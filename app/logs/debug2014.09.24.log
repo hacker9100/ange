@@ -1,0 +1,658 @@
+
+2014/09/24 03:34:18:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 03:34:18:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 03:34:18:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 03:34:18:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 03:34:18:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 03:34:18:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 03:34:18:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 03:34:18:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 03:34:18:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 03:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 03:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 03:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 03:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 03:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 03:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 03:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 03:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 03:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 03:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 03:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 03:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 03:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 03:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 03:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 03:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 03:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 03:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 03:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 03:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 03:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => DELETE
+    [_category] => /content/task
+    [_id] => 28
+)
+
+2014/09/24 03:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 03:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 03:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(91)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 28
+2014/09/24 04:05:04:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 04:05:04:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 04:05:04:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 04:05:04:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 04:05:04:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 04:05:04:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 04:05:04:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 04:05:04:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 04:05:04:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 04:25:37:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 04:25:37:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 04:25:37:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 04:25:37:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 04:25:37:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 04:25:37:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 04:25:37:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 04:25:37:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 04:25:37:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 04:33:05:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 04:33:05:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 04:33:05:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 04:33:05:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 04:33:05:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 04:33:05:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 04:33:05:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 04:33:05:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 04:33:05:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:36:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 08:36:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 08:36:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /app/content/task
+)
+
+2014/09/24 08:36:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 4
+2014/09/24 08:36:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 08:36:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : app
+2014/09/24 08:43:39:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 08:43:39:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 08:43:39:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 08:43:39:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 08:43:39:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 08:43:39:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 08:43:39:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:43:39:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:43:39:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 08:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 08:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task/edit/0
+    [id] => 0
+)
+
+2014/09/24 08:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 5
+2014/09/24 08:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(61)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] _________ID : 0
+2014/09/24 08:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 08:44:24:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(67)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 1 : 
+2014/09/24 08:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 08:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 08:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 08:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 08:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 08:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 08:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:44:26:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 08:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 08:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task/edit/0
+    [id] => 0
+)
+
+2014/09/24 08:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 5
+2014/09/24 08:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(61)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] _________ID : 0
+2014/09/24 08:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 08:44:29:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(67)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 1 : 
+2014/09/24 08:44:30:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 08:44:30:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 08:44:30:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 08:44:30:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 08:44:30:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 08:44:30:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 08:44:30:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:44:30:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:44:30:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 08:44:33:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 08:44:33:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 08:44:33:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => DELETE
+    [_category] => /content/task
+    [_id] => 45
+)
+
+2014/09/24 08:44:33:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 08:44:33:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 08:44:33:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(91)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 45
+2014/09/24 10:14:57:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 10:14:57:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 10:14:57:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 10:14:57:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 10:14:57:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 10:14:57:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 10:14:57:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 10:14:57:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 10:14:57:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 13:45:38:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(26)
+D:\xampp\htdocs\app\services\api.php:line(18)
+D:\xampp\htdocs\app\services\api.php:line(246)
+FUNC[dbConnect]
+2014/09/24 13:45:38:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(39)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi]----------->>>>>>>>>
+2014/09/24 13:45:38:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(56)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category : Array
+(
+    [_method] => GET
+    [_category] => /content/task
+)
+
+2014/09/24 13:45:38:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(57)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] category.cnt : 3
+2014/09/24 13:45:38:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(62)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] REQUEST_METHOD : GET
+2014/09/24 13:45:38:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(71)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 : content
+2014/09/24 13:45:38:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(124)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 13:45:38:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(129)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 
+2014/09/24 13:45:38:::::::::>
+D:\xampp\htdocs\app\services\api.php:line(132)
+D:\xampp\htdocs\app\services\api.php:line(73)
+D:\xampp\htdocs\app\services\api.php:line(247)
+FUNC[processApi] 2 ::::::::::S 

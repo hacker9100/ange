@@ -1,0 +1,28 @@
+이곳은 콘텐츠 영역입니다.
+<div class="row">
+    <div class="col-md-12">
+        <div class= "navbar-header" >
+            <a ng-click="createNewContent()" class="btn btn-lg btn-success">등록</a>
+        </div>
+        <table class="table table-striped table-condensed">
+            <thead>
+            <tr>
+                <th style="min-width: 20px;">No</th>
+                <th style="min-width: 150px;">Subject</th>
+                <th style="width:80px;">User ID</th>
+                <th style="width:150px;">Reg Date</th>
+                <th style="width:80px;">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="content in contents">
+                <td>{{ content.NO }}</td>
+                <td><a ng-click="editContent(content.NO)">{{ content.SUBJECT }}</a></td>
+                <td>{{ content.REG_UID }}</td>
+                <td>{{ content.REG_DT }}</td>
+                <td><a ng-click="deleteContent($index)">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+{
+    states: [{ 'content': {
+        url: '/content',
+        views: {
+            '' : { templateUrl : 'partial/contentMain.html', controller : "contentMainCtrl" },
+            'menuView@content' : { templateUrl : 'partial/contentMenu.html', controller: 'contentMenuCtrl' },
+            'bodyView@content' : { templateUrl: 'partial/contentMain.html' }
+        }
+    }}, { 'content/task': {
+        url: '/content/task',
+        views : {
+            '' : { templateUrl : 'partial/contentMain.html', controller : "contentMainCtrl" },
+            'menuView@content/task' : { templateUrl : 'partial/contentMenu.html', controller: 'contentMenuCtrl' },
+            'bodyView@content/task' : { templateUrl: 'partial/contentList.html', controller: 'contentListCtrl' }
+        }
+    }}, { 'test': {
+        url: '/',
+        views: {
+            'topMenu': { templateUrl: '/Home/TopMenu', dependencies: ['controllers/top-menu-controller'], controller: 'TopMenuCtrl' },
+            'leftMenu': { templateUrl: '/Home/LeftMenu', dependencies: [ 'controllers/left-menu-controller' ] }
+        }
+    }}]
+}
