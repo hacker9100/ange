@@ -5,9 +5,9 @@
  * Description : 사용할 모든 directive를 로드
  */
 define([
-    './contentDirective'
-], function (
-
-    ){
+    './contentDirective',
+    './ckEditorDirective',
+    './plUploadDirective'
+], function (){
 
 });

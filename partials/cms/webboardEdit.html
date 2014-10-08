@@ -1,0 +1,142 @@
+<div ng-include=" 'partials/cms/gnb.html' "></div>
+
+<div class="container">
+
+    <!-- // Local Nav -->
+    <div ui-view="lnbView"></div>
+    <!-- // Local Nav -->
+
+	<div class="btn-group-vertical col-xs-12 col-sm-12 col-md-10">
+		<!-- // Locator -->
+        <div ui-view="locaterView"></div>
+		<!-- // Locator -->
+
+		<div class="panel panel-primary">
+
+			<div class="panel-heading">
+				<h4 class="list-group-item-heading">{{pageTitle}}</h4>
+				<span style="color:#EDEDED; font-size:0.84em;">{{pageDescription}}</span>
+			</div>
+
+			<div class="panel-body">
+			<br />
+                <div class= "navbar-header" >
+                    <a ng-click="createNewBoard()" class="btn btn-lg btn-success">등록</a>
+                </div>
+
+                <!-- Contents Include -->
+                <nav class= "navbar navbar-default" role= "navigation" >
+                    <div class= "navbar-header" >
+                        <a class= "navbar-brand" href= "#/webboard"><i class="glyphicon glyphicon-th-large"></i> Contents List </a>
+                        <a ng-show="board.NO" class= "navbar-brand" href= "#/webboard/edit/0"><i class="glyphicon glyphicon-plus"></i> Create Content </a>
+                        <a ng-show="board.NO" class= "navbar-brand pull-right"><i class="glyphicon glyphicon-edit"></i> Currently Editing Content Number: {{board.NO}}</a>
+                    </div>
+                </nav>
+                <div class="col-md-12">
+
+                    <form role="form" name="myForm" class="form-horizontal">
+                        <div ng-model="board" lass="row">
+                            <div class= "form-group" ng-class="{error: myForm.subject.$invalid}">
+                                <label class= "col-md-2"> Subejct </label>
+                                <div class="col-md-4">
+                                    <input name="subject" ng-model="board.SUBJECT" type= "text" class= "form-control" placeholder="Content Subject" required/>
+                                    <span ng-show="myForm.subject.$dirty && myForm.subject.$invalid" class="help-inline">Subject Required</span>
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">Registration User ID</label>
+                                <div class="col-md-4">
+                                    <input ng-model="board.REG_UID" type= "text" class= "form-control" placeholder= "Registration User ID"/>
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">Registration User Name </label>
+                                <div class="col-md-4">
+                                    <input ng-model="board.REG_NM" type= "text" class= "form-control" placeholder= "Registration User Name"/>
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">Registration Date </label>
+                                <div class="col-md-4">
+                                    <p class="input-group">
+                                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="board.REG_DT" is-open="opened" min-date="minDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">CK Eeditor</label>
+                                <div class="col-md-4">
+                                    <!--<textarea ng-model="board.ckEditor" data-ck-editor></textarea>-->
+                                    <textarea ckeditor="editor" ng-model="board.BODY" ></textarea>
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">PL Upload</label>
+                                <div class="col-md-4">
+                                    <div id="uploader">aaa</div>
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">PL Upload</label>
+                                <div class="row-fluid">
+                                    <div class="span3">
+                                        <a class="btn btn-primary input-block-level" pl-upload pl-auto-upload="false" pl-progress-model="percent" pl-files-model="files" pl-instance="uploader">Upload Files</a>
+                                    </div>
+                                    <div class="span9">
+                                        <progress percent="percent"></progress>
+                                    </div>
+                                </div>
+
+                                <table ng-show="files.length" class="table">
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Size</th>
+                                    <th>Loaded</th>
+                                    <th>Percent Uploaded</th>
+                                    <th>Status</th>
+                                    <tr ng-repeat="file in files">
+                                        <td>{{file.id}}</td>
+                                        <td>{{file.name}}</td>
+                                        <td>{{file.size}}</td>
+                                        <td>{{file.loaded}}</td>
+                                        <td>{{file.percent}}</td>
+                                        <td>{{file.status}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2"></label>
+                                <div class="col-md-4">
+                                    <a ng-click="getBoard()" class="btn">Cancel</a>
+                                    <button ng-click="saveBoard(board);" ng-disabled="myForm.$invalid" class="btn btn-primary">저장</button>
+                                    <button ng-click="deleteBoard(board.NO)" ng-show="board.NO" class="btn btn-warning">삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                content
+                <!-- ////Contents Include -->
+			
+			<br /><br />
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-body" style="font-size:0.84em; color:#999999;">
+			Description
+			</div>
+			<div class="panel-body" style="font-size:0.84em;">
+			To edit settings, press <kbd><kbd>ctrl</kbd> {{'+' + '!'}} <kbd>s</kbd></kbd>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<div ng-include=" 'partials/cms/footer.html' "></div>

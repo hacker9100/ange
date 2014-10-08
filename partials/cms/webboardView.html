@@ -1,0 +1,108 @@
+<div ng-include=" 'partials/cms/gnb.html' "></div>
+
+<div class="container">
+
+    <!-- // Local Nav -->
+    <div ui-view="lnbView"></div>
+    <!-- // Local Nav -->
+
+	<div class="btn-group-vertical col-xs-12 col-sm-12 col-md-10">
+		<!-- // Locator -->
+        <div ui-view="locaterView"></div>
+		<!-- // Locator -->
+
+		<div class="panel panel-primary">
+
+			<div class="panel-heading">
+				<h4 class="list-group-item-heading">{{pageTitle}}</h4>
+				<span style="color:#EDEDED; font-size:0.84em;">{{pageDescription}}</span>
+			</div>
+
+			<div class="panel-body">
+			<br />
+                <div class= "navbar-header" >
+                    <a ng-click="createNewBoard()" class="btn btn-lg btn-success">등록</a>
+                </div>
+
+                <!-- Contents Include -->
+                <nav class= "navbar navbar-default" role= "navigation" >
+                    <div class= "navbar-header" >
+                        <a class= "navbar-brand" href= "#/webboard"><i class="glyphicon glyphicon-th-large"></i> Contents List </a>
+                        <a ng-show="board.NO" class= "navbar-brand" href= "#/webboard/edit/0"><i class="glyphicon glyphicon-plus"></i> Create Content </a>
+                        <a ng-show="board.NO" class= "navbar-brand pull-right"><i class="glyphicon glyphicon-edit"></i> Currently Editing Content Number: {{board.NO}}</a>
+                    </div>
+                </nav>
+                <div class="col-md-12">
+
+                    <form role="form" name="myForm" class="form-horizontal">
+                        <div ng-model="board" lass="row">
+                            <div class= "form-group" ng-class="{error: myForm.subject.$invalid}">
+                                <label class= "col-md-2"> Subejct </label>
+                                <div class="col-md-4">
+                                    <span name="subject" ng-bind="board.SUBJECT" />
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">Registration User ID</label>
+                                <div class="col-md-4">
+                                    <span ng-bind="board.REG_UID" />
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">Registration User Name </label>
+                                <div class="col-md-4">
+                                    <span ng-bind="board.REG_NM" />
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">Registration Date </label>
+                                <div class="col-md-4">
+                                    <span ng-bind="board.REG_DT" />
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">CK Eeditor</label>
+                                <div class="col-md-4">
+                                    {{board.BODY}}
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2">PL Upload</label>
+                                <div class="col-md-4">
+
+                                    <!--<div id="upload" upload style="width: 500px; height: 330px;">aaa</div>-->
+                                    <!--<button plupload="" pl-progress-model="percent" pl-auto-upload="true" pl-files-model="files">Upload Files</button>-->
+                                </div>
+                            </div>
+                            <div class= "form-group">
+                                <label class= "col-md-2"></label>
+                                <div class="col-md-4">
+                                    <a ng-click="getBoard()" class="btn">Cancel</a>
+                                    <button ng-click="editBoard(board.NO);"
+                                            class="btn btn-primary">수정</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                content
+                <!-- ////Contents Include -->
+			
+			<br /><br />
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-body" style="font-size:0.84em; color:#999999;">
+			Description
+			</div>
+			<div class="panel-body" style="font-size:0.84em;">
+			To edit settings, press <kbd><kbd>ctrl</kbd> {{'+' + '!'}} <kbd>s</kbd></kbd>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<div ng-include=" 'partials/cms/footer.html' "></div>

@@ -1,0 +1,6 @@
+		<ol class="breadcrumb"  style="font-size:0.84em;">
+		    <li ng-repeat="item in items" ng-class="{active: isActive(item)}">
+                <a ng-if="item.last == false" ng-href='#{{item.url}}'>{{item.title}}</a>
+                <span ng-if="item.last == true">{{item.title}}</span>
+            </li>
+		</ol>

@@ -1,0 +1,68 @@
+<div ng-include=" 'partials/cms/gnb.html' "></div>
+
+<div class="container">
+
+    <!-- // Local Nav -->
+    <div ui-view="lnbView"></div>
+    <!-- // Local Nav -->
+
+	<div class="btn-group-vertical col-xs-12 col-sm-12 col-md-10">
+		<!-- // Locator -->
+        <div ui-view="locaterView"></div>
+		<!-- // Locator -->
+
+		<div class="panel panel-primary">
+
+			<div class="panel-heading">
+				<h4 class="list-group-item-heading">{{pageTitle}}</h4>
+				<span style="color:#EDEDED; font-size:0.84em;">{{pageDescription}}</span>
+			</div>
+
+			<div class="panel-body">
+			<br />
+                <div class= "navbar-header" >
+                    <a ng-click="createNewBoard()" class="btn btn-lg btn-success">등록</a>
+                </div>
+
+                <!-- Contents Include -->
+                <table class="table table-striped table-condensed">
+                    <thead>
+                    <tr>
+                        <th style="min-width: 20px;">No</th>
+                        <th style="min-width: 150px;">Subject</th>
+                        <th style="width:80px;">User ID</th>
+                        <th style="width:150px;">Reg Date</th>
+                        <th style="width:80px;">Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="board in boards">
+                        <td>{{ board.NO }}</td>
+                        <td><a ng-click="viewBoard(board.NO)">{{ board.SUBJECT }}</a></td>
+                        <td>{{ board.REG_UID }}</td>
+                        <td>{{ board.REG_DT }}</td>
+                        <td><a ng-click="deleteBoard($index)">Delete</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <pagination item-per-page="itemsPerPage" total-items="totalItems" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true"></pagination>
+                <!-- ////Contents Include -->
+			
+			<br /><br />
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-body" style="font-size:0.84em; color:#999999;">
+			Description
+			</div>
+			<div class="panel-body" style="font-size:0.84em;">
+			To edit settings, press <kbd><kbd>ctrl</kbd> {{'+' + '!'}} <kbd>s</kbd></kbd>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<div ng-include=" 'partials/cms/footer.html' "></div>

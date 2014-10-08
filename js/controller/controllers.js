@@ -7,23 +7,22 @@
 
 define([
     'angular'
+//    'ngActivityIndicator'
 ], function (angular) {
     'use strict';
 
     // bootstrap.js에 설정한 App Name를 여기서 동일하게 설정
-    var controllers = angular.module('yourApp.controllers', [
+    var controllers = angular.module('mtApp.controllers', [
 
     ], function () {
 
     });
 
-/*
     controllers.run(function ($rootScope, $templateCache) {
         $rootScope.$on('$viewContentLoaded', function () {
-            $templateCache.removeAll();
+//            $templateCache.removeAll();
         });
     });
-*/
     return controllers;
 
 });

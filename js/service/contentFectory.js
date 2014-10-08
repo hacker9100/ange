@@ -8,8 +8,8 @@ define(['./services'], function (services) {
     'use strict';
 
     services.factory('contentsFactory', ['$resource', '$location', function($resource, $location) {
-        return $resource('services/api.php', { category: $location.path() }, {
-//        return $resource('../../ange/ange/cms/cms.php', {_method : 'list'}, {
+        return $resource('serverscript/api.php', { category: $location.path() }, {
+//        return $resource('../../ange/ange/cms/webboard.php', {_method : 'list'}, {
             query: { method: 'GET', isArray: true },
             create: { method: 'POST' },
             delete: { method: 'DELETE', params: {id: '@id'} }
@@ -17,8 +17,8 @@ define(['./services'], function (services) {
     }]);
 
     services.factory('contentFactory', ['$resource', '$location', function ($resource, $location) {
-        return $resource('services/api.php', { category: $location.path(), id: '@id' }, {
-//        return $resource('services/api.php/:id', {}, {
+        return $resource('serverscript/api.php', { category: $location.path(), id: '@id' }, {
+//        return $resource('serverscript/api.php/:id', {}, {
             show: { method: 'GET' },
             update: { method: 'PUT' },
             delete: { method: 'DELETE' }

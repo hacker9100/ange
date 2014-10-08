@@ -10,5 +10,19 @@ define([
     './contentMenuController',
     './contentListController',
     './contentDetailController',
-    './ManagementMainController',
+    './managementMainController',
+
+    '../../partials/cms/locater',
+
+    // CMS Controller
+    '../../partials/cms/upload',
+    '../../partials/cms/signin',
+    '../../partials/cms/dashboard',
+    '../../partials/cms/project',
+    '../../partials/cms/projectEdit',
+    '../../partials/cms/projectView',
+    '../../partials/cms/task',
+    '../../partials/cms/webboard',
+    '../../partials/cms/webboardEdit',
+    '../../partials/cms/webboardView'
 ], function () {});

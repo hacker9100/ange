@@ -12,7 +12,7 @@ define(['./directives'], function (directives) {
             restrict: 'EA',
             scope: { code:'=' },
             replace: true,
-            templateUrl: 'partial/directive_child1.html',
+            templateUrl: 'partials/directive_child1.html',
             controller: 'directiveCtrl2',
             link: function (scope, element) {
                 scope.$watch('value1', function (newVal) {
@@ -28,7 +28,7 @@ define(['./directives'], function (directives) {
         return {
             restrict: 'EA',
             replace: true,
-            templateUrl: 'partial/directive_child2.html',
+            templateUrl: 'partials/directive_child2.html',
             controller: 'directiveCtrl3',
             link: function (scope, element) {
                     scope.$watch('value2', function (newVal) {
@@ -39,5 +39,25 @@ define(['./directives'], function (directives) {
             }
         };
     });
+*/
+/*
+    // Loading Indicator
+    directives.directive('butterbar', ['$rootScope', function($rootScope) {
+        return {
+            link : function(scope, element, attrs) {
+                $rootScope.$on('$routeUpdate', function() {
+                    element.addClass('hide');
+                });
+
+                $rootScope.$on('$stateChangeStart', function() {
+                    element.removeClass('hide');
+                });
+
+                $rootScope.$on('$stateChangeSuccess', function() {
+                    element.addClass('hide');
+                });
+            }
+        };
+    }]);
 */
 });

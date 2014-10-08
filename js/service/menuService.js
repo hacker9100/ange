@@ -7,7 +7,7 @@
 define(['./services'], function (services, $http, $location) {
     var obj = {};
     obj.getContents = function(){
-        return $http.get('services/api.php?_method=GET&_category='+$location.path());
+        return $http.get('serverscript/api.php?_method=GET&_category='+$location.path());
     }
 
     return obj;

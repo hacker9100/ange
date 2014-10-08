@@ -5,28 +5,27 @@
  * Description : $stateProvider에 각 메뉴별로 url과 해당 화면 정보, 콘트롤을 정의 한다.
  */
 
-define([], function() {
-    return {
-        states: [{ 'content': {
-            url: '/content',
-            views: {
-                '' : { templateUrl : 'partial/contentMain.html', controller : "ContentMainCtrl" },
-                'menuView@content' : { templateUrl : 'partial/contentMenu.html', controller: 'ContentMenuCtrl' },
-                'bodyView@content' : { templateUrl: 'partial/contentMain.html' }
-            }
-        }}, { 'content/task': {
-            url: '/content/task',
-            views : {
-                '' : { templateUrl : 'partial/contentMain.html', controller : "ContentMainCtrl" },
-                'menuView@content/task' : { templateUrl : 'partial/contentMenu.html', controller: 'ContentMenuCtrl' },
-                'bodyView@content/task' : { templateUrl: 'partial/contentList.html', controller: 'ContentListCtrl' }
-            }
-        }}, { 'test': {
-            url: '/',
-            views: {
-                'topMenu': { templateUrl: '/Home/TopMenu', dependencies: ['controllers/top-menu-controller'], controller: 'TopMenuCtrl' },
-                'leftMenu': { templateUrl: '/Home/LeftMenu', dependencies: [ 'controllers/left-menu-controller' ] }
-            }
-        }}]
-    };
+define(['angular', 'jquery'], function(angular, $, $scope) {
+    var json = '';
+
+    $.ajax({
+        url: "js/menu.json",
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        success: function (response) {
+            json = response;
+            console.log("success");
+        },
+        error: function (response) {
+            var text = response.responseText;
+            var data = eval("states = (" + text + ")");
+            console.log("failed");
+
+            json = data;
+        }
+    });
+
+    return json;
 });

@@ -1,7 +1,7 @@
 /**
- * Author : Han-sik Choi
- * Blog   : http://hans.or.kr
- * Date   : 2014-06-07
+ * Author : Sung-hwan Kim
+ * Email  : hacker9100@marveltree.com
+ * Date   : 2014-09-23
  * Description : requireJS를 사용할 때 최초로 호출되는 파일로 requireJS의 설정을 한다.
  */
 
@@ -19,11 +19,28 @@ require.config({
     // 보통 맨뒤 js확장자는 별도롤 붙이지 않으며, 맨 뒤에 js를 붙이지 않아도 자동으로 js를 붙여서 찾아준다.
     // 라이브러리 경로 선언을 위해서도 사용된다.
     paths: {
-        'jquery': '../lib/jquery/jquery',
-        'domReady': '../lib/domReady/domReady',
-        'angular': '../lib/angular/angular',
-        'ngResource': '../lib/angular/angular-resource',
-        'uiRouter': '../lib/angular-ui/angular-ui-router'
+        'text': '../lib/require/text', //HTML 데이터를 가져올때 text! 프리픽스를 붙여준다.
+        'jquery': '../lib/jquery/jquery.min', // jquery를 사용한다.
+        'jquery-ui': '../lib/jquery/jquery-ui-1.10.2.min', // bootstrap 사용을 위해 로딩한다.
+        'domReady': '../lib/domReady/domReady', // requirejs로 library를 로딩할때 사용된다.
+        'angular': '../lib/angular/angular', // angularjs를 사용한다.
+
+        'ngBootstrap': '../lib/bootstrap/js/bootstrap.min', // bootstrap을 사용한다.
+        'uiBootstrap': '../lib/ui-bootstrap/ui-bootstrap-0.11.2.min', // bootstrap의 ui 컴포넌트를 사용하게한다.
+
+        'ngResource': '../lib/angular/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.
+        'uiRouter': '../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
+
+        'ckeditor-core': '../lib/ckeditor/ckeditor',
+        'ckeditor-jquery': '../lib/ckeditor/adapters/jquery',
+        'plupload': '../lib/plupload/plupload.full.min',
+//        'ngPlupload': '../lib/plupload/plupload-angular-directive',
+        'uiPlupload': '../lib/plupload/jquery.ui.plupload/jquery.ui.plupload',
+        'ngActivityIndicator': '../lib/ngActivityIndicator/ngActivityIndicator',
+
+//        'ngMock': '../lib/angular/angular-mocks',
+
+        'library': '../lib'
     },
 
     // shim은 AMD를 지원하지 않는 외부 라이브러리를 모듈로 사용할 수 있게 한다.
@@ -37,12 +54,39 @@ require.config({
             deps: ['jquery'],    // 반드시 먼저 로딩해야될 모듈을 정의한다.
             exports: 'angular'   // 반환되는 변수값이다. angular는 전역변수 "angular"를 사용한다.
         },
+        'jquery-ui': {
+            deps: ['jquery']
+        },
+        'ngBootstrap':{
+            deps:['jquery','angular']//,
+//            exports: "$.fn.popover"
+        },
+        'uiBootstrap':{
+            deps:['jquery','angular','ngBootstrap']//,
+//            exports: "$.fn.popover"
+        },
         'ngResource':{
             deps: ['angular']
         },
         'uiRouter':{
             deps: ['angular']
+        },
+        'ckeditor-jquery':{
+            deps:['jquery','ckeditor-core']
+        },
+        'plupload':{
+            deps:['jquery','jquery-ui'],
+            exports: "plupload"
+        },
+        'uiPlupload':{
+            deps:['plupload']
+        },
+        'ngActivityIndicator':{
+            deps:['angular']
         }
+//        'ngMock':{
+//            deps: ['angular']
+//        }
     },
 
     // 부트스트랩 방법1

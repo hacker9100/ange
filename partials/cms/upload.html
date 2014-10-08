@@ -1,0 +1,41 @@
+<div ng-include=" 'partials/cms/gnb.html' "></div>
+
+<div class="container">
+    <div class="col-md-4">
+
+        <div id="uploader">aaa</div>
+
+        <div class="span6">
+            <h3>Single File Upload</h3>
+            <div class="row-fluid">
+                <div class="span3">
+                    <a class="btn btn-primary input-block-level" pl-upload pl-progress-model="percent" pl-files-model="files" pl-instance="uploader">Upload Files</a>
+                </div>
+                <div class="span9">
+                    <progress percent="percent"></progress>
+                </div>
+            </div>
+
+            <table ng-show="files.length" class="table">
+                <th>#</th>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Loaded</th>
+                <th>Percent Uploaded</th>
+                <th>Status</th>
+                <tr ng-repeat="file in files">
+                    <td>{{file.id}}</td>
+                    <td>{{file.name}}</td>
+                    <td>{{file.size}}</td>
+                    <td>{{file.loaded}}</td>
+                    <td>{{file.percent}}</td>
+                    <td>{{file.status}}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!--<button plupload="" pl-progress-model="percent" pl-auto-upload="true" pl-files-model="files">Upload Files</button>-->
+    </div>
+</div>
+
+<div ng-include=" 'partials/cms/footer.html' "></div>
