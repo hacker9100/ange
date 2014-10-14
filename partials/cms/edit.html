@@ -1,0 +1,45 @@
+<div ng-include=" 'partials/cms/gnb.html' "></div>
+
+<div class="container">
+
+    <!-- // Local Nav -->
+    <div ui-view="lnbView"></div>
+    <!-- // Local Nav -->
+
+	<div class="btn-group-vertical col-xs-12 col-sm-12 col-md-10">
+		<!-- // Locator -->
+        <div ui-view="locaterView"></div>
+		<!-- // Locator -->
+
+		<div class="panel panel-primary">
+
+			<div ng-class="customClass()">
+				<h4 class="list-group-item-heading">{{pageTitle}}</h4>
+				<span style="color:#EDEDED; font-size:0.84em;">{{pageDescription}}</span>
+			</div>
+
+			<div class="panel-body">
+			<br />
+
+                <edit-list ng-show="method == 'GET' && !isId"></edit-list>
+                <edit-edit ng-show="method != 'GET'"></edit-edit>
+                <edit-view ng-show="method == 'GET' && isId"></edit-view>
+
+			<br /><br />
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-body" style="font-size:0.84em; color:#999999;">
+			Description
+			</div>
+			<div class="panel-body" style="font-size:0.84em;">
+			To edit settings, press <kbd><kbd>ctrl</kbd> {{'+' + '!'}} <kbd>s</kbd></kbd>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<div ng-include=" 'partials/cms/footer.html' "></div>

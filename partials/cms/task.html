@@ -2,9 +2,9 @@
 
 <div class="container">
 
-	<!-- // Local Nav -->
+    <!-- // Local Nav -->
     <div ui-view="lnbView"></div>
-	<!-- // Local Nav -->
+    <!-- // Local Nav -->
 
 	<div class="btn-group-vertical col-xs-12 col-sm-12 col-md-10">
 		<!-- // Locator -->
@@ -13,7 +13,7 @@
 
 		<div class="panel panel-primary">
 
-			<div class="panel-heading">
+			<div ng-class="customClass()">
 				<h4 class="list-group-item-heading">{{pageTitle}}</h4>
 				<span style="color:#EDEDED; font-size:0.84em;">{{pageDescription}}</span>
 			</div>
@@ -21,11 +21,10 @@
 			<div class="panel-body">
 			<br />
 
-			<!-- Contents Include -->
-			content
-			<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br  />
-			<!-- ////Contents Include -->
-			
+                <task-list ng-show="method == 'GET' && !isId"></task-list>
+                <task-edit ng-show="method != 'GET'"></task-edit>
+                <task-view ng-show="method == 'GET' && isId"></task-view>
+
 			<br /><br />
 			</div>
 		</div>

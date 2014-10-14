@@ -17,18 +17,6 @@ define(['./services'], function (services) {
             return $http.get('serverscript/api.php?_method=GET&_category='+$location.path()+'&id='+id);
         }
 
-        obj.deleteContent = function(id){
-            return $http.get('serverscript/api.php?_method=DELETE&_category='+$location.path()+'&_id='+id);
-        }
-
-        obj.updateContent = function(id, content){
-            return $http.post('serverscript/api.php?_method=PUT&_category='+$location.path()+'&_id='+id, content);
-        }
-
-        obj.createContent = function(content){
-            return $http.post('serverscript/api.php?_method=POST&_category='+$location.path(), content);
-        }
-
         return obj;
     }]);
 });

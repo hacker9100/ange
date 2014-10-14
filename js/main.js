@@ -25,18 +25,27 @@ require.config({
         'domReady': '../lib/domReady/domReady', // requirejs로 library를 로딩할때 사용된다.
         'angular': '../lib/angular/angular', // angularjs를 사용한다.
 
-        'ngBootstrap': '../lib/bootstrap/js/bootstrap.min', // bootstrap을 사용한다.
+        'jsBootstrap': '../lib/bootstrap/js/bootstrap.min', // bootstrap을 사용한다.
         'uiBootstrap': '../lib/ui-bootstrap/ui-bootstrap-0.11.2.min', // bootstrap의 ui 컴포넌트를 사용하게한다.
 
+        'ngCookies': '../lib/angular/angular-cookies.min', //
         'ngResource': '../lib/angular/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.
+        'ngSanitize': '../lib/angular/angular-sanitize', //
         'uiRouter': '../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
 
         'ckeditor-core': '../lib/ckeditor/ckeditor',
         'ckeditor-jquery': '../lib/ckeditor/adapters/jquery',
+        'ckfinder': '../lib/ckfinder/ckfinder',
+
         'plupload': '../lib/plupload/plupload.full.min',
 //        'ngPlupload': '../lib/plupload/plupload-angular-directive',
         'uiPlupload': '../lib/plupload/jquery.ui.plupload/jquery.ui.plupload',
         'ngActivityIndicator': '../lib/ngActivityIndicator/ngActivityIndicator',
+
+        'fullcalendar': '../lib/fullcalendar/fullcalendar',
+        'ko': '../lib/fullcalendar/lang/ko',
+        'ui-calendar': '../lib/fullcalendar/calendar',
+        'moment': '../lib/fullcalendar/lib/moment.min',
 
 //        'ngMock': '../lib/angular/angular-mocks',
 
@@ -57,15 +66,21 @@ require.config({
         'jquery-ui': {
             deps: ['jquery']
         },
-        'ngBootstrap':{
-            deps:['jquery','angular']//,
-//            exports: "$.fn.popover"
+        'jsBootstrap':{
+            deps:['angular'],
+            exports: "$.fn.popover"
         },
         'uiBootstrap':{
-            deps:['jquery','angular','ngBootstrap']//,
+            deps:['jquery','angular','jsBootstrap']//,
 //            exports: "$.fn.popover"
         },
+        'ngCookies':{
+            deps: ['angular']
+        },
         'ngResource':{
+            deps: ['angular']
+        },
+        'ngSanitize':{
             deps: ['angular']
         },
         'uiRouter':{
@@ -83,6 +98,15 @@ require.config({
         },
         'ngActivityIndicator':{
             deps:['angular']
+        },
+        'fullcalendar':{
+            deps:['jquery','moment']
+        },
+        'ko':{
+            deps:['jquery','moment']
+        },
+        'ui-calendar':{
+            deps:['angular','fullcalendar']
         }
 //        'ngMock':{
 //            deps: ['angular']

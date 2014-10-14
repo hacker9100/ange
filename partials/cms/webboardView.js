@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('webboardView', ['$scope', '$stateParams', 'webboardService', '$location', function ($scope, $stateParams, webboardService, $location) {
+    controllers.controller('webboardView', ['$scope', '$stateParams', 'webboardService', '$sce', '$location', function ($scope, $stateParams, webboardService, $sce, $location) {
 
 		$scope.message = "ANGE CMS";
 
@@ -28,5 +28,9 @@ define([
                 $scope.board = board.data[0];
             });
         }
+
+        $scope.renderHtml = function(html) {
+            return $sce.trustAsHtml(html);
+        };
     }]);
 });

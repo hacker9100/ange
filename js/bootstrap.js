@@ -16,6 +16,7 @@ define([
     'jquery',
     'angular',
     'jquery-ui',
+    'jsBootstrap',
     'app',
     'routes'
 ], function (require, text, $, angular) {

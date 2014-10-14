@@ -153,7 +153,13 @@ define(['./directives'], function (directives) {
                         disableNativeSpellChecker: false,
                         uiColor: '#FAFAFA',
                         height: '400px',
-                        width: '100%'
+                        width: '100%',
+                        filebrowserBrowseUrl : 'lib/ckfinder/ckfinder.html',
+                        filebrowserImageBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Images',
+                        filebrowserFlashBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Flash',
+                        filebrowserUploadUrl : 'lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+                        filebrowserImageUploadUrl : 'lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+                        filebrowserFlashUploadUrl : 'lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
                     };
                     options = angular.extend(options, scope[attrs.ckeditor]);
 
@@ -184,6 +190,8 @@ define(['./directives'], function (directives) {
                             setModelData(setPristine);
                             isReady = true;
                         });
+
+                        CKFinder.setupCKEditor( instance, '../../lib/ckfinder/' );
                     }
 
                     //instance.on('pasteState',   setModelData);
@@ -203,7 +211,6 @@ define(['./directives'], function (directives) {
                         configLoaderDef.resolve();
                     });
 
-                    // 무한루프 발생..
                     ngModel.$render = function() {
                         data.push(ngModel.$viewValue);
                         if (isReady) {

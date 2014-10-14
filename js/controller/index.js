@@ -6,22 +6,27 @@
  */
 
 define([
-    './contentMainController',
-    './contentMenuController',
-    './contentListController',
-    './contentDetailController',
-    './managementMainController',
+//    './contentMainController',
+//    './contentMenuController',
+//    './contentListController',
+//    './contentDetailController',
+//    './managementMainController',
 
     '../../partials/cms/locater',
 
     // CMS Controller
+    '../../partials/cms/dashboard_calendara',
+
     '../../partials/cms/upload',
     '../../partials/cms/signin',
+
     '../../partials/cms/dashboard',
     '../../partials/cms/project',
-    '../../partials/cms/projectEdit',
-    '../../partials/cms/projectView',
     '../../partials/cms/task',
+    '../../partials/cms/article',
+    '../../partials/cms/article_confirm',
+    '../../partials/cms/edit',
+
     '../../partials/cms/webboard',
     '../../partials/cms/webboardEdit',
     '../../partials/cms/webboardView'

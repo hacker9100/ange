@@ -10,9 +10,10 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     // 라이브러리 로딩
     'angular',
     'route-config', //registers에 각 프로바이더를 제공하기 위해 임포트
-    'uiRouter',
-    'ngBootstrap',
+    'jsBootstrap',
     'uiBootstrap',
+    'ngSanitize',
+    'uiRouter',
     'ckeditor-jquery',
     'plupload',
 //    'ngPlupload',
@@ -35,8 +36,8 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'mtApp.controllers',
         'mtApp.filters',
         'mtApp.directives',
-        'ui.router',
         'ui.bootstrap',
+        'ui.router'
 //        'mtTest.mock'
         ], function ($provide, $compileProvider, $controllerProvider, $filterProvider) {
             // 여기서는 필요한 설정들을 진행.
@@ -345,5 +346,4 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
 
     // 외부에 노출할 함수들만 반환한다.
     return app;
-
 });

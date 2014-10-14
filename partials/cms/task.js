@@ -1,17 +1,35 @@
-'use strict';
+/**
+ * Author : Sung-hwan Kim
+ * Email  : hacker9100@marveltree.com
+ * Date   : 2014-09-23
+ * Description : project.html 화면 콘트롤러
+ */
 
 define([
-    '../../js/controller/controllers'
+    '../../js/controller/controllers',
+    './task_list',
+    './task_edit',
+    './task_view'
 ], function (controllers) {
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task', ['$scope', '$location', function ($scope, $location) {
-	
-		$scope.message = "ANGE CMS";
+    controllers.controller('task', ['$scope', '$stateParams', '$location', function ($scope, $stateParams, $location) {
 
-		$scope.pageTitle = "태스크 관리";
-		$scope.pageDescription = "기사주제 설정하고 할당하여 관리합니다.";
+        // ng-class를 이용해 style을 동적으로 할달
+        $scope.customClass = function() {
+            var className = '';
+
+            className = 'panel-heading';
+
+            return className;
+        };
+
+        // list, edit, view을 화면 조건에 따라 변경
+        var search = $location.search();
+
+        $scope.method = search._method;
+        $scope.isId = $stateParams.id == 0 || $stateParams.id == undefined ? false : true;
 
     }]);
 });
