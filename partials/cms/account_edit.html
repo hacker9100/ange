@@ -1,0 +1,77 @@
+<!--<div id="veil" ng-show="isLoading"></div>-->
+<div id="feedLoading" ng-show="isLoading">Loading...</div>
+
+<!-- Contents Include -->
+<div class="col-md-12">
+
+    <form role="form" name="myForm" class="form-horizontal">
+        <div ng-model="content" lass="row">
+            <div class= "form-group" ng-class="{error: myForm.user_id.$invalid}">
+                <label class= "col-md-2">아이디</label>
+                <div class="col-md-4">
+                    <input name="user_id" ng-model="user.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디" required/>
+                    <span ng-show="myForm.user_id.$dirty && myForm.user_id.$invalid" class="help-inline">사용자 아이디가 누락되었습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: myForm.user_name.$invalid}">
+                <label class= "col-md-2">이름</label>
+                <div class="col-md-4">
+                    <input name="user_name" ng-model="user.USER_NM" type= "text" class= "form-control" placeholder="사용자 이름" required/>
+                    <span ng-show="myForm.user_name.$dirty && myForm.user_name.$invalid" class="help-inline">사용자 이름이 누락되었습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: myForm.password.$invalid}">
+                <label class= "col-md-2">비밀번호</label>
+                <div class="col-md-4">
+                    <input name="password" ng-model="user.PASSWORD" type= "password" class= "form-control" placeholder= "사용자 비밀번호" required/>
+                    <span ng-show="myForm.password.$dirty && myForm.password.$invalid" class="help-inline">비밀번호가 누락되었습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: myForm.password_compare.$invalid}">
+                <label class= "col-md-2">비밀번호 확인</label>
+                <div class="col-md-4">
+                    <input name="passwordCompare" ng-model="user.PASSWORD_CP" type= "password" class= "form-control" ng-match="user.PASSWORD" placeholder= "사용자 비밀번호 확인" required/>
+                    <span ng-show="myForm.passwordCompare.$dirty && myForm.passwordCompare.$invalid" class="help-inline">확인 비밀번호가 누락되었습니다.</span>
+                    <span ng-show="myForm.passwordCompare.$error.match" class="help-inline">비밀번호가 일치하지 않습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">연락처</label>
+                <div class="col-md-4">
+                    <input ng-model="user.PHONE" type= "text" class= "form-control" placeholder= "사용자 연락처"/>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">회신메일</label>
+                <div class="col-md-4">
+                    <input name="email" ng-model="user.EMAIL" type= "email" class= "form-control" placeholder= "사용자 이메일"/>
+                    <span ng-show="myForm.email.$error.email" class="help-inline">이메일 형식이 맞지 않습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">메모</label>
+                <div class= "col-md-6">
+                    <textarea ng-model="user.NOTE" class= "form-control" placeholder= "간략한 자기소개.."/>
+                </div>
+            </div>
+
+            <!-- 하단 버튼 -->
+            <div class= "form-group">
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary start" ng-click="saveCmsUser();" ng-disabled="myForm.$invalid">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>저장</span>
+                    </button>
+                    <button type="button" class="btn btn-warning cancel" ng-click="cancel();">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>취소</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<!-- ////Contents Include -->
+

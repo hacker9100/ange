@@ -56,7 +56,7 @@ class CKFinder_Connector_Core_AccessControlConfig
             $_folderRename = isset($node['folderRename']) ? CKFinder_Connector_Utils_Misc::booleanValue($node['folderRename']) : false;
             $_folderDelete = isset($node['folderDelete']) ? CKFinder_Connector_Utils_Misc::booleanValue($node['folderDelete']) : false;
             $_fileView = isset($node['fileView']) ? CKFinder_Connector_Utils_Misc::booleanValue($node['fileView']) : false;
-            $_fileUpload = isset($node['fileUpload']) ? CKFinder_Connector_Utils_Misc::booleanValue($node['fileUpload']) : false;
+            $_fileUpload = isset($node['file-upload']) ? CKFinder_Connector_Utils_Misc::booleanValue($node['file-upload']) : false;
             $_fileRename = isset($node['fileRename']) ? CKFinder_Connector_Utils_Misc::booleanValue($node['fileRename']) : false;
             $_fileDelete = isset($node['fileDelete']) ? CKFinder_Connector_Utils_Misc::booleanValue($node['fileDelete']) : false;
 

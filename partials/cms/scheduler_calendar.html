@@ -1,0 +1,12 @@
+<div class="col-md-12">
+    <div class="well">
+        <div class="row-fluid">
+            <div class="span8">
+                <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+            </div>
+        </div>
+    </div>
+    <div ng-show="alertMessage != undefined && alertMessage != ''">
+        <h4>{{alertMessage}}</h4>
+    </div>
+</div>

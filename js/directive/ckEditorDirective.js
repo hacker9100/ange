@@ -191,7 +191,7 @@ define(['./directives'], function (directives) {
                             isReady = true;
                         });
 
-                        CKFinder.setupCKEditor( instance, '../../lib/ckfinder/' );
+//                        CKFinder.setupCKEditor( instance, '../lib/ckfinder/' );
                     }
 
                     //instance.on('pasteState',   setModelData);

@@ -44,12 +44,12 @@ if ( typeof CKEDITOR == 'undefined' )
 else
 {
 	var editor = CKEDITOR.replace( 'editor1' ,{
-        filebrowserBrowseUrl       : '../lib/ckfinder/ckfinder.html',
-        filebrowserImageBrowseUrl  : '../lib/ckfinder/ckfinder.html?type=Images',
-        filebrowserFlashBrowseUrl  : '../lib/ckfinder/ckfinder.html?type=Flash',
-        filebrowserUploadUrl       : '../lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&currentFolder=/test/',
-        filebrowserImageUploadUrl  : '../lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&currentFolder=/test/',
-        filebrowserFlashUploadUrl  : '../lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash',
+        filebrowserBrowseUrl       : '/app/lib/ckfinder/ckfinder.html',
+        filebrowserImageBrowseUrl  : '/app/lib/ckfinder/ckfinder.html?type=Images',
+        filebrowserFlashBrowseUrl  : '/app/lib/ckfinder/ckfinder.html?type=Flash',
+        filebrowserUploadUrl       : '/app/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&currentFolder=/test/',
+        filebrowserImageUploadUrl  : '/app/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&currentFolder=/test/',
+        filebrowserFlashUploadUrl  : '/app/lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash',
         language : 'ko'
     });
 	editor.setData( '<p>Just click the <b>Image</b> or <b>Link</b> button, and then <b>&quot;Browse Server&quot;</b>.</p>' );
@@ -58,8 +58,8 @@ else
 	// The second parameter (optional), is the path for the CKFinder installation (default = "/ckfinder/").
 	CKFinder.setupCKEditor( editor,
             {
-                basePath: '../lib/ckfinder/',
-                startupPath: 'Images:/test/'
+                basePath: '/app/lib/ckfinder/'//,
+//                startupPath: 'Images:/test/'
             }
     ) ;
 

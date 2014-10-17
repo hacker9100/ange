@@ -19,6 +19,10 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
 //    'ngPlupload',
     'uiPlupload',
 //    'ngActivityIndicator',
+    'uiWidget',
+    'jqFileupload',
+    'jqProcess',
+    'ngFileupload',
 
     // 각 컨트롤러 로딩
     './controller/index',
@@ -37,7 +41,8 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'mtApp.filters',
         'mtApp.directives',
         'ui.bootstrap',
-        'ui.router'
+        'ui.router',
+        'blueimp.fileupload'
 //        'mtTest.mock'
         ], function ($provide, $compileProvider, $controllerProvider, $filterProvider) {
             // 여기서는 필요한 설정들을 진행.

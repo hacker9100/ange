@@ -4,7 +4,7 @@
 define([
 //    'css!../../lib/fullcalendar/fullcalendar.css',
     '../../js/controller/controllers',
-    'ui-calendar'
+    'uiCalendar'
 ], function (controllers) {
     'use strict';
 

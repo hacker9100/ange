@@ -9,6 +9,7 @@ define([
     './contentFectory',
     './contentsService',
 
+    './userService',
     './projectService',
     './contentService',
     './webboardService',

@@ -80,7 +80,7 @@
         case "POST":
             $form = json_decode(file_get_contents("php://input"),true);
 /*
-            $upload_path = '../uploads/';
+            $upload_path = '../upload/';
             $source_path = '../../../';
 
             if (count($form[FILES]) > 0) {

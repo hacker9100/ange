@@ -62,7 +62,6 @@ define([
         projectService.getProjects().then(function(projects){
             projectsData = projects.data;
 
-
             if (projectsData != null) {
                 $scope.totalItems = projects.data[0].TOTAL_COUNT; // 총 아이템 수
                 $scope.currentPage = 1; // 현재 페이지

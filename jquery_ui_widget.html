@@ -15,6 +15,9 @@
 <script type="text/javascript" src="lib/plupload/plupload.full.min.js"></script>
 <script type="text/javascript" src="lib/plupload/jquery.ui.plupload/jquery.ui.plupload.min.js"></script>
 
+<!-- activate Georgian translation -->
+<script type="text/javascript" src="lib/plupload/i18n/ko.js"></script>
+
     <!-- debug
     <script type="text/javascript" src="../../js/moxie.js"></script>
     <script type="text/javascript" src="../../js/plupload.dev.js"></script>
@@ -43,7 +46,7 @@ $(function() {
 	$("#uploader").plupload({
 		// General settings
 		runtimes : 'html5,flash,silverlight,html4',
-		url : 'services/upload.php',
+		url : 'serverscript/upload.php',
 
 		// User can upload no more then 20 files in one go (sets multiple_queues to false)
 		max_file_count: 20,

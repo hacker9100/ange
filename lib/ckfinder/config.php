@@ -79,8 +79,7 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-//$baseDir = resolveUrl($baseUrl);
-$baseDir = 'D:/xampp/htdocs/app/upload/userfiles/';
+$baseDir = resolveUrl($baseUrl);
 
 /*
  * ### Advanced Settings
@@ -143,7 +142,7 @@ $config['AccessControl'][] = Array(
 		'folderDelete' => true,
 
 		'fileView' => true,
-		'fileUpload' => true,
+		'file-upload' => true,
 		'fileRename' => true,
 		'fileDelete' => true);
 
@@ -163,7 +162,7 @@ $config['AccessControl'][] = Array(
 		'folderDelete' => true,
 
 		'fileView' => true,
-		'fileUpload' => false,
+		'file-upload' => false,
 		'fileRename' => false,
 		'fileDelete' => false);
 */
@@ -262,7 +261,7 @@ $config['FilesystemEncoding'] = 'UTF-8';
 Perform additional checks for image files
 if set to true, validate image size
 */
-$config['SecureImageUploads'] = true;
+$config['SecureImageUploads'] = false;
 
 /*
 Indicates that the file size (maxSize) for images must be checked only

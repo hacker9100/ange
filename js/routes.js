@@ -7,10 +7,14 @@
  * 다만 WebApp의 경우 단일 페이지에서 처리가 발생하는 경우가 많을 것으므로, 이 파일은 별로 사용되지 않을 수 있다.
  */
 
-define(['./app', 'json!menu.json'], function(app, menu) {
+define([
+'./app',
+//'blueimp.fileupload',
+'json!menu.json'
+], function(app, menu) {
     'use strict';
 
-    app.config(function($stateProvider, $urlRouterProvider) {
+    app.config(function($stateProvider, $urlRouterProvider, $httpProvider, fileUploadProvider) {
 
         // angular를 사용함으로서 url에 '#'를 제거하기 위한 처리
         var sitePrefix = '/app';
@@ -41,6 +45,13 @@ define(['./app', 'json!menu.json'], function(app, menu) {
                 });
             }
         }
+
+        // fileUpload
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        fileUploadProvider.defaults.redirect = window.location.href.replace(
+            /\/[^\/]*$/,
+            '/partials/result.html?%s'
+        );
     })
 
     return app;

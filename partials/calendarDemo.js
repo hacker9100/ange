@@ -3,7 +3,7 @@
  */
 define([
     '../js/controller/controllers',
-    'ui-calendar'
+    'uiCalendar'
 ], function (controllers) {
     'use strict';
 
