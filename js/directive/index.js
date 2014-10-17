@@ -5,9 +5,14 @@
  * Description : 사용할 모든 directive를 로드
  */
 define([
-    './contentDirective'
-], function (
+    './projectDirective',
+    './taskDirective',
+    './articleDirective',
+    './articleConfirmDirective',
+    './editDirective',
 
-    ){
+    './ckEditorDirective',
+    './plUploadDirective'
+], function (){
 
 });

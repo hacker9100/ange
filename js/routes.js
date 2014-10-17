@@ -7,10 +7,14 @@
  * 다만 WebApp의 경우 단일 페이지에서 처리가 발생하는 경우가 많을 것으므로, 이 파일은 별로 사용되지 않을 수 있다.
  */
 
-define(['./app', './menu1', './service/dependencyResolverFor'], function(app, config, dependencyResolverFor) {
+define([
+'./app',
+//'blueimp.fileupload',
+'json!menu.json'
+], function(app, menu) {
     'use strict';
 
-    app.config(function($stateProvider, $urlRouterProvider) {
+    app.config(function($stateProvider, $urlRouterProvider, $httpProvider, fileUploadProvider) {
 
         // angular를 사용함으로서 url에 '#'를 제거하기 위한 처리
         var sitePrefix = '/app';
@@ -24,11 +28,12 @@ define(['./app', './menu1', './service/dependencyResolverFor'], function(app, co
         });
 
         // 메뉴 정보를 별도의 파일로 분리해 관리
-        // menu.js에 정의된 메뉴들을 루프를 돌리면서 바인딩
-        if (config.states !== undefined) {
+        // menu.json에 정의된 메뉴들을 루프를 돌리면서 바인딩
+//        if (config.states !== undefined) {
+        if (menu !== undefined) {
 
-            for(var i = 0; i < config.states.length; i++) {
-                angular.forEach(config.states[i], function (state, stateName) {
+            for(var i = 0; i < menu.states.length; i++) {
+                angular.forEach(menu.states[i], function (state, stateName) {
                     angular.forEach(state.views, function (view, viewName) {
                     });
 
@@ -40,41 +45,13 @@ define(['./app', './menu1', './service/dependencyResolverFor'], function(app, co
                 });
             }
         }
-/*
-        $stateProvider.state('content', {
-            url: '/content',
-            views : {
-                '' : { templateUrl : 'partial/contentMain.html', controller : "ContentMainCtrl" },
-                'menuView@content' : { templateUrl : 'partial/contentMenu.html', controller: 'ContentMenuCtrl' },
-                'bodyView@content' : { templateUrl: 'partial/contentMain.html' }
-            }
-        }).state('content/task', {
-            url: '/content/task',
-            views : {
-                '' : { templateUrl : 'partial/contentMain.html', controller : "ContentMainCtrl" },
-                'menuView@content/task' : { templateUrl : 'partial/contentMenu.html', controller: 'ContentMenuCtrl' },
-                'bodyView@content/task' : { templateUrl: 'partial/contentList.html', controller: 'ContentListCtrl' }
-            }
-        })
-        .state('content/task/edit', {
-            url: '/content/task/edit/:id',
-            views : {
-                '' : { templateUrl : 'partial/contentMain.html', controller : "ContentMainCtrl" },
-                'menuView@content/task/edit' : { templateUrl : 'partial/contentMenu.html', controller: 'ContentMenuCtrl' },
-                'bodyView@content/task/edit' : { templateUrl: 'partial/contentEdit.html', controller: 'ContentDetailCtrl' }
-            }
-        })
-        .state('management', {
-            url: '/management',
-            templateUrl : 'partial/management.html',
-            controller: 'ManagementMainCtrl'
-        })
-        .state("otherwise", {
-            url: "*path",
-            templateUrl: 'partial/main.html',
-            controller:'ContentMainCtrl'
-        });
-*/
+
+        // fileUpload
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        fileUploadProvider.defaults.redirect = window.location.href.replace(
+            /\/[^\/]*$/,
+            '/partials/result.html?%s'
+        );
     })
 
     return app;

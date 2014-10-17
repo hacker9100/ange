@@ -1,0 +1,52 @@
+<div role="main">
+<div class="container">
+<section id="directives-calendar">
+<div class="well">
+    <div class="row-fluid">
+<!--
+        <div class="span4">
+            <h3>What?</h3>
+
+            <p>Attach Angular objects to a calendar.</p>
+            <p>Show the data binding between two differnet calendars using the same event sources.</p>
+
+            <h3>Why?</h3>
+
+            <p>Why Not?</p>
+
+            <div class="btn-group calTools">
+                <button class="btn" ng-click="changeLang()">
+                    {{changeTo}}
+                </button>
+                <button class="btn" ng-click="addRemoveEventSource(eventSources,eventSource)">
+                    Toggle Source
+                </button>
+                <button type="button" class="btn btn-primary" ng-click="addEvent()">
+                    Add Event
+                </button>
+            </div>
+
+            <ul class="unstyled">
+                <li ng-repeat="e in events">
+                    <div class="alert alert-info">
+                        <a class="close" ng-click="remove($index)"><i class="icon-remove"></i></a>
+                        <b> <input ng-model="e.title"></b>
+                        {{e.start | date:"MMM dd"}} - {{e.end | date:"MMM dd"}}
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+-->
+
+        <div class="span8">
+            <div class="calendar" ng-model="eventSources" calendar="myCalendar1" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+        </div>
+    </div>
+</div>
+</section>
+<div ng-show="alertMessage != undefined && alertMessage != ''">
+    <h4>{{alertMessage}}</h4>
+</div>
+</div>
+</div>

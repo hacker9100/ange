@@ -12,11 +12,14 @@
  */
 define([
     'require',
+    'text', //미리 선언해둔 path, css나 html을 로드하기 위한 requireJS 플러그인
     'jquery',
     'angular',
+    'uiJquery',
+    'jsBootstrap',
     'app',
     'routes'
-], function (require, $, angular) {
+], function (require, text, $, angular) {
     'use strict';
 
     // 방법1 : require를 사용하는 방법
@@ -24,7 +27,7 @@ define([
     require(['domReady!'], function (document) {
         // ng-app에 해당하는 자신의 App Name을 설정
         // 앵귤러 부트스트래핑을 수행
-        angular.bootstrap(document, ['yourApp']);
+        angular.bootstrap(document, ['mtApp']);
     });
 
     // 방법2 : jquery를 사용하는 방법

@@ -9,7 +9,7 @@ define([
 ], function (angular, ngResource) {
     'use strict';
 
-    var services = angular.module('yourApp.services', ['ngResource'
+    var services = angular.module('mtApp.services', ['ngResource'
 
     ], function () {
 

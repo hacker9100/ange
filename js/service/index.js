@@ -7,5 +7,12 @@
 define([
     'ngResource',
     './contentFectory',
-    './contentService'
+    './contentsService',
+
+    './userService',
+    './projectService',
+    './contentService',
+    './webboardService',
+
+    './loginService'
 ], function () {});

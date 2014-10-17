@@ -7,7 +7,7 @@
 define(['angular'], function (angular) {
     'use strict';
 
-    var filters = angular.module('yourApp.filters', [
+    var filters = angular.module('mtApp.filters', [
 
     ], function () {
 

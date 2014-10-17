@@ -1,0 +1,69 @@
+<!--<div id="veil" ng-show="isLoading"></div>-->
+<div id="feedLoading" ng-show="isLoading">Loading...</div>
+
+<!-- Contents Include -->
+<nav class= "navbar navbar-default" role= "navigation" ng-show="content.NO" >
+    <div class= "navbar-header" >
+        <a class= "navbar-brand pull-right"><i class="glyphicon glyphicon-edit"></i> Currently Editing Content Number: {{content.NO}}</a>
+    </div>
+</nav>
+<div class="col-md-12">
+
+    <form role="form" name="myForm" class="form-horizontal">
+        <div ng-model="content" lass="row">
+            <div class= "form-group" ng-class="{error: myForm.subject.$invalid}">
+                <label class= "col-md-2"> 주제 </label>
+                <div class="col-md-4">
+                    <span name="subject" ng-bind="content.SUBJECT" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2"> 등록자 ID </label>
+                <div class="col-md-4">
+                    <span ng-bind="content.REG_UID" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2"> 등록자명 </label>
+                <div class="col-md-4">
+                    <span ng-bind="content.REG_NM" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2"> 등록일 </label>
+                <div class="col-md-4">
+                    <span ng-bind="content.REG_DT" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">본문</label>
+                <div class="col-md-4">
+                    <div ng-bind-html="renderHtml(content.BODY)"></div>
+                </div>
+                    {{content.BODY}}
+            </div>
+
+            <!-- 하단 버튼 -->
+            <div class= "form-group">
+                <div class="col-md-4">
+                    <button class="btn btn-success fileinput-button" ng-click="getContents();" >
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>목록</span>
+                    </button>
+                    <button type="button" class="btn btn-primary start" ng-click="editContent(content.NO);" ng-disabled="myForm.$invalid">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>수정</span>
+                    </button>
+                    <button type="button" class="btn btn-warning cancel" ng-click="deleteContent(content.NO);" ng-show="content.NO">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>삭제</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<!-- ////Contents Include -->
+
