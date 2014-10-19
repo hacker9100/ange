@@ -30,6 +30,7 @@ define([
     '../../partials/cms/scheduler',
     '../../partials/cms/scheduler_calendar',
     '../../partials/cms/archive',
+    '../../partials/cms/archive_list',
 
     // 콘텐츠
     '../../partials/cms/project',
