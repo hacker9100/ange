@@ -191,6 +191,8 @@ define(['./directives'], function (directives) {
                             isReady = true;
                         });
 
+                        instance.setReadOnly( scope.isReadOnly === true );
+
 //                        CKFinder.setupCKEditor( instance, '../lib/ckfinder/' );
                     }
 

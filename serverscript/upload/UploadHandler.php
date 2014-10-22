@@ -134,12 +134,10 @@ class UploadHandler
                     'auto_orient' => true
                 ),
                 // Uncomment the following to create medium sized images:
-                /*
                 'medium' => array(
                     'max_width' => 800,
                     'max_height' => 600
                 ),
-                */
                 'thumbnail' => array(
                     // Uncomment the following to use a defined directory for the thumbnails
                     // instead of a subdirectory based on the version identifier.
@@ -151,8 +149,8 @@ class UploadHandler
                     // Uncomment the following to force the max
                     // dimensions and e.g. create square thumbnails:
                     //'crop' => true,
-                    'max_width' => 80,
-                    'max_height' => 80
+                    'max_width' => 100,
+                    'max_height' => 100
                 )
             )
         );

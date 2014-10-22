@@ -10,11 +10,6 @@
             "templateUrl": "partials/cms/upload.html",
             "controller": "upload"
         }},
-        { "file": {
-            "url": "/file",
-            "templateUrl": "partials/cms/file.html",
-            "controller": "file"
-        }},
         { "signin": {
             "url": "/signin",
             "templateUrl": "partials/cms/signin.html"
@@ -50,6 +45,14 @@
                 "lnbView@archive": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@archive": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "bodyView@archive": { "templateUrl": "partials/cms/archive_list.html", "controller" : "archive_list" }
+            }
+        }}, { "file": {
+            "url": "/file",
+            "views": {
+                "" : { "templateUrl": "partials/cms/jupload.html" },
+                "lnbView@file": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@file": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "bodyView@file": { "templateUrl": "partials/cms/file.html" }
             }
         }}, { "project/list": {
             "url": "/project/list",

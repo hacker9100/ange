@@ -2,20 +2,21 @@
 <div id="feedLoading" ng-show="isLoading">Loading...</div>
 
 <!-- Contents Include -->
-<nav class= "navbar navbar-default" role= "navigation" ng-show="content.NO" >
-    <div class= "navbar-header" >
-        <a class= "navbar-brand pull-right"><i class="glyphicon glyphicon-edit"></i> Currently Editing Content Number: {{content.NO}}</a>
-    </div>
-</nav>
 <div class="col-md-12">
 
-    <form role="form" name="myForm" class="form-horizontal">
+    <form role="form" name="editForm" class="form-horizontal">
         <div ng-model="content" lass="row">
-            <div class= "form-group" ng-class="{error: myForm.subject.$invalid}">
-                <label class= "col-md-2"> 주제 </label>
+            <div class= "form-group" ng-class="{error: editForm.subject.$invalid}">
+                <label class= "col-md-2">프로젝트 주제</label>
                 <div class="col-md-4">
-                    <input name="subject" ng-model="content.SUBJECT" type= "text" class= "form-control" placeholder="태스크 주제" required/>
-                    <span ng-show="myForm.subject.$dirty && myForm.subject.$invalid" class="help-inline">Subject Required</span>
+                    <input name="project_nm" ng-model="content.PROJECT_NM" type= "text" class= "form-control" placeholder="프로젝트 주제" ng-readonly="true" required/>
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: editForm.subject.$invalid}">
+                <label class= "col-md-2">태스크 주제</label>
+                <div class="col-md-4">
+                    <input name="subject" ng-model="content.SUBJECT" type= "text" class= "form-control" placeholder="태스크 주제" ng-readonly="true" required/>
+                    <span ng-show="editForm.subject.$dirty && editForm.subject.$invalid" class="help-inline">Subject Required</span>
                 </div>
             </div>
             <div class= "form-group">
@@ -25,26 +26,21 @@
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2">등록자명 </label>
+                <label class= "col-md-2">등록자명</label>
                 <div class="col-md-4">
                     <input ng-model="content.REG_NM" type= "text" class= "form-control" placeholder= "등록자 명"/>
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2">등록일 </label>
+                <label class= "col-md-2">마감일</label>
                 <div class="col-md-4">
-                    <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="content.REG_DT" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                    </p>
+                    <input ng-model="content.CLOSE_DT" type="text" class="form-control" placeholder= "마감일" ng-readonly="true" />
                 </div>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">본문</label>
                 <div class= "col-md-12">
-                    <textarea ckeditor="editorOptions" ng-model="content.BODY" ></textarea>
+                    <textarea ng-model="content.BODY" ckeditor="editorOptions" ></textarea>
                 </div>
             </div>
 
@@ -55,7 +51,7 @@
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>목록</span>
                     </button>
-                    <button type="button" class="btn btn-primary start" ng-click="saveContent();" ng-disabled="myForm.$invalid">
+                    <button type="button" class="btn btn-primary start" ng-click="saveContent();" ng-disabled="editForm.$invalid">
                         <i class="glyphicon glyphicon-plus"></i>
                         <span>저장</span>
                     </button>

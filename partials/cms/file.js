@@ -14,10 +14,11 @@ define([
 
     // 사용할 서비스를 주입
     controllers.controller('file', ['$scope', '$http', '$filter', '$window', function ($scope, $http) {
-        $scope.options = { url: url };
+        $scope.options = { url: url, autoUpload: true, dropZone: angular.element('#test') };
 
         $scope.newDir = 'test1/';
 
+/*
         $scope.loadingFiles = true;
         $http.get(url+'?newDir='+$scope.newDir)
             .then(
@@ -29,6 +30,7 @@ define([
                 $scope.loadingFiles = false;
             }
         );
+*/
     }]);
 
     controllers.controller('file_destroy', ['$scope', '$http', function ($scope, $http) {

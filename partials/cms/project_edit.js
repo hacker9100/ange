@@ -12,9 +12,19 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_edit', ['$scope', '$stateParams', 'projectService', '$location', function ($scope, $stateParams, projectService, $location) {
+    controllers.controller('project_edit', ['$scope', '$rootScope', '$stateParams', 'projectService', '$location', function ($scope, $rootScope, $stateParams, projectService, $location) {
+        /* 파일 업로드 설정 */
+        var url = '/app/serverscript/upload/';
+        $scope.options = { url: url, autoUpload: true, dropZone: angular.element('dropzone') };
 
-        // 페이지 타이틀
+//        $scope.file = {"name":"Koala.jpg","size":595284,"url":"http://localhost/app/serverscript/upload/../../upload/files/Koala.jpg","thumbnailUrl":"http://localhost/app/serverscript/upload/../../upload/files/thumbnail/Koala.jpg","deleteUrl":"http://localhost/app/serverscript/upload/?file=Koala.jpg","deleteType":"DELETE"};
+
+        // 파일 업로드 후 파일 정보가 변경되면 화면에 썸네일을 로딩
+        $scope.$watch('newFile', function(data){
+            $scope.file = data[0];
+        });
+
+        /* 페이지 타이틀 */
         $scope.message = 'ANGE CMS';
 
         if ($scope.method != 'GET'){
@@ -27,6 +37,7 @@ define([
             }
         }
 
+        /* 입력 폼 초기화 */
         // 날짜 콤보박스
         var year = [];
         var month = [];
@@ -44,31 +55,7 @@ define([
 
         $scope.project = { years: year, months: month, YEAR: nowYear+'', MONTH: (nowMonth+1)+'' };
 
-        // ui bootstrap 달력
-        $scope.today = function() {
-            $scope.dt = new Date();
-        };
-        $scope.today();
-
-        $scope.clear = function () {
-            $scope.dt = null;
-        };
-
-        $scope.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            $scope.opened = true;
-        };
-
-        // CK Editor
-        $scope.$on("ckeditor.ready", function( event ) {
-            $scope.isReady = true;
-        });
-//        $scope.ckeditor = '<p>Hello</p>\n';
-//        $scope.project = { "BODY": '<p>Hello</p>\n' };
-
-        // 버튼 이벤트
+        /* 등록,수정 이벤트 */
         // 목록
         $scope.getProjects = function () {
             $location.search({_method: 'GET'});
@@ -93,6 +80,8 @@ define([
                 });
             }
         };
+
+        $scope.isLoading = false;
 
         // 조회
         if ($scope.method != 'GET' && $stateParams.id != 0) {

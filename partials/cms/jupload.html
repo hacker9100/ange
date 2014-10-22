@@ -21,12 +21,8 @@
 			<div class="panel-body">
 			<br />
 
-                <project-list ng-show="method == 'GET' && !isId"></project-list>
-                <project-edit ng-show="method != 'GET'"></project-edit>
-                <project-view ng-show="method == 'GET' && isId"></project-view>
+                <div ui-view="bodyView"></div>
 
-                <!--<div ng-bind-html="renderHtml(test)"></div>-->
-                <!--<div project-list="test"></div>-->
 			<br /><br />
 			</div>
 		</div>

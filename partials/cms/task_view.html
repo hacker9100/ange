@@ -2,59 +2,65 @@
 <div id="feedLoading" ng-show="isLoading">Loading...</div>
 
 <!-- Contents Include -->
-<nav class= "navbar navbar-default" role= "navigation" ng-show="content.NO" >
-    <div class= "navbar-header" >
-        <a class= "navbar-brand pull-right"><i class="glyphicon glyphicon-edit"></i> Currently Editing Content Number: {{content.NO}}</a>
-    </div>
-</nav>
 <div class="col-md-12">
 
-    <form role="form" name="myForm" class="form-horizontal">
-        <div ng-model="content" lass="row">
-            <div class= "form-group" ng-class="{error: myForm.subject.$invalid}">
-                <label class= "col-md-2"> 주제 </label>
+    <form role="form" name="viewForm" class="form-horizontal">
+        <div ng-model="task" lass="row">
+            <div class= "form-group" ng-class="{error: viewForm.project_nm.$invalid}">
+                <label class= "col-md-2">프로젝트 주제</label>
                 <div class="col-md-4">
-                    <span name="subject" ng-bind="content.SUBJECT" />
+                    <span name="project_nm" ng-bind="task.PROJECT_NM" />
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: viewForm.subject.$invalid}">
+                <label class= "col-md-2">태스크 주제</label>
+                <div class="col-md-4">
+                    <span name="subject" ng-bind="task.SUBJECT" />
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2"> 등록자 ID </label>
+                <label class= "col-md-2">등록자 ID</label>
                 <div class="col-md-4">
-                    <span ng-bind="content.REG_UID" />
+                    <span ng-bind="task.REG_UID" />
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2"> 등록자명 </label>
+                <label class= "col-md-2">등록자명</label>
                 <div class="col-md-4">
-                    <span ng-bind="content.REG_NM" />
+                    <span ng-bind="task.REG_NM" />
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2"> 등록일 </label>
+                <label class= "col-md-2">마감일</label>
                 <div class="col-md-4">
-                    <span ng-bind="content.REG_DT" />
+                    <span ng-bind="task.CLOSE_YMD" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">태그</label>
+                <div class="col-md-9">
+                    <span ng-bind="task.TAG" />
                 </div>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">본문</label>
-                <div class="col-md-4">
-                    <div ng-bind-html="renderHtml(content.BODY)"></div>
+                <div class="col-md-9">
+                    <div ng-bind="task.NOTE"></div>
                 </div>
-                    {{content.BODY}}
             </div>
 
             <!-- 하단 버튼 -->
             <div class= "form-group">
                 <div class="col-md-4">
-                    <button class="btn btn-success fileinput-button" ng-click="getContents();" >
+                    <button class="btn btn-success fileinput-button" ng-click="getTasks();" >
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>목록</span>
                     </button>
-                    <button type="button" class="btn btn-primary start" ng-click="editContent(content.NO);" ng-disabled="myForm.$invalid">
+                    <button type="button" class="btn btn-primary start" ng-click="editTask(task.NO);" ng-disabled="viewForm.$invalid">
                         <i class="glyphicon glyphicon-pencil"></i>
                         <span>수정</span>
                     </button>
-                    <button type="button" class="btn btn-warning cancel" ng-click="deleteContent(content.NO);" ng-show="content.NO">
+                    <button type="button" class="btn btn-warning cancel" ng-click="deleteTask(task.NO);" ng-show="task.NO">
                         <i class="glyphicon glyphicon-ban-circle"></i>
                         <span>삭제</span>
                     </button>

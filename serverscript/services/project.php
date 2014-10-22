@@ -32,7 +32,7 @@
         case "GET":
             if (isset($id)) {
                 $sql = "SELECT
-                            NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
+                            NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST, NOTE
                         FROM
                             CMS_PROJECT
                         WHERE
@@ -45,24 +45,37 @@
                     $_d->dataEnd($sql);
                 }
             } else {
-                $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                        (
-                            SELECT
-                                NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, REG_DT
+                if (isset($_mode)) {
+                    $sql = "SELECT
+                                NO, SUBJECT, PROJECT_ST
                             FROM
                                 CMS_PROJECT
-                        ) AS DATA,
-                        (SELECT @RNUM := 0) R,
-                        (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
+                            WHERE
+                                PROJECT_ST <> '2'
+                            ORDER BY REG_DT DESC
+                            ";
+                } else {
+                    $sql = "SELECT
+                                TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                                NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST
                             FROM
-                                CMS_PROJECT
-                        ) CNT
-                        ";
+                            (
+                                SELECT
+                                    NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, REG_DT, PROJECT_ST
+                                FROM
+                                    CMS_PROJECT
+                                ORDER BY REG_DT DESC
+                            ) AS DATA,
+                            (SELECT @RNUM := 0) R,
+                            (
+                                SELECT
+                                    COUNT(*) AS TOTAL_COUNT
+                                FROM
+                                    CMS_PROJECT
+                            ) CNT
+                            ";
+                }
+
                 $data = $_d->sql_query($sql);
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -99,23 +112,31 @@
                 $_d->failEnd("제목을 작성 하세요");
             }
 
+            if ( trim($form[PROJECT_ST]) == "" ) {
+                $form[PROJECT_ST] = '0';
+            }
+
             $_d->sql_beginTransaction();
 
             $sql = "INSERT INTO CMS_PROJECT
                     (
-                        YEAR,
-                        MONTH,
-                        SUBJECT,
-                        REG_UID,
-                        REG_NM,
-                        REG_DT
+                        YEAR
+                        ,MONTH
+                        ,SUBJECT
+                        ,REG_UID
+                        ,REG_NM
+                        ,REG_DT
+                        ,PROJECT_ST
+                        ,NOTE
                     ) VALUES (
                         '".$form[YEAR]."'
-                        , '".$form[MONTH]."'
-                        , '".$form[SUBJECT]."'
-                        , '".$form[REG_UID]."'
-                        , '".$form[REG_NM]."'
-                        , SYSDATE()
+                        ,'".$form[MONTH]."'
+                        ,'".$form[SUBJECT]."'
+                        ,'".$form[REG_UID]."'
+                        ,'".$form[REG_NM]."'
+                        ,SYSDATE()
+                        ,'".$form[PROJECT_ST]."'
+                        ,'".$form[NOTE]."'
                     )";
 
             $_d->sql_query($sql);
@@ -136,22 +157,23 @@
                 $_d->failEnd("수정실패입니다:"."ID가 누락되었습니다.");
             }
 
-            $FORM = json_decode(file_get_contents("php://input"),true);
+            $form = json_decode(file_get_contents("php://input"),true);
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($FORM[SUBJECT]) == "" ) {
+            if ( trim($form[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
             }
 
             $sql = "UPDATE CMS_PROJECT
                     SET
-                        YEAR = '".$FORM[YEAR]."'
-                        ,MONTH = '".$FORM[MONTH]."'
-                        ,SUBJECT = '".$FORM[SUBJECT]."'
-                        ,REG_UID = '".$FORM[REG_UID]."'
-                        ,REG_NM = '".$FORM[REG_NM]."'
-                        ,REG_DT = SYSDATE()
+                        YEAR = '".$form[YEAR]."'
+                        ,MONTH = '".$form[MONTH]."'
+                        ,SUBJECT = '".$form[SUBJECT]."'
+                        ,REG_UID = '".$form[REG_UID]."'
+                        ,REG_NM = '".$form[REG_NM]."'
+                        ,PROJECT_ST = '".$form[PROJECT_ST]."'
+                        ,NOTE = '".$form[NOTE]."'
                     WHERE
                         NO = ".$id."
                     ";

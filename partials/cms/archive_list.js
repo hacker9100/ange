@@ -22,7 +22,7 @@ define([
             year.push(i+'');
         }
 
-        var order = ['기자', '편집자', '제목+내용'];
+        var order = [{name: "기자", value: "0"}, {name: "편집자", value: "1"}, {name: "제목+내용", value: "2"}];
 
         var category = [
             {"CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신준비", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
@@ -36,7 +36,6 @@ define([
         ];
 
         $scope.search = { years: year, YEAR: nowYear+'', order: order, ORDER: order[0] };
-
 
         var contentsData = null;
 

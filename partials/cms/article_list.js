@@ -23,48 +23,62 @@ define([
 
         var contentsData = null;
 
-        // 등록 화면 이동
-        $scope.createNewContent = function () {
-            $location.search({_method: 'POST'});
-            $location.path('/article/edit/0');
-        };
-
-        // 수정 화면 이동
-        $scope.editContent = function (no) {
-            $location.search({_method: 'PUT'});
-            $location.path('/article/edit/'+no);
-        };
-
         // 조회 화면 이동
-        $scope.viewContent = function (no) {
+        $scope.viewListContent = function (no) {
             $location.search({_method: 'GET'});
             $location.path('/article/view/'+no);
         };
 
-        // 삭제
-        $scope.deleteContent = function (idx) {
+        // 원고 등록
+        $scope.editListContent = function (idx) {
 
             var content = $scope.contents[idx];
 
-            contentService.deleteContent(content.NO).then(function(data){
-                $scope.contents.splice(idx, 1);
+            if (content.PHASE == '0') {
+                $location.search({_method: 'POST'});
+            } else {
+                $location.search({_method: 'PUT'});
+            }
+
+            $location.path('/article/edit/'+content.NO);
+        };
+
+        // 원고 등록
+        $scope.commitListContent = function (idx) {
+
+            var content = $scope.contents[idx];
+
+            if (content.PHASE == '0') {
+                alert("원고를 등록해 주세요.");
+                return;
+            }
+
+            $location.search('_phase', '11');
+            contentService.updateStatusContent(content.NO, content).then(function(data){
+                alert("완료");
+                $scope.getContents();
+                $location.search('_phase', null);
             });
         };
 
         // 목록
-//        $activityIndicator.startAnimating();
         $scope.isLoading = true;
-        contentService.getContents().then(function(contents){
+        $scope.getContents = function () {
+            $location.search('_phase', '0,10,11,13');
+            contentService.getContents().then(function(contents){
 
-            contentsData = contents.data;
+                contentsData = contents.data;
 
-            if (contentsData != null) {
-                $scope.totalItems = contents.data[0].TOTAL_COUNT; // 총 아이템 수
-                $scope.currentPage = 1; // 현재 페이지
-            }
-//            $activityIndicator.stopAnimating();
-            $scope.isLoading = false;
-        });
+                if (contentsData != null) {
+                    $scope.totalItems = contents.data[0].TOTAL_COUNT; // 총 아이템 수
+                    $scope.currentPage = 1; // 현재 페이지
+                }
+                $scope.isLoading = false;
+                $location.search('_phase', null);
+            });
+        };
+
+        $scope.getContents();
 
         // 페이징 처리
         $scope.selectItems = 200; // 한번에 조회하는 아이템 수

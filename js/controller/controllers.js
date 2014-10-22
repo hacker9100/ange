@@ -14,8 +14,8 @@ define([
 
     // bootstrap.js에 설정한 App Name를 여기서 동일하게 설정
     var controllers = angular.module('mtApp.controllers', [
-        'ui.calendar',
-        'ngSanitize'
+        'ui.calendar'
+//        ,'ngSanitize'
     ], function () {
 
     });

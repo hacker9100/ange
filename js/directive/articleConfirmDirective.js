@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-10-12
- * Description : youtube Directive 선언
+ * Description : article confirm Directive 선언
  */
 define(['./directives'], function (directives) {
     'use strict';

@@ -38,6 +38,7 @@ define([
 
         $scope.selectMenu = function(menu) {
             $location.path(menu.url);
+            $location.search("_method=GET")
         };
 	}]);
 });

@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_view', ['$scope', '$stateParams', 'contentService', '$sce', '$location', function ($scope, $stateParams, contentService, $sce, $location) {
+    controllers.controller('task_view', ['$scope', '$stateParams', 'taskService', '$sce', '$location', function ($scope, $stateParams, taskService, $sce, $location) {
 
         if ($scope.method == 'GET' && $stateParams.id != undefined){
             $scope.message = 'ANGE CMS';
@@ -26,20 +26,20 @@ define([
 
         // 버튼 이벤트
         // 목록
-        $scope.getContents = function () {
+        $scope.getTasks = function () {
             $location.search({_method: 'GET'});
             $location.path('/task/list');
         };
 
         // 수정
-        $scope.editContent = function (no) {
+        $scope.editTask = function (no) {
             $location.search({_method: 'PUT'});
             $location.path('/task/edit/'+no);
         };
 
         // 삭제
-        $scope.deleteContent = function (contentNo) {
-            contentService.deleteContent(contentNo).then(function(data){
+        $scope.deleteTask = function (taskNo) {
+            taskService.deleteTask(taskNo).then(function(data){
                 $location.search({_method: 'GET'});
                 $location.path('/task/list');
             });
@@ -47,8 +47,8 @@ define([
 
         // 조회
         if ($scope.method == 'GET' && $stateParams.id != undefined) {
-            contentService.getContent($stateParams.id).then(function(content){
-                $scope.content = content.data[0];
+            taskService.getTask($stateParams.id).then(function(task){
+                $scope.task = task.data[0];
             });
         };
     }]);

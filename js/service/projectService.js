@@ -9,6 +9,10 @@ define(['./services'], function (services) {
 
     services.service('projectService', ['$http', '$location', function($http, $location){
         var obj = {};
+        obj.getProjectOptions = function(){
+            return $http.get('serverscript/services/project.php?_method=GET&_mode=option');
+        }
+
         obj.getProjects = function(){
             return $http.get('serverscript/services/project.php?_method=GET&_category='+$location.path());
         }

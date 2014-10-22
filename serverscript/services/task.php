@@ -32,14 +32,13 @@
         case "GET":
             if (isset($id)) {
                 $sql = "SELECT
-                            P.SUBJECT AS PROJECT_NM, C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.SUBJECT, C.BODY, C.EDITOR_ID, C.CONTENT_ST, C.REG_UID, C.REG_NM, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            C.CURRENT_FL, C.APPLY_YM, C.MODIFY_FL, C.BEGIN_DT, C.CLOSE_DT, C.FINISH_DT, C.CONTENTS, C.HIT_CNT, C.SCRAP_CNT, C.PROJECT_NO
+                            P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
+                            T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO
                         FROM
-                            CONTENT C, CMS_PROJECT P
+                            CMS_TASK T, CMS_PROJECT P
                         WHERE
-                            C.PROJECT_NO = P.NO
-                            AND C.CURRENT_FL = '0'
-                            AND C.NO = ".$id."
+                            T.PROJECT_NO = P.NO
+                            AND T.NO = ".$id."
                         ";
                 $data = $_d->sql_query($sql);
                 if ($_d->mysql_errno > 0) {
@@ -58,34 +57,33 @@
                         if (sizeof($arr_phase) - 1 != $i) $in_str = $in_str.",";
                     }
 
-                    $search = "AND C.PHASE IN (".$in_str.")";
+                    $search = "AND T.PHASE IN (".$in_str.")";
                 }
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            PROJECT_NM, NO, SUPER_NO, PHASE, VERSION, SUBJECT, BODY, EDITOR_ID, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                            CURRENT_FL, APPLY_YM, MODIFY_FL, BEGIN_DT, CLOSE_DT, FINISH_DT, CONTENTS, HIT_CNT, SCRAP_CNT, PROJECT_NO
+                            PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                            CLOSE_YMD, TAG, NOTE, PROJECT_NO
                         FROM
                         (
                             SELECT
-                                P.SUBJECT AS PROJECT_NM, C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.SUBJECT, C.BODY, C.EDITOR_ID, C.CONTENT_ST, C.REG_UID, C.REG_NM, C.REG_DT,
-                                C.CURRENT_FL, C.APPLY_YM, C.MODIFY_FL, C.BEGIN_DT, C.CLOSE_DT, C.FINISH_DT, C.CONTENTS, C.HIT_CNT, C.SCRAP_CNT, C.PROJECT_NO
+                                P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.REG_UID, T.REG_NM, T.REG_DT,
+                                T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO
                             FROM
-                                CONTENT C, CMS_PROJECT P
+                                CMS_TASK T, CMS_PROJECT P
                             WHERE
-                                C.PROJECT_NO = P.NO
-                                AND C.CURRENT_FL = '0'
+                                T.PROJECT_NO = P.NO
                                 ".$search."
-                            ORDER BY C.REG_DT DESC
+                            ORDER BY T.REG_DT DESC
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                CONTENT C
+                                CMS_TASK T
                             WHERE
-                                C.CURRENT_FL = '0'
+                                1 = 1
                                 ".$search."
                         ) CNT
                         ";
@@ -129,10 +127,6 @@
                 $form[PHASE] = '0';
             }
 
-            if ( trim($form[CONTENT_ST]) == "" ) {
-                $form[CONTENT_ST] = '0';
-            }
-
             $project_no = 0;
             $project_st = '1';
 
@@ -150,49 +144,29 @@
 
             MtUtil::_c("### [SUPER_NO] ".( empty($form[SUPER_NO]) ? 0 : $form[SUPER_NO]) );
 
-            $sql = "INSERT INTO CONTENT
+            $sql = "INSERT INTO CMS_TASK
                     (
-                        SUPER_NO
-                        ,PHASE
-                        ,VERSION
+                        PHASE
                         ,SUBJECT
-                        ,BODY
                         ,EDITOR_ID
-                        ,CONTENT_ST
                         ,REG_UID
                         ,REG_NM
                         ,REG_DT
-                        ,CURRENT_FL
-                        ,APPLY_YM
-                        ,MODIFY_FL
-                        ,BEGIN_DT
-                        ,CLOSE_DT
-                        ,FINISH_DT
-                        ,CONTENTS
-                        ,HIT_CNT
-                        ,SCRAP_CNT
+                        ,CLOSE_YMD
                         ,PROJECT_NO
+                        ,TAG
+                        ,NOTE
                     ) VALUES (
-                        ".(!empty($form[SUPER_NO]) ? $form[SUPER_NO] : !empty($form[NO] ? $form[NO] : 0))."
-                        ,'".$form[PHASE]."'
-                        ,'".$form[VERSION]."'
+                        '".$form[PHASE]."'
                         ,'".$form[SUBJECT]."'
-                        ,'".$form[BODY]."'
                         ,'".$form[EDITOR_ID]."'
-                        ,'".$form[CONTENT_ST]."'
                         ,'".$form[REG_UID]."'
                         ,'".$form[REG_NM]."'
                         ,SYSDATE()
-                        ,'0'
-                        ,'".$form[APPLY_YM]."'
-                        ,'".$form[MODIFY_FL]."'
-                        ,'".$form[BEGIN_DT]."'
-                        ,'".$form[CLOSE_DT]."'
-                        ,'".$form[FINISH_DT]."'
-                        ,'".$form[CONTENTS]."'
-                        ,".(empty($form[HIT_CNT]) ? 0 : $form[HIT_CNT])."
-                        ,".(empty($form[SCRAP_CNT]) ? 0 : $form[SCRAP_CNT])."
+                        ,'".$form[CLOSE_YMD]."'
                         ,".$project_no."
+                        ,'".$form[TAG]."'
+                        ,'".$form[NOTE]."'
                     )";
 
             $_d->sql_query($sql);
@@ -240,7 +214,7 @@
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if (isset($_phase)) {
-                $sql = "UPDATE CONTENT
+                $sql = "UPDATE CMS_TASK
                         SET
                             PHASE = '".$_phase."'
                         WHERE
@@ -256,10 +230,6 @@
                     $form[PHASE] = '0';
                 }
 
-                if ( trim($form[CONTENT_ST]) == "" ) {
-                    $form[CONTENT_ST] = '0';
-                }
-
                 $project_no = 0;
                 $project_st = '1';
 
@@ -273,27 +243,17 @@
                     $project_st = $project[PROJECT_ST];
                 }
 
-                $sql = "UPDATE CONTENT
+                $sql = "UPDATE CMS_TASK
                         SET
-                            SUPER_NO = ".(!empty($form[SUPER_NO]) ? $form[SUPER_NO] : !empty($form[NO] ? $form[NO] : 0))."
-                            ,PHASE = '".$form[PHASE]."'
-                            ,VERSION = '".$form[VERSION]."'
+                            PHASE = '".$form[PHASE]."'
                             ,SUBJECT = '".$form[SUBJECT]."'
-                            ,BODY = '".$form[BODY]."'
                             ,EDITOR_ID = '".$form[EDITOR_ID]."'
-                            ,CONTENT_ST = '".$form[CONTENT_ST]."'
                             ,REG_UID = '".$form[REG_UID]."'
                             ,REG_NM = '".$form[REG_NM]."'
-                            ,CURRENT_FL = '".$form[CURRENT_FL]."'
-                            ,APPLY_YM = '".$form[APPLY_YM]."'
-                            ,MODIFY_FL = '".$form[MODIFY_FL]."'
-                            ,BEGIN_DT = '".$form[BEGIN_DT]."'
-                            ,CLOSE_DT = '".$form[CLOSE_DT]."'
-                            ,FINISH_DT = '".$form[FINISH_DT]."'
-                            ,CONTENTS = '".$form[CONTENTS]."'
-                            ,HIT_CNT = ".(empty($form[HIT_CNT]) ? 0 : $form[HIT_CNT])."
-                            ,SCRAP_CNT = ".(empty($form[SCRAP_CNT]) ? 0 : $form[SCRAP_CNT])."
+                            ,CLOSE_YMD = '".$form[CLOSE_YMD]."'
                             ,PROJECT_NO = ".$project_no."
+                            ,TAG = '".$form[TAG]."'
+                            ,NOTE = '".$form[NOTE]."'
                         WHERE
                             NO = ".$id."
                         ";
@@ -314,7 +274,7 @@
                 $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
             }
 
-            $sql = "DELETE FROM CONTENT WHERE NO = ".$id;
+            $sql = "DELETE FROM CMS_TASK WHERE NO = ".$id;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

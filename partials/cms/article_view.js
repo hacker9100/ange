@@ -33,7 +33,13 @@ define([
 
         // 수정
         $scope.editContent = function (no) {
-            $location.search({_method: 'PUT'});
+
+            if ($scope.content.PHASE == '0') {
+                $location.search({_method: 'POST'});
+            } else {
+                $location.search({_method: 'PUT'});
+            }
+
             $location.path('/article/edit/'+no);
         };
 

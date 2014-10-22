@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_list', ['$scope', '$stateParams', 'contentService', '$location', function ($scope, $stateParams, contentService, $location) {
+    controllers.controller('task_list', ['$scope', '$stateParams', 'taskService', '$location', function ($scope, $stateParams, taskService, $location) {
 
         // 페이지 타이틀
         if ($scope.method == 'GET' && $stateParams.id == undefined) {
@@ -21,50 +21,53 @@ define([
             $scope.pageDescription = '기사주제 설정하고 할당하여 관리합니다.';
         }
 
-        var contentsData = null;
+        var tasksData = null;
 
         // 등록 화면 이동
-        $scope.createNewContent = function () {
+        $scope.createNewTask = function () {
             $location.search({_method: 'POST'});
             $location.path('/task/edit/0');
         };
 
-        // 수정 화면 이동
-        $scope.editContent = function (no) {
-            $location.search({_method: 'PUT'});
-            $location.path('/task/edit/'+no);
-        };
-
         // 조회 화면 이동
-        $scope.viewContent = function (no) {
+        $scope.viewListTask = function (no) {
             $location.search({_method: 'GET'});
             $location.path('/task/view/'+no);
         };
 
         // 삭제
-        $scope.deleteContent = function (idx) {
+        $scope.deleteListTask = function (idx) {
 
-            var content = $scope.contents[idx];
+            var task = $scope.Tasks[idx];
 
-            contentService.deleteContent(content.NO).then(function(data){
-                $scope.contents.splice(idx, 1);
+            if (task.PHASE == '5') {
+                alert("완료 상태의 태스크는 삭제할 수 없습니다.");
+                return;
+            }
+
+            taskService.deleteTask(task.NO).then(function(data){
+                $scope.getTasks();
             });
         };
 
         // 목록
-//        $activityIndicator.startAnimating();
-        $scope.isLoading = true;
-        contentService.getContents().then(function(contents){
+        $scope.getTasks = function () {
+            $scope.isLoading = true;
+            taskService.getTasks().then(function(tasks){
 
-            contentsData = contents.data;
+                tasksData = tasks.data;
 
-            if (contentsData != null) {
-                $scope.totalItems = contents.data[0].TOTAL_COUNT; // 총 아이템 수
-                $scope.currentPage = 1; // 현재 페이지
-            }
-//            $activityIndicator.stopAnimating();
-            $scope.isLoading = false;
-        });
+                if (tasksData != null) {
+                    $scope.totalItems = tasks.data[0].TOTAL_COUNT; // 총 아이템 수
+                    $scope.currentPage = 1; // 현재 페이지
+                }
+                $scope.isLoading = false;
+            });
+        };
+
+        if ($scope.method == 'GET' && $stateParams.id == undefined) {
+            $scope.getTasks();
+        }
 
         // 페이징 처리
         $scope.selectItems = 200; // 한번에 조회하는 아이템 수
@@ -87,8 +90,8 @@ define([
             var begin = ((start - 1) * $scope.itemsPerPage);
             var end = begin + $scope.itemsPerPage;
 
-            if (contentsData != null) {
-                $scope.contents = contentsData.slice(begin, end);
+            if (tasksData != null) {
+                $scope.tasks = tasksData.slice(begin, end);
             }
         });
 

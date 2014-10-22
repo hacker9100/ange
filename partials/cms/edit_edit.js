@@ -29,12 +29,12 @@ define([
 
         // ui bootstrap 달력
         $scope.today = function() {
-            $scope.dt = new Date();
+            $scope.project.REG_DT = new Date();
         };
         $scope.today();
 
         $scope.clear = function () {
-            $scope.dt = null;
+            $scope.project.REG_DT = null;
         };
 
         $scope.open = function($event) {
@@ -61,6 +61,8 @@ define([
         // 등록/수정
         $scope.saveContent = function () {
             var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
+
+//            alert(JSON.stringify($rootScope.files));
 
             if (id <= 0) {
                 contentService.createContent($scope.content).then(function(data){

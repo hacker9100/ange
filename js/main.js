@@ -185,13 +185,8 @@ require.config({
             deps:['jquery','jqProcess']
         },
         'ngFileupload':{
-//            deps:['jquery','angular','ui-widget','load-image','canvas-to-blob','blueimp-gallery','iframeTransport','fileupload','process','image','audio','video','validate']
             deps:['jquery','angular','jqGallery','jqFileupload','jqProcess','jqImage','jqAudio','jqVideo','jqValidate']
         }
-
-//        'load-image': '../lib/file-upload/gallery/load-image.all.min',
-//        'canvas-to-blob': '../lib/file-upload/gallery/canvas-to-blob.min',
-
 //        'ngMock':{
 //            deps: ['angular']
 //        }

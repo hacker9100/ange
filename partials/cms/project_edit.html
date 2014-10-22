@@ -2,34 +2,30 @@
 <div id="feedLoading" ng-show="isLoading">Loading...</div>
 
 <!-- Contents Include -->
-<nav class= "navbar navbar-default" role= "navigation" ng-show="project.NO" >
-    <div class= "navbar-header" >
-        <a class= "navbar-brand pull-right"><i class="glyphicon glyphicon-edit"></i> Currently Editing Content Number: {{project.NO}}</a>
-    </div>
-</nav>
 <div class="col-md-12">
 
-    <form role="form" name="myForm" class="form-horizontal">
-        <div ng-model="project" lass="row">
+    <div ng-model="project" lass="row">
+        <form id="fileupload" role="editForm" name="editForm" class="form-horizontal" method="POST" enctype="multipart/form-data" data-file-upload="options">
+
             <div class= "form-group" ng-class="{error: myForm.subject.$invalid}">
-                <label class= "col-md-2"> 주제 </label>
+                <label class= "col-md-2">호제</label>
                 <div class="col-md-4">
                     <input name="subject" ng-model="project.SUBJECT" type= "text" class= "form-control" placeholder="프로젝트 주제" required/>
                     <span ng-show="myForm.subject.$dirty && myForm.subject.$invalid" class="help-inline">Subject Required</span>
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2"> 등록년 </label>
+                <label class= "col-md-2">귀속년</label>
                 <div class="col-md-4">
                     <select ng-model="project.YEAR" ng-options="v for v in project.years" class= "form-control" ></select>
                 </div>
             </div>
-            <div class= "form-group">
-                <label class= "col-md-2"> 등록월 </label>
-                <div class="col-md-4">
-                    <select ng-model="project.MONTH" ng-options="v for v in project.months" class= "form-control" ></select>
-                </div>
-            </div>
+            <!--<div class= "form-group">-->
+                <!--<label class= "col-md-2">등록월</label>-->
+                <!--<div class="col-md-4">-->
+                    <!--<select ng-model="project.MONTH" ng-options="v for v in project.months" class= "form-control" ></select>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class= "form-group">
                 <label class= "col-md-2">등록자 ID</label>
                 <div class="col-md-4">
@@ -37,45 +33,69 @@
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2">등록자명 </label>
+                <label class= "col-md-2">등록자명</label>
                 <div class="col-md-4">
                     <input ng-model="project.REG_NM" type= "text" class= "form-control" placeholder= "등록자 명"/>
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2">등록일 </label>
-                <div class="col-md-4">
-                    <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="project.REG_DT" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close" />
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                    </p>
+                <label class= "col-md-2">표지이미지</label>
+                <div class="col-md-9">
+                    <div class="row fileupload-buttonbar">
+                        <div class="col-lg-7 files">
+                            <!-- The fileinput-button span is used to style the file input field as button -->
+                            <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>Add files...</span>
+                                <input type="file" name="files[]" multiple ng-disabled="disabled">
+                            </span>
+                        </div>
+                        <div class="col-lg-5 fade" data-ng-class="{in: active()}">
+                            <!-- The global progress bar -->
+                            <div class="progress progress-striped active" data-file-upload-progress="progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
+                            <!-- The extended global progress state -->
+                            <div class="progress-extended">&nbsp;</div>
+                        </div>
+                    </div>
+                    <td data-ng-switch data-on="!!file.thumbnailUrl">썸네일 이미지
+                        <div ng-model="file" class="preview">
+                            <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>
+                            <!--<a data-ng-href="http://localhost/app/upload/files/Koala.jpg" title="Koala.jpg" download="Koala.jpg" data-gallery><img data-ng-src="http://localhost/app/upload/files/thumbnail/Koala.jpg" alt=""></a>-->
+                            <!--$scope.file = {"name":"Kolal.jpg","size":595284,"url":"http://localhost/app/upload/files/Kolal.jpg","thumbnailUrl":"http://localhost/app/serverscript/upload/../../upload/files/thumbnail/Kolal.jpg","deleteUrl":"http://localhost/app/serverscript/upload/?file=Kolal.jpg","deleteType":"DELETE"};-->
+                        </div>
+                    </td>
+                    <div id="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">
+                        이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />
+                        (gif, jpg, png만 등록 가능)
+                    </div>
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2">본문</label>
-                <div class= "col-md-12">
-                    <textarea ckeditor="editor" ng-model="project.BODY" ></textarea>
+                <label class= "col-md-2">설명</label>
+                <div class= "col-md-6">
+                    <textarea ng-model="project.NOTE" class= "form-control" placeholder= "간략한 개요.."/>
                 </div>
             </div>
-
-            <!-- 하단 버튼 -->
-            <div class= "form-group">
-                <div class="col-md-4">
-                    <button class="btn btn-success fileinput-button" ng-click="getProjects();" >
-                        <i class="glyphicon glyphicon-upload"></i>
-                        <span>목록</span>
-                    </button>
-                    <button type="button" class="btn btn-primary start" ng-click="saveProject();" ng-disabled="myForm.$invalid">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span>저장</span>
-                    </button>
-                </div>
+            <div class= "form-group" ng-show="method == 'PUT'">
+                <input ng-model="project.COMPLETE_FL" type="checkbox" class= "form-control"> 이 프로젝트의 모든 콘텐츠 등록이 완료되었습니다.
             </div>
+        </form>
 
+        <!-- 하단 버튼 -->
+        <div class= "form-group">
+            <div class="col-md-4">
+                <button class="btn btn-success fileinput-button" ng-click="getProjects();" >
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>목록</span>
+                </button>
+                <button type="button" class="btn btn-primary start" ng-click="saveProject();" ng-disabled="editForm.$invalid">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>저장</span>
+                </button>
+            </div>
         </div>
-    </form>
+
+    </div>
 
 </div>
 <!-- ////Contents Include -->

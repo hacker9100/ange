@@ -101,120 +101,47 @@
 
         case "POST":
             $form = json_decode(file_get_contents("php://input"),true);
-/*
-            $upload_path = '../upload/';
-            $source_path = '../../../';
 
-            if (count($form[FILES]) > 0) {
-                $files = $form[FILES];
-
-//                @mkdir('$source_path');
-
-                for ($i = 0 ; $i < count($form[FILES]); $i++) {
-                    $file = $files[$i];
-
-                    if (file_exists($upload_path.$file[name])) {
-                        rename($upload_path.$file[name], $source_path.$file[name]);
-                    }
-                }
-            }
-*/
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($form[SUBJECT]) == "" ) {
-                $_d->failEnd("제목을 작성 하세요");
-            }
-
-            if ( trim($form[PHASE]) == "" ) {
-                $form[PHASE] = '0';
-            }
-
-            if ( trim($form[CONTENT_ST]) == "" ) {
-                $form[CONTENT_ST] = '0';
-            }
-
-            $project_no = 0;
-            $project_st = '1';
-
-            if ( trim($form[PROJECT_NO]) != "" ) {
-                $project_no = $form[PROJECT_NO];
-            }
-
-            if (count($form[PROJECT]) > 0) {
-                $project = $form[PROJECT];
-                $project_no = $project[NO];
-                $project_st = $project[PROJECT_ST];
+            if ( trim($form[CONTENT_NO]) == "" ) {
+                $_d->failEnd("콘턴츠 순번이 없습니다");
             }
 
             $_d->sql_beginTransaction();
 
-            MtUtil::_c("### [SUPER_NO] ".( empty($form[SUPER_NO]) ? 0 : $form[SUPER_NO]) );
-
-            $sql = "INSERT INTO CONTENT
+            $sql = "INSERT INTO CMS_APPROVAL
                     (
-                        SUPER_NO
-                        ,PHASE
-                        ,VERSION
-                        ,SUBJECT
-                        ,BODY
-                        ,EDITOR_ID
-                        ,CONTENT_ST
-                        ,REG_UID
-                        ,REG_NM
-                        ,REG_DT
-                        ,CURRENT_FL
-                        ,APPLY_YM
-                        ,MODIFY_FL
-                        ,BEGIN_DT
-                        ,CLOSE_DT
-                        ,FINISH_DT
-                        ,CONTENTS
-                        ,HIT_CNT
-                        ,SCRAP_CNT
-                        ,PROJECT_NO
+                        CONTENT_NO
+                        ,APPROVAL_ST
+                        ,APPROVER_ID
+                        ,APPROVER_NM
+                        ,APPROVAL_DT
+                        ,NOTE
                     ) VALUES (
-                        ".(!empty($form[SUPER_NO]) ? $form[SUPER_NO] : !empty($form[NO] ? $form[NO] : 0))."
-                        ,'".$form[PHASE]."'
-                        ,'".$form[VERSION]."'
-                        ,'".$form[SUBJECT]."'
-                        ,'".$form[BODY]."'
-                        ,'".$form[EDITOR_ID]."'
-                        ,'".$form[CONTENT_ST]."'
-                        ,'".$form[REG_UID]."'
-                        ,'".$form[REG_NM]."'
+                        ".$form[CONTENT_NO]."
+                        ,'".$form[APPROVAL_ST]."'
+                        ,'".$form[APPROVAL_ID]."'
+                        ,'".$form[APPROVAL_NM]."'
                         ,SYSDATE()
-                        ,'0'
-                        ,'".$form[APPLY_YM]."'
-                        ,'".$form[MODIFY_FL]."'
-                        ,'".$form[BEGIN_DT]."'
-                        ,'".$form[CLOSE_DT]."'
-                        ,'".$form[FINISH_DT]."'
-                        ,'".$form[CONTENTS]."'
-                        ,".(empty($form[HIT_CNT]) ? 0 : $form[HIT_CNT])."
-                        ,".(empty($form[SCRAP_CNT]) ? 0 : $form[SCRAP_CNT])."
-                        ,".$project_no."
+                        ,'".$form[NOTE]."'
                     )";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if (!empty($form[NO]) && $form[PHASE] > 0) {
+            if (!empty($form[APPROVAL_ST])) {
+
+                if ($form[APPROVAL_ST] == '11')
+                    $parse = '12';
+                else
+                    $parse = '13';
+
                 $sql = "UPDATE CONTENT
                         SET
-                            CURRENT_FL = '1'
+                            PHASE = ".$parse."
                         WHERE
-                            NO = ".$form[NO]."
-                        ";
-
-                $_d->sql_query($sql);
-            }
-
-            if (!($_d->mysql_errno > 0) && ($project_st == 0)) {
-                $sql = "UPDATE CMS_PROJECT
-                        SET
-                            PROJECT_ST = '1'
-                        WHERE
-                            NO = ".$project_no."
+                            NO = ".$form[CONTENT_NO]."
                         ";
 
                 $_d->sql_query($sql);

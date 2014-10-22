@@ -13,15 +13,15 @@
                 </div>
             </div>
             <div class= "form-group">
-                <label class= "col-md-2">카테고리 </label>
+                <label class= "col-md-2">카테고리</label>
                 <div class="col-md-2">
-                    <select ng-model="search.CATEGORY_B" ng-options="v for v in search.category_b" class= "form-control" placeholder="주기 선택" ></select>
+                    <select ng-model="search.CATEGORY_B" ng-options="a.CATEGORY_NM for a in search.category_a" class= "form-control" placeholder="주기 선택" ></select>
                 </div>
                 <div class="col-md-3">
-                    <select ng-model="search.CATEGORY_M" ng-options="v for v in search.category_m" class= "form-control" placeholder="주제 대분류"></select>
+                    <select ng-model="search.CATEGORY_M" ng-options="b.CATEGORY_NM for b in search.category_b" class= "form-control" placeholder="주제 대분류"></select>
                 </div>
                 <div class="col-md-3">
-                    <select ng-model="search.CATEGORY_S" ng-options="v for v in search.category_s" class= "form-control" placeholder="주제 소분류"></select>
+                    <select ng-model="search.CATEGORY_S" ng-options="s.CATEGORY_NM for s in search.category_s" class= "form-control" placeholder="주제 소분류"></select>
                 </div>
             </div>
             <div class= "form-group">
