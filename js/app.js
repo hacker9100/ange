@@ -14,15 +14,17 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'uiBootstrap',
     'ngSanitize',
     'uiRouter',
-    'ckeditor-jquery',
+//    'dropdownMultiSelect',
+    'lodash', // dropdownMultiSelect 관련 라이브러리
+    'ckeditor-jquery', // ckeditor 관련 라이브러리
     'plupload',
 //    'ngPlupload',
     'uiPlupload',
 //    'ngActivityIndicator',
-    'uiWidget',
-    'jqFileupload',
-    'jqProcess',
-    'ngFileupload',
+    'uiWidget', // fileUpload ui 관련 라이브러리
+    'jqFileupload', // fileUpload 관련 라이브러리
+    'jqProcess', // fileUpload ui 관련 라이브러리
+    'ngFileupload', // fileUpload angularjs 관련 라이브러리
 
     // 각 컨트롤러 로딩
     './controller/index',
@@ -40,6 +42,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'mtApp.controllers',
         'mtApp.filters',
         'mtApp.directives',
+//        'angularjs-dropdown-multiselect',
         'ui.bootstrap',
         'ui.router',
         'blueimp.fileupload'

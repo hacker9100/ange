@@ -11,7 +11,7 @@
             <div class= "form-group">
                 <label class= "col-md-2">검색</label>
                 <div class= "col-md-2">
-                    <select ng-model="search.ORDER" ng-options="order for order.name in search.order" class= "form-control" placeholder="검색선택"></select>
+                    <select ng-model="search.ORDER" ng-options="order.name for order in search.order" class= "form-control" placeholder="검색선택"></select>
                 </div>
                 <div class="col-md-6">
                     <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>

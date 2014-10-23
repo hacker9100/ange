@@ -13,18 +13,24 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('project_view', ['$scope', '$stateParams', 'projectService', '$state', '$location', function ($scope, $stateParams, projectService, $state, $location) {
 
-        if ($scope.method == 'GET' && $stateParams.id != undefined){
-            $scope.message = 'ANGE CMS';
+        /* 초기화 */
+        // 초기화
+        $scope.initView = function() {
 
-            $scope.pageTitle = '프로젝트 조회';
-            $scope.pageDescription = '프로젝트를 조회합니다.';
-        }
+        };
 
-        // 버튼 이벤트
+        /* 조회 이벤트 */
         // 목록
         $scope.getProjects = function () {
             $location.search({_method: 'GET'});
             $location.path('/project/list');
+        };
+
+        // 조회
+        $scope.getProject = function () {
+            projectService.getProject($stateParams.id).then(function(project){
+                $scope.project = project.data[0];
+            });
         };
 
         // 수정
@@ -41,11 +47,16 @@ define([
             });
         };
 
-        // 조회
+        /* 화면 초기화 */
         if ($scope.method == 'GET' && $stateParams.id != undefined) {
-            projectService.getProject($stateParams.id).then(function(project){
-                $scope.project = project.data[0];
-            });
-        };
+            // 페이지 타이틀
+            $scope.message = 'ANGE CMS';
+            $scope.pageTitle = '프로젝트 조회';
+            $scope.pageDescription = '프로젝트를 조회합니다.';
+
+            $scope.initView();
+            $scope.getProject();
+        }
+
     }]);
 });

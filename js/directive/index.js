@@ -11,6 +11,7 @@ define([
     './articleConfirmDirective',
     './editDirective',
 
+    './dropdownSelectDirective',
     './ckEditorDirective',
     './plUploadDirective'
 ], function (){

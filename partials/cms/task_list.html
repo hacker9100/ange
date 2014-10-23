@@ -1,3 +1,58 @@
+<div class="panel panel-primary">
+    <div class="panel-body" ng-model="search" lass="row">
+
+        <form role="form" name="myForm" class="form-horizontal">
+            <div class= "form-group">
+                <label class= "col-md-2"> 연도 </label>
+                <div class="col-md-2">
+                    <select ng-model="search.YEAR" ng-options="v for v in search.years" class= "form-control" placeholder="등록년"></select>
+                </div>
+                <label class= "col-md-2">프로젝트명</label>
+                <div class="col-md-4">
+                    <select ng-model="search.PROJECT" ng-options="project.SUBJECT for project in search.projects" class= "form-control" placeholder="프로젝트명"></select>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">카테고리</label>
+                <div class="col-md-2">
+                    <div ng-dropdown-multiselect="" options="category_a" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주기선택'}" extra-settings="select_settings" checkboxes="true"></div>
+                    <!--<select ng-model="tesk.CATEGORY_B" ng-options="a.CATEGORY_NM for a in category_a" class= "form-control" placeholder="주기 선택" ></select>-->
+                </div>
+                <div class="col-md-3">
+                    <select ng-model="CATEGORY_M" ng-options="category.CATEGORY_NM for category in category_b" class= "form-control" placeholder="주제 대분류">
+                        <option name="category_b" value="">- 주제 대분류</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <!--<select ng-model="tesk.CATEGORY_S" ng-options="s.CATEGORY_NM for s in category_s" class= "form-control" placeholder="주제 소분류"></select>-->
+                    <div ng-dropdown-multiselect="" options="category_s" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주제 소분류'}" extra-settings="select_settings" checkboxes="true"></div>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2"></label>
+                <div ng-model="search.CATEGORY" class="col-md-2 btn-group" ng-repeat="category in CATEGORY">
+                    <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">검색</label>
+                <div class= "col-md-2">
+                    <select ng-model="search.ORDER" ng-options="order.name for order in search.order" class= "form-control" placeholder="검색선택"></select>
+                </div>
+                <div class="col-md-6">
+                    <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+                </div>
+            </div>
+
+            <button class="btn btn-success fileinput-button" data-ng-click="searchTask(search)">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>검색</span>
+            </button>
+        </form>
+
+    </div>
+</div>
+
 <div class= "navbar-header" >
     <button class="btn btn-success fileinput-button" data-ng-click="createNewTask()">
         <i class="glyphicon glyphicon-plus"></i>
@@ -37,4 +92,45 @@
 
 <!-- 페이징 -->
 <pagination item-per-page="itemsPerPage" total-items="totalItems" ng-model="currentPage" max-size="maxSize" ng-change="pageChanged()" class="pagination-sm" boundary-links="true"></pagination>
+
+<accordion close-others="oneAtATime">
+    <accordion-group is-open="status.open" ng-repeat="task in tasks">
+        <accordion-heading>
+            {{ task.PROJECT_NM }} &nbsp; {{ task.SUBJECT }} &nbsp; {{ task.CLOSE_YMD }}
+            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+        </accordion-heading>
+        <div class="col-md-12">
+            <div lass="row" class="form-horizontal">
+                <div class= "form-group">
+                    <label class= "col-md-2">담당자</label>
+                    <div class="col-md-4">
+                        {{ task.REG_NM }}
+                    </div>
+                </div>
+                <div class= "form-group">
+                    <label class= "col-md-2">생성일</label>
+                    <div class="col-md-4">
+                        {{ task.REG_DT }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary start" ng-click="editTask(task.NO);">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>태스크 편집</span>
+                    </button>
+                    <button class="btn btn-success fileinput-button" data-ng-click="viewListTask(task.NO)">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>편집보기</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </accordion-group>
+    <!--<accordion-group heading="Dynamic Body Content">-->
+        <!--<p>The body of the accordion group grows to fit the contents</p>-->
+        <!--<button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>-->
+        <!--<div ng-repeat="item in items">{{item}}</div>-->
+    <!--</accordion-group>-->
+</accordion>
+
 <!-- ////Contents Include -->

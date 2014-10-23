@@ -35,6 +35,9 @@ require.config({
         'ngSanitize': '../lib/angular/angular-sanitize.min', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
         'uiRouter': '../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
 
+//        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
+        'lodash' : '../lib/dropdown_multiselect/lodash',
+
         // ckeditor 모듈
         'ckeditor-core': '../lib/ckeditor/ckeditor', // ckeditor
         'ckeditor-jquery': '../lib/ckeditor/adapters/jquery', // angularjs에서 ckeditor를 사용할 수 있게 해주는 어덥터다.
@@ -110,6 +113,9 @@ require.config({
         'uiRouter':{
             deps: ['angular']
         },
+//        'dropdownMultiSelect':{
+//            deps: ['angular', 'uiBootstrap']
+//        },
         'ckeditor-jquery':{
             deps:['jquery','ckeditor-core']
         },

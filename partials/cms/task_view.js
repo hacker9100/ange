@@ -13,22 +13,24 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('task_view', ['$scope', '$stateParams', 'taskService', '$sce', '$location', function ($scope, $stateParams, taskService, $sce, $location) {
 
-        if ($scope.method == 'GET' && $stateParams.id != undefined){
-            $scope.message = 'ANGE CMS';
+        /* 초기화 */
+        // 초기화
+        $scope.initView = function() {
 
-            $scope.pageTitle = '태스크 조회';
-            $scope.pageDescription = '태스크를 조회합니다.';
-        }
+        };
 
-        $scope.renderHtml = function(html) {
-            return $sce.trustAsHtml(html);
-        }
-
-        // 버튼 이벤트
+        /* 조회 이벤트 */
         // 목록
         $scope.getTasks = function () {
             $location.search({_method: 'GET'});
             $location.path('/task/list');
+        };
+
+        // 조회
+        $scope.getTask = function () {
+            taskService.getTask($stateParams.id).then(function(task){
+                $scope.task = task.data[0];
+            });
         };
 
         // 수정
@@ -45,11 +47,21 @@ define([
             });
         };
 
-        // 조회
-        if ($scope.method == 'GET' && $stateParams.id != undefined) {
-            taskService.getTask($stateParams.id).then(function(task){
-                $scope.task = task.data[0];
-            });
+        // 본문 HTML 랜더링
+        $scope.renderHtml = function(html) {
+            return $sce.trustAsHtml(html);
         };
+
+        /* 화면 초기화 */
+        if ($scope.method == 'GET' && $stateParams.id != undefined) {
+            // 페이지 타이틀
+            $scope.message = 'ANGE CMS';
+            $scope.pageTitle = '태스크 조회';
+            $scope.pageDescription = '태스크를 조회합니다.';
+
+            $scope.initView();
+            $scope.getTask();
+        }
+
     }]);
 });

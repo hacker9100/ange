@@ -14,34 +14,28 @@ define([
     controllers.controller('project_list', ['$scope', '$stateParams', 'projectService', '$location', function ($scope, $stateParams, projectService, $location) {
 
 //        alert(localStorage.getItem('userToken'))
-
-        /* 페이지 타이틀 */
-        if ($scope.method == 'GET' && $stateParams.id == undefined) {
-            $scope.message = 'ANGE CMS';
-
-            $scope.pageTitle = '프로젝트 관리';
-            $scope.pageDescription = '프로젝트를 생성하고 섹션을 설정합니다.';
-            $scope.tailDescription = '상단의 검색영역에서 원하는 프로젝트를 필터링하거나 찾을 수 있습니다.<br />진행 중인 프로젝트를 해지하며 이전 프로젝트를 전부 조회할 수 있습니다.';
-        }
-
-        /* 상단 검색 초기화 */
+        /* 초기화 */
         // 날짜 콤보박스
         var year = [];
         var now = new Date();
         var nowYear = now.getFullYear();
 
-        for (var i = nowYear - 5; i < nowYear + 5; i++) {
-            year.push(i+'');
-        }
-
-        // 검색어
-        var order = [{name: "기자", value: "0"}, {name: "편집자", value: "1"}, {name: "제목+내용", value: "2"}];
-
-        $scope.search = { years: year, YEAR: nowYear+'', order: order, ORDER: order[0] };
-
-        /* 목록 조회 이벤트 */
+        // 목록 데이터
         var projectsData = null;
 
+        // 초기화
+        $scope.initList = function() {
+            for (var i = nowYear - 5; i < nowYear + 5; i++) {
+                year.push(i+'');
+            }
+
+            // 검색어
+            var order = [{name: "기자", value: "0"}, {name: "편집자", value: "1"}, {name: "제목+내용", value: "2"}];
+
+            $scope.search = { years: year, YEAR: nowYear+'', order: order, ORDER: order[0] };
+        };
+
+        /* 목록 조회 이벤트 */
         // 등록 화면 이동
         $scope.createNewProject = function () {
             $location.search({_method: 'POST'});
@@ -75,8 +69,8 @@ define([
         };
 
         // 목록
-        $scope.isLoading = true;
-        $scope.getProjects = function () {
+        $scope.getListProjects = function () {
+            $scope.isLoading = true;
             projectService.getProjects().then(function(projects){
                 projectsData = projects.data;
 
@@ -87,8 +81,6 @@ define([
                 $scope.isLoading = false;
             });
         };
-
-        $scope.getProjects();
 
         // 페이징 처리
         $scope.selectItems = 200; // 한번에 조회하는 아이템 수
@@ -128,5 +120,17 @@ define([
         $scope.$watch('selectItems * selectCount < itemsPerPage * currentPage', function() {
             $scope.selectCount = $scope.selectCount + 1;
         });
+
+        /* 화면 초기화 */
+        if ($scope.method == 'GET' && $stateParams.id == undefined) {
+            // 페이지 타이틀
+            $scope.message = 'ANGE CMS';
+            $scope.pageTitle = '프로젝트 관리';
+            $scope.pageDescription = '프로젝트를 생성하고 섹션을 설정합니다.';
+            $scope.tailDescription = '상단의 검색영역에서 원하는 프로젝트를 필터링하거나 찾을 수 있습니다.<br />진행 중인 프로젝트를 해지하며 이전 프로젝트를 전부 조회할 수 있습니다.';
+
+            $scope.initList();
+            $scope.getListProjects();
+        }
     }]);
 });
