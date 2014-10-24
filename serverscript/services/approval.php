@@ -104,22 +104,22 @@
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($form[CONTENT_NO]) == "" ) {
-                $_d->failEnd("콘턴츠 순번이 없습니다");
+            if ( trim($form[TASK_NO]) == "" ) {
+                $_d->failEnd("태스크 순번이 없습니다");
             }
 
             $_d->sql_beginTransaction();
 
             $sql = "INSERT INTO CMS_APPROVAL
                     (
-                        CONTENT_NO
+                        TASK_NO
                         ,APPROVAL_ST
                         ,APPROVER_ID
                         ,APPROVER_NM
                         ,APPROVAL_DT
                         ,NOTE
                     ) VALUES (
-                        ".$form[CONTENT_NO]."
+                        ".$form[TASK_NO]."
                         ,'".$form[APPROVAL_ST]."'
                         ,'".$form[APPROVAL_ID]."'
                         ,'".$form[APPROVAL_NM]."'
@@ -137,11 +137,11 @@
                 else
                     $parse = '13';
 
-                $sql = "UPDATE CONTENT
+                $sql = "UPDATE CMS_TASK
                         SET
                             PHASE = ".$parse."
                         WHERE
-                            NO = ".$form[CONTENT_NO]."
+                            NO = ".$form[TASK_NO]."
                         ";
 
                 $_d->sql_query($sql);
@@ -167,7 +167,7 @@
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if (isset($_phase)) {
-                $sql = "UPDATE CONTENT
+                $sql = "UPDATE CMS_TASK
                         SET
                             PHASE = '".$_phase."'
                         WHERE

@@ -32,21 +32,26 @@
         case "GET":
             if (isset($id)) {
                 $sql = "SELECT
-                            P.SUBJECT AS PROJECT_NM, C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.SUBJECT, C.BODY, C.EDITOR_ID, C.CONTENT_ST, C.REG_UID, C.REG_NM, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            C.CURRENT_FL, C.APPLY_YM, C.MODIFY_FL, C.BEGIN_DT, C.CLOSE_DT, C.FINISH_DT, C.CONTENTS, C.HIT_CNT, C.SCRAP_CNT, C.PROJECT_NO
+                            C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.BODY, C.CONTENT_ST, C.REG_UID, C.REG_NM, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT,
+                            C.CURRENT_FL, C.MODIFY_FL, C.HIT_CNT, C.SCRAP_CNT, C.TASK_NO
                         FROM
-                            CONTENT C, CMS_PROJECT P
+                            CONTENT C, CMS_TASK T
                         WHERE
-                            C.PROJECT_NO = P.NO
+                            C.TASK_NO = T.NO
                             AND C.CURRENT_FL = '0'
-                            AND C.NO = ".$id."
+                            AND T.NO = ".$id."
                         ";
-                $data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd($sql);
-                }
+
+                $result = $_d->sql_query($sql);
+                $data  = $_d->sql_fetch_array($result);
+
+                $_d->dataEnd2($data);
+//                $data = $_d->sql_query($sql);
+//                if ($_d->mysql_errno > 0) {
+//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+//                } else {
+//                    $_d->dataEnd($sql);
+//                }
             } else {
                 $search = "";
 
@@ -63,17 +68,17 @@
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            PROJECT_NM, NO, SUPER_NO, PHASE, VERSION, SUBJECT, BODY, EDITOR_ID, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                            CURRENT_FL, APPLY_YM, MODIFY_FL, BEGIN_DT, CLOSE_DT, FINISH_DT, CONTENTS, HIT_CNT, SCRAP_CNT, PROJECT_NO
+                            NO, SUPER_NO, PHASE, VERSION, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                            CURRENT_FL, MODIFY_FL, HIT_CNT, SCRAP_CNT, TASK_NO
                         FROM
                         (
                             SELECT
-                                P.SUBJECT AS PROJECT_NM, C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.SUBJECT, C.BODY, C.EDITOR_ID, C.CONTENT_ST, C.REG_UID, C.REG_NM, C.REG_DT,
-                                C.CURRENT_FL, C.APPLY_YM, C.MODIFY_FL, C.BEGIN_DT, C.CLOSE_DT, C.FINISH_DT, C.CONTENTS, C.HIT_CNT, C.SCRAP_CNT, C.PROJECT_NO
+                                C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.BODY, C.CONTENT_ST, C.REG_UID, C.REG_NM, C.REG_DT,
+                                C.CURRENT_FL, C.MODIFY_FL, C.HIT_CNT, C.SCRAP_CNT, C.TASK_NO
                             FROM
-                                CONTENT C, CMS_PROJECT P
+                                CONTENT C, CMS_TASK T
                             WHERE
-                                C.PROJECT_NO = P.NO
+                                C.TASK_NO = T.NO
                                 AND C.CURRENT_FL = '0'
                                 ".$search."
                             ORDER BY C.REG_DT DESC
@@ -83,9 +88,10 @@
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                CONTENT C
+                                CONTENT C, CMS_TASK T
                             WHERE
-                                C.CURRENT_FL = '0'
+                                C.TASK_NO = T.NO
+                                AND C.CURRENT_FL = '0'
                                 ".$search."
                         ) CNT
                         ";
@@ -121,10 +127,6 @@
 */
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($form[SUBJECT]) == "" ) {
-                $_d->failEnd("제목을 작성 하세요");
-            }
-
             if ( trim($form[PHASE]) == "" ) {
                 $form[PHASE] = '0';
             }
@@ -133,17 +135,16 @@
                 $form[CONTENT_ST] = '0';
             }
 
-            $project_no = 0;
-            $project_st = '1';
+            $task_no = 0;
+            $task_st = '1';
 
-            if ( trim($form[PROJECT_NO]) != "" ) {
-                $project_no = $form[PROJECT_NO];
+            if ( trim($form[TASK_NO]) != "" ) {
+                $task_no = $form[TASK_NO];
             }
 
-            if (count($form[PROJECT]) > 0) {
-                $project = $form[PROJECT];
-                $project_no = $project[NO];
-                $project_st = $project[PROJECT_ST];
+            if (count($form[TASK]) > 0) {
+                $task = $form[TASK];
+                $task_no = $task[NO];
             }
 
             $_d->sql_beginTransaction();
@@ -155,44 +156,30 @@
                         SUPER_NO
                         ,PHASE
                         ,VERSION
-                        ,SUBJECT
                         ,BODY
-                        ,EDITOR_ID
                         ,CONTENT_ST
                         ,REG_UID
                         ,REG_NM
                         ,REG_DT
                         ,CURRENT_FL
-                        ,APPLY_YM
                         ,MODIFY_FL
-                        ,BEGIN_DT
-                        ,CLOSE_DT
-                        ,FINISH_DT
-                        ,CONTENTS
                         ,HIT_CNT
                         ,SCRAP_CNT
-                        ,PROJECT_NO
+                        ,TASK_NO
                     ) VALUES (
-                        ".(!empty($form[SUPER_NO]) ? $form[SUPER_NO] : !empty($form[NO] ? $form[NO] : 0))."
+                        ".(!empty($form[SUPER_NO]) ? $form[SUPER_NO] : !empty($form[NO]) ? $form[NO] : 0)."
                         ,'".$form[PHASE]."'
                         ,'".$form[VERSION]."'
-                        ,'".$form[SUBJECT]."'
                         ,'".$form[BODY]."'
-                        ,'".$form[EDITOR_ID]."'
                         ,'".$form[CONTENT_ST]."'
                         ,'".$form[REG_UID]."'
                         ,'".$form[REG_NM]."'
                         ,SYSDATE()
                         ,'0'
-                        ,'".$form[APPLY_YM]."'
                         ,'".$form[MODIFY_FL]."'
-                        ,'".$form[BEGIN_DT]."'
-                        ,'".$form[CLOSE_DT]."'
-                        ,'".$form[FINISH_DT]."'
-                        ,'".$form[CONTENTS]."'
                         ,".(empty($form[HIT_CNT]) ? 0 : $form[HIT_CNT])."
                         ,".(empty($form[SCRAP_CNT]) ? 0 : $form[SCRAP_CNT])."
-                        ,".$project_no."
+                        ,".$task_no."
                     )";
 
             $_d->sql_query($sql);
@@ -208,7 +195,7 @@
 
                 $_d->sql_query($sql);
             }
-
+/*
             if (!($_d->mysql_errno > 0) && ($project_st == 0)) {
                 $sql = "UPDATE CMS_PROJECT
                         SET
@@ -219,6 +206,7 @@
 
                 $_d->sql_query($sql);
             }
+*/
 
             if ($_d->mysql_errno > 0) {
                 $_d->sql_rollback();
@@ -248,10 +236,6 @@
                         ";
             } else {
 
-                if ( trim($form[SUBJECT]) == "" ) {
-                    $_d->failEnd("제목을 작성 하세요");
-                }
-
                 if ( trim($form[PHASE]) == "" ) {
                     $form[PHASE] = '0';
                 }
@@ -260,17 +244,16 @@
                     $form[CONTENT_ST] = '0';
                 }
 
-                $project_no = 0;
-                $project_st = '1';
+                $task_no = 0;
+                $task_st = '1';
 
-                if ( trim($form[PROJECT_NO]) != "" ) {
-                    $project_no = $form[PROJECT_NO];
+                if ( trim($form[TASK_NO]) != "" ) {
+                    $task_no = $form[TASK_NO];
                 }
 
-                if (count($form[PROJECT]) > 0) {
-                    $project = $form[PROJECT];
-                    $project_no = $project[NO];
-                    $project_st = $project[PROJECT_ST];
+                if (count($form[TASK]) > 0) {
+                    $task = $form[TASK];
+                    $task_no = $task[NO];
                 }
 
                 $sql = "UPDATE CONTENT
@@ -278,22 +261,15 @@
                             SUPER_NO = ".(!empty($form[SUPER_NO]) ? $form[SUPER_NO] : !empty($form[NO] ? $form[NO] : 0))."
                             ,PHASE = '".$form[PHASE]."'
                             ,VERSION = '".$form[VERSION]."'
-                            ,SUBJECT = '".$form[SUBJECT]."'
                             ,BODY = '".$form[BODY]."'
-                            ,EDITOR_ID = '".$form[EDITOR_ID]."'
                             ,CONTENT_ST = '".$form[CONTENT_ST]."'
                             ,REG_UID = '".$form[REG_UID]."'
                             ,REG_NM = '".$form[REG_NM]."'
                             ,CURRENT_FL = '".$form[CURRENT_FL]."'
-                            ,APPLY_YM = '".$form[APPLY_YM]."'
                             ,MODIFY_FL = '".$form[MODIFY_FL]."'
-                            ,BEGIN_DT = '".$form[BEGIN_DT]."'
-                            ,CLOSE_DT = '".$form[CLOSE_DT]."'
-                            ,FINISH_DT = '".$form[FINISH_DT]."'
-                            ,CONTENTS = '".$form[CONTENTS]."'
                             ,HIT_CNT = ".(empty($form[HIT_CNT]) ? 0 : $form[HIT_CNT])."
                             ,SCRAP_CNT = ".(empty($form[SCRAP_CNT]) ? 0 : $form[SCRAP_CNT])."
-                            ,PROJECT_NO = ".$project_no."
+                            ,TASK_NO = ".$task_no."
                         WHERE
                             NO = ".$id."
                         ";

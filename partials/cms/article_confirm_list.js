@@ -34,7 +34,7 @@ define([
     }]);
 
     // 사용할 서비스를 주입
-    controllers.controller('article_confirm_list', ['$scope', '$stateParams', 'contentService', '$modal', '$location', function ($scope, $stateParams, contentService, $modal, $location) {
+    controllers.controller('article_confirm_list', ['$scope', '$stateParams', 'taskService', 'contentService', '$modal', '$location', function ($scope, $stateParams, taskService, contentService, $modal, $location) {
 
         $scope.openModal = function (content, status, size) {
             var modalInstance = $modal.open({
@@ -58,16 +58,16 @@ define([
             });
         }
 
-        // 페이지 타이틀
-        if ($scope.method == 'GET' && $stateParams.id == undefined) {
-            $scope.message = 'ANGE CMS';
+        /********** 초기화 **********/
+        // 목록 데이터
+        var tasksData = null;
 
-            $scope.pageTitle = '원고 승인';
-            $scope.pageDescription = '작성된 원고를 검수합니다.';
+        // 초기화
+        $scope.initList = function() {
+
         }
 
-        var contentsData = null;
-
+        /********** 목록 조회 이벤트 **********/
         // 조회 화면 이동
         $scope.viewListContent = function (no) {
             $location.search({_method: 'GET'});
@@ -99,15 +99,15 @@ define([
         };
 
         // 목록
-        $scope.isLoading = true;
-        $scope.getContents = function () {
+        $scope.getTasks = function () {
+            $scope.isLoading = true;
             $location.search('_phase', '11,12,13');
-            contentService.getContents().then(function(contents){
+            taskService.getTasks().then(function(tasks){
 
-                contentsData = contents.data;
+                tasksData = tasks.data;
 
-                if (contentsData != null) {
-                    $scope.totalItems = contents.data[0].TOTAL_COUNT; // 총 아이템 수
+                if (tasksData != null) {
+                    $scope.totalItems = tasks.data[0].TOTAL_COUNT; // 총 아이템 수
                     $scope.currentPage = 1; // 현재 페이지
                 }
                 $scope.isLoading = false;
@@ -115,7 +115,21 @@ define([
             });
         };
 
-        $scope.getContents();
+        // 원고 등록
+        $scope.listEditContent = function (idx) {
+
+            $location.search({_method: 'POST'});
+
+            var task = $scope.tasks[idx];
+
+            contentService.getContent(task.NO).then(function(content){
+                if (content.data.NO != undefined) {
+                    $location.search({_method: 'PUT'});
+                }
+
+                $location.path('/article_confirm/edit/'+task.NO);
+            });
+        };
 
         // 페이징 처리
         $scope.selectItems = 200; // 한번에 조회하는 아이템 수
@@ -138,13 +152,25 @@ define([
             var begin = ((start - 1) * $scope.itemsPerPage);
             var end = begin + $scope.itemsPerPage;
 
-            if (contentsData != null) {
-                $scope.contents = contentsData.slice(begin, end);
+            if (tasksData != null) {
+                $scope.tasks = tasksData.slice(begin, end);
             }
         });
 
         $scope.$watch('selectItems * selectCount < itemsPerPage * currentPage', function() {
             $scope.selectCount = $scope.selectCount + 1;
         });
+
+        /********** 화면 초기화 **********/
+        // 페이지 타이틀
+        if ($scope.method == 'GET' && $stateParams.id == undefined) {
+            $scope.message = 'ANGE CMS';
+            $scope.pageTitle = '원고 승인';
+            $scope.pageDescription = '작성된 원고를 검수합니다.';
+            $scope.tailDescription = '.';
+
+            $scope.initList();
+            $scope.getTasks();
+        }
     }]);
 });

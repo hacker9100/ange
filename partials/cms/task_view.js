@@ -13,13 +13,13 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('task_view', ['$scope', '$stateParams', 'taskService', '$sce', '$location', function ($scope, $stateParams, taskService, $sce, $location) {
 
-        /* 초기화 */
+        /********** 초기화 **********/
         // 초기화
         $scope.initView = function() {
 
         };
 
-        /* 조회 이벤트 */
+        /********** 조회 이벤트 **********/
         // 목록
         $scope.getTasks = function () {
             $location.search({_method: 'GET'});
@@ -52,7 +52,7 @@ define([
             return $sce.trustAsHtml(html);
         };
 
-        /* 화면 초기화 */
+        /********** 화면 초기화 **********/
         if ($scope.method == 'GET' && $stateParams.id != undefined) {
             // 페이지 타이틀
             $scope.message = 'ANGE CMS';

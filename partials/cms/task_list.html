@@ -44,20 +44,19 @@
                 </div>
             </div>
 
-            <button class="btn btn-success fileinput-button" data-ng-click="searchTask(search)">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>검색</span>
-            </button>
+            <div class= "navbar-header" >
+                <button class="btn btn-primary start" ng-click="searchTask(search);" ng-disabled="listForm.$invalid">
+                    <i class="glyphicon glyphicon-search"></i>
+                    <span>검색</span>
+                </button>
+                <button class="btn btn-success fileinput-button" data-ng-click="createNewTask()">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>등록</span>
+                </button>
+            </div>
         </form>
 
     </div>
-</div>
-
-<div class= "navbar-header" >
-    <button class="btn btn-success fileinput-button" data-ng-click="createNewTask()">
-        <i class="glyphicon glyphicon-plus"></i>
-        <span>등록</span>
-    </button>
 </div>
 
 <!--<div id="veil" ng-show="isLoading"></div>-->
@@ -96,7 +95,7 @@
 <accordion close-others="oneAtATime">
     <accordion-group is-open="status.open" ng-repeat="task in tasks">
         <accordion-heading>
-            {{ task.PROJECT_NM }} &nbsp; {{ task.SUBJECT }} &nbsp; {{ task.CLOSE_YMD }}
+            {{ task.PROJECT_NM }} &nbsp; {{ task.SUBJECT }} &nbsp; {{ task.EDITOR }} &nbsp; {{ task.CLOSE_YMD }} 마감 &nbsp; {{ task.REG_DT }} 등록
             <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
         </accordion-heading>
         <div class="col-md-12">
@@ -113,15 +112,34 @@
                         {{ task.REG_DT }}
                     </div>
                 </div>
+                <div class= "form-group">
+                    <label class= "col-md-2">카테고리</label>
+                    <!--<pre>{{task.CATEGORY|json}}</pre>-->
+                    <div class="col-md-2 btn-group" ng-repeat="category in task.CATEGORY">
+                        <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                    </div>
+                </div>
+                <div class= "form-group">
+                    <label class= "col-md-2">태그</label>
+                    <div class="col-md-4">
+                        {{ task.TAG }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary start" ng-click="getHistory(task.NO);">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>History</span>
+                    </button>
+                </div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary start" ng-click="editTask(task.NO);">
                         <i class="glyphicon glyphicon-pencil"></i>
                         <span>태스크 편집</span>
                     </button>
-                    <button class="btn btn-success fileinput-button" data-ng-click="viewListTask(task.NO)">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span>편집보기</span>
-                    </button>
+                    <!--<button class="btn btn-success fileinput-button" data-ng-click="viewListTask(task.NO)">-->
+                        <!--<i class="glyphicon glyphicon-plus"></i>-->
+                        <!--<span>편집보기</span>-->
+                    <!--</button>-->
                 </div>
             </div>
         </div>

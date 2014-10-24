@@ -44,7 +44,7 @@ define([
             $scope.CATEGORY.splice(idx, 1);
         }
 
-        /* 초기화 */
+        /********** 초기화 **********/
         // 날짜 콤보박스
         var year = [];
         var now = new Date();
@@ -108,7 +108,7 @@ define([
             alert(JSON.stringify(search));
         };
 
-        /* 목록 조회 이벤트 */
+        /********** 목록 조회 이벤트 **********/
         // 등록 화면 이동
         $scope.createNewTask = function () {
             $location.search({_method: 'POST'});
@@ -187,7 +187,7 @@ define([
             $scope.selectCount = $scope.selectCount + 1;
         });
 
-        /* 화면 초기화 */
+        /********** 화면 초기화 **********/
         if ($scope.method == 'GET' && $stateParams.id == undefined) {
             // 페이지 타이틀
             $scope.message = 'ANGE CMS';

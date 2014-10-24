@@ -15,14 +15,14 @@ define([
     controllers.controller('task_edit', ['$scope', '$stateParams', 'projectService', 'taskService', '$location', function ($scope, $stateParams, projectService, taskService, $location) {
 
         var category = [
-            {"NO": 0, "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신준비", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
-            {"NO": 1, "CATEGORY_B": "002", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신초기", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
-            {"NO": 2, "CATEGORY_B": "003", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신중기", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
-            {"NO": 3, "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "건강", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": 4, "CATEGORY_B": "002", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "음식", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": 5, "CATEGORY_B": "003", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "놀이", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": 6, "CATEGORY_B": "001", "CATEGORY_M": "001", "CATEGORY_S": "", "DEPTH": "2", "CATEGORY_NM": "검사", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": 7, "CATEGORY_B": "001", "CATEGORY_M": "002", "CATEGORY_S": "", "DEPTH": "2", "CATEGORY_NM": "운동", "CATEGORY_GB": "2", "CATEGORY_ST": "0"}
+            {"NO": "0", "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "임신준비", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
+            {"NO": "1", "CATEGORY_B": "002", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "임신초기", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
+            {"NO": "2", "CATEGORY_B": "003", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "임신중기", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
+            {"NO": "3", "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "건강", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
+            {"NO": "4", "CATEGORY_B": "002", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "음식", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
+            {"NO": "5", "CATEGORY_B": "003", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "놀이", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
+            {"NO": "6", "CATEGORY_B": "001", "CATEGORY_M": "001", "CATEGORY_S": "", "CATEGORY_NM": "검사", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
+            {"NO": "7", "CATEGORY_B": "001", "CATEGORY_M": "002", "CATEGORY_S": "", "CATEGORY_NM": "운동", "CATEGORY_GB": "2", "CATEGORY_ST": "0"}
         ];
 
         $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
@@ -47,7 +47,7 @@ define([
             $scope.CATEGORY.splice(idx, 1);
         }
 
-        /* 초기화 */
+        /********** 초기화 **********/
         // 초기화
         $scope.initEdit = function() {
             projectService.getProjectOptions().then(function(projects){
@@ -107,9 +107,9 @@ define([
 //        }
         /***************************************************************************************************/
 
-        /* 등록,수정 이벤트 */
+        /********** 등록,수정 이벤트 **********/
         // 목록
-        $scope.getTasks = function () {
+        $scope.moveList = function () {
             $location.search({_method: 'GET'});
             $location.path('/task/list');
         };
@@ -117,11 +117,12 @@ define([
         // 조회
         $scope.getTask = function () {
             taskService.getTask($stateParams.id).then(function(task){
-                $scope.task = task.data[0];
+                $scope.task = task.data;
+                $scope.CATEGORY = angular.fromJson(task.data.CATEGORY);
 
                 for (var i = 0; i < $scope.projects.length; i++) {
                     var project_nm = $scope.projects[i].SUBJECT;
-                    if (project_nm == task.data[0].PROJECT_NM)
+                    if (project_nm == task.data.PROJECT_NM)
                         $scope.task.PROJECT = $scope.projects[i];
                 }
             });
@@ -131,6 +132,7 @@ define([
         $scope.saveTask = function () {
             var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
+            $scope.task.CATEGORY = $scope.CATEGORY;
             if (id <= 0) {
                 taskService.createTask($scope.task).then(function(data){
                     $location.search({_method: 'GET'});
@@ -145,7 +147,7 @@ define([
             }
         };
 
-        /* 화면 초기화 */
+        /********** 화면 초기화 **********/
         if ($scope.method != 'GET') {
             $scope.initEdit();
 

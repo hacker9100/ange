@@ -14,7 +14,7 @@ define([
     controllers.controller('project_list', ['$scope', '$stateParams', 'projectService', '$location', function ($scope, $stateParams, projectService, $location) {
 
 //        alert(localStorage.getItem('userToken'))
-        /* 초기화 */
+        /********** 초기화 **********/
         // 날짜 콤보박스
         var year = [];
         var now = new Date();
@@ -35,7 +35,7 @@ define([
             $scope.search = { years: year, YEAR: nowYear+'', order: order, ORDER: order[0] };
         };
 
-        /* 목록 조회 이벤트 */
+        /********** 목록 조회 이벤트 **********/
         // 등록 화면 이동
         $scope.createNewProject = function () {
             $location.search({_method: 'POST'});
@@ -121,7 +121,7 @@ define([
             $scope.selectCount = $scope.selectCount + 1;
         });
 
-        /* 화면 초기화 */
+        /********** 화면 초기화 **********/
         if ($scope.method == 'GET' && $stateParams.id == undefined) {
             // 페이지 타이틀
             $scope.message = 'ANGE CMS';

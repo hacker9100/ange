@@ -40,12 +40,32 @@
                             T.PROJECT_NO = P.NO
                             AND T.NO = ".$id."
                         ";
-                $data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd($sql);
-                }
+
+                $result = $_d->sql_query($sql);
+                $data  = $_d->sql_fetch_array($result);
+
+                $sql = "SELECT
+                            C.NO, C.CATEGORY_B, C.CATEGORY_M, C.CATEGORY_S, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
+                        FROM
+                            CMS_TASK T, CONTENT_CATEGORY CC, CATEGORY C
+                        WHERE
+                            T.NO = CC.TARGET_NO
+                            AND CC.CATEGORY_NO = C.NO
+                            AND T.NO = ".$id."
+                        ";
+
+                $category_data = $_d->getData($sql);
+
+                $data['CATEGORY'] = $category_data;
+
+                $_d->dataEnd2($data);
+
+//                $data = $_d->sql_query($sql);
+//                if ($_d->mysql_errno > 0) {
+//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+//                } else {
+//                    $_d->dataEnd($sql);
+//                }
             } else {
                 $search = "";
 
@@ -87,36 +107,46 @@
                                 ".$search."
                         ) CNT
                         ";
-                $data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd($sql);
+
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                    $sql = "SELECT
+                            C.NO, C.CATEGORY_B, C.CATEGORY_M, C.CATEGORY_S, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
+                        FROM
+                            CMS_TASK T, CONTENT_CATEGORY CC, CATEGORY C
+                        WHERE
+                            T.NO = CC.TARGET_NO
+                            AND CC.CATEGORY_NO = C.NO
+                            AND T.NO = ".$row['NO']."
+                        ";
+
+                    $category_data = $_d->getData($sql);
+                    $row['CATEGORY'] = $category_data;
+
+                    $__trn->rows[$i] = $row;
                 }
+                $_d->sql_free_result($result);
+                $data = $__trn->{'rows'};
+
+                $_d->dataEnd2($data);
+
+//                $_d->dataEnd($sql);
+
+//                $data = $_d->sql_query($sql);
+//                if ($_d->mysql_errno > 0) {
+//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+//                } else {
+//                    $_d->dataEnd($sql);
+//                }
             }
 
             break;
 
         case "POST":
             $form = json_decode(file_get_contents("php://input"),true);
-/*
-            $upload_path = '../upload/';
-            $source_path = '../../../';
 
-            if (count($form[FILES]) > 0) {
-                $files = $form[FILES];
-
-//                @mkdir('$source_path');
-
-                for ($i = 0 ; $i < count($form[FILES]); $i++) {
-                    $file = $files[$i];
-
-                    if (file_exists($upload_path.$file[name])) {
-                        rename($upload_path.$file[name], $source_path.$file[name]);
-                    }
-                }
-            }
-*/
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if ( trim($form[SUBJECT]) == "" ) {
@@ -172,6 +202,27 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
+            if (count($form[CATEGORY]) > 0) {
+                $categories = $form[CATEGORY];
+
+                for ($i = 0 ; $i < count($form[CATEGORY]); $i++) {
+                    $category = $categories[$i];
+
+                    $sql = "INSERT INTO CONTENT_CATEGORY
+                    (
+                        CATEGORY_NO
+                        ,TARGET_NO
+                        ,TARGET_GB
+                    ) VALUES (
+                        '".$category[NO]."'
+                        , '".$no."'
+                        , 'T'
+                    )";
+
+                    $_d->sql_query($sql);
+                }
+            }
+
             if (!empty($form[NO]) && $form[PHASE] > 0) {
                 $sql = "UPDATE CONTENT
                         SET
@@ -220,11 +271,18 @@
                         WHERE
                             NO = ".$id."
                         ";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
             } else {
 
-                if ( trim($form[SUBJECT]) == "" ) {
-                    $_d->failEnd("제목을 작성 하세요");
-                }
+                $_d->sql_beginTransaction();
 
                 if ( trim($form[PHASE]) == "" ) {
                     $form[PHASE] = '0';
@@ -257,15 +315,54 @@
                         WHERE
                             NO = ".$id."
                         ";
+
+                $_d->sql_query($sql);
+
+                if (count($form[CATEGORY]) > 0) {
+
+                    $sql = "DELETE FROM CONTENT_CATEGORY
+                            WHERE
+                                TARGET_NO = ".$id."
+                            ";
+
+                    $_d->sql_query($sql);
+
+                    $categories = $form[CATEGORY];
+
+                    for ($i = 0 ; $i < count($form[CATEGORY]); $i++) {
+                        $category = $categories[$i];
+
+                        $sql = "INSERT INTO CONTENT_CATEGORY
+                                (
+                                    CATEGORY_NO
+                                    ,TARGET_NO
+                                    ,TARGET_GB
+                                ) VALUES (
+                                    '".$category[NO]."'
+                                    , '".$id."'
+                                    , 'T'
+                                )";
+
+                        $_d->sql_query($sql);
+                    }
+                }
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
             }
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-            } else {
-                $_d->succEnd($no);
-            }
+//            $_d->sql_query($sql);
+//            $no = $_d->mysql_insert_id;
+//            if ($_d->mysql_errno > 0) {
+//                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+//            } else {
+//                $_d->succEnd($no);
+//            }
 
             break;
 

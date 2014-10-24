@@ -41,16 +41,26 @@ class MtJson extends MtData {
             $__trn->rows[$i] = $row;
         }
         $this->sql_free_result($result);
-        return json_encode($__trn->{'rows'});
+        return $__trn != '' ? $__trn->{'rows'} : $__trn;
+//        return json_encode($__trn != '' ? $__trn->{'rows'} : $__trn);
     }
 
     function dataEnd($sql) {
         $result = $this->getData($sql);
-        MtUtil::_c("### [END] [DATA]".$result);
+        MtUtil::_c("### [END] [DATA]".json_encode($result));
         header('HTTP/1.1 200 OK');
         header('Content-Type:application/json');
 
-        echo $result;
+        echo json_encode($result);
+        exit;
+    }
+
+    function dataEnd2($result) {
+        MtUtil::_c("### [END] [DATA]".json_encode($result));
+        header('HTTP/1.1 200 OK');
+        header('Content-Type:application/json');
+
+        echo json_encode($result);
         exit;
     }
 }
