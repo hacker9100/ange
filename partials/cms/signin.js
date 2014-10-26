@@ -6,12 +6,24 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('signin', ['$scope', '$stateParams', 'contentsService', '$location', function ($scope, $stateParams, contentsService, $location) {
+    controllers.controller('signin', ['$scope', '$rootScope', '$stateParams', 'loginService', '$location', function ($scope, $rootScope, $stateParams, loginService, $location) {
 
 		//CSS 설정
 		//$scope.$emit('updateCSS', ['css/css1.css']);
 		$scope.message = "Welcome to ANGE CMS";
 
+        $scope.loginMe = function() {
+            loginService.login($scope.login.id).then(function(session) {
+                $rootScope.authenticated = true;
+                $rootScope.uid = session.data.USER_ID;
+                $rootScope.name = session.data.USER_NM;
+                $rootScope.email = session.data.EMAIL;
+
+                $location.path('/dashboard');
+            });
+        }
+
+/*
         $scope.login = function () {
             var credentials = {
                 username: this.username,
@@ -33,6 +45,7 @@ define([
 
             authorization.login(credentials).success(success).error(error);
         };
+*/
 
 	}]);
 });

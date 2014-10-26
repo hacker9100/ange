@@ -12,7 +12,8 @@
         }},
         { "signin": {
             "url": "/signin",
-            "templateUrl": "partials/cms/signin.html"
+            "templateUrl": "partials/cms/signin.html",
+            "controller": "signin"
         }}, { "dashboard": {
             "url": "/dashboard",
             "views": {

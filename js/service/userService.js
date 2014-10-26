@@ -4,7 +4,9 @@
  * Date   : 2014-09-23
  * Description : userService 선언
  */
-define(['./services'], function (services) {
+define([
+    './services'
+], function (services) {
     'use strict';
 
     services.service('userService', ['$http', '$location', function($http, $location){

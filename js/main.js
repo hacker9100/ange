@@ -21,21 +21,21 @@ require.config({
     paths: {
         'text': '../lib/require/text', //HTML 데이터를 가져올때 text! 프리픽스를 붙여준다.
         'jquery': '../lib/jquery/jquery.min', // jquery
-        'uiJquery': '../lib/jquery/jquery-ui-1.10.2.min', // bootstrap 사용을 위해 로딩한다.
+        'jquery-ui': '../lib/jquery/jquery-ui-1.10.2.min', // bootstrap 사용을 위해 로딩한다.
         'domReady': '../lib/domReady/domReady', // requirejs로 library를 로딩할때 사용된다.
 
         // bootstrpa 모듈
-        'jsBootstrap': '../lib/bootstrap/js/bootstrap.min', // bootstrap을 사용한다.
-        'uiBootstrap': '../lib/ui-bootstrap/ui-bootstrap-0.11.2.min', // bootstrap의 ui 컴포넌트를 사용하게한다.
+        'js-bootstrap': '../lib/bootstrap/js/bootstrap.min', // bootstrap을 사용한다.
+        'ui-bootstrap': '../lib/ui-bootstrap/ui-bootstrap-0.11.2.min', // bootstrap의 ui 컴포넌트를 사용하게한다.
 
         // angularjs 모듈
         'angular': '../lib/angular/angular', // angularjs를 사용한다.
-        'ngCookies': '../lib/angular/angular-cookies.min', //
-        'ngResource': '../lib/angular/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.
-        'ngSanitize': '../lib/angular/angular-sanitize.min', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
-        'uiRouter': '../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
+//        'ngCookies': '../lib/angular/angular-cookies.min', //
+        'angular-resource': '../lib/angular/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.
+        'angular-sanitize': '../lib/angular/angular-sanitize.min', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
+        'angular-ui-router': '../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
 
-//        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
+////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
         'lodash' : '../lib/dropdown_multiselect/lodash',
 
         // ckeditor 모듈
@@ -43,32 +43,32 @@ require.config({
         'ckeditor-jquery': '../lib/ckeditor/adapters/jquery', // angularjs에서 ckeditor를 사용할 수 있게 해주는 어덥터다.
         'ckfinder': '../lib/ckfinder/ckfinder', // ckeditor에서 업로드를 할 수 있게 해준다.
 
-        // plupload 모듈
-        'plupload': '../lib/plupload/plupload.full.min', // plupload
-//        'ngPlupload': '../lib/plupload/plupload-angular-directive.min',
-        'uiPlupload': '../lib/plupload/jquery.ui.plupload/jquery.ui.plupload',
-        'ngActivityIndicator': '../lib/ngActivityIndicator/ngActivityIndicator', // 로딩시 화면에 잠깐 보여주는 역할을 한다.
+//        // plupload 모듈
+//        'plupload': '../lib/plupload/plupload.full.min', // plupload
+////        'ngPlupload': '../lib/plupload/plupload-angular-directive.min',
+//        'uiPlupload': '../lib/plupload/jquery.ui.plupload/jquery.ui.plupload',
+//        'ngActivityIndicator': '../lib/ngActivityIndicator/ngActivityIndicator', // 로딩시 화면에 잠깐 보여주는 역할을 한다.
 
         // fileupload 모듈
-        'uiWidget': '../lib/file-upload/vendor/jquery.ui.widget',
-        'loadImage': '../lib/file-upload/load-image/load-image',
-        'loadIos': '../lib/file-upload/load-image/load-image-ios',
-        'loadOrientation': '../lib/file-upload/load-image/load-image-orientation',
-        'loadMeta': '../lib/file-upload/load-image/load-image-meta',
-        'loadExif': '../lib/file-upload/load-image/load-image-exif',
-        'loadMap': '../lib/file-upload/load-image/load-image-exif-map',
-        'canvasToBlob': '../lib/file-upload/gallery/canvas-to-blob.min',
-        'biHelper': '../lib/file-upload/gallery/blueimp-helper',
-        'biGallery': '../lib/file-upload/gallery/blueimp-gallery',
-        'jqGallery': '../lib/file-upload/gallery/jquery.blueimp-gallery',
-        'iframeTransport': '../lib/file-upload/jquery.iframe-transport',
-        'jqFileupload': '../lib/file-upload/jquery.fileupload',
-        'jqProcess': '../lib/file-upload/jquery.fileupload-process',
-        'jqImage': '../lib/file-upload/jquery.fileupload-image',
-        'jqAudio': '../lib/file-upload/jquery.fileupload-audio',
-        'jqVideo': '../lib/file-upload/jquery.fileupload-video',
-        'jqValidate': '../lib/file-upload/jquery.fileupload-validate',
-        'ngFileupload': '../lib/file-upload/jquery.fileupload-angular',
+        'ui-widget': '../lib/file-upload/vendor/jquery.ui.widget',
+        'load-image': '../lib/file-upload/load-image/load-image',
+        'load-image-ios': '../lib/file-upload/load-image/load-image-ios',
+        'load-image-orientation': '../lib/file-upload/load-image/load-image-orientation',
+        'load-image-meta': '../lib/file-upload/load-image/load-image-meta',
+        'load-image-exif': '../lib/file-upload/load-image/load-image-exif',
+        'load-image-exif-map': '../lib/file-upload/load-image/load-image-exif-map',
+        'canvas-to-blob': '../lib/file-upload/gallery/canvas-to-blob.min',
+        'blueimp-helper': '../lib/file-upload/gallery/blueimp-helper',
+        'blueimp-gallery': '../lib/file-upload/gallery/blueimp-gallery',
+        'jquery-blueimp-gallery': '../lib/file-upload/gallery/jquery.blueimp-gallery',
+        'iframe-transport': '../lib/file-upload/jquery.iframe-transport',
+        'fileupload': '../lib/file-upload/jquery.fileupload',
+        'fileupload-process': '../lib/file-upload/jquery.fileupload-process',
+        'fileupload-image': '../lib/file-upload/jquery.fileupload-image',
+        'fileupload-audio': '../lib/file-upload/jquery.fileupload-audio',
+        'fileupload-video': '../lib/file-upload/jquery.fileupload-video',
+        'fileupload-validate': '../lib/file-upload/jquery.fileupload-validate',
+        'fileupload-angular': '../lib/file-upload/jquery.fileupload-angular',
 
         // fullcalendar 모듈
         'fullcalendar': '../lib/fullcalendar/fullcalendar',
@@ -92,25 +92,25 @@ require.config({
             deps: ['jquery'],    // 반드시 먼저 로딩해야될 모듈을 정의한다.
             exports: 'angular'   // 반환되는 변수값이다. angular는 전역변수 "angular"를 사용한다.
         },
-        'uiJquery': {
+        'jquery-ui': {
             deps: ['jquery']
         },
-        'jsBootstrap':{
+        'js-bootstrap':{
             deps:['angular']
         },
-        'uiBootstrap':{
-            deps:['jquery','angular','jsBootstrap']
+        'ui-bootstrap':{
+            deps:['jquery','angular','js-bootstrap']
         },
-        'ngCookies':{
+//        'ngCookies':{
+//            deps: ['angular']
+//        },
+        'angular-resource':{
             deps: ['angular']
         },
-        'ngResource':{
+        'angular-sanitize':{
             deps: ['angular']
         },
-        'ngSanitize':{
-            deps: ['angular']
-        },
-        'uiRouter':{
+        'angular-ui-router':{
             deps: ['angular']
         },
 //        'dropdownMultiSelect':{
@@ -119,19 +119,19 @@ require.config({
         'ckeditor-jquery':{
             deps:['jquery','ckeditor-core']
         },
-        'plupload':{
-            deps:['jquery','uiJquery'],
-            exports: "plupload"
-        },
-//        'ngPlupload':{
+//        'plupload':{
+//            deps:['jquery','uiJquery'],
+//            exports: "plupload"
+//        },
+////        'ngPlupload':{
+////            deps:['plupload']
+////        },
+//        'uiPlupload':{
 //            deps:['plupload']
 //        },
-        'uiPlupload':{
-            deps:['plupload']
-        },
-        'ngActivityIndicator':{
-            deps:['angular']
-        },
+//        'ngActivityIndicator':{
+//            deps:['angular']
+//        },
         'fullcalendar':{
             deps:['jquery','moment']
         },
@@ -172,30 +172,30 @@ require.config({
 //        'jqProcess':{
 //            deps:['jquery','jqFileupload']
 //        },
-        'jqGallery':{
-            deps:['jquery','biGallery']
+        'jquery-blueimp-gallery':{
+            deps:['jquery','blueimp-gallery']
         },
         'jqImage':{
-            deps:['jquery','loadImage','loadMeta','loadExif','loadIos','canvasToBlob','jqProcess']
+            deps:['jquery','load-image','load-image-meta','load-image-exif','load-image-ios','canvas-to-blob','fileupload-process']
         },
         'jqAudio':{
-            deps:['jquery','loadImage','jqProcess']
+            deps:['jquery','load-image','fileupload-process']
         },
         'jqVideo':{
-            deps:['jquery','loadImage','jqProcess']
+            deps:['jquery','load-image','fileupload-process']
         },
         'jqIframeTransport':{
             deps:['jquery']
         },
         'jqValidate':{
-            deps:['jquery','jqProcess']
+            deps:['jquery','fileupload-process']
         },
         'ngFileupload':{
-            deps:['jquery','angular','jqGallery','jqFileupload','jqProcess','jqImage','jqAudio','jqVideo','jqValidate']
+            deps:['jquery','angular','jquery-blueimp-gallery','fileupload','fileupload-process','fileupload-image','fileupload-audio','fileupload-video','fileupload-validate']
         }
-//        'ngMock':{
-//            deps: ['angular']
-//        }
+////        'ngMock':{
+////            deps: ['angular']
+////        }
     },
 
     // 부트스트랩 방법1

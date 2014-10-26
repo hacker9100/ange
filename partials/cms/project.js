@@ -14,32 +14,20 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project', ['$scope', '$stateParams', '$sce', '$location', function ($scope, $stateParams, $sce, $location) {
+    controllers.controller('project', ['$scope', '$stateParams', 'loginService', '$location', function ($scope, $stateParams, loginService, $location) {
 
         var search = $location.search();
 
         $scope.method = search._method;
         $scope.isId = $stateParams.id == 0 || $stateParams.id == undefined ? false : true;
 
-        if (search._method == "GET") {
-
-//            angular.element("#test").html('<div project_list></div>');
-
-//            var html = '<div project_list></div>';
-
-//            $scope.test = $sce.trustAsHtml(html);
-
-
-            $scope.renderHtml = function(html) {
-                return $sce.trustAsHtml(html);
-            };
-
-            $scope.test = '<div project-list></div>';
-
-            $scope.list = $sce.trustAsHtml($scope.test);
-
-        }
-
 //        alert(localStorage.getItem('userToken'))
+
+        $scope.logout = function() {
+            loginService.logout().then( function(data) {
+                $location.path('/signin');
+            });
+        };
+
     }]);
 });

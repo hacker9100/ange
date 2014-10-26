@@ -12,8 +12,8 @@ define([
     './editDirective',
 
     './dropdownSelectDirective',
-    './ckEditorDirective',
-    './plUploadDirective'
+    './ckEditorDirective'//,
+//    './plUploadDirective'
 ], function (){
 
 });

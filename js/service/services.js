@@ -5,7 +5,8 @@
  * Description : 모든 sercive를 포함할 services 모듈 생성
  */
 define([
-    'angular'
+    'angular',
+    'angular-resource'
 ], function (angular, ngResource) {
     'use strict';
 

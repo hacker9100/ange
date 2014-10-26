@@ -43,6 +43,8 @@ define([
                     /* $routeProvider.when(path, {templateUrl:route.templateUrl, resolve:dependencyResolverFor(route.dependencies)}); */
 
                 });
+
+//                $stateProvider.state("otherwise", { url : '/signin' });
             }
         }
 

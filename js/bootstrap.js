@@ -15,8 +15,8 @@ define([
     'text', //미리 선언해둔 path, css나 html을 로드하기 위한 requireJS 플러그인
     'jquery',
     'angular',
-    'uiJquery',
-    'jsBootstrap',
+    'jquery-ui',
+    'js-bootstrap',
     'app',
     'routes'
 ], function (require, text, $, angular) {

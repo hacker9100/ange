@@ -10,27 +10,22 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     // 라이브러리 로딩
     'angular',
     'route-config', //registers에 각 프로바이더를 제공하기 위해 임포트
-    'jsBootstrap',
-    'uiBootstrap',
-    'ngSanitize',
-    'uiRouter',
-//    'dropdownMultiSelect',
+    'js-bootstrap',
+    'ui-bootstrap',
+    'angular-sanitize',
+    'angular-ui-router',
     'lodash', // dropdownMultiSelect 관련 라이브러리
     'ckeditor-jquery', // ckeditor 관련 라이브러리
-    'plupload',
-//    'ngPlupload',
-    'uiPlupload',
-//    'ngActivityIndicator',
-    'uiWidget', // fileUpload ui 관련 라이브러리
-    'jqFileupload', // fileUpload 관련 라이브러리
-    'jqProcess', // fileUpload ui 관련 라이브러리
-    'ngFileupload', // fileUpload angularjs 관련 라이브러리
+    'ui-widget', // fileUpload ui 관련 라이브러리
+    'fileupload', // fileUpload 관련 라이브러리
+    'fileupload-process', // fileUpload ui 관련 라이브러리
+    'fileupload-angular', // fileUpload angularjs 관련 라이브러리
 
     // 각 컨트롤러 로딩
-    './controller/index',
+    './service/index',
     './directive/index',
-    './filter/index',
-    './service/index'//,
+    './controller/index',
+    './filter/index'//,
 //    './mockhttp'
 ], function (angular, routeConfig) { // 의존 모듈들은 순서대로 매개변수에 담긴다.
     // 의존 모듈들이 모두 로딩 완료되면 이 함수를 실행한다.
@@ -39,10 +34,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     // bootstrap.js에 설정한 App Name를 여기서 동일하게 설정
     var app = angular.module('mtApp', [
         'mtApp.services',
+        'mtApp.directives',
         'mtApp.controllers',
         'mtApp.filters',
-        'mtApp.directives',
-//        'angularjs-dropdown-multiselect',
         'ui.bootstrap',
         'ui.router',
         'blueimp.fileupload'
@@ -74,6 +68,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             /**
              * Low-level, private functions.
              */
+
             var setHeaders = function (token) {
                 if (!token) {
                     delete $http.defaults.headers.common['X-Token'];
@@ -114,6 +109,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                      * If accessLevels is still undefined, it let the user change the state.
                      * Grandfather.resolve will either let the user in or reject the promise later!
                      */
+
                     if (wrappedService.userRole === null) {
                         wrappedService.doneLoading = false;
                         wrappedService.pendingStateChange = {
@@ -145,12 +141,14 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                  * to handle same status codes for different resolve(s).
                  * This is defined inside $state.redirectMap.
                  */
+
                 $rootScope.$on('$stateChangeError', function (event, to, toParams, from, fromParams, error) {
                     /**
                      * This is a very clever way to implement failure redirection.
                      * You can use the value of redirectMap, based on the value of the rejection
                      * So you can setup DIFFERENT redirections based on different promise errors.
                      */
+
                     var errorObj, redirectObj;
                     // in case the promise given to resolve function is an $http request
                     // the error is a object containing the error and additional informations
@@ -167,6 +165,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                      *
                      * redirectMap should be defined in the $state(s) that can generate transition errors.
                      */
+
                     if (angular.isDefined(to.redirectMap) && angular.isDefined(to.redirectMap[error])) {
                         if (typeof to.redirectMap[error] === 'string') {
                             return $state.go(to.redirectMap[error], { error: error }, { location: false, inherit: false });
@@ -182,6 +181,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             /**
              * High level, public methods
              */
+
             var wrappedService = {
                 loginHandler: function (user, status, headers, config) {
                     /**
@@ -199,6 +199,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                      *   $state.go('app.nagscreen');
                      * }
                      */
+
                         // setup token
                     setToken(user.token);
                     // update user
@@ -217,6 +218,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                      * De-registers the userToken remotely
                      * then clears the loginService as it was on startup
                      */
+
                     setToken(null);
                     this.userRole = userRoles.public;
                     this.user = {};
@@ -249,12 +251,14 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                      * I setted up the state change inside the promises success/error,
                      * so i can safely assign pendingStateChange back to null.
                      */
+
                     self.pendingStateChange = null;
                     return checkUser.promise;
                 },
                 /**
                  * Public properties
                  */
+
                 userRole: null,
                 user: {},
                 isLogged: null,
@@ -269,11 +273,34 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         };
     });
 
-    app.run(function ($rootScope) {
+    app.run(function ($rootScope, loginService, $location) {
         /**
          * $rootScope.doingResolve is a flag useful to display a spinner on changing states.
          * Some states may require remote data so it will take awhile to load.
          */
+        $rootScope.$on("$stateChangeStart", function (event, next, current) {
+            $rootScope.authenticated = false;
+            loginService.getSession().then(function (session) {
+                if (session.data.USER_ID) {
+                    $rootScope.authenticated = true;
+                    $rootScope.uid = session.data.USER_ID;
+                    $rootScope.name = session.data.USER_NM;
+                    $rootScope.email = session.data.EMAIL;
+                } else {
+                    $location.path('/signin');
+/*
+                    var nextUrl = next.$$route.originalPath;
+                    if (nextUrl == '/signup' || nextUrl == '/signin') {
+
+                    } else {
+                        $location.path("/signin");
+                    }
+*/
+                }
+            });
+        });
+
+/*
         var resolveDone = function () { $rootScope.doingResolve = false; };
         $rootScope.doingResolve = false;
 
@@ -283,6 +310,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         $rootScope.$on('$stateChangeSuccess', resolveDone);
         $rootScope.$on('$stateChangeError', resolveDone);
         $rootScope.$on('$statePermissionError', resolveDone);
+*/
     });
 
     //공통 컨트롤러 설정 - 모든 컨트롤러에서 공통적으로 사용하는 부분들 선언
@@ -335,21 +363,6 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             $scope.stylesheets = args;
 
         });
-/*
-        $http.get('menuinfo.json').success( function(data){
-
-            for (var i in data) {
-                if (data[i]._key == _location) {
-                    //alert(JSON.stringify(data[i].menu));
-                    $scope.menuInfos = data[i].localmenu;
-                }
-            }
-
-            //alert($scope.menuInfos);
-
-
-        });
-*/
     });
 
     // 외부에 노출할 함수들만 반환한다.
