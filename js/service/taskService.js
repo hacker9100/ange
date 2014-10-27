@@ -31,15 +31,15 @@ define(['./services'], function (services) {
         }
 
         obj.createTask = function(task){
-            return $http.post('serverscript/services/task.php?_method=POST&'+qs($location.search())+'&_category='+$location.path(), task);
+            return $http.post('serverscript/services/task.php?_method=POST&_category='+$location.path(), task);
         }
 
         obj.updateTask = function(id, task){
-            return $http.post('serverscript/services/task.php?_method=PUT&'+qs($location.search())+'&_category='+$location.path()+'&id='+id, task);
+            return $http.post('serverscript/services/task.php?_method=PUT&_category='+$location.path()+'&id='+id, task);
         }
 
         obj.updateStatusTask = function(id, task){
-            return $http.post('serverscript/services/task.php?_method=PUT&'+qs($location.search())+'&_category='+$location.path()+'&id='+id, task);
+            return $http.post('serverscript/services/task.php?_method=PUT&_category='+$location.path()+'&id='+id, task);
         }
 
         obj.deleteTask = function(id){

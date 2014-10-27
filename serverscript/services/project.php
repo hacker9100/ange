@@ -61,6 +61,19 @@
                             ORDER BY REG_DT DESC
                             ";
                 } else {
+                    $search = "";
+                    MtUtil::_c("### [search] ".$_search);
+
+                    if (count($_search) > 0) {
+                        for ($i = 0 ; $i < count($_search); $i++) {
+                            $search
+
+                            $search."AND ".." IN (".$in_str.")";
+
+                            MtUtil::_c("### [search] ".$_search[$i]);
+                        }
+                    }
+
                     $sql = "SELECT
                                 TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                                 NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST

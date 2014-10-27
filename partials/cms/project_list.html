@@ -1,7 +1,7 @@
 <div class="panel panel-primary">
     <div class="panel-body" ng-model="search" lass="row">
 
-        <form role="form" name="myForm" class="form-horizontal">
+        <form role="form" name="listForm" class="form-horizontal">
             <div class= "form-group">
                 <label class= "col-md-2"> 연도 </label>
                 <div class="col-md-2">
@@ -19,7 +19,7 @@
             </div>
 
             <div class= "navbar-header" >
-                <button class="btn btn-primary start" ng-click="getContents();" ng-disabled="listForm.$invalid">
+                <button class="btn btn-primary start" ng-click="getSearch();" ng-disabled="listForm.$invalid">
                     <i class="glyphicon glyphicon-search"></i>
                     <span>검색</span>
                 </button>

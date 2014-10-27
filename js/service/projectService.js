@@ -9,16 +9,31 @@ define(['./services'], function (services) {
 
     services.service('projectService', ['$http', '$location', function($http, $location){
         var obj = {};
+
+        var qs = function(obj, prefix){
+            var str = [];
+            for (var p in obj) {
+                var k = prefix ? prefix + "[" + p + "]" : p,
+                    v = obj[p];
+//                    v = obj[k];
+                if (p != '_method') {
+                    str.push(angular.isObject(v) ? qs(v, k) : (k) + "=" + encodeURIComponent(v));
+                }
+            }
+            return str.join("&");
+        }
+
         obj.getProjectOptions = function(){
-            return $http.get('serverscript/services/project.php?_method=GET&_mode=option');
+            return $http.get('serverscript/services/project.php?_method=GET&'+qs($location.search())+'&_mode=option');
         }
 
         obj.getProjects = function(){
-            return $http.get('serverscript/services/project.php?_method=GET&_category='+$location.path());
+            alert(JSON.stringify($location.search()));
+            return $http.get('serverscript/services/project.php?_method=GET&'+qs($location.search())+'&_category='+$location.path());
         }
 
         obj.getProject = function(id){
-            return $http.get('serverscript/services/project.php?_method=GET&_category='+$location.path()+'&id='+id);
+            return $http.get('serverscript/services/project.php?_method=GET&'+qs($location.search())+'&_category='+$location.path()+'&id='+id);
         }
 
         obj.createProject = function(project){

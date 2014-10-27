@@ -68,6 +68,21 @@ define([
             });
         };
 
+        // 검색
+        $scope.getSearch = function () {
+            var search = [];
+            search.push('YEAR/'+$scope.search.YEAR);
+            search.push($scope.search.ORDER.value+'/'+$scope.search.KEYWORD);
+
+            var a = 'YEAR/'+$scope.search.YEAR;
+            var b = $scope.search.ORDER.value+'/'+$scope.search.KEYWORD;
+
+            $location.search('_search', search);
+
+            alert(JSON.stringify($location.search()));
+            $scope.getListProjects();
+        }
+
         // 목록
         $scope.getListProjects = function () {
             $scope.isLoading = true;
@@ -79,6 +94,7 @@ define([
                     $scope.currentPage = 1; // 현재 페이지
                 }
                 $scope.isLoading = false;
+//                $location.search('_search', null);
             });
         };
 
