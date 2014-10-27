@@ -29,7 +29,7 @@ define([
         // 조회
         $scope.getProject = function () {
             projectService.getProject($stateParams.id).then(function(project){
-                $scope.project = project.data[0];
+                $scope.project = project.data;
             });
         };
 

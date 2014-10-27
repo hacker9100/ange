@@ -190,8 +190,8 @@
                         '".$form[PHASE]."'
                         ,'".$form[SUBJECT]."'
                         ,'".$form[EDITOR_ID]."'
-                        ,'".$form[REG_UID]."'
-                        ,'".$form[REG_NM]."'
+                        ,'".$_SESSION['uid']."'
+                        ,'".$_SESSION['name']."'
                         ,SYSDATE()
                         ,'".$form[CLOSE_YMD]."'
                         ,".$project_no."
@@ -306,8 +306,8 @@
                             PHASE = '".$form[PHASE]."'
                             ,SUBJECT = '".$form[SUBJECT]."'
                             ,EDITOR_ID = '".$form[EDITOR_ID]."'
-                            ,REG_UID = '".$form[REG_UID]."'
-                            ,REG_NM = '".$form[REG_NM]."'
+                            ,REG_UID = '".$_SESSION['uid']."'
+                            ,REG_NM = '".$_SESSION['name']."'
                             ,CLOSE_YMD = '".$form[CLOSE_YMD]."'
                             ,PROJECT_NO = ".$project_no."
                             ,TAG = '".$form[TAG]."'

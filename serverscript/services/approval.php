@@ -139,7 +139,7 @@
 
                 $sql = "UPDATE CMS_TASK
                         SET
-                            PHASE = ".$parse."
+                            PHASE = '".$parse."'
                         WHERE
                             NO = ".$form[TASK_NO]."
                         ";

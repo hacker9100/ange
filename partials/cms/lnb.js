@@ -23,6 +23,10 @@ define([
                 { url: '/edit/list', 'name': '편집' },
                 { url: '/edit_confirm/list', 'name': '편집 승인' },
                 { url: '/publish/list', 'name': '출판' }
+            ]},
+            {"user, permission": [
+                { url: '/user', 'name': '사용자 관리' },
+                { url: '/permission', 'name': '권한 관리' }
             ]}
         ];
 

@@ -188,6 +188,13 @@
                 "lnbView@webboard/view": { "templateUrl": "partials/cms/lnb.html" },
                 "locaterView@webboard/view": { "templateUrl": "partials/cms/locater.html", "controller": "locater" }
             }
+        }}, { "permission": {
+            "url": "/permission",
+            "views": {
+                "" : { "templateUrl": "partials/cms/permission.html", "controller": "permission" },
+                "lnbView@permission": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@permission": { "templateUrl": "partials/cms/locater.html", "controller": "locater" }
+            }
         }}, { "content": {
             "url": "/content",
             "views": {

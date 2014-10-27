@@ -55,7 +55,7 @@ define([
         // 조회
         $scope.getProject = function () {
             projectService.getProject($stateParams.id).then(function(project){
-                $scope.project = project.data[0];
+                $scope.project = project.data;
 
                 $scope.project.years = year;
                 $scope.project.months = month;
@@ -83,18 +83,19 @@ define([
 
         /* 화면 초기화 */
         if ($scope.method != 'GET'){
+            $scope.initEdit();
+
             // 페이지 타이틀
             $scope.message = 'ANGE CMS';
             if ( $stateParams.id != 0) {
                 $scope.pageTitle = '프로젝트 수정';
                 $scope.pageDescription = '프로젝트를 수정합니다.';
+
+                $scope.getProject();
             } else {
                 $scope.pageTitle = '프로젝트 등록';
                 $scope.pageDescription = '프로젝트를 등록합니다.';
             }
-
-            $scope.initEdit();
-            $scope.getProject();
         }
 
     }]);

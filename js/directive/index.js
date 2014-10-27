@@ -5,11 +5,15 @@
  * Description : 사용할 모든 directive를 로드
  */
 define([
+    // 콘텐츠
     './projectDirective',
     './taskDirective',
     './articleDirective',
     './articleConfirmDirective',
     './editDirective',
+
+    // 관리자
+    './permissionDirective',
 
     './dropdownSelectDirective',
     './ckEditorDirective'//,

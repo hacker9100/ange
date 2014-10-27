@@ -14,12 +14,18 @@ define([
 
         $scope.loginMe = function() {
             loginService.login($scope.login.id).then(function(session) {
-                $rootScope.authenticated = true;
-                $rootScope.uid = session.data.USER_ID;
-                $rootScope.name = session.data.USER_NM;
-                $rootScope.email = session.data.EMAIL;
+                if (session.data.USER_ID) {
+                    $rootScope.authenticated = true;
+                    $rootScope.uid = session.data.USER_ID;
+                    $rootScope.name = session.data.USER_NM;
+                    $rootScope.role = session.data.ROLE;
+                    $rootScope.menu_role = session.data.MENU_ROLE;
+                    $rootScope.email = session.data.EMAIL;
 
-                $location.path('/dashboard');
+                    $location.path('/dashboard');
+                } else {
+                    alert("로그인에 실패 했습니다.");
+                }
             });
         }
 

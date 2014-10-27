@@ -32,17 +32,15 @@
         case "GET":
             if (isset($id)) {
                 $sql = "SELECT
-                            NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST, NOTE
+                            M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
                         FROM
-                            CMS_PROJECT
+                            CMS_ROLE R, MENU_ROLE M
                         WHERE
-                            NO = ".$id."
+                            R.ROLE_ID = '".$id."'
+                            AND R.ROLE_ID = M.ROLE_ID;
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
-
-                $_d->dataEnd2($data);
+                $_d->dataEnd($sql);
 
 //                $data = $_d->sql_query($sql);
 //                if ($_d->mysql_errno > 0) {
@@ -53,12 +51,9 @@
             } else {
                 if (isset($_mode)) {
                     $sql = "SELECT
-                                NO, SUBJECT, PROJECT_ST
+                                ROLE_ID, ROLE_NM, ROLE_GB
                             FROM
-                                CMS_PROJECT
-                            WHERE
-                                PROJECT_ST <> '2'
-                            ORDER BY REG_DT DESC
+                                CMS_ROLE
                             ";
                 } else {
                     $sql = "SELECT
@@ -169,28 +164,35 @@
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($form[SUBJECT]) == "" ) {
-                $_d->failEnd("제목을 작성 하세요");
-            }
+            $_d->sql_beginTransaction();
 
-            $sql = "UPDATE CMS_PROJECT
-                    SET
-                        YEAR = '".$form[YEAR]."'
-                        ,MONTH = '".$form[MONTH]."'
-                        ,SUBJECT = '".$form[SUBJECT]."'
-                        ,REG_UID = '".$_SESSION['uid']."'
-                        ,REG_NM = '".$_SESSION['name']."'
-                        ,PROJECT_ST = '".$form[PROJECT_ST]."'
-                        ,NOTE = '".$form[NOTE]."'
-                    WHERE
-                        NO = ".$id."
+            if (count($form) > 0) {
+                $permissions = $form;
+
+                for ($i = 0 ; $i < count($form); $i++) {
+                    $permission = $permissions[$i];
+
+                    $sql = "UPDATE MENU_ROLE
+                            SET
+                                MENU_FL = '".( $permission[MENU_FL] != null ? $permission[MENU_FL] : null )."'
+                                ,LIST_FL = '".( $permission[LIST_FL] != null ? $permission[LIST_FL] : null )."'
+                                ,VIEW_FL = '".( $permission[VIEW_FL] != null ? $permission[VIEW_FL] : null )."'
+                                ,EDIT_FL = '".( $permission[EDIT_FL] != null ? $permission[EDIT_FL] : null )."'
+                                ,MODIFY_FL = '".( $permission[MODIFY_FL] != null ? $permission[MODIFY_FL] : null )."'
+                            WHERE
+                                MENU_ID = '".$permission[MENU_ID]."'
+                                AND ROLE_ID = '".$permission[ROLE_ID]."'
                     ";
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+                    $_d->sql_query($sql);
+                }
+            }
+
             if ($_d->mysql_errno > 0) {
-                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
             } else {
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 

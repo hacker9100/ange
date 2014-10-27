@@ -5,13 +5,13 @@
 <div class="col-md-12">
 
     <div ng-model="project" lass="row">
-        <form id="fileupload" role="editForm" name="editForm" class="form-horizontal" method="POST" enctype="multipart/form-data" data-file-upload="options">
+        <form id="fileupload" role="form" name="editForm" class="form-horizontal" method="POST" enctype="multipart/form-data" data-file-upload="options">
 
-            <div class= "form-group" ng-class="{error: myForm.subject.$invalid}">
+            <div class= "form-group" ng-class="{error: editForm.subject.$invalid}">
                 <label class= "col-md-2">호제</label>
                 <div class="col-md-4">
                     <input name="subject" ng-model="project.SUBJECT" type= "text" class= "form-control" placeholder="프로젝트 주제" required/>
-                    <span ng-show="myForm.subject.$dirty && myForm.subject.$invalid" class="help-inline">Subject Required</span>
+                    <span ng-show="editForm.subject.$dirty && editForm.subject.$invalid" class="help-inline">Subject Required</span>
                 </div>
             </div>
             <div class= "form-group">
@@ -21,23 +21,17 @@
                 </div>
             </div>
             <!--<div class= "form-group">-->
-                <!--<label class= "col-md-2">등록월</label>-->
+                <!--<label class= "col-md-2">등록자 ID</label>-->
                 <!--<div class="col-md-4">-->
-                    <!--<select ng-model="project.MONTH" ng-options="v for v in project.months" class= "form-control" ></select>-->
+                    <!--<input ng-model="project.REG_UID" type= "text" class= "form-control" placeholder= "등록자 ID"/>-->
                 <!--</div>-->
             <!--</div>-->
-            <div class= "form-group">
-                <label class= "col-md-2">등록자 ID</label>
-                <div class="col-md-4">
-                    <input ng-model="project.REG_UID" type= "text" class= "form-control" placeholder= "등록자 ID"/>
-                </div>
-            </div>
-            <div class= "form-group">
-                <label class= "col-md-2">등록자명</label>
-                <div class="col-md-4">
-                    <input ng-model="project.REG_NM" type= "text" class= "form-control" placeholder= "등록자 명"/>
-                </div>
-            </div>
+            <!--<div class= "form-group">-->
+                <!--<label class= "col-md-2">등록자명</label>-->
+                <!--<div class="col-md-4">-->
+                    <!--<input ng-model="project.REG_NM" type= "text" class= "form-control" placeholder= "등록자 명"/>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class= "form-group">
                 <label class= "col-md-2">표지이미지</label>
                 <div class="col-md-9">

@@ -25,15 +25,28 @@
         case "GET":
             if (isset($id)) {
                 $sql = "SELECT
-                            USER_ID, USER_NM, EMAIL
+                            U.USER_ID, U.USER_NM, U.EMAIL, R.ROLE_ID
                         FROM
-                            CMS_USER
+                            CMS_USER U, USER_ROLE R
                         WHERE
-                            USER_ID = '".$id."'
+                            U.USER_ID = '".$id."'
+                            AND U.USER_ID = R.USER_ID
                         ";
 
                 $result = $_d->sql_query($sql);
                 $data  = $_d->sql_fetch_array($result);
+
+                $sql = "SELECT
+                            M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
+                        FROM
+                            USER_ROLE R, MENU_ROLE M
+                        WHERE
+                            R.USER_ID = '".$id."'
+                           AND R.ROLE_ID = M.ROLE_ID;
+                        ";
+
+                $role_data = $_d->getData($sql);
+                $data['MENU_ROLE'] = $role_data;
 
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -41,9 +54,10 @@
                     if (!isset($_SESSION)) {
                         session_start();
                     }
-                    MtUtil::_c("-------------->>>>>>>>>>>>>".$data['USER_ID']);
                     $_SESSION['uid'] = $data['USER_ID'];
                     $_SESSION['name'] = $data['USER_NM'];
+                    $_SESSION['role'] = $data['ROLE_ID'];
+                    $_SESSION['menu_role'] = $data['MENU_ROLE'];
                     $_SESSION['timeout'] = time();
 
                     $_d->dataEnd2($data);
@@ -60,6 +74,8 @@
                     {
                         unset($_SESSION['uid']);
                         unset($_SESSION['name']);
+                        unset($_SESSION['role']);
+                        unset($_SESSION['menu_role']);
                         unset($_SESSION['timeout']);
                     }
                 } else {
@@ -67,6 +83,8 @@
                     {
                         $sess['USER_ID'] = $_SESSION['uid'];
                         $sess['USER_NM'] = $_SESSION['name'];
+                        $sess['ROLE_ID'] = $_SESSION['role'];
+                        $sess['MENU_ROLE'] = $_SESSION['menu_role'];
 //                    $sess['EMAIL'] = $_SESSION['email'];
                         $_SESSION['timeout'] = time();
                     }
@@ -74,6 +92,8 @@
                     {
                         $sess['USER_ID'] = '';
                         $sess['USER_NM'] = 'Guest';
+                        $sess['ROLE_ID'] = '';
+                        $sess['MENU_ROLE'] = '';
 //                    $sess['EMAIL'] = '';
                     }
                 }
@@ -92,6 +112,8 @@
             {
                 unset($_SESSION['uid']);
                 unset($_SESSION['name']);
+                unset($_SESSION['role']);
+                unset($_SESSION['menu_role']);
 //                unset($_SESSION['email']);
                 unset($_SESSION['timeout']);
             }

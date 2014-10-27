@@ -39,7 +39,11 @@ define([
     '../../partials/cms/article_confirm',
     '../../partials/cms/edit',
 
+    // 게시판
     '../../partials/cms/webboard',
     '../../partials/cms/webboardEdit',
-    '../../partials/cms/webboardView'
+    '../../partials/cms/webboardView',
+
+    // 관리자
+    '../../partials/cms/permission'
 ], function () {});
