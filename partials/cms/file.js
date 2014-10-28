@@ -10,17 +10,18 @@ define([
 ], function (controllers) {
     'use strict';
 
-    var url = '/app/serverscript/upload/';
+    var url = '/serverscript/upload/';
 
     // 사용할 서비스를 주입
     controllers.controller('file', ['$scope', '$http', '$filter', '$window', function ($scope, $http) {
         $scope.options = { url: url, autoUpload: true, dropZone: angular.element('#test') };
 
-        $scope.newDir = 'test1/';
+//        $scope.newDir = 'test1/';
 
 /*
         $scope.loadingFiles = true;
-        $http.get(url+'?newDir='+$scope.newDir)
+//        $http.get(url+'?newDir='+$scope.newDir)
+        $http.get(url)
             .then(
             function (response) {
                 $scope.loadingFiles = false;
@@ -43,7 +44,8 @@ define([
             file.$destroy = function () {
                 state = 'pending';
                 return $http({
-                    url: file.deleteUrl+'&newDir='+$scope.newDir,
+//                    url: file.deleteUrl+'&newDir='+$scope.newDir,
+                    url: file.deleteUrl,
                     method: file.deleteType
                 }).then(
                     function () {

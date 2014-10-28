@@ -45,6 +45,20 @@
                 $result = $_d->sql_query($sql);
                 $data  = $_d->sql_fetch_array($result);
 
+                $sql = "SELECT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                        FROM
+                            FILE F, CONTENT_SOURCE S
+                        WHERE
+                            F.NO = S.SOURCE_NO
+                            AND S.TARGET_NO = ".$data['NO']."
+                            AND F.THUMB_FL = '0'
+                        ";
+
+                $file_data = $_d->getData($sql);
+
+                $data['FILES'] = $file_data;
+
                 $_d->dataEnd2($data);
 //                $data = $_d->sql_query($sql);
 //                if ($_d->mysql_errno > 0) {
@@ -243,7 +257,7 @@
                             '".$file[name]."'
                             , '".$file[thumbnailUrl]."'
                             , '".$file[type]."'
-                            , '".$file[size]."'
+                            , ''
                             , '".$ori_file_no."'
                             , '1'
                             , SYSDATE()
@@ -266,6 +280,8 @@
                             , '".$i."'
                         )";
 
+                    $_d->sql_query($sql);
+
                     $sql = "INSERT INTO FILE
                         (
                             FILE_NM
@@ -280,7 +296,7 @@
                             '".$file[name]."'
                             , '".$file[midiumUrl]."'
                             , '".$file[type]."'
-                            , '".$file[size]."'
+                            , ''
                             , '".$ori_file_no."'
                             , '2'
                             , SYSDATE()
