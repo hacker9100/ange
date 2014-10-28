@@ -98,14 +98,13 @@ define([
 
         $scope.initSearch = function() {
             // 검색어
-            var order = [{name: "기자", value: "0"}, {name: "편집자", value: "1"}, {name: "제목+내용", value: "2"}];
+            var order = [{name: "기자", value: "EDITOR_NM"}, {name: "편집자", value: "PROJECT_REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
             $scope.search = { years: year, YEAR: nowYear+'', order: order, ORDER: order[0], projects: project, PROJECT: project[0] };
         };
 
         $scope.searchTask = function(search) {
             search.CATEGORY = $scope.CATEGORY;
-            alert(JSON.stringify(search));
         };
 
         /********** 목록 조회 이벤트 **********/

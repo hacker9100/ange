@@ -2,6 +2,7 @@
 class MtJson extends MtData {
 
     function MtJson() {
+//        ob_start();
         parent::connect();
     }
 
@@ -19,6 +20,7 @@ class MtJson extends MtData {
 
     function succEnd($msg) {
         MtUtil::_c("### [END] [SUCCESS]".$msg);
+        header('HTTP/1.1 200 OK');
         echo '{\'msg\':\''.$msg.'\',\'err\':false}';
         exit;
     }
@@ -35,30 +37,35 @@ class MtJson extends MtData {
     }
 
     function getData($sql) {
-        $__trn = '';
+        $__trn = null;
         $result = $this->sql_query($sql,true);
         for ($i=0; $row=$this->sql_fetch_array($result); $i++) {
             $__trn->rows[$i] = $row;
         }
         $this->sql_free_result($result);
-        return $__trn != '' ? $__trn->{'rows'} : $__trn;
+        return $__trn != null ? $__trn->{'rows'} : $__trn;
 //        return json_encode($__trn != '' ? $__trn->{'rows'} : $__trn);
     }
 
     function dataEnd($sql) {
+//        ob_end_clean();
+
         $result = $this->getData($sql);
         MtUtil::_c("### [END] [DATA]".json_encode($result));
-        header('HTTP/1.1 200 OK');
-        header('Content-Type:application/json');
+//        header('HTTP/1.1 200 OK');
+//        header('Content-Type:application/json');
 
+//        echo '{"msg":'.json_encode($result).',"err":false}';
         echo json_encode($result);
         exit;
     }
 
     function dataEnd2($result) {
+//        ob_end_clean();
+
         MtUtil::_c("### [END] [DATA]".json_encode($result));
-        header('HTTP/1.1 200 OK');
-        header('Content-Type:application/json');
+//        header('HTTP/1.1 200 OK');
+//        header('Content-Type:application/json');
 
         echo json_encode($result);
         exit;

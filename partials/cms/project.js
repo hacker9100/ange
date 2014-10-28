@@ -22,12 +22,5 @@ define([
         $scope.isId = $stateParams.id == 0 || $stateParams.id == undefined ? false : true;
 
 //        alert(localStorage.getItem('userToken'))
-
-        $scope.logout = function() {
-            loginService.logout().then( function(data) {
-                $location.path('/signin');
-            });
-        };
-
     }]);
 });

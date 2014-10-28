@@ -12,6 +12,7 @@ define([
 //    './contentDetailController',
 //    './managementMainController',
 
+    '../../partials/cms/gnb',
     '../../partials/cms/lnb',
     '../../partials/cms/locater',
 

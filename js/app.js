@@ -332,7 +332,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                     if ($location.path() == '/signup' || $location.path() == '/signin') {
 
                     } else {
-                        alert("세션이 만료되었습니다.")
+                        alert("로그인이 필요한 메뉴입니다.")
                         $location.path("/signin");
                     }
                 }
@@ -402,6 +402,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             $scope.stylesheets = args;
 
         });
+
     });
 
     // 외부에 노출할 함수들만 반환한다.

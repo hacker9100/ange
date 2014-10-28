@@ -25,12 +25,12 @@ define([
 
         // 초기화
         $scope.initList = function() {
-            for (var i = nowYear - 5; i < nowYear + 5; i++) {
+            for (var i = 2010; i < nowYear + 5; i++) {
                 year.push(i+'');
             }
 
             // 검색어
-            var order = [{name: "기자", value: "0"}, {name: "편집자", value: "1"}, {name: "제목+내용", value: "2"}];
+            var order = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
             $scope.search = { years: year, YEAR: nowYear+'', order: order, ORDER: order[0] };
         };
@@ -69,17 +69,13 @@ define([
         };
 
         // 검색
-        $scope.getSearch = function () {
+        $scope.searchProject = function () {
             var search = [];
             search.push('YEAR/'+$scope.search.YEAR);
             search.push($scope.search.ORDER.value+'/'+$scope.search.KEYWORD);
 
-            var a = 'YEAR/'+$scope.search.YEAR;
-            var b = $scope.search.ORDER.value+'/'+$scope.search.KEYWORD;
-
             $location.search('_search', search);
 
-            alert(JSON.stringify($location.search()));
             $scope.getListProjects();
         }
 
@@ -94,7 +90,7 @@ define([
                     $scope.currentPage = 1; // 현재 페이지
                 }
                 $scope.isLoading = false;
-//                $location.search('_search', null);
+                $location.search('_search', null);
             });
         };
 
@@ -111,6 +107,15 @@ define([
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.currentPage);
         };
+
+        // 페이지 이동 시 이벤트
+        $scope.$watch('isLoading', function() {
+            if (projectsData == 'null') {
+                $scope.projects = null;
+            } else {
+                $scope.projects = projectsData;
+            }
+        });
 
         // 페이지 이동 시 이벤트
         $scope.$watch('currentPage + itemsPerPage', function() {
