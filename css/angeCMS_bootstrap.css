@@ -3111,6 +3111,7 @@ input[type="button"].btn-block {
   content: "";
   border-top: 0;
   border-bottom: 4px solid;
+  height:20px;
 }
 .dropup .dropdown-menu,
 .navbar-fixed-bottom .dropdown .dropdown-menu {
@@ -3641,10 +3642,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar {
   position: relative;
-  min-height: 80px;
-  margin-bottom: 20px;
+  min-height: 60px;
+  margin-bottom: 10px;
   border: 1px solid transparent;
-  font-size: 0.94em;
+  font-size: 1.04em;
 }
 @media (min-width: 768px) {
   .navbar {
@@ -3739,14 +3740,21 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-brand {
   float: left;
-  height: 50px;
+  /*height: 50px;
   padding: 15px 15px;
   font-size: 18px;
   line-height: 20px;
+  */
+  margin-top:15px;
+  width: 165px;
+  height: 55px;
+  background:URL('../imgs/gnb_brand_01_brandlogo.png') no-repeat;
+  background-position: 5px 0;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
   text-decoration: none;
+  background-position: 5px -55px;
 }
 @media (min-width: 768px) {
   .navbar > .container .navbar-brand,
@@ -3758,9 +3766,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   float: right;
   padding: 20px 20px;
-  margin-top: 10px;
+  margin-top: 13px;
   margin-right: 15px;
-  margin-bottom: 8px;
+  margin-bottom: 15px;
   background-color: transparent;
   background-image: none;
   border: 1px solid transparent;
@@ -3925,7 +3933,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-bottom: 14px;
 }
 .navbar-text {
-  margin-top: 15px;
+  margin-top: 30px;
   margin-bottom: 15px;
 }
 @media (min-width: 768px) {
@@ -4048,7 +4056,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
   color: #fff;
-  background-color: #080808;
+  /*background-color: #080808;*/
+  /*background-color: #192a2e;*/
+  background:URL('../imgs/gnb_bg_01_active.jpg') repeat-x;
+
 }
 .navbar-inverse .navbar-nav > .disabled > a,
 .navbar-inverse .navbar-nav > .disabled > a:hover,
@@ -4057,14 +4068,16 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: transparent;
 }
 .navbar-inverse .navbar-toggle {
-  border-color: #333;
+  /* border-color: #333; */
+  border-color: #325259;
 }
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
-  background-color: #333;
+  /* background-color: #333; */
+  background-color: #546e74;
 }
 .navbar-inverse .navbar-toggle .icon-bar {
-  background-color: #fff;
+  background-color: #FFF;
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
@@ -4075,6 +4088,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-inverse .navbar-nav > .open > a:focus {
   color: #fff;
   background-color: #080808;
+    background:URL('../imgs/gnb_bg_01_active.jpg') repeat-x;
 }
 @media (max-width: 767px) {
   .navbar-inverse .navbar-nav .open .dropdown-menu > .dropdown-header {
@@ -4089,13 +4103,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
   .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
     color: #fff;
-    background-color: transparent;
+    background:URL('../imgs/gnb_bg_01_active.jpg') repeat-x;
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a,
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover,
   .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
     color: #fff;
-    background-color: #080808;
+        background:URL('../imgs/gnb_bg_01_active.jpg') repeat-x;
+
   }
   .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a,
   .navbar-inverse .navbar-nav .open .dropdown-menu > .disabled > a:hover,
