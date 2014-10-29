@@ -11,21 +11,55 @@
         <div ui-view="locaterView"></div>
 		<!-- // Locator -->
 
-		<div class="panel panel-primary">
+		<div class="panel panel-master contentpannel">
 
-			<div class="panel-heading">
+			<div class="contentpannel-heading">
 				<h4 class="list-group-item-heading">{{pageTitle}}</h4>
-				<span style="color:#EDEDED; font-size:0.84em;">{{pageDescription}}</span>
+				<span style="font-size:0.78em; color:#aaa;">{{pageDescription}}</span>
 			</div>
 
-			<div class="panel-body">
-			<br />
+			<div class="contentpannel-body">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="list-group">
+                            <li class="list-group-item list-group-item-labeling">
+                                공지사항
+                            </li>
+
+                            <!--- 리스트 1set -->
+                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #1 <span class="list-group-item-right">2014-09-09</span></a>
+                            <!--- /// 리스트 1set -->
+
+                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #2 <span class="list-group-item-right">2014-09-09</span></a>
+                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #3 <span class="list-group-item-right">2014-09-09</span></a>
+                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #4 <span class="list-group-item-right">2014-09-09</span></a>
+                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #5 <span class="list-group-item-right">2014-09-09</span></a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="list-group">
+                            <li class="list-group-item list-group-item-labeling">
+                                프로젝트
+                            </li>
+                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #1</a>
+                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #2</a>
+                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #3</a>
+                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #4</a>
+                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #5</a>
+                        </div>
+                    </div>
+
+                </div>
+
+
 
                 <div ng-repeat="view in views">
                     <div ui-view="{{view.name}}"></div>
                 </div>
 
-			<br /><br />
 			</div>
 
 		</div>
