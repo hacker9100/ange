@@ -15,6 +15,8 @@ define([
 
 //        alert(localStorage.getItem('userToken'))
         /********** 초기화 **********/
+        $scope.search = [];
+
         // 날짜 콤보박스
         var year = [];
         var now = new Date();
@@ -32,7 +34,10 @@ define([
             // 검색어
             var order = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
-            $scope.search = { years: year, YEAR: nowYear+'', order: order, ORDER: order[0] };
+            $scope.years = year;
+            $scope.order = order;
+            $scope.search.YEAR = nowYear+'';
+            $scope.search.ORDER = order[0];
         };
 
         /********** 목록 조회 이벤트 **********/

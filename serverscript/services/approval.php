@@ -133,7 +133,7 @@
             if (!empty($form[APPROVAL_ST])) {
 
                 if ($form[APPROVAL_ST] == '11')
-                    $parse = '12';
+                    $parse = '20';
                 else
                     $parse = '13';
 

@@ -11,8 +11,10 @@ define([
     './articleDirective',
     './articleConfirmDirective',
     './editDirective',
+    './editConfirmDirective',
 
     // 관리자
+    './userDirective',
     './permissionDirective',
 
     './dropdownSelectDirective',

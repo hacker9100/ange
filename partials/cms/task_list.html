@@ -1,58 +1,61 @@
 <div class="panel panel-primary">
     <div class="panel-body" ng-model="search" lass="row">
 
-        <form role="form" name="myForm" class="form-horizontal">
-            <div class= "form-group">
-                <label class= "col-md-2"> 연도 </label>
-                <div class="col-md-2">
-                    <select ng-model="search.YEAR" ng-options="v for v in search.years" class= "form-control" placeholder="등록년"></select>
+        <form role="form" name="listForm" class="form-horizontal">
+            <div class="col-md-9">
+                <div class= "form-group">
+                    <label class= "col-md-2"> 연도 </label>
+                    <div class="col-md-3">
+                        <select ng-model="search.YEAR" ng-options="v for v in years" class= "form-control" placeholder="등록년"></select>
+                    </div>
+                    <label class= "col-md-2">프로젝트명</label>
+                    <div class="col-md-4">
+                        <select ng-model="search.PROJECT" ng-options="project.SUBJECT for project in projects" class= "form-control" placeholder="프로젝트명"></select>
+                    </div>
                 </div>
-                <label class= "col-md-2">프로젝트명</label>
-                <div class="col-md-4">
-                    <select ng-model="search.PROJECT" ng-options="project.SUBJECT for project in search.projects" class= "form-control" placeholder="프로젝트명"></select>
+                <div class= "form-group">
+                    <label class= "col-md-2">카테고리</label>
+                    <div class="col-md-3">
+                        <div ng-dropdown-multiselect="" options="category_a" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주기선택'}" extra-settings="select_settings" checkboxes="true"></div>
+                        <!--<select ng-model="tesk.CATEGORY_B" ng-options="a.CATEGORY_NM for a in category_a" class= "form-control" placeholder="주기 선택" ></select>-->
+                    </div>
+                    <div class="col-md-3">
+                        <select ng-model="CATEGORY_M" ng-options="category.CATEGORY_NM for category in category_b" class= "form-control" placeholder="주제 대분류">
+                            <option name="category_b" value="">- 주제 대분류</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <!--<select ng-model="tesk.CATEGORY_S" ng-options="s.CATEGORY_NM for s in category_s" class= "form-control" placeholder="주제 소분류"></select>-->
+                        <div ng-dropdown-multiselect="" options="category_s" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주제 소분류'}" extra-settings="select_settings" checkboxes="true"></div>
+                    </div>
+                </div>
+                <div class= "form-group">
+                    <label class= "col-md-2"></label>
+                    <div ng-model="search.CATEGORY" class="col-md-2 btn-group" ng-repeat="category in CATEGORY">
+                        <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                    </div>
+                </div>
+                <div class= "form-group">
+                    <label class= "col-md-2">검색</label>
+                    <div class= "col-md-3">
+                        <select ng-model="search.ORDER" ng-options="order.name for order in order" class= "form-control" placeholder="검색선택"></select>
+                    </div>
+                    <div class="col-md-6">
+                        <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+                    </div>
                 </div>
             </div>
-            <div class= "form-group">
-                <label class= "col-md-2">카테고리</label>
-                <div class="col-md-2">
-                    <div ng-dropdown-multiselect="" options="category_a" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주기선택'}" extra-settings="select_settings" checkboxes="true"></div>
-                    <!--<select ng-model="tesk.CATEGORY_B" ng-options="a.CATEGORY_NM for a in category_a" class= "form-control" placeholder="주기 선택" ></select>-->
+            <div class="col-md-pull-2">
+                <div class= "navbar-header" >
+                    <button class="btn btn-primary start" ng-click="searchTask();" ng-disabled="listForm.$invalid">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <span>검색</span>
+                    </button>
+                    <button class="btn btn-success fileinput-button" data-ng-click="createNewTask()">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>등록</span>
+                    </button>
                 </div>
-                <div class="col-md-3">
-                    <select ng-model="CATEGORY_M" ng-options="category.CATEGORY_NM for category in category_b" class= "form-control" placeholder="주제 대분류">
-                        <option name="category_b" value="">- 주제 대분류</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <!--<select ng-model="tesk.CATEGORY_S" ng-options="s.CATEGORY_NM for s in category_s" class= "form-control" placeholder="주제 소분류"></select>-->
-                    <div ng-dropdown-multiselect="" options="category_s" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주제 소분류'}" extra-settings="select_settings" checkboxes="true"></div>
-                </div>
-            </div>
-            <div class= "form-group">
-                <label class= "col-md-2"></label>
-                <div ng-model="search.CATEGORY" class="col-md-2 btn-group" ng-repeat="category in CATEGORY">
-                    <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
-                </div>
-            </div>
-            <div class= "form-group">
-                <label class= "col-md-2">검색</label>
-                <div class= "col-md-2">
-                    <select ng-model="search.ORDER" ng-options="order.name for order in search.order" class= "form-control" placeholder="검색선택"></select>
-                </div>
-                <div class="col-md-6">
-                    <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
-                </div>
-            </div>
-
-            <div class= "navbar-header" >
-                <button class="btn btn-primary start" ng-click="searchTask(search);" ng-disabled="listForm.$invalid">
-                    <i class="glyphicon glyphicon-search"></i>
-                    <span>검색</span>
-                </button>
-                <button class="btn btn-success fileinput-button" data-ng-click="createNewTask()">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>등록</span>
-                </button>
             </div>
         </form>
 
@@ -149,11 +152,6 @@
             </div>
         </div>
     </accordion-group>
-    <!--<accordion-group heading="Dynamic Body Content">-->
-        <!--<p>The body of the accordion group grows to fit the contents</p>-->
-        <!--<button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>-->
-        <!--<div ng-repeat="item in items">{{item}}</div>-->
-    <!--</accordion-group>-->
 </accordion>
 
 <!-- ////Contents Include -->

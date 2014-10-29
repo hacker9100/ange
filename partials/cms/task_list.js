@@ -13,6 +13,9 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('task_list', ['$scope', '$stateParams', 'projectService', 'taskService', '$location', function ($scope, $stateParams, projectService, taskService, $location) {
 
+        /********** 초기화 **********/
+        $scope.search = [];
+
         var category = [
             {"NO": 0, "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신준비", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
             {"NO": 1, "CATEGORY_B": "002", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신초기", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
@@ -23,8 +26,6 @@ define([
             {"NO": 6, "CATEGORY_B": "001", "CATEGORY_M": "001", "CATEGORY_S": "", "DEPTH": "2", "CATEGORY_NM": "검사", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
             {"NO": 7, "CATEGORY_B": "001", "CATEGORY_M": "002", "CATEGORY_S": "", "DEPTH": "2", "CATEGORY_NM": "운동", "CATEGORY_GB": "2", "CATEGORY_ST": "0"}
         ];
-
-        $scope.CATEGORY = [];
 
         $scope.$watch('CATEGORY_M', function(data) {
             var category_s = [];
@@ -44,7 +45,6 @@ define([
             $scope.CATEGORY.splice(idx, 1);
         }
 
-        /********** 초기화 **********/
         // 날짜 콤보박스
         var year = [];
         var now = new Date();
@@ -57,6 +57,8 @@ define([
 
         // 초기화
         $scope.initList = function() {
+            $scope.oneAtATime = true;
+
             for (var i = nowYear - 5; i < nowYear + 5; i++) {
                 year.push(i+'');
             }
@@ -64,13 +66,11 @@ define([
             projectService.getProjectOptions().then(function(projects){
                 project = projects.data;
 
-//                $scope.search.projects = projects.data;
-//
-//                if ($scope.projects != null) {
-//                    $scope.search.PROJECT = $scope.projects[0];
-//                }
+                $scope.projects = projects.data;
 
-                $scope.initSearch();
+                if ($scope.projects != null) {
+                    $scope.search.PROJECT = $scope.projects[0];
+                }
             });
 
             // 카테고리
@@ -94,17 +94,16 @@ define([
                 $scope.category_a = category_a;
                 $scope.category_b = category_b;
             }
-        };
 
-        $scope.initSearch = function() {
             // 검색어
-            var order = [{name: "기자", value: "EDITOR_NM"}, {name: "편집자", value: "PROJECT_REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
+            var order = [{name: "기자", value: "EDITOR_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
-            $scope.search = { years: year, YEAR: nowYear+'', order: order, ORDER: order[0], projects: project, PROJECT: project[0] };
-        };
-
-        $scope.searchTask = function(search) {
-            search.CATEGORY = $scope.CATEGORY;
+            $scope.years = year;
+            $scope.projects = project;
+            $scope.order = order;
+            $scope.search.YEAR = nowYear+'';
+            $scope.search.PROJECT = project[0];
+            $scope.search.ORDER = order[0];
         };
 
         /********** 목록 조회 이벤트 **********/
@@ -137,15 +136,29 @@ define([
             }
 
             taskService.deleteTask(task.NO).then(function(data){
-                $scope.getTasks();
+                $scope.getListTasks();
             });
         };
 
+        // 검색
+        $scope.searchTask = function() {
+//            var search = [];
+//
+//            search.CATEGORY = $scope.CATEGORY;
+//            search.push('YEAR/'+$scope.search.YEAR);
+//            search.push('PROJECT_N0/'+$scope.search.PROJECT.NO);
+//            search.push($scope.search.ORDER.value+'/'+$scope.search.KEYWORD);
+//            search.push('CATEGORY/'+$scope.CATEGORY);
+            $scope.search.CATEGORY = $scope.CATEGORY;
+            $location.search('_search', $scope.search);
+
+            $scope.getListTasks();
+        };
+
         // 목록
-        $scope.getTasks = function () {
+        $scope.getListTasks = function () {
             $scope.isLoading = true;
             taskService.getTasks().then(function(tasks){
-
                 tasksData = tasks.data;
 
                 if (tasksData != null) {
@@ -153,6 +166,7 @@ define([
                     $scope.currentPage = 1; // 현재 페이지
                 }
                 $scope.isLoading = false;
+                $location.search('_search', null);
             });
         };
 
@@ -169,6 +183,15 @@ define([
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.currentPage);
         };
+
+        // 페이지 이동 시 이벤트
+        $scope.$watch('isLoading', function() {
+            if (tasksData == 'null') {
+                $scope.tasks = null;
+            } else {
+                $scope.tasks = tasksData;
+            }
+        });
 
         // 페이지 이동 시 이벤트
         $scope.$watch('currentPage + itemsPerPage', function() {
@@ -195,7 +218,7 @@ define([
             $scope.tailDescription = '.';
 
             $scope.initList();
-            $scope.getTasks();
+            $scope.getListTasks();
         }
 
     }]);

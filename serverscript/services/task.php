@@ -32,7 +32,7 @@
         case "GET":
             if (isset($id)) {
                 $sql = "SELECT
-                            P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
+                            P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
                             T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO
                         FROM
                             CMS_TASK T, CMS_PROJECT P
@@ -67,7 +67,8 @@
 //                    $_d->dataEnd($sql);
 //                }
             } else {
-                $search = "";
+                $where_search = "";
+                $from_category = "";
 
                 if (isset($_phase)) {
                     $in_str = "";
@@ -77,23 +78,68 @@
                         if (sizeof($arr_phase) - 1 != $i) $in_str = $in_str.",";
                     }
 
-                    $search = "AND T.PHASE IN (".$in_str.")";
+                    $where_search = "AND T.PHASE IN (".$in_str.")";
+                }
+
+                if (isset($_search) && count($_search) > 0) {
+/*
+                    for ($i = 0 ; $i < count($_search); $i++) {
+                        $item = $_search[$i];
+                        $arr_item = explode('/', $item);
+
+                        if ($arr_item[0] == 'PROJECT_N0') {
+                            $search .= "AND P.NO  = ".$arr_item[1]." ";
+                        } else if ($arr_item[0] == 'YEAR') {
+                            $search .= "AND P.YEAR  = '".$arr_item[1]."' ";
+                        } else {
+                            $search .= "AND T.".$arr_item[0]." LIKE '%".$arr_item[1]."%' ";
+                        }
+                    }
+*/
+                    if (isset($_search[YEAR])) {
+                        $where_search .= "AND P.YEAR  = '".$_search[YEAR]."' ";
+                    }
+                    if (isset($_search[PROJECT])) {
+                        $where_search .= "AND P.NO  = '".$_search[PROJECT][NO]."' ";
+                    }
+                    if (isset($_search[KEYWORD])) {
+                        $where_search .= "AND T.".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    }
+                    if (isset($_search[CATEGORY])) {
+                        $where_category = "";
+                        for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
+                            $category = $_search[CATEGORY][$i];
+                            $where_category .= $category[NO].($i != count($_search[CATEGORY]) - 1 ? "," : "");
+                        }
+
+                        $from_category = ",(
+                                              SELECT
+                                                  TARGET_NO
+                                              FROM
+                                                  CONTENT_CATEGORY
+                                              WHERE CATEGORY_NO IN (".$where_category.")
+                                              GROUP BY TARGET_NO
+                                          ) AS C ";
+
+                        $where_search .= "AND C.TARGET_NO = T.NO ";
+                    }
                 }
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                            PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                             CLOSE_YMD, TAG, NOTE, PROJECT_NO
                         FROM
                         (
                             SELECT
-                                P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.REG_UID, T.REG_NM, T.REG_DT,
+                                P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
                                 T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO
                             FROM
                                 CMS_TASK T, CMS_PROJECT P
+                                ".$from_category."
                             WHERE
                                 T.PROJECT_NO = P.NO
-                                ".$search."
+                                ".$where_search."
                             ORDER BY T.REG_DT DESC
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -101,10 +147,11 @@
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                CMS_TASK T
+                                CMS_TASK T, CMS_PROJECT P
+                                ".$from_category."
                             WHERE
-                                1 = 1
-                                ".$search."
+                                T.PROJECT_NO = P.NO
+                                ".$where_search."
                         ) CNT
                         ";
 

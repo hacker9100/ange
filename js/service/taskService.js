@@ -14,7 +14,7 @@ define(['./services'], function (services) {
             var str = [];
             for (var p in obj) {
                 var k = prefix ? prefix + "[" + p + "]" : p,
-                    v = obj[k];
+                    v = obj[p];
 
                 if (p != '_method')
                     str.push(angular.isObject(v) ? qs(v, k) : (k) + "=" + encodeURIComponent(v));
@@ -39,7 +39,7 @@ define(['./services'], function (services) {
         }
 
         obj.updateStatusTask = function(id, task){
-            return $http.post('serverscript/services/task.php?_method=PUT&_category='+$location.path()+'&id='+id, task);
+            return $http.post('serverscript/services/task.php?_method=PUT&'+qs($location.search())+'&_category='+$location.path()+'&id='+id, task);
         }
 
         obj.deleteTask = function(id){

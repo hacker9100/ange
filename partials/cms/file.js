@@ -63,4 +63,18 @@ define([
             };
         }
     }]);
+
+    controllers.controller('file_editor', ['$scope', '$http', function ($scope, $http) {
+        var file = $scope.file,
+            state;
+        if (file.url) {
+            file.$state = function () {
+                return state;
+            };
+            file.$editor = function () {
+                var img = '<img alt="" src="/upload/files/medium/'+file.name+'" />';
+                $scope.$parent.content.BODY += img;
+            };
+        }
+    }]);
 });

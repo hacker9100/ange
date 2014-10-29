@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : project.html 화면 콘트롤러
+ * Description : edit_confirm_list.html 화면 콘트롤러
  */
 
 define([
@@ -10,7 +10,7 @@ define([
 ], function (controllers) {
     'use strict';
 
-    controllers.controller('article_confirm_modal', ['$scope', '$modalInstance', 'approvalService', 'content', 'status', function ($scope, $modalInstance, approvalService, content, status) {
+    controllers.controller('edit_confirm_modal', ['$scope', '$modalInstance', 'approvalService', 'content', 'status', function ($scope, $modalInstance, approvalService, content, status) {
 
         if (status == '11') {
             $scope.title = "승인 처리";
@@ -34,7 +34,7 @@ define([
     }]);
 
     // 사용할 서비스를 주입
-    controllers.controller('article_confirm_list', ['$scope', '$stateParams', 'taskService', 'contentService', '$modal', '$location', function ($scope, $stateParams, taskService, contentService, $modal, $location) {
+    controllers.controller('edit_confirm_list', ['$scope', '$stateParams', 'taskService', 'contentService', '$modal', '$location', function ($scope, $stateParams, taskService, contentService, $modal, $location) {
 
         $scope.openModal = function (content, status, size) {
             var modalInstance = $modal.open({
@@ -79,7 +79,7 @@ define([
 
             var content = $scope.contents[idx];
 
-            $scope.openModal(content, '11');
+            $scope.openModal(content, '21');
 
 //            contentService.deleteContent(content.NO).then(function(data){
 //                $scope.getContents();
@@ -91,7 +91,7 @@ define([
 
             var content = $scope.contents[idx];
 
-            $scope.openModal(content, '12');
+            $scope.openModal(content, '22');
 
 //            contentService.deleteContent(content.NO).then(function(data){
 //                $scope.getContents();
@@ -101,7 +101,7 @@ define([
         // 목록
         $scope.getListTasks = function () {
             $scope.isLoading = true;
-            $location.search('_phase', '11,12,13');
+            $location.search('_phase', '21,22,23');
             taskService.getTasks().then(function(tasks){
 
                 tasksData = tasks.data;
@@ -127,7 +127,7 @@ define([
                     $location.search({_method: 'PUT'});
                 }
 
-                $location.path('/article_confirm/edit/'+task.NO);
+                $location.path('/edit_confirm/edit/'+task.NO);
             });
         };
 
@@ -165,8 +165,8 @@ define([
         // 페이지 타이틀
         if ($scope.method == 'GET' && $stateParams.id == undefined) {
             $scope.message = 'ANGE CMS';
-            $scope.pageTitle = '원고 승인';
-            $scope.pageDescription = '작성된 원고를 검수합니다.';
+            $scope.pageTitle = '편집 승인';
+            $scope.pageDescription = '편집된 원고를 확인하고 승인관리합니다.';
             $scope.tailDescription = '.';
 
             $scope.initList();

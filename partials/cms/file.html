@@ -10,16 +10,16 @@
                 <!-- The fileinput-button span is used to style the file input field as button -->
                     <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
                         <i class="glyphicon glyphicon-plus"></i>
-                        <span>Add files...</span>
+                        <span>탐색기</span>
                         <input type="file" name="files[]" multiple ng-disabled="disabled">
                     </span>
                 <button type="button" class="btn btn-primary start" data-ng-click="submit()">
                     <i class="glyphicon glyphicon-upload"></i>
-                    <span>Start upload</span>
+                    <span>전체 등록</span>
                 </button>
                 <button type="button" class="btn btn-warning cancel" data-ng-click="cancel()">
                     <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel upload</span>
+                    <span>전체 취소</span>
                 </button>
                 <!-- The global file processing state -->
                 <span class="fileupload-process"></span>
@@ -58,15 +58,19 @@
                 <td>
                     <button type="button" class="btn btn-primary start" data-ng-click="file.$submit()" data-ng-hide="!file.$submit || options.autoUpload" data-ng-disabled="file.$state() == 'pending' || file.$state() == 'rejected'">
                         <i class="glyphicon glyphicon-upload"></i>
-                        <span>Start</span>
+                        <span>등록</span>
                     </button>
                     <button type="button" class="btn btn-warning cancel" data-ng-click="file.$cancel()" data-ng-hide="!file.$cancel">
                         <i class="glyphicon glyphicon-ban-circle"></i>
-                        <span>Cancel</span>
+                        <span>취소</span>
                     </button>
                     <button data-ng-controller="file_destroy" type="button" class="btn btn-danger destroy" data-ng-click="file.$destroy()" data-ng-hide="!file.$destroy">
                         <i class="glyphicon glyphicon-trash"></i>
-                        <span>Delete</span>
+                        <span>삭제</span>
+                    </button>
+                    <button data-ng-controller="file_editor" type="button" class="btn btn-primary start" data-ng-click="file.$editor()" data-ng-hide="!file.$destroy">
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>에디터 추가</span>
                     </button>
                 </td>
             </tr>
