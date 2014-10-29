@@ -24,7 +24,7 @@ define([
 
                     $location.path('/dashboard');
                 } else {
-                    alert("로그인에 실패 했습니다.");
+                    alert("아이디나 비밀번호가 틀립니다.");
                 }
             });
         }

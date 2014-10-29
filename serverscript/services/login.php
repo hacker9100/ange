@@ -118,6 +118,8 @@
                 unset($_SESSION['timeout']);
             }
 
+            $_d->succEnd("ok");
+
             break;
     }
 ?>

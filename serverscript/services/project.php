@@ -42,6 +42,20 @@
                 $result = $_d->sql_query($sql);
                 $data  = $_d->sql_fetch_array($result);
 
+                $sql = "SELECT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                        FROM
+                            FILE F, CONTENT_SOURCE S
+                        WHERE
+                            F.NO = S.SOURCE_NO
+                            AND S.TARGET_NO = ".$id."
+                        ORDER BY THUMB_FL ASC
+                        ";
+
+                $file_data = $_d->getData($sql);
+
+                $data['FILE'] = $file_data;
+
                 $_d->dataEnd2($data);
 
 //                $data = $_d->sql_query($sql);
@@ -62,15 +76,13 @@
                             ";
                 } else {
                     $search = "";
-                    MtUtil::_c("### [search] ".$_search);
 
-                    if (count($_search) > 0) {
+                    if (isset($_search) && count($_search) > 0) {
                         for ($i = 0 ; $i < count($_search); $i++) {
-                            $search
+                            $item = $_search[$i];
+                            $arr_item = explode('/', $item);
 
-                            $search."AND ".." IN (".$in_str.")";
-
-                            MtUtil::_c("### [search] ".$_search[$i]);
+                            $search .= "AND ".$arr_item[0]." LIKE '%".$arr_item[1]."%' ";
                         }
                     }
 
@@ -83,6 +95,9 @@
                                     NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, REG_DT, PROJECT_ST
                                 FROM
                                     CMS_PROJECT
+                                WHERE
+                                    1=1
+                                    ".$search."
                                 ORDER BY REG_DT DESC
                             ) AS DATA,
                             (SELECT @RNUM := 0) R,
@@ -91,6 +106,9 @@
                                     COUNT(*) AS TOTAL_COUNT
                                 FROM
                                     CMS_PROJECT
+                                WHERE
+                                    1=1
+                                    ".$search."
                             ) CNT
                             ";
                 }
@@ -163,6 +181,127 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
+            if (isset($form[FILE])) {
+                $file = $form[FILE];
+
+                MtUtil::_c("------------>>>>> file : ".$file['name']);
+
+                $sql = "INSERT INTO FILE
+                (
+                    FILE_NM
+                    ,PATH
+                    ,FILE_EXT
+                    ,FILE_SIZE
+                    ,THUMB_FL
+                    ,REG_DT
+                    ,FILE_ST
+                ) VALUES (
+                    '".$file[name]."'
+                    , '".$file[url]."'
+                    , '".$file[type]."'
+                    , '".$file[size]."'
+                    , '0'
+                    , SYSDATE()
+                    , 'C'
+                )";
+
+                $_d->sql_query($sql);
+                $ori_file_no = $_d->mysql_insert_id;
+
+                $sql = "INSERT INTO CONTENT_SOURCE
+                (
+                    TARGET_NO
+                    ,SOURCE_NO
+                    ,CONTENT_GB
+                    ,SORT_IDX
+                ) VALUES (
+                    '".$no."'
+                    , '".$ori_file_no."'
+                    , 'FILE'
+                    , '0'
+                )";
+
+                $_d->sql_query($sql);
+
+                $sql = "INSERT INTO FILE
+                (
+                    FILE_NM
+                    ,PATH
+                    ,FILE_EXT
+                    ,FILE_SIZE
+                    ,ORIGINAL_NO
+                    ,THUMB_FL
+                    ,REG_DT
+                    ,FILE_ST
+                ) VALUES (
+                    '".$file[name]."'
+                    , '".$file[thumbnailUrl]."'
+                    , '".$file[type]."'
+                    , ''
+                    , '".$ori_file_no."'
+                    , '1'
+                    , SYSDATE()
+                    , 'C'
+                )";
+
+                $_d->sql_query($sql);
+                $file_no = $_d->mysql_insert_id;
+
+                $sql = "INSERT INTO CONTENT_SOURCE
+                (
+                    TARGET_NO
+                    ,SOURCE_NO
+                    ,CONTENT_GB
+                    ,SORT_IDX
+                ) VALUES (
+                    '".$no."'
+                    , '".$file_no."'
+                    , 'FILE'
+                    , '0'
+                )";
+
+                $_d->sql_query($sql);
+
+                $sql = "INSERT INTO FILE
+                (
+                    FILE_NM
+                    ,PATH
+                    ,FILE_EXT
+                    ,FILE_SIZE
+                    ,ORIGINAL_NO
+                    ,THUMB_FL
+                    ,REG_DT
+                    ,FILE_ST
+                ) VALUES (
+                    '".$file[name]."'
+                    , '".$file[mediumUrl]."'
+                    , '".$file[type]."'
+                    , ''
+                    , '".$ori_file_no."'
+                    , '2'
+                    , SYSDATE()
+                    , 'C'
+                )";
+
+                $_d->sql_query($sql);
+                $file_no = $_d->mysql_insert_id;
+
+                $sql = "INSERT INTO CONTENT_SOURCE
+                (
+                    TARGET_NO
+                    ,SOURCE_NO
+                    ,CONTENT_GB
+                    ,SORT_IDX
+                ) VALUES (
+                    '".$no."'
+                    , '".$file_no."'
+                    , 'FILE'
+                    , '0'
+                )";
+
+                $_d->sql_query($sql);
+            }
+
             if ($_d->mysql_errno > 0) {
                 $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$_d->mysql_error);
@@ -201,6 +340,169 @@
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
+
+            if (isset($form[FILE])) {
+                $file = $form[FILE];
+
+                MtUtil::_c("------------>>>>> file : ".$file['name']);
+
+                $sql = "SELECT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                        FROM
+                            FILE F, CONTENT_SOURCE S
+                        WHERE
+                            F.NO = S.SOURCE_NO
+                            AND S.TARGET_NO = ".$id."
+                            AND F.THUMB_FL = '0'
+                        ";
+
+                $result = $_d->sql_query($sql);
+                $file_data  = $_d->sql_fetch_array($result);
+
+                MtUtil::_c("------------>>>>> FILE_NM : ".$file_data[FILE_NM]);
+                MtUtil::_c("------------>>>>> name : ".$file[name]);
+
+                if ($file_data == null || $file_data[FILE_NM] != $file[name]) {
+                    $sql = "DELETE FROM FILE
+                            WHERE NO IN (
+                                SELECT NO FROM (
+                                    SELECT
+                                        F.NO
+                                    FROM
+                                        FILE F, CONTENT_SOURCE S
+                                    WHERE
+                                        F.NO = S.SOURCE_NO
+                                        AND S.TARGET_NO = ".$id."
+                                ) AS DATA
+                            )
+                            ";
+
+                    $_d->sql_query($sql);
+
+                    $sql = "DELETE FROM CONTENT_SOURCE
+                            WHERE
+                                TARGET_NO = ".$id."
+                            ";
+
+                    $_d->sql_query($sql);
+
+                    $sql = "INSERT INTO FILE
+                    (
+                        FILE_NM
+                        ,PATH
+                        ,FILE_EXT
+                        ,FILE_SIZE
+                        ,THUMB_FL
+                        ,REG_DT
+                        ,FILE_ST
+                    ) VALUES (
+                        '".$file[name]."'
+                        , '".$file[url]."'
+                        , '".$file[type]."'
+                        , '".$file[size]."'
+                        , '0'
+                        , SYSDATE()
+                        , 'C'
+                    )";
+
+                    $_d->sql_query($sql);
+                    $ori_file_no = $_d->mysql_insert_id;
+
+                    $sql = "INSERT INTO CONTENT_SOURCE
+                    (
+                        TARGET_NO
+                        ,SOURCE_NO
+                        ,CONTENT_GB
+                        ,SORT_IDX
+                    ) VALUES (
+                        '".$id."'
+                        , '".$ori_file_no."'
+                        , 'FILE'
+                        , '0'
+                    )";
+
+                    $_d->sql_query($sql);
+
+                    $sql = "INSERT INTO FILE
+                    (
+                        FILE_NM
+                        ,PATH
+                        ,FILE_EXT
+                        ,FILE_SIZE
+                        ,ORIGINAL_NO
+                        ,THUMB_FL
+                        ,REG_DT
+                        ,FILE_ST
+                    ) VALUES (
+                        '".$file[name]."'
+                        , '".$file[thumbnailUrl]."'
+                        , '".$file[type]."'
+                        , ''
+                        , '".$ori_file_no."'
+                        , '1'
+                        , SYSDATE()
+                        , 'C'
+                    )";
+
+                    $_d->sql_query($sql);
+                    $file_no = $_d->mysql_insert_id;
+
+                    $sql = "INSERT INTO CONTENT_SOURCE
+                    (
+                        TARGET_NO
+                        ,SOURCE_NO
+                        ,CONTENT_GB
+                        ,SORT_IDX
+                    ) VALUES (
+                        '".$id."'
+                        , '".$file_no."'
+                        , 'FILE'
+                        , '0'
+                    )";
+
+                    $_d->sql_query($sql);
+
+                    $sql = "INSERT INTO FILE
+                    (
+                        FILE_NM
+                        ,PATH
+                        ,FILE_EXT
+                        ,FILE_SIZE
+                        ,ORIGINAL_NO
+                        ,THUMB_FL
+                        ,REG_DT
+                        ,FILE_ST
+                    ) VALUES (
+                        '".$file[name]."'
+                        , '".$file[mediumUrl]."'
+                        , '".$file[type]."'
+                        , ''
+                        , '".$ori_file_no."'
+                        , '2'
+                        , SYSDATE()
+                        , 'C'
+                    )";
+
+                    $_d->sql_query($sql);
+                    $file_no = $_d->mysql_insert_id;
+
+                    $sql = "INSERT INTO CONTENT_SOURCE
+                    (
+                        TARGET_NO
+                        ,SOURCE_NO
+                        ,CONTENT_GB
+                        ,SORT_IDX
+                    ) VALUES (
+                        '".$id."'
+                        , '".$file_no."'
+                        , 'FILE'
+                        , '0'
+                    )";
+
+                    $_d->sql_query($sql);
+                }
+            }
+
             if ($_d->mysql_errno > 0) {
                 $_d->failEnd("수정실패입니다:".$_d->mysql_error);
             } else {

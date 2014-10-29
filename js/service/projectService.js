@@ -28,7 +28,6 @@ define(['./services'], function (services) {
         }
 
         obj.getProjects = function(){
-            alert(JSON.stringify($location.search()));
             return $http.get('serverscript/services/project.php?_method=GET&'+qs($location.search())+'&_category='+$location.path());
         }
 
