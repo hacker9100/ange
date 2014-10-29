@@ -10,10 +10,10 @@ define([
 
         var menuinfos = [
             {"dashboard, account, scheduler, archive": [
-                { url: '/dashboard', 'name': '홈' },
+                { url: '/dashboard', 'name': '마이페이지' },
                 { url: '/account', 'name': '개인정보' },
                 { url: '/scheduler', 'name': '스케줄' },
-                { url: '/archive', 'name': 'Archive' }
+                { url: '/archive', 'name': '아카이브' }
             ]},
             {"project, task, article, article_confirm": [
                 { url: '/project/list', 'name': '프로젝트' },
