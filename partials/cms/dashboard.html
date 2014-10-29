@@ -22,7 +22,7 @@
 
                 <div class="row" style="margin-bottom: 25px;">
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="padding:0px 2px;">
                         <div class="list-group">
                             <li class="list-group-item list-group-item-labeling-green">
                                 공지사항
@@ -41,7 +41,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="padding:0px 2px;">
                         <div class="list-group">
                             <li class="list-group-item list-group-item-labeling-blue">
                                 프로젝트
@@ -54,6 +54,106 @@
                             <a href="#" class="list-group-item list-group-item-blue">프로젝트 #5 <span class="list-group-item-right">완료</span></a>
                         </div>
                     </div>
+
+                </div>
+
+
+                <div class="row" style="margin-bottom: 25px;">
+
+
+                    <!-- Task list -->
+                    <accordion close-others="oneAtATime">
+                        <accordion-group is-open="status.open">
+
+                            <!-- Task Head -->
+                            <accordion-heading style="clear:both; background-color:#000; padding:0;">
+                                <div class="row" style="height:100%;">
+                                    <div class="col-md-12" style="position:relative; padding:5px; margin:0;  cursor:pointer;">
+                                        <a data-toggle="collapse" style="color:#333">
+                                            <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
+                                                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">
+                                                    <span style="font-size:1.16em;">월간앙쥬</span><br />
+                                                    <span>[2014년 12월]</span>
+                                                </div>
+                                                <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">
+                                                    태스크의 제목이 표시됩니다. 더 길면 어떻게...
+                                                </div>
+                                                <div class="col-lg-1 task-col-manager" style="height:100%; margin-top:8px; text-align:left;">
+                                                    홍길동이
+                                                </div>
+                                                <div class="col-md-2 col-sm-3 col-lg-2 task-col-date" style="height:100%; text-align:center; vertical-align:middle;">
+                                                    <span style="color:#868686;">2014-00-00 등록</span><br />
+                                                    <span style="color:#DE4612; font-weight:bold;">2014-00-00 마감</span>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
+                                                    검수요청
+                                                </div>
+                                            </div>
+
+                                            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': status.open, 'glyphicon-chevron-down': !status.open}" style="position:absolute; top: 15px; right:10px;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </accordion-heading>
+                            <!-- //Task Head -->
+
+                            <div class="col-md-12">
+                                <div lass="row" class="form-horizontal">
+                                    <div class= "form-group">
+                                        <label class= "col-md-2">담당자</label>
+                                        <div class="col-md-4">
+                                            {{ task.REG_NM }}
+                                        </div>
+                                    </div>
+                                    <div class= "form-group">
+                                        <label class= "col-md-2">생성일</label>
+                                        <div class="col-md-4">
+                                            {{ task.REG_DT }}
+                                        </div>
+                                    </div>
+                                    <div class= "form-group">
+                                        <label class= "col-md-2">카테고리</label>
+                                        <!--<pre>{{task.CATEGORY|json}}</pre>-->
+                                        <div class="col-md-2 btn-group" ng-repeat="category in task.CATEGORY">
+                                            <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                                        </div>
+                                    </div>
+                                    <div class= "form-group">
+                                        <label class= "col-md-2">태그</label>
+                                        <div class="col-md-4">
+                                            {{ task.TAG }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary start" ng-click="getHistory(task.NO);">
+                                            <i class="glyphicon glyphicon-pencil"></i>
+                                            <span>History</span>
+                                        </button>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary start" ng-click="editTask(task.NO);">
+                                            <i class="glyphicon glyphicon-pencil"></i>
+                                            <span>태스크 편집</span>
+                                        </button>
+                                        <!--<button class="btn btn-success fileinput-button" data-ng-click="viewListTask(task.NO)">-->
+                                        <!--<i class="glyphicon glyphicon-plus"></i>-->
+                                        <!--<span>편집보기</span>-->
+                                        <!--</button>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </accordion-group>
+                    </accordion>
+
+                        <div class="list-group">
+                            <li class="list-group-item list-group-item-labeling-gray">
+                                태스크 목록
+                                <span class="btn custom-btn-more"> <span class="glyphicon glyphicon-plus"></span> </span>
+
+                            </li>
+
+                        </div>
 
                 </div>
 

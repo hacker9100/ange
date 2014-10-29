@@ -79,3 +79,41 @@ a.custom-btn-more:focus {
 .list-group-item > .custom-btn-more + .custom-btn-more {
     margin-right: 5px;
 }
+
+
+.task-col-series, .task-col-title, .task-col-manager, .task-col-date, .task-col-step {
+    display:block;
+}
+
+@media (max-width: 767px) {
+    .task-col-series, .task-col-title {
+        display:block;
+    }
+    .task-col-manager, .task-col-date, .task-col-step {
+        display:none;
+    }
+}
+
+@media (min-width: 768px) {
+    .task-col-series, .task-col-title, .task-col-date {
+        display:block;
+    }
+    .task-col-manager, .task-col-step {
+        display:none;
+    }
+}
+
+@media (min-width: 992px) {
+    .task-col-series, .task-col-title, .task-col-step, .task-col-date  {
+        display:block;
+    }
+    .task-col-manager {
+        display:none;
+    }
+}
+
+@media (min-width: 1200px) {
+    .task-col-series, .task-col-title, .task-col-manager, .task-col-date, .task-col-step {
+        display:block;
+    }
+}
