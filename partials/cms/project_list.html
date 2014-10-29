@@ -2,31 +2,34 @@
     <div class="panel-body" ng-model="search" lass="row">
 
         <form role="form" name="listForm" class="form-horizontal">
-            <div class= "form-group">
-                <label class= "col-md-2"> 연도 </label>
-                <div class="col-md-2">
-                    <select ng-model="search.YEAR" ng-options="v for v in search.years" class= "form-control" placeholder="등록년"></select>
+            <div class="col-md-9">
+                <div class= "form-group">
+                    <label class= "col-md-2"> 연도 </label>
+                    <div class="col-md-3">
+                        <select ng-model="search.YEAR" ng-options="v for v in years" class= "form-control" placeholder="등록년"></select>
+                    </div>
+                </div>
+                <div class= "form-group">
+                    <label class= "col-md-2">검색</label>
+                    <div class= "col-md-3">
+                        <select ng-model="search.ORDER" ng-options="order.name for order in order" class= "form-control" placeholder="검색선택"></select>
+                    </div>
+                    <div class="col-md-6">
+                        <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+                    </div>
                 </div>
             </div>
-            <div class= "form-group">
-                <label class= "col-md-2">검색</label>
-                <div class= "col-md-2">
-                    <select ng-model="search.ORDER" ng-options="order.name for order in search.order" class= "form-control" placeholder="검색선택"></select>
+            <div class="col-md-pull-2">
+                <div class= "navbar-header" >
+                    <button class="btn btn-primary start" ng-click="searchProject();" ng-disabled="listForm.$invalid">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <span>검색</span>
+                    </button>
+                    <button class="btn btn-success fileinput-button" data-ng-click="createNewProject()">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>등록</span>
+                    </button>
                 </div>
-                <div class="col-md-6">
-                    <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
-                </div>
-            </div>
-
-            <div class= "navbar-header" >
-                <button class="btn btn-primary start" ng-click="searchProject();" ng-disabled="listForm.$invalid">
-                    <i class="glyphicon glyphicon-search"></i>
-                    <span>검색</span>
-                </button>
-                <button class="btn btn-success fileinput-button" data-ng-click="createNewProject()">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>등록</span>
-                </button>
             </div>
         </form>
 

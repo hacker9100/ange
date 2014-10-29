@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : article_confirm_edit.html 화면 콘트롤러
+ * Description : edit_confirm_edit.html 화면 콘트롤러
  */
 'use strict';
 
@@ -12,12 +12,12 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('article_confirm_edit', ['$scope', '$stateParams', 'taskService', 'contentService', 'approvalService', '$location', function ($scope, $stateParams, taskService, contentService, approvalService, $location) {
+    controllers.controller('edit_confirm_edit', ['$scope', '$stateParams', 'taskService', 'contentService', 'approvalService', '$location', function ($scope, $stateParams, taskService, contentService, approvalService, $location) {
 
         var uploadUrl = 'http://localhost/serverscript/upload/../../upload/files/';
 
         /********** 초기화 **********/
-        $scope.queue = [];
+        $scope.content = [];
 
         // 초기화
         $scope.initEdit = function() {
@@ -86,7 +86,7 @@ define([
 
             $scope.approval = {};
             $scope.approval.TASK_NO = $scope.task.NO;
-            $scope.approval.APPROVAL_ST = '20';
+            $scope.approval.APPROVAL_ST = '30';
             $scope.approval.NOTE = $scope.content.NOTE;
 
             approvalService.createApproval($scope.approval).then(function(data){
@@ -99,7 +99,7 @@ define([
 
             $scope.approval = {};
             $scope.approval.TASK_NO = $scope.task.NO;
-            $scope.approval.APPROVAL_ST = '12';
+            $scope.approval.APPROVAL_ST = '22';
             $scope.approval.NOTE = $scope.content.NOTE;
 
             approvalService.createApproval($scope.approval).then(function(data){
@@ -112,14 +112,8 @@ define([
 
             // 페이지 타이틀
             $scope.message = 'ANGE CMS';
-
-            if ( $scope.method == 'PUT') {
-                $scope.pageTitle = '원고 수정';
-                $scope.pageDescription = '원고를 수정합니다.';
-            } else {
-                $scope.pageTitle = '원고 등록';
-                $scope.pageDescription = '원고를 등록합니다.';
-            }
+            $scope.pageTitle = '편집 승인';
+            $scope.pageDescription = '편집된 원고를 확인하고 승인관리합니다.';
 
             $scope.initEdit();
             $scope.getTask();

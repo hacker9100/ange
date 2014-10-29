@@ -47,7 +47,9 @@
 
         <div class= "form-group">
             <label class= "col-md-2">첨부파일 </label>
-            <div ng-include=" 'partials/cms/file.html' "></div>
+            <div class= "col-md-5">
+                <a ng-href="content.FILE.PATH">{{ content.FILE.FILE_NM }}</a>
+            </div>
         </div>
 
         <!-- 하단 버튼 -->
@@ -61,9 +63,13 @@
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>저장</span>
                 </button>
-                <button type="button" class="btn btn-primary start" ng-click="commitContent();" ng-disabled="editForm.$invalid">
+                <button type="button" class="btn btn-primary start" ng-click="returnContent();">
                     <i class="glyphicon glyphicon-plus"></i>
-                    <span>등록&승인요청</span>
+                    <span>반려</span>
+                </button>
+                <button type="button" class="btn btn-primary start" ng-click="approveContent();">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>승인</span>
                 </button>
             </div>
         </div>

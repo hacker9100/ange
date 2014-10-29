@@ -21,9 +21,9 @@
 			<div class="panel-body">
 			<br />
 
-                <article-list ng-show="method == 'GET' && !isId"></article-list>
-                <article-edit ng-show="method != 'GET'"></article-edit>
-                <article-view ng-show="method == 'GET' && isId"></article-view>
+                <edit-confirm-list ng-show="method == 'GET' && !isId"></edit-confirm-list>
+                <edit-confirm-edit ng-show="method != 'GET'"></edit-confirm-edit>
+                <!--<edit-confirm-view ng-show="method == 'GET' && isId"></edit-confirm-view>-->
 
 			<br /><br />
 			</div>

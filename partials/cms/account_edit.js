@@ -14,19 +14,18 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('account_edit', ['$scope', '$stateParams', 'userService', '$location', function ($scope, $stateParams, userService, $location) {
 
-        var userId = 'hong';
-        var userData = null;
+//        var userId = 'hong';
 
         // 버튼 이벤트
         // 등록/수정
         $scope.saveCmsUser = function () {
-            if (userId == '') {
+            if ($rootScope.uid == '') {
                 userService.createCmsUser($scope.user).then(function(data){
                     alert("정상적으로 등록했습니다.");
                 });
             }
             else {
-                userService.updateCmsUser(userId, $scope.user).then(function(data){
+                userService.updateCmsUser($rootScope.uid, $scope.user).then(function(data){
                     alert("정상적으로 수정했습니다.");
                 });
             }
@@ -34,10 +33,9 @@ define([
 
         // 조회
         $scope.getCmsUser = function () {
-            if (userId != '') {
+            if ($rootScope.uid != '') {
                 userService.getCmsUser(userId).then(function(user){
-                    userData = user.data[0];
-                    $scope.user = userData;
+                    $scope.user = user.data[0];
                 });
             }
         }

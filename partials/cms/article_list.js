@@ -19,7 +19,7 @@ define([
 
         // 초기화
         $scope.initList = function() {
-
+            $scope.oneAtATime = true;
         }
 
         /********** 목록 조회 이벤트 **********/
@@ -54,7 +54,7 @@ define([
         };
 
         // 목록
-        $scope.getTasks = function () {
+        $scope.getListTasks = function () {
             $scope.isLoading = true;
             $location.search('_phase', '0,10');
             taskService.getTasks().then(function(tasks){
@@ -72,7 +72,6 @@ define([
 
         // 원고 승인 요청
         $scope.commitListContent = function (idx) {
-
             var content = $scope.contents[idx];
 
             if (content.PHASE == '0') {
@@ -126,7 +125,7 @@ define([
             $scope.tailDescription = '.';
 
             $scope.initList();
-            $scope.getTasks();
+            $scope.getListTasks();
         }
     }]);
 });

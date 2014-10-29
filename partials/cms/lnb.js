@@ -15,7 +15,7 @@ define([
                 { url: '/scheduler', 'name': '스케줄' },
                 { url: '/archive', 'name': '아카이브' }
             ]},
-            {"project, task, article, article_confirm": [
+            {"project, task, article, article_confirm, edit, edit_confirm": [
                 { url: '/project/list', 'name': '프로젝트' },
                 { url: '/task/list', 'name': '태스크' },
                 { url: '/article/list', 'name': '원고' },

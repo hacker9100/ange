@@ -39,6 +39,7 @@ define([
     '../../partials/cms/article',
     '../../partials/cms/article_confirm',
     '../../partials/cms/edit',
+    '../../partials/cms/edit_confirm',
 
     // 게시판
     '../../partials/cms/webboard',
@@ -46,5 +47,6 @@ define([
     '../../partials/cms/webboardView',
 
     // 관리자
+    '../../partials/cms/user',
     '../../partials/cms/permission'
 ], function () {});

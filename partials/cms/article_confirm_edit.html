@@ -50,9 +50,16 @@
             <div ng-include=" 'partials/cms/file.html' "></div>
         </div>
 
+        <div class= "form-group">
+            <label class= "col-md-2">검수 코멘트</label>
+            <div class= "col-md-12">
+                <textarea ng-model="content.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
+            </div>
+        </div>
+
         <!-- 하단 버튼 -->
         <div class= "form-group">
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <button class="btn btn-success fileinput-button" ng-click="moveList();" >
                     <i class="glyphicon glyphicon-upload"></i>
                     <span>목록</span>

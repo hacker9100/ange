@@ -49,7 +49,7 @@
                         WHERE
                             F.NO = S.SOURCE_NO
                             AND S.TARGET_NO = ".$id."
-                        ORDER BY THUMB_FL ASC
+                            AND F.THUMB_FL = '0'
                         ";
 
                 $file_data = $_d->getData($sql);

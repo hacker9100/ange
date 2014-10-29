@@ -2,7 +2,7 @@
 class MtJson extends MtData {
 
     function MtJson() {
-//        ob_start();
+        ob_start();
         parent::connect();
     }
 
@@ -14,14 +14,14 @@ class MtJson extends MtData {
 
     function failEnd($msg) {
         MtUtil::_c("### [END] [ERROR]");
-        echo '{\'msg\':\''.$msg.'\',\'err\':true}';
+        echo '{"msg":"'.$msg.'","err":true}';
         exit;
     }
 
     function succEnd($msg) {
         MtUtil::_c("### [END] [SUCCESS]".$msg);
         header('HTTP/1.1 200 OK');
-        echo '{\'msg\':\''.$msg.'\',\'err\':false}';
+        echo '{"msg":"'.$msg.'","err":false}';
         exit;
     }
 
@@ -48,7 +48,7 @@ class MtJson extends MtData {
     }
 
     function dataEnd($sql) {
-//        ob_end_clean();
+        ob_end_clean();
 
         $result = $this->getData($sql);
         MtUtil::_c("### [END] [DATA]".json_encode($result));
@@ -61,7 +61,7 @@ class MtJson extends MtData {
     }
 
     function dataEnd2($result) {
-//        ob_end_clean();
+        ob_end_clean();
 
         MtUtil::_c("### [END] [DATA]".json_encode($result));
 //        header('HTTP/1.1 200 OK');

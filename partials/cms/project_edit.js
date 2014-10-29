@@ -13,6 +13,9 @@ define([
 
     // 사용할 서비스를 주입
     controllers.controller('project_edit', ['$scope', '$rootScope', '$stateParams', 'projectService', '$location', function ($scope, $rootScope, $stateParams, projectService, $location) {
+
+        var uploadUrl = 'http://localhost/serverscript/upload/../../upload/files/';
+
         /* 파일 업로드 설정 */
         var url = '/serverscript/upload/';
         $scope.options = { url: url, autoUpload: true, dropZone: angular.element('#dropzone') };
@@ -61,9 +64,9 @@ define([
                 $scope.project.months = month;
 
                 // 파일 순서 : 1. 원본, 2. 썸네일, 3. 중간사이즈
-                var files = project.data.FILE;
-                if (files.length == 3) {
-                    $scope.file = {"name":files[0].FILE_NM,"size":files[0].FILE_SIZE,"url":files[0].PATH,"thumbnailUrl":files[1].PATH,"mediumUrl":files[2].PATH,"deleteUrl":"http://localhost/app/serverscript/upload/?file="+files[0].FILE_NM,"deleteType":"DELETE"};
+                var file = project.data.FILE;
+                if (file.length > 0) {
+                    $scope.file = {"name":file[0].FILE_NM,"size":file[0].FILE_SIZE,"url":uploadUrl+file[0].FILE_NM,"thumbnailUrl":uploadUrl+"thumbnail/"+file[0].FILE_NM,"mediumUrl":uploadUrl+"medium/"+file[0].FILE_NM,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[0].FILE_NM,"deleteType":"DELETE"};
                 }
             });
         };

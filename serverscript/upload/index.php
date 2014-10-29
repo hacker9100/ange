@@ -14,6 +14,9 @@ error_reporting(E_ALL | E_STRICT);
 require('UploadHandler.php');
 $upload_handler = new UploadHandler();
 
+//echo dirname($_SERVER['SCRIPT_FILENAME']);
+//echo substr($_SERVER['SCRIPT_NAME'],0, strrpos($_SERVER['SCRIPT_NAME'], '/'));
+
 //$newDir = null;
 //
 //if (isset($_REQUEST['newDir'])) {

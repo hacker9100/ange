@@ -11,12 +11,25 @@ define([
 
     services.service('userService', ['$http', '$location', function($http, $location){
         var obj = {};
+
+        var qs = function(obj, prefix){
+            var str = [];
+            for (var p in obj) {
+                var k = prefix ? prefix + "[" + p + "]" : p,
+                    v = obj[p];
+
+                if (p != '_method')
+                    str.push(angular.isObject(v) ? qs(v, k) : (k) + "=" + encodeURIComponent(v));
+            }
+            return str.join("&");
+        }
+
         obj.getCmsUsers = function(){
-            return $http.get('serverscript/services/cms_user.php?_method=GET&_category='+$location.path());
+            return $http.get('serverscript/services/cms_user.php?_method=GET&'+qs($location.search())+'&_category='+$location.path());
         }
 
         obj.getCmsUser = function(id){
-            return $http.get('serverscript/services/cms_user.php?_method=GET&_category='+$location.path()+'&_id='+id);
+            return $http.get('serverscript/services/cms_user.php?_method=GET&'+qs($location.search())+'&_category='+$location.path()+'&_id='+id);
         }
 
         obj.deleteCmsUser = function(id){

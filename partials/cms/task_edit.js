@@ -48,6 +48,8 @@ define([
         }
 
         /********** 초기화 **********/
+        $scope.task = {};
+
         // 초기화
         $scope.initEdit = function() {
             projectService.getProjectOptions().then(function(projects){
@@ -80,12 +82,12 @@ define([
 
         // ui bootstrap 달력
         $scope.today = function() {
-            $scope.rt = new Date();
+            $scope.task.CLOSE_YMD = new Date();
         };
         $scope.today();
 
         $scope.clear = function () {
-            $scope.rt = null;
+            $scope.task.CLOSE_YMD = null;
         };
 
         $scope.open = function($event) {
