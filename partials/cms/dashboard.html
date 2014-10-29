@@ -20,41 +20,42 @@
 
 			<div class="contentpannel-body">
 
-                <div class="row">
+                <div class="row" style="margin-bottom: 25px;">
 
                     <div class="col-md-6">
                         <div class="list-group">
-                            <li class="list-group-item list-group-item-labeling">
+                            <li class="list-group-item list-group-item-labeling-green">
                                 공지사항
+                                <span class="btn custom-btn-more"> <span class="glyphicon glyphicon-plus"></span> </span>
+
                             </li>
 
                             <!--- 리스트 1set -->
-                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #1 <span class="list-group-item-right">2014-09-09</span></a>
+                            <a href="#" class="list-group-item list-group-item-green">공지사항 #1 <span class="list-group-item-right">2014-09-09</span></a>
                             <!--- /// 리스트 1set -->
 
-                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #2 <span class="list-group-item-right">2014-09-09</span></a>
-                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #3 <span class="list-group-item-right">2014-09-09</span></a>
-                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #4 <span class="list-group-item-right">2014-09-09</span></a>
-                            <a href="#" class="list-group-item list-group-item-miniboard">공지사항 #5 <span class="list-group-item-right">2014-09-09</span></a>
+                            <a href="#" class="list-group-item list-group-item-green">공지사항 #2 <span class="list-group-item-right">2014-09-09</span></a>
+                            <a href="#" class="list-group-item list-group-item-green">공지사항 #3 <span class="list-group-item-right">2014-09-09</span></a>
+                            <a href="#" class="list-group-item list-group-item-green">공지사항 #4 <span class="list-group-item-right">2014-09-09</span></a>
+                            <a href="#" class="list-group-item list-group-item-green">공지사항 #5 <span class="list-group-item-right">2014-09-09</span></a>
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class="list-group">
-                            <li class="list-group-item list-group-item-labeling">
+                            <li class="list-group-item list-group-item-labeling-blue">
                                 프로젝트
+                                <span class="btn custom-btn-more"> <span class="glyphicon glyphicon-plus"></span> </span>
                             </li>
-                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #1</a>
-                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #2</a>
-                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #3</a>
-                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #4</a>
-                            <a href="#" class="list-group-item list-group-item-miniboard">프로젝트 #5</a>
+                            <a href="#" class="list-group-item list-group-item-blue">프로젝트 #1 <span class="list-group-item-right">준비</span></a>
+                            <a href="#" class="list-group-item list-group-item-blue">프로젝트 #2 <span class="list-group-item-right">진행</span></a>
+                            <a href="#" class="list-group-item list-group-item-blue">프로젝트 #3 <span class="list-group-item-right">진행</span></a>
+                            <a href="#" class="list-group-item list-group-item-blue">프로젝트 #4 <span class="list-group-item-right">완료</span></a>
+                            <a href="#" class="list-group-item list-group-item-blue">프로젝트 #5 <span class="list-group-item-right">완료</span></a>
                         </div>
                     </div>
 
                 </div>
-
-
 
                 <div ng-repeat="view in views">
                     <div ui-view="{{view.name}}"></div>

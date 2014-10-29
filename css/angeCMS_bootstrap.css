@@ -4156,7 +4156,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     border:1px solid #999;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
-    border-bottom: none;
+    border-bottom:1px solid #666;
 }
 
 .breadcrumb > li {
@@ -4690,13 +4690,32 @@ a.thumbnail.active {
   border: 1px solid #000;
 }
 
+
 .list-group-item-right {
+    display: inline-block;
+    text-align: center;
+    min-width: 10px;
+    padding: 3px 7px;
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: baseline;
     float: right;
-    font-size: 0.84em;
+    font-size: 0.92em;
 }
 
 .list-group-item-miniboard {
     font-size: 0.84em;
+}
+
+.list-group-item-green {
+    color: #000;
+    font-size: 0.84em;
+    border: 1px solid #129864;
+}
+
+.list-group-item-blue {
+    font-size: 0.84em;
+    border: 1px solid #126498;
 }
 
 .list-group-item:first-child {
@@ -4729,7 +4748,7 @@ a.thumbnail.active {
   margin-right: 5px;
 }
 a.list-group-item {
-  color: #555;
+  color: #000;
 }
 a.list-group-item .list-group-item-heading {
   color: #333;
@@ -4764,7 +4783,27 @@ a.list-group-item.active:focus .list-group-item-text {
 
 .list-group-item-labeling {
     color: #aaa;
+    padding:15px;
+}
+
+.list-group-item-labeling-gray {
     background-color: #464646;
+    color: #aaa;
+    padding:15px;
+}
+
+.list-group-item-labeling-blue {
+    background-color: #2486ae;
+    color: #fff;
+    padding:15px;
+    border: 1px solid #126498;
+}
+
+.list-group-item-labeling-green {
+    background-color: #24ae86;
+    color: #fff;
+    padding:15px;
+    border: 1px solid #129864;
 }
 
 a.list-group-item-success {
@@ -4869,7 +4908,7 @@ a.list-group-item-danger.active:focus {
 }
 
 .contentpannel {
-    border-radius: 10px;
+    border-radius: 4px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
@@ -4882,7 +4921,6 @@ a.list-group-item-danger.active:focus {
   padding: 20px 40px 30px 40px;
 }
 
-
 .panel-heading {
   padding: 10px 15px;
   border-bottom: 1px solid transparent;
@@ -4892,9 +4930,7 @@ a.list-group-item-danger.active:focus {
 
 .contentpannel-heading {
     padding: 10px 15px;
-    border-bottom: 1px solid transparent;
-    border-top-left-radius: 0px;
-    border-top-right-radius: 0px;
+    border-bottom: 1px solid #000;
 }
 
 
@@ -5110,22 +5146,24 @@ a.list-group-item-danger.active:focus {
 
 
 .panel-master {
-    border-color: #aaa;
+    border-color: #ccc;
 }
+
 .panel-master > .contentpannel-heading {
     color: #DEDEDE;
     /*background-color: #428bca;*/
     background-color: #464646;
-    border-color: #333;
+    border-color: #ccc;
     padding:18px 0 18px 20px;
 }
+
 .panel-master > .contentpannel-heading + .panel-collapse .contentpannel-body {
-    border-top-color: #428bca;
+    /* border-top-color: #428bca;*/
+    border-top-color: #aaa;
 }
 .panel-master > .panel-footer + .panel-collapse .contentpannel-body {
-    border-bottom-color: #428bca;
+    border-top-color: #fff;
 }
-
 
 .panel-success {
   border-color: #d6e9c6;

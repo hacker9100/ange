@@ -40,3 +40,42 @@ body {
 	padding-bottom: 50px;
     background:URL(../imgs/if_img_01_background.jpg);
 }
+
+
+.custom-btn-more {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 10px;
+}
+.custom-btn-more:empty {
+    display: none;
+}
+.btn .custom-btn-more {
+    position: relative;
+    top: -1px;
+}
+.btn-xs .custom-btn-more {
+    top: 0;
+    padding: 1px 5px;
+}
+a.custom-btn-more:hover,
+a.custom-btn-more:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.list-group-item > .custom-btn-more {
+    float: right;
+}
+.list-group-item > .custom-btn-more + .custom-btn-more {
+    margin-right: 5px;
+}
