@@ -125,6 +125,11 @@ define([
             $location.path('/task/edit/'+no);
         };
 
+        // 수정
+        $scope.getHistory = function (no) {
+            alert("준비중입니다.")
+        };
+
         // 삭제
         $scope.deleteListTask = function (idx) {
 

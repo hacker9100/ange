@@ -18,7 +18,7 @@ define([
                     $rootScope.authenticated = true;
                     $rootScope.uid = session.data.USER_ID;
                     $rootScope.name = session.data.USER_NM;
-                    $rootScope.role = session.data.ROLE;
+                    $rootScope.role = session.data.ROLE_ID;
                     $rootScope.menu_role = session.data.MENU_ROLE;
                     $rootScope.email = session.data.EMAIL;
 

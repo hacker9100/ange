@@ -8,7 +8,6 @@
 define([
     'angular'
 //    'ngActivityIndicator',
-
 ], function (angular) {
     'use strict';
 

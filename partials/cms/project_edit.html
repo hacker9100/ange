@@ -8,6 +8,13 @@
         <form id="fileupload" role="form" name="editForm" class="form-horizontal" method="POST" enctype="multipart/form-data" data-file-upload="options">
 
             <div class= "form-group" ng-class="{error: editForm.subject.$invalid}">
+                <label class= "col-md-2">시리즈</label>
+                <div class="col-md-4">
+                    추가 예정
+                    <!--<select ng-model="project.SERIES" ng-options="v.NAME for v in project.series" class= "form-control" ></select>-->
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: editForm.subject.$invalid}">
                 <label class= "col-md-2">호제</label>
                 <div class="col-md-4">
                     <input name="subject" ng-model="project.SUBJECT" type= "text" class= "form-control" placeholder="프로젝트 주제" required/>
@@ -40,7 +47,7 @@
                             <!-- The fileinput-button span is used to style the file input field as button -->
                             <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
                                 <i class="glyphicon glyphicon-plus"></i>
-                                <span>Add files...</span>
+                                <span>탐색기</span>
                                 <input type="file" name="files[]" multiple ng-disabled="disabled">
                             </span>
                         </div>
@@ -66,7 +73,7 @@
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">설명</label>
-                <div class= "col-md-6">
+                <div class= "col-md-9">
                     <textarea ng-model="project.NOTE" class= "form-control" placeholder= "간략한 개요.."/>
                 </div>
             </div>

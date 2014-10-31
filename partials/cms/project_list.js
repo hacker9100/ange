@@ -57,6 +57,7 @@ define([
         $scope.viewListProject = function (no) {
             $location.search({_method: 'GET'});
             $location.path('/project/view/'+no);
+//            $location.path('/project/view/'+no);
         };
 
         // 삭제

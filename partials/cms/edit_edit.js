@@ -47,6 +47,11 @@ define([
             if ( $scope.method == 'PUT') {
                 contentService.getContent($stateParams.id).then(function(content){
                     if (content.data.NO != undefined) {
+                        $location.search('_modify', '0');
+                        contentService.updateStatusContent(content.data.NO).then(function(data){
+                            $location.search('_modify', null);
+                        });
+
                         $scope.content = content.data;
 
                         // 파일 순서 : 1. 원본, 2. 썸네일, 3. 중간사이즈
@@ -70,16 +75,20 @@ define([
 
             if ( $scope.method == 'POST') {
                 contentService.createContent($scope.content).then(function(data){
-                    $location.search({_method: 'GET'});
-                    $location.path('/edit/list');
                 });
             }
             else {
                 contentService.updateContent($scope.content.NO, $scope.content).then(function(data){
-                    $location.search({_method: 'GET'});
-                    $location.path('/edit/list');
                 });
             }
+
+            $location.search('_modify', '1');
+            contentService.updateStatusContent($scope.content.NO).then(function(data){
+                $location.search('_modify', null);
+
+                $location.search({_method: 'GET'});
+                $location.path('/edit/list');
+            });
         };
 
         // 원고 승인 요청

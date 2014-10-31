@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('article_list', ['$scope', '$stateParams', 'taskService', 'contentService', '$location', function ($scope, $stateParams, taskService, contentService, $location) {
+    controllers.controller('article_list', ['$scope', '$rootScope', '$stateParams', 'taskService', 'contentService', '$location', function ($scope, $rootScope, $stateParams, taskService, contentService, $location) {
 
         /********** 초기화 **********/
         // 목록 데이터
@@ -31,14 +31,23 @@ define([
 
         // 원고 등록
         $scope.listEditContent = function (idx) {
-
-            $location.search({_method: 'POST'});
-
             var task = $scope.tasks[idx];
 
             contentService.getContent(task.NO).then(function(content){
+                if ($rootScope.role != 'ADMIN' && task.EDITOR_ID != $rootScope.uid) {
+                    alert("다른 담당자의 문서는 작성할수 없습니다.");
+                    return;
+                }
+
                 if (content.data.NO != undefined) {
+                    if ($rootScope.role != 'ADMIN' && content.data.MODIFY_FL == '0' && content.data.REG_UID != $rootScope.uid) {
+                        alert("다른 사용자가 수정중인 문서입니다.");
+                        return;
+                    }
+
                     $location.search({_method: 'PUT'});
+                } else {
+                    $location.search({_method: 'POST'});
                 }
 
                 $location.path('/article/edit/'+task.NO);

@@ -16,7 +16,7 @@ define([
 
         /********** 초기화 **********/
         $scope.userId = '';
-        $scope.user = [];
+        $scope.user = {};
 
         // 초기화
         $scope.initEdit = function() {
@@ -52,9 +52,7 @@ define([
 
             if ($scope.userId != '') {
                 userService.getCmsUser($scope.userId).then(function(user){
-                    alert(JSON.stringify(user.data.ROLE));
                     $scope.user = user.data;
-                    $scope.user.ROLE = user.data.ROLE.ROLE_NM;
                 });
             }
         }
