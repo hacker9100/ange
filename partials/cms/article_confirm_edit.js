@@ -35,7 +35,7 @@ define([
         // 목록
         $scope.moveList = function () {
             $location.search({_method: 'GET'});
-            $location.path('/article_confirm/list');
+            $location.path('/article_confirm');
         };
 
         // 조회
@@ -86,8 +86,7 @@ define([
             contentService.updateStatusContent($scope.content.NO).then(function(data){
                 $location.search('_modify', null);
 
-                $location.search({_method: 'GET'});
-                $location.path('/article_confirm/list');
+                $location.path('/article_confirm');
             });
         };
 
@@ -118,21 +117,19 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        if ($scope.method != 'GET') {
+        // 페이지 타이틀
+        $scope.$parent.message = 'ANGE CMS';
 
-            // 페이지 타이틀
-            $scope.message = 'ANGE CMS';
-
-            if ( $scope.method == 'PUT') {
-                $scope.pageTitle = '원고 수정';
-                $scope.pageDescription = '원고를 수정합니다.';
-            } else {
-                $scope.pageTitle = '원고 등록';
-                $scope.pageDescription = '원고를 등록합니다.';
-            }
-
-            $scope.initEdit();
-            $scope.getTask();
+        if ( $scope.method == 'PUT') {
+            $scope.$parent.pageTitle = '원고 수정';
+            $scope.$parent.pageDescription = '원고를 수정합니다.';
+        } else {
+            $scope.$parent.pageTitle = '원고 등록';
+            $scope.$parent.pageDescription = '원고를 등록합니다.';
         }
+
+        $scope.initEdit();
+        $scope.getTask();
+
     }]);
 });

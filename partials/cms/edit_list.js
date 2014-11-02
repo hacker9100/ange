@@ -23,11 +23,13 @@ define([
         }
 
         /********** 목록 조회 이벤트 **********/
+/*
         // 조회 화면 이동
         $scope.viewContent = function (no) {
             $location.search({_method: 'GET'});
             $location.path('/edit/view/'+no);
         };
+*/
 
         // 원고 편집
         $scope.listEditContent = function (idx) {
@@ -38,10 +40,10 @@ define([
 
             contentService.getContent(task.NO).then(function(content){
                 if (content.data.NO != undefined) {
-                    $location.search({_method: 'PUT'});
+                    task.NO = 0;
                 }
 
-                $location.path('/edit/edit/'+task.NO);
+                $location.path('/edit/'+task.NO);
             });
         };
 
@@ -105,14 +107,13 @@ define([
 
         /********** 화면 초기화 **********/
         // 페이지 타이틀
-        if ($scope.method == 'GET' && $stateParams.id == undefined) {
-            $scope.message = 'ANGE CMS';
-            $scope.pageTitle = '편집';
-            $scope.pageDescription = '승인완료된 원고를 편집하여 기사를 완성합니다.';
-            $scope.tailDescription = 'To edit settings, press <kbd><kbd>ctrl</kbd>+!<kbd>s</kbd></kbd>';
+        $scope.$parent.message = 'ANGE CMS';
+        $scope.$parent.pageTitle = '편집';
+        $scope.$parent.pageDescription = '승인완료된 원고를 편집하여 기사를 완성합니다.';
+        $scope.$parent.tailDescription = 'To edit settings, press <kbd><kbd>ctrl</kbd>+!<kbd>s</kbd></kbd>';
 
-            $scope.initList();
-            $scope.getListTasks();
-        }
+        $scope.initList();
+        $scope.getListTasks();
+
     }]);
 });

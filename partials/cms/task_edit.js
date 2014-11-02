@@ -112,8 +112,7 @@ define([
         /********** 등록,수정 이벤트 **********/
         // 목록
         $scope.moveList = function () {
-            $location.search({_method: 'GET'});
-            $location.path('/task/list');
+            $location.path('/task');
         };
 
         // 조회
@@ -137,34 +136,30 @@ define([
             $scope.task.CATEGORY = $scope.CATEGORY;
             if (id <= 0) {
                 taskService.createTask($scope.task).then(function(data){
-                    $location.search({_method: 'GET'});
-                    $location.path('/task/list');
+                    $location.path('/task');
                 });
             }
             else {
                 taskService.updateTask(id, $scope.task).then(function(data){
-                    $location.search({_method: 'GET'});
-                    $location.path('/task/list');
+                    $location.path('/task');
                 });
             }
         };
 
         /********** 화면 초기화 **********/
-        if ($scope.method != 'GET') {
-            $scope.initEdit();
+        $scope.initEdit();
 
-            // 페이지 타이틀
-            $scope.message = 'ANGE CMS';
+        // 페이지 타이틀
+        $scope.$parent.message = 'ANGE CMS';
 
-            if ( $stateParams.id != 0) {
-                $scope.pageTitle = '태스크 수정';
-                $scope.pageDescription = '태스크를 수정합니다.';
+        if ( $stateParams.id != 0) {
+            $scope.$parent.pageTitle = '태스크 수정';
+            $scope.$parent.pageDescription = '태스크를 수정합니다.';
 
-                $scope.getTask();
-            } else {
-                $scope.pageTitle = '태스크 등록';
-                $scope.pageDescription = '태스크를 등록합니다.';
-            }
+            $scope.getTask();
+        } else {
+            $scope.$parent.pageTitle = '태스크 등록';
+            $scope.$parent.pageDescription = '태스크를 등록합니다.';
         }
 
     }]);

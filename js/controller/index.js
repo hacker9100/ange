@@ -6,15 +6,11 @@
  */
 
 define([
-//    './contentMainController',
-//    './contentMenuController',
-//    './contentListController',
-//    './contentDetailController',
-//    './managementMainController',
-
+    // CMS Common Controller
     '../../partials/cms/gnb',
     '../../partials/cms/lnb',
     '../../partials/cms/locater',
+    '../../partials/cms/cms_common',
 
     // CMS Controller
     '../../partials/cms/dashboard_calendara',
@@ -34,12 +30,18 @@ define([
     '../../partials/cms/archive_list',
 
     // 콘텐츠
-    '../../partials/cms/project',
-    '../../partials/cms/task',
-    '../../partials/cms/article',
-    '../../partials/cms/article_confirm',
-    '../../partials/cms/edit',
-    '../../partials/cms/edit_confirm',
+    '../../partials/cms/project_list',
+    '../../partials/cms/project_edit',
+    '../../partials/cms/task_list',
+    '../../partials/cms/task_edit',
+    '../../partials/cms/article_list',
+    '../../partials/cms/article_edit',
+    '../../partials/cms/article_confirm_list',
+    '../../partials/cms/article_confirm_edit',
+    '../../partials/cms/edit_list',
+    '../../partials/cms/edit_edit',
+    '../../partials/cms/edit_confirm_list',
+    '../../partials/cms/edit_confirm_edit',
 
     // 게시판
     '../../partials/cms/webboard',

@@ -23,11 +23,13 @@ define([
         }
 
         /********** 목록 조회 이벤트 **********/
+/*
         // 조회 화면 이동
         $scope.viewContent = function (no) {
             $location.search({_method: 'GET'});
             $location.path('/article/view/'+no);
         };
+*/
 
         // 원고 등록
         $scope.listEditContent = function (idx) {
@@ -44,13 +46,9 @@ define([
                         alert("다른 사용자가 수정중인 문서입니다.");
                         return;
                     }
-
-                    $location.search({_method: 'PUT'});
-                } else {
-                    $location.search({_method: 'POST'});
                 }
 
-                $location.path('/article/edit/'+task.NO);
+                $location.path('/article/'+task.NO);
             });
 
 //            if (task.PHASE == '0') {
@@ -127,14 +125,13 @@ define([
 
         /********** 화면 초기화 **********/
         // 페이지 타이틀
-        if ($scope.method == 'GET' && $stateParams.id == undefined) {
-            $scope.message = 'ANGE CMS';
-            $scope.pageTitle = '원고 관리';
-            $scope.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
-            $scope.tailDescription = '.';
+        $scope.$parent.message = 'ANGE CMS';
+        $scope.$parent.pageTitle = '원고 관리';
+        $scope.$parent.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
+        $scope.$parent.tailDescription = '.';
 
-            $scope.initList();
-            $scope.getListTasks();
-        }
+        $scope.initList();
+        $scope.getListTasks();
+
     }]);
 });

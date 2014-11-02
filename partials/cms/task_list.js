@@ -109,20 +109,20 @@ define([
         /********** 목록 조회 이벤트 **********/
         // 등록 화면 이동
         $scope.createNewTask = function () {
-            $location.search({_method: 'POST'});
-            $location.path('/task/edit/0');
+            $location.path('/task/0');
         };
 
+/*
         // 조회 화면 이동
         $scope.viewListTask = function (no) {
             $location.search({_method: 'GET'});
             $location.path('/task/view/'+no);
         };
+*/
 
         // 수정
         $scope.editTask = function (no) {
-            $location.search({_method: 'PUT'});
-            $location.path('/task/edit/'+no);
+            $location.path('/task/'+no);
         };
 
         // 수정
@@ -215,16 +215,14 @@ define([
         });
 
         /********** 화면 초기화 **********/
-        if ($scope.method == 'GET' && $stateParams.id == undefined) {
-            // 페이지 타이틀
-            $scope.message = 'ANGE CMS';
-            $scope.pageTitle = '태스크 관리';
-            $scope.pageDescription = '기사주제 설정하고 할당하여 관리합니다.';
-            $scope.tailDescription = '.';
+        // 페이지 타이틀
+        $scope.$parent.message = 'ANGE CMS';
+        $scope.$parent.pageTitle = '태스크 관리';
+        $scope.$parent.pageDescription = '기사주제 설정하고 할당하여 관리합니다.';
+        $scope.$parent.tailDescription = '.';
 
-            $scope.initList();
-            $scope.getListTasks();
-        }
+        $scope.initList();
+        $scope.getListTasks();
 
     }]);
 });

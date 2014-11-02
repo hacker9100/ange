@@ -34,8 +34,7 @@ define([
         /********** 등록,수정 이벤트 **********/
             // 목록
         $scope.moveList = function () {
-            $location.search({_method: 'GET'});
-            $location.path('/edit/list');
+            $location.path('/edit');
         };
 
         // 조회
@@ -44,27 +43,25 @@ define([
                 $scope.task = task.data;
             });
 
-            if ( $scope.method == 'PUT') {
-                contentService.getContent($stateParams.id).then(function(content){
-                    if (content.data.NO != undefined) {
-                        $location.search('_modify', '0');
-                        contentService.updateStatusContent(content.data.NO).then(function(data){
-                            $location.search('_modify', null);
-                        });
+            contentService.getContent($stateParams.id).then(function(content){
+                if (content.data.NO != undefined) {
+                    $location.search('_modify', '0');
+                    contentService.updateStatusContent(content.data.NO).then(function(data){
+                        $location.search('_modify', null);
+                    });
 
-                        $scope.content = content.data;
+                    $scope.content = content.data;
 
-                        // 파일 순서 : 1. 원본, 2. 썸네일, 3. 중간사이즈
-                        var files = content.data.FILES;
+                    // 파일 순서 : 1. 원본, 2. 썸네일, 3. 중간사이즈
+                    var files = content.data.FILES;
 
-                        if (files.length > 0) {
-                            for (var i =0; i < files.length; i++) {
-                                $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":uploadUrl+files[i].FILE_NM,"thumbnailUrl":uploadUrl+"thumbnail/"+files[i].FILE_NM,"mediumUrl":uploadUrl+"medium/"+files[i].FILE_NM,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                            }
+                    if (files.length > 0) {
+                        for (var i =0; i < files.length; i++) {
+                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":uploadUrl+files[i].FILE_NM,"thumbnailUrl":uploadUrl+"thumbnail/"+files[i].FILE_NM,"mediumUrl":uploadUrl+"medium/"+files[i].FILE_NM,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
                     }
-                });
-            }
+                }
+            });
         };
 
         // 등록/수정
@@ -110,18 +107,13 @@ define([
 //        $scope.queue = fileInfo;
 
         /********** 화면 초기화 **********/
-        if ($scope.method != 'GET') {
+        // 페이지 타이틀
+        $scope.$parent.message = 'ANGE CMS';
+        $scope.$parent.pageTitle = '편집';
+        $scope.$parent.pageDescription = '원고를 편집합니다.';
 
-            // 페이지 타이틀
-            $scope.message = 'ANGE CMS';
+        $scope.initEdit();
+        $scope.getTask();
 
-            if ( $scope.method == 'PUT') {
-                $scope.pageTitle = '편집';
-                $scope.pageDescription = '원고를 편집합니다.';
-            }
-
-            $scope.initEdit();
-            $scope.getTask();
-        }
     }]);
 });
