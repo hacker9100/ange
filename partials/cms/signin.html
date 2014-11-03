@@ -12,12 +12,12 @@
 			<form role="login" ng-submit="loginMe()">
 				<div class="form-group">
 				<!-- label for="exampleInputEmail1">Email address</label -->
-				<input type="text" class="form-control" ng-model="login.id" id="userid" name="userid" placeholder="ID" tabindex="1" ng-focus="isFocused=true" ng-blur="isFocused=false">
+				<input type="text" class="form-control" ng-model="login.id" id="userid" name="userid" placeholder="ID">
 				</div>
 
 				<div class="form-group">
 				<!-- label for="exampleInputPassword1">Password</label -->
-				<input type="password" class="form-control" ng-model="login.password" id="password" name="password" placeholder="Password" tabindex="2">
+				<input type="password" class="form-control" ng-model="login.password" id="password" name="password" placeholder="Password">
 				</div>
 
 				<!-- div class="checkbox">
@@ -26,7 +26,7 @@
 				</label>
 				</div -->
 
-				<button type="submit" class="btn btn-info" tabindex="3">Log in</button>
+				<button type="submit" class="btn btn-info">Log in</button>
 			</form>
 			</div>
 		</div>

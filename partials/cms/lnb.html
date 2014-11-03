@@ -1,61 +1,60 @@
-<div class="btn-group-vertical col-xs-12 col-sm-12 col-md-2" style="margin-bottom:10px;">
+    <div class="col-xs-2 btn-group-vertical" style="width:100%;">
 
-    <!-- 메뉴 타이틀 -->
-    <ul class="list-group list-title">
-        <li class="list-group-item-lnb" style="padding-top:20px;">
-            <span class="smalltag">dashboard</span>
-            <span class="glyphicon glyphicon-home"></span> 대시보드
-        </li>
-    </ul>
+        <!-- 메뉴 타이틀 -->
+        <ul class="list-group list-title"style="border:none; border-top:none;">
+            <li class="list-group-item-lnb" style="border:none;">
+                <span class="smalltag" style="margin-top:10px;">dashboard</span>
+                <span class="glyphicon glyphicon-home"></span> 대시보드
+            </li>
+        </ul>
 
-    <!-- ///// 메뉴 타이틀 구성 >
-    <ul class="list-group list-title">
-        <li class="list-group-item" style="padding-top:20px;">
-            <span class="smalltag">contents</span>
-            <span class="glyphicon glyphicon-home"></span> 콘텐츠 관리
-        </li>
-    </ul>
-    <ul class="list-group list-title">
-        <li class="list-group-item" style="padding-top:20px;">
-            <span class="smalltag">media </span>
-            <span class="glyphicon glyphicon-home"></span> 미디어 관리
-        </li>
-    </ul>
-    <ul class="list-group list-title">
-        <li class="list-group-item" style="padding-top:20px;">
-            <span class="smalltag">board </span>
-            <span class="glyphicon glyphicon-home"></span> 게시판
-        </li>
-    </ul>
-    <ul class="list-group list-title">
-        <li class="list-group-item" style="padding-top:20px;">
-            <span class="smalltag">admin</span>
-            <span class="glyphicon glyphicon-home"></span> 관리자
-        </li>
-    </ul>
-    <ul class="list-group list-title">
-        <li class="list-group-item" style="padding-top:20px;">
-            <span class="smalltag">config</span>
-            <span class="glyphicon glyphicon-home"></span> 설정
-        </li>
-    </ul>
-    <///// 메뉴 타이틀 구성 -->
+        <!-- ///// 메뉴 타이틀 구성 >
+        <ul class="list-group list-title">
+            <li class="list-group-item" style="padding-top:20px;">
+                <span class="smalltag">contents</span>
+                <span class="glyphicon glyphicon-home"></span> 콘텐츠 관리
+            </li>
+        </ul>
+        <ul class="list-group list-title">
+            <li class="list-group-item" style="padding-top:20px;">
+                <span class="smalltag">media </span>
+                <span class="glyphicon glyphicon-home"></span> 미디어 관리
+            </li>
+        </ul>
+        <ul class="list-group list-title">
+            <li class="list-group-item" style="padding-top:20px;">
+                <span class="smalltag">board </span>
+                <span class="glyphicon glyphicon-home"></span> 게시판
+            </li>
+        </ul>
+        <ul class="list-group list-title">
+            <li class="list-group-item" style="padding-top:20px;">
+                <span class="smalltag">admin</span>
+                <span class="glyphicon glyphicon-home"></span> 관리자
+            </li>
+        </ul>
+        <ul class="list-group list-title">
+            <li class="list-group-item" style="padding-top:20px;">
+                <span class="smalltag">config</span>
+                <span class="glyphicon glyphicon-home"></span> 설정
+            </li>
+        </ul>
+        <///// 메뉴 타이틀 구성 -->
 
-    <!-- 좌측 메뉴를 생성한다. -->
-    <div class="btn-group" ng-repeat="menuInfo in menuInfos">
-        <button type="button" ng-click="selectMenu(menuInfo)" class="btn btn-default" style="text-align: left; font-size: 0.94em; line-height: 2.4em;">{{menuInfo.name}}</button>
+        <!-- 좌측 메뉴를 생성한다. -->
+        <div class="btn-group" ng-repeat="menuInfo in menuInfos" style="width:150px; margin-left:10px;">
+            <button type="button" ng-click="selectMenu(menuInfo)" class="btn btn-default" style="text-align: left; font-size: 0.94em; line-height: 2.4em; border-radius: 0;">{{menuInfo.name}}</button>
+        </div>
+
+        <!--<div class="btn-group">-->
+            <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
+            <!--Menu #5-->
+            <!--<span class="caret"></span>-->
+            <!--</button>-->
+
+            <!--<ul class="dropdown-menu" role="menu">-->
+            <!--<li><a href="#">Sub #1</a></li>-->
+            <!--<li><a href="#">Sub #2</a></li>-->
+            <!--</ul>-->
+        <!--</div>-->
     </div>
-
-    <!--<div class="btn-group">-->
-        <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">-->
-        <!--Menu #5-->
-        <!--<span class="caret"></span>-->
-        <!--</button>-->
-
-        <!--<ul class="dropdown-menu" role="menu">-->
-        <!--<li><a href="#">Sub #1</a></li>-->
-        <!--<li><a href="#">Sub #2</a></li>-->
-        <!--</ul>-->
-    <!--</div>-->
-</div>
-

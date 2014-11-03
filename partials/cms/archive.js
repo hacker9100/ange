@@ -16,7 +16,7 @@ define([
         // 페이지 타이틀
         $scope.message = 'ANGE CMS';
 
-        $scope.pageTitle = 'Archive';
+        $scope.pageTitle = '아카이브';
         $scope.pageDescription = '지난 기사자료를 조회할 수 있습니다.';
         $scope.tailDescription = '검색영역에서 원하는 기사를 찾을 수 있습니다.<br />제목을 클릭하면 자세한 내용을 조회할 수 있습니다.';
 

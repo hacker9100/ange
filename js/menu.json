@@ -23,21 +23,21 @@
                 "board1View@dashboard": { "templateUrl": "partials/cms/miniProject.html", "controller" : "project" },
                 "board2View@dashboard": { "templateUrl": "partials/cms/miniWebboard.html", "controller" : "webboard" }
             }
-        }}, { "account_edit": {
+        }}, { "account": {
             "url": "/account",
             "views": {
-                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
-                "lnbView@account_edit": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
-                "locaterView@account_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "contentView@account_edit": { "templateUrl": "partials/cms/account_edit.html", "controller" : "account_edit" }
+                "" : { "templateUrl": "partials/cms/account.html", "controller": "account" },
+                "lnbView@account": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@account": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "bodyView@account": { "templateUrl": "partials/cms/account_edit.html", "controller" : "account_edit" }
             }
         }}, { "scheduler": {
             "url": "/scheduler",
             "views": {
-                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "" : { "templateUrl": "partials/cms/scheduler.html", "controller": "scheduler" },
                 "lnbView@scheduler": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@scheduler": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "contentView@scheduler": { "templateUrl": "partials/cms/scheduler_calendar.html", "controller" : "scheduler_calendar" }
+                "bodyView@scheduler": { "templateUrl": "partials/cms/scheduler_calendar.html", "controller" : "scheduler_calendar" }
             }
         }}, { "archive": {
             "url": "/archive",
