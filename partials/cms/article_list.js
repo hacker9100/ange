@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('article_list', ['$scope', '$stateParams', 'taskService', 'contentService', '$location', function ($scope, $stateParams, taskService, contentService, $location) {
+    controllers.controller('article_list', ['$scope', '$rootScope', '$stateParams', 'taskService', 'contentService', '$location', function ($scope, $rootScope, $stateParams, taskService, contentService, $location) {
 
         /********** 초기화 **********/
         // 목록 데이터
@@ -23,25 +23,32 @@ define([
         }
 
         /********** 목록 조회 이벤트 **********/
+/*
         // 조회 화면 이동
         $scope.viewContent = function (no) {
             $location.search({_method: 'GET'});
             $location.path('/article/view/'+no);
         };
+*/
 
         // 원고 등록
         $scope.listEditContent = function (idx) {
-
-            $location.search({_method: 'POST'});
-
             var task = $scope.tasks[idx];
 
             contentService.getContent(task.NO).then(function(content){
-                if (content.data.NO != undefined) {
-                    $location.search({_method: 'PUT'});
+                if ($rootScope.role != 'ADMIN' && task.EDITOR_ID != $rootScope.uid) {
+                    alert("다른 담당자의 문서는 작성할수 없습니다.");
+                    return;
                 }
 
-                $location.path('/article/edit/'+task.NO);
+                if (content.data.NO != undefined) {
+                    if ($rootScope.role != 'ADMIN' && content.data.MODIFY_FL == '0' && content.data.REG_UID != $rootScope.uid) {
+                        alert("다른 사용자가 수정중인 문서입니다.");
+                        return;
+                    }
+                }
+
+                $location.path('/article/'+task.NO);
             });
 
 //            if (task.PHASE == '0') {
@@ -118,14 +125,13 @@ define([
 
         /********** 화면 초기화 **********/
         // 페이지 타이틀
-        if ($scope.method == 'GET' && $stateParams.id == undefined) {
-            $scope.message = 'ANGE CMS';
-            $scope.pageTitle = '원고 관리';
-            $scope.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
-            $scope.tailDescription = '.';
+        $scope.$parent.message = 'ANGE CMS';
+        $scope.$parent.pageTitle = '원고 관리';
+        $scope.$parent.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
+        $scope.$parent.tailDescription = '.';
 
-            $scope.initList();
-            $scope.getListTasks();
-        }
+        $scope.initList();
+        $scope.getListTasks();
+
     }]);
 });

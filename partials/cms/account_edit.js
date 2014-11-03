@@ -12,7 +12,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('account_edit', ['$scope', '$stateParams', 'userService', '$location', function ($scope, $stateParams, userService, $location) {
+    controllers.controller('account_edit', ['$scope', '$rootScope', '$stateParams', 'userService', '$location', function ($scope, $rootScope, $stateParams, userService, $location) {
 
 //        var userId = 'hong';
 
@@ -34,8 +34,8 @@ define([
         // 조회
         $scope.getCmsUser = function () {
             if ($rootScope.uid != '') {
-                userService.getCmsUser(userId).then(function(user){
-                    $scope.user = user.data[0];
+                userService.getCmsUser($rootScope.uid).then(function(user){
+                    $scope.user = user.data;
                 });
             }
         }

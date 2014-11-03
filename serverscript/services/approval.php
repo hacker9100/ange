@@ -134,8 +134,12 @@
 
                 if ($form[APPROVAL_ST] == '11')
                     $parse = '20';
-                else
-                    $parse = '13';
+                else if ($form[APPROVAL_ST] == '12')
+                    $parse = '12';
+                else if ($form[APPROVAL_ST] == '21')
+                    $parse = '30';
+                else if ($form[APPROVAL_ST] == '22')
+                    $parse = '22';
 
                 $sql = "UPDATE CMS_TASK
                         SET

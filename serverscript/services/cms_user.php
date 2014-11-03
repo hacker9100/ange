@@ -45,7 +45,7 @@
                 $data  = $_d->sql_fetch_array($result);
 
                 $sql = "SELECT
-                            R.ROLE_ID, R.ROLE_GB, ROLE_NM
+                            R.ROLE_ID, R.ROLE_NM, R.ROLE_GB
                         FROM
                             USER_ROLE U, CMS_ROLE R
                         WHERE
@@ -156,15 +156,15 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if (isset($_search[ROLE])) {
+            if (isset($form[ROLE])) {
                 $sql = "INSERT INTO USER_ROLE
                     (
                         ROLE_ID
                         ,USER_ID
                         ,REG_DT
                     ) VALUES (
-                        '".$_search[ROLE][ROLE_ID]."'
-                        , '".$no."'
+                        '".$form[ROLE][ROLE_ID]."'
+                        , '".$form[USER_ID]."'
                         , SYSDATE()
                     )";
 

@@ -51,8 +51,7 @@ define([
         /* 등록,수정 이벤트 */
         // 목록
         $scope.getProjects = function () {
-            $location.search({_method: 'GET'});
-            $location.path('/project/list');
+            $location.path('/project');
         };
 
         // 조회
@@ -79,33 +78,29 @@ define([
 
             if (id <= 0) {
                 projectService.createProject($scope.project).then(function(data){
-                    $location.search({_method: 'GET'});
-                    $location.path('/project/list');
+                    $location.path('/project');
                 });
             }
             else {
                 projectService.updateProject(id, $scope.project).then(function(data){
-                    $location.search({_method: 'GET'});
-                    $location.path('/project/list');
+                    $location.path('/project');
                 });
             }
         };
 
         /* 화면 초기화 */
-        if ($scope.method != 'GET'){
-            $scope.initEdit();
+        $scope.initEdit();
 
-            // 페이지 타이틀
-            $scope.message = 'ANGE CMS';
-            if ( $stateParams.id != 0) {
-                $scope.pageTitle = '프로젝트 수정';
-                $scope.pageDescription = '프로젝트를 수정합니다.';
+        // 페이지 타이틀
+        $scope.$parent.message = 'ANGE CMS';
+        if ( $stateParams.id != 0) {
+            $scope.$parent.pageTitle = '프로젝트 수정';
+            $scope.$parent.pageDescription = '프로젝트를 수정합니다.';
 
-                $scope.getProject();
-            } else {
-                $scope.pageTitle = '프로젝트 등록';
-                $scope.pageDescription = '프로젝트를 등록합니다.';
-            }
+            $scope.getProject();
+        } else {
+            $scope.$parent.pageTitle = '프로젝트 등록';
+            $scope.$parent.pageDescription = '프로젝트를 등록합니다.';
         }
 
     }]);

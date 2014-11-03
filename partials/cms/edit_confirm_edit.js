@@ -34,8 +34,7 @@ define([
         /********** 등록,수정 이벤트 **********/
         // 목록
         $scope.moveList = function () {
-            $location.search({_method: 'GET'});
-            $location.path('/article_confirm/list');
+            $location.path('/article_confirm');
         };
 
         // 조회
@@ -47,6 +46,11 @@ define([
             if ( $scope.method == 'PUT') {
                 contentService.getContent($stateParams.id).then(function(content){
                     if (content.data.NO != undefined) {
+                        $location.search('_modify', '0');
+                        contentService.updateStatusContent(content.data.NO).then(function(data){
+                            $location.search('_modify', null);
+                        });
+
                         $scope.content = content.data;
 
                         // 파일 순서 : 1. 원본, 2. 썸네일, 3. 중간사이즈
@@ -66,19 +70,22 @@ define([
         $scope.saveContent = function () {
             $scope.task.PHASE = '0,10';
             $scope.content.TASK = $scope.task;
+            $scope.content.FILES = $scope.queue;
 
             if ( $scope.method == 'POST') {
                 contentService.createContent($scope.content).then(function(data){
-                    $location.search({_method: 'GET'});
-                    $location.path('/article_confirm/list');
                 });
             }
             else {
                 contentService.updateContent($scope.content.NO, $scope.content).then(function(data){
-                    $location.search({_method: 'GET'});
-                    $location.path('/article_confirm/list');
                 });
             }
+
+            $location.search('_modify', '1');
+            contentService.updateStatusContent($scope.content.NO).then(function(data){
+                $location.search('_modify', null);
+                $location.path('/article_confirm');
+            });
         };
 
         // 승인
@@ -86,7 +93,7 @@ define([
 
             $scope.approval = {};
             $scope.approval.TASK_NO = $scope.task.NO;
-            $scope.approval.APPROVAL_ST = '30';
+            $scope.approval.APPROVAL_ST = '21';
             $scope.approval.NOTE = $scope.content.NOTE;
 
             approvalService.createApproval($scope.approval).then(function(data){
@@ -108,15 +115,13 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        if ($scope.method != 'GET') {
+        // 페이지 타이틀
+        $scope.$parent.message = 'ANGE CMS';
+        $scope.$parent.pageTitle = '편집 승인';
+        $scope.$parent.pageDescription = '편집된 원고를 확인하고 승인관리합니다.';
 
-            // 페이지 타이틀
-            $scope.message = 'ANGE CMS';
-            $scope.pageTitle = '편집 승인';
-            $scope.pageDescription = '편집된 원고를 확인하고 승인관리합니다.';
+        $scope.initEdit();
+        $scope.getTask();
 
-            $scope.initEdit();
-            $scope.getTask();
-        }
     }]);
 });

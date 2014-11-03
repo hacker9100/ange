@@ -9,17 +9,17 @@
 
 define([
 './app',
-//'blueimp.fileupload',
 'json!menu.json'
 ], function(app, menu) {
     'use strict';
 
-    app.config(function($stateProvider, $urlRouterProvider, $httpProvider, fileUploadProvider) {
+    app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, fileUploadProvider) {
 
         // angular를 사용함으로서 url에 '#'를 제거하기 위한 처리
         var sitePrefix = '/app';
 
         // use the HTML5 History API
+//        $locationProvider.html5Mode(true);
 //        $locationProvider.html5Mode(true).hashPrefix('/app');
 
         // 무조건 처음에 호출하고 싶은 것이 있으면 여기서 호출

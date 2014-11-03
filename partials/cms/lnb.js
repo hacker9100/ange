@@ -16,13 +16,13 @@ define([
                 { url: '/archive', 'name': '아카이브' }
             ]},
             {"project, task, article, article_confirm, edit, edit_confirm": [
-                { url: '/project/list', 'name': '프로젝트' },
-                { url: '/task/list', 'name': '태스크' },
-                { url: '/article/list', 'name': '원고' },
-                { url: '/article_confirm/list', 'name': '원고 승인' },
-                { url: '/edit/list', 'name': '편집' },
-                { url: '/edit_confirm/list', 'name': '편집 승인' },
-                { url: '/publish/list', 'name': '출판' }
+                { url: '/project', 'name': '프로젝트' },
+                { url: '/task', 'name': '태스크' },
+                { url: '/article', 'name': '원고' },
+                { url: '/article_confirm', 'name': '원고 승인' },
+                { url: '/edit', 'name': '편집' },
+                { url: '/edit_confirm', 'name': '편집 승인' },
+                { url: '/publish', 'name': '출판' }
             ]},
             {"user, permission": [
                 { url: '/user', 'name': '사용자 관리' },
@@ -42,7 +42,6 @@ define([
 
         $scope.selectMenu = function(menu) {
             $location.path(menu.url);
-            $location.search("_method=GET")
         };
 	}]);
 });

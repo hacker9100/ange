@@ -61,7 +61,8 @@
     <tbody>
     <tr ng-repeat="project in projects">
         <td>{{ project.NO }}</td>
-        <td><a ng-click="viewListProject(project.NO)">{{ project.SUBJECT }}</a></td>
+        <td><a ng-click="editProject(project.NO)">{{ project.SUBJECT }}</a></td>
+        <!--<td><a ng-click="viewListProject(project.NO)">{{ project.SUBJECT }}</a></td>-->
         <td>{{ project.REG_DT }}</td>
         <td>{{ project.PROJECT_ST == '0' ? '준비' : project.PROJECT_ST == '1' ? '진행' : '완료' }}</td>
         <td><a ng-click="deleteListProject($index)">삭제</a></td>

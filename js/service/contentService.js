@@ -32,15 +32,15 @@ define(['./services'], function (services) {
         }
 
         obj.createContent = function(content){
-            return $http.post('serverscript/services/content.php?_method=POST&'+qs($location.search())+'&_category='+$location.path(), content);
+            return $http.post('serverscript/services/content.php?_method=POST&_category='+$location.path(), content);
         }
 
         obj.updateContent = function(id, content){
-            return $http.post('serverscript/services/content.php?_method=PUT&'+qs($location.search())+'&_category='+$location.path()+'&id='+id, content);
+            return $http.post('serverscript/services/content.php?_method=PUT&_category='+$location.path()+'&id='+id, content);
         }
 
-        obj.updateStatusContent = function(id, content){
-            return $http.post('serverscript/services/content.php?_method=PUT&'+qs($location.search())+'&_category='+$location.path()+'&id='+id, content);
+        obj.updateStatusContent = function(id){
+            return $http.post('serverscript/services/content.php?_method=PUT&'+qs($location.search())+'&_category='+$location.path()+'&id='+id);
         }
 
         obj.deleteContent = function(id){

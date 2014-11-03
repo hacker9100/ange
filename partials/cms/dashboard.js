@@ -10,7 +10,7 @@ define([
 
         $scope.message = "ANGE CMS";
 
-		$scope.pageTitle = "마이페이지";
+		$scope.pageTitle = "대시보드";
 		$scope.pageDescription = "홍길동 님의 대시보드입니다.";
 
         var views = [{name: "board1View"}, {name: "board2View"}, {name: "board3View"}];

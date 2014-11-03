@@ -503,11 +503,7 @@
                 }
             }
 
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-            } else {
-                $_d->succEnd($no);
-            }
+
 
             break;
 

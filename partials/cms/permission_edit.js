@@ -20,8 +20,8 @@ define([
             permissionService.getPermissionOptions().then(function(roles){
                 $scope.roles = roles.data;
 
-                if ($scope.roles != null) {
-                    $scope.roles.ROLE = $scope.roles[0];
+                if (roles.data != null) {
+                    $scope.ROLE = roles.data[0];
                 }
             });
         };
@@ -45,17 +45,13 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        if ($scope.method != 'GET') {
+        // 페이지 타이틀
+        $scope.message = 'ANGE CMS';
 
-            // 페이지 타이틀
-            $scope.message = 'ANGE CMS';
+        $scope.pageTitle = '권한 관리';
+        $scope.pageDescription = 'CMS 사용 권한을 관리합니다.';
 
-            $scope.pageTitle = '권한 관리';
-            $scope.pageDescription = 'CMS 사용 권한을 관리합니다.';
-
-            $scope.initEdit();
-//            $scope.getTask();
-        }
+        $scope.initEdit();
 
     }]);
 });

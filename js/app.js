@@ -25,7 +25,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     './service/index',
     './directive/index',
     './controller/index',
-    './filter/index'//,
+    './filter/index',
 //    './mockhttp'
 ], function (angular, routeConfig) { // 의존 모듈들은 순서대로 매개변수에 담긴다.
     // 의존 모듈들이 모두 로딩 완료되면 이 함수를 실행한다.
@@ -37,7 +37,8 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'mtApp.directives',
         'mtApp.controllers',
         'mtApp.filters',
-        'ui.bootstrap',
+//        'mtApp.constants',
+//        'ui.bootstrap',
         'ui.router',
         'blueimp.fileupload'
 //        'mtTest.mock'
@@ -200,7 +201,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                      * }
                      */
 
-                        // setup token
+                    // setup token
                     setToken(user.token);
                     // update user
                     angular.extend(wrappedService.user, user);
@@ -291,7 +292,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
 
                         if (role.MENU_ID == spMenu[1]) {
 
-                            if (spMenu.length < 2 && role.MENU_FL == '1') {
+                            if (spMenu.length < 3 && role.MENU_FL == '1') {
                                 permission = false;
                             } else {
                                 switch (spMenu[2]) {
@@ -323,7 +324,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                     $rootScope.authenticated = true;
                     $rootScope.uid = session.data.USER_ID;
                     $rootScope.name = session.data.USER_NM;
-                    $rootScope.role = session.data.ROLE;
+                    $rootScope.role = session.data.ROLE_ID;
                     $rootScope.menu_role = session.data.MENU_ROLE;
                     $rootScope.email = session.data.EMAIL;
                 } else {

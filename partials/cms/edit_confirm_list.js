@@ -117,17 +117,14 @@ define([
 
         // 원고 등록
         $scope.listEditContent = function (idx) {
-
-            $location.search({_method: 'POST'});
-
             var task = $scope.tasks[idx];
 
             contentService.getContent(task.NO).then(function(content){
                 if (content.data.NO != undefined) {
-                    $location.search({_method: 'PUT'});
+                    task.NO = 0;
                 }
 
-                $location.path('/edit_confirm/edit/'+task.NO);
+                $location.path('/edit_confirm/'+task.NO);
             });
         };
 
@@ -163,14 +160,13 @@ define([
 
         /********** 화면 초기화 **********/
         // 페이지 타이틀
-        if ($scope.method == 'GET' && $stateParams.id == undefined) {
-            $scope.message = 'ANGE CMS';
-            $scope.pageTitle = '편집 승인';
-            $scope.pageDescription = '편집된 원고를 확인하고 승인관리합니다.';
-            $scope.tailDescription = '.';
+        $scope.$parent.message = 'ANGE CMS';
+        $scope.$parent.pageTitle = '편집 승인';
+        $scope.$parent.pageDescription = '편집된 원고를 확인하고 승인관리합니다.';
+        $scope.$parent.tailDescription = '.';
 
-            $scope.initList();
-            $scope.getListTasks();
-        }
+        $scope.initList();
+        $scope.getListTasks();
+
     }]);
 });

@@ -13,19 +13,15 @@
 
         <div class="panel panel-primary">
 
-            <div ng-class="customClass()">
+            <div class="panel-heading">
                 <h4 class="list-group-item-heading">{{pageTitle}}</h4>
                 <span style="color:#EDEDED; font-size:0.84em;">{{pageDescription}}</span>
             </div>
 
             <div class="panel-body">
-                <br />
 
-                <edit-list ng-show="method == 'GET' && !isId"></edit-list>
-                <edit-edit ng-show="method != 'GET'"></edit-edit>
-                <!--<edit-view ng-show="method == 'GET' && isId"></edit-view>-->
+                <div ui-view="contentView"></div>
 
-                <br /><br />
             </div>
         </div>
 
