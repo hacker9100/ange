@@ -2,44 +2,40 @@
 
 <div class="container-fluid" style="margin-top:200px;">
 <!-- p>Nothing here {{'yet' + '!'}}</p -->
-	<div class="row" style="">
-
+	<div class="row" style="margin:0; padding:0;">
 
         <div class="panel panel-default col-xs-8 col-xs-offset-2 col-md-4 col-md-offset-4">
-            <div class="panel-body">
+            <div class="panel-body" style="padding:10px 50px 40px 50px;">
 
+                <h2 style="font-weight: 700; line-height:1;">Sign In</h2>
 
+                <div style="margin-top:40px;">
+                    <form role="login" ng-submit="loginMe()">
+                        <div class="form-group">
+                        <!-- label for="exampleInputEmail1">Email address</label -->
+                        <input type="text" class="form-control" ng-model="login.id" id="userid" name="userid" placeholder="ID">
+                        </div>
 
-		<h2 style="font-weight: 700;">Sign In</h2>
+                        <div class="form-group">
+                        <!-- label for="exampleInputPassword1">Password</label -->
+                        <input type="password" class="form-control" ng-model="login.password" id="password" name="password" placeholder="Password">
+                        </div>
 
-		<div style="margin-top:30px;">
-			<form role="login" ng-submit="loginMe()">
-				<div class="form-group">
-				<!-- label for="exampleInputEmail1">Email address</label -->
-				<input type="text" class="form-control" ng-model="login.id" id="userid" name="userid" placeholder="ID">
-				</div>
+                        <!-- div class="checkbox">
+                        <label>
+                        <input type="checkbox"> Remember ID
+                        </label>
+                        </div -->
 
-				<div class="form-group">
-				<!-- label for="exampleInputPassword1">Password</label -->
-				<input type="password" class="form-control" ng-model="login.password" id="password" name="password" placeholder="Password">
-				</div>
-
-				<!-- div class="checkbox">
-				<label>
-				<input type="checkbox"> Remember ID
-				</label>
-				</div -->
-
-				<button type="submit" class="btn btn-info">Log in</button>
-			</form>
-			</div>
-
+                        <button type="submit" class="btn btn-info">Log in</button>
+                    </form>
+                </div>
 
             </div>
         </div>
 
     </div>
 
-    <div class="navbar-fixed-bottom" ng-include=" 'partials/cms/footer.html' "></div>
+    <div class="navbar-fixed-bottom" ng-include=" 'partials/cms/footer.html' " style="border-top:1px solid #f2f2f2;"></div>
 </div> <!-- /container -->
 

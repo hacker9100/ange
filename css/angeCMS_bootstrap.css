@@ -3703,7 +3703,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .container > .navbar-collapse,
 .container-fluid > .navbar-collapse {
   margin-right: -15px;
-  margin-left: 5px;
+  margin-left: 0px;
 }
 @media (min-width: 768px) {
   .container > .navbar-header,
@@ -3759,13 +3759,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 
 .navbar-brand-logo {
     background:URL('../imgs/gnb_brand_01_brandlogo.png') no-repeat;
-    background-position: 0 0;
+    background-position: 5px 0;
 }
 
 .navbar-brand-logo:hover,
 .navbar-brand-logo:focus {
   text-decoration: none;
-  background-position: 0 -55px;
+  background-position: 5px -55px;
 }
 
 @media (min-width: 768px) {
@@ -3811,7 +3811,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-nav > li > a {
   padding-top: 10px;
   padding-bottom: 10px;
-  line-height: 50px;
+  line-height: 49px;
 }
 
 @media (max-width: 767px) {
@@ -4908,6 +4908,7 @@ a.list-group-item-danger.active:focus {
 
 .contentpannel-body {
   padding: 20px 40px 30px 40px;
+  min-height:680px;
 }
 
 .panel-heading {

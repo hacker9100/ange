@@ -37,6 +37,7 @@ body {
     font-family: "Nanum Gothic", Helvetica, Arial, sans-serif;
 	/* padding-bottom: 20px; */
 	padding-top: 45px;
+    padding-bottom: 0;
     background:URL(../imgs/if_img_01_background.jpg);
 }
 
@@ -45,6 +46,7 @@ body {
     background-repeat: repeat-y;
     background-position: 25px;
     margin:0 auto;
+    padding: 0;
 }
 .left_wrap{
     position:absolute;
@@ -193,4 +195,30 @@ span.smalltag {
 
 .copyright {
     font-family: Arial, sans-serif;
+}
+
+a.famlylink{
+    clearboth;
+    font-family: Arial, sans-serif;
+    font-size: 0.94em;
+}
+
+a.famlylink:hover, a.famlylink:focus{
+    color: #000044;
+    text-decoration: none;
+}
+
+a.famlylink:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.foot-content{
+    width:100%;
+    margin:0;
+    padding:30px 40px 32px 40px;
+    line-height:11pt;
+    font-size: 0.64em;
+    margin-bottom: 15px;
 }

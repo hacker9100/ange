@@ -26,7 +26,7 @@
         }}, { "account": {
             "url": "/account",
             "views": {
-                "" : { "templateUrl": "partials/cms/account.html", "controller": "account" },
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "account" },
                 "lnbView@account": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@account": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "bodyView@account": { "templateUrl": "partials/cms/account_edit.html", "controller" : "account_edit" }
@@ -34,7 +34,7 @@
         }}, { "scheduler": {
             "url": "/scheduler",
             "views": {
-                "" : { "templateUrl": "partials/cms/scheduler.html", "controller": "scheduler" },
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "scheduler" },
                 "lnbView@scheduler": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@scheduler": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "bodyView@scheduler": { "templateUrl": "partials/cms/scheduler_calendar.html", "controller" : "scheduler_calendar" }
@@ -42,7 +42,7 @@
         }}, { "archive": {
             "url": "/archive",
             "views": {
-                "" : { "templateUrl": "partials/cms/archive.html", "controller": "archive" },
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "archive" },
                 "lnbView@archive": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@archive": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "bodyView@archive": { "templateUrl": "partials/cms/archive_list.html", "controller" : "archive_list" }
