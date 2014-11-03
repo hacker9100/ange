@@ -198,7 +198,7 @@ span.smalltag {
 }
 
 a.famlylink{
-    clearboth;
+    clear : both;
     font-family: Arial, sans-serif;
     font-size: 0.94em;
 }
