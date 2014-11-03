@@ -36,17 +36,17 @@ define([
             var task = $scope.tasks[idx];
 
             contentService.getContent(task.NO).then(function(content){
-                if ($rootScope.role != 'ADMIN' && task.EDITOR_ID != $rootScope.uid) {
-                    alert("다른 담당자의 문서는 작성할수 없습니다.");
-                    return;
-                }
+//                if ($rootScope.role != 'ADMIN' && task.EDITOR_ID != $rootScope.uid) {
+//                    alert("다른 담당자의 문서는 작성할수 없습니다.");
+//                    return;
+//                }
 
-                if (content.data.NO != undefined) {
-                    if ($rootScope.role != 'ADMIN' && content.data.MODIFY_FL == '0' && content.data.REG_UID != $rootScope.uid) {
-                        alert("다른 사용자가 수정중인 문서입니다.");
-                        return;
-                    }
-                }
+//                if (content.data.NO != undefined) {
+//                    if ($rootScope.role != 'ADMIN' && content.data.MODIFY_FL == '0' && content.data.REG_UID != $rootScope.uid) {
+//                        alert("다른 사용자가 수정중인 문서입니다.");
+//                        return;
+//                    }
+//                }
 
                 $location.path('/article/'+task.NO);
             });

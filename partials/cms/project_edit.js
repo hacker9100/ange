@@ -27,7 +27,7 @@ define([
             $scope.file = data[0];
         });
 
-        /* 초기화 */
+        /********** 초기화 **********/
         // 날짜 콤보박스
         var year = [];
         var month = [];
@@ -48,7 +48,7 @@ define([
             $scope.project = { years: year, months: month, YEAR: nowYear+'', MONTH: (nowMonth+1)+'' };
         }
 
-        /* 등록,수정 이벤트 */
+        /********** 등록,수정 이벤트 **********/
         // 목록
         $scope.getProjects = function () {
             $location.path('/project');
@@ -88,7 +88,7 @@ define([
             }
         };
 
-        /* 화면 초기화 */
+        /********** 화면 초기화 **********/
         $scope.initEdit();
 
         // 페이지 타이틀

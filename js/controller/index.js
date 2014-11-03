@@ -22,9 +22,7 @@ define([
 
     // 대시보드
     '../../partials/cms/dashboard',
-    '../../partials/cms/account',
     '../../partials/cms/account_edit',
-    '../../partials/cms/scheduler',
     '../../partials/cms/scheduler_calendar',
     '../../partials/cms/archive',
     '../../partials/cms/archive_list',

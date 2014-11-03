@@ -129,5 +129,13 @@ define([
         /* event sources array*/
         $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
 //        $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
+
+        /********** 화면 초기화 **********/
+        // 페이지 타이틀
+        $scope.$parent.message = 'ANGE CMS';
+        $scope.$parent.pageTitle = '스케쥴';
+        $scope.$parent.pageDescription = '업무일정을 공유합니다.';
+        $scope.$parent.tailDescription = '일정을 입력한 후 \"등록\"버튼을 누르면 등록이 완료됩니다.<br/>\"취소\"버튼을 누르면 원래대로 돌아갑니다.';
+
     }]);
 });

@@ -12,7 +12,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('article_edit', ['$scope', '$stateParams', 'taskService', 'contentService', '$location', function ($scope, $stateParams, taskService, contentService, $location) {
+    controllers.controller('article_edit', ['$scope', '$stateParams', 'loginService', 'taskService', 'contentService', '$q', '$location', function ($scope, $stateParams, loginService, taskService, contentService, $q, $location) {
 
         var uploadUrl = 'http://localhost/serverscript/upload/../../upload/files/';
 
@@ -38,6 +38,47 @@ define([
         };
 
         // 조회
+        $scope.getSession = function() {
+            return loginService.getSession();
+        },
+        $scope.sessionCheck = function(session) {
+
+            if (session.data.USER_ID == undefined || session.data.USER_ID == '')
+                throw( new String("세션이 만료되었습니다.") );
+//            throw( new Error("세션이 만료되었습니다.") );
+            return loginService.getSession();
+        },
+        $scope.reportProblems = function(error)
+        {
+            alert("1"+error);
+        };
+
+        $scope.getTask = function () {
+            var deferred = $q.defer();
+            $q.all([
+                    taskService.getTask($stateParams.id),
+                    contentService.getContent($stateParams.id)
+                ])
+//                .then( $q.spread( function( task, content )
+                .then( function(results) {
+                    deferred.resolve(results);
+                    alert(JSON.stringify(results[0].data));
+                    $scope.task      = results[0].data;
+                    $scope.content   = results[1].data;
+
+//                    // Let's force an error to demonstrate the reportProblem() works!
+//                    throw( new Error("Just to prove catch() works! ") );
+                },function(error) {
+                    deferred.reject(error);
+                    alert(JSON.stringify(error));
+                });
+
+            return deferred.promise;
+
+        };
+
+
+/*
         $scope.getTask = function () {
             taskService.getTask($stateParams.id).then(function(task){
                 $scope.task = task.data;
@@ -65,6 +106,7 @@ define([
                 });
             }
         };
+*/
 
         // 등록/수정
         $scope.saveContent = function () {
@@ -119,8 +161,13 @@ define([
             $scope.$parent.pageDescription = '원고를 등록합니다.';
         }
 
-        $scope.initEdit();
-        $scope.getTask();
+//        $scope.initEdit();
+//        $scope.getTask();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.initEdit)
+            .then($scope.getTask)
+            .catch($scope.reportProblems);
 
     }]);
 });

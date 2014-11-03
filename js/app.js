@@ -25,7 +25,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     './service/index',
     './directive/index',
     './controller/index',
-    './filter/index',
+    './filter/index'
 //    './mockhttp'
 ], function (angular, routeConfig) { // 의존 모듈들은 순서대로 매개변수에 담긴다.
     // 의존 모듈들이 모두 로딩 완료되면 이 함수를 실행한다.
@@ -52,6 +52,30 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             routeConfig.setFilterProvider($filterProvider); //for filters
         }
     );
+
+    app.directive('ngFocus', ['$parse', function($parse) {
+        return function(scope, element, attr) {
+            var fn = $parse(attr['ngFocus']);
+            alert("-->>"+element)
+            element.bind('focus', function(event) {
+                alert("-->>")
+                scope.$apply(function() {
+                    fn(scope, {$event:event});
+                });
+            });
+        }
+    }]);
+
+    app.directive('ngBlur', ['$parse', function($parse) {
+        return function(scope, element, attr) {
+            var fn = $parse(attr['ngBlur']);
+            element.bind('blur', function(event) {
+                scope.$apply(function() {
+                    fn(scope, {$event:event});
+                });
+            });
+        }
+    }]);
 
     // yourApp에 사용할 전체 controller를 설정.
     // 지금은 불필요하므로 remark.
@@ -110,7 +134,6 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                      * If accessLevels is still undefined, it let the user change the state.
                      * Grandfather.resolve will either let the user in or reject the promise later!
                      */
-
                     if (wrappedService.userRole === null) {
                         wrappedService.doneLoading = false;
                         wrappedService.pendingStateChange = {
@@ -200,7 +223,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                      *   $state.go('app.nagscreen');
                      * }
                      */
-
+alert(JSON.stringify(user));
                     // setup token
                     setToken(user.token);
                     // update user
@@ -212,6 +235,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                     return user;
                 },
                 loginUser: function (httpPromise) {
+alert("loginUser")
                     httpPromise.success(this.loginHandler);
                 },
                 logoutUser: function (httpPromise) {
@@ -226,7 +250,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
                     this.isLogged = false;
                     $state.go(logoutState);
                 },
+
                 resolvePendingState: function (httpPromise) {
+alert("resolvePendingState");
                     var checkUser = $q.defer(),
                         self = this,
                         pendingState = self.pendingStateChange;
@@ -275,72 +301,72 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     });
 
     app.run(function ($rootScope, loginService, $location) {
+
+//        $rootScope.$on("$stateChangeStart", function (event, next, current) {
+//            $rootScope.authenticated = false;
+//            loginService.getSession().then(function (session) {
+//                if (session.data.USER_ID) {
+//                    var path = $location.path();
+//                    var spMenu =  path.split('/');
+//
+//                    for (var idx in session.data.MENU_ROLE) {
+//                        var permission = true;
+//                        var role = session.data.MENU_ROLE[idx];
+//
+//                        if (role.MENU_ID == spMenu[1]) {
+//
+//                            if (spMenu.length < 3 && role.MENU_FL == '1') {
+//                                permission = false;
+//                            } else {
+//                                switch (spMenu[2]) {
+//                                    case 'list' :
+//                                        if (role.LIST_FL != '0') {
+//                                            permission = false;
+//                                        }
+//                                        break;
+//                                    case 'view' :
+//                                        if (role.VIEW_FL != '0') {
+//                                            permission = false;
+//                                        }
+//                                        break;
+//                                    case 'edit' :
+//                                        if (role.EDIT_FL != '0') {
+//                                            permission = false;
+//                                        }
+//                                        break;
+//                                }
+//                            }
+//                        }
+//
+//                        if (!permission) {
+//                            alert('접근할 수 없는 메뉴 입니다.');
+//                            history.back();
+//                        }
+//                    }
+//
+//                    $rootScope.authenticated = true;
+//                    $rootScope.uid = session.data.USER_ID;
+//                    $rootScope.name = session.data.USER_NM;
+//                    $rootScope.role = session.data.ROLE_ID;
+//                    $rootScope.menu_role = session.data.MENU_ROLE;
+//                    $rootScope.email = session.data.EMAIL;
+//                } else {
+////                    $location.path('/signin');
+////                    var nextUrl = next.$$route.originalPath;
+//                    if ($location.path() == '/signup' || $location.path() == '/signin') {
+//
+//                    } else {
+//                        alert("로그인이 필요한 메뉴입니다.")
+//                        $location.path("/signin");
+//                    }
+//                }
+//            });
+//        });
+
         /**
          * $rootScope.doingResolve is a flag useful to display a spinner on changing states.
          * Some states may require remote data so it will take awhile to load.
          */
-        $rootScope.$on("$stateChangeStart", function (event, next, current) {
-            $rootScope.authenticated = false;
-            loginService.getSession().then(function (session) {
-                if (session.data.USER_ID) {
-                    var path = $location.path();
-                    var spMenu =  path.split('/');
-
-                    for (var idx in session.data.MENU_ROLE) {
-                        var permission = true;
-                        var role = session.data.MENU_ROLE[idx];
-
-                        if (role.MENU_ID == spMenu[1]) {
-
-                            if (spMenu.length < 3 && role.MENU_FL == '1') {
-                                permission = false;
-                            } else {
-                                switch (spMenu[2]) {
-                                    case 'list' :
-                                        if (role.LIST_FL != '0') {
-                                            permission = false;
-                                        }
-                                        break;
-                                    case 'view' :
-                                        if (role.VIEW_FL != '0') {
-                                            permission = false;
-                                        }
-                                        break;
-                                    case 'edit' :
-                                        if (role.EDIT_FL != '0') {
-                                            permission = false;
-                                        }
-                                        break;
-                                }
-                            }
-                        }
-
-                        if (!permission) {
-                            alert('접근할 수 없는 메뉴 입니다.');
-                            history.back();
-                        }
-                    }
-
-                    $rootScope.authenticated = true;
-                    $rootScope.uid = session.data.USER_ID;
-                    $rootScope.name = session.data.USER_NM;
-                    $rootScope.role = session.data.ROLE_ID;
-                    $rootScope.menu_role = session.data.MENU_ROLE;
-                    $rootScope.email = session.data.EMAIL;
-                } else {
-//                    $location.path('/signin');
-//                    var nextUrl = next.$$route.originalPath;
-                    if ($location.path() == '/signup' || $location.path() == '/signin') {
-
-                    } else {
-                        alert("로그인이 필요한 메뉴입니다.")
-                        $location.path("/signin");
-                    }
-                }
-            });
-        });
-
-/*
         var resolveDone = function () { $rootScope.doingResolve = false; };
         $rootScope.doingResolve = false;
 
@@ -350,7 +376,6 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         $rootScope.$on('$stateChangeSuccess', resolveDone);
         $rootScope.$on('$stateChangeError', resolveDone);
         $rootScope.$on('$statePermissionError', resolveDone);
-*/
     });
 
     //공통 컨트롤러 설정 - 모든 컨트롤러에서 공통적으로 사용하는 부분들 선언
@@ -370,7 +395,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             // setup promise, and 'working' flag
 //            var loginPromise = $http.post('/login', $scope.login);
 //            alert($scope.login.id);
-            var loginPromise = loginService.getLogin($scope.login.id);
+            var loginPromise = loginService.login($scope.login.id);
             $scope.login.working = true;
             $scope.login.wrong = false;
 

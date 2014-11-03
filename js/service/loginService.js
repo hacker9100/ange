@@ -10,6 +10,7 @@ define(['./services'], function (services) {
     services.service('loginService', ['$http', '$location', function($http, $location){
         var obj = {};
         obj.login = function(id){
+alert("login")
             return $http.get('serverscript/services/login.php?_method=GET&_category='+$location.path()+'&id='+id);
         }
 

@@ -10,8 +10,6 @@ define([
     'use strict';
 
     services.service('userService', ['$http', '$location', function($http, $location){
-        var obj = {};
-
         var qs = function(obj, prefix){
             var str = [];
             for (var p in obj) {
@@ -24,26 +22,27 @@ define([
             return str.join("&");
         }
 
-        obj.getCmsUsers = function(){
-            return $http.get('serverscript/services/cms_user.php?_method=GET&'+qs($location.search())+'&_category='+$location.path());
-        }
+        return {
+            getCmsUsers : function(){
+                return $http.get('serverscript/services/cms_user.php?_method=GET&'+qs($location.search())+'&_category='+$location.path());
+            },
 
-        obj.getCmsUser = function(id){
-            return $http.get('serverscript/services/cms_user.php?_method=GET&'+qs($location.search())+'&_category='+$location.path()+'&_id='+id);
-        }
+            getCmsUser : function(id){
+                return $http.get('serverscript/services/cms_user.php?_method=GET&'+qs($location.search())+'&_category='+$location.path()+'&_id='+id);
+            },
 
-        obj.deleteCmsUser = function(id){
-            return $http.get('serverscript/services/cms_user.php?_method=DELETE&_category='+$location.path()+'&_id='+id);
-        }
+            deleteCmsUser : function(id){
+                return $http.get('serverscript/services/cms_user.php?_method=DELETE&_category='+$location.path()+'&_id='+id);
+            },
 
-        obj.updateCmsUser = function(id, content){
-            return $http.post('serverscript/services/cms_user.php?_method=PUT&_category='+$location.path()+'&_id='+id, content);
-        }
+            updateCmsUser : function(id, content){
+                return $http.post('serverscript/services/cms_user.php?_method=PUT&_category='+$location.path()+'&_id='+id, content);
+            },
 
-        obj.createCmsUser = function(content){
-            return $http.post('serverscript/services/cms_user.php?_method=POST&_category='+$location.path(), content);
+            createCmsUser :  function(content){
+                return $http.post('serverscript/services/cms_user.php?_method=POST&_category='+$location.path(), content);
+            }
         }
-
-        return obj;
+//        return obj;
     }]);
 });
