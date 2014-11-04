@@ -1,0 +1,120 @@
+<div class="panel panel-primary">
+    <div class="panel-body" ng-model="search" lass="row">
+
+        <form role="form" name="listForm" class="form-horizontal">
+            <div class="col-md-9">
+                <div class= "form-group">
+                    <label class= "col-md-2">검색</label>
+                    <div class= "col-md-4">
+                        <select ng-model="search.CATEGORY_GB" class= "form-control" >
+                            <option name="" value="">- 주제 분류</option>
+                            <option name="" value="1">주기 분류</option>
+                            <option name="" value="2">주제 분류</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-pull-2">
+                <div class= "navbar-header" >
+                    <button class="btn btn-primary start" ng-click="searchCategory();" ng-disabled="listForm.$invalid">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <span>검색</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!--<div id="veil" ng-show="isLoading"></div>-->
+<div id="feedLoading" ng-show="isLoading">Loading...</div>
+
+<!-- Contents Include -->
+<!-- 목록 -->
+<table class="table table-striped table-condensed" >
+    <thead>
+    <tr>
+        <th>구분</th>
+        <th>대분류 키워드</th>
+        <th>소분류 키워드</th>
+        <th>등록일</th>
+        <th>상태</th>
+        <th>기능</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="category in categories">
+        <td>{{ category.CATEGORY_GB == '1' ? '주기' : '주제' }}</td>
+        <td><a ng-click="getCategory(category.NO)">{{ category.PARENT_NM }}</a></td>
+        <td>{{ category.CHILD_NM }}</td>
+        <td>{{ category.REG_DT }}</td>
+        <td>{{ category.CATEGORY_ST }}</td>
+        <td><a ng-click="deleteCategory($index)">삭제</a></td>
+    </tr>
+    </tbody>
+</table>
+<!-- ////Contents Include -->
+
+<!-- Contents Include -->
+<div class="col-md-12">
+
+    <form role="form" name="editForm" class="form-horizontal">
+        <div ng-model="category" lass="row">
+            <div class= "form-group">
+                <label class= "col-md-2">구분</label>
+                <div class= "col-md-4">
+                    <select ng-model="category.CATEGORY_GB" ng-init="category.CATEGORY_GB = 1" class= "form-control" >
+                        <option name="" value="1">주기</option>
+                        <option name="" value="2">주제</option>
+                    </select>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">대분류 선택</label>
+                <div class= "col-md-4">
+                    <select ng-model="category.PARENT" ng-options="parent.PARENT_NM for parent in parents" class= "form-control" ng-disabled="category.CATEGORY_GB != '2'">
+                        <option name="" value="">선택하세요.</option>
+                    </select>
+                </div>
+                <div class= "col-md-4">
+                    <span>*주제-소분류를 선택할 경우만 선택합니다.</span>
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: editForm.category_name.$invalid}">
+                <label class= "col-md-2">키워드</label>
+                <div class="col-md-4">
+                    <input name="category_name" ng-model="category.CATEGORY_NM" type= "text" class= "form-control" placeholder="카테고리 키워드" required/>
+                    <span ng-show="editForm.category_name.$dirty && editForm.category_name.$invalid" class="help-inline">카테고리 키워드가 누락되었습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">설명</label>
+                <div class= "col-md-6">
+                    <textarea ng-model="category.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
+                </div>
+            </div>
+
+            <!-- 하단 버튼 -->
+            <div class= "form-group">
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary start" ng-click="saveCategory();" ng-disabled="editForm.$invalid">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>저장</span>
+                    </button>
+                    <button type="button" class="btn btn-warning cancel" ng-click="cancel();">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>취소</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<!-- ////Contents Include -->
+

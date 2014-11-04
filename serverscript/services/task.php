@@ -69,6 +69,7 @@
             } else {
                 $where_search = "";
                 $from_category = "";
+                $limit_search = "";
 
                 if (isset($_phase)) {
                     $in_str = "";
@@ -78,7 +79,7 @@
                         if (sizeof($arr_phase) - 1 != $i) $in_str = $in_str.",";
                     }
 
-                    $where_search = "AND T.PHASE IN (".$in_str.")";
+                    $where_search = "AND T.PHASE IN (".$in_str.") ";
                 }
 
                 if (isset($_search) && count($_search) > 0) {
@@ -96,6 +97,10 @@
                         }
                     }
 */
+                    if (isset($_search[PAGE_NO]) && isset($_search[PAGE_SIZE])) {
+                        $limit_search .= "LIMIT ".($_search[PAGE_NO] * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                    }
+
                     if (isset($_search[YEAR])) {
                         $where_search .= "AND P.YEAR  = '".$_search[YEAR]."' ";
                     }
@@ -141,6 +146,7 @@
                                 T.PROJECT_NO = P.NO
                                 ".$where_search."
                             ORDER BY T.REG_DT DESC
+                            ".$limit_search."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (

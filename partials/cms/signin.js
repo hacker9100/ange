@@ -7,7 +7,7 @@ define([
 
     // 사용할 서비스를 주입
     controllers.controller('signin', ['$scope', '$rootScope', '$state', '$stateParams', 'login', 'loginService', '$location', function ($scope, $rootScope, $state, $stateParams, login, loginService, $location) {
-alert("sign")
+
 		//CSS 설정
 		//$scope.$emit('updateCSS', ['css/css1.css']);
 		$scope.message = "Welcome to ANGE CMS";
@@ -15,7 +15,7 @@ alert("sign")
         // Expose $state and $stateParams to the <body> tag
         $scope.$state = $state;
         $scope.$stateParams = $stateParams;
-
+/*
         // loginService exposed and a new Object containing login user/pwd
         $scope.ls = login;
         $scope.login = {
@@ -27,7 +27,7 @@ alert("sign")
 //            var loginPromise = $http.post('/login', $scope.login);
 //            alert($scope.login.id);
 alert("---");
-            var loginPromise = loginService.login($scope.login.id);
+            var loginPromise = loginService.login($scope.login.id, $scope.login);
 alert("---");
             $scope.login.working = true;
             $scope.login.wrong = false;
@@ -45,23 +45,29 @@ alert("---");
                 $scope.login.working = false;
             });
         };
+*/
+        $scope.loginMe = function() {
+            loginService.login($scope.login.id, $scope.login).then(function(result) {
+                if (result.data.USER_ID) {
+                    $rootScope.authenticated = true;
+                    $rootScope.uid = result.data.USER_ID;
+                    $rootScope.name = result.data.USER_NM;
+                    $rootScope.role = result.data.ROLE_ID;
+                    $rootScope.menu_role = result.data.MENU_ROLE;
+                    $rootScope.email = result.data.EMAIL;
 
-//        $scope.loginMe = function() {
-//            loginService.login($scope.login.id).then(function(session) {
-//                if (session.data.USER_ID) {
-//                    $rootScope.authenticated = true;
-//                    $rootScope.uid = session.data.USER_ID;
-//                    $rootScope.name = session.data.USER_NM;
-//                    $rootScope.role = session.data.ROLE_ID;
-//                    $rootScope.menu_role = session.data.MENU_ROLE;
-//                    $rootScope.email = session.data.EMAIL;
-//
-//                    $location.path('/dashboard');
-//                } else {
-//                    alert("아이디나 비밀번호가 틀립니다.");
-//                }
-//            });
-//        }
+                    $location.path('/dashboard');
+                } else {
+                    if (result.data.msg) {
+                        alert(result.data.msg);
+                    } else {
+                        alert("로그인에 실패하였습니다..");
+                    }
+                }
+            }, function(error) {
+                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
+            });
+        }
 
 /*
         $scope.login = function () {

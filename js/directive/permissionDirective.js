@@ -11,7 +11,7 @@ define(['./directives'], function (directives) {
         return {
             restrict: 'EA',
             replace: false,
-            templateUrl: 'partials/cms/permission_edit.html',
+            templateUrl: 'partials/cms/permission.html',
             controller: 'permission_edit'
         };
     });

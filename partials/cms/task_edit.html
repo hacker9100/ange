@@ -23,7 +23,6 @@
                 <label class= "col-md-2">카테고리</label>
                 <div class="col-md-2">
                     <div ng-dropdown-multiselect="" options="category_a" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주기선택'}" extra-settings="select_settings" checkboxes="true"></div>
-                    <!--<select ng-model="tesk.CATEGORY_B" ng-options="a.CATEGORY_NM for a in category_a" class= "form-control" placeholder="주기 선택" ></select>-->
                 </div>
                 <div class="col-md-3">
                     <select ng-model="CATEGORY_M" ng-options="category.CATEGORY_NM for category in category_b" class= "form-control" placeholder="주제 대분류">
@@ -31,29 +30,16 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <!--<select ng-model="tesk.CATEGORY_S" ng-options="s.CATEGORY_NM for s in category_s" class= "form-control" placeholder="주제 소분류"></select>-->
                     <div ng-dropdown-multiselect="" options="category_s" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주제 소분류'}" extra-settings="select_settings" checkboxes="true"></div>
                 </div>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2"></label>
                 <!--<pre>{{CATEGORY|json}}</pre>-->
-                <div class="col-md-2 btn-group" ng-repeat="category in CATEGORY">
+                <div class="col-md-2 btn-group" ng-model="task.CATEGORY" ng-repeat="category in CATEGORY">
                     <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
                 </div>
             </div>
-            <!--<div class= "form-group">-->
-                <!--<label class= "col-md-2">등록자 ID</label>-->
-                <!--<div class="col-md-4">-->
-                    <!--<input ng-model="task.REG_UID" type= "text" class= "form-control" placeholder= "등록자 ID"/>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class= "form-group">-->
-                <!--<label class= "col-md-2">등록자명</label>-->
-                <!--<div class="col-md-4">-->
-                    <!--<input ng-model="task.REG_NM" type= "text" class= "form-control" placeholder= "등록자 명"/>-->
-                <!--</div>-->
-            <!--</div>-->
             <div class= "form-group">
                 <label class= "col-md-2">마감일</label>
                 <div class="col-md-4">
@@ -81,7 +67,7 @@
             <!-- 하단 버튼 -->
             <div class= "form-group">
                 <div class="col-md-4">
-                    <button class="btn btn-success fileinput-button" ng-click="moveList();" >
+                    <button class="btn btn-success fileinput-button" ng-click="showTaskList();" >
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>목록</span>
                     </button>

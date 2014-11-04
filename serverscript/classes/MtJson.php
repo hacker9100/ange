@@ -13,12 +13,14 @@ class MtJson extends MtData {
     }
 
     function failEnd($msg) {
+        ob_end_clean();
         MtUtil::_c("### [END] [ERROR]");
         echo '{"msg":"'.$msg.'","err":true}';
         exit;
     }
 
     function succEnd($msg) {
+        ob_end_clean();
         MtUtil::_c("### [END] [SUCCESS]".$msg);
         header('HTTP/1.1 200 OK');
         echo '{"msg":"'.$msg.'","err":false}';

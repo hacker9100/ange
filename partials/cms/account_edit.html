@@ -9,7 +9,7 @@
             <div class= "form-group" ng-class="{error: myForm.user_id.$invalid}">
                 <label class= "col-md-2">아이디</label>
                 <div class="col-md-4">
-                    <input name="user_id" ng-model="user.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디" required/>
+                    <input name="user_id" ng-model="user.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디" ng-readonly="{{true}}" required/>
                     <span ng-show="myForm.user_id.$dirty && myForm.user_id.$invalid" class="help-inline">사용자 아이디가 누락되었습니다.</span>
                 </div>
             </div>

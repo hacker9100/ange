@@ -40,6 +40,8 @@ define([
     '../../partials/cms/edit_edit',
     '../../partials/cms/edit_confirm_list',
     '../../partials/cms/edit_confirm_edit',
+    '../../partials/cms/publish_list',
+    '../../partials/cms/publish_edit',
 
     // 게시판
     '../../partials/cms/webboard',
@@ -48,5 +50,6 @@ define([
 
     // 관리자
     '../../partials/cms/user',
-    '../../partials/cms/permission'
+    '../../partials/cms/permission',
+    '../../partials/cms/category'
 ], function () {});

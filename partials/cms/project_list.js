@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : project.html 화면 콘트롤러
+ * Description : project_list.html 화면 콘트롤러
  */
 
 define([
@@ -15,6 +15,7 @@ define([
 
 //        alert(localStorage.getItem('userToken'))
         /********** 초기화 **********/
+        // 검색 조건
         $scope.search = [];
 
         // 날짜 콤보박스
@@ -40,7 +41,7 @@ define([
             $scope.search.ORDER = order[0];
         };
 
-        /********** 목록 조회 이벤트 **********/
+        /********** 이벤트 **********/
         // 등록 화면 이동
         $scope.createNewProject = function () {
             $location.path('/project/0');
@@ -51,17 +52,8 @@ define([
             $location.path('/project/'+no);
         };
 
-/*
-        // 조회 화면 이동
-        $scope.viewListProject = function (no) {
-            $location.search({_method: 'GET'});
-            $location.path('/project/view/'+no);
-//            $location.path('/project/view/'+no);
-        };
-*/
-
         // 삭제
-        $scope.deleteListProject = function (idx) {
+        $scope.deleteProject = function (idx) {
 
             var project = $scope.projects[idx];
 
@@ -82,11 +74,11 @@ define([
 
             $location.search('_search', search);
 
-            $scope.getListProjects();
+            $scope.getProjectList();
         }
 
-        // 목록
-        $scope.getListProjects = function () {
+        // 프로젝트 목록 조회
+        $scope.getProjectList = function () {
             $scope.isLoading = true;
             projectService.getProjects().then(function(projects){
                 projectsData = projects.data;
@@ -97,6 +89,8 @@ define([
                 }
                 $scope.isLoading = false;
                 $location.search('_search', null);
+            }, function(error) {
+                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
         };
 
@@ -148,15 +142,19 @@ define([
             $scope.selectCount = $scope.selectCount + 1;
         });
 
-        /********** 화면 초기화 **********/
+        $scope.setTitle = function() {
         // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        $scope.$parent.pageTitle = '프로젝트 관리';
-        $scope.$parent.pageDescription = '프로젝트를 생성하고 섹션을 설정합니다.';
-        $scope.$parent.tailDescription = '상단의 검색영역에서 원하는 프로젝트를 필터링하거나 찾을 수 있습니다.<br />진행 중인 프로젝트를 해지하며 이전 프로젝트를 전부 조회할 수 있습니다.';
+            $scope.$parent.message = 'ANGE CMS';
+            $scope.$parent.pageTitle = '프로젝트 관리';
+            $scope.$parent.pageDescription = '프로젝트를 생성하고 섹션을 설정합니다.';
+            $scope.$parent.tailDescription = '상단의 검색영역에서 원하는 프로젝트를 필터링하거나 찾을 수 있습니다.<br />진행 중인 프로젝트를 해지하며 이전 프로젝트를 전부 조회할 수 있습니다.';
+        }
+
+        /********** 화면 초기화 **********/
 
         $scope.initList();
-        $scope.getListProjects();
+        $scope.setTitle();
+        $scope.getProjectList();
 
     }]);
 });

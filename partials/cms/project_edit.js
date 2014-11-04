@@ -28,12 +28,14 @@ define([
         });
 
         /********** 초기화 **********/
+        // 프로젝트 모델
+        $scope.project = {};
+
         // 날짜 콤보박스
         var year = [];
         var month = [];
         var now = new Date();
         var nowYear = now.getFullYear();
-        var nowMonth = now.getMonth();
 
         // 초기화
         $scope.initEdit = function() {
@@ -45,32 +47,32 @@ define([
                 month.push(i+'');
             }
 
-            $scope.project = { years: year, months: month, YEAR: nowYear+'', MONTH: (nowMonth+1)+'' };
+            $scope.years = year;
+            $scope.project.YEAR = nowYear+'';
         }
 
-        /********** 등록,수정 이벤트 **********/
-        // 목록
-        $scope.getProjects = function () {
+        /********** 이벤트 **********/
+        // 프로젝트 목록 이동
+        $scope.showProjectList = function () {
             $location.path('/project');
         };
 
-        // 조회
+        // 프로젝트 조회
         $scope.getProject = function () {
             projectService.getProject($stateParams.id).then(function(project){
                 $scope.project = project.data;
-
-                $scope.project.years = year;
-                $scope.project.months = month;
 
                 // 파일 순서 : 1. 원본, 2. 썸네일, 3. 중간사이즈
                 var file = project.data.FILE;
                 if (file.length > 0) {
                     $scope.file = {"name":file[0].FILE_NM,"size":file[0].FILE_SIZE,"url":uploadUrl+file[0].FILE_NM,"thumbnailUrl":uploadUrl+"thumbnail/"+file[0].FILE_NM,"mediumUrl":uploadUrl+"medium/"+file[0].FILE_NM,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[0].FILE_NM,"deleteType":"DELETE"};
                 }
+            }, function(error) {
+                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
         };
 
-        // 등록/수정
+        // 프로젝트 등록/수정
         $scope.saveProject = function () {
             var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
@@ -79,29 +81,35 @@ define([
             if (id <= 0) {
                 projectService.createProject($scope.project).then(function(data){
                     $location.path('/project');
+                }, function(error) {
+                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
                 });
-            }
-            else {
+            } else {
                 projectService.updateProject(id, $scope.project).then(function(data){
                     $location.path('/project');
+                }, function(error) {
+                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
                 });
             }
         };
 
+        // 페이지 타이틀
+        $scope.setTitle = function() {
+            $scope.$parent.message = 'ANGE CMS';
+            if ( $stateParams.id != 0) {
+                $scope.$parent.pageTitle = '프로젝트 수정';
+                $scope.$parent.pageDescription = '프로젝트를 수정합니다.';
+
+                $scope.getProject();
+            } else {
+                $scope.$parent.pageTitle = '프로젝트 등록';
+                $scope.$parent.pageDescription = '프로젝트를 등록합니다.';
+            }
+        }
+
         /********** 화면 초기화 **********/
         $scope.initEdit();
-
-        // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        if ( $stateParams.id != 0) {
-            $scope.$parent.pageTitle = '프로젝트 수정';
-            $scope.$parent.pageDescription = '프로젝트를 수정합니다.';
-
-            $scope.getProject();
-        } else {
-            $scope.$parent.pageTitle = '프로젝트 등록';
-            $scope.$parent.pageDescription = '프로젝트를 등록합니다.';
-        }
+        $scope.setTitle();
 
     }]);
 });

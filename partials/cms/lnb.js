@@ -15,7 +15,7 @@ define([
                 { url: '/scheduler', 'name': '스케줄' },
                 { url: '/archive', 'name': '아카이브' }
             ]},
-            {"project, task, article, article_confirm, edit, edit_confirm": [
+            {"project, task, article, article_confirm, edit, edit_confirm, publish": [
                 { url: '/project', 'name': '프로젝트' },
                 { url: '/task', 'name': '태스크' },
                 { url: '/article', 'name': '원고' },
@@ -26,7 +26,8 @@ define([
             ]},
             {"user, permission": [
                 { url: '/user', 'name': '사용자 관리' },
-                { url: '/permission', 'name': '권한 관리' }
+                { url: '/permission', 'name': '권한 관리' },
+                { url: '/category', 'name': '카테고리 관리' }
             ]}
         ];
 

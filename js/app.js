@@ -302,66 +302,66 @@ alert("resolvePendingState");
 
     app.run(function ($rootScope, loginService, $location) {
 
-//        $rootScope.$on("$stateChangeStart", function (event, next, current) {
-//            $rootScope.authenticated = false;
-//            loginService.getSession().then(function (session) {
-//                if (session.data.USER_ID) {
-//                    var path = $location.path();
-//                    var spMenu =  path.split('/');
-//
-//                    for (var idx in session.data.MENU_ROLE) {
-//                        var permission = true;
-//                        var role = session.data.MENU_ROLE[idx];
-//
-//                        if (role.MENU_ID == spMenu[1]) {
-//
-//                            if (spMenu.length < 3 && role.MENU_FL == '1') {
-//                                permission = false;
-//                            } else {
-//                                switch (spMenu[2]) {
-//                                    case 'list' :
-//                                        if (role.LIST_FL != '0') {
-//                                            permission = false;
-//                                        }
-//                                        break;
-//                                    case 'view' :
-//                                        if (role.VIEW_FL != '0') {
-//                                            permission = false;
-//                                        }
-//                                        break;
-//                                    case 'edit' :
-//                                        if (role.EDIT_FL != '0') {
-//                                            permission = false;
-//                                        }
-//                                        break;
-//                                }
-//                            }
-//                        }
-//
-//                        if (!permission) {
-//                            alert('접근할 수 없는 메뉴 입니다.');
-//                            history.back();
-//                        }
-//                    }
-//
-//                    $rootScope.authenticated = true;
-//                    $rootScope.uid = session.data.USER_ID;
-//                    $rootScope.name = session.data.USER_NM;
-//                    $rootScope.role = session.data.ROLE_ID;
-//                    $rootScope.menu_role = session.data.MENU_ROLE;
-//                    $rootScope.email = session.data.EMAIL;
-//                } else {
-////                    $location.path('/signin');
-////                    var nextUrl = next.$$route.originalPath;
-//                    if ($location.path() == '/signup' || $location.path() == '/signin') {
-//
-//                    } else {
-//                        alert("로그인이 필요한 메뉴입니다.")
-//                        $location.path("/signin");
-//                    }
-//                }
-//            });
-//        });
+        $rootScope.$on("$stateChangeStart", function (event, next, current) {
+            $rootScope.authenticated = false;
+            loginService.getSession().then(function (session) {
+                if (session.data.USER_ID) {
+                    var path = $location.path();
+                    var spMenu =  path.split('/');
+
+                    for (var idx in session.data.MENU_ROLE) {
+                        var permission = true;
+                        var role = session.data.MENU_ROLE[idx];
+
+                        if (role.MENU_ID == spMenu[1]) {
+
+                            if (spMenu.length < 3 && role.MENU_FL == '1') {
+                                permission = false;
+                            } else {
+                                switch (spMenu[2]) {
+                                    case 'list' :
+                                        if (role.LIST_FL != '0') {
+                                            permission = false;
+                                        }
+                                        break;
+                                    case 'view' :
+                                        if (role.VIEW_FL != '0') {
+                                            permission = false;
+                                        }
+                                        break;
+                                    case 'edit' :
+                                        if (role.EDIT_FL != '0') {
+                                            permission = false;
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+
+                        if (!permission) {
+                            alert('접근할 수 없는 메뉴 입니다.');
+                            history.back();
+                        }
+                    }
+
+                    $rootScope.authenticated = true;
+                    $rootScope.uid = session.data.USER_ID;
+                    $rootScope.name = session.data.USER_NM;
+                    $rootScope.role = session.data.ROLE_ID;
+                    $rootScope.menu_role = session.data.MENU_ROLE;
+                    $rootScope.email = session.data.EMAIL;
+                } else {
+//                    $location.path('/signin');
+//                    var nextUrl = next.$$route.originalPath;
+                    if ($location.path() == '/signup' || $location.path() == '/signin') {
+
+                    } else {
+                        alert("로그인이 필요한 메뉴입니다.")
+                        $location.path("/signin");
+                    }
+                }
+            });
+        });
 
         /**
          * $rootScope.doingResolve is a flag useful to display a spinner on changing states.

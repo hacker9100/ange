@@ -59,13 +59,9 @@
                             <div class="list-group">
                                 <li class="list-group-item list-group-item-labeling-blue">
                                     프로젝트
-                                    <span class="btn custom-btn-more"> <span class="glyphicon glyphicon-plus"></span> </span>
+                                    <span class="btn custom-btn-more"> <span ng-click="showProjectList();" class="glyphicon glyphicon-plus"></span> </span>
                                 </li>
-                                <a href="#" class="list-group-item list-group-item-blue">프로젝트 #1 <span class="list-group-item-right">준비</span></a>
-                                <a href="#" class="list-group-item list-group-item-blue">프로젝트 #2 <span class="list-group-item-right">진행</span></a>
-                                <a href="#" class="list-group-item list-group-item-blue">프로젝트 #3 <span class="list-group-item-right">진행</span></a>
-                                <a href="#" class="list-group-item list-group-item-blue">프로젝트 #4 <span class="list-group-item-right">완료</span></a>
-                                <a href="#" class="list-group-item list-group-item-blue">프로젝트 #5 <span class="list-group-item-right">완료</span></a>
+                                    <a href="#/project/{{project.NO}}" class="list-group-item list-group-item-blue" ng-repeat="project in projects">{{project.SUBJECT}}<span class="list-group-item-right">{{ project.PROJECT_ST == '0' ? '준비' : project.PROJECT_ST == '1' ? '진행' : '완료' }}</span></a>
                             </div>
                         </div>
 
@@ -84,7 +80,7 @@
 
                         <!-- Task list -->
                         <accordion close-others="oneAtATime" style="margin: 0;">
-                            <accordion-group is-open="status.open" style="border-radius:10px;">
+                            <accordion-group is-open="status.open" style="border-radius:10px;" ng-repeat="task in tasks">
 
                                 <!-- Task Head -->
                                 <!-- accordion-heading style="clear:both; padding:0;" -->
@@ -95,20 +91,22 @@
                                                 <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
                                                     <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">
                                                         <span style="font-size:1.16em;">월간앙쥬</span><br />
-                                                        <span>[2014년 12월]</span>
+                                                        <span>[{{ task.PROJECT_NM }}]</span>
                                                     </div>
                                                     <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">
-                                                        태스크의 제목이 표시됩니다. 더 길면 어떻게...
+                                                        {{ task.SUBJECT }}
                                                     </div>
                                                     <div class="col-lg-1 task-col-manager" style="height:100%; margin-top:8px; text-align:left;">
-                                                        홍길동이
+                                                        {{ task.REG_NM }}
                                                     </div>
                                                     <div class="col-md-2 col-sm-3 col-lg-2 task-col-date" style="height:100%; text-align:center; vertical-align:middle;">
-                                                        <span style="color:#868686;">2014-00-00 등록</span><br />
-                                                        <span style="color:#DE4612; font-weight:bold;">2014-00-00 마감</span>
+                                                        <span style="color:#868686;">{{task.REG_DT}} 등록</span><br />
+                                                        <span style="color:#DE4612; font-weight:bold;">{{task.CLOSE_YMD}} 마감</span>
                                                     </div>
                                                     <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
-                                                        <span class="badge">검수요청</span>
+                                                        <span class="badge">
+                                                            {{ task.PHASE == '0' ? '태스크등록' : task.PHASE == '10' ? '원고작성' : task.PHASE == '11' ? '원고승인대기' : task.PHASE == '20' ? '원고승인완료' : task.PHASE == '13' ? '원고반려' : task.PHASE == '21' ? '편집작성' : task.PHASE == '13' ? '편집반려' : '편집승인' }}
+                                                        </span>
                                                     </div>
                                                 </div>
 
@@ -137,7 +135,7 @@
                                             <label class= "col-md-2">카테고리</label>
                                             <!--<pre>{{task.CATEGORY|json}}</pre>-->
                                             <div class="col-md-2 btn-group" ng-repeat="category in task.CATEGORY">
-                                                <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                                                <button type="button" class="btn btn-default">{{category.CATEGORY_NM}}</button>
                                             </div>
                                         </div>
                                         <div class= "form-group">
@@ -147,13 +145,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-primary start" ng-click="getHistory(task.NO);">
+                                            <button type="button" class="btn btn-primary start" ng-click="showTaskHistory(task.NO);">
                                                 <i class="glyphicon glyphicon-pencil"></i>
                                                 <span>History</span>
                                             </button>
                                         </div>
                                         <div class="form-group">
-                                            <button type="button" class="btn btn-primary start" ng-click="editTask(task.NO);">
+                                            <button type="button" class="btn btn-primary start" ng-click="showTaskEdit(task.NO);">
                                                 <i class="glyphicon glyphicon-pencil"></i>
                                                 <span>태스크 편집</span>
                                             </button>
@@ -169,14 +167,7 @@
                         </accordion>
                         <!-- //Task list -->
                     </div>
-
-                    <div ng-repeat="view in views">
-                        <div ui-view="{{view.name}}"></div>
-                    </div>
                     <!-- //// 콘텐츠 영역입니다. -->
-
-
-
 
                     <div class="panel panel-default">
                         <div class="panel-body" style="font-size:0.84em; color:#999999;">

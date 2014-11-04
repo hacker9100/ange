@@ -14,7 +14,13 @@ define([
     controllers.controller('task_list', ['$scope', '$stateParams', 'projectService', 'taskService', '$location', function ($scope, $stateParams, projectService, taskService, $location) {
 
         /********** 초기화 **********/
+        // 검색 조건
         $scope.search = [];
+        // 카테고리 선택 항목
+        $scope.CATEGORY = [];
+
+        // 목록 데이터
+        var tasksData = null;
 
         var category = [
             {"NO": 0, "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신준비", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
@@ -30,15 +36,16 @@ define([
         $scope.$watch('CATEGORY_M', function(data) {
             var category_s = [];
 
-            for (var i in category) {
-                var item = category[i];
-
-                if (item.CATEGORY_B == data.CATEGORY_B && item.CATEGORY_GB == '2' && item.CATEGORY_M != "") {
-                    category_s.push(item);
+            if (data != undefined) {
+                for (var i in category) {
+                    var item = category[i];
+                    if (item.CATEGORY_B == data.CATEGORY_B && item.CATEGORY_GB == '2' && item.CATEGORY_M != "") {
+                        category_s.push(item);
+                    }
                 }
-            }
 
-            $scope.category_s = category_s;
+                $scope.category_s = category_s;
+            }
         });
 
         $scope.removeCategory = function(idx) {
@@ -51,9 +58,6 @@ define([
         var nowYear = now.getFullYear();
 
         var project = [];
-
-        // 목록 데이터
-        var tasksData = null;
 
         // 초기화
         $scope.initList = function() {
@@ -112,30 +116,22 @@ define([
             $location.path('/task/0');
         };
 
-/*
-        // 조회 화면 이동
-        $scope.viewListTask = function (no) {
-            $location.search({_method: 'GET'});
-            $location.path('/task/view/'+no);
-        };
-*/
-
-        // 수정
+        // 수정 화면 이동
         $scope.editTask = function (no) {
             $location.path('/task/'+no);
         };
 
-        // 수정
-        $scope.getHistory = function (no) {
+        // 이력 조회
+        $scope.showHistory = function (no) {
             alert("준비중입니다.")
         };
 
         // 삭제
-        $scope.deleteListTask = function (idx) {
+        $scope.deleteTask = function (idx) {
 
-            var task = $scope.Tasks[idx];
+            var task = $scope.tasks[idx];
 
-            if (task.PHASE == '5') {
+            if (task.PHASE == '30') {
                 alert("완료 상태의 태스크는 삭제할 수 없습니다.");
                 return;
             }
@@ -157,17 +153,17 @@ define([
             $scope.search.CATEGORY = $scope.CATEGORY;
             $location.search('_search', $scope.search);
 
-            $scope.getListTasks();
+            $scope.getTaskList();
         };
 
-        // 목록
-        $scope.getListTasks = function () {
+        // 태스크 목록 조회
+        $scope.getTaskList = function () {
             $scope.isLoading = true;
-            taskService.getTasks().then(function(tasks){
-                tasksData = tasks.data;
+            taskService.getTasks().then(function(results){
+                tasksData = results.data;
 
                 if (tasksData != null) {
-                    $scope.totalItems = tasks.data[0].TOTAL_COUNT; // 총 아이템 수
+                    $scope.totalItems = results.data[0].TOTAL_COUNT; // 총 아이템 수
                     $scope.currentPage = 1; // 현재 페이지
                 }
                 $scope.isLoading = false;
@@ -222,7 +218,7 @@ define([
         $scope.$parent.tailDescription = '.';
 
         $scope.initList();
-        $scope.getListTasks();
+        $scope.getTaskList();
 
     }]);
 });

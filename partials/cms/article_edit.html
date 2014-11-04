@@ -4,12 +4,42 @@
 <!-- Contents Include -->
 <div class="col-md-12">
 
+    <!-- Task list -->
     <accordion close-others="oneAtATime">
         <accordion-group is-open="status.open" ng-model="task">
-            <accordion-heading>
-                {{ task.PROJECT_NM }} &nbsp; {{ task.SUBJECT }} &nbsp; {{ task.EDITOR }} &nbsp; {{ task.CLOSE_YMD }} 마감 &nbsp; {{ task.REG_DT }} 등록
-                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+
+            <!-- Task Head -->
+            <accordion-heading style="clear:both; background-color:#000; padding:0;">
+                <div class="row" style="height:100%;">
+                    <div class="col-md-12" style="position:relative; padding:5px; margin:0;  cursor:pointer;">
+                        <a data-toggle="collapse" style="color:#333">
+                            <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
+                                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">
+                                    <span style="font-size:1.16em;">월간앙쥬</span><br />
+                                    <span>[{{ task.PROJECT_NM }}]</span>
+                                </div>
+                                <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">
+                                    {{ task.SUBJECT }}
+                                </div>
+                                <div class="col-lg-1 task-col-manager" style="height:100%; margin-top:8px; text-align:left;">
+                                    {{ task.REG_NM }}
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-lg-2 task-col-date" style="height:100%; text-align:center; vertical-align:middle;">
+                                    <span style="color:#868686;">{{task.REG_DT}} 등록</span><br />
+                                    <span style="color:#DE4612; font-weight:bold;">{{task.CLOSE_YMD}} 마감</span>
+                                </div>
+                                <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
+                                    {{ task.PHASE == '0' ? '태스크등록' : task.PHASE == '10' ? '원고작성' : task.PHASE == '11' ? '원고승인대기' : task.PHASE == '20' ? '원고승인완료' : task.PHASE == '13' ? '원고반려' : task.PHASE == '21' ? '편집작성' : task.PHASE == '13' ? '편집반려' : '편집승인' }}
+                                </div>
+                            </div>
+
+                            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': status.open, 'glyphicon-chevron-down': !status.open}" style="position:absolute; top: 15px; right:10px;"></i>
+                        </a>
+                    </div>
+                </div>
             </accordion-heading>
+            <!-- //Task Head -->
+
             <div class="col-md-12">
                 <div lass="row" class="form-horizontal">
                     <div class= "form-group">
@@ -24,6 +54,19 @@
                             {{ task.REG_DT }}
                         </div>
                     </div>
+                    <div class= "form-group">
+                        <label class= "col-md-2">카테고리</label>
+                        <!--<pre>{{task.CATEGORY|json}}</pre>-->
+                        <div class="col-md-2 btn-group" ng-repeat="category in task.CATEGORY">
+                            <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                        </div>
+                    </div>
+                    <div class= "form-group">
+                        <label class= "col-md-2">태그</label>
+                        <div class="col-md-4">
+                            {{ task.TAG }}
+                        </div>
+                    </div>
                     <div class="form-group">
                         <button type="button" class="btn btn-primary start" ng-click="getHistory(task.NO);">
                             <i class="glyphicon glyphicon-pencil"></i>
@@ -32,6 +75,7 @@
                     </div>
                 </div>
             </div>
+
         </accordion-group>
     </accordion>
 

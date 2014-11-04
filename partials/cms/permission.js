@@ -2,33 +2,54 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : project.html 화면 콘트롤러
+ * Description : permission.html 화면 콘트롤러
  */
 
 define([
-    '../../js/controller/controllers',
-//    './permission_list',
-    './permission_edit'
+    '../../js/controller/controllers'
 ], function (controllers) {
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('permission', ['$scope', '$stateParams', '$location', function ($scope, $stateParams, $location) {
+    controllers.controller('permission', ['$scope', '$stateParams', 'permissionService', '$location', function ($scope, $stateParams, permissionService, $location) {
 
-        // ng-class를 이용해 style을 동적으로 할달
-        $scope.customClass = function() {
-            var className = '';
+        /********** 초기화 **********/
+        // 초기화
+        $scope.initEdit = function() {
+            permissionService.getPermissionOptions().then(function(roles){
+                $scope.roles = roles.data;
 
-            className = 'panel-heading';
-
-            return className;
+                if (roles.data != null) {
+                    $scope.ROLE = roles.data[0];
+                }
+            });
         };
 
-        // list, edit, view을 화면 조건에 따라 변경
-        var search = $location.search();
+        /********** 수정, 조회 이벤트 **********/
+        $scope.$watch('ROLE', function(data) {
+            $scope.getPermission();
+        });
 
-        $scope.method = search._method;
-        $scope.isId = $stateParams.id == 0 || $stateParams.id == undefined ? false : true;
+        $scope.getPermission = function() {
+            permissionService.getPermission($scope.ROLE.ROLE_ID).then(function(permissions){
+                $scope.permissions = permissions.data;
+            });
+        }
+
+        $scope.savePermission = function() {
+            permissionService.updatePermission($scope.ROLE.ROLE_ID, $scope.permissions).then(function(permissions){
+                alert("권한이 수정 되었습니다.");
+//                $scope.permissions = permissions.data;
+            });
+        };
+
+        /********** 화면 초기화 **********/
+        // 페이지 타이틀
+        $scope.$parent.message = 'ANGE CMS';
+        $scope.$parent.pageTitle = '권한 관리';
+        $scope.$parent.pageDescription = 'CMS 사용 권한을 관리합니다.';
+
+        $scope.initEdit();
 
     }]);
 });

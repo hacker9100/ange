@@ -19,33 +19,31 @@
             "views": {
                 "" : { "templateUrl": "partials/cms/dashboard.html", "controller": "dashboard" },
                 "lnbView@dashboard": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
-                "locaterView@dashboard": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "board1View@dashboard": { "templateUrl": "partials/cms/miniProject.html", "controller" : "project" },
-                "board2View@dashboard": { "templateUrl": "partials/cms/miniWebboard.html", "controller" : "webboard" }
+                "locaterView@dashboard": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" }
             }
         }}, { "account": {
             "url": "/account",
             "views": {
-                "" : { "templateUrl": "partials/cms/account.html", "controller": "account" },
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@account": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@account": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "bodyView@account": { "templateUrl": "partials/cms/account_edit.html", "controller" : "account_edit" }
+                "contentView@account": { "templateUrl": "partials/cms/account_edit.html", "controller" : "account_edit" }
             }
         }}, { "scheduler": {
             "url": "/scheduler",
             "views": {
-                "" : { "templateUrl": "partials/cms/scheduler.html", "controller": "scheduler" },
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@scheduler": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@scheduler": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "bodyView@scheduler": { "templateUrl": "partials/cms/scheduler_calendar.html", "controller" : "scheduler_calendar" }
+                "contentView@scheduler": { "templateUrl": "partials/cms/scheduler_calendar.html", "controller" : "scheduler_calendar" }
             }
         }}, { "archive": {
             "url": "/archive",
             "views": {
-                "" : { "templateUrl": "partials/cms/archive.html", "controller": "archive" },
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@archive": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@archive": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "bodyView@archive": { "templateUrl": "partials/cms/archive_list.html", "controller" : "archive_list" }
+                "contentView@archive": { "templateUrl": "partials/cms/archive_list.html", "controller" : "archive_list" }
             }
         }}, { "file": {
             "url": "/file",
@@ -151,6 +149,22 @@
                 "locaterView@edit_confirm_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@edit_confirm_edit": { "templateUrl": "partials/cms/edit_confirm_edit.html", "controller" : "edit_confirm_edit" }
             }
+        }}, { "publish_list": {
+            "url": "/publish",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@publish_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@publish_list": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@publish_list": { "templateUrl": "partials/cms/publish_list.html", "controller" : "publish_list" }
+            }
+        }}, { "publish_edit": {
+            "url": "/publish/:id",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@publish_edit": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@publish_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@publish_edit": { "templateUrl": "partials/cms/publish_edit.html", "controller" : "publish_edit" }
+            }
 
         }}, { "webboard": {
             "url": "/webboard",
@@ -176,16 +190,26 @@
         }}, { "user": {
             "url": "/user",
             "views": {
-                "" : { "templateUrl": "partials/cms/user.html", "controller": "user" },
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@user": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
-                "locaterView@user": { "templateUrl": "partials/cms/locater.html", "controller": "locater" }
+                "locaterView@user": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@user": { "templateUrl": "partials/cms/user.html", "controller" : "user" }
             }
         }}, { "permission": {
             "url": "/permission",
             "views": {
-                "" : { "templateUrl": "partials/cms/permission.html", "controller": "permission" },
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@permission": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
-                "locaterView@permission": { "templateUrl": "partials/cms/locater.html", "controller": "locater" }
+                "locaterView@permission": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@permission": { "templateUrl": "partials/cms/permission.html", "controller" : "permission" }
+            }
+        }}, { "category": {
+            "url": "/category",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@category": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@category": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@category": { "templateUrl": "partials/cms/category.html", "controller" : "category" }
             }
         }}, { "test": {
             "url": "/",

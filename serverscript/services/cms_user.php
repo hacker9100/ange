@@ -15,6 +15,7 @@
     date_default_timezone_set('Asia/Seoul');
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/services/passwordHash.php");
 
     MtUtil::_c("### [START]");
 	MtUtil::_c(print_r($_REQUEST,true));
@@ -134,6 +135,17 @@
 
             $_d->sql_beginTransaction();
 
+            $password = $form[USER_ID];
+//            $iterations = 1000;
+//
+//            // Generate a random IV using mcrypt_create_iv(),
+//            // openssl_random_pseudo_bytes() or another suitable source of randomness
+//            $salt = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
+//
+//            $hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
+
+            $hash = create_hash($password);
+
             $sql = "INSERT INTO CMS_USER
                     (
                         USER_ID,
@@ -146,7 +158,7 @@
                     ) VALUES (
                         '".$form[USER_ID]."'
                         , '".$form[USER_NM]."'
-                        , '".$form[PASSWORD]."'
+                        , '".$hash."'
                         , '".$form[PHONE]."'
                         , '".$form[EMAIL]."'
                         , '".$form[NOTE]."'
@@ -231,15 +243,30 @@
                 $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
             }
 
-            $sql = "DELETE FROM CMS_USER WHERE USER_ID = ".$_id;
+            $_d->sql_beginTransaction();
+
+            $sql = "DELETE FROM USER_ROLE WHERE USER_ID = '".$_id."'";
+
+            $_d->sql_query($sql);
+
+            $sql = "DELETE FROM CMS_USER WHERE USER_ID = '".$_id."'";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
+
             if ($_d->mysql_errno > 0) {
+                $_d->sql_rollback();
                 $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
             } else {
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
+
+//            if ($_d->mysql_errno > 0) {
+//                $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
+//            } else {
+//                $_d->succEnd($no);
+//            }
 
             break;
     }

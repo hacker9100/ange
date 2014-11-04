@@ -75,16 +75,40 @@
                             ORDER BY REG_DT DESC
                             ";
                 } else {
-                    $search = "";
+                    $where_search = "";
+                    $limit_search = "";
 
-                    if (isset($_search) && count($_search) > 0) {
-                        for ($i = 0 ; $i < count($_search); $i++) {
-                            $item = $_search[$i];
-                            $arr_item = explode('/', $item);
-
-                            $search .= "AND ".$arr_item[0]." LIKE '%".$arr_item[1]."%' ";
+                    if (isset($_status)) {
+                        $in_str = "";
+                        $arr_status = explode(',', $_status);
+                        for($i=0;$i< sizeof($arr_status);$i++){
+                            $in_str = $in_str."'".$arr_status[$i]."'";
+                            if (sizeof($arr_status) - 1 != $i) $in_str = $in_str.",";
                         }
+
+                        $where_search = "AND PROJECT_ST IN (".$in_str.") ";
                     }
+
+                    if (isset($_search[PAGE_NO]) && isset($_search[PAGE_SIZE])) {
+                        $limit_search .= "LIMIT ".($_search[PAGE_NO] * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                    }
+
+                    if (isset($_search[YEAR])) {
+                        $where_search .= "AND YEAR  = '".$_search[YEAR]."' ";
+                    }
+
+                    if (isset($_search[KEYWORD])) {
+                        $where_search .= "AND T.".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    }
+
+//                    if (isset($_search) && count($_search) > 0) {
+//                        for ($i = 0 ; $i < count($_search); $i++) {
+//                            $item = $_search[$i];
+//                            $arr_item = explode('/', $item);
+//
+//                            $search .= "AND ".$arr_item[0]." LIKE '%".$arr_item[1]."%' ";
+//                        }
+//                    }
 
                     $sql = "SELECT
                                 TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
@@ -97,8 +121,9 @@
                                     CMS_PROJECT
                                 WHERE
                                     1=1
-                                    ".$search."
+                                    ".$where_search."
                                 ORDER BY REG_DT DESC
+                                ".$limit_search."
                             ) AS DATA,
                             (SELECT @RNUM := 0) R,
                             (
@@ -108,7 +133,7 @@
                                     CMS_PROJECT
                                 WHERE
                                     1=1
-                                    ".$search."
+                                    ".$where_search."
                             ) CNT
                             ";
                 }
@@ -332,7 +357,7 @@
                         ,SUBJECT = '".$form[SUBJECT]."'
                         ,REG_UID = '".$_SESSION['uid']."'
                         ,REG_NM = '".$_SESSION['name']."'
-                        ,PROJECT_ST = '".$form[PROJECT_ST]."'
+                        ,PROJECT_ST = '".( $form[PROJECT_ST] == true ? "3" : $form[PROJECT_ST] )."'
                         ,NOTE = '".$form[NOTE]."'
                     WHERE
                         NO = ".$id."

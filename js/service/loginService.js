@@ -9,17 +9,16 @@ define(['./services'], function (services) {
 
     services.service('loginService', ['$http', '$location', function($http, $location){
         var obj = {};
-        obj.login = function(id){
-alert("login")
-            return $http.get('serverscript/services/login.php?_method=GET&_category='+$location.path()+'&id='+id);
+        obj.login = function(key, model){
+            return $http.post('serverscript/services/login.php?_method=GET&_category='+$location.path()+'&id='+key, model);
         }
 
         obj.getSession = function(){
             return $http.get('serverscript/services/login.php?_method=GET&_category='+$location.path());
         }
 
-        obj.logout = function(id){
-            return $http.get('serverscript/services/login.php?_method=DELETE&_category='+$location.path()+'&id='+id);
+        obj.logout = function(key){
+            return $http.get('serverscript/services/login.php?_method=DELETE&_category='+$location.path()+'&id='+key);
         }
 
         return obj;

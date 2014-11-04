@@ -23,7 +23,6 @@ define(['./services'], function (services) {
         }
 
         obj.getTasks = function(){
-            alert("getTasks")
             return $http.get('serverscript/services/task.php?_method=GET&'+qs($location.search())+'&_category='+$location.path());
         }
 

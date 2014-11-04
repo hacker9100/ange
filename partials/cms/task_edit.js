@@ -12,7 +12,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_edit', ['$scope', '$stateParams', 'projectService', 'taskService', '$location', function ($scope, $stateParams, projectService, taskService, $location) {
+    controllers.controller('task_edit', ['$scope', '$stateParams', 'projectService', 'taskService', '$q', '$location', function ($scope, $stateParams, projectService, taskService, $q, $location) {
 
         var category = [
             {"NO": "0", "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "임신준비", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
@@ -32,11 +32,13 @@ define([
         $scope.$watch('CATEGORY_M', function(data) {
             var category_s = [];
 
-            for (var i in category) {
-                var item = category[i];
+            if (data != undefined) {
+                for (var i in category) {
+                    var item = category[i];
 
-                if (item.CATEGORY_B == data.CATEGORY_B && item.CATEGORY_GB == '2' && item.CATEGORY_M != "") {
-                    category_s.push(item);
+                    if (item.CATEGORY_B == data.CATEGORY_B && item.CATEGORY_GB == '2' && item.CATEGORY_M != "") {
+                        category_s.push(item);
+                    }
                 }
             }
 
@@ -52,12 +54,17 @@ define([
 
         // 초기화
         $scope.initEdit = function() {
-            projectService.getProjectOptions().then(function(projects){
-                $scope.projects = projects.data;
+            var deferred = $q.defer();
+            projectService.getProjectOptions().then(function(results){
+                deferred.resolve(results);
+                $scope.projects = results.data;
 
                 if ($scope.projects != null) {
                     $scope.task.PROJECT = $scope.projects[0];
                 }
+            }, function(error) {
+                deferred.reject(error);
+                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
 
             if (category != null) {
@@ -78,89 +85,96 @@ define([
                 $scope.category_a = category_a;
                 $scope.category_b = category_b;
             }
+
+            // ui bootstrap 달력
+            $scope.today = function() {
+                $scope.task.CLOSE_YMD = new Date();
+            };
+            $scope.today();
+
+            $scope.clear = function () {
+                $scope.task.CLOSE_YMD = null;
+            };
+
+            $scope.open = function($event) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope.opened = true;
+            };
+
+            return deferred.promise;
         };
 
-        // ui bootstrap 달력
-        $scope.today = function() {
-            $scope.task.CLOSE_YMD = new Date();
-        };
-        $scope.today();
-
-        $scope.clear = function () {
-            $scope.task.CLOSE_YMD = null;
-        };
-
-        $scope.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            $scope.opened = true;
-        };
-
-        /***************************************************************************************************/
-//        $scope.getA = function() {
-//            alert($scope.task.BODY);
-//        }
-//
-//        $scope.setA = function() {
-//            var img = '<img alt="" src="/app/upload/userfiles/images/Jellyfish.jpg" style="height:768px; width:1024px" />';
-//            var test = $scope.task.BODY;
-//            $scope.task.BODY = img;
-//        }
-        /***************************************************************************************************/
-
-        /********** 등록,수정 이벤트 **********/
-        // 목록
-        $scope.moveList = function () {
+        /********** 이벤트 **********/
+        // 태스크 목록 이동
+        $scope.showTaskList = function () {
             $location.path('/task');
         };
 
-        // 조회
+        // 태스크 조회
         $scope.getTask = function () {
-            taskService.getTask($stateParams.id).then(function(task){
-                $scope.task = task.data;
-                $scope.CATEGORY = angular.fromJson(task.data.CATEGORY);
+            var deferred = $q.defer();
+            taskService.getTask($stateParams.id).then(function(result){
+                deferred.resolve(result);
+                $scope.task = result.data;
+                $scope.CATEGORY = angular.fromJson(result.data.CATEGORY);
 
                 for (var i = 0; i < $scope.projects.length; i++) {
                     var project_nm = $scope.projects[i].SUBJECT;
-                    if (project_nm == task.data.PROJECT_NM)
+                    if (project_nm == result.data.PROJECT_NM)
                         $scope.task.PROJECT = $scope.projects[i];
                 }
+            }, function(error) {
+                deferred.reject(error);
+                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
+
+            return deferred.promise;
         };
 
-        // 등록/수정
+        // 태스크 등록/수정
         $scope.saveTask = function () {
             var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
 
-            $scope.task.CATEGORY = $scope.CATEGORY;
             if (id <= 0) {
                 taskService.createTask($scope.task).then(function(data){
                     $location.path('/task');
+                }, function(error) {
+                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
                 });
             }
             else {
                 taskService.updateTask(id, $scope.task).then(function(data){
                     $location.path('/task');
+                }, function(error) {
+                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
                 });
             }
         };
 
-        /********** 화면 초기화 **********/
-        $scope.initEdit();
+        $scope.initUpdate = function() {
+            if ( $stateParams.id != 0) {
+                $scope.getTask();
+            }
+        }
 
+        /********** 화면 초기화 **********/
         // 페이지 타이틀
         $scope.$parent.message = 'ANGE CMS';
-
         if ( $stateParams.id != 0) {
             $scope.$parent.pageTitle = '태스크 수정';
             $scope.$parent.pageDescription = '태스크를 수정합니다.';
-
-            $scope.getTask();
         } else {
             $scope.$parent.pageTitle = '태스크 등록';
             $scope.$parent.pageDescription = '태스크를 등록합니다.';
         }
+
+        $scope.$parent.getSession()
+            .then($scope.$parent.sessionCheck)
+            .then($scope.initEdit)
+            .then($scope.initUpdate)
+            .catch($scope.$parent.reportProblems);
 
     }]);
 });
