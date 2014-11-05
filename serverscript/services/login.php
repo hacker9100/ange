@@ -33,6 +33,8 @@
 
                 MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
+                MtUtil::_c("### [PW] ".create_hash($password));
+
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.EMAIL, R.ROLE_ID, U.PASSWORD
                         FROM

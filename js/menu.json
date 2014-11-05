@@ -166,12 +166,13 @@
                 "contentView@publish_edit": { "templateUrl": "partials/cms/publish_edit.html", "controller" : "publish_edit" }
             }
 
-        }}, { "webboard": {
+        }}, { "webboard_list": {
             "url": "/webboard",
             "views": {
-                "" : { "templateUrl": "partials/cms/webboard.html", "controller": "webboard" },
-                "lnbView@webboard": { "templateUrl" : "partials/cms/lnb.html" },
-                "locaterView@webboard": { "templateUrl": "partials/cms/locater.html", "controller": "locater" }
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@webboard_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@webboard_list": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@webboard_list": { "templateUrl": "partials/cms/webboard_list.html", "controller" : "webboard_list" }
             }
         }}, { "webboard/edit": {
             "url": "/webboard/edit/:id",

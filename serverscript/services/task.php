@@ -45,7 +45,7 @@
                 $data  = $_d->sql_fetch_array($result);
 
                 $sql = "SELECT
-                            C.NO, C.CATEGORY_B, C.CATEGORY_M, C.CATEGORY_S, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
+                            C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
                         FROM
                             CMS_TASK T, CONTENT_CATEGORY CC, CATEGORY C
                         WHERE
@@ -82,6 +82,13 @@
                     $where_search = "AND T.PHASE IN (".$in_str.") ";
                 }
 
+                MtUtil::_c("### [START]".$_page);
+                MtUtil::_c("### [START]".$_size);
+
+                if (isset($_page) && isset($_size)) {
+                    $limit_search .= "LIMIT ".($_page * $_size).", ".$_size;
+                }
+
                 if (isset($_search) && count($_search) > 0) {
 /*
                     for ($i = 0 ; $i < count($_search); $i++) {
@@ -97,14 +104,10 @@
                         }
                     }
 */
-                    if (isset($_search[PAGE_NO]) && isset($_search[PAGE_SIZE])) {
-                        $limit_search .= "LIMIT ".($_search[PAGE_NO] * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
-                    }
-
-                    if (isset($_search[YEAR])) {
+                    if (isset($_search[YEAR]) && $_search[YEAR] != 'null') {
                         $where_search .= "AND P.YEAR  = '".$_search[YEAR]."' ";
                     }
-                    if (isset($_search[PROJECT])) {
+                    if (isset($_search[PROJECT]) && $_search[PROJECT] != 'null') {
                         $where_search .= "AND P.NO  = '".$_search[PROJECT][NO]."' ";
                     }
                     if (isset($_search[KEYWORD])) {
@@ -166,7 +169,7 @@
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                            C.NO, C.CATEGORY_B, C.CATEGORY_M, C.CATEGORY_S, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
+                            C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
                         FROM
                             CMS_TASK T, CONTENT_CATEGORY CC, CATEGORY C
                         WHERE

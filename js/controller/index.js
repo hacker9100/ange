@@ -44,6 +44,8 @@ define([
     '../../partials/cms/publish_edit',
 
     // 게시판
+    '../../partials/cms/webboard_list',
+
     '../../partials/cms/webboard',
     '../../partials/cms/webboardEdit',
     '../../partials/cms/webboardView',

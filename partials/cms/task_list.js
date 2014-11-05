@@ -20,7 +20,7 @@ define([
         $scope.CATEGORY = [];
 
         // 목록 데이터
-        var tasksData = null;
+        var tasksData = [];
 
         var category = [
             {"NO": 0, "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신준비", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
@@ -75,6 +75,8 @@ define([
                 if ($scope.projects != null) {
                     $scope.search.PROJECT = $scope.projects[0];
                 }
+            }, function(error) {
+                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
 
             // 카테고리
@@ -113,12 +115,12 @@ define([
         /********** 목록 조회 이벤트 **********/
         // 등록 화면 이동
         $scope.createNewTask = function () {
-            $location.path('/task/0');
+            $location.url('/task/0');
         };
 
         // 수정 화면 이동
         $scope.editTask = function (no) {
-            $location.path('/task/'+no);
+            $location.url('/task/'+no);
         };
 
         // 이력 조회
@@ -138,11 +140,23 @@ define([
 
             taskService.deleteTask(task.NO).then(function(data){
                 $scope.getListTasks();
+            }, function(error) {
+                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
         };
 
+        $scope.tasks = [];
+        $scope.pageNo = 0;
+        $scope.pageSize = 4;
+        $scope.perCnt = 0;
+        $scope.perSize = 2;
+        $scope.totalCnt = 0;
+
         // 검색
         $scope.searchTask = function() {
+            $scope.pageNo = 0;
+            tasksData = [];
+            $scope.tasks = [];
 //            var search = [];
 //
 //            search.CATEGORY = $scope.CATEGORY;
@@ -159,56 +173,63 @@ define([
         // 태스크 목록 조회
         $scope.getTaskList = function () {
             $scope.isLoading = true;
-            taskService.getTasks().then(function(results){
-                tasksData = results.data;
 
-                if (tasksData != null) {
-                    $scope.totalItems = results.data[0].TOTAL_COUNT; // 총 아이템 수
-                    $scope.currentPage = 1; // 현재 페이지
+            $location.search('_page', $scope.pageNo)
+            $location.search('_size', $scope.pageSize);
+
+            taskService.getTasks().then(function(results){
+                $scope.totalCnt = results.data[0].TOTAL_COUNT;
+                angular.forEach(results.data, function(model) {
+                    tasksData.push(model);
+                });
+
+//                tasksData.push(results.data);
+                if ($scope.tasks.length == 0) {
+                    $scope.tasks = tasksData.slice($scope.perCnt, $scope.perSize);
+//                    $scope.tasks = results.data;
+                } else {
+//                    angular.forEach(results.data, function(model) {
+//                        $scope.tasks.push(model);
+//                    });
                 }
+
+//                if (tasksData != null) {
+//                    $scope.totalItems = results.data[0].TOTAL_COUNT; // 총 아이템 수
+//                    $scope.currentPage = 1; // 현재 페이지
+//                }
                 $scope.isLoading = false;
-                $location.search('_search', null);
+//                for (var prop in $location.search())
+//                    $location.search(prop, null);
             });
         };
 
-        // 페이징 처리
-        $scope.selectItems = 200; // 한번에 조회하는 아이템 수
-        $scope.selectCount = 1; // 현재 조회한 카운트 수
-        $scope.itemsPerPage = 10; // 화면에 보이는 아이템 수(default 10)
-        $scope.maxSize = 5; // 총 페이지 제한
-
-        $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-        };
-
-        $scope.pageChanged = function() {
-            console.log('Page changed to: ' + $scope.currentPage);
-        };
-
-        // 페이지 이동 시 이벤트
-        $scope.$watch('isLoading', function() {
-            if (tasksData == 'null') {
-                $scope.tasks = null;
-            } else {
-                $scope.tasks = tasksData;
+        $scope.$watch('perCnt', function() {
+            if ( $scope.perCnt >= $scope.tasks.length) {
+                angular.forEach(tasksData.slice($scope.perCnt, $scope.perCnt + $scope.perSize), function(model) {
+                    $scope.tasks.push(model);
+                });
             }
         });
 
-        // 페이지 이동 시 이벤트
-        $scope.$watch('currentPage + itemsPerPage', function() {
-            var start = $scope.currentPage % ( $scope.selectItems / $scope.itemsPerPage);
+//        $scope.$watch('totalCnt', function() {
+//
+//        });
 
-            var begin = ((start - 1) * $scope.itemsPerPage);
-            var end = begin + $scope.itemsPerPage;
+        $scope.select = function () {
+            $scope.perCnt += $scope.perSize;
 
-            if (tasksData != null) {
-                $scope.tasks = tasksData.slice(begin, end);
+            alert($scope.totalCnt + ", " + $scope.perCnt);
+
+
+            if ($scope.perCnt >= $scope.totalCnt) return;
+
+            if ($scope.perCnt + $scope.perSize >= tasksData.length) {
+                $scope.pageNo++;
+                $scope.getTaskList();
             }
-        });
-
-        $scope.$watch('selectItems * selectCount < itemsPerPage * currentPage', function() {
-            $scope.selectCount = $scope.selectCount + 1;
-        });
+//            $scope.getTaskList();
+//            $scope.tasks.push(tasksData[1]);
+        };
 
         /********** 화면 초기화 **********/
         // 페이지 타이틀

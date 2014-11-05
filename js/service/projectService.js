@@ -23,7 +23,8 @@ define(['./services'], function (services) {
             return str.join("&");
         }
 
-        obj.getProjectOptions = function(){
+        obj.getProjectOptions = function(condition){
+            condition
             return $http.get('serverscript/services/project.php?_method=GET&'+qs($location.search())+'&_mode=option');
         }
 
@@ -31,20 +32,20 @@ define(['./services'], function (services) {
             return $http.get('serverscript/services/project.php?_method=GET&'+qs($location.search())+'&_category='+$location.path());
         }
 
-        obj.getProject = function(id){
-            return $http.get('serverscript/services/project.php?_method=GET&'+qs($location.search())+'&_category='+$location.path()+'&id='+id);
+        obj.getProject = function(key){
+            return $http.get('serverscript/services/project.php?_method=GET&'+qs($location.search())+'&_category='+$location.path()+'&id='+key);
         }
 
-        obj.createProject = function(project){
-            return $http.post('serverscript/services/project.php?_method=POST&_category='+$location.path(), project);
+        obj.createProject = function(model){
+            return $http.post('serverscript/services/project.php?_method=POST&_category='+$location.path(), model);
         }
 
-        obj.updateProject = function(id, project){
-            return $http.post('serverscript/services/project.php?_method=PUT&_category='+$location.path()+'&id='+id, project);
+        obj.updateProject = function(key, model){
+            return $http.post('serverscript/services/project.php?_method=PUT&_category='+$location.path()+'&id='+key, model);
         }
 
-        obj.deleteProject = function(id){
-            return $http.get('serverscript/services/project.php?_method=DELETE&_category='+$location.path()+'&id='+id);
+        obj.deleteProject = function(key){
+            return $http.get('serverscript/services/project.php?_method=DELETE&_category='+$location.path()+'&id='+key);
         }
 
         return obj;

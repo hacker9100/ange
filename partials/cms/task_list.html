@@ -6,11 +6,15 @@
                 <div class= "form-group">
                     <label class= "col-md-2"> 연도 </label>
                     <div class="col-md-3">
-                        <select ng-model="search.YEAR" ng-options="v for v in years" class= "form-control" placeholder="등록년"></select>
+                        <select ng-model="search.YEAR" ng-options="v for v in years" class= "form-control" placeholder="등록년">
+                            <option name="years" value="">- 연도</option>
+                        </select>
                     </div>
                     <label class= "col-md-2">프로젝트명</label>
                     <div class="col-md-4">
-                        <select ng-model="search.PROJECT" ng-options="project.SUBJECT for project in projects" class= "form-control" placeholder="프로젝트명"></select>
+                        <select ng-model="search.PROJECT" ng-options="project.SUBJECT for project in projects" class= "form-control" placeholder="프로젝트명">
+                            <option name="projects" value="">- 프로젝트</option>
+                        </select>
                     </div>
                 </div>
                 <div class= "form-group">
@@ -152,3 +156,8 @@
     </accordion-group>
 </accordion>
 <!-- ////Contents Include -->
+
+<button type="button" class="btn btn-primary start" ng-click="select();">
+    <i class="glyphicon glyphicon-pencil"></i>
+    <span>추가..</span>
+</button>

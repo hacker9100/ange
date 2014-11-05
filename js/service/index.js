@@ -8,6 +8,9 @@ define([
 //    './contentFectory',
 //    './contentsService',
 
+    // 공통
+    './dataService',
+
     // 콘텐츠
     './projectService', // CMS 프로젝트 관련 서비스 모듈. project.php와 통신
     './taskService', // CMS 태스크 관련 서비스 모듈. task.php와 통신

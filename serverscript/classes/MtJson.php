@@ -15,6 +15,7 @@ class MtJson extends MtData {
     function failEnd($msg) {
         ob_end_clean();
         MtUtil::_c("### [END] [ERROR]");
+        header('HTTP/1.1 201 ERROR');
         echo '{"msg":"'.$msg.'","err":true}';
         exit;
     }
@@ -53,12 +54,16 @@ class MtJson extends MtData {
         ob_end_clean();
 
         $result = $this->getData($sql);
+        $data = null;
         MtUtil::_c("### [END] [DATA]".json_encode($result));
+
+        if ($result != null) {
+            $data = json_encode($result);
+        }
 //        header('HTTP/1.1 200 OK');
 //        header('Content-Type:application/json');
 
-//        echo '{"msg":'.json_encode($result).',"err":false}';
-        echo json_encode($result);
+        echo $data;
         exit;
     }
 

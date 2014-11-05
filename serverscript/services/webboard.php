@@ -14,7 +14,12 @@
 
     date_default_timezone_set('Asia/Seoul');
 
-	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+
+    MtUtil::_c("### [START]");
+    MtUtil::_c(print_r($_REQUEST,true));
+
+    MtUtil::_c(json_encode(file_get_contents("php://input"),true));
 
 //	MtUtil::_c(print_r($_REQUEST,true));
 /*
@@ -29,7 +34,7 @@
 
     switch ($_method) {
         case "GET":
-            if (isset($id)){
+            if (isset($_key) && $_key != '') {
 //                MtUtil::_c("FUNC[processApi] 1 : "+$id);
 
                 $sql = "SELECT
@@ -47,7 +52,12 @@
                 }
             }
             else {
-//                MtUtil::_c("FUNC[processApi] 2 : ");
+                $where_search = "";
+                $limit_search = "";
+
+                if (isset($_page)) {
+                    $limit_search .= "LIMIT ".($_page[no] * $_page[size]).", ".$_page[size];
+                }
 
                 $sql = "SELECT
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
@@ -58,13 +68,21 @@
                                 NO, SUBJECT, REG_UID, REG_NM, REG_DT
                             FROM
                                 CMS_BOARD
-                        ) AS DATA,
+                            WHERE
+                                1=1
+                                ".$where_search."
+                            ORDER BY REG_DT DESC
+                             ".$limit_search."
+                       ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
                                 CMS_BOARD
+                            WHERE
+                                1=1
+                                ".$where_search."
                         ) CNT
                         ";
                 $data = $_d->sql_query($sql);
@@ -222,8 +240,11 @@
             }
 
         case "DELETE":
-            if (isset($id)){
-                $sql = "DELETE FROM CMS_BOARD WHERE NO = ".$id;
+            if (isset($_key)){
+                $sql = "DELETE FROM CMS_BOARD WHERE NO = ".$_key;
+
+                // 댓글도 삭제 해야지~
+                // 파일도 삭제 해야지~
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;
