@@ -47,7 +47,7 @@
                 $sql = "SELECT
                             C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
                         FROM
-                            CMS_TASK T, CONTENT_CATEGORY CC, CATEGORY C
+                            CMS_TASK T, CONTENT_CATEGORY CC, CMS_CATEGORY C
                         WHERE
                             T.NO = CC.TARGET_NO
                             AND CC.CATEGORY_NO = C.NO
@@ -171,7 +171,7 @@
                     $sql = "SELECT
                             C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
                         FROM
-                            CMS_TASK T, CONTENT_CATEGORY CC, CATEGORY C
+                            CMS_TASK T, CONTENT_CATEGORY CC, CMS_CATEGORY C
                         WHERE
                             T.NO = CC.TARGET_NO
                             AND CC.CATEGORY_NO = C.NO

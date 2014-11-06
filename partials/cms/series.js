@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : project.html 화면 콘트롤러
+ * Description : series.html 화면 콘트롤러
  */
 
 define([
@@ -11,32 +11,14 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('user', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
+    controllers.controller('series', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
 
         /********** 초기화 **********/
         $scope.key = '';
-        $scope.item = {};
 
         // 초기화
         $scope.initList = function() {
-            dataService.db('permission').find({},{ROLE: true},function(data, status){
-                if (status != 200) {
-                    alert('조회에 실패 했습니다.');
-                } else {
-                    if (!data.err) {
-                        if (angular.isObject(data)) {
-                            $scope.roles = data;
-                            $scope.user_roles = data;
-                            $scope.item.ROLE = data[0];
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("조회 데이터가 없습니다.");
-                        }
-                    } else {
-                        alert(data.msg);
-                    }
-                }
-            });
+
         };
 
         $scope.initEdit = function() {
@@ -44,11 +26,11 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 사용자 삭제 버튼 클릭
-        $scope.click_deleteCmsUser = function (idx) {
-            var user = $scope.list[idx];
+        // 시리즈 삭제 버튼 클릭
+        $scope.click_deleteSeries = function (idx) {
+            var series = $scope.list[idx];
 
-            dataService.db('cms_user').remove(user.USER_ID,function(data, status){
+            dataService.db('series').remove(series.NO,function(data, status){
                 if (status != 200) {
                     alert('삭제에 실패 했습니다.');
                 } else {
@@ -62,15 +44,14 @@ define([
         };
 
         // 검색 버튼 클릭
-        $scope.click_searchCmsUser = function () {
-            $scope.getCmsUserList($scope.search);
+        $scope.click_searchSeries = function () {
+            $scope.getSeriesList($scope.search);
         }
 
-        // 사용자 목록 조회
-        $scope.getCmsUserList = function (search) {
+        // 시리즈 목록 조회
+        $scope.getSeriesList = function (search) {
             $scope.isLoading = true;
-
-            dataService.db('cms_user').find({},search,function(data, status){
+            dataService.db('series').find({},search,function(data, status){
                 if (status != 200) {
                     alert('조회에 실패 했습니다.');
                 } else {
@@ -90,27 +71,27 @@ define([
             });
         };
 
-        // 사용자 저장 버튼 클릭
-        $scope.click_saveCmsUser = function () {
+        // 시리즈 저장 버튼 클릭
+        $scope.click_saveSeries = function () {
             if ($scope.key == '') {
-                dataService.db('cms_user').insert($scope.item,function(data, status){
+                dataService.db('series').insert($scope.item,function(data, status){
                     if (status != 200) {
                         alert('등록에 실패 했습니다.');
                     } else {
                         if (data.err == false) {
-                            $scope.getCmsUserList();
+                            $scope.getSeriesList();
                         } else {
                             alert(data.msg);
                         }
                     }
                 });
             } else {
-                dataService.db('cms_user').update($scope.key,$scope.item,function(data, status){
+                dataService.db('series').update($scope.key,$scope.item,function(data, status){
                     if (status != 200) {
                         alert('수정에 실패 했습니다.');
                     } else {
                         if (data.err == false) {
-                            $scope.getCmsUserList();
+                            $scope.getSeriesList();
                         } else {
                             alert(data.msg);
                         }
@@ -121,25 +102,17 @@ define([
             $scope.key = '';
         };
 
-        // 사용자 편집 클릭
-        $scope.click_getCmsUser = function (id) {
+        // 시리즈 편집 클릭
+        $scope.click_getSeries = function (id) {
             $scope.key = id;
 
             if ($scope.key != '') {
-                dataService.db('cms_user').findOne($scope.key,{},function(data, status){
+                dataService.db('series').findOne($scope.key,{},function(data, status){
                     if (status != 200) {
                         alert('조회에 실패 했습니다.');
                     } else {
                         if (angular.isObject(data)) {
-                            var idx = 0;
-                            for (var i=0; i < $scope.user_roles.length; i ++) {
-                                if (JSON.stringify(data.ROLE) == JSON.stringify($scope.user_roles[i])) {
-                                    idx = i;
-                                }
-                            }
-
                             $scope.item = data;
-                            $scope.item.ROLE = $scope.user_roles[idx];
                         } else {
                             if (data.err == true) {
                                 alert(data.msg);
@@ -151,19 +124,19 @@ define([
                     }
                 });
             }
-        }
+        };
 
-        // 사용자 상태변경 버튼 클릭
+        // 시리즈 상태변경 버튼 클릭
         $scope.click_updateStatus = function (idx) {
-            var user = $scope.list[idx];
-            user.USER_ST = (user.USER_ST == "1" ? "0" : "1");
+            var series = $scope.list[idx];
+            series.SERIES_ST = (series.SERIES_ST == "1" ? "0" : "1");
 
-            dataService.db('cms_user').update(user.USER_ID,user,function(data, status){
+            dataService.db('series').update(series.NO,series,function(data, status){
                 if (status != 200) {
                     alert('수정에 실패 했습니다.');
                 } else {
                     if (data.err == false) {
-                        $scope.getCmsUserList();
+                        $scope.getSeriesList();
                     } else {
                         alert(data.msg);
                     }
@@ -175,19 +148,18 @@ define([
         $scope.click_cancel = function () {
             $scope.key = '';
             $scope.item = null;
-            $scope.item.ROLE = $scope.user_roles[0];
         };
 
         /********** 화면 초기화 **********/
         // 페이지 타이틀
         $scope.$parent.message = 'ANGE CMS';
-        $scope.$parent.pageTitle = '사용자 관리';
-        $scope.$parent.pageDescription = 'CMS 사용자를 관리합니다.';
+        $scope.$parent.pageTitle = '시리즈 관리';
+        $scope.$parent.pageDescription = 'CMS 시리즈를 관리합니다.';
         $scope.$parent.tailDescription = '.';
 
         $scope.initList();
-//        $scope.initEdit();
-        $scope.getCmsUserList();
+        $scope.initEdit();
+        $scope.getSeriesList();
 
     }]);
 });

@@ -11,35 +11,67 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('permission', ['$scope', '$stateParams', 'permissionService', '$location', function ($scope, $stateParams, permissionService, $location) {
+    controllers.controller('permission', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
 
         /********** 초기화 **********/
         // 초기화
         $scope.initEdit = function() {
-            permissionService.getPermissionOptions().then(function(roles){
-                $scope.roles = roles.data;
-
-                if (roles.data != null) {
-                    $scope.ROLE = roles.data[0];
+            dataService.db('permission').find({},{ROLE: true},function(data, status){
+                if (status != 200) {
+                    alert('조회에 실패 했습니다.');
+                } else {
+                    if (!data.err) {
+                        if (angular.isObject(data)) {
+                            $scope.roles = data;
+                            $scope.ROLE = data[0];
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            alert("조회 데이터가 없습니다.");
+                        }
+                    } else {
+                        alert(data.msg);
+                    }
                 }
             });
         };
 
-        /********** 수정, 조회 이벤트 **********/
+        /********** 이벤트 **********/
         $scope.$watch('ROLE', function(data) {
             $scope.getPermission();
         });
 
+        // 권한 조회
         $scope.getPermission = function() {
-            permissionService.getPermission($scope.ROLE.ROLE_ID).then(function(permissions){
-                $scope.permissions = permissions.data;
+            dataService.db('permission').findOne($scope.ROLE.ROLE_ID,{},function(data, status){
+                if (status != 200) {
+                    alert('조회에 실패 했습니다.');
+                } else {
+                    if (!data.err) {
+                        if (angular.isObject(data)) {
+                            $scope.list = data;
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            alert("조회 데이터가 없습니다.");
+                        }
+                    } else {
+                        alert(data.msg);
+                    }
+                }
             });
         }
 
-        $scope.savePermission = function() {
-            permissionService.updatePermission($scope.ROLE.ROLE_ID, $scope.permissions).then(function(permissions){
-                alert("권한이 수정 되었습니다.");
-//                $scope.permissions = permissions.data;
+        // 권한 저장 버튼 클릭
+        $scope.click_savePermission = function() {
+            dataService.db('permission').update($scope.ROLE.ROLE_ID, $scope.list,function(data, status){
+                if (status != 200) {
+                    alert('조회에 실패 했습니다.');
+                } else {
+                    if (data.err == false) {
+                        alert("권한이 수정 되었습니다.");
+                    } else {
+                        alert(data.msg);
+                    }
+                }
             });
         };
 

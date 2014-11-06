@@ -31,7 +31,7 @@
 
     switch ($_method) {
         case "GET":
-            if (isset($_id)) {
+            if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.PHONE, U.EMAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.NOTE,
                             R.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = R.ROLE_ID) AS ROLE_NM
@@ -39,7 +39,7 @@
                             CMS_USER U, USER_ROLE R
                         WHERE
                             U.USER_ID = R.USER_ID
-                            AND U.USER_ID = '".$_id."'
+                            AND U.USER_ID = '".$_key."'
                         ";
 
                 $result = $_d->sql_query($sql);
@@ -51,30 +51,26 @@
                             USER_ROLE U, CMS_ROLE R
                         WHERE
                             U.ROLE_ID = R.ROLE_ID
-                            AND U.USER_ID = '".$_id."'
+                            AND U.USER_ID = '".$_key."'
                         ";
 
-//                $role_data = $_d->getData($sql);
                 $result = $_d->sql_query($sql);
                 $role_data  = $_d->sql_fetch_array($result);
 
                 $data['ROLE'] = $role_data;
 
-                $_d->dataEnd2($data);
-
-//                $data = $_d->sql_query($sql);
-//                if ($_d->mysql_errno > 0) {
-//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                } else {
-//                    $_d->dataEnd($sql);
-//                }
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
             } else {
                 $where_search = "";
 
-                if (isset($_search[ROLE])) {
+                if (isset($_search[ROLE]) && $_search[ROLE] != "") {
                     $where_search .= "AND R.ROLE_ID  = '".$_search[ROLE][ROLE_ID]."' ";
                 }
-                if (isset($_search[KEYWORD])) {
+                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $where_search .= "AND U.USER_NM LIKE '%".$_search[KEYWORD]."%' ";
                 }
 
@@ -112,30 +108,13 @@
             break;
 
         case "POST":
-            $form = json_decode(file_get_contents("php://input"),true);
-/*
-            $upload_path = '../upload/';
-            $source_path = '../../../';
+//            $form = json_decode(file_get_contents("php://input"),true);
 
-            if (count($form[FILES]) > 0) {
-                $files = $form[FILES];
-
-//                @mkdir('$source_path');
-
-                for ($i = 0 ; $i < count($form[FILES]); $i++) {
-                    $file = $files[$i];
-
-                    if (file_exists($upload_path.$file[name])) {
-                        rename($upload_path.$file[name], $source_path.$file[name]);
-                    }
-                }
-            }
-*/
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             $_d->sql_beginTransaction();
 
-            $password = $form[USER_ID];
+            $password = $_model[USER_ID];
 //            $iterations = 1000;
 //
 //            // Generate a random IV using mcrypt_create_iv(),
@@ -150,40 +129,40 @@
                     (
                         USER_ID,
                         USER_NM,
+                        USER_ST,
                         PASSWORD,
                         PHONE,
                         EMAIL,
                         NOTE,
                         REG_DT
                     ) VALUES (
-                        '".$form[USER_ID]."'
-                        , '".$form[USER_NM]."'
+                        '".$_model[USER_ID]."'
+                        , '".$_model[USER_NM]."'
+                        , '0'
                         , '".$hash."'
-                        , '".$form[PHONE]."'
-                        , '".$form[EMAIL]."'
-                        , '".$form[NOTE]."'
+                        , '".$_model[PHONE]."'
+                        , '".$_model[EMAIL]."'
+                        , '".$_model[NOTE]."'
                         , SYSDATE()
                     )";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if (isset($form[ROLE])) {
+            if (isset($_model[ROLE]) && $_model[ROLE] != "") {
                 $sql = "INSERT INTO USER_ROLE
                     (
                         ROLE_ID
                         ,USER_ID
                         ,REG_DT
                     ) VALUES (
-                        '".$form[ROLE][ROLE_ID]."'
-                        , '".$form[USER_ID]."'
+                        '".$_model[ROLE][ROLE_ID]."'
+                        , '".$_model[USER_ID]."'
                         , SYSDATE()
                     )";
 
                 $_d->sql_query($sql);
             }
-
-
 
             if ($_d->mysql_errno > 0) {
                 $_d->sql_rollback();
@@ -196,35 +175,35 @@
             break;
 
         case "PUT":
-            if (!isset($_id)) {
-                $_d->failEnd("수정실패입니다:"."ID가 누락되었습니다.");
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $FORM = json_decode(file_get_contents("php://input"),true);
+//            $FORM = json_decode(file_get_contents("php://input"),true);
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             $sql = "UPDATE CMS_USER
                     SET
-                        USER_ID = '".$FORM[USER_ID]."'
-                        ,USER_NM = '".$FORM[USER_NM]."'
-                        ,PHONE = '".$FORM[PHONE]."'
-                        ,EMAIL = '".$FORM[EMAIL]."'
-                        ,NOTE = '".$FORM[NOTE]."'
+                        USER_NM = '".$_model[USER_NM]."'
+                        ,USER_ST = '".$_model[USER_ST]."'
+                        ,PHONE = '".$_model[PHONE]."'
+                        ,EMAIL = '".$_model[EMAIL]."'
+                        ,NOTE = '".$_model[NOTE]."'
                     WHERE
-                        USER_ID = '".$_id."'
+                        USER_ID = '".$_key."'
                     ";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if (isset($_search[ROLE])) {
+            if (isset($_model[ROLE]) && $_model[ROLE] != "") {
                 $sql = "UPDATE USER_ROLE
                         SET
-                            ROLE_ID = '".$_search[ROLE][ROLE_ID]."'
+                            ROLE_ID = '".$_model[ROLE][ROLE_ID]."'
                             ,REG_DT = SYSDATE()
                         WHERE
-                            USER_ID = '".$no."'
+                            USER_ID = '".$_key."'
                         ";
 
                 $_d->sql_query($sql);
@@ -239,17 +218,17 @@
             break;
 
         case "DELETE":
-            if (!isset($_id)) {
-                $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
             }
 
             $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM USER_ROLE WHERE USER_ID = '".$_id."'";
+            $sql = "DELETE FROM USER_ROLE WHERE USER_ID = '".$_key."'";
 
             $_d->sql_query($sql);
 
-            $sql = "DELETE FROM CMS_USER WHERE USER_ID = '".$_id."'";
+            $sql = "DELETE FROM CMS_USER WHERE USER_ID = '".$_key."'";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

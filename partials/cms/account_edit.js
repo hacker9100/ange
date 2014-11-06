@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('account_edit', ['$scope', '$rootScope', '$stateParams', 'userService', '$location', function ($scope, $rootScope, $stateParams, userService, $location) {
+    controllers.controller('account_edit', ['$scope', '$rootScope', '$stateParams', 'dataService', '$location', function ($scope, $rootScope, $stateParams, dataService, $location) {
 
         /********** 초기화 **********/
         $scope.initEdit = function() {
@@ -19,24 +19,39 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 등록/수정
-        $scope.saveCmsUser = function () {
-            userService.updateCmsUser($rootScope.uid, $scope.user).then(function(data){
-                alert("정상적으로 수정했습니다.");
+        // 저장 버튼 클릭
+        $scope.click_saveCmsUser = function () {
+            dataService.db('cms_user').update($rootScope.uid,$scope.item,function(data, status){
+                if (status != 200) {
+                    alert('수정에 실패 했습니다.');
+                } else {
+                    if (data.err == false) {
+                        alert("정상적으로 수정했습니다.");
+                    } else {
+                        alert(data.msg);
+                    }
+                }
             });
         };
 
         // 로그인 사용자 조회
         $scope.getCmsUser = function (session) {
             if (session.data.USER_ID != '') {
-                userService.getCmsUser(session.data.USER_ID).then(function(user){
-                    if (user.data.USER_ID == undefined) {
-                        alert("조회 정보가 없습니다.");
+                dataService.db('cms_user').findOne(session.data.USER_ID,{},function(data, status){
+                    if (status != 200) {
+                        alert('조회에 실패 했습니다.');
                     } else {
-                        $scope.user = user.data;
+                        if (angular.isObject(data)) {
+                            $scope.item = data;
+                        } else {
+                            if (data.err == true) {
+                                alert(data.msg);
+                            } else {
+                                // TODO: 데이터가 없을 경우 처리
+                                alert("조회 데이터가 없습니다.");
+                            }
+                        }
                     }
-                }, function(error) {
-                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
                 });
             } else {
                 alert("조회 정보가 없습니다.");
@@ -44,7 +59,7 @@ define([
         };
 
         // 취소
-        $scope.cancel = function () {
+        $scope.click_cancel = function () {
             $scope.$parent.getSession()
                 .then($scope.$parent.sessionCheck)
                 .then($scope.getCmsUser)

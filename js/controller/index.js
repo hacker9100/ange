@@ -45,6 +45,7 @@ define([
 
     // 게시판
     '../../partials/cms/webboard_list',
+    '../../partials/cms/webboard_edit',
 
     '../../partials/cms/webboard',
     '../../partials/cms/webboardEdit',
@@ -53,5 +54,6 @@ define([
     // 관리자
     '../../partials/cms/user',
     '../../partials/cms/permission',
-    '../../partials/cms/category'
+    '../../partials/cms/category',
+    '../../partials/cms/series'
 ], function () {});

@@ -1,7 +1,7 @@
 <div class="panel panel-primary">
     <div class="panel-body" ng-model="search" lass="row">
 
-        <form role="form" name="listForm" class="form-horizontal">
+        <form role="form" name="list_form" class="form-horizontal">
             <div class="col-md-9">
                 <div class= "form-group">
                     <label class= "col-md-2">검색</label>
@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-pull-2">
                 <div class= "navbar-header" >
-                    <button class="btn btn-primary start" ng-click="searchCategory();" ng-disabled="listForm.$invalid">
+                    <button class="btn btn-primary start" ng-click="searchCategory();" ng-disabled="list_form.$invalid">
                         <i class="glyphicon glyphicon-search"></i>
                         <span>검색</span>
                     </button>
@@ -47,13 +47,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="category in categories">
-        <td>{{ category.CATEGORY_GB == '1' ? '주기' : '주제' }}</td>
-        <td><a ng-click="getCategory(category.NO)">{{ category.PARENT_NM }}</a></td>
-        <td>{{ category.CHILD_NM }}</td>
-        <td>{{ category.REG_DT }}</td>
-        <td>{{ category.CATEGORY_ST }}</td>
-        <td><a ng-click="deleteCategory($index)">삭제</a></td>
+    <tr ng-repeat="item in list">
+        <td>{{ item.CATEGORY_GB == '1' ? '주기' : '주제' }}</td>
+        <td>{{ item.PARENT_NM }}</td>
+        <td>{{ item.CHILD_NM }}</td>
+        <td>{{ item.REG_DT }}</td>
+        <td>{{ item.CATEGORY_ST == '0' ? '이용가능' : '이용정지' }}</td>
+        <td>
+            <a ng-click="click_getCategory(item.NO)">편집</a>
+            <a ng-click="click_updateStatus($index)">상태변경</a>
+            <a ng-click="click_deleteCategory($index)">삭제</a>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -62,12 +66,12 @@
 <!-- Contents Include -->
 <div class="col-md-12">
 
-    <form role="form" name="editForm" class="form-horizontal">
-        <div ng-model="category" lass="row">
+    <form role="form" name="edit_form" class="form-horizontal">
+        <div ng-model="item" lass="row">
             <div class= "form-group">
                 <label class= "col-md-2">구분</label>
                 <div class= "col-md-4">
-                    <select ng-model="category.CATEGORY_GB" ng-init="category.CATEGORY_GB = 1" class= "form-control" >
+                    <select ng-model="item.CATEGORY_GB" ng-init="item.CATEGORY_GB = 1" class= "form-control" >
                         <option name="" value="1">주기</option>
                         <option name="" value="2">주제</option>
                     </select>
@@ -76,7 +80,7 @@
             <div class= "form-group">
                 <label class= "col-md-2">대분류 선택</label>
                 <div class= "col-md-4">
-                    <select ng-model="category.PARENT" ng-options="parent.PARENT_NM for parent in parents" class= "form-control" ng-disabled="category.CATEGORY_GB != '2'">
+                    <select ng-model="item.PARENT" ng-options="parent.PARENT_NM for parent in parents" class= "form-control" ng-disabled="item.CATEGORY_GB != '2'">
                         <option name="" value="">선택하세요.</option>
                     </select>
                 </div>
@@ -84,28 +88,28 @@
                     <span>*주제-소분류를 선택할 경우만 선택합니다.</span>
                 </div>
             </div>
-            <div class= "form-group" ng-class="{error: editForm.category_name.$invalid}">
+            <div class= "form-group" ng-class="{error: edit_form.item_name.$invalid}">
                 <label class= "col-md-2">키워드</label>
                 <div class="col-md-4">
-                    <input name="category_name" ng-model="category.CATEGORY_NM" type= "text" class= "form-control" placeholder="카테고리 키워드" required/>
-                    <span ng-show="editForm.category_name.$dirty && editForm.category_name.$invalid" class="help-inline">카테고리 키워드가 누락되었습니다.</span>
+                    <input name="item_name" ng-model="item.CATEGORY_NM" type= "text" class= "form-control" placeholder="카테고리 키워드" required/>
+                    <span ng-show="edit_form.item_name.$dirty && edit_form.item_name.$invalid" class="help-inline">카테고리 키워드가 누락되었습니다.</span>
                 </div>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">설명</label>
                 <div class= "col-md-6">
-                    <textarea ng-model="category.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
+                    <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
                 </div>
             </div>
 
             <!-- 하단 버튼 -->
             <div class= "form-group">
                 <div class="col-md-4">
-                    <button type="button" class="btn btn-primary start" ng-click="saveCategory();" ng-disabled="editForm.$invalid">
+                    <button type="button" class="btn btn-primary start" ng-click="click_saveCategory();" ng-disabled="edit_form.$invalid">
                         <i class="glyphicon glyphicon-plus"></i>
                         <span>저장</span>
                     </button>
-                    <button type="button" class="btn btn-warning cancel" ng-click="cancel();">
+                    <button type="button" class="btn btn-warning cancel" ng-click="click_cancel();">
                         <i class="glyphicon glyphicon-ban-circle"></i>
                         <span>취소</span>
                     </button>

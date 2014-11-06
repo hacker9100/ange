@@ -3,7 +3,7 @@
 
 <!-- Contents Include -->
 <div class="col-md-12">
-    <form role="form" name="editForm" class="form-horizontal">
+    <form role="form" name="edit_form" class="form-horizontal">
         <div class= "form-group">
             <label class= "col-md-2">설정대상</label>
             <div class="col-md-4">
@@ -24,20 +24,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="permission in permissions">
-                <td>{{ permission.MENU_ID }}</td>
-                <td><input name="menu" ng-model="permission.MENU_FL" ng-true-value="0" ng-false-value="1" ng-show="permission.MENU_FL != ''" type="checkbox">{{ permission.MENU_FL }}</td>
-                <td><input name="list" ng-model="permission.LIST_FL" ng-true-value="0" ng-false-value="1" ng-show="permission.LIST_FL != ''" type="checkbox">{{ permission.LIST_FL }}</td>
-                <td><input name="view" ng-model="permission.VIEW_FL" ng-true-value="0" ng-false-value="1" ng-show="permission.VIEW_FL != ''" type="checkbox">{{ permission.VIEW_FL }}</td>
-                <td><input name="edit" ng-model="permission.EDIT_FL" ng-true-value="0" ng-false-value="1" ng-show="permission.EDIT_FL != ''" type="checkbox">{{ permission.EDIT_FL }}</td>
-                <td><input name="modify" ng-model="permission.MODIFY_FL" ng-true-value="0" ng-false-value="1" ng-show="permission.MODIFY_FL != ''" type="checkbox">{{ permission.MODIFY_FL }}</td>
+            <tr ng-repeat="item in list">
+                <td>{{ item.MENU_ID }}</td>
+                <td><input name="menu" ng-model="item.MENU_FL" ng-true-value="0" ng-false-value="1" ng-show="item.MENU_FL != ''" type="checkbox">{{ item.MENU_FL }}</td>
+                <td><input name="list" ng-model="item.LIST_FL" ng-true-value="0" ng-false-value="1" ng-show="item.LIST_FL != ''" type="checkbox">{{ item.LIST_FL }}</td>
+                <td><input name="view" ng-model="item.VIEW_FL" ng-true-value="0" ng-false-value="1" ng-show="item.VIEW_FL != ''" type="checkbox">{{ item.VIEW_FL }}</td>
+                <td><input name="edit" ng-model="item.EDIT_FL" ng-true-value="0" ng-false-value="1" ng-show="item.EDIT_FL != ''" type="checkbox">{{ item.EDIT_FL }}</td>
+                <td><input name="modify" ng-model="item.MODIFY_FL" ng-true-value="0" ng-false-value="1" ng-show="item.MODIFY_FL != ''" type="checkbox">{{ item.MODIFY_FL }}</td>
             </tr>
             </tbody>
         </table>
 
         <!-- 버튼 -->
         <div class= "navbar-header" >
-            <button class="btn btn-success fileinput-button" data-ng-click="savePermission()">
+            <button class="btn btn-success fileinput-button" data-ng-click="click_savePermission()">
                 <i class="glyphicon glyphicon-plus"></i>
                 <span>저장</span>
             </button>

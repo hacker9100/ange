@@ -11,117 +11,168 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('category', ['$scope', '$stateParams', 'categoryService', '$location', function ($scope, $stateParams, categoryService, $location) {
+    controllers.controller('category', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
 
         /********** 초기화 **********/
-        $scope.search = [];
-
-        $scope.categoryId = '';
-        $scope.category = {};
+        $scope.key = '';
 
         // 초기화
         $scope.initList = function() {
-            categoryService.getPermissionOptions().then(function(roles){
-                $scope.roles = roles.data;
 
-                if (roles.data != null) {
-                    $scope.search.ROLE = roles.data[0];
-                }
-            });
         };
 
         $scope.initEdit = function() {
-            $location.search('_search', {CATEGORY_GB: '2', PARENT_NO: '0'});
-            categoryService.getCategories().then(function(results){
-                $scope.parents = results.data;
-            }, function(error) {
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-            });
-            $location.search('_search', null);
-        };
-
-        /********** 이벤트 **********/
-        // 카테고리 삭제
-        $scope.deleteCategory = function (idx) {
-            var category = $scope.categories[idx];
-
-            categoryService.deleteCategory(category.NO).then(function(data){
-                alert("정상적으로 삭제했습니다.");
-                $scope.categories.splice(idx, 1);
-            }, function(error) {
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-            });
-        };
-
-        // 검색
-        $scope.searchCategory = function () {
-            $location.search('_search', $scope.search);
-            $scope.getCategoryList();
-        }
-
-        // 카테고리 목록 조회
-        $scope.getCategoryList = function () {
-            $scope.isLoading = true;
-            categoryService.getCategories().then(function(results){
-                if (results.data == 'null') {
-                    $scope.categories = null;
+            dataService.db('category').find({},{CATEGORY_GB: '2', PARENT_NO: '0'},function(data, status){
+                if (status != 200) {
+                    alert('조회에 실패 했습니다.');
                 } else {
-                    $scope.categories = results.data;
+                    if (!data.err) {
+                        if (angular.isObject(data)) {
+                            $scope.parents = data;
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            alert("조회 데이터가 없습니다.");
+                        }
+                    } else {
+                        alert(data.msg);
+                    }
                 }
 
                 $scope.isLoading = false;
-            }, function(error) {
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
-            $location.search('_search', null);
         };
 
-        // 카테고리 등록/수정
-        $scope.saveCategory = function () {
-            if ($scope.categoryId == '') {
-                categoryService.createCategory($scope.category).then(function(data){
-                    alert("정상적으로 등록했습니다.");
-                    $scope.user = null;
-                    $scope.getCategoryList();
-                }, function(error) {
-                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-                });
-            }
-            else {
-                categoryService.updateCategory($scope.categoryId, $scope.category).then(function(data){
-                    alert("정상적으로 수정했습니다.");
-                    $scope.getCategoryList();
-                }, function(error) {
-                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-                });
-            }
+        /********** 이벤트 **********/
+        // 카테고리 삭제 버튼 클릭
+        $scope.click_deleteCategory = function (idx) {
+            var category = $scope.list[idx];
+
+            dataService.db('category').remove(category.NO,function(data, status){
+                if (status != 200) {
+                    alert('삭제에 실패 했습니다.');
+                } else {
+                    if (data.err == false) {
+                        $scope.list.splice(idx, 1);
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
         };
 
-        // 조회
-        $scope.getCategory = function (id) {
-            $scope.categoryId = id;
+        // 검색 버튼 클릭
+        $scope.searchCategory = function () {
+            $scope.getCategoryList($scope.search);
+        }
 
-            if ($scope.categoryId != '') {
-                categoryService.getCategory($scope.categoryId).then(function(result){
-                    var idx = 0;
-                    for (var i=0; i < $scope.parents.length; i ++) {
-                        if (result.data.PARENT_NO == $scope.parents[i].NO) {
-                            idx = i;
+        // 카테고리 목록 조회
+        $scope.getCategoryList = function (search) {
+            $scope.isLoading = true;
+            dataService.db('category').find({},search,function(data, status){
+                if (status != 200) {
+                    alert('조회에 실패 했습니다.');
+                } else {
+                    if (!data.err) {
+                        if (angular.isObject(data)) {
+                            $scope.list = data;
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            alert("조회 데이터가 없습니다.");
+                        }
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+
+                $scope.isLoading = false;
+            });
+        };
+
+        // 카테고리 저장 버튼 클릭
+        $scope.click_saveCategory = function () {
+            if ($scope.key == '') {
+                dataService.db('category').insert($scope.item,function(data, status){
+                    if (status != 200) {
+                        alert('등록에 실패 했습니다.');
+                    } else {
+                        if (data.err == false) {
+                            $scope.getCategoryList();
+                        } else {
+                            alert(data.msg);
                         }
                     }
-
-                    $scope.category = result.data;
-                    $scope.category.PARENT = result.data.PARENT_NO == 0 ? null : $scope.parents[idx];
-                }, function(error) {
-                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
+                });
+            } else {
+                dataService.db('category').update($scope.key,$scope.item,function(data, status){
+                    if (status != 200) {
+                        alert('수정에 실패 했습니다.');
+                    } else {
+                        if (data.err == false) {
+                            $scope.getCategoryList();
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
                 });
             }
+
+            $scope.key = '';
+        };
+
+        // 카테고리 편집 클릭
+        $scope.click_getCategory = function (id) {
+            $scope.key = id;
+
+            if ($scope.key != '') {
+                dataService.db('category').findOne($scope.key,{},function(data, status){
+                    if (status != 200) {
+                        alert('조회에 실패 했습니다.');
+                    } else {
+                        if (angular.isObject(data)) {
+                            var idx = 0;
+                            for (var i=0; i < $scope.parents.length; i ++) {
+                                if (data.PARENT_NO == $scope.parents[i].NO) {
+                                    idx = i;
+                                }
+                            }
+
+                            $scope.item = data;
+                            $scope.item.PARENT = data.PARENT_NO == 0 ? null : $scope.parents[idx];
+                        } else {
+                            if (data.err == true) {
+                                alert(data.msg);
+                            } else {
+                                // TODO: 데이터가 없을 경우 처리
+                                alert("조회 데이터가 없습니다.");
+                            }
+                        }
+                    }
+                });
+            }
+        };
+
+        // 카테고리 상태변경 버튼 클릭
+        $scope.click_updateStatus = function (idx) {
+            var category = $scope.list[idx];
+            category.CATEGORY_ST = (category.CATEGORY_ST == "1" ? "0" : "1");
+
+            dataService.db('category').update(category.NO,category,function(data, status){
+                if (status != 200) {
+                    alert('수정에 실패 했습니다.');
+                } else {
+                    if (data.err == false) {
+                        $scope.getCategoryList();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
         };
 
         // 취소
-        $scope.cancel = function () {
-            $scope.categoryId = '';
-            $scope.category = null;
+        $scope.click_cancel = function () {
+            $scope.key = '';
+            $scope.item = null;
         };
 
         /********** 화면 초기화 **********/

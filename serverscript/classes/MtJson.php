@@ -15,7 +15,7 @@ class MtJson extends MtData {
     function failEnd($msg) {
         ob_end_clean();
         MtUtil::_c("### [END] [ERROR]");
-        header('HTTP/1.1 201 ERROR');
+        header('HTTP/1.1 200 OK');
         echo '{"msg":"'.$msg.'","err":true}';
         exit;
     }

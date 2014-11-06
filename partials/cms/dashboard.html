@@ -59,7 +59,7 @@
                             <div class="list-group">
                                 <li class="list-group-item list-group-item-labeling-blue">
                                     프로젝트
-                                    <span class="btn custom-btn-more"> <span ng-click="showProjectList();" class="glyphicon glyphicon-plus"></span> </span>
+                                    <span class="btn custom-btn-more"> <span ng-click="click_showProjectList();" class="glyphicon glyphicon-plus"></span> </span>
                                 </li>
                                     <a href="#/project/{{project.NO}}" class="list-group-item list-group-item-blue" ng-repeat="project in projects">{{project.SUBJECT}}<span class="list-group-item-right">{{ project.PROJECT_ST == '0' ? '준비' : project.PROJECT_ST == '1' ? '진행' : '완료' }}</span></a>
                             </div>
@@ -73,7 +73,7 @@
                         <div class="list-group" style="margin-bottom: 0;">
                             <li class="list-group-item list-group-item-labeling-gray">
                                 태스크 목록
-                                <span class="btn custom-btn-more"> <span class="glyphicon glyphicon-plus"></span> </span>
+                                <span class="btn custom-btn-more"> <span ng-click="click_showTaskList();" class="glyphicon glyphicon-plus"></span> </span>
 
                             </li>
                         </div>

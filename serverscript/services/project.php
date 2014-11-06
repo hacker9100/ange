@@ -30,17 +30,17 @@
 
     switch ($_method) {
         case "GET":
-            if (isset($id)) {
+            if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST, NOTE
                         FROM
                             CMS_PROJECT
                         WHERE
-                            NO = ".$id."
+                            NO = ".$_key."
                         ";
 
                 $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
+                $data = $_d->sql_fetch_array($result);
 
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
@@ -48,7 +48,7 @@
                             FILE F, CONTENT_SOURCE S
                         WHERE
                             F.NO = S.SOURCE_NO
-                            AND S.TARGET_NO = ".$id."
+                            AND S.TARGET_NO = ".$_key."
                             AND F.THUMB_FL = '0'
                         ";
 
@@ -56,14 +56,11 @@
 
                 $data['FILE'] = $file_data;
 
-                $_d->dataEnd2($data);
-
-//                $data = $_d->sql_query($sql);
-//                if ($_d->mysql_errno > 0) {
-//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                } else {
-//                    $_d->dataEnd($sql);
-//                }
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
             } else {
                 if (isset($_mode)) {
                     $sql = "SELECT
@@ -89,26 +86,17 @@
                         $where_search = "AND PROJECT_ST IN (".$in_str.") ";
                     }
 
-                    if (isset($_search[PAGE_NO]) && isset($_search[PAGE_SIZE])) {
-                        $limit_search .= "LIMIT ".($_search[PAGE_NO] * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                    if (isset($_page)) {
+                        $limit_search .= "LIMIT ".($_page[no] * $_page[size]).", ".$_page[size];
                     }
 
-                    if (isset($_search[YEAR])) {
+                    if (isset($_search[YEAR]) && $_search[YEAR] != "") {
                         $where_search .= "AND YEAR  = '".$_search[YEAR]."' ";
                     }
 
-                    if (isset($_search[KEYWORD])) {
+                    if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                         $where_search .= "AND T.".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
                     }
-
-//                    if (isset($_search) && count($_search) > 0) {
-//                        for ($i = 0 ; $i < count($_search); $i++) {
-//                            $item = $_search[$i];
-//                            $arr_item = explode('/', $item);
-//
-//                            $search .= "AND ".$arr_item[0]." LIKE '%".$arr_item[1]."%' ";
-//                        }
-//                    }
 
                     $sql = "SELECT
                                 TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
@@ -138,14 +126,12 @@
                             ";
                 }
 
-                $_d->dataEnd($sql);
-
-//                $data = $_d->sql_query($sql);
-//                if ($_d->mysql_errno > 0) {
-//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                } else {
-//                    $_d->dataEnd($sql);
-//                }
+                $data = $_d->sql_query($sql);
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd($sql);
+                }
             }
 
             break;

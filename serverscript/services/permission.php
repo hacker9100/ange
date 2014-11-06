@@ -30,13 +30,13 @@
 
     switch ($_method) {
         case "GET":
-            if (isset($id)) {
+            if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
                         FROM
                             CMS_ROLE R, MENU_ROLE M
                         WHERE
-                            R.ROLE_ID = '".$id."'
+                            R.ROLE_ID = '".$_key."'
                             AND R.ROLE_ID = M.ROLE_ID;
                         ";
 
@@ -49,7 +49,7 @@
 //                    $_d->dataEnd($sql);
 //                }
             } else {
-                if (isset($_mode)) {
+                if (isset($_search[ROLE]) && $_search[ROLE] != "") {
                     $sql = "SELECT
                                 ROLE_ID, ROLE_NM, ROLE_GB
                             FROM
@@ -90,56 +90,15 @@
             break;
 
         case "POST":
-            $form = json_decode(file_get_contents("php://input"),true);
-/*
-            $upload_path = '../upload/';
-            $source_path = '../../../';
+//            $form = json_decode(file_get_contents("php://input"),true);
 
-            if (count($form[FILES]) > 0) {
-                $files = $form[FILES];
-
-//                @mkdir('$source_path');
-
-                for ($i = 0 ; $i < count($form[FILES]); $i++) {
-                    $file = $files[$i];
-
-                    if (file_exists($upload_path.$file[name])) {
-                        rename($upload_path.$file[name], $source_path.$file[name]);
-                    }
-                }
-            }
-*/
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
-
-            if ( trim($form[SUBJECT]) == "" ) {
-                $_d->failEnd("제목을 작성 하세요");
-            }
-
-            if ( trim($form[PROJECT_ST]) == "" ) {
-                $form[PROJECT_ST] = '0';
-            }
 
             $_d->sql_beginTransaction();
 
-            $sql = "INSERT INTO CMS_PROJECT
+            $sql = "INSERT INTO CMS_
                     (
-                        YEAR
-                        ,MONTH
-                        ,SUBJECT
-                        ,REG_UID
-                        ,REG_NM
-                        ,REG_DT
-                        ,PROJECT_ST
-                        ,NOTE
                     ) VALUES (
-                        '".$form[YEAR]."'
-                        ,'".$form[MONTH]."'
-                        ,'".$form[SUBJECT]."'
-                        ,'".$_SESSION['uid']."'
-                        ,'".$_SESSION['name']."'
-                        ,SYSDATE()
-                        ,'".$form[PROJECT_ST]."'
-                        ,'".$form[NOTE]."'
                     )";
 
             $_d->sql_query($sql);
@@ -156,20 +115,20 @@
             break;
 
         case "PUT":
-            if (!isset($id)) {
-                $_d->failEnd("수정실패입니다:"."ID가 누락되었습니다.");
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $form = json_decode(file_get_contents("php://input"),true);
+//            $form = json_decode(file_get_contents("php://input"),true);
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             $_d->sql_beginTransaction();
 
-            if (count($form) > 0) {
-                $permissions = $form;
+            if (count($_model) > 0) {
+                $permissions = $_model;
 
-                for ($i = 0 ; $i < count($form); $i++) {
+                for ($i = 0 ; $i < count($_model); $i++) {
                     $permission = $permissions[$i];
 
                     $sql = "UPDATE MENU_ROLE
@@ -185,6 +144,7 @@
                     ";
 
                     $_d->sql_query($sql);
+                    $no = $_d->mysql_insert_id;
                 }
             }
 
@@ -199,11 +159,11 @@
             break;
 
         case "DELETE":
-            if (!isset($id)) {
-                $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $sql = "DELETE FROM CMS_PROJECT WHERE NO = ".$id;
+            $sql = "DELETE FROM CMS_PROJECT WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

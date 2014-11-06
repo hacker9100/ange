@@ -11,29 +11,31 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('dashboard', ['$scope', '$rootScope', 'loginService', 'projectService', 'taskService', '$location', function ($scope, $rootScope, loginService, projectService, taskService, $location) {
+    controllers.controller('dashboard', ['$scope', '$rootScope', 'loginService', 'dataService', '$location', function ($scope, $rootScope, loginService, dataService, $location) {
 
         /********** 초기화 **********/
-        // 검색 조건
-        $scope.search = [];
-
         // 초기화
         $scope.initList = function() {
-            $scope.search.PAGE_NO = 0;
-            $scope.search.PAGE_SIZE = 5;
+            $scope.PAGE_NO = 0;
+            $scope.PAGE_SIZE = 5;
 
             $location.search('_search', $scope.search);
         };
 
         /********** 이벤트 **********/
-        // 수정 화면 이동
-        $scope.showTaskEdit = function (no) {
-            $location.path('/task/'+no);
+        // 태스크 선택
+        $scope.click_showTaskEdit = function (no) {
+            $location.url('/task/'+no);
         };
 
         // 프로젝트 목록 이동
-        $scope.showProjectList = function () {
-            $location.path('/project');
+        $scope.click_showProjectList = function () {
+            $location.url('/project');
+        };
+
+        // 태스크 목록 이동
+        $scope.click_showTaskList = function () {
+            $location.url('/task');
         };
 
         // 공지사항 포틀릿 조회
@@ -42,23 +44,55 @@ define([
         // 프로젝트 포틀릿 조회
         $scope.getProjectPortlet = function () {
             $scope.isLoading = true;
-            projectService.getProjects().then(function(projects){
-                $scope.projects = projects.data;
+
+            dataService.db('project').find({no:$scope.PAGE_NO, size:$scope.PAGE_SIZE},{},function(data, status){
+                if (status != 200) {
+                    alert('조회에 실패 했습니다.');
+                } else {
+                    if (angular.isObject(data)) {
+                        $scope.projects = data;
+                    } else {
+                        // TODO: 데이터가 없을 경우 처리
+                        alert("조회 데이터가 없습니다.");
+                    }
+                }
+
                 $scope.isLoading = false;
-            }, function(error) {
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
+
+//            projectService.getProjects().then(function(projects){
+//                $scope.projects = projects.data;
+//                $scope.isLoading = false;
+//            }, function(error) {
+//                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
+//            });
         };
 
         // 태스크 목록 조회
         $scope.getTaskList = function () {
             $scope.isLoading = true;
-            taskService.getTasks().then(function(tasks){
-                $scope.tasks = tasks.data;
+
+            dataService.db('task').find({no:$scope.PAGE_NO, size:$scope.PAGE_SIZE},{},function(data, status){
+                if (status != 200) {
+                    alert('조회에 실패 했습니다.');
+                } else {
+                    if (angular.isObject(data)) {
+                        $scope.tasks = data;
+                    } else {
+                        // TODO: 데이터가 없을 경우 처리
+                        alert("조회 데이터가 없습니다.");
+                    }
+                }
+
                 $scope.isLoading = false;
-            }, function(error) {
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
+
+//            taskService.getTasks().then(function(tasks){
+//                $scope.tasks = tasks.data;
+//                $scope.isLoading = false;
+//            }, function(error) {
+//                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
+//            });
         };
 
         $scope.getSession = function() {

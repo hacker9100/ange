@@ -165,7 +165,6 @@
                 "locaterView@publish_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@publish_edit": { "templateUrl": "partials/cms/publish_edit.html", "controller" : "publish_edit" }
             }
-
         }}, { "webboard_list": {
             "url": "/webboard",
             "views": {
@@ -174,6 +173,15 @@
                 "locaterView@webboard_list": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@webboard_list": { "templateUrl": "partials/cms/webboard_list.html", "controller" : "webboard_list" }
             }
+        }}, { "webboard_edit": {
+            "url": "/webboard/:id",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@webboard_edit": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@webboard_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@webboard_edit": { "templateUrl": "partials/cms/webboard_edit.html", "controller" : "webboard_edit" }
+            }
+
         }}, { "webboard/edit": {
             "url": "/webboard/edit/:id",
             "views": {
@@ -211,6 +219,14 @@
                 "lnbView@category": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@category": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@category": { "templateUrl": "partials/cms/category.html", "controller" : "category" }
+            }
+        }}, { "series": {
+            "url": "/series",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@series": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@series": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@series": { "templateUrl": "partials/cms/series.html", "controller" : "series" }
             }
         }}, { "test": {
             "url": "/",

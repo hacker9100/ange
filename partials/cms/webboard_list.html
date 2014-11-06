@@ -20,7 +20,7 @@
                         <i class="glyphicon glyphicon-search"></i>
                         <span>검색</span>
                     </button>
-                    <button class="btn btn-success fileinput-button" data-ng-click="click_createNewCmsBoard()">
+                    <button class="btn btn-success fileinput-button" data-ng-click="click_showCreateNewCmsBoard()">
                         <i class="glyphicon glyphicon-plus"></i>
                         <span>등록</span>
                     </button>
@@ -52,7 +52,7 @@
         <tr ng-repeat="item in list">
             <td>{{ item.NO }}</td>
             <td>{{ item.HEAD }}</td>
-            <td><a ng-click="click_editCmsBoard(item.NO)">{{ item.SUBJECT }}</a></td>
+            <td><a ng-click="click_showEditCmsBoard(item.NO)">{{ item.SUBJECT }}</a></td>
             <td>{{ item.REG_NM }}</td>
             <td>{{ item.REG_DT }}</td>
             <td><a ng-click="click_deleteCmsBoard($index)">삭제</a></td>

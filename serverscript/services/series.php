@@ -25,14 +25,11 @@
         case "GET":
             if (isset($_key) && $_key != "") {
                 $sql = "SELECT
-                            C.NO, C.PARENT_NO, C.CATEGORY_NM,
-                            CASE C.PARENT_NO WHEN 0 THEN '' ELSE C.CATEGORY_NM END AS CHILD_NM,
-                            CASE C.PARENT_NO WHEN 0 THEN C.CATEGORY_NM ELSE (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = C.PARENT_NO) END AS PARENT_NM,
-                            C.CATEGORY_GB, C.CATEGORY_ST, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT, C.NOTE
+                            NO, SERIES_NM, SERIES_GB, SERIES_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NOTE
                         FROM
-                            CMS_CATEGORY C
+                            CMS_SERIES
                         WHERE
-                            C.NO = ".$_key."
+                            NO = ".$_key."
                         ";
 
                 $data = $_d->sql_query($sql);
@@ -46,26 +43,30 @@
             } else {
                 $where_search = "";
 
-                if (isset($_search[CATEGORY_GB]) && $_search[CATEGORY_GB] != "") {
-                    $where_search .= "AND C.CATEGORY_GB  = '".$_search[CATEGORY_GB]."' ";
-                }
-                if (isset($_search[PARENT_NO])) {
-                    $where_search .= "AND C.PARENT_NO = ".$_search[PARENT_NO]." ";
-                }
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $where_search .= "AND C.CATEGORY_NM LIKE '%".$_search[KEYWORD]."%' ";
+                    $where_search .= "AND SERIES_NM LIKE '%".$_search[KEYWORD]."%' ";
                 }
 
                 $sql = "SELECT
-                            C.NO, C.PARENT_NO, C.CATEGORY_NM,
-                            CASE C.PARENT_NO WHEN 0 THEN '' ELSE C.CATEGORY_NM END AS CHILD_NM,
-                            CASE C.PARENT_NO WHEN 0 THEN C.CATEGORY_NM ELSE (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = C.PARENT_NO) END AS PARENT_NM,
-                            C.CATEGORY_GB, C.CATEGORY_ST, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT, C.NOTE
+                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                            NO, SERIES_NM, SERIES_GB, SERIES_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NOTE
                         FROM
-                            CMS_CATEGORY C
-                        WHERE
-                            1=1
-                            ".$where_search."
+                        (
+                            SELECT
+                                NO, SERIES_NM, SERIES_GB, SERIES_ST, REG_DT, NOTE
+                            FROM
+                              CMS_SERIES
+                            WHERE
+                                1 = 1
+                                ".$where_search."
+                        ) AS DATA,
+                        (SELECT @RNUM := 0) R,
+                        (
+                            SELECT
+                                COUNT(*) AS TOTAL_COUNT
+                            FROM
+                                CMS_SERIES
+                        ) CNT
                         ";
                 $data = $_d->sql_query($sql);
                 if ($_d->mysql_errno > 0) {
@@ -78,35 +79,34 @@
             break;
 
         case "POST":
-//            $form = json_decode(file_get_contents("php://input"),true);
 
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+            $_d->sql_beginTransaction();
 
-            $sql = "INSERT INTO CMS_CATEGORY
+//            $FORM = json_decode(file_get_contents("php://input"),true);
+
+            $sql = "INSERT INTO CMS_SERIES
                     (
-                        PARENT_NO,
-                        CATEGORY_NM,
-                        CATEGORY_GB,
-                        CATEGORY_ST,
+                        SERIES_NM,
+                        SERIES_GB,
+                        SERIES_ST,
                         REG_DT,
                         NOTE
                     ) VALUES (
-                        ".( isset($_model[PARENT]) && $_model[PARENT] != "" ? $_model[PARENT][NO] : 0 )."
-                        , '".$_model[CATEGORY_NM]."'
-                        , '".$_model[CATEGORY_GB]."'
+                        '".$_model[SERIES_NM]."'
+                        , '".$_model[SERIES_GB]."'
                         , '0'
                         , SYSDATE()
                         , '".$_model[NOTE]."'
                     )";
 
-            MtUtil::_c("### [POST_DATA] ".$sql);
-
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
             if ($_d->mysql_errno > 0) {
+                $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$_d->mysql_error);
             } else {
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
@@ -114,19 +114,18 @@
 
         case "PUT":
             if (!isset($_key) || $_key == '') {
-                $_d->failEnd("수정실패입니다:"."ID가 누락되었습니다.");
+                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $FORM = json_decode(file_get_contents("php://input"),true);
+//            $FORM = json_decode(file_get_contents("php://input"),true);
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            $sql = "UPDATE CMS_CATEGORY
+            $sql = "UPDATE CMS_SERIES
                     SET
-                        PARENT_NO = ".( isset($_model[PARENT]) && $_model[PARENT] != "" ? $_model[PARENT][NO] : 0 )."
-                        ,CATEGORY_NM = '".$_model[CATEGORY_NM]."'
-                        ,CATEGORY_GB = '".$_model[CATEGORY_GB]."'
-                        ,CATEGORY_ST = '".$_model[CATEGORY_ST]."'
+                        SERIES_NM = '".$_model[SERIES_NM]."'
+                        ,SERIES_GB = '".$_model[SERIES_GB]."'
+                        ,SERIES_ST = '".$_model[SERIES_ST]."'
                         ,NOTE = '".$_model[NOTE]."'
                     WHERE
                         NO = ".$_key."
@@ -145,16 +144,12 @@
 
         case "DELETE":
             if (!isset($_key) || $_key == '') {
-                $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
+                $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
             }
 
             $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM CMS_CATEGORY WHERE NO = ".$_id;
-
-            $_d->sql_query($sql);
-
-            $sql = "DELETE FROM CONTENT_CATEGORY WHERE CATEGORY_NO = ".$_id;
+            $sql = "DELETE FROM CMS_SERIES WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

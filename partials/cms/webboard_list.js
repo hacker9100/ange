@@ -14,8 +14,7 @@ define([
     controllers.controller('webboard_list', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
 
         /********** 초기화 **********/
-        // 검색 조건
-        $scope.search = [];
+        $scope.search = {};
 
         // 목록 데이터
         $scope.listData = [];
@@ -31,7 +30,7 @@ define([
 
         /********** 이벤트 **********/
         // 등록 버튼 클릭
-        $scope.click_createNewCmsBoard = function () {
+        $scope.click_showCreateNewCmsBoard = function () {
             $location.url('/webboard/0');
         };
 
@@ -57,15 +56,14 @@ define([
 
         // 검색 버튼
         $scope.click_searchCmsBoard = function () {
-            $location.search('_search', $scope.search);
-            $scope.getCmsBoardList();
+            $scope.getCmsBoardList($scope.search);
         }
 
         // 프로젝트 목록 조회
-        $scope.getCmsBoardList = function () {
+        $scope.getCmsBoardList = function (search) {
             $scope.isLoading = true;
 
-            dataService.db('webboard').find('GET',{no:0, size:4},{},function(data, status){
+            dataService.db('webboard').find({no:0, size:4},search,function(data, status){
                 if (status != 200) {
                     alert('조회에 실패 했습니다.');
                 } else {
@@ -79,19 +77,6 @@ define([
 
                 $scope.isLoading = false;
             });
-
-//            webboardService.getProjects().then(function(results){
-//                $scope.listData = results.data;
-//
-//                if ($scope.listData != null) {
-//                    $scope.totalItems = results.data[0].TOTAL_COUNT; // 총 아이템 수
-//                    $scope.currentPage = 1; // 현재 페이지
-//                }
-//                $scope.isLoading = false;
-//                $location.search('_search', null);
-//            }, function(error) {
-//                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-//            });
         };
 
         // 페이징 처리
