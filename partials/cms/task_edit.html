@@ -4,19 +4,19 @@
 <!-- Contents Include -->
 <div class="col-md-12">
 
-    <form role="form" name="editForm" class="form-horizontal">
-        <div ng-model="task" lass="row">
-            <div class= "form-group" ng-class="{error: editForm.subject.$invalid}">
+    <form role="form" name="edit_form" class="form-horizontal">
+        <div ng-model="item" lass="row">
+            <div class= "form-group" ng-class="{error: edit_form.subject.$invalid}">
                 <label class= "col-md-2">프로젝트</label>
                 <div class="col-md-4">
-                    <select ng-model="task.PROJECT" ng-options="project.SUBJECT for project in projects" class= "form-control" ></select>
+                    <select ng-model="item.PROJECT" ng-options="project.SUBJECT for project in projects" class= "form-control" ></select>
                 </div>
             </div>
-            <div class= "form-group" ng-class="{error: editForm.subject.$invalid}">
+            <div class= "form-group" ng-class="{error: edit_form.subject.$invalid}">
                 <label class= "col-md-2">제목</label>
                 <div class="col-md-9">
-                    <input name="subject" ng-model="task.SUBJECT" type= "text" class= "form-control" placeholder="태스크 제목" required/>
-                    <span ng-show="editForm.subject.$dirty && editForm.subject.$invalid" class="help-inline">Subject Required</span>
+                    <input name="subject" ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder="태스크 제목" required/>
+                    <span ng-show="edit_form.subject.$dirty && edit_form.subject.$invalid" class="help-inline">Subject Required</span>
                 </div>
             </div>
             <div class= "form-group">
@@ -36,15 +36,15 @@
             <div class= "form-group">
                 <label class= "col-md-2"></label>
                 <!--<pre>{{CATEGORY|json}}</pre>-->
-                <div class="col-md-2 btn-group" ng-model="task.CATEGORY" ng-repeat="category in CATEGORY">
-                    <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                <div class="col-md-2 btn-group" ng-model="item.CATEGORY" ng-repeat="category in CATEGORY">
+                    <button type="button" ng-click="click_removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
                 </div>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">마감일</label>
                 <div class="col-md-4">
                     <p class="input-group">
-                    <input ng-model="task.CLOSE_YMD" type="text" class="form-control" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close" />
+                    <input ng-model="item.CLOSE_YMD" type="text" class="form-control" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close" />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
@@ -54,24 +54,24 @@
             <div class= "form-group">
                 <label class= "col-md-2">태그</label>
                 <div class="col-md-9">
-                    <input ng-model="task.TAG" type= "text" class= "form-control" placeholder= "태그"/>
+                    <input ng-model="item.TAG" type= "text" class= "form-control" placeholder= "태그"/>
                 </div>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">설명</label>
                 <div class= "col-md-9">
-                    <textarea ng-model="task.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
+                    <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
                 </div>
             </div>
 
             <!-- 하단 버튼 -->
             <div class= "form-group">
                 <div class="col-md-4">
-                    <button class="btn btn-success fileinput-button" ng-click="showTaskList();" >
+                    <button class="btn btn-success fileinput-button" ng-click="click_showTaskList();" >
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>목록</span>
                     </button>
-                    <button type="button" class="btn btn-primary start" ng-click="saveTask();" ng-disabled="editForm.$invalid">
+                    <button type="button" class="btn btn-primary start" ng-click="click_saveTask();" ng-disabled="edit_form.$invalid">
                         <i class="glyphicon glyphicon-plus"></i>
                         <span>저장</span>
                     </button>

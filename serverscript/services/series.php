@@ -48,6 +48,16 @@
                 }
 
                 $sql = "SELECT
+                            NO, SERIES_NM, SERIES_GB, SERIES_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NOTE
+                        FROM
+                          CMS_SERIES
+                        WHERE
+                            1 = 1
+                            ".$where_search."
+                        ";
+
+/*
+                $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             NO, SERIES_NM, SERIES_GB, SERIES_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NOTE
                         FROM
@@ -68,6 +78,7 @@
                                 CMS_SERIES
                         ) CNT
                         ";
+*/
                 $data = $_d->sql_query($sql);
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);

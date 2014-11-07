@@ -51,7 +51,7 @@
         <tbody>
         <tr ng-repeat="item in list">
             <td>{{ item.NO }}</td>
-            <td>{{ item.HEAD }}</td>
+            <td>{{ item.HEAD == ''}}</td>
             <td><a ng-click="click_showEditCmsBoard(item.NO)">{{ item.SUBJECT }}</a></td>
             <td>{{ item.REG_NM }}</td>
             <td>{{ item.REG_DT }}</td>

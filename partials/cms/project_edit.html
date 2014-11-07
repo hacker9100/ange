@@ -4,39 +4,38 @@
 <!-- Contents Include -->
 <div class="col-md-12">
 
-    <div ng-model="project" lass="row">
-        <form id="fileupload" role="form" name="editForm" class="form-horizontal" method="POST" enctype="multipart/form-data" data-file-upload="options">
+    <div ng-model="item" lass="row">
+        <form id="fileupload" role="form" name="edit_from" class="form-horizontal" method="POST" enctype="multipart/form-data" data-file-upload="options">
 
-            <div class= "form-group" ng-class="{error: editForm.subject.$invalid}">
+            <div class= "form-group" ng-class="{error: edit_from.subject.$invalid}">
                 <label class= "col-md-2">시리즈</label>
                 <div class="col-md-4">
-                    추가 예정
-                    <!--<select ng-model="project.SERIES" ng-options="v.NAME for v in project.series" class= "form-control" ></select>-->
+                    <select ng-model="item.SERIES" ng-options="v.SERIES_NM for v in series" class= "form-control" ></select>
                 </div>
             </div>
-            <div class= "form-group" ng-class="{error: editForm.subject.$invalid}">
+            <div class= "form-group" ng-class="{error: edit_from.subject.$invalid}">
                 <label class= "col-md-2">호제</label>
                 <div class="col-md-4">
-                    <input name="subject" ng-model="project.SUBJECT" type= "text" class= "form-control" placeholder="프로젝트 주제" required/>
-                    <span ng-show="editForm.subject.$dirty && editForm.subject.$invalid" class="help-inline">Subject Required</span>
+                    <input name="subject" ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder="프로젝트 주제" required/>
+                    <span ng-show="edit_from.subject.$dirty && edit_from.subject.$invalid" class="help-inline">Subject Required</span>
                 </div>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">귀속년</label>
                 <div class="col-md-4">
-                    <select ng-model="project.YEAR" ng-options="v for v in years" class= "form-control" ></select>
+                    <select ng-model="item.YEAR" ng-options="v for v in years" class= "form-control" ></select>
                 </div>
             </div>
             <!--<div class= "form-group">-->
                 <!--<label class= "col-md-2">등록자 ID</label>-->
                 <!--<div class="col-md-4">-->
-                    <!--<input ng-model="project.REG_UID" type= "text" class= "form-control" placeholder= "등록자 ID"/>-->
+                    <!--<input ng-model="item.REG_UID" type= "text" class= "form-control" placeholder= "등록자 ID"/>-->
                 <!--</div>-->
             <!--</div>-->
             <!--<div class= "form-group">-->
                 <!--<label class= "col-md-2">등록자명</label>-->
                 <!--<div class="col-md-4">-->
-                    <!--<input ng-model="project.REG_NM" type= "text" class= "form-control" placeholder= "등록자 명"/>-->
+                    <!--<input ng-model="item.REG_NM" type= "text" class= "form-control" placeholder= "등록자 명"/>-->
                 <!--</div>-->
             <!--</div>-->
             <div class= "form-group">
@@ -74,22 +73,22 @@
             <div class= "form-group">
                 <label class= "col-md-2">설명</label>
                 <div class= "col-md-9">
-                    <textarea ng-model="project.NOTE" class= "form-control" placeholder= "간략한 개요.."/>
+                    <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 개요.."/>
                 </div>
             </div>
-            <div class= "form-group" ng-show="project.NO">
-                <input ng-model="project.COMPLETE_FL" type="checkbox"> 이 프로젝트의 모든 콘텐츠 등록이 완료되었습니다.
+            <div class= "form-group" ng-show="item.NO">
+                <input ng-model="item.COMPLETE_FL" type="checkbox"> 이 프로젝트의 모든 콘텐츠 등록이 완료되었습니다.
             </div>
         </form>
 
         <!-- 하단 버튼 -->
         <div class= "form-group">
             <div class="col-md-4">
-                <button class="btn btn-success fileinput-button" ng-click="showProjectList();" >
+                <button class="btn btn-success fileinput-button" ng-click="click_showProjectList();" >
                     <i class="glyphicon glyphicon-upload"></i>
                     <span>목록</span>
                 </button>
-                <button type="button" class="btn btn-primary start" ng-click="saveProject();" ng-disabled="editForm.$invalid">
+                <button type="button" class="btn btn-primary start" ng-click="click_saveProject();" ng-disabled="edit_from.$invalid">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>저장</span>
                 </button>

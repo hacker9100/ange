@@ -11,20 +11,19 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_list', ['$scope', '$stateParams', 'projectService', '$location', function ($scope, $stateParams, projectService, $location) {
+    controllers.controller('project_list', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
 
-//        alert(localStorage.getItem('userToken'))
         /********** 초기화 **********/
         // 검색 조건
-        $scope.search = [];
+        $scope.search = {};
+
+        // 목록 데이터
+        $scope.listData = [];
 
         // 날짜 콤보박스
         var year = [];
         var now = new Date();
         var nowYear = now.getFullYear();
-
-        // 목록 데이터
-        var projectsData = null;
 
         // 초기화
         $scope.initList = function() {
@@ -42,56 +41,77 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 등록 화면 이동
-        $scope.createNewProject = function () {
+        // 등록 버튼 클릭
+        $scope.click_createNewProject = function () {
             $location.path('/project/0');
         };
 
         // 수정 화면 이동
-        $scope.editProject = function (no) {
-            $location.path('/project/'+no);
+        $scope.click_showEditProject = function (key) {
+            $location.path('/project/'+key);
         };
 
-        // 삭제
-        $scope.deleteProject = function (idx) {
+        // 삭제 버튼 클릭
+        $scope.click_deleteProject = function (idx) {
 
-            var project = $scope.projects[idx];
+            var project = $scope.list[idx];
 
             if (project.PROJECT_ST == '2') {
                 alert("완료 상태의 프로젝트는 삭제할 수 없습니다.")
             }
 
-            projectService.deleteProject(project.NO).then(function(data){
-                $scope.projects.splice(idx, 1);
-            });
+            // TODO: 권한 처리 넣을것
+//            if () {
+//                alert("삭제 권한이 없습니다.");
+//            }
+
+            // TODO: 삭제 후 처리
+
+//            projectService.deleteProject(project.NO).then(function(data){
+//                $scope.projects.splice(idx, 1);
+//            });
         };
 
-        // 검색
-        $scope.searchProject = function () {
-            var search = [];
-            search.push('YEAR/'+$scope.search.YEAR);
-            search.push($scope.search.ORDER.value+'/'+$scope.search.KEYWORD);
-
-            $location.search('_search', search);
-
-            $scope.getProjectList();
+        // 검색 버튼 클릭
+        $scope.click_searchProject = function () {
+            $scope.getProjectList($scope.search);
         }
 
         // 프로젝트 목록 조회
-        $scope.getProjectList = function () {
+        $scope.getProjectList = function (search) {
             $scope.isLoading = true;
-            projectService.getProjects().then(function(projects){
-                projectsData = projects.data;
 
-                if (projectsData != null) {
-                    $scope.totalItems = projects.data[0].TOTAL_COUNT; // 총 아이템 수
-                    $scope.currentPage = 1; // 현재 페이지
+            dataService.db('project').find({NO:0, SIZE:5},search,function(data, status){
+                if (status != 200) {
+                    alert('프로젝트 목록 조회에 실패 했습니다.');
+                } else {
+                    if (angular.isObject(data)) {
+                        if (data.err == true) {
+                            alert(data.msg);
+                        } else {
+                            $scope.list = data;
+                        }
+                    } else {
+                        // TODO: 데이터가 없을 경우 처리
+                        alert("프로젝트 목록 데이터가 없습니다.");
+                    }
                 }
+
                 $scope.isLoading = false;
-                $location.search('_search', null);
-            }, function(error) {
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
+
+//            projectService.getProjects().then(function(projects){
+//                $scope.listData = projects.data;
+//
+//                if (projectsData != null) {
+//                    $scope.totalItems = projects.data[0].TOTAL_COUNT; // 총 아이템 수
+//                    $scope.currentPage = 1; // 현재 페이지
+//                }
+//                $scope.isLoading = false;
+//                $location.search('_search', null);
+//            }, function(error) {
+//                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
+//            });
         };
 
         // 페이징 처리
@@ -110,7 +130,7 @@ define([
 
         // 페이지 이동 시 이벤트
         $scope.$watch('isLoading', function() {
-            if (projectsData == 'null') {
+            if ($scope.listData == 'null') {
                 $scope.projects = null;
             } else {
                 $scope.projects = projectsData;
@@ -124,7 +144,7 @@ define([
             var begin = ((start - 1) * $scope.itemsPerPage);
             var end = begin + $scope.itemsPerPage;
 
-            if (projectsData != null) {
+            if ($scope.listData != null) {
                 $scope.projects = projectsData.slice(begin, end);
 /*
                 var i = 0;

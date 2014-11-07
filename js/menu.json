@@ -85,6 +85,14 @@
                 "locaterView@task_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@task_edit": { "templateUrl": "partials/cms/task_edit.html", "controller" : "task_edit" }
             }
+        }}, { "content_list": {
+            "url": "/content/:menu",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@content_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@content_list": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@content_list": { "templateUrl": "partials/cms/content_list.html", "controller" : "content_list" }
+            }
         }}, { "article_list": {
             "url": "/article",
             "views": {

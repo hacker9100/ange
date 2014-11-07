@@ -38,7 +38,7 @@
 //                MtUtil::_c("FUNC[processApi] 1 : "+$id);
 
                 $sql = "SELECT
-                          NO, SUBJECT, BODY, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, TAG
+                          NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, TAG
                         FROM
                           CMS_BOARD
                         WHERE
@@ -58,20 +58,24 @@
                 $limit_search = "";
 
                 if (isset($_page)) {
-                    $limit_search .= "LIMIT ".($_page[no] * $_page[size]).", ".$_page[size];
+                    $limit_search .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $where_search .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
                 }
 
+                if (isset($_search[HEAD]) && $_search[HEAD] != "") {
+                    $where_search .= "AND HEAD = '".$_search[HEAD]."' ";
+                }
+
                 $sql = "SELECT
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                          NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, TAG
+                          NO, HEAD, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, TAG
                         FROM
                         (
                             SELECT
-                                NO, SUBJECT, REG_UID, REG_NM, REG_DT, TAG
+                                NO, HEAD, SUBJECT, REG_UID, REG_NM, REG_DT, TAG
                             FROM
                                 CMS_BOARD
                             WHERE
@@ -135,14 +139,16 @@
 
             $sql = "INSERT INTO CMS_BOARD
                     (
-                        SUBJECT
+                        HEAD
+                        ,SUBJECT
                         ,BODY
                         ,REG_UID
                         ,REG_NM
-                        ,REG_DT,
+                        ,REG_DT
                         ,TAG
                     ) VALUES (
-                        '".$_model[SUBJECT]."'
+                        '".$_model[HEAD]."'
+                        ,'".$_model[SUBJECT]."'
                         , '".$_model[BODY]."'
                         , '".$_SESSION['uid']."'
                         , '".$_SESSION['name']."'
@@ -233,7 +239,8 @@
 
             $sql = "UPDATE CMS_BOARD
                     SET
-                        SUBJECT = '".$_model[SUBJECT]."'
+                        HEAD = '".$_model[HEAD]."'
+                        ,SUBJECT = '".$_model[SUBJECT]."'
                         ,BODY = '".$_model[BODY]."'
                         ,REG_UID = '".$_model[REG_UID]."'
                         ,REG_NM = '".$_model[REG_NM]."'

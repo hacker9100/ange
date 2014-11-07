@@ -91,7 +91,7 @@ define([
 //            return deferred.promise;
         };
 
-        // 게사판 등록/수정
+        // 게사판 저장 버튼 클릭
         $scope.click_saveCmsBoard = function () {
             $scope.item.FILES = $scope.queue;
 

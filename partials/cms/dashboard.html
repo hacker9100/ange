@@ -40,18 +40,11 @@
                             <div class="list-group">
                                 <li class="list-group-item list-group-item-labeling-green">
                                     공지사항
-                                    <span class="btn custom-btn-more"> <span class="glyphicon glyphicon-plus"></span> </span>
+                                    <span class="btn custom-btn-more"> <span ng-click="click_showWebboardList();" class="glyphicon glyphicon-plus"></span> </span>
 
                                 </li>
 
-                                <!--- 리스트 1set -->
-                                <a href="#" class="list-group-item list-group-item-green">공지사항 #1 <span class="list-group-item-right">2014-09-09</span></a>
-                                <!--- /// 리스트 1set -->
-
-                                <a href="#" class="list-group-item list-group-item-green">공지사항 #2 <span class="list-group-item-right">2014-09-09</span></a>
-                                <a href="#" class="list-group-item list-group-item-green">공지사항 #3 <span class="list-group-item-right">2014-09-09</span></a>
-                                <a href="#" class="list-group-item list-group-item-green">공지사항 #4 <span class="list-group-item-right">2014-09-09</span></a>
-                                <a href="#" class="list-group-item list-group-item-green">공지사항 #5 <span class="list-group-item-right">2014-09-09</span></a>
+                                <a href="#/webboard/{{notice.NO}}" class="list-group-item list-group-item-green" ng-repeat="notice in notices">{{notice.SUBJECT}}<span class="list-group-item-right">{{notice.REG_DT}}</span></a>
                             </div>
                         </div>
 
@@ -61,7 +54,8 @@
                                     프로젝트
                                     <span class="btn custom-btn-more"> <span ng-click="click_showProjectList();" class="glyphicon glyphicon-plus"></span> </span>
                                 </li>
-                                    <a href="#/project/{{project.NO}}" class="list-group-item list-group-item-blue" ng-repeat="project in projects">{{project.SUBJECT}}<span class="list-group-item-right">{{ project.PROJECT_ST == '0' ? '준비' : project.PROJECT_ST == '1' ? '진행' : '완료' }}</span></a>
+
+                                <a href="#/project/{{project.NO}}" class="list-group-item list-group-item-blue" ng-repeat="project in projects">{{project.SUBJECT}}<span class="list-group-item-right">{{ project.PROJECT_ST == '0' ? '준비' : project.PROJECT_ST == '1' ? '진행' : '완료' }}</span></a>
                             </div>
                         </div>
 

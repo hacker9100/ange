@@ -1,7 +1,7 @@
 <div class="panel panel-primary">
     <div class="panel-body" ng-model="search" lass="row">
 
-        <form role="form" name="listForm" class="form-horizontal">
+        <form role="form" name="list_from" class="form-horizontal">
             <div class="col-md-9">
                 <div class= "form-group">
                     <label class= "col-md-2"> 연도 </label>
@@ -36,7 +36,7 @@
                 <div class= "form-group">
                     <label class= "col-md-2"></label>
                     <div ng-model="search.CATEGORY" class="col-md-2 btn-group" ng-repeat="category in CATEGORY">
-                        <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                        <button type="button" ng-click="click_removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
                     </div>
                 </div>
                 <div class= "form-group">
@@ -51,11 +51,11 @@
             </div>
             <div class="col-md-pull-2">
                 <div class= "navbar-header" >
-                    <button class="btn btn-primary start" ng-click="searchTask();" ng-disabled="listForm.$invalid">
+                    <button class="btn btn-primary start" ng-click="click_searchTask();" ng-disabled="list_from.$invalid">
                         <i class="glyphicon glyphicon-search"></i>
                         <span>검색</span>
                     </button>
-                    <button class="btn btn-success fileinput-button" data-ng-click="createNewTask()">
+                    <button class="btn btn-success fileinput-button" data-ng-click="click_createNewTask()">
                         <i class="glyphicon glyphicon-plus"></i>
                         <span>등록</span>
                     </button>
@@ -73,7 +73,7 @@
 
 <!-- Task list -->
 <accordion close-others="oneAtATime">
-    <accordion-group is-open="status.open" ng-repeat="task in tasks">
+    <accordion-group is-open="status.open" ng-repeat="item in list">
 
         <!-- Task Head -->
         <accordion-heading style="clear:both; background-color:#000; padding:0;">
@@ -83,20 +83,20 @@
                         <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
                             <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">
                                 <span style="font-size:1.16em;">월간앙쥬</span><br />
-                                <span>[{{ task.PROJECT_NM }}]</span>
+                                <span>[{{ item.PROJECT_NM }}]</span>
                             </div>
                             <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">
-                                {{ task.SUBJECT }}
+                                {{ item.SUBJECT }}
                             </div>
                             <div class="col-lg-1 task-col-manager" style="height:100%; margin-top:8px; text-align:left;">
-                                {{ task.REG_NM }}
+                                {{ item.REG_NM }}
                             </div>
                             <div class="col-md-2 col-sm-3 col-lg-2 task-col-date" style="height:100%; text-align:center; vertical-align:middle;">
-                                <span style="color:#868686;">{{task.REG_DT}} 등록</span><br />
-                                <span style="color:#DE4612; font-weight:bold;">{{task.CLOSE_YMD}} 마감</span>
+                                <span style="color:#868686;">{{item.REG_DT}} 등록</span><br />
+                                <span style="color:#DE4612; font-weight:bold;">{{item.CLOSE_YMD}} 마감</span>
                             </div>
                             <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
-                                {{ task.PHASE == '0' ? '태스크등록' : task.PHASE == '10' ? '원고작성' : task.PHASE == '11' ? '원고승인대기' : task.PHASE == '20' ? '원고승인완료' : task.PHASE == '13' ? '원고반려' : task.PHASE == '21' ? '편집작성' : task.PHASE == '13' ? '편집반려' : '편집승인' }}
+                                {{ item.PHASE == '0' ? '태스크등록' : item.PHASE == '10' ? '원고작성' : item.PHASE == '11' ? '원고승인대기' : item.PHASE == '20' ? '원고승인완료' : item.PHASE == '13' ? '원고반려' : item.PHASE == '21' ? '편집작성' : item.PHASE == '13' ? '편집반려' : '편집승인' }}
                             </div>
                         </div>
 
@@ -112,40 +112,40 @@
                 <div class= "form-group">
                     <label class= "col-md-2">담당자</label>
                     <div class="col-md-4">
-                        {{ task.REG_NM }}
+                        {{ item.REG_NM }}
                     </div>
                 </div>
                 <div class= "form-group">
                     <label class= "col-md-2">생성일</label>
                     <div class="col-md-4">
-                        {{ task.REG_DT }}
+                        {{ item.REG_DT }}
                     </div>
                 </div>
                 <div class= "form-group">
                     <label class= "col-md-2">카테고리</label>
-                    <!--<pre>{{task.CATEGORY|json}}</pre>-->
-                    <div class="col-md-2 btn-group" ng-repeat="category in task.CATEGORY">
-                        <button type="button" ng-click="removeCategory($index)" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                    <!--<pre>{{item.CATEGORY|json}}</pre>-->
+                    <div class="col-md-2 btn-group" ng-repeat="category in item.CATEGORY">
+                        <button type="button" class="btn btn-default">{{category.CATEGORY_NM}}</button>
                     </div>
                 </div>
                 <div class= "form-group">
                     <label class= "col-md-2">태그</label>
                     <div class="col-md-4">
-                        {{ task.TAG }}
+                        {{ item.TAG }}
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary start" ng-click="getHistory(task.NO);">
+                    <button type="button" class="btn btn-primary start" ng-click="click_showGetHistory(item.NO);">
                         <i class="glyphicon glyphicon-pencil"></i>
                         <span>History</span>
                     </button>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary start" ng-click="editTask(task.NO);">
+                    <button type="button" class="btn btn-primary start" ng-click="click_showEditTask(item.NO);">
                         <i class="glyphicon glyphicon-pencil"></i>
                         <span>태스크 편집</span>
                     </button>
-                    <!--<button class="btn btn-success fileinput-button" data-ng-click="viewListTask(task.NO)">-->
+                    <!--<button class="btn btn-success fileinput-button" data-ng-click="viewListTask(item.NO)">-->
                     <!--<i class="glyphicon glyphicon-plus"></i>-->
                     <!--<span>편집보기</span>-->
                     <!--</button>-->
@@ -157,7 +157,7 @@
 </accordion>
 <!-- ////Contents Include -->
 
-<button type="button" class="btn btn-primary start" ng-click="select();">
+<button type="button" class="btn btn-primary start" ng-click="addTask();">
     <i class="glyphicon glyphicon-pencil"></i>
-    <span>추가..</span>
+    <span>더보기..</span>
 </button>

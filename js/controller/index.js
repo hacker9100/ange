@@ -32,6 +32,8 @@ define([
     '../../partials/cms/project_edit',
     '../../partials/cms/task_list',
     '../../partials/cms/task_edit',
+    '../../partials/cms/content_list',
+
     '../../partials/cms/article_list',
     '../../partials/cms/article_edit',
     '../../partials/cms/article_confirm_list',

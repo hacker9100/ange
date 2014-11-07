@@ -30,7 +30,7 @@
 
     switch ($_method) {
         case "GET":
-            if (isset($id)) {
+            if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
                             T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO
@@ -38,7 +38,7 @@
                             CMS_TASK T, CMS_PROJECT P
                         WHERE
                             T.PROJECT_NO = P.NO
-                            AND T.NO = ".$id."
+                            AND T.NO = ".$_key."
                         ";
 
                 $result = $_d->sql_query($sql);
@@ -51,21 +51,18 @@
                         WHERE
                             T.NO = CC.TARGET_NO
                             AND CC.CATEGORY_NO = C.NO
-                            AND T.NO = ".$id."
+                            AND T.NO = ".$_key."
                         ";
 
                 $category_data = $_d->getData($sql);
 
                 $data['CATEGORY'] = $category_data;
 
-                $_d->dataEnd2($data);
-
-//                $data = $_d->sql_query($sql);
-//                if ($_d->mysql_errno > 0) {
-//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                } else {
-//                    $_d->dataEnd($sql);
-//                }
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
             } else {
                 $where_search = "";
                 $from_category = "";
@@ -82,12 +79,12 @@
                     $where_search = "AND T.PHASE IN (".$in_str.") ";
                 }
 
-                MtUtil::_c("### [START]".$_page);
-                MtUtil::_c("### [START]".$_size);
-
-                if (isset($_page) && isset($_size)) {
-                    $limit_search .= "LIMIT ".($_page * $_size).", ".$_size;
+                if (isset($_page)) {
+                    $limit_search .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
+
+                MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".$_search);
+                MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".count($_search));
 
                 if (isset($_search) && count($_search) > 0) {
 /*
@@ -104,16 +101,16 @@
                         }
                     }
 */
-                    if (isset($_search[YEAR]) && $_search[YEAR] != 'null') {
+                    if (isset($_search[YEAR]) && $_search[YEAR] != "") {
                         $where_search .= "AND P.YEAR  = '".$_search[YEAR]."' ";
                     }
-                    if (isset($_search[PROJECT]) && $_search[PROJECT] != 'null') {
+                    if (isset($_search[PROJECT]) && $_search[PROJECT] != "") {
                         $where_search .= "AND P.NO  = '".$_search[PROJECT][NO]."' ";
                     }
-                    if (isset($_search[KEYWORD])) {
+                    if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                         $where_search .= "AND T.".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
                     }
-                    if (isset($_search[CATEGORY])) {
+                    if (isset($_search[CATEGORY]) && $_search[CATEGORY] != "") {
                         $where_category = "";
                         for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
                             $category = $_search[CATEGORY][$i];
@@ -186,42 +183,37 @@
                 $_d->sql_free_result($result);
                 $data = $__trn->{'rows'};
 
-                $_d->dataEnd2($data);
-
-//                $_d->dataEnd($sql);
-
-//                $data = $_d->sql_query($sql);
-//                if ($_d->mysql_errno > 0) {
-//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                } else {
-//                    $_d->dataEnd($sql);
-//                }
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
             }
 
             break;
 
         case "POST":
-            $form = json_decode(file_get_contents("php://input"),true);
+//            $form = json_decode(file_get_contents("php://input"),true);
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($form[SUBJECT]) == "" ) {
+            if ( trim($_model[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
             }
 
-            if ( trim($form[PHASE]) == "" ) {
-                $form[PHASE] = '0';
+            if ( trim($_model[PHASE]) == "" ) {
+                $_model[PHASE] = '0';
             }
 
             $project_no = 0;
             $project_st = '1';
 
-            if ( trim($form[PROJECT_NO]) != "" ) {
-                $project_no = $form[PROJECT_NO];
+            if ( trim($_model[PROJECT_NO]) != "" ) {
+                $project_no = $_model[PROJECT_NO];
             }
 
-            if (count($form[PROJECT]) > 0) {
-                $project = $form[PROJECT];
+            if (count($_model[PROJECT]) > 0) {
+                $project = $_model[PROJECT];
                 $project_no = $project[NO];
                 $project_st = $project[PROJECT_ST];
             }
@@ -243,25 +235,25 @@
                         ,TAG
                         ,NOTE
                     ) VALUES (
-                        '".$form[PHASE]."'
-                        ,'".$form[SUBJECT]."'
-                        ,'".$form[EDITOR_ID]."'
+                        '".$_model[PHASE]."'
+                        ,'".$_model[SUBJECT]."'
+                        ,'".$_model[EDITOR_ID]."'
                         ,'".$_SESSION['uid']."'
                         ,'".$_SESSION['name']."'
                         ,SYSDATE()
-                        ,'".$form[CLOSE_YMD]."'
+                        ,'".$_model[CLOSE_YMD]."'
                         ,".$project_no."
-                        ,'".$form[TAG]."'
-                        ,'".$form[NOTE]."'
+                        ,'".$_model[TAG]."'
+                        ,'".$_model[NOTE]."'
                     )";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if (count($form[CATEGORY]) > 0) {
-                $categories = $form[CATEGORY];
+            if (count($_model[CATEGORY]) > 0) {
+                $categories = $_model[CATEGORY];
 
-                for ($i = 0 ; $i < count($form[CATEGORY]); $i++) {
+                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
                     $category = $categories[$i];
 
                     $sql = "INSERT INTO CONTENT_CATEGORY
@@ -279,12 +271,12 @@
                 }
             }
 
-            if (!empty($form[NO]) && $form[PHASE] > 0) {
+            if (!empty($_model[NO]) && $_model[PHASE] > 0) {
                 $sql = "UPDATE CONTENT
                         SET
                             CURRENT_FL = '1'
                         WHERE
-                            NO = ".$form[NO]."
+                            NO = ".$_model[NO]."
                         ";
 
                 $_d->sql_query($sql);
@@ -312,11 +304,11 @@
             break;
 
         case "PUT":
-            if (!isset($id)) {
-                $_d->failEnd("수정실패입니다:"."ID가 누락되었습니다.");
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $form = json_decode(file_get_contents("php://input"),true);
+//            $form = json_decode(file_get_contents("php://input"),true);
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
@@ -325,7 +317,7 @@
                         SET
                             PHASE = '".$_phase."'
                         WHERE
-                            NO = ".$id."
+                            NO = ".$_key."
                         ";
 
                 $_d->sql_query($sql);
@@ -340,52 +332,52 @@
 
                 $_d->sql_beginTransaction();
 
-                if ( trim($form[PHASE]) == "" ) {
-                    $form[PHASE] = '0';
+                if ( trim($_model[PHASE]) == "" ) {
+                    $_model[PHASE] = '0';
                 }
 
                 $project_no = 0;
                 $project_st = '1';
 
-                if ( trim($form[PROJECT_NO]) != "" ) {
-                    $project_no = $form[PROJECT_NO];
+                if ( trim($_model[PROJECT_NO]) != "" ) {
+                    $project_no = $_model[PROJECT_NO];
                 }
 
-                if (count($form[PROJECT]) > 0) {
-                    $project = $form[PROJECT];
+                if (count($_model[PROJECT]) > 0) {
+                    $project = $_model[PROJECT];
                     $project_no = $project[NO];
                     $project_st = $project[PROJECT_ST];
                 }
 
                 $sql = "UPDATE CMS_TASK
                         SET
-                            PHASE = '".$form[PHASE]."'
-                            ,SUBJECT = '".$form[SUBJECT]."'
-                            ,EDITOR_ID = '".$form[EDITOR_ID]."'
+                            PHASE = '".$_model[PHASE]."'
+                            ,SUBJECT = '".$_model[SUBJECT]."'
+                            ,EDITOR_ID = '".$_model[EDITOR_ID]."'
                             ,REG_UID = '".$_SESSION['uid']."'
                             ,REG_NM = '".$_SESSION['name']."'
-                            ,CLOSE_YMD = '".$form[CLOSE_YMD]."'
+                            ,CLOSE_YMD = '".$_model[CLOSE_YMD]."'
                             ,PROJECT_NO = ".$project_no."
-                            ,TAG = '".$form[TAG]."'
-                            ,NOTE = '".$form[NOTE]."'
+                            ,TAG = '".$_model[TAG]."'
+                            ,NOTE = '".$_model[NOTE]."'
                         WHERE
-                            NO = ".$id."
+                            NO = ".$_key."
                         ";
 
                 $_d->sql_query($sql);
 
-                if (count($form[CATEGORY]) > 0) {
+                if (count($_model[CATEGORY]) > 0) {
 
                     $sql = "DELETE FROM CONTENT_CATEGORY
                             WHERE
-                                TARGET_NO = ".$id."
+                                TARGET_NO = ".$_key."
                             ";
 
                     $_d->sql_query($sql);
 
-                    $categories = $form[CATEGORY];
+                    $categories = $_model[CATEGORY];
 
-                    for ($i = 0 ; $i < count($form[CATEGORY]); $i++) {
+                    for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
                         $category = $categories[$i];
 
                         $sql = "INSERT INTO CONTENT_CATEGORY
@@ -395,7 +387,7 @@
                                     ,TARGET_GB
                                 ) VALUES (
                                     '".$category[NO]."'
-                                    , '".$id."'
+                                    , '".$_key."'
                                     , 'T'
                                 )";
 
@@ -412,22 +404,14 @@
                 }
             }
 
-//            $_d->sql_query($sql);
-//            $no = $_d->mysql_insert_id;
-//            if ($_d->mysql_errno > 0) {
-//                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-//            } else {
-//                $_d->succEnd($no);
-//            }
-
             break;
 
         case "DELETE":
-            if (!isset($id)) {
-                $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $sql = "DELETE FROM CMS_TASK WHERE NO = ".$id;
+            $sql = "DELETE FROM CMS_TASK WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

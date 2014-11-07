@@ -35,11 +35,11 @@ define([
         };
 
         // 수정 화면 이동
-        $scope.click_showEditCmsBoard = function (no) {
-            $location.url('/webboard/'+no);
+        $scope.click_showEditCmsBoard = function (key) {
+            $location.url('/webboard/'+key);
         };
 
-        // 삭제 버튼
+        // 삭제 버튼 클릭
         $scope.click_deleteCmsBoard = function (idx) {
             var board = $scope.list[idx];
 
@@ -54,7 +54,7 @@ define([
             });
         };
 
-        // 검색 버튼
+        // 검색 버튼 클릭
         $scope.click_searchCmsBoard = function () {
             $scope.getCmsBoardList($scope.search);
         }

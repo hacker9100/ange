@@ -7,6 +7,15 @@
     <div ng-model="item" lass="row">
         <form role="form" name="edit_form" class="form-horizontal">
             <div class= "form-group">
+                <label class= "col-md-2">머리말</label>
+                <div class="col-md-3">
+                    <select ng-model="item.HEAD" class= "form-control" placeholder="등록년">
+                        <option name="head" value="">- 머리말 선택</option>
+                        <option name="head" value="NOTICE">공지사항</option>
+                    </select>
+                </div>
+            </div>
+            <div class= "form-group">
                 <label class= "col-md-2">제목</label>
                 <div class="col-md-9">
                     <input ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder= "제목"/>

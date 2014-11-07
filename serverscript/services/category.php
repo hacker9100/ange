@@ -62,7 +62,7 @@
                             CASE C.PARENT_NO WHEN 0 THEN C.CATEGORY_NM ELSE (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = C.PARENT_NO) END AS PARENT_NM,
                             C.CATEGORY_GB, C.CATEGORY_ST, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT, C.NOTE
                         FROM
-                            CMS_CATEGORY C
+                            CMS_CATEGOR C
                         WHERE
                             1=1
                             ".$where_search."

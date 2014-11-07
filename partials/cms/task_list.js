@@ -11,125 +11,147 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_list', ['$scope', '$stateParams', 'projectService', 'taskService', '$location', function ($scope, $stateParams, projectService, taskService, $location) {
+    controllers.controller('task_list', ['$scope', '$stateParams', 'dataService', '$q', '$location', function ($scope, $stateParams, dataService, $q, $location) {
 
         /********** 초기화 **********/
-        // 검색 조건
-        $scope.search = [];
-        // 카테고리 선택 항목
-        $scope.CATEGORY = [];
-
         // 목록 데이터
-        var tasksData = [];
+        $scope.listData = [];
+        // 검색 조건
+        $scope.search = {};
+        // 선택 카테고리
+        $scope.CATEGORY = [];
+        // 카테고리 데이터
+        $scope.category = [];
 
-        var category = [
-            {"NO": 0, "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신준비", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
-            {"NO": 1, "CATEGORY_B": "002", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신초기", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
-            {"NO": 2, "CATEGORY_B": "003", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "임신중기", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
-            {"NO": 3, "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "건강", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": 4, "CATEGORY_B": "002", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "음식", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": 5, "CATEGORY_B": "003", "CATEGORY_M": "", "CATEGORY_S": "", "DEPTH": "1", "CATEGORY_NM": "놀이", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": 6, "CATEGORY_B": "001", "CATEGORY_M": "001", "CATEGORY_S": "", "DEPTH": "2", "CATEGORY_NM": "검사", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": 7, "CATEGORY_B": "001", "CATEGORY_M": "002", "CATEGORY_S": "", "DEPTH": "2", "CATEGORY_NM": "운동", "CATEGORY_GB": "2", "CATEGORY_ST": "0"}
-        ];
-
-        $scope.$watch('CATEGORY_M', function(data) {
-            var category_s = [];
-
-            if (data != undefined) {
-                for (var i in category) {
-                    var item = category[i];
-                    if (item.CATEGORY_B == data.CATEGORY_B && item.CATEGORY_GB == '2' && item.CATEGORY_M != "") {
-                        category_s.push(item);
-                    }
-                }
-
-                $scope.category_s = category_s;
-            }
-        });
-
-        $scope.removeCategory = function(idx) {
-            $scope.CATEGORY.splice(idx, 1);
-        }
+        // 카테고리 선택 콤보박스 설정
+        $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
 
         // 날짜 콤보박스
         var year = [];
         var now = new Date();
         var nowYear = now.getFullYear();
 
-        var project = [];
-
         // 초기화
         $scope.initList = function() {
+            var deferred = $q.defer();
+
             $scope.oneAtATime = true;
 
             for (var i = nowYear - 5; i < nowYear + 5; i++) {
                 year.push(i+'');
             }
 
-            projectService.getProjectOptions().then(function(projects){
-                project = projects.data;
+            // 카테고리 목록 조회
+            dataService.db('category').find({},{},function(data, status){
+                if (status != 200) {
+                    deferred.reject('카테고리 조회에 실패 했습니다.');
+                } else {
+                    if (angular.isObject(data)) {
+                        if (!data.err) {
 
-                $scope.projects = projects.data;
+                            $scope.category = data;
 
-                if ($scope.projects != null) {
-                    $scope.search.PROJECT = $scope.projects[0];
-                }
-            }, function(error) {
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-            });
+                            var category_a = [];
+                            var category_b = [];
 
-            // 카테고리
-            $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
+                            for (var i in data) {
+                                var item = data[i];
 
-            if (category != null) {
-                var category_a = [];
-                var category_b = [];
+                                if (item.CATEGORY_GB == '1') {
+                                    category_a.push(item);
+                                } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
+                                    category_b.push(item);
+                                }
+                            }
 
-                for (var i in category) {
-                    var item = category[i];
+                            $scope.category_a = category_a;
+                            $scope.category_b = category_b;
 
-                    if (item.CATEGORY_GB == '1') {
-//                    category_a.push({id: item.NO, label: item.CATEGORY_NM});
-                        category_a.push(item);
-                    } else if (item.CATEGORY_GB == '2' && item.CATEGORY_M == "") {
-                        category_b.push(item);
+                            deferred.resolve();
+                        } else {
+                            deferred.reject(data);
+                        }
+                    } else {
+                        // TODO: 데이터가 없을 경우 처리
+                        deferred.reject("카테고리 데이터가 없습니다.");
                     }
                 }
-
-                $scope.category_a = category_a;
-                $scope.category_b = category_b;
-            }
+            });
 
             // 검색어
             var order = [{name: "기자", value: "EDITOR_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
             $scope.years = year;
-            $scope.projects = project;
             $scope.order = order;
             $scope.search.YEAR = nowYear+'';
-            $scope.search.PROJECT = project[0];
             $scope.search.ORDER = order[0];
+
+            deferred.promise;
         };
 
-        /********** 목록 조회 이벤트 **********/
-        // 등록 화면 이동
-        $scope.createNewTask = function () {
+        /********** 이벤트 **********/
+        // 카테고리 주제 대분류 선택
+        $scope.$watch('CATEGORY_M', function(data) {
+            var category_s = [];
+
+            if (data != undefined) {
+                for (var i in $scope.category) {
+                    var item = $scope.category[i];
+
+                    if (item.PARENT_NO == data.NO && item.CATEGORY_GB == '2' && item.PARENT_NO != '0') {
+
+                        category_s.push(item);
+                    }
+                }
+            }
+
+            $scope.category_s = category_s;
+        });
+
+        // 추가된 카테고리 클릭
+        $scope.click_removeCategory = function(idx) {
+            $scope.CATEGORY.splice(idx, 1);
+        }
+
+        // 연도 변경 선택
+        $scope.$watch('search.YEAR', function (data) {
+            if (data != null) {
+                dataService.db('project').find({},{YEAR: data},function(data, status){
+                    if (status != 200) {
+                        alert('조회에 실패 했습니다.');
+                    } else {
+                        if (angular.isObject(data)) {
+                            if (data.err == true) {
+                                alert(data.msg);
+                            } else {
+                                $scope.projects = data;
+                            }
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            alert("조회 데이터가 없습니다.");
+                        }
+                    }
+                });
+            }
+        });
+
+        // 등록 버튼 클릭
+        $scope.click_createNewTask = function () {
             $location.url('/task/0');
         };
 
         // 수정 화면 이동
-        $scope.editTask = function (no) {
+        $scope.click_showEditTask = function (no) {
             $location.url('/task/'+no);
         };
 
-        // 이력 조회
-        $scope.showHistory = function (no) {
+        // 이력조회 버튼 클릭
+        $scope.click_showGetHistory = function (no) {
             alert("준비중입니다.")
         };
 
-        // 삭제
-        $scope.deleteTask = function (idx) {
+        // 삭제 버튼 클릭
+        $scope.click_deleteTask = function (idx) {
 
             var task = $scope.tasks[idx];
 
@@ -138,97 +160,87 @@ define([
                 return;
             }
 
-            taskService.deleteTask(task.NO).then(function(data){
-                $scope.getListTasks();
-            }, function(error) {
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
+            dataService.db('task').remove(task.NO,function(data, status){
+                if (status != 200) {
+                    alert('프로젝트 목록 조회에 실패 했습니다.');
+                } else {
+                    if (data.err == true) {
+                        alert(data.msg);
+                    } else {
+                        alert("삭제 되었습니다.");
+                        // TODO: 삭제 후 처리.
+                    }
+                }
             });
         };
 
-        $scope.tasks = [];
+        $scope.list = [];
         $scope.pageNo = 0;
         $scope.pageSize = 4;
         $scope.perCnt = 0;
         $scope.perSize = 2;
         $scope.totalCnt = 0;
 
-        // 검색
-        $scope.searchTask = function() {
-            $scope.pageNo = 0;
-            tasksData = [];
-            $scope.tasks = [];
-//            var search = [];
-//
-//            search.CATEGORY = $scope.CATEGORY;
-//            search.push('YEAR/'+$scope.search.YEAR);
-//            search.push('PROJECT_N0/'+$scope.search.PROJECT.NO);
-//            search.push($scope.search.ORDER.value+'/'+$scope.search.KEYWORD);
-//            search.push('CATEGORY/'+$scope.CATEGORY);
-            $scope.search.CATEGORY = $scope.CATEGORY;
-            $location.search('_search', $scope.search);
+        // 검색 버튼 클릭
+        $scope.click_searchTask = function() {
+            $scope.list = [];
+            $scope.listData = [];
 
-            $scope.getTaskList();
+            $scope.pageNo = 0;
+            $scope.perCnt = 0;
+
+            $scope.search.CATEGORY = $scope.CATEGORY;
+            $scope.getTaskList($scope.search);
         };
 
         // 태스크 목록 조회
-        $scope.getTaskList = function () {
+        $scope.getTaskList = function (search) {
             $scope.isLoading = true;
 
-            $location.search('_page', $scope.pageNo)
-            $location.search('_size', $scope.pageSize);
-
-            taskService.getTasks().then(function(results){
-                $scope.totalCnt = results.data[0].TOTAL_COUNT;
-                angular.forEach(results.data, function(model) {
-                    tasksData.push(model);
-                });
-
-//                tasksData.push(results.data);
-                if ($scope.tasks.length == 0) {
-                    $scope.tasks = tasksData.slice($scope.perCnt, $scope.perSize);
-//                    $scope.tasks = results.data;
+            dataService.db('task').find({NO:$scope.pageNo, SIZE:$scope.pageSize},search,function(data, status){
+                if (status != 200) {
+                    alert('태스크 목록 조회에 실패 했습니다.');
                 } else {
-//                    angular.forEach(results.data, function(model) {
-//                        $scope.tasks.push(model);
-//                    });
+                    if (angular.isObject(data)) {
+                        if (data.err == true) {
+                            alert(data.msg);
+                        } else {
+                            $scope.totalCnt = data[0].TOTAL_COUNT;
+                            angular.forEach(data, function(model) {
+                                $scope.listData.push(model);
+                            });
+
+                            if ($scope.list.length == 0) {
+                                $scope.list = $scope.listData.slice($scope.perCnt, $scope.perSize);
+                            }
+                        }
+                    } else {
+                        // TODO: 데이터가 없을 경우 처리
+                        alert("태스크 목록 데이터가 없습니다.");
+                    }
                 }
 
-//                if (tasksData != null) {
-//                    $scope.totalItems = results.data[0].TOTAL_COUNT; // 총 아이템 수
-//                    $scope.currentPage = 1; // 현재 페이지
-//                }
                 $scope.isLoading = false;
-//                for (var prop in $location.search())
-//                    $location.search(prop, null);
             });
         };
 
         $scope.$watch('perCnt', function() {
-            if ( $scope.perCnt >= $scope.tasks.length) {
-                angular.forEach(tasksData.slice($scope.perCnt, $scope.perCnt + $scope.perSize), function(model) {
-                    $scope.tasks.push(model);
+            if ( $scope.perCnt >= $scope.list.length) {
+                angular.forEach($scope.listData.slice($scope.perCnt, $scope.perCnt + $scope.perSize), function(model) {
+                    $scope.list.push(model);
                 });
             }
         });
 
-//        $scope.$watch('totalCnt', function() {
-//
-//        });
-
-        $scope.select = function () {
+        $scope.addTask = function () {
             $scope.perCnt += $scope.perSize;
-
-            alert($scope.totalCnt + ", " + $scope.perCnt);
-
 
             if ($scope.perCnt >= $scope.totalCnt) return;
 
-            if ($scope.perCnt + $scope.perSize >= tasksData.length) {
+            if ($scope.perCnt + $scope.perSize >= $scope.listData.length) {
                 $scope.pageNo++;
                 $scope.getTaskList();
             }
-//            $scope.getTaskList();
-//            $scope.tasks.push(tasksData[1]);
         };
 
         /********** 화면 초기화 **********/

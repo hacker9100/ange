@@ -12,88 +12,145 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_edit', ['$scope', '$stateParams', 'projectService', 'taskService', '$q', '$location', function ($scope, $stateParams, projectService, taskService, $q, $location) {
-
-        var category = [
-            {"NO": "0", "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "임신준비", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
-            {"NO": "1", "CATEGORY_B": "002", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "임신초기", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
-            {"NO": "2", "CATEGORY_B": "003", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "임신중기", "CATEGORY_GB": "1", "CATEGORY_ST": "0"},
-            {"NO": "3", "CATEGORY_B": "001", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "건강", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": "4", "CATEGORY_B": "002", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "음식", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": "5", "CATEGORY_B": "003", "CATEGORY_M": "", "CATEGORY_S": "", "CATEGORY_NM": "놀이", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": "6", "CATEGORY_B": "001", "CATEGORY_M": "001", "CATEGORY_S": "", "CATEGORY_NM": "검사", "CATEGORY_GB": "2", "CATEGORY_ST": "0"},
-            {"NO": "7", "CATEGORY_B": "001", "CATEGORY_M": "002", "CATEGORY_S": "", "CATEGORY_NM": "운동", "CATEGORY_GB": "2", "CATEGORY_ST": "0"}
-        ];
-
-        $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
-
-        $scope.CATEGORY = [];
-
-        $scope.$watch('CATEGORY_M', function(data) {
-            var category_s = [];
-
-            if (data != undefined) {
-                for (var i in category) {
-                    var item = category[i];
-
-                    if (item.CATEGORY_B == data.CATEGORY_B && item.CATEGORY_GB == '2' && item.CATEGORY_M != "") {
-                        category_s.push(item);
-                    }
-                }
-            }
-
-            $scope.category_s = category_s;
-        });
-
-        $scope.removeCategory = function(idx) {
-            $scope.CATEGORY.splice(idx, 1);
-        }
+    controllers.controller('task_edit', ['$scope', '$stateParams', 'dataService', '$q', '$location', function ($scope, $stateParams, dataService, $q, $location) {
 
         /********** 초기화 **********/
-        $scope.task = {};
+        // 태스크 모델 초기화
+        $scope.item = {};
+        // 선택 카테고리
+        $scope.CATEGORY = [];
+        // 카테고리 데이터
+        $scope.category = [];
+
+        // 카테고리 선택 콤보박스 설정
+        $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
 
         // 초기화
         $scope.initEdit = function() {
             var deferred = $q.defer();
-            projectService.getProjectOptions().then(function(results){
-                deferred.resolve(results);
-                $scope.projects = results.data;
 
-                if ($scope.projects != null) {
-                    $scope.task.PROJECT = $scope.projects[0];
-                }
-            }, function(error) {
-                deferred.reject(error);
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-            });
+            $q.all([
+                dataService.db('project').find({},{},null),
+                dataService.db('category').find({},{},null)
+                ])
+                .then( function(results) {
 
-            if (category != null) {
-                var category_a = [];
-                var category_b = [];
+                    if (results.length > 1) {
+                        if (results[0].status != 200) {
+                            deferred.reject('프로젝트 조회에 실패 했습니다.');
+                        } else {
+                            if (angular.isObject(results[0].data)) {
+                                if (!results[0].err) {
+                                    $scope.projects = results[0].data;
+                                } else {
+                                    deferred.reject(results[0].msg);
+                                }
+                            } else {
+                                // TODO: 데이터가 없을 경우 처리
+                                deferred.reject("프로젝트 데이터가 없습니다.");
+                            }
+                        }
 
-                for (var i in category) {
-                    var item = category[i];
+                        if (results[1].status != 200) {
+                            deferred.reject('카테고리 조회에 실패 했습니다.');
+                        } else {
+                            if (angular.isObject(results[1].data)) {
+                                if (!results[1].err) {
 
-                    if (item.CATEGORY_GB == '1') {
-//                    category_a.push({id: item.NO, label: item.CATEGORY_NM});
-                        category_a.push(item);
-                    } else if (item.CATEGORY_GB == '2' && item.CATEGORY_M == "") {
-                        category_b.push(item);
+                                    $scope.category = results[1].data;
+
+                                    var category_a = [];
+                                    var category_b = [];
+
+                                    for (var i in results[1].data) {
+                                        var item = results[1].data[i];
+
+                                        if (item.CATEGORY_GB == '1') {
+                                            category_a.push(item);
+                                        } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
+                                            category_b.push(item);
+                                        }
+                                    }
+
+                                    $scope.category_a = category_a;
+                                    $scope.category_b = category_b;
+                                } else {
+                                    deferred.reject(results[1].msg);
+                                }
+                            } else {
+                                // TODO: 데이터가 없을 경우 처리
+                                deferred.reject("카테고리 데이터가 없습니다.");
+                            }
+                        }
+
+                        deferred.resolve();
                     }
-                }
+                },function(error) {
+                    deferred.reject(error);
+                });
 
-                $scope.category_a = category_a;
-                $scope.category_b = category_b;
-            }
+//            dataService.db('project').find({},{},function(data, status){
+//                if (status != 200) {
+//                    deferred.reject('프로젝트 조회에 실패 했습니다.');
+//                } else {
+//                    if (angular.isObject(data)) {
+//                        if (!data.err) {
+//                            $scope.projects = data;
+//                        } else {
+//                            deferred.reject(data);
+//                        }
+//                    } else {
+//                        // TODO: 데이터가 없을 경우 처리
+//                        deferred.reject("프로젝트 데이터가 없습니다.");
+//                    }
+//                }
+//            });
+//
+//            // 카테고리 목록 조회
+//            dataService.db('category').find({},{},function(data, status){
+//                if (status != 200) {
+//                    deferred.reject('카테고리 조회에 실패 했습니다.');
+//                } else {
+//                    if (angular.isObject(data)) {
+//                        if (!data.err) {
+//
+//                            $scope.category = data;
+//
+//                            var category_a = [];
+//                            var category_b = [];
+//
+//                            for (var i in data) {
+//                                var item = data[i];
+//
+//                                if (item.CATEGORY_GB == '1') {
+//                                    category_a.push(item);
+//                                } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
+//                                    category_b.push(item);
+//                                }
+//                            }
+//
+//                            $scope.category_a = category_a;
+//                            $scope.category_b = category_b;
+//
+//                            deferred.resolve();
+//                        } else {
+//                            deferred.reject(data);
+//                        }
+//                    } else {
+//                        // TODO: 데이터가 없을 경우 처리
+//                        deferred.reject("카테고리 데이터가 없습니다.");
+//                    }
+//                }
+//            });
 
             // ui bootstrap 달력
             $scope.today = function() {
-                $scope.task.CLOSE_YMD = new Date();
+                $scope.item.CLOSE_YMD = new Date();
             };
             $scope.today();
 
             $scope.clear = function () {
-                $scope.task.CLOSE_YMD = null;
+                $scope.item.CLOSE_YMD = null;
             };
 
             $scope.open = function($event) {
@@ -107,48 +164,91 @@ define([
         };
 
         /********** 이벤트 **********/
+        // 카테고리 주제 대분류 선택
+        $scope.$watch('CATEGORY_M', function(data) {
+            var category_s = [];
+
+            if (data != undefined) {
+                for (var i in $scope.category) {
+                    var item = $scope.category[i];
+
+                    if (item.PARENT_NO == data.NO && item.CATEGORY_GB == '2' && item.PARENT_NO != '0') {
+                        category_s.push(item);
+                    }
+                }
+            }
+
+            $scope.category_s = category_s;
+        });
+
+        // 추가된 카테고리 클릭
+        $scope.click_removeCategory = function(idx) {
+            $scope.CATEGORY.splice(idx, 1);
+        }
+
         // 태스크 목록 이동
-        $scope.showTaskList = function () {
+        $scope.click_showTaskList = function () {
             $location.path('/task');
         };
 
         // 태스크 조회
         $scope.getTask = function () {
             var deferred = $q.defer();
-            taskService.getTask($stateParams.id).then(function(result){
-                deferred.resolve(result);
-                $scope.task = result.data;
-                $scope.CATEGORY = angular.fromJson(result.data.CATEGORY);
 
-                for (var i = 0; i < $scope.projects.length; i++) {
-                    var project_nm = $scope.projects[i].SUBJECT;
-                    if (project_nm == result.data.PROJECT_NM)
-                        $scope.task.PROJECT = $scope.projects[i];
+            dataService.db('task').findOne($stateParams.id,{},function(data, status){
+                if (status != 200) {
+                    deferred.reject('태스크 조회에 실패 했습니다.');
+                } else {
+                    if (angular.isObject(data)) {
+                        if (!data.err) {
+                            $scope.item = data;
+                            $scope.CATEGORY = angular.fromJson(data.CATEGORY);
+
+                            angular.forEach($scope.projects,function(value, idx){
+                                if(value.NO == data.PROJECT_NO);
+                                $scope.item.PROJECT = $scope.projects[idx];
+                                return;
+                            });
+
+                            deferred.resolve();
+                        } else {
+                            deferred.reject(data);
+                        }
+                    } else {
+                        // TODO: 데이터가 없을 경우 처리
+                        deferred.reject("태스크 데이터가 없습니다.");
+                    }
                 }
-            }, function(error) {
-                deferred.reject(error);
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
 
             return deferred.promise;
         };
 
-        // 태스크 등록/수정
-        $scope.saveTask = function () {
-            var id = ($stateParams.id) ? parseInt($stateParams.id) : 0;
-
-            if (id <= 0) {
-                taskService.createTask($scope.task).then(function(data){
-                    $location.path('/task');
-                }, function(error) {
-                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
+        // 태스크 저장 버튼 클릭
+        $scope.click_saveTask = function () {
+            if ($stateParams.id == 0) {
+                dataService.db('task').insert($scope.item,function(data, status){
+                    if (status != 200) {
+                        alert('태스크 등록에 실패 했습니다.');
+                    } else {
+                        if (!data.err) {
+                            $location.url('/task');
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
                 });
-            }
-            else {
-                taskService.updateTask(id, $scope.task).then(function(data){
-                    $location.path('/task');
-                }, function(error) {
-                    alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
+            } else {
+                dataService.db('task').update($stateParams.id,$scope.item,function(data, status){
+                    if (status != 200) {
+                        alert('태스크 수정에 실패 했습니다.');
+                    } else {
+                        if (!data.err) {
+                            $location.url('/task');
+                        } else {
+                            alert(data.msg);
+                        }
+                    }
                 });
             }
         };

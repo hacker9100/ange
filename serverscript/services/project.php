@@ -32,7 +32,7 @@
         case "GET":
             if (isset($_key) && $_key != "") {
                 $sql = "SELECT
-                            NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST, NOTE
+                            NO, YEAR, SERIES_NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST, NOTE
                         FROM
                             CMS_PROJECT
                         WHERE
@@ -41,6 +41,18 @@
 
                 $result = $_d->sql_query($sql);
                 $data = $_d->sql_fetch_array($result);
+
+                $sql = "SELECT
+                            NO, SERIES_NM, SERIES_GB, SERIES_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NOTE
+                        FROM
+                            CMS_SERIES
+                        WHERE
+                            NO = ".$data[SERIES_NO]."
+                        ";
+
+                $result = $_d->sql_query($sql);
+                $series_data = $_d->sql_fetch_array($result);
+                $data['SERIES'] = $series_data;
 
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
@@ -53,7 +65,6 @@
                         ";
 
                 $file_data = $_d->getData($sql);
-
                 $data['FILE'] = $file_data;
 
                 if ($_d->mysql_errno > 0) {
@@ -87,24 +98,23 @@
                     }
 
                     if (isset($_page)) {
-                        $limit_search .= "LIMIT ".($_page[no] * $_page[size]).", ".$_page[size];
+                        $limit_search .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                     }
 
                     if (isset($_search[YEAR]) && $_search[YEAR] != "") {
                         $where_search .= "AND YEAR  = '".$_search[YEAR]."' ";
                     }
-
                     if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                        $where_search .= "AND T.".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                        $where_search .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
                     }
 
                     $sql = "SELECT
                                 TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                                NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST
+                                NO, YEAR, (SELECT SERIES_NM FROM CMS_SERIES WHERE NO = DATA.SERIES_NO) AS SERIES_NM, SERIES_NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST
                             FROM
                             (
                                 SELECT
-                                    NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, REG_DT, PROJECT_ST
+                                    NO, YEAR, SERIES_NO, SUBJECT, REG_UID, REG_NM, REG_DT, PROJECT_ST
                                 FROM
                                     CMS_PROJECT
                                 WHERE
@@ -137,7 +147,7 @@
             break;
 
         case "POST":
-            $form = json_decode(file_get_contents("php://input"),true);
+//            $form = json_decode(file_get_contents("php://input"),true);
 /*
             $upload_path = '../upload/';
             $source_path = '../../../';
@@ -158,20 +168,20 @@
 */
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($form[SUBJECT]) == "" ) {
+            if ( trim($_model[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
             }
 
-            if ( trim($form[PROJECT_ST]) == "" ) {
-                $form[PROJECT_ST] = '0';
+            if ( trim($_model[PROJECT_ST]) == "" ) {
+                $_model[PROJECT_ST] = '0';
             }
 
             $_d->sql_beginTransaction();
 
             $sql = "INSERT INTO CMS_PROJECT
                     (
-                        YEAR
-                        ,MONTH
+                        SERIES_NO
+                        ,YEAR
                         ,SUBJECT
                         ,REG_UID
                         ,REG_NM
@@ -179,21 +189,21 @@
                         ,PROJECT_ST
                         ,NOTE
                     ) VALUES (
-                        '".$form[YEAR]."'
-                        ,'".$form[MONTH]."'
-                        ,'".$form[SUBJECT]."'
+                        '".$_model[SERIES][NO]."'
+                        ,'".$_model[YEAR]."'
+                        ,'".$_model[SUBJECT]."'
                         ,'".$_SESSION['uid']."'
                         ,'".$_SESSION['name']."'
                         ,SYSDATE()
-                        ,'".$form[PROJECT_ST]."'
-                        ,'".$form[NOTE]."'
+                        ,'".$_model[PROJECT_ST]."'
+                        ,'".$_model[NOTE]."'
                     )";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if (isset($form[FILE])) {
-                $file = $form[FILE];
+            if (isset($_model[FILE])) {
+                $file = $_model[FILE];
 
                 MtUtil::_c("------------>>>>> file : ".$file['name']);
 
@@ -324,36 +334,38 @@
             break;
 
         case "PUT":
-            if (!isset($id)) {
-                $_d->failEnd("수정실패입니다:"."ID가 누락되었습니다.");
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $form = json_decode(file_get_contents("php://input"),true);
+//            $form = json_decode(file_get_contents("php://input"),true);
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($form[SUBJECT]) == "" ) {
+            if ( trim($_model[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
             }
 
+            $_d->sql_beginTransaction();
+
             $sql = "UPDATE CMS_PROJECT
                     SET
-                        YEAR = '".$form[YEAR]."'
-                        ,MONTH = '".$form[MONTH]."'
-                        ,SUBJECT = '".$form[SUBJECT]."'
+                        SERIES_NO = '".$_model[SERIES][NO]."'
+                        ,YEAR = '".$_model[YEAR]."'
+                        ,SUBJECT = '".$_model[SUBJECT]."'
                         ,REG_UID = '".$_SESSION['uid']."'
                         ,REG_NM = '".$_SESSION['name']."'
-                        ,PROJECT_ST = '".( $form[PROJECT_ST] == true ? "3" : $form[PROJECT_ST] )."'
-                        ,NOTE = '".$form[NOTE]."'
+                        ,PROJECT_ST = '".( $_model[PROJECT_ST] == true ? "3" : $_model[PROJECT_ST] )."'
+                        ,NOTE = '".$_model[NOTE]."'
                     WHERE
-                        NO = ".$id."
+                        NO = ".$_key."
                     ";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if (isset($form[FILE])) {
-                $file = $form[FILE];
+            if (isset($_model[FILE])) {
+                $file = $_model[FILE];
 
                 MtUtil::_c("------------>>>>> file : ".$file['name']);
 
@@ -363,7 +375,7 @@
                             FILE F, CONTENT_SOURCE S
                         WHERE
                             F.NO = S.SOURCE_NO
-                            AND S.TARGET_NO = ".$id."
+                            AND S.TARGET_NO = ".$_key."
                             AND F.THUMB_FL = '0'
                         ";
 
@@ -383,7 +395,7 @@
                                         FILE F, CONTENT_SOURCE S
                                     WHERE
                                         F.NO = S.SOURCE_NO
-                                        AND S.TARGET_NO = ".$id."
+                                        AND S.TARGET_NO = ".$_key."
                                 ) AS DATA
                             )
                             ";
@@ -392,7 +404,7 @@
 
                     $sql = "DELETE FROM CONTENT_SOURCE
                             WHERE
-                                TARGET_NO = ".$id."
+                                TARGET_NO = ".$_key."
                             ";
 
                     $_d->sql_query($sql);
@@ -426,7 +438,7 @@
                         ,CONTENT_GB
                         ,SORT_IDX
                     ) VALUES (
-                        '".$id."'
+                        '".$_key."'
                         , '".$ori_file_no."'
                         , 'FILE'
                         , '0'
@@ -465,7 +477,7 @@
                         ,CONTENT_GB
                         ,SORT_IDX
                     ) VALUES (
-                        '".$id."'
+                        '".$_key."'
                         , '".$file_no."'
                         , 'FILE'
                         , '0'
@@ -504,7 +516,7 @@
                         ,CONTENT_GB
                         ,SORT_IDX
                     ) VALUES (
-                        '".$id."'
+                        '".$_key."'
                         , '".$file_no."'
                         , 'FILE'
                         , '0'
@@ -514,16 +526,22 @@
                 }
             }
 
-
+            if ($_d->mysql_errno > 0) {
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+            } else {
+                $_d->sql_commit();
+                $_d->succEnd($no);
+            }
 
             break;
 
         case "DELETE":
-            if (!isset($id)) {
-                $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $sql = "DELETE FROM CMS_PROJECT WHERE NO = ".$id;
+            $sql = "DELETE FROM CMS_PROJECT WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

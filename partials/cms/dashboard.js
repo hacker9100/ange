@@ -18,19 +18,22 @@ define([
         $scope.initList = function() {
             $scope.PAGE_NO = 0;
             $scope.PAGE_SIZE = 5;
-
-            $location.search('_search', $scope.search);
         };
 
         /********** 이벤트 **********/
         // 태스크 선택
-        $scope.click_showTaskEdit = function (no) {
-            $location.url('/task/'+no);
+        $scope.click_showTaskEdit = function (key) {
+            $location.url('/task/'+key);
         };
 
         // 프로젝트 목록 이동
         $scope.click_showProjectList = function () {
             $location.url('/project');
+        };
+
+        // 게시판 목록 이동
+        $scope.click_showWebboardList = function () {
+            $location.url('/webboard');
         };
 
         // 태스크 목록 이동
@@ -39,13 +42,30 @@ define([
         };
 
         // 공지사항 포틀릿 조회
+        $scope.getNoticePortlet = function () {
+            $scope.isLoading = true;
 
+            dataService.db('webboard').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},{HEAD: 'NOTICE'},function(data, status){
+                if (status != 200) {
+                    alert('조회에 실패 했습니다.');
+                } else {
+                    if (angular.isObject(data)) {
+                        $scope.notices = data;
+                    } else {
+                        // TODO: 데이터가 없을 경우 처리
+                        alert("조회 데이터가 없습니다.");
+                    }
+                }
+
+                $scope.isLoading = false;
+            });
+        }
 
         // 프로젝트 포틀릿 조회
         $scope.getProjectPortlet = function () {
             $scope.isLoading = true;
 
-            dataService.db('project').find({no:$scope.PAGE_NO, size:$scope.PAGE_SIZE},{},function(data, status){
+            dataService.db('project').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},{},function(data, status){
                 if (status != 200) {
                     alert('조회에 실패 했습니다.');
                 } else {
@@ -72,7 +92,7 @@ define([
         $scope.getTaskList = function () {
             $scope.isLoading = true;
 
-            dataService.db('task').find({no:$scope.PAGE_NO, size:$scope.PAGE_SIZE},{},function(data, status){
+            dataService.db('task').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},{},function(data, status){
                 if (status != 200) {
                     alert('조회에 실패 했습니다.');
                 } else {
@@ -117,13 +137,19 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        $scope.initList();
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.setTitle)
-            .then($scope.getProjectPortlet)
-            .then($scope.getTaskList)
             .catch($scope.reportProblems);
+
+        $scope.initList();
+        $scope.getNoticePortlet();
+        $scope.getProjectPortlet();
+        $scope.getTaskList();
+
+//            .then($scope.getProjectPortlet)
+//            .then($scope.getTaskList)
+//            .catch($scope.reportProblems);
 
 	}]);
 });
