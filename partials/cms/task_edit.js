@@ -25,66 +25,118 @@ define([
         // 카테고리 선택 콤보박스 설정
         $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
 
+        $scope.getProject = function(data, status) {
+            if (status != 200) {
+                alert('프로젝트 조회에 실패 했습니다.');
+            } else {
+                if (angular.isObject(data)) {
+                    if (!data.err) {
+                        $scope.projects = data;
+                    } else {
+                        alert(data.msg);
+                    }
+                } else {
+                    // TODO: 데이터가 없을 경우 처리
+                    alert("프로젝트 데이터가 없습니다.");
+                }
+            }
+        };
+
+        $scope.getCategory = function(data, status) {
+            if (status != 200) {
+                alert('카테고리 조회에 실패 했습니다.');
+            } else {
+                if (angular.isObject(data)) {
+                    if (!data.err) {
+
+                        $scope.category = data;
+
+                        var category_a = [];
+                        var category_b = [];
+
+                        for (var i in data) {
+                            var item = data[i];
+
+                            if (item.CATEGORY_GB == '1') {
+                                category_a.push(item);
+                            } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
+                                category_b.push(item);
+                            }
+                        }
+
+                        $scope.category_a = category_a;
+                        $scope.category_b = category_b;
+                    } else {
+                        alert(data.msg);
+                    }
+                } else {
+                    // TODO: 데이터가 없을 경우 처리
+                    alert("카테고리 데이터가 없습니다.");
+                }
+            }
+        }
+
+
         // 초기화
         $scope.initEdit = function() {
             var deferred = $q.defer();
 
             $q.all([
-                dataService.db('project').find({},{},null),
-                dataService.db('category').find({},{},null)
+                dataService.db('project').find({},{},function(data, status){ $scope.getProject(data, status) }),
+                dataService.db('category').find({},{},function(data, status){ $scope.getCategory(data, status) })
                 ])
                 .then( function(results) {
-
-                    if (results.length > 1) {
-                        if (results[0].status != 200) {
-                            deferred.reject('프로젝트 조회에 실패 했습니다.');
-                        } else {
-                            if (angular.isObject(results[0].data)) {
-                                if (!results[0].err) {
-                                    $scope.projects = results[0].data;
-                                } else {
-                                    deferred.reject(results[0].msg);
-                                }
-                            } else {
-                                // TODO: 데이터가 없을 경우 처리
-                                deferred.reject("프로젝트 데이터가 없습니다.");
-                            }
-                        }
-
-                        if (results[1].status != 200) {
-                            deferred.reject('카테고리 조회에 실패 했습니다.');
-                        } else {
-                            if (angular.isObject(results[1].data)) {
-                                if (!results[1].err) {
-
-                                    $scope.category = results[1].data;
-
-                                    var category_a = [];
-                                    var category_b = [];
-
-                                    for (var i in results[1].data) {
-                                        var item = results[1].data[i];
-
-                                        if (item.CATEGORY_GB == '1') {
-                                            category_a.push(item);
-                                        } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
-                                            category_b.push(item);
-                                        }
-                                    }
-
-                                    $scope.category_a = category_a;
-                                    $scope.category_b = category_b;
-                                } else {
-                                    deferred.reject(results[1].msg);
-                                }
-                            } else {
-                                // TODO: 데이터가 없을 경우 처리
-                                deferred.reject("카테고리 데이터가 없습니다.");
-                            }
-                        }
-
-                        deferred.resolve();
-                    }
+//                    if (results.length > 1) {
+//                        if (results[0].status != 200) {
+//                            deferred.reject('프로젝트 조회에 실패 했습니다.');
+//                        } else {
+//                            if (angular.isObject(results[0].data)) {
+//                                if (!results[0].err) {
+//                                    $scope.projects = results[0].data;
+//                                } else {
+//                                    deferred.reject(results[0].msg);
+//                                }
+//                            } else {
+//                                // TODO: 데이터가 없을 경우 처리
+//                                deferred.reject("프로젝트 데이터가 없습니다.");
+//                            }
+//                        }
+//
+//                        if (results[1].status != 200) {
+//                            deferred.reject('카테고리 조회에 실패 했습니다.');
+//                        } else {
+//                            if (angular.isObject(results[1].data)) {
+//                                if (!results[1].err) {
+//
+//                                    $scope.category = results[1].data;
+//
+//                                    var category_a = [];
+//                                    var category_b = [];
+//
+//                                    for (var i in results[1].data) {
+//                                        var item = results[1].data[i];
+//
+//                                        if (item.CATEGORY_GB == '1') {
+//                                            category_a.push(item);
+//                                        } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
+//                                            category_b.push(item);
+//                                        }
+//                                    }
+//
+//                                    $scope.category_a = category_a;
+//                                    $scope.category_b = category_b;
+//                                } else {
+//                                    deferred.reject(results[1].msg);
+//                                }
+//                            } else {
+//                                // TODO: 데이터가 없을 경우 처리
+//                                deferred.reject("카테고리 데이터가 없습니다.");
+//                            }
+//                        }
+//
+//                        deferred.resolve();
+//                    }
+                    deferred.resolve();
                 },function(error) {
                     deferred.reject(error);
                 });

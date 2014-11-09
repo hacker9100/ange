@@ -141,19 +141,19 @@ define([
         };
 
         // 수정 화면 이동
-        $scope.click_showEditTask = function (no) {
-            $location.url('/task/'+no);
+        $scope.click_showEditTask = function (key) {
+            $location.url('/task/'+key);
         };
 
         // 이력조회 버튼 클릭
-        $scope.click_showGetHistory = function (no) {
+        $scope.click_showGetHistory = function (key) {
             alert("준비중입니다.")
         };
 
         // 삭제 버튼 클릭
         $scope.click_deleteTask = function (idx) {
 
-            var task = $scope.tasks[idx];
+            var task = $scope.list[idx];
 
             if (task.PHASE == '30') {
                 alert("완료 상태의 태스크는 삭제할 수 없습니다.");

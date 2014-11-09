@@ -18,7 +18,7 @@ define([
             {"project, task, article, article_confirm, edit, edit_confirm, publish": [
                 { url: '/project', 'name': '프로젝트' },
                 { url: '/task', 'name': '태스크' },
-                { url: '/article', 'name': '원고' },
+                { url: 'content/article', 'name': '원고' },
                 { url: '/article_confirm', 'name': '원고 승인' },
                 { url: '/edit', 'name': '편집' },
                 { url: '/edit_confirm', 'name': '편집 승인' },
