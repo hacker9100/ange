@@ -14,10 +14,9 @@ define([
 
     // 사용할 서비스를 주입
     controllers.controller('file', ['$scope', '$http', '$filter', '$window', function ($scope, $http) {
-        $scope.options = { url: url, autoUpload: true, dropZone: angular.element('#test') };
+        $scope.options = { url: url, autoUpload: true, dropZone: angular.element('#dropzone') };
 
 //        $scope.newDir = 'test1/';
-
 /*
         $scope.loadingFiles = true;
 //        $http.get(url+'?newDir='+$scope.newDir)
@@ -72,8 +71,10 @@ define([
                 return state;
             };
             file.$editor = function () {
-                var img = '<img alt="" src="/upload/files/medium/'+file.name+'" />';
-                $scope.$parent.content.BODY += img;
+//                alert(JSON.stringify(file))
+//                var img = '<img alt="" src="/upload/files/medium/'+file.name+'" />';
+                var img = '<img alt="" src="'+file.mediumUrl+'" />';
+                $scope.$parent.item.BODY += img;
             };
         }
     }]);

@@ -13,13 +13,12 @@ define(['./services'], function (services) {
             serviceUri : "webboard",
             getParam : function(){
                 return {
-                    collection  : ""
-                    ,db         : "ange"
-                    ,match      : {}
-                    ,projection : {}
-                    ,jsonData   : {}
-                    ,upsert     : ""
-                    ,multi      : ""
+                    db         : "ange"
+                    ,_method    : ""
+                    ,_key       : ""
+                    ,_phase     : ""
+                    ,_model     : {}
+                    ,_category  : {}
                 };
             }
         };
@@ -28,15 +27,18 @@ define(['./services'], function (services) {
 
         var obj = {
 
-            getProject : function(url,callback){
+            updateStatus : function(uri,key,phase,callback){
 
                 //console.log("getProject() : projectid = [" + projectid + "]");
 
-                param._method = "GET";
+                param._method = "PUT";
+                param._key = key;
+                param._phase = phase;
                 $http({
-                    url : helpers.uri+url
+                    url : helpers.uri+uri+".php"
                     ,method : 'POST'
                     ,data : $.param(param)
+                    ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
             }, db : (function(uri,dbname) {

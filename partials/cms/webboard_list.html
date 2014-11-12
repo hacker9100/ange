@@ -45,17 +45,21 @@
             <th>제목</th>
             <th>등록자</th>
             <th>등록일</th>
-            <th>버튼</th>
+            <th>기능</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="item in list">
             <td>{{ item.NO }}</td>
-            <td>{{ item.HEAD == ''}}</td>
-            <td><a ng-click="click_showEditCmsBoard(item.NO)">{{ item.SUBJECT }}</a></td>
+            <td>{{ item.HEAD == 'NOTICE' ? '공지사항' : '' }}</td>
+            <td>{{ item.SUBJECT }}</td>
             <td>{{ item.REG_NM }}</td>
             <td>{{ item.REG_DT }}</td>
-            <td><a ng-click="click_deleteCmsBoard($index)">삭제</a></td>
+            <td>
+                <a ng-click="click_showViewCmsBoard(item.NO)">조회</a>
+                <a ng-click="click_showEditCmsBoard(item)">수정</a>
+                <a ng-click="click_deleteCmsBoard($index)">삭제</a>
+            </td>
         </tr>
         </tbody>
     </table>

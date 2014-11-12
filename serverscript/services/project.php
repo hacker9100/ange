@@ -166,7 +166,7 @@
                 }
             }
 */
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if ( trim($_model[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
@@ -175,6 +175,9 @@
             if ( trim($_model[PROJECT_ST]) == "" ) {
                 $_model[PROJECT_ST] = '0';
             }
+
+            $err = 0;
+            $msg = "";
 
             $_d->sql_beginTransaction();
 
@@ -195,12 +198,17 @@
                         ,'".$_SESSION['uid']."'
                         ,'".$_SESSION['name']."'
                         ,SYSDATE()
-                        ,'".$_model[PROJECT_ST]."'
+                        ,'0'
                         ,'".$_model[NOTE]."'
                     )";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
 
             if (isset($_model[FILE])) {
                 $file = $_model[FILE];
@@ -229,6 +237,11 @@
                 $_d->sql_query($sql);
                 $ori_file_no = $_d->mysql_insert_id;
 
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
                 $sql = "INSERT INTO CONTENT_SOURCE
                 (
                     TARGET_NO
@@ -243,6 +256,11 @@
                 )";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
                 $sql = "INSERT INTO FILE
                 (
@@ -268,6 +286,11 @@
                 $_d->sql_query($sql);
                 $file_no = $_d->mysql_insert_id;
 
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
                 $sql = "INSERT INTO CONTENT_SOURCE
                 (
                     TARGET_NO
@@ -282,6 +305,11 @@
                 )";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
                 $sql = "INSERT INTO FILE
                 (
@@ -307,6 +335,11 @@
                 $_d->sql_query($sql);
                 $file_no = $_d->mysql_insert_id;
 
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
                 $sql = "INSERT INTO CONTENT_SOURCE
                 (
                     TARGET_NO
@@ -321,11 +354,16 @@
                 )";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
             }
 
-            if ($_d->mysql_errno > 0) {
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                $_d->failEnd("등록실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);
@@ -339,12 +377,14 @@
             }
 
 //            $form = json_decode(file_get_contents("php://input"),true);
-
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if ( trim($_model[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
             }
+
+            $err = 0;
+            $msg = "";
 
             $_d->sql_beginTransaction();
 
@@ -353,9 +393,7 @@
                         SERIES_NO = '".$_model[SERIES][NO]."'
                         ,YEAR = '".$_model[YEAR]."'
                         ,SUBJECT = '".$_model[SUBJECT]."'
-                        ,REG_UID = '".$_SESSION['uid']."'
-                        ,REG_NM = '".$_SESSION['name']."'
-                        ,PROJECT_ST = '".( $_model[PROJECT_ST] == true ? "3" : $_model[PROJECT_ST] )."'
+                        ,PROJECT_ST = '".( $_model[COMPLETE_FL] == true ? "3" : $_model[PROJECT_ST] )."'
                         ,NOTE = '".$_model[NOTE]."'
                     WHERE
                         NO = ".$_key."
@@ -363,6 +401,11 @@
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
 
             if (isset($_model[FILE])) {
                 $file = $_model[FILE];
@@ -381,6 +424,11 @@
 
                 $result = $_d->sql_query($sql);
                 $file_data  = $_d->sql_fetch_array($result);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
                 MtUtil::_c("------------>>>>> FILE_NM : ".$file_data[FILE_NM]);
                 MtUtil::_c("------------>>>>> name : ".$file[name]);
@@ -402,12 +450,22 @@
 
                     $_d->sql_query($sql);
 
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
                     $sql = "DELETE FROM CONTENT_SOURCE
                             WHERE
                                 TARGET_NO = ".$_key."
                             ";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
 
                     $sql = "INSERT INTO FILE
                     (
@@ -431,6 +489,11 @@
                     $_d->sql_query($sql);
                     $ori_file_no = $_d->mysql_insert_id;
 
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
                     $sql = "INSERT INTO CONTENT_SOURCE
                     (
                         TARGET_NO
@@ -445,6 +508,11 @@
                     )";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
 
                     $sql = "INSERT INTO FILE
                     (
@@ -470,6 +538,11 @@
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
 
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
                     $sql = "INSERT INTO CONTENT_SOURCE
                     (
                         TARGET_NO
@@ -484,6 +557,11 @@
                     )";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
 
                     $sql = "INSERT INTO FILE
                     (
@@ -509,6 +587,11 @@
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
 
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
                     $sql = "INSERT INTO CONTENT_SOURCE
                     (
                         TARGET_NO
@@ -523,12 +606,17 @@
                     )";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
                 }
             }
 
-            if ($_d->mysql_errno > 0) {
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                $_d->failEnd("등록실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);

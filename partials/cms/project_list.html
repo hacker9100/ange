@@ -57,17 +57,21 @@
         <th>프로젝트명</th>
         <th>개설일</th>
         <th>상태</th>
-        <th>버튼</th>
+        <th>기능</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="item in list">
         <td>{{ item.NO }}</td>
-        <td><a ng-click="click_showEditProject(item.NO)">{{ item.SERIES_NM + '[' + item.SUBJECT + ']' }}</a></td>
+        <td>{{ item.SERIES_NM + '[' + item.SUBJECT + ']' }}</td>
         <!--<td><a ng-click="viewListProject(project.NO)">{{ project.SUBJECT }}</a></td>-->
         <td>{{ item.REG_DT }}</td>
         <td>{{ item.PROJECT_ST == '0' ? '준비' : item.PROJECT_ST == '1' ? '진행' : item.PROJECT_ST == '2' ? '출판대기' : '완료' }}</td>
-        <td><a ng-click="click_deleteProject($index)">삭제</a></td>
+        <td>
+            <!--<a ng-click="click_showViewProject($index)">조회</a>-->
+            <a ng-click="click_showEditProject($index)">수정</a>
+            <a ng-click="click_deleteProject($index)">삭제</a>
+        </td>
     </tr>
     </tbody>
 </table>

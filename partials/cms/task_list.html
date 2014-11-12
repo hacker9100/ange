@@ -96,7 +96,7 @@
                                 <span style="color:#DE4612; font-weight:bold;">{{item.CLOSE_YMD}} 마감</span>
                             </div>
                             <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
-                                {{ item.PHASE == '0' ? '태스크등록' : item.PHASE == '10' ? '원고작성' : item.PHASE == '11' ? '원고승인대기' : item.PHASE == '20' ? '원고승인완료' : item.PHASE == '13' ? '원고반려' : item.PHASE == '21' ? '편집작성' : item.PHASE == '13' ? '편집반려' : '편집승인' }}
+                                {{ item.PHASE == '0' ? '태스크등록' : item.PHASE == '10' ? '원고작성' : item.PHASE == '11' ? '원고승인대기' : item.PHASE == '12' ? '원고반려' : item.PHASE == '13' ? '원고승인완료' : item.PHASE == '20' ? '편집작성' : item.PHASE == '21' ? '편집승인대기' : item.PHASE == '22' ? '편집반려' : '편집승인완료' }}
                             </div>
                         </div>
 
@@ -140,9 +140,13 @@
                     </button>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary start" ng-click="click_showEditTask(item.NO);">
+                    <button type="button" class="btn btn-primary start" ng-click="click_showEditTask(item.NO);" ng-hide="isTask">
                         <i class="glyphicon glyphicon-pencil"></i>
                         <span>태스크 편집</span>
+                    </button>
+                    <button type="button" class="btn btn-primary start" ng-click="click_showEditContent(item.NO);" ng-hide="!isTask">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>원고 편집</span>
                     </button>
                     <!--<button class="btn btn-success fileinput-button" data-ng-click="viewListTask(item.NO)">-->
                     <!--<i class="glyphicon glyphicon-plus"></i>-->

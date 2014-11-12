@@ -37,7 +37,7 @@
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 } else {
                     $result = $_d->sql_query($sql);
-                    $data  = $_d->sql_fetch_array($result);
+                    $data = $_d->sql_fetch_array($result);
                     $_d->dataEnd2($data);
                 }
             } else {
@@ -91,8 +91,6 @@
 
         case "POST":
 
-            $_d->sql_beginTransaction();
-
 //            $FORM = json_decode(file_get_contents("php://input"),true);
 
             $sql = "INSERT INTO CMS_SERIES
@@ -114,10 +112,8 @@
             $no = $_d->mysql_insert_id;
 
             if ($_d->mysql_errno > 0) {
-                $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$_d->mysql_error);
             } else {
-                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
@@ -158,18 +154,14 @@
                 $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $_d->sql_beginTransaction();
-
             $sql = "DELETE FROM CMS_SERIES WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
             if ($_d->mysql_errno > 0) {
-                $_d->sql_rollback();
                 $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
             } else {
-                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 

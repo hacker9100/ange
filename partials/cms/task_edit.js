@@ -25,7 +25,7 @@ define([
         // 카테고리 선택 콤보박스 설정
         $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
 
-        $scope.getProject = function(data, status) {
+        $scope.dataProject = function(data, status) {
             if (status != 200) {
                 alert('프로젝트 조회에 실패 했습니다.');
             } else {
@@ -42,7 +42,7 @@ define([
             }
         };
 
-        $scope.getCategory = function(data, status) {
+        $scope.dataCategory = function(data, status) {
             if (status != 200) {
                 alert('카테고리 조회에 실패 했습니다.');
             } else {
@@ -82,8 +82,8 @@ define([
             var deferred = $q.defer();
 
             $q.all([
-                dataService.db('project').find({},{},function(data, status){ $scope.getProject(data, status) }),
-                dataService.db('category').find({},{},function(data, status){ $scope.getCategory(data, status) })
+                dataService.db('project').find({},{},function(data, status){ $scope.dataProject(data, status) }),
+                dataService.db('category').find({},{},function(data, status){ $scope.dataCategory(data, status) })
                 ])
                 .then( function(results) {
 //                    if (results.length > 1) {

@@ -37,6 +37,9 @@
             if (isset($_key) && $_key != "") {
 //                MtUtil::_c("FUNC[processApi] 1 : "+$id);
 
+                $err = 0;
+                $msg = "";
+
                 $sql = "SELECT
                           NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, TAG
                         FROM
@@ -44,12 +47,36 @@
                         WHERE
                           NO = ".$_key."
                         ";
-                $data = $_d->sql_query($sql);
-                if($_d->mysql_errno > 0){
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                $result = $_d->sql_query($sql);
+                $data = $_d->sql_fetch_array($result);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                $sql = "SELECT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                        FROM
+                            FILE F, CONTENT_SOURCE S
+                        WHERE
+                            F.NO = S.SOURCE_NO
+                            AND S.TARGET_GB = 'CMS_BOARD'
+                            AND S.TARGET_NO = ".$_key."
+                            AND F.THUMB_FL = '0'
+                        ";
+
+                $file_data = $_d->getData($sql);
+                $data['FILES'] = $file_data;
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if($err > 0){
+                    $_d->failEnd("조회실패입니다:".$msg);
                 }else{
-                    $result = $_d->sql_query($sql);
-                    $data = $_d->sql_fetch_array($result);
                     $_d->dataEnd2($data);
                 }
             }
@@ -108,25 +135,9 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-//
-//            $upload_path = '../upload/';
-//            $source_path = '../../../';
-//
-//            if (count($form[FILES]) > 0) {
-//                $files = $form[FILES];
-//
-////                @mkdir('$source_path');
-//
-//                for ($i = 0 ; $i < count($form[FILES]); $i++) {
-//                    $file = $files[$i];
-//
-//                    if (file_exists($upload_path.$file[name])) {
-//                        rename($upload_path.$file[name], $source_path.$file[name]);
-//                    }
-//                }
-//            }
 
-//            MtUtil::_c("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
+            $err = 0;
+            $msg = "";
 
             if( trim($_model[SUBJECT]) == '' ){
                 $_d->failEnd("제목을 작성 하세요");
@@ -134,6 +145,48 @@
             if( trim($_model[BODY]) == '' ){
                 $_d->failEnd("내용이 비어있습니다");
             }
+
+            $upload_path = '../../upload/files/';
+            $file_path = '/storage/'.date('Y').'/'.date('m').'/';
+            $source_path = '../..'.$file_path;
+            $insert_path = array();
+
+            $body_str = $_model[BODY];
+
+            try
+            {
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
+                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                        @mkdir($source_path);
+                        @mkdir($source_path.'thumbnail/');
+                        @mkdir($source_path.'medium/');
+                    }
+
+                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        $file = $files[$i];
+
+                        if (file_exists($upload_path.$file[name])) {
+                            $uid = uniqid();
+                            rename($upload_path.$file[name], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                            $insert_path[$i] = array(path => $file_path, uid => $uid);
+
+                            MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+
+                            $body_str = str_replace($file[mediumUrl], 'http://localhost'.$file_path.'medium/'.$uid, $body_str);
+                        }
+                    }
+                }
+
+                $_model[BODY] = $body_str;
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
+//            MtUtil::_c("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
+
 
             $_d->sql_beginTransaction();
 
@@ -159,9 +212,10 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            MtUtil::_c("------------>>>>> NO : ".$no);
-            MtUtil::_c("------------>>>>> files : ".$form[FILES]);
-            MtUtil::_c("------------>>>>> files size : ".count($form[FILES]));
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
 
             if (count($_model[FILES]) > 0) {
                 $files = $_model[FILES];
@@ -169,10 +223,12 @@
                 for ($i = 0 ; $i < count($_model[FILES]); $i++) {
                     $file = $files[$i];
                     MtUtil::_c("------------>>>>> file : ".$file['name']);
+                    MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
                     $sql = "INSERT INTO FILE
                     (
                         FILE_NM
+                        ,FILE_ID
                         ,PATH
                         ,FILE_EXT
                         ,FILE_SIZE
@@ -181,10 +237,11 @@
                         ,FILE_ST
                     ) VALUES (
                         '".$file[name]."'
-                        , '".$file[BODY]."'
+                        , '".$insert_path[$i][uid]."'
+                        , '".$insert_path[$i][path]."'
                         , '".$file[type]."'
                         , '".$file[size]."'
-                        , 'N'
+                        , '0'
                         , SYSDATE()
                         , 'C'
                     )";
@@ -192,28 +249,40 @@
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
 
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
                     $sql = "INSERT INTO CONTENT_SOURCE
                     (
                         TARGET_NO
                         ,SOURCE_NO
                         ,CONTENT_GB
+                        ,TARGET_GB
                         ,SORT_IDX
                     ) VALUES (
                         '".$no."'
                         , '".$file_no."'
                         , 'FILE'
+                        , 'CMS_BOARD'
                         , '".$i."'
                     )";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
                 }
             }
 
             MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
 
-            if($_d->mysql_errno > 0){
+            if($err > 0){
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                $_d->failEnd("등록실패입니다:".$msg);
             }else{
                 $_d->sql_commit();
                 $_d->succEnd($no);
@@ -228,6 +297,54 @@
 
 //            $FORM = json_decode(file_get_contents("php://input"),true);
 
+            $err = 0;
+            $msg = "";
+
+            $upload_path = '../../upload/files/';
+            $file_path = '/storage/'.date('Y').'/'.date('m').'/';
+            $source_path = '../..'.$file_path;
+            $insert_path = array();
+
+            $body_str = $_model[BODY];
+
+            try
+            {
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
+                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                        @mkdir($source_path);
+                        @mkdir($source_path.'thumbnail/');
+                        @mkdir($source_path.'medium/');
+                    }
+
+                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        $file = $files[$i];
+
+                        if (file_exists($upload_path.$file[name])) {
+                            $uid = uniqid();
+                            rename($upload_path.$file[name], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                            $insert_path[$i] = array(path => $file_path, uid => $uid);
+
+                            MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                            MtUtil::_c("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
+
+                            $body_str = str_replace($file[mediumUrl], 'http://localhost'.$file_path.'medium/'.$uid, $body_str);
+
+                            MtUtil::_c("------------>>>>> body_str : ".$body_str);
+                        } else {
+                            $insert_path[$i] = array(path => '', uid => '');
+                        }
+                    }
+                }
+
+                $_model[BODY] = $body_str;
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
+
             MtUtil::_c("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
             if( trim($_model[SUBJECT]) == '' ){
@@ -236,6 +353,8 @@
             if( trim($_model[BODY]) == '' ){
                 $_d->failEnd("내용이 비어있습니다");
             }
+
+            $_d->sql_beginTransaction();
 
             $sql = "UPDATE CMS_BOARD
                     SET
@@ -252,9 +371,123 @@
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
-            if($_d->mysql_errno > 0){
-                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $sql = "SELECT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                        FROM
+                            FILE F, CONTENT_SOURCE S
+                        WHERE
+                            F.NO = S.SOURCE_NO
+                            AND S.TARGET_GB = 'CMS_BOARD'
+                            AND S.TARGET_NO = ".$_key."
+                            AND F.THUMB_FL = '0'
+                        ";
+
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $is_delete = true;
+
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
+                    for ($i = 0 ; $i < count($files); $i++) {
+                        if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                            $is_delete = false;
+                        }
+                    }
+                }
+
+                if ($is_delete) {
+                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    $sql = "DELETE FROM CONTENT_SOURCE WHERE AND TARGET_GB = 'CMS_BOARD' AND TARGET_NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+
+                    if (file_exists('../..'.$row[PATH].$row[FILE_ID])) {
+                        unlink('../..'.$row[PATH].$row[FILE_ID]);
+                        unlink('../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                        unlink('../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    }
+                }
+            }
+
+            if (count($_model[FILES]) > 0) {
+                $files = $_model[FILES];
+
+                for ($i = 0 ; $i < count($files); $i++) {
+                    $file = $files[$i];
+                    MtUtil::_c("------------>>>>> file : ".$file['name']);
+
+                    if ($insert_path[$i][uid] != "") {
+                        $sql = "INSERT INTO FILE
+                        (
+                            FILE_NM
+                            ,FILE_ID
+                            ,PATH
+                            ,FILE_EXT
+                            ,FILE_SIZE
+                            ,THUMB_FL
+                            ,REG_DT
+                            ,FILE_ST
+                        ) VALUES (
+                            '".$file[name]."'
+                            , '".$insert_path[$i][uid]."'
+                            , '".$insert_path[$i][path]."'
+                            , '".$file[type]."'
+                            , '".$file[size]."'
+                            , '0'
+                            , SYSDATE()
+                            , 'C'
+                        )";
+
+                        $_d->sql_query($sql);
+                        $file_no = $_d->mysql_insert_id;
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+
+                        $sql = "INSERT INTO CONTENT_SOURCE
+                        (
+                            TARGET_NO
+                            ,SOURCE_NO
+                            ,CONTENT_GB
+                            ,TARGET_GB
+                            ,SORT_IDX
+                        ) VALUES (
+                            '".$_key."'
+                            , '".$file_no."'
+                            , 'FILE'
+                            , 'CMS_BOARD'
+                            , '".$i."'
+                        )";
+
+                        $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                }
+            }
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("수정실패입니다:".$msg);
             }else{
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 

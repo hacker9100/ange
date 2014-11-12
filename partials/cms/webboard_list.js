@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('webboard_list', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
+    controllers.controller('webboard_list', ['$scope', '$rootScope', '$stateParams', 'dataService', '$location', function ($scope, $rootScope, $stateParams, dataService, $location) {
 
         /********** 초기화 **********/
         $scope.search = {};
@@ -31,12 +31,21 @@ define([
         /********** 이벤트 **********/
         // 등록 버튼 클릭
         $scope.click_showCreateNewCmsBoard = function () {
-            $location.url('/webboard/0');
+            $location.url('/webboard/edit/0');
+        };
+
+        // 조회 화면 이동
+        $scope.click_showViewCmsBoard = function (key) {
+            $location.url('/webboard/view/'+key);
         };
 
         // 수정 화면 이동
-        $scope.click_showEditCmsBoard = function (key) {
-            $location.url('/webboard/'+key);
+        $scope.click_showEditCmsBoard = function (item) {
+            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+                alert("수정 권한이 없습니다.")
+            }
+
+            $location.path('/webboard/edit/'+item.NO);
         };
 
         // 삭제 버튼 클릭
@@ -63,15 +72,19 @@ define([
         $scope.getCmsBoardList = function (search) {
             $scope.isLoading = true;
 
-            dataService.db('webboard').find({no:0, size:4},search,function(data, status){
+            dataService.db('webboard').find({NO:0, SIZE:4},search,function(data, status){
                 if (status != 200) {
-                    alert('조회에 실패 했습니다.');
+                    alert('게시판 조회에 실패 했습니다.');
                 } else {
-                    if (angular.isObject(data)) {
-                        $scope.list = data;
+                    if (data.err == true) {
+                        alert(data.msg);
                     } else {
-                        // TODO: 데이터가 없을 경우 처리
-                        alert("조회 데이터가 없습니다.");
+                        if (angular.isObject(data)) {
+                            $scope.list = data;
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            alert("게시판 조회 데이터가 없습니다.");
+                        }
                     }
                 }
 

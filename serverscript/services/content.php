@@ -30,7 +30,7 @@
 
     switch ($_method) {
         case "GET":
-            if (isset($id)) {
+            if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.BODY, C.CONTENT_ST, C.REG_UID, C.REG_NM, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT,
                             C.CURRENT_FL, C.MODIFY_FL, C.HIT_CNT, C.SCRAP_CNT, C.TASK_NO
@@ -39,35 +39,35 @@
                         WHERE
                             C.TASK_NO = T.NO
                             AND C.CURRENT_FL = '0'
-                            AND T.NO = ".$id."
+                            AND T.NO = ".$_key."
                         ";
 
                 $result = $_d->sql_query($sql);
                 $data  = $_d->sql_fetch_array($result);
 
-                $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_NO = ".$data['NO']."
-                            AND F.THUMB_FL = '0'
-                        ";
+                if ($data != null) {
+                    $sql = "SELECT
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                FILE F, CONTENT_SOURCE S
+                            WHERE
+                                F.NO = S.SOURCE_NO
+                                AND S.TARGET_NO = ".$data[NO]."
+                                AND F.THUMB_FL = '0'
+                            ";
 
-                $file_data = $_d->getData($sql);
+                    $file_data = $_d->getData($sql);
 
-                $data['FILES'] = $file_data;
+                    $data['FILES'] = $file_data;
+                }
 
-                $_d->dataEnd2($data);
-//                $data = $_d->sql_query($sql);
-//                if ($_d->mysql_errno > 0) {
-//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                } else {
-//                    $_d->dataEnd($sql);
-//                }
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
             } else {
-                $search = "";
+                $where_search = "";
 
                 if (isset($_phase)) {
                     $in_str = "";
@@ -94,7 +94,7 @@
                             WHERE
                                 C.TASK_NO = T.NO
                                 AND C.CURRENT_FL = '0'
-                                ".$search."
+                                ".$where_search."
                             ORDER BY C.REG_DT DESC
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -106,7 +106,7 @@
                             WHERE
                                 C.TASK_NO = T.NO
                                 AND C.CURRENT_FL = '0'
-                                ".$search."
+                                ".$where_search."
                         ) CNT
                         ";
                 $data = $_d->sql_query($sql);
@@ -120,7 +120,7 @@
             break;
 
         case "POST":
-            $form = json_decode(file_get_contents("php://input"),true);
+//            $form = json_decode(file_get_contents("php://input"),true);
 /*
             $upload_path = '../upload/';
             $source_path = '../../../';
@@ -139,27 +139,30 @@
                 }
             }
 */
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($form[PHASE]) == "" ) {
-                $form[PHASE] = '0';
+            if ( trim($_model[PHASE]) == "" ) {
+                $_model[PHASE] = '10';
             }
 
-            if ( trim($form[CONTENT_ST]) == "" ) {
-                $form[CONTENT_ST] = '0';
+            if ( trim($_model[CONTENT_ST]) == "" ) {
+                $_model[CONTENT_ST] = '0';
             }
 
             $task_no = 0;
             $task_st = '1';
 
-            if ( trim($form[TASK_NO]) != "" ) {
-                $task_no = $form[TASK_NO];
+            if ( trim($_model[TASK_NO]) != "" ) {
+                $task_no = $_model[TASK_NO];
             }
 
-            if (count($form[TASK]) > 0) {
-                $task = $form[TASK];
+            if (count($_model[TASK]) > 0) {
+                $task = $_model[TASK];
                 $task_no = $task[NO];
             }
+
+            $err = 0;
+            $msg = "";
 
             $_d->sql_beginTransaction();
 
@@ -181,28 +184,47 @@
                         ,SCRAP_CNT
                         ,TASK_NO
                     ) VALUES (
-                        ".(!empty($form[SUPER_NO]) ? $form[SUPER_NO] : !empty($form[NO]) ? $form[NO] : 0)."
-                        ,'".$form[PHASE]."'
-                        ,'".$form[VERSION]."'
-                        ,'".$form[BODY]."'
-                        ,'".$form[CONTENT_ST]."'
+                        ".(!empty($_model[SUPER_NO]) ? $_model[SUPER_NO] : !empty($_model[NO]) ? $_model[NO] : 0)."
+                        ,'".$_model[PHASE]."'
+                        ,'".$_model[VERSION]."'
+                        ,'".$_model[BODY]."'
+                        ,'".$_model[CONTENT_ST]."'
                         ,'".$_SESSION['uid']."'
                         ,'".$_SESSION['name']."'
                         ,SYSDATE()
                         ,'0'
-                        ,'".$form[MODIFY_FL]."'
-                        ,".(empty($form[HIT_CNT]) ? 0 : $form[HIT_CNT])."
-                        ,".(empty($form[SCRAP_CNT]) ? 0 : $form[SCRAP_CNT])."
+                        ,'".$_model[MODIFY_FL]."'
+                        ,".(empty($_model[HIT_CNT]) ? 0 : $_model[HIT_CNT])."
+                        ,".(empty($_model[SCRAP_CNT]) ? 0 : $_model[SCRAP_CNT])."
                         ,".$task_no."
                     )";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            If (count($form[FILES]) > 0) {
-                $files = $form[FILES];
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
 
-                for ($i = 0 ; $i < count($form[FILES]); $i++) {
+            $sql = "UPDATE CMS_TASK
+                        SET
+                            PHASE = '".$_model[PHASE]."'
+                        WHERE
+                            NO = ".$task_no."
+                        ";
+
+            $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            If (count($_model[FILES]) > 0) {
+                $files = $_model[FILES];
+
+                for ($i = 0 ; $i < count($_model[FILES]); $i++) {
                     $file = $files[$i];
                     MtUtil::_c("------------>>>>> file : ".$file['name']);
 
@@ -228,6 +250,11 @@
                     $_d->sql_query($sql);
                     $ori_file_no = $_d->mysql_insert_id;
 
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
                     $sql = "INSERT INTO CONTENT_SOURCE
                         (
                             TARGET_NO
@@ -242,6 +269,11 @@
                         )";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
 
                     $sql = "INSERT INTO FILE
                         (
@@ -267,6 +299,11 @@
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
 
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
                     $sql = "INSERT INTO CONTENT_SOURCE
                         (
                             TARGET_NO
@@ -281,6 +318,11 @@
                         )";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
 
                     $sql = "INSERT INTO FILE
                         (
@@ -306,6 +348,11 @@
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
 
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
                     $sql = "INSERT INTO CONTENT_SOURCE
                         (
                             TARGET_NO
@@ -320,18 +367,28 @@
                         )";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
                 }
             }
 
-            if (!empty($form[NO]) && $form[PHASE] > 0) {
+            if (!empty($_model[NO]) && $_model[PHASE] > 0) {
                 $sql = "UPDATE CONTENT
                         SET
                             CURRENT_FL = '1'
                         WHERE
-                            NO = ".$form[NO]."
+                            NO = ".$_model[NO]."
                         ";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
             }
 /*
             if (!($_d->mysql_errno > 0) && ($project_st == 0)) {
@@ -346,9 +403,9 @@
             }
 */
 
-            if ($_d->mysql_errno > 0) {
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                $_d->failEnd("등록실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);
@@ -357,28 +414,40 @@
             break;
 
         case "PUT":
-            if (!isset($id)) {
-                $_d->failEnd("수정실패입니다:"."ID가 누락되었습니다.");
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $form = json_decode(file_get_contents("php://input"),true);
-
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            $form = json_decode(file_get_contents("php://input"),true);
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if (isset($_phase)) {
+                $_d->sql_beginTransaction();
+
                 $sql = "UPDATE CONTENT
                         SET
                             PHASE = '".$_phase."'
                         WHERE
-                            NO = ".$id."
+                            NO = ".$_key."
                         ";
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;
 
+                $sql = "UPDATE CMS_TASK
+                        SET
+                            PHASE = '".$_phase."'
+                        WHERE
+                            NO = ( SELECT TASK_NO FROM CONTENT C WHERE C.NO = ".$_key.")
+                        ";
+
+                $_d->sql_query($sql);
+
                 if ($_d->mysql_errno > 0) {
+                    $_d->sql_rollback();
                     $_d->failEnd("수정실패입니다:".$_d->mysql_error);
                 } else {
+                    $_d->sql_commit();
                     $_d->succEnd($no);
                 }
             } else if (isset($_modify)) {
@@ -386,7 +455,7 @@
                         SET
                             MODIFY_FL = '".$_modify."'
                         WHERE
-                            NO = ".$id."
+                            NO = ".$_key."
                         ";
 
                 $_d->sql_query($sql);
@@ -398,47 +467,72 @@
                     $_d->succEnd($no);
                 }
             } else {
+                $err = 0;
+                $msg = "";
 
                 $_d->sql_beginTransaction();
 
-                if ( trim($form[PHASE]) == "" ) {
-                    $form[PHASE] = '0';
+                if ( trim($_model[PHASE]) == "" ) {
+                    $_model[PHASE] = '10';
                 }
 
-                if ( trim($form[CONTENT_ST]) == "" ) {
-                    $form[CONTENT_ST] = '0';
+                if ( trim($_model[CONTENT_ST]) == "" ) {
+                    $_model[CONTENT_ST] = '0';
                 }
 
                 $task_no = 0;
-                $task_st = '1';
+                $task_st = "1";
+                $task_phase = "";
 
-                if ( trim($form[TASK_NO]) != "" ) {
-                    $task_no = $form[TASK_NO];
+                if ( trim($_model[TASK_NO]) != "" ) {
+                    $task_no = $_model[TASK_NO];
                 }
 
-                if (count($form[TASK]) > 0) {
-                    $task = $form[TASK];
+                if (count($_model[TASK]) > 0) {
+                    $task = $_model[TASK];
                     $task_no = $task[NO];
+                    $task_phase = $task[PHASE];
                 }
 
                 $sql = "UPDATE CONTENT
                         SET
-                            SUPER_NO = ".(!empty($form[SUPER_NO]) ? $form[SUPER_NO] : !empty($form[NO] ? $form[NO] : 0))."
-                            ,PHASE = '".$form[PHASE]."'
-                            ,VERSION = '".$form[VERSION]."'
-                            ,BODY = '".$form[BODY]."'
-                            ,CONTENT_ST = '".$form[CONTENT_ST]."'
-                            ,CURRENT_FL = '".$form[CURRENT_FL]."'
-                            ,MODIFY_FL = '".$form[MODIFY_FL]."'
-                            ,HIT_CNT = ".(empty($form[HIT_CNT]) ? 0 : $form[HIT_CNT])."
-                            ,SCRAP_CNT = ".(empty($form[SCRAP_CNT]) ? 0 : $form[SCRAP_CNT])."
+                            SUPER_NO = ".(!empty($_model[SUPER_NO]) ? $_model[SUPER_NO] : !empty($_model[NO] ? $_model[NO] : 0))."
+                            ,PHASE = '".$task_phase."'
+                            ,VERSION = '".$_model[VERSION]."'
+                            ,BODY = '".$_model[BODY]."'
+                            ,CONTENT_ST = '".$_model[CONTENT_ST]."'
+                            ,CURRENT_FL = '".$_model[CURRENT_FL]."'
+                            ,MODIFY_FL = '".$_model[MODIFY_FL]."'
+                            ,HIT_CNT = ".(empty($_model[HIT_CNT]) ? 0 : $_model[HIT_CNT])."
+                            ,SCRAP_CNT = ".(empty($_model[SCRAP_CNT]) ? 0 : $_model[SCRAP_CNT])."
                             ,TASK_NO = ".$task_no."
                         WHERE
-                            NO = ".$id."
+                            NO = ".$_key."
                         ";
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if (trim($task_phase) != "") {
+                    $sql = "UPDATE CMS_TASK
+                            SET
+                                PHASE = '".$task_phase."'
+                            WHERE
+                                NO = ".$task_no."
+                            ";
+
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
 
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
@@ -446,7 +540,7 @@
                             FILE F, CONTENT_SOURCE S
                         WHERE
                             F.NO = S.SOURCE_NO
-                            AND S.TARGET_NO = ".$id."
+                            AND S.TARGET_NO = ".$_key."
                             AND F.THUMB_FL = '0'
                         ";
 
@@ -463,27 +557,37 @@
                                         FILE F, CONTENT_SOURCE S
                                     WHERE
                                         F.NO = S.SOURCE_NO
-                                        AND S.TARGET_NO = ".$id."
+                                        AND S.TARGET_NO = ".$_key."
                                 ) AS DATA
                             )
                             ";
 
                     $_d->sql_query($sql);
 
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
                     $sql = "DELETE FROM CONTENT_SOURCE
                             WHERE
-                                TARGET_NO = ".$id."
+                                TARGET_NO = ".$_key."
                             ";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
                 }
 
-                if (isset($form[FILES])) {
-                    $files = $form[FILES];
+                if (isset($_model[FILES])) {
+                    $files = $_model[FILES];
 
                     MtUtil::_c("### [---------------------------------------------------------------] ".count($form[FILES]));
 
-                    for ($i = 0 ; $i < count($form[FILES]); $i++) {
+                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
                         $file = $files[$i];
                         MtUtil::_c("------------>>>>> file : ".$file['name']);
 
@@ -509,6 +613,11 @@
                         $_d->sql_query($sql);
                         $ori_file_no = $_d->mysql_insert_id;
 
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+
                         $sql = "INSERT INTO CONTENT_SOURCE
                         (
                             TARGET_NO
@@ -516,13 +625,18 @@
                             ,CONTENT_GB
                             ,SORT_IDX
                         ) VALUES (
-                            '".$id."'
+                            '".$_key."'
                             , '".$ori_file_no."'
                             , 'FILE'
                             , '".$i."'
                         )";
 
                         $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
 
                         $sql = "INSERT INTO FILE
                         (
@@ -548,6 +662,11 @@
                         $_d->sql_query($sql);
                         $file_no = $_d->mysql_insert_id;
 
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+
                         $sql = "INSERT INTO CONTENT_SOURCE
                         (
                             TARGET_NO
@@ -555,13 +674,18 @@
                             ,CONTENT_GB
                             ,SORT_IDX
                         ) VALUES (
-                            '".$id."'
+                            '".$_key."'
                             , '".$file_no."'
                             , 'FILE'
                             , '".$i."'
                         )";
 
                         $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
 
                         $sql = "INSERT INTO FILE
                         (
@@ -587,6 +711,11 @@
                         $_d->sql_query($sql);
                         $file_no = $_d->mysql_insert_id;
 
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+
                         $sql = "INSERT INTO CONTENT_SOURCE
                         (
                             TARGET_NO
@@ -594,19 +723,24 @@
                             ,CONTENT_GB
                             ,SORT_IDX
                         ) VALUES (
-                            '".$id."'
+                            '".$_key."'
                             , '".$file_no."'
                             , 'FILE'
                             , '".$i."'
                         )";
 
                         $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
                     }
                 }
 
-                if ($_d->mysql_errno > 0) {
+                if ($err > 0) {
                     $_d->sql_rollback();
-                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                    $_d->failEnd("수정실패입니다:".$msg);
                 } else {
                     $_d->sql_commit();
                     $_d->succEnd($no);

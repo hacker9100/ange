@@ -13,6 +13,7 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('content_list', ['$scope', '$rootScope', '$stateParams', 'dataService', '$q', '$location', function ($scope, $rootScope, $stateParams, dataService, $q, $location) {
 
+        /********** 초기화 **********/
         // 목록 데이터
         $scope.listData = [];
         // 검색 조건
@@ -254,8 +255,6 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        alert($stateParams.menu);
-
         // 페이지 타이틀
         $scope.$parent.message = 'ANGE CMS';
         if ($stateParams.menu == 'article') {

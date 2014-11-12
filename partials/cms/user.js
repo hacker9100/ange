@@ -23,7 +23,9 @@ define([
                 if (status != 200) {
                     alert('조회에 실패 했습니다.');
                 } else {
-                    if (!data.err) {
+                    if (data.err == true) {
+                        alert(data.msg);
+                    } else {
                         if (angular.isObject(data)) {
                             $scope.roles = data;
                             $scope.user_roles = data;
@@ -32,8 +34,6 @@ define([
                             // TODO: 데이터가 없을 경우 처리
                             alert("조회 데이터가 없습니다.");
                         }
-                    } else {
-                        alert(data.msg);
                     }
                 }
             });
@@ -52,10 +52,10 @@ define([
                 if (status != 200) {
                     alert('삭제에 실패 했습니다.');
                 } else {
-                    if (data.err == false) {
-                        $scope.list.splice(idx, 1);
-                    } else {
+                    if (data.err == true) {
                         alert(data.msg);
+                    } else {
+                        $scope.list.splice(idx, 1);
                     }
                 }
             });
@@ -74,15 +74,15 @@ define([
                 if (status != 200) {
                     alert('조회에 실패 했습니다.');
                 } else {
-                    if (!data.err) {
+                    if (data.err == true) {
+                        alert(data.msg);
+                    } else {
                         if (angular.isObject(data)) {
                             $scope.list = data;
                         } else {
                             // TODO: 데이터가 없을 경우 처리
                             alert("조회 데이터가 없습니다.");
                         }
-                    } else {
-                        alert(data.msg);
                     }
                 }
 
@@ -97,10 +97,10 @@ define([
                     if (status != 200) {
                         alert('등록에 실패 했습니다.');
                     } else {
-                        if (data.err == false) {
-                            $scope.getCmsUserList();
-                        } else {
+                        if (data.err == true) {
                             alert(data.msg);
+                        } else {
+                            $scope.getCmsUserList();
                         }
                     }
                 });
@@ -109,10 +109,10 @@ define([
                     if (status != 200) {
                         alert('수정에 실패 했습니다.');
                     } else {
-                        if (data.err == false) {
-                            $scope.getCmsUserList();
-                        } else {
+                        if (data.err == true) {
                             alert(data.msg);
+                        } else {
+                            $scope.getCmsUserList();
                         }
                     }
                 });
@@ -128,24 +128,24 @@ define([
             if ($scope.key != '') {
                 dataService.db('cms_user').findOne($scope.key,{},function(data, status){
                     if (status != 200) {
-                        alert('조회에 실패 했습니다.');
+                        alert('사용자 조회에 실패 했습니다.');
                     } else {
-                        if (angular.isObject(data)) {
-                            var idx = 0;
-                            for (var i=0; i < $scope.user_roles.length; i ++) {
-                                if (JSON.stringify(data.ROLE) == JSON.stringify($scope.user_roles[i])) {
-                                    idx = i;
-                                }
-                            }
-
-                            $scope.item = data;
-                            $scope.item.ROLE = $scope.user_roles[idx];
+                        if (data.err == true) {
+                            alert(data.msg);
                         } else {
-                            if (data.err == true) {
-                                alert(data.msg);
+                            if (angular.isObject(data)) {
+                                var idx = 0;
+                                for (var i=0; i < $scope.user_roles.length; i ++) {
+                                    if (JSON.stringify(data.ROLE) == JSON.stringify($scope.user_roles[i])) {
+                                        idx = i;
+                                    }
+                                }
+
+                                $scope.item = data;
+                                $scope.item.ROLE = $scope.user_roles[idx];
                             } else {
                                 // TODO: 데이터가 없을 경우 처리
-                                alert("조회 데이터가 없습니다.");
+                                alert("사용자 조회 데이터가 없습니다.");
                             }
                         }
                     }
@@ -162,10 +162,10 @@ define([
                 if (status != 200) {
                     alert('수정에 실패 했습니다.');
                 } else {
-                    if (data.err == false) {
-                        $scope.getCmsUserList();
-                    } else {
+                    if (data.err == true) {
                         alert(data.msg);
+                    } else {
+                        $scope.getCmsUserList();
                     }
                 }
             });

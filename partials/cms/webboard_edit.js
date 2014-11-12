@@ -13,10 +13,17 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('webboard_edit', ['$scope', '$stateParams', 'loginService', 'dataService', '$q', '$location', function ($scope, $stateParams, loginService, dataService, $q, $location) {
 
-        var uploadUrl = 'http://localhost/serverscript/upload/../../upload/files/';
+        var uploadUrl = 'http://localhost';
+//        var uploadUrl = 'http://localhost/serverscript/upload/../../upload/files/';
+
+        /* 파일 업로드 설정 */
+        var url = '/serverscript/upload/';
+        $scope.options = { url: url, autoUpload: false };
 
         /********** 초기화 **********/
         $scope.queue = [];
+        // 게시판 초기화
+        $scope.item = {};
 
         // 초기화
         $scope.initEdit = function() {
@@ -43,11 +50,20 @@ define([
                     if (status != 200) {
                         alert('조회에 실패 했습니다.');
                     } else {
-                        if (angular.isObject(data)) {
-                            $scope.item = data;
+                        if (data.err == true) {
+                            alert(data.msg);
                         } else {
-                            if (data.err == true) {
-                                alert(data.msg);
+                            if (angular.isObject(data)) {
+                                $scope.item = data;
+
+                                // 파일 순서 : 1. 원본, 2. 썸네일, 3. 중간사이즈
+                                var files = data.FILES;
+
+                                if (files.length > 0) {
+                                    for (var i =0; i < files.length; i++) {
+                                        $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":uploadUrl+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":uploadUrl+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":uploadUrl+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                                    }
+                                }
                             } else {
                                 // TODO: 데이터가 없을 경우 처리
                                 alert("조회 데이터가 없습니다.");
@@ -94,6 +110,11 @@ define([
         // 게사판 저장 버튼 클릭
         $scope.click_saveCmsBoard = function () {
             $scope.item.FILES = $scope.queue;
+
+            for(var i in $scope.item.FILES) {
+                $scope.item.FILES[i].$destroy = "";
+//                $scope.item.FILES[i].$submit();
+            }
 
             if ($stateParams.id == 0) {
                 dataService.db('webboard').insert($scope.item,function(data, status){

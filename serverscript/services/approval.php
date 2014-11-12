@@ -30,7 +30,7 @@
 
     switch ($_method) {
         case "GET":
-            if (isset($id)) {
+            if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             P.SUBJECT AS PROJECT_NM, C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.SUBJECT, C.BODY, C.EDITOR_ID, C.CONTENT_ST, C.REG_UID, C.REG_NM, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT,
                             C.CURRENT_FL, C.APPLY_YM, C.MODIFY_FL, C.BEGIN_DT, C.CLOSE_DT, C.FINISH_DT, C.CONTENTS, C.HIT_CNT, C.SCRAP_CNT, C.PROJECT_NO
@@ -39,7 +39,7 @@
                         WHERE
                             C.PROJECT_NO = P.NO
                             AND C.CURRENT_FL = '0'
-                            AND C.NO = ".$id."
+                            AND C.NO = ".$_key."
                         ";
                 $data = $_d->sql_query($sql);
                 if ($_d->mysql_errno > 0) {
@@ -100,13 +100,15 @@
             break;
 
         case "POST":
-            $form = json_decode(file_get_contents("php://input"),true);
+//            $form = json_decode(file_get_contents("php://input"),true);
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
-
-            if ( trim($form[TASK_NO]) == "" ) {
+            if ( trim($_model[TASK_NO]) == "" ) {
                 $_d->failEnd("태스크 순번이 없습니다");
             }
+
+            $err = 0;
+            $msg = "";
 
             $_d->sql_beginTransaction();
 
@@ -119,41 +121,51 @@
                         ,APPROVAL_DT
                         ,NOTE
                     ) VALUES (
-                        ".$form[TASK_NO]."
-                        ,'".$form[APPROVAL_ST]."'
-                        ,'".$form[APPROVAL_ID]."'
-                        ,'".$form[APPROVAL_NM]."'
+                        ".$_model[TASK_NO]."
+                        ,'".$_model[APPROVAL_ST]."'
+                        ,'".$_model[APPROVAL_ID]."'
+                        ,'".$_model[APPROVAL_NM]."'
                         ,SYSDATE()
-                        ,'".$form[NOTE]."'
+                        ,'".$_model[NOTE]."'
                     )";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if (!empty($form[APPROVAL_ST])) {
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
 
-                if ($form[APPROVAL_ST] == '11')
-                    $parse = '20';
-                else if ($form[APPROVAL_ST] == '12')
+            if (!empty($_model[APPROVAL_ST])) {
+
+                if ($_model[APPROVAL_ST] == '11')
                     $parse = '12';
-                else if ($form[APPROVAL_ST] == '21')
-                    $parse = '30';
-                else if ($form[APPROVAL_ST] == '22')
+                else if ($_model[APPROVAL_ST] == '12')
+                    $parse = '13';
+                else if ($_model[APPROVAL_ST] == '21')
                     $parse = '22';
+                else if ($_model[APPROVAL_ST] == '22')
+                    $parse = '23';
 
                 $sql = "UPDATE CMS_TASK
                         SET
                             PHASE = '".$parse."'
                         WHERE
-                            NO = ".$form[TASK_NO]."
+                            NO = ".$_model[TASK_NO]."
                         ";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
             }
 
-            if ($_d->mysql_errno > 0) {
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                $_d->failEnd("등록실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);
@@ -166,9 +178,8 @@
                 $_d->failEnd("수정실패입니다:"."ID가 누락되었습니다.");
             }
 
-            $form = json_decode(file_get_contents("php://input"),true);
-
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            $form = json_decode(file_get_contents("php://input"),true);
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if (isset($_phase)) {
                 $sql = "UPDATE CMS_TASK

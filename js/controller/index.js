@@ -22,7 +22,7 @@ define([
 
     // 대시보드
     '../../partials/cms/dashboard',
-    '../../partials/cms/account_edit',
+    '../../partials/cms/account',
     '../../partials/cms/scheduler_calendar',
     '../../partials/cms/archive',
     '../../partials/cms/archive_list',
@@ -33,6 +33,7 @@ define([
     '../../partials/cms/task_list',
     '../../partials/cms/task_edit',
     '../../partials/cms/content_list',
+    '../../partials/cms/content_edit',
 
     '../../partials/cms/article_list',
     '../../partials/cms/article_edit',

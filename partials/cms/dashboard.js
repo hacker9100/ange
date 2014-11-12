@@ -16,6 +16,8 @@ define([
         /********** 초기화 **********/
         // 초기화
         $scope.initList = function() {
+            $scope.oneAtATime = true;
+
             $scope.PAGE_NO = 0;
             $scope.PAGE_SIZE = 5;
         };
@@ -47,13 +49,17 @@ define([
 
             dataService.db('webboard').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},{HEAD: 'NOTICE'},function(data, status){
                 if (status != 200) {
-                    alert('조회에 실패 했습니다.');
+                    alert('공지사항 조회에 실패 했습니다.');
                 } else {
-                    if (angular.isObject(data)) {
-                        $scope.notices = data;
+                    if (data.err == true) {
+                        alert(data.msg);
                     } else {
-                        // TODO: 데이터가 없을 경우 처리
-                        alert("조회 데이터가 없습니다.");
+                        if (angular.isObject(data)) {
+                            $scope.notices = data;
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            alert("공지사항 조회 데이터가 없습니다.");
+                        }
                     }
                 }
 
@@ -67,13 +73,17 @@ define([
 
             dataService.db('project').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},{},function(data, status){
                 if (status != 200) {
-                    alert('조회에 실패 했습니다.');
+                    alert('프로젝트 조회에 실패 했습니다.');
                 } else {
-                    if (angular.isObject(data)) {
-                        $scope.projects = data;
+                    if (data.err == true) {
+                        alert(data.msg);
                     } else {
-                        // TODO: 데이터가 없을 경우 처리
-                        alert("조회 데이터가 없습니다.");
+                        if (angular.isObject(data)) {
+                            $scope.projects = data;
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            alert("프로젝트 조회 데이터가 없습니다.");
+                        }
                     }
                 }
 
@@ -92,15 +102,24 @@ define([
         $scope.getTaskList = function () {
             $scope.isLoading = true;
 
-            dataService.db('task').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},{},function(data, status){
+            var search = {};
+            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER') {
+                search = {EDITOR_ID: $rootScope.uid};
+            }
+
+            dataService.db('task').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},search,function(data, status){
                 if (status != 200) {
-                    alert('조회에 실패 했습니다.');
+                    alert('태스크 조회에 실패 했습니다.');
                 } else {
-                    if (angular.isObject(data)) {
-                        $scope.tasks = data;
+                    if (data.err == true) {
+                        alert(data.msg);
                     } else {
-                        // TODO: 데이터가 없을 경우 처리
-                        alert("조회 데이터가 없습니다.");
+                        if (angular.isObject(data)) {
+                            $scope.tasks = data;
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            alert("태스크 조회 데이터가 없습니다.");
+                        }
                     }
                 }
 

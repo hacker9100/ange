@@ -29,7 +29,7 @@
                                     <span style="color:#DE4612; font-weight:bold;">{{task.CLOSE_YMD}} 마감</span>
                                 </div>
                                 <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
-                                    {{ task.PHASE == '0' ? '태스크등록' : task.PHASE == '10' ? '원고작성' : task.PHASE == '11' ? '원고승인대기' : task.PHASE == '20' ? '원고승인완료' : task.PHASE == '13' ? '원고반려' : task.PHASE == '21' ? '편집작성' : task.PHASE == '13' ? '편집반려' : '편집승인' }}
+                                    {{ task.PHASE == '0' ? '태스크등록' : task.PHASE == '10' ? '원고작성' : task.PHASE == '11' ? '원고승인대기' : task.PHASE == '12' ? '원고반려' : task.PHASE == '13' ? '원고승인완료' : task.PHASE == '20' ? '편집작성' : task.PHASE == '21' ? '편집승인대기' : task.PHASE == '22' ? '편집반려' : '편집승인완료' }}
                                 </div>
                             </div>
 
@@ -104,13 +104,17 @@
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>저장</span>
                 </button>
-                <button type="button" class="btn btn-primary start" ng-click="click_commitContent();" ng-disabled="editForm.$invalid">
+                <button type="button" class="btn btn-primary start" ng-click="click_commitContent();" ng-hide="!isCommit">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>등록&승인요청</span>
                 </button>
-                <button type="button" class="btn btn-primary start" ng-click="test();">
+                <button type="button" class="btn btn-primary start" ng-click="click_returnContent();" ng-hide="!isApproval">
                     <i class="glyphicon glyphicon-plus"></i>
-                    <span>테스트</span>
+                    <span>반려</span>
+                </button>
+                <button type="button" class="btn btn-primary start" ng-click="click_approveContent();" ng-hide="!isApproval">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>승인</span>
                 </button>
             </div>
         </div>
@@ -119,4 +123,30 @@
 
 </div>
 <!-- ////Contents Include -->
+
+<script type="text/ng-template" id="content_approval_modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{title}}</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-model="approval" lass="row" class="form-horizontal">
+            <div class= "form-group">
+                <label class= "col-md-2">콘텐츠순번</label>
+                <div class="col-md-4">
+                    <input ng-model="approval.CONTENT_NO" type= "text" class= "form-control" placeholder= "콘텐츠순번"/>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">메모</label>
+                <div class="col-md-9">
+                    <textarea ng-model="approval.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_ok()">확인</button>
+        <button class="btn btn-warning" ng-click="click_cancel()">취소</button>
+    </div>
+</script>
 

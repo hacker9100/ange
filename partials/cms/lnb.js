@@ -18,8 +18,8 @@ define([
             {"project, task, article, article_confirm, edit, edit_confirm, publish": [
                 { url: '/project', 'name': '프로젝트' },
                 { url: '/task', 'name': '태스크' },
-                { url: 'content/article', 'name': '원고' },
-                { url: '/article_confirm', 'name': '원고 승인' },
+                { url: '/content/article', 'name': '원고' },
+                { url: '/content/article_confirm', 'name': '원고 승인' },
                 { url: '/edit', 'name': '편집' },
                 { url: '/edit_confirm', 'name': '편집 승인' },
                 { url: '/publish', 'name': '출판' }
@@ -36,7 +36,7 @@ define([
 
         for(var i = 0; i < menuinfos.length; i++) {
             angular.forEach(menuinfos[i], function (submenu, menu) {
-                if (menu.indexOf(spMenu[1]) > -1) {
+                if (menu.indexOf(spMenu[1]) > -1 || menu.indexOf(spMenu[2]) > -1) {
                     $scope.menuInfos = submenu;
                 }
             });

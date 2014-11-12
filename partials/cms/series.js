@@ -34,10 +34,10 @@ define([
                 if (status != 200) {
                     alert('삭제에 실패 했습니다.');
                 } else {
-                    if (data.err == false) {
-                        $scope.list.splice(idx, 1);
-                    } else {
+                    if (data.err == true) {
                         alert(data.msg);
+                    } else {
+                        $scope.list.splice(idx, 1);
                     }
                 }
             });
@@ -53,17 +53,17 @@ define([
             $scope.isLoading = true;
             dataService.db('series').find({},search,function(data, status){
                 if (status != 200) {
-                    alert('조회에 실패 했습니다.');
+                    alert('시리즈 조회에 실패 했습니다.');
                 } else {
-                    if (!data.err) {
+                    if (data.err == true) {
+                        alert(data.msg);
+                    } else {
                         if (angular.isObject(data)) {
                             $scope.list = data;
                         } else {
                             // TODO: 데이터가 없을 경우 처리
-                            alert("조회 데이터가 없습니다.");
+                            alert("시리즈 조회 데이터가 없습니다.");
                         }
-                    } else {
-                        alert(data.msg);
                     }
                 }
 
@@ -78,10 +78,10 @@ define([
                     if (status != 200) {
                         alert('등록에 실패 했습니다.');
                     } else {
-                        if (data.err == false) {
-                            $scope.getSeriesList();
-                        } else {
+                        if (data.err == true) {
                             alert(data.msg);
+                        } else {
+                            $scope.getSeriesList();
                         }
                     }
                 });
@@ -90,10 +90,10 @@ define([
                     if (status != 200) {
                         alert('수정에 실패 했습니다.');
                     } else {
-                        if (data.err == false) {
-                            $scope.getSeriesList();
-                        } else {
+                        if (data.err == true) {
                             alert(data.msg);
+                        } else {
+                            $scope.getSeriesList();
                         }
                     }
                 });
@@ -109,16 +109,16 @@ define([
             if ($scope.key != '') {
                 dataService.db('series').findOne($scope.key,{},function(data, status){
                     if (status != 200) {
-                        alert('조회에 실패 했습니다.');
+                        alert('시리즈 조회에 실패 했습니다.');
                     } else {
-                        if (angular.isObject(data)) {
-                            $scope.item = data;
+                        if (data.err == true) {
+                            alert(data.msg);
                         } else {
-                            if (data.err == true) {
-                                alert(data.msg);
+                            if (angular.isObject(data)) {
+                                $scope.item = data;
                             } else {
                                 // TODO: 데이터가 없을 경우 처리
-                                alert("조회 데이터가 없습니다.");
+                                alert("시리즈 조회 데이터가 없습니다.");
                             }
                         }
                     }
@@ -135,10 +135,10 @@ define([
                 if (status != 200) {
                     alert('수정에 실패 했습니다.');
                 } else {
-                    if (data.err == false) {
-                        $scope.getSeriesList();
-                    } else {
+                    if (data.err == true) {
                         alert(data.msg);
+                    } else {
+                        $scope.getSeriesList();
                     }
                 }
             });

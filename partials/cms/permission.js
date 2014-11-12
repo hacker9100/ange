@@ -18,18 +18,18 @@ define([
         $scope.initEdit = function() {
             dataService.db('permission').find({},{ROLE: true},function(data, status){
                 if (status != 200) {
-                    alert('조회에 실패 했습니다.');
+                    alert('권한 조회에 실패 했습니다.');
                 } else {
-                    if (!data.err) {
+                    if (data.err == true) {
+                        alert(data.msg);
+                    } else {
                         if (angular.isObject(data)) {
                             $scope.roles = data;
                             $scope.ROLE = data[0];
                         } else {
                             // TODO: 데이터가 없을 경우 처리
-                            alert("조회 데이터가 없습니다.");
+                            alert("권한 조회 데이터가 없습니다.");
                         }
-                    } else {
-                        alert(data.msg);
                     }
                 }
             });
@@ -44,17 +44,17 @@ define([
         $scope.getPermission = function() {
             dataService.db('permission').findOne($scope.ROLE.ROLE_ID,{},function(data, status){
                 if (status != 200) {
-                    alert('조회에 실패 했습니다.');
+                    alert('권한 조회에 실패 했습니다.');
                 } else {
-                    if (!data.err) {
+                    if (data.err == true) {
+                        alert(data.msg);
+                    } else {
                         if (angular.isObject(data)) {
                             $scope.list = data;
                         } else {
                             // TODO: 데이터가 없을 경우 처리
-                            alert("조회 데이터가 없습니다.");
+                            alert("권한 조회 데이터가 없습니다.");
                         }
-                    } else {
-                        alert(data.msg);
                     }
                 }
             });
@@ -64,12 +64,12 @@ define([
         $scope.click_savePermission = function() {
             dataService.db('permission').update($scope.ROLE.ROLE_ID, $scope.list,function(data, status){
                 if (status != 200) {
-                    alert('조회에 실패 했습니다.');
+                    alert('권한 수정에 실패 했습니다.');
                 } else {
-                    if (data.err == false) {
-                        alert("권한이 수정 되었습니다.");
-                    } else {
+                    if (data.err == true) {
                         alert(data.msg);
+                    } else {
+                        alert("권한이 수정 되었습니다.");
                     }
                 }
             });

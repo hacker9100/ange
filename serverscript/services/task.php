@@ -68,23 +68,16 @@
                 $from_category = "";
                 $limit_search = "";
 
-                if (isset($_phase)) {
-                    $in_str = "";
-                    $arr_phase = explode(',', $_phase);
-                    for($i=0;$i< sizeof($arr_phase);$i++){
-                        $in_str = $in_str."'".$arr_phase[$i]."'";
-                        if (sizeof($arr_phase) - 1 != $i) $in_str = $in_str.",";
-                    }
-
-                    $where_search = "AND T.PHASE IN (".$in_str.") ";
-                }
-
                 if (isset($_page)) {
                     $limit_search .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
                 MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".$_search);
                 MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".count($_search));
+
+                if ($_SESSION['role'] != 'ADMIN' && $_SESSION['role'] != 'MANAGER') {
+                    $where_search .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
+                }
 
                 if (isset($_search) && count($_search) > 0) {
 /*
@@ -101,6 +94,17 @@
                         }
                     }
 */
+                    if (isset($_search[PHASE])) {
+                        $in_str = "";
+                        $arr_phase = explode(',', $_search[PHASE]);
+                        for($i=0;$i< sizeof($arr_phase);$i++){
+                            $in_str = $in_str."'".trim($arr_phase[$i])."'";
+                            if (sizeof($arr_phase) - 1 != $i) $in_str = $in_str.",";
+                        }
+
+                        $where_search = "AND T.PHASE IN (".$in_str.") ";
+                    }
+
                     if (isset($_search[YEAR]) && $_search[YEAR] != "") {
                         $where_search .= "AND P.YEAR  = '".$_search[YEAR]."' ";
                     }
@@ -109,6 +113,9 @@
                     }
                     if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                         $where_search .= "AND T.".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    }
+                    if (isset($_search[EDITOR_ID]) && $_search[EDITOR_ID] != "") {
+                        $where_search .= "AND T.EDITOR_ID  = '".$_search[EDITOR_ID]."' ";
                     }
                     if (isset($_search[CATEGORY]) && $_search[CATEGORY] != "") {
                         $where_category = "";
@@ -194,8 +201,7 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if ( trim($_model[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
@@ -218,9 +224,10 @@
                 $project_st = $project[PROJECT_ST];
             }
 
-            $_d->sql_beginTransaction();
+            $err = 0;
+            $msg = "";
 
-            MtUtil::_c("### [SUPER_NO] ".( empty($form[SUPER_NO]) ? 0 : $form[SUPER_NO]) );
+            $_d->sql_beginTransaction();
 
             $sql = "INSERT INTO CMS_TASK
                     (
@@ -250,6 +257,11 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
             if (count($_model[CATEGORY]) > 0) {
                 $categories = $_model[CATEGORY];
 
@@ -268,6 +280,11 @@
                     )";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
                 }
             }
 
@@ -280,6 +297,11 @@
                         ";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
             }
 
             if (!($_d->mysql_errno > 0) && ($project_st == 0)) {
@@ -291,11 +313,16 @@
                         ";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
             }
 
-            if ($_d->mysql_errno > 0) {
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                $_d->failEnd("등록실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);
@@ -309,8 +336,7 @@
             }
 
 //            $form = json_decode(file_get_contents("php://input"),true);
-
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if (isset($_phase)) {
                 $sql = "UPDATE CMS_TASK
@@ -329,6 +355,8 @@
                     $_d->succEnd($no);
                 }
             } else {
+                $err = 0;
+                $msg = "";
 
                 $_d->sql_beginTransaction();
 
@@ -366,6 +394,11 @@
 
                 $_d->sql_query($sql);
 
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
                 if (count($_model[CATEGORY]) > 0) {
 
                     $sql = "DELETE FROM CONTENT_CATEGORY
@@ -374,6 +407,11 @@
                             ";
 
                     $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
 
                     $categories = $_model[CATEGORY];
 
@@ -392,12 +430,17 @@
                                 )";
 
                         $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
                     }
                 }
 
-                if ($_d->mysql_errno > 0) {
+                if ($err > 0) {
                     $_d->sql_rollback();
-                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                    $_d->failEnd("수정실패입니다:".$msg);
                 } else {
                     $_d->sql_commit();
                     $_d->succEnd($no);

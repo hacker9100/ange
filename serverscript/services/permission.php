@@ -40,14 +40,12 @@
                             AND R.ROLE_ID = M.ROLE_ID;
                         ";
 
-                $_d->dataEnd($sql);
-
-//                $data = $_d->sql_query($sql);
-//                if ($_d->mysql_errno > 0) {
-//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                } else {
-//                    $_d->dataEnd($sql);
-//                }
+                $data = $_d->sql_query($sql);
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd($sql);
+                }
             } else {
                 if (isset($_search[ROLE]) && $_search[ROLE] != "") {
                     $sql = "SELECT
@@ -77,14 +75,12 @@
                             ";
                 }
 
-                $_d->dataEnd($sql);
-
-//                $data = $_d->sql_query($sql);
-//                if ($_d->mysql_errno > 0) {
-//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                } else {
-//                    $_d->dataEnd($sql);
-//                }
+                $data = $_d->sql_query($sql);
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd($sql);
+                }
             }
 
             break;
@@ -93,6 +89,9 @@
 //            $form = json_decode(file_get_contents("php://input"),true);
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+
+            $err = 0;
+            $msg = "";
 
             $_d->sql_beginTransaction();
 
@@ -104,9 +103,14 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if ($_d->mysql_errno > 0) {
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                $_d->failEnd("등록실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);
@@ -120,8 +124,10 @@
             }
 
 //            $form = json_decode(file_get_contents("php://input"),true);
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+            $err = 0;
+            $msg = "";
 
             $_d->sql_beginTransaction();
 
@@ -145,12 +151,17 @@
 
                     $_d->sql_query($sql);
                     $no = $_d->mysql_insert_id;
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
                 }
             }
 
-            if ($_d->mysql_errno > 0) {
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                $_d->failEnd("등록실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);

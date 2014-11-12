@@ -110,6 +110,9 @@
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
 
+            $err = 0;
+            $msg = "";
+
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             $_d->sql_beginTransaction();
@@ -149,6 +152,11 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
             if (isset($_model[ROLE]) && $_model[ROLE] != "") {
                 $sql = "INSERT INTO USER_ROLE
                     (
@@ -162,11 +170,16 @@
                     )";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
             }
 
-            if ($_d->mysql_errno > 0) {
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                $_d->failEnd("등록실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);
@@ -179,13 +192,27 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-//            $FORM = json_decode(file_get_contents("php://input"),true);
+            $err = 0;
+            $msg = "";
 
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            $FORM = json_decode(file_get_contents("php://input"),true);
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+
+            $update_password = "";
+
+            if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
+                $password = $_model[PASSWORD];
+                $hash = create_hash($password);
+
+                $update_password = ",PASSWORD = '".$hash."'";
+            }
+
+            $_d->sql_beginTransaction();
 
             $sql = "UPDATE CMS_USER
                     SET
                         USER_NM = '".$_model[USER_NM]."'
+                        ".$update_password."
                         ,USER_ST = '".$_model[USER_ST]."'
                         ,PHONE = '".$_model[PHONE]."'
                         ,EMAIL = '".$_model[EMAIL]."'
@@ -197,6 +224,11 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
             if (isset($_model[ROLE]) && $_model[ROLE] != "") {
                 $sql = "UPDATE USER_ROLE
                         SET
@@ -207,11 +239,18 @@
                         ";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
             }
 
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+            if ($err > 0) {
+                $_d->sql_rollback();
+                $_d->failEnd("수정실패입니다:".$msg);
             } else {
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
@@ -222,30 +261,37 @@
                 $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
             }
 
+            $err = 0;
+            $msg = "";
+
             $_d->sql_beginTransaction();
 
             $sql = "DELETE FROM USER_ROLE WHERE USER_ID = '".$_key."'";
 
             $_d->sql_query($sql);
 
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
             $sql = "DELETE FROM CMS_USER WHERE USER_ID = '".$_key."'";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if ($_d->mysql_errno > 0) {
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
+                $_d->failEnd("삭제실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);
             }
-
-//            if ($_d->mysql_errno > 0) {
-//                $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
-//            } else {
-//                $_d->succEnd($no);
-//            }
 
             break;
     }

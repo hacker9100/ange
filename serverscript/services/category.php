@@ -79,8 +79,7 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             $sql = "INSERT INTO CMS_CATEGORY
                     (
@@ -148,30 +147,37 @@
                 $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
             }
 
+            $err = 0;
+            $msg = "";
+
             $_d->sql_beginTransaction();
 
             $sql = "DELETE FROM CMS_CATEGORY WHERE NO = ".$_id;
 
             $_d->sql_query($sql);
 
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
             $sql = "DELETE FROM CONTENT_CATEGORY WHERE CATEGORY_NO = ".$_id;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if ($_d->mysql_errno > 0) {
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
+                $_d->failEnd("삭제실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);
             }
-
-//            if ($_d->mysql_errno > 0) {
-//                $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
-//            } else {
-//                $_d->succEnd($no);
-//            }
 
             break;
     }

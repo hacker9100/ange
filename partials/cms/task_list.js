@@ -26,6 +26,8 @@ define([
         // 카테고리 선택 콤보박스 설정
         $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
 
+        var menuSearch = {};
+
         // 날짜 콤보박스
         var year = [];
         var now = new Date();
@@ -140,9 +142,14 @@ define([
             $location.url('/task/0');
         };
 
-        // 수정 화면 이동
+        // 태스크 수정 화면 이동
         $scope.click_showEditTask = function (key) {
             $location.url('/task/'+key);
+        };
+
+        // 콘텐츠 수정 화면 이동
+        $scope.click_showEditContent = function (key) {
+            $location.url('/content/'+$stateParams.menu+'/'+key);
         };
 
         // 이력조회 버튼 클릭
@@ -244,14 +251,35 @@ define([
         };
 
         /********** 화면 초기화 **********/
+        var initSearch = {};
+
         // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        $scope.$parent.pageTitle = '태스크 관리';
-        $scope.$parent.pageDescription = '기사주제 설정하고 할당하여 관리합니다.';
-        $scope.$parent.tailDescription = '.';
+        if ($stateParams.menu == 'article') {
+            $scope.$parent.pageTitle = '원고 관리';
+            $scope.$parent.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
+            $scope.$parent.tailDescription = '.';
+
+            $scope.isTask = true;
+            initSearch = {PHASE: '0, 10, 11, 12'};
+        } else if ($stateParams.menu == "article_confirm") {
+            $scope.$parent.pageTitle = '원고 승인';
+            $scope.$parent.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
+            $scope.$parent.tailDescription = '.';
+
+            $scope.isTask = true;
+            initSearch = {PHASE: '11, 12'};
+        } else {
+            $scope.$parent.message = 'ANGE CMS';
+            $scope.$parent.pageTitle = '태스크 관리';
+            $scope.$parent.pageDescription = '기사주제 설정하고 할당하여 관리합니다.';
+            $scope.$parent.tailDescription = '.';
+
+            $scope.isTask = false;
+            $scope.search = {};
+        }
 
         $scope.initList();
-        $scope.getTaskList();
+        $scope.getTaskList(initSearch);
 
     }]);
 });
