@@ -9,14 +9,14 @@ define(['./services'], function (services) {
 
     services.service('dataService', ['$http', '$location', function($http, $location){
         var helpers = {
-            uri : "/serverscript/services/",
-            serviceUri : "webboard",
+            uri : '/serverscript/services/',
+            serviceUri : 'webboard',
             getParam : function(){
                 return {
-                    db         : "ange"
-                    ,_method    : ""
-                    ,_key       : ""
-                    ,_phase     : ""
+                    db         : 'ange'
+                    ,_method    : ''
+                    ,_key       : ''
+                    ,_phase     : ''
                     ,_model     : {}
                     ,_category  : {}
                 };
@@ -27,15 +27,37 @@ define(['./services'], function (services) {
 
         var obj = {
 
-            updateStatus : function(uri,key,phase,callback){
+            login : function(key, model, callback){
+                param._method = 'GET';
+                param._key = key;
+                param._model = model;
+                $http({
+                    url : helpers.uri+'login.php'
+                    ,method : 'POST'
+                    ,data : $.param(param)
+                    ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
+                }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
+            },
+
+            getSession : function(callback){
+                param._method = 'GET';
+                $http({
+                    url : helpers.uri+'login.php'
+                    ,method : 'POST'
+                    ,data : $.param(param)
+                    ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
+                }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
+            }, updateStatus : function(uri,key,phase,callback){
 
                 //console.log("getProject() : projectid = [" + projectid + "]");
 
-                param._method = "PUT";
+                param._method = 'PUT';
                 param._key = key;
                 param._phase = phase;
                 $http({
-                    url : helpers.uri+uri+".php"
+                    url : helpers.uri+uri+'.php'
                     ,method : 'POST'
                     ,data : $.param(param)
                     ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -58,14 +80,14 @@ define(['./services'], function (services) {
                             var callback = function(result,stat){ console.log(result); } ;
 
                             if(arguments.length===2){
-                                param._method = "GET";
+                                param._method = 'GET';
                                 param._key = "";
                                 param._page = {};
                                 param._search = arguments[0];
                                 param._model = {};
                                 callback = arguments[1];
                             }else if(arguments.length===3){
-                                param._method = "GET";
+                                param._method = 'GET';
                                 param._key = "";
                                 param._page = arguments[0];
                                 param._search = arguments[1];
@@ -74,7 +96,7 @@ define(['./services'], function (services) {
                             }
 
                             return $http({
-                                url : helpers.uri+uri+".php"
+                                url : helpers.uri+uri+'.php'
                                 ,method : 'POST'
                                 ,data : $.param(param)
                                 ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -86,14 +108,14 @@ define(['./services'], function (services) {
                             var callback ;
 
                             if(arguments.length===2){
-                                param._method = "GET";
+                                param._method = 'GET';
                                 param._key = arguments[0];
                                 param._page = {};
                                 param._search = {};
                                 param._model = {};
                                 callback = arguments[1];
                             }else if(arguments.length===3){
-                                param._method = "GET";
+                                param._method = 'GET';
                                 param._key = arguments[0];
                                 param._page = {};
                                 param._search = arguments[1];
@@ -102,7 +124,7 @@ define(['./services'], function (services) {
                             }
 
                             $http({
-                                url : helpers.uri+uri+".php"
+                                url : helpers.uri+uri+'.php'
                                 ,method : 'POST'
                                 ,data : $.param(param)
                                 ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -112,7 +134,7 @@ define(['./services'], function (services) {
 
                         },
                         insert : function(){
-                            param._method = "POST";
+                            param._method = 'POST';
                             param._key = "";
                             param._page = {};
                             param._search = {};
@@ -120,7 +142,7 @@ define(['./services'], function (services) {
                             var callback = arguments[1];
 
                             $http({
-                                url : helpers.uri+uri+".php"
+                                url : helpers.uri+uri+'.php'
                                 ,method : 'POST'
                                 ,data : $.param(param)
                                 ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -129,7 +151,7 @@ define(['./services'], function (services) {
                             return true;
                         },
                         update : function(){
-                            param._method = "PUT";
+                            param._method = 'PUT';
                             param._key = arguments[0];
                             param._page = {};
                             param._search = {};
@@ -137,7 +159,7 @@ define(['./services'], function (services) {
                             var callback = arguments[2];
 
                             $http({
-                                url : helpers.uri+uri+".php"
+                                url : helpers.uri+uri+'.php'
                                 ,method : 'POST'
                                 ,data : $.param(param)
                                 ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -147,7 +169,7 @@ define(['./services'], function (services) {
                             return true;
                         },
                         remove : function(){
-                            param._method = "DELETE";
+                            param._method = 'DELETE';
                             param._key = arguments[0];
                             param._page = {};
                             param._search = {};
@@ -155,7 +177,7 @@ define(['./services'], function (services) {
                             var callback = arguments[1];
 
                             $http({
-                                url : helpers.uri+uri+".php"
+                                url : helpers.uri+uri+'.php'
                                 ,method : 'POST'
                                 ,data : $.param(param)
                                 ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -165,7 +187,7 @@ define(['./services'], function (services) {
                         }
                     }
                 })
-            })(helpers.serviceUri,"ange")
+            })(helpers.serviceUri,'ange')
 
         };
 

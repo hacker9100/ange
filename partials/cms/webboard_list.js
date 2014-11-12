@@ -11,7 +11,10 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('webboard_list', ['$scope', '$rootScope', '$stateParams', 'dataService', '$location', function ($scope, $rootScope, $stateParams, dataService, $location) {
+    controllers.controller('webboard_list', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', function ($scope, $rootScope, $stateParams, $location, $controller) {
+
+        /********** 공통 controller 호출 **********/
+        angular.extend(this, $controller('common', {$scope: $scope}));
 
         /********** 초기화 **********/
         $scope.search = {};
@@ -20,7 +23,7 @@ define([
         $scope.listData = [];
 
         // 초기화
-        $scope.initList = function() {
+        $scope.init = function(session) {
             // 검색어 조건
             var order = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
@@ -57,10 +60,9 @@ define([
 //                alert("삭제 권한이 없습니다.");
 //            }
 
-            webboard.deleteProject(board.NO).then(function(data){
-                // TODO: 삭제 후 처리
-//                $scope.list.splice(idx, 1);
-            });
+            $scope.deleteItem('webboard', board.NO, false)
+                .then(function(){$scope.getCmsBoardList($scope.search)})
+                .catch(function(error){alert(error)});
         };
 
         // 검색 버튼 클릭
@@ -70,26 +72,9 @@ define([
 
         // 프로젝트 목록 조회
         $scope.getCmsBoardList = function (search) {
-            $scope.isLoading = true;
-
-            dataService.db('webboard').find({NO:0, SIZE:4},search,function(data, status){
-                if (status != 200) {
-                    alert('게시판 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.list = data;
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("게시판 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
-
-                $scope.isLoading = false;
-            });
+            $scope.getList('webboard', {NO:0, SIZE:4}, search, true)
+                .then(function(data){$scope.list = data})
+                .catch(function(error){$scope.list = [];  alert(error)});
         };
 
         // 페이징 처리
@@ -140,18 +125,11 @@ define([
             $scope.selectCount = $scope.selectCount + 1;
         });
 
-        $scope.setTitle = function() {
-        // 페이지 타이틀
-            $scope.$parent.message = 'ANGE CMS';
-            $scope.$parent.pageTitle = '게시판';
-            $scope.$parent.pageDescription = '공지사항을 게시합니다.';
-            $scope.$parent.tailDescription = '.';
-        }
-
         /********** 화면 초기화 **********/
-        $scope.initList();
-        $scope.setTitle();
-        $scope.getCmsBoardList();
-
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getCmsBoardList)
+            .catch($scope.reportProblems);
     }]);
 });

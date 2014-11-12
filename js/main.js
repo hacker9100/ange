@@ -38,6 +38,9 @@ require.config({
 ////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
         'lodash' : '../lib/dropdown_multiselect/lodash',
 
+        // ng-table 모듈
+        'ng-table': '../lib/ng-table/ng-table',
+
         // ckeditor 모듈
         'ckeditor-core': '../lib/ckeditor/ckeditor', // ckeditor
         'ckeditor-jquery': '../lib/ckeditor/adapters/jquery', // angularjs에서 ckeditor를 사용할 수 있게 해주는 어덥터다.
@@ -111,6 +114,9 @@ require.config({
             deps: ['angular']
         },
         'angular-ui-router':{
+            deps: ['angular']
+        },
+        'ng-table':{
             deps: ['angular']
         },
 //        'dropdownMultiSelect':{

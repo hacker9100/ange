@@ -94,7 +94,10 @@
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                CMS_PROJECT
+                                CMS_USER U, USER_ROLE R
+                            WHERE
+                                U.USER_ID = R.USER_ID
+                                ".$where_search."
                         ) CNT
                         ";
                 $data = $_d->sql_query($sql);

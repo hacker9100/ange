@@ -6,7 +6,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('signin', ['$scope', '$rootScope', '$state', '$stateParams', 'login', 'loginService', '$location', function ($scope, $rootScope, $state, $stateParams, login, loginService, $location) {
+    controllers.controller('signin', ['$scope', '$rootScope', '$state', '$stateParams', 'login', 'dataService', '$location', function ($scope, $rootScope, $state, $stateParams, login, dataService, $location) {
 
 		//CSS 설정
 		//$scope.$emit('updateCSS', ['css/css1.css']);
@@ -47,27 +47,30 @@ alert("---");
         };
 */
         $scope.loginMe = function() {
-            loginService.login($scope.login.id, $scope.login).then(function(result) {
-                if (result.data.USER_ID) {
-                    $rootScope.authenticated = true;
-                    $rootScope.uid = result.data.USER_ID;
-                    $rootScope.name = result.data.USER_NM;
-                    $rootScope.role = result.data.ROLE_ID;
-                    $rootScope.menu_role = result.data.MENU_ROLE;
-                    $rootScope.email = result.data.EMAIL;
-
-                    $location.path('/dashboard');
+            dataService.login($scope.login.id, $scope.login, function(data, status) {
+                if (status != 200) {
+                    console.log('조회에 실패 했습니다.');
                 } else {
-                    if (result.data.msg) {
-                        alert(result.data.msg);
+                    if (data.err == true) {
+                        console.log(data.msg);
                     } else {
-                        alert("로그인에 실패하였습니다..");
+                        if (angular.isObject(data)) {
+                            $rootScope.authenticated = true;
+                            $rootScope.uid = data.USER_ID;
+                            $rootScope.name = data.USER_NM;
+                            $rootScope.role = data.ROLE_ID;
+                            $rootScope.menu_role = data.MENU_ROLE;
+                            $rootScope.email = data.EMAIL;
+
+                            $location.path('/dashboard');
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            console.log('조회 데이터가 없습니다.');
+                        }
                     }
                 }
-            }, function(error) {
-                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
             });
-        }
+        };
 
 /*
         $scope.login = function () {

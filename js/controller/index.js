@@ -49,10 +49,7 @@ define([
     // 게시판
     '../../partials/cms/webboard_list',
     '../../partials/cms/webboard_edit',
-
-    '../../partials/cms/webboard',
-    '../../partials/cms/webboardEdit',
-    '../../partials/cms/webboardView',
+    '../../partials/cms/webboard_view',
 
     // 관리자
     '../../partials/cms/user',

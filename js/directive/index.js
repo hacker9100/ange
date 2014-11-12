@@ -5,10 +5,6 @@
  * Description : 사용할 모든 directive를 로드
  */
 define([
-    // 관리자
-    './userDirective',
-    './permissionDirective',
-
     './dropdownSelectDirective',
     './ckEditorDirective'//,
 //    './plUploadDirective'

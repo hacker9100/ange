@@ -176,7 +176,7 @@
         }}, { "publish_edit": {
             "url": "/publish/:id",
             "views": {
-                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },awe
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@publish_edit": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@publish_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@publish_edit": { "templateUrl": "partials/cms/publish_edit.html", "controller" : "publish_edit" }
@@ -204,20 +204,6 @@
                 "lnbView@webboard_view": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@webboard_view": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@webboard_view": { "templateUrl": "partials/cms/webboard_view.html", "controller" : "webboard_view" }
-            }
-        }}, { "webboard/edit": {
-            "url": "/webboard/edit/:id",
-            "views": {
-                "" : { "templateUrl": "partials/cms/webboardEdit.html", "controller": "webboardEdit" },
-                "lnbView@webboard/edit": { "templateUrl": "partials/cms/lnb.html" },
-                "locaterView@webboard/edit": { "templateUrl": "partials/cms/locater.html", "controller": "locater" }
-            }
-        }}, { "webboard/view": {
-            "url": "/webboard/view/:id",
-            "views": {
-                "" : { "templateUrl": "partials/cms/webboardView.html", "controller": "webboardView" },
-                "lnbView@webboard/view": { "templateUrl": "partials/cms/lnb.html" },
-                "locaterView@webboard/view": { "templateUrl": "partials/cms/locater.html", "controller": "locater" }
             }
         }}, { "user": {
             "url": "/user",

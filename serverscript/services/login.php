@@ -24,45 +24,53 @@
 
     switch ($_method) {
         case "GET":
-            if (isset($id)) {
-                if (!isset($id)) {
-                    $_d->failEnd("ID가 누락되었습니다.");
-                }
-
-                $form = json_decode(file_get_contents("php://input"),true);
-
-                MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+            if (isset($_key) && $_key != "") {
+//                $form = json_decode(file_get_contents("php://input"),true);
+//                MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
                 MtUtil::_c("### [PW] ".create_hash($password));
+
+                $err = 0;
+                $msg = "";
 
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.EMAIL, R.ROLE_ID, U.PASSWORD
                         FROM
                             CMS_USER U, USER_ROLE R
                         WHERE
-                            U.USER_ID = '".$id."'
+                            U.USER_ID = '".$_key."'
                             AND U.USER_ID = R.USER_ID
                         ";
 
                 $result = $_d->sql_query($sql);
                 $data  = $_d->sql_fetch_array($result);
 
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
                 $sql = "SELECT
                             M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
                         FROM
                             USER_ROLE R, MENU_ROLE M
                         WHERE
-                            R.USER_ID = '".$id."'
+                            R.USER_ID = '".$_key."'
                            AND R.ROLE_ID = M.ROLE_ID;
                         ";
 
                 $role_data = $_d->getData($sql);
                 $data['MENU_ROLE'] = $role_data;
 
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($err > 0) {
+                    $_d->failEnd("조회실패입니다:".$msg);
                 } else {
-                    if ( !validate_password($form[password], $data['PASSWORD'])) {
+                    if ( !validate_password($_model[password], $data['PASSWORD'])) {
                         $_d->failEnd("아이디나 패스워드가 일치하지 않습니다.");
                     }
 

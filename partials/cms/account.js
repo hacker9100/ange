@@ -11,48 +11,30 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('account', ['$scope', '$rootScope', '$stateParams', 'dataService', '$location', function ($scope, $rootScope, $stateParams, dataService, $location) {
+    controllers.controller('account', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', function ($scope, $rootScope, $stateParams, $location, $controller ) {
+
+        /********** 공통 controller 호출 **********/
+        angular.extend(this, $controller('common', {$scope: $scope}));
 
         /********** 초기화 **********/
-        $scope.initEdit = function() {
+        $scope.init = function() {
 
         };
 
         /********** 이벤트 **********/
         // 저장 버튼 클릭
         $scope.click_saveCmsUser = function () {
-            dataService.db('cms_user').update($rootScope.uid,$scope.item,function(data, status){
-                if (status != 200) {
-                    alert('수정에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        alert("정상적으로 수정했습니다.");
-                    }
-                }
-            });
+            $scope.updateItem('cms_user', $stateParams.id, $scope.item, true)
+                .then(function(){alert("정상적으로 수정했습니다.");})
+                .catch(function(error){alert(error)});
         };
 
         // 로그인 사용자 조회
         $scope.getCmsUser = function (session) {
-            if (session.data.USER_ID != '') {
-                dataService.db('cms_user').findOne(session.data.USER_ID,{},function(data, status){
-                    if (status != 200) {
-                        alert('조회에 실패 했습니다.');
-                    } else {
-                        if (data.err == true) {
-                            alert(data.msg);
-                        } else {
-                            if (angular.isObject(data)) {
-                                $scope.item = data;
-                            } else {
-                                // TODO: 데이터가 없을 경우 처리
-                                alert("조회 데이터가 없습니다.");
-                            }
-                        }
-                    }
-                });
+            if (session.USER_ID != '') {
+                $scope.getItem('cms_user', session.USER_ID, {}, true)
+                    .then(function(data){$scope.item = data;})
+                    .catch(function(error){alert(error)});
             } else {
                 alert("조회 정보가 없습니다.");
             }
@@ -60,24 +42,18 @@ define([
 
         // 취소
         $scope.click_cancel = function () {
-            $scope.$parent.getSession()
-                .then($scope.$parent.sessionCheck)
+            $scope.getSession()
+                .then($scope.sessionCheck)
                 .then($scope.getCmsUser)
-                .catch($scope.$parent.reportProblems);
+                .catch($scope.reportProblems);
         };
 
         /********** 화면 초기화 **********/
-        // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        $scope.$parent.pageTitle = '개인정보';
-        $scope.$parent.pageDescription = '개인정보를 조회하고 수정할 수 있습니다.';
-        $scope.$parent.tailDescription = '내용을 수정한 후 \"수정\"버튼을 누르면 수정이 완료됩니다.<br/>\"취소\"버튼을 누르면 원래대로 돌아갑니다.';
-
-        $scope.initEdit();
-        $scope.$parent.getSession()
-            .then($scope.$parent.sessionCheck)
+        $scope.init();
+        $scope.getSession()
+            .then($scope.sessionCheck)
             .then($scope.getCmsUser)
-            .catch($scope.$parent.reportProblems);
+            .catch($scope.reportProblems);
 
     }]);
 });

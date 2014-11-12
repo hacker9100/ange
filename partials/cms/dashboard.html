@@ -44,7 +44,7 @@
 
                                 </li>
 
-                                <a href="#/webboard/{{notice.NO}}" class="list-group-item list-group-item-green" ng-repeat="notice in notices">{{notice.SUBJECT}}<span class="list-group-item-right">{{notice.REG_DT}}</span></a>
+                                <a ng-href="#" ng-click="click_showWebboardView(notice.NO)" class="list-group-item list-group-item-green" ng-repeat="notice in notices">{{notice.SUBJECT}}<span class="list-group-item-right">{{notice.REG_DT}}</span></a>
                             </div>
                         </div>
 
@@ -55,7 +55,7 @@
                                     <span class="btn custom-btn-more"> <span ng-click="click_showProjectList();" class="glyphicon glyphicon-plus"></span> </span>
                                 </li>
 
-                                <a href="#/project/{{project.NO}}" class="list-group-item list-group-item-blue" ng-repeat="project in projects">{{project.SUBJECT}}<span class="list-group-item-right">{{ project.PROJECT_ST == '0' ? '준비' : project.PROJECT_ST == '1' ? '진행' : '완료' }}</span></a>
+                                <a ng-href="#" ng-click="click_showProjectView(notice.NO)" class="list-group-item list-group-item-blue" ng-repeat="project in projects">{{project.SUBJECT}}<span class="list-group-item-right">{{ project.PROJECT_ST == '0' ? '준비' : project.PROJECT_ST == '1' ? '진행' : '완료' }}</span></a>
                             </div>
                         </div>
 

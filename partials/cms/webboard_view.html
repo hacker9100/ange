@@ -1,0 +1,75 @@
+<!--<div id="veil" ng-show="isLoading"></div>-->
+<div id="feedLoading" ng-show="isLoading">Loading...</div>
+
+<!-- Contents Include -->
+<div class="col-md-12">
+
+    <div ng-model="item" lass="row">
+        <form role="form" name="edit_form" class="form-horizontal">
+            <div class= "form-group">
+                <label class= "col-md-2">머리말</label>
+                <div class="col-md-3">
+                    <span ng-bind="item.HEAD == 'NOTICE' ? '공지사항' : ''" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">제목</label>
+                <div class="col-md-9">
+                    <span ng-bind="item.SUBJECT" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">태그</label>
+                <div class="col-md-9">
+                    <span ng-bind="item.TAG" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">본문</label>
+                <div class= "col-md-12">
+                    <div ng-bind-html="item.BODY"></div>
+                    <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
+                </div>
+            </div>
+        </form>
+        <div class= "form-group">
+            <label class= "col-md-2">첨부파일 </label>
+            <table class="table table-striped files ng-cloak">
+                <tr data-ng-repeat="file in queue">
+                    <td data-ng-switch data-on="!!file.thumbnailUrl">
+                        <div class="preview" data-ng-switch-when="true">
+                            <img src="{{file.thumbnailUrl}}" alt="">
+                        </div>
+                    </td>
+                    <td>
+                        <p class="name" data-ng-switch data-on="!!file.url">
+                            <a data-ng-switch-default data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}">{{file.name}}</a>
+                        </p>
+                    </td>
+                    <td>
+                        <p class="size">{{ formatFileSize(file.size) }}</p>
+                        <p class="size">{{file.size | formatFileSize}}</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 하단 버튼 -->
+        <div class= "form-group">
+            <div class="col-md-12">
+                <button class="btn btn-success fileinput-button" ng-click="click_showCmsBoardList();" >
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>목록</span>
+                </button>
+                <button type="button" class="btn btn-primary start" ng-click="click_showCmsBoardEdit(item.NO);" >
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>수정</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- ////Contents Include -->
+

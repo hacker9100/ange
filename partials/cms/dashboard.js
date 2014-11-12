@@ -11,11 +11,14 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('dashboard', ['$scope', '$rootScope', 'loginService', 'dataService', '$location', function ($scope, $rootScope, loginService, dataService, $location) {
+    controllers.controller('dashboard', ['$scope', '$rootScope', '$location', '$controller', 'dataService', function ($scope, $rootScope, $location, $controller, dataService) {
+
+        /********** 공통 controller 호출 **********/
+        angular.extend(this, $controller('common', {$scope: $scope}));
 
         /********** 초기화 **********/
         // 초기화
-        $scope.initList = function() {
+        $scope.init = function() {
             $scope.oneAtATime = true;
 
             $scope.PAGE_NO = 0;
@@ -23,14 +26,14 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 태스크 선택
-        $scope.click_showTaskEdit = function (key) {
-            $location.url('/task/'+key);
-        };
-
         // 프로젝트 목록 이동
         $scope.click_showProjectList = function () {
             $location.url('/project');
+        };
+
+        // 프로젝트 선택
+        $scope.click_showProjectView = function (key) {
+            $location.url('/project/view/'+key);
         };
 
         // 게시판 목록 이동
@@ -38,64 +41,35 @@ define([
             $location.url('/webboard');
         };
 
+        // 게시판 목록 이동
+        $scope.click_showWebboardView = function (key) {
+            $location.url('/webboard/view/'+key);
+        };
+
         // 태스크 목록 이동
         $scope.click_showTaskList = function () {
             $location.url('/task');
         };
 
+        // 태스크 선택
+        $scope.click_showTaskView = function (key) {
+            $location.url('/task/view/'+key);
+        };
+
         // 공지사항 포틀릿 조회
         $scope.getNoticePortlet = function () {
-            $scope.isLoading = true;
-
-            dataService.db('webboard').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},{HEAD: 'NOTICE'},function(data, status){
-                if (status != 200) {
-                    alert('공지사항 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.notices = data;
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("공지사항 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
-
-                $scope.isLoading = false;
-            });
+            $scope.getList('webboard', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {HEAD: 'NOTICE'}, true)
+                .then(function(data){$scope.notices = data})
+                .catch(function(error){$scope.notices = [];  alert(error)});
         }
 
         // 프로젝트 포틀릿 조회
         $scope.getProjectPortlet = function () {
             $scope.isLoading = true;
 
-            dataService.db('project').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},{},function(data, status){
-                if (status != 200) {
-                    alert('프로젝트 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.projects = data;
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("프로젝트 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
-
-                $scope.isLoading = false;
-            });
-
-//            projectService.getProjects().then(function(projects){
-//                $scope.projects = projects.data;
-//                $scope.isLoading = false;
-//            }, function(error) {
-//                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-//            });
+            $scope.getList('project', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
+                .then(function(data){$scope.projects = data})
+                .catch(function(error){$scope.projects = [];  alert(error)});
         };
 
         // 태스크 목록 조회
@@ -107,51 +81,16 @@ define([
                 search = {EDITOR_ID: $rootScope.uid};
             }
 
-            dataService.db('task').find({NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE},search,function(data, status){
-                if (status != 200) {
-                    alert('태스크 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.tasks = data;
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("태스크 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
-
-                $scope.isLoading = false;
-            });
-
-//            taskService.getTasks().then(function(tasks){
-//                $scope.tasks = tasks.data;
-//                $scope.isLoading = false;
-//            }, function(error) {
-//                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-//            });
-        };
-
-        $scope.getSession = function() {
-            return loginService.getSession();
-        },
-        $scope.sessionCheck = function(session) {
-            if (session.data.USER_ID == undefined || session.data.USER_ID == '')
-                throw( new String("세션이 만료되었습니다.") );
-            return session;
-        },
-        $scope.reportProblems = function(error)
-        {
-            alert(error);
+            $scope.getList('task', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, search, true)
+                .then(function(data){$scope.tasks = data})
+                .catch(function(error){$scope.tasks = [];  alert(error)});
         };
 
         // 페이지 타이틀
         $scope.setTitle = function(session) {
             $scope.message = "ANGE CMS";
             $scope.pageTitle = "마이페이지";
-            $scope.pageDescription = session.data.USER_NM + " 님의 대시보드입니다.";
+            $scope.pageDescription = session.USER_NM + " 님의 대시보드입니다.";
             $scope.tailDescription = '.';
         };
 
@@ -161,7 +100,7 @@ define([
             .then($scope.setTitle)
             .catch($scope.reportProblems);
 
-        $scope.initList();
+        $scope.init();
         $scope.getNoticePortlet();
         $scope.getProjectPortlet();
         $scope.getTaskList();

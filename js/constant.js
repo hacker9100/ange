@@ -10,8 +10,12 @@ define([
     'use strict';
     app.constant(
         "CONFIG", {
-            "test1": "test1_mode",
-            "test2": "test2_mode"
+            "TEST" : "test"
+        }
+    );
+    app.constant(
+        "UPLOAD", {
+            "UPLOAD_URL" : "http://localhost"
         }
     );
 
