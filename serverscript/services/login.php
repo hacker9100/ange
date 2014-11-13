@@ -70,9 +70,9 @@
                 if ($err > 0) {
                     $_d->failEnd("조회실패입니다:".$msg);
                 } else {
-//                    if ( !validate_password($_model[password], $data['PASSWORD'])) {
-//                        $_d->failEnd("아이디나 패스워드가 일치하지 않습니다.");
-//                    }
+                    if ( !validate_password($_model[password], $data['PASSWORD'])) {
+                        $_d->failEnd("아이디나 패스워드가 일치하지 않습니다.");
+                    }
 
                     if (!isset($_SESSION)) {
                         session_start();

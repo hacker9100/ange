@@ -15,19 +15,19 @@ define([
 
 //        alert(localStorage.getItem('userToken'))
 
-        $scope.getSession = function() {
-            return loginService.getSession();
-        },
-        $scope.sessionCheck = function(session) {
-            if (session.data.USER_ID == undefined || session.data.USER_ID == '')
-                throw( new String("세션이 만료되었습니다.") );
-//            throw( new Error("세션이 만료되었습니다.") );
-            return session;
-        },
-        $scope.reportProblems = function(error)
-        {
-            alert(error);
-        };
+//        $scope.getSession = function() {
+//            return loginService.getSession();
+//        },
+//        $scope.sessionCheck = function(session) {
+//            if (session.data.USER_ID == undefined || session.data.USER_ID == '')
+//                throw( new String("세션이 만료되었습니다.") );
+////            throw( new Error("세션이 만료되었습니다.") );
+//            return session;
+//        },
+//        $scope.reportProblems = function(error)
+//        {
+//            alert(error);
+//        };
 
         // 페이지 타이틀
         var spMenu = $location.path().split('/');
@@ -37,6 +37,24 @@ define([
             $scope.pageTitle = '개인정보';
             $scope.pageDescription = '개인정보를 조회하고 수정할 수 있습니다.';
             $scope.tailDescription = '내용을 수정한 후 \"수정\"버튼을 누르면 수정이 완료됩니다.<br/>\"취소\"버튼을 누르면 원래대로 돌아갑니다.';
+        } else if (spMenu[1] == "project") {
+            $scope.pageTitle = '프로젝트 관리';
+            $scope.pageDescription = '프로젝트를 생성하고 섹션을 설정합니다.';
+            $scope.tailDescription = '상단의 검색영역에서 원하는 프로젝트를 필터링하거나 찾을 수 있습니다.<br />진행 중인 프로젝트를 해지하며 이전 프로젝트를 전부 조회할 수 있습니다.';
+        } else if (spMenu[1] == 'task') {
+            $scope.pageTitle = '태스크 관리';
+            $scope.pageDescription = '기사주제 설정하고 할당하여 관리합니다.';
+            $scope.tailDescription = '.';
+        } else if (spMenu[1] == 'content') {
+            if (spMenu[2] == 'article') {
+                $scope.pageTitle = '원고 관리';
+                $scope.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
+                $scope.tailDescription = '.';
+            } else if (spMenu[2] == 'article_confirm') {
+                $scope.pageTitle = '원고 승인';
+                $scope.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
+                $scope.tailDescription = '.';
+            }
         } else if (spMenu[1] == "webboard") {
             $scope.pageTitle = '게시판';
             $scope.pageDescription = '공지사항을 게시합니다.';

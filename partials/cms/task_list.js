@@ -11,7 +11,10 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_list', ['$scope', '$stateParams', 'dataService', '$q', '$location', function ($scope, $stateParams, dataService, $q, $location) {
+    controllers.controller('task_list', ['$scope', '$stateParams', '$location', '$controller', function ($scope, $stateParams, $location, $controller) {
+
+        /********** 공통 controller 호출 **********/
+        angular.extend(this, $controller('common', {$scope: $scope}));
 
         /********** 초기화 **********/
         // 목록 데이터
@@ -34,9 +37,7 @@ define([
         var nowYear = now.getFullYear();
 
         // 초기화
-        $scope.initList = function() {
-            var deferred = $q.defer();
-
+        $scope.init = function() {
             $scope.oneAtATime = true;
 
             for (var i = nowYear - 5; i < nowYear + 5; i++) {
@@ -44,41 +45,27 @@ define([
             }
 
             // 카테고리 목록 조회
-            dataService.db('category').find({},{},function(data, status){
-                if (status != 200) {
-                    deferred.reject('카테고리 조회에 실패 했습니다.');
-                } else {
-                    if (angular.isObject(data)) {
-                        if (!data.err) {
+            var ret = $scope.getList('category', {}, {}, false)
+                .then(function(data){
+                    $scope.category = data;
 
-                            $scope.category = data;
+                    var category_a = [];
+                    var category_b = [];
 
-                            var category_a = [];
-                            var category_b = [];
+                    for (var i in data) {
+                        var item = data[i];
 
-                            for (var i in data) {
-                                var item = data[i];
-
-                                if (item.CATEGORY_GB == '1') {
-                                    category_a.push(item);
-                                } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
-                                    category_b.push(item);
-                                }
-                            }
-
-                            $scope.category_a = category_a;
-                            $scope.category_b = category_b;
-
-                            deferred.resolve();
-                        } else {
-                            deferred.reject(data);
+                        if (item.CATEGORY_GB == '1') {
+                            category_a.push(item);
+                        } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
+                            category_b.push(item);
                         }
-                    } else {
-                        // TODO: 데이터가 없을 경우 처리
-                        deferred.reject("카테고리 데이터가 없습니다.");
                     }
-                }
-            });
+
+                    $scope.category_a = category_a;
+                    $scope.category_b = category_b;
+                })
+                .catch(function(error){alert(error)});
 
             // 검색어
             var order = [{name: "기자", value: "EDITOR_NM"}, {name: "제목+내용", value: "SUBJECT"}];
@@ -88,7 +75,7 @@ define([
             $scope.search.YEAR = nowYear+'';
             $scope.search.ORDER = order[0];
 
-            deferred.promise;
+            return ret;
         };
 
         /********** 이벤트 **********/
@@ -101,7 +88,6 @@ define([
                     var item = $scope.category[i];
 
                     if (item.PARENT_NO == data.NO && item.CATEGORY_GB == '2' && item.PARENT_NO != '0') {
-
                         category_s.push(item);
                     }
                 }
@@ -118,22 +104,9 @@ define([
         // 연도 변경 선택
         $scope.$watch('search.YEAR', function (data) {
             if (data != null) {
-                dataService.db('project').find({},{YEAR: data},function(data, status){
-                    if (status != 200) {
-                        alert('조회에 실패 했습니다.');
-                    } else {
-                        if (angular.isObject(data)) {
-                            if (data.err == true) {
-                                alert(data.msg);
-                            } else {
-                                $scope.projects = data;
-                            }
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("조회 데이터가 없습니다.");
-                        }
-                    }
-                });
+                $scope.getList('project', {}, {YEAR: data}, false)
+                    .then(function(data){$scope.projects = data;})
+                    .catch(function(error){alert(error)});
             }
         });
 
@@ -167,18 +140,9 @@ define([
                 return;
             }
 
-            dataService.db('task').remove(task.NO,function(data, status){
-                if (status != 200) {
-                    alert('프로젝트 목록 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        alert("삭제 되었습니다.");
-                        // TODO: 삭제 후 처리.
-                    }
-                }
-            });
+            $scope.deleteItem('task', task.NO, true)
+                .then(function(){alert("삭제 되었습니다.");})
+                .catch(function(error){alert(error)});
         };
 
         $scope.list = [];
@@ -202,33 +166,18 @@ define([
 
         // 태스크 목록 조회
         $scope.getTaskList = function (search) {
-            $scope.isLoading = true;
+            $scope.getList('task', {NO:$scope.pageNo, SIZE:$scope.pageSize}, search, true)
+                .then(function(data){
+                    $scope.totalCnt = data[0].TOTAL_COUNT;
+                    angular.forEach(data, function(model) {
+                        $scope.listData.push(model);
+                    });
 
-            dataService.db('task').find({NO:$scope.pageNo, SIZE:$scope.pageSize},search,function(data, status){
-                if (status != 200) {
-                    alert('태스크 목록 조회에 실패 했습니다.');
-                } else {
-                    if (angular.isObject(data)) {
-                        if (data.err == true) {
-                            alert(data.msg);
-                        } else {
-                            $scope.totalCnt = data[0].TOTAL_COUNT;
-                            angular.forEach(data, function(model) {
-                                $scope.listData.push(model);
-                            });
-
-                            if ($scope.list.length == 0) {
-                                $scope.list = $scope.listData.slice($scope.perCnt, $scope.perSize);
-                            }
-                        }
-                    } else {
-                        // TODO: 데이터가 없을 경우 처리
-                        alert("태스크 목록 데이터가 없습니다.");
+                    if ($scope.list.length == 0) {
+                        $scope.list = $scope.listData.slice($scope.perCnt, $scope.perSize);
                     }
-                }
-
-                $scope.isLoading = false;
-            });
+                })
+                .catch(function(error){alert(error)});
         };
 
         $scope.$watch('perCnt', function() {
@@ -255,30 +204,17 @@ define([
 
         // 페이지 타이틀
         if ($stateParams.menu == 'article') {
-            $scope.$parent.pageTitle = '원고 관리';
-            $scope.$parent.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
-            $scope.$parent.tailDescription = '.';
-
             $scope.isTask = true;
             initSearch = {PHASE: '0, 10, 11, 12'};
         } else if ($stateParams.menu == "article_confirm") {
-            $scope.$parent.pageTitle = '원고 승인';
-            $scope.$parent.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
-            $scope.$parent.tailDescription = '.';
-
             $scope.isTask = true;
             initSearch = {PHASE: '11, 12'};
         } else {
-            $scope.$parent.message = 'ANGE CMS';
-            $scope.$parent.pageTitle = '태스크 관리';
-            $scope.$parent.pageDescription = '기사주제 설정하고 할당하여 관리합니다.';
-            $scope.$parent.tailDescription = '.';
-
             $scope.isTask = false;
             $scope.search = {};
         }
 
-        $scope.initList();
+        $scope.init();
         $scope.getTaskList(initSearch);
 
     }]);

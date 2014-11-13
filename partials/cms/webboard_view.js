@@ -28,12 +28,12 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 게시판 수정 이동
+        // 수정 버튼 클릭
         $scope.click_showCmsBoardEdit = function (key) {
             $location.url('/webboard/edit/'+key);
         };
 
-        // 게시판 목록 이동
+        // 목록 버튼 클릭
         $scope.click_showCmsBoardList = function () {
             $location.url('/webboard');
         };
@@ -41,7 +41,7 @@ define([
         // 게시판 조회
         $scope.getCmsBoard = function () {
             if ($stateParams.id != 0) {
-                $scope.getItem('webboard', $stateParams.id, {}, true)
+                return $scope.getItem('webboard', $stateParams.id, {}, true)
                     .then(function(data){
                         $scope.item = data;
 
@@ -50,7 +50,7 @@ define([
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.UPLOAD_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.UPLOAD_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.UPLOAD_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
                     })
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){throw('게시판:'+error);});
             }
         };
 

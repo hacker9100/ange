@@ -30,8 +30,10 @@ define([
     // 콘텐츠
     '../../partials/cms/project_list',
     '../../partials/cms/project_edit',
+    '../../partials/cms/project_view',
     '../../partials/cms/task_list',
     '../../partials/cms/task_edit',
+    '../../partials/cms/task_view',
     '../../partials/cms/content_list',
     '../../partials/cms/content_edit',
 

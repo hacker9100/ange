@@ -1,0 +1,64 @@
+<!--<div id="veil" ng-show="isLoading"></div>-->
+<div id="feedLoading" ng-show="isLoading">Loading...</div>
+
+<!-- Contents Include -->
+<div class="col-md-12">
+
+    <div ng-model="item" lass="row">
+        <form id="fileupload" role="form" name="edit_from" class="form-horizontal" method="POST" enctype="multipart/form-data" data-file-upload="options">
+
+            <div class= "form-group" ng-class="{error: edit_from.subject.$invalid}">
+                <label class= "col-md-2">시리즈</label>
+                <div class="col-md-4">
+                    <span ng-bind="item.SERIES.SERIES_NM" />
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: edit_from.subject.$invalid}">
+                <label class= "col-md-2">호제</label>
+                <div class="col-md-4">
+                    <span ng-bind="item.SUBJECT" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">귀속년</label>
+                <div class="col-md-4">
+                    <span ng-bind="item.YEAR" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">표지이미지</label>
+                <div class="col-md-9">
+                    <td data-ng-switch data-on="!!file.thumbnailUrl">썸네일 이미지
+                        <div ng-model="file" class="preview">
+                            <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>
+                        </div>
+                    </td>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">설명</label>
+                <div class= "col-md-9">
+                    <span ng-bind="item.NOTE" />
+                </div>
+            </div>
+        </form>
+
+        <!-- 하단 버튼 -->
+        <div class= "form-group">
+            <div class="col-md-4">
+                <button class="btn btn-success fileinput-button" ng-click="click_showProjectList();" >
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>목록</span>
+                </button>
+                <button type="button" class="btn btn-primary start" ng-click="click_showProjectEdit(item.NO);" >
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>수정</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- ////Contents Include -->
+

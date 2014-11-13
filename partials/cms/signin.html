@@ -8,16 +8,16 @@
 
 		<h2 style="font-weight: 700;">Sign In</h2>
 
-		<div style="margin-top:30px;">
+		<div ng-model="item" style="margin-top:30px;">
 			<form role="login" ng-submit="loginMe()">
 				<div class="form-group">
 				<!-- label for="exampleInputEmail1">Email address</label -->
-				<input type="text" class="form-control" ng-model="login.id" id="userid" name="userid" placeholder="ID">
+				<input type="text" class="form-control" ng-model="item.id" id="userid" name="userid" placeholder="아이디">
 				</div>
 
 				<div class="form-group">
 				<!-- label for="exampleInputPassword1">Password</label -->
-				<input type="password" class="form-control" ng-model="login.password" id="password" name="password" placeholder="Password">
+				<input type="password" class="form-control" ng-model="item.password" id="password" name="password" placeholder="비밀번호">
 				</div>
 
 				<!-- div class="checkbox">

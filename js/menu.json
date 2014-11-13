@@ -69,6 +69,14 @@
                 "locaterView@project_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@project_edit": { "templateUrl": "partials/cms/project_edit.html", "controller" : "project_edit" }
             }
+        }}, { "project_view": {
+            "url": "/project/view/:id",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@project_view": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@project_view": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@project_view": { "templateUrl": "partials/cms/project_view.html", "controller" : "project_view" }
+            }
         }}, { "task_list": {
             "url": "/task",
             "views": {
@@ -84,6 +92,14 @@
                 "lnbView@task_edit": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@task_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@task_edit": { "templateUrl": "partials/cms/task_edit.html", "controller" : "task_edit" }
+            }
+        }}, { "task_view": {
+            "url": "/task/view/:id",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@task_view": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@task_view": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@task_view": { "templateUrl": "partials/cms/task_view.html", "controller" : "task_view" }
             }
         }}, { "content_list": {
             "url": "/content/:menu",

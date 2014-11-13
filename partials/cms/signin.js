@@ -51,7 +51,7 @@ alert("---");
         };
 */
         $scope.loginMe = function() {
-            $scope.login($scope.login.id, $scope.login)
+            $scope.login($scope.item.id, $scope.item)
                 .then(function(data){
                     $rootScope.authenticated = true;
                     $rootScope.uid = data.USER_ID;

@@ -11,7 +11,10 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_list', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
+    controllers.controller('project_list', ['$scope', '$stateParams', '$location', '$controller', function ($scope, $stateParams, $location, $controller) {
+
+        /********** 공통 controller 호출 **********/
+        angular.extend(this, $controller('common', {$scope: $scope}));
 
         /********** 초기화 **********/
         // 검색 조건
@@ -26,7 +29,7 @@ define([
         var nowYear = now.getFullYear();
 
         // 초기화
-        $scope.initList = function() {
+        $scope.init = function() {
             for (var i = 2010; i < nowYear + 5; i++) {
                 year.push(i+'');
             }
@@ -47,8 +50,12 @@ define([
         };
 
         // 수정 화면 이동
-        $scope.click_showEditProject = function (key) {
-            $location.path('/project/'+key);
+        $scope.click_showEditProject = function (idx) {
+            var project = $scope.list[idx];
+
+            // TODO: 권한 처리 넣을것
+
+            $location.path('/project/'+project.NO);
         };
 
         // 삭제 버튼 클릭
@@ -79,39 +86,9 @@ define([
 
         // 프로젝트 목록 조회
         $scope.getProjectList = function (search) {
-            $scope.isLoading = true;
-
-            dataService.db('project').find({NO:0, SIZE:5},search,function(data, status){
-                if (status != 200) {
-                    alert('프로젝트 목록 조회에 실패 했습니다.');
-                } else {
-                    if (angular.isObject(data)) {
-                        if (data.err == true) {
-                            alert(data.msg);
-                        } else {
-                            $scope.list = data;
-                        }
-                    } else {
-                        // TODO: 데이터가 없을 경우 처리
-                        alert("프로젝트 목록 데이터가 없습니다.");
-                    }
-                }
-
-                $scope.isLoading = false;
-            });
-
-//            projectService.getProjects().then(function(projects){
-//                $scope.listData = projects.data;
-//
-//                if (projectsData != null) {
-//                    $scope.totalItems = projects.data[0].TOTAL_COUNT; // 총 아이템 수
-//                    $scope.currentPage = 1; // 현재 페이지
-//                }
-//                $scope.isLoading = false;
-//                $location.search('_search', null);
-//            }, function(error) {
-//                alert("서버가 정상적으로 응답하지 않습니다. 관리자에게 문의 하세요.");
-//            });
+            $scope.getList('project', {NO:0, SIZE:5}, search, true)
+                .then(function(data){$scope.list = data;})
+                .catch(function(error){alert(error)});
         };
 
         // 페이징 처리
@@ -162,18 +139,8 @@ define([
             $scope.selectCount = $scope.selectCount + 1;
         });
 
-        $scope.setTitle = function() {
-        // 페이지 타이틀
-            $scope.$parent.message = 'ANGE CMS';
-            $scope.$parent.pageTitle = '프로젝트 관리';
-            $scope.$parent.pageDescription = '프로젝트를 생성하고 섹션을 설정합니다.';
-            $scope.$parent.tailDescription = '상단의 검색영역에서 원하는 프로젝트를 필터링하거나 찾을 수 있습니다.<br />진행 중인 프로젝트를 해지하며 이전 프로젝트를 전부 조회할 수 있습니다.';
-        }
-
         /********** 화면 초기화 **********/
-
-        $scope.initList();
-        $scope.setTitle();
+        $scope.init();
         $scope.getProjectList();
 
     }]);

@@ -12,7 +12,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_edit', ['$scope', '$rootScope', '$stateParams', '$q', 'dataService', '$location', function ($scope, $rootScope, $stateParams, $q, dataService, $location) {
+    controllers.controller('project_edit', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
 
         var uploadUrl = 'http://localhost/serverscript/upload/../../upload/files/';
 
@@ -27,6 +27,9 @@ define([
             $scope.file = data[0];
         });
 
+        /********** 공통 controller 호출 **********/
+        angular.extend(this, $controller('common', {$scope: $scope}));
+
         /********** 초기화 **********/
         // 프로젝트 모델
         $scope.item = {};
@@ -37,28 +40,13 @@ define([
         var nowYear = now.getFullYear();
 
         // 초기화
-        $scope.initEdit = function() {
-            var deferred = $q.defer();
-
-            dataService.db('series').find({},{},function(data, status){
-                if (status != 200) {
-                    deferred.reject('시리즈 조회에 실패 했습니다.');
-                } else {
-                    if (angular.isObject(data)) {
-                        if (!data.err) {
-                            $scope.series = data;
-                            $scope.item.SERIES = data[0];
-
-                            deferred.resolve();
-                        } else {
-                            deferred.reject(data.msg);
-                        }
-                    } else {
-                        // TODO: 데이터가 없을 경우 처리
-                        alert("시리즈 조회 데이터가 없습니다.");
-                    }
-                }
-            });
+        $scope.init = function(session) {
+            var ret = $scope.getList('series', {}, {}, false)
+                .then(function(data){
+                    $scope.series = data;
+                    $scope.item.SERIES = data[0];
+                })
+                .catch(function(error){throw('시리즈:'+error);});
 
             for (var i = 2010; i < nowYear + 5; i++) {
                 year.push(i+'');
@@ -67,7 +55,7 @@ define([
             $scope.years = year;
             $scope.item.YEAR = nowYear+'';
 
-            return deferred.promise;
+            return ret;
         }
 
         /********** 이벤트 **********/
@@ -78,42 +66,24 @@ define([
 
         // 프로젝트 조회
         $scope.getProject = function () {
-            var deferred = $q.defer();
-
             if ($stateParams.id != 0) {
-                dataService.db('project').findOne($stateParams.id,{},function(data, status){
-                    if (status != 200) {
-                        deferred.reject('프로젝트 조회에 실패 했습니다.');
-                    } else {
-                        if (angular.isObject(data)) {
-                            if (!data.err) {
-                                $scope.item = data;
+                return $scope.getItem('project', $stateParams.id, {}, false)
+                    .then(function(data){
+                        $scope.item = data;
 
-                                angular.forEach($scope.series,function(value, idx){
-                                    if(JSON.stringify(value) == JSON.stringify(data.SERIES));
-                                    $scope.item.SERIES = $scope.series[idx];
-                                    return;
-                                });
+                        angular.forEach($scope.series,function(value, idx){
+                            if(JSON.stringify(value) == JSON.stringify(data.SERIES));
+                            $scope.item.SERIES = $scope.series[idx];
+                            return;
+                        });
 
-                                // 파일 순서 : 1. 원본, 2. 썸네일, 3. 중간사이즈
-                                var file = data.FILE;
-                                if (file.length > 0) {
-                                    $scope.file = {"name":file[0].FILE_NM,"size":file[0].FILE_SIZE,"url":uploadUrl+file[0].FILE_NM,"thumbnailUrl":uploadUrl+"thumbnail/"+file[0].FILE_NM,"mediumUrl":uploadUrl+"medium/"+file[0].FILE_NM,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[0].FILE_NM,"deleteType":"DELETE"};
-                                }
-
-                                deferred.resolve();
-                            } else {
-                                deferred.reject(data.msg);
-                            }
-                        } else {
-                             // TODO: 데이터가 없을 경우 처리
-                            alert("조회 데이터가 없습니다.");
+                        var file = data.FILE;
+                        for(var i in file) {
+                            $scope.file = {"name":file.FILE_NM,"size":file[0].FILE_SIZE,"url":UPLOAD.UPLOAD_URL+file[0].PATH+file[0].FILE_ID,"thumbnailUrl":UPLOAD.UPLOAD_URL+file[0].PATH+"thumbnail/"+file[0].FILE_ID,"mediumUrl":UPLOAD.UPLOAD_URL+file[0].PATH+"medium/"+file[0].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[0].FILE_NM,"deleteType":"DELETE"};
                         }
-                    }
-                });
+                    })
+                    .catch(function(error){throw('프로젝트:'+error);});
             }
-
-            return deferred.promise;
         };
 
         // 저장 버튼 클릭
@@ -121,46 +91,22 @@ define([
             $scope.item.FILE = $scope.file;
 
             if ($stateParams.id == 0) {
-                dataService.db('project').insert($scope.item,function(data, status){
-                    if (status != 200) {
-                        alert('등록에 실패 했습니다.');
-                    } else {
-                        if (!data.err) {
-                            $location.url('/project');
-                        } else {
-                            alert(data.msg);
-                        }
-                    }
-                });
+                $scope.insertItem('project', $scope.item, false)
+                    .then(function(){$location.url('/project');})
+                    .catch(function(error){alert(error)});
             } else {
-                dataService.db('project').update($stateParams.id,$scope.item,function(data, status){
-                    if (status != 200) {
-                        alert('수정에 실패 했습니다.');
-                    } else {
-                        if (!data.err) {
-                            $location.url('/project');
-                        } else {
-                            alert(data.msg);
-                        }
-                    }
-                });
+                $scope.updateItem('project', $stateParams.id, $scope.item, false)
+                    .then(function(){$location.url('/project');})
+                    .catch(function(error){alert(error)});
             }
         };
 
         /********** 화면 초기화 **********/
-        // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        if ( $stateParams.id != 0) {
-            $scope.$parent.pageTitle = '프로젝트 수정';
-            $scope.$parent.pageDescription = '프로젝트를 수정합니다.';
-        } else {
-            $scope.$parent.pageTitle = '프로젝트 등록';
-            $scope.$parent.pageDescription = '프로젝트를 등록합니다.';
-        }
-
-        $scope.initEdit()
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
             .then($scope.getProject)
-            .catch($scope.$parent.reportProblems);
+            .catch($scope.reportProblems);
 
     }]);
 });

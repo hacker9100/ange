@@ -55,7 +55,7 @@
                 $data['SERIES'] = $series_data;
 
                 $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
                             FILE F, CONTENT_SOURCE S
                         WHERE
@@ -185,6 +185,35 @@
                 $_model[PROJECT_ST] = '0';
             }
 
+            $upload_path = '../../upload/files/';
+            $file_path = '/storage/'.date('Y').'/'.date('m').'/';
+            $source_path = '../..'.$file_path;
+            $insert_path = null;
+
+            try {
+                if (count($_model[FILE]) > 0) {
+                    $file = $_model[FILE];
+                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                        @mkdir($source_path);
+                        @mkdir($source_path.'thumbnail/');
+                        @mkdir($source_path.'medium/');
+                    }
+
+                    if (file_exists($upload_path.$file[name])) {
+                        $uid = uniqid();
+                        rename($upload_path.$file[name], $source_path.$uid);
+                        rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                        rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                        $insert_path = array(path => $file_path, uid => $uid);
+                    }
+                }
+
+                $_model[BODY] = $body_str;
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
+
             $err = 0;
             $msg = "";
 
@@ -227,6 +256,7 @@
                 $sql = "INSERT INTO FILE
                 (
                     FILE_NM
+                    ,FILE_ID
                     ,PATH
                     ,FILE_EXT
                     ,FILE_SIZE
@@ -235,7 +265,8 @@
                     ,FILE_ST
                 ) VALUES (
                     '".$file[name]."'
-                    , '".$file[url]."'
+                    , '".$insert_path[uid]."'
+                    , '".$insert_path[path]."'
                     , '".$file[type]."'
                     , '".$file[size]."'
                     , '0'
@@ -270,104 +301,6 @@
                     $err++;
                     $msg = $_d->mysql_error;
                 }
-
-                $sql = "INSERT INTO FILE
-                (
-                    FILE_NM
-                    ,PATH
-                    ,FILE_EXT
-                    ,FILE_SIZE
-                    ,ORIGINAL_NO
-                    ,THUMB_FL
-                    ,REG_DT
-                    ,FILE_ST
-                ) VALUES (
-                    '".$file[name]."'
-                    , '".$file[thumbnailUrl]."'
-                    , '".$file[type]."'
-                    , ''
-                    , '".$ori_file_no."'
-                    , '1'
-                    , SYSDATE()
-                    , 'C'
-                )";
-
-                $_d->sql_query($sql);
-                $file_no = $_d->mysql_insert_id;
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "INSERT INTO CONTENT_SOURCE
-                (
-                    TARGET_NO
-                    ,SOURCE_NO
-                    ,CONTENT_GB
-                    ,SORT_IDX
-                ) VALUES (
-                    '".$no."'
-                    , '".$file_no."'
-                    , 'FILE'
-                    , '0'
-                )";
-
-                $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "INSERT INTO FILE
-                (
-                    FILE_NM
-                    ,PATH
-                    ,FILE_EXT
-                    ,FILE_SIZE
-                    ,ORIGINAL_NO
-                    ,THUMB_FL
-                    ,REG_DT
-                    ,FILE_ST
-                ) VALUES (
-                    '".$file[name]."'
-                    , '".$file[mediumUrl]."'
-                    , '".$file[type]."'
-                    , ''
-                    , '".$ori_file_no."'
-                    , '2'
-                    , SYSDATE()
-                    , 'C'
-                )";
-
-                $_d->sql_query($sql);
-                $file_no = $_d->mysql_insert_id;
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "INSERT INTO CONTENT_SOURCE
-                (
-                    TARGET_NO
-                    ,SOURCE_NO
-                    ,CONTENT_GB
-                    ,SORT_IDX
-                ) VALUES (
-                    '".$no."'
-                    , '".$file_no."'
-                    , 'FILE'
-                    , '0'
-                )";
-
-                $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
             }
 
             if ($err > 0) {
@@ -387,6 +320,39 @@
 
 //            $form = json_decode(file_get_contents("php://input"),true);
 //            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+
+            $upload_path = '../../upload/files/';
+            $file_path = '/storage/'.date('Y').'/'.date('m').'/';
+            $source_path = '../..'.$file_path;
+            $insert_path = null;
+
+            try {
+                if (count($_model[FILE]) > 0) {
+                    $file = $_model[FILE];
+                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                        @mkdir($source_path);
+                        @mkdir($source_path.'thumbnail/');
+                        @mkdir($source_path.'medium/');
+                    }
+
+                    if (file_exists($upload_path.$file[name])) {
+                        $uid = uniqid();
+                        rename($upload_path.$file[name], $source_path.$uid);
+                        rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                        rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                        $insert_path = array(path => $file_path, uid => $uid);
+
+                        MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                        MtUtil::_c("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
+                        MtUtil::_c("------------>>>>> body_str : ".$body_str);
+                    } else {
+                        $insert_path = array(path => '', uid => '');
+                    }
+                }
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
 
             if ( trim($_model[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
@@ -416,133 +382,74 @@
                 $msg = $_d->mysql_error;
             }
 
-            if (isset($_model[FILE])) {
+            $sql = "SELECT
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        FILE F, CONTENT_SOURCE S
+                    WHERE
+                        F.NO = S.SOURCE_NO
+                        AND S.TARGET_GB = 'CMS_BOARD'
+                        AND S.TARGET_NO = ".$_key."
+                        AND F.THUMB_FL = '0'
+                    ";
+
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $is_delete = true;
+
+                if (count($_model[FILE]) > 0) {
+                    $file = $_model[FILE];
+                    if ($row[FILE_NM] == $file[name] && $row[FILE_SIZE] == $file[size]) {
+                        $is_delete = false;
+                    }
+                }
+
+                if ($is_delete) {
+                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    $sql = "DELETE FROM CONTENT_SOURCE WHERE AND TARGET_GB = 'CMS_BOARD' AND TARGET_NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+
+                    if (file_exists('../..'.$row[PATH].$row[FILE_ID])) {
+                        unlink('../..'.$row[PATH].$row[FILE_ID]);
+                        unlink('../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                        unlink('../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    }
+                }
+            }
+
+            if (count($_model[FILE]) > 0) {
                 $file = $_model[FILE];
 
                 MtUtil::_c("------------>>>>> file : ".$file['name']);
 
-                $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
-
-                $result = $_d->sql_query($sql);
-                $file_data  = $_d->sql_fetch_array($result);
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                MtUtil::_c("------------>>>>> FILE_NM : ".$file_data[FILE_NM]);
-                MtUtil::_c("------------>>>>> name : ".$file[name]);
-
-                if ($file_data == null || $file_data[FILE_NM] != $file[name]) {
-                    $sql = "DELETE FROM FILE
-                            WHERE NO IN (
-                                SELECT NO FROM (
-                                    SELECT
-                                        F.NO
-                                    FROM
-                                        FILE F, CONTENT_SOURCE S
-                                    WHERE
-                                        F.NO = S.SOURCE_NO
-                                        AND S.TARGET_NO = ".$_key."
-                                ) AS DATA
-                            )
-                            ";
-
-                    $_d->sql_query($sql);
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "DELETE FROM CONTENT_SOURCE
-                            WHERE
-                                TARGET_NO = ".$_key."
-                            ";
-
-                    $_d->sql_query($sql);
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
+                if ($insert_path[uid] != "") {
                     $sql = "INSERT INTO FILE
-                    (
-                        FILE_NM
-                        ,PATH
-                        ,FILE_EXT
-                        ,FILE_SIZE
-                        ,THUMB_FL
-                        ,REG_DT
-                        ,FILE_ST
-                    ) VALUES (
-                        '".$file[name]."'
-                        , '".$file[url]."'
-                        , '".$file[type]."'
-                        , '".$file[size]."'
-                        , '0'
-                        , SYSDATE()
-                        , 'C'
-                    )";
-
-                    $_d->sql_query($sql);
-                    $ori_file_no = $_d->mysql_insert_id;
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO CONTENT_SOURCE
-                    (
-                        TARGET_NO
-                        ,SOURCE_NO
-                        ,CONTENT_GB
-                        ,SORT_IDX
-                    ) VALUES (
-                        '".$_key."'
-                        , '".$ori_file_no."'
-                        , 'FILE'
-                        , '0'
-                    )";
-
-                    $_d->sql_query($sql);
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO FILE
-                    (
-                        FILE_NM
-                        ,PATH
-                        ,FILE_EXT
-                        ,FILE_SIZE
-                        ,ORIGINAL_NO
-                        ,THUMB_FL
-                        ,REG_DT
-                        ,FILE_ST
-                    ) VALUES (
-                        '".$file[name]."'
-                        , '".$file[thumbnailUrl]."'
-                        , '".$file[type]."'
-                        , ''
-                        , '".$ori_file_no."'
-                        , '1'
-                        , SYSDATE()
-                        , 'C'
-                    )";
+                        (
+                            FILE_NM
+                            ,FILE_ID
+                            ,PATH
+                            ,FILE_EXT
+                            ,FILE_SIZE
+                            ,THUMB_FL
+                            ,REG_DT
+                            ,FILE_ST
+                        ) VALUES (
+                            '".$file[name]."'
+                            , '".$insert_path[uid]."'
+                            , '".$insert_path[path]."'
+                            , '".$file[type]."'
+                            , '".$file[size]."'
+                            , '0'
+                            , SYSDATE()
+                            , 'C'
+                        )";
 
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
@@ -553,66 +460,19 @@
                     }
 
                     $sql = "INSERT INTO CONTENT_SOURCE
-                    (
-                        TARGET_NO
-                        ,SOURCE_NO
-                        ,CONTENT_GB
-                        ,SORT_IDX
-                    ) VALUES (
-                        '".$_key."'
-                        , '".$file_no."'
-                        , 'FILE'
-                        , '0'
-                    )";
-
-                    $_d->sql_query($sql);
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO FILE
-                    (
-                        FILE_NM
-                        ,PATH
-                        ,FILE_EXT
-                        ,FILE_SIZE
-                        ,ORIGINAL_NO
-                        ,THUMB_FL
-                        ,REG_DT
-                        ,FILE_ST
-                    ) VALUES (
-                        '".$file[name]."'
-                        , '".$file[mediumUrl]."'
-                        , '".$file[type]."'
-                        , ''
-                        , '".$ori_file_no."'
-                        , '2'
-                        , SYSDATE()
-                        , 'C'
-                    )";
-
-                    $_d->sql_query($sql);
-                    $file_no = $_d->mysql_insert_id;
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO CONTENT_SOURCE
-                    (
-                        TARGET_NO
-                        ,SOURCE_NO
-                        ,CONTENT_GB
-                        ,SORT_IDX
-                    ) VALUES (
-                        '".$_key."'
-                        , '".$file_no."'
-                        , 'FILE'
-                        , '0'
-                    )";
+                        (
+                            TARGET_NO
+                            ,SOURCE_NO
+                            ,CONTENT_GB
+                            ,TARGET_GB
+                            ,SORT_IDX
+                        ) VALUES (
+                            '".$_key."'
+                            , '".$file_no."'
+                            , 'FILE'
+                            , 'CMS_BOARD'
+                            , '".$i."'
+                        )";
 
                     $_d->sql_query($sql);
 
@@ -625,7 +485,7 @@
 
             if ($err > 0) {
                 $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
+                $_d->failEnd("수정실패입니다:".$msg);
             } else {
                 $_d->sql_commit();
                 $_d->succEnd($no);

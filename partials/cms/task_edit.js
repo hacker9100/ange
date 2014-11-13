@@ -12,7 +12,10 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_edit', ['$scope', '$stateParams', 'dataService', '$q', '$location', function ($scope, $stateParams, dataService, $q, $location) {
+    controllers.controller('task_edit', ['$scope', '$stateParams', '$location', '$controller', '$q', function ($scope, $stateParams, $location, $controller, $q) {
+
+        /********** 공통 controller 호출 **********/
+        angular.extend(this, $controller('common', {$scope: $scope}));
 
         /********** 초기화 **********/
         // 태스크 모델 초기화
@@ -25,30 +28,13 @@ define([
         // 카테고리 선택 콤보박스 설정
         $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
 
-        $scope.dataProject = function(data, status) {
-            if (status != 200) {
-                alert('프로젝트 조회에 실패 했습니다.');
-            } else {
-                if (angular.isObject(data)) {
-                    if (!data.err) {
-                        $scope.projects = data;
-                    } else {
-                        alert(data.msg);
-                    }
-                } else {
-                    // TODO: 데이터가 없을 경우 처리
-                    alert("프로젝트 데이터가 없습니다.");
-                }
-            }
-        };
+        // 초기화
+        $scope.init = function() {
+            var deferred = $q.defer();
 
-        $scope.dataCategory = function(data, status) {
-            if (status != 200) {
-                alert('카테고리 조회에 실패 했습니다.');
-            } else {
-                if (angular.isObject(data)) {
-                    if (!data.err) {
-
+            $q.all([
+                    $scope.getList('project', {}, {}, false).then(function(data){$scope.projects = data;}),
+                    $scope.getList('category', {}, {}, false).then(function(data){
                         $scope.category = data;
 
                         var category_a = [];
@@ -66,134 +52,13 @@ define([
 
                         $scope.category_a = category_a;
                         $scope.category_b = category_b;
-                    } else {
-                        alert(data.msg);
-                    }
-                } else {
-                    // TODO: 데이터가 없을 경우 처리
-                    alert("카테고리 데이터가 없습니다.");
-                }
-            }
-        }
-
-
-        // 초기화
-        $scope.initEdit = function() {
-            var deferred = $q.defer();
-
-            $q.all([
-                dataService.db('project').find({},{},function(data, status){ $scope.dataProject(data, status) }),
-                dataService.db('category').find({},{},function(data, status){ $scope.dataCategory(data, status) })
+                    })
                 ])
                 .then( function(results) {
-//                    if (results.length > 1) {
-//                        if (results[0].status != 200) {
-//                            deferred.reject('프로젝트 조회에 실패 했습니다.');
-//                        } else {
-//                            if (angular.isObject(results[0].data)) {
-//                                if (!results[0].err) {
-//                                    $scope.projects = results[0].data;
-//                                } else {
-//                                    deferred.reject(results[0].msg);
-//                                }
-//                            } else {
-//                                // TODO: 데이터가 없을 경우 처리
-//                                deferred.reject("프로젝트 데이터가 없습니다.");
-//                            }
-//                        }
-//
-//                        if (results[1].status != 200) {
-//                            deferred.reject('카테고리 조회에 실패 했습니다.');
-//                        } else {
-//                            if (angular.isObject(results[1].data)) {
-//                                if (!results[1].err) {
-//
-//                                    $scope.category = results[1].data;
-//
-//                                    var category_a = [];
-//                                    var category_b = [];
-//
-//                                    for (var i in results[1].data) {
-//                                        var item = results[1].data[i];
-//
-//                                        if (item.CATEGORY_GB == '1') {
-//                                            category_a.push(item);
-//                                        } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
-//                                            category_b.push(item);
-//                                        }
-//                                    }
-//
-//                                    $scope.category_a = category_a;
-//                                    $scope.category_b = category_b;
-//                                } else {
-//                                    deferred.reject(results[1].msg);
-//                                }
-//                            } else {
-//                                // TODO: 데이터가 없을 경우 처리
-//                                deferred.reject("카테고리 데이터가 없습니다.");
-//                            }
-//                        }
-//
-//                        deferred.resolve();
-//                    }
                     deferred.resolve();
                 },function(error) {
                     deferred.reject(error);
                 });
-
-//            dataService.db('project').find({},{},function(data, status){
-//                if (status != 200) {
-//                    deferred.reject('프로젝트 조회에 실패 했습니다.');
-//                } else {
-//                    if (angular.isObject(data)) {
-//                        if (!data.err) {
-//                            $scope.projects = data;
-//                        } else {
-//                            deferred.reject(data);
-//                        }
-//                    } else {
-//                        // TODO: 데이터가 없을 경우 처리
-//                        deferred.reject("프로젝트 데이터가 없습니다.");
-//                    }
-//                }
-//            });
-//
-//            // 카테고리 목록 조회
-//            dataService.db('category').find({},{},function(data, status){
-//                if (status != 200) {
-//                    deferred.reject('카테고리 조회에 실패 했습니다.');
-//                } else {
-//                    if (angular.isObject(data)) {
-//                        if (!data.err) {
-//
-//                            $scope.category = data;
-//
-//                            var category_a = [];
-//                            var category_b = [];
-//
-//                            for (var i in data) {
-//                                var item = data[i];
-//
-//                                if (item.CATEGORY_GB == '1') {
-//                                    category_a.push(item);
-//                                } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
-//                                    category_b.push(item);
-//                                }
-//                            }
-//
-//                            $scope.category_a = category_a;
-//                            $scope.category_b = category_b;
-//
-//                            deferred.resolve();
-//                        } else {
-//                            deferred.reject(data);
-//                        }
-//                    } else {
-//                        // TODO: 데이터가 없을 경우 처리
-//                        deferred.reject("카테고리 데이터가 없습니다.");
-//                    }
-//                }
-//            });
 
             // ui bootstrap 달력
             $scope.today = function() {
@@ -245,63 +110,30 @@ define([
 
         // 태스크 조회
         $scope.getTask = function () {
-            var deferred = $q.defer();
+            $scope.getItem('task', $stateParams.id, {}, true)
+                .then(function(data){
+                    $scope.item = data;
+                    $scope.CATEGORY = angular.fromJson(data.CATEGORY);
 
-            dataService.db('task').findOne($stateParams.id,{},function(data, status){
-                if (status != 200) {
-                    deferred.reject('태스크 조회에 실패 했습니다.');
-                } else {
-                    if (angular.isObject(data)) {
-                        if (!data.err) {
-                            $scope.item = data;
-                            $scope.CATEGORY = angular.fromJson(data.CATEGORY);
-
-                            angular.forEach($scope.projects,function(value, idx){
-                                if(value.NO == data.PROJECT_NO);
-                                $scope.item.PROJECT = $scope.projects[idx];
-                                return;
-                            });
-
-                            deferred.resolve();
-                        } else {
-                            deferred.reject(data);
-                        }
-                    } else {
-                        // TODO: 데이터가 없을 경우 처리
-                        deferred.reject("태스크 데이터가 없습니다.");
-                    }
-                }
-            });
-
-            return deferred.promise;
+                    angular.forEach($scope.projects,function(value, idx){
+                        if(value.NO == data.PROJECT_NO);
+                        $scope.item.PROJECT = $scope.projects[idx];
+                        return;
+                    });
+                })
+                .catch(function(error){throw('태스크:'+error);});
         };
 
         // 태스크 저장 버튼 클릭
         $scope.click_saveTask = function () {
             if ($stateParams.id == 0) {
-                dataService.db('task').insert($scope.item,function(data, status){
-                    if (status != 200) {
-                        alert('태스크 등록에 실패 했습니다.');
-                    } else {
-                        if (!data.err) {
-                            $location.url('/task');
-                        } else {
-                            alert(data.msg);
-                        }
-                    }
-                });
+                $scope.insertItem('task', $scope.item, false)
+                    .then(function(){$location.url('/task');})
+                    .catch(function(error){alert(error)});
             } else {
-                dataService.db('task').update($stateParams.id,$scope.item,function(data, status){
-                    if (status != 200) {
-                        alert('태스크 수정에 실패 했습니다.');
-                    } else {
-                        if (!data.err) {
-                            $location.url('/task');
-                        } else {
-                            alert(data.msg);
-                        }
-                    }
-                });
+                $scope.updateItem('task', $stateParams.id, $scope.item, false)
+                    .then(function(){$location.url('/task');})
+                    .catch(function(error){alert(error)});
             }
         };
 
@@ -312,21 +144,11 @@ define([
         }
 
         /********** 화면 초기화 **********/
-        // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        if ( $stateParams.id != 0) {
-            $scope.$parent.pageTitle = '태스크 수정';
-            $scope.$parent.pageDescription = '태스크를 수정합니다.';
-        } else {
-            $scope.$parent.pageTitle = '태스크 등록';
-            $scope.$parent.pageDescription = '태스크를 등록합니다.';
-        }
-
-        $scope.$parent.getSession()
-            .then($scope.$parent.sessionCheck)
-            .then($scope.initEdit)
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
             .then($scope.initUpdate)
-            .catch($scope.$parent.reportProblems);
+            .catch($scope.reportProblems);
 
     }]);
 });

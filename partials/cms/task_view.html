@@ -1,0 +1,71 @@
+<!--<div id="veil" ng-show="isLoading"></div>-->
+<div id="feedLoading" ng-show="isLoading">Loading...</div>
+
+<!-- Contents Include -->
+<div class="col-md-12">
+
+    <form role="form" name="edit_form" class="form-horizontal">
+        <div ng-model="item" lass="row">
+            <div class= "form-group" ng-class="{error: edit_form.subject.$invalid}">
+                <label class= "col-md-2">프로젝트</label>
+                <div class="col-md-4">
+                    <span ng-bind="item.PROJECT_NM" />
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: edit_form.subject.$invalid}">
+                <label class= "col-md-2">제목</label>
+                <div class="col-md-9">
+                    <span ng-bind="item.SUBJECT" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">카테고리</label>
+                <div class="col-md-2 btn-group" ng-repeat="category in item.CATEGORY">
+                    <button type="button" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">마감일</label>
+                <div class="col-md-4">
+                    <span ng-bind="item.CLOSE_YMD" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">담당기자</label>
+                <div class="col-md-9">
+                    <span ng-bind="item.EDITOR" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">태그</label>
+                <div class="col-md-9">
+                    <span ng-bind="item.TAG" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">설명</label>
+                <div class= "col-md-9">
+                    <span ng-bind="item.NOTE" />
+                </div>
+            </div>
+
+            <!-- 하단 버튼 -->
+            <div class= "form-group">
+                <div class="col-md-4">
+                    <button class="btn btn-success fileinput-button" ng-click="click_showTaskList();" >
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>목록</span>
+                    </button>
+                    <button type="button" class="btn btn-primary start" ng-click="click_showTaskEdit(item.NO);" >
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>수정</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<!-- ////Contents Include -->
+

@@ -38,9 +38,7 @@ define(['./services'], function (services) {
                     ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
-            },
-
-            getSession : function(callback){
+            }, getSession : function(callback){
                 param._method = 'GET';
                 $http({
                     url : helpers.uri+'login.php'

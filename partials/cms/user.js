@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('user', ['$scope', '$stateParams', 'dataService', '$location', '$controller', '$filter', 'ngTableParams', function ($scope, $stateParams, dataService, $location, $controller, $filter, ngTableParams) {
+    controllers.controller('user', ['$scope', '$stateParams', '$location', '$controller', '$filter', 'ngTableParams', function ($scope, $stateParams, $location, $controller, $filter, ngTableParams) {
 
         /********** 공통 controller 호출 **********/
         angular.extend(this, $controller('common', {$scope: $scope}));

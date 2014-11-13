@@ -153,8 +153,7 @@
 
             $body_str = $_model[BODY];
 
-            try
-            {
+            try {
                 if (count($_model[FILES]) > 0) {
                     $files = $_model[FILES];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
@@ -297,9 +296,6 @@
 
 //            $FORM = json_decode(file_get_contents("php://input"),true);
 
-            $err = 0;
-            $msg = "";
-
             $upload_path = '../../upload/files/';
             $file_path = '/storage/'.date('Y').'/'.date('m').'/';
             $source_path = '../..'.$file_path;
@@ -307,8 +303,7 @@
 
             $body_str = $_model[BODY];
 
-            try
-            {
+            try {
                 if (count($_model[FILES]) > 0) {
                     $files = $_model[FILES];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
@@ -354,6 +349,9 @@
                 $_d->failEnd("내용이 비어있습니다");
             }
 
+            $err = 0;
+            $msg = "";
+
             $_d->sql_beginTransaction();
 
             $sql = "UPDATE CMS_BOARD
@@ -378,15 +376,15 @@
             }
 
             $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'CMS_BOARD'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        FILE F, CONTENT_SOURCE S
+                    WHERE
+                        F.NO = S.SOURCE_NO
+                        AND S.TARGET_GB = 'CMS_BOARD'
+                        AND S.TARGET_NO = ".$_key."
+                        AND F.THUMB_FL = '0'
+                    ";
 
             $result = $_d->sql_query($sql,true);
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
