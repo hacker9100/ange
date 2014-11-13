@@ -34,7 +34,7 @@ define([
         /********** 이벤트 **********/
         // 사용자 삭제 버튼 클릭
         $scope.click_deleteCmsUser = function (idx) {
-            var user = $scope.list[idx];
+            var user = $scope.$data[idx];
 
             $scope.deleteItem('cms_user', user.USER_ID, true)
                 .then(function(){alert('정상적으로 삭제했습니다.'); $scope.list.splice(idx, 1);})
@@ -43,7 +43,8 @@ define([
 
         // 검색 버튼 클릭
         $scope.click_searchCmsUser = function () {
-            $scope.getCmsUserList($scope.search);
+            $scope.tableParams.reload();
+//            $scope.getCmsUserList($scope.search);
         }
 
         // 사용자 목록 조회
@@ -57,8 +58,10 @@ define([
             }, {
                 total: 0,           // length of data
                 getData: function($defer, params) {
+                    alert("1");
                     $scope.getList('cms_user', {}, search, true)
                         .then(function(data){
+                            alert("2");
                             params.total(data[0].TOTAL_COUNT);
 //                            $defer.resolve(data);
 
@@ -66,7 +69,8 @@ define([
                             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
                         .catch(function(error){alert(error)});
-                }
+                },
+                $scope: { $data: {} }
             });
 
 //            $scope.getList('cms_user', {}, search, true)
@@ -78,11 +82,11 @@ define([
         $scope.click_saveCmsUser = function () {
             if ($scope.key == '') {
                 $scope.insertItem('cms_user', $scope.item, false)
-                    .then(function(){$scope.getCmsUserList();})
+                    .then(function(){$scope.tableParams.reload(); $scope.getCmsUserList();})
                     .catch(function(error){alert(error)});
             } else {
                 $scope.updateItem('cms_user', $scope.key, $scope.item, false)
-                    .then(function(){$scope.getCmsUserList();})
+                    .then(function(){$scope.tableParams.reload(); $scope.getCmsUserList();})
                     .catch(function(error){alert(error)});
             }
 
@@ -112,11 +116,12 @@ define([
 
         // 사용자 상태변경 버튼 클릭
         $scope.click_updateStatus = function (idx) {
-            var user = $scope.list[idx];
+            alert(idx);
+            var user = $scope.$data[idx];
             user.USER_ST = (user.USER_ST == "1" ? "0" : "1");
 
             $scope.updateItem('webboard', user.USER_ID, user, false)
-                .then(function(){$scope.getCmsUserList();})
+                .then(function(){$scope.tableParams.reload(); $scope.getCmsUserList();})
                 .catch(function(error){alert(error)});
         };
 
