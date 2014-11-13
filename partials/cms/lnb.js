@@ -24,11 +24,12 @@ define([
                 { url: '/edit_confirm', 'name': '편집 승인' },
                 { url: '/publish', 'name': '출판' }
             ]},
-            {"user, permission, series, category": [
+            {"user, permission, series, section, category": [
                 { url: '/user', 'name': '사용자 관리' },
                 { url: '/permission', 'name': '권한 관리' },
                 { url: '/category', 'name': '카테고리 관리' },
-                { url: '/series', 'name': '시리즈 관리' }
+                { url: '/series', 'name': '시리즈 관리' },
+                { url: '/section', 'name': '섹션 관리' }
             ]}
         ];
 
