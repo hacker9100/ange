@@ -398,10 +398,10 @@ alert("resolvePendingState");
         }
 
         // 로그인
-        $scope.login = function() {
+        $scope.login = function(id, item) {
             var deferred = $q.defer();
 
-            dataService.login(id, function(data, status) {
+            dataService.login(id, item, function(data, status) {
                 if (status != 200) {
                     console.log('조회에 실패 했습니다.');
                     deferred.reject('조회에 실패 했습니다.');

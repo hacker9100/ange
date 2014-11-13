@@ -108,7 +108,14 @@
                         $where_search .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
                     }
 
-                    $sql = "SELECT
+                    if (isset($_search[ROLE]) && $_search[ROLE] != "") {
+                        $sql = "SELECT
+                                    NO AS PROJECT_NO, SUBJECT
+                                FROM
+                                    CMS_PROJECT
+                            ";
+                    } else {
+                        $sql = "SELECT
                                 TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                                 NO, YEAR, (SELECT SERIES_NM FROM CMS_SERIES WHERE NO = DATA.SERIES_NO) AS SERIES_NM, SERIES_NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST
                             FROM
@@ -134,6 +141,8 @@
                                     ".$where_search."
                             ) CNT
                             ";
+                    }
+
                 }
 
                 $data = $_d->sql_query($sql);

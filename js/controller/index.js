@@ -55,5 +55,6 @@ define([
     '../../partials/cms/user',
     '../../partials/cms/permission',
     '../../partials/cms/category',
-    '../../partials/cms/series'
+    '../../partials/cms/series',
+    '../../partials/cms/section'
 ], function () {});

@@ -243,6 +243,14 @@
                 "topMenu": { "templateUrl": "/Home/TopMenu", "dependencies": ["controllers/top-menu-controller"], "controller": "TopMenuCtrl" },
                 "leftMenu": { "templateUrl": "/Home/LeftMenu", "dependencies": [ "controllers/left-menu-controller" ] }
             }
+        }}, {"section" : {
+            "url" : "/section",
+            "views" : {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@section": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@section": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@section": { "templateUrl": "partials/cms/section.html", "controller" : "section" }
+            }
         }}
     ]
 }

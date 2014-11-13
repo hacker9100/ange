@@ -1,0 +1,113 @@
+<div class="panel panel-primary">
+    <div class="panel-body" ng-model="search" lass="row">
+
+        <form role="form" name="list_form" class="form-horizontal">
+            <div class="col-md-9">
+                <div class= "form-group">
+                    <label class= "col-md-2">검색</label>
+                    <div class="col-md-6">
+                        <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-pull-2">
+                <div class= "navbar-header" >
+                    <button class="btn btn-primary start" ng-click="click_searchSection();" ng-disabled="list_form.$invalid">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <span>검색</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<!--<div id="veil" ng-show="isLoading"></div>-->
+<div id="feedLoading" ng-show="isLoading">Loading...</div>
+
+<!-- Contents Include -->
+<!-- 목록 -->
+<div loading-container="tableParams.settings().$loading">
+    <table ng-table="tableParams" class="table">
+        <tr ng-repeat="item in $data">
+            <td data-title="'연도'" sortable="'YEAR'">
+                {{item.YEAR}}
+            </td>
+            <td data-title="'섹션명'" sortable="'SECTION_NM'">
+                {{item.SECTION_NM}}
+            </td>
+            <td data-title="'프로젝트명'" sortable="'PROJECT_NO'">
+                {{item.SUBJECT}}
+            </td>
+            <td data-title="'순번'" sortable="'SORT_IDX'">
+                {{item.SORT_IDX}}
+            </td>
+            <td data-title="'기능'">
+                <a ng-click="click_getSection(item.NO)">편집</a>
+                <a ng-click="click_deleteSection($index)">삭제</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- ////Contents Include -->
+
+<!-- Contents Include -->
+<div class="col-md-12">
+
+    <form role="form" name="edit_form" class="form-horizontal">
+        <div ng-model="item" lass="row">
+            <div class= "form-group">
+                <label class= "col-md-2">연도</label>
+                <div class="col-md-4">
+                    <select ng-model="item.YEAR" ng-options="v for v in years" class= "form-control" ></select>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">프로젝트명</label>
+                <div class="col-md-4">
+                    <select ng-model="item.PROJECT_NO" ng-options="p.SUBJECT for p in project" class= "form-control"></select>
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: edit_form.user_name.$invalid}">
+                <label class= "col-md-2">섹션명</label>
+                <div class="col-md-4">
+                    <input name="section_nm" ng-model="item.SECTION_NM" type= "text" class= "form-control" placeholder="섹션 제목" required/>
+                    <span ng-show="edit_form.section_nm.$dirty && edit_form.section_nm.$invalid" class="help-inline">섹션 제목이 누락되었습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: edit_form.user_name.$invalid}">
+                <label class= "col-md-2">정렬순서</label>
+                <div class="col-md-4">
+                    <input name="sort_idx" ng-model="item.SORT_IDX" type= "text" class= "form-control" placeholder="정렬순서" required/>
+                    <span ng-show="edit_form.sort_idx.$dirty && edit_form.series_name.$invalid" class="help-inline">정렬순서가 누락되었습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">메모</label>
+                <div class= "col-md-6">
+                    <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
+                </div>
+            </div>
+
+            <!-- 하단 버튼 -->
+            <div class= "form-group">
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary start" ng-click="click_saveSection();" ng-disabled="edit_form.$invalid">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>저장</span>
+                    </button>
+                    <button type="button" class="btn btn-warning cancel" ng-click="click_cancel();">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>취소</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>
+<!-- ////Contents Include -->
+
