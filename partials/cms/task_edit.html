@@ -12,6 +12,14 @@
                     <select ng-model="item.PROJECT" ng-options="project.SUBJECT for project in projects" class= "form-control" ></select>
                 </div>
             </div>
+            <!-- 2014.11.13(목) 추가-->
+            <div class= "form-group" ng-class="{error: edit_form.section.$invalid}">
+                <label class= "col-md-2">섹션</label>
+                <div class="col-md-4">
+                    <select ng-model="item.SECTION" ng-options="section.SECTION_NM for section in sections" class= "form-control" ></select>
+                </div>
+            </div>
+            <!-- 2014.11.13(목) 추가 완료 -->
             <div class= "form-group" ng-class="{error: edit_form.subject.$invalid}">
                 <label class= "col-md-2">제목</label>
                 <div class="col-md-9">

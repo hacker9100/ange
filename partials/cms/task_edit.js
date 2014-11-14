@@ -33,7 +33,9 @@ define([
             var deferred = $q.defer();
 
             $q.all([
-                    $scope.getList('project', {}, {}, false).then(function(data){$scope.projects = data;}),
+                    $scope.getList('project', {}, {}, false).then(function(data){
+                        $scope.projects = data;
+                    }),
                     $scope.getList('category', {}, {}, false).then(function(data){
                         $scope.category = data;
 
@@ -52,7 +54,10 @@ define([
 
                         $scope.category_a = category_a;
                         $scope.category_b = category_b;
-                    })
+                    }),
+
+                    $scope.getList('section', {}, {}, false).then(function(data){$scope.sections = data;})
+                    // YEAR : $scope.projects.YEAR
                 ])
                 .then( function(results) {
                     deferred.resolve();
@@ -120,6 +125,15 @@ define([
                         $scope.item.PROJECT = $scope.projects[idx];
                         return;
                     });
+
+                    var idx = 0;
+                    for(var i=0; i < $scope.sections.length; i ++){
+                        if(JSON.stringify(data.SECTION_NO) == JSON.stringify($scope.sections[i].NO)){
+                            idx = i;
+                        }
+                    }
+
+                    $scope.item.SECTION = $scope.sections[idx];
                 })
                 .catch(function(error){throw('태스크:'+error);});
         };
@@ -142,6 +156,43 @@ define([
                 $scope.getTask();
             }
         }
+
+        /*        // 프로젝트 선택 시 연도별 섹션 조회
+         $scope.search_SectionYearUpdate = function() {
+         $scope.YEAR = $scope.item.YEAR;
+
+         console.log($scope.YEAR);
+         $scope.getList('section', {}, {YEAR : $scope.YEAR}, false).then(function(data){$scope.sections = data;})
+         // use $scope.selectedItem.code and $scope.selectedItem.name here
+         // for other stuff ...
+         }*/
+
+        // 프로젝트 변경 시 연도에 따른 섹션 선택
+/*        $scope.$watch('item.PROJECT', function (data) {
+            if (data != null) {
+                $scope.getList('section', {}, {YEAR: data.YEAR}, false)
+                    .then(function(data){$scope.sections = data;})
+                    .catch(function(error){alert(error)});
+            }
+        });*/
+
+/*        $scope.search_sectionYearUpdate = function() {
+            $scope.$watch('item.PROJECT', function (data) {
+                if (data != null) {
+                    $scope.getList('section', {}, {YEAR: data.YEAR}, false)
+                        .then(function(data){$scope.sections = data;})
+                        .catch(function(error){alert(error)});
+                }
+            });
+        }*/
+
+        $scope.$watch('item.PROJECT', function (data) {
+            if (data != null) {
+                $scope.getList('section', {}, {YEAR: data.YEAR}, false)
+                    .then(function(data){$scope.sections = data;$scope.item.SECTION = data[0]})
+                    .catch(function(error){alert(error)});
+            }
+        });
 
         /********** 화면 초기화 **********/
         $scope.getSession()

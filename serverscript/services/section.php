@@ -47,6 +47,12 @@ switch ($_method) {
                 $where_search .= "AND S.SECTION_NM LIKE '%".$_search[KEYWORD]."%' ";
             }
 
+            // 2014.11.14(금) 프로젝트 연도에 따른 섹션 연도 검색 필터 추가
+            if (isset($_search[YEAR]) && $_search[YEAR] != "") {
+                $where_search .= "AND S.YEAR =".$_search[YEAR]."";
+            }
+
+
             $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
 	                         YEAR, SECTION_NM, PROJECT_NO, SUBJECT, SORT_IDX, NO

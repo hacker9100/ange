@@ -33,11 +33,12 @@
             if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO
+                            T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, S.SECTION_NM, P.YEAR
                         FROM
-                            CMS_TASK T, CMS_PROJECT P
+                            CMS_TASK T, CMS_PROJECT P, CMS_SECTION S
                         WHERE
                             T.PROJECT_NO = P.NO
+                            AND T.SECTION_NO = S.NO
                             AND T.NO = ".$_key."
                         ";
 
@@ -140,12 +141,12 @@
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                            CLOSE_YMD, TAG, NOTE, PROJECT_NO
+                            CLOSE_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO
                         FROM
                         (
                             SELECT
                                 P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
-                                T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO
+                                T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO
                             FROM
                                 CMS_TASK T, CMS_PROJECT P
                                 ".$from_category."
@@ -224,6 +225,13 @@
                 $project_st = $project[PROJECT_ST];
             }
 
+            // 2014.11.14(금) SECTION 섹션 추가
+            if(count($_model[SECTION]) > 0){
+                $section = $_model[SECTION];
+                $section_no = $section[NO];
+                $section_nm = $section[SECTION_NM];
+            }
+
             $err = 0;
             $msg = "";
 
@@ -239,6 +247,7 @@
                         ,REG_DT
                         ,CLOSE_YMD
                         ,PROJECT_NO
+                        ,SECTION_NO
                         ,TAG
                         ,NOTE
                     ) VALUES (
@@ -250,6 +259,7 @@
                         ,SYSDATE()
                         ,'".$_model[CLOSE_YMD]."'
                         ,".$project_no."
+                        ,".$section_no."
                         ,'".$_model[TAG]."'
                         ,'".$_model[NOTE]."'
                     )";
@@ -377,6 +387,13 @@
                     $project_st = $project[PROJECT_ST];
                 }
 
+                // 2014.11.14(금) SECTION 섹션 추가
+                if(count($_model[SECTION]) > 0){
+                    $section = $_model[SECTION];
+                    $section_no = $section[NO];
+                    $section_nm = $section[SECTION_NM];
+                }
+
                 $sql = "UPDATE CMS_TASK
                         SET
                             PHASE = '".$_model[PHASE]."'
@@ -386,6 +403,7 @@
                             ,REG_NM = '".$_SESSION['name']."'
                             ,CLOSE_YMD = '".$_model[CLOSE_YMD]."'
                             ,PROJECT_NO = ".$project_no."
+                            ,SECTION_NO = ".$section_no."
                             ,TAG = '".$_model[TAG]."'
                             ,NOTE = '".$_model[NOTE]."'
                         WHERE

@@ -48,42 +48,45 @@ define([
         /********** 이벤트 **********/
         // 섹션 삭제 버튼 클릭
         $scope.click_deleteSection = function (idx) {
-            var section = $scope.list[idx];
+            var section = $scope.tableParams.data[idx];
 
             $scope.deleteItem('section', section.NO, true)
-                .then(function(){alert('정상적으로 삭제했습니다.'); $scope.list.splice(idx, 1); $scope.getSectionList();})
+                .then(function(){alert('정상적으로 삭제했습니다.'); $scope.tableParams.data.splice(idx, 1);})
                 .catch(function(error){alert(error)});
 
         };
 
         // 검색 버튼 클릭
         $scope.click_searchSection = function () {
-            $scope.getSectionList(aaaaaa$scope.search);
+            //$scope.getSectionList($scope.search);
+            $scope.tableParams.reload();
         }
 
         // 섹션 목록 조회
         $scope.getSectionList = function (search) {
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
-                count: 10,          // count per page
+                count: 1000,          // count per page
                 sorting: {
                     PROJECT_NO: 'asc',
                     SORT_IDX : 'asc'     // initial sorting
                 }
             }, {
+                counts: [],
                 total: 0,           // length of data
                 getData: function($defer, params) {
-                    $scope.getList('section', {}, search, true)
+                    $scope.getList('section', {}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
 //                            $defer.resolve(data);
 
-                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
+                           // var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
 
-                            $scope.list = data;
+                            //$scope.list = data;
 
 
-                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                            //$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                            $defer.resolve(data);
                         })
                         .catch(function(error){alert(error)});
                 }
@@ -98,11 +101,11 @@ define([
         $scope.click_saveSection = function () {
             if ($scope.key == '') {
                 $scope.insertItem('section', $scope.item, false)
-                    .then(function(){$scope.getSectionList();})
+                    .then(function(){$scope.tableParams.reload();})
                     .catch(function(error){alert(error)});
             } else {
                 $scope.updateItem('section', $scope.key, $scope.item, false)
-                    .then(function(){$scope.getSectionList();})
+                    .then(function(){$scope.tableParams.reload();})
                     .catch(function(error){alert(error)});
             }
 
