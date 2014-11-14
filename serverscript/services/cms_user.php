@@ -112,11 +112,10 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             $err = 0;
             $msg = "";
-
-            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             $_d->sql_beginTransaction();
 
