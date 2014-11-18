@@ -166,6 +166,7 @@ define([
 
         // 태스크 목록 조회
         $scope.getTaskList = function (search) {
+            $scope.isLoading = true;
             $scope.getList('task', {NO:$scope.pageNo, SIZE:$scope.pageSize}, search, true)
                 .then(function(data){
                     $scope.totalCnt = data[0].TOTAL_COUNT;
@@ -176,6 +177,9 @@ define([
                     if ($scope.list.length == 0) {
                         $scope.list = $scope.listData.slice($scope.perCnt, $scope.perSize);
                     }
+
+                    console.log($scope.projects);
+                    $scope.isLoading = false;
                 })
                 .catch(function(error){alert(error)});
         };
@@ -203,10 +207,10 @@ define([
         var initSearch = {};
 
         // 페이지 타이틀
-        if ($stateParams.menu == 'article') {
+        if ($stateParams.menu == 'article') {ㅋ
             $scope.isTask = true;
             initSearch = {PHASE: '0, 10, 11, 12'};
-        } else if ($stateParams.menu == "article_confirm") {
+        } else if ($stateParams.menu == "article_confirm") {ㅋㅋㅋㅋㅋ
             $scope.isTask = true;
             initSearch = {PHASE: '11, 12'};
         } else {

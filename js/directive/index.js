@@ -6,7 +6,8 @@
  */
 define([
     './dropdownSelectDirective',
-    './ckEditorDirective'//,
+    './ckEditorDirective',
+    './focusDirective'//,
 //    './plUploadDirective'
 ], function (){
 
