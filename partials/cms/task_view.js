@@ -28,7 +28,7 @@ define([
         /********** 이벤트 **********/
         // 태스크 목록 버튼 클릭
         $scope.click_showTaskList = function () {
-            $location.path('/task');
+            $location.path('/task/list');
         };
 
         // 태스크 수정 버튼 클릭

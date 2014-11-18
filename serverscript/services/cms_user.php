@@ -70,6 +70,9 @@
                 if (isset($_search[ROLE]) && $_search[ROLE] != "") {
                     $where_search .= "AND R.ROLE_ID  = '".$_search[ROLE][ROLE_ID]."' ";
                 }
+                if (isset($_search[ROLE_ID]) && $_search[ROLE_ID] != "") {
+                    $where_search .= "AND R.ROLE_ID  = '".$_search[ROLE_ID]."' ";
+                }
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $where_search .= "AND U.USER_NM LIKE '%".$_search[KEYWORD]."%' ";
                 }

@@ -23,7 +23,7 @@ define([
     // 대시보드
     '../../partials/cms/dashboard',
     '../../partials/cms/account',
-    '../../partials/cms/scheduler_calendar',
+    '../../partials/cms/scheduler',
     '../../partials/cms/archive',
     '../../partials/cms/archive_list',
 
@@ -58,5 +58,7 @@ define([
     '../../partials/cms/permission',
     '../../partials/cms/category',
     '../../partials/cms/series',
-    '../../partials/cms/section'
+    '../../partials/cms/section',
+
+    '../../partials/cms/contact_list',
 ], function () {});

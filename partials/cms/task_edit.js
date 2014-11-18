@@ -33,9 +33,7 @@ define([
             var deferred = $q.defer();
 
             $q.all([
-                    $scope.getList('project', {}, {}, false).then(function(data){
-                        $scope.projects = data;
-                    }),
+                    $scope.getList('project', {}, {}, false).then(function(data){$scope.projects = data;}),
                     $scope.getList('category', {}, {}, false).then(function(data){
                         $scope.category = data;
 
@@ -110,7 +108,7 @@ define([
 
         // 태스크 목록 이동
         $scope.click_showTaskList = function () {
-            $location.path('/task');
+            $location.path('/task/list');
         };
 
         // 태스크 조회
@@ -142,11 +140,11 @@ define([
         $scope.click_saveTask = function () {
             if ($stateParams.id == 0) {
                 $scope.insertItem('task', $scope.item, false)
-                    .then(function(){$location.url('/task');})
+                    .then(function(){$location.url('/task/list');})
                     .catch(function(error){alert(error)});
             } else {
                 $scope.updateItem('task', $stateParams.id, $scope.item, false)
-                    .then(function(){$location.url('/task');})
+                    .then(function(){$location.url('/task/list');})
                     .catch(function(error){alert(error)});
             }
         };
@@ -155,6 +153,33 @@ define([
             if ( $stateParams.id != 0) {
                 $scope.getTask();
             }
+        }
+
+        // 사용자 선택 버튼 클릭
+        $scope.click_selectEditor = function () {
+            $scope.openModal(true, {ROLE_ID : 'IN_EDITOR'});
+        }
+
+        $scope.openModal = function (modal, search, size) {
+            var modalInstance = $modal.open({
+                templateUrl: '/partials/cms/contact_list.html',
+                controller: 'contact_list',
+                size: size,
+                resolve: {
+                    modal: function () {
+                        return modal;
+                    },
+                    search: function() {
+                        return search;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (user) {
+                alert(JSON.stringify(user))
+            }, function () {
+//                $log.info('Modal dismissed at: ' + new Date());
+            });
         }
 
         /*        // 프로젝트 선택 시 연도별 섹션 조회

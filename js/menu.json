@@ -35,15 +35,15 @@
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@scheduler": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@scheduler": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "contentView@scheduler": { "templateUrl": "partials/cms/scheduler_calendar.html", "controller" : "scheduler_calendar" }
+                "contentView@scheduler": { "templateUrl": "partials/cms/scheduler.html", "controller" : "scheduler" }
             }
-        }}, { "archive": {
-            "url": "/archive",
+        }}, { "archive_list": {
+            "url": "/archive/list",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
-                "lnbView@archive": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
-                "locaterView@archive": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "contentView@archive": { "templateUrl": "partials/cms/archive_list.html", "controller" : "archive_list" }
+                "lnbView@archive_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@archive_list": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@archive_list": { "templateUrl": "partials/cms/task_list.html", "controller" : "task_list" }
             }
         }}, { "file": {
             "url": "/file",
@@ -54,7 +54,7 @@
                 "bodyView@file": { "templateUrl": "partials/cms/file.html" }
             }
         }}, { "project_list": {
-            "url": "/project",
+            "url": "/project/list",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@project_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
@@ -62,7 +62,7 @@
                 "contentView@project_list": { "templateUrl": "partials/cms/project_list.html", "controller" : "project_list" }
             }
         }}, { "project_edit": {
-            "url": "/project/:id",
+            "url": "/project/edit/:id",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@project_edit": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
@@ -78,7 +78,7 @@
                 "contentView@project_view": { "templateUrl": "partials/cms/project_view.html", "controller" : "project_view" }
             }
         }}, { "task_list": {
-            "url": "/task",
+            "url": "/task/list",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@task_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
@@ -86,7 +86,7 @@
                 "contentView@task_list": { "templateUrl": "partials/cms/task_list.html", "controller" : "task_list" }
             }
         }}, { "task_edit": {
-            "url": "/task/:id",
+            "url": "/task/edit/:id",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@task_edit": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
@@ -102,7 +102,7 @@
                 "contentView@task_view": { "templateUrl": "partials/cms/task_view.html", "controller" : "task_view" }
             }
         }}, { "content_list": {
-            "url": "/content/:menu",
+            "url": "/content/:menu/list",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@content_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
@@ -110,12 +110,20 @@
                 "contentView@content_list": { "templateUrl": "partials/cms/task_list.html", "controller" : "task_list" }
             }
         }}, { "content_edit": {
-            "url": "/content/:menu/:id",
+            "url": "/content/:menu/edit/:id",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@content_edit": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@content_edit": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@content_edit": { "templateUrl": "partials/cms/content_edit.html", "controller" : "content_edit" }
+            }
+        }}, { "content_view": {
+            "url": "/content/:menu/view/:id",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@content_view": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@content_view": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@content_view": { "templateUrl": "partials/cms/content_view.html", "controller" : "content_view" }
             }
         }}, { "article_list": {
             "url": "/article",
@@ -182,7 +190,7 @@
                 "contentView@edit_confirm_edit": { "templateUrl": "partials/cms/edit_confirm_edit.html", "controller" : "edit_confirm_edit" }
             }
         }}, { "publish_list": {
-            "url": "/publish",
+            "url": "/publish/list",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@publish_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
@@ -190,7 +198,7 @@
                 "contentView@publish_list": { "templateUrl": "partials/cms/publish_list.html", "controller" : "publish_list" }
             }
         }}, { "publish_edit": {
-            "url": "/publish/:id",
+            "url": "/publish/edit/:id",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@publish_edit": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
@@ -198,7 +206,7 @@
                 "contentView@publish_edit": { "templateUrl": "partials/cms/publish_edit.html", "controller" : "publish_edit" }
             }
         }}, { "webboard_list": {
-            "url": "/webboard",
+            "url": "/webboard/list",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@webboard_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
@@ -252,6 +260,14 @@
                 "lnbView@series": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@series": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@series": { "templateUrl": "partials/cms/series.html", "controller" : "series" }
+            }
+        }}, { "contact": {
+            "url": "/contact",
+            "views": {
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@contact": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@contact": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@contact": { "templateUrl": "partials/cms/contact_list.html", "controller" : "contact_list" }
             }
         }}, { "test": {
             "url": "/",

@@ -13,16 +13,16 @@ define([
                 { url: '/dashboard', 'name': '마이페이지' },
                 { url: '/account', 'name': '개인정보' },
                 { url: '/scheduler', 'name': '스케줄' },
-                { url: '/archive', 'name': '아카이브' }
+                { url: '/archive/list', 'name': '아카이브' }
             ]},
             {"project, task, article, article_confirm, edit, edit_confirm, publish": [
-                { url: '/project', 'name': '프로젝트' },
-                { url: '/task', 'name': '태스크' },
-                { url: '/content/article', 'name': '원고' },
-                { url: '/content/article_confirm', 'name': '원고 승인' },
-                { url: '/edit', 'name': '편집' },
-                { url: '/edit_confirm', 'name': '편집 승인' },
-                { url: '/publish', 'name': '출판' }
+                { url: '/project/list', 'name': '프로젝트' },
+                { url: '/task/list', 'name': '태스크' },
+                { url: '/content/article/list', 'name': '원고' },
+                { url: '/content/article_confirm/list', 'name': '원고 승인' },
+                { url: '/content/edit/list', 'name': '편집' },
+                { url: '/content/edit_confirm/list', 'name': '편집 승인' },
+                { url: '/publish/list', 'name': '출판' }
             ]},
             {"user, permission, series, section, category": [
                 { url: '/user', 'name': '사용자 관리' },

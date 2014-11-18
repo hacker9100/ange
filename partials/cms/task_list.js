@@ -204,22 +204,24 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        var initSearch = {};
+        $scope.isTask = true;
 
         // 페이지 타이틀
-        if ($stateParams.menu == 'article') {ㅋ
-            $scope.isTask = true;
-            initSearch = {PHASE: '0, 10, 11, 12'};
-        } else if ($stateParams.menu == "article_confirm") {ㅋㅋㅋㅋㅋ
-            $scope.isTask = true;
-            initSearch = {PHASE: '11, 12'};
+        if ($stateParams.menu == 'article') {
+            $scope.search = {PHASE: '0, 10, 11, 12'};
+        } else if ($stateParams.menu == "article_confirm") {
+            $scope.search = {PHASE: '11, 12'};
+        } else if ($stateParams.menu == 'edit') {
+            $scope.search = {PHASE: '20, 21, 22'};
+        } else if ($stateParams.menu == "edit_confirm") {
+            $scope.search = {PHASE: '21, 22'};
         } else {
             $scope.isTask = false;
             $scope.search = {};
         }
 
         $scope.init();
-        $scope.getTaskList(initSearch);
+        $scope.getTaskList($scope.search);
 
     }]);
 });

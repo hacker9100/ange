@@ -17,11 +17,7 @@ define([
         $scope.key = '';
 
         // 초기화
-        $scope.initList = function() {
-
-        };
-
-        $scope.initEdit = function() {
+        $scope.init = function() {
 
         };
 
@@ -151,14 +147,7 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        $scope.$parent.pageTitle = '시리즈 관리';
-        $scope.$parent.pageDescription = 'CMS 시리즈를 관리합니다.';
-        $scope.$parent.tailDescription = '.';
-
-        $scope.initList();
-        $scope.initEdit();
+        $scope.init();
         $scope.getSeriesList();
 
     }]);

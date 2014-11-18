@@ -315,12 +315,19 @@ alert("resolvePendingState");
                         var permission = true;
                         var role = session.data.MENU_ROLE[idx];
 
-                        if (role.MENU_ID == spMenu[1]) {
+                        var menuId = spMenu[1];
+                        var menuGb = spMenu[2];
 
+                        if (menuId == "content") {
+                            menuId = spMenu[2];
+                            menuGb = spMenu[3];
+                        }
+
+                        if (role.MENU_ID == menuId) {
                             if (spMenu.length < 3 && role.MENU_FL == '1') {
                                 permission = false;
                             } else {
-                                switch (spMenu[2]) {
+                                switch (menuGb) {
                                     case 'list' :
                                         if (role.LIST_FL != '0') {
                                             permission = false;
@@ -336,6 +343,8 @@ alert("resolvePendingState");
                                             permission = false;
                                         }
                                         break;
+//                                    default :
+//                                        permission = false;
                                 }
                             }
                         }

@@ -3,7 +3,7 @@
 // 로컬 서버
 //define("__ANGE_ADD__" , "localhost");
 //define("__ANGE_USR__" , "ange");
-//define("__ANGE_PWD__" , "ange");
+//define("__ANGE_PWD__" , "");
 //define("__ANGE_DBF__" , "ange");
 
 

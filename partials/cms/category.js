@@ -17,11 +17,7 @@ define([
         $scope.key = '';
 
         // 초기화
-        $scope.initList = function() {
-
-        };
-
-        $scope.initEdit = function() {
+        $scope.init = function() {
             dataService.db('category').find({},{CATEGORY_GB: '2', PARENT_NO: '0'},function(data, status){
                 if (status != 200) {
                     alert('카테고리 조회에 실패 했습니다.');
@@ -176,14 +172,7 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        $scope.$parent.pageTitle = '카테고리 관리';
-        $scope.$parent.pageDescription = 'CMS 사용하는 카테고리를 관리합니다.';
-        $scope.$parent.tailDescription = '.';
-
-//        $scope.initList();
-        $scope.initEdit();
+        $scope.init();
         $scope.getCategoryList();
 
     }]);
