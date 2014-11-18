@@ -4,7 +4,21 @@
         <form role="form" name="list_form" class="form-horizontal">
             <div class="col-md-9">
                 <div class= "form-group">
-                    <label class= "col-md-2">검색</label>
+                    <label class= "col-md-2"> 연도 </label>
+                    <div class="col-md-2">
+                        <select ng-model="search.YEAR" ng-options="v for v in years" class= "form-control" placeholder="등록년">
+                            <option name="years" value="">- 연도</option>
+                        </select>
+                    </div>
+                    <label class= "col-md-2"> 프로젝트명 </label>
+                    <div class="col-md-4">
+                        <select ng-model="search.PROJECT" ng-options="project.SUBJECT for project in projects" class= "form-control" placeholder="프로젝트명">
+                            <option name="projects" value="" selected="selected">- 프로젝트</option>
+                        </select>
+                    </div>
+                </div>
+                <div class= "form-group">
+                    <label class= "col-md-2"> 섹션명 </label>
                     <div class="col-md-6">
                         <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
                     </div>
@@ -30,10 +44,16 @@
 <!-- 목록 -->
 <div loading-container="tableParams.settings().$loading">
     <table ng-table="tableParams" class="table">
-        <tr ng-repeat="item in $data">
-            <td data-title="'연도'" sortable="'YEAR'">
-                {{item.YEAR}}
+    <tbody ng-repeat="group in $groups">
+         <tr class="ng-table-group">
+            <td colspan="{{$columns.length}}">
+                <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                    <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                    <strong> {{ group.value }}년 </strong>
+                </a>
             </td>
+         </tr>
+         <tr ng-hide="group.$hideRows" ng-repeat="item in group.data">
             <td data-title="'섹션명'" sortable="'SECTION_NM'">
                 {{item.SECTION_NM}}
             </td>
@@ -45,9 +65,10 @@
             </td>
             <td data-title="'기능'">
                 <a ng-click="click_getSection(item.NO)">편집</a>
-                <a ng-click="click_deleteSection($index)">삭제</a>
+                <a ng-click="click_deleteSection($group.index, $index)">삭제</a>
             </td>
         </tr>
+    </tbody>
     </table>
 </div>
 

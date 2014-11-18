@@ -19,7 +19,7 @@ define([
         /********** 초기화 **********/
         $scope.key = '';
         $scope.item = {};
-
+        $scope.search = {};
 
         // 초기화
         $scope.init = function() {
@@ -36,23 +36,33 @@ define([
 
             $scope.years = year;
             $scope.item.YEAR = nowYear+'';
+            //$scope.search.YEAR = nowYear+''; // 연도검색 셀렉트 박스 2014년 값 셋팅
 
-            $scope.getList('project', {}, {ROLE: true}, false)
+/*
+            $scope.getList('project', {}, {ROLE: true, YEAR: nowYear}, false)
                 .then(function(data){
                     $scope.project = data;
                     $scope.item.PROJECT_NO = data[0];
+                })
+                .catch(function(error){alert(error)});
+*/
+            $scope.getList('project', {}, {ROLE: true}, false)
+                .then(function(data){
+                    $scope.projects = data;
+                    //$scope.search.PROJECT = data[0]
                 })
                 .catch(function(error){alert(error)});
         };
 
         /********** 이벤트 **********/
         // 섹션 삭제 버튼 클릭
-        $scope.click_deleteSection = function (idx) {
+        $scope.click_deleteSection = function (grpIdx, idx) {
             var section = $scope.tableParams.data[idx];
 
-            $scope.deleteItem('section', section.NO, true)
+            console.log(grpIdx +','+ $scope.tableParams.data[idx]);
+  /*          $scope.deleteItem('section', section.NO, true)
                 .then(function(){alert('정상적으로 삭제했습니다.'); $scope.tableParams.data.splice(idx, 1);})
-                .catch(function(error){alert(error)});
+                .catch(function(error){alert(error)});*/
 
         };
 
@@ -72,19 +82,16 @@ define([
                     SORT_IDX : 'asc'     // initial sorting
                 }
             }, {
+                groupBy: 'YEAR',
                 counts: [],
                 total: 0,           // length of data
                 getData: function($defer, params) {
                     $scope.getList('section', {}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
-//                            $defer.resolve(data);
-
                            // var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
 
                             //$scope.list = data;
-
-
                             //$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                             $defer.resolve(data);
                         })
@@ -110,6 +117,8 @@ define([
             }
 
             $scope.key = '';
+            //$scope.search = {};
+            //$scope.item = {};
         };
 
         // 섹션 편집 클릭
@@ -134,6 +143,29 @@ define([
             }
         }
 
+        // [검색] 연도별에 따른 프로젝트명 셀렉트 박스 셋팅
+        $scope.$watch('search.YEAR', function (data) {
+            if (data != null) {
+                $scope.getList('project', {}, {ROLE: true, YEAR: data}, false)
+                    .then(function(data){
+                        $scope.projects = data;
+                        $scope.search.PROJECT = data[0]
+                    })
+                    .catch(function(error){alert(error)});
+            }
+        });
+
+        // 연도별에 따른 프로젝트명 셀렉트 박스 셋팅
+        $scope.$watch('item.YEAR', function (data) {
+            if (data != null) {
+                $scope.getList('project', {}, {ROLE: true, YEAR: data}, false)// $scope.item.YEAR
+                    .then(function(data){
+                        $scope.project = data;
+                        $scope.item.PROJECT_NO = data[0]
+                    })
+                    .catch(function(error){alert(error)});
+            }
+        });
 
         // 취소 클릭
         $scope.click_cancel = function () {
@@ -148,8 +180,11 @@ define([
         $scope.$parent.pageDescription = 'CMS 섹션을 관리합니다.';
         $scope.$parent.tailDescription = '.';
 
-        $scope.init();
-        $scope.getSectionList();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getSectionList)
+            .catch($scope.reportProblems);
 
     }]);
 });

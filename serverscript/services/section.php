@@ -49,9 +49,13 @@ switch ($_method) {
 
             // 2014.11.14(금) 프로젝트 연도에 따른 섹션 연도 검색 필터 추가
             if (isset($_search[YEAR]) && $_search[YEAR] != "") {
-                $where_search .= "AND S.YEAR =".$_search[YEAR]."";
+                $where_search .= "AND S.YEAR =".$_search[YEAR]." ";
             }
 
+            // 2014.11.14(금) 프로젝트 연도에 따른 섹션 연도 검색 필터 추가
+            if (isset($_search[PROJECT][PROJECT_NO]) && $_search[PROJECT][PROJECT_NO] != "") {
+                $where_search .= "AND S.PROJECT_NO =".$_search[PROJECT][PROJECT_NO]." ";
+            }
 
             $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
@@ -75,6 +79,7 @@ switch ($_method) {
                              FROM CMS_SECTION S
                              WHERE 1=1
                              ".$where_search."
+                             ORDER BY PROJECT_NO ASC, SORT_IDX ASC
                         ) CNT
                         ";
 
