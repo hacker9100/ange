@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : webboardView.html 화면 콘트롤러
+ * Description : file upload 콘트롤러
  */
 
 define([
@@ -10,12 +10,9 @@ define([
 ], function (controllers) {
     'use strict';
 
-    var url = '/serverscript/upload/';
-
     // 사용할 서비스를 주입
-    controllers.controller('file', ['$scope', '$http', '$filter', '$window', function ($scope, $http) {
-        $scope.options = { url: url, autoUpload: true, dropZone: angular.element('#dropzone') };
-
+    controllers.controller('file', ['$scope', 'UPLOAD', function ($scope, UPLOAD) {
+//        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 //        $scope.newDir = 'test1/';
 /*
         $scope.loadingFiles = true;
@@ -74,7 +71,7 @@ define([
 //                alert(JSON.stringify(file))
 //                var img = '<img alt="" src="/upload/files/medium/'+file.name+'" />';
                 var img = '<img alt="" src="'+file.mediumUrl+'" />';
-                $scope.$parent.item.BODY += img;
+                $scope.item.BODY += img;
             };
         }
     }]);

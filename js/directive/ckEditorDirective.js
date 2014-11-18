@@ -142,6 +142,7 @@ define(['./directives'], function (directives) {
                             { name: 'paragraph', items: [ 'BulletedList', 'NumberedList', 'Blockquote' ] },
                             { name: 'editing', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
                             { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+                            { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
                             { name: 'tools', items: [ 'SpellChecker', 'Maximize' ] },
                             '/',
                             { name: 'styles', items: [ 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
@@ -153,13 +154,13 @@ define(['./directives'], function (directives) {
                         disableNativeSpellChecker: false,
                         uiColor: '#FAFAFA',
                         height: '400px',
-                        width: '780px',
-                        filebrowserBrowseUrl : 'lib/ckfinder/ckfinder.html',
-                        filebrowserImageBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Images',
-                        filebrowserFlashBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Flash',
-                        filebrowserUploadUrl : 'lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
-                        filebrowserImageUploadUrl : 'lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
-                        filebrowserFlashUploadUrl : 'lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
+                        width: '780px'
+//                        filebrowserBrowseUrl : 'lib/ckfinder/ckfinder.html',
+//                        filebrowserImageBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Images',
+//                        filebrowserFlashBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Flash',
+//                        filebrowserUploadUrl : 'lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+//                        filebrowserImageUploadUrl : 'lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+//                        filebrowserFlashUploadUrl : 'lib/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
                     };
                     options = angular.extend(options, scope[attrs.ckeditor]);
 
@@ -171,7 +172,20 @@ define(['./directives'], function (directives) {
                             false //If the instance is replacing a DOM element, this parameter indicates whether or not to update the element with the instance contents.
                         );
                     });
+
+                    /*
+                     * Sung-hwan Kim (2014-11-14)
+                     *
+                     * 이미지를 더블클릭 이벤트를 정의한다.
+                     * 파일 업로드 선택 화면을 화면에 출력하고 업로드 후 화면에 이미지를 대체한다.
+                     **/
+                    var dbClick = function(a, b) {
+                        alert(a.data.element.is("img"));
+                        if (a.data.element.getAttribute("id") == "img") {
+                        }
+                    }
                     var setModelData = function(setPristine) {
+//                        alert(instance.getData())
                         var data = instance.getData();
                         if (data == '') {
                             data = null;
@@ -200,6 +214,13 @@ define(['./directives'], function (directives) {
                     instance.on('change',       setModelData);
                     instance.on('blur',         setModelData);
                     //instance.on('key',          setModelData); // for source view
+
+                    /*
+                     * Sung-hwan Kim (2014-11-14)
+                     *
+                     * 이미지를 더블클릭 할경우 이변트를 지정한다.
+                     **/
+                    instance.on('doubleclick',        dbClick);
 
                     instance.on('instanceReady', function() {
                         scope.$broadcast("ckeditor.ready");

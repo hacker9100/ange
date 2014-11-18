@@ -112,17 +112,17 @@ define([
 
         // 등록 버튼 클릭
         $scope.click_createNewTask = function () {
-            $location.url('/task/0');
+            $location.url('/task/edit/0');
         };
 
         // 태스크 수정 화면 이동
         $scope.click_showEditTask = function (key) {
-            $location.url('/task/'+key);
+            $location.url('/task/edit/'+key);
         };
 
         // 콘텐츠 수정 화면 이동
         $scope.click_showEditContent = function (key) {
-            $location.url('/content/'+$stateParams.menu+'/'+key);
+            $location.url('/content/'+$stateParams.menu+'/edit/'+key);
         };
 
         // 이력조회 버튼 클릭
@@ -200,22 +200,24 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        var initSearch = {};
+        $scope.isTask = true;
 
         // 페이지 타이틀
         if ($stateParams.menu == 'article') {
-            $scope.isTask = true;
-            initSearch = {PHASE: '0, 10, 11, 12'};
+            $scope.search = {PHASE: '0, 10, 11, 12'};
         } else if ($stateParams.menu == "article_confirm") {
-            $scope.isTask = true;
-            initSearch = {PHASE: '11, 12'};
+            $scope.search = {PHASE: '11, 12'};
+        } else if ($stateParams.menu == 'edit') {
+            $scope.search = {PHASE: '20, 21, 22'};
+        } else if ($stateParams.menu == "edit_confirm") {
+            $scope.search = {PHASE: '21, 22'};
         } else {
             $scope.isTask = false;
             $scope.search = {};
         }
 
         $scope.init();
-        $scope.getTaskList(initSearch);
+        $scope.getTaskList($scope.search);
 
     }]);
 });

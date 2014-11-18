@@ -1,0 +1,128 @@
+<div class="panel panel-primary">
+    <div class="panel-body" ng-model="search" lass="row">
+
+        <form role="form" name="search_form" class="form-horizontal">
+            <div class="col-md-9">
+                <div class= "form-group">
+                    <label class= "col-md-2">검색</label>
+                    <div class= "col-md-4">
+                        <select ng-model="search.ROLE" ng-options="role.ROLE_NM for role in roles" class= "form-control" >
+                            <option name="" value="">- 권한</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-pull-2">
+                <div class= "navbar-header" >
+                    <button class="btn btn-primary start" ng-click="click_searchCmsUser();" ng-disabled="search_form.$invalid">
+                        <i class="glyphicon glyphicon-search"></i>
+                        <span>검색</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div loading-container="tableParams.settings().$loading">
+    <table ng-table="tableParams" class="table">
+    <tbody ng-repeat="group in $groups">
+        <tr class="ng-table-group">
+            <td colspan="{{$columns.length}}">
+                <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                    <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                    <strong>{{ group.value }}</strong>
+                </a>
+            </td>
+        </tr>
+        <tr ng-hide="group.$hideRows" ng-repeat="item in group.data">
+            <td data-title="'이름'" sortable="'USER_NM'">
+                {{item.USER_NM}}
+            </td>
+            <td data-title="'권한'" sortable="'ROLE'">
+                {{item.ROLE_NM}}
+            </td>
+            <td data-title="'등록일'" sortable="'REG_DT'">
+                {{item.REG_DT}}
+            </td>
+            <td data-title="'상태'" sortable="'USER_ST'">
+                {{item.USER_ST == '0' ? '이용가능' : '이용정지'}}
+            </td>
+            <td data-title="'기능'">
+                <a ng-click="click_getCmsUser(item.USER_ID)">조회</a>
+                <a ng-click="click_selectCmsUser(item)" ng-show="isModal">선택</a>
+                <!--<a ng-click="click_updateStatus($index)">상태변경</a>-->
+                <!--<a ng-click="click_deleteCmsUser($index)">삭제</a>-->
+            </td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+
+<!-- ////Contents Include -->
+
+<!-- Contents Include -->
+<div class="col-md-12" ng-show="!isModal">
+    <form role="form" name="edit_form" class="form-horizontal">
+        <div ng-model="item" lass="row">
+            <div class= "form-group" ng-class="{error: edit_form.user_id.$invalid}">
+                <label class= "col-md-2">아이디</label>
+                <div class="col-md-4">
+                    <span ng-bind="item.USER_ID" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">권한</label>
+                <div class= "col-md-4">
+                    <span ng-bind="item.ROLE.ROLE_NM" />
+                </div>
+            </div>
+            <div class= "form-group" ng-class="{error: edit_form.user_name.$invalid}">
+                <label class= "col-md-2">이름</label>
+                <div class="col-md-4">
+                    <span ng-bind="item.USER_NM" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">연락처</label>
+                <div class="col-md-4">
+                    <span ng-bind="item.PHONE" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">회신메일</label>
+                <div class="col-md-4">
+                    <span ng-bind="item.EMAIL" />
+                </div>
+            </div>
+            <div class= "form-group">
+                <label class= "col-md-2">메모</label>
+                <div class= "col-md-6">
+                    <textarea ng-bind="item.NOTE"/>
+                </div>
+            </div>
+
+            <!-- 하단 버튼 -->
+            <!--<div class= "form-group">-->
+                <!--<div class="col-md-4">-->
+                    <!--<button type="button" class="btn btn-primary start" ng-click="click_saveCmsUser();" ng-disabled="edit_form.$invalid">-->
+                        <!--<i class="glyphicon glyphicon-plus"></i>-->
+                        <!--<span>저장</span>-->
+                    <!--</button>-->
+                    <!--<button type="button" class="btn btn-warning cancel" ng-click="click_cancel();">-->
+                        <!--<i class="glyphicon glyphicon-ban-circle"></i>-->
+                        <!--<span>취소</span>-->
+                    <!--</button>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        </div>
+    </form>
+
+</div>
+<!-- ////Contents Include -->
+

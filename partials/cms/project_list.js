@@ -46,7 +46,7 @@ define([
         /********** 이벤트 **********/
         // 등록 버튼 클릭
         $scope.click_createNewProject = function () {
-            $location.path('/project/0');
+            $location.path('/project/edit/0');
         };
 
         // 수정 화면 이동
@@ -55,7 +55,7 @@ define([
 
             // TODO: 권한 처리 넣을것
 
-            $location.path('/project/'+project.NO);
+            $location.path('/project/edit/'+project.NO);
         };
 
         // 삭제 버튼 클릭

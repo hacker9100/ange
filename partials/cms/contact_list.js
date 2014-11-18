@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : project.html 화면 콘트롤러
+ * Description : contact_list.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('user', ['$scope', '$stateParams', '$location', '$controller', '$filter', 'ngTableParams', function ($scope, $stateParams, $location, $controller, $filter, ngTableParams) {
+    controllers.controller('contact_list', ['$scope', '$stateParams', '$modalInstance', '$location', '$controller', '$filter', 'ngTableParams', 'search', function ($scope, $stateParams, $modalInstance, $location, $controller, $filter, ngTableParams, search) {
 
         /********** 공통 controller 호출 **********/
         angular.extend(this, $controller('common', {$scope: $scope}));
@@ -29,6 +29,11 @@ define([
                     $scope.item.ROLE = data[0];
                 })
                 .catch(function(error){alert(error)});
+alert(search)
+            if (search != undefined) {
+                $scope.isModal = true;
+                $scope.search = search;
+            }
         };
 
         /********** 이벤트 **********/
@@ -92,36 +97,21 @@ define([
             $scope.click_cancel();
         };
 
-        // 사용자 편집 클릭
+        // 사용자 조회 클릭
         $scope.click_getCmsUser = function (id) {
             $scope.key = id;
 
             if ($scope.key != '') {
                 $scope.getItem('cms_user', $scope.key, {}, false)
-                    .then(function(data) {
-                        var idx = 0;
-                        for (var i=0; i < $scope.user_roles.length; i ++) {
-                            if (JSON.stringify(data.ROLE) == JSON.stringify($scope.user_roles[i])) {
-                                idx = i;
-                            }
-                        }
-
-                        $scope.item = data;
-                        $scope.item.ROLE = $scope.user_roles[idx];
-                    })
+                    .then(function(data) { $scope.item = data; })
                     .catch(function(error){alert(error)});
             }
         }
 
-        // 사용자 상태변경 버튼 클릭
-        $scope.click_updateStatus = function (idx) {
-            var user = $scope.tableParams.data[idx];
-            user.USER_ST = (user.USER_ST == "1" ? "0" : "1");
-
-            $scope.updateItem('cms_user', user.USER_ID, user, false)
-                .then(function(){/*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
-                .catch(function(error){alert(error); $scope.tableParams.reload();});
-        };
+        // 사용자 조회 클릭
+        $scope.click_selectCmsUser = function (item) {
+            $modalInstance.close(item);
+        }
 
         // 취소 클릭
         $scope.click_cancel = function () {

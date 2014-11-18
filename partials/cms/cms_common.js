@@ -29,7 +29,7 @@ define([
 //            alert(error);
 //        };
 
-        // 페이지 타이틀
+        /********** 페이지 타이틀 **********/
         var spMenu = $location.path().split('/');
 
         $scope.message = 'ANGE CMS';
@@ -37,6 +37,10 @@ define([
             $scope.pageTitle = '개인정보';
             $scope.pageDescription = '개인정보를 조회하고 수정할 수 있습니다.';
             $scope.tailDescription = '내용을 수정한 후 \"수정\"버튼을 누르면 수정이 완료됩니다.<br/>\"취소\"버튼을 누르면 원래대로 돌아갑니다.';
+        } if (spMenu[1] == "archive") {
+            $scope.pageTitle = '아카이브';
+            $scope.pageDescription = '지난 기사자료를 조회할 수 있습니다.';
+            $scope.tailDescription = '.';
         } else if (spMenu[1] == "project") {
             $scope.pageTitle = '프로젝트 관리';
             $scope.pageDescription = '프로젝트를 생성하고 섹션을 설정합니다.';
@@ -54,15 +58,39 @@ define([
                 $scope.pageTitle = '원고 승인';
                 $scope.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
                 $scope.tailDescription = '.';
+            } else if (spMenu[2] == 'edit') {
+                $scope.pageTitle = '편집';
+                $scope.pageDescription = '승인완료된 원고를 편집하여 기사를 완성합니다.';
+                $scope.tailDescription = '.';
+            } else if (spMenu[2] == 'edit_confirm') {
+                $scope.pageTitle = '편집 승인';
+                $scope.pageDescription = '편집된 원고를 확인하고 승인관리합니다.';
+                $scope.tailDescription = '.';
             }
         } else if (spMenu[1] == "webboard") {
             $scope.pageTitle = '게시판';
             $scope.pageDescription = '공지사항을 게시합니다.';
             $scope.tailDescription = '.';
         } else if (spMenu[1] == "user") {
-            $scope.pageTitle = '개인정보';
-            $scope.pageDescription = '개인정보를 조회하고 수정할 수 있습니다.';
-            $scope.tailDescription = '내용을 수정한 후 \"수정\"버튼을 누르면 수정이 완료됩니다.<br/>\"취소\"버튼을 누르면 원래대로 돌아갑니다.';
+            $scope.pageTitle = '사용자 관리';
+            $scope.pageDescription = 'CMS 사용자를 관리합니다.';
+            $scope.tailDescription = '.';
+        } else if (spMenu[1] == "permission") {
+            $scope.pageTitle = '권한 관리';
+            $scope.pageDescription = 'CMS 사용 권한을 관리합니다.';
+            $scope.tailDescription = '.';
+        } else if (spMenu[1] == "category") {
+            $scope.pageTitle = '카테고리 관리';
+            $scope.pageDescription = 'CMS 사용하는 카테고리를 관리합니다.';
+            $scope.tailDescription = '.';
+        } else if (spMenu[1] == "series") {
+            $scope.pageTitle = '시리즈 관리';
+            $scope.pageDescription = 'CMS 시리즈를 관리합니다.';
+            $scope.tailDescription = '.';
+        } else if (spMenu[1] == "contact") {
+            $scope.pageTitle = '주소록';
+            $scope.pageDescription = 'CMS 시리즈를 관리합니다.';
+            $scope.tailDescription = '.';
         }
 
     }]);

@@ -15,7 +15,7 @@ define([
 
         /********** 초기화 **********/
         // 초기화
-        $scope.initEdit = function() {
+        $scope.init = function() {
             dataService.db('permission').find({},{ROLE: true},function(data, status){
                 if (status != 200) {
                     alert('권한 조회에 실패 했습니다.');
@@ -76,12 +76,7 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        $scope.$parent.pageTitle = '권한 관리';
-        $scope.$parent.pageDescription = 'CMS 사용 권한을 관리합니다.';
-
-        $scope.initEdit();
+        $scope.init();
 
     }]);
 });
