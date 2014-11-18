@@ -111,8 +111,10 @@
                     if (isset($_search[ROLE]) && $_search[ROLE] != "") {
                         $sql = "SELECT
                                     NO AS PROJECT_NO, SUBJECT
-                                FROM
-                                    CMS_PROJECT
+                            FROM
+                                CMS_PROJECT
+                            WHERE
+                                1=1
                             ";
                     } else {
                         $sql = "SELECT

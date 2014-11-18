@@ -21,10 +21,12 @@ define([
         $scope.item = {};
         $scope.search = {};
 
+        //$scope.season_nm_check = false;
+
         // 초기화
         $scope.init = function() {
 
-            // 날짜 콤보박스
+/*            // 날짜 콤보박스
             var year = [];
             var now = new Date();
             var nowYear = now.getFullYear();
@@ -32,10 +34,10 @@ define([
 
             for (var i = 2010; i < nowYear + 5; i++) {
                 year.push(i+'');
-            }
+            }*/
 
-            $scope.years = year;
-            $scope.item.YEAR = nowYear+'';
+            //$scope.years = year;
+            //$scope.item.YEAR = nowYear+'';
             //$scope.search.YEAR = nowYear+''; // 연도검색 셀렉트 박스 2014년 값 셋팅
 
 /*
@@ -46,9 +48,10 @@ define([
                 })
                 .catch(function(error){alert(error)});
 */
-            $scope.getList('project', {}, {ROLE: true}, false)
+            // 검색조건 시즌명 셀렉트 박스 셋팅
+            $scope.getList('section', {}, {ROLE: true}, false)
                 .then(function(data){
-                    $scope.projects = data;
+                    $scope.season = data;
                     //$scope.search.PROJECT = data[0]
                 })
                 .catch(function(error){alert(error)});
@@ -82,7 +85,7 @@ define([
                     SORT_IDX : 'asc'     // initial sorting
                 }
             }, {
-                groupBy: 'YEAR',
+                groupBy: 'SEASON_NM',
                 counts: [],
                 total: 0,           // length of data
                 getData: function($defer, params) {
@@ -129,21 +132,19 @@ define([
                 $scope.getItem('section', $scope.key, {}, false)
                     .then(function(data) {
                         var idx = 0;
-                        for (var i=0; i < $scope.project.length; i ++) {
-                           // console.log(JSON.stringify(data.PROJECT_NO));
-                           // console.log(JSON.stringify($scope.project[i]));
-                            if (JSON.stringify(data.PROJECT_NO) == JSON.stringify($scope.project[i].PROJECT_NO)) {
-                                   idx = i;
-                            }
-                        }
                         $scope.item = data;
-                        $scope.item.PROJECT_NO = $scope.project[idx];
+
+                        //ng-disabled="item.SEASON_NM != ''"
+                        //if($scope.item.SEASON_NM != ''){}
+                        if(data.SEASON_NM != ""){
+                            $scope.season_nm_check = true;
+                        }
                     })
                     .catch(function(error){alert(error)});
             }
         }
 
-        // [검색] 연도별에 따른 프로젝트명 셀렉트 박스 셋팅
+/*        // [검색] 연도별에 따른 프로젝트명 셀렉트 박스 셋팅
         $scope.$watch('search.YEAR', function (data) {
             if (data != null) {
                 $scope.getList('project', {}, {ROLE: true, YEAR: data}, false)
@@ -153,9 +154,9 @@ define([
                     })
                     .catch(function(error){alert(error)});
             }
-        });
+        });*/
 
-        // 연도별에 따른 프로젝트명 셀렉트 박스 셋팅
+/*        // 연도별에 따른 프로젝트명 셀렉트 박스 셋팅
         $scope.$watch('item.YEAR', function (data) {
             if (data != null) {
                 $scope.getList('project', {}, {ROLE: true, YEAR: data}, false)// $scope.item.YEAR
@@ -165,7 +166,7 @@ define([
                     })
                     .catch(function(error){alert(error)});
             }
-        });
+        });*/
 
         // 취소 클릭
         $scope.click_cancel = function () {

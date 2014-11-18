@@ -25,7 +25,7 @@ switch ($_method) {
     case "GET":
         if (isset($_key) && $_key != "") {
             $sql = "SELECT
-                            S.YEAR, S.PROJECT_NO, S.SECTION_NM, S.SORT_IDX, S.NOTE, S.NO
+                            S.PROJECT_NO, S.SECTION_NM, S.SORT_IDX, S.NOTE, S.NO, S.SEASON_NM
                         FROM
                             CMS_SECTION S
                         WHERE
@@ -43,27 +43,31 @@ switch ($_method) {
         } else {
             $where_search = "";
 
+
             if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                 $where_search .= "AND S.SECTION_NM LIKE '%".$_search[KEYWORD]."%' ";
             }
 
-            // 2014.11.14(금) 프로젝트 연도에 따른 섹션 연도 검색 필터 추가
-            if (isset($_search[YEAR]) && $_search[YEAR] != "") {
-                $where_search .= "AND S.YEAR =".$_search[YEAR]." ";
+            if (isset($_search[SEASON_NM][SEASON_NM]) && $_search[SEASON_NM][SEASON_NM] != "") {
+                $where_search .= "AND S.SEASON_NM  = '".$_search[SEASON_NM][SEASON_NM]."' ";
             }
 
-            // 2014.11.14(금) 프로젝트 연도에 따른 섹션 연도 검색 필터 추가
-            if (isset($_search[PROJECT][PROJECT_NO]) && $_search[PROJECT][PROJECT_NO] != "") {
-                $where_search .= "AND S.PROJECT_NO =".$_search[PROJECT][PROJECT_NO]." ";
-            }
-
+            if (isset($_search[ROLE]) && $_search[ROLE] != "") {
+                $sql = "SELECT SEASON_NM
+                         FROM
+                                CMS_SECTION
+                         WHERE
+                                1=1
+                         GROUP BY SEASON_NM
+                            ";
+            }else{
             $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-	                         YEAR, SECTION_NM, PROJECT_NO, SUBJECT, SORT_IDX, NO
+                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM, SEASON_NM,
+	                         SECTION_NM, PROJECT_NO, SUBJECT, SORT_IDX, NO
                         FROM
                         (
                              SELECT  S.NO,
-                                     S.YEAR,
+                                     S.SEASON_NM,
                                      S.SECTION_NM,
                                      S.PROJECT_NO,
                                      (SELECT SUBJECT FROM CMS_PROJECT WHERE NO = S.PROJECT_NO) AS SUBJECT,
@@ -82,6 +86,7 @@ switch ($_method) {
                              ORDER BY PROJECT_NO ASC, SORT_IDX ASC
                         ) CNT
                         ";
+            }
 
             /*
                             $sql = "SELECT
@@ -122,15 +127,13 @@ switch ($_method) {
 
         $sql = "INSERT INTO CMS_SECTION
                     (
-                        YEAR,
                         SECTION_NM,
-                        PROJECT_NO,
+                        SEASON_NM,
                         SORT_IDX,
                         NOTE
                     ) VALUES (
-                        '".$_model[YEAR]."'
-                        , '".$_model[SECTION_NM]."'
-                        , '".$_model[PROJECT_NO][PROJECT_NO]."'
+                         '".$_model[SECTION_NM]."'
+                        , '".$_model[SEASON_NM]."'
                         , '".$_model[SORT_IDX]."'
                         , '".$_model[NOTE]."'
                     )";
@@ -159,14 +162,13 @@ switch ($_method) {
 
         $sql = "UPDATE CMS_SECTION
                     SET
-                        YEAR = '".$_model[YEAR]."'
-                        ,SECTION_NM = '".$_model[SECTION_NM]."'
-                        ,PROJECT_NO = '".$_model[PROJECT_NO][PROJECT_NO]."'
+                        SECTION_NM = '".$_model[SECTION_NM]."'
                         ,SORT_IDX = '".$_model[SORT_IDX]."'
                         ,NOTE = '".$_model[NOTE]."'
                     WHERE
                         NO = ".$_key."
                     ";
+               // ,SEASON_NM = '".$_model[SEASON_NM]."'
 
         $_d->sql_query($sql);
         $no = $_d->mysql_insert_id;

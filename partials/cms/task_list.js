@@ -112,12 +112,12 @@ define([
 
         // 등록 버튼 클릭
         $scope.click_createNewTask = function () {
-            $location.url('/task/0');
+            $location.url('/task/edit/0');
         };
 
         // 태스크 수정 화면 이동
         $scope.click_showEditTask = function (key) {
-            $location.url('/task/'+key);
+            $location.url('/task/edit/'+key);
         };
 
         // 콘텐츠 수정 화면 이동
