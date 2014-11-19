@@ -52,6 +52,10 @@ switch ($_method) {
                 $where_search .= "AND S.SEASON_NM  = '".$_search[SEASON_NM][SEASON_NM]."' ";
             }
 
+            if (isset($_search[SEASON_NM]) && $_search[SEASON_NM] != "") {
+                $where_search .= "AND S.SEASON_NM  = '".$_search[SEASON_NM]."' ";
+            }
+
             if (isset($_search[ROLE]) && $_search[ROLE] != "") {
                 $sql = "SELECT SEASON_NM
                          FROM
@@ -63,14 +67,13 @@ switch ($_method) {
             }else{
             $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM, SEASON_NM,
-	                         SECTION_NM, PROJECT_NO, SUBJECT, SORT_IDX, NO
+	                         SECTION_NM, PROJECT_NO, SORT_IDX, NO
                         FROM
                         (
                              SELECT  S.NO,
                                      S.SEASON_NM,
                                      S.SECTION_NM,
                                      S.PROJECT_NO,
-                                     (SELECT SUBJECT FROM CMS_PROJECT WHERE NO = S.PROJECT_NO) AS SUBJECT,
                                      SORT_IDX
                              FROM CMS_SECTION S
                              WHERE 1=1

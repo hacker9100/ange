@@ -53,9 +53,8 @@ define([
                         $scope.category_a = category_a;
                         $scope.category_b = category_b;
                     }),
-
+                    $scope.getList('section', {}, {ROLE: true}, false).then(function(data){$scope.season_names = data;}),
                     $scope.getList('section', {}, {}, false).then(function(data){$scope.sections = data;})
-                    // YEAR : $scope.projects.YEAR
                 ])
                 .then( function(results) {
                     deferred.resolve();
@@ -97,9 +96,9 @@ define([
                     }
                 }
             }
-
             $scope.category_s = category_s;
         });
+
 
         // 추가된 카테고리 클릭
         $scope.click_removeCategory = function(idx) {
@@ -124,17 +123,43 @@ define([
                         return;
                     });
 
+                    // 섹션 - 시즌명
                     var idx = 0;
-                    for(var i=0; i < $scope.sections.length; i ++){
-                        if(JSON.stringify(data.SECTION_NO) == JSON.stringify($scope.sections[i].NO)){
+                    for(var i=0; i < $scope.season_names.length; i ++){
+                        if(JSON.stringify(data.SEASON_NM) == JSON.stringify($scope.season_names[i].SEASON_NM)){
                             idx = i;
                         }
                     }
+                    $scope.item.SEASON_NM = $scope.season_names[idx];
 
+                    // 섹션 - 섹션명
+                    var idx = 0;
+                    for(var i=0; i < $scope.sections.length; i ++){
+                        if(JSON.stringify(data.SECTION_NM) == JSON.stringify($scope.sections[i].SECTION_NM)){
+                            idx = i;
+                        }
+                    }
                     $scope.item.SECTION = $scope.sections[idx];
                 })
                 .catch(function(error){throw('태스크:'+error);});
         };
+
+
+        $scope.$watch('item.SEASON_NM', function (data) {
+            if (data != null) {
+                $scope.getList('section', {}, {SEASON_NM: data.SEASON_NM}, false)
+                    .then(function(data){
+                        console.log('data = '+data);
+                        $scope.sections = data;
+                        for(var i=0; i < $scope.sections.length; i ++){
+                            if(JSON.stringify($scope.item.SECTION.SECTION_NM) == JSON.stringify($scope.sections[i].SECTION_NM)){
+                                $scope.item.SECTION = $scope.sections[i];
+                            }
+                        }
+                    })
+                    .catch(function(error){alert(error)});
+            }
+        });
 
         // 태스크 저장 버튼 클릭
         $scope.click_saveTask = function () {
@@ -178,46 +203,10 @@ define([
             modalInstance.result.then(function (user) {
                 alert(JSON.stringify(user))
             }, function () {
-//                $log.info('Modal dismissed at: ' + new Date());
             });
         }
 
-        /*        // 프로젝트 선택 시 연도별 섹션 조회
-         $scope.search_SectionYearUpdate = function() {
-         $scope.YEAR = $scope.item.YEAR;
 
-         console.log($scope.YEAR);
-         $scope.getList('section', {}, {YEAR : $scope.YEAR}, false).then(function(data){$scope.sections = data;})
-         // use $scope.selectedItem.code and $scope.selectedItem.name here
-         // for other stuff ...
-         }*/
-
-        // 프로젝트 변경 시 연도에 따른 섹션 선택
-/*        $scope.$watch('item.PROJECT', function (data) {
-            if (data != null) {
-                $scope.getList('section', {}, {YEAR: data.YEAR}, false)
-                    .then(function(data){$scope.sections = data;})
-                    .catch(function(error){alert(error)});
-            }
-        });*/
-
-/*        $scope.search_sectionYearUpdate = function() {
-            $scope.$watch('item.PROJECT', function (data) {
-                if (data != null) {
-                    $scope.getList('section', {}, {YEAR: data.YEAR}, false)
-                        .then(function(data){$scope.sections = data;})
-                        .catch(function(error){alert(error)});
-                }
-            });
-        }*/
-
-        $scope.$watch('item.PROJECT', function (data) {
-            if (data != null) {
-                $scope.getList('section', {}, {YEAR: data.YEAR}, false)
-                    .then(function(data){$scope.sections = data;$scope.item.SECTION = data[0]})
-                    .catch(function(error){alert(error)});
-            }
-        });
 
         /********** 화면 초기화 **********/
         $scope.getSession()

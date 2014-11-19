@@ -33,7 +33,7 @@
             if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, S.SECTION_NM, P.YEAR
+                            T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SEASON_NM, S.SECTION_NM, P.YEAR
                         FROM
                             CMS_TASK T, CMS_PROJECT P, CMS_SECTION S
                         WHERE
