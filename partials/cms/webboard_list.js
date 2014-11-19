@@ -45,22 +45,21 @@ define([
         // 수정 화면 이동
         $scope.click_showEditCmsBoard = function (item) {
             if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
-                alert("수정 권한이 없습니다.")
+                alert("수정 권한이 없습니다.");
+                return;
             }
 
             $location.path('/webboard/edit/'+item.NO);
         };
 
         // 삭제 버튼 클릭
-        $scope.click_deleteCmsBoard = function (idx) {
-            var board = $scope.list[idx];
+        $scope.click_deleteCmsBoard = function (item) {
+            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+                alert("삭제 권한이 없습니다.");
+                return;
+            }
 
-            // TODO: 권한 처리 넣을것
-//            if () {
-//                alert("삭제 권한이 없습니다.");
-//            }
-
-            $scope.deleteItem('webboard', board.NO, false)
+            $scope.deleteItem('webboard', item.NO, false)
                 .then(function(){$scope.getCmsBoardList($scope.search)})
                 .catch(function(error){alert(error)});
         };
@@ -68,7 +67,7 @@ define([
         // 검색 버튼 클릭
         $scope.click_searchCmsBoard = function () {
             $scope.getCmsBoardList($scope.search);
-        }
+        };
 
         // 프로젝트 목록 조회
         $scope.getCmsBoardList = function (search) {

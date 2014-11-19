@@ -188,7 +188,7 @@ define([
         $scope.openModal = function (modal, search, size) {
             var modalInstance = $modal.open({
                 templateUrl: '/partials/cms/contact_list.html',
-                controller: 'contact_list',
+                controller: 'contact_list_modal',
                 size: size,
                 resolve: {
                     modal: function () {
@@ -201,7 +201,8 @@ define([
             });
 
             modalInstance.result.then(function (user) {
-                alert(JSON.stringify(user))
+                $scope.item.EDITOR_ID = user.USER_ID;
+                $scope.item.EDITOR_NM = user.USER_NM;
             }, function () {
             });
         }

@@ -308,7 +308,7 @@
                         '".$no."'
                         , '".$file_no."'
                         , 'FILE'
-                        , 'CMS_BOARD'
+                        , 'CONTENT'
                         , '".$i."'
                     )";
 
@@ -530,7 +530,7 @@
                         FILE F, CONTENT_SOURCE S
                     WHERE
                         F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'CMS_BOARD'
+                        AND S.TARGET_GB = 'CONTENT'
                         AND S.TARGET_NO = ".$_key."
                         AND F.THUMB_FL = '0'
                     ";
@@ -554,7 +554,7 @@
 
                         $_d->sql_query($sql);
 
-                        $sql = "DELETE FROM CONTENT_SOURCE WHERE AND TARGET_GB = 'CMS_BOARD' AND TARGET_NO = ".$row[NO];
+                        $sql = "DELETE FROM CONTENT_SOURCE WHERE AND TARGET_GB = 'CONTENT' AND TARGET_NO = ".$row[NO];
 
                         $_d->sql_query($sql);
 
@@ -616,7 +616,7 @@
                             '".$_key."'
                             , '".$file_no."'
                             , 'FILE'
-                            , 'CMS_BOARD'
+                            , 'CONTENT'
                             , '".$i."'
                         )";
 

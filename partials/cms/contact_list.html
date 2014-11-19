@@ -5,7 +5,7 @@
             <div class="col-md-9">
                 <div class= "form-group">
                     <label class= "col-md-2">검색</label>
-                    <div class= "col-md-4">
+                    <div class= "col-md-4" ng-show="!isModal">
                         <select ng-model="search.ROLE" ng-options="role.ROLE_NM for role in roles" class= "form-control" >
                             <option name="" value="">- 권한</option>
                         </select>
@@ -53,7 +53,7 @@
                 {{item.USER_ST == '0' ? '이용가능' : '이용정지'}}
             </td>
             <td data-title="'기능'">
-                <a ng-click="click_getCmsUser(item.USER_ID)">조회</a>
+                <a ng-click="click_getCmsUser(item.USER_ID)" ng-show="!isModal">조회</a>
                 <a ng-click="click_selectCmsUser(item)" ng-show="isModal">선택</a>
                 <!--<a ng-click="click_updateStatus($index)">상태변경</a>-->
                 <!--<a ng-click="click_deleteCmsUser($index)">삭제</a>-->

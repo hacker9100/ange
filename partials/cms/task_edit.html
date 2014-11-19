@@ -15,10 +15,7 @@
             <!-- 2014.11.13(목) 추가-->
             <div class= "form-group" ng-class="{error: edit_form.section.$invalid}">
                 <label class= "col-md-2">섹션</label>
-                <div class="col-md-2">
-                    <select ng-model="item.SEASON_NM" ng-options="v.SEASON_NM for v in season_names" class= "form-control" placeholder="시즌"></select>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <select ng-model="item.SECTION" ng-options="section.SECTION_NM for section in sections" class= "form-control" ></select>
                 </div>
             </div>
@@ -65,7 +62,7 @@
             <div class= "form-group">
                 <label class= "col-md-2">담당기자</label>
                 <div class="col-md-9">
-                    <input ng-model="item.EDITOR" type= "text" class= "form-control" placeholder= "담당기자"/>
+                    <input ng-model="item.EDITOR_NM" type= "text" class= "form-control" placeholder= "담당기자"/>
                     <button class="btn btn-success fileinput-button" ng-click="click_selectEditor();" >
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>기자선택</span>

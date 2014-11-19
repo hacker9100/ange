@@ -17,9 +17,10 @@
         }}, { "dashboard": {
             "url": "/dashboard",
             "views": {
-                "" : { "templateUrl": "partials/cms/dashboard.html", "controller": "dashboard" },
+                "" : { "templateUrl": "partials/cms/cms_common.html", "controller": "cms_common" },
                 "lnbView@dashboard": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
-                "locaterView@dashboard": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" }
+                "locaterView@dashboard": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
+                "contentView@dashboard": { "templateUrl": "partials/cms/dashboard.html", "controller" : "dashboard" }
             }
         }}, { "account": {
             "url": "/account",

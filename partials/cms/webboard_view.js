@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('webboard_view', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
+    controllers.controller('webboard_view', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, $controller, UPLOAD) {
 
         /********** 공통 controller 호출 **********/
         angular.extend(this, $controller('common', {$scope: $scope}));
@@ -29,13 +29,18 @@ define([
 
         /********** 이벤트 **********/
         // 수정 버튼 클릭
-        $scope.click_showCmsBoardEdit = function (key) {
-            $location.url('/webboard/edit/'+key);
+        $scope.click_showCmsBoardEdit = function (item) {
+            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+                alert("수정 권한이 없습니다.");
+                return;
+            }
+
+            $location.url('/webboard/edit/'+item.NO);
         };
 
         // 목록 버튼 클릭
         $scope.click_showCmsBoardList = function () {
-            $location.url('/webboard');
+            $location.url('/webboard/list');
         };
 
         // 게시판 조회

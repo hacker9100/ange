@@ -14,7 +14,7 @@ define([
     controllers.controller('dashboard', ['$scope', '$rootScope', '$location', '$controller', 'dataService', function ($scope, $rootScope, $location, $controller, dataService) {
 
         /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+        angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
         /********** 초기화 **********/
         // 초기화
@@ -25,26 +25,29 @@ define([
             $scope.PAGE_SIZE = 5;
         };
 
+        $scope.list1 = {api: 'webboard', title: '공지사항', css: 'list-group-item list-group-item-labeling-green'};
+        $scope.list2 = {api: 'project', title: '프로젝트', css: 'list-group-item list-group-item-labeling-blue'};
+
         /********** 이벤트 **********/
-        // 프로젝트 목록 이동
-        $scope.click_showProjectList = function () {
-            $location.url('/project');
-        };
-
-        // 프로젝트 선택
-        $scope.click_showProjectView = function (key) {
-            $location.url('/project/view/'+key);
-        };
-
-        // 게시판 목록 이동
-        $scope.click_showWebboardList = function () {
-            $location.url('/webboard');
-        };
-
-        // 게시판 목록 이동
-        $scope.click_showWebboardView = function (key) {
-            $location.url('/webboard/view/'+key);
-        };
+//        // 프로젝트 목록 이동
+//        $scope.click_showProjectList = function () {
+//            $location.url('/project');
+//        };
+//
+//        // 프로젝트 선택
+//        $scope.click_showProjectView = function (key) {
+//            $location.url('/project/view/'+key);
+//        };
+//
+//        // 게시판 목록 이동
+//        $scope.click_showWebboardList = function () {
+//            $location.url('/webboard');
+//        };
+//
+//        // 게시판 목록 이동
+//        $scope.click_showWebboardView = function (key) {
+//            $location.url('/webboard/view/'+key);
+//        };
 
         // 태스크 목록 이동
         $scope.click_showTaskList = function () {
@@ -56,21 +59,21 @@ define([
             $location.url('/task/view/'+key);
         };
 
-        // 공지사항 포틀릿 조회
-        $scope.getNoticePortlet = function () {
-            $scope.getList('webboard', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {HEAD: 'NOTICE'}, true)
-                .then(function(data){$scope.notices = data})
-                .catch(function(error){$scope.notices = [];  alert(error)});
-        }
-
-        // 프로젝트 포틀릿 조회
-        $scope.getProjectPortlet = function () {
-            $scope.isLoading = true;
-
-            $scope.getList('project', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
-                .then(function(data){$scope.projects = data})
-                .catch(function(error){$scope.projects = [];  alert(error)});
-        };
+//        // 공지사항 포틀릿 조회
+//        $scope.getNoticePortlet = function () {
+//            $scope.getList('webboard', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {HEAD: 'NOTICE'}, true)
+//                .then(function(data){$scope.notices = data})
+//                .catch(function(error){$scope.notices = [];  alert(error)});
+//        }
+//
+//        // 프로젝트 포틀릿 조회
+//        $scope.getProjectPortlet = function () {
+//            $scope.isLoading = true;
+//
+//            $scope.getList('project', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
+//                .then(function(data){$scope.projects = data})
+//                .catch(function(error){$scope.projects = [];  alert(error)});
+//        };
 
         // 태스크 목록 조회
         $scope.getTaskList = function () {
@@ -88,21 +91,22 @@ define([
 
         // 페이지 타이틀
         $scope.setTitle = function(session) {
-            $scope.message = "ANGE CMS";
-            $scope.pageTitle = "마이페이지";
-            $scope.pageDescription = session.USER_NM + " 님의 대시보드입니다.";
-            $scope.tailDescription = '.';
+            $scope.$parent.message = "ANGE CMS";
+            $scope.$parent.pageTitle = "마이페이지";
+            $scope.$parent.pageDescription = session.USER_NM + " 님의 대시보드입니다.";
+            $scope.$parent.tailDescription = '.';
         };
 
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
             .then($scope.setTitle)
             .catch($scope.reportProblems);
 
         $scope.init();
-        $scope.getNoticePortlet();
-        $scope.getProjectPortlet();
+//        $scope.getNoticePortlet();
+//        $scope.getProjectPortlet();
         $scope.getTaskList();
 
 //            .then($scope.getProjectPortlet)

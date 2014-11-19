@@ -17,7 +17,7 @@ define([
         $scope.$stateParams = $stateParams;
 
         /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+        angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
 /*
         // loginService exposed and a new Object containing login user/pwd

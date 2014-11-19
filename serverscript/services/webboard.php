@@ -44,6 +44,7 @@
                           NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, TAG
                         FROM
                           CMS_BOARD
+                          #COM_BOARD
                         WHERE
                           NO = ".$_key."
                         ";
@@ -105,6 +106,7 @@
                                 NO, HEAD, SUBJECT, REG_UID, REG_NM, REG_DT, TAG
                             FROM
                                 CMS_BOARD
+                                #COM_BOARD
                             WHERE
                                 1=1
                                 ".$where_search."
@@ -189,6 +191,7 @@
 
             $_d->sql_beginTransaction();
 
+//            $sql = "INSERT INTO COM_BOARD
             $sql = "INSERT INTO CMS_BOARD
                     (
                         HEAD
@@ -197,6 +200,7 @@
                         ,REG_UID
                         ,REG_NM
                         ,REG_DT
+                        ,NOTICE_FL
                         ,TAG
                     ) VALUES (
                         '".$_model[HEAD]."'
@@ -205,6 +209,7 @@
                         , '".$_SESSION['uid']."'
                         , '".$_SESSION['name']."'
                         , SYSDATE()
+                        , '".($_model[NOTICE_FL] == true) ? "Y" : "N"."'
                         , '".$_model[TAG]."'
                     )";
 
@@ -354,6 +359,7 @@
 
             $_d->sql_beginTransaction();
 
+//            $sql = "UPDATE COM_BOARD
             $sql = "UPDATE CMS_BOARD
                     SET
                         HEAD = '".$_model[HEAD]."'
@@ -362,6 +368,7 @@
                         ,REG_UID = '".$_model[REG_UID]."'
                         ,REG_NM = '".$_model[REG_NM]."'
                         ,REG_DT = SYSDATE()
+                        ,NOTICE_FL = '".($_model[NOTICE_FL] == true) ? "Y" : "N"."'
                         ,TAG = '".$_model[TAG]."'
                     WHERE
                         NO = ".$_key."
@@ -496,7 +503,8 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $sql = "DELETE FROM CMS_BOARD WHERE NO = ".$_key;
+//            $sql = "DELETE FROM CMS_BOARD WHERE NO = ".$_key;
+            $sql = "DELETE FROM COM_BOARD WHERE NO = ".$_key;
 
             // 댓글도 삭제 해야지~
             // 파일도 삭제 해야지~

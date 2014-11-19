@@ -37,7 +37,7 @@ define([
 
         for(var i = 0; i < menuinfos.length; i++) {
             angular.forEach(menuinfos[i], function (submenu, menu) {
-                if (menu.indexOf(spMenu[1]) > -1 || menu.indexOf(spMenu[2]) > -1) {
+                if (menu.indexOf(spMenu[1]) > -1 || ( spMenu[1] == 'content' && menu.indexOf(spMenu[2]) > -1)) {
                     $scope.menuInfos = submenu;
                 }
             });

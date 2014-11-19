@@ -49,34 +49,35 @@ define([
             $location.path('/project/edit/0');
         };
 
+        // 조회 화면 이동
+        $scope.click_showViewProject = function (key) {
+            $location.url('/project/view/'+key);
+        };
+
         // 수정 화면 이동
-        $scope.click_showEditProject = function (idx) {
-            var project = $scope.list[idx];
+        $scope.click_showEditProject = function (item) {
+            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+                alert("수정 권한이 없습니다.");
+                return;
+            }
 
-            // TODO: 권한 처리 넣을것
-
-            $location.path('/project/edit/'+project.NO);
+            $location.path('/project/edit/'+item.NO);
         };
 
         // 삭제 버튼 클릭
-        $scope.click_deleteProject = function (idx) {
-
-            var project = $scope.list[idx];
-
-            if (project.PROJECT_ST == '2') {
+        $scope.click_deleteProject = function (item) {
+            if (item.PROJECT_ST == '2') {
                 alert("완료 상태의 프로젝트는 삭제할 수 없습니다.")
             }
 
-            // TODO: 권한 처리 넣을것
-//            if () {
-//                alert("삭제 권한이 없습니다.");
-//            }
+            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+                alert("삭제 권한이 없습니다.");
+                return;
+            }
 
-            // TODO: 삭제 후 처리
-
-//            projectService.deleteProject(project.NO).then(function(data){
-//                $scope.projects.splice(idx, 1);
-//            });
+            $scope.deleteItem('project', item.NO, false)
+                .then(function(){$scope.getProjectList($scope.search)})
+                .catch(function(error){alert(error)});
         };
 
         // 검색 버튼 클릭

@@ -14,7 +14,7 @@ define([
     controllers.controller('account', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', function ($scope, $rootScope, $stateParams, $location, $controller ) {
 
         /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+        angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
         /********** 초기화 **********/
         $scope.init = function() {

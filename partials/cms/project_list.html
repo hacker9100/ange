@@ -68,9 +68,9 @@
         <td>{{ item.REG_DT }}</td>
         <td>{{ item.PROJECT_ST == '0' ? '준비' : item.PROJECT_ST == '1' ? '진행' : item.PROJECT_ST == '2' ? '출판대기' : '완료' }}</td>
         <td>
-            <!--<a ng-click="click_showViewProject($index)">조회</a>-->
-            <a ng-click="click_showEditProject($index)">수정</a>
-            <a ng-click="click_deleteProject($index)">삭제</a>
+            <a ng-click="click_showViewProject(item.NO)">조회</a>
+            <a ng-click="click_showEditProject(item)">수정</a>
+            <a ng-click="click_deleteProject(item)">삭제</a>
         </td>
     </tr>
     </tbody>

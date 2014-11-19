@@ -1,0 +1,10 @@
+<div class="col-xs-6" style="padding:0px 2px;">
+    <div class="list-group">
+        <li class="{{portletCss}}">
+            {{portletTitle}}
+            <span class="btn custom-btn-more"> <span ng-click="click_showList();" class="glyphicon glyphicon-plus"></span> </span>
+        </li>
+
+        <a ng-click="click_showView(item.NO)" class="list-group-item list-group-item-green" ng-repeat="item in list">{{item.SUBJECT}}<span class="list-group-item-right">{{item.REG_DT}}</span></a>
+    </div>
+</div>

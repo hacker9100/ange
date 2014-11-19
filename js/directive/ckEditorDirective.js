@@ -125,6 +125,7 @@ define(['./directives'], function (directives) {
                 var ngModel = ctrls[0];
                 var form    = ctrls[1] || null;
                 var EMPTY_HTML = '<p></p>',
+//                                '<img id="dropzone" src="http://localhost/serverscript/upload/../../upload/files/medium/Koala%20%285%29.jpg" />',
                     isTextarea = element[0].tagName.toLowerCase() == 'textarea',
                     data = [],
                     isReady = false;
@@ -137,13 +138,12 @@ define(['./directives'], function (directives) {
                     var options = {
                         toolbar: 'full',
                         toolbar_full: [
-                            { name: 'basicstyles',
-                                items: [ 'Bold', 'Italic', 'Strike', 'Underline' ] },
+                            { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike', 'Underline' ] },
                             { name: 'paragraph', items: [ 'BulletedList', 'NumberedList', 'Blockquote' ] },
                             { name: 'editing', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
                             { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
                             { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
-                            { name: 'tools', items: [ 'SpellChecker', 'Maximize' ] },
+//                            { name: 'tools', items: [ 'SpellChecker', 'Maximize' ] },
                             '/',
                             { name: 'styles', items: [ 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
                             { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar' ] },
@@ -196,7 +196,6 @@ define(['./directives'], function (directives) {
                         }, 0);
                     }, onUpdateModelData = function(setPristine) {
                         if (!data.length) { return; }
-
 
                         var item = data.pop() || EMPTY_HTML;
                         isReady = false;

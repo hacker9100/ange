@@ -3,10 +3,17 @@
         <!-- 메뉴 타이틀 -->
         <ul class="list-group list-title"style="border:none; border-top:none;">
             <li class="list-group-item-lnb" style="border:none;">
-                <span class="smalltag" style="margin-top:10px;">dashboard</span>
-                <span class="glyphicon glyphicon-home"></span> 대시보드
+                <span class="smalltag" style="margin-top:10px;">{{lnbSubscript}}</span>
+                <span class="glyphicon glyphicon-home" ng-show="isDashboard"></span>{{lnbTitle}}
             </li>
         </ul>
+
+        <!--<ul class="list-group list-title"style="border:none; border-top:none;">-->
+            <!--<li class="list-group-item-lnb" style="border:none;">-->
+                <!--<span class="smalltag" style="margin-top:10px;">dashboard</span>-->
+                <!--<span class="glyphicon glyphicon-home"></span> 대시보드-->
+            <!--</li>-->
+        <!--</ul>-->
 
         <!-- ///// 메뉴 타이틀 구성 >
         <ul class="list-group list-title">

@@ -122,7 +122,7 @@ define([
 
         // 콘텐츠 수정 화면 이동
         $scope.click_showEditContent = function (key) {
-            $location.url('/content/'+$stateParams.menu+'/'+key);
+            $location.url('/content/'+$stateParams.menu+'/edit/'+key);
         };
 
         // 이력조회 버튼 클릭

@@ -37,7 +37,13 @@ define([
         $scope.$on("ckeditor.ready", function( event ) {
             $scope.isReady = true;
         });
-        $scope.ckeditor = '<p>\n<p>';
+        $scope.ckeditor = '<p>Hello</p>';
+
+//        $scope.ckeditor = '<div><p>\n<p>aaa</div>'+
+//        '<div class= "form-group" id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">' +
+//        '이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />' +
+//        '(gif, jpg, png만 등록 가능)' +
+//        '</div>';
 
         /********** 이벤트 **********/
         // 게시판 목록 이동

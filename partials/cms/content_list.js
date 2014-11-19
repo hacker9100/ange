@@ -32,7 +32,7 @@ define([
         var nowYear = now.getFullYear();
 
         // 초기화
-        $scope.initList = function() {
+        $scope.init = function() {
             var deferred = $q.defer();
 
             $scope.oneAtATime = true;
@@ -255,19 +255,7 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        if ($stateParams.menu == 'article') {
-            $scope.$parent.pageTitle = '원고 관리';
-            $scope.$parent.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
-            $scope.$parent.tailDescription = '.';
-        } else if ($stateParams.menu == "article_confirm") {
-            $scope.$parent.pageTitle = '원고 승인';
-            $scope.$parent.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
-            $scope.$parent.tailDescription = '.';
-        }
-
-        $scope.initList();
+        $scope.init();
         $scope.getTaskList();
 
     }]);

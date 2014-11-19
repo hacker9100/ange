@@ -51,14 +51,14 @@
         <tbody>
         <tr ng-repeat="item in list">
             <td>{{ item.NO }}</td>
-            <td>{{ item.HEAD == 'NOTICE' ? '공지사항' : '' }}</td>
+            <td>{{ item.NOTICE_FL == 'Y' ? '공지사항' : '' }}</td>
             <td>{{ item.SUBJECT }}</td>
             <td>{{ item.REG_NM }}</td>
             <td>{{ item.REG_DT }}</td>
             <td>
                 <a ng-click="click_showViewCmsBoard(item.NO)">조회</a>
                 <a ng-click="click_showEditCmsBoard(item)">수정</a>
-                <a ng-click="click_deleteCmsBoard($index)">삭제</a>
+                <a ng-click="click_deleteCmsBoard(item)">삭제</a>
             </td>
         </tr>
         </tbody>
