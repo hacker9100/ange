@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('cms_common', ['$scope', '$rootScope', '$location', '$q', 'dataService', function ($scope, $rootScope, $location, $q, dataService) {
+    controllers.controller('cms_common', ['$scope', '$rootScope', '$location', '$q', 'dataService', 'dialogs', function ($scope, $rootScope, $location, $q, dataService, dialogs) {
 
         $rootScope.PAGE_SIZE = 20;
 
@@ -89,10 +89,13 @@ define([
 
         // 세션 체크
         $scope.sessionCheck = function(session) {
-            if (session.USER_ID == undefined || session.USER_ID == '') {
+            if (session.USER_ID == undefined) {
                 $location.path("/signin");
                 throw( new String('세션이 만료되었습니다.') );
 //            throw( new Error("세션이 만료되었습니다.") );
+            } else if (session.USER_ID == '') {
+                $location.path("/signin");
+                throw( new String('로그인 후 사용가능합니다.') );
             } else {
                 $rootScope.authenticated = true;
                 $rootScope.uid = session.USER_ID;
@@ -165,7 +168,7 @@ define([
 
         // 오류 리포트
         $scope.reportProblems = function(error) {
-            alert(error);
+            dialogs.error('오류', error+'', {size: 'md'});
         };
 
         // 목록 데이터를 조회
@@ -304,7 +307,14 @@ define([
         var spMenu = $location.path().split('/');
 
         $scope.message = 'ANGE CMS';
-        if (spMenu[1] == "account") {
+        if (spMenu[1] == "dashboard") {
+            $scope.pageTitle = '마이페이지';
+            $scope.pageDescription = '대시보드입니다.';
+            $scope.tailDescription = '.';
+            $scope.lnbSubscript = 'dashboard';
+            $scope.lnbTitle = '대시보드';
+            $scope.isDashboard = true;
+        } else if (spMenu[1] == "account") {
             $scope.pageTitle = '개인정보';
             $scope.pageDescription = '개인정보를 조회하고 수정할 수 있습니다.';
             $scope.tailDescription = '내용을 수정한 후 \"수정\"버튼을 누르면 수정이 완료됩니다.<br/>\"취소\"버튼을 누르면 원래대로 돌아갑니다.';

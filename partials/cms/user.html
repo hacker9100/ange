@@ -84,7 +84,7 @@
             <td data-title="'기능'">
                 <a ng-click="click_getCmsUser(item.USER_ID)">편집</a>
                 <a ng-click="click_updateStatus($index)">상태변경</a>
-                <a ng-click="click_deleteCmsUser($index)">삭제</a>
+                <a ng-click="click_deleteCmsUser($parent.$index, $index)">삭제</a>
             </td>
         </tr>
     </tbody>
@@ -102,8 +102,8 @@
                 <label class= "col-md-2">아이디</label>
                 <div class="col-md-4">
                     <input name="user_id" ng-model="item.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디" required/>
-                    <span ng-show="edit_form.user_id.$dirty && edit_form.user_id.$invalid" class="help-inline">사용자 아이디가 누락되었습니다.</span>
                 </div>
+                <span ng-show="edit_form.user_id.$dirty && edit_form.user_id.$invalid" class="help-inline">사용자 아이디가 누락되었습니다.</span>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">권한</label>
@@ -115,8 +115,8 @@
                 <label class= "col-md-2">이름</label>
                 <div class="col-md-4">
                     <input name="user_name" ng-model="item.USER_NM" type= "text" class= "form-control" placeholder="사용자 이름" required/>
-                    <span ng-show="edit_form.user_name.$dirty && edit_form.user_name.$invalid" class="help-inline">사용자 이름이 누락되었습니다.</span>
                 </div>
+                <span tooltip="test" ng-show="edit_form.user_name.$dirty && edit_form.user_name.$invalid" class="help-inline">사용자 이름이 누락되었습니다.</span>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">연락처</label>

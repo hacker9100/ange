@@ -7,7 +7,7 @@
 define(['./directives'], function (directives) {
     'use strict';
 
-    directives.directive('portletList', ['$controller', function($controller) {
+    directives.directive('cmsPortletList', ['$controller', function($controller) {
         return {
             restrict: 'EA',
             scope: { code:'=' },

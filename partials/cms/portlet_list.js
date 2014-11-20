@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('portlet_list', ['$scope', '$location', '$controller', function ($scope, $location, $controller) {
+    controllers.controller('portlet_list', ['$scope', '$rootScope', '$location', '$controller', '$activityIndicator', function ($scope, $rootScope, $location, $controller, $activityIndicator) {
         angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
         /********** 초기화 **********/
@@ -34,7 +34,7 @@ define([
         $scope.getPortlet = function (api) {
             $scope.getList(api, {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
                 .then(function(data){$scope.list = data})
-                .catch(function(error){$scope.list = [];  alert(error)});
+                .catch(function(error){$scope.list = [];});
         };
 	}]);
 });

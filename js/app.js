@@ -15,6 +15,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'angular-sanitize',
     'angular-ui-router',
     'ng-table',
+    'dialog',
+    'dialog-translation',
+    'ngActivityIndicator',
     'lodash', // dropdownMultiSelect 관련 라이브러리
     'ckeditor-jquery', // ckeditor 관련 라이브러리
     'ui-widget', // fileUpload ui 관련 라이브러리
@@ -306,7 +309,7 @@ alert("resolvePendingState");
         // 기본 값 설정
         $rootScope.pageSize = 20;
 
-        alert("1")
+        // TODO: 메뉴정보와 코드 정보를 로딩한다.
 
 //        // 페이지 이동시 권한 체크
 //        $rootScope.$on("$stateChangeStart", function (event, next, current) {

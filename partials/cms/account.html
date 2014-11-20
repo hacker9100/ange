@@ -23,22 +23,23 @@
             <div class= "form-group" ng-class="{error: edit_form.password.$invalid}">
                 <label class= "col-md-2">비밀번호</label>
                 <div class="col-md-4">
-                    <input name="password" ng-model="item.PASSWORD" type= "password" class= "form-control" placeholder= "사용자 비밀번호" required/>
+                    <input id="password" name="password" ng-model="item.PASSWORD" type= "password" class= "form-control" placeholder= "사용자 비밀번호" required/>
                     <span ng-show="edit_form.password.$dirty && edit_form.password.$invalid" class="help-inline">비밀번호가 누락되었습니다.</span>
                 </div>
             </div>
             <div class= "form-group" ng-class="{error: edit_form.password_compare.$invalid}">
                 <label class= "col-md-2">비밀번호 확인</label>
                 <div class="col-md-4">
-                    <input name="passwordCompare" ng-model="item.PASSWORD_CP" type= "password" class= "form-control" ng-match="item.PASSWORD" placeholder= "사용자 비밀번호 확인" required/>
-                    <span ng-show="edit_form.passwordCompare.$dirty && edit_form.passwordCompare.$invalid" class="help-inline">확인 비밀번호가 누락되었습니다.</span>
-                    <span ng-show="edit_form.passwordCompare.$error.match" class="help-inline">비밀번호가 일치하지 않습니다.</span>
+                    <input name="passwordCompare" ng-model="item.PASSWORD_CP" type= "password" class= "form-control" password-check="password"  ng-match="item.PASSWORD" placeholder= "사용자 비밀번호 확인" required/>
+                    <!--<span ng-show="edit_form.passwordCompare.$dirty && edit_form.passwordCompare.$invalid" class="help-inline">확인 비밀번호가 누락되었습니다.</span>-->
+                    <span ng-show="edit_form.passwordCompare.$dirty && edit_form.passwordCompare.$error.pwmatch" class="help-inline">비밀번호가 일치하지 않습니다.</span>
                 </div>
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">연락처</label>
                 <div class="col-md-4">
-                    <input ng-model="item.PHONE" type= "text" class= "form-control" placeholder= "사용자 연락처"/>
+                    <input name="phone" ng-model="item.PHONE" type= "text" maxlength="15" ng-pattern="/^\d{0,9}(\.\d{1,9})?$/" class= "form-control" placeholder= "사용자 연락처"/>
+                    <span ng-show="edit_form.phone.$invalid" class="help-inline">숫자만 입력 가능합니다.</span>
                 </div>
             </div>
             <div class= "form-group">

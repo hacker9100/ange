@@ -16,6 +16,10 @@ define([
         'ui.calendar'
         ,'ui.bootstrap'
         ,'ngSanitize'
+        ,'dialogs.main'
+        ,'pascalprecht.translate'
+        ,'dialogs.default-translations'
+        ,'ngActivityIndicator'
     ], function () {
 
     });

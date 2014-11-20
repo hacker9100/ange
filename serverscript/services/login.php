@@ -74,6 +74,31 @@
 //                        $_d->failEnd("아이디나 패스워드가 일치하지 않습니다.");
 //                    }
 
+                    $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                    ) VALUES (
+                        '".$_model[WORK_ID]."'
+                        ,'CMS_LOGIN'
+                        ,SYSDATE()
+                        ,'".$data[USER_ID]."'
+                        ,''
+                        ,''
+                        ,''
+                        ,'IP'
+                        ,'/signin'
+                    )";
+
+                    $_d->sql_query($sql);
+
                     if (!isset($_SESSION)) {
                         session_start();
                     }
@@ -133,6 +158,31 @@
             }
             if(isSet($_SESSION['uid']))
             {
+                $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                    ) VALUES (
+                        '".$_model[WORK_ID]."'
+                        ,'CMS_LOGOUT'
+                        ,SYSDATE()
+                        ,'".$_SESSION[uid]."'
+                        ,''
+                        ,''
+                        ,''
+                        ,'IP'
+                        ,'/signin'
+                    )";
+
+                $_d->sql_query($sql);
+
                 unset($_SESSION['uid']);
                 unset($_SESSION['name']);
                 unset($_SESSION['role']);

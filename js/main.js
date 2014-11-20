@@ -34,12 +34,17 @@ require.config({
         'angular-resource': '../lib/angular/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.
         'angular-sanitize': '../lib/angular/angular-sanitize.min', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
         'angular-ui-router': '../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
+        'angular-translate': '../lib/angular/angular-translate.min', //
 
 ////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
         'lodash' : '../lib/dropdown_multiselect/lodash',
 
         // ng-table 모듈
         'ng-table': '../lib/ng-table/ng-table',
+
+        // modal 모듈
+        'dialog-translation': '../lib/dialog/dialogs-default-translations.min',
+        'dialog': '../lib/dialog/dialogs.min',
 
         // ckeditor 모듈
         'ckeditor-core': '../lib/ckeditor/ckeditor', // ckeditor
@@ -50,7 +55,7 @@ require.config({
 //        'plupload': '../lib/plupload/plupload.full.min', // plupload
 ////        'ngPlupload': '../lib/plupload/plupload-angular-directive.min',
 //        'uiPlupload': '../lib/plupload/jquery.ui.plupload/jquery.ui.plupload',
-//        'ngActivityIndicator': '../lib/ngActivityIndicator/ngActivityIndicator', // 로딩시 화면에 잠깐 보여주는 역할을 한다.
+        'ngActivityIndicator': '../lib/ngActivityIndicator/ngActivityIndicator', // 로딩시 화면에 잠깐 보여주는 역할을 한다.
 
         // fileupload 모듈
         'ui-widget': '../lib/file-upload/vendor/jquery.ui.widget',
@@ -116,8 +121,17 @@ require.config({
         'angular-ui-router':{
             deps: ['angular']
         },
+        'angular-translate':{
+            deps: ['angular']
+        },
         'ng-table':{
             deps: ['angular']
+        },
+        'dialog-translation':{
+            deps: ['angular']
+        },
+        'dialog':{
+            deps: ['angular', 'angular-translate', 'ui-bootstrap']
         },
 //        'dropdownMultiSelect':{
 //            deps: ['angular', 'uiBootstrap']
@@ -135,9 +149,9 @@ require.config({
 //        'uiPlupload':{
 //            deps:['plupload']
 //        },
-//        'ngActivityIndicator':{
-//            deps:['angular']
-//        },
+        'ngActivityIndicator':{
+            deps:['angular']
+        },
         'fullcalendar':{
             deps:['jquery','moment']
         },

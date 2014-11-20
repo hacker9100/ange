@@ -13,6 +13,16 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('account', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', function ($scope, $rootScope, $stateParams, $location, $controller ) {
 
+        $scope.phoneNumberPattern = (function() {
+            var regexp = /^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/;
+            return {
+                test: function(value) {
+                    alert("1")
+                    return regexp.test(value);
+                }
+            };
+        })();
+
         /********** 공통 controller 호출 **********/
         angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
@@ -42,6 +52,8 @@ define([
 
         // 취소
         $scope.click_cancel = function () {
+            $scope.item = {};
+
             $scope.getSession()
                 .then($scope.sessionCheck)
                 .then($scope.getCmsUser)

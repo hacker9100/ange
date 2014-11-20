@@ -30,6 +30,9 @@
 <link rel="stylesheet" type="text/css" href="lib/fullcalendar/fullcalendar.css" />
 <link rel="stylesheet" type="text/css" href="css/calendarDemo.css" />
 
+<link rel="stylesheet" type="text/css" href="css/ng-table/ng-table.min.css" />
+<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />
+
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
 <link rel="stylesheet" href="css/file-upload/blueimp-gallery.css">
@@ -60,6 +63,14 @@
         color:white;
         text-shadow: 2px 2px 2px #021124;
     }
+    .feed-loading {
+        position: absolute;
+        display: block;
+        width: 32px;
+        height: 32px;
+        top:10px;
+        width:50px;
+    }
 </style>
 
 <style>
@@ -80,6 +91,15 @@
         background-color: white;
         opacity: 0.5;
     }
+
+    .form-horizontal input.ng-invalid.ng-dirty {
+        border-color: #FA787E;
+    }
+/*
+    .form-horizontal input.ng-valid.ng-dirty {
+        border-color: #78FA89;
+    }
+*/
 </style>
 
 <!-- IE6,7,8에서도 HTML5 element를 인식시켜주기 위한 코드 -->

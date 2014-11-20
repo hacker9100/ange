@@ -33,11 +33,11 @@ define([
 
         /********** 이벤트 **********/
         // 사용자 삭제 버튼 클릭
-        $scope.click_deleteCmsUser = function (idx) {
-            var user = $scope.tableParams.data[idx];
+        $scope.click_deleteCmsUser = function (parentIdx, idx) {
+            var user = $scope.tableParams.data[parentIdx].data[idx];
 
             $scope.deleteItem('cms_user', user.USER_ID, true)
-                .then(function(){alert('정상적으로 삭제했습니다.'); $scope.tableParams.data.splice(idx, 1);})
+                .then(function(){alert('정상적으로 삭제했습니다.'); $scope.tableParams.data[parentIdx].data.splice(idx, 1);})
                 .catch(function(error){alert(error)});
         };
 

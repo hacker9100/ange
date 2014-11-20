@@ -38,7 +38,7 @@
 .ai-circled {
   height: 32px;
   width: 32px;
-  position: relative;
+  position: absolute;
   border-width: 5px;
   border-style: solid;
   border-radius: 100%;
