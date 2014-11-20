@@ -49,7 +49,7 @@
             <td colspan="{{$columns.length}}">
                 <a href="" ng-click="group.$hideRows = !group.$hideRows">
                     <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
-                    <strong> {{ group.value }} </strong>
+                    <strong> {{ group.value }}</strong>
                 </a>
             </td>
          </tr>
@@ -65,7 +65,7 @@
             </td>
             <td data-title="'기능'">
                 <a ng-click="click_getSection(item.NO)">편집</a>
-                <a ng-click="click_deleteSection($group.index, $index)">삭제</a>
+                <a ng-click="click_deleteSection($parent.$index, $index)">삭제</a>
             </td>
         </tr>
     </tbody>

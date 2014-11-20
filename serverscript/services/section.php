@@ -78,7 +78,7 @@ switch ($_method) {
                              FROM CMS_SECTION S
                              WHERE 1=1
                              ".$where_search."
-                             ORDER BY PROJECT_NO ASC, SORT_IDX ASC
+                             ORDER BY SEASON_NM DESC, SORT_IDX ASC
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
@@ -86,7 +86,7 @@ switch ($_method) {
                              FROM CMS_SECTION S
                              WHERE 1=1
                              ".$where_search."
-                             ORDER BY PROJECT_NO ASC, SORT_IDX ASC
+                             ORDER BY SEASON_NM DESC, SORT_IDX ASC
                         ) CNT
                         ";
             }

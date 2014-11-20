@@ -40,13 +40,19 @@ define([
 
         /********** 이벤트 **********/
         // 섹션 삭제 버튼 클릭
-        $scope.click_deleteSection = function (grpIdx, idx) {
-            var section = $scope.tableParams.data[idx];
+        $scope.click_deleteSection = function (parentIdx, idx) {
 
-            console.log(grpIdx +','+ $scope.tableParams.data[idx]);
+            var section = $scope.tableParams.data[parentIdx].data[idx];
+
+            console.log('parentIdx = '+parentIdx);
+            console.log('idx = '+idx);
+            console.log('section = '+section);
+
             $scope.deleteItem('section', section.NO, true)
-                .then(function(){alert('정상적으로 삭제했습니다.'); $scope.tableParams.data.splice(idx, 1);})
+                .then(function(){alert('정상적으로 삭제했습니다.'); /*$scope.tableParams.group.data.splice(idx, 1);*/ $scope.tableParams.reload();})
                 .catch(function(error){alert(error)});
+
+            console.log('end');
 
         };
 
@@ -76,7 +82,9 @@ define([
                             $defer.resolve(data);
                         })
                         .catch(function(error){alert(error)});
+
                 }
+
             });
 
         };
@@ -85,7 +93,7 @@ define([
         $scope.click_saveSection = function () {
             if ($scope.key == '') {
                 $scope.insertItem('section', $scope.item, false)
-                    .then(function(){$scope.tableParams.reload();})
+                    .then(function(){$scope.tableParams.reload(); })
                     .catch(function(error){alert(error)});
             } else {
                 $scope.updateItem('section', $scope.key, $scope.item, false)
