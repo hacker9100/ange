@@ -117,10 +117,12 @@ define([
                     $scope.item = data;
                     $scope.CATEGORY = angular.fromJson(data.CATEGORY);
 
+                    // 프로젝트
                     angular.forEach($scope.projects,function(value, idx){
-                        if(value.NO == data.PROJECT_NO);
-                        $scope.item.PROJECT = $scope.projects[idx];
-                        return;
+                        if(value.NO == data.PROJECT_NO){
+                            $scope.item.PROJECT = $scope.projects[idx];
+                            return;
+                        }
                     });
 
                     // 섹션 - 시즌명
@@ -151,9 +153,9 @@ define([
                     .then(function(data){
                         $scope.sections = data;
 
-                        if($stateParams.id == 0) {
+                        if($stateParams.id == 0) { // 등록할 때 섹션명 리스트 조회하여 첫번째값으로 셋팅
                             $scope.item.SECTION = data[0]
-                        } else {
+                        } else { // 수정할때 섹션명 리스트를 조회 한 후 해당 섹션명을 선택 후 셋팅
                             for(var i=0; i < $scope.sections.length; i ++){
                                 if(JSON.stringify($scope.item.SECTION.SECTION_NM) == JSON.stringify($scope.sections[i].SECTION_NM)){
                                     $scope.item.SECTION = $scope.sections[i];
