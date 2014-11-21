@@ -48,8 +48,8 @@ switch ($_method) {
                 $where_search .= "AND S.SECTION_NM LIKE '%".$_search[KEYWORD]."%' ";
             }
 
-            if (isset($_search[SEASON_NM][SEASON_NM]) && $_search[SEASON_NM][SEASON_NM] != "") {
-                $where_search .= "AND S.SEASON_NM  = '".$_search[SEASON_NM][SEASON_NM]."' ";
+            if (isset($_search[SEARCH_SEASON_NM][SEASON_NM]) && $_search[SEARCH_SEASON_NM][SEASON_NM] != "") {
+                $where_search .= "AND S.SEASON_NM  = '".$_search[SEARCH_SEASON_NM][SEASON_NM]."' ";
             }
 
             if (isset($_search[SEASON_NM]) && $_search[SEASON_NM] != "") {
@@ -57,7 +57,7 @@ switch ($_method) {
             }
 
             if (isset($_search[ROLE]) && $_search[ROLE] != "") {
-                $sql = "SELECT SEASON_NM
+                $sql = "SELECT SEASON_NM, SECTION_NM, NO
                          FROM
                                 CMS_SECTION
                          WHERE

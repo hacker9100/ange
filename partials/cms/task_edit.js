@@ -53,7 +53,7 @@ define([
                         $scope.category_a = category_a;
                         $scope.category_b = category_b;
                     }),
-                    $scope.getList('section', {}, {ROLE: true}, false).then(function(data){$scope.season_names = data;}),
+                    $scope.getList('section', {}, {ROLE: true}, false).then(function(data){$scope.seasons = data;}),
                     $scope.getList('section', {}, {}, false).then(function(data){$scope.sections = data;})
                 ])
                 .then( function(results) {
@@ -125,12 +125,12 @@ define([
 
                     // 섹션 - 시즌명
                     var idx = 0;
-                    for(var i=0; i < $scope.season_names.length; i ++){
-                        if(JSON.stringify(data.SEASON_NM) == JSON.stringify($scope.season_names[i].SEASON_NM)){
+                    for(var i=0; i < $scope.seasons.length; i ++){
+                        if(JSON.stringify(data.SEASON_NM) == JSON.stringify($scope.seasons[i].SEASON_NM)){
                             idx = i;
                         }
                     }
-                    $scope.item.SEASON_NM = $scope.season_names[idx];
+                    $scope.item.SEASON_NM = $scope.seasons[idx];
 
                     // 섹션 - 섹션명
                     var idx = 0;
@@ -149,16 +149,23 @@ define([
             if (data != null) {
                 $scope.getList('section', {}, {SEASON_NM: data.SEASON_NM}, false)
                     .then(function(data){
-                        console.log('data = '+data);
                         $scope.sections = data;
-                        for(var i=0; i < $scope.sections.length; i ++){
-                            if(JSON.stringify($scope.item.SECTION.SECTION_NM) == JSON.stringify($scope.sections[i].SECTION_NM)){
-                                $scope.item.SECTION = $scope.sections[i];
+
+                        if($stateParams.id == 0) {
+                            $scope.item.SECTION = data[0]
+                        } else {
+                            for(var i=0; i < $scope.sections.length; i ++){
+                                if(JSON.stringify($scope.item.SECTION.SECTION_NM) == JSON.stringify($scope.sections[i].SECTION_NM)){
+                                    $scope.item.SECTION = $scope.sections[i];
+                                }
                             }
                         }
                     })
                     .catch(function(error){alert(error)});
+            }else {
+                $scope.getList('section', {}, {}, false).then(function(data){$scope.sections = data;})
             }
+
         });
 
         // 태스크 저장 버튼 클릭

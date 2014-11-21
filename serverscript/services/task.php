@@ -230,6 +230,7 @@
                 $section = $_model[SECTION];
                 $section_no = $section[NO];
                 $section_nm = $section[SECTION_NM];
+                $season_nm = $section[SEASON_NM];
             }
 
             $err = 0;
