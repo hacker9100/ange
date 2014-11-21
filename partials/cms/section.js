@@ -93,7 +93,17 @@ define([
         $scope.click_saveSection = function () {
             if ($scope.key == '') {
                 $scope.insertItem('section', $scope.item, false)
-                    .then(function(){$scope.tableParams.reload(); })
+                    .then(function(){
+                        // 리스트 재조회
+                        $scope.tableParams.reload();
+
+                        // 검색조건 시즌명 셀렉트 박스 재조회 후 셋팅 --> 추가한 시즌명 검색조건에 포함
+                        $scope.getList('section', {}, {ROLE: true}, false)
+                            .then(function(data){
+                                $scope.season = data;
+                            })
+                            .catch(function(error){alert(error)});
+                    })
                     .catch(function(error){alert(error)});
             } else {
                 $scope.updateItem('section', $scope.key, $scope.item, false)
