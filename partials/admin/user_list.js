@@ -11,10 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('user_list', ['$scope', '$stateParams', '$location', '$controller', function ($scope, $stateParams, $location, $controller) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+    controllers.controller('user_list', ['$scope', '$stateParams', '$location', function ($scope, $stateParams, $location) {
 
         /********** 초기화 **********/
         // 검색 조건
@@ -23,23 +20,25 @@ define([
         // 목록 데이터
         $scope.listData = [];
 
-        // 날짜 콤보박스
-        var year = [];
-        var now = new Date();
-        var nowYear = now.getFullYear();
-
         // 초기화
         $scope.init = function() {
-            for (var i = 2010; i < nowYear + 5; i++) {
-                year.push(i+'');
-            }
+            // 검색조건
+            var condition = [{name: "이름", value: "USER_NM"}, {name: "아이디", value: "USER_ID"}, {name: "닉네임", value: "NICK_NM"}, {name: "전화번호", value: "PHONE"}, {name: "주소", value: "ADDR"}, {name: "이메일", value: "EMAIL"}, {name: "생일", value: "BIRTH"}, {name: "가입기간", value: "REG_DT"}];
+            var type = [{name: "일반회원", value: "PER"}, {name: "앙쥬맘", value: "MOM"}, {name: "앙쥬클럽", value: "CLUB"}, {name: "블로그메이트", value: "MATE"}];
+            var state = [{name: "전체", value: "A"}, {name: "정상", value: "N"}, {name: "불량", value: "F"}, {name: "휴면", value: "D"}, {name: "탈퇴", value: "S"}];
+            var act = [{name: "일반정보", value: "A"}, {name: "커뮤니티활동", value: "C"}, {name: "참여활동", value: "P"}, {name: "블로거활동", value: "B"}];
+            var sort = [{name: "가입일", value: "REG_DT"}, {name: "이름", value: "USER_NM"}, {name: "포인트", value: "POINT"}, {name: "스코어", value: "SCORE"}];
+            var order = [{name: "내림차순", value: "DESC"}, {name: "오름차순", value: "ASC"}];
 
-            // 검색어
-            var order = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
-
-            $scope.years = year;
+            $scope.condition = condition;
+            $scope.type = type;
+            $scope.state = state;
+            $scope.act = act;
+            $scope.sort = sort;
             $scope.order = order;
-            $scope.search.YEAR = nowYear+'';
+            $scope.search.CONDITION = condition[0];
+            $scope.search.STATE = state[0];
+            $scope.search.SORT = sort[0];
             $scope.search.ORDER = order[0];
         };
 

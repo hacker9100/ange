@@ -4,20 +4,36 @@
         <form role="form" name="list_form" class="form-horizontal">
             <div class="col-md-9">
                 <div class= "form-group">
-                    <label class= "col-md-2"> 연도 </label>
-                    <div class="col-md-3">
-                        <select ng-model="search.YEAR" ng-options="v for v in years" class= "form-control" placeholder="등록년">
-                            <option name="" value=""> - 연도</option>
-                        </select>
+                    <label class= "col-md-2">검색</label>
+                    <div class= "col-md-3">
+                        <select ng-model="search.CONDITION" ng-options="condition.name for condition in condition" class= "form-control"></select>
+                    </div>
+                    <div class="col-md-6">
+                        <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어" />
                     </div>
                 </div>
                 <div class= "form-group">
-                    <label class= "col-md-2">검색</label>
-                    <div class= "col-md-3">
-                        <select ng-model="search.ORDER" ng-options="order.name for order in order" class= "form-control" placeholder="검색선택"></select>
+                    <label class= "col-md-2">유형</label>
+                    <div class="col-md-9">
+                        <div class="checkbox-inline" ng-repeat="item in type" >
+                            <input checklist-model="search.TYPE" type= "checkbox" checklist-value="item.value" /> {{item.name}}
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+                </div>
+                <div class= "form-group">
+                    <label class= "col-md-2">상태</label>
+                    <div class="col-md-9">
+                        <div class="radio-inline" ng-repeat="item in state" >
+                            <input ng-model="search.STATE" type= "radio" ng-value="item.value" /> {{item.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class= "form-group">
+                    <label class= "col-md-2">활동</label>
+                    <div class="col-md-9">
+                        <div class="radio-inline" ng-repeat="item in act" >
+                            <input ng-model="search.ACT" type= "radio" ng-value="item.value" /> {{item.name}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,15 +43,39 @@
                         <i class="glyphicon glyphicon-search"></i>
                         <span>검색</span>
                     </button>
-                    <button class="btn btn-success fileinput-button" data-ng-click="click_createNewProject()">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span>등록</span>
-                    </button>
                 </div>
             </div>
         </form>
-
     </div>
+</div>
+
+<div>
+    <div class="col-md-6">
+        <button class="btn btn-success fileinput-button" data-ng-click="click_createNewProject()">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>목록갱신</span>
+        </button>
+        <button class="btn btn-success fileinput-button" data-ng-click="click_createNewProject()">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>신규회원등록</span>
+        </button>
+        <button class="btn btn-success fileinput-button" data-ng-click="click_createNewProject()">
+            <i class="glyphicon glyphicon-plus"></i>
+            <span>자주쓰는 목록</span>
+        </button>
+    </div>
+    <div class="col-md-pull-6">
+        <div class= "col-md-2">
+            <select ng-model="search.SORT" ng-options="sort.name for sort in sort" class= "form-control"></select>
+        </div>
+        <div class= "col-md-2">
+            <select ng-model="search.ORDER" ng-options="order.name for order in order" class= "form-control"></select>
+        </div>
+    </div>
+</div>
+
+<div class= "form-group">
+
 </div>
 
 <!--
