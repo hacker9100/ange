@@ -1,12 +1,15 @@
 <!-- 콘텐츠 영역입니다. -->
-<div class="row" style="margin-bottom: 25px;">
+<!--<div class="row" style="margin-bottom: 25px;">-->
 
-    <cms-portlet-list type="portlet" api="{{list1.api}}" title="{{list1.title}}" css="{{list1.css}}"></cms-portlet-list>
+    <!--<cms-portlet-list type="portlet" api="{{list1.api}}" title="{{list1.title}}" css="{{list1.css}}"></cms-portlet-list>-->
 
     <cms-portlet-list type="portlet" api="{{list2.api}}" title="{{list2.title}}" css="{{list2.css}}"></cms-portlet-list>
 
-</div>
+<!--</div>-->
 
+<div class="row" style="margin-bottom: 25px;">
+    <cms-layout></cms-layout>
+</div>
 
 <div class="row" style="margin-bottom: 25px;">
 
@@ -14,7 +17,6 @@
         <li class="list-group-item list-group-item-labeling-gray">
             태스크 목록
             <span class="btn custom-btn-more"> <span ng-click="click_showTaskList();" class="glyphicon glyphicon-plus"></span> </span>
-
         </li>
     </div>
 

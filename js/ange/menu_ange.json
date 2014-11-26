@@ -1,0 +1,17 @@
+{
+    "states": [
+        { "signin": {
+            "url": "/signin",
+            "templateUrl": "/partials/ange/signin.html",
+            "controller": "signin"
+        }}, { "storylist_list": {
+            "url": "/storylist/:menu/list",
+            "views": {
+                "" : { "templateUrl": "/partials/ange/ange_common.html", "controller": "ange_common" },
+                "lnbView@storylist_list": { "templateUrl": "/partials/ange/lnb.html", "controller": "lnb" },
+                "locaterView@storylist_list": { "templateUrl": "/partials/ange/locater.html", "controller" : "locater" },
+                "contentView@storylist_list": { "templateUrl": "/partials/ange/user_list.html", "controller" : "user_list" }
+            }
+        }}
+    ]
+}

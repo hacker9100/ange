@@ -9,25 +9,37 @@
 
 define([
 './app',
-'json!menu.json'
+'json!menu.json',
 ], function(app, menu) {
     'use strict';
 
     app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, fileUploadProvider) {
 
-        // angular를 사용함으로서 url에 '#'를 제거하기 위한 처리
-        var sitePrefix = '/app';
-
         // use the HTML5 History API
 //        $locationProvider.html5Mode(true);
-//        $locationProvider.html5Mode(true).hashPrefix('/app');
+
+//        $provide.service('test', function() {
+//            this.test1 = 'test111';
+//        });
+//
+//        $provide.provider('test2', function() {
+//            this.$get = function($injector) {
+//                return $injector.instantiate(function() {
+//                    this.name = 'The Catcher in the Rye';
+//                    this.author = 'J. D. Salinger';
+//                });
+//            };
+//        });
+
+//        $provide.decorator('test', function ($injector) {
+//            return test;
+//        });
 
         // 무조건 처음에 호출하고 싶은 것이 있으면 여기서 호출
-        // $urlRouterProvider.otherwise('/YouApp');
-        $urlRouterProvider.otherwise(function($injector, $location) {
-            /*$location.path('/signin')*/
-        });
-
+        $urlRouterProvider.otherwise('/signin');
+//        $urlRouterProvider.otherwise(function($injector, $location) {
+//            $location.path('/signin')
+//        });
 
         // 메뉴 정보를 별도의 파일로 분리해 관리
         // menu.json에 정의된 메뉴들을 루프를 돌리면서 바인딩

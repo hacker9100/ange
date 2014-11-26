@@ -94,7 +94,6 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             logoutState = 'app.home';
 
         this.$get = function ($rootScope, $http, $q, $state) {
-
             /**
              * Low-level, private functions.
              */
@@ -301,15 +300,15 @@ alert("resolvePendingState");
             getLoginData();
             managePermissions();
 
-            return wrappedService;
+//            return wrappedService;
         };
     });
 
-    app.run(function ($rootScope, loginService, $location) {
+    app.run(function ($rootScope, dataService, $location, $q) {
         // 기본 값 설정
         $rootScope.pageSize = 20;
-
         // TODO: 메뉴정보와 코드 정보를 로딩한다.
+
 
 //        // 페이지 이동시 권한 체크
 //        $rootScope.$on("$stateChangeStart", function (event, next, current) {
@@ -404,220 +403,10 @@ alert("resolvePendingState");
     });
 
     //공통 컨트롤러 설정 - 모든 컨트롤러에서 공통적으로 사용하는 부분들 선언
-    app.controller('common', function($scope, $q, dataService) {
+    app.controller('common', function($scope, $q, dataService, $location) {
 
-//        // 파일 사이즈 변환
-//        $scope.formatFileSize = function (bytes) {
-////            if (typeof bytes !== 'number') {
-////                return '';
-////            }
-//            if (bytes >= 1000000000) {
-//                return (bytes / 1000000000).toFixed(2) + ' GB';
-//            }
-//            if (bytes >= 1000000) {
-//                return (bytes / 1000000).toFixed(2) + ' MB';
-//            }
-//            return (bytes / 1000).toFixed(2) + ' KB';
-//        }
-//
-//        // 로그인
-//        $scope.login = function(key, item) {
-//            var deferred = $q.defer();
-//
-//            dataService.login(key,item,function(data, status) {
-//                if (status != 200) {
-//                    console.log('조회에 실패 했습니다.');
-//                    deferred.reject('조회에 실패 했습니다.');
-//                } else {
-//                    if (data.err == true) {
-//                        console.log(data.msg);
-//                        deferred.reject(data.msg);
-//                    } else {
-//                        if (angular.isObject(data)) {
-//                            deferred.resolve(data);
-//                        } else {
-//                            // TODO: 데이터가 없을 경우 처리
-//                            console.log('조회 데이터가 없습니다.');
-//                            deferred.reject('조회 데이터가 없습니다.');
-//                        }
-//                    }
-//                }
-//            });
-//
-//            return deferred.promise;
-//        }
-//
-//        // 세션 조회
-//        $scope.getSession = function() {
-//            var deferred = $q.defer();
-//
-//            dataService.getSession(function(data, status) {
-//                if (status != 200) {
-//                    console.log('조회에 실패 했습니다.');
-//                    deferred.reject('조회에 실패 했습니다.');
-//                } else {
-//                    if (data.err == true) {
-//                        console.log(data.msg);
-//                        deferred.reject(data.msg);
-//                    } else {
-//                        if (angular.isObject(data)) {
-//                            deferred.resolve(data);
-//                        } else {
-//                            // TODO: 데이터가 없을 경우 처리
-//                            console.log('조회 데이터가 없습니다.');
-//                            deferred.reject('조회 데이터가 없습니다.');
-//                        }
-//                    }
-//                }
-//            });
-//
-//            return deferred.promise;
-//        }
-//
-//        // 세션 체크
-//        $scope.sessionCheck = function(session) {
-//            if (session.USER_ID == undefined || session.USER_ID == '')
-//                throw( new String('세션이 만료되었습니다.') );
-////            throw( new Error("세션이 만료되었습니다.") );
-//            return session;
-//        };
-//
-//        // 오류 리포트
-//        $scope.reportProblems = function(error) {
-//            alert(error);
-//        };
-//
-//        // 목록 데이터를 조회
-//        $scope.getList = function (service, page, search, loding) {
-//            var deferred = $q.defer();
-//
-//            if (loding) $scope.isLoading = true;
-//            dataService.db(service).find(page,search,function(data, status) {
-//                if (status != 200) {
-//                    console.log('조회에 실패 했습니다.');
-//                    deferred.reject('조회에 실패 했습니다.');
-//                } else {
-//                    if (data.err == true) {
-//                        console.log(data.msg);
-//                        deferred.reject(data.msg);
-//                    } else {
-//                        if (angular.isObject(data)) {
-//                            deferred.resolve(data);
-//                        } else {
-//                            // TODO: 데이터가 없을 경우 처리
-//                            console.log('조회 데이터가 없습니다.');
-//                            deferred.reject('조회 데이터가 없습니다.');
-//                        }
-//                    }
-//                }
-//
-//                if (loding) $scope.isLoading = false;
-//            });
-//
-//            return deferred.promise;
-//        };
-//
-//        // 모델 데이터를 조회
-//        $scope.getItem = function (service, key, search, loding) {
-//            var deferred = $q.defer();
-//
-//            if (loding) $scope.isLoading = true;
-//            dataService.db(service).findOne(key,search,function(data, status) {
-//                if (status != 200) {
-//                    console.log('조회에 실패 했습니다.');
-//                    deferred.reject('조회에 실패 했습니다.');
-//                } else {
-//                    if (data.err == true) {
-//                        console.log(data.msg);
-//                        deferred.reject(data.msg);
-//                    } else {
-//                        if (angular.isObject(data)) {
-//                            deferred.resolve(data);
-//                        } else {
-//                            // TODO: 데이터가 없을 경우 처리
-//                            console.log('조회 데이터가 없습니다.');
-//                            deferred.reject('조회 데이터가 없습니다.');
-//                        }
-//                    }
-//                }
-//
-//                if (loding) $scope.isLoading = false;
-//            });
-//
-//            return deferred.promise;
-//        };
-//
-//        // 모델 등록
-//        $scope.insertItem = function (service, item, loding) {
-//            var deferred = $q.defer();
-//
-//            if (loding) $scope.isLoading = true;
-//            dataService.db(service).insert(item,function(data, status) {
-//                if (status != 200) {
-//                    console.log('등록에 실패 했습니다.');
-//                    deferred.reject('등록에 실패 했습니다.');
-//                } else {
-//                    if (data.err == true) {
-//                        console.log(data.msg);
-//                        deferred.reject(data.msg);
-//                    } else {
-//                        deferred.resolve();
-//                    }
-//                }
-//
-//                if (loding) $scope.isLoading = false;
-//            });
-//
-//            return deferred.promise;
-//        };
-//
-//        // 모델 수정
-//        $scope.updateItem = function (service, key, item, loding) {
-//            var deferred = $q.defer();
-//
-//            if (loding) $scope.isLoading = true;
-//            dataService.db(service).update(key, item,function(data, status) {
-//                if (status != 200) {
-//                    console.log('수정에 실패 했습니다.');
-//                    deferred.reject('수정에 실패 했습니다.');
-//                } else {
-//                    if (data.err == true) {
-//                        console.log(data.msg);
-//                        deferred.reject(data.msg);
-//                    } else {
-//                        deferred.resolve();
-//                    }
-//                }
-//
-//                if (loding) $scope.isLoading = false;
-//            });
-//
-//            return deferred.promise;
-//        };
-//
-//        // 모델 삭제
-//        $scope.deleteItem = function (service, key, loding) {
-//            var deferred = $q.defer();
-//
-//            if (loding) $scope.isLoading = true;
-//            dataService.db(service).remove(key,function(data, status){
-//                if (status != 200) {
-//                    console.log('삭제에 실패 했습니다.');
-//                    deferred.reject('삭제에 실패 했습니다.');
-//                } else {
-//                    if (data.err == true) {
-//                        console.log(data.msg);
-//                        deferred.reject(data.msg);
-//                    } else {
-//                            deferred.resolve();
-//                    }
-//                }
-//
-//                if (loding) $scope.isLoading = false;
-//            });
-//
-//            return deferred.promise;
-//        };
+//        $scope.path = $location.path();
+
     });
 
     //공통 컨트롤러 설정 - 모든 컨트롤러에서 공통적으로 사용하는 부분들 선언

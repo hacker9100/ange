@@ -9,8 +9,14 @@ define([
 ], function(app, menu) {
     'use strict';
     app.constant(
-        "CONFIG", {
+        "COMMON", {
             "TEST" : "test"
+        }
+    );
+    app.constant(
+        "CMS", {
+            "SYSTEM_GB" : "CMS",
+            "" : ""
         }
     );
     app.constant(

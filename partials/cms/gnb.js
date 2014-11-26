@@ -11,7 +11,9 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('gnb', ['$rootScope', '$scope', 'loginService', '$location', function ($rootScope, $scope, loginService, $location) {
+    controllers.controller('gnb', ['$scope', '$rootScope', 'loginService', '$location', function ($scope, $rootScope, loginService, $location) {
+
+        $scope.list = $rootScope.cms_channel;
 
         $scope.logout = function() {
             loginService.logout($rootScope.uid).then( function(data) {

@@ -11,9 +11,40 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('cms_common', ['$scope', '$rootScope', '$location', '$q', 'dataService', 'dialogs', function ($scope, $rootScope, $location, $q, dataService, dialogs) {
+    controllers.controller('cms_common', ['$timeout', '$scope', '$rootScope', '$location', '$q', 'dataService', 'dialogs', 'login', function ($timeout, $scope, $rootScope, $location, $q, dataService, dialogs, login) {
 
         $rootScope.PAGE_SIZE = 20;
+        $scope.path = $location.path();
+
+//        $scope.processing = false;
+//        $scope.complete = false;
+//
+//        $scope.menu = function() {
+//            alert("menu");
+//            var deferred = $q.defer();
+//
+//            if (!$scope.processing) {
+//                $scope.processing = true;
+//
+//                $timeout( function() {
+//                    alert("success");
+//                    $rootScope.test1 = 'test';
+//                    $scope.complete = true;
+//                    deferred.resolve();
+//                },1000);
+//            } else {
+//                if ($scope.complete) {
+//                    alert("c")
+//                    deferred.resolve();
+//                } else {
+//                    $timeout($scope.menu, 500);
+//                }
+//            }
+//
+//            return deferred.promise;
+//        }
+//
+//        $scope.menu();
 
 //        alert(localStorage.getItem('userToken'))
 
@@ -39,8 +70,8 @@ define([
 
             dataService.login(key,item,function(data, status) {
                 if (status != 200) {
-                    console.log('조회에 실패 했습니다.');
-                    deferred.reject('조회에 실패 했습니다.');
+                    console.log('로그인에 실패 했습니다.');
+                    deferred.reject('로그인에 실패 했습니다.');
                 } else {
                     if (data.err == true) {
                         console.log(data.msg);
@@ -50,8 +81,8 @@ define([
                             deferred.resolve(data);
                         } else {
                             // TODO: 데이터가 없을 경우 처리
-                            console.log('조회 데이터가 없습니다.');
-                            deferred.reject('조회 데이터가 없습니다.');
+                            console.log('로그인 데이터가 없습니다.');
+                            deferred.reject('로그인 데이터가 없습니다.');
                         }
                     }
                 }
@@ -303,108 +334,25 @@ define([
             return deferred.promise;
         };
 
-        /********** 페이지 타이틀 **********/
-        var spMenu = $location.path().split('/');
+        $scope.getMenu = function() {
+            var deferred = $q.defer();
 
-        $scope.message = 'ANGE CMS';
-        if (spMenu[1] == "dashboard") {
-            $scope.pageTitle = '마이페이지';
-            $scope.pageDescription = '대시보드입니다.';
-            $scope.tailDescription = '.';
-            $scope.lnbSubscript = 'dashboard';
-            $scope.lnbTitle = '대시보드';
-            $scope.isDashboard = true;
-        } else if (spMenu[1] == "account") {
-            $scope.pageTitle = '개인정보';
-            $scope.pageDescription = '개인정보를 조회하고 수정할 수 있습니다.';
-            $scope.tailDescription = '내용을 수정한 후 \"수정\"버튼을 누르면 수정이 완료됩니다.<br/>\"취소\"버튼을 누르면 원래대로 돌아갑니다.';
-            $scope.lnbSubscript = 'dashboard';
-            $scope.lnbTitle = '대시보드';
-            $scope.isDashboard = true;
-        } else if (spMenu[1] == "archive") {
-            $scope.pageTitle = '아카이브';
-            $scope.pageDescription = '지난 기사자료를 조회할 수 있습니다.';
-            $scope.tailDescription = '검색영역에서 원하는 기사를 찾을 수 있습니다.<br />제목을 클릭하면 자세한 내용을 조회할 수 있습니다.';
-            $scope.lnbSubscript = 'dashboard';
-            $scope.lnbTitle = '대시보드';
-            $scope.isDashboard = true;
-        } else if (spMenu[1] == "project") {
-            $scope.pageTitle = '프로젝트 관리';
-            $scope.pageDescription = '프로젝트를 생성하고 섹션을 설정합니다.';
-            $scope.tailDescription = '상단의 검색영역에서 원하는 프로젝트를 필터링하거나 찾을 수 있습니다.<br />진행 중인 프로젝트를 해지하며 이전 프로젝트를 전부 조회할 수 있습니다.';
-            $scope.lnbSubscript = 'contents';
-            $scope.lnbTitle = '콘텐츠 관리';
-            $scope.isDashboard = false;
-        } else if (spMenu[1] == 'task') {
-            $scope.pageTitle = '태스크 관리';
-            $scope.pageDescription = '기사주제 설정하고 할당하여 관리합니다.';
-            $scope.tailDescription = '.';
-            $scope.lnbSubscript = 'contents';
-            $scope.lnbTitle = '콘텐츠 관리';
-            $scope.isDashboard = false;
-        } else if (spMenu[1] == 'content') {
-            $scope.lnbSubscript = 'contents';
-            $scope.lnbTitle = '콘텐츠 관리';
-            $scope.isDashboard = false;
-            if (spMenu[2] == 'article') {
-                $scope.pageTitle = '원고 관리';
-                $scope.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
-                $scope.tailDescription = '.';
-            } else if (spMenu[2] == 'article_confirm') {
-                $scope.pageTitle = '원고 승인';
-                $scope.pageDescription = '태스크 내용을 확인하여 원고를 작성하고 관리합니다.';
-                $scope.tailDescription = '.';
-            } else if (spMenu[2] == 'edit') {
-                $scope.pageTitle = '편집';
-                $scope.pageDescription = '승인완료된 원고를 편집하여 기사를 완성합니다.';
-                $scope.tailDescription = '.';
-            } else if (spMenu[2] == 'edit_confirm') {
-                $scope.pageTitle = '편집 승인';
-                $scope.pageDescription = '편집된 원고를 확인하고 승인관리합니다.';
-                $scope.tailDescription = '.';
-            }
-        } else if (spMenu[1] == "webboard") {
-            $scope.pageTitle = '게시판';
-            $scope.pageDescription = '공지사항을 게시합니다.';
-            $scope.tailDescription = '.';
-            $scope.lnbSubscript = 'boaard';
-            $scope.lnbTitle = '게시판';
-            $scope.isDashboard = false;
-        } else if (spMenu[1] == "user") {
-            $scope.pageTitle = '사용자 관리';
-            $scope.pageDescription = 'CMS 사용자를 관리합니다.';
-            $scope.tailDescription = '.';
-            $scope.lnbSubscript = 'admin';
-            $scope.lnbTitle = '관리자';
-            $scope.isDashboard = false;
-        } else if (spMenu[1] == "permission") {
-            $scope.pageTitle = '권한 관리';
-            $scope.pageDescription = 'CMS 사용 권한을 관리합니다.';
-            $scope.tailDescription = '.';
-            $scope.lnbSubscript = 'admin';
-            $scope.lnbTitle = '관리자';
-            $scope.isDashboard = false;
-        } else if (spMenu[1] == "category") {
-            $scope.pageTitle = '카테고리 관리';
-            $scope.pageDescription = 'CMS 사용하는 카테고리를 관리합니다.';
-            $scope.tailDescription = '.';
-            $scope.lnbSubscript = 'admin';
-            $scope.lnbTitle = '관리자';
-            $scope.isDashboard = false;
-        } else if (spMenu[1] == "series") {
-            $scope.pageTitle = '시리즈 관리';
-            $scope.pageDescription = 'CMS 시리즈를 관리합니다.';
-            $scope.tailDescription = '.';
-            $scope.lnbSubscript = 'admin';
-            $scope.lnbTitle = '관리자';
-            $scope.isDashboard = false;
-        } else if (spMenu[1] == "contact") {
-            $scope.pageTitle = '주소록';
-            $scope.pageDescription = 'CMS 시리즈를 관리합니다.';
-            $scope.tailDescription = '.';
-            $scope.lnbSubscript = 'admin';
-            $scope.lnbTitle = '관리자';
-            $scope.isDashboard = false;
+            $q.all([
+                    $scope.getList('menu', {}, {CHANNEL_GB: 'CMS'}, false).then(function(data){$rootScope.cms_channel = data;}),
+                    $scope.getList('menu', {}, {MENU_GB: 'CMS'}, false).then(function(data){$rootScope.cms_menu = data;})
+                ])
+                .then( function() {
+                    deferred.resolve();
+                },function(error) {
+                    deferred.reject(error);
+                });
+
+            return deferred.promise;
         }
+
+        if ($rootScope.cms_channel == undefined) {
+//            $scope.getMenu();
+        }
+
     }]);
 });

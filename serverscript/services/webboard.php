@@ -42,6 +42,7 @@
 
                 $sql = "SELECT
                           NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, TAG
+                          #NO, PARENT_NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, WARNING_FL, BEST_FL, TAG
                         FROM
                           CMS_BOARD
                           #COM_BOARD
@@ -74,6 +75,23 @@
                     $err++;
                     $msg = $_d->mysql_error;
                 }
+/*
+                $sql = "SELECT
+                            NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
+                        FROM
+                            COM_REPLY
+                        WHERE
+                            TARGET_NO = ".$_key."
+                        ";
+
+                $reply_data = $_d->getData($sql);
+                $data['REPLY'] = $reply_data;
+*/
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
                 if($err > 0){
                     $_d->failEnd("조회실패입니다:".$msg);
@@ -82,19 +100,30 @@
                 }
             }
             else {
-                $where_search = "";
-                $limit_search = "";
+                $search_common = "";
+                $search_where = "";
+                $limit = "";
 
                 if (isset($_page)) {
-                    $limit_search .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
+                if (isset($_search[BOARD_GB]) && $_search[BOARD_GB] != "") {
+                    $search_common .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
+                }
+
+                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
+                    $search_common .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
+                }
+
+                $search_where = $search_common;
+
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $where_search .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    $search_where .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
                 }
 
                 if (isset($_search[HEAD]) && $_search[HEAD] != "") {
-                    $where_search .= "AND HEAD = '".$_search[HEAD]."' ";
+                    $search_where .= "AND HEAD = '".$_search[HEAD]."' ";
                 }
 
                 $sql = "SELECT
@@ -109,9 +138,9 @@
                                 #COM_BOARD
                             WHERE
                                 1=1
-                                ".$where_search."
+                                ".$search_where."
                             ORDER BY REG_DT DESC
-                             ".$limit_search."
+                             ".$limit."
                        ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
@@ -121,9 +150,47 @@
                                 CMS_BOARD
                             WHERE
                                 1=1
-                                ".$where_search."
+                                ".$search_where."
                         ) CNT
                         ";
+/*
+                $sql = "SELECT
+                          TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                          SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, WARNING_FL, BEST_FL, TAG
+                        FROM
+                        (
+                            SELECT
+                                '0' AS SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, WARNING_FL, BEST_FL, TAG
+                            FROM
+                                COM_BOARD
+                            WHERE
+                                NOTICE_FL = 'Y'
+                                ".$search_common."
+
+                            UNION
+
+                            SELECT
+                                '1' AS SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, WARNING_FL, BEST_FL, TAG
+                            FROM
+                                COM_BOARD
+                            WHERE
+                                1=1
+                                ".$search_where."
+                            ORDER BY SORT_GB, REG_DT DESC
+                             ".$limit."
+                       ) AS DATA,
+                        (SELECT @RNUM := 0) R,
+                        (
+                            SELECT
+                                COUNT(*) AS TOTAL_COUNT
+                            FROM
+                                COM_BOARD
+                            WHERE
+                                1=1
+                                ".$search_where."
+                        ) CNT
+                        ";
+*/
 
                 $data = $_d->sql_query($sql);
                 if($_d->mysql_errno > 0){
@@ -191,7 +258,35 @@
 
             $_d->sql_beginTransaction();
 
-//            $sql = "INSERT INTO COM_BOARD
+/*
+            $sql = "INSERT INTO COM_BOARD
+                    (
+                        PARENT_NO
+                        ,HEAD
+                        ,SUBJECT
+                        ,BODY
+                        ,BOARD_GB
+                        ,SYSTEM_GB
+                        ,REG_UID
+                        ,REG_NM
+                        ,REG_DT
+                        ,NOTICE_FL
+                        ,TAG
+                    ) VALUES (
+                        '".$_model[PARENT_NO]."'
+                        ,'".$_model[HEAD]."'
+                        ,'".$_model[SUBJECT]."'
+                        , '".$_model[BODY]."'
+                        , '".$_model[BOARD_GB]."'
+                        , '".$_model[SYSTEM_GB]."'
+                        , '".$_SESSION['uid']."'
+                        , '".$_SESSION['name']."'
+                        , SYSDATE()
+                        , '".($_model[NOTICE_FL] == true) ? "Y" : "N"."'
+                        , '".$_model[TAG]."'
+                    )";
+*/
+
             $sql = "INSERT INTO CMS_BOARD
                     (
                         HEAD
@@ -269,7 +364,7 @@
                         '".$no."'
                         , '".$file_no."'
                         , 'FILE'
-                        , 'CMS_BOARD'
+                        , 'BOARD'
                         , '".$i."'
                     )";
 
@@ -281,6 +376,31 @@
                     }
                 }
             }
+
+            $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                    ) VALUES (
+                        '".$_model[WORK_ID]."'
+                        ,'CREATE'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'.$no.'
+                        ,'BOARD'
+                        ,'CREATE'
+                        ,'IP'
+                        ,'/webboard'
+                    )";
+
+            $_d->sql_query($sql);
 
             MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
 
@@ -488,6 +608,31 @@
                 }
             }
 
+            $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                    ) VALUES (
+                        '".$_model[WORK_ID]."'
+                        ,'UPDATE'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'.$_key.'
+                        ,'BOARD'
+                        ,'UPDATE'
+                        ,'IP'
+                        ,'/webboard'
+                    )";
+
+            $_d->sql_query($sql);
+
             if($err > 0){
                 $_d->sql_rollback();
                 $_d->failEnd("수정실패입니다:".$msg);
@@ -503,17 +648,64 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-//            $sql = "DELETE FROM CMS_BOARD WHERE NO = ".$_key;
-            $sql = "DELETE FROM COM_BOARD WHERE NO = ".$_key;
+            $err = 0;
+            $msg = "";
 
-            // 댓글도 삭제 해야지~
+            $_d->sql_beginTransaction();
+
+            $sql = "DELETE FROM CMS_BOARD WHERE NO = ".$_key;
+//            $sql = "DELETE FROM COM_BOARD WHERE NO = ".$_key;
+
             // 파일도 삭제 해야지~
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
-            if($_d->mysql_errno > 0){
-                $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+/*
+            $sql = "DELETE FROM COM_REPLY WHERE TARGET_NO = ".$_key;
+
+            $_d->sql_query($sql);
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+*/
+
+            $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                    ) VALUES (
+                        '".$_model[WORK_ID]."'
+                        ,'DELETE'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'.$_key.'
+                        ,'BOARD'
+                        ,'DELETE'
+                        ,'IP'
+                        ,'/webboard'
+                    )";
+
+            $_d->sql_query($sql);
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("삭제실패입니다:".$msg);
             }else{
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 

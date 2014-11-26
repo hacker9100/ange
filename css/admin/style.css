@@ -1,0 +1,224 @@
+/* 
+ * Nanum Gothic (Korean) http://www.google.com/webfonts/earlyaccess
+ */
+@font-face {
+  font-family: 'Nanum Gothic';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../../fonts/NanumGothic-Bold.eot');
+  src: url('../../fonts/NanumGothic-Bold.eot?#iefix') format('embedded-opentype'),
+       url('../../fonts/NanumGothic-Bold.woff2') format('woff2'),
+       url('../../fonts/NanumGothic-Bold.woff') format('woff'),
+       url('../../fonts/NanumGothic-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Nanum Gothic';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../fonts/NanumGothic-Regular.eot');
+  src: url('../../fonts/NanumGothic-Regular.eot?#iefix') format('embedded-opentype'),
+       url('../../fonts/NanumGothic-Regular.woff2') format('woff2'),
+       url('../../fonts/NanumGothic-Regular.woff') format('woff'),
+       url('../../fonts/NanumGothic-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Nanum Gothic';
+  font-style: normal;
+  font-weight: 800;
+  src: url('../../fonts/NanumGothic-ExtraBold.eot');
+  src: url('../../fonts/NanumGothic-ExtraBold.eot?#iefix') format('embedded-opentype'),
+       url('../../fonts/NanumGothic-ExtraBold.woff2') format('woff2'),
+       url('../../fonts/NanumGothic-ExtraBold.woff') format('woff'),
+       url('../../fonts/NanumGothic-ExtraBold.ttf') format('truetype');
+}
+
+body {
+    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    font-family: "Nanum Gothic", Helvetica, Arial, sans-serif;
+	/* padding-bottom: 20px; */
+	padding-top: 45px;
+    padding-bottom: 0;
+    background:URL(../../imgs/admin/if_img_01_background.jpg);
+}
+
+.body_wrap {
+    background:URL(../../imgs/admin/lnb_bg_01_gray.jpg);
+    background-repeat: repeat-y;
+    background-position: 25px;
+    margin:0 auto;
+    padding: 0;
+}
+.left_wrap{
+    position:absolute;
+    height: 100%;
+    width:160px;
+    top:85px;
+    left:25px;
+    z-index:1;
+}
+.custom-btn-more {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 10px;
+}
+.custom-btn-more:empty {
+    display: none;
+}
+.btn .custom-btn-more {
+    position: relative;
+    top: -1px;
+}
+.btn-xs .custom-btn-more {
+    top: 0;
+    padding: 1px 5px;
+}
+a.custom-btn-more:hover,
+a.custom-btn-more:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.list-group-item > .custom-btn-more {
+    float: right;
+}
+.list-group-item > .custom-btn-more + .custom-btn-more {
+    margin-right: 5px;
+}
+
+
+.task-col-series, .task-col-title, .task-col-manager, .task-col-date, .task-col-step {
+    display:block;
+}
+
+@media (max-width: 767px) {
+    .task-col-series, .task-col-title {
+        display:block;
+    }
+    .task-col-manager, .task-col-date, .task-col-step {
+        display:none;
+    }
+}
+
+@media (min-width: 768px) {
+    .task-col-series, .task-col-title, .task-col-date {
+        display:block;
+    }
+    .task-col-manager, .task-col-step {
+        display:none;
+    }
+}
+
+@media (min-width: 992px) {
+    .task-col-series, .task-col-title, .task-col-step, .task-col-date  {
+        display:block;
+    }
+    .task-col-manager {
+        display:none;
+    }
+}
+
+@media (min-width: 1200px) {
+    .task-col-series, .task-col-title, .task-col-manager, .task-col-date, .task-col-step {
+        display:block;
+    }
+}
+
+.task-header {
+    font-size : 4em;
+    font-weight: bold;
+}
+
+.container {
+    width: 980px;
+    max-width: none !important;
+    padding:0px;
+    margin:0px;
+
+    padding-right: 0;
+    padding-left: 0;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+
+.contentpannel-heading {
+    padding: 0;
+}
+
+.panel-master {
+    border-color: #ccc;
+}
+
+.panel-master > .contentpannel-heading {
+    color: #DEDEDE;
+    /*background-color: #428bca;*/
+    background-color: #ccc;
+    border-top: 1px solid #BBB;
+    padding:21px 0 18px 15px;
+}
+
+.panel-master > .contentpannel-heading + .panel-collapse .contentpannel-body {
+    /* border-top-color: #428bca;*/
+    border-top-color: #aaa;
+}
+.panel-master > .panel-footer + .panel-collapse .contentpannel-body {
+    border-top-color: #fff;
+}
+
+
+span.smalltag {
+    position:absolute;
+    top:2px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.68em;
+}
+
+
+.locatorbar {
+    padding: 10px 15px;
+    margin-bottom: 0px;
+    list-style: none;
+    background-color: #AAA;
+    border:1px solid #999;
+    border-radius: 0px;
+    border-bottom:1px solid #666;
+}
+
+.copyright {
+    font-family: Arial, sans-serif;
+}
+
+a.famlylink{
+    clear : both;
+    font-family: Arial, sans-serif;
+    font-size: 0.94em;
+}
+
+a.famlylink:hover, a.famlylink:focus{
+    color: #000044;
+    text-decoration: none;
+}
+
+a.famlylink:focus {
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+.foot-content{
+    width:100%;
+    margin:0;
+    padding:30px 40px 32px 40px;
+    line-height:11pt;
+    font-size: 0.64em;
+    margin-bottom: 15px;
+}
