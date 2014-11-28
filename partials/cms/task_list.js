@@ -11,10 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_list', ['$scope', '$stateParams', '$location', '$controller', function ($scope, $stateParams, $location, $controller) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+    controllers.controller('task_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $location, dialogs) {
 
         /********** 초기화 **********/
         // 목록 데이터
@@ -65,14 +62,14 @@ define([
                     $scope.category_a = category_a;
                     $scope.category_b = category_b;
                 })
-                .catch(function(error){alert(error)});
+                .catch(function(error){console.log(error)});
 
             // 검색어
             var order = [{name: "기자", value: "EDITOR_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
             $scope.years = year;
             $scope.order = order;
-            $scope.search.YEAR = nowYear+'';
+//            $scope.search.YEAR = nowYear+'';
             $scope.search.ORDER = order[0];
 
             return ret;
@@ -106,7 +103,7 @@ define([
             if (data != null) {
                 $scope.getList('project', {}, {YEAR: data}, false)
                     .then(function(data){$scope.projects = data;})
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){console.log(error)});
             }
         });
 
@@ -115,14 +112,37 @@ define([
             $location.url('/task/edit/0');
         };
 
+        // 태스크 조회 화면 이동
+        $scope.click_showViewTask = function (key) {
+            $location.url('/task/view/'+key);
+        };
+
         // 태스크 수정 화면 이동
-        $scope.click_showEditTask = function (key) {
-            $location.url('/task/edit/'+key);
+        $scope.click_showEditTask = function (item) {
+            if (!($rootScope.role == 'CMS_ADMIN' || $rootScope.role == 'MANAGER') && $rootScope.uid != item.REG_UID) {
+                dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
+                return;
+            }
+
+            $location.url('/task/edit/'+item.NO);
+        };
+
+        // 콘텐츠 조회 화면 이동
+        $scope.click_showViewContent = function (key) {
+            dialogs.notify('알림', "화면 수정 중 입니다.", {size: 'md'});
+            return;
+
+            $location.url('/content/'+$stateParams.menu+'/view/'+key);
         };
 
         // 콘텐츠 수정 화면 이동
-        $scope.click_showEditContent = function (key) {
-            $location.url('/content/'+$stateParams.menu+'/edit/'+key);
+        $scope.click_showEditContent = function (item) {
+            if (!($rootScope.role == 'CMS_ADMIN' || $rootScope.role == 'MANAGER') && $rootScope.uid != item.EDITOR_ID) {
+                dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
+                return;
+            }
+
+            $location.url('/content/'+$stateParams.menu+'/edit/'+item.NO);
         };
 
         // 이력조회 버튼 클릭
@@ -136,13 +156,13 @@ define([
             var task = $scope.list[idx];
 
             if (task.PHASE == '30') {
-                alert("완료 상태의 태스크는 삭제할 수 없습니다.");
+                dialogs.notify('알림', '완료 상태의 태스크는 삭제할 수 없습니다.', {size: 'md'});
                 return;
             }
 
             $scope.deleteItem('task', task.NO, true)
-                .then(function(){alert("삭제 되었습니다.");})
-                .catch(function(error){alert(error)});
+                .then(function(){dialogs.notify('알림', '삭제 되었습니다.', {size: 'md'});})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.list = [];
@@ -161,13 +181,13 @@ define([
             $scope.perCnt = 0;
 
             $scope.search.CATEGORY = $scope.CATEGORY;
-            $scope.getTaskList($scope.search);
+            $scope.getTaskList();
         };
 
         // 태스크 목록 조회
-        $scope.getTaskList = function (search) {
+        $scope.getTaskList = function () {
             $scope.isLoading = true;
-            $scope.getList('task', {NO:$scope.pageNo, SIZE:$scope.pageSize}, search, true)
+            $scope.getList('task', {NO:$scope.pageNo, SIZE:$scope.pageSize}, $scope.search, true)
                 .then(function(data){
                     $scope.totalCnt = data[0].TOTAL_COUNT;
                     angular.forEach(data, function(model) {
@@ -177,11 +197,9 @@ define([
                     if ($scope.list.length == 0) {
                         $scope.list = $scope.listData.slice($scope.perCnt, $scope.perSize);
                     }
-
-                    console.log($scope.projects);
-                    $scope.isLoading = false;
                 })
-                .catch(function(error){alert(error)});
+                .catch(function(error){console.log(error);})
+                .finally(function(){$scope.isLoading = false;});
         };
 
         $scope.$watch('perCnt', function() {
@@ -205,9 +223,12 @@ define([
 
         /********** 화면 초기화 **********/
         $scope.isTask = true;
+        $scope.isCompleted = false;
 
-        // 페이지 타이틀
-        if ($stateParams.menu == 'article') {
+        if ($location.path() == '/archive/list') {
+            $scope.search = {PHASE: '31'};
+            $scope.isTask = true;
+        } else if ($stateParams.menu == 'article') {
             $scope.search = {PHASE: '0, 10, 11, 12'};
         } else if ($stateParams.menu == "article_confirm") {
             $scope.search = {PHASE: '11, 12'};
@@ -220,8 +241,13 @@ define([
             $scope.search = {};
         }
 
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
+            .catch($scope.reportProblems);
+
         $scope.init();
-        $scope.getTaskList($scope.search);
+        $scope.getTaskList();
 
     }]);
 });

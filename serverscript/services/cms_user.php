@@ -45,19 +45,21 @@
                 $result = $_d->sql_query($sql);
                 $data  = $_d->sql_fetch_array($result);
 
-                $sql = "SELECT
-                            R.ROLE_ID, R.ROLE_NM, R.ROLE_GB
-                        FROM
-                            USER_ROLE U, CMS_ROLE R
-                        WHERE
-                            U.ROLE_ID = R.ROLE_ID
-                            AND U.USER_ID = '".$_key."'
-                        ";
+                if (data) {
+                    $sql = "SELECT
+                                R.ROLE_ID, R.ROLE_NM, R.ROLE_GB
+                            FROM
+                                USER_ROLE U, CMS_ROLE R
+                            WHERE
+                                U.ROLE_ID = R.ROLE_ID
+                                AND U.USER_ID = '".$_key."'
+                            ";
 
-                $result = $_d->sql_query($sql);
-                $role_data  = $_d->sql_fetch_array($result);
+                    $result = $_d->sql_query($sql);
+                    $role_data  = $_d->sql_fetch_array($result);
 
-                $data['ROLE'] = $role_data;
+                    $data['ROLE'] = $role_data;
+                }
 
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);

@@ -11,10 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('dashboard', ['$scope', '$rootScope', '$location', '$controller', 'dataService', function ($scope, $rootScope, $location, $controller, dataService) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('cms_common', {$scope: $scope}));
+    controllers.controller('dashboard', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
 
         /********** 초기화 **********/
         // 초기화
@@ -41,16 +38,16 @@ define([
 
         // 태스크 목록 조회
         $scope.getTaskList = function () {
-            $scope.isLoading = true;
-
             var search = {};
-            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER') {
+            if ($rootScope.role != 'CMS_ADMIN' && $rootScope.role != 'MANAGER') {
                 search = {EDITOR_ID: $rootScope.uid};
             }
 
+            $scope.isLoading = true;
             $scope.getList('task', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, search, true)
                 .then(function(data){$scope.tasks = data})
-                .catch(function(error){$scope.tasks = [];  alert(error)});
+                .catch(function(error){$scope.tasks = []; console.log(error);})
+                .finally(function(){$scope.isLoading = false;});
         };
 
         // 페이지 타이틀

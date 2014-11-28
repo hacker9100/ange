@@ -11,7 +11,76 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('content_edit', ['$scope', '$stateParams', '$location', '$controller', '$modal', '$q', 'UPLOAD', function ($scope, $stateParams, $location, $controller, $modal, $q, UPLOAD) {
+    controllers.controller('content_edit', ['$scope', '$stateParams', '$location', '$controller', '$modal', '$q', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, $controller, $modal, $q, dialogs, UPLOAD) {
+
+        $scope.click_showPreview = function() {
+            $scope.openModal2($scope.item.BODY, 'lg');
+        };
+
+        $scope.openModal2 = function (content, size) {
+            var dlg = dialogs.create('preview_modal.html',
+                function($scope, $modalInstance, data) {
+                    alert(data);
+                    $scope.content = data;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+                },content,{size:size,keyboard: true,backdrop: false});
+            dlg.result.then(function(){
+
+            },function(){
+                if(angular.equals($scope.name,''))
+                    $scope.name = 'You did not enter in your name!';
+            });
+        };
+
+        $scope.click_selectTemplet = function (item) {
+            switch (item) {
+                case '2E' :
+                    var temp =
+                        '<div class="row"> ' +
+                            '<div class="col-md-2" style="width:50%; height:400px; border:1px dashed; "> 여기는 사진 영역 </div>' +
+                            '<div class= "col-md-2" style="width:50%; height:400px; border:1px dashed; "></div>' +
+                        '</div>';
+                    $scope.item.BODY += temp;
+                    break;
+                case '2F' :
+
+                    break;
+            }
+        };
+
+        /********** 모달 팝업 **********/
+/*
+        $scope.openModal2 = function (content, size) {
+            var modalInstance = $modal.open({
+                templateUrl: 'preview_modal.html',
+                controller: function($scope, $modalInstance, content) {
+                    alert(content);
+                    $scope.content = content;
+
+                    $scope.ok = function () {
+                        $modalInstance.close();
+                    };
+                },
+//                templateUrl: 'partials/cms/task_list.html',
+//                controller: 'task_list',
+                size: size,
+                resolve: {
+                    content: function () {
+                        return content;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+                alert(JSON.stringify());
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        }
+*/
 
         /* 파일 업로드 설정 */
         var url = '/serverscript/upload/';

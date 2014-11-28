@@ -12,10 +12,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_edit', ['$scope', '$stateParams', '$location', '$controller', '$q', function ($scope, $stateParams, $location, $controller, $q) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+    controllers.controller('task_edit', ['$scope', '$stateParams', '$location', '$controller', '$q', '$modal', 'dialogs', function ($scope, $stateParams, $location, $controller, $q, $modal, dialogs) {
 
         /********** 초기화 **********/
         // 태스크 모델 초기화
@@ -143,7 +140,7 @@ define([
                     }
                     $scope.item.SECTION = $scope.sections[idx];
                 })
-                .catch(function(error){throw('태스크:'+error);});
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
 
@@ -163,7 +160,7 @@ define([
                             }
                         }
                     })
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }else {
                 $scope.getList('section', {}, {}, false).then(function(data){$scope.sections = data;})
             }
@@ -175,11 +172,11 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('task', $scope.item, false)
                     .then(function(){$location.url('/task/list');})
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('task', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/task/list');})
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -216,11 +213,10 @@ define([
             });
         }
 
-
-
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.initUpdate)
             .catch($scope.reportProblems);

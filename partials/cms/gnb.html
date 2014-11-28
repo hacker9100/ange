@@ -37,7 +37,7 @@
                     <ul ng-if="item.DROP_FL == 'Y'" class="dropdown-menu" role="menu">
                         <div ng-repeat="sub_item in item.MENU_INFO">
                             <li ng-if="sub_item.MENU_URL != '/logout'"><a ng-href="#{{sub_item.MENU_URL}}">{{sub_item.MENU_NM}}</a></li>
-                            <li ng-if="sub_item.MENU_URL == '/logout'"><a ng-click="logout()">{{sub_item.MENU_NM}}</a></li>
+                            <li ng-if="sub_item.MENU_URL == '/logout'"><a ng-click="logoutMe()">{{sub_item.MENU_NM}}</a></li>
                             <li ng-if="sub_item.DIVIDER_FL == 'Y'" class="divider"></li>
                         </div>
                     </ul>

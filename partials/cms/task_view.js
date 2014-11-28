@@ -11,10 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_view', ['$scope', '$stateParams', 'dataService', '$q', '$location', '$controller', function ($scope, $stateParams, dataService, $q, $location, $controller) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+    controllers.controller('task_view', ['$scope', '$rootScope', '$stateParams', 'dataService', '$q', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, dataService, $q, $location, dialogs) {
 
         /********** 초기화 **********/
         // 태스크 모델 초기화
@@ -33,6 +30,11 @@ define([
 
         // 태스크 수정 버튼 클릭
         $scope.click_showTaskEdit = function (key) {
+            if (!($rootScope.role == 'CMS_ADMIN' || $rootScope.role == 'MANAGER') && $rootScope.uid != item.REG_UID) {
+                dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
+                return;
+            }
+
             $location.url('/task/edit/'+key);
         };
 
@@ -49,12 +51,13 @@ define([
                         return;
                     });
                 })
-                .catch(function(error){throw('태스크:'+error);});
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getTask)
             .catch($scope.reportProblems);

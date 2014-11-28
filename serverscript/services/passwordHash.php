@@ -26,6 +26,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+
 // These constants may be changed without breaking existing hashes.
 define("PBKDF2_HASH_ALGORITHM", "sha256");
 define("PBKDF2_ITERATIONS", 1000);
@@ -63,7 +65,8 @@ function validate_password($password, $correct_hash)
             $password,
             $params[HASH_SALT_INDEX],
             (int)$params[HASH_ITERATION_INDEX],
-            strlen($pbkdf2),
+            PBKDF2_HASH_BYTE_SIZE,
+//            strlen($pbkdf2),
             true
         )
     );

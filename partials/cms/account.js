@@ -11,20 +11,16 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('account', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', function ($scope, $rootScope, $stateParams, $location, $controller ) {
+    controllers.controller('account', ['$scope', 'dialogs', function ($scope, dialogs ) {
 
         $scope.phoneNumberPattern = (function() {
             var regexp = /^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/;
             return {
                 test: function(value) {
-                    alert("1")
                     return regexp.test(value);
                 }
             };
         })();
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
         /********** 초기화 **********/
         $scope.init = function() {
@@ -34,9 +30,9 @@ define([
         /********** 이벤트 **********/
         // 저장 버튼 클릭
         $scope.click_saveCmsUser = function () {
-            $scope.updateItem('cms_user', $stateParams.id, $scope.item, true)
-                .then(function(){alert("정상적으로 수정했습니다.");})
-                .catch(function(error){alert(error)});
+            $scope.updateItem('cms_user', $scope.item.USER_ID, $scope.item, true)
+                .then(function(){dialogs.notify('알림', "정상적으로 수정 완료 됐습니다.", {size: 'md'});})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 로그인 사용자 조회
@@ -44,9 +40,9 @@ define([
             if (session.USER_ID != '') {
                 $scope.getItem('cms_user', session.USER_ID, {}, true)
                     .then(function(data){$scope.item = data;})
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                alert("조회 정보가 없습니다.");
+                dialogs.error('오류', '조회 정보가 없습니다.', {size: 'md'});
             }
         };
 

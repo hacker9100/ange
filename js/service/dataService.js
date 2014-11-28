@@ -38,6 +38,16 @@ define(['./services'], function (services) {
                     ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
+            }, logout : function(key, callback){
+                param._method = 'DELETE';
+                param._key = key;
+                $http({
+                    url : helpers.uri+'login.php'
+                    ,method : 'POST'
+                    ,data : $.param(param)
+                    ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
+                }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
             }, getSession : function(callback){
                 param._method = 'GET';
                 $http({

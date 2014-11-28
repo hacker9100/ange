@@ -304,7 +304,7 @@
                         , '".$_SESSION['uid']."'
                         , '".$_SESSION['name']."'
                         , SYSDATE()
-                        , '".($_model[NOTICE_FL] == true) ? "Y" : "N"."'
+                        , '".($_model[NOTICE_FL] == true ? "Y" : "N")."'
                         , '".$_model[TAG]."'
                     )";
 

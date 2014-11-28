@@ -1,6 +1,3 @@
-<!--<div id="veil" ng-show="isLoading"></div>-->
-<div id="feedLoading" ng-show="isLoading">Loading...</div>
-
 <!-- Contents Include -->
 <div class="col-md-12">
 
@@ -70,8 +67,10 @@
             </div>
             <div class= "form-group">
                 <label class= "col-md-2">담당기자</label>
-                <div class="col-md-9">
-                    <input ng-model="item.EDITOR_NM" type= "text" class= "form-control" placeholder= "담당기자"/>
+                <div class="col-md-3">
+                    <input ng-model="item.EDITOR_NM" type= "text" class= "form-control" placeholder= "담당기자" ng-readonly="true" ng-required="true" />
+                </div>
+                <div class="col-md-3">
                     <button class="btn btn-success fileinput-button" ng-click="click_selectEditor();" >
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>기자선택</span>

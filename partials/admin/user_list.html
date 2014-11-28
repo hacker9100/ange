@@ -1,8 +1,8 @@
 <div class="panel panel-primary">
-    <div class="panel-body" ng-model="search" lass="row">
+    <div class="panel-body" lass="row">
 
-        <form role="form" name="list_form" class="form-horizontal">
-            <div class="col-md-9">
+        <form role="form" ng-model="search" name="list_form" class="form-horizontal">
+            <div class="col-md-8">
                 <div class= "form-group">
                     <label class= "col-md-2">검색</label>
                     <div class= "col-md-3">
@@ -37,11 +37,37 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-pull-2">
                 <div class= "navbar-header" >
-                    <button class="btn btn-primary start" ng-click="click_searchProject();" ng-disabled="list_form.$invalid">
+                    <button class="btn btn-primary start" ng-click="click_searchUser();" ng-disabled="list_form.$invalid">
                         <i class="glyphicon glyphicon-search"></i>
                         <span>검색</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class= "form-group">
+                    <label class= "col-md-2">기능</label>
+                </div>
+                <div class= "form-group">
+                    <span>총</span>{{ total_cnt }} <span> 명중</span>{{ check_cnt }}</span>명이 선택되었습니다.</span>
+                </div>
+                <div class= "form-group">
+                    <div class="col-md-9">
+                        <div class="radio-inline" ng-repeat="item in range" >
+                            <input ng-model="action.CHECKED" type="radio" ng-value="item.value" /> {{item.name}}
+                        </div>
+                    </div>
+                </div>
+                <div class= "form-group">
+                    <div class= "col-md-4">
+                        <select ng-model="action.FUNCTION" ng-options="function.name for function in function" class= "form-control"></select>
+                    </div>
+                    <span>처리합니다.</span>
+                    <button class="btn btn-success fileinput-button" data-ng-click="click_function()">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>실행</span>
                     </button>
                 </div>
             </div>
@@ -51,15 +77,15 @@
 
 <div>
     <div class="col-md-6">
-        <button class="btn btn-success fileinput-button" data-ng-click="click_createNewProject()">
+        <button class="btn btn-success fileinput-button" data-ng-click="click_refreshList()">
             <i class="glyphicon glyphicon-plus"></i>
             <span>목록갱신</span>
         </button>
-        <button class="btn btn-success fileinput-button" data-ng-click="click_createNewProject()">
+        <button class="btn btn-success fileinput-button" data-ng-click="click_createNewUser()">
             <i class="glyphicon glyphicon-plus"></i>
             <span>신규회원등록</span>
         </button>
-        <button class="btn btn-success fileinput-button" data-ng-click="click_createNewProject()">
+        <button class="btn btn-success fileinput-button" data-ng-click="click_saveSearch()">
             <i class="glyphicon glyphicon-plus"></i>
             <span>자주쓰는 목록</span>
         </button>
@@ -93,24 +119,35 @@
 <table class="table table-striped table-condensed" >
     <thead>
     <tr>
-        <th>순번</th>
-        <th>프로젝트명</th>
-        <th>개설일</th>
+        <th></th>
+        <th>계정</th>
+        <th>연락처</th>
+        <th>현황</th>
+        <th>Email/SNS</th>
+        <th>Point(Score)</th>
+        <th>가입(최종접속)</th>
         <th>상태</th>
         <th>기능</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="item in list">
-        <td>{{ item.NO }}</td>
-        <td>{{ item.SERIES_NM + '[' + item.SUBJECT + ']' }}</td>
-        <!--<td><a ng-click="viewListProject(project.NO)">{{ project.SUBJECT }}</a></td>-->
-        <td>{{ item.REG_DT }}</td>
-        <td>{{ item.PROJECT_ST == '0' ? '준비' : item.PROJECT_ST == '1' ? '진행' : item.PROJECT_ST == '2' ? '출판대기' : '완료' }}</td>
+        <td><input ng-model="item.CHECKED" type= "checkbox" checklist-model="check_user.selected" checklist-value="item.USER_ID"/></td>
+        <td>{{ item.USER_NM + '(' + item.NICK_NM + ')' + item.USER_ID }}</td>
+        <td>{{ item.PHONE_1 + item.PHONE_2 }}</td>
+        <td>현황</td>
+        <td>{{ item.EMAIL }}</td>
+        <td>포인트</td>
+        <td>{{ item.REG_DT + '(' + item.FINAL_LOGIN_DT + ')' }}</td>
         <td>
-            <a ng-click="click_showViewProject(item.NO)">조회</a>
-            <a ng-click="click_showEditProject(item)">수정</a>
-            <a ng-click="click_deleteProject(item)">삭제</a>
+            <span ng-if="item.NEW_USER == 'Y'">New</span>
+            {{ item.USER_GB == 'CLUB' ? '앙쥬클럽' : item.USER_GB == 'SUPPORTERS' ? '서포터즈' : '일반' }}
+        </td>
+        <!--<td>{{ item.USER_ST == 'F' ? '불량' : item.USER_ST == 'D' ? '휴면' : item.USER_ST == 'S' ? '탈퇴' : '정상' }}</td>-->
+        <td>
+            <a ng-click="click_showViewUser(item.USER_ID)">V</a>
+            <a ng-click="click_showEditUser(item)">수정</a>
+            <a ng-click="click_deleteUser(item)">삭제</a>
         </td>
     </tr>
     </tbody>

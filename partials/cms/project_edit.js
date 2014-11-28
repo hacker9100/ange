@@ -12,7 +12,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_edit', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
+    controllers.controller('project_edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
@@ -21,9 +21,6 @@ define([
         $scope.$watch('newFile', function(data){
             $scope.file = data[0];
         });
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
 
         /********** 초기화 **********/
         // 프로젝트 모델
@@ -77,7 +74,7 @@ define([
                             $scope.file = {"name":file.FILE_NM,"size":file[0].FILE_SIZE,"url":UPLOAD.BASE_URL+file[0].PATH+file[0].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+file[0].PATH+"thumbnail/"+file[0].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+file[0].PATH+"medium/"+file[0].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[0].FILE_NM,"deleteType":"DELETE"};
                         }
                     })
-                    .catch(function(error){throw('프로젝트:'+error);});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -88,11 +85,11 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('project', $scope.item, false)
                     .then(function(){$location.url('/project/list');})
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('project', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/project/list');})
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 

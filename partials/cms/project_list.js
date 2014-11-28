@@ -11,10 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_list', ['$scope', '$stateParams', '$location', '$controller', function ($scope, $stateParams, $location, $controller) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+    controllers.controller('project_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $location, dialogs) {
 
         /********** 초기화 **********/
         // 검색 조건
@@ -56,8 +53,8 @@ define([
 
         // 수정 화면 이동
         $scope.click_showEditProject = function (item) {
-            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
-                alert("수정 권한이 없습니다.");
+            if (!($rootScope.role == 'CMS_ADMIN' || $rootScope.role == 'MANAGER') && $rootScope.uid != item.REG_UID) {
+                dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
                 return;
             }
 
@@ -66,18 +63,19 @@ define([
 
         // 삭제 버튼 클릭
         $scope.click_deleteProject = function (item) {
-            if (item.PROJECT_ST == '2') {
-                alert("완료 상태의 프로젝트는 삭제할 수 없습니다.")
+            if (item.PROJECT_ST == '3') {
+                dialogs.notify('오류', '완료 상태의 프로젝트는 삭제할 수 없습니다.', {size: 'md'});
+                return;
             }
 
             if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
-                alert("삭제 권한이 없습니다.");
+                dialogs.notify('오류', '삭제 권한이 없습니다.', {size: 'md'});
                 return;
             }
 
             $scope.deleteItem('project', item.NO, false)
                 .then(function(){$scope.getProjectList($scope.search)})
-                .catch(function(error){alert(error)});
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 검색 버튼 클릭
@@ -87,9 +85,11 @@ define([
 
         // 프로젝트 목록 조회
         $scope.getProjectList = function (search) {
+            $scope.isLoading = true;
             $scope.getList('project', {NO:0, SIZE:5}, search, true)
                 .then(function(data){$scope.list = data;})
-                .catch(function(error){alert(error)});
+                .catch(function(error){$scope.list = []; console.log(error);})
+                .finally(function(){$scope.isLoading = false;});
         };
 
         // 페이징 처리
@@ -141,6 +141,11 @@ define([
         });
 
         /********** 화면 초기화 **********/
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
+            .catch($scope.reportProblems);
+
         $scope.init();
         $scope.getProjectList();
 

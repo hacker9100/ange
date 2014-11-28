@@ -45,19 +45,21 @@
                 $result = $_d->sql_query($sql);
                 $data  = $_d->sql_fetch_array($result);
 
-                $sql = "SELECT
-                            C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
-                        FROM
-                            CMS_TASK T, CONTENT_CATEGORY CC, CMS_CATEGORY C
-                        WHERE
-                            T.NO = CC.TARGET_NO
-                            AND CC.CATEGORY_NO = C.NO
-                            AND T.NO = ".$_key."
-                        ";
+                if ($data) {
+                    $sql = "SELECT
+                                C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
+                            FROM
+                                CMS_TASK T, CONTENT_CATEGORY CC, CMS_CATEGORY C
+                            WHERE
+                                T.NO = CC.TARGET_NO
+                                AND CC.CATEGORY_NO = C.NO
+                                AND T.NO = ".$_key."
+                            ";
 
-                $category_data = $_d->getData($sql);
+                    $category_data = $_d->getData($sql);
 
-                $data['CATEGORY'] = $category_data;
+                    $data['CATEGORY'] = $category_data;
+                }
 
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -76,7 +78,7 @@
                 MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".$_search);
                 MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".count($_search));
 
-                if ($_SESSION['role'] != 'ADMIN' && $_SESSION['role'] != 'MANAGER') {
+                if ($_SESSION['role'] != 'CMS_ADMIN' && $_SESSION['role'] != 'MANAGER') {
                     $where_search .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
                 }
 
@@ -243,6 +245,7 @@
                         PHASE
                         ,SUBJECT
                         ,EDITOR_ID
+                        ,EDITOR_NM
                         ,REG_UID
                         ,REG_NM
                         ,REG_DT
@@ -255,6 +258,7 @@
                         '".$_model[PHASE]."'
                         ,'".$_model[SUBJECT]."'
                         ,'".$_model[EDITOR_ID]."'
+                        ,'".$_model[EDITOR_NM]."'
                         ,'".$_SESSION['uid']."'
                         ,'".$_SESSION['name']."'
                         ,SYSDATE()
@@ -400,6 +404,7 @@
                             PHASE = '".$_model[PHASE]."'
                             ,SUBJECT = '".$_model[SUBJECT]."'
                             ,EDITOR_ID = '".$_model[EDITOR_ID]."'
+                            ,EDITOR_NM = '".$_model[EDITOR_NM]."'
                             ,REG_UID = '".$_SESSION['uid']."'
                             ,REG_NM = '".$_SESSION['name']."'
                             ,CLOSE_YMD = '".$_model[CLOSE_YMD]."'

@@ -136,7 +136,11 @@ define(['./directives'], function (directives) {
 
                 var onLoad = function () {
                     var options = {
+                        allowedContent: true,
+//                        allowedContent: {div: {style: true, id: true, class:true}},
+                        extraAllowedContent: 'img{!width,!height}',
                         toolbar: 'full',
+//                        toolbar_full: [
                         toolbar_full: [
                             { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike', 'Underline' ] },
                             { name: 'paragraph', items: [ 'BulletedList', 'NumberedList', 'Blockquote' ] },
@@ -144,14 +148,14 @@ define(['./directives'], function (directives) {
                             { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
                             { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
 //                            { name: 'tools', items: [ 'SpellChecker', 'Maximize' ] },
-                            '/',
+//                            '/',
                             { name: 'styles', items: [ 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
                             { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar' ] },
                             { name: 'forms', items: [ 'Outdent', 'Indent' ] },
                             { name: 'clipboard', items: [ 'Undo', 'Redo' ] },
                             { name: 'document', items: [ 'PageBreak', 'Source' ] }
                         ],
-                        disableNativeSpellChecker: false,
+//                        disableNativeSpellChecker: false,
                         uiColor: '#FAFAFA',
                         height: '400px',
                         width: '780px'
@@ -183,10 +187,17 @@ define(['./directives'], function (directives) {
                         alert(a.data.element.is("img"));
                         if (a.data.element.getAttribute("id") == "img") {
                         }
+
+                        var data = instance.getData();
+                        data = data.replace('thumbnail', 'medium');
+//                        ngModel.$setViewValue(data);
+                        instance.setData(data);
                     }
                     var setModelData = function(setPristine) {
 //                        alert(instance.getData())
                         var data = instance.getData();
+//data = data.replace('thumbnail', 'medium')
+//alert(data);
                         if (data == '') {
                             data = null;
                         }
@@ -208,7 +219,9 @@ define(['./directives'], function (directives) {
 
 //                        CKFinder.setupCKEditor( instance, '../lib/ckfinder/' );
                     }
-
+                    var test = function() {
+                        alert(0)
+                    }
                     //instance.on('pasteState',   setModelData);
                     instance.on('change',       setModelData);
                     instance.on('blur',         setModelData);
@@ -222,6 +235,7 @@ define(['./directives'], function (directives) {
                     instance.on('doubleclick',        dbClick);
 
                     instance.on('instanceReady', function() {
+//                        console.log( instance.filter.allowedContent );
                         scope.$broadcast("ckeditor.ready");
                         scope.$apply(function() {
                             onUpdateModelData(true);

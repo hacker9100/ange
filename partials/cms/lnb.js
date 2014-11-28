@@ -21,9 +21,9 @@ define([
         });
 
         var menu = $filter('filter')($rootScope.cms_menu, function (data) {
-//            return data.MENU_URL === $location.path()
             return (data.MENU_URL.indexOf(spMenu[1]) > -1 || ( spMenu[1] == 'content' && data.MENU_URL.indexOf(spMenu[2]) > -1))
         })[0];
+
         var channel = $filter('filter')($rootScope.cms_channel, function (data) {
             return data.CHANNEL_NO === menu.CHANNEL_NO;
         })[0];

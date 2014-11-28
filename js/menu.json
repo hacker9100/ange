@@ -46,21 +46,13 @@
                 "locaterView@archive_list": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
                 "contentView@archive_list": { "templateUrl": "partials/cms/task_list.html", "controller" : "task_list" }
             }
-        }}, { "file": {
-            "url": "/file",
-            "views": {
-                "" : { "templateUrl": "partials/cms/jupload.html" },
-                "lnbView@file": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
-                "locaterView@file": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "bodyView@file": { "templateUrl": "partials/cms/file.html" }
-            }
         }}, { "project_list": {
             "url": "/project/list",
             "views": {
                 "" : { "templateUrl": "partials/cms/cms_common.php", "controller": "cms_common" },
                 "lnbView@project_list": { "templateUrl": "partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@project_list": { "templateUrl": "partials/cms/locater.html", "controller" : "locater" },
-                "contentView@project_list": { "templateUrl": "partials/cms/user_list.html", "controller" : "project_list" }
+                "contentView@project_list": { "templateUrl": "partials/cms/project_list.html", "controller" : "project_list" }
             }
         }}, { "project_edit": {
             "url": "/project/edit/:id",

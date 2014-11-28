@@ -119,7 +119,7 @@ define([
     controllers.controller('contact_list_modal', ['$scope', '$stateParams', '$modalInstance', '$location', '$controller', '$filter', 'ngTableParams', 'search', function ($scope, $stateParams, $modalInstance, $location, $controller, $filter, ngTableParams, search) {
 
         /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+        angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
         /********** 초기화 **********/
         $scope.key = '';
@@ -142,7 +142,7 @@ define([
         };
 
         /********** 이벤트 **********/
-            // 사용자 삭제 버튼 클릭
+        // 사용자 삭제 버튼 클릭
         $scope.click_deleteCmsUser = function (idx) {
             var user = $scope.tableParams.data[idx];
 
@@ -213,7 +213,7 @@ define([
             }
         }
 
-        // 사용자 조회 클릭
+        // 사용자 선택 클릭
         $scope.click_selectCmsUser = function (item) {
             $modalInstance.close(item);
         }

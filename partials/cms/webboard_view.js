@@ -11,10 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('webboard_view', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, $controller, UPLOAD) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+    controllers.controller('webboard_view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
         /********** 초기화 **********/
         // 첨부파일 초기화
@@ -30,8 +27,8 @@ define([
         /********** 이벤트 **********/
         // 수정 버튼 클릭
         $scope.click_showCmsBoardEdit = function (item) {
-            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
-                alert("수정 권한이 없습니다.");
+            if ($rootScope.role != 'CMS_ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+                dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
                 return;
             }
 
@@ -46,7 +43,7 @@ define([
         // 게시판 조회
         $scope.getCmsBoard = function () {
             if ($stateParams.id != 0) {
-                return $scope.getItem('webboard', $stateParams.id, {}, true)
+                return $scope.getItem('webboard', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
 
@@ -55,7 +52,7 @@ define([
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
                     })
-                    .catch(function(error){throw('게시판:'+error);});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 

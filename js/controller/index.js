@@ -14,18 +14,16 @@ define([
     '../../partials/cms/portlet_list',
 
     // CMS 공통
+    '../../partials/cms/cms_common',
     '../../partials/cms/gnb',
     '../../partials/cms/lnb',
     '../../partials/cms/locater',
-    '../../partials/cms/cms_common',
     // CMS 로그인
     '../../partials/cms/signin',
     // CMS 대시보드
     '../../partials/cms/dashboard',
     '../../partials/cms/account',
     '../../partials/cms/scheduler',
-//    '../../partials/cms/archive',
-    '../../partials/cms/archive_list',
     // CMS 콘텐츠
     '../../partials/cms/project_list',
     '../../partials/cms/project_edit',

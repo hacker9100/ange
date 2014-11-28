@@ -67,11 +67,15 @@
 </div>
 
 <!--<div id="veil" ng-show="isLoading"></div>-->
-<div id="feedLoading" ng-show="isLoading"><img src="../imgs/loading3.gif"/></div>
+<!--<div id="feedLoading" ng-show="isLoading"><img src="../imgs/loading3.gif"/></div>-->
 
 <!-- Contents Include -->
 
 <!-- Task list -->
+<div ng-show="isLoading" style="position: absolute; margin-top: 10px; left: 48%; z-index: 1000" class="ai-circled ai-indicator ai-grey-spin"></div>
+<div ng-show="list == ''" class="list-group" style="height: 40px; margin-top: 40px; text-align: center; font-weight: bold;">
+    조회 데이터가 없습니다.
+</div>
 <accordion close-others="oneAtATime">
     <accordion-group is-open="status.open" ng-repeat="item in list">
 
@@ -96,7 +100,7 @@
                                 <span style="color:#DE4612; font-weight:bold;">{{item.CLOSE_YMD}} 마감</span>
                             </div>
                             <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
-                                {{ item.PHASE == '0' ? '태스크등록' : item.PHASE == '10' ? '원고작성' : item.PHASE == '11' ? '원고승인대기' : item.PHASE == '12' ? '원고반려' : item.PHASE == '13' ? '원고승인완료' : item.PHASE == '20' ? '편집작성' : item.PHASE == '21' ? '편집승인대기' : item.PHASE == '22' ? '편집반려' : '편집승인완료' }}
+                                {{ item.PHASE == '0' ? '태스크등록' : item.PHASE == '10' ? '원고작성' : item.PHASE == '11' ? '원고승인대기' : item.PHASE == '12' ? '원고반려' : item.PHASE == '13' ? '원고승인완료' : item.PHASE == '20' ? '편집작성' : item.PHASE == '21' ? '편집승인대기' : item.PHASE == '22' ? '편집반려' : item.PHASE == '23' ? '편집승인완료' : item.PHASE == '30' ? '출판대기' : '완료' }}
                             </div>
                         </div>
 
@@ -140,11 +144,19 @@
                     </button>
                 </div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary start" ng-click="click_showEditTask(item.NO);" ng-hide="isTask">
+                    <button type="button" class="btn btn-primary start" ng-click="click_showViewTask(item.NO);" ng-hide="isTask && !isCompleted">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>태스크 조회</span>
+                    </button>
+                    <button type="button" class="btn btn-primary start" ng-click="click_showEditTask(item);" ng-hide="isTask && !isCompleted">
                         <i class="glyphicon glyphicon-pencil"></i>
                         <span>태스크 편집</span>
                     </button>
-                    <button type="button" class="btn btn-primary start" ng-click="click_showEditContent(item.NO);" ng-hide="!isTask">
+                    <button type="button" class="btn btn-primary start" ng-click="click_showViewContent(item.NO);" ng-hide="!isTask && !isCompleted">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>원고 조회</span>
+                    </button>
+                    <button type="button" class="btn btn-primary start" ng-click="click_showEditContent(item);" ng-hide="!isTask && !isCompleted">
                         <i class="glyphicon glyphicon-pencil"></i>
                         <span>원고 편집</span>
                     </button>

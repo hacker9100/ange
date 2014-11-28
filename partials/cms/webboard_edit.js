@@ -11,16 +11,13 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('webboard_edit', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
+    controllers.controller('webboard_edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
         // 파일 업로드 완료 후 에디터에 중간 사이즈 이미지 추가
         $scope.addEditor = true;
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
 
         /********** 초기화 **********/
         // 첨부파일 초기화
@@ -54,7 +51,7 @@ define([
         // 게시판 조회
         $scope.getCmsBoard = function () {
             if ($stateParams.id != 0) {
-                $scope.getItem('webboard', $stateParams.id, {}, true)
+                $scope.getItem('webboard', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
 
@@ -63,7 +60,7 @@ define([
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
                     })
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -78,18 +75,14 @@ define([
 
             if ($stateParams.id == 0) {
                 $scope.insertItem('webboard', $scope.item, false)
-                    .then(function(){$location.url('/webboard');})
-                    .catch(function(error){alert(error)});
+                    .then(function(){$location.url('/webboard/list');})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('webboard', $stateParams.id, $scope.item, false)
-                    .then(function(){$location.url('/webboard');})
-                    .catch(function(error){alert(error)});
+                    .then(function(){$location.url('/webboard/list');})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
-
-        $scope.test = function () {
-            alert("test");
-        }
 
         /********** 화면 초기화 **********/
         $scope.getSession()

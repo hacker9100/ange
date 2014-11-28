@@ -81,8 +81,35 @@ define([
                             deferred.resolve(data);
                         } else {
                             // TODO: 데이터가 없을 경우 처리
-                            console.log('로그인 데이터가 없습니다.');
-                            deferred.reject('로그인 데이터가 없습니다.');
+                            console.log('아이디나 패스워드가 일치하지 않습니다.');
+                            deferred.reject('아이디나 패스워드가 일치하지 않습니다.');
+                        }
+                    }
+                }
+            });
+
+            return deferred.promise;
+        }
+
+        // 로그아웃
+        $scope.logout = function(key) {
+            var deferred = $q.defer();
+
+            dataService.logout(key, function(data, status) {
+                if (status != 200) {
+                    console.log('로그아웃에 실패 했습니다.');
+                    deferred.reject('로그아웃에 실패 했습니다.');
+                } else {
+                    if (data.err == true) {
+                        console.log(data.msg);
+                        deferred.reject(data.msg);
+                    } else {
+                        if (angular.isObject(data)) {
+                            deferred.resolve(data);
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            console.log('로그아웃에 패스워드가 일치하지 않습니다.');
+                            deferred.reject('로그아웃에 패스워드가 일치하지 않습니다.');
                         }
                     }
                 }
@@ -333,7 +360,7 @@ define([
 
             return deferred.promise;
         };
-
+/*
         $scope.getMenu = function() {
             var deferred = $q.defer();
 
@@ -351,8 +378,8 @@ define([
         }
 
         if ($rootScope.cms_channel == undefined) {
-//            $scope.getMenu();
+            $scope.getMenu();
         }
-
+*/
     }]);
 });

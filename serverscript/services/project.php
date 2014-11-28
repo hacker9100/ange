@@ -42,30 +42,32 @@
                 $result = $_d->sql_query($sql);
                 $data = $_d->sql_fetch_array($result);
 
-                $sql = "SELECT
-                            NO, SERIES_NM, SERIES_GB, SERIES_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NOTE
-                        FROM
-                            CMS_SERIES
-                        WHERE
-                            NO = ".$data[SERIES_NO]."
-                        ";
+                if ($data) {
+                    $sql = "SELECT
+                                NO, SERIES_NM, SERIES_GB, SERIES_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NOTE
+                            FROM
+                                CMS_SERIES
+                            WHERE
+                                NO = ".$data[SERIES_NO]."
+                            ";
 
-                $result = $_d->sql_query($sql);
-                $series_data = $_d->sql_fetch_array($result);
-                $data['SERIES'] = $series_data;
+                    $result = $_d->sql_query($sql);
+                    $series_data = $_d->sql_fetch_array($result);
+                    $data['SERIES'] = $series_data;
 
-                $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
+                    $sql = "SELECT
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                FILE F, CONTENT_SOURCE S
+                            WHERE
+                                F.NO = S.SOURCE_NO
+                                AND S.TARGET_NO = ".$_key."
+                                AND F.THUMB_FL = '0'
+                            ";
 
-                $file_data = $_d->getData($sql);
-                $data['FILE'] = $file_data;
+                    $file_data = $_d->getData($sql);
+                    $data['FILE'] = $file_data;
+                }
 
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -500,12 +502,37 @@
                 $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $sql = "DELETE FROM CMS_PROJECT WHERE NO = ".$_key;
+            $err = 0;
+            $msg = "";
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
+            $sql = "SELECT
+                        COUNT(*) AS COUNT
+                    FROM
+                        CMS_TASK
+                    WHERE
+                        PROJECT_NO = ".$_key."
+                    ";
+
+            $result = $_d->sql_query($sql);
+            $data = $_d->sql_fetch_array($result);
+
+            if ($data["COUNT"] > 0) {
+                $err++;
+                $msg = "등록된 태스크가 있습니다.";
+            } else {
+                $sql = "DELETE FROM CMS_PROJECT WHERE NO = ".$_key;
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+            }
+
+            if ($err > 0) {
+                $_d->failEnd("삭제실패입니다:".$msg);
             } else {
                 $_d->succEnd($no);
             }

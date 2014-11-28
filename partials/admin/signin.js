@@ -8,14 +8,18 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('signin', ['$scope', '$rootScope', '$state', '$stateParams', 'dataService', '$location', '$controller', function ($scope, $rootScope, $state, $stateParams, dataService, $location, $controller) {
 
-		//CSS 설정
-		//$scope.$emit('updateCSS', ['css/css1.css']);
-		$scope.message = "Welcome to ANGE CMS";
-
-        /********** 공통 controller 호출 **********/
+        /********** 공통 컨트롤러 호출 **********/
         angular.extend(this, $controller('admin_common', {$scope: $scope}));
 
+        /********** 초기화 **********/
+		//CSS 설정
+		//$scope.$emit('updateCSS', ['css/css1.css']);
+		$scope.message = "Welcome to ANGE ADMIN";
+
+        /********** 이벤트 **********/
         $scope.loginMe = function() {
+            $scope.item.SYSTEM_GB = 'ADMIN';
+
             $scope.login($scope.item.id, $scope.item)
                 .then(function(data){
                     $rootScope.authenticated = true;

@@ -30,7 +30,8 @@
                 FROM
                     COM_MENU
                 WHERE
-                    CHANNEL_NO  = '".$row[CHANNEL_NO]."'
+                    MENU_GB = 'CMS'
+                    AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
                 ORDER BY SORT_IDX ASC
                 ";
 

@@ -11,10 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('webboard_list', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', function ($scope, $rootScope, $stateParams, $location, $controller) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+    controllers.controller('webboard_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $location, dialogs) {
 
         /********** 초기화 **********/
         $scope.search = {};
@@ -44,8 +41,8 @@ define([
 
         // 수정 화면 이동
         $scope.click_showEditCmsBoard = function (item) {
-            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
-                alert("수정 권한이 없습니다.");
+            if ($rootScope.role != 'CMS_ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+                dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
                 return;
             }
 
@@ -54,14 +51,14 @@ define([
 
         // 삭제 버튼 클릭
         $scope.click_deleteCmsBoard = function (item) {
-            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
-                alert("삭제 권한이 없습니다.");
+            if ($rootScope.role != 'CMS_ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+                dialogs.notify('오류', '삭제 권한이 없습니다.', {size: 'md'});
                 return;
             }
 
             $scope.deleteItem('webboard', item.NO, false)
                 .then(function(){$scope.getCmsBoardList($scope.search)})
-                .catch(function(error){alert(error)});
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 검색 버튼 클릭
@@ -71,9 +68,11 @@ define([
 
         // 프로젝트 목록 조회
         $scope.getCmsBoardList = function (search) {
+            $scope.isLoading = true;
             $scope.getList('webboard', {NO:0, SIZE:4}, search, true)
                 .then(function(data){$scope.list = data})
-                .catch(function(error){$scope.list = [];  alert(error)});
+                .catch(function(error){$scope.list = []; console.log(error);})
+                .finally(function(){$scope.isLoading = false;});
         };
 
         // 페이징 처리

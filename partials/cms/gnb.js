@@ -11,16 +11,15 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('gnb', ['$scope', '$rootScope', 'loginService', '$location', function ($scope, $rootScope, loginService, $location) {
+    controllers.controller('gnb', ['$scope', '$rootScope', '$location', 'dialogs', function ($scope, $rootScope, $location, dialogs) {
 
         $scope.list = $rootScope.cms_channel;
 
-        $scope.logout = function() {
-            loginService.logout($rootScope.uid).then( function(data) {
-                alert("로그아웃 되었습니다.");
+        $scope.logoutMe = function() {
+            $scope.logout($rootScope.uid).then( function(data) {
+                dialogs.notify('알림', "로그아웃 되었습니다.", {size: 'md'});
                 $location.path('/signin');
             });
         };
-
     }]);
 });

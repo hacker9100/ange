@@ -28,76 +28,92 @@
 //                $form = json_decode(file_get_contents("php://input"),true);
 //                MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
+                $where_search = "";
+
+                if (isset($_model[SYSTEM_GB]) && $_model[SYSTEM_GB] != "") {
+                    $where_search .= "AND R.SYSTEM_GB  = '".$_model[SYSTEM_GB]."' ";
+                }
+
                 MtUtil::_c("### [PW] ".create_hash($password));
 
                 $err = 0;
                 $msg = "";
 
                 $sql = "SELECT
-                            U.USER_ID, U.USER_NM, U.EMAIL, R.ROLE_ID, U.PASSWORD
+                            U.USER_ID, U.USER_NM, U.EMAIL, UR.ROLE_ID, U.PASSWORD
                         FROM
-                            CMS_USER U, USER_ROLE R
+                            CMS_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
                             U.USER_ID = '".$_key."'
-                            AND U.USER_ID = R.USER_ID
+                            AND U.USER_ID = UR.USER_ID
+                            AND UR.ROLE_ID = R.ROLE_ID
+                            ".$where_search."
                         ";
 
                 $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
+                $data = $_d->sql_fetch_array($result);
 
                 if($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
                 }
 
-                $sql = "SELECT
-                            M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
-                        FROM
-                            USER_ROLE R, MENU_ROLE M
-                        WHERE
-                            R.USER_ID = '".$_key."'
-                           AND R.ROLE_ID = M.ROLE_ID;
-                        ";
+                if ($data) {
+                    $sql = "SELECT
+                                M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
+                            FROM
+                                USER_ROLE UR, COM_ROLE R, MENU_ROLE M
+                            WHERE
+                                UR.USER_ID = '".$_key."'
+                                AND R.ROLE_ID = M.ROLE_ID
+                                AND UR.ROLE_ID = R.ROLE_ID
+                                ".$where_search."
+                            ";
 
-                $role_data = $_d->getData($sql);
-                $data['MENU_ROLE'] = $role_data;
+                    $role_data = $_d->getData($sql);
+                    $data['MENU_ROLE'] = $role_data;
 
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                } else {
+                    $_d->failEnd("세션이 만료되었거나 로그인 후 사용가능합니다.");
                 }
 
                 if ($err > 0) {
                     $_d->failEnd("조회실패입니다:".$msg);
                 } else {
-//                    if ( !validate_password($_model[password], $data['PASSWORD'])) {
-//                        $_d->failEnd("아이디나 패스워드가 일치하지 않습니다.");
-//                    }
+                    if (isset($_model[password]) && $_model[password] != "") {
+                        if ( !validate_password($_model[password], $data['PASSWORD'])) {
+                            $_d->failEnd("아이디나 패스워드가 일치하지 않습니다.");
+                        }
 
-                    $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'CMS_LOGIN'
-                        ,SYSDATE()
-                        ,'".$data[USER_ID]."'
-                        ,''
-                        ,''
-                        ,''
-                        ,'IP'
-                        ,'/signin'
-                    )";
+                        $sql = "INSERT INTO CMS_HISTORY
+                        (
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
+                        ) VALUES (
+                            '".$_model[WORK_ID]."'
+                            ,'CMS_LOGIN'
+                            ,SYSDATE()
+                            ,'".$data[USER_ID]."'
+                            ,''
+                            ,''
+                            ,''
+                            ,'IP'
+                            ,'/signin'
+                        )";
 
-                    $_d->sql_query($sql);
+                        $_d->sql_query($sql);
+                    }
 
                     if (!isset($_SESSION)) {
                         session_start();
