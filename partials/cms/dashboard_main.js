@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : dashboard.html 화면 콘트롤러
+ * Description : dashboard_main.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('dashboard', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
+    controllers.controller('dashboard_main', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
 
         /********** 초기화 **********/
         // 초기화
@@ -28,12 +28,24 @@ define([
         /********** 이벤트 **********/
         // 태스크 목록 이동
         $scope.click_showTaskList = function () {
-            $location.url('/task');
+            $location.url('/task/list');
         };
 
-        // 태스크 선택
+        // 태스크 조회 화면 이동
         $scope.click_showTaskView = function (key) {
             $location.url('/task/view/'+key);
+        };
+
+        // 콘텐츠 조회 화면 이동
+        $scope.click_showViewContent = function (item) {
+            var list = 'edit';
+            if (item.PHASE == '10' || item.PHASE == '11') {
+                list = 'article';
+            } else if (item.PHASE == '20' || item.PHASE == '21') {
+                list = 'edit';
+            }
+
+            $location.url('/content/'+list+'/view/'+item.NO);
         };
 
         // 태스크 목록 조회

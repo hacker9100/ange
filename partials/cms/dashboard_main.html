@@ -1,14 +1,5 @@
-<!-- 콘텐츠 영역입니다. -->
-<!--<div class="row" style="margin-bottom: 25px;">-->
-
-    <!--<cms-portlet-list type="portlet" api="{{list1.api}}" title="{{list1.title}}" css="{{list1.css}}"></cms-portlet-list>-->
-
-    <!--<cms-portlet-list type="portlet" api="{{list2.api}}" title="{{list2.title}}" css="{{list2.css}}"></cms-portlet-list>-->
-
-<!--</div>-->
-
 <div class="row" style="margin-bottom: 25px;">
-    <cms-layout></cms-layout>
+    <cms-main></cms-main>
 </div>
 
 <div class="row" style="margin-bottom: 25px;">
@@ -24,7 +15,6 @@
     <div ng-show="tasks == ''" class="list-group" style="height: 50px; margin-top: 20px; text-align: center; font-weight: bold;">
         조회 데이터가 없습니다.
     </div>
-
 
     <!-- Task list -->
     <accordion close-others="oneAtATime" style="margin: 0;">
@@ -53,7 +43,7 @@
                                 </div>
                                 <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
                                     <span class="badge">
-                                        {{ task.PHASE == '0' ? '태스크등록' : task.PHASE == '10' ? '원고작성' : task.PHASE == '11' ? '원고승인대기' : task.PHASE == '20' ? '원고승인완료' : task.PHASE == '13' ? '원고반려' : task.PHASE == '21' ? '편집작성' : task.PHASE == '13' ? '편집반려' : '편집승인' }}
+                                        {{ item.PHASE == '0' ? '태스크등록' : item.PHASE == '10' ? '원고작성' : item.PHASE == '11' ? '원고승인대기' : item.PHASE == '12' ? '원고반려' : item.PHASE == '13' ? '원고승인완료' : item.PHASE == '20' ? '편집작성' : item.PHASE == '21' ? '편집승인대기' : item.PHASE == '22' ? '편집반려' : item.PHASE == '23' ? '편집승인완료' : item.PHASE == '30' ? '출판대기' : '완료' }}
                                     </span>
                                 </div>
                             </div>
@@ -99,14 +89,14 @@
                         </button>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary start" ng-click="click_showTaskView(task.NO);">
+                        <button type="button" class="btn btn-primary start" ng-click="click_showTaskView(task.NO);" ng-show="!isTask && !isCompleted">
                             <i class="glyphicon glyphicon-pencil"></i>
                             <span>태스크 조회</span>
                         </button>
-                        <!--<button class="btn btn-success fileinput-button" data-ng-click="viewListTask(task.NO)">-->
-                        <!--<i class="glyphicon glyphicon-plus"></i>-->
-                        <!--<span>편집보기</span>-->
-                        <!--</button>-->
+                        <button type="button" class="btn btn-primary start" ng-click="click_showViewContent(item.NO);" ng-show="!isTask && !isCompleted">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                            <span>원고 조회</span>
+                        </button>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,9 @@
-		<ol class="breadcrumb locatorbar"  style="font-size:0.84em; background-color: #fff; border:none;">
-            <li>
-                <a href="#"><span class="glyphicon glyphicon-home"></span></a>
-            </li>
-		    <li ng-repeat="item in items" ng-class="{active: isActive(item)}">
-                <a ng-if="item.last == false" ng-href='#{{item.url}}'>{{item.title}}</a>
-                <span ng-if="item.last == true">{{item.title}}</span>
-            </li>
-		</ol>
+<ol class="breadcrumb locatorbar"  style="font-size:0.84em; background-color: #fff; border:none;" ng-controller="locater">
+    <li>
+        <a href="#"><span class="glyphicon glyphicon-home"></span></a>
+    </li>
+    <li ng-repeat="item in items" ng-class="{active: isActive(item)}">
+        <a ng-if="item.last == false" ng-href='#{{item.url}}'>{{item.title}}</a>
+        <span ng-if="item.last == true">{{item.title}}</span>
+    </li>
+</ol>

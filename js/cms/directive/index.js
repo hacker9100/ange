@@ -5,7 +5,8 @@
  * Description : 사용할 모든 directive를 로드
  */
 define([
-    './cmsLayoutDirective',
+    './cms_layout_directive',
+    './cms_main_directive',
     './cmsPortletDirective',
     './validationDirective',
     './dropdownSelectDirective',

@@ -7,7 +7,7 @@
 define(['./directives'], function (directives) {
     'use strict';
 
-    directives.directive('cmsLayout', ['$controller', function($controller) {
+    directives.directive('cmsMain', ['$controller', function($controller) {
         return {
             restrict: 'EA',
             scope: { code:'=' },

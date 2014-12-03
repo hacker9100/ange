@@ -7,7 +7,8 @@
     <div class="left_wrap">
 
         <!-- // Local Nav -->
-        <div ui-view="lnbView"></div>
+        <div ng-include=" '/partials/cms/lnb.html' "></div>
+        <!--<div ui-view="lnbView"></div>-->
         <!-- // Local Nav -->
 
     </div>
@@ -19,7 +20,8 @@
             <div class="container-fluid" style="margin:0; min-width: 760px; display:block;">
 
                 <!-- // Locator -->
-                <div ui-view="locaterView"></div>
+                <div ng-include=" '/partials/cms/locater.html' "></div>
+                <!--<div ui-view="locaterView"></div>-->
                 <!-- // Locator -->
 
 
@@ -34,7 +36,9 @@
                         <!-- //// Template Top : 상단 공통 영역입니다. -->
 
                         <!-- 콘텐츠 영역입니다. -->
-                        <div ui-view="contentView"></div>
+                        <!--<div ng-include=" '/partials/cms/project_list.html' " ng-controller="project_list"></div>-->
+                        <cms-layout menu="{{layoutMenu}}" type="{{layoutType}}"></cms-layout>
+                        <!--<div ui-view="contentView"></div>-->
                         <!-- //// 콘텐츠 영역입니다. -->
 
                         <div class="panel panel-default">

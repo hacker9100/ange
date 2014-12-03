@@ -245,8 +245,7 @@ define([
         /********** 화면 초기화 **********/
         $scope.isTask = true;
         $scope.isCompleted = false;
-
-        if ($location.path() == '/archive/list') {
+        if ($stateParams.menu == 'archive') {
             $scope.search = {PHASE: '31'};
             $scope.isTask = true;
         } else if ($stateParams.menu == 'article') {

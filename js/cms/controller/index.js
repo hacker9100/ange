@@ -20,8 +20,8 @@ define([
     '../../../partials/cms/signin',
     '../../../partials/cms/forgot_idpw',
     // CMS 대시보드
-    '../../../partials/cms/dashboard',
-    '../../../partials/cms/account',
+    '../../../partials/cms/dashboard_main',
+    '../../../partials/cms/account_main',
     '../../../partials/cms/scheduler',
     // CMS 콘텐츠
     '../../../partials/cms/project_list',
@@ -30,7 +30,6 @@ define([
     '../../../partials/cms/task_list',
     '../../../partials/cms/task_edit',
     '../../../partials/cms/task_view',
-    '../../../partials/cms/content_list',
     '../../../partials/cms/content_edit',
 //    '../../../partials/cms/content_view',
     '../../../partials/cms/publish_list',

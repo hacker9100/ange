@@ -13,15 +13,19 @@ define([
         /********** 페이지 타이틀 **********/
 //        $scope.message = 'ANGE CMS';
         angular.forEach($rootScope.cms_menu, function(menu) {
-            if ((spMenu[1] != 'content' && menu.MENU_URL.indexOf(spMenu[1]) > -1) || ( spMenu[1] == 'content' && menu.MENU_URL.indexOf(spMenu[2]+"/") > -1)) {
-                $scope.$parent.pageTitle = menu.MENU_NM;
-                $scope.$parent.pageDescription = menu.MENU_DESC;
-                $scope.$parent.tailDescription = menu.TAIL_DESC;
+
+            if (menu.MENU_URL.indexOf(spMenu[1]+"/") > -1) {
+                $scope.$parent.$parent.pageTitle = menu.MENU_NM;
+                $scope.$parent.$parent.pageDescription = menu.MENU_DESC;
+                $scope.$parent.$parent.tailDescription = menu.TAIL_DESC;
+
+                return;
             }
         });
 
+        /********** 좌측 메뉴 **********/
         var menu = $filter('filter')($rootScope.cms_menu, function (data) {
-            return (data.MENU_URL.indexOf(spMenu[1]) > -1 || ( spMenu[1] == 'content' && data.MENU_URL.indexOf(spMenu[2]) > -1))
+            return (data.MENU_URL.indexOf(spMenu[1]) > -1)
         })[0];
 
         var channel = $filter('filter')($rootScope.cms_channel, function (data) {

@@ -180,9 +180,10 @@
 <![endif]-->
 
 <script>
-    function cms_init($rootScope) {
+    function cms_init($rootScope, $location) {
         $rootScope.cms_channel = <?=$channel_info?>;
         $rootScope.cms_menu = <?=$menu_info?>;
+        $rootScope.location = $location.path();
     }
 </script>
 

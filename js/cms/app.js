@@ -304,12 +304,15 @@ alert("resolvePendingState");
         };
     });
 
-    app.run(function ($rootScope, dataService, $location, $q) {
+    app.run(function ($rootScope, $stateParams, dataService, $location, $q) {
         // 기본 값 설정
         $rootScope.pageSize = 20;
         // TODO: 메뉴정보와 코드 정보를 로딩한다.
 
-
+        $rootScope.$on("$stateChangeStart", function (event, next, current) {
+            // com_commom에서 layout을 동적으로 생성하는데 url이 변경되는 경우 정보 이동을 위해
+            $rootScope.location = $location.path();
+        });
 //        // 페이지 이동시 권한 체크
 //        $rootScope.$on("$stateChangeStart", function (event, next, current) {
 //            $rootScope.authenticated = false;

@@ -11,7 +11,12 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('cms_common', ['$timeout', '$scope', '$rootScope', '$location', '$q', 'dataService', 'dialogs', 'login', function ($timeout, $scope, $rootScope, $location, $q, dataService, dialogs, login) {
+    controllers.controller('cms_common', ['$timeout', '$scope', '$rootScope', '$stateParams', '$location', '$q', 'dataService', 'dialogs', 'login', function ($timeout, $scope, $rootScope, $stateParams, $location, $q, dataService, dialogs, login) {
+
+
+        $scope.layoutMenu = $stateParams.menu;
+        $scope.layoutType = $stateParams.type;
+        $scope.includeName = $stateParams.menu+'_'+$stateParams.type;
 
         $rootScope.PAGE_SIZE = 20;
         $scope.path = $location.path();
@@ -195,6 +200,11 @@ define([
                         permission = true;
                     } else {
                         switch (menuGb) {
+                            case 'main' :
+                                if (role.MENU_FL == '0') {
+                                    permission = true;
+                                }
+                                break;
                             case 'list' :
                                 if (role.LIST_FL == '0') {
                                     permission = true;

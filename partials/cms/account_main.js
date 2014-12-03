@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : account_edit.html 화면 콘트롤러
+ * Description : account_main.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('account', ['$scope', 'dialogs', function ($scope, dialogs ) {
+    controllers.controller('account_main', ['$scope', 'dialogs', function ($scope, dialogs ) {
 
         $scope.phoneNumberPattern = (function() {
             var regexp = /^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/;
