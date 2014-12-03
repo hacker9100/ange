@@ -6,7 +6,7 @@
  */
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -86,7 +86,7 @@ define([
         // 프로젝트 목록 조회
         $scope.getProjectList = function (search) {
             $scope.isLoading = true;
-            $scope.getList('project', {NO:0, SIZE:5}, search, true)
+            $scope.getList('project', {NO:0, SIZE:20}, search, true)
                 .then(function(data){$scope.list = data;})
                 .catch(function(error){$scope.list = []; console.log(error);})
                 .finally(function(){$scope.isLoading = false;});

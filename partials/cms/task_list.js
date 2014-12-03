@@ -6,7 +6,7 @@
  */
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -137,7 +137,7 @@ define([
 
         // 콘텐츠 수정 화면 이동
         $scope.click_showEditContent = function (item) {
-            if (!($rootScope.role == 'CMS_ADMIN' || $rootScope.role == 'MANAGER') && $rootScope.uid != item.EDITOR_ID) {
+            if (!($rootScope.role == 'CMS_ADMIN' || $rootScope.role == 'MANAGER' || $rootScope.role == 'MAGAZINE') && $rootScope.uid != item.EDITOR_ID) {
                 dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
                 return;
             }
@@ -147,7 +147,28 @@ define([
 
         // 이력조회 버튼 클릭
         $scope.click_showGetHistory = function (key) {
-            alert("준비중입니다.")
+            $scope.openModal({TASK_NO : key}, 'lg');
+        };
+
+        $scope.openModal = function (item, size) {
+            var dlg = dialogs.create('/partials/cms/history.html',
+                function($scope, $controller, $modalInstance, data) {
+                    angular.extend(this, $controller('cms_common', {$scope: $scope}));
+
+                    $scope.getList('cms/history', {}, item, true).then(function(data){$scope.list = data;})
+                        .catch(function(error){console.log(error);});
+
+                    $scope.list = data;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+                },item,{size:size,keyboard: true});
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
         };
 
         // 삭제 버튼 클릭

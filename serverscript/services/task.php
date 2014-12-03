@@ -335,6 +335,33 @@
                 }
             }
 
+            $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                        ,ETC
+                    ) VALUES (
+                        '".$no."'
+                        ,'CREATE'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'".$no."'
+                        ,'TASK'
+                        ,'CREATE'
+                        ,'IP'
+                        ,'/task'
+                        ,'".$_model[SUBJECT]."'
+                    )";
+
+            $_d->sql_query($sql);
+
             if ($err > 0) {
                 $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$msg);
@@ -461,6 +488,33 @@
                         }
                     }
                 }
+
+                $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                        ,ETC
+                    ) VALUES (
+                        '".$_key."'
+                        ,'UPDATE'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'".$_key."'
+                        ,'TASK'
+                        ,'UPDATE'
+                        ,'IP'
+                        ,'/task'
+                        ,'".$_model[SUBJECT]."'
+                    )";
+
+                $_d->sql_query($sql);
 
                 if ($err > 0) {
                     $_d->sql_rollback();

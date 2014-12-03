@@ -34,11 +34,12 @@
             if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.PHONE, U.EMAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.NOTE,
-                            R.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = R.ROLE_ID) AS ROLE_NM
+                            UR.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
                         FROM
-                            COM_USER U, USER_ROLE R
+                            COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
-                            U.USER_ID = R.USER_ID
+                            U.USER_ID = UR.USER_ID
+                            AND UR.ROLE_ID = R.ROLE_ID
                             AND U.USER_ID = '".$_key."'
                         ";
 
@@ -66,6 +67,44 @@
                 }
             } else {
                 $where_search = "";
+                $sort_order = "";
+
+                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
+                    $where_search .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                }
+
+                if ((isset($_search[CONDITION]) && $_search[CONDITION] != "") && (isset($_search[KEYWORD]) && $_search[KEYWORD] != "")) {
+                    if ($_search[CONDITION][value] == "USER_NM" || $_search[CONDITION][value] == "USER_ID" || $_search[CONDITION][value] == "NICK_NM") {
+                        $arr_keywords = explode(",", $_search[KEYWORD]);
+                        $in_condition = "";
+                        for ($i=0; $i< sizeof($arr_keywords); $i++) {
+                            $in_condition .= "'".trim($arr_keywords[$i])."'";
+                            if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
+                        }
+//                        foreach ($keywords as $e) {
+//                            $in_condition .= trim($e).",";
+//                        }
+
+                        $where_search .= "AND U.".$_search[CONDITION][value]." IN (".$in_condition.") ";
+                    } else if ($_search[CONDITION][value] == "PHONE") {
+                        $where_search .= "AND ( U.PHONE_1 LIKE '%".$_search[KEYWORD]."%' OR U.PHONE_2 LIKE '%".$_search[KEYWORD]."%' ) ";
+                    } else {
+                        $where_search .= "AND U.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    }
+                }
+                if (isset($_search[TYPE]) && $_search[TYPE] != "") {
+
+                    $in_type = "";
+                    for ($i=0; $i< count($_search[TYPE]); $i++) {
+                        $in_type .= "'".$_search[TYPE][$i]."'";
+                        if (count($_search[TYPE]) - 1 != $i) $in_type .= ",";
+                    }
+
+                    $where_search .= "AND U.USER_GB IN (".$in_type.") ";
+                }
+                if (isset($_search[STATUS]) && $_search[STATUS] != "" && $_search[STATUS][value] != "A") {
+                    $where_search .= "AND U.USER_ST  = '".$_search[STATUS][value]."' ";
+                }
 
                 if (isset($_search[JOIN_PATH]) && $_search[JOIN_PATH] != "") {
                     $where_search .= "AND U.JOIN_PATH  = '".$_search[JOIN_PATH]."' ";
@@ -76,8 +115,12 @@
                 if (isset($_search[ROLE_ID]) && $_search[ROLE_ID] != "") {
                     $where_search .= "AND R.ROLE_ID  = '".$_search[ROLE_ID]."' ";
                 }
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+                if (!isset($_search[CONDITION]) && isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $where_search .= "AND U.USER_NM LIKE '%".$_search[KEYWORD]."%' ";
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= "ORDER BY ".$_search[SORT][value]." ".$_search[ORDER][value]." ";
                 }
 
                 $sql = "SELECT
@@ -90,11 +133,12 @@
                             SELECT
                                 U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.NOTE,
                                 U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SNS_FL, U.EN_PHONE_FL,
-                                R.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = R.ROLE_ID) AS ROLE_NM
+                                UR.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
                             FROM
-                              COM_USER U, USER_ROLE R
+                                COM_USER U, USER_ROLE UR, COM_ROLE R
                             WHERE
-                                U.USER_ID = R.USER_ID
+                                U.USER_ID = UR.USER_ID
+                                AND UR.ROLE_ID = R.ROLE_ID
                                 ".$where_search."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -102,11 +146,13 @@
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                COM_USER U, USER_ROLE R
+                                COM_USER U, USER_ROLE UR, COM_ROLE R
                             WHERE
-                                U.USER_ID = R.USER_ID
+                                U.USER_ID = UR.USER_ID
+                                AND UR.ROLE_ID = R.ROLE_ID
                                 ".$where_search."
                         ) CNT
+                        $sort_order
                         ";
                 $data = $_d->sql_query($sql);
                 if ($_d->mysql_errno > 0) {
@@ -177,8 +223,8 @@
                         '".$_model[ADDR_DETAIL]."',
                         '".$_model[PHONE_1]."',
                         '".$_model[PHONE_2]."',
-                        '".$_model[USER_GB]."',
-                        'C',
+                        '".$_model[USER_GB][value]."',
+                        'N',
                         '".$_model[EMAIL]."',
                         '".$_model[SEX_GB]."',
                         '".$_model[NOTE]."',
@@ -213,8 +259,8 @@
                         ,REG_DT
                     ) VALUES (
                         '".$_model[ROLE][ROLE_ID]."'
-                        , '".$_model[USER_ID]."'
-                        , SYSDATE()
+                        ,'".$_model[USER_ID]."'
+                        ,SYSDATE()
                     )";
 
                 $_d->sql_query($sql);
@@ -222,6 +268,65 @@
                 if($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
+                }
+            }
+
+            if (isset($_model[BABY]) && $_model[BABY] != "") {
+                foreach ($_model[BABY] as $e) {
+                    if (isset($e[BABY_NM]) && $e[BABY_NM] != "") {
+                        $sql = "INSERT INTO ANGE_USER_BABY
+                        (
+                            USER_ID
+                            ,BABY_NM
+                            ,BABY_BIRTH
+                            ,BABY_SEX_GB
+                        ) VALUES (
+                            '".$_model[USER_ID]."'
+                            ,'".$e[BABY_NM]."'
+                            ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? '0'+$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? '0'+$e[BABY_DAY] : $e[BABY_DAY])."'
+                            ,'".$e[BABY_SEX_GB]."'
+                        )";
+
+                        $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                }
+            }
+
+            if (isset($_model[BLOG]) && $_model[BLOG] != "") {
+                if (isset($_model[BLOG][BLOG_URL]) && $_model[BLOG][BLOG_URL] != "") {
+                    $sql = "INSERT INTO ANGE_USER_BLOG
+                    (
+                        USER_ID
+                        ,BLOG_GB
+                        ,BLOG_URL
+                        ,PHASE
+                        ,THEME
+                        ,NEIGHBOR_CNT
+                        ,POST_CNT
+                        ,VISIT_CNT
+                        ,SNS
+                    ) VALUES (
+                        '".$_model[USER_ID]."'
+                        ,'".$_model[BLOG][BLOG_GB]."'
+                        ,'".$_model[BLOG][BLOG_URL]."'
+                        ,'".$_model[BLOG][PHASE]."'
+                        ,'".$_model[BLOG][THEME]."'
+                        ,'".$_model[BLOG][NEIGHBOR_CNT]."'
+                        ,'".$_model[BLOG][POST_CNT]."'
+                        ,'".$_model[BLOG][SNS]."'
+                    )";
+
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
                 }
             }
 

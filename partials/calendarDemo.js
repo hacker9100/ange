@@ -2,7 +2,7 @@
  * calendarDemoApp - 0.1.3
  */
 define([
-    '../js/controller/controllers',
+    './controllers',
     'uiCalendar'
 ], function (controllers) {
     'use strict';

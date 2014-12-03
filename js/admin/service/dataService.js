@@ -47,6 +47,19 @@ define(['./services'], function (services) {
                     ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
+            }, excelDownload : function(uri,data,callback){
+
+                param._data = data;
+                $http({
+                    url : helpers.uri+uri+'.php'
+                    ,method : 'POST'
+                    ,data : $.param(param)
+                    ,headers : {'Content-Type': 'application/x-www-form-urlencoded'
+//                        , 'Accept': 'application/vnd.ms-excel; charset=utf-8'
+                    }
+                }).success(function(data, status, headers, config) {
+//                    window.location = helpers.uri+uri+'.php';
+                }).error(function(data, status, headers, config) { alert("2")});
             }, updateStatus : function(uri,key,phase,callback){
 
                 //console.log("getProject() : projectid = [" + projectid + "]");

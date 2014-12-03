@@ -6,7 +6,7 @@
  */
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -124,16 +124,19 @@ define([
 
             dataService.getSession(function(data, status) {
                 if (status != 200) {
+                    $location.path("/signin");
                     console.log('조회에 실패 했습니다.');
                     deferred.reject('조회에 실패 했습니다.');
                 } else {
                     if (data.err == true) {
+                        $location.path("/signin");
                         console.log(data.msg);
                         deferred.reject(data.msg);
                     } else {
                         if (angular.isObject(data)) {
                             deferred.resolve(data);
                         } else {
+                            $location.path("/signin");
                             // TODO: 데이터가 없을 경우 처리
                             console.log('조회 데이터가 없습니다.');
                             deferred.reject('조회 데이터가 없습니다.');
@@ -319,6 +322,30 @@ define([
 
             if (loding) $scope.isLoading = true;
             dataService.db(service).update(key, item,function(data, status) {
+                if (status != 200) {
+                    console.log('수정에 실패 했습니다.');
+                    deferred.reject('수정에 실패 했습니다.');
+                } else {
+                    if (data.err == true) {
+                        console.log(data.msg);
+                        deferred.reject(data.msg);
+                    } else {
+                        deferred.resolve();
+                    }
+                }
+
+                if (loding) $scope.isLoading = false;
+            });
+
+            return deferred.promise;
+        };
+
+        // 모델 상태 수정
+        $scope.updateStatus = function (service, key, phase, loding) {
+            var deferred = $q.defer();
+
+            if (loding) $scope.isLoading = true;
+            dataService.updateStatus(service, key, phase,function(data, status) {
                 if (status != 200) {
                     console.log('수정에 실패 했습니다.');
                     deferred.reject('수정에 실패 했습니다.');

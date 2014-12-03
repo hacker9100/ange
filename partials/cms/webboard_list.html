@@ -53,7 +53,7 @@
         <tbody>
         <tr ng-repeat="item in list">
             <td>{{ item.NO }}</td>
-            <td>{{ item.NOTICE_FL == 'Y' ? '공지사항' : '' }}</td>
+            <td>{{ item.SORT_GB == '0' ? '공지사항' : '' }}</td>
             <td>{{ item.SUBJECT }}</td>
             <td>{{ item.REG_NM }}</td>
             <td>{{ item.REG_DT }}</td>

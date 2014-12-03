@@ -4,9 +4,9 @@
     <div ng-model="item" lass="row">
         <form role="form" name="edit_form" class="form-horizontal">
             <div class= "form-group">
-                <label class= "col-md-2">머리말</label>
+                <label class= "col-md-2">공지사항 여부</label>
                 <div class="col-md-3">
-                    <span ng-bind="item.HEAD == 'NOTICE' ? '공지사항' : ''" />
+                    <span ng-bind="item.NOTICE_FL == 'Y' ? '공지사항' : ''" />
                 </div>
             </div>
             <div class= "form-group">

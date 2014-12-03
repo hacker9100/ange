@@ -32,12 +32,15 @@
         case "GET":
             if (isset($_key) && $_key != "") {
                 $sql = "SELECT
-                            M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
+                            M.MENU_NM, MR.MENU_ID, MR.ROLE_ID, MR.MENU_FL, MR.LIST_FL, MR.VIEW_FL, MR.EDIT_FL, MR.MODIFY_FL
                         FROM
-                            CMS_ROLE R, MENU_ROLE M
+                            COM_ROLE R, MENU_ROLE MR, COM_MENU M
                         WHERE
                             R.ROLE_ID = '".$_key."'
-                            AND R.ROLE_ID = M.ROLE_ID;
+                            AND R.ROLE_ID = MR.ROLE_ID
+                            AND MR.MENU_ID = M.MENU_ID
+                        ORDER BY
+                            M.CHANNEL_NO ASC, M.SORT_IDX
                         ";
 
                 $data = $_d->sql_query($sql);
@@ -48,10 +51,19 @@
                 }
             } else {
                 if (isset($_search[ROLE]) && $_search[ROLE] != "") {
+                    $where_search = "";
+
+                    if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
+                        $where_search .= "AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                    }
+
                     $sql = "SELECT
                                 ROLE_ID, ROLE_NM, ROLE_GB
                             FROM
-                                CMS_ROLE
+                                COM_ROLE
+                            WHERE
+                                1 = 1
+                            ".$where_search."
                             ";
                 } else {
                     $sql = "SELECT

@@ -6,12 +6,12 @@
  */
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_view', ['$scope', '$stateParams', '$location', '$controller', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, $controller, dialogs, UPLOAD) {
+    controllers.controller('project_view', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, $controller, dialogs, UPLOAD) {
 
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };

@@ -12,6 +12,14 @@
                 "locaterView@user_list": { "templateUrl": "/partials/admin/locater.html", "controller" : "locater" },
                 "contentView@user_list": { "templateUrl": "/partials/admin/user_list.html", "controller" : "user_list" }
             }
+        }}, { "user_edit": {
+            "url": "/user/edit/:key",
+            "views": {
+                "" : { "templateUrl": "/partials/admin/admin_common.html", "controller": "admin_common" },
+                "lnbView@user_edit": { "templateUrl": "/partials/admin/lnb.html", "controller": "lnb" },
+                "locaterView@user_edit": { "templateUrl": "/partials/admin/locater.html", "controller" : "locater" },
+                "contentView@user_edit": { "templateUrl": "/partials/admin/user_edit.html", "controller" : "user_edit" }
+            }
         }}
     ]
 }

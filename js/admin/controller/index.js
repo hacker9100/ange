@@ -17,5 +17,7 @@ define([
     // ADMIN 로그인
     '../../../partials/admin/signin',
     // ADMIN 회원현황
-    '../../../partials/admin/user_list'
+    '../../../partials/admin/user_list',
+    '../../../partials/admin/user_edit'
+//    '../../../partials/admin/user_view'
 ], function () {});

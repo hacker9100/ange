@@ -32,6 +32,36 @@ define([
             return (bytes / 1000).toFixed(2) + ' KB';
         }
 
+        // 엑셀 다운로드
+        $scope.excelDownload = function (service, data, loding) {
+            var deferred = $q.defer();
+
+            if (loding) $scope.isLoading = true;
+            dataService.excelDownload(service,data,function(data, status) {
+                if (status != 200) {
+                    console.log('조회에 실패 했습니다.');
+                    deferred.reject('조회에 실패 했습니다.');
+                } else {
+                    if (data.err == true) {
+                        console.log(data.msg);
+                        deferred.reject(data.msg);
+                    } else {
+                        if (angular.isObject(data)) {
+                            deferred.resolve(data);
+                        } else {
+                            // TODO: 데이터가 없을 경우 처리
+                            console.log('조회 데이터가 없습니다.');
+                            deferred.reject('조회 데이터가 없습니다.');
+                        }
+                    }
+                }
+
+                if (loding) $scope.isLoading = false;
+            });
+
+            return deferred.promise;
+        };
+
         // 로그인
         $scope.login = function(key, item) {
             var deferred = $q.defer();

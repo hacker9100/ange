@@ -35,7 +35,7 @@
             <div class= "form-group">
                 <label class= "col-md-2">연락처</label>
                 <div class="col-md-4">
-                    <input name="phone" ng-model="item.PHONE" type= "text" maxlength="15" ng-pattern="/^\d{0,9}(\.\d{1,9})?$/" class= "form-control" placeholder= "사용자 연락처"/>
+                    <input name="phone" ng-model="item.PHONE" type= "text" maxlength="15" ng-pattern="/^\d{0,15}(\.\d{1,9})?$/" class= "form-control" placeholder= "사용자 연락처"/>
                     <span ng-show="edit_form.phone.$invalid" class="help-inline">숫자만 입력 가능합니다.</span>
                 </div>
             </div>

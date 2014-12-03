@@ -31,70 +31,9 @@
     switch ($_method) {
         case "GET":
             if (isset($_key) && $_key != "") {
-                $sql = "SELECT
-                            P.SUBJECT AS PROJECT_NM, C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.SUBJECT, C.BODY, C.EDITOR_ID, C.CONTENT_ST, C.REG_UID, C.REG_NM, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            C.CURRENT_FL, C.APPLY_YM, C.MODIFY_FL, C.BEGIN_DT, C.CLOSE_DT, C.FINISH_DT, C.CONTENTS, C.HIT_CNT, C.SCRAP_CNT, C.PROJECT_NO
-                        FROM
-                            CONTENT C, CMS_PROJECT P
-                        WHERE
-                            C.PROJECT_NO = P.NO
-                            AND C.CURRENT_FL = '0'
-                            AND C.NO = ".$_key."
-                        ";
-                $data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd($sql);
-                }
+                //TODO: 조회
             } else {
-                $search = "";
-
-                if (isset($_phase)) {
-                    $in_str = "";
-                    $arr_phase = explode(',', $_phase);
-                    for($i=0;$i< sizeof($arr_phase);$i++){
-                        $in_str = $in_str."'".$arr_phase[$i]."'";
-                        if (sizeof($arr_phase) - 1 != $i) $in_str = $in_str.",";
-                    }
-
-                    $search = "AND C.PHASE IN (".$in_str.")";
-                }
-
-                $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            PROJECT_NM, NO, SUPER_NO, PHASE, VERSION, SUBJECT, BODY, EDITOR_ID, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                            CURRENT_FL, APPLY_YM, MODIFY_FL, BEGIN_DT, CLOSE_DT, FINISH_DT, CONTENTS, HIT_CNT, SCRAP_CNT, PROJECT_NO
-                        FROM
-                        (
-                            SELECT
-                                P.SUBJECT AS PROJECT_NM, C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.SUBJECT, C.BODY, C.EDITOR_ID, C.CONTENT_ST, C.REG_UID, C.REG_NM, C.REG_DT,
-                                C.CURRENT_FL, C.APPLY_YM, C.MODIFY_FL, C.BEGIN_DT, C.CLOSE_DT, C.FINISH_DT, C.CONTENTS, C.HIT_CNT, C.SCRAP_CNT, C.PROJECT_NO
-                            FROM
-                                CONTENT C, CMS_PROJECT P
-                            WHERE
-                                C.PROJECT_NO = P.NO
-                                AND C.CURRENT_FL = '0'
-                                ".$search."
-                            ORDER BY C.REG_DT DESC
-                        ) AS DATA,
-                        (SELECT @RNUM := 0) R,
-                        (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
-                            FROM
-                                CONTENT C
-                            WHERE
-                                C.CURRENT_FL = '0'
-                                ".$search."
-                        ) CNT
-                        ";
-                $data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd($sql);
-                }
+                //TODO: 목록 조회
             }
 
             break;
@@ -142,11 +81,11 @@
                 if ($_model[APPROVAL_ST] == '11')
                     $parse = '12';
                 else if ($_model[APPROVAL_ST] == '12')
-                    $parse = '13';
+                    $parse = '20';
                 else if ($_model[APPROVAL_ST] == '21')
                     $parse = '22';
                 else if ($_model[APPROVAL_ST] == '22')
-                    $parse = '23';
+                    $parse = '30';
 
                 $sql = "UPDATE CMS_TASK
                         SET
@@ -163,6 +102,33 @@
                 }
             }
 
+            $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                        ,ETC
+                    ) VALUES (
+                        '".$_model[TASK_NO]."'
+                        ,'APPROVAL'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'".$_model[TASK_NO]."'
+                        ,'TASK'
+                        ,'".($_model[APPROVAL_ST] == '11' ? 'GIVE_BACK' : 'APPROVAL')."'
+                        ,'IP'
+                        ,'/content'
+                        ,''
+                    )";
+
+            $_d->sql_query($sql);
+
             if ($err > 0) {
                 $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$msg);
@@ -174,97 +140,12 @@
             break;
 
         case "PUT":
-            if (!isset($id)) {
-                $_d->failEnd("수정실패입니다:"."ID가 누락되었습니다.");
-            }
-
-//            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
-
-            if (isset($_phase)) {
-                $sql = "UPDATE CMS_TASK
-                        SET
-                            PHASE = '".$_phase."'
-                        WHERE
-                            NO = ".$id."
-                        ";
-            } else {
-
-                if ( trim($form[SUBJECT]) == "" ) {
-                    $_d->failEnd("제목을 작성 하세요");
-                }
-
-                if ( trim($form[PHASE]) == "" ) {
-                    $form[PHASE] = '0';
-                }
-
-                if ( trim($form[CONTENT_ST]) == "" ) {
-                    $form[CONTENT_ST] = '0';
-                }
-
-                $project_no = 0;
-                $project_st = '1';
-
-                if ( trim($form[PROJECT_NO]) != "" ) {
-                    $project_no = $form[PROJECT_NO];
-                }
-
-                if (count($form[PROJECT]) > 0) {
-                    $project = $form[PROJECT];
-                    $project_no = $project[NO];
-                    $project_st = $project[PROJECT_ST];
-                }
-
-                $sql = "UPDATE CONTENT
-                        SET
-                            SUPER_NO = ".(!empty($form[SUPER_NO]) ? $form[SUPER_NO] : !empty($form[NO] ? $form[NO] : 0))."
-                            ,PHASE = '".$form[PHASE]."'
-                            ,VERSION = '".$form[VERSION]."'
-                            ,SUBJECT = '".$form[SUBJECT]."'
-                            ,BODY = '".$form[BODY]."'
-                            ,EDITOR_ID = '".$form[EDITOR_ID]."'
-                            ,CONTENT_ST = '".$form[CONTENT_ST]."'
-                            ,REG_UID = '".$form[REG_UID]."'
-                            ,REG_NM = '".$form[REG_NM]."'
-                            ,CURRENT_FL = '".$form[CURRENT_FL]."'
-                            ,APPLY_YM = '".$form[APPLY_YM]."'
-                            ,MODIFY_FL = '".$form[MODIFY_FL]."'
-                            ,BEGIN_DT = '".$form[BEGIN_DT]."'
-                            ,CLOSE_DT = '".$form[CLOSE_DT]."'
-                            ,FINISH_DT = '".$form[FINISH_DT]."'
-                            ,CONTENTS = '".$form[CONTENTS]."'
-                            ,HIT_CNT = ".(empty($form[HIT_CNT]) ? 0 : $form[HIT_CNT])."
-                            ,SCRAP_CNT = ".(empty($form[SCRAP_CNT]) ? 0 : $form[SCRAP_CNT])."
-                            ,PROJECT_NO = ".$project_no."
-                        WHERE
-                            NO = ".$id."
-                        ";
-            }
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-            } else {
-                $_d->succEnd($no);
-            }
+            //TODO: 수정
 
             break;
 
         case "DELETE":
-            if (!isset($id)) {
-                $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
-            }
-
-            $sql = "DELETE FROM CONTENT WHERE NO = ".$id;
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
-            } else {
-                $_d->succEnd($no);
-            }
+            //TODO: 삭제
 
             break;
     }

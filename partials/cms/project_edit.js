@@ -7,7 +7,7 @@
 'use strict';
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -15,7 +15,7 @@ define([
     controllers.controller('project_edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
         // 파일 업로드 설정
-        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+//        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
         // 파일 업로드 후 파일 정보가 변경되면 화면에 썸네일을 로딩
         $scope.$watch('newFile', function(data){
@@ -59,7 +59,7 @@ define([
         // 프로젝트 조회
         $scope.getProject = function () {
             if ($stateParams.id != 0) {
-                return $scope.getItem('project', $stateParams.id, {}, false)
+                return $scope.getItem('cms/project', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
 
@@ -83,11 +83,11 @@ define([
             $scope.item.FILE = $scope.file;
 
             if ($stateParams.id == 0) {
-                $scope.insertItem('project', $scope.item, false)
+                $scope.insertItem('cms/project', $scope.item, false)
                     .then(function(){$location.url('/project/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('project', $stateParams.id, $scope.item, false)
+                $scope.updateItem('cms/project', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/project/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -96,6 +96,7 @@ define([
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getProject)
             .catch($scope.reportProblems);

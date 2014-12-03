@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -20,7 +20,11 @@ define([
         angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
         /********** 이벤트 **********/
-        $scope.loginMe = function() {
+        $scope.click_lostAccount = function () {
+            $location.url('/forgot_idpw');
+        };
+
+        $scope.loginMe = function () {
             $scope.item.SYSTEM_GB = 'CMS';
 
             $scope.login($scope.item.id, $scope.item)
@@ -32,7 +36,7 @@ define([
                     $rootScope.menu_role = data.MENU_ROLE;
                     $rootScope.email = data.EMAIL;
 
-                    $location.path('/dashboard');
+                    $location.url('/dashboard');
                 }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 	}]);

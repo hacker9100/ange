@@ -6,7 +6,7 @@
  */
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -14,13 +14,13 @@ define([
     controllers.controller('webboard_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $location, dialogs) {
 
         /********** 초기화 **********/
-        $scope.search = {};
+        $scope.search = {SYSTEM_GB: 'CMS'};
 
         // 목록 데이터
         $scope.listData = [];
 
         // 초기화
-        $scope.init = function(session) {
+        $scope.init = function() {
             // 검색어 조건
             var order = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
@@ -56,20 +56,20 @@ define([
                 return;
             }
 
-            $scope.deleteItem('webboard', item.NO, false)
+            $scope.deleteItem('comm/webboard', item.NO, false)
                 .then(function(){$scope.getCmsBoardList($scope.search)})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 검색 버튼 클릭
         $scope.click_searchCmsBoard = function () {
-            $scope.getCmsBoardList($scope.search);
+            $scope.getCmsBoardList();
         };
 
         // 프로젝트 목록 조회
-        $scope.getCmsBoardList = function (search) {
+        $scope.getCmsBoardList = function () {
             $scope.isLoading = true;
-            $scope.getList('webboard', {NO:0, SIZE:4}, search, true)
+            $scope.getList('comm/webboard', {NO:0, SIZE:20}, $scope.search, true)
                 .then(function(data){$scope.list = data})
                 .catch(function(error){$scope.list = []; console.log(error);})
                 .finally(function(){$scope.isLoading = false;});

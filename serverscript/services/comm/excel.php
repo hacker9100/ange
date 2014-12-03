@@ -23,6 +23,9 @@
 
     $where_search = "";
 
+    $excel = $_data;
+MtUtil::_c(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>".$_data);
+
     if (isset($_search[JOIN_PATH]) && $_search[JOIN_PATH] != "") {
         $where_search .= "AND U.JOIN_PATH  = '".$_search[JOIN_PATH]."' ";
     }
@@ -87,13 +90,16 @@
 
     $EXCEL_STR .= "</table>";
 
+    $EXCEL_STR = $_data;
+
     ob_end_clean();
 
-    header( "Content-type: application/vnd.ms-excel" );
+//    header( "Content-type: application/vnd.ms-excel" );
     header( "Content-type: application/vnd.ms-excel; charset=utf-8");
-    header( "Content-Disposition: attachment; filename = invoice.xls" );
+    header( "Content: application/vnd.ms-excel; charset=utf-8");
+    header( "Content-Disposition: attachment; filename = 한글.xls" );
     header( "Content-Description: PHP4 Generated Data" );
 
-    echo "<meta content=\"application/vnd.ms-excel; charset=UTF-8\" name=\"Content-type\"> ";
+    echo "<meta content=\"application/vnd.ms-excel; charset=utf-8\" name=\"Content-type\"> ";
     echo $EXCEL_STR;
 ?>

@@ -5,6 +5,7 @@
     Description : app의 최상위 파일로서 최초 로딩되는 index 파일
 -->
 <?php
+    header("Content-type: text/html; charset=utf-8");
     @extract($_SERVER);
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
@@ -86,8 +87,10 @@
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
+<!--<meta name="content-type" content="text/html; charset=UTF-8"" >-->
 <meta name="author" content="">
 
 <link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.css" />

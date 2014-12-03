@@ -6,7 +6,7 @@
  */
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -21,18 +21,18 @@ define([
         /********** 이벤트 **********/
         // 목록 이동
         $scope.click_showList = function () {
-            $location.url('/'+$scope.api+'/list');
+            $location.url('/'+$scope.url+'/list');
         };
 
         // 선택
         $scope.click_showView = function (key) {
-            $location.url('/'+$scope.api+'/view/'+key);
+            $location.url('/'+$scope.url+'/view/'+key);
         };
 
         // 포틀릿 조회
         $scope.getPortlet = function (api) {
             $scope.isLoading = true;
-            $scope.$parent.getList(api, {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
+            $scope.$parent.getList(api, {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {SYSTEM_GB: 'CMS', NOTICE_FL: 'Y'}, true)
                 .then(function(data){$scope.list = data})
                 .catch(function(error){$scope.list = []; console.log(error);})
                 .finally(function(){$scope.isLoading = false;});

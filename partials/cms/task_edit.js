@@ -7,7 +7,7 @@
 'use strict';
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -112,7 +112,10 @@ define([
             $scope.getItem('task', $stateParams.id, {}, true)
                 .then(function(data){
                     $scope.item = data;
-                    $scope.CATEGORY = angular.fromJson(data.CATEGORY);
+
+                    if (data.CATEGORY != null){
+                        $scope.CATEGORY = angular.fromJson(data.CATEGORY);
+                    }
 
                     // 프로젝트
                     angular.forEach($scope.projects,function(value, idx){
@@ -169,6 +172,7 @@ define([
 
         // 태스크 저장 버튼 클릭
         $scope.click_saveTask = function () {
+            $scope.item.CATEGORY = $scope.CATEGORY;
             if ($stateParams.id == 0) {
                 $scope.insertItem('task', $scope.item, false)
                     .then(function(){$location.url('/task/list');})

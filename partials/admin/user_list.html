@@ -23,8 +23,8 @@
                 <div class= "form-group">
                     <label class= "col-md-2">상태</label>
                     <div class="col-md-9">
-                        <div class="radio-inline" ng-repeat="item in state" >
-                            <input ng-model="search.STATE" type= "radio" ng-value="item.value" /> {{item.name}}
+                        <div class="radio-inline" ng-repeat="item in status" >
+                            <input ng-model="search.STATUS" type= "radio" ng-value="item.value" /> {{item.name}}
                         </div>
                     </div>
                 </div>
@@ -122,8 +122,15 @@
         <th></th>
         <th>계정</th>
         <th>연락처</th>
-        <th>현황</th>
-        <th>Email/SNS</th>
+        <th ng-if="search.ACT == 'A'">현황</th>
+        <th ng-if="search.ACT == 'A'">Email/SNS</th>
+        <th ng-if="search.ACT == 'C'">현황(글수)</th>
+        <th ng-if="search.ACT == 'C'">공감/랭킹</th>
+        <th ng-if="search.ACT == 'P'">현황(당첨/참여)</th>
+        <th ng-if="search.ACT == 'P'">리뷰</th>
+        <th ng-if="search.ACT == 'B'">현황(포스트)</th>
+        <th ng-if="search.ACT == 'B'">방문(오늘/전체)</th>
+        <th ng-if="search.ACT == 'B'">단계</th>
         <th>Point(Score)</th>
         <th>가입(최종접속)</th>
         <th>상태</th>
@@ -135,8 +142,15 @@
         <td><input ng-model="item.CHECKED" type= "checkbox" checklist-model="check_user.selected" checklist-value="item.USER_ID"/></td>
         <td>{{ item.USER_NM + '(' + item.NICK_NM + ')' + item.USER_ID }}</td>
         <td>{{ item.PHONE_1 + item.PHONE_2 }}</td>
-        <td>현황</td>
-        <td>{{ item.EMAIL }}</td>
+        <td ng-if="search.ACT == 'A'">현황</td>
+        <td ng-if="search.ACT == 'A'">{{ item.EMAIL }}</td>
+        <td ng-if="search.ACT == 'C'">현황(글수)</td>
+        <td ng-if="search.ACT == 'C'">공감()</td>
+        <td ng-if="search.ACT == 'P'">현황(당첨)</td>
+        <td ng-if="search.ACT == 'P'">리뷰</td>
+        <td ng-if="search.ACT == 'B'">현황(포스트)</td>
+        <td ng-if="search.ACT == 'B'">방문()</td>
+        <td ng-if="search.ACT == 'B'">단계</td>
         <td>포인트</td>
         <td>{{ item.REG_DT + '(' + item.FINAL_LOGIN_DT + ')' }}</td>
         <td>
@@ -145,6 +159,7 @@
         </td>
         <!--<td>{{ item.USER_ST == 'F' ? '불량' : item.USER_ST == 'D' ? '휴면' : item.USER_ST == 'S' ? '탈퇴' : '정상' }}</td>-->
         <td>
+            <a ng-click="test()">TEST</a>
             <a ng-click="click_showViewUser(item.USER_ID)">V</a>
             <a ng-click="click_showEditUser(item)">수정</a>
             <a ng-click="click_deleteUser(item)">삭제</a>

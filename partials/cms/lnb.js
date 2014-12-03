@@ -1,7 +1,7 @@
 'use strict';
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -13,7 +13,7 @@ define([
         /********** 페이지 타이틀 **********/
 //        $scope.message = 'ANGE CMS';
         angular.forEach($rootScope.cms_menu, function(menu) {
-            if (menu.MENU_URL.indexOf(spMenu[1]) > -1 || ( spMenu[1] == 'content' && menu.MENU_URL.indexOf(spMenu[2]) > -1)) {
+            if ((spMenu[1] != 'content' && menu.MENU_URL.indexOf(spMenu[1]) > -1) || ( spMenu[1] == 'content' && menu.MENU_URL.indexOf(spMenu[2]+"/") > -1)) {
                 $scope.$parent.pageTitle = menu.MENU_NM;
                 $scope.$parent.pageDescription = menu.MENU_DESC;
                 $scope.$parent.tailDescription = menu.TAIL_DESC;

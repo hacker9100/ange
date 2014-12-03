@@ -6,7 +6,7 @@
  */
 
 define([
-    '../../js/controller/controllers'
+    'controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -45,15 +45,16 @@ define([
         /********** 이벤트 **********/
         // 게시판 목록 이동
         $scope.click_showCmsBoardList = function () {
-            $location.url('/webboard');
+            $location.url('/webboard/list');
         };
 
         // 게시판 조회
         $scope.getCmsBoard = function () {
             if ($stateParams.id != 0) {
-                $scope.getItem('webboard', $stateParams.id, {}, false)
+                $scope.getItem('comm/webboard', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
+                        $scope.item.NOTICE_FL == 'Y' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
 
                         var files = data.FILES;
                         for(var i in files) {
@@ -74,11 +75,11 @@ define([
             }
 
             if ($stateParams.id == 0) {
-                $scope.insertItem('webboard', $scope.item, false)
+                $scope.insertItem('comm/webboard', $scope.item, false)
                     .then(function(){$location.url('/webboard/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('webboard', $stateParams.id, $scope.item, false)
+                $scope.updateItem('comm/webboard', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/webboard/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

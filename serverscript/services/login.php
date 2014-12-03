@@ -22,6 +22,10 @@
 
     $_d = new MtJson();
 
+    if ($_d->connect_db == "") {
+        $_d->failEnd("DB 연결 실패. 시스템에 비정상적으로 작동합니다.");
+    }
+
     switch ($_method) {
         case "GET":
             if (isset($_key) && $_key != "") {

@@ -4,12 +4,9 @@
     <div ng-model="item" lass="row">
         <form role="form" name="edit_form" class="form-horizontal">
             <div class= "form-group">
-                <label class= "col-md-2">머리말</label>
+                <label class= "col-md-2">공지사항 여부</label>
                 <div class="col-md-3">
-                    <select ng-model="item.HEAD" class= "form-control" placeholder="등록년">
-                        <option name="head" value="">- 머리말 선택</option>
-                        <option name="head" value="NOTICE">공지사항</option>
-                    </select>
+                    <input ng-model="item.NOTICE_FL" type="checkbox" ng-checked="item.NOTICE_FL" ng-disabled="role != 'CMS_ADMIN' && role != 'MANAGER'">
                 </div>
             </div>
             <div class= "form-group">
@@ -38,7 +35,7 @@
         <!--</div>-->
         <div class= "form-group">
             <label class= "col-md-2">첨부파일 </label>
-            <div ng-include=" 'partials/cms/file.html' "></div>
+            <div ng-include=" '/partials/cms/file.html' "></div>
         </div>
 
         <!-- 하단 버튼 -->

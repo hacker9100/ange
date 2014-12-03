@@ -14,7 +14,7 @@
 
     date_default_timezone_set('Asia/Seoul');
 
-	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
     MtUtil::_c("### [START]");
 	MtUtil::_c(print_r($_REQUEST,true));
@@ -27,6 +27,10 @@
     }
 */
     $_d = new MtJson();
+
+    if ($_d->connect_db == "") {
+        $_d->failEnd("DB 연결 실패. 시스템에 비정상적으로 작동합니다.");
+    }
 
     switch ($_method) {
         case "GET":
@@ -348,6 +352,32 @@
                 $_d->sql_query($sql);
             }
 */
+            $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                        ,ETC
+                    ) VALUES (
+                        '".$task_no."'
+                        ,'CREATE'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'".$no."'
+                        ,'CONTENT'
+                        ,'CREATE'
+                        ,'IP'
+                        ,'/content'
+                        ,''
+                    )";
+
+            $_d->sql_query($sql);
 
             if ($err > 0) {
                 $_d->sql_rollback();
@@ -360,7 +390,7 @@
             break;
 
         case "PUT":
-            if (!isset($_key) || $_key == '') {
+            if (!isset($_key) || $_key == "") {
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
@@ -478,15 +508,17 @@
                     $task_no = $_model[TASK_NO];
                 }
 
-                if (count($_model[TASK]) > 0) {
+                if ($_model[TASK] != "") {
                     $task = $_model[TASK];
                     $task_no = $task[NO];
                     $task_phase = $task[PHASE];
                 }
 
+                MtUtil::_c("------------>>>>> count_task___________ : ".$_model[TASK]);
+
                 $sql = "UPDATE CONTENT
                         SET
-                            SUPER_NO = ".(!empty($_model[SUPER_NO]) ? $_model[SUPER_NO] : !empty($_model[NO] ? $_model[NO] : 0))."
+                            SUPER_NO = ".((!empty($_model[SUPER_NO])) ? $_model[SUPER_NO] : (!empty($_model[NO]) ? $_model[NO] : 0))."
                             ,PHASE = '".$task_phase."'
                             ,VERSION = '".$_model[VERSION]."'
                             ,BODY = '".$_model[BODY]."'
@@ -629,6 +661,33 @@
                         }
                     }
                 }
+
+                $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                        ,ETC
+                    ) VALUES (
+                        '".$task_no."'
+                        ,'UPDATE'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'".$_key."'
+                        ,'CONTENT'
+                        ,'UPDATE'
+                        ,'IP'
+                        ,'/content'
+                        ,''
+                    )";
+
+                $_d->sql_query($sql);
 
                 if ($err > 0) {
                     $_d->sql_rollback();
