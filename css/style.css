@@ -222,3 +222,55 @@ a.famlylink:focus {
     font-size: 0.64em;
     margin-bottom: 15px;
 }
+
+.form_basic {
+    float:left;
+    margin:0 !important;
+    margin-bottom: 15px !important;
+}
+
+.form_label{
+    float:left;
+    font-size:0.64em;
+    color:#888;
+    margin:0;
+}
+
+.form_valueText{
+    float:left;
+    line-height:18pt;
+    margin-left:15px;
+}
+
+.balls_group{
+    float:left;
+    width:100%;
+}
+
+.bnt_ball_group{
+    display:inline-block;
+    float:left;
+    margin-left:5px;
+}
+
+.cate_ball_normal{
+    float: left;
+    margin-left: 0px;
+    margin:10px 0;
+    border:none;
+    background-color:#ed8624;
+    color:#fff;
+    font-size:0.76em;
+    padding:2px;
+}
+
+.tag_ball_normal {
+    float:left;
+    margin-left: 0px;
+    margin:10px 4px;
+    border:none;
+    background-color:#2486ED;
+    color:#fff;
+    font-size:0.76em;
+    padding:2px;
+}

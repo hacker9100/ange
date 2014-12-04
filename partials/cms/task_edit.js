@@ -176,8 +176,6 @@ alert($scope.item.CLOSE_YMD)
         $scope.click_saveTask = function () {
             $scope.item.CATEGORY = $scope.CATEGORY;
 
-            console.log($scope.item);
-            return;
             if ($stateParams.id == 0) {
                 $scope.insertItem('task', $scope.item, false)
                     .then(function(){$location.url('/task/list');})
