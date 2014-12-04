@@ -229,6 +229,38 @@ a.famlylink:focus {
     margin-bottom: 15px !important;
 }
 
+.form_basic_wrap{
+    float:left;
+    margin:0px auto;
+    width:100%;
+}
+
+.form_basic_100 {
+    float:left;
+    width:100%;
+    margin-bottom:20px;
+    font-size:0.87em;
+}
+
+.form_basic_group {
+    float:left;
+    margin:8px auto !important;
+    width:100%;
+}
+
+.form_basic_label{
+    position:relative;
+    float:left;
+    color:#333;
+    margin:0;
+    line-height:36px;
+}
+
+.form_basic_input{
+    position:absolute;
+    margin-left: 110px;
+}
+
 .form_label{
     float:left;
     font-size:0.64em;
