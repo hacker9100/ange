@@ -60,6 +60,8 @@ define([
                 });
 
             // ui bootstrap 달력
+            $scope.format = 'yyyy-MM-dd';
+
             $scope.today = function() {
                 $scope.item.CLOSE_YMD = new Date();
             };
@@ -72,7 +74,7 @@ define([
             $scope.open = function($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
-
+alert($scope.item.CLOSE_YMD)
                 $scope.opened = true;
             };
 
@@ -173,6 +175,9 @@ define([
         // 태스크 저장 버튼 클릭
         $scope.click_saveTask = function () {
             $scope.item.CATEGORY = $scope.CATEGORY;
+
+            console.log($scope.item);
+            return;
             if ($stateParams.id == 0) {
                 $scope.insertItem('task', $scope.item, false)
                     .then(function(){$location.url('/task/list');})

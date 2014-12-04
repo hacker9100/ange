@@ -20,6 +20,14 @@
             "url": "/:menu/:type/:id",
             "templateUrl": "/partials/cms/cms_common.html",
             "controller": "cms_common"
+        }}, { "test": {
+            "url": "/test",
+            "views": {
+                "" : { "templateUrl": "/partials/cms/cms_common.html", "controller": "cms_common" },
+                "lnbView@test": { "templateUrl": "/partials/cms/lnb.html", "controller": "lnb" },
+                "locaterView@test": { "templateUrl": "/partials/cms/locater.html", "controller" : "locater" },
+                "contentView@test": { "templateUrl": "/partials/cms/task_edit.html", "controller" : "task_edit" }
+            }
         }}
     ]
 }

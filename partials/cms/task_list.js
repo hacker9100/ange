@@ -132,7 +132,7 @@ define([
             dialogs.notify('알림', "화면 수정 중 입니다.", {size: 'md'});
             return;
 
-            $location.url('/content/'+$stateParams.menu+'/view/'+key);
+            $location.url('/'+$stateParams.menu+'/view/'+key);
         };
 
         // 콘텐츠 수정 화면 이동
@@ -142,7 +142,7 @@ define([
                 return;
             }
 
-            $location.url('/content/'+$stateParams.menu+'/edit/'+item.NO);
+            $location.url('/'+$stateParams.menu+'/edit/'+item.NO);
         };
 
         // 이력조회 버튼 클릭
@@ -243,11 +243,12 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        $scope.isTask = true;
-        $scope.isCompleted = false;
+        $scope.isTask = false;
+        $scope.isEdit = true;
         if ($stateParams.menu == 'archive') {
             $scope.search = {PHASE: '31'};
-            $scope.isTask = true;
+            $scope.isTask = false;
+            $scope.isEdit = false;
         } else if ($stateParams.menu == 'article') {
             $scope.search = {PHASE: '0, 10, 11, 12'};
         } else if ($stateParams.menu == "article_confirm") {
@@ -257,7 +258,7 @@ define([
         } else if ($stateParams.menu == "edit_confirm") {
             $scope.search = {PHASE: '21, 22'};
         } else {
-            $scope.isTask = false;
+            $scope.isTask = true;
             $scope.search = {};
         }
 

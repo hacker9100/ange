@@ -1,8 +1,8 @@
 /**
- * Author : Yiseul.Choi
- * Email  : cys1128@marveltree.com
- * Date   : 2014-11-13
- * Description : section.html 화면 콘트롤러
+ * Author : Sung-hwan Kim
+ * Email  : hacker9100@marveltree.com
+ * Date   : 2014-09-23
+ * Description : section_main.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('section', ['$scope', '$stateParams', 'dataService', '$location', '$controller', '$filter', 'ngTableParams', function ($scope, $stateParams, dataService, $location, $controller, $filter, ngTableParams) {
+    controllers.controller('section_main', ['$scope', '$stateParams', 'dataService', '$location', '$controller', '$filter', 'ngTableParams', function ($scope, $stateParams, dataService, $location, $controller, $filter, ngTableParams) {
 
         /********** 공통 controller 호출 **********/
         angular.extend(this, $controller('common', {$scope: $scope}));

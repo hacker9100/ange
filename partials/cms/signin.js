@@ -1,4 +1,9 @@
-'use strict';
+/**
+ * Author : Sung-hwan Kim
+ * Email  : hacker9100@marveltree.com
+ * Date   : 2014-09-23
+ * Description : series_main.html 화면 콘트롤러
+ */
 
 define([
     'controller/controllers'
@@ -36,7 +41,7 @@ define([
                     $rootScope.menu_role = data.MENU_ROLE;
                     $rootScope.email = data.EMAIL;
 
-                    $location.url('/dashboard');
+                    $location.url('/dashboard/main');
                 }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 	}]);

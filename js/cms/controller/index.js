@@ -39,11 +39,11 @@ define([
     '../../../partials/cms/webboard_edit',
     '../../../partials/cms/webboard_view',
     // CMS 관리자
-    '../../../partials/cms/user',
-    '../../../partials/cms/permission',
-    '../../../partials/cms/category',
-    '../../../partials/cms/series',
-    '../../../partials/cms/section',
+    '../../../partials/cms/user_main',
+    '../../../partials/cms/permission_main',
+    '../../../partials/cms/category_main',
+    '../../../partials/cms/series_main',
+    '../../../partials/cms/section_main',
     // CMS 부가기능
     '../../../partials/cms/contact_list'
 ], function () {});

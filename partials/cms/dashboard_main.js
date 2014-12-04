@@ -11,7 +11,25 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('dashboard_main', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
+    controllers.controller('dashboard_main', ['$scope', '$rootScope', '$location', 'dialogs', function ($scope, $rootScope, $location, dialogs) {
+
+        $scope.today = function() {
+//            $scope.item.CLOSE_YMD = new Date();
+            $scope.dt = new Date();
+        };
+        $scope.today();
+
+        $scope.clear = function () {
+//            $scope.item.CLOSE_YMD = null;
+            $scope.dt = null;
+        };
+
+        $scope.open = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            alert($scope.opened)
+            $scope.opened = true;
+        };
 
         /********** 초기화 **********/
         // 초기화
@@ -48,6 +66,32 @@ define([
             $location.url('/content/'+list+'/view/'+item.NO);
         };
 
+        // 이력조회 버튼 클릭
+        $scope.click_showGetHistory = function (key) {
+            $scope.openModal({TASK_NO : key}, 'lg');
+        };
+
+        $scope.openModal = function (item, size) {
+            var dlg = dialogs.create('/partials/cms/history.html',
+                function($scope, $controller, $modalInstance, data) {
+                    angular.extend(this, $controller('cms_common', {$scope: $scope}));
+
+                    $scope.getList('cms/history', {}, item, true).then(function(data){$scope.list = data;})
+                        .catch(function(error){console.log(error);});
+
+                    $scope.list = data;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+                },item,{size:size,keyboard: true});
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        };
+
         // 태스크 목록 조회
         $scope.getTaskList = function () {
             var search = {};
@@ -57,8 +101,8 @@ define([
 
             $scope.isLoading = true;
             $scope.getList('task', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, search, true)
-                .then(function(data){$scope.tasks = data})
-                .catch(function(error){$scope.tasks = []; console.log(error);})
+                .then(function(data){$scope.list = data})
+                .catch(function(error){$scope.list = []; console.log(error);})
                 .finally(function(){$scope.isLoading = false;});
         };
 

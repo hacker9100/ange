@@ -26,7 +26,7 @@ require.config({
 
         // bootstrpa 모듈
         'js-bootstrap': '../../lib/bootstrap/js/bootstrap.min', // bootstrap을 사용한다.
-        'ui-bootstrap': '../../lib/ui-bootstrap/ui-bootstrap-0.11.2.min', // bootstrap의 ui 컴포넌트를 사용하게한다.
+        'ui-bootstrap': '../../lib/ui-bootstrap/ui-bootstrap-0.11.2', // bootstrap의 ui 컴포넌트를 사용하게한다.
 
         // angularjs 모듈
         'angular': '../../lib/angular/angular', // angularjs를 사용한다.

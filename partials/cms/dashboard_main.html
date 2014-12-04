@@ -1,7 +1,10 @@
 <div class="row" style="margin-bottom: 25px;">
     <cms-main></cms-main>
 </div>
-
+<input ng-model="dt" type="text" class="form-control" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close" />
+<span class="input-group-btn">
+<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+</span>
 <div class="row" style="margin-bottom: 25px;">
 
     <div class="list-group" style="margin-bottom: 0;">
@@ -18,7 +21,7 @@
 
     <!-- Task list -->
     <accordion close-others="oneAtATime" style="margin: 0;">
-        <accordion-group is-open="status.open" style="border-radius:10px;" ng-repeat="task in tasks">
+        <accordion-group is-open="status.open" style="border-radius:10px;" ng-repeat="item in list">
 
             <!-- Task Head -->
             <!-- accordion-heading style="clear:both; padding:0;" -->
@@ -29,17 +32,17 @@
                             <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
                                 <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">
                                     <span style="font-size:1.16em;">월간앙쥬</span><br />
-                                    <span>[{{ task.PROJECT_NM }}]</span>
+                                    <span>[{{ item.PROJECT_NM }}]</span>
                                 </div>
                                 <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">
-                                    {{ task.SUBJECT }}
+                                    {{ item.SUBJECT }}
                                 </div>
                                 <div class="col-lg-1 task-col-manager" style="height:100%; margin-top:8px; text-align:left;">
-                                    {{ task.REG_NM }}
+                                    {{ item.REG_NM }}
                                 </div>
                                 <div class="col-md-2 col-sm-3 col-lg-2 task-col-date" style="height:100%; text-align:center; vertical-align:middle;">
-                                    <span style="color:#868686;">{{task.REG_DT}} 등록</span><br />
-                                    <span style="color:#DE4612; font-weight:bold;">{{task.CLOSE_YMD}} 마감</span>
+                                    <span style="color:#868686;">{{item.REG_DT}} 등록</span><br />
+                                    <span style="color:#DE4612; font-weight:bold;">{{item.CLOSE_YMD}} 마감</span>
                                 </div>
                                 <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
                                     <span class="badge">
@@ -47,7 +50,6 @@
                                     </span>
                                 </div>
                             </div>
-
                             <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': status.open, 'glyphicon-chevron-down': !status.open}" style="position:absolute; top: 15px; right:10px;"></i>
                         </a>
                     </div>
@@ -60,40 +62,40 @@
                     <div class= "form-group">
                         <label class= "col-md-2">담당자</label>
                         <div class="col-md-4">
-                            {{ task.REG_NM }}
+                            {{ item.REG_NM }}
                         </div>
                     </div>
                     <div class= "form-group">
                         <label class= "col-md-2">생성일</label>
                         <div class="col-md-4">
-                            {{ task.REG_DT }}
+                            {{ item.REG_DT }}
                         </div>
                     </div>
                     <div class= "form-group">
                         <label class= "col-md-2">카테고리</label>
-                        <!--<pre>{{task.CATEGORY|json}}</pre>-->
-                        <div class="col-md-2 btn-group" ng-repeat="category in task.CATEGORY">
+                        <!--<pre>{{item.CATEGORY|json}}</pre>-->
+                        <div class="col-md-2 btn-group" ng-repeat="category in item.CATEGORY">
                             <button type="button" class="btn btn-default">{{category.CATEGORY_NM}}</button>
                         </div>
                     </div>
                     <div class= "form-group">
                         <label class= "col-md-2">태그</label>
                         <div class="col-md-4">
-                            {{ task.TAG }}
+                            {{ item.TAG }}
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary start" ng-click="showTaskHistory(task.NO);">
+                        <button type="button" class="btn btn-primary start" ng-click="click_showGetHistory(item.NO);">
                             <i class="glyphicon glyphicon-pencil"></i>
                             <span>History</span>
                         </button>
                     </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary start" ng-click="click_showTaskView(task.NO);" ng-show="!isTask && !isCompleted">
+                        <button type="button" class="btn btn-primary start" ng-click="click_showTaskView(item.NO);" ng-show="item.PHASE == '0'">
                             <i class="glyphicon glyphicon-pencil"></i>
                             <span>태스크 조회</span>
                         </button>
-                        <button type="button" class="btn btn-primary start" ng-click="click_showViewContent(item.NO);" ng-show="!isTask && !isCompleted">
+                        <button type="button" class="btn btn-primary start" ng-click="click_showViewContent(item.NO);" ng-show="item.PHASE != '0'">
                             <i class="glyphicon glyphicon-pencil"></i>
                             <span>원고 조회</span>
                         </button>

@@ -71,13 +71,13 @@ define([
 //                alert(JSON.stringify(file))
 //                var img = '<img alt="" src="/upload/files/medium/'+file.name+'" />';
 
-//                if (!angular.isUndefined(CKEDITOR)) {
-//                    var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.mediumUrl+'" />' );
-//                    CKEDITOR.instances.editor1.insertElement( element );
-//                }
+                if (!angular.isUndefined(CKEDITOR)) {
+                    var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.mediumUrl+'" />' );
+                    CKEDITOR.instances.ckeditor.insertElement( element );
+                }
 
-                var img = '<img alt="" src="'+file.mediumUrl+'" />';
-                $scope.item.BODY += img;
+//                var img = '<img alt="" src="'+file.mediumUrl+'" />';
+//                $scope.item.BODY += img;
             };
         }
     }]);

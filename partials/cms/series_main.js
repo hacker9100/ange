@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : category.html 화면 콘트롤러
+ * Description : series_main.html 화면 콘트롤러
  */
 
 define([
@@ -11,39 +11,22 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('category', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
+    controllers.controller('series_main', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
 
         /********** 초기화 **********/
         $scope.key = '';
 
         // 초기화
         $scope.init = function() {
-            dataService.db('category').find({},{CATEGORY_GB: '2', PARENT_NO: '0'},function(data, status){
-                if (status != 200) {
-                    alert('카테고리 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.parents = data;
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("카테고리 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
 
-                $scope.isLoading = false;
-            });
         };
 
         /********** 이벤트 **********/
-        // 카테고리 삭제 버튼 클릭
-        $scope.click_deleteCategory = function (idx) {
-            var category = $scope.list[idx];
+        // 시리즈 삭제 버튼 클릭
+        $scope.click_deleteSeries = function (idx) {
+            var series = $scope.list[idx];
 
-            dataService.db('category').remove(category.NO,function(data, status){
+            dataService.db('series').remove(series.NO,function(data, status){
                 if (status != 200) {
                     alert('삭제에 실패 했습니다.');
                 } else {
@@ -57,16 +40,16 @@ define([
         };
 
         // 검색 버튼 클릭
-        $scope.searchCategory = function () {
-            $scope.getCategoryList($scope.search);
+        $scope.click_searchSeries = function () {
+            $scope.getSeriesList($scope.search);
         }
 
-        // 카테고리 목록 조회
-        $scope.getCategoryList = function (search) {
+        // 시리즈 목록 조회
+        $scope.getSeriesList = function (search) {
             $scope.isLoading = true;
-            dataService.db('category').find({},search,function(data, status){
+            dataService.db('series').find({},search,function(data, status){
                 if (status != 200) {
-                    alert('카테고리 조회에 실패 했습니다.');
+                    alert('시리즈 조회에 실패 했습니다.');
                 } else {
                     if (data.err == true) {
                         alert(data.msg);
@@ -75,7 +58,7 @@ define([
                             $scope.list = data;
                         } else {
                             // TODO: 데이터가 없을 경우 처리
-                            alert("카테고리 조회 데이터가 없습니다.");
+                            alert("시리즈 조회 데이터가 없습니다.");
                         }
                     }
                 }
@@ -84,29 +67,29 @@ define([
             });
         };
 
-        // 카테고리 저장 버튼 클릭
-        $scope.click_saveCategory = function () {
+        // 시리즈 저장 버튼 클릭
+        $scope.click_saveSeries = function () {
             if ($scope.key == '') {
-                dataService.db('category').insert($scope.item,function(data, status){
+                dataService.db('series').insert($scope.item,function(data, status){
                     if (status != 200) {
                         alert('등록에 실패 했습니다.');
                     } else {
                         if (data.err == true) {
                             alert(data.msg);
                         } else {
-                            $scope.getCategoryList();
+                            $scope.getSeriesList();
                         }
                     }
                 });
             } else {
-                dataService.db('category').update($scope.key,$scope.item,function(data, status){
+                dataService.db('series').update($scope.key,$scope.item,function(data, status){
                     if (status != 200) {
                         alert('수정에 실패 했습니다.');
                     } else {
                         if (data.err == true) {
                             alert(data.msg);
                         } else {
-                            $scope.getCategoryList();
+                            $scope.getSeriesList();
                         }
                     }
                 });
@@ -115,31 +98,23 @@ define([
             $scope.key = '';
         };
 
-        // 카테고리 편집 클릭
-        $scope.click_getCategory = function (id) {
+        // 시리즈 편집 클릭
+        $scope.click_getSeries = function (id) {
             $scope.key = id;
 
             if ($scope.key != '') {
-                dataService.db('category').findOne($scope.key,{},function(data, status){
+                dataService.db('series').findOne($scope.key,{},function(data, status){
                     if (status != 200) {
-                        alert('카테고리 조회에 실패 했습니다.');
+                        alert('시리즈 조회에 실패 했습니다.');
                     } else {
                         if (data.err == true) {
                             alert(data.msg);
                         } else {
                             if (angular.isObject(data)) {
-                                var idx = 0;
-                                for (var i=0; i < $scope.parents.length; i ++) {
-                                    if (data.PARENT_NO == $scope.parents[i].NO) {
-                                        idx = i;
-                                    }
-                                }
-
                                 $scope.item = data;
-                                $scope.item.PARENT = data.PARENT_NO == 0 ? null : $scope.parents[idx];
                             } else {
                                 // TODO: 데이터가 없을 경우 처리
-                                alert("카테고리 조회 데이터가 없습니다.");
+                                alert("시리즈 조회 데이터가 없습니다.");
                             }
                         }
                     }
@@ -147,25 +122,25 @@ define([
             }
         };
 
-        // 카테고리 상태변경 버튼 클릭
+        // 시리즈 상태변경 버튼 클릭
         $scope.click_updateStatus = function (idx) {
-            var category = $scope.list[idx];
-            category.CATEGORY_ST = (category.CATEGORY_ST == "1" ? "0" : "1");
+            var series = $scope.list[idx];
+            series.SERIES_ST = (series.SERIES_ST == "1" ? "0" : "1");
 
-            dataService.db('category').update(category.NO,category,function(data, status){
+            dataService.db('series').update(series.NO,series,function(data, status){
                 if (status != 200) {
                     alert('수정에 실패 했습니다.');
                 } else {
                     if (data.err == true) {
                         alert(data.msg);
                     } else {
-                        $scope.getCategoryList();
+                        $scope.getSeriesList();
                     }
                 }
             });
         };
 
-        // 취소
+        // 취소 클릭
         $scope.click_cancel = function () {
             $scope.key = '';
             $scope.item = null;
@@ -173,7 +148,7 @@ define([
 
         /********** 화면 초기화 **********/
         $scope.init();
-        $scope.getCategoryList();
+        $scope.getSeriesList();
 
     }]);
 });

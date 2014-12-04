@@ -13,6 +13,8 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('cms_common', ['$timeout', '$scope', '$rootScope', '$stateParams', '$location', '$q', 'dataService', 'dialogs', 'login', function ($timeout, $scope, $rootScope, $stateParams, $location, $q, dataService, dialogs, login) {
 
+        $scope.test = '/partials/cms/task_edit.html';
+        $scope.test_ctr = 'task_edit';
 
         $scope.layoutMenu = $stateParams.menu;
         $scope.layoutType = $stateParams.type;
