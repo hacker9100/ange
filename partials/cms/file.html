@@ -13,17 +13,13 @@
                         <span>탐색기</span>
                         <input type="file" name="files[]" multiple ng-disabled="disabled">
                     </span>
-                <button type="button" class="btn btn-primary start" data-ng-click="submit()">
+                <button type="button" class="btn btn-primary start" data-ng-click="submit()" ng-show="false">
                     <i class="glyphicon glyphicon-upload"></i>
                     <span>전체 등록</span>
                 </button>
-                <button type="button" class="btn btn-warning cancel" data-ng-click="cancel()">
+                <button type="button" class="btn btn-warning cancel" data-ng-click="cancel()" ng-show="false">
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     <span>전체 취소</span>
-                </button>
-                <button type="button" class="btn btn-primary start" data-ng-click="test()">
-                    <i class="glyphicon glyphicon-upload"></i>
-                    <span>테스트</span>
                 </button>
 
                 <!-- The global file processing state -->

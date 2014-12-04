@@ -32,9 +32,17 @@
 */
     $_d = new MtJson();
 
+    if ($_d->connect_db == "") {
+        $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
+    }
+
+    if (!isset($_type) || $_type == "") {
+        $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
+    }
+
     switch ($_method) {
         case "GET":
-            if (isset($_key) && $_key != "") {
+            if ($_type == 'item') {
 //                MtUtil::_c("FUNC[processApi] 1 : "+$id);
 
                 $err = 0;
@@ -96,15 +104,11 @@
                 }else{
                     $_d->dataEnd2($data);
                 }
-            }
-            else {
+            } else if ($_type == 'list') {
                 $search_common = "";
                 $search_where = "";
+                $sort_order = "";
                 $limit = "";
-
-                if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
-                }
 
                 if (isset($_search[BOARD_GB]) && $_search[BOARD_GB] != "") {
                     $search_common .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
@@ -118,6 +122,14 @@
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_where .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= ", ".$_search[SORT]." ".$_search[ORDER]." ";
+                }
+
+                if (isset($_page)) {
+                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
                 $sql = "SELECT
@@ -150,7 +162,7 @@
                     $sql .= $select1." UNION ".$select2;
                 }
 
-                $sql .= "   ORDER BY SORT_GB, REG_DT DESC
+                $sql .= "   ORDER BY SORT_GB".$sort_order."
                              ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -188,9 +200,9 @@
                 $_d->failEnd("내용이 비어있습니다");
             }
 
-            $upload_path = '../../upload/files/';
-            $file_path = '/storage/'.date('Y').'/'.date('m').'/';
-            $source_path = '../..'.$file_path;
+            $upload_path = '../../../upload/files/';
+            $file_path = '/storage/board/';
+            $source_path = '../../..'.$file_path;
             $insert_path = array();
 
             $body_str = $_model[BODY];
@@ -371,9 +383,9 @@
 
 //            $FORM = json_decode(file_get_contents("php://input"),true);
 
-            $upload_path = '../../upload/files/';
-            $file_path = '/storage/'.date('Y').'/'.date('m').'/';
-            $source_path = '../..'.$file_path;
+            $upload_path = '../../../upload/files/';
+            $file_path = '/storage/board/';
+            $source_path = '../../..'.$file_path;
             $insert_path = array();
 
             $body_str = $_model[BODY];

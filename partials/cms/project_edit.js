@@ -15,7 +15,7 @@ define([
     controllers.controller('project_edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
         // 파일 업로드 설정
-//        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
         // 파일 업로드 후 파일 정보가 변경되면 화면에 썸네일을 로딩
         $scope.$watch('newFile', function(data){
@@ -33,7 +33,7 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-            var ret = $scope.getList('series', {}, {}, false)
+            var ret = $scope.getList('cms/series', 'list', {}, {}, false)
                 .then(function(data){
                     $scope.series = data;
                     $scope.item.SERIES = data[0];
@@ -59,7 +59,7 @@ define([
         // 프로젝트 조회
         $scope.getProject = function () {
             if ($stateParams.id != 0) {
-                return $scope.getItem('cms/project', $stateParams.id, {}, false)
+                return $scope.getItem('cms/project', 'item', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
 
@@ -81,13 +81,12 @@ define([
         // 저장 버튼 클릭
         $scope.click_saveProject = function () {
             $scope.item.FILE = $scope.file;
-
             if ($stateParams.id == 0) {
-                $scope.insertItem('cms/project', $scope.item, false)
+                $scope.insertItem('cms/project', 'item', $scope.item, false)
                     .then(function(){$location.url('/project/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('cms/project', $stateParams.id, $scope.item, false)
+                $scope.updateItem('cms/project', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/project/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

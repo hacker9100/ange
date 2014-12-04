@@ -25,7 +25,7 @@ define([
         $scope.init = function() {
 
             // 검색조건 시즌명 셀렉트 박스 셋팅
-            $scope.getList('section', {}, {ROLE: true}, false)
+            $scope.getList('cms/section', 'list', {}, {ROLE: true}, false)
                 .then(function(data){
                     $scope.season = data;
                 })
@@ -48,7 +48,7 @@ define([
             console.log('idx = '+idx);
             console.log('section = '+section);
 
-            $scope.deleteItem('section', section.NO, true)
+            $scope.deleteItem('cms/ section', 'item', section.NO, true)
                 .then(function(){alert('정상적으로 삭제했습니다.'); /*$scope.tableParams.group.data.splice(idx, 1);*/ $scope.tableParams.reload();})
                 .catch(function(error){alert(error)});
 
@@ -76,7 +76,7 @@ define([
                 counts: [],
                 total: 0,           // length of data
                 getData: function($defer, params) {
-                    $scope.getList('section', {}, $scope.search, true)
+                    $scope.getList('cms/section', 'list', {}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
                             $defer.resolve(data);
@@ -92,13 +92,13 @@ define([
         // 섹션 저장 버튼 클릭
         $scope.click_saveSection = function () {
             if ($scope.key == '') {
-                $scope.insertItem('section', $scope.item, false)
+                $scope.insertItem('cms/section', 'item', $scope.item, false)
                     .then(function(){
                         // 리스트 재조회
                         $scope.tableParams.reload();
 
                         // 검색조건 시즌명 셀렉트 박스 재조회 후 셋팅 --> 추가한 시즌명 검색조건에 포함
-                        $scope.getList('section', {}, {ROLE: true}, false)
+                        $scope.getList('cms/section', 'list', {}, {ROLE: true}, false)
                             .then(function(data){
                                 $scope.season = data;
                             })
@@ -106,7 +106,7 @@ define([
                     })
                     .catch(function(error){alert(error)});
             } else {
-                $scope.updateItem('section', $scope.key, $scope.item, false)
+                $scope.updateItem('cms/section', 'item', $scope.key, $scope.item, false)
                     .then(function(){$scope.tableParams.reload();})
                     .catch(function(error){alert(error)});
             }
@@ -117,7 +117,7 @@ define([
             $scope.key = id;
 
             if ($scope.key != '') {
-                $scope.getItem('section', $scope.key, {}, false)
+                $scope.getItem('cms/section', 'item', $scope.key, {}, false)
                     .then(function(data) {
                         var idx = 0;
                         $scope.item = data;

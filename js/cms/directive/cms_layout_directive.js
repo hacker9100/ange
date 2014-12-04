@@ -16,7 +16,11 @@ define(['./directives'], function (directives) {
                 var menu = element.scope().location.split('/');
 
                 if (menu[1] == 'archive' || menu[1] == 'article' || menu[1] == 'article_confirm' || menu[1] == 'edit' || menu[1] == 'edit_confirm') {
-                    menu[1] = 'task';
+                    if (menu[2] == 'list') {
+                        menu[1] = 'task';
+                    } else {
+                        menu[1] = 'content';
+                    }
                 }
                 element.append('<div ng-include src=" \'/partials/cms/'+menu[1]+'_'+menu[2]+'.html\' " ng-controller="'+menu[1]+'_'+menu[2]+'"></div>');
             },

@@ -16,7 +16,7 @@ define([
         /********** 초기화 **********/
         // 초기화
         $scope.init = function() {
-            dataService.db('permission').find({},{ROLE: true},function(data, status){
+            dataService.db('comm/permission').find({},{ROLE: true},function(data, status){
                 if (status != 200) {
                     alert('권한 조회에 실패 했습니다.');
                 } else {
@@ -42,7 +42,7 @@ define([
 
         // 권한 조회
         $scope.getPermission = function() {
-            dataService.db('permission').findOne($scope.ROLE.ROLE_ID,{},function(data, status){
+            dataService.db('comm/permission').findOne($scope.ROLE.ROLE_ID,{},function(data, status){
                 if (status != 200) {
                     alert('권한 조회에 실패 했습니다.');
                 } else {
@@ -62,7 +62,7 @@ define([
 
         // 권한 저장 버튼 클릭
         $scope.click_savePermission = function() {
-            dataService.db('permission').update($scope.ROLE.ROLE_ID, $scope.list,function(data, status){
+            dataService.db('comm/permission').update($scope.ROLE.ROLE_ID, $scope.list,function(data, status){
                 if (status != 200) {
                     alert('권한 수정에 실패 했습니다.');
                 } else {

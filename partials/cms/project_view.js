@@ -11,10 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_view', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, $controller, dialogs, UPLOAD) {
-
-        // 파일 업로드 설정
-        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+    controllers.controller('project_view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
         /********** 초기화 **********/
         // 프로젝트 모델
@@ -44,7 +41,7 @@ define([
         // 프로젝트 조회
         $scope.getProject = function () {
             if ($stateParams.id != 0) {
-                return $scope.getItem('project', $stateParams.id, {}, false)
+                return $scope.getItem('cms/project', 'item', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
 

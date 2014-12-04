@@ -13,24 +13,6 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('dashboard_main', ['$scope', '$rootScope', '$location', 'dialogs', function ($scope, $rootScope, $location, dialogs) {
 
-        $scope.today = function() {
-//            $scope.item.CLOSE_YMD = new Date();
-            $scope.dt = new Date();
-        };
-        $scope.today();
-
-        $scope.clear = function () {
-//            $scope.item.CLOSE_YMD = null;
-            $scope.dt = null;
-        };
-
-        $scope.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            alert($scope.opened)
-            $scope.opened = true;
-        };
-
         /********** 초기화 **********/
         // 초기화
         $scope.init = function() {
@@ -76,7 +58,7 @@ define([
                 function($scope, $controller, $modalInstance, data) {
                     angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
-                    $scope.getList('cms/history', {}, item, true).then(function(data){$scope.list = data;})
+                    $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
                         .catch(function(error){console.log(error);});
 
                     $scope.list = data;
@@ -100,7 +82,7 @@ define([
             }
 
             $scope.isLoading = true;
-            $scope.getList('task', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, search, true)
+            $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, search, true)
                 .then(function(data){$scope.list = data})
                 .catch(function(error){$scope.list = []; console.log(error);})
                 .finally(function(){$scope.isLoading = false;});

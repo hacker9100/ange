@@ -7,7 +7,9 @@
                 <div class= "form-group">
                     <label class= "col-md-2">검색</label>
                     <div class= "col-md-3">
-                        <select ng-model="search.ORDER" ng-options="order.name for order in order" class= "form-control" placeholder="검색선택"></select>
+                        <select ng-model="search.ORDER" ng-options="order.name for order in order" class= "form-control" placeholder="검색선택">
+                            <option name="" value=""> - 조건</option>
+                        </select>
                     </div>
                     <div class="col-md-6">
                         <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
@@ -39,39 +41,34 @@
     <!--<div ng-show="isLoading" style="position: absolute;top: 55px;left: 45%; z-index: 1000" class="ai-circled ai-indicator ai-grey-spin"></div>-->
 
     <!-- List -->
-    <table class="table table-striped table-condensed" >
-        <thead>
-        <tr>
-            <th>순번</th>
-            <th>머리말</th>
-            <th>제목</th>
-            <th>등록자</th>
-            <th>등록일</th>
-            <th>기능</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="item in list">
-            <td>{{ item.NO }}</td>
-            <td>{{ item.SORT_GB == '0' ? '공지사항' : '' }}</td>
-            <td>{{ item.SUBJECT }}</td>
-            <td>{{ item.REG_NM }}</td>
-            <td>{{ item.REG_DT }}</td>
-            <td>
+    <table ng-table="tableParams" class="table">
+        <tr ng-repeat="item in $data">
+            <td data-title="'순번'">
+                {{item.NO}}
+            </td>
+            <td data-title="'머리말'">
+                {{ item.SORT_GB == '0' ? '공지사항' : '' }}
+            </td>
+            <td data-title="'제목'" sortable="'SUBJECT'">
+                {{ item.SUBJECT }}
+            </td>
+            <td data-title="'등록자'" sortable="'REG_NM'">
+                {{item.REG_NM}}
+            </td>
+            <td data-title="'등록일'" sortable="'REG_DT'">
+                {{item.REG_DT}}
+            </td>
+            <td data-title="'기능'">
                 <a ng-click="click_showViewCmsBoard(item.NO)">조회</a>
                 <a ng-click="click_showEditCmsBoard(item)">수정</a>
                 <a ng-click="click_deleteCmsBoard(item)">삭제</a>
             </td>
         </tr>
-        <tr ng-show="list == ''">
+        <tr ng-show="$data == ''">
             <td colspan="6" style="text-align: center">조회 데이터가 없습니다.</td>
         </tr>
-        </tbody>
     </table>
     <!-- ////List -->
 
-    <!-- Pagination -->
-    <pagination item-per-page="itemsPerPage" total-items="totalItems" ng-model="currentPage" max-size="maxSize" ng-change="change_pageChanged()" class="pagination-sm" boundary-links="true"></pagination>
-    <!-- ////Pagination -->
 </div>
 <!-- ////Contents Include -->

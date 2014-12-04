@@ -11,13 +11,10 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('webboard_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $location, dialogs) {
+    controllers.controller('webboard_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
 
         /********** 초기화 **********/
         $scope.search = {SYSTEM_GB: 'CMS'};
-
-        // 목록 데이터
-        $scope.listData = [];
 
         // 초기화
         $scope.init = function() {
@@ -56,72 +53,54 @@ define([
                 return;
             }
 
-            $scope.deleteItem('comm/webboard', item.NO, false)
-                .then(function(){$scope.getCmsBoardList($scope.search)})
+            $scope.deleteItem('comm/webboard', 'item', item.NO, false)
+                .then(function(){$scope.tableParams.reload();})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 검색 버튼 클릭
         $scope.click_searchCmsBoard = function () {
-            $scope.getCmsBoardList();
+            $scope.tableParams.reload();
         };
 
-        // 프로젝트 목록 조회
+        // 페이지 사이즈
+        $scope.PAGE_SIZE = 10;
+
+        // 게시판 목록 조회
         $scope.getCmsBoardList = function () {
-            $scope.isLoading = true;
-            $scope.getList('comm/webboard', {NO:0, SIZE:20}, $scope.search, true)
-                .then(function(data){$scope.list = data})
-                .catch(function(error){$scope.list = []; console.log(error);})
-                .finally(function(){$scope.isLoading = false;});
-        };
-
-        // 페이징 처리
-        $scope.selectItems = 200; // 한번에 조회하는 아이템 수
-        $scope.selectCount = 1; // 현재 조회한 카운트 수
-        $scope.itemsPerPage = 10; // 화면에 보이는 아이템 수(default 10)
-        $scope.maxSize = 5; // 총 페이지 제한
-
-        $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-        };
-
-        $scope.change_pageChanged = function() {
-            console.log('Page changed to: ' + $scope.currentPage);
-        };
-
-        // 페이지 이동 시 이벤트
-        $scope.$watch('isLoading', function() {
-            if ($scope.projectsData == 'null') {
-                $scope.projects = null;
-            } else {
-                $scope.projects = $scope.projectsData;
-            }
-        });
-
-        // 페이지 이동 시 이벤트
-        $scope.$watch('currentPage + itemsPerPage', function() {
-            var start = $scope.currentPage % ( $scope.selectItems / $scope.itemsPerPage);
-
-            var begin = ((start - 1) * $scope.itemsPerPage);
-            var end = begin + $scope.itemsPerPage;
-
-            if ($scope.projectsData != null) {
-                $scope.projects = $scope.projectsData.slice(begin, end);
-/*
-                var i = 0;
-                for (i = begin; i <= end; i++) {
-                    $scope.$watch('projects', function() {
-                        alert($scope.projects[i].NO)
-                        $scope.projects[i].ST_NM = 'TEST';
-                    });
+            $scope.tableParams = new ngTableParams({
+                page: 1,                    // show first page
+                count: $scope.PAGE_SIZE,    // count per page
+                sorting: {                  // initial sorting
+                    REG_DT: 'desc'
                 }
-*/
-            }
-        });
+            }, {
+                counts: [],         // hide page counts control
+                total: 0,           // length of data
+                getData: function($defer, params) {
+                    var key = Object.keys(params.sorting())[0];
 
-        $scope.$watch('selectItems * selectCount < itemsPerPage * currentPage', function() {
-            $scope.selectCount = $scope.selectCount + 1;
-        });
+                    $scope.search['SORT'] = key;
+                    $scope.search['ORDER'] = params.sorting()[key];
+
+                    $scope.getList('comm/webboard', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                        .then(function(data){
+                            params.total(data[0].TOTAL_COUNT);
+                            $defer.resolve(data);
+
+//                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
+//                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        })
+                        .catch(function(error){$defer.resolve([]);});
+                }
+            });
+
+//            $scope.isLoading = true;
+//            $scope.getList('comm/webboard', 'list', {NO:0, SIZE:20}, $scope.search, true)
+//                .then(function(data){$scope.listData = data; $scope.totalItems = data[0].TOTAL_COUNT;})
+//                .catch(function(error){$scope.list = []; console.log(error);})
+//                .finally(function(){$scope.isLoading = false;});
+        };
 
         /********** 화면 초기화 **********/
         $scope.getSession()

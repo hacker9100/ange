@@ -28,9 +28,17 @@
 */
     $_d = new MtJson();
 
+    if ($_d->connect_db == "") {
+        $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
+    }
+
+    if (!isset($_type) || $_type == "") {
+        $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
+    }
+
     switch ($_method) {
         case "GET":
-            if (isset($_key) && $_key != "") {
+            if ($_type == 'item') {
                 $sql = "SELECT
                             NO, YEAR, SERIES_NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST, NOTE
                         FROM
@@ -75,7 +83,7 @@
                 } else {
                     $_d->dataEnd2($data);
                 }
-            } else {
+            } else if ($_type == 'list') {
                 if (isset($_mode)) {
                     $sql = "SELECT
                                 NO, SUBJECT, PROJECT_ST
@@ -86,8 +94,9 @@
                             ORDER BY REG_DT DESC
                             ";
                 } else {
-                    $where_search = "";
-                    $limit_search = "";
+                    $search_where = "";
+                    $sort_order = "";
+                    $limit = "";
 
                     if (isset($_status)) {
                         $in_str = "";
@@ -97,18 +106,22 @@
                             if (sizeof($arr_status) - 1 != $i) $in_str = $in_str.",";
                         }
 
-                        $where_search = "AND PROJECT_ST IN (".$in_str.") ";
-                    }
-
-                    if (isset($_page)) {
-                        $limit_search .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                        $search_where = "AND PROJECT_ST IN (".$in_str.") ";
                     }
 
                     if (isset($_search[YEAR]) && $_search[YEAR] != "") {
-                        $where_search .= "AND YEAR  = '".$_search[YEAR]."' ";
+                        $search_where .= "AND YEAR  = '".$_search[YEAR]."' ";
                     }
                     if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                        $where_search .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                        $search_where .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    }
+
+                    if (isset($_search[SORT]) && $_search[SORT] != "") {
+                        $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                    }
+
+                    if (isset($_page)) {
+                        $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                     }
 
                     if (isset($_search[ROLE]) && $_search[ROLE] != "") {
@@ -131,9 +144,9 @@
                                     CMS_PROJECT
                                 WHERE
                                     1=1
-                                    ".$where_search."
-                                ORDER BY REG_DT DESC
-                                ".$limit_search."
+                                    ".$search_where."
+                                ".$sort_order."
+                                ".$limit."
                             ) AS DATA,
                             (SELECT @RNUM := 0) R,
                             (
@@ -143,7 +156,7 @@
                                     CMS_PROJECT
                                 WHERE
                                     1=1
-                                    ".$where_search."
+                                    ".$search_where."
                             ) CNT
                             ";
                     }
@@ -190,9 +203,9 @@
                 $_model[PROJECT_ST] = '0';
             }
 
-            $upload_path = '../../upload/files/';
-            $file_path = '/storage/'.date('Y').'/'.date('m').'/';
-            $source_path = '../..'.$file_path;
+            $upload_path = '../../../upload/files/';
+            $file_path = '/storage/cms/';
+            $source_path = '../../..'.$file_path;
             $insert_path = null;
 
             try {
@@ -326,9 +339,9 @@
 //            $form = json_decode(file_get_contents("php://input"),true);
 //            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            $upload_path = '../../upload/files/';
-            $file_path = '/storage/'.date('Y').'/'.date('m').'/';
-            $source_path = '../..'.$file_path;
+            $upload_path = '../../../upload/files/';
+            $file_path = '/storage/cms/';
+            $source_path = '../../..'.$file_path;
             $insert_path = null;
 
             try {

@@ -245,11 +245,11 @@ define([
         };
 
         // 목록 데이터를 조회
-        $scope.getList = function (service, page, search, loding) {
+        $scope.getList = function (service, type, page, search, loding) {
             var deferred = $q.defer();
 
             if (loding) $scope.isLoading = true;
-            dataService.db(service).find(page,search,function(data, status) {
+            dataService.db(service).find(type,page,search,function(data, status) {
                 if (status != 200) {
                     console.log('조회에 실패 했습니다.');
                     deferred.reject('조회에 실패 했습니다.');
@@ -275,11 +275,11 @@ define([
         };
 
         // 모델 데이터를 조회
-        $scope.getItem = function (service, key, search, loding) {
+        $scope.getItem = function (service, type, key, search, loding) {
             var deferred = $q.defer();
 
             if (loding) $scope.isLoading = true;
-            dataService.db(service).findOne(key,search,function(data, status) {
+            dataService.db(service).findOne(type,key,search,function(data, status) {
                 if (status != 200) {
                     console.log('조회에 실패 했습니다.');
                     deferred.reject('조회에 실패 했습니다.');
@@ -305,11 +305,11 @@ define([
         };
 
         // 모델 등록
-        $scope.insertItem = function (service, item, loding) {
+        $scope.insertItem = function (service, type, item, loding) {
             var deferred = $q.defer();
 
             if (loding) $scope.isLoading = true;
-            dataService.db(service).insert(item,function(data, status) {
+            dataService.db(service).insert(type,item,function(data, status) {
                 if (status != 200) {
                     console.log('등록에 실패 했습니다.');
                     deferred.reject('등록에 실패 했습니다.');
@@ -329,11 +329,11 @@ define([
         };
 
         // 모델 수정
-        $scope.updateItem = function (service, key, item, loding) {
+        $scope.updateItem = function (service, type, key, item, loding) {
             var deferred = $q.defer();
 
             if (loding) $scope.isLoading = true;
-            dataService.db(service).update(key, item,function(data, status) {
+            dataService.db(service).update(type,key,item,function(data, status) {
                 if (status != 200) {
                     console.log('수정에 실패 했습니다.');
                     deferred.reject('수정에 실패 했습니다.');
@@ -353,11 +353,11 @@ define([
         };
 
         // 모델 상태 수정
-        $scope.updateStatus = function (service, key, phase, loding) {
+        $scope.updateStatus = function (service,type,key,phase,loding) {
             var deferred = $q.defer();
 
             if (loding) $scope.isLoading = true;
-            dataService.updateStatus(service, key, phase,function(data, status) {
+            dataService.updateStatus(service,type,key,phase,function(data, status) {
                 if (status != 200) {
                     console.log('수정에 실패 했습니다.');
                     deferred.reject('수정에 실패 했습니다.');
@@ -377,11 +377,11 @@ define([
         };
 
         // 모델 삭제
-        $scope.deleteItem = function (service, key, loding) {
+        $scope.deleteItem = function (service, type, key, loding) {
             var deferred = $q.defer();
 
             if (loding) $scope.isLoading = true;
-            dataService.db(service).remove(key,function(data, status){
+            dataService.db(service).remove(type,key,function(data, status){
                 if (status != 200) {
                     console.log('삭제에 실패 했습니다.');
                     deferred.reject('삭제에 실패 했습니다.');

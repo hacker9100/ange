@@ -1,11 +1,8 @@
-<div class="row" style="margin-bottom: 25px;">
+<div class="row" style="margin:0;">
     <cms-main></cms-main>
 </div>
-<input ng-model="dt" type="text" class="form-control" datepicker-popup="{{format}}" is-open="opened" min-date="minDate" datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="Close" />
-<span class="input-group-btn">
-<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-</span>
-<div class="row" style="margin-bottom: 25px;">
+
+<div class="row" style="margin:0; margin-top:10px;">
 
     <div class="list-group" style="margin-bottom: 0;">
 
@@ -57,49 +54,65 @@
             </accordion-heading>
             <!-- //Task Head -->
 
-            <div class="col-md-12">
-                <div lass="row" class="form-horizontal">
-                    <div class= "form-group">
-                        <label class= "col-md-2">담당자</label>
-                        <div class="col-md-4">
-                            {{ item.REG_NM }}
-                        </div>
+            <div class="col-md-12" style="position:relative;">
+                <div class="row" class="form-horizontal" style="float:left; margin:0px auto; width:100%;">
+
+                    <div class="col-xs-6 form-group form_basic">
+                        <label class="form_label">담당자</label>
+                        <div class="form_valueText">{{ item.REG_NM }}</div>
                     </div>
-                    <div class= "form-group">
-                        <label class= "col-md-2">생성일</label>
-                        <div class="col-md-4">
-                            {{ item.REG_DT }}
-                        </div>
+                    <div class="col-xs-6 form-group form_basic">
+                        <label class="form_label">생성일</label>
+                        <div class="form_valueText">{{ item.REG_DT }}</div>
                     </div>
-                    <div class= "form-group">
-                        <label class= "col-md-2">카테고리</label>
+
+                    <div class="col-xs-6 form-group form_basic">
+                        <label class="form_label">카테고리</label>
                         <!--<pre>{{item.CATEGORY|json}}</pre>-->
-                        <div class="col-md-2 btn-group" ng-repeat="category in item.CATEGORY">
-                            <button type="button" class="btn btn-default">{{category.CATEGORY_NM}}</button>
+                        <div class="balls_group">
+                            <div class="bnt_ball_group" ng-repeat="category in item.CATEGORY">
+                                <button type="button" class="btn btn-default cate_ball_normal">
+                                    {{ category.CATEGORY_NM }}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-6 form-group form_basic">
+                        <label class="form_label">태그</label>
+                        <div class="balls_group">
+                            <div class="btn-group bnt_ball_group" ng-repeat="tag in item.TAG | split:','">
+                                <button type="button" class="btn btn-default tag_ball_normal">
+                                    {{ tag }}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class= "form-group">
-                        <label class= "col-md-2">태그</label>
-                        <div class="col-md-4">
-                            {{ item.TAG }}
+
+                    <div class="col-xs-12 form-group form_basic">
+                        <label class="form_label">설명</label>
+                        <div class="form_valueText">{{ item.NOTE }}</div>
+                    </div>
+
+                    <div class="raw" style="float:left; width:100%; padding-top:10px; border-top:1px solid #DEDEDE;">
+                        <div class="col-xs-6 form-group form_basic">
+                            <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showGetHistory(item.NO);">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                <span>History</span>
+                            </button>
+                        </div>
+                        <div class="col-xs-6 form-group form_basic" style="text-align:right;">
+                            <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showTaskView(item.NO);" ng-show="item.PHASE == '0'">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                <span>태스크 정보</span>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item.NO);" ng-show="item.PHASE != '0'">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                <span>원고 조회</span>
+                            </button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary start" ng-click="click_showGetHistory(item.NO);">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                            <span>History</span>
-                        </button>
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn btn-primary start" ng-click="click_showTaskView(item.NO);" ng-show="item.PHASE == '0'">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                            <span>태스크 조회</span>
-                        </button>
-                        <button type="button" class="btn btn-primary start" ng-click="click_showViewContent(item.NO);" ng-show="item.PHASE != '0'">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                            <span>원고 조회</span>
-                        </button>
-                    </div>
+
                 </div>
             </div>
 

@@ -28,11 +28,19 @@
 */
     $_d = new MtJson();
 
+    if ($_d->connect_db == "") {
+        $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
+    }
+
+    if (!isset($_type) || $_type == "") {
+        $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
+    }
+
     switch ($_method) {
         case "GET":
-            if (isset($_key) && $_key != "") {
+            if ($_type == 'item') {
                 //TODO: 조회
-            } else {
+            } else if ($_type == 'list') {
                 //TODO: 목록 조회
             }
 

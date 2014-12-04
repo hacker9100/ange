@@ -42,7 +42,7 @@ define([
             }
 
             // 카테고리 목록 조회
-            var ret = $scope.getList('category', {}, {}, false)
+            var ret = $scope.getList('cms/category', 'list', {}, {}, false)
                 .then(function(data){
                     $scope.category = data;
 
@@ -101,7 +101,7 @@ define([
         // 연도 변경 선택
         $scope.$watch('search.YEAR', function (data) {
             if (data != null) {
-                $scope.getList('project', {}, {YEAR: data}, false)
+                $scope.getList('cms/project', 'list', {}, {YEAR: data}, false)
                     .then(function(data){$scope.projects = data;})
                     .catch(function(error){console.log(error)});
             }
@@ -155,7 +155,7 @@ define([
                 function($scope, $controller, $modalInstance, data) {
                     angular.extend(this, $controller('cms_common', {$scope: $scope}));
 
-                    $scope.getList('cms/history', {}, item, true).then(function(data){$scope.list = data;})
+                    $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
                         .catch(function(error){console.log(error);});
 
                     $scope.list = data;
@@ -181,7 +181,7 @@ define([
                 return;
             }
 
-            $scope.deleteItem('task', task.NO, true)
+            $scope.deleteItem('cms/task', 'item', task.NO, true)
                 .then(function(){dialogs.notify('알림', '삭제 되었습니다.', {size: 'md'});})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
@@ -208,7 +208,7 @@ define([
         // 태스크 목록 조회
         $scope.getTaskList = function () {
             $scope.isLoading = true;
-            $scope.getList('task', {NO:$scope.pageNo, SIZE:$scope.pageSize}, $scope.search, true)
+            $scope.getList('cms/task', 'list', {NO:$scope.pageNo, SIZE:$scope.pageSize}, $scope.search, true)
                 .then(function(data){
                     $scope.totalCnt = data[0].TOTAL_COUNT;
                     angular.forEach(data, function(model) {

@@ -26,7 +26,7 @@ define([
         $scope.click_deleteSeries = function (idx) {
             var series = $scope.list[idx];
 
-            dataService.db('series').remove(series.NO,function(data, status){
+            dataService.db('cms/series').remove(series.NO,function(data, status){
                 if (status != 200) {
                     alert('삭제에 실패 했습니다.');
                 } else {
@@ -47,7 +47,7 @@ define([
         // 시리즈 목록 조회
         $scope.getSeriesList = function (search) {
             $scope.isLoading = true;
-            dataService.db('series').find({},search,function(data, status){
+            dataService.db('cms/series').find({},search,function(data, status){
                 if (status != 200) {
                     alert('시리즈 조회에 실패 했습니다.');
                 } else {
@@ -70,7 +70,7 @@ define([
         // 시리즈 저장 버튼 클릭
         $scope.click_saveSeries = function () {
             if ($scope.key == '') {
-                dataService.db('series').insert($scope.item,function(data, status){
+                dataService.db('cms/series').insert($scope.item,function(data, status){
                     if (status != 200) {
                         alert('등록에 실패 했습니다.');
                     } else {
@@ -82,7 +82,7 @@ define([
                     }
                 });
             } else {
-                dataService.db('series').update($scope.key,$scope.item,function(data, status){
+                dataService.db('cms/series').update($scope.key,$scope.item,function(data, status){
                     if (status != 200) {
                         alert('수정에 실패 했습니다.');
                     } else {
@@ -103,7 +103,7 @@ define([
             $scope.key = id;
 
             if ($scope.key != '') {
-                dataService.db('series').findOne($scope.key,{},function(data, status){
+                dataService.db('cms/series').findOne($scope.key,{},function(data, status){
                     if (status != 200) {
                         alert('시리즈 조회에 실패 했습니다.');
                     } else {
@@ -127,7 +127,7 @@ define([
             var series = $scope.list[idx];
             series.SERIES_ST = (series.SERIES_ST == "1" ? "0" : "1");
 
-            dataService.db('series').update(series.NO,series,function(data, status){
+            dataService.db('cms/series').update(series.NO,series,function(data, status){
                 if (status != 200) {
                     alert('수정에 실패 했습니다.');
                 } else {
