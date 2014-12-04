@@ -28,18 +28,26 @@
 */
     $_d = new MtJson();
 
+    if ($_d->connect_db == "") {
+        $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
+    }
+
+    if (!isset($_type) || $_type == "") {
+        $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
+    }
+
     switch ($_method) {
         case "GET":
-            if (isset($_key) && $_key != "") {
+            if ($_type == 'item') {
                 $sql = "SELECT
                             P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
                             T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SEASON_NM, S.SECTION_NM, P.YEAR
                         FROM
-                            CMS_TASK T, CMS_PROJECT P, CMS_SECTION S
+                            CMS_TASK T
+                            INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
+                            LEFT OUTER JOIN CMS_SECTION S ON T.SECTION_NO = S.NO
                         WHERE
-                            T.PROJECT_NO = P.NO
-                            AND T.SECTION_NO = S.NO
-                            AND T.NO = ".$_key."
+                            T.NO = ".$_key."
                         ";
 
                 $result = $_d->sql_query($sql);
@@ -66,20 +74,20 @@
                 } else {
                     $_d->dataEnd2($data);
                 }
-            } else {
-                $where_search = "";
+            } else if ($_type == 'list') {
+                $search_where = "";
                 $from_category = "";
-                $limit_search = "";
+                $limit = "";
 
                 if (isset($_page)) {
-                    $limit_search .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
                 MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".$_search);
                 MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".count($_search));
 
                 if ($_SESSION['role'] != 'CMS_ADMIN' && $_SESSION['role'] != 'MANAGER') {
-                    $where_search .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
+                    $search_where .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
                 }
 
                 if (isset($_search) && count($_search) > 0) {
@@ -105,20 +113,20 @@
                             if (sizeof($arr_phase) - 1 != $i) $in_str = $in_str.",";
                         }
 
-                        $where_search = "AND T.PHASE IN (".$in_str.") ";
+                        $search_where = "AND T.PHASE IN (".$in_str.") ";
                     }
 
                     if (isset($_search[YEAR]) && $_search[YEAR] != "") {
-                        $where_search .= "AND P.YEAR  = '".$_search[YEAR]."' ";
+                        $search_where .= "AND P.YEAR  = '".$_search[YEAR]."' ";
                     }
                     if (isset($_search[PROJECT]) && $_search[PROJECT] != "") {
-                        $where_search .= "AND P.NO  = '".$_search[PROJECT][NO]."' ";
+                        $search_where .= "AND P.NO  = '".$_search[PROJECT][NO]."' ";
                     }
                     if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                        $where_search .= "AND T.".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                        $search_where .= "AND T.".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
                     }
                     if (isset($_search[EDITOR_ID]) && $_search[EDITOR_ID] != "") {
-                        $where_search .= "AND T.EDITOR_ID  = '".$_search[EDITOR_ID]."' ";
+                        $search_where .= "AND T.EDITOR_ID  = '".$_search[EDITOR_ID]."' ";
                     }
                     if (isset($_search[CATEGORY]) && $_search[CATEGORY] != "") {
                         $where_category = "";
@@ -136,7 +144,7 @@
                                               GROUP BY TARGET_NO
                                           ) AS C ";
 
-                        $where_search .= "AND C.TARGET_NO = T.NO ";
+                        $search_where .= "AND C.TARGET_NO = T.NO ";
                     }
                 }
 
@@ -154,9 +162,9 @@
                                 ".$from_category."
                             WHERE
                                 T.PROJECT_NO = P.NO
-                                ".$where_search."
+                                ".$search_where."
                             ORDER BY T.REG_DT DESC
-                            ".$limit_search."
+                            ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
@@ -167,7 +175,7 @@
                                 ".$from_category."
                             WHERE
                                 T.PROJECT_NO = P.NO
-                                ".$where_search."
+                                ".$search_where."
                         ) CNT
                         ";
 

@@ -32,7 +32,7 @@ define([
         // 포틀릿 조회
         $scope.getPortlet = function (api) {
             $scope.isLoading = true;
-            $scope.$parent.getList(api, {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {SYSTEM_GB: 'CMS', NOTICE_FL: 'Y'}, true)
+            $scope.$parent.getList(api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {SYSTEM_GB: 'CMS', NOTICE_FL: 'Y'}, true)
                 .then(function(data){$scope.list = data})
                 .catch(function(error){$scope.list = []; console.log(error);})
                 .finally(function(){$scope.isLoading = false;});

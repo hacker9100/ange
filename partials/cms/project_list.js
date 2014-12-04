@@ -11,14 +11,11 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $location, dialogs) {
+    controllers.controller('project_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
 
         /********** 초기화 **********/
         // 검색 조건
         $scope.search = {};
-
-        // 목록 데이터
-        $scope.listData = [];
 
         // 날짜 콤보박스
         var year = [];
@@ -36,8 +33,6 @@ define([
 
             $scope.years = year;
             $scope.order = order;
-            $scope.search.YEAR = nowYear+'';
-            $scope.search.ORDER = order[0];
         };
 
         /********** 이벤트 **********/
@@ -73,68 +68,54 @@ define([
                 return;
             }
 
-            $scope.deleteItem('project', item.NO, false)
+            $scope.deleteItem('cms/project', 'item', item.NO, false)
                 .then(function(){$scope.getProjectList($scope.search)})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 검색 버튼 클릭
         $scope.click_searchProject = function () {
-            $scope.getProjectList($scope.search);
+            $scope.tableParams.reload();
         }
 
+        // 페이지 사이즈
+        $scope.PAGE_SIZE = 10;
+
         // 프로젝트 목록 조회
-        $scope.getProjectList = function (search) {
-            $scope.isLoading = true;
-            $scope.getList('project', {NO:0, SIZE:20}, search, true)
-                .then(function(data){$scope.list = data;})
-                .catch(function(error){$scope.list = []; console.log(error);})
-                .finally(function(){$scope.isLoading = false;});
-        };
-
-        // 페이징 처리
-        $scope.selectItems = 200; // 한번에 조회하는 아이템 수
-        $scope.selectCount = 1; // 현재 조회한 카운트 수
-        $scope.itemsPerPage = 10; // 화면에 보이는 아이템 수(default 10)
-        $scope.maxSize = 5; // 총 페이지 제한
-
-        $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-        };
-
-        $scope.pageChanged = function() {
-            console.log('Page changed to: ' + $scope.currentPage);
-        };
-
-        // 페이지 이동 시 이벤트
-        $scope.$watch('isLoading', function() {
-            if ($scope.listData == 'null') {
-                $scope.projects = null;
-            } else {
-                $scope.projects = projectsData;
-            }
-        });
-
-        // 페이지 이동 시 이벤트
-        $scope.$watch('currentPage + itemsPerPage', function() {
-            var start = $scope.currentPage % ( $scope.selectItems / $scope.itemsPerPage);
-
-            var begin = ((start - 1) * $scope.itemsPerPage);
-            var end = begin + $scope.itemsPerPage;
-
-            if ($scope.listData != null) {
-                $scope.projects = projectsData.slice(begin, end);
-/*
-                var i = 0;
-                for (i = begin; i <= end; i++) {
-                    $scope.$watch('projects', function() {
-                        alert($scope.projects[i].NO)
-                        $scope.projects[i].ST_NM = 'TEST';
-                    });
+        $scope.getProjectList = function () {
+            $scope.tableParams = new ngTableParams({
+                page: 1,                    // show first page
+                count: $scope.PAGE_SIZE,    // count per page
+                sorting: {                  // initial sorting
+                    REG_DT: 'desc'
                 }
-*/
-            }
-        });
+            }, {
+                counts: [],         // hide page counts control
+                total: 0,           // length of data
+                getData: function($defer, params) {
+                    var key = Object.keys(params.sorting())[0];
+
+                    $scope.search['SORT'] = key;
+                    $scope.search['ORDER'] = params.sorting()[key];
+
+                    $scope.getList('cms/project', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                        .then(function(data){
+                            params.total(data[0].TOTAL_COUNT);
+                            $defer.resolve(data);
+
+//                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
+//                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        })
+                        .catch(function(error){$defer.resolve([]);});
+                }
+            });
+
+//            $scope.isLoading = true;
+//            $scope.getList('project', 'list', {NO:0, SIZE:20}, search, true)
+//                .then(function(data){$scope.list = data;})
+//                .catch(function(error){$scope.list = []; console.log(error);})
+//                .finally(function(){$scope.isLoading = false;});
+        };
 
         $scope.$watch('selectItems * selectCount < itemsPerPage * currentPage', function() {
             $scope.selectCount = $scope.selectCount + 1;

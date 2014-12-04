@@ -12,7 +12,7 @@ define([
 
     // 사용할 서비스를 주입
     controllers.controller('file', ['$scope', 'UPLOAD', function ($scope, UPLOAD) {
-//        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 //        $scope.newDir = 'test1/';
 /*
         $scope.loadingFiles = true;
@@ -73,7 +73,7 @@ define([
 
                 if (!angular.isUndefined(CKEDITOR)) {
                     var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.mediumUrl+'" />' );
-                    CKEDITOR.instances.ckeditor.insertElement( element );
+                    CKEDITOR.instances.editor1.insertElement( element );
                 }
 
 //                var img = '<img alt="" src="'+file.mediumUrl+'" />';

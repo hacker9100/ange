@@ -12,7 +12,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_edit', ['$scope', '$stateParams', '$location', '$controller', '$q', '$modal', 'dialogs', function ($scope, $stateParams, $location, $controller, $q, $modal, dialogs) {
+    controllers.controller('task_edit', ['$scope', '$stateParams', '$location', '$controller', '$q', '$modal', 'dialogs', '$filter', function ($scope, $stateParams, $location, $controller, $q, $modal, dialogs, $filter) {
 
         /********** 초기화 **********/
         // 태스크 모델 초기화
@@ -30,8 +30,8 @@ define([
             var deferred = $q.defer();
 
             $q.all([
-                    $scope.getList('project', {}, {}, false).then(function(data){$scope.projects = data;}),
-                    $scope.getList('category', {}, {}, false).then(function(data){
+                    $scope.getList('cms/project', 'list', {}, {}, false).then(function(data){$scope.projects = data;}),
+                    $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
                         $scope.category = data;
 
                         var category_a = [];
@@ -50,8 +50,8 @@ define([
                         $scope.category_a = category_a;
                         $scope.category_b = category_b;
                     }),
-                    $scope.getList('section', {}, {ROLE: true}, false).then(function(data){$scope.seasons = data;}),
-                    $scope.getList('section', {}, {}, false).then(function(data){$scope.sections = data;})
+                    $scope.getList('cms/section', 'list', {}, {ROLE: true}, false).then(function(data){$scope.seasons = data;}),
+                    $scope.getList('cms/section', 'list', {}, {}, false).then(function(data){$scope.sections = data;})
                 ])
                 .then( function(results) {
                     deferred.resolve();
@@ -74,7 +74,7 @@ define([
             $scope.open = function($event) {
                 $event.preventDefault();
                 $event.stopPropagation();
-alert($scope.item.CLOSE_YMD)
+
                 $scope.opened = true;
             };
 
@@ -111,7 +111,7 @@ alert($scope.item.CLOSE_YMD)
 
         // 태스크 조회
         $scope.getTask = function () {
-            $scope.getItem('task', $stateParams.id, {}, true)
+            $scope.getItem('cms/task', 'item', $stateParams.id, {}, true)
                 .then(function(data){
                     $scope.item = data;
 
@@ -151,7 +151,7 @@ alert($scope.item.CLOSE_YMD)
 
         $scope.$watch('item.SEASON_NM', function (data) {
             if (data != null) {
-                $scope.getList('section', {}, {SEASON_NM: data.SEASON_NM}, false)
+                $scope.getList('cms/section', 'list', {}, {SEASON_NM: data.SEASON_NM}, false)
                     .then(function(data){
                         $scope.sections = data;
 
@@ -167,7 +167,7 @@ alert($scope.item.CLOSE_YMD)
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }else {
-                $scope.getList('section', {}, {}, false).then(function(data){$scope.sections = data;})
+                $scope.getList('cms/section', 'list', {}, {}, false).then(function(data){$scope.sections = data;})
             }
 
         });
@@ -175,13 +175,14 @@ alert($scope.item.CLOSE_YMD)
         // 태스크 저장 버튼 클릭
         $scope.click_saveTask = function () {
             $scope.item.CATEGORY = $scope.CATEGORY;
+            $scope.item.CLOSE_YMD = $filter('date')($scope.item.CLOSE_YMD, 'yyyy-MM-dd');
 
             if ($stateParams.id == 0) {
-                $scope.insertItem('task', $scope.item, false)
+                $scope.insertItem('cms/task', 'item', $scope.item, false)
                     .then(function(){$location.url('/task/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('task', $stateParams.id, $scope.item, false)
+                $scope.updateItem('cms/task', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/task/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

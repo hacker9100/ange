@@ -51,7 +51,7 @@ define([
         // 게시판 조회
         $scope.getCmsBoard = function () {
             if ($stateParams.id != 0) {
-                $scope.getItem('comm/webboard', $stateParams.id, {}, false)
+                $scope.getItem('comm/webboard', 'item', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
                         $scope.item.NOTICE_FL == 'Y' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;

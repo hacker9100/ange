@@ -20,6 +20,11 @@ define([
         }
     );
     app.constant(
+        "SERVER", {
+            "SERVER_URL" : "/serverscript/services/"
+        }
+    );
+    app.constant(
         "UPLOAD", {
             "UPLOAD_INDEX" : "/serverscript/upload/",
             "BASE_URL" : "http://localhost"

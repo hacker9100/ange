@@ -40,7 +40,7 @@ define([
 
         // 태스크 조회
         $scope.getTask = function () {
-            $scope.getItem('task', $stateParams.id, {}, true)
+            $scope.getItem('cms/task', 'item', $stateParams.id, {}, true)
                 .then(function(data){
                     $scope.item = data;
                     $scope.CATEGORY = angular.fromJson(data.CATEGORY);

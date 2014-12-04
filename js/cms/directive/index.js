@@ -5,12 +5,14 @@
  * Description : 사용할 모든 directive를 로드
  */
 define([
+    './ckeditor_directive',
+
     './cms_layout_directive',
     './cms_main_directive',
-    './cmsPortletDirective',
+    './cms_portlet_directive',
+
     './validationDirective',
     './dropdownSelectDirective',
-    './ckEditorDirective',
     './focusDirective'//,
 //    './plUploadDirective'
 ], function (){

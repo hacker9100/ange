@@ -39,10 +39,21 @@ define([
                 case '2E' :
                     var temp =
                         '<div class="row"> ' +
-                            '<div class="col-md-2" style="width:700px; height:500px; border:1px dashed; "> 여기는 사진 영역 </div>' +
-                            '<div class= "col-md-2" style="width:700px; height:300px; border:1px dashed; "></div>' +
+                            '<div class="col-md-2" style="width:700px; height:500px; border:1px dashed; "></div>' +
+                            '<div class= "col-md-2" style="width:700px; height:300px; border:1px dashed; ">' +
+                            $scope.item.BODY;
+                            '</div>' +
                         '</div>';
-                    $scope.item.BODY += temp;
+
+                    $scope.item.BODY = temp;
+
+//                    if (!angular.isUndefined(CKEDITOR)) {
+//                        var element = CKEDITOR.dom.element.createFromHtml( temp );
+//                        CKEDITOR.instances.editor1.insertElement( element );
+//                    }
+
+//                    CKEDITOR.instances.editor1.insertHtml(temp);
+
                     break;
                 case '2F' :
 
@@ -82,8 +93,8 @@ define([
 */
 
         /* 파일 업로드 설정 */
-        var url = '/serverscript/upload/';
-        $scope.options = { url: url, autoUpload: true };
+//        var url = '/serverscript/upload/';
+//        $scope.options = { url: url, autoUpload: true };
 
         /********** 초기화 **********/
         // 첨부 파일
@@ -104,15 +115,15 @@ define([
         /********** 이벤트 **********/
         // 태스크 목록 이동
         $scope.click_showContentList = function () {
-            $location.path('/content/'+$stateParams.menu+'/list');
+            $location.path('/'+$stateParams.menu+'/list');
         };
 
         // 태스크/콘텐츠 조회
         $scope.getTask = function () {
             var deferred = $q.defer();
             $q.all([
-                    $scope.getItem('task', $stateParams.id, {}, false).then(function(data){$scope.task = data;}),
-                    $scope.getItem('content', $stateParams.id, {}, false).then(function(data){
+                    $scope.getItem('cms/task', 'item', $stateParams.id, {}, false).then(function(data){console.log(data); $scope.task = data;}),
+                    $scope.getItem('cms/content', 'item', $stateParams.id, {}, false).then(function(data){
                         $scope.item = data;
 
                         var files = data.FILES;
@@ -144,12 +155,12 @@ define([
                     $scope.item.PHASE = '10';
                 }
 
-                $scope.insertItem('content', $scope.item, false)
-                    .then(function(){$location.url('/content/'+$stateParams.menu+'/list');})
+                $scope.insertItem('cms/content', 'item', $scope.item, false)
+                    .then(function(){$location.url('/'+$stateParams.menu+'/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('content', $scope.item.NO, $scope.item, false)
-                    .then(function(){$location.url('/content/'+$stateParams.menu+'/list');})
+                $scope.updateItem('cms/content', 'item', $scope.item.NO, $scope.item, false)
+                    .then(function(){$location.url('/'+$stateParams.menu+'/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
 
@@ -177,8 +188,8 @@ define([
                 phase = '21';
             }
 
-            $scope.updateStatus('content', $scope.item.NO, phase, false)
-                .then(function(){$location.url('/content/'+$stateParams.menu+'/list');})
+            $scope.updateStatus('cms/content', 'status', $scope.item.NO, phase, false)
+                .then(function(){$location.url('/'+$stateParams.menu+'/list');})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 //            $location.search('_phase', '11');
@@ -249,6 +260,10 @@ define([
             $scope.isApproval = true;
         }
 
+        if ($stateParams.menu == 'edit' || $stateParams.menu == 'edit_confirm') {
+            $scope.isTemplet = true;
+        }
+
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.permissionCheck)
@@ -272,12 +287,12 @@ define([
         $scope.approval.APPROVAL_ST = status;
 
         $scope.click_ok = function () {
-            dataService.db('approval').insert($scope.approval,function(data, status){
+            dataService.db('cms/approval').insert($scope.approval,function(data, status){
                 if (status != 200) {
                     alert('결재에 실패 했습니다.');
                 } else {
                     if (!data.err) {
-                        $location.url('/content/'+$stateParams.menu+'/list');
+                        $location.url('/'+$stateParams.menu+'/list');
                         $modalInstance.dismiss();
                     } else {
                         alert(data.msg);

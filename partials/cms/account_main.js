@@ -38,7 +38,7 @@ define([
         // 로그인 사용자 조회
         $scope.getCmsUser = function (session) {
             if (session.USER_ID != '') {
-                $scope.getItem('cms_user', session.USER_ID, {}, true)
+                $scope.getItem('cms_user', 'item', session.USER_ID, {}, true)
                     .then(function(data){$scope.item = data;})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {

@@ -43,7 +43,7 @@ define([
         // 게시판 조회
         $scope.getCmsBoard = function () {
             if ($stateParams.id != 0) {
-                return $scope.getItem('comm/webboard', $stateParams.id, {}, false)
+                return $scope.getItem('comm/webboard', 'item', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
 
