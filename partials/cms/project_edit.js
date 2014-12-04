@@ -19,7 +19,9 @@ define([
 
         // 파일 업로드 후 파일 정보가 변경되면 화면에 썸네일을 로딩
         $scope.$watch('newFile', function(data){
-            $scope.file = data[0];
+            if (typeof data !== 'undefined') {
+                $scope.file = data[0];
+            }
         });
 
         /********** 초기화 **********/

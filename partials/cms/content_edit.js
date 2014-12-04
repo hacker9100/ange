@@ -118,6 +118,11 @@ define([
             $location.path('/'+$stateParams.menu+'/list');
         };
 
+        // 이력조회 버튼 클릭
+        $scope.click_showGetHistory = function (key) {
+            $scope.openModal({TASK_NO : key}, 'lg');
+        };
+
         // 태스크/콘텐츠 조회
         $scope.getTask = function () {
             var deferred = $q.defer();

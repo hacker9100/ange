@@ -58,42 +58,20 @@
                     $_d->dataEnd($sql);
                 }
             } else if ($_type == 'list') {
-                if (isset($_search[ROLE]) && $_search[ROLE] != "") {
-                    $where_search = "";
+                $search_where = "";
 
-                    if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                        $where_search .= "AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
-                    }
-
-                    $sql = "SELECT
-                                ROLE_ID, ROLE_NM, ROLE_GB
-                            FROM
-                                COM_ROLE
-                            WHERE
-                                1 = 1
-                            ".$where_search."
-                            ";
-                } else {
-                    $sql = "SELECT
-                                TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                                NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST
-                            FROM
-                            (
-                                SELECT
-                                    NO, YEAR, MONTH, SUBJECT, REG_UID, REG_NM, REG_DT, PROJECT_ST
-                                FROM
-                                    CMS_PROJECT
-                                ORDER BY REG_DT DESC
-                            ) AS DATA,
-                            (SELECT @RNUM := 0) R,
-                            (
-                                SELECT
-                                    COUNT(*) AS TOTAL_COUNT
-                                FROM
-                                    CMS_PROJECT
-                            ) CNT
-                            ";
+                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
+                    $search_where .= "AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
                 }
+
+                $sql = "SELECT
+                            ROLE_ID, ROLE_NM, ROLE_GB
+                        FROM
+                            COM_ROLE
+                        WHERE
+                            1 = 1
+                        ".$search_where."
+                        ";
 
                 $data = $_d->sql_query($sql);
                 if ($_d->mysql_errno > 0) {

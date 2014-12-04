@@ -59,8 +59,16 @@
 
 <div loading-container="tableParams.settings().$loading">
     <table ng-table="tableParams" class="table">
-    <tbody>
-        <tr ng-repeat="item in $data">
+    <tbody ng-repeat="group in $groups">
+        <tr class="ng-table-group">
+            <td colspan="{{$columns.length}}">
+                <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                    <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                    <strong>{{ group.value }}</strong>
+                </a>
+            </td>
+        </tr>
+        <tr ng-hide="group.$hideRows" ng-repeat="item in group.data">
             <td data-title="'이름'" sortable="'USER_NM'">
                 {{item.USER_NM}}
             </td>
@@ -75,9 +83,14 @@
             </td>
             <td data-title="'기능'">
                 <a ng-click="click_getCmsUser(item.USER_ID)">편집</a>
-                <a ng-click="click_updateStatus($index)">상태변경</a>
+                <a ng-click="click_updateStatus(item)">상태변경</a>
                 <a ng-click="click_deleteCmsUser($parent.$index, $index)">삭제</a>
             </td>
+        </tr>
+    </tbody>
+    <tbody ng-show="$groups == ''">
+        <tr>
+            <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
         </tr>
     </tbody>
     </table>

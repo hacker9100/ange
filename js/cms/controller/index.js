@@ -31,7 +31,7 @@ define([
     '../../../partials/cms/task_edit',
     '../../../partials/cms/task_view',
     '../../../partials/cms/content_edit',
-//    '../../../partials/cms/content_view',
+    '../../../partials/cms/content_view',
     '../../../partials/cms/publish_list',
     '../../../partials/cms/publish_edit',
     // CMS 게시판

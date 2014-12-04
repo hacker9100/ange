@@ -11,24 +11,22 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('user_main', ['$scope', '$stateParams', '$location', '$controller', '$filter', 'ngTableParams', function ($scope, $stateParams, $location, $controller, $filter, ngTableParams) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+    controllers.controller('user_main', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', 'ngTableParams', function ($scope, $stateParams, $location, $filter, dialogs, ngTableParams) {
 
         /********** 초기화 **********/
         $scope.key = '';
         $scope.item = {};
+        $scope.search = {SYSTEM_GB: 'CMS'}
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('comm/permission', 'list', {}, {ROLE: true}, false)
+            $scope.getList('comm/permission', 'list', {}, {SYSTEM_GB: 'CMS'}, false)
                 .then(function(data){
                     $scope.roles = data;
                     $scope.user_roles = data;
                     $scope.item.ROLE = data[0];
                 })
-                .catch(function(error){alert(error)});
+                .catch(function(error){console.log(error)});
         };
 
         /********** 이벤트 **********/
@@ -36,9 +34,9 @@ define([
         $scope.click_deleteCmsUser = function (parentIdx, idx) {
             var user = $scope.tableParams.data[parentIdx].data[idx];
 
-            $scope.deleteItem('cms_user', 'item', user.USER_ID, true)
+            $scope.deleteItem('comm/com_user', 'item', user.USER_ID, true)
                 .then(function(){alert('정상적으로 삭제했습니다.'); $scope.tableParams.data[parentIdx].data.splice(idx, 1);})
-                .catch(function(error){alert(error)});
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 검색 버튼 클릭
@@ -60,7 +58,7 @@ define([
                 counts: [],         // hide page counts control
                 total: 0,           // length of data
                 getData: function($defer, params) {
-                    $scope.getList('cms_user', 'list', {}, $scope.search, true)
+                    $scope.getList('comm/com_user', 'list', {}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
                             $defer.resolve(data);
@@ -68,7 +66,7 @@ define([
 //                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
 //                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
-                        .catch(function(error){alert(error)});
+                        .catch(function(error){$defer.resolve([]);});
                 }
             });
 
@@ -79,14 +77,16 @@ define([
 
         // 사용자 저장 버튼 클릭
         $scope.click_saveCmsUser = function () {
+            $scope.item.SYSTEM_GB = 'CMS';
+
             if ($scope.key == '') {
-                $scope.insertItem('cms_user', 'item', $scope.item, false)
+                $scope.insertItem('comm/com_user', 'item', $scope.item, false)
                     .then(function(){$scope.tableParams.reload();})
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('cms_user', 'item', $scope.key, $scope.item, false)
+                $scope.updateItem('comm/com_user', 'item', $scope.key, $scope.item, false)
                     .then(function(){$scope.tableParams.reload();})
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
 
             $scope.click_cancel();
@@ -97,7 +97,7 @@ define([
             $scope.key = id;
 
             if ($scope.key != '') {
-                $scope.getItem('cms_user', 'item', $scope.key, {}, false)
+                $scope.getItem('comm/com_user', 'item', $scope.key, {SYSTEM_GB: 'CMS'}, false)
                     .then(function(data) {
                         var idx = 0;
                         for (var i=0; i < $scope.user_roles.length; i ++) {
@@ -109,18 +109,17 @@ define([
                         $scope.item = data;
                         $scope.item.ROLE = $scope.user_roles[idx];
                     })
-                    .catch(function(error){alert(error)});
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         }
 
         // 사용자 상태변경 버튼 클릭
-        $scope.click_updateStatus = function (idx) {
-            var user = $scope.tableParams.data[idx];
-            user.USER_ST = (user.USER_ST == "1" ? "0" : "1");
+        $scope.click_updateStatus = function (item) {
+            item.USER_ST = (item.USER_ST == "1" ? "0" : "1");
 
-            $scope.updateItem('cms_user', user.USER_ID, user, false)
+            $scope.updateItem('comm/com_user', 'item', item.USER_ID, item, false)
                 .then(function(){/*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
-                .catch(function(error){alert(error); $scope.tableParams.reload();});
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
         };
 
         // 취소 클릭
