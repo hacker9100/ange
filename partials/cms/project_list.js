@@ -59,12 +59,12 @@ define([
         // 삭제 버튼 클릭
         $scope.click_deleteProject = function (item) {
             if (item.PROJECT_ST == '3') {
-                dialogs.notify('오류', '완료 상태의 프로젝트는 삭제할 수 없습니다.', {size: 'md'});
+                dialogs.notify('알림', '완료 상태의 프로젝트는 삭제할 수 없습니다.', {size: 'md'});
                 return;
             }
 
             if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
-                dialogs.notify('오류', '삭제 권한이 없습니다.', {size: 'md'});
+                dialogs.notify('알림', '삭제 권한이 없습니다.', {size: 'md'});
                 return;
             }
 

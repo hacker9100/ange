@@ -129,9 +129,6 @@ define([
 
         // 콘텐츠 조회 화면 이동
         $scope.click_showViewContent = function (key) {
-            dialogs.notify('알림', "화면 수정 중 입니다.", {size: 'md'});
-            return;
-
             $location.url('/'+$stateParams.menu+'/view/'+key);
         };
 

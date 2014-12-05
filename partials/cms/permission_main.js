@@ -11,68 +11,38 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('permission_main', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
+    controllers.controller('permission_main', ['$scope', '$stateParams', '$location', 'dialogs', function ($scope, $stateParams, $location, dialogs) {
 
         /********** 초기화 **********/
         // 초기화
         $scope.init = function() {
-            dataService.db('comm/permission').find({},{ROLE: true},function(data, status){
-                if (status != 200) {
-                    alert('권한 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.roles = data;
-                            $scope.ROLE = data[0];
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("권한 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
-            });
+            $scope.getList('comm/permission', 'list', {}, {SYSTEM_GB: 'CMS'}, false)
+                .then(function(data){
+                    $scope.roles = data;
+                    $scope.ROLE = data[0];
+                })
+                .catch(function(error){console.log(error)});
         };
 
         /********** 이벤트 **********/
         $scope.$watch('ROLE', function(data) {
-            $scope.getPermission();
+            if (typeof data !== 'undefined') {
+                $scope.getPermission();
+            }
         });
 
         // 권한 조회
         $scope.getPermission = function() {
-            dataService.db('comm/permission').findOne($scope.ROLE.ROLE_ID,{},function(data, status){
-                if (status != 200) {
-                    alert('권한 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.list = data;
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("권한 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
-            });
+            $scope.getItem('comm/permission', 'item', $scope.ROLE.ROLE_ID, {}, false)
+                .then(function(data) {$scope.list = data;})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 권한 저장 버튼 클릭
         $scope.click_savePermission = function() {
-            dataService.db('comm/permission').update($scope.ROLE.ROLE_ID, $scope.list,function(data, status){
-                if (status != 200) {
-                    alert('권한 수정에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        alert("권한이 수정 되었습니다.");
-                    }
-                }
-            });
+            $scope.updateItem('comm/permission', 'item', $scope.ROLE.ROLE_ID, $scope.list, false)
+                .then(function(){dialogs.notify('알림', '권한이 수정 되었습니다.', {size: 'md'});})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         /********** 화면 초기화 **********/

@@ -75,11 +75,11 @@ define([
             }
 
             if ($stateParams.id == 0) {
-                $scope.insertItem('comm/webboard', $scope.item, false)
+                $scope.insertItem('comm/webboard', 'item', $scope.item, false)
                     .then(function(){$location.url('/webboard/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('comm/webboard', $stateParams.id, $scope.item, false)
+                $scope.updateItem('comm/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/webboard/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

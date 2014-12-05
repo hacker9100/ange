@@ -29,11 +29,25 @@
 */
     $_d = new MtJson();
 
+    if ($_d->connect_db == "") {
+        $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
+    }
+
+    if (!isset($_type) || $_type == "") {
+        $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
+    }
+
     switch ($_method) {
         case "GET":
-            if (isset($_key) && $_key != "") {
+            if ($_type == 'item') {
+                $search_where = "";
+
+                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
+                    $search_where .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                }
+
                 $sql = "SELECT
-                            U.USER_ID, U.USER_NM, U.PHONE, U.EMAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.NOTE,
+                            U.USER_ID, U.USER_NM, U.PHONE_1, U.PHONE_2, U.EMAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.NOTE,
                             UR.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
@@ -53,6 +67,7 @@
                         WHERE
                             U.ROLE_ID = R.ROLE_ID
                             AND U.USER_ID = '".$_key."'
+                            ".$search_where."
                         ";
 
                 $result = $_d->sql_query($sql);
@@ -65,12 +80,12 @@
                 } else {
                     $_d->dataEnd2($data);
                 }
-            } else {
-                $where_search = "";
+            } else if ($_type == 'list') {
+                $search_where = "";
                 $sort_order = "";
 
                 if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $where_search .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                    $search_where .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
                 }
 
                 if ((isset($_search[CONDITION]) && $_search[CONDITION] != "") && (isset($_search[KEYWORD]) && $_search[KEYWORD] != "")) {
@@ -85,11 +100,11 @@
 //                            $in_condition .= trim($e).",";
 //                        }
 
-                        $where_search .= "AND U.".$_search[CONDITION][value]." IN (".$in_condition.") ";
+                        $search_where .= "AND U.".$_search[CONDITION][value]." IN (".$in_condition.") ";
                     } else if ($_search[CONDITION][value] == "PHONE") {
-                        $where_search .= "AND ( U.PHONE_1 LIKE '%".$_search[KEYWORD]."%' OR U.PHONE_2 LIKE '%".$_search[KEYWORD]."%' ) ";
+                        $search_where .= "AND ( U.PHONE_1 LIKE '%".$_search[KEYWORD]."%' OR U.PHONE_2 LIKE '%".$_search[KEYWORD]."%' ) ";
                     } else {
-                        $where_search .= "AND U.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                        $search_where .= "AND U.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
                     }
                 }
                 if (isset($_search[TYPE]) && $_search[TYPE] != "") {
@@ -100,23 +115,23 @@
                         if (count($_search[TYPE]) - 1 != $i) $in_type .= ",";
                     }
 
-                    $where_search .= "AND U.USER_GB IN (".$in_type.") ";
+                    $search_where .= "AND U.USER_GB IN (".$in_type.") ";
                 }
                 if (isset($_search[STATUS]) && $_search[STATUS] != "" && $_search[STATUS][value] != "A") {
-                    $where_search .= "AND U.USER_ST  = '".$_search[STATUS][value]."' ";
+                    $search_where .= "AND U.USER_ST  = '".$_search[STATUS][value]."' ";
                 }
 
                 if (isset($_search[JOIN_PATH]) && $_search[JOIN_PATH] != "") {
-                    $where_search .= "AND U.JOIN_PATH  = '".$_search[JOIN_PATH]."' ";
+                    $search_where .= "AND U.JOIN_PATH  = '".$_search[JOIN_PATH]."' ";
                 }
                 if (isset($_search[ROLE]) && $_search[ROLE] != "") {
-                    $where_search .= "AND R.ROLE_ID  = '".$_search[ROLE][ROLE_ID]."' ";
+                    $search_where .= "AND R.ROLE_ID  = '".$_search[ROLE][ROLE_ID]."' ";
                 }
                 if (isset($_search[ROLE_ID]) && $_search[ROLE_ID] != "") {
-                    $where_search .= "AND R.ROLE_ID  = '".$_search[ROLE_ID]."' ";
+                    $search_where .= "AND R.ROLE_ID  = '".$_search[ROLE_ID]."' ";
                 }
                 if (!isset($_search[CONDITION]) && isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $where_search .= "AND U.USER_NM LIKE '%".$_search[KEYWORD]."%' ";
+                    $search_where .= "AND U.USER_NM LIKE '%".$_search[KEYWORD]."%' ";
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
@@ -139,7 +154,7 @@
                             WHERE
                                 U.USER_ID = UR.USER_ID
                                 AND UR.ROLE_ID = R.ROLE_ID
-                                ".$where_search."
+                                ".$search_where."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
@@ -150,7 +165,7 @@
                             WHERE
                                 U.USER_ID = UR.USER_ID
                                 AND UR.ROLE_ID = R.ROLE_ID
-                                ".$where_search."
+                                ".$search_where."
                         ) CNT
                         $sort_order
                         ";
@@ -357,19 +372,38 @@
                 $password = $_model[PASSWORD];
                 $hash = create_hash($password);
 
-                $update_password = ",PASSWORD = '".$hash."'";
+                $update_password = "PASSWORD = '".$hash."',";
             }
 
             $_d->sql_beginTransaction();
 
-            $sql = "UPDATE CMS_USER
+            $sql = "UPDATE COM_USER
                     SET
-                        USER_NM = '".$_model[USER_NM]."'
+                        USER_NM = '".$_model[USER_NM]."',
+                        NICK_NM = '".$_model[NICK_NM]."',
                         ".$update_password."
-                        ,USER_ST = '".$_model[USER_ST]."'
-                        ,PHONE = '".$_model[PHONE]."'
-                        ,EMAIL = '".$_model[EMAIL]."'
-                        ,NOTE = '".$_model[NOTE]."'
+                        ZIP_CODE = '".$_model[ZIP_CODE]."',
+                        ADDR = '".$_model[ADDR]."',
+                        ADDR_DETAIL = '".$_model[ADDR_DETAIL]."',
+                        PHONE_1 = '".$_model[PHONE_1]."',
+                        PHONE_2 = '".$_model[PHONE_2]."',
+                        USER_GB = '".$_model[USER_GB]."',
+                        USER_ST = '".$_model[USER_ST]."',
+                        EMAIL = '".$_model[EMAIL]."',
+                        SEX_GB = '".$_model[SEX_GB]."',
+                        NOTE = '".$_model[NOTE]."',
+                        PREGNENT_FL = '".$_model[PREGNENT_FL]."',
+                        BLOG_FL = '".$_model[BLOG_FL]."',
+                        JOIN_PATH = '".$_model[JOIN_PATH]."',
+                        CONTACT_ID = '".$_model[CONTACT_ID]."',
+                        CARE_CENTER = '".$_model[CARE_CENTER]."',
+                        CENTER_VISIT_DT = '".$_model[CENTER_VISIT_DT]."',
+                        CENTER_OUT_DT = '".$_model[CENTER_OUT_DT]."',
+                        EN_FL = '".$_model[EN_FL]."',
+                        EN_EMAIL_FL = '".$_model[EN_EMAIL_FL]."',
+                        EN_POST_FL = '".$_model[EN_POST_FL]."',
+                        EN_SNS_FL = '".$_model[EN_SNS_FL]."',
+                        EN_PHONE_FL = '".$_model[EN_PHONE_FL]."'
                     WHERE
                         USER_ID = '".$_key."'
                     ";
@@ -383,12 +417,14 @@
             }
 
             if (isset($_model[ROLE]) && $_model[ROLE] != "") {
-                $sql = "UPDATE USER_ROLE
+                $sql = "UPDATE USER_ROLE UR, COM_ROLE R
                         SET
-                            ROLE_ID = '".$_model[ROLE][ROLE_ID]."'
-                            ,REG_DT = SYSDATE()
+                            UR.ROLE_ID = '".$_model[ROLE][ROLE_ID]."',
+                            UR.REG_DT = SYSDATE()
                         WHERE
-                            USER_ID = '".$_key."'
+                            UR.ROLE_ID = R.ROLE_ID
+                            AND UR.USER_ID = '".$_key."'
+                            AND R.SYSTEM_GB = '".$_model[SYSTEM_GB]."'
                         ";
 
                 $_d->sql_query($sql);
@@ -428,7 +464,7 @@
                 $msg = $_d->mysql_error;
             }
 
-            $sql = "DELETE FROM CMS_USER WHERE USER_ID = '".$_key."'";
+            $sql = "DELETE FROM COM_USER WHERE USER_ID = '".$_key."'";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

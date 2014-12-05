@@ -305,11 +305,13 @@
                     TARGET_NO
                     ,SOURCE_NO
                     ,CONTENT_GB
+                    ,TARGET_GB
                     ,SORT_IDX
                 ) VALUES (
                     '".$no."'
                     , '".$ori_file_no."'
                     , 'FILE'
+                    , 'PROJECT'
                     , '0'
                 )";
 
