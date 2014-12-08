@@ -149,12 +149,32 @@ define(['./directives'], function (directives) {
                             { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
 //                            { name: 'tools', items: [ 'SpellChecker', 'Maximize' ] },
 //                            '/',
-                            { name: 'styles', items: [ 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
-                            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar' ] },
+                            { name: 'styles', items: [ 'Font', 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
+//                            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar' ] },
+                            { name: 'insert', items: [ 'Table', 'SpecialChar' ] },
                             { name: 'forms', items: [ 'Outdent', 'Indent' ] },
                             { name: 'clipboard', items: [ 'Undo', 'Redo' ] },
                             { name: 'document', items: [ 'PageBreak', 'Source' ] }
                         ],
+                        format_tags: 'p;h2;h3;pre;links;test',
+                        format_links: {
+                            name: 'Links',
+                            element: 'span',
+                            styles: {
+                                color: 'red',
+                                'font-family': 'arial',
+                                'font-weight': 'bold'
+                            }
+                        },
+                        format_test: {
+                            name: 'Test',
+                            element: 'span',
+                            styles: {
+                                color: 'red',
+                                'font-family': 'arial',
+                                'font-weight': 'bold'
+                            }
+                        },
 //                        disableNativeSpellChecker: false,
                         uiColor: '#FAFAFA',
                         height: '400px',

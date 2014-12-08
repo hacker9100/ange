@@ -1,4 +1,38 @@
 /*
+ * Nanum Gothic (Korean) http://www.google.com/webfonts/earlyaccess
+ */
+@font-face {
+    font-family: 'Nanum Gothic';
+    font-style: normal;
+    font-weight: 700;
+    src: url('../../fonts/NanumGothic-Bold.eot');
+    src: url('../../fonts/NanumGothic-Bold.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/NanumGothic-Bold.woff2') format('woff2'),
+    url('../../fonts/NanumGothic-Bold.woff') format('woff'),
+    url('../../fonts/NanumGothic-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Nanum Gothic';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../fonts/NanumGothic-Regular.eot');
+    src: url('../../fonts/NanumGothic-Regular.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/NanumGothic-Regular.woff2') format('woff2'),
+    url('../../fonts/NanumGothic-Regular.woff') format('woff'),
+    url('../../fonts/NanumGothic-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Nanum Gothic';
+    font-style: normal;
+    font-weight: 800;
+    src: url('../../fonts/NanumGothic-ExtraBold.eot');
+    src: url('../../fonts/NanumGothic-ExtraBold.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/NanumGothic-ExtraBold.woff2') format('woff2'),
+    url('../../fonts/NanumGothic-ExtraBold.woff') format('woff'),
+    url('../../fonts/NanumGothic-ExtraBold.ttf') format('truetype');
+}
+
+/*
 Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
@@ -6,7 +40,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 body
 {
 	/* Font */
-	font-family: sans-serif, Arial, Verdana, "Trebuchet MS";
+	font-family: Nanum Gothic, sans-serif, Arial, Verdana, "Trebuchet MS";
 	font-size: 12px;
 
 	/* Text color */
