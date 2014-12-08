@@ -11,31 +11,18 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('category_main', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
+    controllers.controller('category_main', ['$scope', '$stateParams', '$location', 'dialogs', function ($scope, $stateParams, $location, dialogs) {
 
         /********** 초기화 **********/
         $scope.key = '';
+        $scope.item = {};
+        $scope.search = {};
 
         // 초기화
         $scope.init = function() {
-            dataService.db('cms/category').find({},{CATEGORY_GB: '2', PARENT_NO: '0'},function(data, status){
-                if (status != 200) {
-                    alert('카테고리 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.parents = data;
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("카테고리 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
-
-                $scope.isLoading = false;
-            });
+            $scope.getList('cms/category', 'list', {}, {CATEGORY_GB: '2', PARENT_NO: '0'}, false)
+                .then(function(data){$scope.parents = data;})
+                .catch(function(error){console.log(error)});
         };
 
         /********** 이벤트 **********/
@@ -43,17 +30,9 @@ define([
         $scope.click_deleteCategory = function (idx) {
             var category = $scope.list[idx];
 
-            dataService.db('cms/category').remove(category.NO,function(data, status){
-                if (status != 200) {
-                    alert('삭제에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        $scope.list.splice(idx, 1);
-                    }
-                }
-            });
+            $scope.deleteItem('cms/category', 'item', category.NO, true)
+                .then(function(){alert('정상적으로 삭제했습니다.'); $scope.list.splice(idx, 1);})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 검색 버튼 클릭
@@ -63,53 +42,21 @@ define([
 
         // 카테고리 목록 조회
         $scope.getCategoryList = function (search) {
-            $scope.isLoading = true;
-            dataService.db('cms/category').find({},search,function(data, status){
-                if (status != 200) {
-                    alert('카테고리 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.list = data;
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("카테고리 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
-
-                $scope.isLoading = false;
-            });
+            $scope.getList('cms/category', 'list', {}, search, true)
+                .then(function(data){$scope.list = data;})
+                .catch(function(error){$scope.list = []});
         };
 
         // 카테고리 저장 버튼 클릭
         $scope.click_saveCategory = function () {
             if ($scope.key == '') {
-                dataService.db('cms/category').insert($scope.item,function(data, status){
-                    if (status != 200) {
-                        alert('등록에 실패 했습니다.');
-                    } else {
-                        if (data.err == true) {
-                            alert(data.msg);
-                        } else {
-                            $scope.getCategoryList();
-                        }
-                    }
-                });
+                $scope.insertItem('cms/category', 'item', $scope.item, false)
+                    .then(function(){$scope.getCategoryList();})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                dataService.db('cms/category').update($scope.key,$scope.item,function(data, status){
-                    if (status != 200) {
-                        alert('수정에 실패 했습니다.');
-                    } else {
-                        if (data.err == true) {
-                            alert(data.msg);
-                        } else {
-                            $scope.getCategoryList();
-                        }
-                    }
-                });
+                $scope.updateItem('cms/category', 'item', $scope.key, $scope.item, false)
+                    .then(function(){$scope.getCategoryList();})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
 
             $scope.key = '';
@@ -120,30 +67,19 @@ define([
             $scope.key = id;
 
             if ($scope.key != '') {
-                dataService.db('cms/category').findOne($scope.key,{},function(data, status){
-                    if (status != 200) {
-                        alert('카테고리 조회에 실패 했습니다.');
-                    } else {
-                        if (data.err == true) {
-                            alert(data.msg);
-                        } else {
-                            if (angular.isObject(data)) {
-                                var idx = 0;
-                                for (var i=0; i < $scope.parents.length; i ++) {
-                                    if (data.PARENT_NO == $scope.parents[i].NO) {
-                                        idx = i;
-                                    }
-                                }
-
-                                $scope.item = data;
-                                $scope.item.PARENT = data.PARENT_NO == 0 ? null : $scope.parents[idx];
-                            } else {
-                                // TODO: 데이터가 없을 경우 처리
-                                alert("카테고리 조회 데이터가 없습니다.");
+                $scope.getItem('cms/category', 'item', $scope.key, {}, false)
+                    .then(function(data) {
+                        var idx = 0;
+                        for (var i=0; i < $scope.parents.length; i ++) {
+                            if (data.PARENT_NO == $scope.parents[i].NO) {
+                                idx = i;
                             }
                         }
-                    }
-                });
+
+                        $scope.item = data;
+                        $scope.item.PARENT = data.PARENT_NO == '0' ? null : $scope.parents[idx];
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -152,17 +88,9 @@ define([
             var category = $scope.list[idx];
             category.CATEGORY_ST = (category.CATEGORY_ST == "1" ? "0" : "1");
 
-            dataService.db('cms/category').update(category.NO,category,function(data, status){
-                if (status != 200) {
-                    alert('수정에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        $scope.getCategoryList();
-                    }
-                }
-            });
+            $scope.updateItem('cms/category', 'item', category.NO, category, false)
+                .then(function(){$scope.getCategoryList(); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 취소

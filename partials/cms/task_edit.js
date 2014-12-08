@@ -25,12 +25,23 @@ define([
         // 카테고리 선택 콤보박스 설정
         $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
 
+        // 날짜 콤보박스
+        var year = [];
+        var now = new Date();
+        var nowYear = now.getFullYear();
+
         // 초기화
         $scope.init = function() {
+            for (var i = nowYear - 5; i < nowYear + 5; i++) {
+                year.push(i+'');
+            }
+
+            $scope.years = year;
+
             var deferred = $q.defer();
 
             $q.all([
-                    $scope.getList('cms/project', 'list', {}, {}, false).then(function(data){$scope.projects = data;}),
+//                    $scope.getList('cms/project', 'list', {}, {}, false).then(function(data){$scope.projects = data;}),
                     $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
                         $scope.category = data;
 
@@ -103,6 +114,15 @@ define([
         $scope.click_removeCategory = function(idx) {
             $scope.CATEGORY.splice(idx, 1);
         }
+
+        // 연도 변경 선택
+        $scope.$watch('YEAR', function (data) {
+            if (data != null) {
+                $scope.getList('cms/project', 'list', {}, {YEAR: data}, false)
+                    .then(function(data){$scope.projects = data;})
+                    .catch(function(error){console.log(error)});
+            }
+        });
 
         // 태스크 목록 이동
         $scope.click_showTaskList = function () {
@@ -196,7 +216,7 @@ define([
 
         // 사용자 선택 버튼 클릭
         $scope.click_selectEditor = function () {
-            $scope.openModal(true, {ROLE_ID : 'IN_EDITOR'});
+            $scope.openModal(true, {ROLE_ID : 'IN_EDITOR, OUT_EDITOR'});
         }
 
         $scope.openModal = function (modal, search, size) {

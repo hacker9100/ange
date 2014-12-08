@@ -20,7 +20,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('comm/permission', 'list', {}, {SYSTEM_GB: 'CMS'}, false)
+            $scope.getList('com/permission', 'list', {}, {SYSTEM_GB: 'CMS'}, false)
                 .then(function(data){
                     $scope.roles = data;
                     $scope.user_roles = data;
@@ -34,7 +34,7 @@ define([
         $scope.click_deleteCmsUser = function (parentIdx, idx) {
             var user = $scope.tableParams.data[parentIdx].data[idx];
 
-            $scope.deleteItem('comm/com_user', 'item', user.USER_ID, true)
+            $scope.deleteItem('com/user', 'item', user.USER_ID, true)
                 .then(function(){alert('정상적으로 삭제했습니다.'); $scope.tableParams.data[parentIdx].data.splice(idx, 1);})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
@@ -58,7 +58,7 @@ define([
                 counts: [],         // hide page counts control
                 total: 0,           // length of data
                 getData: function($defer, params) {
-                    $scope.getList('comm/com_user', 'list', {}, $scope.search, true)
+                    $scope.getList('com/user', 'list', {}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
                             $defer.resolve(data);
@@ -80,11 +80,11 @@ define([
             $scope.item.SYSTEM_GB = 'CMS';
 
             if ($scope.key == '') {
-                $scope.insertItem('comm/com_user', 'item', $scope.item, false)
+                $scope.insertItem('com/user', 'item', $scope.item, false)
                     .then(function(){$scope.tableParams.reload();})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('comm/com_user', 'item', $scope.key, $scope.item, false)
+                $scope.updateItem('com/user', 'item', $scope.key, $scope.item, false)
                     .then(function(){$scope.tableParams.reload();})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -97,7 +97,7 @@ define([
             $scope.key = id;
 
             if ($scope.key != '') {
-                $scope.getItem('comm/com_user', 'item', $scope.key, {SYSTEM_GB: 'CMS'}, false)
+                $scope.getItem('com/user', 'item', $scope.key, {SYSTEM_GB: 'CMS'}, false)
                     .then(function(data) {
                         var idx = 0;
                         for (var i=0; i < $scope.user_roles.length; i ++) {
@@ -117,7 +117,7 @@ define([
         $scope.click_updateStatus = function (item) {
             item.USER_ST = (item.USER_ST == "1" ? "0" : "1");
 
-            $scope.updateItem('comm/com_user', 'item', item.USER_ID, item, false)
+            $scope.updateItem('com/user', 'item', item.USER_ID, item, false)
                 .then(function(){/*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
         };

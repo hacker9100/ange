@@ -67,11 +67,11 @@ define([
             $scope.item.BLOG = $scope.blog;
 
             if ($stateParams.key == 0) {
-                $scope.insertItem('comm/com_user', $scope.item, false)
+                $scope.insertItem('com/user', $scope.item, false)
                     .then(function(){$location.url('/user/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('comm/com_user', $stateParams.key, $scope.item, false)
+                $scope.updateItem('com/user', $stateParams.key, $scope.item, false)
                     .then(function(){$location.url('/user/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -80,7 +80,7 @@ define([
         // 사용자 조회
         $scope.getCmsUser = function () {
             if ($stateParams.key != 0) {
-                $scope.getItem('comm/com_user', $stateParams.key, {}, false)
+                $scope.getItem('com/user', $stateParams.key, {}, false)
                     .then(function(data) {
                         var idx = 0;
                         for (var i=0; i < $scope.user_roles.length; i ++) {

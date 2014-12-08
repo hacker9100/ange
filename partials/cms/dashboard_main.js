@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('dashboard_main', ['$scope', '$rootScope', '$location', 'dialogs', function ($scope, $rootScope, $location, dialogs) {
+    controllers.controller('dashboard_main', ['$scope', '$rootScope', '$location', 'dialogs', 'COMMON', function ($scope, $rootScope, $location, dialogs, COMMON) {
 
         /********** 초기화 **********/
         // 초기화
@@ -19,11 +19,8 @@ define([
             $scope.oneAtATime = true;
 
             $scope.PAGE_NO = 0;
-            $scope.PAGE_SIZE = 5;
+            $scope.PAGE_SIZE = COMMON.DASHBOARD_PAGE_SIZE;
         };
-
-//        $scope.list1 = {api: 'webboard', title: '공지사항', css: 'list-group-item list-group-item-labeling-green'};
-//        $scope.list2 = {api: 'project', title: '프로젝트', css: 'list-group-item list-group-item-labeling-blue'};
 
         /********** 이벤트 **********/
         // 태스크 목록 이동
@@ -45,7 +42,7 @@ define([
                 list = 'edit';
             }
 
-            $location.url('/content/'+list+'/view/'+item.NO);
+            $location.url('/'+list+'/view/'+item.NO);
         };
 
         // 이력조회 버튼 클릭

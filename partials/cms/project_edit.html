@@ -1,25 +1,25 @@
 <!-- Contents Include -->
 <div class="col-md-12" ng-controller="project_edit">
 
-    <div ng-model="item" lass="row">
-        <form id="fileupload" role="form" name="edit_from" class="form-horizontal" method="POST" enctype="multipart/form-data" data-file-upload="options">
+    <div ng-model="item" class="row form_basic_wrap">
+        <form id="fileupload" role="form" name="edit_form" class="form-horizontal form_basic_100" method="POST" enctype="multipart/form-data" data-file-upload="options">
 
-            <div class= "form-group" ng-class="{error: edit_from.subject.$invalid}">
-                <label class= "col-md-2">시리즈</label>
-                <div class="col-md-4">
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.subject.$invalid}">
+                <label class= "form_basic_label">시리즈</label>
+                <div class="form_basic_input">
                     <select ng-model="item.SERIES" ng-options="v.SERIES_NM for v in series" class= "form-control" ></select>
                 </div>
             </div>
-            <div class= "form-group" ng-class="{error: edit_from.subject.$invalid}">
-                <label class= "col-md-2">호제</label>
-                <div class="col-md-4">
-                    <input name="subject" ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder="프로젝트 주제" required/>
-                    <span ng-show="edit_from.subject.$dirty && edit_from.subject.$invalid" class="help-inline">Subject Required</span>
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.subject.$invalid}">
+                <label class= "form_basic_label">호제</label>
+                <div class="form_basic_input">
+                    <input name="subject" ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder="프로젝트 호제" required/>
+                    <span ng-show="edit_form.subject.$dirty && edit_form.subject.$invalid" class="help-inline">프로젝트 호제가 누락되었습니다.</span>
                 </div>
             </div>
-            <div class= "form-group">
-                <label class= "col-md-2">귀속년</label>
-                <div class="col-md-4">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">귀속연도</label>
+                <div class="form_basic_input">
                     <select ng-model="item.YEAR" ng-options="v for v in years" class= "form-control" ></select>
                 </div>
             </div>
@@ -35,8 +35,8 @@
                     <!--<input ng-model="item.REG_NM" type= "text" class= "form-control" placeholder= "등록자 명"/>-->
                 <!--</div>-->
             <!--</div>-->
-            <div class= "form-group">
-                <label class= "col-md-2">표지이미지</label>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">표지이미지</label>
                 <div class="col-md-9">
                     <div class="row fileupload-buttonbar">
                         <div class="col-lg-7 files">
@@ -56,9 +56,7 @@
                     </div>
                     <td data-ng-switch data-on="!!file.thumbnailUrl">썸네일 이미지
                         <div ng-model="file" class="preview">
-                            <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>
-                            <!--<a data-ng-href="http://localhost/app/upload/files/Koala.jpg" title="Koala.jpg" download="Koala.jpg" data-gallery><img data-ng-src="http://localhost/app/upload/files/thumbnail/Koala.jpg" alt=""></a>-->
-                            <!--$scope.file = {"name":"Kolal.jpg","size":595284,"url":"http://localhost/app/upload/files/Kolal.jpg","thumbnailUrl":"http://localhost/app/serverscript/upload/../../upload/files/thumbnail/Kolal.jpg","deleteUrl":"http://localhost/app/serverscript/upload/?file=Kolal.jpg","deleteType":"DELETE"};-->
+                            <img data-ng-src="{{file.thumbnailUrl}}" alt="">
                         </div>
                     </td>
                     <div id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">
@@ -67,25 +65,30 @@
                     </div>
                 </div>
             </div>
-            <div class= "form-group">
-                <label class= "col-md-2">설명</label>
-                <div class= "col-md-9">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">설명</label>
+                <div class= "col-xs-6 form_basic_input">
                     <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 개요.."/>
                 </div>
             </div>
-            <div class= "form-group" ng-show="item.NO">
-                <input ng-model="item.COMPLETE_FL" type="checkbox"> 이 프로젝트의 모든 콘텐츠 등록이 완료되었습니다.
+            <div class= "form-group form_basic_group" ng-show="item.NO">
+                <label class= "form_basic_label"></label>
+                <div class="form_basic_input">
+                    <input ng-model="item.COMPLETE_FL" type="checkbox"> 이 프로젝트의 모든 콘텐츠 등록이 완료되었습니다.
+                </div>
             </div>
         </form>
 
         <!-- 하단 버튼 -->
-        <div class= "form-group">
-            <div class="col-md-4">
-                <button class="btn btn-success fileinput-button" ng-click="click_showProjectList();" >
-                    <i class="glyphicon glyphicon-upload"></i>
+        <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+            <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showProjectList();" >
+                    <i class="glyphicon glyphicon-list"></i>
                     <span>목록</span>
                 </button>
-                <button type="button" class="btn btn-primary start" ng-click="click_saveProject();" ng-disabled="edit_from.$invalid">
+            </div>
+            <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveProject();" ng-disabled="edit_form.$invalid">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>저장</span>
                 </button>

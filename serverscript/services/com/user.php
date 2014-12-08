@@ -47,7 +47,7 @@
                 }
 
                 $sql = "SELECT
-                            U.USER_ID, U.USER_NM, U.PHONE_1, U.PHONE_2, U.EMAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.NOTE,
+                            U.USER_ID, U.USER_NM, U.PHONE_1, U.PHONE_2, U.EMAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
                             UR.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
@@ -128,7 +128,14 @@
                     $search_where .= "AND R.ROLE_ID  = '".$_search[ROLE][ROLE_ID]."' ";
                 }
                 if (isset($_search[ROLE_ID]) && $_search[ROLE_ID] != "") {
-                    $search_where .= "AND R.ROLE_ID  = '".$_search[ROLE_ID]."' ";
+                    $arr_roles = explode(",", $_search[ROLE_ID]);
+                    $in_role = "";
+                    for ($i=0; $i< sizeof($arr_roles); $i++) {
+                        $in_role .= "'".trim($arr_roles[$i])."'";
+                        if (sizeof($arr_roles) - 1 != $i) $in_role .= ",";
+                    }
+
+                    $search_where .= "AND R.ROLE_ID  IN (".$in_role.") ";
                 }
                 if (!isset($_search[CONDITION]) && isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_where .= "AND U.USER_NM LIKE '%".$_search[KEYWORD]."%' ";
@@ -140,13 +147,13 @@
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, NOTE,
+                            USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, INTRO, NOTE,
                             PREGNENT_FL, BLOG_FL, JOIN_PATH, CONTACT_ID, CARE_CENTER, CENTER_VISIT_DT, CENTER_OUT_DT, EN_FL, EN_EMAIL_FL, EN_POST_FL, EN_SNS_FL, EN_PHONE_FL,
                             ROLE_ID, ROLE_NM
                         FROM
                         (
                             SELECT
-                                U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.NOTE,
+                                U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
                                 U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SNS_FL, U.EN_PHONE_FL,
                                 UR.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
                             FROM
@@ -214,6 +221,7 @@
                         USER_ST,
                         EMAIL,
                         SEX_GB,
+                        INTRO,
                         NOTE,
                         PREGNENT_FL,
                         BLOG_FL,
@@ -242,6 +250,7 @@
                         'N',
                         '".$_model[EMAIL]."',
                         '".$_model[SEX_GB]."',
+                        '".$_model[INTRO]."',
                         '".$_model[NOTE]."',
                         '".$_model[PREGNENT_FL]."',
                         '".$_model[BLOG_FL]."',
@@ -391,6 +400,7 @@
                         USER_ST = '".$_model[USER_ST]."',
                         EMAIL = '".$_model[EMAIL]."',
                         SEX_GB = '".$_model[SEX_GB]."',
+                        INTRO = '".$_model[INTRO]."',
                         NOTE = '".$_model[NOTE]."',
                         PREGNENT_FL = '".$_model[PREGNENT_FL]."',
                         BLOG_FL = '".$_model[BLOG_FL]."',

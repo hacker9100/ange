@@ -93,7 +93,7 @@
         </accordion-group>
     </accordion>
 
-    <div ng-model="item" class="col-xs-12 row" style="margin:0px auto;">
+    <div ng-model="item" class="col-xs-12 row" style="margin:0px auto;" ng-init="scope = { isDisabled: false }">
         <form role="form" name="editForm" class="form-horizontal form_basic_100">
             <div class= "form-group form_basic_group">
                 <H5 style="line-height:8px; margin:0;">
@@ -103,7 +103,7 @@
 
             <div class= "form-group form_basic_group" style="float:left;">
                 <div class="editor_cell" style="float:left; left:0;">
-                    <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions"></textarea>
+                    <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>
                 </div>
                 <div class="editor_template_cell" style="float:left; width:782px; margin-top:0px; border:1px solid #DEDEDE; " ng-show="isTemplet">
                     <div style="width:100%; background:#464646; color:#fff; line-height: 42px; padding-left: 15px;">
@@ -116,7 +116,7 @@
                         </div>
                     </div>
 
-                    <div class="form-horizontal" style="float:left; padding:10px;">
+                    <div class="form-horizontal" style="float:left; padding:10px;" disabled="{{scope.isDisabled}}">
                         <!-- span ng-click="click_selectTemplet('2E')">2단 사진 세로 구성</span -->
 
                         <div style="float:left; background-image:URL(); padding:4px; color:#646464; font-size: 0.68em; border:1px solid #EDEDED; width:98px; margin:5px; height:60px; cursor:pointer;" ng-click="click_selectTemplet('2E')">
@@ -142,7 +142,7 @@
                     <i class="glyphicon glyphicon-list"></i>
                     <span>목록</span>
                 </button>
-                <button type="button" class="btn btn-warning btn-xs start" ng-click="click_commitContent();" ng-hide="!isCommit">
+                <button type="button" class="btn btn-warning btn-xs start" ng-click="click_commitContent();" ng-hide="!isCommit || task.PHASE == '11' || task.PHASE == '21'">
                     <i class="glyphicon glyphicon-check"></i>
                     <span>등록&승인요청</span>
                 </button>
@@ -158,7 +158,6 @@
 
             <!-- 하단 버튼 -->
             <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
-
                 <button type="button" class="btn btn-info btn-xs fileinput-button" ng-click="click_showPreview();" >
                     <i class="glyphicon glyphicon-zoom-in"></i>
                     <span>미리보기</span>
@@ -183,12 +182,6 @@
     </div>
     <div class="modal-body">
         <div ng-model="approval" lass="row" class="form-horizontal">
-            <div class= "form-group">
-                <label class= "col-md-2">콘텐츠순번</label>
-                <div class="col-md-4">
-                    <input ng-model="approval.CONTENT_NO" type= "text" class= "form-control" placeholder= "콘텐츠순번"/>
-                </div>
-            </div>
             <div class= "form-group">
                 <label class= "col-md-2">메모</label>
                 <div class="col-md-9">

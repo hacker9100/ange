@@ -121,7 +121,7 @@
                 $search_where = $search_common;
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
@@ -339,7 +339,15 @@
                 }
             }
 
-            $sql = "INSERT INTO CMS_HISTORY
+            MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            }else{
+                $_d->sql_commit();
+
+                $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
                         ,WORK_GB
@@ -362,15 +370,8 @@
                         ,'/webboard'
                     )";
 
-            $_d->sql_query($sql);
+                $_d->sql_query($sql);
 
-            MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
-
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
@@ -569,7 +570,13 @@
                 }
             }
 
-            $sql = "INSERT INTO CMS_HISTORY
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("수정실패입니다:".$msg);
+            }else{
+                $_d->sql_commit();
+
+                $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
                         ,WORK_GB
@@ -592,13 +599,8 @@
                         ,'/webboard'
                     )";
 
-            $_d->sql_query($sql);
+                $_d->sql_query($sql);
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("수정실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
@@ -665,7 +667,13 @@
             }
 */
 
-            $sql = "INSERT INTO CMS_HISTORY
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("삭제실패입니다:".$msg);
+            }else{
+                $_d->sql_commit();
+
+                $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
                         ,WORK_GB
@@ -688,13 +696,8 @@
                         ,'/webboard'
                     )";
 
-            $_d->sql_query($sql);
+                $_d->sql_query($sql);
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("삭제실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 

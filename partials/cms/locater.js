@@ -6,7 +6,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('locater', ['$scope', '$stateParams', '$location', function ($scope, $stateParams, $location) {
+    controllers.controller('locater', ['$scope', '$rootScope', '$stateParams', '$location', '$filter', function ($scope, $rootScope, $stateParams, $location, $filter) {
 
 /*
         var path = [
@@ -15,34 +15,50 @@ define([
                     ];
 */
 
-        var path = "/webboard/edit";
+//        var path = "/webboard/edit";
+//
+//        var nav = function(path) {
+//            var url = "";
+//            var items = new Array();
+//            var sp = path.split('/');
+//
+//            for (var i = 1; i < sp.length; i++) {
+////                alert(sp.splice(idx, sp.length));
+//                url += "/" + sp[i];
+//                var last = false;
+//                if (i + 1 == sp.length) last = true;
+//                items.push({url: url, title: sp[i], last: last });
+//            }
+//
+////            alert(JSON.stringify(items))
+//
+//            return items;
+//        }
+//
+//        $scope.items = nav(path);
+//
+//        $scope.isActive = function(item) {
+//            if (item.last == true) {
+//                return true;
+//            }
+//            return false;
+//        };
 
-        var nav = function(path) {
-            var url = "";
-            var items = new Array();
-            var sp = path.split('/');
+        var spMenu = $location.path().split('/');
 
-            for (var i = 1; i < sp.length; i++) {
-//                alert(sp.splice(idx, sp.length));
-                url += "/" + sp[i];
-                var last = false;
-                if (i + 1 == sp.length) last = true;
-                items.push({url: url, title: sp[i], last: last });
-            }
+        var menu = $filter('filter')($rootScope.cms_menu, function (data) {
+            return (data.MENU_URL.indexOf(spMenu[1]) > -1)
+        })[0];
 
-//            alert(JSON.stringify(items))
+        var channel = $filter('filter')($rootScope.cms_channel, function (data) {
+            return data.CHANNEL_NO === menu.CHANNEL_NO;
+        })[0];
 
-            return items;
-        }
+        var items = [];
+        items.push({LOCATOR_URL: '', LOCATOR_NM: channel.CHANNEL_NM, CHANNEL_NO: channel.CHANNEL_NO, CHANNEL_FL: 'Y'});
+        items.push({LOCATOR_URL: menu.MENU_URL, LOCATOR_NM: menu.MENU_NM, CHANNEL_NO: '', CHANNEL_FL: 'N'});
 
-        $scope.items = nav(path);
-
-        $scope.isActive = function(item) {
-            if (item.last == true) {
-                return true;
-            }
-            return false;
-        };
+        $scope.items = items;
 
 	}]);
 });

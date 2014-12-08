@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
+    controllers.controller('project_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'COMMON', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, COMMON) {
 
         /********** 초기화 **********/
         // 검색 조건
@@ -29,10 +29,11 @@ define([
             }
 
             // 검색어
-            var order = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
+            var condition = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
             $scope.years = year;
-            $scope.order = order;
+            $scope.conditions = condition;
+            $scope.search.CONDITION = condition[0];
         };
 
         /********** 이벤트 **********/
@@ -79,7 +80,7 @@ define([
         }
 
         // 페이지 사이즈
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = COMMON.PAGE_SIZE;
 
         // 프로젝트 목록 조회
         $scope.getProjectList = function () {

@@ -11,10 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('contact_list', ['$scope', '$stateParams', '$location', '$controller', '$filter', 'ngTableParams', function ($scope, $stateParams, $location, $controller, $filter, ngTableParams) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+    controllers.controller('contact_list', ['$scope', '$stateParams', '$location', '$filter', 'ngTableParams', function ($scope, $stateParams, $location, $filter, ngTableParams) {
 
         /********** 초기화 **********/
         $scope.key = '';
@@ -22,7 +19,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('comm/permission', 'list', {}, {ROLE: true}, false)
+            $scope.getList('com/permission', 'list', {}, {ROLE: true}, false)
                 .then(function(data){
                     $scope.roles = data;
                     $scope.user_roles = data;
@@ -36,7 +33,7 @@ define([
         $scope.click_deleteCmsUser = function (idx) {
             var user = $scope.tableParams.data[idx];
 
-            $scope.deleteItem('cms_user', 'item', user.USER_ID, true)
+            $scope.deleteItem('com/user', 'item', user.USER_ID, true)
                 .then(function(){alert('정상적으로 삭제했습니다.'); $scope.tableParams.data.splice(idx, 1);})
                 .catch(function(error){alert(error)});
         };
@@ -60,7 +57,7 @@ define([
                 counts: [],         // hide page counts control
                 total: 0,           // length of data
                 getData: function($defer, params) {
-                    $scope.getList('cms_user', 'list', {}, $scope.search, true)
+                    $scope.getList('com/user', 'list', {}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
                             $defer.resolve(data);
@@ -80,11 +77,11 @@ define([
         // 사용자 저장 버튼 클릭
         $scope.click_saveCmsUser = function () {
             if ($scope.key == '') {
-                $scope.insertItem('cms_user', 'item', $scope.item, false)
+                $scope.insertItem('com/user', 'item', $scope.item, false)
                     .then(function(){$scope.tableParams.reload();})
                     .catch(function(error){alert(error)});
             } else {
-                $scope.updateItem('cms_user', 'item', $scope.key, $scope.item, false)
+                $scope.updateItem('com/user', 'item', $scope.key, $scope.item, false)
                     .then(function(){$scope.tableParams.reload();})
                     .catch(function(error){alert(error)});
             }
@@ -97,7 +94,7 @@ define([
             $scope.key = id;
 
             if ($scope.key != '') {
-                $scope.getItem('cms_user', 'item', $scope.key, {}, false)
+                $scope.getItem('com/user', 'item', $scope.key, {}, false)
                     .then(function(data) { $scope.item = data; })
                     .catch(function(error){alert(error)});
             }
@@ -127,7 +124,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('comm/permission', 'list', {}, {ROLE: true}, false)
+            $scope.getList('com/permission', 'list', {}, {ROLE: true}, false)
                 .then(function(data){
                     $scope.roles = data;
                     $scope.user_roles = data;
@@ -146,7 +143,7 @@ define([
         $scope.click_deleteCmsUser = function (idx) {
             var user = $scope.tableParams.data[idx];
 
-            $scope.deleteItem('cms_user', 'item', user.USER_ID, true)
+            $scope.deleteItem('com/user', 'item', user.USER_ID, true)
                 .then(function(){alert('정상적으로 삭제했습니다.'); $scope.tableParams.data.splice(idx, 1);})
                 .catch(function(error){alert(error)});
         };
@@ -170,7 +167,7 @@ define([
                 counts: [],         // hide page counts control
                 total: 0,           // length of data
                 getData: function($defer, params) {
-                    $scope.getList('cms_user', 'list', {}, $scope.search, true)
+                    $scope.getList('com/user', 'list', {}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
                             $defer.resolve(data);
@@ -190,11 +187,11 @@ define([
         // 사용자 저장 버튼 클릭
         $scope.click_saveCmsUser = function () {
             if ($scope.key == '') {
-                $scope.insertItem('cms_user', 'item', $scope.item, false)
+                $scope.insertItem('com/user', 'item', $scope.item, false)
                     .then(function(){$scope.tableParams.reload();})
                     .catch(function(error){alert(error)});
             } else {
-                $scope.updateItem('cms_user', 'item', $scope.key, $scope.item, false)
+                $scope.updateItem('com/user', 'item', $scope.key, $scope.item, false)
                     .then(function(){$scope.tableParams.reload();})
                     .catch(function(error){alert(error)});
             }
@@ -207,7 +204,7 @@ define([
             $scope.key = id;
 
             if ($scope.key != '') {
-                $scope.getItem('cms_user', 'item', $scope.key, {}, false)
+                $scope.getItem('com/user', 'item', $scope.key, {}, false)
                     .then(function(data) { $scope.item = data; })
                     .catch(function(error){alert(error)});
             }

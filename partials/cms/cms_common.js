@@ -353,7 +353,7 @@ define([
         };
 
         // 모델 상태 수정
-        $scope.updateStatus = function (service,type,key,phase,loding) {
+        $scope.updateStatus = function (service, type, key, phase, loding) {
             var deferred = $q.defer();
 
             if (loding) $scope.isLoading = true;

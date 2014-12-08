@@ -51,7 +51,7 @@ define([
         // 게시판 조회
         $scope.getCmsBoard = function () {
             if ($stateParams.id != 0) {
-                $scope.getItem('comm/webboard', 'item', $stateParams.id, {}, false)
+                $scope.getItem('com/webboard', 'item', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
                         $scope.item.NOTICE_FL == 'Y' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
@@ -75,11 +75,11 @@ define([
             }
 
             if ($stateParams.id == 0) {
-                $scope.insertItem('comm/webboard', 'item', $scope.item, false)
+                $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){$location.url('/webboard/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('comm/webboard', 'item', $stateParams.id, $scope.item, false)
+                $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/webboard/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

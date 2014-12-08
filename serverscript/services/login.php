@@ -46,7 +46,7 @@
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.EMAIL, UR.ROLE_ID, U.PASSWORD
                         FROM
-                            CMS_USER U, USER_ROLE UR, COM_ROLE R
+                            COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
                             U.USER_ID = '".$_key."'
                             AND U.USER_ID = UR.USER_ID
@@ -82,7 +82,7 @@
                         $msg = $_d->mysql_error;
                     }
                 } else {
-                    $_d->failEnd("세션이 만료되었거나 로그인 후 사용가능합니다.");
+                    $_d->failEnd("아이디나 패스워드를 확인해주세요.");
                 }
 
                 if ($err > 0) {
@@ -90,7 +90,7 @@
                 } else {
                     if (isset($_model[password]) && $_model[password] != "") {
                         if ( !validate_password($_model[password], $data['PASSWORD'])) {
-                            $_d->failEnd("아이디나 패스워드가 일치하지 않습니다.");
+                            $_d->failEnd("아이디나 패스워드를 확인해주세요.");
                         }
 
                         $sql = "INSERT INTO CMS_HISTORY

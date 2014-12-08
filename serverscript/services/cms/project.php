@@ -98,9 +98,9 @@
                     $sort_order = "";
                     $limit = "";
 
-                    if (isset($_status)) {
+                    if (isset($_search[STATUS])) {
                         $in_str = "";
-                        $arr_status = explode(',', $_status);
+                        $arr_status = explode(',', $_search[STATUS]);
                         for($i=0;$i< sizeof($arr_status);$i++){
                             $in_str = $in_str."'".$arr_status[$i]."'";
                             if (sizeof($arr_status) - 1 != $i) $in_str = $in_str.",";
@@ -108,12 +108,16 @@
 
                         $search_where = "AND PROJECT_ST IN (".$in_str.") ";
                     }
-
+                    if (isset($_search[IS_PROGRESS]) && $_search[IS_PROGRESS] != "") {
+                        if ($_search[IS_PROGRESS] == 'true') {
+                            $search_where .= "AND PROJECT_ST IN ('0', '1') ";
+                        }
+                    }
                     if (isset($_search[YEAR]) && $_search[YEAR] != "") {
                         $search_where .= "AND YEAR  = '".$_search[YEAR]."' ";
                     }
                     if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                        $search_where .= "AND ".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                        $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
                     }
 
                     if (isset($_search[SORT]) && $_search[SORT] != "") {
@@ -261,7 +265,7 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if($_d->mysql_errno > 0) {
+            if ($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
             }
@@ -295,7 +299,7 @@
                 $_d->sql_query($sql);
                 $ori_file_no = $_d->mysql_insert_id;
 
-                if($_d->mysql_errno > 0) {
+                if ($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
                 }
@@ -317,7 +321,7 @@
 
                 $_d->sql_query($sql);
 
-                if($_d->mysql_errno > 0) {
+                if ($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
                 }
@@ -397,7 +401,7 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if($_d->mysql_errno > 0) {
+            if ($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
             }
@@ -474,7 +478,7 @@
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
 
-                    if($_d->mysql_errno > 0) {
+                    if ($_d->mysql_errno > 0) {
                         $err++;
                         $msg = $_d->mysql_error;
                     }
@@ -496,7 +500,7 @@
 
                     $_d->sql_query($sql);
 
-                    if($_d->mysql_errno > 0) {
+                    if ($_d->mysql_errno > 0) {
                         $err++;
                         $msg = $_d->mysql_error;
                     }
@@ -541,7 +545,7 @@
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;
 
-                if($_d->mysql_errno > 0) {
+                if ($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
                 }

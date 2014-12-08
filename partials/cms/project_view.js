@@ -25,7 +25,7 @@ define([
         /********** 이벤트 **********/
         // 수정 버튼 클릭
         $scope.click_showProjectEdit = function (item) {
-            if (!($rootScope.role == 'CMS_ADMIN' || $rootScope.role == 'MANAGER') && $rootScope.uid != item.REG_UID) {
+            if (!($rootScope.role == 'CMS_ADMIN' || $rootScope.role == 'MANAGER') && $rootScope.uid != item.REG_UID || item.PROJECT_ST == '3') {
                 dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
                 return;
             }

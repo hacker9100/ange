@@ -16,7 +16,7 @@ define([
         /********** 초기화 **********/
         // 초기화
         $scope.init = function() {
-            $scope.getList('comm/permission', 'list', {}, {SYSTEM_GB: 'CMS'}, false)
+            $scope.getList('com/permission', 'list', {}, {SYSTEM_GB: 'CMS'}, false)
                 .then(function(data){
                     $scope.roles = data;
                     $scope.ROLE = data[0];
@@ -33,14 +33,14 @@ define([
 
         // 권한 조회
         $scope.getPermission = function() {
-            $scope.getItem('comm/permission', 'item', $scope.ROLE.ROLE_ID, {}, false)
+            $scope.getItem('com/permission', 'item', $scope.ROLE.ROLE_ID, {}, false)
                 .then(function(data) {$scope.list = data;})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 권한 저장 버튼 클릭
         $scope.click_savePermission = function() {
-            $scope.updateItem('comm/permission', 'item', $scope.ROLE.ROLE_ID, $scope.list, false)
+            $scope.updateItem('com/permission', 'item', $scope.ROLE.ROLE_ID, $scope.list, false)
                 .then(function(){dialogs.notify('알림', '권한이 수정 되었습니다.', {size: 'md'});})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };

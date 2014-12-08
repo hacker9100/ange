@@ -13,27 +13,7 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('content_edit', ['$scope', '$stateParams', '$location', '$modal', '$q', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, $modal, $q, dialogs, UPLOAD) {
 
-        $scope.click_showPreview = function() {
-            $scope.openModal2($scope.item.BODY, 'lg');
-        };
-
-        $scope.openModal2 = function (content, size) {
-            var dlg = dialogs.create('preview_modal.html',
-                function($scope, $modalInstance, data) {
-                    $scope.content = data;
-
-                    $scope.click_ok = function () {
-                        $modalInstance.close();
-                    };
-                },content,{size:size,keyboard: true,backdrop: false});
-            dlg.result.then(function(){
-
-            },function(){
-                if(angular.equals($scope.name,''))
-                    $scope.name = 'You did not enter in your name!';
-            });
-        };
-
+        // 텔플릿 선택 클릭
         $scope.click_selectTemplet = function (item) {
             switch (item) {
                 case '2E' :
@@ -61,41 +41,6 @@ define([
             }
         };
 
-        /********** 모달 팝업 **********/
-/*
-        $scope.openModal2 = function (content, size) {
-            var modalInstance = $modal.open({
-                templateUrl: 'preview_modal.html',
-                controller: function($scope, $modalInstance, content) {
-                    alert(content);
-                    $scope.content = content;
-
-                    $scope.ok = function () {
-                        $modalInstance.close();
-                    };
-                },
-//                templateUrl: 'partials/cms/task_list.html',
-//                controller: 'task_list',
-                size: size,
-                resolve: {
-                    content: function () {
-                        return content;
-                    }
-                }
-            });
-
-            modalInstance.result.then(function () {
-                alert(JSON.stringify());
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
-        }
-*/
-
-        /* 파일 업로드 설정 */
-//        var url = '/serverscript/upload/';
-//        $scope.options = { url: url, autoUpload: true };
-
         /********** 초기화 **********/
         // 첨부 파일
         $scope.queue = [];
@@ -120,7 +65,28 @@ define([
 
         // 이력조회 버튼 클릭
         $scope.click_showGetHistory = function (key) {
-            $scope.openModal({TASK_NO : key}, 'lg');
+            $scope.openHistoryModal({TASK_NO : key}, 'lg');
+        };
+
+        $scope.openHistoryModal = function (item, size) {
+            var dlg = dialogs.create('/partials/cms/history.html',
+                function($scope, $controller, $modalInstance, data) {
+                    angular.extend(this, $controller('cms_common', {$scope: $scope}));
+
+                    $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
+                        .catch(function(error){console.log(error);});
+
+                    $scope.list = data;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+                },item,{size:size,keyboard: true});
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
         };
 
         // 태스크/콘텐츠 조회
@@ -187,13 +153,13 @@ define([
             }
 
             var phase = '';
-            if ($scope.task.PHASE == '11' || $scope.task.PHASE == '12') {
+            if ($scope.task.PHASE == '10' || $scope.task.PHASE == '11' || $scope.task.PHASE == '12') {
                 phase = '11';
             } else {
                 phase = '21';
             }
 
-            $scope.updateStatus('cms/content', 'status', $scope.item.NO, phase, false)
+            $scope.updateStatus('cms/task', 'status', $scope.task.NO, phase, false)
                 .then(function(){$location.url('/'+$stateParams.menu+'/list');})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
@@ -213,7 +179,7 @@ define([
                 status = '21';
             }
 
-            $scope.openModal($scope.item, status);
+            $scope.openApprovalModal($scope.item, status);
         };
 
         // 승인 버튼 클릭
@@ -225,16 +191,11 @@ define([
                 status = '22';
             }
 
-            $scope.openModal($scope.item, status);
+            $scope.openApprovalModal($scope.item, status);
         }
 
-        $scope.initUpdate = function() {
-            if ( $stateParams.id != 0) {
-                $scope.getTask();
-            }
-        }
-
-        $scope.openModal = function (content, status, size) {
+        // 결재 모달창
+        $scope.openApprovalModal = function (content, status, size) {
             var modalInstance = $modal.open({
                 templateUrl: 'content_approval_modal.html',
                 controller: 'content_approval_modal',
@@ -254,6 +215,35 @@ define([
             }, function () {
                 console.log("결재 오류");
             });
+        }
+
+        // 미리보기 버튼 클릭
+        $scope.click_showPreview = function() {
+            $scope.openModal2($scope.item.BODY, 'lg');
+        };
+
+        // 미리보기 모달창
+        $scope.openModal2 = function (content, size) {
+            var dlg = dialogs.create('preview_modal.html',
+                function($scope, $modalInstance, data) {
+                    $scope.content = data;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+                },content,{size:size,keyboard: true,backdrop: false});
+            dlg.result.then(function(){
+
+            },function(){
+                if(angular.equals($scope.name,''))
+                    $scope.name = 'You did not enter in your name!';
+            });
+        };
+
+        $scope.initUpdate = function() {
+            if ( $stateParams.id != 0) {
+                $scope.getTask();
+            }
         }
 
         /********** 화면 초기화 **********/
@@ -280,7 +270,7 @@ define([
 
     controllers.controller('content_approval_modal', ['$scope', '$stateParams', '$modalInstance', 'dataService', 'content', 'status', '$location', function ($scope, $stateParams, $modalInstance, dataService, content, status, $location) {
 
-        if (status == '11') {
+        if (status == '12' || status == '22') {
             $scope.title = "승인 처리";
         } else {
             $scope.title = "반려 처리";
@@ -292,10 +282,11 @@ define([
         $scope.approval.APPROVAL_ST = status;
 
         $scope.click_ok = function () {
-            dataService.db('cms/approval').insert($scope.approval,function(data, status){
+            dataService.db('com/approval').insert('item', $scope.approval, function(data, status){
                 if (status != 200) {
                     alert('결재에 실패 했습니다.');
                 } else {
+                    console.log(JSON.stringify(data))
                     if (!data.err) {
                         $location.url('/'+$stateParams.menu+'/list');
                         $modalInstance.dismiss();

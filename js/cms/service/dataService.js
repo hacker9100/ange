@@ -32,6 +32,7 @@ define(['./services'], function (services) {
 
             login : function(key, model, callback){
                 param._method = 'GET';
+                param._type = '';
                 param._key = key;
                 param._model = model;
                 $http({
@@ -43,7 +44,9 @@ define(['./services'], function (services) {
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
             }, logout : function(key, callback){
                 param._method = 'DELETE';
+                param._type = '';
                 param._key = key;
+                param._model = {};
                 $http({
                     url : helpers.uri+'login.php'
                     ,method : 'POST'
@@ -53,6 +56,9 @@ define(['./services'], function (services) {
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
             }, getSession : function(callback){
                 param._method = 'GET';
+                param._type = '';
+                param._key = '';
+                param._model = {};
                 $http({
                     url : helpers.uri+'login.php'
                     ,method : 'POST'
@@ -61,9 +67,6 @@ define(['./services'], function (services) {
                 }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
             }, updateStatus : function(uri,type,key,phase,callback){
-
-                //console.log("getProject() : projectid = [" + projectid + "]");
-
                 param._method = 'PUT';
                 param._type = type;
                 param._key = key;
@@ -93,8 +96,8 @@ define(['./services'], function (services) {
                             var callback;
 
                             param._method = 'GET';
-                            param._key = '';
                             param._type = arguments[0];
+                            param._key = '';
                             param._page = arguments[1];
                             param._search = arguments[2];
                             param._model = {};

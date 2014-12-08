@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('content_view', ['$scope', '$rootScope', '$stateParams', '$location', '$q', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, $q, dialogs, UPLOAD) {
+    controllers.controller('content_view', ['$scope', '$sce', '$rootScope', '$stateParams', '$location', '$q', 'dialogs', 'UPLOAD', function ($scope, $sce, $rootScope, $stateParams, $location, $q, dialogs, UPLOAD) {
 
         /********** 초기화 **********/
         // 첨부파일 초기화
@@ -42,7 +42,28 @@ define([
 
         // 이력조회 버튼 클릭
         $scope.click_showGetHistory = function (key) {
-            $scope.openModal({TASK_NO : key}, 'lg');
+            $scope.openHistoryModal({TASK_NO : key}, 'lg');
+        };
+
+        $scope.openHistoryModal = function (item, size) {
+            var dlg = dialogs.create('/partials/cms/history.html',
+                function($scope, $controller, $modalInstance, data) {
+                    angular.extend(this, $controller('cms_common', {$scope: $scope}));
+
+                    $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
+                        .catch(function(error){console.log(error);});
+
+                    $scope.list = data;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+                },item,{size:size,keyboard: true});
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
         };
 
         // 태스크/콘텐츠 조회
@@ -52,6 +73,9 @@ define([
                     $scope.getItem('cms/task', 'item', $stateParams.id, {}, false).then(function(data){console.log(data); $scope.task = data;}),
                     $scope.getItem('cms/content', 'item', $stateParams.id, {}, false).then(function(data){
                         $scope.item = data;
+                        var body = data.BODY.replace(/border:1px dashed;/g, '');
+
+                        $scope.item.BODY = $sce.trustAsHtml(body);
 
                         var files = data.FILES;
                         for(var i in files) {

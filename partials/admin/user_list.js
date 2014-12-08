@@ -299,7 +299,7 @@ define([
 
             switch($scope.action.FUNCTION.value) {
                 case 'excel' :
-//                    $scope.getList('comm/com_user', {NO:0, SIZE:5}, $scope.search, true)
+//                    $scope.getList('com/user', {NO:0, SIZE:5}, $scope.search, true)
 //                        .then(function(data){
 //                            var tbl = "<table border='1'>"+
 //                                        "<thead>" +
@@ -343,12 +343,12 @@ define([
                                 "</tbody>" +
                                 "</table>";
 
-                    $scope.excelDownload('comm/excel', data, true)
+                    $scope.excelDownload('com/excel', data, true)
                         .then(function(data){alert("-->>");})
                         .catch(function(error){alert(error)});
 
 /*
-                    var dataUrl = 'http://localhost/serverscript/services/comm/excel.php';
+                    var dataUrl = 'http://localhost/serverscript/services/com/excel.php';
 
 //                    var data = "<table border='1'>"+
 //                                "<tr>"+
@@ -367,7 +367,7 @@ define([
                     link.click();
 */
 
-//                    $scope.getList('comm/excel', {NO:0, SIZE:5}, $scope.search, true)
+//                    $scope.getList('com/excel', {NO:0, SIZE:5}, $scope.search, true)
 //                        .then(function(data){$scope.list = data; $scope.total_cnt = $scope.list.length;})
 //                        .catch(function(error){alert(error)});
                     break;
@@ -441,7 +441,7 @@ define([
 
         // 사용자 목록 조회
         $scope.getUserList = function () {
-            $scope.getList('comm/com_user', {NO:0, SIZE:5}, $scope.search, true)
+            $scope.getList('com/user', {NO:0, SIZE:5}, $scope.search, true)
 //            $scope.getList('project', {NO:0, SIZE:5}, search, true)
                 .then(function(data){$scope.list = data; $scope.total_cnt = $scope.list.length;})
                 .catch(function(error){alert(error)});

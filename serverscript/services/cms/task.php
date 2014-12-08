@@ -86,9 +86,9 @@
                 MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".$_search);
                 MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".count($_search));
 
-                if ($_SESSION['role'] != 'CMS_ADMIN' && $_SESSION['role'] != 'MANAGER') {
-                    $search_where .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
-                }
+//                if ($_SESSION['role'] != 'CMS_ADMIN' && $_SESSION['role'] != 'MANAGER') {
+//                    $search_where .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
+//                }
 
                 if (isset($_search) && count($_search) > 0) {
 /*
@@ -105,6 +105,7 @@
                         }
                     }
 */
+
                     if (isset($_search[PHASE])) {
                         $in_str = "";
                         $arr_phase = explode(',', $_search[PHASE]);
@@ -115,7 +116,11 @@
 
                         $search_where = "AND T.PHASE IN (".$in_str.") ";
                     }
-
+                    if (isset($_search[MY_TASK]) && $_search[MY_TASK] != "") {
+                        if ($_search[MY_TASK] == 'true') {
+                            $search_where .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
+                        }
+                    }
                     if (isset($_search[YEAR]) && $_search[YEAR] != "") {
                         $search_where .= "AND P.YEAR  = '".$_search[YEAR]."' ";
                     }
@@ -123,7 +128,7 @@
                         $search_where .= "AND P.NO  = '".$_search[PROJECT][NO]."' ";
                     }
                     if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                        $search_where .= "AND T.".$_search[ORDER][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                        $search_where .= "AND T.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
                     }
                     if (isset($_search[EDITOR_ID]) && $_search[EDITOR_ID] != "") {
                         $search_where .= "AND T.EDITOR_ID  = '".$_search[EDITOR_ID]."' ";
@@ -236,7 +241,7 @@
             }
 
             // 2014.11.14(금) SECTION 섹션 추가
-            if(count($_model[SECTION]) > 0){
+            if (count($_model[SECTION]) > 0) {
                 $section = $_model[SECTION];
                 $section_no = $section[NO];
                 $section_nm = $section[SECTION_NM];
@@ -280,7 +285,7 @@
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            if($_d->mysql_errno > 0) {
+            if ($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
             }
@@ -304,7 +309,7 @@
 
                     $_d->sql_query($sql);
 
-                    if($_d->mysql_errno > 0) {
+                    if ($_d->mysql_errno > 0) {
                         $err++;
                         $msg = $_d->mysql_error;
                     }
@@ -321,7 +326,7 @@
 
                 $_d->sql_query($sql);
 
-                if($_d->mysql_errno > 0) {
+                if ($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
                 }
@@ -337,13 +342,19 @@
 
                 $_d->sql_query($sql);
 
-                if($_d->mysql_errno > 0) {
+                if ($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
                 }
             }
 
-            $sql = "INSERT INTO CMS_HISTORY
+            if ($err > 0) {
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            } else {
+                $_d->sql_commit();
+
+                $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
                         ,WORK_GB
@@ -368,13 +379,8 @@
                         ,'".$_model[SUBJECT]."'
                     )";
 
-            $_d->sql_query($sql);
+                $_d->sql_query($sql);
 
-            if ($err > 0) {
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            } else {
-                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
@@ -388,23 +394,7 @@
 //            $form = json_decode(file_get_contents("php://input"),true);
 //            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if (isset($_phase)) {
-                $sql = "UPDATE CMS_TASK
-                        SET
-                            PHASE = '".$_phase."'
-                        WHERE
-                            NO = ".$_key."
-                        ";
-
-                $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
-
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->succEnd($no);
-                }
-            } else {
+            if ($_type == 'item') {
                 $err = 0;
                 $msg = "";
 
@@ -428,7 +418,7 @@
                 }
 
                 // 2014.11.14(금) SECTION 섹션 추가
-                if(count($_model[SECTION]) > 0){
+                if (count($_model[SECTION]) > 0) {
                     $section = $_model[SECTION];
                     $section_no = $section[NO];
                     $section_nm = $section[SECTION_NM];
@@ -453,9 +443,44 @@
 
                 $_d->sql_query($sql);
 
-                if($_d->mysql_errno > 0) {
+                if ($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
+                }
+
+                if ($_model[PHASE] == '30') {
+
+                    $sql = "SELECT
+                                PHASE
+                            FROM
+                                CMS_TASK
+                            WHERE
+                                PROJECT_NO = '".$project_no."'
+                    ";
+
+                    $result = $_d->sql_query($sql,true);
+                    $is_all = true;
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                        if ($row[PHASE] != '30') {
+                            $is_all = false;
+                        }
+                    }
+
+                    if ($is_all) {
+                        $sql = "UPDATE CMS_PROJECT
+                                SET
+                                    PROJECT_ST = '2'
+                                WHERE
+                                    NO = ".$project_no."
+                                ";
+
+                        $_d->sql_query($sql);
+
+                        if ($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
                 }
 
                 if (count($_model[CATEGORY]) > 0) {
@@ -467,7 +492,7 @@
 
                     $_d->sql_query($sql);
 
-                    if($_d->mysql_errno > 0) {
+                    if ($_d->mysql_errno > 0) {
                         $err++;
                         $msg = $_d->mysql_error;
                     }
@@ -490,14 +515,20 @@
 
                         $_d->sql_query($sql);
 
-                        if($_d->mysql_errno > 0) {
+                        if ($_d->mysql_errno > 0) {
                             $err++;
                             $msg = $_d->mysql_error;
                         }
                     }
                 }
 
-                $sql = "INSERT INTO CMS_HISTORY
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                } else {
+                    $_d->sql_commit();
+
+                    $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
                         ,WORK_GB
@@ -522,13 +553,24 @@
                         ,'".$_model[SUBJECT]."'
                     )";
 
-                $_d->sql_query($sql);
+                    $_d->sql_query($sql);
 
-                if ($err > 0) {
-                    $_d->sql_rollback();
-                    $_d->failEnd("수정실패입니다:".$msg);
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == "status") {
+                $sql = "UPDATE CMS_TASK
+                            SET
+                                PHASE = '".$_phase."'
+                            WHERE
+                                NO = ".$_key."
+                            ";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
                 } else {
-                    $_d->sql_commit();
                     $_d->succEnd($no);
                 }
             }

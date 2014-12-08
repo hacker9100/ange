@@ -11,10 +11,12 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('series_main', ['$scope', '$stateParams', 'dataService', '$location', function ($scope, $stateParams, dataService, $location) {
+    controllers.controller('series_main', ['$scope', '$stateParams', '$location', 'dialogs', function ($scope, $stateParams, $location, dialogs) {
 
         /********** 초기화 **********/
         $scope.key = '';
+        $scope.item = {};
+        $scope.search = {};
 
         // 초기화
         $scope.init = function() {
@@ -26,17 +28,9 @@ define([
         $scope.click_deleteSeries = function (idx) {
             var series = $scope.list[idx];
 
-            dataService.db('cms/series').remove(series.NO,function(data, status){
-                if (status != 200) {
-                    alert('삭제에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        $scope.list.splice(idx, 1);
-                    }
-                }
-            });
+            $scope.deleteItem('cms/series', 'item', series.NO, true)
+                .then(function(){alert('정상적으로 삭제했습니다.'); $scope.list.splice(idx, 1);})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 검색 버튼 클릭
@@ -46,53 +40,21 @@ define([
 
         // 시리즈 목록 조회
         $scope.getSeriesList = function (search) {
-            $scope.isLoading = true;
-            dataService.db('cms/series').find({},search,function(data, status){
-                if (status != 200) {
-                    alert('시리즈 조회에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        if (angular.isObject(data)) {
-                            $scope.list = data;
-                        } else {
-                            // TODO: 데이터가 없을 경우 처리
-                            alert("시리즈 조회 데이터가 없습니다.");
-                        }
-                    }
-                }
-
-                $scope.isLoading = false;
-            });
+            $scope.getList('cms/series', 'list', {}, search, true)
+                .then(function(data){$scope.list = data;})
+                .catch(function(error){$scope.list = []});
         };
 
         // 시리즈 저장 버튼 클릭
         $scope.click_saveSeries = function () {
             if ($scope.key == '') {
-                dataService.db('cms/series').insert($scope.item,function(data, status){
-                    if (status != 200) {
-                        alert('등록에 실패 했습니다.');
-                    } else {
-                        if (data.err == true) {
-                            alert(data.msg);
-                        } else {
-                            $scope.getSeriesList();
-                        }
-                    }
-                });
+                $scope.insertItem('cms/series', 'item', $scope.item, false)
+                    .then(function(){$scope.getSeriesList();})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                dataService.db('cms/series').update($scope.key,$scope.item,function(data, status){
-                    if (status != 200) {
-                        alert('수정에 실패 했습니다.');
-                    } else {
-                        if (data.err == true) {
-                            alert(data.msg);
-                        } else {
-                            $scope.getSeriesList();
-                        }
-                    }
-                });
+                $scope.updateItem('cms/series', 'item', $scope.key, $scope.item, false)
+                    .then(function(){$scope.getSeriesList();})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
 
             $scope.key = '';
@@ -103,22 +65,9 @@ define([
             $scope.key = id;
 
             if ($scope.key != '') {
-                dataService.db('cms/series').findOne($scope.key,{},function(data, status){
-                    if (status != 200) {
-                        alert('시리즈 조회에 실패 했습니다.');
-                    } else {
-                        if (data.err == true) {
-                            alert(data.msg);
-                        } else {
-                            if (angular.isObject(data)) {
-                                $scope.item = data;
-                            } else {
-                                // TODO: 데이터가 없을 경우 처리
-                                alert("시리즈 조회 데이터가 없습니다.");
-                            }
-                        }
-                    }
-                });
+                $scope.getItem('cms/series', 'item', $scope.key, {}, false)
+                    .then(function(data) {$scope.item = data;})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -127,17 +76,9 @@ define([
             var series = $scope.list[idx];
             series.SERIES_ST = (series.SERIES_ST == "1" ? "0" : "1");
 
-            dataService.db('cms/series').update(series.NO,series,function(data, status){
-                if (status != 200) {
-                    alert('수정에 실패 했습니다.');
-                } else {
-                    if (data.err == true) {
-                        alert(data.msg);
-                    } else {
-                        $scope.getSeriesList();
-                    }
-                }
-            });
+            $scope.updateItem('cms/series', 'item', series.NO, series, false)
+                .then(function(){$scope.getSeriesList(); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 취소 클릭

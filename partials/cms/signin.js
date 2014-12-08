@@ -11,18 +11,17 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('signin', ['$scope', '$rootScope', '$state', '$stateParams', '$location', '$controller', 'dialogs', function ($scope, $rootScope, $state, $stateParams, $location, $controller, dialogs) {
-
-		//CSS 설정
-		//$scope.$emit('updateCSS', ['css/css1.css']);
-		$scope.message = "Welcome to ANGE CMS";
-
-        // Expose $state and $stateParams to the <body> tag
-        $scope.$state = $state;
-        $scope.$stateParams = $stateParams;
+    controllers.controller('signin', ['$scope', '$rootScope', '$location', '$controller', 'dialogs', function ($scope, $rootScope, $location, $controller, dialogs) {
 
         /********** 공통 컨트롤러 호출 **********/
         angular.extend(this, $controller('cms_common', {$scope: $scope}));
+
+        /********** 초기화 **********/
+        $scope.item = {};
+
+        //CSS 설정
+        //$scope.$emit('updateCSS', ['css/css1.css']);
+        $scope.message = "Welcome to ANGE CMS";
 
         /********** 이벤트 **********/
         $scope.click_lostAccount = function () {

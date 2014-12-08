@@ -26,8 +26,6 @@ define([
         // 카테고리 선택 콤보박스 설정
         $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
 
-        var menuSearch = {};
-
         // 날짜 콤보박스
         var year = [];
         var now = new Date();
@@ -65,12 +63,12 @@ define([
                 .catch(function(error){console.log(error)});
 
             // 검색어
-            var order = [{name: "기자", value: "EDITOR_NM"}, {name: "제목+내용", value: "SUBJECT"}];
+            var condition = [{name: "기자", value: "EDITOR_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
             $scope.years = year;
-            $scope.order = order;
+            $scope.condition = condition;
 //            $scope.search.YEAR = nowYear+'';
-            $scope.search.ORDER = order[0];
+            $scope.search.CONDITION = condition[0];
 
             return ret;
         };
@@ -246,17 +244,23 @@ define([
             $scope.search = {PHASE: '31'};
             $scope.isTask = false;
             $scope.isEdit = false;
+            $scope.editContentBtn = '원고 편집';
         } else if ($stateParams.menu == 'article') {
             $scope.search = {PHASE: '0, 10, 11, 12'};
+            $scope.editContentBtn = '원고 편집';
         } else if ($stateParams.menu == "article_confirm") {
             $scope.search = {PHASE: '11, 12'};
+            $scope.editContentBtn = '원고 검수';
         } else if ($stateParams.menu == 'edit') {
             $scope.search = {PHASE: '20, 21, 22'};
+            $scope.editContentBtn = '원고 편집';
         } else if ($stateParams.menu == "edit_confirm") {
-            $scope.search = {PHASE: '21, 22'};
+            $scope.search = {PHASE: '21, 22, 30'};
+            $scope.editContentBtn = '원고 검수';
         } else {
             $scope.isTask = true;
             $scope.search = {};
+            $scope.editContentBtn = '원고 편집';
         }
 
         $scope.getSession()

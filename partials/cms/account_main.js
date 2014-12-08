@@ -30,7 +30,7 @@ define([
         /********** 이벤트 **********/
         // 저장 버튼 클릭
         $scope.click_saveCmsUser = function () {
-            $scope.updateItem('cms_user', $scope.item.USER_ID, $scope.item, true)
+            $scope.updateItem('com/user', 'item', $scope.item.USER_ID, $scope.item, true)
                 .then(function(){dialogs.notify('알림', "정상적으로 수정 완료 됐습니다.", {size: 'md'});})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
@@ -38,7 +38,7 @@ define([
         // 로그인 사용자 조회
         $scope.getCmsUser = function (session) {
             if (session.USER_ID != '') {
-                $scope.getItem('cms_user', 'item', session.USER_ID, {}, true)
+                $scope.getItem('com/user', 'item', session.USER_ID, {}, true)
                     .then(function(data){$scope.item = data;})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {

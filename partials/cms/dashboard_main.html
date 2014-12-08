@@ -7,7 +7,7 @@
     <div class="list-group" style="margin-bottom: 0;">
 
         <li class="list-group-item list-group-item-labeling-gray">
-            태스크 목록
+            Task
             <span class="btn custom-btn-more"> <span ng-click="click_showTaskList();" class="glyphicon glyphicon-plus"></span> </span>
         </li>
     </div>
@@ -105,7 +105,7 @@
                                 <i class="glyphicon glyphicon-folder-open"></i>
                                 <span>태스크 정보</span>
                             </button>
-                            <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item.NO);" ng-show="item.PHASE != '0'">
+                            <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item);" ng-show="item.PHASE != '0'">
                                 <i class="glyphicon glyphicon-book"></i>
                                 <span>원고 조회</span>
                             </button>

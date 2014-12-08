@@ -1,53 +1,52 @@
 <!-- Contents Include -->
 <div class="col-md-12" ng-controller="project_view">
 
-    <div ng-model="item" lass="row">
-        <form id="fileupload" role="form" name="edit_from" class="form-horizontal" method="POST" enctype="multipart/form-data" data-file-upload="options">
+    <div ng-model="item" class="row form_basic_wrap">
+        <form id="fileupload" role="form" name="edit_from" class="form-horizontal form_basic_100" method="POST" enctype="multipart/form-data" data-file-upload="options">
 
-            <div class= "form-group" ng-class="{error: edit_from.subject.$invalid}">
-                <label class= "col-md-2">시리즈</label>
-                <div class="col-md-4">
+            <div class= "form-group form_basic_group" ng-class="{error: edit_from.subject.$invalid}">
+                <label class= "form_basic_label">시리즈</label>
+                <div class="form_basic_input">
                     <span ng-bind="item.SERIES.SERIES_NM" />
                 </div>
             </div>
-            <div class= "form-group" ng-class="{error: edit_from.subject.$invalid}">
-                <label class= "col-md-2">호제</label>
-                <div class="col-md-4">
+            <div class= "form-group form_basic_group" ng-class="{error: edit_from.subject.$invalid}">
+                <label class= "form_basic_label">호제</label>
+                <div class="form_basic_input">
                     <span ng-bind="item.SUBJECT" />
                 </div>
             </div>
-            <div class= "form-group">
-                <label class= "col-md-2">귀속년</label>
-                <div class="col-md-4">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">귀속연도</label>
+                <div class="form_basic_input">
                     <span ng-bind="item.YEAR" />
                 </div>
             </div>
-            <div class= "form-group">
-                <label class= "col-md-2">표지이미지</label>
-                <div class="col-md-9">
-                    <td data-ng-switch data-on="!!file.thumbnailUrl">썸네일 이미지
-                        <div ng-model="file" class="preview">
-                            <a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>
-                        </div>
-                    </td>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">표지이미지</label>
+                <div ng-model="file" class="form_basic_input">
+                    <img data-ng-src="{{file.thumbnailUrl}}" alt="">
                 </div>
+                <div ng-show="file == ''">이미지 없음</div>
             </div>
-            <div class= "form-group">
-                <label class= "col-md-2">설명</label>
-                <div class= "col-md-9">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">설명</label>
+                <div class= "col-xs-6 form_basic_input">
                     <span ng-bind="item.NOTE" />
                 </div>
             </div>
         </form>
 
         <!-- 하단 버튼 -->
-        <div class= "form-group">
-            <div class="col-md-4">
-                <button class="btn btn-success fileinput-button" ng-click="click_showProjectList();" >
-                    <i class="glyphicon glyphicon-upload"></i>
+        <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+            <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showProjectList();" >
+                    <i class="glyphicon glyphicon-list"></i>
                     <span>목록</span>
                 </button>
-                <button type="button" class="btn btn-primary start" ng-click="click_showProjectEdit(item);" >
+            </div>
+            <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showProjectEdit(item);" ng-disabled="!(role == 'CMS_ADMIN' || role == 'MANAGER') && uid != item.REG_UID || item.PROJECT_ST == '3'">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>수정</span>
                 </button>

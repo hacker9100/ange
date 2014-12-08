@@ -19,10 +19,10 @@ define([
         // 초기화
         $scope.init = function() {
             // 검색어 조건
-            var order = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
+            var condition = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
-            $scope.order = order;
-            $scope.search.ORDER = order[0];
+            $scope.conditions = condition;
+            $scope.search.CONDITION = condition[0];
         };
 
         /********** 이벤트 **********/
@@ -53,7 +53,7 @@ define([
                 return;
             }
 
-            $scope.deleteItem('comm/webboard', 'item', item.NO, false)
+            $scope.deleteItem('com/webboard', 'item', item.NO, false)
                 .then(function(){$scope.tableParams.reload();})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
@@ -83,7 +83,7 @@ define([
                     $scope.search['SORT'] = key;
                     $scope.search['ORDER'] = params.sorting()[key];
 
-                    $scope.getList('comm/webboard', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList('com/webboard', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
                             $defer.resolve(data);
@@ -96,7 +96,7 @@ define([
             });
 
 //            $scope.isLoading = true;
-//            $scope.getList('comm/webboard', 'list', {NO:0, SIZE:20}, $scope.search, true)
+//            $scope.getList('com/webboard', 'list', {NO:0, SIZE:20}, $scope.search, true)
 //                .then(function(data){$scope.listData = data; $scope.totalItems = data[0].TOTAL_COUNT;})
 //                .catch(function(error){$scope.list = []; console.log(error);})
 //                .finally(function(){$scope.isLoading = false;});

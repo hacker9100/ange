@@ -108,9 +108,51 @@
                     $err++;
                     $msg = $_d->mysql_error;
                 }
+
+                if ($_model[APPROVAL_ST] == '22') {
+                    $project_no;
+                    $sql = "SELECT
+                                PHASE, PROJECT_NO
+                            FROM
+                                CMS_TASK
+                            WHERE
+                                PROJECT_NO = (SELECT PROJECT_NO FROM CMS_TASK WHERE NO = ".$_model[TASK_NO].")
+                    ";
+
+                    $result = $_d->sql_query($sql,true);
+                    $is_all = true;
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                        $project_no = $row[PROJECT_NO];
+                        if ($row[PHASE] != '30') {
+                            $is_all = false;
+                        }
+                    }
+
+                    if ($is_all) {
+                        $sql = "UPDATE CMS_PROJECT
+                                SET
+                                    PROJECT_ST = '2'
+                                WHERE
+                                    NO = ".$project_no."
+                                ";
+
+                        $_d->sql_query($sql);
+
+                        if ($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                }
             }
 
-            $sql = "INSERT INTO CMS_HISTORY
+            if ($err > 0) {
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            } else {
+                $_d->sql_commit();
+
+                $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
                         ,WORK_GB
@@ -135,13 +177,8 @@
                         ,''
                     )";
 
-            $_d->sql_query($sql);
+                $_d->sql_query($sql);
 
-            if ($err > 0) {
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            } else {
-                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
