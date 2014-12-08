@@ -175,6 +175,13 @@ define(['./directives'], function (directives) {
                                 'font-weight': 'bold'
                             }
                         },
+                        format_test2: {
+                            name: 'Test',
+                            element: 'span',
+                            attributes : {
+                                'class' : 'contentTitle2'
+                            }
+                        },
 //                        disableNativeSpellChecker: false,
                         uiColor: '#FAFAFA',
                         height: '400px',
