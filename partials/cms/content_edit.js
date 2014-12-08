@@ -120,7 +120,7 @@ define([
             for(var i in $scope.item.FILES) {
                 $scope.item.FILES[i].$destroy = "";
             }
-alert("1");
+
             if ( $scope.item.NO == undefined ) {
                 if ($stateParams.menu == 'article') {
                     $scope.item.PHASE = '10';
