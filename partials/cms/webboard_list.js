@@ -22,7 +22,7 @@ define([
             var condition = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
             $scope.conditions = condition;
-            $scope.search.CONDITION = condition[0];
+            $scope.search.ORDER = condition[0];
         };
 
         /********** 이벤트 **********/

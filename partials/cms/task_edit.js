@@ -139,7 +139,9 @@ define([
                         $scope.CATEGORY = angular.fromJson(data.CATEGORY);
                     }
 
-                    // 프로젝트
+                    $scope.YEAR = data.YEAR;
+
+                        // 프로젝트
                     angular.forEach($scope.projects,function(value, idx){
                         if(value.NO == data.PROJECT_NO){
                             $scope.item.PROJECT = $scope.projects[idx];

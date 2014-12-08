@@ -64,7 +64,7 @@ define([
                 return;
             }
 
-            if ($rootScope.role != 'ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+            if (!($rootScope.role == 'ADMIN' || $rootScope.role == 'MANAGER') && $rootScope.uid != item.REG_UID) {
                 dialogs.notify('알림', '삭제 권한이 없습니다.', {size: 'md'});
                 return;
             }

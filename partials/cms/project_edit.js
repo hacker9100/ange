@@ -64,7 +64,7 @@ define([
                 return $scope.getItem('cms/project', 'item', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
-
+alert(JSON.stringify(data.SERIES))
                         angular.forEach($scope.series,function(value, idx){
                             if(JSON.stringify(value) == JSON.stringify(data.SERIES));
                             $scope.item.SERIES = $scope.series[idx];

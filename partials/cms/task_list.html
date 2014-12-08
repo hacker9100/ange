@@ -1,5 +1,5 @@
-<div class="panel panel-default">
-    <div class="panel-body" ng-model="search" lass="row">
+<div class="panel panel-default" ng-controller="task_list">
+    <div class="panel-body" ng-model="search" class="row">
 
         <form role="form" name="list_from" class="form-horizontal form_basic_100" style="margin-bottom:0px;">
             <div class="col-xs-9" style="border-right:1px solid #DEDEDE">
@@ -138,8 +138,8 @@
             <div class="row" class="form-horizontal" style="float:left; margin:0px auto; width:100%;">
 
                 <div class="col-xs-6 form-group form_basic">
-                    <label class="form_label">담당자</label>
-                    <div class="form_valueText">{{ item.REG_NM }}</div>
+                    <label class="form_label">담당기자</label>
+                    <div class="form_valueText">{{ item.EDITOR_NM }}</div>
                 </div>
                 <div class="col-xs-6 form-group form_basic">
                     <label class="form_label">생성일</label>

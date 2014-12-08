@@ -48,7 +48,7 @@
 
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.PHONE_1, U.PHONE_2, U.EMAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
-                            UR.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
+                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -63,7 +63,7 @@
                 $sql = "SELECT
                             R.ROLE_ID, R.ROLE_NM, R.ROLE_GB
                         FROM
-                            USER_ROLE U, CMS_ROLE R
+                            USER_ROLE U, COM_ROLE R
                         WHERE
                             U.ROLE_ID = R.ROLE_ID
                             AND U.USER_ID = '".$_key."'
@@ -155,7 +155,7 @@
                             SELECT
                                 U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
                                 U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SNS_FL, U.EN_PHONE_FL,
-                                UR.ROLE_ID, (SELECT ROLE_NM FROM CMS_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
+                                UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
                             FROM
                                 COM_USER U, USER_ROLE UR, COM_ROLE R
                             WHERE

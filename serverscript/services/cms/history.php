@@ -64,7 +64,7 @@
                             H.WORK_ID, H.WORK_DT, H.WORKER_ID, U.USER_NM AS WORKER_NM, H.OBJECT_ID, H.OBJECT_GB, H.ACTION_GB, H.IP, H.ACTION_PLACE, H.WORK_GB, H.ETC
                         FROM
                             CMS_HISTORY H
-                            LEFT OUTER JOIN CMS_USER U ON H.WORKER_ID = U.USER_ID
+                            LEFT OUTER JOIN COM_USER U ON H.WORKER_ID = U.USER_ID
                         WHERE
                             WORK_ID = '".$_search[TASK_NO]."'
                         ORDER BY H.WORK_DT ASC

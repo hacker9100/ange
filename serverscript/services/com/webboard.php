@@ -110,6 +110,10 @@
                 $sort_order = "";
                 $limit = "";
 
+                if (isset($_search[COMM_NO]) && $_search[COMM_NO] != "") {
+                    $search_common .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
+                }
+
                 if (isset($_search[BOARD_GB]) && $_search[BOARD_GB] != "") {
                     $search_common .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
                 }
@@ -177,11 +181,45 @@
                         ) CNT
                         ";
 
-                $data = $_d->sql_query($sql);
-                if($_d->mysql_errno > 0){
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                }else{
-                    $_d->dataEnd($sql);
+                $data = null;
+
+                if (isset($_search[EVENT])) {
+                    $__trn = '';
+                    $result = $_d->sql_query($sql,true);
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                        $sql = "SELECT
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    F.NO = S.SOURCE_NO
+                                    AND S.TARGET_GB = 'BOARD'
+                                    AND S.TARGET_NO = ".$data[NO]."
+                                    AND F.THUMB_FL = '0'
+                                ";
+
+                        $category_data = $_d->getData($sql);
+                        $row['FILE'] = $category_data;
+
+                        $__trn->rows[$i] = $row;
+                    }
+                    $_d->sql_free_result($result);
+                    $data = $__trn->{'rows'};
+
+                    if($_d->mysql_errno > 0){
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    }else{
+                        $_d->dataEnd2($data);
+                    }
+                } else {
+                    $data = $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0){
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    }else{
+                        $_d->dataEnd($sql);
+                    }
                 }
             }
 
@@ -246,6 +284,7 @@
             $sql = "INSERT INTO COM_BOARD
                     (
                         PARENT_NO
+                        ,COMM_NO
                         ,HEAD
                         ,SUBJECT
                         ,BODY
@@ -258,6 +297,7 @@
                         ,TAG
                     ) VALUES (
                         '".$_model[PARENT_NO]."'
+                        ,'".$_model[COMM_NO]."'
                         ,'".$_model[HEAD]."'
                         ,'".$_model[SUBJECT]."'
                         , '".$_model[BODY]."'

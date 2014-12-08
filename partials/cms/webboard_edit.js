@@ -67,6 +67,7 @@ define([
 
         // 게사판 저장 버튼 클릭
         $scope.click_saveCmsBoard = function () {
+            $scope.item.SYSTEM_GB = 'CMS';
             $scope.item.FILES = $scope.queue;
 
             for(var i in $scope.item.FILES) {

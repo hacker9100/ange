@@ -142,15 +142,15 @@
                     <i class="glyphicon glyphicon-list"></i>
                     <span>목록</span>
                 </button>
-                <button type="button" class="btn btn-warning btn-xs start" ng-click="click_commitContent();" ng-hide="!isCommit || task.PHASE == '11' || task.PHASE == '21'">
+                <button type="button" class="btn btn-warning btn-xs start" ng-click="click_commitContent();" ng-show="isCommit || task.PHASE == '11' || task.PHASE == '21'">
                     <i class="glyphicon glyphicon-check"></i>
                     <span>등록&승인요청</span>
                 </button>
-                <button type="button" class="btn btn-danger btn-xs start" ng-click="click_returnContent();" ng-hide="!isApproval || task.PHASE == '12' || task.PHASE == '22'">
+                <button type="button" class="btn btn-danger btn-xs start" ng-click="click_returnContent();" ng-show="isApproval || task.PHASE == '12' || task.PHASE == '22'">
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     <span>반려</span>
                 </button>
-                <button type="button" class="btn btn-success btn-xs start" ng-click="click_approveContent();" ng-hide="!isApproval || task.PHASE == '12' || task.PHASE == '22'">
+                <button type="button" class="btn btn-success btn-xs start" ng-click="click_approveContent();" ng-show="isApproval || task.PHASE == '12' || task.PHASE == '22'">
                     <i class="glyphicon glyphicon-ok-circle"></i>
                     <span>승인</span>
                 </button>

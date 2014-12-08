@@ -101,7 +101,7 @@ define([
             if (data != null) {
                 $scope.getList('cms/project', 'list', {}, {YEAR: data}, false)
                     .then(function(data){$scope.projects = data;})
-                    .catch(function(error){console.log(error)});
+                    .catch(function(error){$scope.projects = []; console.log(error)});
             }
         });
 
