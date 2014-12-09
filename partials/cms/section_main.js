@@ -48,7 +48,7 @@ define([
             console.log('idx = '+idx);
             console.log('section = '+section);
 
-            $scope.deleteItem('cms/ section', 'item', section.NO, true)
+            $scope.deleteItem('cms/section', 'item', section.NO, true)
                 .then(function(){alert('정상적으로 삭제했습니다.'); /*$scope.tableParams.group.data.splice(idx, 1);*/ $scope.tableParams.reload();})
                 .catch(function(error){alert(error)});
 
@@ -64,6 +64,7 @@ define([
 
         // 섹션 목록 조회
         $scope.getSectionList = function (search) {
+
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
                 count: 1000,          // count per page
@@ -79,13 +80,40 @@ define([
                     $scope.getList('cms/section', 'list', {}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
-                            $defer.resolve(data);
+                            //$defer.resolve(data);
+                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
+                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
                         .catch(function(error){alert(error)});
 
                 }
 
             });
+
+            /*
+            $scope.tableParams = new ngTableParams({
+                page: 1,            // show first page
+                count: 20,          // count per page
+                sorting: {
+                    SEASON_NM: 'desc',
+                    SORT_IDX : 'asc'     // initial sorting
+                }
+            }, {
+                groupBy: 'SEASON_NM',
+                counts: [],
+                total: 0,           // length of data
+                getData: function($defer, params) {
+                    $scope.getList('section', {}, $scope.search, true)
+                        .then(function(data){
+                            params.total(data[0].TOTAL_COUNT);
+
+                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
+                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                            //$defer.resolve(data);
+                        })
+                        .catch(function(error){alert(error)});
+                }
+            }); */
 
         };
 
