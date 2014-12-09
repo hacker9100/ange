@@ -90,7 +90,6 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
 <link rel="stylesheet" type="text/css" href="/lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
 <link rel="stylesheet" type="text/css" href="/lib/ngActivityIndicator/css/ngActivityIndicator.css" />
@@ -104,6 +103,7 @@
 <link rel="stylesheet" type="text/css" href="/css/normalize.css" >
 <link rel="stylesheet" type="text/css" href="/css/angeCMS_bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/article.css" />
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
 <link rel="stylesheet" href="/css/file-upload/blueimp-gallery.css">
