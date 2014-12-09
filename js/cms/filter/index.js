@@ -6,6 +6,7 @@
  */
 define([
     './split_filter',
+    './string_limit_filter',
     './formatFileSizeFilter',
     './reverseUppercaseFilter'
 ], function () {});

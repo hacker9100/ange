@@ -35,6 +35,7 @@
                     </a>
 
                     <ul ng-if="item.DROP_FL == 'Y'" class="dropdown-menu" role="menu">
+                        <li ng-if="item.CHANNEL_NO == '5' && uid != undefined">{{name}}님 로그인 중</li>
                         <div ng-repeat="sub_item in item.MENU_INFO">
                             <li ng-if="sub_item.MENU_URL != '/logout'"><a ng-href="#{{sub_item.MENU_URL}}">{{sub_item.MENU_NM}}</a></li>
                             <li ng-if="sub_item.MENU_URL == '/logout'"><a ng-click="logoutMe()">{{sub_item.MENU_NM}}</a></li>
