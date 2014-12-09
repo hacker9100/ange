@@ -160,7 +160,7 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM CMS_CATEGORY WHERE NO = ".$_id;
+            $sql = "DELETE FROM CMS_CATEGORY WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
 
@@ -169,7 +169,7 @@
                 $msg = $_d->mysql_error;
             }
 
-            $sql = "DELETE FROM CONTENT_CATEGORY WHERE CATEGORY_NO = ".$_id;
+            $sql = "DELETE FROM CONTENT_CATEGORY WHERE CATEGORY_NO = ".$_key;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
