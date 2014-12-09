@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('section_main', ['$scope', '$stateParams', 'dataService', '$location', '$controller', '$filter', 'ngTableParams', function ($scope, $stateParams, dataService, $location, $controller, $filter, ngTableParams) {
+    controllers.controller('section_main', ['$scope', '$stateParams', 'dataService', '$modal', '$location', '$controller', '$filter', 'ngTableParams', '$q', 'dialogs', function ($scope, $stateParams, $modal, dataService, $location, $controller, $filter, ngTableParams, $q, dialogs, UPLOAD) {
 
         /********** 공통 controller 호출 **********/
         angular.extend(this, $controller('common', {$scope: $scope}));
@@ -172,6 +172,16 @@ define([
         }
 
        // selectbox 시즌명 선택시 inputbox 시즌명 disabled
+/*        $scope.$watch('item.SELECT_SEASON_NM', function (data) {
+            if (data != null && data != "") {
+                $scope.item.SEASON_NM = data.SEASON_NM;
+                $scope.season_nm_check = true;
+            }else{
+                $scope.season_nm_check = false;
+                $scope.item.SEASON_NM= "";
+            }
+        });*/
+
         $scope.$watch('item.SELECT_SEASON_NM', function (data) {
             if (data != null && data != "") {
                 $scope.item.SEASON_NM = data.SEASON_NM;
@@ -181,6 +191,14 @@ define([
                 $scope.item.SEASON_NM= "";
             }
         });
+
+        // 시즌수정
+        $scope.click_updateSeason = function () {
+            console.log('$scope.item.SEASON_NM = '+$scope.item.SEASON_NM);
+            $scope.updateItem('cms/section', 'item', {}, $scope.item, false)
+                .then(function(){alert('시즌수정이 완료되었습니다'); $scope.tableParams.reload();})
+                .catch(function(error){alert(error)});
+        }
 
         // 취소 클릭
         $scope.click_cancel = function () {
@@ -202,4 +220,5 @@ define([
             .catch($scope.reportProblems);
 
     }]);
+
 });

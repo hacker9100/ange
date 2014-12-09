@@ -87,6 +87,11 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
+        // 섹션 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
+        $scope.click_focus = function () {
+            $('#item_gb').focus();
+        }
+
         // 취소 클릭
         $scope.click_cancel = function () {
             $scope.key = '';

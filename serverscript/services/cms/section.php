@@ -162,25 +162,32 @@
             break;
 
         case "PUT":
-            if (!isset($_key) || $_key == '') {
-                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
-            }
+
 
     //            $FORM = json_decode(file_get_contents("php://input"),true);
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
 
+            if($_model[SECTION_NM] != ""){
+                $sql = "UPDATE CMS_SECTION SET
+                            SEASON_NM = '".$_model[SEASON_NM]."'";
+            } else {
 
-            $sql = "UPDATE CMS_SECTION
-                        SET
-                            SECTION_NM = '".$_model[SECTION_NM]."'
-                            ,SORT_IDX = '".$_model[SORT_IDX]."'
-                            ,NOTE = '".$_model[NOTE]."'
-                        WHERE
-                            NO = ".$_key."
+                if (!isset($_key) || $_key == '') {
+                    $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
+                }
+                $sql = "UPDATE CMS_SECTION
+                            SET
+                                SECTION_NM = '".$_model[SECTION_NM]."'
+                                ,SORT_IDX = '".$_model[SORT_IDX]."'
+                                ,NOTE = '".$_model[NOTE]."'
+                            WHERE
+                                NO = ".$_key."
                         ";
                    // ,SEASON_NM = '".$_model[SEASON_NM]."'
+            }
+
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
