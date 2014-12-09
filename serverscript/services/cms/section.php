@@ -71,6 +71,7 @@
                              WHERE
                                     1=1
                              GROUP BY SEASON_NM
+                             ORDER BY CAST(SUBSTRING(SEASON_NM,3) AS UNSIGNED) DESC
                                 ";
                 }else{
                 $sql = "SELECT
