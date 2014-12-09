@@ -89,6 +89,11 @@ define([
             }
         };
 
+        // 섹션 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
+        $scope.click_focus = function () {
+            $('#item_gb').focus();
+        }
+
         // 카테고리 상태변경 버튼 클릭
         $scope.click_updateStatus = function (idx) {
             var category = $scope.list[idx];

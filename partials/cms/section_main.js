@@ -158,7 +158,7 @@ define([
                         $scope.item.SELECT_SEASON_NM = $scope.season[idx];
                         $scope.season_nm_check = true;
 
-                        $('#section_nm').focus();
+                        $('#season_gb').focus();
                     })
                     .catch(function(error){alert(error)});
 
@@ -168,7 +168,7 @@ define([
 
         // 섹션 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
         $scope.click_focus = function () {
-            $('#season_nm').focus();
+            $('#season_gb').focus();
         }
 
        // selectbox 시즌명 선택시 inputbox 시즌명 disabled

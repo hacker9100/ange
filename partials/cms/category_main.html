@@ -23,6 +23,10 @@
                         <i class="glyphicon glyphicon-search"></i>
                         <span>검색</span>
                     </button>
+                    <button class="btn btn-primary btn-success fileinput-button" data-ng-click="click_focus();">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>등록</span>
+                    </button>
                 </div>
             </div>
         </form>
@@ -80,7 +84,7 @@
             <div class= "form-group">
                 <label class= "col-md-2">대분류 선택</label>
                 <div class= "col-md-4">
-                    <select ng-model="item.PARENT" ng-options="parent.PARENT_NM for parent in parents" class= "form-control" ng-disabled="item.CATEGORY_GB != '2'">
+                    <select id ng-model="item.PARENT" ng-options="parent.PARENT_NM for parent in parents" class= "form-control" ng-disabled="item.CATEGORY_GB != '2'">
                         <option name="" value="">선택하세요.</option>
                     </select>
                 </div>

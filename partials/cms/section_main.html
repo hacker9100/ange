@@ -96,15 +96,15 @@
                     <select ng-model="item.PROJECT_NO" ng-options="p.SUBJECT for p in project" class= "form-control"></select>
                 </div>
             </div>-->
-            <div class="form-group" ng-class="{error: edit_form.user_name.$invalid}">
+            <div class="form-group" id="season_nm" ng-class="{error: edit_form.user_name.$invalid}">
                 <label class= "col-md-2">시즌</label>
                 <div class="col-md-2">
-                    <select ng-model="item.SELECT_SEASON_NM" ng-options="v.SEASON_NM for v in season" class= "form-control" placeholder="시즌">
+                    <select id="season_gb" ng-model="item.SELECT_SEASON_NM" ng-options="v.SEASON_NM for v in season" class= "form-control" placeholder="시즌">
                         <option name="season" value="">- 선택</option>
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <input id="season_nm" name="season_nm"  ng-model="item.SEASON_NM" type= "text" class= "form-control" placeholder="새 시즌명" required ng-disabled="season_nm_check"/>
+                    <input  name="season_nm"  ng-model="item.SEASON_NM" type= "text" class= "form-control" placeholder="새 시즌명" required ng-disabled="season_nm_check"/>
                     <span ng-show="edit_form.section_nm.$dirty && edit_form.section_nm.$invalid" class="help-inline">시즌명이 누락되었습니다.</span>
                 </div>
             </div>
