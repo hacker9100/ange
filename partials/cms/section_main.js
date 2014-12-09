@@ -142,6 +142,10 @@ define([
 
         // 섹션 편집 클릭
         $scope.click_getSection = function (id) {
+
+
+            angular.element("#season_nm").focus();
+
             $scope.key = id;
 
             if ($scope.key != '') {
@@ -160,7 +164,14 @@ define([
                         $scope.season_nm_check = true;
                     })
                     .catch(function(error){alert(error)});
+
             }
+
+        }
+
+        // 섹션 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
+        $scope.click_focus = function () {
+            angular.element("#season_nm").focus();
         }
 
        // selectbox 시즌명 선택시 inputbox 시즌명 disabled

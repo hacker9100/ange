@@ -30,6 +30,10 @@
                         <i class="glyphicon glyphicon-search"></i>
                         <span>검색</span>
                     </button>
+                    <button class="btn btn-primary btn-success fileinput-button" data-ng-click="click_focus();">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>등록</span>
+                    </button>
                 </div>
             </div>
         </form>
@@ -78,7 +82,7 @@
 <!-- Contents Include -->
 <div class="col-md-12">
 
-    <form role="form" name="edit_form" class="form-horizontal">
+    <form role="form" name="edit_form" class="form-horizontal" id="edit_form">
         <div ng-model="item" lass="row">
 <!--            <div class= "form-group">
                 <label class= "col-md-2">연도</label>
@@ -92,7 +96,7 @@
                     <select ng-model="item.PROJECT_NO" ng-options="p.SUBJECT for p in project" class= "form-control"></select>
                 </div>
             </div>-->
-            <div class= "form-group" ng-class="{error: edit_form.user_name.$invalid}">
+            <div class="form-group" ng-class="{error: edit_form.user_name.$invalid}">
                 <label class= "col-md-2">시즌</label>
                 <div class="col-md-2">
                     <select ng-model="item.SELECT_SEASON_NM" ng-options="v.SEASON_NM for v in season" class= "form-control" placeholder="시즌">
@@ -100,14 +104,14 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <input name="season_nm" ng-model="item.SEASON_NM" type= "text" class= "form-control" placeholder="시즌" required ng-disabled="season_nm_check"/>
+                    <input name="season_nm" id="season_nm" ng-model="item.SEASON_NM" type= "text" class= "form-control" placeholder="새 시즌명" required ng-disabled="season_nm_check"/>
                     <span ng-show="edit_form.section_nm.$dirty && edit_form.section_nm.$invalid" class="help-inline">시즌명이 누락되었습니다.</span>
                 </div>
             </div>
             <div class= "form-group" ng-class="{error: edit_form.user_name.$invalid}">
                 <label class= "col-md-2">섹션명</label>
                 <div class="col-md-4">
-                    <input name="section_nm" ng-model="item.SECTION_NM" type= "text" class= "form-control" placeholder="섹션 제목" required/>
+                    <input name="section_nm" ng-model="item.SECTION_NM" type= "text" class= "form-control" placeholder="섹션명" required/>
                     <span ng-show="edit_form.section_nm.$dirty && edit_form.section_nm.$invalid" class="help-inline">섹션 제목이 누락되었습니다.</span>
                 </div>
             </div>
