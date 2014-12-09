@@ -48,7 +48,7 @@ define([
             console.log('idx = '+idx);
             console.log('section = '+section);
 
-            $scope.deleteItem('cms/ section', 'item', section.NO, true)
+            $scope.deleteItem('cms/section', 'item', section.NO, true)
                 .then(function(){alert('정상적으로 삭제했습니다.'); /*$scope.tableParams.group.data.splice(idx, 1);*/ $scope.tableParams.reload();})
                 .catch(function(error){alert(error)});
 
