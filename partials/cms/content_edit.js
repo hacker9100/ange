@@ -25,6 +25,10 @@ define([
                             '</div>' +
                         '</div>';
 
+//                    if (!angular.isUndefined(CKEDITOR)) {
+//                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+//                        CKEDITOR.instances.editor1.insertElement( element );
+//                    }
                     $scope.item.BODY = temp;
                     break;
 
@@ -32,8 +36,11 @@ define([
                     var temp =
                         '<plantitle>' + '<strong>섹션명</strong> | 제목' + '</plantitle>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'byline_template' :
@@ -43,8 +50,11 @@ define([
                             '<strong>에디터</strong> 이름 / <strong>포토그래퍼</strong> 이름 / <strong>참고한 책</strong> &lt;제목&gt; &lt;제목&gt; / <strong>의상 협찬</strong> 업체(02-1234-5678, www.homepage.co.kr) / <strong>모델</strong> 이름' +
                         '</byline>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'headline_template' :
@@ -52,8 +62,11 @@ define([
                         '<subtitle>' + "소제목을 입력하세요" + '</subtitle>' +
                         '<maintitle>' + "대제목을 입력하세요" + '</maintitle>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'preface_basic_template' :
@@ -62,32 +75,44 @@ define([
 
                         '<preface>' + '전문 내용을 입력하세요' + '</preface>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'sectionmain_template' :
                     var temp =
                         '<sectionmain>' + '주제를 입력하세요' + '</sectionmain>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'sectionsub_template' :
                     var temp =
                         '<sectionsub>' + '소주제를 입력하세요' + '</sectionsub>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'bodyscript_template' :
                     var temp =
                         '<bodyscript>' + '본문 내용을 입력하세요' + '</bodyscript>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'bodyscript_p2b_template' :
@@ -103,8 +128,11 @@ define([
                             '</div>' +
                         '</div>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'bodyscript_b2p_template' :
@@ -120,16 +148,22 @@ define([
                             '</div>' +
                         '</div>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'tips_template' :
                     var temp =
                         '<tips>' + '<div class="tip_title">' + 'TIP 제목을 입력하세요' + '</div>' + '내용을 입력하세요.' + '</tips>' + '<br />&nbsp;&nbsp;';
 
-                    $scope.item.BODY = temp + $scope.item.BODY;
-
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case '2E' :

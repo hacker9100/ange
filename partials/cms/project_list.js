@@ -101,7 +101,10 @@ define([
 
                     $scope.getList('cms/project', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
-                            params.total(data[0].TOTAL_COUNT);
+                            var total_cnt = data[0].TOTAL_COUNT;
+                            $scope.TOTAL_COUNT = total_cnt;
+
+                            params.total(total_cnt);
                             $defer.resolve(data);
 
 //                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;

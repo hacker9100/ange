@@ -86,7 +86,8 @@
 <!-- Contents Include -->
 <div class="list-group" style="margin-bottom: 0;">
     <div style="text-align:left;">
-        Task
+        <label>Task</label>
+        <label>총 {{TOTAL_COUNT}}건</label>
     </div>
     <div style="text-align:right;">
         <input ng-model="search.MY_TASK" type="checkbox" ng-change="click_searchTask()" ng-disabled="role == 'CMS_ADMIN' || role == 'MANAGER' ">

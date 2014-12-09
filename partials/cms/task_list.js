@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $location, dialogs) {
+    controllers.controller('task_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'COMMON', function ($scope, $rootScope, $stateParams, $location, dialogs, COMMON) {
 
         /********** 초기화 **********/
         // 목록 데이터
@@ -181,11 +181,14 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
+        // 페이지 사이즈
+        $scope.PAGE_SIZE = COMMON.PAGE_SIZE;
+
         $scope.list = [];
         $scope.pageNo = 0;
-        $scope.pageSize = 4;
+        $scope.pageSize = $scope.PAGE_SIZE;
         $scope.perCnt = 0;
-        $scope.perSize = 2;
+        $scope.perSize = $scope.PAGE_SIZE / 2;
         $scope.totalCnt = 0;
 
         // 검색 버튼 클릭
@@ -205,7 +208,10 @@ define([
             $scope.isLoading = true;
             $scope.getList('cms/task', 'list', {NO:$scope.pageNo, SIZE:$scope.pageSize}, $scope.search, true)
                 .then(function(data){
-                    $scope.totalCnt = data[0].TOTAL_COUNT;
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
+                    $scope.totalCnt = total_cnt;
+
                     angular.forEach(data, function(model) {
                         $scope.listData.push(model);
                     });
