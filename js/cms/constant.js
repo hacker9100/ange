@@ -23,7 +23,7 @@ define([
     app.constant(
         "UPLOAD", {
             "UPLOAD_INDEX" : "/serverscript/upload/",
-            "BASE_URL" : "http://localhost"
+            "BASE_URL" : "http://14.63.219.171"
         }
     );
 

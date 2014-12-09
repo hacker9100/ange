@@ -504,8 +504,8 @@ class UploadHandler
         /**
          * Sunghwan Kim 2014-12-09 한글 깨짐 현상 처리
          */
-//        $name = trim(basename(stripslashes($name)), ".\x00..\x20");
-        $name = $this->utf2euc($name);
+        $name = trim(basename(stripslashes($name)), ".\x00..\x20");
+//        $name = $this->utf2euc($name);
         // Use a timestamp for empty filenames:
         if (!$name) {
             $name = str_replace('.', '-', microtime(true));
