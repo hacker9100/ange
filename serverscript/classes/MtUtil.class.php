@@ -31,20 +31,22 @@ class MtUtil extends Mt {
 
     //consoleLog 길어서 만듬
     function _c($msg,$line=true) {
-        $access = date("Y.m.d");
-        $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/debug".$access.".log", "a");
-        $text = "";
-        if ($line) {
-            $text = chr(10).date("Y/m/d H:i:s").":::::::::>"."\n";
-            foreach (debug_backtrace() as $k => $v) {
-                $text = $text.$v['file'].":line(".$v['line'].")\n";
+        if (DEBUG) {
+            $access = date("Y.m.d");
+            $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/debug".$access.".log", "a");
+            $text = "";
+            if ($line) {
+                $text = chr(10).date("Y/m/d H:i:s").":::::::::>"."\n";
+                foreach (debug_backtrace() as $k => $v) {
+                    $text = $text.$v['file'].":line(".$v['line'].")\n";
+                }
+            } else {
+                $text = $text."\n";
             }
-        } else {
-            $text = $text."\n";
+            $text = $text.$msg;
+            fwrite($file_pointer, $text);
+            fclose($file_pointer);
         }
-        $text = $text.$msg;
-        fwrite($file_pointer, $text);
-        fclose($file_pointer);
     }
 
     //consoleLog 길어서 만듬

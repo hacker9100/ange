@@ -193,7 +193,8 @@
                         FROM
                             CMS_TASK T, CONTENT_CATEGORY CC, CMS_CATEGORY C
                         WHERE
-                            T.NO = CC.TARGET_NO
+                            C.CATEGORY_ST = '0'
+                            AND T.NO = CC.TARGET_NO
                             AND CC.CATEGORY_NO = C.NO
                             AND T.NO = ".$row['NO']."
                         ";
@@ -352,8 +353,6 @@
                 $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$msg);
             } else {
-                $_d->sql_commit();
-
                 $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
@@ -381,6 +380,7 @@
 
                 $_d->sql_query($sql);
 
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
@@ -526,8 +526,6 @@
                     $_d->sql_rollback();
                     $_d->failEnd("수정실패입니다:".$msg);
                 } else {
-                    $_d->sql_commit();
-
                     $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
@@ -555,6 +553,7 @@
 
                     $_d->sql_query($sql);
 
+                    $_d->sql_commit();
                     $_d->succEnd($no);
                 }
             } else if ($_type == "status") {

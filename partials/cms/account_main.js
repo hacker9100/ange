@@ -31,7 +31,7 @@ define([
         // 저장 버튼 클릭
         $scope.click_saveCmsUser = function () {
             $scope.updateItem('com/user', 'item', $scope.item.USER_ID, $scope.item, true)
-                .then(function(){dialogs.notify('알림', "정상적으로 수정 완료 됐습니다.", {size: 'md'});})
+                .then(function(){dialogs.notify('알림', "정상적으로 수정 되었습니다.", {size: 'md'});})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 

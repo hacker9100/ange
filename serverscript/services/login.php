@@ -34,6 +34,10 @@
 
                 $where_search = "";
 
+                if (!isset($_model[password]) || $_model[password] == "") {
+                    $_d->failEnd("아이디나 패스워드를 확인해주세요.");
+                }
+
                 if (isset($_model[SYSTEM_GB]) && $_model[SYSTEM_GB] != "") {
                     $where_search .= "AND R.SYSTEM_GB  = '".$_model[SYSTEM_GB]."' ";
                 }
@@ -44,7 +48,7 @@
                 $msg = "";
 
                 $sql = "SELECT
-                            U.USER_ID, U.USER_NM, U.EMAIL, UR.ROLE_ID, U.PASSWORD
+                            U.USER_ID, U.USER_NM, U.EMAIL, UR.ROLE_ID, U.PASSWORD, U.USER_ST
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -63,6 +67,14 @@
                 }
 
                 if ($data) {
+                    if ( $data['USER_ST'] == "F") {
+                        $_d->failEnd("이용이 정지된 사용자입니다. 관리자에게 문의하세요.");
+                    }
+
+                    if ( !validate_password($_model[password], $data['PASSWORD'])) {
+                        $_d->failEnd("아이디나 패스워드를 확인해주세요.");
+                    }
+
                     $sql = "SELECT
                                 M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
                             FROM
@@ -88,36 +100,30 @@
                 if ($err > 0) {
                     $_d->failEnd("조회실패입니다:".$msg);
                 } else {
-                    if (isset($_model[password]) && $_model[password] != "") {
-                        if ( !validate_password($_model[password], $data['PASSWORD'])) {
-                            $_d->failEnd("아이디나 패스워드를 확인해주세요.");
-                        }
+                    $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                    ) VALUES (
+                        '".$_model[WORK_ID]."'
+                        ,'CMS_LOGIN'
+                        ,SYSDATE()
+                        ,'".$data[USER_ID]."'
+                        ,''
+                        ,''
+                        ,''
+                        ,'IP'
+                        ,'/signin'
+                    )";
 
-                        $sql = "INSERT INTO CMS_HISTORY
-                        (
-                            WORK_ID
-                            ,WORK_GB
-                            ,WORK_DT
-                            ,WORKER_ID
-                            ,OBJECT_ID
-                            ,OBJECT_GB
-                            ,ACTION_GB
-                            ,IP
-                            ,ACTION_PLACE
-                        ) VALUES (
-                            '".$_model[WORK_ID]."'
-                            ,'CMS_LOGIN'
-                            ,SYSDATE()
-                            ,'".$data[USER_ID]."'
-                            ,''
-                            ,''
-                            ,''
-                            ,'IP'
-                            ,'/signin'
-                        )";
-
-                        $_d->sql_query($sql);
-                    }
+                    $_d->sql_query($sql);
 
                     if (!isset($_SESSION)) {
                         session_start();

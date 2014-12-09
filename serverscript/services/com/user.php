@@ -142,7 +142,7 @@
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT][value]." ".$_search[ORDER][value]." ";
+                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
                 }
 
                 $sql = "SELECT

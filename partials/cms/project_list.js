@@ -70,7 +70,7 @@ define([
             }
 
             $scope.deleteItem('cms/project', 'item', item.NO, false)
-                .then(function(){$scope.getProjectList($scope.search)})
+                .then(function(){$scope.tableParams.reload();})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 

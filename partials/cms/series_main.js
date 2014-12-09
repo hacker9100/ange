@@ -28,9 +28,15 @@ define([
         $scope.click_deleteSeries = function (idx) {
             var series = $scope.list[idx];
 
-            $scope.deleteItem('cms/series', 'item', series.NO, true)
-                .then(function(){alert('정상적으로 삭제했습니다.'); $scope.list.splice(idx, 1);})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
+
+            dialog.result.then(function(btn){
+                $scope.deleteItem('cms/series', 'item', series.NO, true)
+                    .then(function(){alert('정상적으로 삭제되었습니다.'); $scope.list.splice(idx, 1);})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
         };
 
         // 검색 버튼 클릭
@@ -66,7 +72,7 @@ define([
 
             if ($scope.key != '') {
                 $scope.getItem('cms/series', 'item', $scope.key, {}, false)
-                    .then(function(data) {$scope.item = data;})
+                    .then(function(data) {$scope.item = data; $('#item_gb').focus();})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
@@ -77,19 +83,24 @@ define([
             series.SERIES_ST = (series.SERIES_ST == "1" ? "0" : "1");
 
             $scope.updateItem('cms/series', 'item', series.NO, series, false)
-                .then(function(){$scope.getSeriesList(); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
+                .then(function(){dialogs.notify('알림', '시리즈 상태가 변경되었습니다.', {size: 'md'}); $scope.getSeriesList(); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 취소 클릭
         $scope.click_cancel = function () {
             $scope.key = '';
-            $scope.item = null;
+            $scope.item = {};
+            $scope.item.SERIES_GB = '1';
         };
 
         /********** 화면 초기화 **********/
-        $scope.init();
-        $scope.getSeriesList();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
+            .then($scope.init)
+            .then($scope.getSeriesList)
+            .catch($scope.reportProblems);
 
     }]);
 });

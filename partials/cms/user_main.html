@@ -72,14 +72,14 @@
             <td data-title="'이름'" sortable="'USER_NM'">
                 {{item.USER_NM}}
             </td>
-            <td data-title="'권한'" sortable="'ROLE'">
+            <td data-title="'권한'" sortable="'ROLE_NM'">
                 {{item.ROLE_NM}}
             </td>
             <td data-title="'등록일'" sortable="'REG_DT'">
                 {{item.REG_DT}}
             </td>
             <td data-title="'상태'" sortable="'USER_ST'">
-                {{item.USER_ST == '0' ? '이용가능' : '이용정지'}}
+                {{item.USER_ST == 'N' ? '이용가능' : '이용정지'}}
             </td>
             <td data-title="'기능'">
                 <a ng-click="click_getCmsUser(item.USER_ID)">편집</a>
@@ -106,7 +106,7 @@
             <div class="form-group form_basic_group" ng-class="{error: edit_form.item_id.$invalid}">
                 <label class= "form_basic_label">아이디</label>
                 <div class="form_basic_input">
-                    <input name="item_id" ng-model="item.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디" required/>
+                    <input id="item_id" name="item_id" ng-model="item.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디" required/>
                     <span ng-show="edit_form.item_id.$dirty && edit_form.item_id.$invalid" class="help-inline">사용자 아이디가 누락되었습니다.</span>
                 </div>
             </div>

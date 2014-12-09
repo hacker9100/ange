@@ -43,5 +43,26 @@ define([
                     $location.url('/dashboard/main');
                 }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
+
+        $scope.sessionCheck = function(session) {
+            if (session.USER_ID != undefined && session.USER_ID != '') {
+                $rootScope.authenticated = true;
+                $rootScope.uid = session.USER_ID;
+                $rootScope.name = session.USER_NM;
+                $rootScope.role = session.ROLE_ID;
+                $rootScope.menu_role = session.MENU_ROLE;
+                $rootScope.email = session.EMAIL;
+
+                dialogs.notify('알림', "이미 로그인 되었습니다.", {size: 'md'});
+                $location.url('/dashboard/main');
+            }
+
+            return session;
+        };
+
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .catch($scope.reportProblems);
+
 	}]);
 });

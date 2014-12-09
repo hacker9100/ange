@@ -51,9 +51,9 @@ define([
                         for (var i in data) {
                             var item = data[i];
 
-                            if (item.CATEGORY_GB == '1') {
+                            if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
                                 category_a.push(item);
-                            } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '0') {
+                            } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
                                 category_b.push(item);
                             }
                         }
@@ -101,14 +101,13 @@ define([
                 for (var i in $scope.category) {
                     var item = $scope.category[i];
 
-                    if (item.PARENT_NO == data.NO && item.CATEGORY_GB == '2' && item.PARENT_NO != '0') {
+                    if (item.PARENT_NO == data.NO && item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO != '0') {
                         category_s.push(item);
                     }
                 }
             }
             $scope.category_s = category_s;
         });
-
 
         // 추가된 카테고리 클릭
         $scope.click_removeCategory = function(idx) {

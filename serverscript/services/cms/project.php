@@ -270,7 +270,7 @@
                 $msg = $_d->mysql_error;
             }
 
-            if (isset($_model[FILE])) {
+            if (isset($_model[FILE]) && $_model[FILE] != "") {
                 $file = $_model[FILE];
 
                 MtUtil::_c("------------>>>>> file : ".$file['name']);
@@ -392,7 +392,7 @@
                         SERIES_NO = '".$_model[SERIES][NO]."'
                         ,YEAR = '".$_model[YEAR]."'
                         ,SUBJECT = '".$_model[SUBJECT]."'
-                        ,PROJECT_ST = '".( $_model[COMPLETE_FL] == true ? "3" : $_model[PROJECT_ST] )."'
+                        ,PROJECT_ST = '".( $_model[COMPLETE_FL] == "true" ? "3" : $_model[PROJECT_ST] )."'
                         ,NOTE = '".$_model[NOTE]."'
                     WHERE
                         NO = ".$_key."

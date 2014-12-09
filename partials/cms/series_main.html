@@ -62,7 +62,7 @@
             <div class= "form-group" ng-class="{error: edit_form.user_id.$invalid}">
                 <label class= "col-md-2">유형</label>
                 <div class="col-md-4">
-                    <select ng-model="item.SERIES_GB" ng-init="item.SERIES_GB = 1" class= "form-control" >
+                    <select id="item_gb" ng-model="item.SERIES_GB" ng-init="item.SERIES_GB = 1" class= "form-control" >
                         <option name="" value="1">정기 출판</option>
                         <option name="" value="2">비정기 출판(상시)</option>
                     </select>
