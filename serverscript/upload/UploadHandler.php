@@ -9,6 +9,9 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
+include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+
+MtUtil::_c("### [FILEUPLOAD]");
 
 class UploadHandler
 {
@@ -491,12 +494,18 @@ class UploadHandler
         return $name;
     }
 
+    protected function utf2euc($str) { return iconv("UTF-8","cp949//IGNORE", $str); }
+
     protected function trim_file_name($file_path, $name, $size, $type, $error,
             $index, $content_range) {
         // Remove path information and dots around the filename, to prevent uploading
         // into different directories or replacing hidden system files.
         // Also remove control characters and spaces (\x00..\x20) around the filename:
-        $name = trim(basename(stripslashes($name)), ".\x00..\x20");
+        /**
+         * Sunghwan Kim 2014-12-09 한글 깨짐 현상 처리
+         */
+//        $name = trim(basename(stripslashes($name)), ".\x00..\x20");
+        $name = $this->utf2euc($name);
         // Use a timestamp for empty filenames:
         if (!$name) {
             $name = str_replace('.', '-', microtime(true));

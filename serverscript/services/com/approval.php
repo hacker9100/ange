@@ -150,8 +150,6 @@
                 $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$msg);
             } else {
-                $_d->sql_commit();
-
                 $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
@@ -179,6 +177,7 @@
 
                 $_d->sql_query($sql);
 
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 

@@ -122,9 +122,7 @@ define([
             }
 
             if ( $scope.item.NO == undefined ) {
-                if ($stateParams.menu == 'article') {
-                    $scope.item.PHASE = '10';
-                }
+                $scope.item.PHASE = '10';
 
                 $scope.insertItem('cms/content', 'item', $scope.item, false)
                     .then(function(){$location.url('/'+$stateParams.menu+'/list');})

@@ -156,7 +156,7 @@ define(['./directives'], function (directives) {
                             { name: 'clipboard', items: [ 'Undo', 'Redo' ] },
                             { name: 'document', items: [ 'PageBreak', 'Source' ] }
                         ],
-                        format_tags: 'p;h2;h3;pre;links;test',
+                        format_tags: 'p;h2;h3;pre;links;test;test2',
                         format_links: {
                             name: 'Links',
                             element: 'span',
@@ -176,7 +176,7 @@ define(['./directives'], function (directives) {
                             }
                         },
                         format_test2: {
-                            name: 'Test',
+                            name: 'Test2',
                             element: 'span',
                             attributes : {
                                 'class' : 'contentTitle2'

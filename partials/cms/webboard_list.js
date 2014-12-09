@@ -22,7 +22,7 @@ define([
             var condition = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
 
             $scope.conditions = condition;
-            $scope.search.ORDER = condition[0];
+            $scope.search.CONDITION = condition[0];
         };
 
         /********** 이벤트 **********/
@@ -49,17 +49,24 @@ define([
         // 삭제 버튼 클릭
         $scope.click_deleteCmsBoard = function (item) {
             if ($rootScope.role != 'CMS_ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
-                dialogs.notify('오류', '삭제 권한이 없습니다.', {size: 'md'});
+                dialogs.notify('알림', '삭제 권한이 없습니다.', {size: 'md'});
                 return;
             }
 
-            $scope.deleteItem('com/webboard', 'item', item.NO, false)
-                .then(function(){$scope.tableParams.reload();})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
+
+            dialog.result.then(function(btn){
+                $scope.deleteItem('com/webboard', 'item', item.NO, false)
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
         };
 
         // 검색 버튼 클릭
         $scope.click_searchCmsBoard = function () {
+            $scope.tableParams.$params.page = 1;
             $scope.tableParams.reload();
         };
 

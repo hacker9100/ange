@@ -266,7 +266,7 @@
 
                             MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
-                            $body_str = str_replace($file[mediumUrl], 'http://localhost'.$file_path.'medium/'.$uid, $body_str);
+                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                         }
                     }
                 }
@@ -385,8 +385,6 @@
                 $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$msg);
             }else{
-                $_d->sql_commit();
-
                 $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
@@ -412,6 +410,7 @@
 
                 $_d->sql_query($sql);
 
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
@@ -453,7 +452,7 @@
                             MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
                             MtUtil::_c("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
 
-                            $body_str = str_replace($file[mediumUrl], 'http://localhost'.$file_path.'medium/'.$uid, $body_str);
+                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
 
                             MtUtil::_c("------------>>>>> body_str : ".$body_str);
                         } else {
@@ -614,8 +613,6 @@
                 $_d->sql_rollback();
                 $_d->failEnd("수정실패입니다:".$msg);
             }else{
-                $_d->sql_commit();
-
                 $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
@@ -641,6 +638,7 @@
 
                 $_d->sql_query($sql);
 
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 
@@ -711,8 +709,6 @@
                 $_d->sql_rollback();
                 $_d->failEnd("삭제실패입니다:".$msg);
             }else{
-                $_d->sql_commit();
-
                 $sql = "INSERT INTO CMS_HISTORY
                     (
                         WORK_ID
@@ -738,6 +734,7 @@
 
                 $_d->sql_query($sql);
 
+                $_d->sql_commit();
                 $_d->succEnd($no);
             }
 

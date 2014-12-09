@@ -71,7 +71,7 @@
             <div class= "form-group">
                 <label class= "col-md-2">구분</label>
                 <div class= "col-md-4">
-                    <select ng-model="item.CATEGORY_GB" ng-init="item.CATEGORY_GB = 1" class= "form-control" >
+                    <select id="item_gb" ng-model="item.CATEGORY_GB" ng-init="item.CATEGORY_GB = 1" class= "form-control" >
                         <option name="" value="1">주기</option>
                         <option name="" value="2">주제</option>
                     </select>
@@ -91,7 +91,7 @@
             <div class= "form-group" ng-class="{error: edit_form.item_name.$invalid}">
                 <label class= "col-md-2">키워드</label>
                 <div class="col-md-4">
-                    <input name="item_name" ng-model="item.CATEGORY_NM" type= "text" class= "form-control" placeholder="카테고리 키워드" required/>
+                    <input id="item_name" name="item_name" ng-model="item.CATEGORY_NM" type= "text" class= "form-control" placeholder="카테고리 키워드" required/>
                     <span ng-show="edit_form.item_name.$dirty && edit_form.item_name.$invalid" class="help-inline">카테고리 키워드가 누락되었습니다.</span>
                 </div>
             </div>

@@ -27,6 +27,8 @@ define([
         /********** 초기화 **********/
         // 프로젝트 모델
         $scope.item = {};
+        // 시리즈 데이터
+        $scope.series = [];
 
         // 날짜 콤보박스
         var year = [];
@@ -38,7 +40,20 @@ define([
             var ret = $scope.getList('cms/series', 'list', {}, {}, false)
                 .then(function(data){
                     $scope.series = data;
-                    $scope.item.SERIES = data[0];
+
+                    if ($stateParams.id == 0) {
+                        var arr_series = [];
+
+                        for (var i in $scope.series) {
+                            var item = $scope.series[i];
+                            if (item.SERIES_GB == $scope.TYPE) {
+                                arr_series.push(item);
+                            }
+                        }
+
+                        $scope.arr_series = arr_series;
+                        $scope.item.SERIES = arr_series[0];
+                    }
                 })
                 .catch(function(error){throw('시리즈:'+error);});
 
@@ -53,6 +68,25 @@ define([
         }
 
         /********** 이벤트 **********/
+        // 시리즈 유형 선택
+        $scope.$watch('TYPE', function(data) {
+            var arr_series = [];
+
+            if (data != undefined) {
+                for (var i in $scope.series) {
+                    var item = $scope.series[i];
+                    if (item.SERIES_GB == data) {
+                        arr_series.push(item);
+                    }
+                }
+
+                $scope.arr_series = arr_series;
+                $scope.item.SERIES = arr_series[0];
+            }
+
+        });
+
+
         // 목록 버튼 클릭
         $scope.click_showProjectList = function () {
             $location.url('/project/list');
@@ -64,11 +98,13 @@ define([
                 return $scope.getItem('cms/project', 'item', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
-alert(JSON.stringify(data.SERIES))
+                        $scope.TYPE = data.SERIES.SERIES_GB;
+
                         angular.forEach($scope.series,function(value, idx){
-                            if(JSON.stringify(value) == JSON.stringify(data.SERIES));
-                            $scope.item.SERIES = $scope.series[idx];
-                            return;
+                            if(JSON.stringify(value) == JSON.stringify(data.SERIES)) {
+                                $scope.item.SERIES = $scope.series[idx];
+                                return;
+                            }
                         });
 
                         var file = data.FILE;
@@ -77,6 +113,8 @@ alert(JSON.stringify(data.SERIES))
                         }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            } else {
+                $scope.TYPE = 1;
             }
         };
 

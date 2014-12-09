@@ -223,8 +223,12 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        $scope.init();
-        $scope.getCmsUserList();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
+            .then($scope.init)
+            .then($scope.getCmsUserList)
+            .catch($scope.reportProblems);
 
     }]);
 });
