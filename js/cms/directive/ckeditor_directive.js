@@ -184,8 +184,8 @@ define(['./directives'], function (directives) {
                         },
 //                        disableNativeSpellChecker: false,
                         uiColor: '#FAFAFA',
-                        height: '400px',
-                        width: '780px'
+                        height: '400px'
+//                        width: '780px'
 //                        filebrowserBrowseUrl : 'lib/ckfinder/ckfinder.html',
 //                        filebrowserImageBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Images',
 //                        filebrowserFlashBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Flash',
