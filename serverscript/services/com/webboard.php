@@ -69,7 +69,7 @@
                             FILE F, CONTENT_SOURCE S
                         WHERE
                             F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'CMS_BOARD'
+                            AND S.TARGET_GB = 'BOARD'
                             AND S.TARGET_NO = ".$_key."
                             AND F.THUMB_FL = '0'
                         ";
