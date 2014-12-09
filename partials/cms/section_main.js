@@ -143,24 +143,22 @@ define([
         // 섹션 편집 클릭
         $scope.click_getSection = function (id) {
 
-            $('#season_nm').focus();
-
             $scope.key = id;
 
             if ($scope.key != '') {
                 $scope.getItem('cms/section', 'item', $scope.key, {}, false)
                     .then(function(data) {
                         var idx = 0;
-                        $scope.item = data;
-
-                        var idx = 0;
                         for(var i=0; i < $scope.season.length; i ++){
                             if(JSON.stringify(data.SEASON_NM) == JSON.stringify($scope.season[i].SEASON_NM)){
                                 idx = i;
                             }
                         }
+                        $scope.item = data;
                         $scope.item.SELECT_SEASON_NM = $scope.season[idx];
                         $scope.season_nm_check = true;
+
+                        $('#section_nm').focus();
                     })
                     .catch(function(error){alert(error)});
 

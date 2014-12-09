@@ -104,14 +104,14 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <input name="season_nm" id="season_nm" ng-model="item.SEASON_NM" type= "text" class= "form-control" placeholder="새 시즌명" required ng-disabled="season_nm_check"/>
+                    <input id="season_nm" name="season_nm"  ng-model="item.SEASON_NM" type= "text" class= "form-control" placeholder="새 시즌명" required ng-disabled="season_nm_check"/>
                     <span ng-show="edit_form.section_nm.$dirty && edit_form.section_nm.$invalid" class="help-inline">시즌명이 누락되었습니다.</span>
                 </div>
             </div>
             <div class= "form-group" ng-class="{error: edit_form.user_name.$invalid}">
                 <label class= "col-md-2">섹션명</label>
                 <div class="col-md-4">
-                    <input name="section_nm" ng-model="item.SECTION_NM" type= "text" class= "form-control" placeholder="섹션명" required/>
+                    <input id="section_nm" name="section_nm" ng-model="item.SECTION_NM" type= "text" class= "form-control" placeholder="섹션명" required/>
                     <span ng-show="edit_form.section_nm.$dirty && edit_form.section_nm.$invalid" class="help-inline">섹션 제목이 누락되었습니다.</span>
                 </div>
             </div>
