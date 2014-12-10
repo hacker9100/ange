@@ -14,7 +14,7 @@ define("__ANGE_PWD__" , "XT1GuAa3qz");
 define("__ANGE_DBF__" , "admin_default");
 
 define("DEBUG", true);
-define("BASE_URL", "14.63.219.171");
+define("BASE_URL", "http://14.63.219.171");
 
 class Mt {
 
