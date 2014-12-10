@@ -39,7 +39,24 @@
 
     switch ($_method) {
         case "GET":
-            if ($_type == 'item') {
+            if ($_type == 'check') {
+                $sql = "SELECT
+                            COUNT(*) AS COUNT
+                        FROM
+                            COM_USER
+                        WHERE
+                            USER_ID = '".$_key."'
+                        ";
+
+                $result = $_d->sql_query($sql);
+                $data  = $_d->sql_fetch_array($result);
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
+            } else if ($_type == 'item') {
                 $search_where = "";
 
                 if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
@@ -195,7 +212,13 @@
 
             $_d->sql_beginTransaction();
 
-            $password = $_model[USER_ID];
+            $password = "";
+
+            if (isset($_search[PASSWORD]) && $_search[PASSWORD] != "") {
+                $password = $_model[PASSWORD];
+            } else {
+                $password = $_model[USER_ID];
+            }
 //            $iterations = 1000;
 //
 //            // Generate a random IV using mcrypt_create_iv(),
