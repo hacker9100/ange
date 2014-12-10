@@ -197,7 +197,7 @@ define([
             }
         });
 
-        // 시즌수정
+        // 시즌수정 2014.12.10
         $scope.click_updateSeason = function () {
             console.log('$scope.item.SEASON_NM = '+$scope.item.SEASON_NM);
             $scope.updateItem('cms/section', 'item', $scope.key, $scope.item, false)
