@@ -539,10 +539,10 @@
 
                     MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
 
-                    if (file_exists('../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../..'.$row[PATH].$row[FILE_ID]);
-                        unlink('../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                        unlink('../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
                     }
                 }
             }
@@ -688,10 +688,10 @@
 
                 MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
 
-                if (file_exists('../..'.$row[PATH].$row[FILE_ID])) {
-                    unlink('../..'.$row[PATH].$row[FILE_ID]);
-                    unlink('../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                    unlink('../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
                 }
             }
 
