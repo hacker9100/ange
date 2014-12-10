@@ -108,7 +108,7 @@
                     <!-- 2014.12.10(수) 추가 -->
                     <input type="hidden" id="old_season_nm" name="old_season_nm" ng-model="item.OLD_SEASON_NM" value=""/>
                     <!-- // 2014.12.10(수) 추가 -->
-                    <button class="btn btn-primary start" id="season_upt_btn" ng-click="click_updateSeason(item.SEASON_NM, item.OLD_SEASON_NM);" ng-disabled="edit_form.season_nm.$invalid" data-ng-hide="edit_form.season_nm.$invalid"><span>시즌수정</span></button>
+                    <button class="btn btn-primary start" id="season_upt_btn" ng-click="click_updateSeason(item.SEASON_NM, item.OLD_SEASON_NM);" ng-disabled="edit_form.season_nm.$invalid" ng-hide="edit_form.season_nm.$invalid" type="button"><span>시즌수정</span></button>
                     <span ng-show="edit_form.section_nm.$dirty && edit_form.section_nm.$invalid" class="help-inline">시즌명이 누락되었습니다.</span>
                 </div>
             </div>
