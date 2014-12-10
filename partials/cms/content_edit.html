@@ -161,11 +161,11 @@
                     <i class="glyphicon glyphicon-check"></i>
                     <span>등록&승인요청</span>
                 </button>
-                <button type="button" class="btn btn-danger btn-xs start" ng-click="click_returnContent();" ng-show="isApproval || task.PHASE == '22'">
+                <button type="button" class="btn btn-danger btn-xs start" ng-click="click_returnContent();" ng-show="isApproval && !(task.PHASE == '12' || task.PHASE == '22')">
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     <span>반려</span>
                 </button>
-                <button type="button" class="btn btn-success btn-xs start" ng-click="click_approveContent();" ng-show="isApproval || task.PHASE == '22'">
+                <button type="button" class="btn btn-success btn-xs start" ng-click="click_approveContent();" ng-show="isApproval && !(task.PHASE == '12' || task.PHASE == '22')">
                     <i class="glyphicon glyphicon-ok-circle"></i>
                     <span>승인</span>
                 </button>
