@@ -187,7 +187,8 @@ define([
         $scope.$watch('item.SELECT_SEASON_NM', function (data) {
             if (data != null && data != "") {
                 $scope.item.SEASON_NM = data.SEASON_NM;
-                //$scope.season_nm_check = true;
+                $scope.item.OLD_SEASON_NM = data.SEASON_NM;
+                $("#old_season_nm").val(data.SEASON_NM);
                 $("#season_upt_btn").show();
             }else{
                 //$scope.season_nm_check = false;
@@ -199,8 +200,17 @@ define([
         // 시즌수정
         $scope.click_updateSeason = function () {
             console.log('$scope.item.SEASON_NM = '+$scope.item.SEASON_NM);
-            $scope.updateItem('cms/section', 'item', {}, $scope.item, false)
-                .then(function(){alert('시즌수정이 완료되었습니다'); $scope.tableParams.reload();})
+            $scope.updateItem('cms/section', 'item', $scope.key, $scope.item, false)
+                .then(function() {
+                    alert('시즌수정이 완료되었습니다');
+                    $scope.tableParams.reload();
+                    // 검색조건 시즌명 셀렉트 박스 재조회 후 셋팅 --> 추가한 시즌명 검색조건에 포함
+                    $scope.getList('cms/section', 'list', {}, {ROLE: true}, false)
+                        .then(function(data){
+                            $scope.season = data;
+                        })
+                        .catch(function(error){alert(error)});
+                })
                 .catch(function(error){alert(error)});
         }
 
