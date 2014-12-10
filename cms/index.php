@@ -18,6 +18,7 @@
                 COM_CHANNEL
             WHERE
                 CHANNEL_GB = 'CMS'
+                AND CHANNEL_ST = 'Y'
             ORDER BY CHANNEL_NO ASC
             ";
 
@@ -31,6 +32,7 @@
                     COM_MENU
                 WHERE
                     MENU_GB = 'CMS'
+                    AND MENU_ST = 'Y'
                     AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
                 ORDER BY SORT_IDX ASC
                 ";

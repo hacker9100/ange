@@ -13,6 +13,9 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('publish_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'COMMON', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, COMMON) {
 
+        dialogs.notify('알림', '준비 중 입니다.', {size: 'md'});
+        history.back();
+
 //        alert(localStorage.getItem('userToken'))
         /********** 초기화 **********/
         // 검색 조건

@@ -6,7 +6,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('lnb', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', '$filter', function ($scope, $rootScope, $stateParams, $controller, $location, $filter) {
+    controllers.controller('lnb', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', '$filter', 'dialogs', function ($scope, $rootScope, $stateParams, $controller, $location, $filter, dialogs) {
 
         var spMenu = $location.path().split('/');
 
