@@ -1,220 +1,222 @@
-<div class="panel panel-default" ng-controller="task_list">
-    <div class="panel-body" ng-model="search" class="row">
+<div ng-controller="task_list">
+    <div class="panel panel-default">
+        <div class="panel-body" ng-model="search" class="row">
 
-        <form role="form" name="list_from" class="form-horizontal form_basic_100" style="margin-bottom:0px;">
-            <div class="col-xs-9" style="border-right:1px solid #DEDEDE">
-                <div class="form_basic_wrap">
-                    <div class="row form-group form_basic_group">
-                        <div class="col-xs-6" style="max-width:220px;">
-                            <label class= "form_basic_label"> 연 도 </label>
+            <form role="form" name="list_from" class="form-horizontal form_basic_100" style="margin-bottom:0px;">
+                <div class="col-xs-9" style="border-right:1px solid #DEDEDE">
+                    <div class="form_basic_wrap">
+                        <div class="row form-group form_basic_group">
+                            <div class="col-xs-6" style="max-width:220px;">
+                                <label class= "form_basic_label"> 연 도 </label>
+                                <div class="form_basic_input" style="margin-left:60px;">
+                                    <select ng-model="search.YEAR" ng-options="v for v in years" class= "form-control" placeholder="등록년">
+                                        <option name="years" value="">- 선택</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="form_basic_label">프로젝트명</label>
+                                <div class="form_basic_input" style="margin-left:80px;">
+                                    <select ng-model="search.PROJECT" ng-options="project.SUBJECT for project in projects" class="form-control" placeholder="프로젝트명">
+                                        <option name="projects" value="">- 선택</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form_basic_group">
+                            <label class= "form_basic_label">카테고리</label>
                             <div class="form_basic_input" style="margin-left:60px;">
-                                <select ng-model="search.YEAR" ng-options="v for v in years" class= "form-control" placeholder="등록년">
-                                    <option name="years" value="">- 선택</option>
+                                <div ng-dropdown-multiselect="" options="category_a" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주기선택'}" extra-settings="select_settings" checkboxes="true"></div>
+                                <!--<select ng-model="tesk.CATEGORY_B" ng-options="a.CATEGORY_NM for a in category_a" class= "form-control" placeholder="주기 선택" ></select>-->
+                            </div>
+                            <div class="form_basic_input" style="margin-left:200px;">
+                                <select ng-model="CATEGORY_M" ng-options="category.CATEGORY_NM for category in category_b" class= "form-control" placeholder="주제 대분류">
+                                    <option name="category_b" value="">- 주제 대분류</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="col-xs-6">
-                            <label class="form_basic_label">프로젝트명</label>
-                            <div class="form_basic_input" style="margin-left:80px;">
-                                <select ng-model="search.PROJECT" ng-options="project.SUBJECT for project in projects" class="form-control" placeholder="프로젝트명">
-                                    <option name="projects" value="">- 선택</option>
-                                </select>
+                            <div class="form_basic_input" style="margin-left:340px;">
+                                <!--<select ng-model="tesk.CATEGORY_S" ng-options="s.CATEGORY_NM for s in category_s" class= "form-control" placeholder="주제 소분류"></select>-->
+                                <div ng-dropdown-multiselect="" options="category_s" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주제 소분류'}" extra-settings="select_settings" checkboxes="true"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group form_basic_group">
-                        <label class= "form_basic_label">카테고리</label>
-                        <div class="form_basic_input" style="margin-left:60px;">
-                            <div ng-dropdown-multiselect="" options="category_a" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주기선택'}" extra-settings="select_settings" checkboxes="true"></div>
-                            <!--<select ng-model="tesk.CATEGORY_B" ng-options="a.CATEGORY_NM for a in category_a" class= "form-control" placeholder="주기 선택" ></select>-->
-                        </div>
-                        <div class="form_basic_input" style="margin-left:200px;">
-                            <select ng-model="CATEGORY_M" ng-options="category.CATEGORY_NM for category in category_b" class= "form-control" placeholder="주제 대분류">
-                                <option name="category_b" value="">- 주제 대분류</option>
-                            </select>
-                        </div>
-                        <div class="form_basic_input" style="margin-left:340px;">
-                            <!--<select ng-model="tesk.CATEGORY_S" ng-options="s.CATEGORY_NM for s in category_s" class= "form-control" placeholder="주제 소분류"></select>-->
-                            <div ng-dropdown-multiselect="" options="category_s" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주제 소분류'}" extra-settings="select_settings" checkboxes="true"></div>
-                        </div>
-                    </div>
 
-                    <div class= "form-group form_basic_group" style="padding: 0 50px 0 60px;">
-                        <div ng-model="search.CATEGORY" class="bnt_ball_group" ng-repeat="category in CATEGORY">
-                            <button type="button" ng-click="click_removeCategory($index)" class="btn btn-default cate_ball_normal">
-                                {{category.CATEGORY_NM}}
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="row form-group form_basic_group">
-                        <div class="col-xs-5" style="max-width:200px;">
-                            <label class= "form_basic_label">검색</label>
-                            <div class= "form_basic_input" style="margin-left:60px; width:135px;">
-                                <select ng-model="search.CONDITION" ng-options="condition.name for condition in condition" class= "form-control" placeholder="검색선택"></select>
+                        <div class= "form-group form_basic_group" style="padding: 0 50px 0 60px;">
+                            <div ng-model="search.CATEGORY" class="bnt_ball_group" ng-repeat="category in CATEGORY">
+                                <button type="button" ng-click="click_removeCategory($index)" class="btn btn-default cate_ball_normal">
+                                    {{category.CATEGORY_NM}}
+                                </button>
                             </div>
                         </div>
-                        <div class="col-xs-7">
-                            <div class="form_basic_input" style="margin-left:0; width:100%;">
-                                <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어" style="width:100%;"/>
+
+                        <div class="row form-group form_basic_group">
+                            <div class="col-xs-5" style="max-width:200px;">
+                                <label class= "form_basic_label">검색</label>
+                                <div class= "form_basic_input" style="margin-left:60px; width:135px;">
+                                    <select ng-model="search.CONDITION" ng-options="condition.name for condition in condition" class= "form-control" placeholder="검색선택"></select>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="form_basic_input" style="margin-left:0; width:100%;">
+                                    <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어" style="width:100%;"/>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xs-3" style="display:block;">
-                <div class= "navbar-header" style="float:left; width:100%; margin:0px auto; line-height:62px; padding:20px; text-align:center;">
-                    <button class="btn btn-lg btn-primary start" ng-click="click_searchTask();" ng-disabled="list_from.$invalid">
-                        <i class="glyphicon glyphicon-search"></i>
-                        <span>검색</span>
-                    </button>
-                    <br />
-                    <button class="btn btn-lg btn-success fileinput-button" data-ng-click="click_createNewTask()" ng-show="isTask">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span>등록</span>
-                    </button>
-                </div>
-            </div>
-        </form>
-
-    </div>
-</div>
-
-<!--<div id="veil" ng-show="isLoading"></div>-->
-<!--<div id="feedLoading" ng-show="isLoading"><img src="../imgs/loading3.gif"/></div>-->
-
-<!-- Contents Include -->
-<div class="list-group" style="margin-bottom: 0;">
-    <div style="text-align:left;">
-        <label>Task</label>
-        <label>총 {{TOTAL_COUNT}}건</label>
-    </div>
-    <div style="text-align:right;">
-        <input ng-model="search.MY_TASK" type="checkbox" ng-change="click_searchTask()" ng-disabled="role == 'CMS_ADMIN' || role == 'MANAGER' ">
-        내가 참여한 콘텐츠
-    </div>
-</div>
-
-<!-- Task list -->
-<div ng-show="isLoading" style="position: absolute; margin-top: 10px; left: 48%; z-index: 1000" class="ai-circled ai-indicator ai-grey-spin"></div>
-<div ng-show="list == ''" class="list-group" style="height: 40px; margin-top: 40px; text-align: center; font-weight: bold;">
-    조회 데이터가 없습니다.
-</div>
-<accordion close-others="oneAtATime">
-    <accordion-group is-open="status.open" ng-repeat="item in list">
-
-        <!-- Task Head -->
-        <accordion-heading style="clear:both; background-color:#000; padding:0;">
-            <div class="row" style="height:100%;">
-                <div class="col-md-12" style="position:relative; padding:5px; margin:0;  cursor:pointer;">
-                    <a data-toggle="collapse" style="color:#333">
-                        <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
-                            <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">
-                                <span style="font-size:1.16em;">{{ item.SERIES_NM }}</span><br />
-                                <span>[{{ item.PROJECT_NM }}]</span>
-                            </div>
-                            <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">
-                                {{ item.SUBJECT }}
-                            </div>
-                            <div class="col-lg-1 task-col-manager" style="height:100%; margin-top:8px; text-align:left;">
-                                {{ item.REG_NM }}
-                            </div>
-                            <div class="col-md-2 col-sm-3 col-lg-2 task-col-date" style="height:100%; text-align:center; vertical-align:middle;">
-                                <span style="color:#868686;">{{item.REG_DT}} 등록</span><br />
-                                <span style="color:#DE4612; font-weight:bold;">{{item.CLOSE_YMD}} 마감</span>
-                            </div>
-                            <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
-                                {{ item.PHASE == '0' ? '태스크등록' : item.PHASE == '10' ? '원고작성' : item.PHASE == '11' ? '원고승인대기' : item.PHASE == '12' ? '원고반려' : item.PHASE == '13' ? '원고승인완료' : item.PHASE == '20' ? '편집작성' : item.PHASE == '21' ? '편집승인대기' : item.PHASE == '22' ? '편집반려' : item.PHASE == '23' ? '편집승인완료' : item.PHASE == '30' ? '출판대기' : '출판완료' }}
-                            </div>
-                        </div>
-
-                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': status.open, 'glyphicon-chevron-down': !status.open}" style="position:absolute; top: 15px; right:10px;"></i>
-                    </a>
-                </div>
-            </div>
-        </accordion-heading>
-        <!-- //Task Head -->
-
-        <div class="col-md-12">
-            <div class="row" class="form-horizontal" style="float:left; margin:0px auto; width:100%;">
-
-                <div class="col-xs-6 form-group form_basic">
-                    <label class="form_label">담당기자</label>
-                    <div class="form_valueText">{{ item.EDITOR_NM }}</div>
-                </div>
-                <div class="col-xs-6 form-group form_basic">
-                    <label class="form_label">생성일</label>
-                    <div class="form_valueText">{{ item.REG_DT }}</div>
-                </div>
-
-                <div class="col-xs-6 form-group form_basic">
-                    <label class="form_label">카테고리</label>
-                    <!--<pre>{{item.CATEGORY|json}}</pre>-->
-                    <div class="balls_group">
-                        <div class="bnt_ball_group" ng-repeat="category in item.CATEGORY">
-                            <button type="button" class="btn btn-default cate_ball_normal">
-                                {{ category.CATEGORY_NM }}
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col-xs-6 form-group form_basic">
-                    <label class="form_label">태그</label>
-                    <div class="balls_group">
-                        <div class="btn-group bnt_ball_group" ng-repeat="tag in item.TAG | split:','">
-                            <button type="button" class="btn btn-default tag_ball_normal">
-                                {{ tag }}
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 form-group form_basic">
-                    <label class="form_label">설명</label>
-                    <div class="form_valueText">{{ item.NOTE }}</div>
-                </div>
-
-                <div class="raw" style="float:left; width:100%; padding-top:10px; border-top:1px solid #DEDEDE;">
-                    <div class="col-xs-6 form-group form_basic">
-                        <button type="button" class="btn btn-info btn-xs start" ng-click="click_showGetHistory(item.NO);">
-                            <i class="glyphicon glyphicon-list-alt"></i>
-                            <span>History</span>
+                <div class="col-xs-3" style="display:block;">
+                    <div class= "navbar-header" style="float:left; width:100%; margin:0px auto; line-height:62px; padding:20px; text-align:center;">
+                        <button class="btn btn-lg btn-primary start" ng-click="click_searchTask();" ng-disabled="list_from.$invalid">
+                            <i class="glyphicon glyphicon-search"></i>
+                            <span>검색</span>
+                        </button>
+                        <br />
+                        <button class="btn btn-lg btn-success fileinput-button" data-ng-click="click_createNewTask()" ng-show="isTask">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>등록</span>
                         </button>
                     </div>
-
-                    <div class="col-xs-6 form-group form_basic" style="text-align:right;">
-                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewTask(item.NO);" ng-show="isTask">
-                            <i class="glyphicon glyphicon-folder-open"></i>
-                            <span>태스크 정보</span>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditTask(item);" ng-show="(isTask && isEdit) && ((role == 'CMS_ADMIN' || role == 'MANAGER') || uid == item.REG_UID)">
-                            <i class="glyphicon glyphicon-edit"></i>
-                            <span>태스크 편집</span>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item.NO);" ng-show="!isTask">
-                            <i class="glyphicon glyphicon-book"></i>
-                            <span>원고 조회</span>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditContent(item);" ng-show="!isTask && isEdit && item.PHASE < 30">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                            <span>{{editContentBtn}}</span>
-                        </button>
-                        <!--<button class="btn btn-success fileinput-button" data-ng-click="viewListTask(item.NO)">-->
-                        <!--<i class="glyphicon glyphicon-plus"></i>-->
-                        <!--<span>편집보기</span>-->
-                        <!--</button>-->
-                    </div>
                 </div>
-            </div>
+            </form>
+
         </div>
+    </div>
 
-    </accordion-group>
-</accordion>
-<!-- ////Contents Include -->
-<div class="raw" style="margin-bottom:50px;">
-    <button type="button" class="btn btn-default start" style="width:100%; " ng-click="addTask();">
-        <i class="glyphicon glyphicon-align-justify"></i>
-        <span>더보기</span>
-    </button>
+    <!--<div id="veil" ng-show="isLoading"></div>-->
+    <!--<div id="feedLoading" ng-show="isLoading"><img src="../imgs/loading3.gif"/></div>-->
+
+    <!-- Contents Include -->
+    <div class="list-group" style="margin-bottom: 0;">
+        <div style="text-align:left;">
+            <label>Task</label>
+            <label>총 {{TOTAL_COUNT}}건</label>
+        </div>
+        <div style="text-align:right;">
+            <input ng-model="search.MY_TASK" type="checkbox" ng-change="click_searchTask()" ng-disabled="role == 'CMS_ADMIN' || role == 'MANAGER' ">
+            내가 참여한 콘텐츠
+        </div>
+    </div>
+
+    <!-- Task list -->
+    <div ng-show="isLoading" style="position: absolute; margin-top: 10px; left: 48%; z-index: 1000" class="ai-circled ai-indicator ai-grey-spin"></div>
+    <div ng-show="list == ''" class="list-group" style="height: 40px; margin-top: 40px; text-align: center; font-weight: bold;">
+        조회 데이터가 없습니다.
+    </div>
+    <accordion close-others="oneAtATime">
+        <accordion-group is-open="status.open" ng-repeat="item in list">
+
+            <!-- Task Head -->
+            <accordion-heading style="clear:both; background-color:#000; padding:0;">
+                <div class="row" style="height:100%;">
+                    <div class="col-md-12" style="position:relative; padding:5px; margin:0;  cursor:pointer;">
+                        <a data-toggle="collapse" style="color:#333">
+                            <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
+                                <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">
+                                    <span style="font-size:1.16em;">{{ item.SERIES_NM }}</span><br />
+                                    <span>[{{ item.PROJECT_NM }}]</span>
+                                </div>
+                                <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">
+                                    {{ item.SUBJECT }}
+                                </div>
+                                <div class="col-lg-1 task-col-manager" style="height:100%; margin-top:8px; text-align:left;">
+                                    {{ item.REG_NM }}
+                                </div>
+                                <div class="col-md-2 col-sm-3 col-lg-2 task-col-date" style="height:100%; text-align:center; vertical-align:middle;">
+                                    <span style="color:#868686;">{{item.REG_DT}} 등록</span><br />
+                                    <span style="color:#DE4612; font-weight:bold;">{{item.CLOSE_YMD}} 마감</span>
+                                </div>
+                                <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
+                                    {{ item.PHASE == '0' ? '태스크등록' : item.PHASE == '10' ? '원고작성' : item.PHASE == '11' ? '원고승인대기' : item.PHASE == '12' ? '원고반려' : item.PHASE == '13' ? '원고승인완료' : item.PHASE == '20' ? '편집작성' : item.PHASE == '21' ? '편집승인대기' : item.PHASE == '22' ? '편집반려' : item.PHASE == '23' ? '편집승인완료' : item.PHASE == '30' ? '출판대기' : '출판완료' }}
+                                </div>
+                            </div>
+
+                            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': status.open, 'glyphicon-chevron-down': !status.open}" style="position:absolute; top: 15px; right:10px;"></i>
+                        </a>
+                    </div>
+                </div>
+            </accordion-heading>
+            <!-- //Task Head -->
+
+            <div class="col-md-12">
+                <div class="row" class="form-horizontal" style="float:left; margin:0px auto; width:100%;">
+
+                    <div class="col-xs-6 form-group form_basic">
+                        <label class="form_label">담당기자</label>
+                        <div class="form_valueText">{{ item.EDITOR_NM }}</div>
+                    </div>
+                    <div class="col-xs-6 form-group form_basic">
+                        <label class="form_label">생성일</label>
+                        <div class="form_valueText">{{ item.REG_DT }}</div>
+                    </div>
+
+                    <div class="col-xs-6 form-group form_basic">
+                        <label class="form_label">카테고리</label>
+                        <!--<pre>{{item.CATEGORY|json}}</pre>-->
+                        <div class="balls_group">
+                            <div class="bnt_ball_group" ng-repeat="category in item.CATEGORY">
+                                <button type="button" class="btn btn-default cate_ball_normal">
+                                    {{ category.CATEGORY_NM }}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-6 form-group form_basic">
+                        <label class="form_label">태그</label>
+                        <div class="balls_group">
+                            <div class="btn-group bnt_ball_group" ng-repeat="tag in item.TAG | split:','">
+                                <button type="button" class="btn btn-default tag_ball_normal">
+                                    {{ tag }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 form-group form_basic">
+                        <label class="form_label">설명</label>
+                        <div class="form_valueText">{{ item.NOTE }}</div>
+                    </div>
+
+                    <div class="raw" style="float:left; width:100%; padding-top:10px; border-top:1px solid #DEDEDE;">
+                        <div class="col-xs-6 form-group form_basic">
+                            <button type="button" class="btn btn-info btn-xs start" ng-click="click_showGetHistory(item.NO);">
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                                <span>History</span>
+                            </button>
+                        </div>
+
+                        <div class="col-xs-6 form-group form_basic" style="text-align:right;">
+                            <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewTask(item.NO);" ng-show="isTask">
+                                <i class="glyphicon glyphicon-folder-open"></i>
+                                <span>태스크 정보</span>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditTask(item);" ng-show="(isTask && isEdit) && ((role == 'CMS_ADMIN' || role == 'MANAGER') || uid == item.REG_UID)">
+                                <i class="glyphicon glyphicon-edit"></i>
+                                <span>태스크 편집</span>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item.NO);" ng-show="!isTask">
+                                <i class="glyphicon glyphicon-book"></i>
+                                <span>원고 조회</span>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditContent(item);" ng-show="!isTask && isEdit && item.PHASE < 30">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                                <span>{{editContentBtn}}</span>
+                            </button>
+                            <!--<button class="btn btn-success fileinput-button" data-ng-click="viewListTask(item.NO)">-->
+                            <!--<i class="glyphicon glyphicon-plus"></i>-->
+                            <!--<span>편집보기</span>-->
+                            <!--</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </accordion-group>
+    </accordion>
+    <!-- ////Contents Include -->
+    <div class="raw" style="margin-bottom:50px;">
+        <button type="button" class="btn btn-default start" style="width:100%; " ng-click="addTask();">
+            <i class="glyphicon glyphicon-align-justify"></i>
+            <span>더보기</span>
+        </button>
+    </div>
 </div>

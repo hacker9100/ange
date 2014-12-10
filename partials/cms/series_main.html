@@ -1,108 +1,109 @@
-<div class="panel panel-primary">
-    <div class="panel-body" ng-model="search" lass="row">
+<div ng-controller="series_main">
+    <div class="panel panel-primary">
+        <div class="panel-body" ng-model="search" lass="row">
 
-        <form role="form" name="list_form" class="form-horizontal">
-            <div class="col-md-9">
-                <div class= "form-group">
-                    <label class= "col-md-2">검색</label>
-                    <div class="col-md-6">
-                        <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+            <form role="form" name="list_form" class="form-horizontal">
+                <div class="col-md-9">
+                    <div class= "form-group">
+                        <label class= "col-md-2">검색</label>
+                        <div class="col-md-6">
+                            <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-pull-2">
-                <div class= "navbar-header" >
-                    <button class="btn btn-primary start" ng-click="click_searchSeries();" ng-disabled="list_form.$invalid">
-                        <i class="glyphicon glyphicon-search"></i>
-                        <span>검색</span>
-                    </button>
+                <div class="col-md-pull-2">
+                    <div class= "navbar-header" >
+                        <button class="btn btn-primary start" ng-click="click_searchSeries();" ng-disabled="list_form.$invalid">
+                            <i class="glyphicon glyphicon-search"></i>
+                            <span>검색</span>
+                        </button>
                     <button class="btn btn-primary btn-success fileinput-button" data-ng-click="click_focus();">
                         <i class="glyphicon glyphicon-plus"></i>
                         <span>등록</span>
                     </button>
+                    </div>
                 </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!--<div id="veil" ng-show="isLoading"></div>-->
+    <div id="feedLoading" ng-show="isLoading">Loading...</div>
+
+    <!-- Contents Include -->
+    <!-- 목록 -->
+    <table class="table table-striped table-condensed" >
+        <thead>
+        <tr>
+            <th>유형</th>
+            <th>제목</th>
+            <th>등록일</th>
+            <th>상태</th>
+            <th>기능</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in list">
+            <td>{{ item.SERIES_GB == '1' ? '정기' : '비정기' }}</td>
+            <td>{{ item.SERIES_NM }}</a></td>
+            <td>{{ item.REG_DT }}</td>
+            <td>{{ item.SERIES_ST == '0' ? '이용가능' : '이용정지' }}</td>
+            <td>
+                <a ng-click="click_getSeries(item.NO)">편집</a>
+                <a ng-click="click_updateStatus($index)">상태변경</a>
+                <a ng-click="click_deleteSeries($index)">삭제</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- ////Contents Include -->
+
+    <!-- Contents Include -->
+    <div class="col-md-12">
+
+        <form role="form" name="edit_form" class="form-horizontal">
+            <div ng-model="item" lass="row">
+                <div class= "form-group" ng-class="{error: edit_form.user_id.$invalid}">
+                    <label class= "col-md-2">유형</label>
+                    <div class="col-md-4">
+                        <select id="item_gb" ng-model="item.SERIES_GB" ng-init="item.SERIES_GB = 1" class= "form-control" >
+                            <option name="" value="1">정기 출판</option>
+                            <option name="" value="2">비정기 출판(상시)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class= "form-group" ng-class="{error: edit_form.user_name.$invalid}">
+                    <label class= "col-md-2">제목</label>
+                    <div class="col-md-4">
+                        <input name="series_name" ng-model="item.SERIES_NM" type= "text" class= "form-control" placeholder="시리즈 제목" required/>
+                        <span ng-show="edit_form.series_name.$dirty && edit_form.series_name.$invalid" class="help-inline">시리즈 제목이 누락되었습니다.</span>
+                    </div>
+                </div>
+                <div class= "form-group">
+                    <label class= "col-md-2">메모</label>
+                    <div class= "col-md-6">
+                        <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
+                    </div>
+                </div>
+
+                <!-- 하단 버튼 -->
+                <div class= "form-group">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-primary start" ng-click="click_saveSeries();" ng-disabled="edit_form.$invalid">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>저장</span>
+                        </button>
+                        <button type="button" class="btn btn-warning cancel" ng-click="click_cancel();">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>취소</span>
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </form>
 
     </div>
+    <!-- ////Contents Include -->
 </div>
-
-<!--<div id="veil" ng-show="isLoading"></div>-->
-<div id="feedLoading" ng-show="isLoading">Loading...</div>
-
-<!-- Contents Include -->
-<!-- 목록 -->
-<table class="table table-striped table-condensed" >
-    <thead>
-    <tr>
-        <th>유형</th>
-        <th>제목</th>
-        <th>등록일</th>
-        <th>상태</th>
-        <th>기능</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="item in list">
-        <td>{{ item.SERIES_GB == '1' ? '정기' : '비정기' }}</td>
-        <td>{{ item.SERIES_NM }}</a></td>
-        <td>{{ item.REG_DT }}</td>
-        <td>{{ item.SERIES_ST == '0' ? '이용가능' : '이용정지' }}</td>
-        <td>
-            <a ng-click="click_getSeries(item.NO)">편집</a>
-            <a ng-click="click_updateStatus($index)">상태변경</a>
-            <a ng-click="click_deleteSeries($index)">삭제</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<!-- ////Contents Include -->
-
-<!-- Contents Include -->
-<div class="col-md-12">
-
-    <form role="form" name="edit_form" class="form-horizontal">
-        <div ng-model="item" lass="row">
-            <div class= "form-group" ng-class="{error: edit_form.user_id.$invalid}">
-                <label class= "col-md-2">유형</label>
-                <div class="col-md-4">
-                    <select id="item_gb" ng-model="item.SERIES_GB" ng-init="item.SERIES_GB = 1" class= "form-control" >
-                        <option name="" value="1">정기 출판</option>
-                        <option name="" value="2">비정기 출판(상시)</option>
-                    </select>
-                </div>
-            </div>
-            <div class= "form-group" ng-class="{error: edit_form.user_name.$invalid}">
-                <label class= "col-md-2">제목</label>
-                <div class="col-md-4">
-                    <input name="series_name" ng-model="item.SERIES_NM" type= "text" class= "form-control" placeholder="시리즈 제목" required/>
-                    <span ng-show="edit_form.series_name.$dirty && edit_form.series_name.$invalid" class="help-inline">시리즈 제목이 누락되었습니다.</span>
-                </div>
-            </div>
-            <div class= "form-group">
-                <label class= "col-md-2">메모</label>
-                <div class= "col-md-6">
-                    <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
-                </div>
-            </div>
-
-            <!-- 하단 버튼 -->
-            <div class= "form-group">
-                <div class="col-md-4">
-                    <button type="button" class="btn btn-primary start" ng-click="click_saveSeries();" ng-disabled="edit_form.$invalid">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span>저장</span>
-                    </button>
-                    <button type="button" class="btn btn-warning cancel" ng-click="click_cancel();">
-                        <i class="glyphicon glyphicon-ban-circle"></i>
-                        <span>취소</span>
-                    </button>
-                </div>
-            </div>
-
-        </div>
-    </form>
-
-</div>
-<!-- ////Contents Include -->
-

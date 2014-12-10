@@ -215,7 +215,6 @@ define([
                     angular.forEach(data, function(model) {
                         $scope.listData.push(model);
                     });
-
                     if ($scope.list.length == 0) {
                         $scope.list = $scope.listData.slice($scope.perCnt, $scope.perSize);
                     }

@@ -9,10 +9,11 @@
 
 define([
 './app',
-'json!menu.json',
+'json!menu.json'
 ], function(app, menu) {
     'use strict';
 
+    var stateProvider;
     app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, fileUploadProvider) {
 
         // use the HTML5 History API
@@ -24,6 +25,7 @@ define([
 //            $location.path('/signin')
 //        });
 
+        stateProvider = $stateProvider;
         // 메뉴 정보를 별도의 파일로 분리해 관리
         // menu.json에 정의된 메뉴들을 루프를 돌리면서 바인딩
 //        if (config.states !== undefined) {
@@ -60,7 +62,17 @@ define([
             maxFileSize: 5000000,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png|pdf)$/i
         });
-    })
+    });
+
+//    app.controller('test', function($rootScope) {
+//        alert($rootScope.cms_channel)
+//        stateProvider.state("cms_list", {
+//            "url": "/:menu/:type",
+//            "views": {
+//                "" : { templateUrl: "/partials/cms/cms_common.html", controller: "cms_common" },
+//                "contentView@cms_list": { templateUrl: function($stateParams) { return '/partials/cms/'+$stateParams.menu+'_'+$stateParams.type+'.html' }}
+//            }});
+//    });
 
     return app;
 });

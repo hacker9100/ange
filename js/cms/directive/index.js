@@ -8,6 +8,7 @@ define([
     './ckeditor_directive',
 
     './cms_layout_directive',
+    './cms_body_directive',
     './cms_main_directive',
     './cms_portlet_directive',
 

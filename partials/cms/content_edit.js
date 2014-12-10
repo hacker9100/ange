@@ -274,13 +274,19 @@ define([
             if ( $scope.item.NO == undefined ) {
                 $scope.item.PHASE = '10';
 
-                $scope.insertItem('cms/content', 'item', $scope.item, false)
-                    .then(function(){$location.url('/'+$stateParams.menu+'/list');})
+                $scope.insertItem('cms/content', 'new', $scope.item, false)
+                    .then(function(){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'}); $location.url('/'+$stateParams.menu+'/list');})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
-                $scope.updateItem('cms/content', 'item', $scope.item.NO, $scope.item, false)
-                    .then(function(){$location.url('/'+$stateParams.menu+'/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                if ( $scope.task.PHASE == '20' && $scope.item.PHASE != $scope.task.PHASE ) {
+                    $scope.insertItem('cms/content', 'version', $scope.item, false)
+                        .then(function(){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'}); $location.url('/'+$stateParams.menu+'/list');})
+                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                } else {
+                    $scope.updateItem('cms/content', 'item', $scope.item.NO, $scope.item, false)
+                        .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'}); $location.url('/'+$stateParams.menu+'/list');})
+                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                }
             }
 
 //            $location.search('_modify', '1');

@@ -7,12 +7,12 @@
 define(['./directives'], function (directives) {
     'use strict';
 
-    directives.directive('cmsLayout', ['$controller', function($controller) {
+    directives.directive('cmsBody', ['$controller', function($controller) {
         return {
             restrict: 'EA',
             scope: { code:'=' },
             replace: true,
-            compile: function(element, attrs){
+            templateUrl: function(element, attr) {
                 var menu = element.scope().location.split('/');
 
                 if (menu[1] == 'archive' || menu[1] == 'article' || menu[1] == 'article_confirm' || menu[1] == 'edit' || menu[1] == 'edit_confirm') {
@@ -22,14 +22,9 @@ define(['./directives'], function (directives) {
                         menu[1] = 'content';
                     }
                 }
-                element.append('<div ng-include src=" \'/partials/cms/'+menu[1]+'_'+menu[2]+'.html\' "></div>');
-//                element.append('<cms-body menu="'+menu[1]+'" type="'+menu[2]+'"></cms-body>');
+
+                return '/partials/cms/'+menu[1]+'_'+menu[2]+'.html';
             },
-//            templateUrl: function(element, attr) {
-//                alert(attr.menu);
-//                alert(attr.type);
-//                return '/partials/cms/'+attr.menu+'_'+attr.type+'.html';
-//            },
 //            controller: function(element, attr) {
 //                return attr.menu+'_'+attr.type;
 //            },
