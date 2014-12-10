@@ -595,7 +595,7 @@
                             '".$_key."'
                             , '".$file_no."'
                             , 'FILE'
-                            , 'CMS_BOARD'
+                            , 'BOARD'
                             , '".$i."'
                         )";
 
