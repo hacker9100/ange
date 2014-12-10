@@ -13,6 +13,8 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('webboard_edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
+        //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
+
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 

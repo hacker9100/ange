@@ -28,7 +28,7 @@
                 <div class="panel panel-master contentpannel" style="border:none; display:block;">
 
                     <div class="contentpannel-heading">
-                        <h4 class="list-group-item-heading">{{pageTitle}}&nbsp;&nbsp; |&nbsp;&nbsp; <span style="font-size:0.64em; color:#333;">{{pageDescription}}</span></h4>
+                        <h4 class="list-group-item-heading">{{ pageTitle }}&nbsp;&nbsp; |&nbsp;&nbsp; <span style="font-size:0.64em; color:#333;">{{ pageDescription }}</span></h4>
                     </div>
 
                     <div class="contentpannel-body">
@@ -47,7 +47,9 @@
                             </div>
                             <div class="panel-body" style="font-size:0.84em;">
                                 <!-- 페이지 설명 및 툴팁을 입력하세요. -->
-                                To edit settings, press <kbd><kbd>ctrl</kbd> {{'+' + '!'}} <kbd>s</kbd></kbd>
+                                <span ng-bind-html="tailDescription"></span>
+
+                                <!--To edit settings, press <kbd><kbd>ctrl</kbd> {{'+' + '!'}} <kbd>s</kbd></kbd>-->
                                 <!-- ///페이지 설명 및 툴팁을 입력하세요. -->
                             </div>
                         </div>

@@ -41,11 +41,12 @@
             if ($_type == 'item') {
                 $sql = "SELECT
                             P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SEASON_NM, S.SECTION_NM, P.YEAR
+                            T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SERIES_NM, C.SEASON_NM, C.SECTION_NM, P.YEAR
                         FROM
                             CMS_TASK T
                             INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
-                            LEFT OUTER JOIN CMS_SECTION S ON T.SECTION_NO = S.NO
+                            LEFT OUTER JOIN CMS_SERIES S ON S.NO = P.SERIES_NO
+                            LEFT OUTER JOIN CMS_SECTION C ON T.SECTION_NO = C.NO
                         WHERE
                             T.NO = ".$_key."
                         ";
@@ -156,14 +157,15 @@
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                            CLOSE_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO
+                            CLOSE_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM
                         FROM
                         (
                             SELECT
                                 P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
-                                T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO
+                                T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, S.SERIES_NM
                             FROM
                                 CMS_TASK T, CMS_PROJECT P
+                                LEFT OUTER JOIN CMS_SERIES S ON S.NO = P.SERIES_NO
                                 ".$from_category."
                             WHERE
                                 T.PROJECT_NO = P.NO

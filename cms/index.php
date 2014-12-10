@@ -18,6 +18,7 @@
                 COM_CHANNEL
             WHERE
                 CHANNEL_GB = 'CMS'
+                AND CHANNEL_ST = 'Y'
             ORDER BY CHANNEL_NO ASC
             ";
 
@@ -31,6 +32,7 @@
                     COM_MENU
                 WHERE
                     MENU_GB = 'CMS'
+                    AND MENU_ST = 'Y'
                     AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
                 ORDER BY SORT_IDX ASC
                 ";
@@ -90,7 +92,6 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
 <link rel="stylesheet" type="text/css" href="/lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
 <link rel="stylesheet" type="text/css" href="/lib/ngActivityIndicator/css/ngActivityIndicator.css" />
@@ -104,6 +105,7 @@
 <link rel="stylesheet" type="text/css" href="/css/normalize.css" >
 <link rel="stylesheet" type="text/css" href="/css/angeCMS_bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/article.css" />
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
 <link rel="stylesheet" href="/css/file-upload/blueimp-gallery.css">

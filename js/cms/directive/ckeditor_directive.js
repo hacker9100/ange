@@ -148,7 +148,7 @@ define(['./directives'], function (directives) {
                             { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
                             { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
 //                            { name: 'tools', items: [ 'SpellChecker', 'Maximize' ] },
-//                            '/',
+                            '/',
                             { name: 'styles', items: [ 'Font', 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
 //                            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar' ] },
                             { name: 'insert', items: [ 'Table', 'SpecialChar' ] },
@@ -184,8 +184,8 @@ define(['./directives'], function (directives) {
                         },
 //                        disableNativeSpellChecker: false,
                         uiColor: '#FAFAFA',
-                        height: '400px',
-                        width: '780px'
+                        height: '400px'
+//                        width: '780px'
 //                        filebrowserBrowseUrl : 'lib/ckfinder/ckfinder.html',
 //                        filebrowserImageBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Images',
 //                        filebrowserFlashBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Flash',

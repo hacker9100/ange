@@ -11,7 +11,7 @@
             </li>
 
             <a ng-click="click_showView(item.NO)" class="list-group-item list-group-item-green" ng-repeat="item in list">
-                {{ item.SUBJECT }}
+                {{ item.SUBJECT | string_limit:30}}
                 <span class="list-group-item-right" ng-show="url != 'project'">{{ item.REG_DT }}</span>
                 <span class="list-group-item-right" ng-show="url == 'project'">{{ item.PROJECT_ST == '0' ? '준비' : item.PROJECT_ST == '1' ? '진행' : item.PROJECT_ST == '2' ? '출판대기' : '완료' }}</span>
             </a>

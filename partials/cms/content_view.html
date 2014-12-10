@@ -11,7 +11,7 @@
                         <a data-toggle="collapse" style="color:#333">
                             <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
                                 <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">
-                                    <span style="font-size:1.16em;">월간앙쥬</span><br />
+                                    <span style="font-size:1.16em;">{{ task.SERIES_NM }}</span><br />
                                     <span>[{{ task.PROJECT_NM }}]</span>
                                 </div>
                                 <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">
@@ -93,26 +93,26 @@
     </accordion>
 
     <div ng-model="item" class="col-xs-12 row" style="margin:0px auto;">
-        <form role="form" name="editForm" class="form-horizontal form_basic_100">
-            <div class= "form-group form_basic_group">
-                <H5 style="line-height:8px; margin:0;">
+
+            <div class="form-group form_basic_group" style="margin:0px auto;">
+                <H5 style="line-height:18px; margin:0;">
                     <span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> <span class="label label-default">편집기</span>를 이용하여 작성된 글입니다.
                 </H5>
             </div>
 
-            <div class= "form-group form_basic_group" style="float:left;">
-                <div class="editor_cell" style="float:left; left:0;">
-                    <div ng-bind-html="item.BODY"></div>
-                    <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
-                </div>
-                <div class= "col-md-10">
-                    <label class= "col-md-2">글·사진 {{item.EDITOR.USER_NM}}</label>
-                    <label>{{item.EDITOR.INTRO}}</label>
-                    <span>{{item.EDITOR.NOTE}}</span>
-                    <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
-                </div>
+            <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+                <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>
+                <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
             </div>
-        </form>
+
+            <div class= "col-md-12">
+                <label class= "col-md-2">담당 에디터 :  {{item.EDITOR.USER_NM}}</label>
+                <label>{{item.EDITOR.INTRO}}</label>
+                <span>{{item.EDITOR.NOTE}}</span>
+                <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
+            </div>
+
+
 
         <div class= "form-group form_basic_group" style="float:left;">
             <H5 style="line-height:8px; margin:0;">

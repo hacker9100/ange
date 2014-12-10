@@ -509,7 +509,7 @@
                         FILE F, CONTENT_SOURCE S
                     WHERE
                         F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'CMS_BOARD'
+                        AND S.TARGET_GB = 'BOARD'
                         AND S.TARGET_NO = ".$_key."
                         AND F.THUMB_FL = '0'
                     ";
@@ -533,16 +533,16 @@
 
                     $_d->sql_query($sql);
 
-                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'CMS_BOARD' AND TARGET_NO = ".$row[NO];
+                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND TARGET_NO = ".$row[NO];
 
                     $_d->sql_query($sql);
 
                     MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
 
-                    if (file_exists('../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../..'.$row[PATH].$row[FILE_ID]);
-                        unlink('../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                        unlink('../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
                     }
                 }
             }
@@ -595,7 +595,7 @@
                             '".$_key."'
                             , '".$file_no."'
                             , 'FILE'
-                            , 'CMS_BOARD'
+                            , 'BOARD'
                             , '".$i."'
                         )";
 
@@ -688,10 +688,10 @@
 
                 MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
 
-                if (file_exists('../..'.$row[PATH].$row[FILE_ID])) {
-                    unlink('../..'.$row[PATH].$row[FILE_ID]);
-                    unlink('../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                    unlink('../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
                 }
             }
 

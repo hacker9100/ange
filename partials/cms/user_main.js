@@ -14,6 +14,7 @@ define([
     controllers.controller('user_main', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', 'ngTableParams', function ($scope, $stateParams, $location, $filter, dialogs, ngTableParams) {
 
         /********** 초기화 **********/
+        var check = false;
         $scope.key = '';
         $scope.item = {};
         $scope.search = {SYSTEM_GB: 'CMS'}
@@ -91,6 +92,11 @@ define([
             $scope.item.SYSTEM_GB = 'CMS';
 
             if ($scope.key == '') {
+                if (!check) {
+                    dialogs.notify('알림', '아이디 확인을 해주세요.', {size: 'md'});
+                    return;
+                }
+
                 $scope.insertItem('com/user', 'item', $scope.item, false)
                     .then(function(){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -117,6 +123,7 @@ define([
                             }
                         }
 
+                        check = true;
                         $scope.item = data;
                         $scope.item.ROLE = $scope.user_roles[idx];
 
@@ -137,10 +144,28 @@ define([
 
         // 취소 클릭
         $scope.click_cancel = function () {
+            check = false;
             $scope.key = '';
             $scope.item = {};
             $scope.item.ROLE = $scope.user_roles[0];
         };
+
+        $scope.click_checkUserId = function () {
+            $scope.getItem('com/user', 'check', $scope.item.USER_ID, {SYSTEM_GB: 'CMS'}, false)
+                .then(function(data) {
+                    if (data.COUNT < 1) {
+                        check = true;
+                        dialogs.notify('알림', '사용 가능한 아이디입니다.', {size: 'md'});
+                    } else {
+                        dialogs.notify('알림', '이미 존재하는 아이디입니다.', {size: 'md'});
+                    }
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
+        $scope.$watch('item.USER_ID', function(data) {
+            check = false;
+        });
 
         /********** 화면 초기화 **********/
         $scope.getSession()

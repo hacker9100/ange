@@ -12,7 +12,7 @@
                         <a data-toggle="collapse" style="color:#333">
                             <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
                                 <div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">
-                                    <span style="font-size:1.16em;">월간앙쥬</span><br />
+                                    <span style="font-size:1.16em;">{{ task.SERIES_NM }}</span><br />
                                     <span>[{{ task.PROJECT_NM }}]</span>
                                 </div>
                                 <div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">
@@ -105,7 +105,7 @@
                 <div class="editor_cell" style="float:left; left:0;">
                     <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>
                 </div>
-                <div class="editor_template_cell" style="float:left; width:782px; margin-top:0px; border:1px solid #DEDEDE; " ng-show="isTemplet">
+                <div class="editor_template_cell" style="float:left; width:100%; margin-top:0px; border:1px solid #DEDEDE; " ng-show="isTemplet">
                     <div style="width:100%; background:#464646; color:#fff; line-height: 42px; padding-left: 15px;">
                         Template
 
@@ -118,10 +118,25 @@
 
                     <div class="form-horizontal" style="float:left; padding:10px;" disabled="{{scope.isDisabled}}">
                         <!-- span ng-click="click_selectTemplet('2E')">2단 사진 세로 구성</span -->
+                        <!-- div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('2E')">2단 사진 세로</div -->
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('basic_template')">기본 레이아웃<br />(테스트용)</div>
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('plantitle_template')">상단꼭지<br />(필수)</div>
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('headline_template')">일반 제목</div>
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('byline_template')">바이라인</div>
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('preface_basic_template')">대표이미지+전문<br />(세로)</div>
 
-                        <div style="float:left; background-image:URL(); padding:4px; color:#646464; font-size: 0.68em; border:1px solid #EDEDED; width:98px; margin:5px; height:60px; cursor:pointer;" ng-click="click_selectTemplet('2E')">
-                            2단 사진 세로
-                        </div>
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('sectionmain_template')">중제(일반)</div>
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('sectionsub_template')">소제(일반)</div>
+
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('bodyscript_template')">일반 본문</div>
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('bodyscript_p2b_template')">이미지(좌)+본문</div>
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('bodyscript_b2p_template')">본문+이미지(우)</div>
+
+                        <div class="template_thumb" style="background-image:URL() no-repeat;" ng-click="click_selectTemplet('tips_template')">TIP박스</div>
+
+
+
+
 
                         <!--<span ng-click="click_selectTemplet('2F')">2단 사진 세로 구성</span>-->
                     </div>
@@ -142,15 +157,15 @@
                     <i class="glyphicon glyphicon-list"></i>
                     <span>목록</span>
                 </button>
-                <button type="button" class="btn btn-warning btn-xs start" ng-click="click_commitContent();" ng-show="isCommit || task.PHASE == '11' || task.PHASE == '21'">
+                <button type="button" class="btn btn-warning btn-xs start" ng-click="click_commitContent();" ng-show="isCommit && !(task.PHASE == '11' || task.PHASE == '21')">
                     <i class="glyphicon glyphicon-check"></i>
                     <span>등록&승인요청</span>
                 </button>
-                <button type="button" class="btn btn-danger btn-xs start" ng-click="click_returnContent();" ng-show="isApproval || task.PHASE == '12' || task.PHASE == '22'">
+                <button type="button" class="btn btn-danger btn-xs start" ng-click="click_returnContent();" ng-show="isApproval && !(task.PHASE == '12' || task.PHASE == '22')">
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     <span>반려</span>
                 </button>
-                <button type="button" class="btn btn-success btn-xs start" ng-click="click_approveContent();" ng-show="isApproval || task.PHASE == '12' || task.PHASE == '22'">
+                <button type="button" class="btn btn-success btn-xs start" ng-click="click_approveContent();" ng-show="isApproval && !(task.PHASE == '12' || task.PHASE == '22')">
                     <i class="glyphicon glyphicon-ok-circle"></i>
                     <span>승인</span>
                 </button>
@@ -209,33 +224,33 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <link rel="stylesheet" type="text/css" href="../../css/ange/normalize.css" >
-        <link rel="stylesheet" type="text/css" href="../../css/ange/ange_bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/ange/article.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/normalize.css" >
+        <link rel="stylesheet" type="text/css" href="../../css/angeCMS_bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="../../css/article.css" />
 
-        <link rel="stylesheet" type="text/css" href="lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
-        <link rel="stylesheet" type="text/css" href="lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
+        <link rel="stylesheet" type="text/css" href="../../lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
+        <link rel="stylesheet" type="text/css" href="../../lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
 
         <!--[if lt IE 9]>
-            <script src="lib/html5shiv/html5shiv.js"></script>
-            <script src="lib/respond/respond.min.js"></script>
+            <script src="../../lib/html5shiv/html5shiv.js"></script>
+            <script src="../../lib/respond/respond.min.js"></script>
         <![endif]-->
+
     </head>
 
     <body>
 
     <div id="articlewrap" class="articlewrap">
 
-        <div class="modal-header article_windowtitle">Preview | Web Browser for PC</div>
+        <div class="modal-header article_windowtitle">
+            Preview | Web Browser for PC
+            <a ng-click="click_ok()" style="float:right; cursor:pointer;">Close</a>
+        </div>
 
         <div class="modal-body">
 
-            <div class="row  article_previewwrap">
-                <div class="col-xs-12">
-                            <div ng-bind-html="content"></div>
-                            <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
-                </div>
-            </div>
+            <div ng-bind-html="content"></div>
+            <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
 
         </div>
 

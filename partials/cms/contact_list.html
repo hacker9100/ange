@@ -1,5 +1,5 @@
-<div class="panel panel-primary">
-    <div class="panel-body" ng-model="search" lass="row">
+<div class="panel panel-primary" ng-controller="contact_list">
+    <div class="panel-body" ng-model="search" class="row">
 
         <form role="form" name="search_form" class="form-horizontal">
             <div class="col-md-9">
@@ -43,18 +43,18 @@
             <td data-title="'이름'" sortable="'USER_NM'">
                 {{item.USER_NM}}
             </td>
-            <td data-title="'권한'" sortable="'ROLE'">
+            <td class="text-center" data-title="'권한'" sortable="'ROLE'">
                 {{item.ROLE_NM}}
             </td>
-            <td data-title="'등록일'" sortable="'REG_DT'">
+            <td class="text-center" data-title="'등록일'" sortable="'REG_DT'">
                 {{item.REG_DT}}
             </td>
-            <td data-title="'상태'" sortable="'USER_ST'">
+            <td class="text-center" data-title="'상태'" sortable="'USER_ST'">
                 {{item.USER_ST == '0' ? '이용가능' : '이용정지'}}
             </td>
-            <td data-title="'기능'">
-                <a ng-click="click_getCmsUser(item.USER_ID)" ng-show="!isModal">조회</a>
-                <a ng-click="click_selectCmsUser(item)" ng-show="isModal">선택</a>
+            <td class="text-center" data-title="'기능'">
+                <button class="btn btn-info btn-xs" ng-click="click_getCmsUser(item.USER_ID)" ng-show="!isModal">V</button>
+                <button class="btn btn-info btn-xs" ng-click="click_selectCmsUser(item)" ng-show="isModal">Select</button>
                 <!--<a ng-click="click_updateStatus($index)">상태변경</a>-->
                 <!--<a ng-click="click_deleteCmsUser($index)">삭제</a>-->
             </td>
@@ -68,7 +68,7 @@
 <!-- Contents Include -->
 <div class="col-md-12" ng-show="!isModal">
     <form role="form" name="edit_form" class="form-horizontal">
-        <div ng-model="item" lass="row">
+        <div id="item" ng-model="item" lass="row">
             <div class= "form-group" ng-class="{error: edit_form.user_id.$invalid}">
                 <label class= "col-md-2">아이디</label>
                 <div class="col-md-4">
@@ -100,9 +100,15 @@
                 </div>
             </div>
             <div class= "form-group">
+                <label class= "col-md-2">소개</label>
+                <div class= "col-md-6">
+                    <span ng-bind="item.INTRO"/>
+                </div>
+            </div>
+            <div class= "form-group">
                 <label class= "col-md-2">메모</label>
                 <div class= "col-md-6">
-                    <textarea ng-bind="item.NOTE"/>
+                    <span ng-bind="item.NOTE"/>
                 </div>
             </div>
 

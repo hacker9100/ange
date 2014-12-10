@@ -95,7 +95,11 @@ define([
 
             if ($scope.key != '') {
                 $scope.getItem('com/user', 'item', $scope.key, {}, false)
-                    .then(function(data) { $scope.item = data; })
+                    .then(function(data) {
+                        // 스크롤 하단으로 이동
+                        $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
+                        $scope.item = data;
+                    })
                     .catch(function(error){alert(error)});
             }
         }
@@ -108,8 +112,12 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        $scope.init();
-        $scope.getCmsUserList();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
+            .then($scope.init)
+            .then($scope.getCmsUserList)
+            .catch($scope.reportProblems);
 
     }]);
 
