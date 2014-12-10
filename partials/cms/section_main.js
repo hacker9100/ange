@@ -38,6 +38,8 @@ define([
             }
         }
 
+        //$("#season_upt_btn").hide();
+
         /********** 이벤트 **********/
         // 섹션 삭제 버튼 클릭
         $scope.click_deleteSection = function (parentIdx, idx) {
@@ -185,10 +187,12 @@ define([
         $scope.$watch('item.SELECT_SEASON_NM', function (data) {
             if (data != null && data != "") {
                 $scope.item.SEASON_NM = data.SEASON_NM;
-                $scope.season_nm_check = true;
+                //$scope.season_nm_check = true;
+                $("#season_upt_btn").show();
             }else{
-                $scope.season_nm_check = false;
+                //$scope.season_nm_check = false;
                 $scope.item.SEASON_NM= "";
+                $("#season_upt_btn").hide();
             }
         });
 
