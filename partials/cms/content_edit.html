@@ -157,7 +157,7 @@
                     <i class="glyphicon glyphicon-list"></i>
                     <span>목록</span>
                 </button>
-                <button type="button" class="btn btn-warning btn-xs start" ng-click="click_commitContent();" ng-show="isCommit || task.PHASE == '11' || task.PHASE == '21'">
+                <button type="button" class="btn btn-warning btn-xs start" ng-click="click_commitContent();" ng-show="isCommit && (task.PHASE == '11' || task.PHASE == '21')">
                     <i class="glyphicon glyphicon-check"></i>
                     <span>등록&승인요청</span>
                 </button>
