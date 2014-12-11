@@ -55,10 +55,10 @@
                     </td>
                     <td class="text-center" data-title="'등록일'" sortable="'REG_DT'">
                         {{item.REG_DT}}
-                    </td>
+                    </td><!--
                     <td class="text-center" data-title="'상태'" sortable="'USER_ST'">
                         {{item.USER_ST == 'N' ? '이용가능' : '이용정지'}}
-                    </td>
+                    </td>-->
                     <td class="text-center" data-title="'기능'">
                         <button class="btn btn-info btn-xs" ng-click="click_getCmsUser(item.USER_ID)" ng-show="!isModal">V</button>
                         <button class="btn btn-info btn-xs" ng-click="click_selectCmsUser(item)" ng-show="isModal">Select</button>

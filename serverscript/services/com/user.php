@@ -178,6 +178,7 @@
                             WHERE
                                 U.USER_ID = UR.USER_ID
                                 AND UR.ROLE_ID = R.ROLE_ID
+                                AND U.USER_ST = 'N'
                                 ".$search_where."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -189,6 +190,7 @@
                             WHERE
                                 U.USER_ID = UR.USER_ID
                                 AND UR.ROLE_ID = R.ROLE_ID
+                                AND U.USER_ST = 'N'
                                 ".$search_where."
                         ) CNT
                         $sort_order
