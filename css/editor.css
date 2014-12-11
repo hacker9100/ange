@@ -1,7 +1,14 @@
 @import "ange_bootstrap.css";
 @import "article.css";
 
+.article_previewwrap {
+    clear: both;
+    width: 100%;
+}
+
 mediacaption, subtitle, maintitle, preface, sectionmain, sectionsub, bodyscript, byline, tips, plantitle {
+    clear: inherit;
+    width:100%;
     outline:1px dotted #DEDEDE;
 }
 
@@ -15,4 +22,19 @@ mediacaption, subtitle, maintitle, preface, sectionmain, sectionsub, bodyscript,
 
 .tip_title, .imagebox {
     outline:1px dotted #DEDEDE;
+}
+
+/** 에디터 전용 클래스 **/
+.hiddenline {
+    display: block;
+    float:left;
+    width:100%;
+    border-top:1px solid #DEDEDE;
+
+    padding:20px 10px 15px 10px;
+    margin: 12px 0;
+}
+
+.template_handle {
+    display: block;
 }

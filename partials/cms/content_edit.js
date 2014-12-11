@@ -15,13 +15,27 @@ define([
 
         // 텔플릿 선택 클릭
         $scope.click_selectTemplet = function (item) {
+
+            var blankSpace = '<p><img class="template_handle" src="' + UPLOAD.BASE_URL + '/imgs/template_handler.jpg" style="width:260px; height:14px;"/></p>';
+
             switch (item) {
+
+                case 'handler_template' :
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+
+                    break;
 
                 case 'basic_template' :
                     var temp =
                         '<div class="row previewwrap">' +
                             '<div id="inBodyForm" class="col-xs-12 article_previewwrap">' +
-                            $scope.item.BODY;
+                                blankSpace +
+                            '</div>' +
+                            '<div class="hiddenline">' +
+                                $scope.item.BODY;
                             '</div>' +
                         '</div>';
 
@@ -34,10 +48,13 @@ define([
 
                 case 'plantitle_template' :
                     var temp =
-                        '<plantitle>' + '<strong>섹션명</strong> | 제목' + '</plantitle>' + '<br />&nbsp;&nbsp;';
+                        '<plantitle>' + '<strong>섹션명</strong> | 제목' + '</plantitle>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
@@ -48,10 +65,13 @@ define([
                         '<byline>' +
                             '<div id="basic_information" class="basic_information">' + '<strong>프로젝트 [호제]</strong> 2014-12-25' + '</div>' +
                             '<strong>에디터</strong> 이름 / <strong>포토그래퍼</strong> 이름 / <strong>참고한 책</strong> &lt;제목&gt; &lt;제목&gt; / <strong>의상 협찬</strong> 업체(02-1234-5678, www.homepage.co.kr) / <strong>모델</strong> 이름' +
-                        '</byline>' + '<br />&nbsp;&nbsp;';
+                        '</byline>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
@@ -59,13 +79,10 @@ define([
 
                 case 'headline_template' :
                     var temp1 =
-                        '<subtitle style="float:left;">' + "소제목을 입력하세요" + '</subtitle>' //+
-//                        '<maintitle style="float:left;">' + "대제목을 입력하세요" + '</maintitle>' + '<br />&nbsp;&nbsp;';
+                        '<subtitle>' + "소제목을 입력하세요" + '</subtitle>';
 
                     var temp2 =
-                        '<maintitle style="float:left;">' + "대제목을 입력하세요" + '</maintitle>'; // + '<br />&nbsp;&nbsp;';
-
-                    var temp3 = '<br />&nbsp;&nbsp;';
+                        '<maintitle>' + "대제목을 입력하세요" + '</maintitle>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp1);
@@ -74,7 +91,7 @@ define([
                         element = CKEDITOR.dom.element.createFromHtml(temp2);
                         CKEDITOR.instances.editor1.insertElement( element );
 
-                        element = CKEDITOR.dom.element.createFromHtml(temp3);
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
@@ -82,10 +99,10 @@ define([
 
                 case 'preface_basic_template' :
                     var temp1 =
-                        '<div class="imagebox" placeholder="여기에 커서를 위치하고 이미지를 선택하세요">여기에 커서를 위치하고 이미지를 선택하세요</div>'; // +
+                        '<div class="imagebox"><img class="template_handle" src="' + UPLOAD.BASE_URL + '/imgs/image_handler.jpg" style="float:none; width:260px; height:14px; margin:0px auto;"/></div>';
 
                     var temp2 =
-                        '<preface>' + '전문 내용을 입력하세요' + '</preface>' + '<br />&nbsp;&nbsp;';
+                        '<preface>' + '전문 내용을 입력하세요' + '</preface>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp1);
@@ -93,16 +110,22 @@ define([
 
                         var element = CKEDITOR.dom.element.createFromHtml(temp2);
                         CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
+                        CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'sectionmain_template' :
                     var temp =
-                        '<sectionmain>' + '주제를 입력하세요' + '</sectionmain>' + '<br />&nbsp;&nbsp;';
+                        '<sectionmain>' + '주제를 입력하세요' + '</sectionmain>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
@@ -110,10 +133,13 @@ define([
 
                 case 'sectionsub_template' :
                     var temp =
-                        '<sectionsub>' + '소주제를 입력하세요' + '</sectionsub>' + '<br />&nbsp;&nbsp;';
+                        '<sectionsub>' + '소주제를 입력하세요' + '</sectionsub>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
@@ -121,10 +147,13 @@ define([
 
                 case 'bodyscript_template' :
                     var temp =
-                        '<bodyscript>' + '본문 내용을 입력하세요' + '</bodyscript>' + '<br />&nbsp;&nbsp;';
+                        '<bodyscript>' + '본문 내용을 입력하세요' + '</bodyscript>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
@@ -134,17 +163,20 @@ define([
                     var temp =
                         '<div class="row">' +
                             '<div class="col-sm-6">' +
-                                '<div class="imagebox" placeholder="여기에 커서를 위치하고 이미지를 선택하세요">여기에 커서를 위치하고 이미지를 선택하세요</div>' +
+                                '<div class="imagebox"><img class="template_handle" src="' + UPLOAD.BASE_URL + '/imgs/image_handler.jpg" style="float:none; width:260px; height:14px; margin:0px auto;"/></div>' +
                                 '<mediacaption>이미지 설명을 입력하세요</mediacaption>' +
                             '</div>' +
 
                             '<div class="col-sm-6">' +
                                 '<bodyscript>본문 내용을 입력하세요</bodyscript>' +
                             '</div>' +
-                        '</div>' + '<br />&nbsp;&nbsp;';
+                        '</div>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
@@ -158,13 +190,16 @@ define([
                             '</div>' +
 
                             '<div class="col-sm-6">' +
-                                '<div class="imagebox" placeholder="여기에 커서를 위치하고 이미지를 선택하세요">여기에 커서를 위치하고 이미지를 선택하세요</div>' +
+                            '<div class="imagebox"><img class="template_handle" src="' + UPLOAD.BASE_URL + '/imgs/image_handler.jpg" style="float:none; width:260px; height:14px; margin:0px auto;"/></div>' +
                                 '<mediacaption>이미지 설명을 입력하세요</mediacaption>' +
                             '</div>' +
-                        '</div>' + '<br />&nbsp;&nbsp;';
+                        '</div>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
@@ -172,10 +207,13 @@ define([
 
                 case 'tips_template' :
                     var temp =
-                        '<tips>' + '<div class="tip_title">' + 'TIP 제목을 입력하세요' + '</div>' + '내용을 입력하세요.' + '</tips>' + '<br />&nbsp;&nbsp;';
+                        '<tips>' + '<div class="tip_title">' + 'TIP 제목을 입력하세요' + '</div>' + '내용을 입력하세요.' + '</tips>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
@@ -184,8 +222,8 @@ define([
                 case '2E' :
                     var temp =
                         '<div class="row"> ' +
-                            '<div class="col-md-2" style="width:700px; height:500px; border:1px dashed; "></div>' +
-                            '<div class= "col-md-2" style="width:700px; height:300px; border:1px dashed; ">' +
+                            '<div class="col-sm-2" style="width:700px; height:500px; border:1px dashed; "></div>' +
+                            '<div class= "col-sm-2" style="width:700px; height:300px; border:1px dashed; ">' +
                             $scope.item.BODY;
                             '</div>' +
                         '</div>';

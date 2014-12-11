@@ -9,9 +9,9 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
-include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
-
-MtUtil::_c("### [FILEUPLOAD]");
+//include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+//
+//MtUtil::_c("### [FILEUPLOAD]");
 
 class UploadHandler
 {
@@ -504,7 +504,7 @@ class UploadHandler
         /**
          * Sunghwan Kim 2014-12-09 한글 깨짐 현상 처리
          */
-//        $name = trim(basename(stripslashes($name)), ".\x00..\x20");
+        $name = trim(basename(stripslashes($name)), ".\x00..\x20");
 //        $name = $this->utf2euc($name);
         // Use a timestamp for empty filenames:
         if (!$name) {
