@@ -1,21 +1,20 @@
 <div>
     <div class="col-xs-6" style="padding:0px 2px;">
-        <div class="list-group">
-            <!--<div ng-activity-indicator="SpinnerGrey" skip-ng-show="yes"></div>-->
-            <!--<div ng-show="isLoading" style="position: relative;top:-100px;left:10px;" ng-class="feed-loading"><img src="../imgs/loading3.gif"/></div>-->
+        <div class="list-group" style="border: none;">
+
             <div ng-show="isLoading" style="position: absolute;top: 55px;left: 45%; z-index: 1000" class="ai-circled ai-indicator ai-grey-spin"></div>
-            <!--<div ng-show="isLoading" style="position: absolute; left: 40%; z-index: 1000" class="ai-spinner ai-indicator ai-dark-parent"><div class="ai-bar1"></div><div class="ai-bar2"></div><div class="ai-bar3"></div><div class="ai-bar4"></div><div class="ai-bar5"></div><div class="ai-bar6"></div><div class="ai-bar7"></div><div class="ai-bar8"></div><div class="ai-bar7"></div><div class="ai-bar8"></div><div class="ai-bar9"></div><div class="ai-bar10"></div></div>-->
-            <li class="{{portletCss}}">
+
+            <li class="{{portletCss}}" style="background: #333; border-color: #333">
                 {{ portletTitle }}
-                <span class="btn custom-btn-more"> <span ng-click="click_showList();" class="glyphicon glyphicon-plus"></span> </span>
+                <span class="btn custom-btn-more" title="더보기"> <span ng-click="click_showList();" class="glyphicon glyphicon-plus"></span> MORE </span>
             </li>
 
-            <a ng-click="click_showView(item.NO)" class="list-group-item list-group-item-green" ng-repeat="item in list">
+            <a ng-click="click_showView(item.NO)" class="list-group-item list-group-item-green" ng-repeat="item in list" style="cursor:pointer; margin:0; border: none; border-bottom:1px dotted #888; ">
                 {{ item.SUBJECT | string_limit:30}}
                 <span class="list-group-item-right" ng-show="url != 'project'">{{ item.REG_DT }}</span>
                 <span class="list-group-item-right" ng-show="url == 'project'">{{ item.PROJECT_ST == '0' ? '준비' : item.PROJECT_ST == '1' ? '진행' : item.PROJECT_ST == '2' ? '출판대기' : '완료' }}</span>
             </a>
-            <a ng-show="list == ''" class="list-group-item list-group-item-green">조회 데이터가 없습니다.<span class="list-group-item-right"></span></a>
+            <div ng-show="list == ''" style="border:none;text-align: center; border-bottom:1px dotted #888; height:190px; padding-top:80px;">조회 데이터가 없습니다.<span class="list-group-item-right"></span></div>
         </div>
     </div>
 </div>

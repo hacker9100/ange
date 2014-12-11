@@ -101,7 +101,7 @@ define([
 //                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
 //                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
-                        .catch(function(error){$defer.resolve([]);});
+                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
                 }
             });
 

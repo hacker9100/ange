@@ -219,7 +219,7 @@ define([
                         $scope.list = $scope.listData.slice($scope.perCnt, $scope.perSize);
                     }
                 })
-                .catch(function(error){console.log(error);})
+                .catch(function(error){$scope.TOTAL_COUNT = 0; console.log(error);})
                 .finally(function(){$scope.isLoading = false;});
         };
 
