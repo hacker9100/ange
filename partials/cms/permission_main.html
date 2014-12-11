@@ -1,10 +1,10 @@
 <div ng-controller="permission_main">
     <!-- Contents Include -->
-    <div class="col-md-12" ng-controller="permission_main">
-        <form role="form" name="edit_form" class="form-horizontal">
-            <div class= "form-group">
-                <label class= "col-md-2">설정대상</label>
-                <div class="col-md-4">
+    <div class="col-md-12">
+        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">설정대상</label>
+                <div class="form_basic_input">
                     <select ng-model="ROLE" ng-options="role.ROLE_NM for role in roles" class= "form-control" ></select>
                 </div>
             </div>
@@ -34,15 +34,17 @@
             </table>
 
             <!-- 버튼 -->
-            <div class= "navbar-header" >
-                <button class="btn btn-success fileinput-button" data-ng-click="click_savePermission()">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>저장</span>
-                </button>
-                <button class="btn btn-primary start" ng-click="getPermission();">
-                    <i class="glyphicon glyphicon-search"></i>
-                    <span>취소</span>
-                </button>
+            <div class="raw" style="float:left; width:100%; margin-top:50px; padding-top:10px; border-top:1px solid #DEDEDE;">
+                <div class="col-xs-12 form-group form_basic" style="text-align:center;">
+                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePermission();">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>저장</span>
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs cancel" ng-click="getPermission();">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>취소</span>
+                    </button>
+                </div>
             </div>
         </form>
     </div>

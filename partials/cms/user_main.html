@@ -73,19 +73,19 @@
                 <td data-title="'이름'" sortable="'USER_NM'">
                     {{item.USER_NM}}
                 </td>
-                <td data-title="'권한'" sortable="'ROLE_NM'">
+                <td class="text-center" data-title="'권한'" sortable="'ROLE_NM'">
                     {{item.ROLE_NM}}
                 </td>
-                <td data-title="'등록일'" sortable="'REG_DT'">
+                <td class="text-center" data-title="'등록일'" sortable="'REG_DT'">
                     {{item.REG_DT}}
                 </td>
-                <td data-title="'상태'" sortable="'USER_ST'">
+                <td class="text-center" data-title="'상태'" sortable="'USER_ST'">
                     {{item.USER_ST == 'N' ? '이용가능' : '이용정지'}}
                 </td>
-                <td data-title="'기능'">
-                    <a ng-click="click_getCmsUser(item.USER_ID)">편집</a>
-                    <a ng-click="click_updateStatus(item)">상태변경</a>
-                    <a ng-click="click_deleteCmsUser($parent.$index, $index)">삭제</a>
+                <td class="text-center" data-title="'기능'">
+                    <button class="btn btn-info btn-xs" ng-click="click_getCmsUser(item.USER_ID)">E</button>
+                    <button class="btn btn-info btn-xs" ng-click="click_updateStatus(item)">{{item.USER_ST == 'N' ? '이용가능' : '이용정지'}}</button>
+                    <button class="btn btn-info btn-xs" ng-click="click_deleteCmsUser($parent.$index, $index)">D</button>
                 </td>
             </tr>
         </tbody>
@@ -103,7 +103,7 @@
     <div class="col-md-12">
 
         <form role="form" name="edit_form" class="form-horizontal form_basic_100">
-            <div ng-model="item" lass="row form_basic_wrap">
+            <div id="item" ng-model="item" class="row form_basic_wrap">
                 <div class="form-group form_basic_group" ng-class="{error: edit_form.item_id.$invalid}">
                     <label class= "form_basic_label">아이디 <span style="color:#b94a48">*</span></label>
                     <div class="form_basic_input">

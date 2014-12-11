@@ -34,7 +34,7 @@ define([
 
             dialog.result.then(function(btn){
                 $scope.deleteItem('cms/category', 'item', category.NO, true)
-                    .then(function(){alert('정상적으로 삭제되었습니다.'); $scope.list.splice(idx, 1);})
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.list.splice(idx, 1);})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             });
         };
@@ -83,7 +83,7 @@ define([
                         $scope.item = data;
                         $scope.item.PARENT = data.PARENT_NO == '0' ? null : $scope.parents[idx];
 
-                        $('#item_gb').focus();
+                        $scope.click_focus();
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -91,6 +91,7 @@ define([
 
         // 섹션 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
         $scope.click_focus = function () {
+            $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
             $('#item_gb').focus();
         }
 

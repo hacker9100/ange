@@ -127,6 +127,8 @@ define([
                         $scope.item = data;
                         $scope.item.ROLE = $scope.user_roles[idx];
 
+                        // 스크롤 하단으로 이동
+                        $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
                         $('#item_id').focus();
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
