@@ -124,7 +124,7 @@ define(['./directives'], function (directives) {
             link: function (scope, element, attrs, ctrls) {
                 var ngModel = ctrls[0];
                 var form    = ctrls[1] || null;
-                var EMPTY_HTML = '<p></p>',
+                var EMPTY_HTML = '</br></br>',
 //                                '<img id="dropzone" src="http://localhost/serverscript/upload/../../upload/files/medium/Koala%20%285%29.jpg" />',
                     isTextarea = element[0].tagName.toLowerCase() == 'textarea',
                     data = [],
