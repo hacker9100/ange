@@ -69,20 +69,20 @@
                     </a>
                 </td>
             </tr>
-            <tr ng-hide="group.$hideRows" ng-repeat="item in group.data">
+            <tr ng-hide="group.$hideRows" ng-repeat="item in group.data" ng-click="click_getCmsUser(item.USER_ID)">
                 <td data-title="'이름'" sortable="'USER_NM'">
                     {{item.USER_NM}}
                 </td>
-                <td class="text-center" data-title="'권한'" sortable="'ROLE_NM'">
+                <td style="width:250px" class="text-center" data-title="'권한'" sortable="'ROLE_NM'">
                     {{item.ROLE_NM}}
                 </td>
-                <td class="text-center" data-title="'등록일'" sortable="'REG_DT'">
+                <td style="width:150px" class="text-center" data-title="'등록일'" sortable="'REG_DT'">
                     {{item.REG_DT}}
                 </td>
-                <td class="text-center" data-title="'상태'" sortable="'USER_ST'">
+                <td style="width:150px" class="text-center" data-title="'상태'" sortable="'USER_ST'">
                     {{item.USER_ST == 'N' ? '이용가능' : '이용정지'}}
                 </td>
-                <td class="text-center" data-title="'기능'">
+                <td style="width:200px" class="text-center" data-title="'기능'">
                     <button class="btn btn-info btn-xs" ng-click="click_getCmsUser(item.USER_ID)">E</button>
                     <button class="btn btn-info btn-xs" ng-click="click_updateStatus(item)">{{item.USER_ST == 'N' ? '이용가능' : '이용정지'}}</button>
                     <button class="btn btn-info btn-xs" ng-click="click_deleteCmsUser($parent.$index, $index)">D</button>

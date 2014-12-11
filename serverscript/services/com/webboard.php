@@ -40,6 +40,16 @@
         $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
     }
 
+    $ip = "";
+
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+
     switch ($_method) {
         case "GET":
             if ($_type == 'item') {
@@ -405,7 +415,7 @@
                         ,'.$no.'
                         ,'BOARD'
                         ,'CREATE'
-                        ,'IP'
+                        ,'".$ip."'
                         ,'/webboard'
                     )";
 
@@ -634,7 +644,7 @@
                         ,'.$_key.'
                         ,'BOARD'
                         ,'UPDATE'
-                        ,'IP'
+                        ,'".$ip."'
                         ,'/webboard'
                     )";
 
@@ -730,7 +740,7 @@
                         ,'.$_key.'
                         ,'BOARD'
                         ,'DELETE'
-                        ,'IP'
+                        ,'".$ip."'
                         ,'/webboard'
                     )";
 

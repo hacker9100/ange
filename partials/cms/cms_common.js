@@ -112,6 +112,15 @@ define([
                         deferred.reject(data.msg);
                     } else {
                         if (angular.isObject(data)) {
+                            $rootScope.session = null;
+
+                            $rootScope.authenticated = true;
+                            $rootScope.uid = null;
+                            $rootScope.name = null;
+                            $rootScope.role = null;
+                            $rootScope.menu_role = null;
+                            $rootScope.email = null;
+
                             deferred.resolve(data);
                         } else {
                             // TODO: 데이터가 없을 경우 처리
@@ -165,6 +174,8 @@ define([
                 $location.path("/signin");
                 throw( new String('로그인 후 사용가능합니다.') );
             } else {
+                $rootScope.session = session;
+
                 $rootScope.authenticated = true;
                 $rootScope.uid = session.USER_ID;
                 $rootScope.name = session.USER_NM;
@@ -173,11 +184,24 @@ define([
                 $rootScope.email = session.EMAIL;
             }
 
-            return session;
+            return;
         };
 
-        $scope.permissionCheck = function(session) {
+        $scope.permissionCheck = function(url, back) {
             var path = $location.path();
+
+            if ($rootScope.session == undefined || $rootScope.session == null) {
+                if (back) {
+                    throw( new String('로그인 후 사용가능합니다.') );
+                } else {
+                    dialogs.error('오류', '로그인 후 사용가능합니다.', {size: 'md'});
+                }
+                $location.path("/signin");
+                return false;
+            }
+
+            if (url) path = url;
+
             var spMenu =  path.split('/');
             var menuId = spMenu[1];
             var menuGb = '';
@@ -189,9 +213,9 @@ define([
                 menuGb = spMenu[3];
             }
 
-            for (var idx in session.MENU_ROLE) {
+            for (var idx in $rootScope.session.MENU_ROLE) {
                 var permission = false;
-                var role = session.MENU_ROLE[idx];
+                var role = $rootScope.session.MENU_ROLE[idx];
 
                 if (menuId == 'signup' || menuId == 'signin') {
                     permission = true;
@@ -228,15 +252,20 @@ define([
                     }
 
                     if (!permission) {
-//                        alert('접근할 수 없는 메뉴 입니다.');
-                        history.back();
-                        throw( new String('접근할 수 없는 메뉴 입니다.') );
-                        return;
+                        if (back) {
+    //                        alert('접근할 수 없는 메뉴 입니다.');
+                            history.back();
+                            throw( new String('접근할 수 없는 메뉴 입니다.') );
+                            return;
+                        } else {
+                            dialogs.error('오류', '접근할 수 없는 메뉴 입니다.', {size: 'md'});
+                            return false;
+                        }
                     }
                 }
             }
 
-            return session;
+            return true;
         };
 
         // 오류 리포트

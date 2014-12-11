@@ -15,6 +15,12 @@ define([
 
         $scope.list = $rootScope.cms_channel;
 
+        $scope.selectMenu = function(url) {
+            if ($scope.permissionCheck(url, false)) {
+                $location.url(url);
+            }
+        };
+
         $scope.logoutMe = function() {
             if ($rootScope.uid != undefined) {
                 $scope.logout($rootScope.uid).then( function(data) {

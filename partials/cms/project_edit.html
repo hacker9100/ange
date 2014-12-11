@@ -29,6 +29,13 @@
                     <select ng-model="item.YEAR" ng-options="v for v in years" class= "form-control" ></select>
                 </div>
             </div>
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.isbn.$invalid}">
+                <label class= "form_basic_label">ISBN 번호</label>
+                <div class="form_basic_input">
+                    <input name="isbn" ng-model="item.ISBN_NO" type= "text" ng-pattern="/^\d{0,15}(\.\d{1,9})?$/" class= "form-control" placeholder="ISBN 번호"/>
+                    <span ng-show="edit_form.isbn.$invalid" class="help-inline">숫자만 입력 가능합니다.</span>
+                </div>
+            </div>
             <!--<div class= "form-group">-->
                 <!--<label class= "col-md-2">등록자 ID</label>-->
                 <!--<div class="col-md-4">-->
