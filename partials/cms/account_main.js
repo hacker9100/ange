@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('account_main', ['$scope', 'dialogs', function ($scope, dialogs ) {
+    controllers.controller('account_main', ['$scope', '$rootScope', 'dialogs', function ($scope, $rootScope, dialogs ) {
 
         $scope.phoneNumberPattern = (function() {
             var regexp = /^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/;
@@ -36,9 +36,9 @@ define([
         };
 
         // 로그인 사용자 조회
-        $scope.getCmsUser = function (session) {
-            if (session.USER_ID != '') {
-                $scope.getItem('com/user', 'item', session.USER_ID, {}, true)
+        $scope.getCmsUser = function () {
+            if ($rootScope.uid != '') {
+                $scope.getItem('com/user', 'item', $rootScope.uid, {}, true)
                     .then(function(data){$scope.item = data;})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
