@@ -3676,6 +3676,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-collapse.in {
   overflow-y: auto;
 }
+
 @media (min-width: 768px) {
   .navbar-collapse {
     width: auto;
@@ -3806,7 +3807,9 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-nav {
+    float: left;
   margin: 7.5px -15px;
+
 }
 .navbar-nav > li > a {
   padding-top: 10px;
@@ -3817,7 +3820,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 @media (max-width: 767px) {
   .navbar-nav .open .dropdown-menu {
     position: static;
-    float: none;
+                    float: left;
     width: auto;
     margin-top: 0;
     background-color: transparent;
@@ -4774,8 +4777,8 @@ a.list-group-item.active:focus .list-group-item-text {
 }
 
 .list-group-item-labeling-gray {
-    background-color: #464646;
-    color: #aaa;
+    background-color: #242424;
+    color: #ccc;
     padding:15px;
 }
 
@@ -4896,9 +4899,7 @@ a.list-group-item-danger.active:focus {
 }
 
 .contentpannel {
-    border-radius: 0;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    border:none;
     margin:0;
 }
 
@@ -5936,39 +5937,3 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
-
-
-/*!
- * Bootstrap v3.3.1 (http://getbootstrap.com)
- * Copyright 2011-2014 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
-
-.embed-responsive {
-    position: relative;
-    display: block;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-}
-.embed-responsive .embed-responsive-item,
-.embed-responsive iframe,
-.embed-responsive embed,
-.embed-responsive object,
-.embed-responsive video {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-}
-.embed-responsive.embed-responsive-16by9 {
-    padding-bottom: 56.25%;
-}
-.embed-responsive.embed-responsive-4by3 {
-    padding-bottom: 75%;
-}
-
-

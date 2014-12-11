@@ -5,9 +5,8 @@ mediacaption, subtitle, maintitle, preface, sectionmain, sectionsub, bodyscript,
     outline:1px dotted #DEDEDE;
 }
 
-previewwrap, article_previewwrap {
-    outline:1px dotted #DEDEDE;
-
+.previewwrap {
+    outline:1px dashed #DEDEDE;
 }
 
 .basic_information {
