@@ -209,13 +209,21 @@
                                 </button>
                             </div>
                             <div class="col-xs-6 form-group form_basic" style="text-align:right;">
-                                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showTaskView(item.NO);" ng-show="item.PHASE == '0'">
+                                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewTask(item.NO);" ng-show="isTask">
                                     <i class="glyphicon glyphicon-folder-open"></i>
                                     <span>태스크 정보</span>
                                 </button>
-                                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item.NO);" ng-show="item.PHASE != '0'">
+                                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditTask(item);" ng-show="(isTask && isEdit) && ((role == 'CMS_ADMIN' || role == 'MANAGER') || uid == item.REG_UID)">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                    <span>태스크 편집</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item.NO);" ng-show="!isTask">
                                     <i class="glyphicon glyphicon-book"></i>
                                     <span>원고 조회</span>
+                                </button>
+                                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditContent(item);" ng-show="!isTask && isEdit && item.PHASE < 30">
+                                    <i class="glyphicon glyphicon-pencil"></i>
+                                    <span>{{editContentBtn}}</span>
                                 </button>
                             </div>
                         </div>
