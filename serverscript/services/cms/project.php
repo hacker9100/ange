@@ -436,7 +436,7 @@
 
                     $_d->sql_query($sql);
 
-                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'PROJECT' AND S.CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
+                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'PROJECT' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
 
                     $_d->sql_query($sql);
 
