@@ -73,7 +73,8 @@ define([
             $scope.item.FILES = $scope.queue;
 
             for(var i in $scope.item.FILES) {
-                $scope.item.FILES[i].$destroy = "";
+                $scope.item.FILES[i].$destroy = '';
+                $scope.item.FILES[i].$editor = '';
 //                $scope.item.FILES[i].$submit();
             }
 

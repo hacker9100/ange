@@ -42,9 +42,6 @@
         </div>
     </div>
 
-    <!--<div id="veil" ng-show="isLoading"></div>-->
-    <div id="feedLoading" ng-show="isLoading">Loading...</div>
-
     <!-- Contents Include -->
     <!-- 목록 -->
     <div loading-container="tableParams.settings().$loading">
@@ -58,19 +55,19 @@
                     </a>
                 </td>
              </tr>
-             <tr ng-hide="group.$hideRows" ng-repeat="item in group.data">
+             <tr ng-hide="group.$hideRows" ng-repeat="item in group.data" ng-click="click_getSection(item.NO)">
                 <td data-title="'섹션명'" sortable="'SECTION_NM'">
                     {{item.SECTION_NM}}
                 </td>
     <!--&lt;!&ndash;            <td data-title="'프로젝트명'" sortable="'PROJECT_NO'">
                     {{item.SUBJECT}}
                 </td>&ndash;&gt;-->
-                <td data-title="'정렬순서'" sortable="'SORT_IDX'">
+                <td style="width:100px" class="text-center" data-title="'정렬순서'" sortable="'SORT_IDX'">
                     {{item.SORT_IDX}}
                 </td>
-                <td data-title="'기능'">
-                    <a ng-click="click_getSection(item.NO)">편집</a>
-                    <a ng-click="click_deleteSection($parent.$index, $index)">삭제</a>
+                <td style="width:200px" class="text-center" data-title="'기능'">
+                    <button class="btn btn-info btn-xs" ng-click="click_getSection(item.USER_ID)">E</button>
+                    <button class="btn btn-info btn-xs" ng-click="click_deleteSection($parent.$index, $index)">D</button>
                 </td>
             </tr>
         </tbody>

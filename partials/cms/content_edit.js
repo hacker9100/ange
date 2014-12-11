@@ -327,14 +327,15 @@ define([
             $scope.item.FILES = $scope.queue;
 
             for(var i in $scope.item.FILES) {
-                $scope.item.FILES[i].$destroy = "";
+                $scope.item.FILES[i].$destroy = '';
+                $scope.item.FILES[i].$editor = '';
             }
 
             if ( $scope.item.NO == undefined ) {
                 $scope.item.PHASE = '10';
 
                 $scope.insertItem('cms/content', 'new', $scope.item, false)
-                    .then(function(){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});})
+                    .then(function(){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'}); $scope.task.PHASE = '10';})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 if ( $scope.task.PHASE == '20' && $scope.item.PHASE != $scope.task.PHASE ) {

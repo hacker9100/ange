@@ -65,17 +65,17 @@
     <div>
         <!-- 목록 -->
         <table ng-table="tableParams" class="table">
-            <tr ng-repeat="item in $data">
+            <tr ng-repeat="item in $data" ng-click="click_showViewProject(item.NO)">
                 <td data-title="'프로젝트명'" sortable="'SUBJECT'">
                     {{ item.SERIES_NM + '[' + item.SUBJECT + ']' }}
                 </td>
-                <td class="text-center" data-title="'개설일'" sortable="'REG_DT'">
+                <td style="width:150px" class="text-center" data-title="'개설일'" sortable="'REG_DT'">
                     {{ item.REG_DT }}
                 </td>
-                <td class="text-center" data-title="'상태'" sortable="'PROJECT_ST'">
+                <td style="width:150px" class="text-center" data-title="'상태'" sortable="'PROJECT_ST'">
                     {{ item.PROJECT_ST == '0' ? '준비' : item.PROJECT_ST == '1' ? '진행' : item.PROJECT_ST == '2' ? '출판대기' : '완료' }}
                 </td>
-                <td class="text-center" data-title="'기능'">
+                <td style="width:120px" class="text-center" data-title="'기능'">
                     <button class="btn btn-info btn-xs" ng-click="click_showViewProject(item.NO)">V</button>
                     <button class="btn btn-info btn-xs" ng-click="click_showEditProject(item)" ng-disabled="!(role == 'CMS_ADMIN' || role == 'MANAGER') && uid != item.REG_UID || item.PROJECT_ST == '3'">E</button>
                     <button class="btn btn-info btn-xs" ng-click="click_deleteProject(item)" ng-disabled="!(role == 'CMS_ADMIN' || role == 'MANAGER') && uid != item.REG_UID || item.PROJECT_ST == '3'">D</button>

@@ -36,6 +36,16 @@
         $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
     }
 
+    $ip = "";
+
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+
     switch ($_method) {
         case "GET":
             if ($_type == 'item') {
@@ -222,93 +232,111 @@
 //            $form = json_decode(file_get_contents("php://input"),true);
 //            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($_model[SUBJECT]) == "" ) {
-                $_d->failEnd("제목을 작성 하세요");
-            }
+            if ($_type == 'item') {
+                if ( trim($_model[SUBJECT]) == "" ) {
+                    $_d->failEnd("제목을 작성 하세요");
+                }
 
-            if ( trim($_model[PHASE]) == "" ) {
-                $_model[PHASE] = '0';
-            }
+                if ( trim($_model[PHASE]) == "" ) {
+                    $_model[PHASE] = '0';
+                }
 
-            $project_no = 0;
-            $project_st = '1';
+                $project_no = 0;
+                $project_st = '1';
 
-            if ( trim($_model[PROJECT_NO]) != "" ) {
-                $project_no = $_model[PROJECT_NO];
-            }
+                if ( trim($_model[PROJECT_NO]) != "" ) {
+                    $project_no = $_model[PROJECT_NO];
+                }
 
-            if (count($_model[PROJECT]) > 0) {
-                $project = $_model[PROJECT];
-                $project_no = $project[NO];
-                $project_st = $project[PROJECT_ST];
-            }
+                if (count($_model[PROJECT]) > 0) {
+                    $project = $_model[PROJECT];
+                    $project_no = $project[NO];
+                    $project_st = $project[PROJECT_ST];
+                }
 
-            // 2014.11.14(금) SECTION 섹션 추가
-            if (count($_model[SECTION]) > 0) {
-                $section = $_model[SECTION];
-                $section_no = $section[NO];
-                $section_nm = $section[SECTION_NM];
-                $season_nm = $section[SEASON_NM];
-            }
+                // 2014.11.14(금) SECTION 섹션 추가
+                if (count($_model[SECTION]) > 0) {
+                    $section = $_model[SECTION];
+                    $section_no = $section[NO];
+                    $section_nm = $section[SECTION_NM];
+                    $season_nm = $section[SEASON_NM];
+                }
 
-            $err = 0;
-            $msg = "";
+                $err = 0;
+                $msg = "";
 
-            $_d->sql_beginTransaction();
+                $_d->sql_beginTransaction();
 
-            $sql = "INSERT INTO CMS_TASK
-                    (
-                        PHASE
-                        ,SUBJECT
-                        ,EDITOR_ID
-                        ,EDITOR_NM
-                        ,REG_UID
-                        ,REG_NM
-                        ,REG_DT
-                        ,CLOSE_YMD
-                        ,PROJECT_NO
-                        ,SECTION_NO
-                        ,TAG
-                        ,NOTE
-                    ) VALUES (
-                        '".$_model[PHASE]."'
-                        ,'".$_model[SUBJECT]."'
-                        ,'".$_model[EDITOR_ID]."'
-                        ,'".$_model[EDITOR_NM]."'
-                        ,'".$_SESSION['uid']."'
-                        ,'".$_SESSION['name']."'
-                        ,SYSDATE()
-                        ,'".$_model[CLOSE_YMD]."'
-                        ,".$project_no."
-                        ,".$section_no."
-                        ,'".$_model[TAG]."'
-                        ,'".$_model[NOTE]."'
-                    )";
+                $sql = "INSERT INTO CMS_TASK
+                        (
+                            PHASE
+                            ,SUBJECT
+                            ,EDITOR_ID
+                            ,EDITOR_NM
+                            ,REG_UID
+                            ,REG_NM
+                            ,REG_DT
+                            ,CLOSE_YMD
+                            ,PROJECT_NO
+                            ,SECTION_NO
+                            ,TAG
+                            ,NOTE
+                        ) VALUES (
+                            '".$_model[PHASE]."'
+                            ,'".$_model[SUBJECT]."'
+                            ,'".$_model[EDITOR_ID]."'
+                            ,'".$_model[EDITOR_NM]."'
+                            ,'".$_SESSION['uid']."'
+                            ,'".$_SESSION['name']."'
+                            ,SYSDATE()
+                            ,'".$_model[CLOSE_YMD]."'
+                            ,".$project_no."
+                            ,".$section_no."
+                            ,'".$_model[TAG]."'
+                            ,'".$_model[NOTE]."'
+                        )";
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-            if ($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+                if ($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
-            if (count($_model[CATEGORY]) > 0) {
-                $categories = $_model[CATEGORY];
+                if (count($_model[CATEGORY]) > 0) {
+                    $categories = $_model[CATEGORY];
 
-                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
-                    $category = $categories[$i];
+                    for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                        $category = $categories[$i];
 
-                    $sql = "INSERT INTO CONTENT_CATEGORY
-                    (
-                        CATEGORY_NO
-                        ,TARGET_NO
-                        ,TARGET_GB
-                    ) VALUES (
-                        '".$category[NO]."'
-                        , '".$no."'
-                        , 'T'
-                    )";
+                        $sql = "INSERT INTO CONTENT_CATEGORY
+                        (
+                            CATEGORY_NO
+                            ,TARGET_NO
+                            ,TARGET_GB
+                        ) VALUES (
+                            '".$category[NO]."'
+                            , '".$no."'
+                            , 'T'
+                        )";
+
+                        $_d->sql_query($sql);
+
+                        if ($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                }
+
+                if (!empty($_model[NO]) && $_model[PHASE] > 0) {
+                    $sql = "UPDATE CONTENT
+                            SET
+                                CURRENT_FL = '1'
+                            WHERE
+                                NO = ".$_model[NO]."
+                            ";
 
                     $_d->sql_query($sql);
 
@@ -317,15 +345,67 @@
                         $msg = $_d->mysql_error;
                     }
                 }
-            }
 
-            if (!empty($_model[NO]) && $_model[PHASE] > 0) {
-                $sql = "UPDATE CONTENT
-                        SET
-                            CURRENT_FL = '1'
-                        WHERE
-                            NO = ".$_model[NO]."
-                        ";
+                if (!($_d->mysql_errno > 0) && ($project_st == 0)) {
+                    $sql = "UPDATE CMS_PROJECT
+                            SET
+                                PROJECT_ST = '1'
+                            WHERE
+                                NO = ".$project_no."
+                            ";
+
+                    $_d->sql_query($sql);
+
+                    if ($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("등록실패입니다:".$msg);
+                } else {
+                    $sql = "INSERT INTO CMS_HISTORY
+                        (
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
+                            ,ETC
+                        ) VALUES (
+                            '".$no."'
+                            ,'CREATE'
+                            ,SYSDATE()
+                            ,'".$_SESSION['uid']."'
+                            ,'".$no."'
+                            ,'TASK'
+                            ,'CREATE'
+                            ,'".$ip."'
+                            ,'/task'
+                            ,'".$_model[SUBJECT]."'
+                        )";
+
+                    $_d->sql_query($sql);
+
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == 'delete') {
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
+
+                $sql = "INSERT INTO CMS_TASK_DEL
+                            SELECT * FROM CMS_TASK
+                            WHERE NO = ".$_model[NO]."
+                       ";
 
                 $_d->sql_query($sql);
 
@@ -333,57 +413,41 @@
                     $err++;
                     $msg = $_d->mysql_error;
                 }
-            }
 
-            if (!($_d->mysql_errno > 0) && ($project_st == 0)) {
-                $sql = "UPDATE CMS_PROJECT
-                        SET
-                            PROJECT_ST = '1'
-                        WHERE
-                            NO = ".$project_no."
-                        ";
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("등록실패입니다:".$msg);
+                } else {
+                    $sql = "INSERT INTO CMS_HISTORY
+                            (
+                                WORK_ID
+                                ,WORK_GB
+                                ,WORK_DT
+                                ,WORKER_ID
+                                ,OBJECT_ID
+                                ,OBJECT_GB
+                                ,ACTION_GB
+                                ,IP
+                                ,ACTION_PLACE
+                                ,ETC
+                            ) VALUES (
+                                '".$no."'
+                                ,'DELETE'
+                                ,SYSDATE()
+                                ,'".$_SESSION['uid']."'
+                                ,'".$no."'
+                                ,'TASK'
+                                ,'DELETE'
+                                ,'".$ip."'
+                                ,'/task'
+                                ,''
+                            )";
 
-                $_d->sql_query($sql);
+                    $_d->sql_query($sql);
 
-                if ($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
                 }
-            }
-
-            if ($err > 0) {
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            } else {
-                $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                        ,ETC
-                    ) VALUES (
-                        '".$no."'
-                        ,'CREATE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'".$no."'
-                        ,'TASK'
-                        ,'CREATE'
-                        ,'IP'
-                        ,'/task'
-                        ,'".$_model[SUBJECT]."'
-                    )";
-
-                $_d->sql_query($sql);
-
-                $_d->sql_commit();
-                $_d->succEnd($no);
             }
 
             break;
@@ -548,7 +612,7 @@
                         ,'".$_key."'
                         ,'TASK'
                         ,'UPDATE'
-                        ,'IP'
+                        ,'".$ip."'
                         ,'/task'
                         ,'".$_model[SUBJECT]."'
                     )";

@@ -54,20 +54,20 @@
 
         <!-- List -->
         <table ng-table="tableParams" class="table">
-            <tr ng-repeat="item in $data">
-                <td data-title="'머리말'">
+            <tr ng-repeat="item in $data" ng-click="click_showViewCmsBoard(item.NO)">
+                <td style="width:100px" data-title="'머리말'">
                     {{ item.SORT_GB == '0' ? '공지사항' : '' }}
                 </td>
                 <td data-title="'제목'" sortable="'SUBJECT'">
                     {{ item.SUBJECT }}
                 </td>
-                <td class="text-center" data-title="'등록자'" sortable="'REG_NM'">
+                <td style="width:120px" class="text-center" data-title="'등록자'" sortable="'REG_NM'">
                     {{item.REG_NM}}
                 </td>
-                <td class="text-center" data-title="'등록일'" sortable="'REG_DT'">
+                <td style="width:150px" class="text-center" data-title="'등록일'" sortable="'REG_DT'">
                     {{item.REG_DT}}
                 </td>
-                <td class="text-center" data-title="'기능'">
+                <td style="width:120px" class="text-center" data-title="'기능'">
                     <button class="btn btn-info btn-xs" ng-click="click_showViewCmsBoard(item.NO)">V</button>
                     <button class="btn btn-info btn-xs" ng-click="click_showEditCmsBoard(item)" ng-disabled="!(role == 'CMS_ADMIN' || role == 'MANAGER') && uid != item.REG_UID">E</button>
                     <button class="btn btn-info btn-xs" ng-click="click_deleteCmsBoard(item)" ng-disabled="!(role == 'CMS_ADMIN' || role == 'MANAGER') && uid != item.REG_UID">D</button>

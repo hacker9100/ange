@@ -40,7 +40,7 @@
         case "GET":
             if ($_type == 'item') {
                 $sql = "SELECT
-                            NO, YEAR, SERIES_NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST, NOTE
+                            NO, YEAR, SERIES_NO, SUBJECT, ISBN_NO, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST, NOTE
                         FROM
                             CMS_PROJECT
                         WHERE
@@ -131,39 +131,39 @@
 
                     if (isset($_search[ROLE]) && $_search[ROLE] != "") {
                         $sql = "SELECT
-                                    NO AS PROJECT_NO, SUBJECT
-                            FROM
-                                CMS_PROJECT
-                            WHERE
-                                1=1
-                            ";
+                                        NO AS PROJECT_NO, SUBJECT
+                                FROM
+                                    CMS_PROJECT
+                                WHERE
+                                    1=1
+                                ";
                     } else {
                         $sql = "SELECT
-                                TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                                NO, YEAR, (SELECT SERIES_NM FROM CMS_SERIES WHERE NO = DATA.SERIES_NO) AS SERIES_NM, SERIES_NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST
-                            FROM
-                            (
-                                SELECT
-                                    NO, YEAR, SERIES_NO, SUBJECT, REG_UID, REG_NM, REG_DT, PROJECT_ST
+                                    TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                                    NO, YEAR, (SELECT SERIES_NM FROM CMS_SERIES WHERE NO = DATA.SERIES_NO) AS SERIES_NM, SERIES_NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST
                                 FROM
-                                    CMS_PROJECT
-                                WHERE
-                                    1=1
-                                    ".$search_where."
-                                ".$sort_order."
-                                ".$limit."
-                            ) AS DATA,
-                            (SELECT @RNUM := 0) R,
-                            (
-                                SELECT
-                                    COUNT(*) AS TOTAL_COUNT
-                                FROM
-                                    CMS_PROJECT
-                                WHERE
-                                    1=1
-                                    ".$search_where."
-                            ) CNT
-                            ";
+                                (
+                                    SELECT
+                                        NO, YEAR, SERIES_NO, SUBJECT, ISBN_NO, REG_UID, REG_NM, REG_DT, PROJECT_ST
+                                    FROM
+                                        CMS_PROJECT
+                                    WHERE
+                                        1=1
+                                        ".$search_where."
+                                    ".$sort_order."
+                                    ".$limit."
+                                ) AS DATA,
+                                (SELECT @RNUM := 0) R,
+                                (
+                                    SELECT
+                                        COUNT(*) AS TOTAL_COUNT
+                                    FROM
+                                        CMS_PROJECT
+                                    WHERE
+                                        1=1
+                                        ".$search_where."
+                                ) CNT
+                                ";
                     }
 
                 }
@@ -247,6 +247,7 @@
                         SERIES_NO
                         ,YEAR
                         ,SUBJECT
+                        ,ISBN_NO
                         ,REG_UID
                         ,REG_NM
                         ,REG_DT
@@ -256,6 +257,7 @@
                         '".$_model[SERIES][NO]."'
                         ,'".$_model[YEAR]."'
                         ,'".$_model[SUBJECT]."'
+                        ,'".$_model[ISBN_NO]."'
                         ,'".$_SESSION['uid']."'
                         ,'".$_SESSION['name']."'
                         ,SYSDATE()
@@ -277,25 +279,25 @@
                 MtUtil::_c("------------>>>>> file : ".$file['name']);
 
                 $sql = "INSERT INTO FILE
-                (
-                    FILE_NM
-                    ,FILE_ID
-                    ,PATH
-                    ,FILE_EXT
-                    ,FILE_SIZE
-                    ,THUMB_FL
-                    ,REG_DT
-                    ,FILE_ST
-                ) VALUES (
-                    '".$file[name]."'
-                    , '".$insert_path[uid]."'
-                    , '".$insert_path[path]."'
-                    , '".$file[type]."'
-                    , '".$file[size]."'
-                    , '0'
-                    , SYSDATE()
-                    , 'C'
-                )";
+                        (
+                            FILE_NM
+                            ,FILE_ID
+                            ,PATH
+                            ,FILE_EXT
+                            ,FILE_SIZE
+                            ,THUMB_FL
+                            ,REG_DT
+                            ,FILE_ST
+                        ) VALUES (
+                            '".$file[name]."'
+                            , '".$insert_path[uid]."'
+                            , '".$insert_path[path]."'
+                            , '".$file[type]."'
+                            , '".$file[size]."'
+                            , '0'
+                            , SYSDATE()
+                            , 'C'
+                        )";
 
                 $_d->sql_query($sql);
                 $ori_file_no = $_d->mysql_insert_id;
@@ -306,19 +308,19 @@
                 }
 
                 $sql = "INSERT INTO CONTENT_SOURCE
-                (
-                    TARGET_NO
-                    ,SOURCE_NO
-                    ,CONTENT_GB
-                    ,TARGET_GB
-                    ,SORT_IDX
-                ) VALUES (
-                    '".$no."'
-                    , '".$ori_file_no."'
-                    , 'FILE'
-                    , 'PROJECT'
-                    , '0'
-                )";
+                        (
+                            TARGET_NO
+                            ,SOURCE_NO
+                            ,CONTENT_GB
+                            ,TARGET_GB
+                            ,SORT_IDX
+                        ) VALUES (
+                            '".$no."'
+                            , '".$ori_file_no."'
+                            , 'FILE'
+                            , 'PROJECT'
+                            , '0'
+                        )";
 
                 $_d->sql_query($sql);
 
@@ -393,6 +395,7 @@
                         SERIES_NO = '".$_model[SERIES][NO]."'
                         ,YEAR = '".$_model[YEAR]."'
                         ,SUBJECT = '".$_model[SUBJECT]."'
+                        ,ISBN_NO = '".$_model[ISBN_NO]."'
                         ,PROJECT_ST = '".( $_model[COMPLETE_FL] == "true" ? "3" : $_model[PROJECT_ST] )."'
                         ,NOTE = '".$_model[NOTE]."'
                     WHERE
@@ -457,25 +460,25 @@
 
                 if ($insert_path[uid] != "") {
                     $sql = "INSERT INTO FILE
-                        (
-                            FILE_NM
-                            ,FILE_ID
-                            ,PATH
-                            ,FILE_EXT
-                            ,FILE_SIZE
-                            ,THUMB_FL
-                            ,REG_DT
-                            ,FILE_ST
-                        ) VALUES (
-                            '".$file[name]."'
-                            , '".$insert_path[uid]."'
-                            , '".$insert_path[path]."'
-                            , '".$file[type]."'
-                            , '".$file[size]."'
-                            , '0'
-                            , SYSDATE()
-                            , 'C'
-                        )";
+                            (
+                                FILE_NM
+                                ,FILE_ID
+                                ,PATH
+                                ,FILE_EXT
+                                ,FILE_SIZE
+                                ,THUMB_FL
+                                ,REG_DT
+                                ,FILE_ST
+                            ) VALUES (
+                                '".$file[name]."'
+                                , '".$insert_path[uid]."'
+                                , '".$insert_path[path]."'
+                                , '".$file[type]."'
+                                , '".$file[size]."'
+                                , '0'
+                                , SYSDATE()
+                                , 'C'
+                            )";
 
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
@@ -486,19 +489,19 @@
                     }
 
                     $sql = "INSERT INTO CONTENT_SOURCE
-                        (
-                            TARGET_NO
-                            ,SOURCE_NO
-                            ,CONTENT_GB
-                            ,TARGET_GB
-                            ,SORT_IDX
-                        ) VALUES (
-                            '".$_key."'
-                            , '".$file_no."'
-                            , 'FILE'
-                            , 'PROJECT'
-                            , '".$i."'
-                        )";
+                            (
+                                TARGET_NO
+                                ,SOURCE_NO
+                                ,CONTENT_GB
+                                ,TARGET_GB
+                                ,SORT_IDX
+                            ) VALUES (
+                                '".$_key."'
+                                , '".$file_no."'
+                                , 'FILE'
+                                , 'PROJECT'
+                                , '".$i."'
+                            )";
 
                     $_d->sql_query($sql);
 

@@ -35,7 +35,9 @@ define([
         $scope.item = channel;
 
         $scope.selectMenu = function(menu) {
-            $location.url(menu.MENU_URL);
+            if ($scope.permissionCheck(menu.MENU_URL, false)) {
+                $location.url(menu.MENU_URL);
+            }
         };
 
         $scope.nowMenu = spMenu[1];
