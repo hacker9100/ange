@@ -98,15 +98,15 @@
 
     <div class="row" style="margin:0; margin-top:10px;">
         <div class="list-group-item-labeling-gray">
-            <strong>My Task List</strong>
-            <span class="btn custom-btn-more" style="float:right;"> <span ng-click="click_showTaskList();" class="glyphicon glyphicon-plus"></span> MORE</span>
+            <strong>Task List</strong>
+            <!--<span class="btn custom-btn-more" style="float:right;"> <span ng-click="click_showTaskList();" class="glyphicon glyphicon-plus"></span> MORE</span>-->
         </div>
         <!--<div id="veil" ng-show="isLoading"></div>-->
         <!--<div id="feedLoading" ng-show="isLoading"><img src="../imgs/loading3.gif"/></div>-->
 
         <!-- Contents Include -->
         <div ng-show="isLoading" style="position: absolute; margin-top: 10px; left: 48%; z-index: 1000" class="ai-circled ai-indicator ai-grey-spin"></div>
-        <div ng-show="tasks == ''" class="list-group" style="height: 260px; margin:0 auto; text-align: center; padding-top: 100px; font-weight: bold; border:1px solid #333;">
+        <div ng-show="list == ''" class="list-group" style="height: 260px; margin:0 auto; text-align: center; padding-top: 100px; font-weight: bold; border:1px solid #333;">
             조회 데이터가 없습니다.
         </div>
 
