@@ -29,7 +29,7 @@ define([
                 .then(function(data){
                     $scope.season = data;
                 })
-                .catch(function(error){console.log(error)});
+                .catch(function(error){alert(error)});
         };
 
         $scope.initUpdate = function() {
@@ -51,8 +51,8 @@ define([
             console.log('section = '+section);
 
             $scope.deleteItem('cms/section', 'item', section.NO, true)
-                .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); /*$scope.tableParams.group.data.splice(idx, 1);*/ $scope.tableParams.reload();})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                .then(function(){alert('정상적으로 삭제했습니다.'); /*$scope.tableParams.group.data.splice(idx, 1);*/ $scope.tableParams.reload();})
+                .catch(function(error){alert(error)});
 
             console.log('end');
 
@@ -86,7 +86,7 @@ define([
                             var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
                             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
-                        .catch(function(error){alert(error)});
+                        .catch(function(error){$defer.resolve([]);});
 
                 }
 
@@ -124,9 +124,8 @@ define([
             if ($scope.key == '') {
                 $scope.insertItem('cms/section', 'item', $scope.item, false)
                     .then(function(){
-                        dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-
                         // 리스트 재조회
+                        dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                         $scope.tableParams.reload();
 
                         // 검색조건 시즌명 셀렉트 박스 재조회 후 셋팅 --> 추가한 시즌명 검색조건에 포함
@@ -134,14 +133,16 @@ define([
                             .then(function(data){
                                 $scope.season = data;
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            .catch(function(error){alert(error)});
                     })
                     .catch(function(error){alert(error)});
             } else {
                 $scope.updateItem('cms/section', 'item', $scope.key, $scope.item, false)
-                    .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    .then(function(){$scope.tableParams.reload();})
+                    .catch(function(error){alert(error)});
             }
+
+            $scope.click_cancel();
         };
 
         // 섹션 편집 클릭
@@ -162,9 +163,9 @@ define([
                         $scope.item.SELECT_SEASON_NM = $scope.season[idx];
                         $scope.season_nm_check = true;
 
-                        $scope.click_focus();
+                        $('#season_gb').focus();
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    .catch(function(error){alert(error)});
 
             }
 
@@ -172,7 +173,6 @@ define([
 
         // 섹션 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
         $scope.click_focus = function () {
-            $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
             $('#season_gb').focus();
         }
 
@@ -205,16 +205,16 @@ define([
             console.log('$scope.item.SEASON_NM = '+$scope.item.SEASON_NM);
             $scope.updateItem('cms/section', 'item', $scope.key, $scope.item, false)
                 .then(function() {
-                    dialogs.notify('알림', '시즌수정이 완료되었습니다.', {size: 'md'});
+                    alert('시즌수정이 완료되었습니다');
                     $scope.tableParams.reload();
                     // 검색조건 시즌명 셀렉트 박스 재조회 후 셋팅 --> 추가한 시즌명 검색조건에 포함
                     $scope.getList('cms/section', 'list', {}, {ROLE: true}, false)
                         .then(function(data){
                             $scope.season = data;
                         })
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        .catch(function(error){alert(error)});
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                .catch(function(error){alert(error)});
         }
 
         // 취소 클릭

@@ -37,6 +37,7 @@ define([
             }
 
             $scope.years = year;
+            $scope.YEAR = nowYear+'';
 
             var deferred = $q.defer();
 
