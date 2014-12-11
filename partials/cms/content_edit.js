@@ -58,25 +58,40 @@ define([
                     break;
 
                 case 'headline_template' :
-                    var temp =
-                        '<subtitle>' + "소제목을 입력하세요" + '</subtitle>' +
-                        '<maintitle>' + "대제목을 입력하세요" + '</maintitle>' + '<br />&nbsp;&nbsp;';
+                    var temp1 =
+                        '<subtitle style="float:left;">' + "소제목을 입력하세요" + '</subtitle>' //+
+//                        '<maintitle style="float:left;">' + "대제목을 입력하세요" + '</maintitle>' + '<br />&nbsp;&nbsp;';
+
+                    var temp2 =
+                        '<maintitle style="float:left;">' + "대제목을 입력하세요" + '</maintitle>'; // + '<br />&nbsp;&nbsp;';
+
+                    var temp3 = '<br />&nbsp;&nbsp;';
 
                     if (!angular.isUndefined(CKEDITOR)) {
-                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        var element = CKEDITOR.dom.element.createFromHtml(temp1);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(temp2);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(temp3);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
                     break;
 
                 case 'preface_basic_template' :
-                    var temp =
-                        '<div class="imagebox" placeholder="여기에 커서를 위치하고 이미지를 선택하세요">여기에 커서를 위치하고 이미지를 선택하세요</div>' +
+                    var temp1 =
+                        '<div class="imagebox" placeholder="여기에 커서를 위치하고 이미지를 선택하세요">여기에 커서를 위치하고 이미지를 선택하세요</div>'; // +
 
+                    var temp2 =
                         '<preface>' + '전문 내용을 입력하세요' + '</preface>' + '<br />&nbsp;&nbsp;';
 
                     if (!angular.isUndefined(CKEDITOR)) {
-                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        var element = CKEDITOR.dom.element.createFromHtml(temp1);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        var element = CKEDITOR.dom.element.createFromHtml(temp2);
                         CKEDITOR.instances.editor1.insertElement( element );
                     }
 //                    $scope.item.BODY = temp + $scope.item.BODY;
