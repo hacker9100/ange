@@ -87,7 +87,7 @@ define([
 
         // 페이지 타이틀
         $scope.setTitle = function(session) {
-            $scope.$parent.pageDescription = session.USER_NM + " 님의 대시보드입니다.";
+            $scope.$parent.$parent.pageDescription = $rootScope.name + " 님의 대시보드입니다.";
         };
 
         /********** 화면 초기화 **********/
