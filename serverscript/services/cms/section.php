@@ -168,7 +168,7 @@
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if($_model[OLD_SEASON_NM] != "" || $_model[OLD_SEASON_NM] != $_model[SEASON_NM]){
+/*            if($_model[OLD_SEASON_NM] != "" || $_model[OLD_SEASON_NM] != $_model[SEASON_NM]){
                 $sql = "UPDATE CMS_SECTION SET
                             SEASON_NM = '".$_model[SEASON_NM]."'
                      WHERE SEASON_NM = '".$_model[OLD_SEASON_NM]."'
@@ -185,6 +185,22 @@
                                 WHERE
                                     NO = ".$_key."
                             ";
+            }*/
+
+            if(isset($_key) || $_key != ''){
+                $sql = "UPDATE CMS_SECTION
+                                SET
+                                    SECTION_NM = '".$_model[SECTION_NM]."'
+                                    ,SORT_IDX = '".$_model[SORT_IDX]."'
+                                    ,NOTE = '".$_model[NOTE]."'
+                                WHERE
+                                    NO = ".$_key."
+             ";
+            }else{
+                $sql = "UPDATE CMS_SECTION SET
+                            SEASON_NM = '".$_model[SEASON_NM]."'
+                     WHERE SEASON_NM = '".$_model[OLD_SEASON_NM]."'
+                        ";
             }
             // ,SEASON_NM = '".$_model[SEASON_NM]."'
 
