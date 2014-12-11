@@ -86,7 +86,7 @@ define([
                             var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
                             $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
-                        .catch(function(error){alert(error)});
+                        .catch(function(error){$defer.resolve([]);});
 
                 }
 
