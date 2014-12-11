@@ -118,7 +118,19 @@ define([
         $scope.$watch('YEAR', function (data) {
             if (data != null) {
                 $scope.getList('cms/project', 'list', {}, {YEAR: data}, false)
-                    .then(function(data){$scope.projects = data;})
+                    .then(function(data){
+                        $scope.projects = data;
+
+                        if ($scope.item.PROJECT_NO != undefined) {
+                            // 프로젝트
+                            angular.forEach($scope.projects,function(value, idx){
+                                if(value.NO == $scope.item.PROJECT_NO){
+                                    $scope.item.PROJECT = $scope.projects[idx];
+                                    return;
+                                }
+                            });
+                        }
+                    })
                     .catch(function(error){console.log(error)});
             }
         });
@@ -140,13 +152,14 @@ define([
 
                     $scope.YEAR = data.YEAR;
 
-                        // 프로젝트
-                    angular.forEach($scope.projects,function(value, idx){
-                        if(value.NO == data.PROJECT_NO){
-                            $scope.item.PROJECT = $scope.projects[idx];
-                            return;
-                        }
-                    });
+//                    // 프로젝트
+//                    angular.forEach($scope.projects,function(value, idx){
+//                        if(value.NO == data.PROJECT_NO){
+//                            alert(idx)
+//                            $scope.item.PROJECT = $scope.projects[idx];
+//                            return;
+//                        }
+//                    });
 
                     // 섹션 - 시즌명
                     var idx = 0;
