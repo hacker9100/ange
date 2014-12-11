@@ -39,5 +39,9 @@ define([
                 $location.url(menu.MENU_URL);
             }
         };
+
+        $scope.nowMenu = spMenu[1];
+        //alert(spMenu[1]);
+
 	}]);
 });
