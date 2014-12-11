@@ -43,15 +43,10 @@
             <!--</div>-->
             <div class= "form-group form_basic_group">
                 <label class= "form_basic_label">표지이미지</label>
-                <div class="col-md-9">
-                    <div class="row fileupload-buttonbar">
-                        <div class="col-lg-7 files">
-                            <!-- The fileinput-button span is used to style the file input field as button -->
-                            <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                <span>탐색기</span>
-                                <input type="file" name="files[]" multiple ng-disabled="disabled">
-                            </span>
+                <div class="row" style="margin-left:110px;">
+                    <div class="col-sm-2" ng-show="!!file.thumbnailUrl">
+                        <div ng-model="file" class="preview">
+                            <img data-ng-src="{{file.thumbnailUrl}}" alt="">
                         </div>
                         <div class="col-lg-5 fade" data-ng-class="{in: active()}">
                             <!-- The global progress bar -->
@@ -60,14 +55,19 @@
                             <div class="progress-extended">&nbsp;</div>
                         </div>
                     </div>
-                    <td data-ng-switch data-on="!!file.thumbnailUrl">썸네일 이미지
-                        <div ng-model="file" class="preview">
-                            <img data-ng-src="{{file.thumbnailUrl}}" alt="">
+                    <div class="col-sm-8">
+                        <div id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">
+                            이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />
+                            (gif, jpg, png만 등록 가능)
                         </div>
-                    </td>
-                    <div id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">
-                        이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />
-                        (gif, jpg, png만 등록 가능)
+                    </div>
+                    <div class="col-sm-2 files">
+                        <!-- The fileinput-button span is used to style the file input field as button -->
+                        <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>탐색기</span>
+                            <input type="file" name="files[]" multiple ng-disabled="disabled">
+                        </span>
                     </div>
                 </div>
             </div>

@@ -5,32 +5,32 @@
         <form id="fileupload" role="form" name="edit_from" class="form-horizontal form_basic_100" method="POST" enctype="multipart/form-data" data-file-upload="options">
 
             <div class= "form-group form_basic_group" ng-class="{error: edit_from.subject.$invalid}">
-                <label class= "form_basic_label">시리즈</label>
+                <label class= "col-md-2">시리즈</label>
                 <div class="form_basic_input">
                     <span ng-bind="item.SERIES.SERIES_NM" />
                 </div>
             </div>
             <div class= "form-group form_basic_group" ng-class="{error: edit_from.subject.$invalid}">
-                <label class= "form_basic_label">호제</label>
+                <label class= "col-md-2">호제</label>
                 <div class="form_basic_input">
                     <span ng-bind="item.SUBJECT" />
                 </div>
             </div>
             <div class= "form-group form_basic_group">
-                <label class= "form_basic_label">귀속연도</label>
+                <label class= "col-md-2">귀속연도</label>
                 <div class="form_basic_input">
                     <span ng-bind="item.YEAR" />
                 </div>
             </div>
             <div class= "form-group form_basic_group">
-                <label class= "form_basic_label">표지이미지</label>
-                <div ng-model="file" class="form_basic_input">
+                <label class= "col-md-2">표지이미지</label>
+                <div ng-model="file" class="row" style="margin-left:110px;">
                     <img data-ng-src="{{file.thumbnailUrl}}" alt="">
                 </div>
                 <div ng-show="file == ''">이미지 없음</div>
             </div>
             <div class= "form-group form_basic_group">
-                <label class= "form_basic_label">설명</label>
+                <label class= "col-md-2">설명</label>
                 <div class= "col-xs-6 form_basic_input">
                     <span ng-bind="item.NOTE" />
                 </div>

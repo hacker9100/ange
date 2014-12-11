@@ -1,70 +1,79 @@
 <!-- Contents Include -->
 <div class="col-md-12" ng-controller="webboard_view">
 
-    <div ng-model="item" lass="row">
-        <form role="form" name="edit_form" class="form-horizontal">
-            <div class= "form-group">
+    <div ng-model="item" class="row form_basic_wrap">
+        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+            <div class= "form-group form_basic_group">
                 <label class= "col-md-2">공지사항 여부</label>
-                <div class="col-md-3">
+                <div class="form_basic_input">
                     <span ng-bind="item.NOTICE_FL == 'Y' ? '공지사항' : ''" />
                 </div>
             </div>
-            <div class= "form-group">
+            <div class= "form-group form_basic_group">
                 <label class= "col-md-2">제목</label>
-                <div class="col-md-9">
+                <div class="form_basic_input">
                     <span ng-bind="item.SUBJECT" />
                 </div>
             </div>
-            <div class= "form-group">
+            <div class= "form-group form_basic_group">
                 <label class= "col-md-2">태그</label>
-                <div class="col-md-9">
+                <div class="form_basic_input">
                     <span ng-bind="item.TAG" />
                 </div>
             </div>
-            <div class= "form-group">
-                <label class= "col-md-2">본문</label>
-                <div class= "col-md-12">
-                    <div ng-bind-html="item.BODY"></div>
-                    <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
-                </div>
+
+            <div class="form-group form_basic_group" style="margin:0px auto;">
+                <H5 style="line-height:18px; margin:0;">
+                    <span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> <span class="label label-default">편집기</span>를 이용하여 작성된 글입니다.
+                </H5>
             </div>
+            <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+                <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>
+                <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
+            </div>
+
         </form>
-        <div class= "form-group">
-            <label class= "col-md-2">첨부파일 </label>
-            <table class="table table-striped files ng-cloak">
-                <tr data-ng-repeat="file in queue">
-                    <td data-ng-switch data-on="!!file.thumbnailUrl">
-                        <div class="preview" data-ng-switch-when="true">
-                            <img src="{{file.thumbnailUrl}}" alt="">
-                        </div>
-                    </td>
-                    <td>
-                        <p class="name" data-ng-switch data-on="!!file.url">
-                            <a data-ng-switch-default data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}">{{file.name}}</a>
-                        </p>
-                    </td>
-                    <td>
-                        <p class="size">{{ formatFileSize(file.size) }}</p>
-                        <p class="size">{{file.size | formatFileSize}}</p>
-                    </td>
-                </tr>
-            </table>
+        <div class= "form-group form_basic_group" style="float:left;">
+            <H5 style="line-height:8px; margin:0;">
+                <span class="glyphicon glyphicon-floppy-disk" style="color:#2486ED;"></span> 파일첨부
+            </H5>
+            <div style="margin-top:20px; width:100%; float:left;">
+                <table class="table table-striped files ng-cloak">
+                    <tr data-ng-repeat="file in queue">
+                        <td data-ng-switch data-on="!!file.thumbnailUrl">
+                            <div class="preview" data-ng-switch-when="true">
+                                <img src="{{file.thumbnailUrl}}" alt="">
+                            </div>
+                        </td>
+                        <td>
+                            <p class="name" data-ng-switch data-on="!!file.url">
+                                <a data-ng-switch-default data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}">{{file.name}}</a>
+                            </p>
+                        </td>
+                        <td>
+                            <p class="size">{{ formatFileSize(file.size) }}</p>
+                            <p class="size">{{file.size | formatFileSize}}</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <!-- 하단 버튼 -->
-        <div class= "form-group">
-            <div class="col-md-12">
-                <button class="btn btn-success fileinput-button" ng-click="click_showCmsBoardList();" >
-                    <i class="glyphicon glyphicon-upload"></i>
+        <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+            <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showCmsBoardList();" >
+                    <i class="glyphicon glyphicon-list"></i>
                     <span>목록</span>
                 </button>
-                <button type="button" class="btn btn-primary start" ng-click="click_showCmsBoardEdit(item);" >
+            </div>
+            <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showCmsBoardEdit(item);" ng-disabled="edit_form.$invalid">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>수정</span>
                 </button>
             </div>
         </div>
-
     </div>
 
 </div>
