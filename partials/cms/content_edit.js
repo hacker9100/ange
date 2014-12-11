@@ -30,8 +30,8 @@ define([
 
                 case 'basic_template' :
                     var temp =
-                        '<div class="row previewwrap">' +
-                            '<div id="inBodyForm" class="col-xs-12 article_previewwrap">' +
+                        '<div class="story-row previewwrap">' +
+                            '<div id="inBodyForm" class="story-col-xs-12 article_previewwrap">' +
                                 blankSpace +
                             '</div>' +
                             '<div class="hiddenline">' +
@@ -161,13 +161,13 @@ define([
 
                 case 'bodyscript_p2b_template' :
                     var temp =
-                        '<div class="row">' +
-                            '<div class="col-sm-6">' +
+                        '<div class="story-row">' +
+                            '<div class="story-col-sm-6">' +
                                 '<div class="imagebox"><img class="template_handle" src="' + UPLOAD.BASE_URL + '/imgs/image_handler.jpg" style="float:none; width:260px; height:14px; margin:0px auto;"/></div>' +
                                 '<mediacaption>이미지 설명을 입력하세요</mediacaption>' +
                             '</div>' +
 
-                            '<div class="col-sm-6">' +
+                            '<div class="story-col-sm-6">' +
                                 '<bodyscript>본문 내용을 입력하세요</bodyscript>' +
                             '</div>' +
                         '</div>';
@@ -184,12 +184,12 @@ define([
 
                 case 'bodyscript_b2p_template' :
                     var temp =
-                        '<div class="row">' +
-                            '<div class="col-sm-6">' +
+                        '<div class="story-row">' +
+                            '<div class="story-col-sm-6">' +
                                 '<bodyscript>본문 내용을 입력하세요</bodyscript>' +
                             '</div>' +
 
-                            '<div class="col-sm-6">' +
+                            '<div class="story-col-sm-6">' +
                             '<div class="imagebox"><img class="template_handle" src="' + UPLOAD.BASE_URL + '/imgs/image_handler.jpg" style="float:none; width:260px; height:14px; margin:0px auto;"/></div>' +
                                 '<mediacaption>이미지 설명을 입력하세요</mediacaption>' +
                             '</div>' +
@@ -221,9 +221,9 @@ define([
 
                 case '2E' :
                     var temp =
-                        '<div class="row"> ' +
-                            '<div class="col-sm-2" style="width:700px; height:500px; border:1px dashed; "></div>' +
-                            '<div class= "col-sm-2" style="width:700px; height:300px; border:1px dashed; ">' +
+                        '<div class="story-row"> ' +
+                            '<div class="story-col-sm-2" style="width:700px; height:500px; border:1px dashed; "></div>' +
+                            '<div class= "story-col-sm-2" style="width:700px; height:300px; border:1px dashed; ">' +
                             $scope.item.BODY;
                             '</div>' +
                         '</div>';
