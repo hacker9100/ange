@@ -189,8 +189,6 @@
 </div>
 <!-- ////Contents Include -->
 
-
-
 <script type="text/ng-template" id="content_approval_modal.html">
     <div class="modal-header">
         <h3 class="modal-title">{{title}}</h3>
@@ -212,34 +210,6 @@
 </script>
 
 <script type="text/ng-template" id="preview_modal.html">
-
-    <!DOCTYPE html>
-
-    <html lang="en" ng-controller="CommonController">
-    <head>
-        <meta charset="utf-8">
-        <title>앙쥬 : 시즌2</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <link rel="stylesheet" type="text/css" href="../../css/normalize.css" >
-        <link rel="stylesheet" type="text/css" href="../../css/angeCMS_bootstrap.css" />
-        <link rel="stylesheet" type="text/css" href="../../css/article.css" />
-
-        <link rel="stylesheet" type="text/css" href="../../lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
-        <link rel="stylesheet" type="text/css" href="../../lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
-
-        <!--[if lt IE 9]>
-            <script src="../../lib/html5shiv/html5shiv.js"></script>
-            <script src="../../lib/respond/respond.min.js"></script>
-        <![endif]-->
-
-    </head>
-
-    <body>
-
     <div id="articlewrap" class="articlewrap">
 
         <div class="modal-header article_windowtitle">
@@ -249,8 +219,8 @@
 
         <div class="modal-body">
 
-            <div ng-bind-html="content"></div>
-            <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
+            <!--<div ng-bind-html="content"></div>-->
+            <div ng-bind-html="renderHtml(item.BODY)"></div>
 
         </div>
 
@@ -259,9 +229,5 @@
         </div>
 
     </div>
-
-    </body>
-    </html>
-
 </script>
 

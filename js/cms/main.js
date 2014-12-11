@@ -35,6 +35,7 @@ require.config({
         'angular-sanitize': '../../lib/angular/angular-sanitize.min', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
         'angular-ui-router': '../../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
         'angular-translate': '../../lib/angular/angular-translate.min', //
+        'angular-i18n': '../../lib/angular/i18n/angular-locale_ko-kr', //
 
 ////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
         'lodash' : '../../lib/dropdown_multiselect/lodash',

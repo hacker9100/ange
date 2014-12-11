@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('content_edit', ['$scope', '$stateParams', '$location', '$modal', '$q', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, $modal, $q, dialogs, UPLOAD) {
+    controllers.controller('content_edit', ['$scope', '$sce', '$stateParams', '$location', '$modal', '$q', 'dialogs', 'UPLOAD', function ($scope, $sce, $stateParams, $location, $modal, $q, dialogs, UPLOAD) {
 
         // 텔플릿 선택 클릭
         $scope.click_selectTemplet = function (item) {
@@ -189,6 +189,12 @@ define([
 
                     break;
             }
+        };
+
+        /********** 미리보기 랜더링 **********/
+        $scope.renderHtml = function(html_code)
+        {
+            return $sce.trustAsHtml(html_code);
         };
 
         /********** 초기화 **********/
@@ -385,7 +391,7 @@ define([
                     $scope.click_ok = function () {
                         $modalInstance.close();
                     };
-                },content,{size:size,keyboard: true,backdrop: false});
+                },content,{size:size,keyboard: true,backdrop: false},$scope);
             dlg.result.then(function(){
 
             },function(){

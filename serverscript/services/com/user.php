@@ -214,7 +214,7 @@
 
             $password = "";
 
-            if (isset($_search[PASSWORD]) && $_search[PASSWORD] != "") {
+            if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
                 $password = $_model[PASSWORD];
             } else {
                 $password = $_model[USER_ID];

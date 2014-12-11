@@ -121,10 +121,7 @@ define([
 
     }]);
 
-    controllers.controller('contact_list_modal', ['$scope', '$stateParams', '$modalInstance', '$location', '$controller', '$filter', 'ngTableParams', 'search', function ($scope, $stateParams, $modalInstance, $location, $controller, $filter, ngTableParams, search) {
-
-        /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('cms_common', {$scope: $scope}));
+    controllers.controller('contact_list_modal', ['$scope', '$stateParams', '$modalInstance', '$location', '$filter', 'ngTableParams', 'data', function ($scope, $stateParams, $modalInstance, $location, $filter, ngTableParams, data) {
 
         /********** 초기화 **********/
         $scope.key = '';
@@ -140,9 +137,9 @@ define([
                 })
                 .catch(function(error){alert(error)});
 
-            if (search != undefined) {
+            if (data != undefined) {
                 $scope.isModal = true;
-                $scope.search = search;
+                $scope.search = data;
             }
         };
 
@@ -228,6 +225,10 @@ define([
             $scope.key = '';
             $scope.item = {};
             $scope.item.ROLE = $scope.user_roles[0];
+        };
+
+        $scope.click_ok = function () {
+            $modalInstance.close();
         };
 
         /********** 화면 초기화 **********/

@@ -221,25 +221,36 @@ define([
         }
 
         $scope.openModal = function (modal, search, size) {
-            var modalInstance = $modal.open({
-                templateUrl: '/partials/cms/contact_list.html',
-                controller: 'contact_list_modal',
-                size: size,
-                resolve: {
-                    modal: function () {
-                        return modal;
-                    },
-                    search: function() {
-                        return search;
-                    }
-                }
-            });
-
-            modalInstance.result.then(function (user) {
+            var dlg = dialogs.create('/partials/cms/contact_list.html',
+                'contact_list_modal',search,{size:size,keyboard: true},$scope);
+            dlg.result.then(function(user){
                 $scope.item.EDITOR_ID = user.USER_ID;
                 $scope.item.EDITOR_NM = user.USER_NM;
-            }, function () {
+            },function(){
+
             });
+
+
+//            var modalInstance = $modal.open({
+//                templateUrl: '/partials/cms/contact_list.html',
+//                controller: 'contact_list_modal',
+//                size: size,
+//                scope: $scope,
+//                resolve: {
+//                    modal: function () {
+//                        return modal;
+//                    },
+//                    search: function() {
+//                        return search;
+//                    }
+//                }
+//            });
+//
+//            modalInstance.result.then(function (user) {
+//                $scope.item.EDITOR_ID = user.USER_ID;
+//                $scope.item.EDITOR_NM = user.USER_NM;
+//            }, function () {
+//            });
         }
 
         /********** 화면 초기화 **********/

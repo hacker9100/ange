@@ -43,7 +43,7 @@
                                         <span style="color:#DE4612; font-weight:bold;">{{item.CLOSE_YMD}} 마감</span>
                                     </div>
                                     <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
-                                        <span class="badge">
+                                        <span ng-class=" { ' badge' : item.PHASE == '30', ' badge' : item.PHASE == '20' } ">
                                             {{ item.PHASE == '0' ? '태스크등록' : item.PHASE == '10' ? '원고작성' : item.PHASE == '11' ? '원고승인대기' : item.PHASE == '12' ? '원고반려' : item.PHASE == '13' ? '원고승인완료' : item.PHASE == '20' ? '편집작성' : item.PHASE == '21' ? '편집승인대기' : item.PHASE == '22' ? '편집반려' : item.PHASE == '23' ? '편집승인완료' : item.PHASE == '30' ? '출판대기' : '완료' }}
                                         </span>
                                     </div>
