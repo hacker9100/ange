@@ -249,22 +249,28 @@ define([
             $scope.search = {PHASE: '31'};
             $scope.isTask = false;
             $scope.isEdit = false;
+            $scope.viewContentBtn = '원고 조회';
             $scope.editContentBtn = '원고 편집';
         } else if ($stateParams.menu == 'article') {
             $scope.search = {PHASE: '0, 10, 11, 12'};
+            $scope.viewContentBtn = '원고 조회';
             $scope.editContentBtn = '원고 편집';
         } else if ($stateParams.menu == "article_confirm") {
             $scope.search = {PHASE: '11, 12'};
+            $scope.viewContentBtn = '원고 조회';
             $scope.editContentBtn = '원고 검수';
         } else if ($stateParams.menu == 'edit') {
             $scope.search = {PHASE: '20, 21, 22'};
-            $scope.editContentBtn = '원고 편집';
+            $scope.viewContentBtn = '편집 보기';
+            $scope.editContentBtn = '편집 하기';
         } else if ($stateParams.menu == "edit_confirm") {
             $scope.search = {PHASE: '21, 22, 30'};
-            $scope.editContentBtn = '원고 검수';
+            $scope.viewContentBtn = '편집 보기';
+            $scope.editContentBtn = '편집 검수';
         } else {
             $scope.isTask = true;
             $scope.search = {};
+            $scope.viewContentBtn = '원고 조회';
             $scope.editContentBtn = '원고 편집';
         }
 

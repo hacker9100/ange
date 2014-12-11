@@ -219,7 +219,7 @@
                                 </button>
                                 <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item.NO);" ng-show="!isTask">
                                     <i class="glyphicon glyphicon-book"></i>
-                                    <span>원고 조회</span>
+                                    <span>{{viewContentBtn}}</span>
                                 </button>
                                 <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditContent(item);" ng-show="!isTask && isEdit && item.PHASE < 30">
                                     <i class="glyphicon glyphicon-pencil"></i>
