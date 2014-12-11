@@ -27,7 +27,7 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
+                    MENU_ID, MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
                 FROM
                     COM_MENU
                 WHERE
