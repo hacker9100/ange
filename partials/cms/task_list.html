@@ -1,9 +1,9 @@
 <div ng-controller="task_list">
-    <div class="panel panel-default">
-        <div class="panel-body" ng-model="search" class="row">
+    <div class="panel panel-default" style="border-radius:0px;">
+        <div class="panel-body" ng-model="search" class="row" style="border-radius: 0px; border-left:8px solid #DEDEDE; border-right:2px solid #DEDEDE;">
 
-            <form role="form" name="list_from" class="form-horizontal form_basic_100" style="margin-bottom:0px;">
-                <div class="col-xs-9" style="border-right:1px solid #DEDEDE">
+            <form role="form" name="list_from" class="form-horizontal form_basic_100">
+                <div class="col-xs-9" style="padding-left:15px;">
                     <div class="form_basic_wrap">
                         <div class="row form-group form_basic_group">
                             <div class="col-xs-6" style="max-width:220px;">
@@ -63,17 +63,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-3" style="display:block;">
+                <div class="col-xs-3" style="border-left: 1px solid #DEDEDE; display:block;">
                     <div class= "navbar-header" style="float:left; width:100%; margin:0px auto; line-height:62px; padding:20px; text-align:center;">
                         <button class="btn btn-lg btn-primary start" ng-click="click_searchTask();" ng-disabled="list_from.$invalid">
                             <i class="glyphicon glyphicon-search"></i>
                             <span>검색</span>
                         </button>
-                        <br />
+
                         <button class="btn btn-lg btn-success fileinput-button" data-ng-click="click_createNewTask()" ng-show="isTask">
                             <i class="glyphicon glyphicon-plus"></i>
                             <span>등록</span>
                         </button>
+                        <div style="text-align:center;">
+                            <input ng-model="search.MY_TASK" type="checkbox" ng-change="click_searchTask()" ng-disabled="role == 'CMS_ADMIN' || role == 'MANAGER' ">
+                            내가 참여한 콘텐츠
+                        </div>
                     </div>
                 </div>
             </form>
@@ -85,20 +89,18 @@
     <!--<div id="feedLoading" ng-show="isLoading"><img src="../imgs/loading3.gif"/></div>-->
 
     <!-- Contents Include -->
-    <div class="list-group" style="margin-bottom: 0;">
-        <div style="text-align:left;">
-            <label>Task &nbsp;&nbsp;&nbsp;</label>
-            <label>총 {{TOTAL_COUNT}}건</label>
-        </div>
-        <div style="text-align:right;">
-            <input ng-model="search.MY_TASK" type="checkbox" ng-change="click_searchTask()" ng-disabled="role == 'CMS_ADMIN' || role == 'MANAGER' ">
-            내가 참여한 콘텐츠
-        </div>
-    </div>
+
 
     <div class="row" style="margin:0; margin-top:10px;">
         <div class="list-group-item-labeling-gray">
             <strong>Task List</strong>
+
+            <div class="list-group" style="float:right; margin-bottom: 0;">
+                <div style="text-align:left; font-size:0.8em; font-family: Arial, sans-serif; padding-top:2px;">
+                    Total &nbsp; <span style="color:#fff; font-size:1.1em; ">{{TOTAL_COUNT}}</span> &nbsp; task(s)
+                </div>
+            </div>
+
             <!--<span class="btn custom-btn-more" style="float:right;"> <span ng-click="click_showTaskList();" class="glyphicon glyphicon-plus"></span> MORE</span>-->
         </div>
         <!--<div id="veil" ng-show="isLoading"></div>-->
