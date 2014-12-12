@@ -142,7 +142,8 @@ define([
                     .catch(function(error){alert(error)});
             }
 
-            $scope.click_cancel();
+            $scope.key = '';
+            $scope.item = {};
         };
 
         // 섹션 편집 클릭
@@ -174,6 +175,9 @@ define([
         // 섹션 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
         $scope.click_focus = function () {
             $('#season_gb').focus();
+
+            $scope.key = '';
+            $scope.item = {};
         }
 
        // selectbox 시즌명 선택시 inputbox 시즌명 disabled
@@ -220,7 +224,7 @@ define([
         // 취소 클릭
         $scope.click_cancel = function () {
             $scope.key = '';
-            $scope.item = null;
+            $scope.item = {};
         };
 
         /********** 화면 초기화 **********/
