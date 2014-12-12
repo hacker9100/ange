@@ -64,6 +64,10 @@
                     $search_where .= "AND S.SEASON_NM  = '".$_search[SEASON_NM]."' ";
                 }
 
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                }
+
                 if (isset($_search[ROLE]) && $_search[ROLE] != "") {
                     $sql = "SELECT SEASON_NM, SECTION_NM, NO
                              FROM
@@ -87,7 +91,7 @@
                                  FROM CMS_SECTION S
                                  WHERE 1=1
                                  ".$search_where."
-                                 ORDER BY SEASON_NM DESC, SORT_IDX ASC
+                                 ".$sort_order."
                             ) AS DATA,
                             (SELECT @RNUM := 0) R,
                             (
@@ -95,7 +99,7 @@
                                  FROM CMS_SECTION S
                                  WHERE 1=1
                                  ".$search_where."
-                                 ORDER BY SEASON_NM DESC, SORT_IDX ASC
+                                 ".$sort_order."
                             ) CNT
                             ";
                 }

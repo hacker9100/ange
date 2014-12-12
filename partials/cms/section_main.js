@@ -71,6 +71,7 @@ define([
                 page: 1,            // show first page
                 count: 1000,          // count per page
                 sorting: {
+                    SECTION_NM : 'asc',
                     SORT_IDX : 'asc'     // initial sorting
                 }
             }, {
