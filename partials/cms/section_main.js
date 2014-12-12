@@ -50,7 +50,19 @@ define([
 
             dialog.result.then(function(btn){
                 $scope.deleteItem('cms/section', 'item', section.NO, true)
-                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.tableParams.data[parentIdx].data.splice(idx, 1);})
+                    .then(function(){
+                        dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                        $scope.tableParams.data[parentIdx].data.splice(idx, 1);
+
+                        $scope.tableParams.reload();
+
+                        // 검색조건 시즌명 셀렉트 박스 재조회 후 셋팅 --> 추가한 시즌명 검색조건에 포함
+                        $scope.getList('cms/section', 'list', {}, {ROLE: true}, false)
+                            .then(function(data){
+                                $scope.season = data;
+                            })
+                            .catch(function(error){alert(error)});
+                    })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
