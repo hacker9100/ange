@@ -1,10 +1,7 @@
-<!--<div id="veil" ng-show="isLoading"></div>-->
-<div id="feedLoading" ng-show="isLoading">Loading...</div>
-
-<!-- Contents Include -->
-
-<!-- Task list -->
-    <!-- Task Head -->
+<div ng-controller="publish_edit">
+    <!-- Contents Include -->
+    <!-- Task list -->
+        <!-- Task Head -->
         <div class="row" style="height:100%;">
             <div class="col-md-12" style="position:relative; padding:5px; margin:0;  cursor:pointer;">
                 <a data-toggle="collapse" style="color:#333">
@@ -15,10 +12,10 @@
                     </div>
                 </a>
             </div>
-    </div>
-    <!-- //Task Head -->
+        </div>
+        <!-- //Task Head -->
 
-    <!-- Task Head -->
+        <!-- Task Head -->
         <div class="row" style="height:100%;">
             <div class="col-md-12" style="position:relative; padding:5px; margin:0;  cursor:pointer;">
                 <a data-toggle="collapse" style="color:#333">
@@ -30,69 +27,129 @@
 
                 </a>
             </div>
+        </div>
+        <!-- //Task Head -->
+
+        <!-- Task Head -->
+            <!--<div class="row" style="height:100%;" ng-repeat="task in tasks">-->
+                <!--<div class="col-md-12" style="position:relative; padding:5px; margin:0;  cursor:pointer;">-->
+                    <!--<a data-toggle="collapse" style="color:#333">-->
+                        <!--<div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">-->
+                            <!--<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">-->
+                                <!--<span style="font-size:1.16em;">월간앙쥬</span><br />-->
+                                <!--<span>[{{ task.PROJECT_NM }}]</span>-->
+                            <!--</div>-->
+                            <!--<div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">-->
+                                <!--{{ task.SUBJECT }}-->
+                            <!--</div>-->
+                            <!--<div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">-->
+                                <!--<button type="button" class="btn btn-primary start" ng-click="up($index);">-->
+                                    <!--<i class="glyphicon glyphicon-pencil"></i>-->
+                                    <!--<span>위로</span>-->
+                                <!--</button>-->
+                                <!--<button type="button" class="btn btn-primary start" ng-click="down($index);">-->
+                                    <!--<i class="glyphicon glyphicon-pencil"></i>-->
+                                    <!--<span>아래로</span>-->
+                                <!--</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                    <!--</a>-->
+                <!--</div>-->
+        <!--</div>-->
+        <!-- //Task Head -->
+
+    <div loading-container="tableParams.settings().$loading">
+        <table ng-table="tableParams" class="table">
+            <tbody ng-repeat="group in $groups">
+            <tr class="ng-table-group">
+                <td style="width:50px">
+                    <button type="button" class="btn btn-primary start" ng-click="moveUpSection($index);">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>위로</span>
+                    </button>
+                </td>
+                <td colspan="{{$columns.length - 2}}">
+                    <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                        <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                        <strong>{{ group.value }}</strong>
+                    </a>
+                </td>
+                <td style="width:50px" >
+                    <button type="button" class="btn btn-primary start" ng-click="moveDownSection($index);">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>아래로</span>
+                    </button>
+                </td>
+            </tr>
+            <tr ng-hide="group.$hideRows" ng-repeat="item in group.data">
+                <td style="width:50px">
+                </td>
+                <td style="width:50px">
+                    <button type="button" class="btn btn-primary start" ng-click="moveUpTask($parent.$index, $index);">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>위로</span>
+                    </button>
+                </td>
+                <td class="text-center" data-title="'제목'" sortable="'SUBJECT'">
+                    {{item.SUBJECT}}
+                </td>
+                <td style="width:50px" >
+                    <button type="button" class="btn btn-primary start" ng-click="moveDownTask($parent.$index, $index);">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>아래로</span>
+                    </button>
+                </td>
+                <td style="width:50px" >
+                </td>
+                <td style="width:50px" >
+                    <button type="button" class="btn btn-primary start" ng-click="deleteItem($index);" ng-show="{{ item.DELETE_FL }}">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>삭제</span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+            <tbody ng-show="$groups == ''">
+            <tr>
+                <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <!-- //Task Head -->
 
-    <!-- Task Head -->
-        <!--<div class="row" style="height:100%;" ng-repeat="task in tasks">-->
-            <!--<div class="col-md-12" style="position:relative; padding:5px; margin:0;  cursor:pointer;">-->
-                <!--<a data-toggle="collapse" style="color:#333">-->
-                    <!--<div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">-->
-                        <!--<div class="col-xs-3 col-sm-3 col-md-2 col-lg-2 task-col-series" style="height:100%; text-align:center; ">-->
-                            <!--<span style="font-size:1.16em;">월간앙쥬</span><br />-->
-                            <!--<span>[{{ task.PROJECT_NM }}]</span>-->
-                        <!--</div>-->
-                        <!--<div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">-->
-                            <!--{{ task.SUBJECT }}-->
-                        <!--</div>-->
-                        <!--<div class="col-xs-8 col-sm-6 col-md-6 col-lg-5 task-col-title" style="height:100%; display:inline; word-break: break-all; word-wrap: break-word; padding:8px 0;font-size:1.4em;">-->
-                            <!--<button type="button" class="btn btn-primary start" ng-click="up($index);">-->
-                                <!--<i class="glyphicon glyphicon-pencil"></i>-->
-                                <!--<span>위로</span>-->
-                            <!--</button>-->
-                            <!--<button type="button" class="btn btn-primary start" ng-click="down($index);">-->
-                                <!--<i class="glyphicon glyphicon-pencil"></i>-->
-                                <!--<span>아래로</span>-->
-                            <!--</button>-->
-                        <!--</div>-->
-                    <!--</div>-->
 
-                <!--</a>-->
-            <!--</div>-->
-    <!--</div>-->
-    <!-- //Task Head -->
+    <!--<table class="table table-striped table-condensed" >-->
+        <!--<tbody>-->
+        <!--<tr ng-repeat="item in list">-->
+            <!--<td>{{ item.SUBJECT }}</td>-->
+            <!--<td>-->
+                <!--<button type="button" class="btn btn-primary start" ng-click="moveUp($index);">-->
+                    <!--<i class="glyphicon glyphicon-pencil"></i>-->
+                    <!--<span>위로</span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary start" ng-click="moveDown($index);">-->
+                    <!--<i class="glyphicon glyphicon-pencil"></i>-->
+                    <!--<span>아래로</span>-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary start" ng-click="deleteItem($index);" ng-show="{{ item.DELETE_FL }}">-->
+                    <!--<i class="glyphicon glyphicon-pencil"></i>-->
+                    <!--<span>삭제</span>-->
+                <!--</button>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
 
-<table class="table table-striped table-condensed" >
-    <tbody>
-    <tr ng-repeat="task in tasks">
-        <td>{{ task.SUBJECT }}</td>
-        <td>
-            <button type="button" class="btn btn-primary start" ng-click="moveUp($index);">
-                <i class="glyphicon glyphicon-pencil"></i>
-                <span>위로</span>
-            </button>
-            <button type="button" class="btn btn-primary start" ng-click="moveDown($index);">
-                <i class="glyphicon glyphicon-pencil"></i>
-                <span>아래로</span>
-            </button>
-            <button type="button" class="btn btn-primary start" ng-click="deleteItem($index);" ng-show="{{ task.DELETE_FL }}">
-                <i class="glyphicon glyphicon-pencil"></i>
-                <span>삭제</span>
-            </button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
-<button type="button" class="btn btn-primary start" ng-click="addItem();">
-    <i class="glyphicon glyphicon-pencil"></i>
-    <span>다른개체 추가</span>
-</button>
-<button type="button" class="btn btn-primary start" ng-click="addItem();">
-    <i class="glyphicon glyphicon-pencil"></i>
-    <span>다른 프로젝트</span>
-</button>
-
+    <button type="button" class="btn btn-primary start" ng-click="addItem();">
+        <i class="glyphicon glyphicon-pencil"></i>
+        <span>다른개체 추가</span>
+    </button>
+    <button type="button" class="btn btn-primary start" ng-click="addItem();">
+        <i class="glyphicon glyphicon-pencil"></i>
+        <span>다른 프로젝트</span>
+    </button>
+</div>
 <!-- ////Contents Include -->
 
 <script type="text/ng-template" id="publish_modal.html">

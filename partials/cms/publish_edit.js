@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('publish_edit', ['$scope', '$stateParams', 'projectService', 'taskService', '$modal', '$location', function ($scope, $stateParams, projectService, taskService, $modal, $location) {
+    controllers.controller('publish_edit', ['$scope', '$stateParams', '$modal', '$location', 'ngTableParams', function ($scope, $stateParams, $modal, $location, ngTableParams) {
 
         /********** 모달 팝업 **********/
         $scope.openModal = function (content, status, size) {
@@ -45,7 +45,7 @@ define([
         var search = {};
 
         // 초기화
-        $scope.initEdit = function() {
+        $scope.init = function() {
             var PROJECT = {NO: $stateParams.id};
             search = {PROJECT: PROJECT};
             $location.search('_search', search);
@@ -59,30 +59,71 @@ define([
 
         // 태스크 목록 조회
         $scope.getTaskList = function () {
-            $scope.isLoading = true;
-            taskService.getTasks().then(function(results){
-                $scope.tasks = results.data;
+            $scope.tableParams = new ngTableParams({
+                page: 1,            // show first page
+                count: 1000,          // count per page
+                sorting: {
+                    SECTION_NO: 'asc'     // initial sorting
+                }
+            }, {
+                groupBy: 'SECTION_NM',
+                counts: [],         // hide page counts control
+                total: 0,           // length of data
+                getData: function($defer, params) {
+//                    var key = Object.keys(params.sorting())[0];
+//
+//                    $scope.search['SORT'] = key;
+//                    $scope.search['ORDER'] = params.sorting()[key];
 
-                $scope.isLoading = false;
-                $location.search('_search', null);
+                    $scope.getList('cms/task', 'list', {}, $scope.search, true)
+                        .then(function(data){
+                            params.total(data[0].TOTAL_COUNT);
+                            $defer.resolve(data);
+
+//                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
+//                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                        })
+                        .catch(function(error){$defer.resolve([]);});
+                }
             });
         };
 
-        var moveIndex = function (origin, destination) {
-            var temp = $scope.tasks[destination];
-            $scope.tasks[destination] = $scope.tasks[origin];
-            $scope.tasks[origin] = temp;
+        var moveIndexSection = function (origin, destination) {
+            var temp = $scope.tableParams.data[destination];
+            $scope.tableParams.data[destination] = $scope.tableParams.data[origin];
+            $scope.tableParams.data[origin] = temp;
         };
 
-        $scope.moveUp = function(idx) {
+        $scope.moveUpSection = function(idx) {
             if (idx != 0) {
-                moveIndex(idx, idx - 1);
+                moveIndexSection(idx, idx - 1);
             }
         };
 
-        $scope.moveDown = function(idx) {
-            if (idx != $scope.tasks.length) {
-                moveIndex(idx, idx + 1);
+        $scope.moveDownSection = function(idx) {
+            if ($scope.tableParams.data[idx + 1] != undefined) {
+                moveIndexSection(idx, idx + 1);
+            }
+        };
+
+        var moveIndexTask = function (parentIdx, origin, destination) {
+            var temp = $scope.tableParams.data[parentIdx].data[destination];
+            $scope.tableParams.data[parentIdx].data[destination] = $scope.tableParams.data[parentIdx].data[origin];
+            $scope.tableParams.data[parentIdx].data[origin] = temp;
+//            var temp = $scope.tasks[destination];
+//            $scope.tasks[destination] = $scope.tasks[origin];
+//            $scope.tasks[origin] = temp;
+        };
+
+        $scope.moveUpTask = function(parentIdx, idx) {
+            if (idx != 0) {
+                moveIndexTask(parentIdx, idx, idx - 1);
+            }
+        };
+
+        $scope.moveDownTask = function(parentIdx, idx) {
+            if ($scope.tableParams.data[parentIdx].data[idx + 1] != undefined) {
+                moveIndexTask(parentIdx, idx, idx + 1);
             }
         };
 
@@ -103,18 +144,16 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        // 페이지 타이틀
-        $scope.$parent.message = 'ANGE CMS';
-        $scope.$parent.pageTitle = '춮판 관리';
-        $scope.$parent.pageDescription = 'ePUB 출판을 수행합니다.';
-        $scope.$parent.tailDescription = '.';
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
+            .catch($scope.reportProblems);
 
-        $scope.initEdit();
         $scope.getTaskList();
 
     }]);
 
-    controllers.controller('publish_modal', ['$scope', '$modalInstance', 'projectService', 'taskService', 'content', 'status', '$location', function ($scope, $modalInstance, projectService, taskService, content, status, $location) {
+    controllers.controller('publish_modal', ['$scope', '$modalInstance', 'content', 'status', '$location', function ($scope, $modalInstance, content, status, $location) {
         /********** 초기화 **********/
             // 검색 조건
         $scope.search = [];

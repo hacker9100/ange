@@ -79,6 +79,7 @@
                             WHERE
                                 F.NO = S.SOURCE_NO
                                 AND S.CONTENT_GB = 'FILE'
+                                AND S.TARGET_GB = 'CONTENT'
                                 AND S.TARGET_NO = ".$data[NO]."
                                 AND F.THUMB_FL = '0'
                             ";

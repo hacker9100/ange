@@ -252,7 +252,7 @@ define([
             $scope.viewContentBtn = '원고 조회';
             $scope.editContentBtn = '원고 작성';
         } else if ($stateParams.menu == 'article') {
-//            $scope.search = {PHASE: '0, 10, 11, 12'};
+            $scope.search = {PHASE: '0, 10, 11, 12'};
             $scope.viewContentBtn = '원고 조회';
             $scope.editContentBtn = '원고 작성';
         } else if ($stateParams.menu == "article_confirm") {

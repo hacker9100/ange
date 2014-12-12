@@ -13,8 +13,8 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('publish_list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'COMMON', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, COMMON) {
 
-        dialogs.notify('알림', '준비 중 입니다.', {size: 'md'});
-        history.back();
+//        dialogs.notify('알림', '준비 중 입니다.', {size: 'md'});
+//        history.back();
 
 //        alert(localStorage.getItem('userToken'))
         /********** 초기화 **********/
@@ -45,7 +45,7 @@ define([
             $location.url('/project/view/'+key);
         };
 
-        // 등록 화면 이동
+        // EPUB 버튼 이동
         $scope.click_publishProject = function (idx) {
             var project = $scope.tableParams.data[idx];
             $location.path('/publish/edit/'+project.NO);

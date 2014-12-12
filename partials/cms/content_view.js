@@ -101,7 +101,7 @@ define([
         // 콘텐츠 조회
         $scope.getContent = function () {
             var search = {};
-            if ($stateParams.menu.indexOf('article') > -1 && $scope.task.PHASE <= 20) {
+            if ($stateParams.menu.indexOf('article') > -1 && $scope.task.PHASE >= 20) {
                 search = {CURRENT_FL: 'N'};
             }
 

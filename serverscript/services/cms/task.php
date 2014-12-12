@@ -167,7 +167,7 @@
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                            CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM
+                            CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM, (SELECT SECTION_NM FROM CMS_SECTION S WHERE S.NO = SECTION_NO) AS SECTION_NM
                         FROM
                         (
                             SELECT
@@ -528,17 +528,17 @@
                     ";
 
                     $result = $_d->sql_query($sql,true);
-                    $is_all = true;
+                    $project_st = '2';
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                        if ($row[PHASE] != '30') {
-                            $is_all = false;
+                        if ($row[PHASE] != '30' && $row[PHASE] != '31') {
+                            $project_st = '1';
                         }
                     }
 
                     if ($is_all) {
                         $sql = "UPDATE CMS_PROJECT
                                 SET
-                                    PROJECT_ST = '2'
+                                    PROJECT_ST = '".$project_st."'
                                 WHERE
                                     NO = ".$project_no."
                                 ";
