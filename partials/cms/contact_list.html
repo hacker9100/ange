@@ -50,16 +50,16 @@
                     <td data-title="'이름'" sortable="'USER_NM'">
                         {{item.USER_NM}}
                     </td>
-                    <td class="text-center" data-title="'권한'" sortable="'ROLE'">
+                    <td style="width:250px" class="text-center" data-title="'권한'" sortable="'ROLE'">
                         {{item.ROLE_NM}}
                     </td>
-                    <td class="text-center" data-title="'등록일'" sortable="'REG_DT'">
+                    <td style="width:150px" class="text-center" data-title="'등록일'" sortable="'REG_DT'">
                         {{item.REG_DT}}
-                    </td><!--
-                    <td class="text-center" data-title="'상태'" sortable="'USER_ST'">
+                    </td>
+                    <td style="width:150px" class="text-center" data-title="'상태'" sortable="'USER_ST'" ng-show="!isModal">
                         {{item.USER_ST == 'N' ? '이용가능' : '이용정지'}}
-                    </td>-->
-                    <td class="text-center" data-title="'기능'">
+                    </td>
+                    <td style="width:80px" class="text-center" data-title="'기능'">
                         <button class="btn btn-info btn-xs" ng-click="click_getCmsUser(item.USER_ID)" ng-show="!isModal">V</button>
                         <button class="btn btn-info btn-xs" ng-click="click_selectCmsUser(item)" ng-show="isModal">Select</button>
                         <!--<a ng-click="click_updateStatus($index)">상태변경</a>-->

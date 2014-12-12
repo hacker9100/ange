@@ -51,7 +51,7 @@
             if ($_type == 'item') {
                 $sql = "SELECT
                             P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SERIES_NM, C.SEASON_NM, C.SECTION_NM, P.YEAR
+                            T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SERIES_NM, C.SEASON_NM, C.SECTION_NM, P.YEAR
                         FROM
                             CMS_TASK T
                             INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
@@ -167,12 +167,12 @@
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                            CLOSE_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM
+                            CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM
                         FROM
                         (
                             SELECT
                                 P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
-                                T.CLOSE_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, S.SERIES_NM
+                                T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, S.SERIES_NM
                             FROM
                                 CMS_TASK T, CMS_PROJECT P
                                 LEFT OUTER JOIN CMS_SERIES S ON S.NO = P.SERIES_NO
@@ -277,6 +277,7 @@
                             ,REG_NM
                             ,REG_DT
                             ,CLOSE_YMD
+                            ,DEPLOY_YMD
                             ,PROJECT_NO
                             ,SECTION_NO
                             ,TAG
@@ -290,6 +291,7 @@
                             ,'".$_SESSION['name']."'
                             ,SYSDATE()
                             ,'".$_model[CLOSE_YMD]."'
+                            ,'".$_model[DEPLOY_YMD]."'
                             ,".$project_no."
                             ,".$section_no."
                             ,'".$_model[TAG]."'
@@ -331,9 +333,9 @@
                 }
 
                 if (!empty($_model[NO]) && $_model[PHASE] > 0) {
-                    $sql = "UPDATE CONTENT
+                    $sql = "UPDATE CMS_CONTENT
                             SET
-                                CURRENT_FL = '1'
+                                CURRENT_FL = 'N'
                             WHERE
                                 NO = ".$_model[NO]."
                             ";
@@ -499,6 +501,7 @@
                             ,REG_UID = '".$_SESSION['uid']."'
                             ,REG_NM = '".$_SESSION['name']."'
                             ,CLOSE_YMD = '".$_model[CLOSE_YMD]."'
+                            ,DEPLOY_YMD = '".$_model[DEPLOY_YMD]."'
                             ,PROJECT_NO = ".$project_no."
                             ,SECTION_NO = ".$section_no."
                             ,TAG = '".$_model[TAG]."'

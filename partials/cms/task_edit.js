@@ -76,6 +76,7 @@ define([
 
             $scope.today = function() {
                 $scope.item.CLOSE_YMD = new Date();
+                $scope.item.DEPLOY_YMD = new Date();
             };
             $scope.today();
 
@@ -83,11 +84,11 @@ define([
                 $scope.item.CLOSE_YMD = null;
             };
 
-            $scope.open = function($event) {
+            $scope.open = function($event, opened) {
                 $event.preventDefault();
                 $event.stopPropagation();
 
-                $scope.opened = true;
+                $scope[opened] = true;
             };
 
             return deferred.promise;

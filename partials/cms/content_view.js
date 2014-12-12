@@ -66,30 +66,58 @@ define([
             });
         };
 
-        // 태스크/콘텐츠 조회
+        // 태스크 조회
         $scope.getTask = function () {
             var deferred = $q.defer();
-            $q.all([
-                    $scope.getItem('cms/task', 'item', $stateParams.id, {}, false).then(function(data){console.log(data); $scope.task = data;}),
-                    $scope.getItem('cms/content', 'item', $stateParams.id, {}, false).then(function(data){
-                        $scope.item = data;
-                        var body = data.BODY.replace(/border:1px dashed;/g, '');
-
-                        $scope.item.BODY = $sce.trustAsHtml(body);
-
-                        var files = data.FILES;
-                        for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                        }
-                    })
-                ])
-                .then( function(results) {
-                    deferred.resolve();
-                },function(error) {
-                    deferred.reject(error);
-                });
+            $scope.getItem('cms/task', 'item', $stateParams.id, {}, false)
+                .then(function(data){$scope.task = data; deferred.resolve();})
+                .catch(function(error){console.log(error); deferred.reject(error);});
 
             return deferred.promise;
+//            var deferred = $q.defer();
+//            $q.all([
+//                    $scope.getItem('cms/task', 'item', $stateParams.id, {}, false).then(function(data){console.log(data); $scope.task = data;}),
+//                    $scope.getItem('cms/content', 'item', $stateParams.id, {}, false).then(function(data){
+//                        $scope.item = data;
+//                        var body = data.BODY.replace(/border:1px dashed;/g, '');
+//
+//                        $scope.item.BODY = $sce.trustAsHtml(body);
+//
+//                        var files = data.FILES;
+//                        for(var i in files) {
+//                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+//                        }
+//                    })
+//                ])
+//                .then( function(results) {
+//                    deferred.resolve();
+//                },function(error) {
+//                    deferred.reject(error);
+//                });
+//
+//            return deferred.promise;
+        };
+
+        // 콘텐츠 조회
+        $scope.getContent = function () {
+            var search = {};
+            if ($stateParams.menu.indexOf('article') > -1 && $scope.task.PHASE <= 20) {
+                search = {CURRENT_FL: 'N'};
+            }
+
+            $scope.getItem('cms/content', 'item', $stateParams.id, search, false)
+                .then(function(data){
+                    $scope.item = data;
+                    var body = data.BODY.replace(/border:1px dashed;/g, '');
+
+                    $scope.item.BODY = $sce.trustAsHtml(body);
+
+                    var files = data.FILES;
+                    for(var i in files) {
+                        $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                    }
+                })
+                .catch(function(error){console.log(error)});
         };
 
         /********** 화면 초기화 **********/
@@ -97,6 +125,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getTask)
+            .then($scope.getContent)
             .catch($scope.reportProblems);
 
     }]);

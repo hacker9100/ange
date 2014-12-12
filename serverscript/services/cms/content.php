@@ -49,14 +49,22 @@
     switch ($_method) {
         case "GET":
             if ($_type == "item") {
+                $search_where = "";
+
+                if (isset($_search[CURRENT_FL]) && $_search[CURRENT_FL] != "") {
+                    $search_where .= "AND C.CURRENT_FL = '".$_search[CURRENT_FL]."' ";
+                } else {
+                    $search_where .= "AND C.CURRENT_FL = 'Y' ";
+                }
+
                 $sql = "SELECT
                             C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.BODY, C.CONTENT_ST, C.REG_UID, C.REG_NM, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT,
                             C.CURRENT_FL, C.MODIFY_FL, C.HIT_CNT, C.SCRAP_CNT, C.TASK_NO, T.EDITOR_ID
                         FROM
-                            CONTENT C, CMS_TASK T
+                            CMS_CONTENT C, CMS_TASK T
                         WHERE
                             C.TASK_NO = T.NO
-                            AND C.CURRENT_FL = 'Y'
+                            ".$search_where."
                             AND T.NO = ".$_key."
                         ";
 
@@ -99,7 +107,7 @@
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == "list") {
-                $where_search = "";
+                $search_where = "";
 
                 if (isset($_phase)) {
                     $in_str = "";
@@ -122,11 +130,11 @@
                                 C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.BODY, C.CONTENT_ST, C.REG_UID, C.REG_NM, C.REG_DT,
                                 C.CURRENT_FL, C.MODIFY_FL, C.HIT_CNT, C.SCRAP_CNT, C.TASK_NO
                             FROM
-                                CONTENT C, CMS_TASK T
+                                CMS_CONTENT C, CMS_TASK T
                             WHERE
                                 C.TASK_NO = T.NO
-                                AND C.CURRENT_FL = '0'
-                                ".$where_search."
+                                AND C.CURRENT_FL = 'Y'
+                                ".$search_where."
                             ORDER BY C.REG_DT DESC
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -134,11 +142,11 @@
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                CONTENT C, CMS_TASK T
+                                CMS_CONTENT C, CMS_TASK T
                             WHERE
                                 C.TASK_NO = T.NO
-                                AND C.CURRENT_FL = '0'
-                                ".$where_search."
+                                AND C.CURRENT_FL = 'Y'
+                                ".$search_where."
                         ) CNT
                         ";
                 $data = $_d->sql_query($sql);
@@ -240,7 +248,7 @@
 
                 MtUtil::_c("### [SUPER_NO] ".( empty($form[SUPER_NO]) ? 0 : $form[SUPER_NO]) );
 
-                $sql = "INSERT INTO CONTENT
+                $sql = "INSERT INTO CMS_CONTENT
                         (
                             SUPER_NO
                             ,PHASE
@@ -355,7 +363,7 @@
                 }
 
                 if (!empty($_model[NO]) && $_model[PHASE] > 0) {
-                    $sql = "UPDATE CONTENT
+                    $sql = "UPDATE CMS_CONTENT
                             SET
                                 CURRENT_FL = '1'
                             WHERE
@@ -489,7 +497,7 @@
 
                 $_d->sql_beginTransaction();
 
-                $sql = "UPDATE CONTENT
+                $sql = "UPDATE CMS_CONTENT
                         SET
                             CURRENT_FL = 'N'
                         WHERE
@@ -503,7 +511,7 @@
                     $msg = $_d->mysql_error;
                 }
 
-                $sql = "INSERT INTO CONTENT
+                $sql = "INSERT INTO CMS_CONTENT
                         (
                             SUPER_NO
                             ,PHASE
@@ -661,7 +669,7 @@
             if (isset($_phase)) {
                 $_d->sql_beginTransaction();
 
-                $sql = "UPDATE CONTENT
+                $sql = "UPDATE CMS_CONTENT
                         SET
                             PHASE = '".$_phase."'
                         WHERE
@@ -675,7 +683,7 @@
                         SET
                             PHASE = '".$_phase."'
                         WHERE
-                            NO = ( SELECT TASK_NO FROM CONTENT C WHERE C.NO = ".$_key.")
+                            NO = ( SELECT TASK_NO FROM CMS_CONTENT C WHERE C.NO = ".$_key.")
                         ";
 
                 $_d->sql_query($sql);
@@ -688,7 +696,7 @@
                     $_d->succEnd($no);
                 }
             } else if (isset($_modify)) {
-                $sql = "UPDATE CONTENT
+                $sql = "UPDATE CMS_CONTENT
                         SET
                             MODIFY_FL = '".$_modify."'
                         WHERE
@@ -777,7 +785,7 @@
 
                 MtUtil::_c("------------>>>>> count_task___________ : ".$_model[TASK]);
 
-                $sql = "UPDATE CONTENT
+                $sql = "UPDATE CMS_CONTENT
                         SET
                             SUPER_NO = ".((!empty($_model[SUPER_NO])) ? $_model[SUPER_NO] : (!empty($_model[NO]) ? $_model[NO] : 0))."
                             ,PHASE = '".$_model[TASK][PHASE]."'
@@ -976,7 +984,7 @@
                 $_d->failEnd("삭제실패입니다:"."ID가 누락되었습니다.");
             }
 
-            $sql = "DELETE FROM CONTENT WHERE NO = ".$id;
+            $sql = "DELETE FROM CMS_CONTENT WHERE NO = ".$id;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
