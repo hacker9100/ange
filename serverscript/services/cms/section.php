@@ -199,7 +199,7 @@
             }else{
                 $sql = "UPDATE CMS_SECTION SET
                             SEASON_NM = '".$_model[SEASON_NM]."'
-                     WHERE SEASON_NM = '".$_model[OLD_SEASON_NM]."'
+                     WHERE SEASON_NM = '".$_model[SELECT_SEASON_NM][SEASON_NM]."'
                         ";
             }
             // ,SEASON_NM = '".$_model[SEASON_NM]."'

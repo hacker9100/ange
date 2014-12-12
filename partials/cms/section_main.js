@@ -11,10 +11,10 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('section_main', ['$scope', '$stateParams', 'dataService', '$modal', '$location', '$controller', '$filter', 'ngTableParams', '$q', 'dialogs', function ($scope, $stateParams, $modal, dataService, $location, $controller, $filter, ngTableParams, $q, dialogs, UPLOAD) {
+    controllers.controller('section_main', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', 'ngTableParams', function ($scope, $stateParams, $location, $filter, dialogs, ngTableParams) {
 
         /********** 공통 controller 호출 **********/
-        angular.extend(this, $controller('common', {$scope: $scope}));
+        //angular.extend(this, $controller('common', {$scope: $scope}));
 
         /********** 초기화 **********/
         $scope.key = '';
@@ -46,15 +46,15 @@ define([
 
             var section = $scope.tableParams.data[parentIdx].data[idx];
 
-            console.log('parentIdx = '+parentIdx);
-            console.log('idx = '+idx);
-            console.log('section = '+section);
+            var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
 
-            $scope.deleteItem('cms/section', 'item', section.NO, true)
-                .then(function(){alert('정상적으로 삭제했습니다.'); /*$scope.tableParams.group.data.splice(idx, 1);*/ $scope.tableParams.reload();})
-                .catch(function(error){alert(error)});
-
-            console.log('end');
+            dialog.result.then(function(btn){
+                $scope.deleteItem('cms/section', 'item', section.NO, true)
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.tableParams.data[parentIdx].data.splice(idx, 1);})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
 
         };
 
@@ -71,7 +71,6 @@ define([
                 page: 1,            // show first page
                 count: 1000,          // count per page
                 sorting: {
-                    PROJECT_NO: 'asc',
                     SORT_IDX : 'asc'     // initial sorting
                 }
             }, {
@@ -79,43 +78,22 @@ define([
                 counts: [],
                 total: 0,           // length of data
                 getData: function($defer, params) {
+
+                    var key = Object.keys(params.sorting())[0];
+
+                    $scope.search['SORT'] = key;
+                    $scope.search['ORDER'] = params.sorting()[key];
+
                     $scope.getList('cms/section', 'list', {}, $scope.search, true)
                         .then(function(data){
                             params.total(data[0].TOTAL_COUNT);
-                            //$defer.resolve(data);
-                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
-                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                            $defer.resolve(data);
                         })
                         .catch(function(error){$defer.resolve([]);});
 
                 }
 
             });
-
-            /*
-            $scope.tableParams = new ngTableParams({
-                page: 1,            // show first page
-                count: 20,          // count per page
-                sorting: {
-                    SEASON_NM: 'desc',
-                    SORT_IDX : 'asc'     // initial sorting
-                }
-            }, {
-                groupBy: 'SEASON_NM',
-                counts: [],
-                total: 0,           // length of data
-                getData: function($defer, params) {
-                    $scope.getList('section', {}, $scope.search, true)
-                        .then(function(data){
-                            params.total(data[0].TOTAL_COUNT);
-
-                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
-                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
-                            //$defer.resolve(data);
-                        })
-                        .catch(function(error){alert(error)});
-                }
-            }); */
 
         };
 
@@ -207,7 +185,7 @@ define([
         // 시즌수정 2014.12.10
         $scope.click_updateSeason = function () {
             console.log('$scope.item.SEASON_NM = '+$scope.item.SEASON_NM);
-            $scope.updateItem('cms/section', 'item', $scope.key, $scope.item, false)
+            $scope.updateItem('cms/section', 'item', {}, $scope.item, false)
                 .then(function() {
                     alert('시즌수정이 완료되었습니다');
                     $scope.tableParams.reload();
