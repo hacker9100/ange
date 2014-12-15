@@ -7,48 +7,20 @@
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
         <div class="col-xs-12 row fileupload-buttonbar" style="margin:0px auto;">
             <div class="col-sm-9">
-                <div id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">
-                    이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />
-                    (gif, jpg, png만 등록 가능)
+                <div id="dropzone" name="dropzone" class="edit_dropzone">
+                    <!--이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다(gif, jpg, png만 등록 가능)-->
+                    <img src="/imgs/_blank.gif" border="1" style="width:100%; height:100%" />
                 </div>
             </div>
-            <div class="files" style="text-align:center;">
+            <div class="col-sm-3" style="height:100px; overflow:hidden; text-align:center; padding-left:5px;">
 
-                <!-- div class="raw" style="float:left; width:100%; padding-top:10px; border-top:1px solid #DEDEDE;">
-                    <div class="col-xs-6 form-group form_basic">
-                        <button type="button" class="btn btn-info btn-xs start" ng-click="click_showGetHistory(item.NO);">
-                            <i class="glyphicon glyphicon-list-alt"></i>
-                            <span>History</span>
-                        </button>
-                    </div>
-
-                    <div class="col-xs-6 form-group form_basic" style="text-align:right;">
-                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewTask(item.NO);" ng-show="isTask">
-                            <i class="glyphicon glyphicon-folder-open"></i>
-                            <span>태스크 정보</span>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditTask(item);" ng-show="isTask && isEdit">
-                            <i class="glyphicon glyphicon-edit"></i>
-                            <span>태스크 편집</span>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item.NO);" ng-show="!isTask">
-                            <i class="glyphicon glyphicon-book"></i>
-                            <span>원고 조회</span>
-                        </button>
-                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditContent(item);" ng-show="!isTask && isEdit">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                            <span>원고 편집</span>
-                        </button>
-                    </div>
-                </div -->
+                <span class="fileinput-button addfile_sm" ng-class="{disabled: disabled}">
+                    <input type="file" name="files[]" multiple ng-disabled="disabled" />
+                </span>
+                <input type="file" name="files[]" multiple ng-disabled="disabled" />
 
 
-                <!-- The fileinput-button span is used to style the file input field as button -->
-                    <span class="btn btn-success btn-lg fileinput-button" ng-class="{disabled: disabled}">
-                        <i class="glyphicon glyphicon-picture"></i>
-                        <span>탐색기에서 파일열기</span>
-                        <input type="file" name="files[]" multiple ng-disabled="disabled">
-                    </span>
+
                 <button type="button" class="btn btn-primary btn-xs start" data-ng-click="submit()" ng-show="false">
                     <i class="glyphicon glyphicon-upload"></i>
                     <span>전체 등록</span>

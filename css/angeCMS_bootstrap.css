@@ -3513,6 +3513,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border: 1px solid transparent;
   border-radius: 4px 4px 0 0;
 }
+
+.nav-tabs > li > span {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+}
+
 .nav-tabs > li > a:hover {
   border-color: #eee #eee #ddd;
 }

@@ -116,6 +116,20 @@
         <accordion close-others="oneAtATime" style="margin:0;">
             <accordion-group is-open="status.open" style="border-radius:10px;" ng-repeat="item in list">
 
+
+                <div class="task_progress_wrap">
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '0', 'task_progress' : item.PHASE != '0'}">태스크등록</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '10', 'task_progress' : item.PHASE != '10'}">원고작성</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '11', 'task_progress' : item.PHASE != '11'}">원고승인</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '12', 'task_progress' : item.PHASE != '12'}">원고반려</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '13', 'task_progress' : item.PHASE != '13'}">원고승인완료</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '20', 'task_progress' : item.PHASE != '20'}">편집작성</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '21', 'task_progress' : item.PHASE != '21'}">편집승인</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '22', 'task_progress' : item.PHASE != '22'}">편집반려</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                    <!-- span class="label label-default task_progress" ng-class="{'label-danger' : item.PHASE == '23'}">편집승인완료</span -->
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '30', 'task_progress' : item.PHASE != '30'}">출판대기</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                    <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '31', 'task_progress' : item.PHASE != '31'}">완료</span>
+                </div>
                 <!-- Task Head -->
                 <!-- accordion-heading style="clear:both; padding:0;" -->
                 <accordion-heading style="border-radius:4px;">
@@ -161,10 +175,12 @@
                             </a>
                         </div>
                     </div>
+
                 </accordion-heading>
                 <!-- //Task Head -->
 
                 <div class="col-md-12" style="position:relative;">
+
                     <div class="row" class="form-horizontal" style="float:left; margin:0px auto; width:100%;">
 
                         <div class="col-xs-6 form-group form_basic">
