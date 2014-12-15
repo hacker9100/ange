@@ -25,7 +25,7 @@ define([
     '../../../partials/cms/scheduler.min',
     // CMS 콘텐츠
     '../../../partials/cms/project_list.min',
-    '../../../partials/cms/project_edit',
+    '../../../partials/cms/project_edit.min',
     '../../../partials/cms/project_view.min',
     '../../../partials/cms/task_list.min',
     '../../../partials/cms/task_edit.min',
