@@ -315,13 +315,18 @@ a.famlylink:focus {
     padding:4px;
     color:#646464;
     font-size: 0.68em;
-    border:1px solid #EDEDED;
-    width:98px;
+    /*border:1px solid #EDEDED;*/
+    width:91px;
     margin:5px;
-    height:60px;
+    height:82px;
     cursor:pointer;
+    background-repeat: no-repeat;
+    text-indent: -9999px;
 }
 
+.template_thumb:hover {
+    outline:2px solid #6dcff6;
+}
 .editor_cell {
     float:left;
     width:100%;
