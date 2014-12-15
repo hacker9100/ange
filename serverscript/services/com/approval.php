@@ -69,7 +69,7 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "INSERT INTO CMS_APPROVAL
+            $sql = "INSERT INTO COM_APPROVAL
                     (
                         TASK_NO
                         ,APPROVAL_ST
@@ -99,7 +99,7 @@
                 if ($_model[APPROVAL_ST] == '11')
                     $parse = '12';
                 else if ($_model[APPROVAL_ST] == '12')
-                    $parse = '20';
+                    $parse = '13';
                 else if ($_model[APPROVAL_ST] == '21')
                     $parse = '22';
                 else if ($_model[APPROVAL_ST] == '22')

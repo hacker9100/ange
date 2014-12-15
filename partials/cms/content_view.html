@@ -4,6 +4,19 @@
     <accordion close-others="oneAtATime">
         <accordion-group is-open="status.open" ng-model="task">
 
+            <div class="task_progress_wrap">
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '0', 'task_progress' : task.PHASE != '0'}">태스크등록</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '10', 'task_progress' : task.PHASE != '10'}">원고작성</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '11', 'task_progress' : task.PHASE != '11'}">원고승인</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '12', 'task_progress' : task.PHASE != '12'}">원고반려</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '13', 'task_progress' : task.PHASE != '13'}">원고승인완료</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '20', 'task_progress' : task.PHASE != '20'}">편집작성</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '21', 'task_progress' : task.PHASE != '21'}">편집승인</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '22', 'task_progress' : task.PHASE != '22'}">편집반려</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <!-- span class="label label-default task_progress" ng-class="{'label-danger' : task.PHASE == '23'}">편집승인완료</span -->
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '30', 'task_progress' : task.PHASE != '30'}">출판대기</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '31', 'task_progress' : task.PHASE != '31'}">완료</span>
+            </div>
             <!-- Task Head -->
             <accordion-heading style="clear:both; background-color:#000; padding:0;">
                 <div class="row" style="height:100%;">
@@ -25,7 +38,22 @@
                                     <span style="color:#DE4612; font-weight:bold;">{{task.CLOSE_YMD}} 마감</span>
                                 </div>
                                 <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
-                                    {{ task.PHASE == '0' ? '태스크등록' : task.PHASE == '10' ? '원고작성' : task.PHASE == '11' ? '원고승인대기' : task.PHASE == '12' ? '원고반려' : task.PHASE == '13' ? '원고승인완료' : task.PHASE == '20' ? '편집작성' : task.PHASE == '21' ? '편집승인대기' : task.PHASE == '22' ? '편집반려' : '편집승인완료' }}
+
+                                    <span class="badge" ng-class="{'step1' : task.PHASE == '0', 'step2' : task.PHASE == '10', 'step3' : task.PHASE == '11', 'step4' : task.PHASE == '12', 'step5' : task.PHASE == '13', 'step6' : task.PHASE == '20', 'step7' : task.PHASE == '21', 'step8' : task.PHASE == '22', 'step9' : task.PHASE == '23', 'step10' : task.PHASE == '30', 'step0' : task.PHASE == '31'}">
+                                    {{
+                                    task.PHASE == '0' ? '태스크등록' :
+                                    task.PHASE == '10' ? '원고작성' :
+                                    task.PHASE == '11' ? '원고승인대기' :
+                                    task.PHASE == '12' ? '원고반려' :
+                                    task.PHASE == '13' ? '원고승인완료' :
+                                    task.PHASE == '20' ? '편집작성' :
+                                    task.PHASE == '21' ? '편집승인대기' :
+                                    task.PHASE == '22' ? '편집반려' :
+                                    task.PHASE == '23' ? '편집승인완료' :
+                                    task.PHASE == '30' ? '출판대기' :
+                                    '완료'
+                                    }}
+                                    </span>
                                 </div>
                             </div>
 
@@ -66,7 +94,7 @@
                         <div class="balls_group">
                             <div class="btn-group bnt_ball_group" ng-repeat="tag in task.TAG | split:','">
                                 <button type="button" class="btn btn-default tag_ball_normal">
-                                    {{ task.TAG }}
+                                    {{ tag }}
                                 </button>
                             </div>
                         </div>
@@ -94,25 +122,17 @@
 
     <div ng-model="item" class="col-xs-12 row" style="margin:0px auto;">
 
-            <div class="form-group form_basic_group" style="margin:0px auto;">
-                <H5 style="line-height:18px; margin:0;">
-                    <span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> <span class="label label-default">편집기</span>를 이용하여 작성된 글입니다.
-                </H5>
-            </div>
+        <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+            <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>
+            <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
+        </div>
 
-            <div style="border:1px solid #DEDEDE; width:100%; float:left;">
-                <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>
-                <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
-            </div>
-
-            <div class= "col-md-12">
-                <label class= "col-md-2">담당 에디터 :  {{item.EDITOR.USER_NM}}</label>
-                <label>{{item.EDITOR.INTRO}}</label>
-                <span>{{item.EDITOR.NOTE}}</span>
-                <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
-            </div>
-
-
+        <div class= "col-md-12">
+            <label class= "col-md-2">담당 에디터 :  {{item.EDITOR.USER_NM}}</label>
+            <label>{{item.EDITOR.INTRO}}</label>
+            <span>{{item.EDITOR.NOTE}}</span>
+            <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
+        </div>
 
         <div class= "form-group form_basic_group" style="float:left;">
             <H5 style="line-height:8px; margin:0;">

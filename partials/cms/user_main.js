@@ -72,7 +72,10 @@ define([
 
                     $scope.getList('com/user', 'list', {}, $scope.search, true)
                         .then(function(data){
-                            params.total(data[0].TOTAL_COUNT);
+                            var total_cnt = data[0].TOTAL_COUNT;
+                            $scope.TOTAL_COUNT = total_cnt;
+
+                            params.total(total_cnt);
                             $defer.resolve(data);
 
 //                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
@@ -128,8 +131,7 @@ define([
                         $scope.item.ROLE = $scope.user_roles[idx];
 
                         // 스크롤 하단으로 이동
-                        $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
-                        $('#item_id').focus();
+                        $scope.click_focus();
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -143,6 +145,12 @@ define([
                 .then(function(){dialogs.notify('알림', '사용자 상태가 변경되었습니다.', {size: 'md'}); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
         };
+
+        // 사용자 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
+        $scope.click_focus = function () {
+            $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
+            $('#item_id').focus();
+        }
 
         // 취소 클릭
         $scope.click_cancel = function () {

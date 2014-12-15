@@ -49,19 +49,41 @@
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'list') {
-                $where_search = "";
+                $search_where = "";
+                $sort_order = "";
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $where_search .= "AND SERIES_NM LIKE '%".$_search[KEYWORD]."%' ";
+                    $search_where .= "AND SERIES_NM LIKE '%".$_search[KEYWORD]."%' ";
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
                 }
 
                 $sql = "SELECT
+                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             NO, SERIES_NM, SERIES_GB, SERIES_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NOTE
                         FROM
-                          CMS_SERIES
-                        WHERE
-                            1 = 1
-                            ".$where_search."
+                        (
+                            SELECT
+                                NO, SERIES_NM, SERIES_GB, SERIES_ST, REG_DT, NOTE
+                            FROM
+                              CMS_SERIES
+                            WHERE
+                                1 = 1
+                                ".$search_where."
+                        ) AS DATA,
+                        (SELECT @RNUM := 0) R,
+                        (
+                            SELECT
+                                COUNT(*) AS TOTAL_COUNT
+                            FROM
+                                CMS_SERIES
+                            WHERE
+                                1 = 1
+                                ".$search_where."
+                        ) CNT
+                        $sort_order
                         ";
 
 /*

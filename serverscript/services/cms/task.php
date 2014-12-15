@@ -78,6 +78,19 @@
                     $category_data = $_d->getData($sql);
 
                     $data['CATEGORY'] = $category_data;
+
+                    $sql = "SELECT
+                                TASK_NO, APPROVAL_ST, APPROVER_ID, APPROVER_NM, APPROVAL_DT, NOTE
+                            FROM
+                                COM_APPROVAL
+                            WHERE
+                                TASK_NO = ".$_key."
+                            ORDER BY APPROVAL_DT DESC
+                            ";
+
+                    $approval_data = $_d->getData($sql);
+
+                    $data['APPROVAL'] = $approval_data;
                 }
 
                 if ($_d->mysql_errno > 0) {

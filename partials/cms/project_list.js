@@ -78,8 +78,6 @@ define([
             }, function(btn) {
                 return;
             });
-
-
         };
 
         // 검색 버튼 클릭

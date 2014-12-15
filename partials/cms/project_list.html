@@ -72,8 +72,8 @@
     <!-- Contents Include -->
     <div>
         <!-- 목록 -->
-        <table ng-table="tableParams" class="table ng-table-responsive" style="border-bottom: 1px solid #868686;">
-            <tr ng-repeat="item in $data" style="background-color: #F0F0F0;">
+        <table ng-table="tableParams" class="table" style="border-bottom: 1px solid #868686;">
+            <tr ng-repeat="item in $data">
                 <td style="font-size:0.94em; line-height:38px;" data-title="'프로젝트명'" sortable="'SUBJECT'">
                     <a style="cursor:pointer;" ng-click="click_showViewProject(item.NO)" title="{{ item.SERIES_NM + '[' + item.SUBJECT + ']' + ' 내용보기' }}">{{ item.SERIES_NM + '[' + item.SUBJECT + ']' }}</a>
                 </td>
@@ -90,7 +90,7 @@
                 </td>
             </tr>
             <tr ng-show="$data == ''">
-                <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                <td colspan="4" style="text-align: center; font-size:0.86em; line-height:38px;">조회 데이터가 없습니다.</td>
             </tr>
         </table>
 

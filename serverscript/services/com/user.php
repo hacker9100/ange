@@ -92,6 +92,46 @@
 
                 $data['ROLE'] = $role_data;
 
+                if (isset($_search[DETAIL])) {
+                    $sql = "SELECT
+                                SUM_POINT, USE_POINT, REMAIN_POINT
+                            FROM
+                                ANGE_MILEAGE_STATUS
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $result = $_d->sql_query($sql);
+                    $mileage_data  = $_d->sql_fetch_array($result);
+
+                    $data['MILEAGE'] = $mileage_data;
+
+                    $sql = "SELECT
+                                BABY_NM, BABY_BIRTH, BABY_SEX_GB, CARE_CENTER, CENTER_VISIT_DT, CENTER_OUT_DT
+                            FROM
+                                ANGE_USER_BABY
+                            WHERE
+                                USER_ID = ".$_key."
+                            ";
+
+                    $baby_data = $_d->getData($sql);
+
+                    $data['BABY'] = $baby_data;
+
+                    $sql = "SELECT
+                                BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS
+                            FROM
+                                ANGE_USER_BLOG
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $result = $_d->sql_query($sql);
+                    $blog_data  = $_d->sql_fetch_array($result);
+
+                    $data['BLOG'] = $blog_data;
+                }
+
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 } else {
@@ -178,7 +218,6 @@
                             WHERE
                                 U.USER_ID = UR.USER_ID
                                 AND UR.ROLE_ID = R.ROLE_ID
-                                AND U.USER_ST = 'N'
                                 ".$search_where."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -190,7 +229,6 @@
                             WHERE
                                 U.USER_ID = UR.USER_ID
                                 AND UR.ROLE_ID = R.ROLE_ID
-                                AND U.USER_ST = 'N'
                                 ".$search_where."
                         ) CNT
                         $sort_order

@@ -99,7 +99,6 @@
                                  FROM CMS_SECTION S
                                  WHERE 1=1
                                  ".$search_where."
-                                 ".$sort_order."
                             ) CNT
                             ";
                 }

@@ -116,7 +116,6 @@
         <accordion close-others="oneAtATime" style="margin:0;">
             <accordion-group is-open="status.open" style="border-radius:10px;" ng-repeat="item in list">
 
-
                 <div class="task_progress_wrap">
                     <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '0', 'task_progress' : item.PHASE != '0'}">태스크등록</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
                     <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '10', 'task_progress' : item.PHASE != '10'}">원고작성</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>

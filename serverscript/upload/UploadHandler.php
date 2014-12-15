@@ -530,6 +530,7 @@ class UploadHandler
     }
 
     protected function handle_form_data($file, $index) {
+        $file->kind = $_REQUEST['kind'];
         // Handle form data, e.g. $_REQUEST['description'][$index]
     }
 

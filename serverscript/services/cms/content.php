@@ -100,6 +100,19 @@
                     $editor_data  = $_d->sql_fetch_array($result);
 
                     $data['EDITOR'] = $editor_data;
+
+//                    $sql = "SELECT
+//                                TASK_NO, APPROVAL_ST, APPROVER_ID, APPROVER_NM, APPROVAL_DT, NOTE
+//                            FROM
+//                                COM_APPROVAL
+//                            WHERE
+//                                TASK_NO = ".$data[TASK_NO]."
+//                            ORDER BY APPROVAL_DT DESC
+//                            ";
+//
+//                    $approval_data = $_d->getData($sql);
+//
+//                    $data['APPROVAL'] = $approval_data;
                 }
 
                 if ($_d->mysql_errno > 0) {
@@ -486,7 +499,11 @@
                 }
 
                 if ( !isset($_model[PHASE]) || $_model[PHASE] == "" ) {
-                    $_model[PHASE] = '10';
+                    $_model[PHASE] = '20';
+                }
+
+                if ( $_model[PHASE] == "13" ) {
+                    $_model[PHASE] = '20';
                 }
 
                 if ( trim($_model[CONTENT_ST]) == "" ) {

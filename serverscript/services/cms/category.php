@@ -52,28 +52,50 @@
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'list') {
-                $where_search = "";
+                $search_where = "";
+                $sort_order = "";
 
                 if (isset($_search[CATEGORY_GB]) && $_search[CATEGORY_GB] != "") {
-                    $where_search .= "AND C.CATEGORY_GB  = '".$_search[CATEGORY_GB]."' ";
+                    $search_where .= "AND C.CATEGORY_GB  = '".$_search[CATEGORY_GB]."' ";
                 }
                 if (isset($_search[PARENT_NO])) {
-                    $where_search .= "AND C.PARENT_NO = ".$_search[PARENT_NO]." ";
+                    $search_where .= "AND C.PARENT_NO = ".$_search[PARENT_NO]." ";
                 }
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $where_search .= "AND C.CATEGORY_NM LIKE '%".$_search[KEYWORD]."%' ";
+                    $search_where .= "AND C.CATEGORY_NM LIKE '%".$_search[KEYWORD]."%' ";
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
                 }
 
                 $sql = "SELECT
-                            C.NO, C.PARENT_NO, C.CATEGORY_NM,
-                            CASE C.PARENT_NO WHEN 0 THEN '' ELSE C.CATEGORY_NM END AS CHILD_NM,
-                            CASE C.PARENT_NO WHEN 0 THEN C.CATEGORY_NM ELSE (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = C.PARENT_NO) END AS PARENT_NM,
-                            C.CATEGORY_GB, C.CATEGORY_ST, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT, C.NOTE
+                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                            NO, PARENT_NO, CATEGORY_NM,
+                            CASE PARENT_NO WHEN 0 THEN '' ELSE CATEGORY_NM END AS CHILD_NM,
+                            CASE PARENT_NO WHEN 0 THEN DATA.CATEGORY_NM ELSE (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = DATA.PARENT_NO) END AS PARENT_NM,
+                            CATEGORY_GB, CATEGORY_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NOTE
                         FROM
-                            CMS_CATEGORY C
-                        WHERE
-                            1=1
-                            ".$where_search."
+                        (
+                            SELECT
+                                C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST, C.REG_DT, C.NOTE
+                            FROM
+                                CMS_CATEGORY C
+                            WHERE
+                                1 = 1
+                                ".$search_where."
+                        ) AS DATA,
+                        (SELECT @RNUM := 0) R,
+                        (
+                            SELECT
+                                COUNT(*) AS TOTAL_COUNT
+                            FROM
+                                CMS_CATEGORY C
+                            WHERE
+                                1 = 1
+                                ".$search_where."
+                        ) CNT
+                        $sort_order
                         ";
                 $data = $_d->sql_query($sql);
                 if ($_d->mysql_errno > 0) {

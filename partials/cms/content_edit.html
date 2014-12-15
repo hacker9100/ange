@@ -5,6 +5,19 @@
     <accordion close-others="oneAtATime">
         <accordion-group is-open="status.open" ng-model="task">
 
+            <div class="task_progress_wrap">
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '0', 'task_progress' : task.PHASE != '0'}">태스크등록</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '10', 'task_progress' : task.PHASE != '10'}">원고작성</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '11', 'task_progress' : task.PHASE != '11'}">원고승인</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '12', 'task_progress' : task.PHASE != '12'}">원고반려</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '13', 'task_progress' : task.PHASE != '13'}">원고승인완료</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '20', 'task_progress' : task.PHASE != '20'}">편집작성</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '21', 'task_progress' : task.PHASE != '21'}">편집승인</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '22', 'task_progress' : task.PHASE != '22'}">편집반려</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <!-- span class="label label-default task_progress" ng-class="{'label-danger' : task.PHASE == '23'}">편집승인완료</span -->
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '30', 'task_progress' : task.PHASE != '30'}">출판대기</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                <span class="label label-default" ng-class="{'label-danger' : task.PHASE == '31', 'task_progress' : task.PHASE != '31'}">완료</span>
+            </div>
             <!-- Task Head -->
             <accordion-heading style="clear:both; background-color:#000; padding:0;">
                 <div class="row" style="height:100%;">
@@ -26,7 +39,22 @@
                                     <span style="color:#DE4612; font-weight:bold;">{{task.CLOSE_YMD}} 마감</span>
                                 </div>
                                 <div class="col-md-2 col-lg-2 task-col-step" style="height:100%;  word-break: break-all; word-wrap: break-word; padding:8px 0; text-align:center;">
-                                    {{ task.PHASE == '0' ? '태스크등록' : task.PHASE == '10' ? '원고작성' : task.PHASE == '11' ? '원고승인대기' : task.PHASE == '12' ? '원고반려' : task.PHASE == '13' ? '원고승인완료' : task.PHASE == '20' ? '편집작성' : task.PHASE == '21' ? '편집승인대기' : task.PHASE == '22' ? '편집반려' : '편집승인완료' }}
+
+                                    <span class="badge" ng-class="{'step1' : task.PHASE == '0', 'step2' : task.PHASE == '10', 'step3' : task.PHASE == '11', 'step4' : task.PHASE == '12', 'step5' : task.PHASE == '13', 'step6' : task.PHASE == '20', 'step7' : task.PHASE == '21', 'step8' : task.PHASE == '22', 'step9' : task.PHASE == '23', 'step10' : task.PHASE == '30', 'step0' : task.PHASE == '31'}">
+                                    {{
+                                    task.PHASE == '0' ? '태스크등록' :
+                                    task.PHASE == '10' ? '원고작성' :
+                                    task.PHASE == '11' ? '원고승인대기' :
+                                    task.PHASE == '12' ? '원고반려' :
+                                    task.PHASE == '13' ? '원고승인완료' :
+                                    task.PHASE == '20' ? '편집작성' :
+                                    task.PHASE == '21' ? '편집승인대기' :
+                                    task.PHASE == '22' ? '편집반려' :
+                                    task.PHASE == '23' ? '편집승인완료' :
+                                    task.PHASE == '30' ? '출판대기' :
+                                    '완료'
+                                    }}
+                                    </span>
                                 </div>
                             </div>
 
@@ -67,7 +95,7 @@
                         <div class="balls_group">
                             <div class="btn-group bnt_ball_group" ng-repeat="tag in task.TAG | split:','">
                                 <button type="button" class="btn btn-default tag_ball_normal">
-                                    {{ task.TAG }}
+                                    {{ tag }}
                                 </button>
                             </div>
                         </div>
@@ -143,7 +171,6 @@
             </div>
         </form>
 
-
         <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
             <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
                 <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showContentList();" >
@@ -154,11 +181,11 @@
                     <i class="glyphicon glyphicon-check"></i>
                     <span>등록&승인요청</span>
                 </button>
-                <button type="button" class="btn btn-danger btn-xs start" ng-click="click_returnContent();" ng-show="isApproval && !(task.PHASE == '12' || task.PHASE == '22')">
+                <button type="button" class="btn btn-danger btn-xs start" ng-click="click_returnContent();" ng-show="isApproval && !(task.PHASE == '12' || task.PHASE == '13' || task.PHASE == '22')">
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     <span>반려</span>
                 </button>
-                <button type="button" class="btn btn-success btn-xs start" ng-click="click_approveContent();" ng-show="isApproval && !(task.PHASE == '12' || task.PHASE == '22')">
+                <button type="button" class="btn btn-success btn-xs start" ng-click="click_approveContent();" ng-show="isApproval && !(task.PHASE == '12' || task.PHASE == '13' || task.PHASE == '22')">
                     <i class="glyphicon glyphicon-ok-circle"></i>
                     <span>승인</span>
                 </button>
@@ -175,6 +202,16 @@
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>저장</span>
                 </button>
+            </div>
+        </div>
+
+        <div ng-show="task.APPROVAL != '' && (task.PHASE == '12' || task.PHASE == '13' || tash.PHASE == '22')" class= "form-group form_basic_group">
+            <H5 style="line-height:8px; margin:0;">
+                <span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> 검수 설명
+            </H5>
+
+            <div style="margin-top:20px; border:1px solid #DEDEDE; width:100%; float:left;">
+                {{ task.APPROVAL[0].NOTE }}
             </div>
         </div>
 

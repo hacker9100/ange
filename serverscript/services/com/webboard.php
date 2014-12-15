@@ -154,7 +154,7 @@
                         (";
 
                 $select1 = "SELECT
-                                '0' AS SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, WARNING_FL, BEST_FL, NOTICE_FL, TAG
+                                '0' AS SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, WARNING_FL, BEST_FL, NOTICE_FL, TAG, '' AS COMM_NM
                             FROM
                                 COM_BOARD
                             WHERE
@@ -162,9 +162,10 @@
                                 ".$search_common;
 
                 $select2 = "SELECT
-                                '1' AS SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, WARNING_FL, BEST_FL, NOTICE_FL, TAG
+                                '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, IFNULL(C.COMM_NM, '') AS COMM_NM
                             FROM
-                                COM_BOARD
+                                COM_BOARD B
+                                LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
                             WHERE
                                 1=1
                                 ".$search_where;
@@ -205,6 +206,7 @@
                                     FILE F, CONTENT_SOURCE S
                                 WHERE
                                     F.NO = S.SOURCE_NO
+                                    AND S.CONTENT_GB = 'FILE'
                                     AND S.TARGET_GB = 'BOARD'
                                     AND S.TARGET_NO = ".$data[NO]."
                                     AND F.THUMB_FL = '0'

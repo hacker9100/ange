@@ -101,11 +101,13 @@ define([
 
                     $scope.getList('cms/section', 'list', {}, $scope.search, true)
                         .then(function(data){
-                            params.total(data[0].TOTAL_COUNT);
+                            var total_cnt = data[0].TOTAL_COUNT;
+                            $scope.TOTAL_COUNT = total_cnt;
+
+                            params.total(total_cnt);
                             $defer.resolve(data);
                         })
                         .catch(function(error){$defer.resolve([]);});
-
                 }
 
             });
@@ -157,6 +159,7 @@ define([
                         $scope.item.SELECT_SEASON_NM = $scope.season[idx];
                         $scope.season_nm_check = true;
 
+                        $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
                         $('#season_gb').focus();
                     })
                     .catch(function(error){alert(error)});
@@ -167,6 +170,7 @@ define([
 
         // 섹션 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
         $scope.click_focus = function () {
+            $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
             $('#season_gb').focus();
 
             $scope.key = '';

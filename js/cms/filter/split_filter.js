@@ -11,9 +11,14 @@ define([
 
     return filters.filter('split', function() {
         return function(input, delimiter) {
+            var ret;
             var delimiter = delimiter || ',';
 
-            return input.split(delimiter);
+            if (input != null) {
+                ret = input.split(delimiter);
+            }
+
+            return ret;
         };
     })
 });

@@ -182,7 +182,8 @@ define([
         };
 
         // 페이지 사이즈
-        $scope.PAGE_SIZE = COMMON.PAGE_SIZE;
+//        $scope.PAGE_SIZE = COMMON.PAGE_SIZE;
+        $scope.PAGE_SIZE = 10;
 
         $scope.list = [];
         $scope.pageNo = 0;
@@ -229,12 +230,11 @@ define([
                     $scope.list.push(model);
                 });
             }
-        });
+        })
 
         $scope.addTask = function () {
             $scope.perCnt += $scope.perSize;
-
-            if ($scope.perCnt >= $scope.totalCnt) return;
+            if ($scope.perCnt + $scope.perSize >= $scope.totalCnt) return;
 
             if ($scope.perCnt + $scope.perSize >= $scope.listData.length) {
                 $scope.pageNo++;
@@ -256,11 +256,11 @@ define([
             $scope.viewContentBtn = '원고 조회';
             $scope.editContentBtn = '원고 작성';
         } else if ($stateParams.menu == "article_confirm") {
-            $scope.search = {PHASE: '11, 12'};
+            $scope.search = {PHASE: '11, 12, 13'};
             $scope.viewContentBtn = '원고 조회';
             $scope.editContentBtn = '원고 검수';
         } else if ($stateParams.menu == 'edit') {
-            $scope.search = {PHASE: '20, 21, 22'};
+            $scope.search = {PHASE: '13, 20, 21, 22'};
             $scope.viewContentBtn = '편집 조회';
             $scope.editContentBtn = '편집 작성';
         } else if ($stateParams.menu == "edit_confirm") {

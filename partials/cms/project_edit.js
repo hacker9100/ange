@@ -120,7 +120,9 @@ define([
 
         // 저장 버튼 클릭
         $scope.click_saveProject = function () {
+//            $scope.item.FILE = $scope.queue;
             $scope.item.FILE = $scope.file;
+
             if ($stateParams.id == 0) {
                 $scope.insertItem('cms/project', 'item', $scope.item, false)
                     .then(function(){$location.url('/project/list');})
