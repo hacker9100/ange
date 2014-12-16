@@ -6,7 +6,7 @@
 
             <li class="{{portletCss}}" style="background: #333; border-color: #333">
                 {{ portletTitle }}
-                <span class="btn custom-btn-more" title="더보기"> <span ng-click="click_showList();" class="glyphicon glyphicon-plus"></span> MORE </span>
+                <span class="btn custom-btn-more" ng-click="click_showList();" title="더보기"> <span  class="glyphicon glyphicon-plus"></span> MORE </span>
             </li>
 
             <a ng-click="click_showView(item.NO)" class="list-group-item list-group-item-green" ng-repeat="item in list" style="cursor:pointer; margin:0; border: none; border-bottom:1px dotted #888; ">
