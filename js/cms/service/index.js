@@ -9,5 +9,5 @@ define([
 //    './contentsService',
 
     // 공통
-    './dataService'
+    './data-service.min'
 ], function () {});

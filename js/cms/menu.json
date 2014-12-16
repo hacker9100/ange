@@ -8,25 +8,25 @@
             "url": "/signin",
             "templateUrl": "/partials/cms/signin.html",
             "controller": "signin"
-        }},{ "forgot_idpw": {
-            "url": "/forgot_idpw",
-            "templateUrl": "/partials/cms/forgot_idpw.html",
-            "controller": "forgot_idpw"
+        }},{ "forgot-idpw": {
+            "url": "/forgot-idpw",
+            "templateUrl": "/partials/cms/forgot-idpw.html",
+            "controller": "forgot-idpw"
         }},{ "cms_list": {
             "url": "/:menu/:type",
-            "templateUrl": "/partials/cms/cms_common.html",
-            "controller": "cms_common"
+            "templateUrl": "/partials/cms/com/cms-common.html",
+            "controller": "cms-common"
         }},{ "cms_edit": {
             "url": "/:menu/:type/:id",
-            "templateUrl": "/partials/cms/cms_common.html",
-            "controller": "cms_common"
+            "templateUrl": "/partials/cms/com/cms-common.html",
+            "controller": "cms-common"
         }}, { "test": {
             "url": "/test",
             "views": {
-                "" : { "templateUrl": "/partials/cms/cms_common.html", "controller": "cms_common" },
+                "" : { "templateUrl": "/partials/cms/com/cms-common.html", "controller": "cms-common" },
                 "lnbView@test": { "templateUrl": "/partials/cms/lnb.html", "controller": "lnb" },
                 "locaterView@test": { "templateUrl": "/partials/cms/locater.html", "controller" : "locater" },
-                "contentView@test": { "templateUrl": "/partials/cms/task_edit.html", "controller" : "task_edit" }
+                "contentView@test": { "templateUrl": "/partials/cms/task-edit.html", "controller" : "task-edit" }
             }
         }}
     ]

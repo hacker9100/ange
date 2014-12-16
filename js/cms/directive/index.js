@@ -12,9 +12,9 @@ define([
     './cms_main_directive',
     './cms_portlet_directive',
 
-    './validationDirective',
-    './dropdownSelectDirective',
-    './focusDirective'//,
+    './validation-directive',
+    './dropdown-select-directive',
+    './focus-directive'//,
 //    './plUploadDirective'
 ], function (){
 

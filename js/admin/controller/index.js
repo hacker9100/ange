@@ -7,7 +7,7 @@
 
 define([
     // Component Test
-//    '../../../partials/admin/portlet_list',
+//    '../../../partials/admin/portlet-list',
 
     // ADMIN 공통
     '../../../partials/admin/admin_common',

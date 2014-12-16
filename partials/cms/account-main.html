@@ -1,0 +1,81 @@
+<!-- Contents Include -->
+<div class="col-md-12" ng-controller="account-main">
+
+    <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+        <div ng-model="item" class="row form_basic_wrap">
+            <div class="form-group form_basic_group" ng-class="{error: edit_form.item_id.$invalid}">
+                <label class= "form_basic_label">아이디 <span style="color:#b94a48">*</span></label>
+                <div class="form_basic_input">
+                    <input name="item_id" ng-model="item.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디" ng-readonly="{{true}}" required/>
+                    <span ng-show="edit_form.$submitted && edit_form.item_id.$dirty && edit_form.item_id.$invalid" class="help-inline">사용자 아이디가 누락되었습니다.</span>
+                </div>
+            </div>
+            <div class="form-group form_basic_group" ng-class="{error: edit_form.item_name.$dirty && edit_form.item_name.$invalid}">
+                <label class= "form_basic_label">이름 <span style="color:#b94a48">*</span></label>
+                <div class="form_basic_input">
+                    <input name="item_name" ng-model="item.USER_NM" type= "text" class= "form-control" placeholder="사용자 이름" required/>
+                    <span ng-show="edit_form.item_name.$dirty && edit_form.item_name.$invalid" class="help-inline">사용자 이름이 누락되었습니다.</span>
+                </div>
+            </div>
+            <div class="form-group form_basic_group" ng-class="{error: edit_form.password.$invalid}">
+                <label class= "form_basic_label">비밀번호</label>
+                <div class="form_basic_input">
+                    <input id="password" name="password" ng-model="item.PASSWORD" type= "password" class= "form-control" placeholder= "사용자 비밀번호"/>
+                </div>
+            </div>
+            <div class="form-group form_basic_group" ng-class="{error: edit_form.password_compare.$invalid}">
+                <label class= "form_basic_label">비밀번호 확인</label>
+                <div class="form_basic_input">
+                    <input name="passwordCompare" ng-model="item.PASSWORD_CP" type= "password" class= "form-control" password-check="password"  ng-match="item.PASSWORD" placeholder= "사용자 비밀번호 확인"/>
+                    <!--<span ng-show="edit_form.passwordCompare.$dirty && edit_form.passwordCompare.$invalid" class="help-inline">확인 비밀번호가 누락되었습니다.</span>-->
+                    <span ng-show="edit_form.password.$touched || ( edit_form.passwordCompare.$dirty && edit_form.passwordCompare.$error.pwmatch )" class="help-inline">비밀번호가 일치하지 않습니다.</span>
+                </div>
+            </div>
+            <div class="form-group form_basic_group">
+                <label class= "form_basic_label">연락처</label>
+                <div class="form_basic_input">
+                    <input name="phone" ng-model="item.PHONE_1" type= "text" maxlength="15" ng-pattern="/^\d{0,15}(\.\d{1,9})?$/" class= "form-control" placeholder= "사용자 연락처"/>
+                    <span ng-show="edit_form.phone.$invalid" class="help-inline">숫자만 입력 가능합니다.</span>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">회신메일</label>
+                <div class="form_basic_input">
+                    <input name="email" ng-model="item.EMAIL" type= "email" class= "form-control" placeholder= "사용자 이메일"/>
+                    <span ng-show="edit_form.email.$error.email" class="help-inline">이메일 형식이 맞지 않습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">소개</label>
+                <div class= "col-xs-6 form_basic_input" style="min-width:610px;">
+                    <textarea ng-model="item.INTRO" class= "form-control" placeholder= "소개.."/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group" style="padding-top:15px;">
+                <label class= "form_basic_label">메모</label>
+                <div class= "col-xs-6 form_basic_input" style="min-width:610px;">
+                    <textarea ng-model="item.NOTE" class= "form-control" placeholder= "메모.."/>
+                </div>
+            </div>
+
+            <!-- 하단 버튼 -->
+            <div class="raw" style="float:left; width:100%; margin-top:50px; padding-top:10px; border-top:1px solid #DEDEDE;">
+                <div class="col-xs-12 form-group form_basic" style="text-align:center;">
+                    <button type="submit" class="btn btn-primary btn-xs start" ng-click="click_saveCmsUser();" ng-disabled="edit_form.$invalid">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>수정</span>
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs cancel" ng-click="click_cancel();">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>취소</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+
+</div>
+<!-- ////Contents Include -->
+

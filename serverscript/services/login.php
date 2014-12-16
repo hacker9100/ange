@@ -58,7 +58,7 @@
                 $msg = "";
 
                 $sql = "SELECT
-                            U.USER_ID, U.USER_NM, U.EMAIL, UR.ROLE_ID, U.PASSWORD, U.USER_ST
+                            U.USER_ID, U.USER_NM, U.NICK_NM, U.EMAIL, UR.ROLE_ID, U.PASSWORD, U.USER_ST
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -139,6 +139,7 @@
                         session_start();
                     }
                     $_SESSION['uid'] = $data['USER_ID'];
+                    $_SESSION['nick'] = $data['NICK_NM'];
                     $_SESSION['name'] = $data['USER_NM'];
                     $_SESSION['role'] = $data['ROLE_ID'];
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
@@ -153,10 +154,11 @@
 
                 $sess = array();
 
-                if(isset($_SESSION['timeout']) && time() - $_SESSION['timeout'] > 1800) {
+                if(isset($_SESSION['timeout']) && time() - $_SESSION['timeout'] > SESSION_TIMEOUT) {
                     if(isset($_SESSION['uid']))
                     {
                         unset($_SESSION['uid']);
+                        unset($_SESSION['nick']);
                         unset($_SESSION['name']);
                         unset($_SESSION['role']);
                         unset($_SESSION['menu_role']);
@@ -166,6 +168,7 @@
                     if(isset($_SESSION['uid']))
                     {
                         $sess['USER_ID'] = $_SESSION['uid'];
+                        $sess['NICK_NM'] = $_SESSION['nick'];
                         $sess['USER_NM'] = $_SESSION['name'];
                         $sess['ROLE_ID'] = $_SESSION['role'];
                         $sess['MENU_ROLE'] = $_SESSION['menu_role'];
@@ -175,6 +178,7 @@
                     else
                     {
                         $sess['USER_ID'] = '';
+                        $sess['NICK_NM'] = 'Guest';
                         $sess['USER_NM'] = 'Guest';
                         $sess['ROLE_ID'] = '';
                         $sess['MENU_ROLE'] = '';
@@ -220,6 +224,7 @@
                 $_d->sql_query($sql);
 
                 unset($_SESSION['uid']);
+                unset($_SESSION['nick']);
                 unset($_SESSION['name']);
                 unset($_SESSION['role']);
                 unset($_SESSION['menu_role']);

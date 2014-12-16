@@ -5,8 +5,8 @@
  * Description : 사용할 모든 filter를 로드
  */
 define([
-    './split_filter',
-    './string_limit_filter',
-    './formatFileSizeFilter',
-    './reverseUppercaseFilter'
+    './split-filter',
+    './string-limit-filter',
+    './format-filesize-filter',
+    './reverse-uppercase-filter'
 ], function () {});

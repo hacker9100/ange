@@ -1,0 +1,151 @@
+<!-- Contents Include -->
+<div class="col-md-12" ng-controller="project-edit">
+
+    <div ng-model="item" class="row form_basic_wrap">
+        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.subject.$invalid}">
+                <label class= "form_basic_label">시리즈</label>
+                <div class="form_basic_input">
+                    <select ng-model="TYPE" class= "form-control">
+                        <option name="" value="1">정기 출판</option>
+                        <option name="" value="2">비정기 출판(상시)</option>
+                    </select>
+                </div>
+                <div class="form_basic_input" style="margin-left:300px;">
+                    <select ng-model="item.SERIES" ng-options="v.SERIES_NM for v in arr_series" class= "form-control" ></select>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.subject.$invalid}">
+                <label class= "form_basic_label">호제</label>
+                <div class="form_basic_input">
+                    <input name="subject" ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder="프로젝트 호제" required/>
+                    <span ng-show="edit_form.subject.$dirty && edit_form.subject.$invalid" class="help-inline">프로젝트 호제가 누락되었습니다.</span>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">귀속연도</label>
+                <div class="form_basic_input">
+                    <select ng-model="item.YEAR" ng-options="v for v in years" class= "form-control" ></select>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.isbn.$invalid}">
+                <label class= "form_basic_label">ISBN 번호</label>
+                <div class="form_basic_input">
+                    <input name="isbn" ng-model="item.ISBN_NO" type= "text" ng-pattern="/^\d{0,15}(\.\d{1,9})?$/" class= "form-control" placeholder="ISBN 번호"/>
+                    <span ng-show="edit_form.isbn.$invalid" class="help-inline">숫자만 입력 가능합니다.</span>
+                </div>
+            </div>
+        </form>
+            <!--<div class= "form-group">-->
+                <!--<label class= "col-md-2">등록자 ID</label>-->
+                <!--<div class="col-md-4">-->
+                    <!--<input ng-model="item.REG_UID" type= "text" class= "form-control" placeholder= "등록자 ID"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class= "form-group">-->
+                <!--<label class= "col-md-2">등록자명</label>-->
+                <!--<div class="col-md-4">-->
+                    <!--<input ng-model="item.REG_NM" type= "text" class= "form-control" placeholder= "등록자 명"/>-->
+                <!--</div>-->
+            <!--</div>-->
+        <form id="fileupload1" method="POST" enctype="multipart/form-data" data-file-upload="options">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">표지이미지</label>
+                <div class="row" style="margin-left:110px;">
+                    <div class="col-sm-2" ng-show="!!file.thumbnailUrl">
+                        <div ng-model="file" class="preview">
+                            <img data-ng-src="{{file.thumbnailUrl}}" alt="">
+                        </div>
+                        <div class="col-lg-5 fade" data-ng-class="{in: active()}">
+                            <!-- The global progress bar -->
+                            <div class="progress progress-striped active" data-file-upload-progress="progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>
+                            <!-- The extended global progress state -->
+                            <div class="progress-extended">&nbsp;</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div id="dropzone1" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">
+                            이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />
+                            (gif, jpg, png만 등록 가능)
+                        </div>
+                    </div>
+                    <div class="col-sm-2 files">
+                        <!-- The fileinput-button span is used to style the file input field as button -->
+                            <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>탐색기</span>
+                                <input type="file" name="files[]" ng-disabled="disabled">
+                            </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+            <!--<div class= "form-group form_basic_group">-->
+                <!--<label class= "form_basic_label">표지이미지2</label>-->
+                <!--<div class="row" style="margin-left:110px;">-->
+                    <!--<div class="col-sm-2" ng-show="!!file.thumbnailUrl && file.kind == 'title2'">-->
+                        <!--<div ng-model="file2" class="preview">-->
+                            <!--<img data-ng-src="{{file.thumbnailUrl}}" alt="">-->
+                        <!--</div>-->
+                        <!--<div class="col-lg-5 fade" data-ng-class="{in: active()}">-->
+                            <!--&lt;!&ndash; The global progress bar &ndash;&gt;-->
+                            <!--<div class="progress progress-striped active" data-file-upload-progress="progress()"><div class="progress-bar progress-bar-success" data-ng-style="{width: num + '%'}"></div></div>-->
+                            <!--&lt;!&ndash; The extended global progress state &ndash;&gt;-->
+                            <!--<div class="progress-extended">&nbsp;</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<form id="fileupload2" name="title2" method="POST" enctype="multipart/form-data" data-file-upload="options" ng-upload="callbackFunction1">-->
+                        <!--<div class="col-sm-8">-->
+                            <!--<div id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">-->
+                                <!--이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />-->
+                                <!--(gif, jpg, png만 등록 가능)-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-sm-2 files">-->
+                            <!--&lt;!&ndash; The fileinput-button span is used to style the file input field as button &ndash;&gt;-->
+                            <!--<span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">-->
+                                <!--<i class="glyphicon glyphicon-plus"></i>-->
+                                <!--<span>탐색기</span>-->
+                                <!--<input type="file" name="files[]" ng-disabled="disabled">-->
+                            <!--</span>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">설명</label>
+                <div class= "col-xs-6 form_basic_input">
+                    <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 개요.."/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group" ng-show="item.NO">
+                <label class= "form_basic_label"></label>
+                <div class="form_basic_input">
+                    <input ng-model="item.COMPLETE_FL" type="checkbox"> 이 프로젝트의 모든 콘텐츠 등록이 완료되었습니다.
+                </div>
+            </div>
+
+
+        <!-- 하단 버튼 -->
+        <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+            <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showProjectList();" >
+                    <i class="glyphicon glyphicon-list"></i>
+                    <span>목록</span>
+                </button>
+            </div>
+            <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveProject();" ng-disabled="edit_form.$invalid">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>저장</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- ////Contents Include -->
+

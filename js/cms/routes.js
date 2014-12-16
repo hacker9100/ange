@@ -64,15 +64,5 @@ define([
         });
     });
 
-//    app.controller('test', function($rootScope) {
-//        alert($rootScope.cms_channel)
-//        stateProvider.state("cms_list", {
-//            "url": "/:menu/:type",
-//            "views": {
-//                "" : { templateUrl: "/partials/cms/cms_common.html", controller: "cms_common" },
-//                "contentView@cms_list": { templateUrl: function($stateParams) { return '/partials/cms/'+$stateParams.menu+'_'+$stateParams.type+'.html' }}
-//            }});
-//    });
-
     return app;
 });

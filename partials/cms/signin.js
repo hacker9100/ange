@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : series_main.html 화면 콘트롤러
+ * Description : series-main.html 화면 콘트롤러
  */
 
 define([
@@ -14,7 +14,7 @@ define([
     controllers.controller('signin', ['$scope', '$rootScope', '$location', '$controller', 'dialogs', function ($scope, $rootScope, $location, $controller, dialogs) {
 
         /********** 공통 컨트롤러 호출 **********/
-        angular.extend(this, $controller('cms_common', {$scope: $scope}));
+        angular.extend(this, $controller('cms-common', {$scope: $scope}));
 
         /********** 초기화 **********/
         $scope.item = {};
@@ -25,7 +25,7 @@ define([
 
         /********** 이벤트 **********/
         $scope.click_lostAccount = function () {
-            $location.url('/forgot_idpw');
+            $location.url('/forgot-idpw');
         };
 
         $scope.loginMe = function () {

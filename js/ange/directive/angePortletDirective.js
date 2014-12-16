@@ -15,9 +15,9 @@ define(['./directives'], function (directives) {
             templateUrl: function(element, attr) {
                 return 'partials/cms/'+attr.type+'_list.html';
             },
-            controller: 'portlet_list',
+            controller: 'portlet-list',
 //            controller: function($scope, $location) {
-//                angular.extend(this, $controller('cms_common', {$scope: $scope}));
+//                angular.extend(this, $controller('cms-common', {$scope: $scope}));
 //
 //                /********** 초기화 **********/
 //                // 초기화

@@ -1,0 +1,212 @@
+<!-- Contents Include -->
+<div class="col-md-12" ng-controller="project-view">
+
+    <div ng-model="item" class="row form_basic_wrap">
+        <form id="fileupload" role="form" name="edit_from" class="form-horizontal form_basic_100" method="POST" enctype="multipart/form-data" data-file-upload="options">
+
+            <div class= "form-group form_basic_group" ng-class="{error: edit_from.subject.$invalid}">
+                <label class= "col-md-2">시리즈</label>
+                <div class="form_basic_input">
+                    <span ng-bind="item.SERIES.SERIES_NM" />
+                </div>
+            </div>
+            <div class= "form-group form_basic_group" ng-class="{error: edit_from.subject.$invalid}">
+                <label class= "col-md-2">호제</label>
+                <div class="form_basic_input">
+                    <span ng-bind="item.SUBJECT" />
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "col-md-2">귀속연도</label>
+                <div class="form_basic_input">
+                    <span ng-bind="item.YEAR" />
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "col-md-2">표지이미지</label>
+                <div ng-model="file" class="row form_basic_input" style="margin-left:110px;"> <!-- class="row" style="margin-left:110px;" -->
+                    <img data-ng-src="{{file.thumbnailUrl}}" alt="">
+                </div>
+                <div ng-show="file == ''">이미지 없음</div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "col-md-2">설명</label>
+                <div class= "col-xs-6 form_basic_input">
+                    <span ng-bind="item.NOTE" />
+                </div>
+            </div>
+        </form>
+
+        <div class="row" style="margin:0; margin-top:10px;">
+            <div class="list-group-item-labeling-gray">
+                <strong>Task List</strong>
+
+                <div class="list-group" style="float:right; margin-bottom: 0;">
+                    <div style="text-align:left; font-size:0.8em; font-family: Arial, sans-serif; padding-top:2px;">
+                        Total &nbsp; <span style="color:#fff; font-size:1.1em; ">{{TOTAL_COUNT}}</span> &nbsp; task(s)
+                    </div>
+                </div>
+
+                <!--<span class="btn custom-btn-more" style="float:right;"> <span ng-click="click_showTaskList();" class="glyphicon glyphicon-plus"></span> MORE</span>-->
+            </div>
+            <!--<div id="veil" ng-show="isLoading"></div>-->
+            <!--<div id="feedLoading" ng-show="isLoading"><img src="../imgs/loading3.gif"/></div>-->
+
+            <!-- Contents Include -->
+            <div ng-show="isLoading" style="position: absolute; margin-top: 10px; left: 48%; z-index: 1000" class="ai-circled ai-indicator ai-grey-spin"></div>
+            <div ng-show="list == ''" class="list-group" style="height: 260px; margin:0 auto; text-align: center; padding-top: 100px; font-weight: bold; border:1px solid #333;">
+                조회 데이터가 없습니다.
+            </div>
+
+            <!-- Task list -->
+            <accordion close-others="oneAtATime" style="margin:0;">
+                <accordion-group is-open="status.open" style="border-radius:10px;" ng-repeat="item in list">
+                    <div class="task_progress_wrap">
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '0', 'task_progress' : item.PHASE != '0'}">태스크등록</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '10', 'task_progress' : item.PHASE != '10'}">원고작성</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '11', 'task_progress' : item.PHASE != '11'}">원고승인</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '12', 'task_progress' : item.PHASE != '12'}">원고반려</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '13', 'task_progress' : item.PHASE != '13'}">원고승인완료</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '20', 'task_progress' : item.PHASE != '20'}">편집작성</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '21', 'task_progress' : item.PHASE != '21'}">편집승인</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '22', 'task_progress' : item.PHASE != '22'}">편집반려</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                        <!-- span class="label label-default task_progress" ng-class="{'label-danger' : item.PHASE == '23'}">편집승인완료</span -->
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '30', 'task_progress' : item.PHASE != '30'}">출판대기</span><span class="glyphicon glyphicon-chevron-right task_progress_arrow"></span>
+                        <span class="label label-default" ng-class="{'label-danger' : item.PHASE == '31', 'task_progress' : item.PHASE != '31'}">완료</span>
+                    </div>
+                    <!-- Task Head -->
+                    <!-- accordion-heading style="clear:both; padding:0;" -->
+                    <accordion-heading style="border-radius:4px;">
+                        <div class="row" style="height:100%;">
+                            <div class="col-md-12" style="position:relative; padding:5px; margin:0; cursor:pointer;">
+                                <a data-toggle="collapse" style="color:#333">
+                                    <div class="panel-title" style="height:100%; font-size:0.68em; line-height:18px;">
+                                        <div class="col-xs-3 task-col-series">
+                                            <span style="font-size:1.16em;">{{ item.SERIES_NM }}</span><br />
+                                            <span style="font-size:0.98em;">[{{ item.PROJECT_NM }}]</span>
+                                        </div>
+                                        <div class="col-xs-4 task-col-title">
+                                            {{ item.SUBJECT }}
+                                        </div>
+                                        <div class="col-xs-1 task-col-manager">
+                                            <span style="color:#FFF;">담당:{{ item.EDITOR_NM }}</span><br />
+                                            <span style="color:#ccc;">관리:{{ item.REG_NM }}</span>
+                                        </div>
+                                        <div class="col-xs-2 task-col-date">
+                                            <span style="color:#ccc;">{{item.REG_DT}} 등록</span><br />
+                                            <span style="color:yellow; font-weight:bold;">{{item.CLOSE_YMD}} 마감</span>
+                                        </div>
+                                        <div class="col-xs-2 task-col-step">
+
+                                        <span class="badge" ng-class="{'step1' : item.PHASE == '0', 'step2' : item.PHASE == '10', 'step3' : item.PHASE == '11', 'step4' : item.PHASE == '12', 'step5' : item.PHASE == '13', 'step6' : item.PHASE == '20', 'step7' : item.PHASE == '21', 'step8' : item.PHASE == '22', 'step9' : item.PHASE == '23', 'step10' : item.PHASE == '30', 'step0' : item.PHASE == '31'}">
+                                        {{
+                                        item.PHASE == '0' ? '태스크등록' :
+                                        item.PHASE == '10' ? '원고작성' :
+                                        item.PHASE == '11' ? '원고승인대기' :
+                                        item.PHASE == '12' ? '원고반려' :
+                                        item.PHASE == '13' ? '원고승인완료' :
+                                        item.PHASE == '20' ? '편집작성' :
+                                        item.PHASE == '21' ? '편집승인대기' :
+                                        item.PHASE == '22' ? '편집반려' :
+                                        item.PHASE == '23' ? '편집승인완료' :
+                                        item.PHASE == '30' ? '출판대기' :
+                                        '완료'
+                                        }}
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-up': status.open, 'glyphicon-chevron-down': !status.open}" style="position:absolute; top: 15px; right:10px;"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </accordion-heading>
+                    <!-- //Task Head -->
+
+                    <div class="col-md-12" style="position:relative;">
+                        <div class="row" class="form-horizontal" style="float:left; margin:0px auto; width:100%;">
+
+                            <div class="col-xs-6 form-group form_basic">
+                                <label class="form_label">담당기자</label>
+                                <div class="form_valueText">{{ item.EDITOR_NM }}</div>
+                            </div>
+                            <div class="col-xs-6 form-group form_basic">
+                                <label class="form_label">생성일</label>
+                                <div class="form_valueText">{{ item.REG_DT }}</div>
+                            </div>
+
+                            <div class="col-xs-6 form-group form_basic">
+                                <label class="form_label">카테고리</label>
+                                <!--<pre>{{item.CATEGORY|json}}</pre>-->
+                                <div class="balls_group">
+                                    <div class="bnt_ball_group" ng-repeat="category in item.CATEGORY">
+                                        <button type="button" class="btn btn-default cate_ball_normal">
+                                            {{ category.CATEGORY_NM }}
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xs-6 form-group form_basic">
+                                <label class="form_label">태그</label>
+                                <div class="balls_group">
+                                    <div class="btn-group bnt_ball_group" ng-repeat="tag in item.TAG | split:','">
+                                        <button type="button" class="btn btn-default tag_ball_normal">
+                                            {{ tag }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 form-group form_basic">
+                                <label class="form_label">설명</label>
+                                <div class="form_valueText">{{ item.NOTE }}</div>
+                            </div>
+
+                            <div class="raw" style="float:left; width:100%; padding-top:10px; border-top:1px solid #DEDEDE;">
+                                <div class="col-xs-6 form-group form_basic">
+                                    <button type="button" class="btn btn-info btn-xs start" ng-click="click_showGetHistory(item.NO);">
+                                        <i class="glyphicon glyphicon-list-alt"></i>
+                                        <span>History</span>
+                                    </button>
+                                </div>
+                                <div class="col-xs-6 form-group form_basic" style="text-align:right;">
+                                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showTaskView(item.NO);" ng-show="item.PHASE == '0'">
+                                        <i class="glyphicon glyphicon-folder-open"></i>
+                                        <span>태스크 정보</span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item);" ng-show="item.PHASE != '0'">
+                                        <i class="glyphicon glyphicon-book"></i>
+                                        <span>원고 조회</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </accordion-group>
+            </accordion>
+            <!-- //Task list -->
+
+        </div>
+
+        <!-- 하단 버튼 -->
+        <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+            <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showProjectList();" >
+                    <i class="glyphicon glyphicon-list"></i>
+                    <span>목록</span>
+                </button>
+            </div>
+            <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showProjectEdit(item);" ng-disabled="!(role == 'CMS_ADMIN' || role == 'MANAGER') && uid != item.REG_UID || item.PROJECT_ST == '3'">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>수정</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- ////Contents Include -->
+
