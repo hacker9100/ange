@@ -152,7 +152,7 @@
 
             $sql = "UPDATE CMS_CATEGORY
                     SET
-                        PARENT_NO = ".( isset($_model[PARENT]) && $_model[PARENT] != "" ? $_model[PARENT][NO] : 0 )."
+                        PARENT_NO = ".( isset($_model[PARENT_NO]) && $_model[PARENT_NO] != "" ? $_model[PARENT_NO] : 0 )."
                         ,CATEGORY_NM = '".$_model[CATEGORY_NM]."'
                         ,CATEGORY_GB = '".$_model[CATEGORY_GB]."'
                         ,CATEGORY_ST = '".$_model[CATEGORY_ST]."'
