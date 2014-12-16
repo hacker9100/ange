@@ -23,7 +23,7 @@ define(['./directives'], function (directives) {
                     }
                 }
 //                element.append('<div ng-include src=" \'/partials/cms/'+menu[1]+'_'+menu[2]+'.html\' "></div>');
-                element.append('<cms-body menu="'+menu[1]+'" type="'+menu[2]+'" controller-name="'+menu[1]+'_'+menu[2]+'"></cms-body>');
+                element.append('<cms-body menu="'+menu[1]+'" type="'+menu[2]+'" controller-name="'+menu[1]+'-'+menu[2]+'"></cms-body>');
             },
 //            templateUrl: function(element, attr) {
 //                alert(attr.menu);

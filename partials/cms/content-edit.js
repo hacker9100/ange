@@ -279,7 +279,7 @@ define([
 
         $scope.openHistoryModal = function (item, size) {
             var dlg = dialogs.create('/partials/cms/popup/history.html',
-                function($scope, $modalInstance, data) {
+                ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
                     $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
                         .catch(function(error){console.log(error);});
 
@@ -288,7 +288,7 @@ define([
                     $scope.click_ok = function () {
                         $modalInstance.close();
                     };
-                }, item, {size:size,keyboard: true}, $scope);
+                }], item, {size:size,keyboard: true}, $scope);
             dlg.result.then(function(){
 
             },function(){
@@ -422,13 +422,13 @@ define([
         // 미리보기 모달창
         $scope.openModal2 = function (content, size) {
             var dlg = dialogs.create('preview_modal.html',
-                function($scope, $modalInstance, data) {
+                ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
                     $scope.content = data;
 
                     $scope.click_ok = function () {
                         $modalInstance.close();
                     };
-                },content,{size:size,keyboard: true,backdrop: false},$scope);
+                }], content, {size:size,keyboard: true,backdrop: false}, $scope);
             dlg.result.then(function(){
 
             },function(){

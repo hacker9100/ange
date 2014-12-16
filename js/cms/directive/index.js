@@ -5,12 +5,12 @@
  * Description : 사용할 모든 directive를 로드
  */
 define([
-    './ckeditor_directive',
+    './ckeditor-directive',
 
-    './cms_layout_directive',
-    './cms_body_directive',
-    './cms_main_directive',
-    './cms_portlet_directive',
+    './cms-layout-directive',
+    './cms-body-directive',
+    './cms-main-directive',
+    './cms-portlet-directive',
 
     './validation-directive',
     './dropdown-select-directive',

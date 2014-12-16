@@ -38,7 +38,7 @@ require.config({
         'angular-i18n': '../../lib/angular/i18n/angular-locale_ko-kr', //
 
 ////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
-        'lodash' : '../../lib/dropdown_multiselect/lodash',
+        'lodash' : '../../lib/dropdown-multiselect/lodash',
 
         // ng-table 모듈
         'ng-table': '../../lib/ng-table/ng-table',

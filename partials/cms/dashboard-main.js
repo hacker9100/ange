@@ -47,12 +47,12 @@ define([
 
         // 이력조회 버튼 클릭
         $scope.click_showGetHistory = function (key) {
-            $scope.openModal({TASK_NO : key}, 'lg');
+            $scope.openHistoryModal({TASK_NO : key}, 'lg');
         };
 
-        $scope.openModal = function (item, size) {
+        $scope.openHistoryModal = function (item, size) {
             var dlg = dialogs.create('/partials/cms/popup/history.html',
-                function($scope, $modalInstance, data) {
+                ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
                     $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
                         .catch(function(error){console.log(error);});
 
@@ -61,7 +61,7 @@ define([
                     $scope.click_ok = function () {
                         $modalInstance.close();
                     };
-                }, item, {size:size,keyboard: true}, $scope);
+                }], item, {size:size,keyboard: true}, $scope);
             dlg.result.then(function(){
 
             },function(){
