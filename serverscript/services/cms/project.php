@@ -118,7 +118,7 @@
                         $search_where .= "AND YEAR  = '".$_search[YEAR]."' ";
                     }
                     if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                        $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                        $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' OR NOTE LIKE '%".$_search[KEYWORD]."%'";
                     }
 
                     if (isset($_search[SORT]) && $_search[SORT] != "") {
