@@ -75,6 +75,9 @@
                 </td>
              </tr>
              <tr ng-hide="group.$hideRows" ng-repeat="item in group.data">
+                 <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'시즌'" sortable="'SEASON_NM'">
+                    {{ item.SEASON_NM }}
+                 </td>
                 <td style="font-size:0.94em; line-height:38px;" data-title="'섹션명'" sortable="'SECTION_NM'">
                     <a style="cursor:pointer;" ng-click="click_getSection(item.NO)" title="{{ item.SECTION_NM + ' 수정하기' }}">{{item.SECTION_NM}}</a>
                 </td>
@@ -90,7 +93,7 @@
                 </td>
             </tr>
         </tbody>
-        <tbody ng-show="$groups == ''">
+        <tbody ng-show="$groups == '' || $groups == null">
         <tr>
             <td colspan="3" style="text-align: center">조회 데이터가 없습니다.</td>
         </tr>
