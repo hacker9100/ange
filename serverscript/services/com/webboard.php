@@ -136,7 +136,7 @@
                 $search_where = $search_common;
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' OR BODY LIKE '%".$_search[KEYWORD]."%'";
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
