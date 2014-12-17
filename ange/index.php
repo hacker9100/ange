@@ -104,6 +104,9 @@
 <link rel="stylesheet" type="text/css" href="/css/ange/angeCMS_bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/css/ange/style.css" />
 
+<!-- image slide 슬라이드 css 추가 -->
+<link rel="stylesheet" type="text/css" href="/css/ange/slider.css"/>
+
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
 <link rel="stylesheet" href="/css/file-upload/blueimp-gallery.css">
@@ -179,6 +182,8 @@
 <script src="/lib/respond/respond.min.js"></script>
 <![endif]-->
 
+
+<script src="/lib/dropdown-multiselect/lodash.js"></script>
 <script>
     function ange_init($rootScope) {
         $rootScope.ange_channel = <?=$channel_info?>;
