@@ -62,6 +62,7 @@ define([
                         $scope.category_a = category_a;
                         $scope.category_b = category_b;
                     }),
+                    $scope.getList('cms/section', 'list', {}, {YEAR: ''}, false).then(function(data){$scope.projects = data;}),
                     $scope.getList('cms/section', 'list', {}, {ROLE: true}, false).then(function(data){$scope.seasons = data;}),
                     $scope.getList('cms/section', 'list', {}, {}, false).then(function(data){$scope.sections = data;})
                 ])
@@ -116,24 +117,56 @@ define([
             $scope.CATEGORY.splice(idx, 1);
         }
 
+        /*// 연도 변경 선택
+         $scope.$watch('YEAR', function (data) {
+         if (data != null) {
+         $scope.getList('cms/project', 'list', {}, {YEAR: $scope.YEAR}, false)
+         .then(function(data){
+         $scope.projects = data;
+
+         //if ($scope.item.PROJECT_NO != undefined) {
+         // 프로젝트
+         angular.forEach($scope.projects,function(value, idx){
+
+         console.log('value.NO = '+value.NO);
+
+         if(value.NO == $scope.item.PROJECT){
+         $scope.item.PROJECT = $scope.projects[idx];
+         return;
+         }else{
+         $scope.item.PROJECT = $scope.projects[idx];
+
+         console.log('$scope.item.PROJECT = '+$scope.item.PROJECT);
+         }
+
+         });
+
+         console.log('end');
+         //}
+         })
+         .catch(function(error){console.log(error)});
+         }
+         });*/
+
         // 연도 변경 선택
         $scope.$watch('YEAR', function (data) {
             if (data != null) {
                 $scope.getList('cms/project', 'list', {}, {YEAR: data}, false)
                     .then(function(data){
+
                         $scope.projects = data;
 
-                        if ($scope.item.PROJECT_NO != undefined) {
-                            // 프로젝트
-                            angular.forEach($scope.projects,function(value, idx){
-                                if(value.NO == $scope.item.PROJECT_NO){
-                                    $scope.item.PROJECT = $scope.projects[idx];
-                                    return;
-                                }
-                            });
+                        if($stateParams.id == 0) { // 등록할 때 섹션명 리스트 조회하여 첫번째값으로 셋팅
+                            $scope.item.PROJECT = data[0]
+                        } else { // 수정할때 섹션명 리스트를 조회 한 후 해당 섹션명을 선택 후 셋팅
+                            for(var i=0; i < $scope.projects.length; i ++){
+                               $scope.item.PROJECT = $scope.projects[i];
+                            }
                         }
-                    })
-                    .catch(function(error){console.log(error)});
+                })
+                .catch(function(error){$scope.projects = []; console.log(error)});
+            } else {
+                $scope.getList('cms/project', 'list', {}, {YEAR: ''}, false).then(function(data){$scope.projects = data;})
             }
         });
 
@@ -155,7 +188,7 @@ define([
                     $scope.YEAR = data.YEAR;
 
                     // 프로젝트
-                    angular.forEach($scope.projects,function(value, idx){
+                   angular.forEach($scope.projects,function(value, idx){
                         if(value.NO == data.PROJECT_NO){
                             $scope.item.PROJECT = $scope.projects[idx];
                             return;
