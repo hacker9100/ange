@@ -15,7 +15,7 @@ define([
     );
     app.constant(
         "ADMIN", {
-            "SYSTEM_GB" : "ADMIN",
+            "SYSTEM_GB" : "ANGE",
             "" : ""
         }
     );
