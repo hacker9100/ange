@@ -1,3 +1,63 @@
+<div style="width: 400px; height:250px; float:left;">
+    <tabset>
+        <tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
+            <table style="width:80%">
+                <thead>
+                <tr>
+                    <th width="50%">제목</th>
+                    <th width="30%">작성자</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="bbs in tab.content">
+                    <td>{{bbs.subject}}</td>
+                    <td>{{bbs.regNm}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </tab>
+    </tabset>
+</div>
+
+<div style="width: 400px; height:250px; margin-left:20px; float:left;">
+    <tabset>
+        <tab ng-repeat="tab in tabs1" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
+            <table style="width:80%">
+                <thead>
+                <tr>
+                    <th width="50%">제목</th>
+                    <th width="30%">작성자</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-ng-repeat="bbs in tab.content">
+                    <td>{{bbs.subject}}</td>
+                    <td>{{bbs.regNm}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </tab>
+    </tabset>
+</div>
+
+<div>
+    <slider images="images"/>
+</div>
+
+<!--<div>
+    <slider images="images1"/>
+</div>-->
+<div style="width:450px; height:250px;">
+    <carousel interval="myInterval">
+        <slide ng-repeat="slideCollection in groupedSlides" active="slide.active">
+            <div>
+                <img ng-src="{{slideCollection.slide1.src}}" style="width:135;height:100px;">
+                <img ng-src="{{slideCollection.slide2.src}}" style="width:135;height:100px;">
+            </div>
+        </slide>
+    </carousel>
+</div>
+
 <div class="panel panel-primary">
     <div class="panel-body" ng-model="search" lass="row">
 

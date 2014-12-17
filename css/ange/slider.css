@@ -1,0 +1,147 @@
+/**{
+    font-family: 'Open Sans', sans-serif;
+}*/
+/*.center-grey{
+    background:#f2f2f2;
+}*/
+.slider{
+    position: relative;
+    padding:1px;
+    width:400px;
+    height:200px;
+    /*margin: auto;*/
+   /* margin-top: 40px;*/
+    overflow: hidden;
+    background: #e6e6e6;
+    border: 20px solid #FFF;
+
+}
+.slide{
+    position:absolute;
+    top:0;
+    left:0;
+    box-shadow: 0px 0px 15px #999;
+}
+
+.arrows{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.arrows img{
+    width: 20px;
+    height: 32px;
+}
+
+h1{
+    text-align: center;
+    padding: 10px;
+    font-size: 40px;
+    color: #222;
+}
+
+.slide.ng-hide-add, .slide.ng-hide-remove {
+    -webkit-transition:all linear 0.5s;
+    -moz-transition:all linear 0.5s;
+    -o-transition:all linear 0.5s;
+    transition:all linear 0.5s;
+    display:block!important;
+}
+
+.slide.ng-hide-add.ng-hide-add-active,.slide.ng-hide-remove {
+    opacity:0;
+}
+
+.slide.ng-hide-add,.slide.ng-hide-remove.ng-hide-remove-active {
+    opacity:1;
+}
+
+/*---------------------------------------------------------
+NAV
+---------------------------------------------------------*/
+
+
+.nav1 {
+    text-align: center;
+    display: block;
+    position: absolute;
+    z-index: 1002;
+    left: 0;
+    bottom: -4px;
+    right: 0;
+    height: 48px;
+}
+
+.nonDraggableImage{
+    -webkit-user-drag: none;
+}
+
+.nav1 .wrapper {
+    margin: 0 auto;
+    width: 100%;
+    padding: 1em 0 .8em;
+}
+
+.nav1 ul {
+    margin: 0;
+    width: 100%;
+}
+
+.nav1 .dot, .nav1 .dot a {
+    display: inline-block;
+    zoom: 1;
+}
+
+.dots .dot {
+    position: relative;
+    margin: 0 8px;
+    width: 12px;
+    height: 12px;
+}
+
+.dots .dot a {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 6px;
+    height: 6px;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    background: #FFF;
+    border: 1px solid transparent;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -webkit-transition: background-color 0.25s, border-color 0.25s;
+    -moz-transition: background-color 0.25s, border-color 0.25s;
+    transition: background-color 0.25s, border-color 0.25s;
+}
+
+
+/*---------------------------------------------------------
+CAROUSEL
+---------------------------------------------------------*/
+.display-mode {
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.display-mode span {
+    display: inline-block;
+    height: 1px;
+    width: 1px;
+}
+
+a.active {
+    border-color: #FFF;
+    background-color: transparent;
+}
+

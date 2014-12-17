@@ -10,7 +10,9 @@ define([
     './validationDirective',
     './dropdownSelectDirective',
     './ckEditorDirective',
-    './focusDirective'//,
+    './focusDirective',
+    './animateDirective',
+    './displayDirective'//,
 //    './plUploadDirective'
 ], function (){
 

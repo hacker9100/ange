@@ -28,9 +28,9 @@ define([
     // CMS 콘텐츠
     '../../../partials/cms/project-list.min',
     '../../../partials/cms/project-edit.min',
-    '../../../partials/cms/project-view.min',
+    '../../../partials/cms/project-view',
     '../../../partials/cms/task-list.min',
-    '../../../partials/cms/task-edit.min',
+    '../../../partials/cms/task-edit',
     '../../../partials/cms/task-view.min',
     '../../../partials/cms/content-edit.min',
     '../../../partials/cms/content-view.min',
