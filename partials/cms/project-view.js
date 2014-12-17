@@ -39,6 +39,35 @@ define([
             history.back();
         };
 
+        // 태스크 조회 화면 이동
+        $scope.click_showTaskView = function (key) {
+            $location.url('/task/view/'+key);
+        };
+
+        // 이력조회 버튼 클릭
+        $scope.click_showGetHistory = function (key) {
+            $scope.openHistoryModal({TASK_NO : key}, 'lg');
+        };
+
+        $scope.openHistoryModal = function (item, size) {
+            var dlg = dialogs.create('/partials/cms/popup/history.html',
+                ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
+                    $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
+                        .catch(function(error){console.log(error);});
+
+                    $scope.list = data;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        };
+
         // 프로젝트 조회
         $scope.getProject = function () {
             if ($stateParams.id != 0) {
