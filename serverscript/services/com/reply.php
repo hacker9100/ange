@@ -51,6 +51,21 @@
             if ($_type == 'item') {
                 //TODO: 조회
             } else if ($_type == 'list') {
+                $sql = 'SELECT
+                            REPLY_CTE.LEVEL, R.NO, PARENT_NO, PARENT_NO, REPLY_NO, REPLY_GB, COMMENT, REG_UID, NICK_NM, REG_NM, TARGET_NO, TARGET_GB
+                        FROM (
+                            SELECT
+                                REPLY_CONNET_BY_PRIOR_ID(NO) AS NO, @level AS LEVEL
+                            FROM    (
+                                SELECT  @start_with := 0,
+                                @NO := @start_with,
+                                @level := 0
+                            ) TMP, COM_REPLY
+                            WHERE   @NO IS NOT NULL
+                            AND TARGET_NO = 3
+                        ) REPLY_CTE, COM_REPLY R
+                        WHERE REPLY_CTE.NO = R.NO';
+
                 //TODO: 목록 조회
             }
 

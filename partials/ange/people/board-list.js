@@ -22,7 +22,6 @@ define([
         /********** 이벤트 **********/
             // 우측 메뉴 클릭
         $scope.click_showViewBoard = function(item) {
-            alert("1");
             $location.url('people/board/view/1');
 //            $location.url('people/poll/edit/'+item.NO);
         };
