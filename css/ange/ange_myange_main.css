@@ -1,0 +1,383 @@
+/* mini_album  */
+.comp_album {
+	float:left; 
+	width:100%; 
+	border:1px solid #DDD; 
+	border-radius:12px;
+	background-color: #F8F6F9;
+}
+.comp_album_titlebar {
+	float:left; 
+	width:100%; 
+	padding:10px 12px 5px 12px;
+}
+.comp_album_titlebar_title {
+	float:left; 
+	border:1px solid transparent; 
+	border-radius:12px; 
+	background-color:#111; 
+	padding:5px 12px; 
+	font-size:0.86em; 
+	font-weight:700; 
+	color:#fff;
+}
+.comp_album_titlebar_desc {
+	float:left; 
+	font-size:0.82em; 
+	padding:5px; 
+	color:#666;
+}
+.comp_album_content {
+	float:left; 
+	width:100%; 
+	padding:10px 35px 5px 35px;
+}
+
+.comp_album_content_wrap {
+	float: left;
+	clear:both;
+	width:100%;
+	margin:0px auto;
+	overflow: hidden;
+	overflow-y: visible;
+}
+
+.comp_album_content_scroll {
+	float:left;
+	display:block;
+	width:1000px;
+}
+
+.comp_album_contents {
+	float:left;
+	padding:4px;
+	width:108px;
+	margin:2px 6px;
+	cursor:pointer; 
+	/* border:1px solid transparent; */
+	border-radius:12px; 
+}
+
+.comp_album_contents:hover {
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, .6);
+}
+
+.comp_album_content_img {
+	width:100%; 
+	border:1px solid transparent;
+	border-radius: 50%;
+}
+
+a.comp_album_content_txt {
+	float:left; 
+	width:100%; 
+	color:#333; 
+	margin-top:6px;
+	font-size:0.68em; 
+	text-align:center; 
+	line-height:16px;
+}
+
+a.comp_album_content_txt:hover {
+	text-decoration:none;
+}
+
+.comp_album_content_txt_title {
+	font-size: 1.24em;
+	font-weight:700; 
+	width:100%;
+}
+
+/* /mini_album  */
+
+
+/* mini_calendar  */
+.comp_calendar {
+	float:left; 
+	width:100%; 
+	height:100%;
+	border:1px solid #DDD; 
+	border-radius:12px;
+	background-color: #F8F6F9;
+	padding:12px;
+}
+
+/* /mini_calendar  */
+
+.comp_schedule_viewer_titlebar {
+	float:left; 
+	width:100%; 
+	padding:10px 12px 5px 12px;
+}
+
+.comp_schedule_viewer_titlebar_title {
+	float:left; 
+	border:1px solid transparent; 
+	border-radius:12px; 
+	background-color:#111; 
+	padding:5px 12px; 
+	font-size:0.86em; 
+	font-weight:700; 
+	color:#fff;
+}
+
+.comp_schedule_viewer_date {
+	font-family: arial, sna-serif; 
+	color: #BC8E76;
+	font-size: 0.94em;
+}
+
+.comp_schedule_viewer_text {
+	color: #666;
+	cursor:pointer; 
+	line-height:1.2em;
+	background-repeat: no-repeat;
+}
+
+.schedule_event {
+	padding-left: 46px;
+	background-image: url(/imgs/ange/calendar_bullet_01.gif);
+}
+
+.schedule_information {
+	padding-left: 55px;
+	background-image: url(/imgs/ange/calendar_bullet_02.gif);
+}
+
+.comp_schedule_viewer_text:hover,  .comp_schedule_viewer_text:focus{
+	text-decoration: none; 
+	color: #386ae8;
+}
+
+/* //mini_calendar  */
+
+
+
+/* mini_account */
+.comp_account {
+	float:left; 
+	width:100%; 
+	height:100%;
+	border:1px solid #DDD; 
+	border-radius:12px;
+	background-color: #F8F6F9;
+}
+
+.comp_account_top {
+	position:relative;
+	width:100%;
+	height: 70px;
+	background-color: #2F3C45;
+	color: #fff;
+	border:1px solid transparent;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	padding: 8px 0 0 10px;
+}
+
+.comp_account_top_img {
+	float: left; 
+	width:50px; 
+	height:50px; 
+	border:1px solid transparent; 
+	border-radius: 50%;
+}
+
+.comp_account_top_txt {
+	float: left;
+	margin-left: 10px;
+	margin-top: 10px;
+	line-height: 16px; 
+}
+
+.comp_account_top_id {
+	color: #ddd;
+	font-family: arial, san-serif;
+	font-size: 0.78em;
+}
+
+a.comp_account_top_config {
+	position:absolute;
+	color: orange;
+	top:72%;
+	right:5px; 
+}
+
+a.comp_account_top_config:hover, a.comp_account_top_config:focus {
+	text-decoration: none;
+	color:yellow;
+}
+
+.comp_account_contentwrap {
+	float:left;
+	width:100%;
+	height:200px;
+	margin:5px 0 0 0;
+}
+
+.comp_account_content_txt { 
+	position:relative;
+	width:99%;
+	height:58px;
+	margin:5px 0 0 2px;
+	background-color:#F1F1F1;	
+	padding-left: 22px;
+	background-repeat: no-repeat;
+	background-position: 4px 45%;
+}
+
+.group { background-image: url('/imgs/ange/bullet_account_01_group.png'); }
+.mileage { background-image: url('/imgs/ange/bullet_account_02_mileage.png'); }
+.message { background-image: url('/imgs/ange/bullet_account_03_message.png'); }
+
+.comp_account_content_kor {
+	float:left;
+	line-height:56px;
+	color:#333;
+	font-size: 0.94em;
+	font-weight: 700;
+}
+
+.comp_account_content_eng {
+	color:#888;
+	font-size: 0.78em;
+	margin-left:2px;
+}
+
+.comp_account_content_result {
+	float:right;
+	font-family: arial, san-serif;
+	margin: 22px 5px 0 0;
+}
+
+a.account_goto {
+	font-size: 0.64em;
+	cursor:pointer;
+}
+
+a.account_goto:hover {
+	text-decoration: none;
+	color: #fff;
+}
+
+.comp_account_point {
+	float:right;
+	margin-top:2px;
+	font-size: 0.86em;
+	font-weight: 700;
+}
+
+a.comp_account_gotomall {
+	position: absolute;
+	width: 120px;
+	height: 12px;
+	right: 0px;
+	bottom: 5px;
+	text-indent: -9999px;
+	background-image: url('/imgs/ange/goto_pointmall.png');
+	background-position:left top;
+	background-repeat:no-repeat;
+}
+
+a.comp_account_gotomall:hover {
+	background-position:left -12px;
+}
+
+/* mini_purchase */
+.comp_purchase {
+	float:left; 
+	width:100%; 
+	height:110%;
+	border:1px solid #DDD; 
+	border-radius:12px;
+	background-color: #F8F6F9;
+	line-height:18px;
+}
+
+.comp_purchase_contentwrap {
+	float:left; 
+	width:100%;
+	margin:0 auto; 
+	margin-top:8px; 
+	padding-top:12px;  
+	padding-left:1%;
+	background-image:url('/imgs/ange/comp_miniboard_hr.png'); 
+	background-repeat:repeat-x; 
+	font-size:0.82em; 
+	line-height:16px;
+}
+
+.comp_purchase_content {
+	float:left; 
+	width:33%; 
+	padding:4px; 
+	text-align:center;
+	cursor:pointer;
+	border:1px solid transparent;
+	border-radius:12px;
+}
+
+.comp_purchase_content_img {
+	width: 60px; 
+	height:60px; 
+	border:1px solid transparent;
+	border-radius:50%;
+}
+.comp_purchase_content_date {
+	width:100%;
+	font-family: arial, san-serif;
+}
+.comp_purchase_content_name {
+	width:100%;
+	color: #BC8E76;
+}
+.comp_purchase_content_price {
+	width:100%;
+	font-family: arial, san-serif;
+}
+
+.comp_purchase_content:hover {
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, .6);
+text-decoration: none;
+}
+
+
+/* mini_activity */
+.comp_activity {
+	float:left; 
+	width:100%; 
+	height:110%;
+	border:1px solid #DDD; 
+	border-radius:12px;
+	background-color: #F8F6F9;
+}
+
+
+/* common */
+a.rollbtn_white_w5px {
+	position:absolute;
+	width: 5px;
+	height: 8px;
+	background-image: url('/imgs/ange/comp_rollmonth.png');
+	background-repeat: no-repeat;
+	cursor: pointer;
+	text-indent: -9999px;
+	top: 48%;
+}
+
+
+a.rollbtn_white_w5px.prev {
+	left: 15px;
+	background-position: left top;
+}
+
+a.rollbtn_white_w5px.next {
+	right: 15px;
+	background-position: right top;
+}
+
+a.rollbtn_white_w5px.prev:hover {	background-position: left -8px; }
+a.rollbtn_white_w5px.next:hover {	background-position: right -8px; }
+

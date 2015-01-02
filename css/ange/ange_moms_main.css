@@ -1,0 +1,250 @@
+/* ++comp_momsnow  */
+
+.comp_momsnow {
+	width:100%; 
+	height:100%; 
+	margin:0px auto;
+	font-size:0.86em;
+}
+
+.comp_momsnow_title {
+	width:110px; 
+	padding:5px 10px; 
+	border:1px solid transparent; 
+	border-radius:12px; 
+	margin:10px auto;
+	color:#fff; 
+	text-align:center;
+}
+
+.comp_momsnow_left {
+	position:relative;
+	border:1px solid #DEDEDE; 
+	height:100%;
+}
+
+.comp_momsnow_right {
+	position:relative;
+	border:1px solid #DEDEDE; 
+	border-left:none; 
+	height:100%;
+}
+
+.comp_momsnow_eventTitle {
+	background-color: #1c8cd4;
+}
+
+.comp_momsnow_expTitle {
+	background-color: #f67464;
+}
+
+.comp_momsnow_content{
+	position: absolute;
+	width:100%;
+	height:295px;
+	margin:0px auto;
+	left:0;
+	overflow: hidden;
+	/* overflow-y: hidden; */
+}
+
+.comp_momsnow_img {
+	max-height:240px; 
+	margin:0px auto; 
+	border:1px solid #DEDEDE; 
+	border-radius:4px;
+}
+
+.comp_momsnow_eventtitle{
+	font-size:0.94em; 
+	line-height:1.4em; 
+	padding:6px 0;
+}
+
+.comp_momsnow_small{
+	font-family:arial, san-serif; 
+	color: #aadaf8;
+}
+
+.comp_slide_btn_w30 {
+	display: block;
+	position:absolute; 
+	width:30px; 
+	height:39px; 
+	text-indent: -9999px;
+	z-index: 999;
+}
+
+.comp_slide_btn_w30.prev {
+	background-image: url('/imgs/ange/arrow_w30.png'); 
+	background-position: left top;
+	top: 45%;
+	left: 1px;
+}
+
+.comp_slide_btn_w30.next {
+	background-image: url('/imgs/ange/arrow_w30.png'); 
+	background-position: right top;
+	top: 45%;
+	right: 1px;
+}
+
+.comp_slide_btn_w30.prev:hover { background-position: left bottom; }
+.comp_slide_btn_w30.next:hover { background-position: right bottom; }
+
+.comp_ranking_img {
+	float:left; 
+	width:100%; 
+	height:128px; 
+	background-image: url('/imgs/ange/rank_champion_bg.png');
+	background-repeat: no-repeat;
+	background-position: center 2px;
+	text-align:center;
+}
+
+img.comp_ranking_champion {
+	float:none;
+	width:72px;
+	height:72px;
+	margin:0px auto;
+	border:1px solid transparent; 
+	border-radius:50%;
+	margin-top:25px; 
+}
+
+.comp_ranking_champion_txt {
+	font-size:0.78em;
+	color:#333;
+	padding:5px;
+	background-color: #FB6362;
+	width:75%;
+	margin:1px auto;
+	border:1px solid transparent;
+	border-radius: 12px; 
+
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 2px 5px rgba(102, 175, 233, .6);
+          box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 2px 5px rgba(102, 175, 233, .6);
+}
+
+.comp_ranking_champion_name {
+	font-size:1.2em;
+	color:#fff;
+	margin-left:5px;
+}
+
+.mini_ranking_txt_no {
+	padding:1px 4px; 
+	font-size: 0.86em;
+	color:#ffffff; 
+	background-color:#888; 
+	border:1px solid transparent; 
+	border-radius: 2px; 
+	margin-right:8px;
+}
+
+.topRank {
+	background-color:#FD6564; 
+}
+
+/* mini_joinlink */
+.comp_joinlink {
+	height:100%;
+	width:100%;
+}
+
+.comp_joinlink_wrap.left {
+	float:left; 
+	width:33%; 
+	height:100%; 
+	border:1px solid #DDD; 
+	border-right:none;
+}
+
+.comp_joinlink_wrap.middle {
+	float:left; 
+	width:34%; 
+	height:100%; 
+	border:1px solid #DDD; 
+}
+
+.comp_joinlink_wrap.right {
+	float:right; 
+	width:33%; 
+	height:100%; 
+	border:1px solid #DDD; 
+	border-left:none;
+}
+
+
+a.comp_joinlink_booker {
+	float:left;
+	width: 100%;
+	height:100%;
+	background-color: #FFE2D0;
+	background-image: url('/imgs/ange/comp_joinlink_booker_bg.png');
+	background-repeat: no-repeat;
+	background-position: 5px 54px;
+	cursor: pointer;
+	padding: 4px 5% 0 0;
+	text-align:right;
+}
+
+.comp_joinlink_booker_txt{
+	float:right; 
+	margin-top:5px; 
+	text-align: justify; 
+	color:#666; 
+	width: 48%; 
+	line-height:1.2em; 
+	font-size:0.78em;
+}
+
+a.comp_joinlink_exper {
+	float:left;
+	width: 100%;
+	height:50%; 
+	background-color: #fff;
+	border-bottom:1px solid #DDD;
+	background-image: url('/imgs/ange/comp_joinlink_exper_bg.png');
+	background-repeat: no-repeat;
+	background-position: -10% 5px;
+	cursor: pointer;
+	text-align: right;
+	padding:4px 8% 0 0;
+}
+
+a.comp_joinlink_partner {
+	float:left;
+	width: 100%;
+	height:50%; 
+	background-color: #fff;
+	background-image: url('/imgs/ange/comp_joinlink_partner_bg.png');
+	background-repeat: no-repeat;
+	background-position: 110% top;
+	cursor: pointer;
+	padding:6px 0 0 8%;
+}
+
+a.comp_joinlink_samplepack {
+	float:left;
+	width: 100%;
+	height:100%;
+	background-color: #bde5cf;
+	background-image: url('/imgs/ange/comp_joinlink_samplepack_bg.png');
+	background-repeat: no-repeat;
+	background-position: center 5px;
+	cursor: pointer;
+	text-align:right;	
+	padding: 136px 0 0 0;
+}
+
+.comp_joinlink_samplepack_txt {
+	float: right;
+	color:#000;
+	font-size: 0.78em;
+	margin-right:5%;
+	padding: 2px 10px 4px 0;
+	background-image: url('/imgs/ange/comp_linktext_arw.png');
+	background-repeat: no-repeat;
+	background-position: right top;
+}
