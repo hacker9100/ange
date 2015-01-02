@@ -6,22 +6,18 @@
 //	header("Cache-Control: pre-check=0, post-check=0, max-age=0");
 //	header("Pragma: no-cache");
 
-    @session_start();
+@session_start();
 
-    @extract($_GET);
-    @extract($_POST);
-    @extract($_SERVER);
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
 
-    date_default_timezone_set('Asia/Seoul');
+date_default_timezone_set('Asia/Seoul');
 
-    include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_c("### [START]");
-    MtUtil::_c(print_r($_REQUEST,true));
-
-    MtUtil::_c(json_encode(file_get_contents("php://input"),true));
-
-//	MtUtil::_c(print_r($_REQUEST,true));
+MtUtil::_c("### [START]");
+MtUtil::_c(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
@@ -30,15 +26,25 @@
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-    $_d = new MtJson();
+$_d = new MtJson();
 
-    if ($_d->connect_db == "") {
-        $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
-    }
+if ($_d->connect_db == "") {
+    $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
+}
 
-    if (!isset($_type) || $_type == "") {
-        $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
-    }
+if (!isset($_type) || $_type == "") {
+    $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
+}
+
+$ip = "";
+
+if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    $ip = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+    $ip = $_SERVER['REMOTE_ADDR'];
+}
 
     switch ($_method) {
         case "GET":

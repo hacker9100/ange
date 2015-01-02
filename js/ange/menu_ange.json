@@ -24,6 +24,14 @@
                 "locaterView@storyist-list": { "templateUrl": "/partials/ange/com/locater.html", "controller" : "locater" },
                 "contentView@storylist-list": { "templateUrl": "/partials/ange/user_list.html", "controller" : "user_list" }
             }
+        }}, { "peoplelist-list": {
+            "url": "/people/:menu/list",
+            "views": {
+                "" : { "templateUrl": "/partials/ange/com/ange-common.html", "controller": "ange-common" },
+                "lnbView@storylist-list": { "templateUrl": "/partials/ange/com/lnb.html", "controller": "lnb" },
+                "locaterView@storyist-list": { "templateUrl": "/partials/ange/com/locater.html", "controller" : "locater" },
+                "contentView@storylist-list": { "templateUrl": "/partials/ange/user_list.html", "controller" : "user_list" }
+            }
         }}
     ]
 }

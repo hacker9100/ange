@@ -25,8 +25,13 @@ define(['./directives'], function (directives) {
                         url = menu[1] + '/' + menu[2];
                         break;
                     default :
-                        if (menu[2] == 'angeroom' || menu[2] == 'momstalk')
+                        if (menu[2] == 'angeroom' || menu[2] == 'momstalk' || menu[2] == 'babycare' || menu[2] == 'firstbirthtalk' || menu[2] == 'booktalk'){
                             menu[2] = 'board';
+                        } else if (menu[2] == 'angemodel' || menu[2] == 'recipearcade' || menu[2] == 'peopletaste'){
+                            menu[2] = 'photo';
+                        } else if (menu[2] == 'childdevelop' || menu[2] == 'chlidoriental' || menu[2] == 'obstetrics' || menu[2] == 'momshealth' || menu[2] == 'financial'){
+                            menu[2] = 'clinic';
+                        }
 
                         url = menu[1] + '/' + menu[2] + '-' + menu[3];
                         break;

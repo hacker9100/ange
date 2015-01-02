@@ -13,11 +13,11 @@
     $_d = new MtJson();
 
     $sql = "SELECT
-                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, CHANNEL_GB, DROP_FL, POSITION
+                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION
             FROM
                 COM_CHANNEL
             WHERE
-                CHANNEL_GB = 'ANGE'
+                SYSTEM_GB = 'ANGE'
             ORDER BY CHANNEL_NO ASC
             ";
 
@@ -26,13 +26,13 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
+                    MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
                 FROM
                     COM_MENU
                 WHERE
-                    MENU_GB = 'ANGE'
+                    SYSTEM_GB = 'ANGE'
                     AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
-                ORDER BY SORT_IDX ASC
+                ORDER BY MENU_ORD ASC
                 ";
 
         $menu_data = $_d->getData($sql);
@@ -44,12 +44,12 @@
     $channel_data = $__trn->{'rows'};
 
     $sql = "SELECT
-                MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, MENU_DESC, TAIL_DESC
+                MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, MENU_DESC, TAIL_DESC
             FROM
                 COM_MENU
             WHERE
-                MENU_GB  = 'ANGE'
-            ORDER BY SORT_IDX ASC
+                SYSTEM_GB  = 'ANGE'
+            ORDER BY MENU_ORD ASC
             ";
 
     $__trn = '';
@@ -57,12 +57,12 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, SORT_IDX
+                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, COLUMN_ORD
                 FROM
                     COM_SUB_MENU
                 WHERE
                     MENU_URL = '".$row[MENU_URL]."'
-                ORDER BY SORT_IDX ASC
+                ORDER BY COLUMN_ORD ASC
                 ";
 
         $sub_menu_data = $_d->getData($sql);
@@ -101,11 +101,8 @@
 <link rel="stylesheet" type="text/css" href="/css/dialog/dialogs.min.css" />
 
 <link rel="stylesheet" type="text/css" href="/css/ange/normalize.css" >
-<link rel="stylesheet" type="text/css" href="/css/ange/angeCMS_bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="/css/ange/style.css" />
-
-<!-- image slide 슬라이드 css 추가 -->
-<link rel="stylesheet" type="text/css" href="/css/ange/slider.css"/>
+<!--<link rel="stylesheet" type="text/css" href="/css/ange/angeCMS_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/css/ange/style.css" />-->
 
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->

@@ -51,7 +51,12 @@
             if ($_type == 'item') {
                 //TODO: 조회
             } else if ($_type == 'list') {
-                $sql = 'SELECT
+
+                if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
+                    $search_where .= "AND TARGET_NO =".$_search[TARGET_NO]."";
+                }
+
+                $sql = "SELECT
                             REPLY_CTE.LEVEL, R.NO, PARENT_NO, PARENT_NO, REPLY_NO, REPLY_GB, COMMENT, REG_UID, NICK_NM, REG_NM, TARGET_NO, TARGET_GB
                         FROM (
                             SELECT
@@ -62,11 +67,17 @@
                                 @level := 0
                             ) TMP, COM_REPLY
                             WHERE   @NO IS NOT NULL
-                            AND TARGET_NO = 3
+                            ".$search_where."
                         ) REPLY_CTE, COM_REPLY R
-                        WHERE REPLY_CTE.NO = R.NO';
+                        WHERE REPLY_CTE.NO = R.NO";
 
                 //TODO: 목록 조회
+                $data = $_d->sql_query($sql);
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd($sql);
+                }
             }
 
             break;
@@ -75,9 +86,9 @@
 //            $form = json_decode(file_get_contents("php://input"),true);
 //            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            if ( trim($_model[TASK_NO]) == "" ) {
+/*            if ( trim($_model[TASK_NO]) == "" ) {
                 $_d->failEnd("댓글 순번이 없습니다");
-            }
+            }*/
 
             $err = 0;
             $msg = "";
@@ -89,11 +100,12 @@
                         PARENT_NO,
                         REPLY_NO,
                         REPLY_GB,
+                        LEVEL,
                         COMMENT,
                         REG_UID,
                         NICK_NM,
                         REG_NM,
-                        REG_DATE,
+                        REG_DT,
                         LIKE_CNT,
                         TARGET_NO,
                         TARGET_GB
@@ -101,14 +113,15 @@
                         ".$_model[PARENT_NO].",
                         '".$_model[REPLY_NO]."',
                         '".$_model[REPLY_GB]."',
+                        '".$_model[LEVEL]."',
                         '".$_model[COMMENT]."',
-                        '".$_SESSION['uid']."',
-                        '".$_SESSION['name']."',
-                        '".$_SESSION['nick']."',
+                        'hong',
+                        '홍길동',
+                        '므에에롱',
                         SYSDATE(),
-                        '".$_model[LIKE_CNT]."',
+                        '0',
                         '".$_model[TARGET_NO]."',
-                        '".$_model[TARGET_GB]."',
+                        '".$_model[TARGET_GB]."'
                     )";
 
             $_d->sql_query($sql);

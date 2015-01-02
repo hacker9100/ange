@@ -1,0 +1,65 @@
+<!-- Contents Include -->
+<div class="col-md-12" ng-controller="peopleclinic-edit">
+
+    <div ng-model="item" class="row form_basic_wrap">
+        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+            <!--            <div class= "form-group form_basic_group">
+                            <label class= "form_basic_label">공지사항 여부</label>
+                            <div class="form_basic_input">
+                                <input ng-model="item.NOTICE_FL" type="checkbox" ng-checked="item.NOTICE_FL" ng-disabled="role != 'CMS_ADMIN' && role != 'MANAGER'">
+                            </div>
+                        </div>-->
+            <input ng-model="item.NOTICE_FL" type="hidden" value="false">
+
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">제목</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder= "제목"/>
+                </div>
+            </div>
+
+            <div class="form-group form_basic_group" style="margin:0px auto;">
+                <H5 style="line-height:18px; margin:0;">
+                    <span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> <span class="label label-default">편집기</span>를 이용하여 작성합니다.
+                </H5>
+            </div>
+            <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+                <div>
+                    <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>
+                </div>
+            </div>
+        </form>
+        <!--<img id="dropzone" src="http://localhost/serverscript/upload/../../upload/files/medium/Koala%20%285%29.jpg" />-->
+        <!--<div class= "form-group" id="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">-->
+        <!--이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />-->
+        <!--(gif, jpg, png만 등록 가능)-->
+        <!--</div>-->
+<!--        <div class= "form-group form_basic_group" style="float:left;">
+            <div class= "form-group form_basic_group" style="float:left;">
+                <H5 style="line-height:8px; margin:0;">
+                    <span class="glyphicon glyphicon-floppy-disk" style="color:#2486ED;"></span> 파일첨부
+                </H5>
+                <div ng-include=" '/partials/ange/file-list.html' " style="margin-top:20px; width:100%; float:left;"></div>
+            </div>
+        </div>-->
+
+        <!-- 하단 버튼 -->
+        <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+            <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showPeopleClinicList();" >
+                    <i class="glyphicon glyphicon-list"></i>
+                    <span>목록</span>
+                </button>
+            </div>
+            <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePeopleClinic();" ng-disabled="edit_form.$invalid">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>저장</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- ////Contents Include -->

@@ -22,7 +22,15 @@ define([
     '../../../partials/ange/story/list',
     '../../../partials/ange/people/home',
     '../../../partials/ange/people/poll-list',
-    '../../../partials/ange/people/board-list',
+    '../../../partials/ange/people/board-list',,
+    '../../../partials/ange/people/board-edit',
+    '../../../partials/ange/people/board-view',
+    '../../../partials/ange/people/poll-edit',
+    '../../../partials/ange/people/clinic-list',
+    '../../../partials/ange/people/clinic-edit',
+    '../../../partials/ange/people/clinic-view',
+    '../../../partials/ange/people/photo-list',
+    '../../../partials/ange/people/photo-edit',
 
     // ADMIN 로그인
     '../../../partials/ange/signin',

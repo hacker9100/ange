@@ -150,12 +150,13 @@
                 $sql = "SELECT
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                           SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NM,
-                          (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL
+                          (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT
                         FROM
                         (";
 
                 $select1 = "SELECT
-                                '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, '' AS COMM_NM
+                                '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, '' AS COMM_NM,
+                                        (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -164,12 +165,14 @@
                                 ".$search_common;
 
                 $select2 = "SELECT
-                                '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, IFNULL(C.COMM_NM, '') AS COMM_NM
+                                '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, IFNULL(C.COMM_NM, '') AS COMM_NM,
+                                        (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
                             WHERE
                                 1=1
+                                AND NOTICE_FL = 'N'
                                 ".$search_where;
 
                 if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] == "Y") {
@@ -180,7 +183,7 @@
                     $sql .= $select1." UNION ".$select2;
                 }
 
-                $sql .= "   ORDER BY SORT_GB".$sort_order."
+                $sql .= "   ORDER BY NOTICE_FL DESC, SORT_GB".$sort_order."
                              ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -484,19 +487,27 @@
 
             MtUtil::_c("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
-            if( trim($_model[SUBJECT]) == '' ){
-                $_d->failEnd("제목을 작성 하세요");
-            }
-            if( trim($_model[BODY]) == '' ){
-                $_d->failEnd("내용이 비어있습니다");
-            }
-
-            $err = 0;
+             $err = 0;
             $msg = "";
 
             $_d->sql_beginTransaction();
 
-            $sql = "UPDATE COM_BOARD
+            if(isset($_model[ROLE]) && $_model[ROLE] != ""){
+                $sql = "UPDATE COM_BOARD
+                     SET HIT_CNT = HIT_CNT + 1
+                    WHERE
+                        NO = ".$_key."
+                    ";
+            }else{
+
+                if( trim($_model[SUBJECT]) == '' ){
+                    $_d->failEnd("제목을 작성 하세요");
+                }
+                if( trim($_model[BODY]) == '' ){
+                    $_d->failEnd("내용이 비어있습니다");
+                }
+
+                $sql = "UPDATE COM_BOARD
                     SET
                         HEAD = '".$_model[HEAD]."'
                         ,SUBJECT = '".$_model[SUBJECT]."'
@@ -509,6 +520,7 @@
                     WHERE
                         NO = ".$_key."
                     ";
+            }
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

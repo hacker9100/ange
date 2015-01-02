@@ -1,10 +1,11 @@
-<div ng-controller="poll-list">
+<div class="mainbar sub-slide0" ng-controller="board-view">
     <!-- mainbar -->
     <!--<div class="mainbar sub-slide0">-->
         <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
 
 
-            <div class="row">
+            <div class="row" ng-model="item">
+                <form role="form" name="view_form" class="form-horizontal form_basic_100">
 
                 <div class="col-xs-12 v-cell-3">
                     <div class="comp_basic h-cell-dynamic">
@@ -13,47 +14,8 @@
 
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
-                                <h3 style="font-weight:bold;">동적 커뮤니티 이름 <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a></h3>
+                                <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
-
-                            <div class="container-fluid sub_contents_search">
-                                <div class="row">
-                                    <div class="col-xs-12" style="padding:0">
-
-                                        <div class="btn-group" style="float:left;">
-                                            <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
-
-                                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">제목+내용</a></li>
-                                                <li><a href="#">작성자</a></li>
-                                            </ul>
-                                        </div><!-- /btn-group -->
-
-                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                            <input type="text" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
-
-												<span class="input-group-btn">
-												<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-												</span>
-                                        </div>
-
-                                        <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" />
-                                                </span>
-                                                <input type="text" class="form-control table_filtercheck" placeholder="진행중" style="background:#fff; padding-top: 2px; cursor:default; font-size: 0.86em;" disabled />
-                                            </div>
-                                        </div -->
-
-                                    </div><!-- /.col-xs-12-->
-                                </div><!-- /.row -->
-                            </div><!-- /.container -->
 
                         </div><!-- /.sub_contents_wrap -->
 
@@ -64,20 +26,20 @@
                             <div class="people_view_wrap">
 
 
-                                <div class="container-fluid peopleboard_view_top" style="border-top:2px solid #111;">
+<!--                                <div class="container-fluid peopleboard_view_top" style="border-top:2px solid #111;">
 
                                     <div class="row">
 
                                         <div class="col-xs-2 peopleboard_view_comment">
                                             제목
-                                        </div><!-- /.col-xs-2-->
+                                        </div>&lt;!&ndash; /.col-xs-2&ndash;&gt;
 
                                         <div class="col-xs-10 peopleboard_view_comment">
                                             앙쥬Poll 떳어요
                                             <span class="table_icon_new">N</span>
                                             <span class="glyphicon glyphicon-picture table_icon_pic"></span>
                                             <span class="glyphicon glyphicon-paperclip table_icon_clip"></span>
-                                        </div><!-- /.col-xs-2-->
+                                        </div>&lt;!&ndash; /.col-xs-2&ndash;&gt;
 
 
                                         <div class="col-xs-3 peoplepoll_view_btn" style="padding:0;">
@@ -86,9 +48,9 @@
                                                 <button type="button" class="btn btn-xs btn-info" style="margin:18px 5px 0 0;"><span class="glyphicon glyphicon glyphicon-check"></span> 설문결과</button>
                                             </div>
 
-                                        </div><!-- /.col-xs-3-->
-                                    </div><!-- /.row -->
-                                </div><!-- /.container -->
+                                        </div>&lt;!&ndash; /.col-xs-3&ndash;&gt;
+                                    </div>&lt;!&ndash; /.row &ndash;&gt;
+                                </div>&lt;!&ndash; /.container &ndash;&gt;-->
 
 
                                 <div class="container-fluid peoplepoll_view_contentwrap">
@@ -105,63 +67,91 @@
                                             <div class="peoplepoll_view_title">
 												<span class="peoplepoll_view_title_qt">
 													<span class="icon_qt_left"></span>
-													산부인과/산후조리원 선택 기준은?
-													<span class="icon_qt_right"></span>
+													{{item.SUBJECT}}
+													<span class="icon_qt_right">
+													</span>
 												</span>
                                             </div>
                                         </div><!-- /.col-01-->
 
                                         <div class="col-xs-12 peoplepoll_view_contentbody">
                                             <div class="peoplepoll_view_content">
-                                                <dl>
-                                                    <dt>Q1. 산부인과 최우선 선택 기준은 무엇인가요?</dt>
-                                                    <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios1" value="q1a1">집과의 거리가 가깝고 모든 직원들이 친절한 병원</label></div></dd>
-                                                    <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios2" value="q1a2">위급한 상황에 유리한 산부인과 전문병원과 종합병원</label></div></dd>
-                                                    <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios3" value="q1a3">원하는 분만법의 유무</label></div></dd>
-                                                    <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios3" value="q1a3">산후조리원과 연계되어 있는 곳</label></div></dd>
-                                                    <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios3" value="q1a3">출산 준비 교육이나 태교 프로그램이 있는 곳</label></div></dd>
-                                                </dl>
-
-                                                <dl>
-                                                    <dt>Q2. 산후조리원 최우선 선택 기준은 무엇인가요?</dt>
-                                                    <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios1" value="q2a1">집(또는 남편 회사, 산부인과)과의 거리가 가까운 곳</label></div></dd>
-                                                    <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios2" value="q2a2">가격이 비싸도 위생, 안전, 편의시설과 다양한 프로그램을 갖춘 곳</label></div></dd>
-                                                    <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios3" value="q2a3">가격 대비 시설과 프로그램이 괜찮은 곳	</label></div></dd>
-                                                    <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios3" value="q2a3">산부인과, 소아과와 연계 진료가 가능한 곳, 산부인과, 소아과와 연계 진료가 가능한 곳, 산부인과, 소아과와 연계 진료가 가능한 곳</label></div></dd>
-                                                    <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios3" value="q2a3">신생아 케어 시설이 잘되어 있고, 베테랑 전문가가 신생아를 안전하게 돌봐주는 곳</label></div></dd>
-                                                </dl>
+                                                <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>
                                             </div>
 
-                                            <div class="peoplepoll_view_paging">
+<!--                                            <div class="peoplepoll_view_paging">
                                                 <button type="button" class="btn btn-default btn-xs" style="position:absolute; bottom:4px; left:35%;" disabled><span class="glyphicon glyphicon-step-backward"></span></button>
                                                 <center><span class="table_red">1</span>/3</center>
                                                 <button type="button" class="btn btn-default btn-xs" style="position:absolute; bottom:4px; right:35%;"><span class="glyphicon glyphicon-step-forward"></span></button>
-                                            </div>
+                                            </div>-->
                                         </div><!-- /.col-02-->
 
-
-                                        <div class="col-xs-12 peoplepoll_view_bottom">
-                                            <div class="poll_count">현재설문자 <span>9,999</span> 명</div>
-                                        </div><!-- /.col-03-->
-
                                     </div><!-- /.row -->
+
+                                    <div class="form-horizontal form_basic_100">
+                                        <p><strong>의견쓰기</strong></p>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <textarea ng-model="item.COMMENT" cols="70" rows="3"></textarea>
+                                                </td>
+                                                <td>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePeopleBoardComment(comment);" ng-disabled="comment_form.$invalid">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                        <span>(500자이내)<br>등록</span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div><!-- /.container -->
 
+                                <div class="form-horizontal form_basic_100">
+                                    <p><strong>댓글 리스트</strong></p>
 
-                                <div class="container-fluid peoplepoll_view_btnwrap">
-                                    <div class="row">
-                                        <div class="col-xs-4">
-                                            <a href="#" class="btn people_btn list" title="목록으로" style="display:block;">리스트</a>
-                                        </div>
-
-                                        <div class="col-xs-8">
-                                            <a href="#" class="btn people_btn vote" title="투표하기" style="display:block;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
-                                            <a href="#" class="btn people_btn submit" title="등록하기" style="display:none;">등록</a>
-                                            <a href="#" class="btn people_btn cancel" title="작성취소" style="display:none;">취소</a>
-                                            <a href="#" class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>
-                                        </div>
-                                    </div><!-- /.row -->
-                                </div><!-- /.container -->
+                                    <!-- Reply List -->
+                                    <table class="table" style="border-bottom: 1px solid #868686;">
+                                        <tr ng-repeat="item in replyList">
+                                            <td style="width:100px; font-size:0.94em; line-height:38px;">
+                                                <input type="hidden" ng-model="item.PARENT_NO" value="{{item.NO}}"/>
+                                                <strong>{{item.REG_NM}}</strong>&nbsp;({{item.REG_UID}})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                {{item.COMMENT}}
+                                                <button type="button" class="btn btn-primary btn-xs start"  ng-click="showDetails = ! showDetails">
+                                                    └ 댓글
+                                                </button>
+                                                <div ng-class="{ 'hidden': ! showDetails }">
+                                                    <input type="hidden" ng-model="item.LEVEL" id="level" value="{{item.LEVEL}}"/>
+                                                    <input type="hidden" ng-model="item.REPLY_NO" id="reply_no" value="{{item.REPLY_NO}}" />
+                                                    <textarea ng-model="item.RE_COMMENT" cols="100" rows="1" id="reply_comment" ></textarea>
+                                                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePeopleBoardReComment(comment);" ng-disabled="comment_form.$invalid">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                        <span>등록</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr ng-show="replyList == ''">
+                                            <td colspan="2" style="text-align: center; font-size:0.86em; line-height:38px;">댓글이 없습니다.</td>
+                                        </tr>
+                                    </table>
+                                    <!-- ////Reply List -->
+                                </div>
+                                <!-- 하단 버튼 -->
+                                <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+                                    <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                                        <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showPeopleBoardList();" >
+                                            <i class="glyphicon glyphicon-list"></i>
+                                            <span>목록</span>
+                                        </button>
+                                    </div>
+                                    <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
+                                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showPeopleBoardEdit(item);" ng-disabled="edit_form.$invalid">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                            <span>수정</span>
+                                        </button>
+                                    </div>
+                                </div>
 
                             </div>
                             <!-- /peopleboard_view -->
@@ -175,9 +165,8 @@
 
                     </div>
                 </div>
-
+              </form>
             </div> <!-- rows -->
-
 
         </div><!-- container-fluid -->
 

@@ -256,6 +256,7 @@ define([
 
         // 목록 데이터를 조회
         $scope.getList = function (service, type, page, search, loding) {
+
             var deferred = $q.defer();
 
             if (loding) $scope.isLoading = true;

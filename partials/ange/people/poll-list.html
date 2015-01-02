@@ -21,24 +21,26 @@
                                     <div class="col-xs-12" style="padding:0">
 
                                         <div class="btn-group" style="float:left;">
-                                            <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
+<!--                                            <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
 
                                             <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                             <span class="caret"></span>
                                             <span class="sr-only">Toggle Dropdown</span>
                                             </button>
 
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">제목+내용</a></li>
-                                                <li><a href="#">작성자</a></li>
-                                            </ul>
+                                            <ul class="dropdown-menu" role="menu" ng-repeat="condition in conditions">
+                                                <li><a href="#">{{condition.name}}</a></li>
+                                            </ul>-->
+                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
+
+
                                         </div><!-- /btn-group -->
 
                                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                            <input type="text" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+                                            <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
                                             <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                            <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" ng-click="click_searchPoll();"></span></button>
                                             </span>
                                         </div>
 
@@ -72,30 +74,25 @@
                                 </tr>
                                 </thead>
 
-                                <tbody class="on">
+                                <tbody class="on" data-ng-repeat="item in list">
 
-                                <tr class="primary"><td class="table_no"><span class="table_blue">공지</span></td><td></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
+                                <!--<tr class="primary"><td class="table_no"><span class="table_blue">공지</span></td><td></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>-->
 
-                                <tr ng-click="click_showEditPoll()" style="cursor:pointer;">
-                                    <td class="table_no">99</td>
-                                    <td><span class="table_red">진행중</span></td>
-                                    <td>산부인과/산후조리원 선택 기준은?<span class="table_icon_new">N</span></td>
-                                    <td class="table_date">2014-10-17~<br />2014-10-27</td>
+                                    <tr ng-class="item.END_DT <= todayDate ? '' : 'ended'" ng-click="click_showViewAngePoll(item.BOARD_NO)">
+                                        <td class="table_no">{{item.RNUM}}</td>
+                                        <td><span ng-class="item.END_DT <= todayDate ? 'table_red' : 'table_gray'">{{item.END_DT <= todayDate ? '진행중' : '완료'}}</span></td>
+                                        <td valign="middle">{{item.SUBJECT}}</td>
+                                        <td class="table_date">{{item.START_YMD}}~<br />{{item.END_YMD}}</td>
+                                    </tr>
+
+                                </tbody>
+                                <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                <!--<tr class="primary"><td class="table_no"><span class="table_blue">공지</span></td><td></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>-->
+
+                                <tr>
+                                    <td style="text-align: center" valign="middle" colspan="4">설문조사 조회 데이터가 없습니다.</td>
                                 </tr>
-
-                                <tr><td class="table_no">99</td><td><span class="table_red">진행중</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td>
-                                <tr class="ended"><td class="table_no">98</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="ended"><td class="table_no">97</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="ended"><td class="table_no">96</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="ended"><td class="table_no">95</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="ended"><td class="table_no">94</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="ended"><td class="table_no">93</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="ended"><td class="table_no">93</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="ended"><td class="table_no">92</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="ended"><td class="table_no">91</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="ended"><td class="table_no">90</td><td><span class="table_gray">완료</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="desabled"><td class="table_no">89</td><td><span class="table_gray">취소</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
-                                <tr class="desabled"><td class="table_no">88</td><td><span class="table_gray">취소</span></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>
 
                                 </tbody>
                             </table><!-- /.List-->
