@@ -5,7 +5,8 @@
  * Description : 모든 directive를 포함할 directives 모듈 생성
  */
 define([
-    'angular'
+    'angular',
+    'slick-carousel'
 ], function (angular) {
     'use strict';
     var directives = angular.module('mtApp.directives', [

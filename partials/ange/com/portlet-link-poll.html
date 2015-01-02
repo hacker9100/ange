@@ -1,0 +1,14 @@
+<div class="peoplepoll" ng-model="item">
+    <div  class="poll_left"></div>
+    <div  class="poll_right"></div>
+    <!-- 최근 poll 제목 -->
+    <div class="poll_txt">
+        <strong>{{item.SUBJECT}}</strong>
+    </div>
+    <!-- 최근 poll 제목 -->
+    <div class="poll_txtSub">
+        <div class="poll_s01">{{item.START_YMD | date:'yyyy-MM-dd'}} ~ {{item.END_YMD | date:'yyyy-MM-dd'}}</div>
+        <div class="poll_s02">지금 바로 투표하세요!</div>
+        <div class="peoplepoll_gotopoll"><a ng-click="click_showPoll(item.NO)">투표하기</a></div>
+    </div>
+</div>

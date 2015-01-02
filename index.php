@@ -13,11 +13,12 @@
     $_d = new MtJson();
 
     $sql = "SELECT
-                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, CHANNEL_GB, DROP_FL, POSITION
+                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION, COLUMN_CNT
             FROM
                 COM_CHANNEL
             WHERE
-                CHANNEL_GB = 'CMS'
+                SYSTEM_GB = 'ANGE'
+                AND CHANNEL_ST = 'Y'
             ORDER BY CHANNEL_NO ASC
             ";
 
@@ -26,13 +27,14 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
+                    MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC
                 FROM
                     COM_MENU
                 WHERE
-                    MENU_GB = 'CMS'
+                    SYSTEM_GB = 'ANGE'
+                    AND MENU_ST  = 'Y'
                     AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
-                ORDER BY SORT_IDX ASC
+                ORDER BY MENU_ORD ASC
                 ";
 
         $menu_data = $_d->getData($sql);
@@ -44,12 +46,13 @@
     $channel_data = $__trn->{'rows'};
 
     $sql = "SELECT
-                MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, MENU_DESC, TAIL_DESC
+                MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC
             FROM
                 COM_MENU
             WHERE
-                MENU_GB  = 'CMS'
-            ORDER BY SORT_IDX ASC
+                SYSTEM_GB  = 'ANGE'
+                AND MENU_ST  = 'Y'
+            ORDER BY MENU_ORD ASC
             ";
 
     $__trn = '';
@@ -57,12 +60,12 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, SORT_IDX
+                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, ROW_ORD
                 FROM
                     COM_SUB_MENU
                 WHERE
                     MENU_URL = '".$row[MENU_URL]."'
-                ORDER BY SORT_IDX ASC
+                ORDER BY ROW_ORD ASC
                 ";
 
         $sub_menu_data = $_d->getData($sql);
@@ -82,7 +85,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>ANGE CMS</title>
+<title>ANGE - 엄마들의 즐거운 놀이터</title>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,23 +93,17 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css" />
-<link rel="stylesheet" href="css/app_d.css">
-
-<link rel="stylesheet" type="text/css" href="css/normalize.css" >
-<link rel="stylesheet" type="text/css" href="css/angeCMS_bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/normalize.css" >
+<link rel="stylesheet" type="text/css" href="css/ange/ange_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_style.css" />
 
 <link rel="stylesheet" type="text/css" href="lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
 <link rel="stylesheet" type="text/css" href="lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
 
-<!-- requirejs로 controller에서 제어 할수 있는 방법 찾기 -->
-<link rel="stylesheet" type="text/css" href="lib/ngActivityIndicator/css/ngActivityIndicator.css" />
-<link rel="stylesheet" type="text/css" href="lib/fullcalendar/fullcalendar.css" />
-<link rel="stylesheet" type="text/css" href="css/calendarDemo.css" />
+<link rel="stylesheet" type="text/css" href="lib/slick-carousel/slick.css" />
 
-<link rel="stylesheet" type="text/css" href="css/ng-table/ng-table.min.css" />
-<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />
+<!--<link rel="stylesheet" type="text/css" href="css/ng-table/ng-table.min.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />-->
 
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
@@ -117,65 +114,12 @@
 <!-- CSS adjustments for browsers with JavaScript disabled -->
 <noscript><link rel="stylesheet" href="css/file-upload/jquery.fileupload-noscript.css"></noscript>
 <noscript><link rel="stylesheet" href="css/file-upload/jquery.fileupload-ui-noscript.css"></noscript>
-<style type="text/css">
-    #veil {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height:100%;
-        width:100%;
-        cursor: not-allowed;
-        filter: alpha(opacity=60);
-        opacity: 0.6;
-        background: #000000 url(http://www.wingo.com/angular/AngularShieldLogo.png) no-repeat center;
-    }
-    #feedLoading {
-        position: absolute;
-        top:200px;
-        width:100%;
-        text-align: center;
-        font-size: 4em;
-        color:white;
-        text-shadow: 2px 2px 2px #021124;
-    }
-    .feed-loading {
-        position: absolute;
-        display: block;
-        width: 32px;
-        height: 32px;
-        top:10px;
-        width:50px;
-    }
-</style>
 
-<style>
-    .loading-container {
-        position: relative;
-    }
-    .loading-container .loading:before, .loading-container .loading:after {
-        content: " ";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        min-height: 50px;
-        min-width: 50px;
-    }
-    .loading-container .loading:before {
-        background-color: white;
-        opacity: 0.5;
-    }
-
-    .form-horizontal input.ng-invalid.ng-dirty {
-        border-color: #FA787E;
-    }
-/*
-    .form-horizontal input.ng-valid.ng-dirty {
-        border-color: #78FA89;
-    }
-*/
-</style>
+<link rel="stylesheet" type="text/css" href="css/ange/ange_main.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_storylist.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_people_main.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_moms_main.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_myange_main.css" />
 
 <!-- IE6,7,8에서도 HTML5 element를 인식시켜주기 위한 코드 -->
 <!--[if lt IE 9]>
@@ -184,9 +128,9 @@
 <![endif]-->
 
 <script>
-    function cms_init($rootScope) {
-        $rootScope.cms_channel = <?=$channel_info?>;
-        $rootScope.cms_menu = <?=$menu_info?>;
+    function ange_init($rootScope) {
+        $rootScope.ange_channel = <?=$channel_info?>;
+        $rootScope.ange_menu = <?=$menu_info?>;
     }
 </script>
 
@@ -199,13 +143,13 @@ http://plnkr.co/edit/KzjIMN
 
 <body>
 <!-- View가 표시될 영역 -->
-<div ui-view ng-controller="cms_init"></div>
+<div ui-view ng-controller="ange_init"></div>
 
 <!--
     requireJS를 사용하기 위한 부분으로,
     requireJS는 data-main에 설정한 main.js 파일을 최초로 로드한다.
  -->
-<script src="lib/require/require.js" data-main="js/main.js"></script>
+<script src="lib/require/require.js" data-main="js/ange/main.js"></script>
 </body>
 
 </html>

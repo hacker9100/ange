@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h3 class="modal-title">진행내역 확인</h3>
+</div>
+<div class="modal-body">
+    <div class="body_wrap">
+        <div class="panel panel-master contentpannel" style="border:none; display:block;">
+            <div class="contentpannel-body" >
+                <div class="col-md-12">
+                    <div lass="row" ng-repeat="item in list">
+                        <div class= "form-group">
+                            <label class= "col-md-9">
+                                <span>{{item.WORKER_NM}}</span>
+                                <span ng-show="item.OBJECT_GB == 'TASK' && item.ACTION_GB == 'CREATE'">"{{item.ETC}}"</span>
+                                <span>{{item.OBJECT_GB == 'TASK' ? '태스크' : '원고'}}을(를)</span>
+                                <span>{{item.ACTION_GB == 'CREATE' ? '등록' : item.ACTION_GB == 'UPDATE' ? '수정' : item.ACTION_GB == 'GIVE_BACK' ? '반려' : item.ACTION_GB == 'APPROVAL' ? '승인' : '등록'}} </span>
+                                <span>하였습니다.</span>
+                            </label>
+                            <span>{{item.WORK_DT}}</span>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="click_ok()">확인</button>
+</div>

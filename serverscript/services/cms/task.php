@@ -227,6 +227,38 @@
                     $category_data = $_d->getData($sql);
                     $row['CATEGORY'] = $category_data;
 
+                    if ($_search[CONETNT]) {
+                        $sql = "SELECT
+                                    NO, SUPER_NO, PHASE, VERSION, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                                    CURRENT_FL, MODIFY_FL, HIT_CNT, SCRAP_CNT, TASK_NO
+                                FROM
+                                    CMS_CONTENT
+                                WHERE
+                                    CURRENT_FL = 'Y'
+                                    AND TASK_NO = ".$row['NO']."
+                                ";
+
+                        $content_result = $_d->sql_query($sql);
+                        $content_data  = $_d->sql_fetch_array($content_result);
+                        $row['CONTENT'] = $content_data;
+
+                        $sql = "SELECT
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    F.NO = S.SOURCE_NO
+                                    AND S.CONTENT_GB = 'FILE'
+                                    AND S.TARGET_GB = 'CONTENT'
+                                    AND S.TARGET_NO = ".$content_data[NO]."
+                                    AND F.THUMB_FL = '1'
+                                ";
+
+                        $file_result = $_d->sql_query($sql);
+                        $file_data = $_d->sql_fetch_array($file_result);
+                        $row['FILE'] = $file_data;
+                    }
+
                     $__trn->rows[$i] = $row;
                 }
                 $_d->sql_free_result($result);

@@ -5,6 +5,7 @@
  * Description : 사용할 모든 filter를 로드
  */
 define([
-    './formatFileSizeFilter',
-    './reverseUppercaseFilter'
+    './string-limit-filter',
+    './format-filesize-filter',
+    './reverse-uppercase-filter'
 ], function () {});

@@ -1,0 +1,33 @@
+<div class="comp_basic h-cell-dynamic">
+    <!-- mini_event -->
+    <div class="mini_event">
+        <div class="mini_event_top">
+            <div class="mini_event_titlebar">
+                <span class="mini_community_title">{{ portletTitle }}</span>
+                <a class="miniboard_tab_more" style="margin-left: 10px;" ng-click="click_showList();">더보기</a>
+            </div>
+            <div class="mini_event_control">
+                <a ng-show="toggle" class="miniboard_tab_slidepause" title="일시정지" ng-click="click_slickPause()">일시정지</a>
+                <a ng-show="!toggle" class="miniboard_tab_slideplay" title="동작" ng-click="click_slickPlay()">동작</a>
+                <!-- a class="miniboard_tab_slideplay" title="재생">재생</a --> <!-- 일시재생 클릭시 표시 -->
+                <a class="miniboard_tab_slideprev" title="이전" ng-click="click_slickPrev()">이전슬라이드</a>
+                <a class="miniboard_tab_slidenext" title="다음" ng-click="click_slickNext()">다음슬라이드</a>
+            </div>
+        </div>
+
+        <div class="row mini_event_contentlist">
+
+            <slick id="{{option.id}}" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="3" autoplay-speed="3000" fade="false" pause-on-hover="false"></slick>
+
+            <!--<div class="col-xs-4 mini_event_contentcol">-->
+                <!--<div class="mini_event_content">-->
+                    <!--<div class="mini_event_closed"></div>-->
+                    <!--<img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  />-->
+                    <!--<div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단</span>교감여행 서평단</div>-->
+                    <!--<div class="mini_event_txt_duration">2014.10.11~2014.11.10</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <!-- /mini_event -->
+</div>

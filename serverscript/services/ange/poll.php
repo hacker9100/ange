@@ -42,20 +42,20 @@
 
     switch ($_method) {
         case "GET":
-            if ($_type == 'item') {
+            if ($_type == "item") {
                 $search_where = "";
 
-                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
-                }
+//                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
+//                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
+//                }
 
                 $err = 0;
                 $msg = "";
 
                 $sql = "SELECT
-                            NO, COMM_NM, COMM_GB, REG_ID, REG_DT, COMM_ST, COMM_CLASS
+                            NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, REG_DT
                         FROM
-                            ANGE_COMM
+                            ANGE_POLL
                         WHERE
                             NO = ".$_key."
                             ".$search_where."
@@ -69,38 +69,38 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if (isset($_search[BOARD])) {
+                $sql = "SELECT
+                          POLL_NO, QUERY_NO, QUERY_ORD, QUERY_GB, QUERY
+                        FROM
+                          ANGE_POLL_QUERY
+                        WHERE
+                          POLL_NO = ".$data[NO]."
+                        ORDER BY QUERY_ORD
+                        ";
+
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
                     $sql = "SELECT
-                              NO, PARENT_NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG
+                                POLL_NO, QUERY_NO, SELECT_ORD, NOTE
                             FROM
-                              COM_BOARD
+                                ANGE_POLL_SELECT
                             WHERE
-                              COMM_NO = ".$data[COMM_NO]."
+                                POLL_NO = ".$row[POLL_NO]."
+                                AND QUERY_NO = ".$row[QUERY_NO]."
+                            ORDER BY SELECT_ORD
                             ";
 
-                    $__trn = '';
-                    $result = $_d->sql_query($sql,true);
-                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                    $file_data = $_d->getData($sql);
+                    $row['SELECT'] = $file_data;
 
-                        $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    FILE F, CONTENT_SOURCE S
-                                WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.TARGET_GB = 'CMS_BOARD'
-                                    AND S.TARGET_NO = ".$row[NO]."
-                                    AND F.THUMB_FL = '0'
-                                ";
-
-                        $file_data = $_d->getData($sql);
-                        $row['FILES'] = $file_data;
-
-                        $__trn->rows[$i] = $row;
-                    }
-                    $_d->sql_free_result($result);
-                    $data['BOARD'] = $__trn->{'rows'};
+                    $__trn->rows[$i] = $row;
                 }
+
+                $_d->sql_free_result($result);
+                $data['QUERY'] = $__trn->{'rows'};
 /*
                 $sql = "SELECT
                             NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
@@ -124,43 +124,48 @@
                 }else{
                     $_d->dataEnd2($data);
                 }
-            } else if ($_type == 'list') {
-                $search_common = "";
+            } else if ($_type == "list") {
                 $search_where = "";
                 $sort_order = "";
                 $limit = "";
 
-                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
+                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
+                    $search_where .= "AND POLL_ST = '".$_search[POLL_ST]."' ";
                 }
 
-//                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-//                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
-//                }
+                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                }
 
-//                if (isset($_page)) {
-//                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
-//                }
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                }
+
+                if (isset($_page)) {
+                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                }
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            NO, COMM_NM, COMM_GB, REG_ID, REG_DT, COMM_ST, COMM_CLASS
+                            NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
                         (
                             SELECT
-                                NO, COMM_NM, COMM_GB, REG_ID, REG_DT, COMM_ST, COMM_CLASS
+                                NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, REG_DT
                             FROM
-                                ANGE_COMM
+                                ANGE_POLL
                             WHERE
                                 1 = 1
                                 ".$search_where."
+                            ".$sort_order."
+                            ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                ANGE_COMM
+                                ANGE_POLL
                             WHERE
                                 1 = 1
                                 ".$search_where."
@@ -180,46 +185,139 @@
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
 
-            $err = 0;
-            $msg = "";
+            if ($_type == "item") {
+                $err = 0;
+                $msg = "";
 
-            if( trim($_model[COMM_NM]) == "" ){
-                $_d->failEnd("제목을 작성 하세요");
-            }
+                if( trim($_model[SUBJECT]) == "" ){
+                    $_d->failEnd("제목을 작성 하세요");
+                }
 
-            $_d->sql_beginTransaction();
+                $_d->sql_beginTransaction();
 
-            $sql = "INSERT INTO ANGE_COMM
-                    (
-                        COMM_NM,
-                        COMM_GB,
-                        REG_ID,
-                        REG_DT,
-                        COMM_ST,
-                        COMM_CLASS
-                    ) VALUES (
-                        '".$_model[COMM_NM]."',
-                        '".$_model[COMM_GB]."',
-                        '".$_SESSION['name']."',
-                        SYSDATE(),
-                        '".$_model[COMM_ST]."',
-                        '".$_model[COMM_CLASS]."',
-                    )";
+                $sql = "INSERT INTO ANGE_POLL
+                        (
+                            SUBJECT,
+                            START_YMD,
+                            END_YMD,
+                            PRESENT,
+                            QUERY_CNT,
+                            POLL_ST,
+                            REG_DT
+                        ) VALUES (
+                            '".$_model[SUBJECT]."',
+                            '".$_model[START_YMD]."',
+                            '".$_model[END_YMD]."',
+                            '".$_model[PRESENT]."',
+                            '".$_model[QUERY_CNT]."',
+                            '".$_model[POLL_ST]."',
+                            SYSDATE()
+                        )";
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
-                $_d->succEnd($no);
+                $i = 0;
+                foreach ($_model[QUERY] as $e) {
+                    if (isset($e[QUERY]) && $e[QUERY] != "") {
+                        $sql = "INSERT INTO ANGE_POLL_QUERY
+                                (
+                                    POLL_NO
+                                    ,QUERY_NO
+                                    ,QUERY_ORD
+                                    ,QUERY_GB
+                                    ,QUERY
+                                ) VALUES (
+                                    '".$no."'
+                                    ,'".$i++."'
+                                    ,'".$e[BABY_SEX_GB]."'
+                                    ,'".$e[QUERY_GB]."'
+                                    ,'".$e[QUERY]."'
+                                )";
+
+                        $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+
+                        $j = 0;
+                        foreach ($e[SELECT] as $s) {
+                            if (isset($s[NOTE]) && $s[NOTE] != "") {
+                                $sql = "INSERT INTO ANGE_POLL_SELECT
+                                        (
+                                            POLL_NO
+                                            ,QUERY_NO
+                                            ,SELECT_ORD
+                                            ,NOTE
+                                        ) VALUES (
+                                            '".$no."'
+                                            ,'".$i++."'
+                                            ,'".$j."'
+                                            ,'".$s[NOTE]."'
+                                        )";
+
+                                $_d->sql_query($sql);
+
+                                if($_d->mysql_errno > 0) {
+                                    $err++;
+                                    $msg = $_d->mysql_error;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("등록실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == "answear") {
+                $j = 0;
+                foreach ($_model[SELECT] as $s) {
+                    if (isset($s[NOTE]) && $s[NOTE] != "") {
+                        $sql = "INSERT INTO ANGE_POLL_ANSWEAR
+                                (
+                                    POLL_NO
+                                    ,QUERY_NO
+                                    ,USER_UID
+                                    ,SELECT_ANSWEAR
+                                    ,NOTE
+                                    ,REG_DT
+                                ) VALUES (
+                                    '".$s[POLL_NO]."'
+                                    ,'".$s[QUERY_NO]."'
+                                    ,'".$_SESSION['uid']."'
+                                    ,'".$s[SELECT_ANSWEAR]."'
+                                    ,'".$s[NOTE]."'
+                                    ,SYSDATE()
+                                )";
+
+                        $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                }
+
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("등록실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd("0");
+                }
             }
 
             break;
@@ -229,7 +327,7 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            if( trim($_model[COMM_NM]) == "" ){
+            if( trim($_model[SUBJECT]) == "" ){
                 $_d->failEnd("제목을 작성 하세요");
             }
 
@@ -238,20 +336,90 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "UPDATE ANGE_COMM
+            $sql = "UPDATE ANGE_POLL
                     SET
-                        COMM_NM = '".$_model[COMM_NM]."',
-                        COMM_GB = '".$_model[COMM_GB]."',
-                        REG_UID = '".$_model[REG_UID]."',
-                        REG_DT = SYSDATE(),
-                        COMM_ST = '".$_model[COMM_ST]."',
-                        COMM_CLASS = '".$_model[COMM_CLASS]."'
+                        SUBJECT = '".$_model[SUBJECT]."',
+                        START_YMD = '".$_model[START_YMD]."',
+                        END_YMD = '".$_model[END_YMD]."',
+                        PRESENT = '".$_model[PRESENT]."',
+                        QUERY_CNT = '".$_model[QUERY_CNT]."',
+                        POLL_ST = '".$_model[POLL_ST]."'
                     WHERE
                         NO = ".$_key."
                     ";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
+
+            $sql = "DELETE FROM ANGE_POLL_QUERY WHERE POLL_NO = ".$_key;
+
+            $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $sql = "DELETE FROM ANGE_POLL_SELECT WHERE POLL_NO = ".$_key;
+
+            $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $i = 0;
+            foreach ($_model[QUERY] as $e) {
+                if (isset($e[QUERY]) && $e[QUERY] != "") {
+                    $sql = "INSERT INTO ANGE_POLL_QUERY
+                            (
+                                POLL_NO
+                                ,QUERY_NO
+                                ,QUERY_ORD
+                                ,QUERY_GB
+                                ,QUERY
+                            ) VALUES (
+                                '".$no."'
+                                ,'".$i++."'
+                                ,'".$e[BABY_SEX_GB]."'
+                                ,'".$e[QUERY_GB]."'
+                                ,'".$e[QUERY]."'
+                            )";
+
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
+                    $j = 0;
+                    foreach ($e[SELECT] as $s) {
+                        if (isset($s[NOTE]) && $s[NOTE] != "") {
+                            $sql = "INSERT INTO ANGE_POLL_SELECT
+                                    (
+                                        POLL_NO
+                                        ,QUERY_NO
+                                        ,SELECT_ORD
+                                        ,NOTE
+                                    ) VALUES (
+                                        '".$no."'
+                                        ,'".$i++."'
+                                        ,'".$j."'
+                                        ,'".$s[NOTE]."'
+                                    )";
+
+                            $_d->sql_query($sql);
+
+                            if($_d->mysql_errno > 0) {
+                                $err++;
+                                $msg = $_d->mysql_error;
+                            }
+                        }
+                    }
+                }
+            }
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -278,10 +446,28 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM ANGE_COMM WHERE NO = ".$_key;
+            $sql = "DELETE FROM ANGE_POLL WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $sql = "DELETE FROM ANGE_POLL_QUERY WHERE POLL_NO = ".$_key;
+
+            $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $sql = "DELETE FROM ANGE_POLL_SELECT WHERE POLL_NO = ".$_key;
+
+            $_d->sql_query($sql);
 
             if($_d->mysql_errno > 0) {
                 $err++;

@@ -10,13 +10,14 @@ define([
     'use strict';
     app.constant(
         "COMMON", {
-            "TEST" : "test"
+            "SYSTEM_GB" : "ANGE",
+            "DASHBOARD_PAGE_SIZE" : 5,
+            "PAGE_SIZE" : 20
         }
     );
     app.constant(
-        "ADMIN", {
-            "SYSTEM_GB" : "ANGE",
-            "" : ""
+        "SERVER", {
+            "SERVER_URL" : "/serverscript/services/"
         }
     );
     app.constant(

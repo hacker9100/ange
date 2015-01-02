@@ -23,6 +23,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'fileupload-process', // fileUpload ui 관련 라이브러리
     'fileupload-angular', // fileUpload angularjs 관련 라이브러리
 
+    'angular-masonry',
+    'ng-infinite-scroll',
+
     // 각 컨트롤러 로딩
     './service/index',
     './directive/index',
@@ -41,7 +44,12 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'mtApp.filters',
         'ngTable',
         'ui.router',
-        'blueimp.fileupload'
+        'blueimp.fileupload',
+
+        'ange.portlet.tpls',
+
+        'masonryLayout',
+        'infinite-scroll'
         ], function () {
             // 여기서는 필요한 설정들을 진행.
         }
@@ -52,13 +60,12 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
 //    yourApp.controller('YourAppCtrl', function($scope) {
 //    });
 
-    //공통 컨트롤러 설정 - 모든 컨트롤러에서 공통적으로 사용하는 부분들 선언
-    app.controller('common', function($scope, $q, dataService, $location) {
-
-//        $scope.path = $location.path();
-
+    app.run(function ($rootScope, $stateParams, dataService, $location, $q) {
+        $rootScope.$on("$stateChangeStart", function (event, next, current) {
+            // com_commom에서 layout을 동적으로 생성하는데 url이 변경되는 경우 정보 이동을 위해
+            $rootScope.location = $location.path();
+        });
     });
 
-    // 외부에 노출할 함수들만 반환한다.
     return app;
 });

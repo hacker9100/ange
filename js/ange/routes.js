@@ -10,7 +10,7 @@
 define([
 'app',
 'json!menu_ange.json'
-], function(app, menu_admin) {
+], function(app, menu_ange) {
     'use strict';
 
     app.config(function($stateProvider, $urlRouterProvider) {
@@ -19,15 +19,15 @@ define([
 //        $locationProvider.html5Mode(true);
 
         // 무조건 처음에 호출하고 싶은 것이 있으면 여기서 호출
-        $urlRouterProvider.otherwise('/signin');
+        $urlRouterProvider.otherwise('/main');
 
         // 메뉴 정보를 별도의 파일로 분리해 관리
         // menu.json에 정의된 메뉴들을 루프를 돌리면서 바인딩
 //        if (config.states !== undefined) {
-        if (menu_admin !== undefined) {
+        if (menu_ange !== undefined) {
 
-            for(var i = 0; i < menu_admin.states.length; i++) {
-                angular.forEach(menu_admin.states[i], function (state, stateName) {
+            for(var i = 0; i < menu_ange.states.length; i++) {
+                angular.forEach(menu_ange.states[i], function (state, stateName) {
                     angular.forEach(state.views, function (view, viewName) {
                     });
 

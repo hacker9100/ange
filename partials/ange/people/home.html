@@ -1,0 +1,350 @@
+<div ng-controller="home">
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+            <div class="row">
+                <div class="col-xs-3 v-cell-3">
+                    <div class="comp_basic comp_splite_left h-cell-1-half">
+                        <!-- mini_peoplepoll -->
+
+                        <ange-portlet-link-poll ng-model="option_r1_c1"></ange-portlet-link-poll>
+
+                        <!--<div class="peoplepoll">-->
+                            <!--<div  class="poll_left"></div>-->
+                            <!--<div  class="poll_right"></div>-->
+                            <!--&lt;!&ndash; 최근 poll 제목 &ndash;&gt;-->
+                            <!--<div class="poll_txt">-->
+                                <!--<strong>우리 아이 하루 물 섭취량은 어느 정도인가요?</strong>-->
+                            <!--</div>-->
+                            <!--&lt;!&ndash; 최근 poll 제목 &ndash;&gt;-->
+                            <!--<div class="poll_txtSub">-->
+                                <!--<div class="poll_s01">2014-10-10 ~ 2014-10-15</div>-->
+                                <!--<div class="poll_s02">지금 바로 투표하세요!</div>-->
+                                <!--<div class="peoplepoll_gotopoll"><a href="#">투표하기</a></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!-- /mini_peoplepoll -->
+                    </div>
+                </div>
+
+                <div class="col-xs-6 v-cell-3">
+                    <div class="comp_basic comp_splite_middle h-cell-1-half">
+                        <!-- mini_peopleboard -->
+                        <ange-portlet-channel-list ng-model="option_r1_c2"></ange-portlet-channel-list>
+
+                        <!--<div class="mini_peopleboard">-->
+                            <!--<div class="peopleboard_top">-->
+                                <!--<div class="miniboard_titlebar">-->
+                                    <!--<span class="people_miniboard_title">Talk&Talk</span>-->
+                                    <!--<a class="people_miniboard_tab_more">더보기</a>-->
+                                    <!--<div class="people_miniboard_tab">돌잔치톡</div>-->
+                                    <!--<div class="people_miniboard_tab">육아방</div>-->
+                                    <!--<div class="people_miniboard_tab_on">예비맘&출산맘</div>-->
+                                    <!--<div class="people_miniboard_tab">수다방</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="miniboard_contents">-->
+                                <!--<div class="mini_board_contents">-->
+                                    <!--&lt;!&ndash;<img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="mini_story_txt_title">임산부 독감 예방접종 해도 되나...<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>2014/10/17</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="mini_board_contents">-->
+                                    <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="mini_story_txt_title">와 대박!! 산모교실 경품 진짜...<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>2014/10/17</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="mini_board_contents">-->
+                                    <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="mini_story_txt_title">아~ 콜라 끊을수 없는 유혹이네....<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>2014/10/17</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="mini_board_contents">-->
+                                    <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="mini_story_txt_title">둥이 침대고민...<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>2014/10/17</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="mini_board_contents">-->
+                                    <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="mini_story_txt_title">★ 발표 ★ 임산부 배려해주세요.<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>2014/10/17</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div> &lt;!&ndash;miniboard_contents&ndash;&gt;-->
+                        <!--</div>-->
+                        <!-- mini_peopleboard -->
+                    </div>
+                </div>
+
+                <div class="col-xs-3 v-cell-3">
+                    <div class="comp_basic comp_splite_right h-cell-1-half">
+                        <!-- mini_peoplelinetalk -->
+                        <ange-portlet-link-menu ng-model="option_r1_c3"></ange-portlet-link-menu>
+
+                        <!--<div class="mini_peoplelinetalk">-->
+                            <!--<div class="mini_peoplelinetalk_contents">-->
+                                <!--<div class="mini_peoplelinetalk_contents_bg"> <img src="" /> </div>-->
+                            <!--</div >-->
+                            <!--<div class="mini_peoplelinetalk_bg_r"></div>-->
+                            <!--<div class="mini_peoplelinetalk_txt">-->
+                                <!--<p class="mini_peoplelinetalk_txt1"><strong>앙쥬회원님</strong></p>-->
+                                <!--<p class="mini_peoplelinetalk_txt2">한줄톡<br>남겨주세요</p>-->
+                                <!--<p class="mini_peoplelinetalk_txt3">출석만해도<br>포인트가 쌓인다?!</p>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!-- mini_peoplelinetalk -->
+                    </div>
+                </div>
+            </div><!-- //no.1_row -->
+
+            <div class="row">
+                <div class="col-xs-6 v-cell-3">
+                    <div class="comp_basic comp_splite_left h-cell-1-half">
+                        <!-- mini_peoplebabymodel -->
+                        <ange-portlet-slide-baby ng-model="option_r2_c1"></ange-portlet-slide-baby>
+
+                        <!--<div class="mini_peoplebabymodel">-->
+                            <!--<div class="mini_peoplebabymodel_logo" ></div>-->
+                            <!--<div class="mini_peoplebabymodel_banner" ></div>-->
+                            <!--<p>+ 앙쥬마일리지 (1일1회) <span class="point">15P 적립</span></p>-->
+                            <!--<div class="mini_peoplebabymodel_top"></div>-->
+                            <!--<div class="mini_peoplebabymodel_top_bg"></div>-->
+                            <!--<div class="mini_peoplebabymodel_slider">-->
+                                <!--<div class="mini_peoplebabymodel_slider_pic">-->
+                                    <!--<dl>-->
+                                        <!--<dd><a href="#"><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" /></a></dd>-->
+                                        <!--<dd><a href="#"><img src="imgs/ange/mini_peoplebabymodel_02.png" width="99" height="119" alt="" /></a></dd>-->
+                                        <!--<dd><a href="#"><img src="imgs/ange/mini_peoplebabymodel_03.png" width="99" height="119" alt="" /></a></dd>-->
+                                        <!--<dd><a href="#"><img src="imgs/ange/mini_peoplebabymodel_04.png" width="99" height="119" alt="" /></a></dd>-->
+                                    <!--</dl>-->
+                                <!--</div>-->
+                                <!--<span class="prev_btn">이전 버튼</span><span class="next_btn">다음 버튼</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!-- /mini_peoplebabymodel -->
+                    </div>
+                </div>
+
+                <div class="col-xs-6 v-cell-3">
+                    <div class="comp_basic comp_splite_right h-cell-1-half">
+                        <!-- mini_peopleclinic -->
+                        <div class="mini_peopleclinic">
+                            <div class="red"></div>
+                            <div class="green"></div>
+                            <div class="blue"></div>
+                            <div class="purple"></div>
+
+                            <div class="mini_peopleclinic_quick">
+                                <div class="mini_peopleclinic_title">전문가<strong>상담실</strong></div>
+                                <div class="mini_peopleclinic_contents">
+                                    <div class="mini_peopleclinic_contents_icon">
+                                        <div class="clinic_q1"><a href=""></a><span class="t">아동발달</span></div>
+                                        <div class="clinic_q2"><a href=""></a><span class="t">한방소아과</span></div>
+                                        <div class="clinic_q3"><a href=""></a><span class="t">산부인과</span></div>
+                                        <div class="clinic_q4"><a href=""></a><span class="t">Q&A</span></div>
+                                        <div class="clinic_q5"><a href=""></a><span class="t">재테크</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mini_peopleclinic_box">
+                                <div class="mini_peopleclinic_box_bg"></div>
+                                <div class="mini_peopleclinic_box_arrow"></div>
+                                <div class="mini_peopleclinic_quick_ex">
+                                    <span class="" style="display:block">도서와 인터넷을 찾아도 궁금증이 해소되지 않을때가 많습니다. 해소되지 못했거나 물어보기 민망했던 질문등 어떤 궁금증도 환영합니다.</span>
+                                    <span class="">도서와 인터넷을 찾아도 궁금증이 해소되지 않을때가 많습니다. 해소되지 못했거나 물어보기 민망했던 질문등 어떤 궁금증도 환영합니다.</span>
+                                    <span class="">도서와 인터넷을 찾아도 궁금증이 해소되지 않을때가 많습니다. 해소되지 못했거나 물어보기 민망했던 질문등 어떤 궁금증도 환영합니다.</span>
+                                    <span class="">도서와 인터넷을 찾아도 궁금증이 해소되지 않을때가 많습니다. 해소되지 못했거나 물어보기 민망했던 질문등 어떤 궁금증도 환영합니다.</span>
+                                    <span class="">도서와 인터넷을 찾아도 궁금증이 해소되지 않을때가 많습니다. 해소되지 못했거나 물어보기 민망했던 질문등 어떤 궁금증도 환영합니다.</span>
+                                </div>
+                            </div>
+                        </div>	<!-- mini_peopleclinic_quick -->
+                        <!-- /mini_peopleclinic -->
+                    </div>
+                </div>
+            </div><!-- //no.2_row -->
+
+
+            <div class="row">
+                <div class="col-xs-3 v-cell-3">
+                    <div class="comp_basic comp_splite_left h-cell-1-half">
+                        <!-- mini_peoplebooktalk -->
+                        <ange-portlet-link-menu ng-model="option_r3_c1"></ange-portlet-link-menu>
+                        <!--<div class="mini_peoplebooktalk">-->
+                            <!--<div class="mini_peoplebooktalk_bg"></div>-->
+                            <!--<div class="mini_peoplebooktalk_title1"></div>-->
+                            <!--<div class="mini_peoplebooktalk_title2"></div>-->
+                        <!--</div>-->
+                        <!-- /mini_peoplebooktalk -->
+                    </div>
+                </div>
+
+                <div class="col-xs-6 v-cell-3">
+                    <div class="comp_basic comp_splite_middle h-cell-1-half">
+                        <!-- mini_peoplephoto -->
+                        <ange-portlet-channel-list ng-model="option_r3_c2"></ange-portlet-channel-list>
+
+                        <!--<div class="taste_mini_peopleboard">-->
+                            <!--<div class="taste_peopleboard_top">-->
+                                <!--<div class="miniboard_titlebar">-->
+                                    <!--<span class="taste_people_miniboard_title">맛!맛!맛</span>-->
+                                    <!--<a class="taste_people_miniboard_tab_more">더보기</a>-->
+                                    <!--<div class="taste_miniboard_tab_on">레시피 아케이드</div>-->
+                                    <!--<div class="taste_miniboard_tab">앙쥬피플 맛집</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="taste_miniboard_contents">-->
+                                <!--<div class="taste_miniboard_img"><a href=""><img src="" /></a></div>-->
+                                <!--<div class="taste_mini_board_contents">-->
+                                    <!--&lt;!&ndash;<img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="taste_mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="taste_mini_story_txt_title"><span class="bold">[이유식]</span>황기영양식<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="taste_mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>다원둥이맘</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="taste_mini_board_contents">-->
+                                    <!--&lt;!&ndash;<img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="taste_mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="taste_mini_story_txt_title"><span class="bold">[밑반찬]]</span>오이무침<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="taste_mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>다원둥이맘</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="taste_mini_board_contents">-->
+                                    <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="taste_mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="taste_mini_story_txt_title"><span class="bold">[밑반찬]</span>오뎅볶음<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="taste_mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>다원둥이맘</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="taste_mini_board_contents">-->
+                                    <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="taste_mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="taste_mini_story_txt_title"><span class="bold">[밑반찬]</span>생선조림<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="taste_mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>롤롤마미</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="taste_mini_board_contents">-->
+                                    <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="taste_mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="taste_mini_story_txt_title"><span class="bold">[밑반찬]</span>어묵볶음<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="taste_mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>롤롤마미</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="taste_mini_board_contents">-->
+                                    <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                    <!--<div class="taste_mini_board_contents_txt">-->
+                                        <!--&lt;!&ndash; span class="mini_story_txt_head">월간앙쥬 1월</span &ndash;&gt;-->
+                                        <!--<span class="taste_mini_story_txt_title"><span class="bold">[밑반찬]</span>메추리알 간장조림<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--<ul class="taste_mini_board_feeds">-->
+                                            <!--&lt;!&ndash; li class="mini_reply" style="float: right;">9</li>-->
+                                            <!--<li class="mini_like" style="float: right;">55</li &ndash;&gt;-->
+                                            <!--<li>쯔이맘</li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div> &lt;!&ndash;miniboard_contents&ndash;&gt;-->
+                        <!--</div>-->
+                        <!-- /mini_peoplephoto -->
+                    </div>
+                </div>
+
+                <div class="col-xs-3 v-cell-3">
+                    <div class="comp_basic comp_splite_right h-cell-1-half">
+                        <!-- mini_angegrouplink -->
+                        <ange-portlet-link-menu ng-model="option_r3_c3"></ange-portlet-link-menu>
+                        <!--<div class="mini_angegrouplink">-->
+                            <!--<div class="mini_angegrouplink_go">-->
+                                <!--앙쥬그룹 홈으로 가기-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!-- /mini_angegrouplink -->
+                    </div>
+                </div>
+            </div><!-- //no3._row -->
+
+        </div>
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div class="copyright_foot">
+            <br /><br />
+            <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+                <hr style="margin:0 15px 0 15px;" />
+
+                <center>
+                    <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+                </center>
+            </nav>
+        </div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
+
+    </div>
+
+    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
+        <div class="row">
+            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
+                우측바
+            </div>
+        </div>
+    </div>
+
+    <!-- /Main Page Layout Set -->
+</div>

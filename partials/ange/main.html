@@ -1,0 +1,433 @@
+<div ng-controller="main">
+    <!-- mainbar -->
+    <div ng-class="slide != 'cover' ? 'mainbar slide0_small' : 'mainbar slide0'">
+        <!-- 1페이지 모드일 경우 보여지는 슬라이드 버튼 -->
+        <a class="tablet_arrow tablet_arrow_left" title="이전 슬라이드">prev_button</a>
+        <a class="tablet_arrow tablet_arrow_right" title="다음 슬라이드">next_button</a>
+        <!-- 1페이지 모드일 경우 보여지는 슬라이드 버튼 -->
+
+        <div class="container-fluid common_container">
+
+            <div class="row">
+
+                <div class="col-xs-12 v-cell-4">
+
+                    <ange-portlet-slide-banner ng-model="option_r1_c1"></ange-portlet-slide-banner>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
+                    <div ng-class="slide != 'cover' ? 'comp_basic h-cell-2' : 'comp_basic comp_splite_left h-cell-2'">
+                        <!-- mini_story -->
+                        <div class="mini_story">
+
+                            <div class="miniboard_titlebar">
+                                <span class="miniboard_title">맘스그라운드</span>
+
+                                <a class="miniboard_tab_more">더보기</a>
+
+                                <div class="miniboard_tab">인기</div>
+                                <div class="miniboard_tab">최신</div>
+                                <div class="miniboard_tab_on">추천<span style="color:#AAA;">[맞춤서비스]</span></div>
+                            </div>
+
+                            <div class="mini_story_rollcate" style="margin-bottom:5px;">
+                                <a class="mini_story_rollcate_left">Pre Category</a>
+
+                                    <div class="mini_story_rollcate_catenames">
+                                        <ul class="mini_story_rollcate_ul">
+                                            <li><a class="rollcate_link">Health</a></li>
+                                            <!-- 일반 타입 --><li><a class="rollcate_link">Food</a></li>
+                                            <!-- 현재 지정 --><li class="foucs">DIY</li>
+                                            <li><a class="rollcate_link">Travel</a></li>
+                                            <li><a class="rollcate_link">Place</a></li>
+                                            <li><a class="rollcate_link">Investments</a></li>
+                                            <li><a class="rollcate_link">Health</a></li>
+                                            <li><a class="rollcate_link">Food</a></li>
+                                            <li><a class="rollcate_link">DIY</a></li>
+                                            <li><a class="rollcate_link">Travel</a></li>
+                                            <li><a class="rollcate_link">Place</a></li>
+                                            <li><a class="rollcate_link">Investments</a></li>
+                                        </ul>
+
+                                    </div>
+                                <a class="mini_story_rollcate_right">Next Category</a>
+                            </div>
+
+                            <div class="mini_board_contents">
+                                <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                                <div class="mini_board_contents_txt">
+
+                                    <span class="mini_story_txt_head">월간앙쥬 1월</span>
+                                    <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                    <ul class="mini_board_feeds">
+                                        <li class="mini_reply" style="float: right;">9</li>
+                                        <li class="mini_like" style="float: right;">55</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="mini_board_contents">
+                                <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                                <div class="mini_board_contents_txt">
+
+                                    <span class="mini_story_txt_head">월간앙쥬 1월</span>
+                                    <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                    <ul class="mini_board_feeds">
+                                        <li class="mini_reply" style="float: right;">9</li>
+                                        <li class="mini_like" style="float: right;">55</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="mini_board_contents">
+                                <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                                <div class="mini_board_contents_txt">
+
+                                    <span class="mini_story_txt_head">월간앙쥬 1월</span>
+                                    <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                    <ul class="mini_board_feeds">
+                                        <li class="mini_reply" style="float: right;">9</li>
+                                        <li class="mini_like" style="float: right;">55</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="mini_board_contents">
+                                <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                                <div class="mini_board_contents_txt">
+
+                                    <span class="mini_story_txt_head">월간앙쥬 1월</span>
+                                    <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                    <ul class="mini_board_feeds">
+                                        <li class="mini_reply" style="float: right;">9</li>
+                                        <li class="mini_like" style="float: right;">55</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="mini_board_contents">
+                                <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                                <div class="mini_board_contents_txt">
+
+                                    <span class="mini_story_txt_head">앙쥬백과 14호</span>
+                                    <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                    <ul class="mini_board_feeds">
+                                        <li class="mini_reply" style="float: right;">9888</li>
+                                        <li class="mini_like" style="float: right;">9999</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="mini_story_contentbox">
+                                <div class="row" style="margin:0 auto; position:relative;">
+                                    <div class="col-xs-2" style="padding:4px;">
+                                        <span class="mini_story_contentbox_kortitle">건강<br /><strong>먹거리</strong></span>
+                                        <div class="mini_story_contentbox_engtitle">Health<br />&nbsp;&nbsp;& Food</div>
+                                        <a class="miniboard_tab_slideprev" style="margin-top:-12px;" title="이전">이전슬라이드</a>
+                                        <a class="miniboard_tab_slidenext" style="margin-top:-12px;" title="다음">다음슬라이드</a>
+                                    </div>
+
+                                    <div class="col-xs-10 mini_story_contentboxlist_roll">
+                                        <div class="mini_story_contentboxlist_wrap">
+
+                                            <div class="mini_story_contentboxlist">
+                                                <div class="mini_story_contentbox_img">
+                                                    <span class="mini_story_contentbox_cate">초기(4-6)</span>
+                                                    <img src="imgs/ange/temp/story_food_01.jpg" />
+                                                </div>
+                                                <span class="mini_story_contentbox_title">단호박 미음</span>
+                                            </div>
+
+
+                                            <div class="mini_story_contentboxlist">
+                                                <div class="mini_story_contentbox_img">
+                                                    <span class="mini_story_contentbox_cate">중기(7-8)</span>
+                                                    <img src="imgs/ange/temp/story_food_02.jpg" />
+                                                </div>
+                                                <span class="mini_story_contentbox_title">비트닭고기밥</span>
+                                            </div>
+                                            <div class="mini_story_contentboxlist">
+                                                <div class="mini_story_contentbox_img">
+                                                    <span class="mini_story_contentbox_cate">후기(9-11)</span>
+                                                    <img src="imgs/ange/temp/story_food_03.jpg" />
+                                                </div>
+                                                <span class="mini_story_contentbox_title">쇠고기애호박</span>
+                                            </div>
+                                            <div class="mini_story_contentboxlist">
+                                                <div class="mini_story_contentbox_img">
+                                                    <span class="mini_story_contentbox_cate">완료기(12-15)</span>
+                                                    <img src="imgs/ange/temp/story_food_04.jpg" />
+                                                </div>
+                                                <span class="mini_story_contentbox_title">오색나물비빔밥</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- mini_story -->
+                    </div>
+                </div>
+
+                <!-- 슬라이드가 확장되지 않을 경우 -->
+                <div ng-if="slide == 'cover'" ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
+                    <div ng-class="slide != 'cover' ? 'comp_basic comp_splite_left h-cell-1' : 'comp_basic comp_splite_right h-cell-1'">
+                        <!-- maineventbanner -->
+                        <ange-portlet-link-image ng-model="option_r2_c2"></ange-portlet-link-image>
+                        <!-- /maineventbanner -->
+                    </div>
+
+                    <div class="comp_basic comp_splite_right h-cell-1">
+                        <!-- mini_community -->
+                        <ange-portlet-main-list ng-model="option_r3_c2"></ange-portlet-main-list>
+                        <!-- /mini_community -->
+                    </div>
+                </div>
+                <!-- /슬라이드가 확장되지 않을 경우 -->
+
+                <!-- 슬라이드가 확장될 경우 -->
+                <div ng-if="slide != 'cover'" ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
+                    <div ng-class="slide != 'cover' ? 'comp_basic comp_splite_left h-cell-1' : 'comp_basic comp_splite_right h-cell-1'">
+                        <!-- maineventbanner -->
+                        <ange-portlet-link-image ng-model="option_r2_c2"></ange-portlet-link-image>
+                        <!-- /maineventbanner -->
+                    </div>
+                </div>
+                <div ng-if="slide != 'cover'" class="col-xs-6 v-cell-1">
+                    <div class="comp_basic comp_splite_right h-cell-1">
+                        <!-- mini_community -->
+                        <ange-portlet-main-list ng-model="option_r3_c2"></ange-portlet-main-list>
+                        <!-- /mini_community -->
+                    </div>
+                </div>
+                <!-- /슬라이드가 확장될 경우 -->
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 v-cell-4">
+                    <!-- mini_event -->
+                    <ange-portlet-slide-page ng-model="option_r4_c1"></ange-portlet-slide-page>
+                    <!-- /mini_event -->
+                </div>
+            </div>
+
+            <div class="row">
+                <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
+                    <div ng-class="slide != 'cover' ? 'comp_basic h-cell-1' : 'comp_basic comp_splite_left h-cell-1'">
+                        <!-- /mini_peoplebabymodel -->
+                        <ange-portlet-piece-image ng-model="option_r5_c1"></ange-portlet-piece-image>
+
+                        <!--<div class="comp_peoplebabymodel">-->
+
+                        <!--<div class="comp_peoplebabymodel_logo" ></div>-->
+                        <!--<div class="comp_peoplebabymodel_info" ></div>-->
+
+                        <!--<div class="comp_peoplebabymodel_pics">-->
+                            <!--&lt;!&ndash;<img class="comp_peoplebabymodel_bigthumb" src="imgs/ange/temp/comp_peoplebabymodel_01.jpg" /> &lt;!&ndash; 큰이미지  (w)100px : (h)160px, 5:8 비율 (직사각형) &ndash;&gt;&ndash;&gt;-->
+                            <!--<img class="comp_peoplebabymodel_bigthumb" src="imgs/ange/temp/comp_peoplebabymodel_02.jpg" /> &lt;!&ndash; 큰이미지  (w)100px : (h)160px, 5:8 비율 (직사각형) &ndash;&gt;-->
+
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_02.jpg" /> &lt;!&ndash; 작은이미지  (w)90px : (h)90px, 1:1 비율 (정사각형) &ndash;&gt;-->
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_03.jpg" />-->
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_04.jpg" />-->
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_05.jpg" />-->
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_06.jpg" />-->
+
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_05.jpg" />-->
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_04.jpg" />-->
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_03.jpg" />-->
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_06.jpg" />-->
+                            <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_02.jpg" />-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!-- /mini_peoplebabymodel -->
+                    </div>
+                </div>
+
+                <!-- 슬라이드가 확장되지 않을 경우 -->
+                <div ng-if="slide == 'cover'" class="col-xs-4 v-cell-1">
+                    <div class="comp_basic comp_splite_right h-cell-1">
+                        <!-- /mini_clinic -->
+                        <ange-portlet-main-list ng-model="option_r5_c2"></ange-portlet-main-list>
+                        <!-- /mini_clinic -->
+                    </div>
+                </div>
+                <!-- /슬라이드가 확장되지 않을 경우 -->
+            </div>
+
+            <div class="row">
+                <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
+                    <div ng-class="slide != 'cover' ? 'comp_basic h-cell-1' : 'comp_basic comp_splite_left h-cell-1'">
+                    <!-- /mini_review -->
+                    <ange-portlet-main-list ng-model="option_r6_c1"></ange-portlet-main-list>
+                    <!-- /mini_review -->
+                    </div>
+                </div>
+
+                <!-- 슬라이드가 확장되지 않을 경우 -->
+                <div ng-if="slide == 'cover'" ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
+                    <div class="comp_basic comp_splite_right h-cell-1">
+                        <!-- /mini_notice -->
+                        <ange-portlet-main-list ng-model="option_r6_c2"></ange-portlet-main-list>
+                        <!-- /mini_notice -->
+                    </div>
+                </div>
+                <!-- /슬라이드가 확장되지 않을 경우 -->
+            </div>
+
+            <!-- 슬라이드가 확장될 경우 -->
+            <div ng-if="slide != 'cover'" class="row">
+                <div class="col-xs-6 v-cell-1">
+                    <div class="comp_basic comp_splite_left h-cell-1">
+                        <!-- /mini_clinic -->
+                        <ange-portlet-main-list ng-model="option_r5_c2"></ange-portlet-main-list>
+                        <!-- /mini_clinic -->
+                    </div>
+                </div>
+
+                <div ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
+                    <div class="comp_basic comp_splite_right h-cell-1">
+                        <!-- /mini_notice -->
+                        <ange-portlet-main-list ng-model="option_r6_c2"></ange-portlet-main-list>
+                        <!-- /mini_notice -->
+                    </div>
+                </div>
+            </div>
+            <!-- /슬라이드가 확장될 경우 -->
+        </div>
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div class="copyright_foot">
+            <br /><br />
+            <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+                    <hr style="margin:0 15px 0 15px;" />
+
+                    <center>
+                        <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+                    </center>
+            </nav>
+        </div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
+
+    </div> <!-- /mainbar -->
+
+    <div ng-class="slide == 'story' && mode == 'pan' ? 'subar slide1_pan' : 'subar slide1'">
+        <div class="main_channelbar_thumb">
+
+            <div class="channel_mark story_mark" ng-click="click_toggleSlide('story')"></div>
+            <div class="channel_label_note">디지털매거진</div>
+            <div class="channel_label_title">앙쥬스토리</div>
+
+            <div class="menuicons_wrap" ng-hide="slide == 'story' && mode == 'pan'" ng-click="click_showSlide('story', 'pan')">
+                <img class="menuicons" src="imgs/ange/main01-01.png" />
+                <div class="menuicons_label">행복한 임신</div>
+
+                <img class="menuicons" src="imgs/ange/main01-02.png" />
+                <div class="menuicons_label">기분좋은 출산</div>
+
+                <img class="menuicons" src="imgs/ange/main01-03.png" />
+                <div class="menuicons_label">즐거운 육아</div>
+
+                <img class="menuicons" src="imgs/ange/main01-04.png" />
+                <div class="menuicons_label">건강한 임신준비</div>
+
+                <img class="menuicons" src="imgs/ange/main01-05.png" />
+                <div class="menuicons_label">앙쥬 스페셜</div>
+            </div>
+
+            <div class="menucontents_wrap" ng-show="slide == 'story' && mode == 'pan'" ng-click="click_showSlide('cover', '')">
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_01.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_02.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_03.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_04.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_05.png" /></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div ng-class="slide == 'people' && mode == 'pan' ? 'subar slide2_pan' : 'subar slide2'">
+        <div class="main_channelbar_thumb">
+
+            <div class="channel_mark story_mark" ng-click="click_toggleSlide('people')"></div>
+            <div class="channel_label_note">커뮤니티</div>
+            <div class="channel_label_title">앙쥬피플</div>
+
+            <div class="menuicons_wrap" ng-hide="slide == 'people' && mode == 'pan'" ng-click="click_showSlide('people', 'pan')">
+                <img class="menuicons" src="imgs/ange/main02-01.png" />
+                <div class="menuicons_label">설문 POLL</div>
+
+                <img class="menuicons" src="imgs/ange/main02-02.png" />
+                <div class="menuicons_label">Talk Talk Talk</div>
+
+                <img class="menuicons" src="imgs/ange/main02-03.png" />
+                <div class="menuicons_label">GROUP</div>
+
+                <img class="menuicons" src="imgs/ange/main02-04.png" />
+                <div class="menuicons_label">전문가 상담실</div>
+
+                <img class="menuicons" src="imgs/ange/main02-05.png" />
+                <div class="menuicons_label">베이비모델 선발대회</div>
+            </div>
+
+            <div class="menucontents_wrap" ng-show="slide == 'people' && mode == 'pan'" >
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_01.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_02.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_03.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_04.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_05.png" /></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div ng-class="slide == 'moms' && mode == 'pan' ? 'subar slide3_pan' : 'subar slide3'">
+        <div class="main_channelbar_thumb">
+
+            <div class="channel_mark story_mark" ng-click="click_toggleSlide('moms')"></div>
+            <div class="channel_label_note">체험단/이벤트</div>
+            <div class="channel_label_title">앙쥬맘스</div>
+
+            <div class="menuicons_wrap" ng-hide="slide == 'moms' && mode == 'pan'" ng-click="click_showSlide('moms', 'pan')">
+                <img class="menuicons" src="imgs/ange/main03-01.png"/>
+                <div class="menuicons_label">체험단</div>
+
+                <img class="menuicons" src="imgs/ange/main03-02.png" />
+                <div class="menuicons_label">이벤트</div>
+
+                <img class="menuicons" src="imgs/ange/main03-03.png" />
+                <div class="menuicons_label">베스트 리뷰</div>
+
+                <img class="menuicons" src="imgs/ange/main03-04.png" />
+                <div class="menuicons_label">샘플팩</div>
+
+                <img class="menuicons" src="imgs/ange/main03-05.png" />
+                <div class="menuicons_label">앙쥬 랭킹</div>
+            </div>
+
+            <div class="menucontents_wrap" ng-show="slide == 'moms' && mode == 'pan'" ng-click="click_showSlide('cover', '')">
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_01.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_02.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_03.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_04.png" /></div>
+                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_05.png" /></div>
+            </div>
+
+        </div>
+    </div>
+</div>

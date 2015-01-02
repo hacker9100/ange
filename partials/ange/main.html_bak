@@ -1,0 +1,704 @@
+<div ng-controller="main">
+<!-- mainbar -->
+<div ng-class="slide != 'cover' ? 'mainbar slide0_small' : 'mainbar slide0'">
+<span ng-if="slide == 'cover'">test</span>
+<span>test</span>
+    <!-- 1페이지 모드일 경우 보여지는 슬라이드 버튼 -->
+    <a class="tablet_arrow tablet_arrow_left" title="이전 슬라이드">prev_button</a>
+    <a class="tablet_arrow tablet_arrow_right" title="다음 슬라이드">next_button</a>
+    <!-- 1페이지 모드일 경우 보여지는 슬라이드 버튼 -->
+
+    <div class="container-fluid common_container">
+
+        <div class="row">
+
+            <div class="col-xs-12 v-cell-4">
+
+                <ange-portlet-slide-banner ng-model="option_r1_c1"></ange-portlet-slide-banner>
+
+                <!--<div class="comp_basic h-cell-dynamic">-->
+                    <!--&lt;!&ndash; jumbotron_cover &ndash;&gt;-->
+                    <!--<div class="jumbotron_cover">-->
+
+                        <!--<div class="jumbotron_cover_imgs">-->
+                            <!--<div id="jumbotron_cover" class="carousel slide" data-ride="carousel">-->
+
+                                <!--<ange-portlet-slide-image ng-model="option_r1_c1" sid="main" dots="true" autoplay="true" center-mode="true" slides-to-show="1" autoplaySpeed="3000" fade="true"></ange-portlet-slide-image>-->
+
+                                <!--&lt;!&ndash;<div class="carousel-inner" role="listbox">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div class="item active"><img src="imgs/ange/temp/events_bg_001_pic.jpg" alt="First Label"></div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div class="item active"><img src="storage/ad/thumbnail/2" alt="First Label"></div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="jumbotron_cover_controlbar">-->
+                            <!--<div class="black_shade_nomargin"></div>-->
+
+                            <!--<div class="jumbotron_cover_controlset">-->
+                                <!--<a ng-show="toggle" class="jumbotron_cover_pause" ng-click="click_slickPause()">일시정지</a>-->
+                                <!--<a ng-show="!toggle" class="jumbotron_cover_play" ng-click="click_slickPlay()">동작</a>-->
+                                <!--&lt;!&ndash; a class="jumbotron_cover_play">재생</a &ndash;&gt; &lt;!&ndash; 일시정지 시에 표시 &ndash;&gt;-->
+
+                                <!--&lt;!&ndash;<ol class="carousel-indicators jumbotron_indicators_wrap">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<li data-target="#jumbotron_cover" data-slide-to="0" class="jumbotron_indicators_actived"></li>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<li data-target="#jumbotron_cover" data-slide-to="1" class="jumbotron_indicators"></li>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<li data-target="#jumbotron_cover" data-slide-to="2" class="jumbotron_indicators"></li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</ol>&ndash;&gt;-->
+                            <!--</div>-->
+
+                            <!--&lt;!&ndash;<div class="jumbotron_cover_controlbar_title">코웨이에서 물쉼표 KIT를 드립니다.</div>&ndash;&gt;-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /jumbotron_cover &ndash;&gt;-->
+                <!--</div>-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
+                <div ng-class="slide != 'cover' ? 'comp_basic h-cell-2' : 'comp_basic comp_splite_left h-cell-2'">
+                    <!-- mini_story -->
+                    <div class="mini_story">
+
+                        <div class="miniboard_titlebar">
+                            <span class="miniboard_title">맘스그라운드</span>
+
+                            <a class="miniboard_tab_more">더보기</a>
+
+                            <div class="miniboard_tab">인기</div>
+                            <div class="miniboard_tab">최신</div>
+                            <div class="miniboard_tab_on">추천<span style="color:#AAA;">[맞춤서비스]</span></div>
+                        </div>
+
+                        <div class="mini_story_rollcate" style="margin-bottom:5px;">
+                            <a class="mini_story_rollcate_left">Pre Category</a>
+
+                                <div class="mini_story_rollcate_catenames">
+                                    <ul class="mini_story_rollcate_ul">
+                                        <li><a class="rollcate_link">Health</a></li>
+                                        <!-- 일반 타입 --><li><a class="rollcate_link">Food</a></li>
+                                        <!-- 현재 지정 --><li class="foucs">DIY</li>
+                                        <li><a class="rollcate_link">Travel</a></li>
+                                        <li><a class="rollcate_link">Place</a></li>
+                                        <li><a class="rollcate_link">Investments</a></li>
+                                        <li><a class="rollcate_link">Health</a></li>
+                                        <li><a class="rollcate_link">Food</a></li>
+                                        <li><a class="rollcate_link">DIY</a></li>
+                                        <li><a class="rollcate_link">Travel</a></li>
+                                        <li><a class="rollcate_link">Place</a></li>
+                                        <li><a class="rollcate_link">Investments</a></li>
+                                    </ul>
+
+                                </div>
+                            <a class="mini_story_rollcate_right">Next Category</a>
+                        </div>
+
+                        <div class="mini_board_contents">
+                            <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                            <div class="mini_board_contents_txt">
+
+                                <span class="mini_story_txt_head">월간앙쥬 1월</span>
+                                <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                <ul class="mini_board_feeds">
+                                    <li class="mini_reply" style="float: right;">9</li>
+                                    <li class="mini_like" style="float: right;">55</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mini_board_contents">
+                            <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                            <div class="mini_board_contents_txt">
+
+                                <span class="mini_story_txt_head">월간앙쥬 1월</span>
+                                <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                <ul class="mini_board_feeds">
+                                    <li class="mini_reply" style="float: right;">9</li>
+                                    <li class="mini_like" style="float: right;">55</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mini_board_contents">
+                            <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                            <div class="mini_board_contents_txt">
+
+                                <span class="mini_story_txt_head">월간앙쥬 1월</span>
+                                <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                <ul class="mini_board_feeds">
+                                    <li class="mini_reply" style="float: right;">9</li>
+                                    <li class="mini_like" style="float: right;">55</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mini_board_contents">
+                            <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                            <div class="mini_board_contents_txt">
+
+                                <span class="mini_story_txt_head">월간앙쥬 1월</span>
+                                <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                <ul class="mini_board_feeds">
+                                    <li class="mini_reply" style="float: right;">9</li>
+                                    <li class="mini_like" style="float: right;">55</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mini_board_contents">
+                            <img src="imgs/ange/temp/story_thumb_01.jpg" class="mini_board_contents_img" />
+                            <div class="mini_board_contents_txt">
+
+                                <span class="mini_story_txt_head">앙쥬백과 14호</span>
+                                <span class="mini_story_txt_title">| 화개장터로 오세요.</span>
+
+
+                                <ul class="mini_board_feeds">
+                                    <li class="mini_reply" style="float: right;">9888</li>
+                                    <li class="mini_like" style="float: right;">9999</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="mini_story_contentbox">
+                            <div class="row" style="margin:0 auto; position:relative;">
+                                <div class="col-xs-2" style="padding:4px;">
+                                    <span class="mini_story_contentbox_kortitle">건강<br /><strong>먹거리</strong></span>
+                                    <div class="mini_story_contentbox_engtitle">Health<br />&nbsp;&nbsp;& Food</div>
+                                    <a class="miniboard_tab_slideprev" style="margin-top:-12px;" title="이전">이전슬라이드</a>
+                                    <a class="miniboard_tab_slidenext" style="margin-top:-12px;" title="다음">다음슬라이드</a>
+                                </div>
+
+                                <div class="col-xs-10 mini_story_contentboxlist_roll">
+                                    <div class="mini_story_contentboxlist_wrap">
+
+                                        <div class="mini_story_contentboxlist">
+                                            <div class="mini_story_contentbox_img">
+                                                <span class="mini_story_contentbox_cate">초기(4-6)</span>
+                                                <img src="imgs/ange/temp/story_food_01.jpg" />
+                                            </div>
+                                            <span class="mini_story_contentbox_title">단호박 미음</span>
+                                        </div>
+
+
+                                        <div class="mini_story_contentboxlist">
+                                            <div class="mini_story_contentbox_img">
+                                                <span class="mini_story_contentbox_cate">중기(7-8)</span>
+                                                <img src="imgs/ange/temp/story_food_02.jpg" />
+                                            </div>
+                                            <span class="mini_story_contentbox_title">비트닭고기밥</span>
+                                        </div>
+                                        <div class="mini_story_contentboxlist">
+                                            <div class="mini_story_contentbox_img">
+                                                <span class="mini_story_contentbox_cate">후기(9-11)</span>
+                                                <img src="imgs/ange/temp/story_food_03.jpg" />
+                                            </div>
+                                            <span class="mini_story_contentbox_title">쇠고기애호박</span>
+                                        </div>
+                                        <div class="mini_story_contentboxlist">
+                                            <div class="mini_story_contentbox_img">
+                                                <span class="mini_story_contentbox_cate">완료기(12-15)</span>
+                                                <img src="imgs/ange/temp/story_food_04.jpg" />
+                                            </div>
+                                            <span class="mini_story_contentbox_title">오색나물비빔밥</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- mini_story -->
+                </div>
+            </div>
+
+            <div ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
+                <div ng-class="slide != 'cover' ? 'comp_basic comp_splite_left h-cell-1' : 'comp_basic comp_splite_right h-cell-1'">
+                    <!-- maineventbanner -->
+                    <ange-portlet-link-image ng-model="option_r2_c2"></ange-portlet-link-image>
+
+                    <!--<div class="inven_Highlight">-->
+                        <!--<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('/imgs/ange/temp/temp_maineventbanner.png'); background-position:center;">Event Banner</a>-->
+                    <!--</div>-->
+                    <!-- /maineventbanner -->
+                </div>
+<!--여기가 문제-->
+            <!--<div ng-class="{ slide != 'cover' ? 'col-xs-6 v-cell-1' : '' }" >-->
+
+                <div class="comp_basic comp_splite_right h-cell-1">
+                    <!-- mini_community -->
+
+                    <ange-portlet-basic-list ng-model="option_r3_c2"></ange-portlet-basic-list>
+
+                    <!--<div class="mini_community">-->
+                        <!--<div class="peopleboard_top">-->
+                            <!--<div class="mini_community_titlebar" style="border:1px solid red;">-->
+                                <!--<span class="mini_community_title">커뮤니티</span>-->
+                                <!--<a class="miniboard_tab_more">더보기</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="miniboard_community_contents">-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;<img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">-->
+                                    <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[앙쥬맘]&nbsp;</span>전라도와 경상도를 가로...<kbd class="kbd_new">N</kbd></span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title">전라도와 경상도를 가로지르는...</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title">전라도와 경상도를 가로지르는...</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title">전라도와 경상도를 가로지르는...</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title">전라도와 경상도를 가로지르는...</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!-- /mini_community -->
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12 v-cell-4">
+
+                <ange-portlet-slide-list ng-model="option_r4_c1"></ange-portlet-slide-list>
+
+                <!--<div class="comp_basic h-cell-dynamic">-->
+                    <!--&lt;!&ndash; mini_event &ndash;&gt;-->
+                    <!--<div class="mini_event">-->
+                        <!--<div class="mini_event_top">-->
+                            <!--<div class="mini_event_titlebar">-->
+                                <!--<span class="mini_community_title">체험단&이벤트</span>-->
+                                <!--<a class="miniboard_tab_more" style="margin-left: 10px;">더보기</a>-->
+                            <!--</div>-->
+                            <!--<div class="mini_event_control">-->
+                                <!--<a class="miniboard_tab_slidepause" title="일시정지">일시정지</a>-->
+                                <!--&lt;!&ndash; a class="miniboard_tab_slideplay" title="재생">재생</a &ndash;&gt; &lt;!&ndash; 일시재생 클릭시 표시 &ndash;&gt;-->
+                                <!--<a class="miniboard_tab_slideprev" title="이전">이전슬라이드</a>-->
+                                <!--<a class="miniboard_tab_slidenext" title="다음">다음슬라이드</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="row mini_event_contentlist">-->
+
+                            <!--<div class="col-xs-4 mini_event_contentcol">-->
+                                <!--<div class="mini_event_content">-->
+                                    <!--&lt;!&ndash; div class="mini_event_closed"></div &ndash;&gt;-->
+                                    <!--<img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_001_pic.jpg"  />-->
+                                    <!--<div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>프라젠트라데이 1+1</div>-->
+                                    <!--<div class="mini_event_txt_duration">2014.10.11~2014.11.10</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="col-xs-4 mini_event_contentcol">-->
+                                <!--<div class="mini_event_content">-->
+                                    <!--&lt;!&ndash; div class="mini_event_closed"></div &ndash;&gt;-->
+                                    <!--<img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_002_pic.jpg"  />-->
+                                    <!--<div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_blue">체험단</span>누보백 체험단</div>-->
+                                    <!--<div class="mini_event_txt_duration">2014.09.22~2014.10.05</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-xs-4 mini_event_contentcol">-->
+                                <!--<div class="mini_event_content">-->
+                                    <!--<div class="mini_event_closed"></div>-->
+                                    <!--<img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  />-->
+                                    <!--<div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단</span>교감여행 서평단</div>-->
+                                    <!--<div class="mini_event_txt_duration">2014.10.11~2014.11.10</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; /mini_event &ndash;&gt;-->
+                <!--</div>-->
+            </div>
+        </div>
+
+        <div class="row">
+            <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
+                <div ng-class="slide != 'cover' ? 'comp_basic h-cell-1' : 'comp_basic comp_splite_left h-cell-1'">
+                    <!-- /mini_peoplebabymodel -->
+                    <div class="comp_peoplebabymodel">
+
+                    <div class="comp_peoplebabymodel_logo" ></div>
+                    <div class="comp_peoplebabymodel_info" ></div>
+
+                    <div class="comp_peoplebabymodel_pics">
+                        <img class="comp_peoplebabymodel_bigthumb" src="imgs/ange/temp/comp_peoplebabymodel_01.jpg" /> <!-- 큰이미지  (w)100px : (h)160px, 5:8 비율 (직사각형) -->
+
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_02.jpg" /> <!-- 작은이미지  (w)90px : (h)90px, 1:1 비율 (정사각형) -->
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_03.jpg" />
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_04.jpg" />
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_05.jpg" />
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_06.jpg" />
+
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_05.jpg" />
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_04.jpg" />
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_03.jpg" />
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_06.jpg" />
+                        <img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_02.jpg" />
+                    </div>
+                    </div>
+                    <!-- /mini_peoplebabymodel -->
+                </div>
+            </div>
+            <div ng-show="slide == 'cover'" class="col-xs-4 v-cell-1">
+                <div class="comp_basic comp_splite_right h-cell-1">
+                    <!-- /mini_clinic -->
+                    <ange-portlet-basic-list ng-model="option_r5_c2"></ange-portlet-basic-list>
+
+                    <!--<div class="comp_clinic">-->
+
+                        <!--<div class="comp_clinic_top">-->
+                            <!--<div class="comp_clinic_titlebar">-->
+                                <!--<span class="comp_clinic_title"><span style="color:#e25d4c;">전문가</span>상담</span>-->
+                                <!--<a class="miniboard_tab_more">더보기</a>-->
+
+                                <!--&lt;!&ndash; div class="miniboard_tab">산부인과</div>-->
+                                <!--<div class="miniboard_tab_on">소아과</div &ndash;&gt;-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="comp_clinic_desc">-->
+                            <!--전문의 상담! 무엇이든 물어보세요.-->
+                        <!--</div>-->
+
+                        <!--<div class="comp_clinic_contents">-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;<img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">-->
+                                    <!--<span class="mini_community_txt_title"><span class="glyphicon glyphicon-lock" style="color:#e25d4c; font-size:0.78em; margin-right:4px;"></span>문의드려요.</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title">전라도와 경상도를...</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title">가로지릅니다.</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!-- /mini_clinic -->
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
+                <div ng-class="slide != 'cover' ? 'comp_basic h-cell-1' : 'comp_basic comp_splite_left h-cell-1'">
+                <!-- /mini_review -->
+                <ange-portlet-basic-list ng-model="option_r6_c1"></ange-portlet-basic-list>
+
+                    <!--<div class="mini_story">-->
+                        <!--<div class="miniboard_titlebar">-->
+                            <!--<span class="miniboard_title">앙쥬후기</span>-->
+
+                            <!--<a class="miniboard_tab_more">더보기</a>-->
+
+                            <!--<div class="miniboard_tab">샘플팩</div>-->
+                            <!--<div class="miniboard_tab_on">이벤트/체험단</span></div>-->
+                            <!--<div class="miniboard_tab">상품</div>-->
+                            <!--<div class="miniboard_tab">앙쥬</div>-->
+                        <!--</div>-->
+
+
+                        <!--<div class="miniboard_review_contents">-->
+
+                            <!--<div src="" class="mini_review_kingimg" style="background-image: url('/imgs/ange/temp/temp_reviewbest.png'); background-repeat: no-repeat; background-position:center 50%;"></div>-->
+
+                            <!--<div class="mini_review_contents">-->
+                                <!--<div class="mini_board_contents_txt">-->
+
+                                    <!--<span class="mini_story_txt_head">[시즌 2]</span>-->
+                                    <!--<span class="mini_story_txt_title">샘플팩 후기<kbd class="kbd_new">N</kbd></span>-->
+
+
+                                    <!--<ul class="mini_board_feeds">-->
+                                        <!--<li class="mini_author">userNickname</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="mini_review_contents">-->
+                                <!--<div class="mini_board_contents_txt">-->
+
+                                    <!--<span class="mini_story_txt_head">[시즌 2]</span>-->
+                                    <!--<span class="mini_story_txt_title">샘플팩 후기</span>-->
+
+
+                                    <!--<ul class="mini_board_feeds">-->
+                                        <!--<li class="mini_author">닉네임</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="mini_review_contents">-->
+                                <!--<div class="mini_board_contents_txt">-->
+
+                                    <!--<span class="mini_story_txt_head">[시즌 2]</span>-->
+                                    <!--<span class="mini_story_txt_title">샘플팩 후기</span>-->
+
+
+                                    <!--<ul class="mini_board_feeds">-->
+                                        <!--<li class="mini_author">닉네임</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="mini_review_contents">-->
+                                <!--<div class="mini_board_contents_txt">-->
+
+                                    <!--<span class="mini_story_txt_head">[시즌 2]</span>-->
+                                    <!--<span class="mini_story_txt_title">샘플팩 후기</span>-->
+
+
+                                    <!--<ul class="mini_board_feeds">-->
+                                        <!--<li class="mini_author">닉네임</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_review_contents">-->
+                                <!--<div class="mini_board_contents_txt">-->
+
+                                    <!--<span class="mini_story_txt_head">[시즌 2]</span>-->
+                                    <!--<span class="mini_story_txt_title">샘플팩 후기</span>-->
+
+                                    <!--<ul class="mini_board_feeds">-->
+                                        <!--<li class="mini_author">닉네임</li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+
+                        <!--</div>-->
+
+                    <!--</div>-->
+                <!-- /mini_review -->
+                </div>
+            </div>
+
+            <div ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
+                <div class="comp_basic comp_splite_right h-cell-1">
+                    <!-- /mini_notice -->
+                    <ange-portlet-basic-list ng-model="option_r6_c2"></ange-portlet-basic-list>
+
+                    <!--<div class="mini_community">-->
+                        <!--<div class="peopleboard_top">-->
+                            <!--<div class="mini_community_titlebar" style="border:1px solid red;">-->
+                                <!--<span class="mini_community_title">공지사항&당첨자발표</span>-->
+                                <!--<a class="miniboard_tab_more">더보기</a>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="miniboard_community_contents">-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;<img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">-->
+                                    <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표<kbd class="kbd_new">N</kbd></span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[점검]&nbsp;</span>서버다운<kbd class="kbd_new">N</kbd></span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                            <!--<div class="mini_community_contents">-->
+                                <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                <!--<div class="mini_board_contents_txt">-->
+                                    <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</div>-->
+
+                    <!--</div>-->
+                    <!-- /mini_notice -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 1200px 이하일 경우 표시되는 footer -->
+    <div class="copyright_foot">
+        <br /><br />
+        <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+                <hr style="margin:0 15px 0 15px;" />
+
+                <center>
+                    <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+                </center>
+        </nav>
+    </div>
+    <!-- /1200px 이하일 경우 표시되는 footer -->
+
+</div> <!-- /mainbar -->
+
+<div ng-class="slide == 'story' && mode == 'pan' ? 'subar slide1_pan' : 'subar slide1'">
+    <div class="main_channelbar_thumb">
+
+        <div class="channel_mark story_mark"></div>
+        <div class="channel_label_note">디지털매거진</div>
+        <div class="channel_label_title">앙쥬스토리</div>
+
+        <div class="menuicons_wrap" ng-hide="slide == 'story' && mode == 'pan'" ng-click="click_showSlide('story', 'pan')">
+            <img class="menuicons" src="imgs/ange/main01-01.png" />
+            <div class="menuicons_label">행복한 임신</div>
+
+            <img class="menuicons" src="imgs/ange/main01-02.png" />
+            <div class="menuicons_label">기분좋은 출산</div>
+
+            <img class="menuicons" src="imgs/ange/main01-03.png" />
+            <div class="menuicons_label">즐거운 육아</div>
+
+            <img class="menuicons" src="imgs/ange/main01-04.png" />
+            <div class="menuicons_label">건강한 임신준비</div>
+
+            <img class="menuicons" src="imgs/ange/main01-05.png" />
+            <div class="menuicons_label">앙쥬 스페셜</div>
+        </div>
+
+        <div class="menucontents_wrap" ng-show="slide == 'story' && mode == 'pan'" ng-click="click_showSlide('cover', '')">
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_01.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_02.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_03.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_04.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_05.png" /></div>
+        </div>
+
+    </div>
+</div>
+
+<div ng-class="slide == 'people' && mode == 'pan' ? 'subar slide2_pan' : 'subar slide2'">
+    <div class="main_channelbar_thumb">
+
+        <div class="channel_mark story_mark"></div>
+        <div class="channel_label_note">커뮤니티</div>
+        <div class="channel_label_title">앙쥬피플</div>
+
+        <div class="menuicons_wrap" ng-hide="slide == 'people' && mode == 'pan'" ng-click="click_showSlide('people', 'pan')">
+            <img class="menuicons" src="imgs/ange/main02-01.png" />
+            <div class="menuicons_label">설문 POLL</div>
+
+            <img class="menuicons" src="imgs/ange/main02-02.png" />
+            <div class="menuicons_label">Talk Talk Talk</div>
+
+            <img class="menuicons" src="imgs/ange/main02-03.png" />
+            <div class="menuicons_label">GROUP</div>
+
+            <img class="menuicons" src="imgs/ange/main02-04.png" />
+            <div class="menuicons_label">전문가 상담실</div>
+
+            <img class="menuicons" src="imgs/ange/main02-05.png" />
+            <div class="menuicons_label">베이비모델 선발대회</div>
+        </div>
+
+        <div class="menucontents_wrap" ng-show="slide == 'people' && mode == 'pan'" ng-click="click_showSlide('cover', '')">
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_01.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_02.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_03.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_04.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_05.png" /></div>
+        </div>
+
+    </div>
+</div>
+
+<div ng-class="slide == 'moms' && mode == 'pan' ? 'subar slide3_pan' : 'subar slide3'">
+    <div class="main_channelbar_thumb">
+
+        <div class="channel_mark story_mark"></div>
+        <div class="channel_label_note">체험단/이벤트</div>
+        <div class="channel_label_title">앙쥬맘스</div>
+
+        <div class="menuicons_wrap" ng-hide="slide == 'moms' && mode == 'pan'" ng-click="click_showSlide('moms', 'pan')">
+            <img class="menuicons" src="imgs/ange/main03-01.png"/>
+            <div class="menuicons_label">체험단</div>
+
+            <img class="menuicons" src="imgs/ange/main03-02.png" />
+            <div class="menuicons_label">이벤트</div>
+
+            <img class="menuicons" src="imgs/ange/main03-03.png" />
+            <div class="menuicons_label">베스트 리뷰</div>
+
+            <img class="menuicons" src="imgs/ange/main03-04.png" />
+            <div class="menuicons_label">샘플팩</div>
+
+            <img class="menuicons" src="imgs/ange/main03-05.png" />
+            <div class="menuicons_label">앙쥬 랭킹</div>
+        </div>
+
+        <div class="menucontents_wrap" ng-show="slide == 'moms' && mode == 'pan'" ng-click="click_showSlide('cover', '')">
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_01.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_02.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_03.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_04.png" /></div>
+            <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_05.png" /></div>
+        </div>
+
+    </div>
+</div>
+    </div>

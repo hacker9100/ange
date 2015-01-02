@@ -1,0 +1,35 @@
+<div ng-class="option.type == '' ? 'mini_story' : 'mini_peopleboard'">
+    <div ng-class="option.type == '' ? 'comp_clinic_top' : 'peopleboard_top'">
+        <div class="miniboard_titlebar">
+            <span class="people_miniboard_title">{{ portletTitle }}</span>
+            <a class="people_miniboard_tab_more" ng-click="click_showList();">더보기</a>
+
+            <div ng-if="option.tab" ng-repeat="tab in option.tab" ng-class="tabIdx == $index ? 'people_miniboard_tab_on' : 'people_miniboard_tab'" ng-click="click_tabIndex($index)">{{tab.name}}</div>
+        </div>
+    </div>
+
+    <div ng-class="option.type == '' ? 'comp_clinic_contents' : 'miniboard_contents'">
+
+        <div ng-if="option.image" class="taste_miniboard_img"><a href=""><img src="" /></a></div>
+
+        <div class="mini_board_contents" ng-repeat="item in list">
+            <!--<img src="" class="mini_board_contents_img" />-->
+            <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">
+
+                <span ng-show="option.head" class="mini_community_txt_head">[{{ item.COMM_NM }}]&nbsp;</span>
+                <span class="mini_story_txt_title">
+                    <span ng-show="item.SECRET_FL == '1'" class="glyphicon glyphicon-lock" style="color:#e25d4c; font-size:0.78em; margin-right:4px;"></span>
+                    {{ item.SUBJECT | string_limit:30 }}<kbd ng-show="item.NEW_FL == '1'" class="kbd_new">N</kbd>
+                </span>
+
+                <ul ng-show="option.date" class="mini_board_feeds">
+                    <li class="mini_author">{{ item.REG_DT }}</li>
+                </ul>
+
+                <ul ng-show="option.nick" class="mini_board_feeds">
+                    <li class="mini_author">{{ item.NICK_NM }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

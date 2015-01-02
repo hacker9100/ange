@@ -1,7 +1,7 @@
 /**
- * Author : Han-sik Choi
- * Blog   : http://hans.or.kr
- * Date   : 2014-06-07
+ * Author : Sung-hwan Kim
+ * Email  : hacker9100@marveltree.com
+ * Date   : 2014-09-23
  * Description : 모든 controller를 포함할 controlers mudule 생성
  */
 

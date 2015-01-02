@@ -37,7 +37,12 @@ require.config({
         'angular-translate': '../../lib/angular/angular-translate.min', //
 
 ////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
-        'lodash' : '../../lib/dropdown_multiselect/lodash',
+        'lodash' : '../../lib/dropdown-multiselect/lodash',
+
+        'slick-carousel': '../../lib/slick-carousel/slick', //
+
+        'angular-masonry': '../../lib/angular-masonry/angular-masonry', //
+        'ng-infinite-scroll': '../../lib/angular-masonry/ng-infinite-scroll.min', //
 
         // ng-table 모듈
         'ng-table': '../../lib/ng-table/ng-table',
@@ -121,6 +126,15 @@ require.config({
         },
         'dialog':{
             deps: ['angular', 'angular-translate', 'ui-bootstrap']
+        },
+        'slick-carousel':{
+            deps: ['jquery']
+        },
+        'angular-masonry':{
+            deps: ['angular']
+        },
+        'ng-infinite-scroll':{
+            deps: ['angular']
         },
         'ckeditor-jquery':{
             deps:['jquery','ckeditor-core']

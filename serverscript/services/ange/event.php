@@ -53,7 +53,7 @@
                 $msg = "";
 
                 $sql = "SELECT
-	                        NO, SUBJECT, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE
+	                        NO, SUBJECT, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD
                         FROM
                             ANGE_EVENT
                         WHERE
@@ -72,13 +72,12 @@
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
-                            FILE F, CONTENT_SOURCE S
+                            COM_FILE F, CONTENT_SOURCE S
                         WHERE
                             F.NO = S.SOURCE_NO
                             AND S.CONTENT_GB = 'FILE'
                             AND S.TARGET_GB = 'EVENT'
                             AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
                         ";
 
                 $file_data = $_d->getData($sql);
@@ -131,11 +130,11 @@
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            NO, SUBJECT, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE
+                            NO, SUBJECT, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD
                         FROM
                         (
                             SELECT
-                                NO, SUBJECT, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE
+                                NO, SUBJECT, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD
                             FROM
                                 ANGE_EVENT
                             WHERE
@@ -161,17 +160,18 @@
                     $sql = "SELECT
                                     F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                                 FROM
-                                    FILE F, CONTENT_SOURCE S
+                                    COM_FILE F, CONTENT_SOURCE S
                                 WHERE
                                     F.NO = S.SOURCE_NO
                                     AND S.CONTENT_GB = 'FILE'
                                     AND S.TARGET_GB = 'EVENT'
-                                    AND S.TARGET_NO = ".$data[NO]."
+                                    AND S.TARGET_NO = ".$row[NO]."
                                     AND F.THUMB_FL = '0'
                                 ";
 
-                    $category_data = $_d->getData($sql);
-                    $row['FILE'] = $category_data;
+                    $file_result = $_d->sql_query($sql);
+                    $file_data = $_d->sql_fetch_array($file_result);
+                    $row['FILE'] = $file_data;
 
                     $__trn->rows[$i] = $row;
                 }

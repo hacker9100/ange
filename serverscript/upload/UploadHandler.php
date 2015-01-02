@@ -719,10 +719,18 @@ class UploadHandler
         if (!empty($options['max_height'])) {
             $max_height = $options['max_height'];
         }
-        $scale = min(
+        /**
+         * 2014.12.23. Sunghwan Kim
+         * 이미지 길이, 넓이 중 큰값으로
+         */
+        $scale = max(
             $max_width / $img_width,
             $max_height / $img_height
         );
+//        $scale = min(
+//            $max_width / $img_width,
+//            $max_height / $img_height
+//        );
         if ($scale >= 1) {
             if ($image_oriented) {
                 return $write_func($src_img, $new_file_path, $image_quality);

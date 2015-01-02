@@ -147,7 +147,7 @@
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                ANGE_EVENT
+                                ANGE_REVIEW
                             WHERE
                                 1 = 1
                                 ".$search_where."
@@ -166,7 +166,7 @@
                                     F.NO = S.SOURCE_NO
                                     AND S.CONTENT_GB = 'FILE'
                                     AND S.TARGET_GB = 'REVIEW'
-                                    AND S.TARGET_NO = ".$data[NO]."
+                                    AND S.TARGET_NO = ".$row[NO]."
                                     AND F.THUMB_FL = '0'
                                 ";
 

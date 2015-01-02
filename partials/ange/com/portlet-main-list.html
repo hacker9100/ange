@@ -1,0 +1,62 @@
+<!--<div>-->
+    <!--<div class="col-xs-6" style="padding:0px 2px;">-->
+        <!--<div class="list-group" style="border: none;">-->
+            <!--<div ng-show="isLoading" style="position: absolute;top: 55px;left: 45%; z-index: 1000" class="ai-circled ai-indicator ai-grey-spin"></div>-->
+
+            <!--<li class="{{portletCss}}" style="background: #333; border-color: #333">-->
+                <!--{{ portletTitle }}-->
+                <!--<span class="btn custom-btn-more" ng-click="click_showList();" title="더보기"> <span  class="glyphicon glyphicon-plus"></span> MORE </span>-->
+            <!--</li>-->
+            <!--<span ng-if="option.tab" ng-repeat="tab in option.tab" ng-click="click_tabIndex($index)" ng-class="{'active': $index}">{{tab.name}}&nbsp;&nbsp;&nbsp;</span>-->
+
+            <!--<div ng-if="option.image"><img ng-src="{{img}}" ng-click="click_showView(key)"/></div>-->
+
+            <!--<a ng-click="click_showView(item.NO)" class="list-group-item list-group-item-green" ng-repeat="item in list" style="cursor:pointer; margin:0; border: none; border-bottom:1px dotted #888; ">-->
+                <!--<span ng-show="option.head">[{{ item.COMM_NM }}]</span>{{ item.SUBJECT | string_limit:30 }}<span ng-show="item.NEW_FL == '1'">N</span>-->
+                <!--<span class="list-group-item-right" ng-show="option.date">{{ item.REG_DT }}</span>-->
+                <!--<span class="list-group-item-right" ng-show="option.nick">{{ item.NICK_NM }}</span>-->
+            <!--</a>-->
+            <!--<div ng-show="list == ''" style="border:none;text-align: center; border-bottom:1px dotted #888; height:190px; padding-top:80px;">조회 데이터가 없습니다.<span class="list-group-item-right"></span></div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div ng-class="option.type == 'review' ? 'mini_story' : option.type == 'clinic' ? 'comp_clinic' : 'mini_community'">
+    <div ng-class="option.type == 'review' ? 'comp_clinic_top' : 'peopleboard_top'">
+        <div class="mini_community_titlebar">
+            <span class="mini_community_title">{{ portletTitle }}</span>
+            <a class="miniboard_tab_more" ng-click="click_showList();">더보기</a>
+
+            <div ng-if="option.tab" ng-repeat="tab in option.tab" ng-class="tabIdx == $index ? 'miniboard_tab_on' : 'miniboard_tab'" ng-click="click_tabIndex($index)">{{tab.name}}</div>
+        </div>
+    </div>
+
+    <div ng-show="option.type == 'clinic'" class="comp_clinic_desc">
+        전문의 상담! 무엇이든 물어보세요.
+    </div>
+
+    <div ng-class="option.type == 'clinic' ? 'comp_clinic_contents' : 'miniboard_community_contents'">
+
+        <div ng-if="option.image" class="mini_review_kingimg" style="background-image: url('/imgs/ange/temp/temp_reviewbest.png'); background-repeat: no-repeat; background-position:center 50%;"></div>
+
+        <div class="mini_community_contents" ng-repeat="item in list">
+            <!--<img src="" class="mini_board_contents_img" />-->
+            <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">
+
+                <span ng-show="option.head" class="mini_community_txt_head">[{{ item.COMM_NM }}]&nbsp;</span>
+                <span class="mini_community_txt_title">
+                    <span ng-show="item.SECRET_FL == '1'" class="glyphicon glyphicon-lock" style="color:#e25d4c; font-size:0.78em; margin-right:4px;"></span>
+                    {{ item.SUBJECT | string_limit:30 }}<kbd ng-show="item.NEW_FL == '1'" class="kbd_new">N</kbd>
+                </span>
+
+                <ul ng-show="option.date" class="mini_board_feeds">
+                    <li class="mini_author">{{ item.REG_DT }}</li>
+                </ul>
+
+                <ul ng-show="option.nick" class="mini_board_feeds">
+                    <li class="mini_author">{{ item.NICK_NM }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

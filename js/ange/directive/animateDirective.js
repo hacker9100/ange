@@ -61,10 +61,18 @@ define(['./directives'], function (directives) {
                 });
 
             },
-            template : '<div class="slider"><div class="slide" ng-repeat="image in images" ng-show="image.visible" ><img ng-src="{{image.src}}" width="400px" height="250px" ng-hide="!isCurrentSlideIndex($index)"/></div><div class="arrows"><a ng-click="prev()"><img ng-src="/imgs/ange/img/left-arrow.png" width="20px" height="20px"/></a> <!--<imgng-src="/imgs/left-arrow.png"/>-->&nbsp;&nbsp;&nbsp;&nbsp;<a ng-click="next()"><img ng-src="/imgs/ange/img/right-arrow.png" width="20px" height="20px"/></a><!--<img ng-src="/imgs/right-arrow.png"/>--></div>' +
-                        '<div class="nav1 wrapper"><ul class="dots"><li class="dot" ng-repeat="image in images">' +
-                        '<a ng-class="{active:isCurrentSlideIndex($index)}" ng-click="setCurrentSlideIndex($index);">{{image.description}}</a></li></ul></div></div>'
-
+            template : '<div class="slider">' +
+                        '   <div class="slide" ng-repeat="image in images" ng-show="image.visible" >' +
+                        '       <img ng-src="{{image.src}}" width="400px" height="250px" ng-hide="!isCurrentSlideIndex($index)"/>' +
+                        '   </div>' +
+                        '   <div class="arrows">' +
+                        '       <a ng-click="prev()"><img ng-src="/imgs/ange/img/left-arrow.png" width="20px" height="20px"/></a> <!--<imgng-src="/imgs/left-arrow.png"/>-->&nbsp;&nbsp;&nbsp;&nbsp;' +
+                        '       <a ng-click="next()"><img ng-src="/imgs/ange/img/right-arrow.png" width="20px" height="20px"/></a><!--<img ng-src="/imgs/right-arrow.png"/>-->' +
+                        '   </div>' +
+                        '   <div class="nav1 wrapper"><ul class="dots"><li class="dot" ng-repeat="image in images">' +
+                        '       <a ng-class="{active:isCurrentSlideIndex($index)}" ng-click="setCurrentSlideIndex($index);">{{image.description}}</a></li></ul>' +
+                        '   </div>' +
+                        '</div>'
 
         }
     });

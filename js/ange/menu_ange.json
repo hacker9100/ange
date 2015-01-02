@@ -1,16 +1,28 @@
 {
     "states": [
-        { "signin": {
-            "url": "/signin",
-            "templateUrl": "/partials/ange/signin.html",
-            "controller": "signin"
-        }}, { "storylist_list": {
-            "url": "/storylist/:menu/list",
+        { "main": {
+            "url": "/main",
+            "templateUrl": "/partials/ange/com/ange-common.html",
+            "controller": "ange-common"
+        }},{ "ange_main": {
+            "url": "/:channel/:menu",
+            "templateUrl": "/partials/ange/com/ange-common.html",
+            "controller": "ange-common"
+        }},{ "ange_list": {
+            "url": "/:channel/:menu/:type",
+            "templateUrl": "/partials/ange/com/ange-common.html",
+            "controller": "ange-common"
+        }},{ "ange_edit": {
+            "url": "/:channel/:menu/:type/:id",
+            "templateUrl": "/partials/ange/com/ange-common.html",
+            "controller": "ange-common"
+        }}, { "storylist-list": {
+            "url": "/story/:menu/list",
             "views": {
-                "" : { "templateUrl": "/partials/ange/ange_common.html", "controller": "ange_common" },
-                "lnbView@storylist_list": { "templateUrl": "/partials/ange/lnb.html", "controller": "lnb" },
-                "locaterView@storylist_list": { "templateUrl": "/partials/ange/locater.html", "controller" : "locater" },
-                "contentView@storylist_list": { "templateUrl": "/partials/ange/user_list.html", "controller" : "user_list" }
+                "" : { "templateUrl": "/partials/ange/com/ange-common.html", "controller": "ange-common" },
+                "lnbView@storylist-list": { "templateUrl": "/partials/ange/com/lnb.html", "controller": "lnb" },
+                "locaterView@storyist-list": { "templateUrl": "/partials/ange/com/locater.html", "controller" : "locater" },
+                "contentView@storylist-list": { "templateUrl": "/partials/ange/user_list.html", "controller" : "user_list" }
             }
         }}
     ]
