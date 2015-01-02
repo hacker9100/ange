@@ -25,10 +25,13 @@ define(['./directives'], function (directives) {
                         url = menu[1] + '/' + menu[2];
                         break;
                     default :
+                        if (menu[2] == 'angeroom' || menu[2] == 'momstalk')
+                            menu[2] = 'board';
+
                         url = menu[1] + '/' + menu[2] + '-' + menu[3];
                         break;
                 }
-
+alert(url)
                 return '/partials/ange/'+url+'.html';
             },
 //            controller: function(element, attr) {

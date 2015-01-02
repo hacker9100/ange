@@ -1,0 +1,176 @@
+<div ng-controller="board-list">
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+            <div class="row">
+
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
+
+                        <div class="sub_contents_wrap">
+
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">동적 커뮤니티 이름 <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a></h3>
+                            </div>
+
+                            <div class="container-fluid sub_contents_search">
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding:0">
+
+                                        <div class="btn-group" style="float:left;">
+                                            <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
+
+                                            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">제목+내용</a></li>
+                                                <li><a href="#">작성자</a></li>
+                                            </ul>
+                                        </div><!-- /btn-group -->
+
+                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
+                                            <input type="text" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+
+												<span class="input-group-btn">
+												<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
+												</span>
+                                        </div>
+
+                                        <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" />
+                                                </span>
+                                                <input type="text" class="form-control table_filtercheck" placeholder="진행중" style="background:#fff; padding-top: 2px; cursor:default; font-size: 0.86em;" disabled />
+                                            </div>
+                                        </div -->
+
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
+                        </div><!-- /.sub_contents_wrap -->
+
+
+                        <div class="sub_contents_body">
+
+                            <!-- peoplepoll_list -->
+                            <table id="comp_board_table" class="table table-hover">
+
+                                <thead>
+                                <tr class="board_thead" height="48">
+                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
+                                    <td><span class="board_th">제목</span></td>
+                                    <td width="92" align="center"><span class="board_th">작성자</span></td>
+                                    <td width="80"><span class="board_th">작성일</span></td>
+                                    <td width="60" align="center"><span class="board_th">조회</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody class="on">
+
+                                <tr class="primary"><td class="table_no"><span class="table_blue">공지</span></td><td>★게시글 이벤트★&lt;아이디어 상품들&gt;추천해주세요~...<span class="reply_num">[28]</span><span class="table_icon_new">N</span></td><td  class="table_author">비타민D</td><td class="table_date">2014-10-17</td><td class="table_hit">12545</td></tr>
+                                <tr class="primary"><td class="table_no"><span class="table_blue">공지</span></td><td>돌방은 모바일로 게시글 작성시 붙어나옵니다~~<span class="reply_num">[56]</td><td  class="table_author">비타민D</td><td class="table_date">2014-10-17</td><td class="table_hit">12545</td></tr>
+                                <tr class="primary"><td class="table_no"><span class="table_blue">공지</span></td><td>★커뮤니티 게시물작성 안내&gt;지키지않으면 자동삭제!<span class="reply_num">[688]</td><td  class="table_author">비타민D</td><td class="table_date">2014-10-17</td><td class="table_hit">12545</td></tr>
+
+                                <tr ng-click="click_showViewBoard()" style="cursor:pointer;">
+                                    <td class="table_no">2000</td>
+                                    <td>
+                                        <span class="glyphicon glyphicon-lock table_icon_lock"></span>
+                                        경매소 구경
+                                        <span class="reply_num">[2]</span>
+                                        <span class="table_icon_new">N</span>
+                                        <span class="glyphicon glyphicon-picture table_icon_pic"></span>
+                                        <span class="glyphicon glyphicon-paperclip table_icon_clip"></span>
+                                    </td>
+                                    <td  class="table_author">쯔이맘</td>
+                                    <td class="table_date">2014-10-27</td>
+                                    <td class="table_hit">5</td>
+                                </tr>
+
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1999</td><td>[질문] 3살 큰 아이 침대 고민인데요<span class="table_icon_new">N</span></span></td><td  class="table_author">라하맘마</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1998</td><td>오랜만에 ㅎㅎ<span class="reply_num">[1]</span><span class="table_icon_new">N</span></td><td  class="table_author">착하게살장</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1997</td><td>켁..우지원..<span class="reply_num">[6]</span><span class="table_icon_new">N</span></td><td  class="table_author">예쁜별맘</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1996</td><td>드뎌 3단계 완성이에요~<span class="reply_num">[6]</span></td><td  class="table_author">찬희맘여란</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1995</td><td>아깝다 싶은..<span class="reply_num">[3]</span></td><td  class="table_author">민우마미0606</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1994</td><td>체한것 같아요<span class="reply_num">[4]</span></td><td  class="table_author">쯔이맘</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1993</td><td>농사는 힘들어<span class="reply_num">[3]</span></td><td  class="table_author">노라죠</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1992</td><td>친구 레스토랑 오픈<span class="reply_num">[4]</span></td><td  class="table_author">라임공주</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1991</td><td>[아이디어상품]브레프 변기세정제!<span class="reply_num">[7]</span></td><td  class="table_author">도담맘윤지</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1990</td><td>으악.....비온데요..<span class="reply_num">[6</span>]</td><td  class="table_author">예쁜별맘</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1989</td><td>한식대첩 재방~ ㅎㅎ<span class="reply_num">[7]</span></td><td  class="table_author">하결맘</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+                                <tr onClick="location.href='#';" style="cursor:pointer;"><td class="table_no">1988</td><td>오늘따라 허리가 너무 아프네요<span class="reply_num">[8]</span></td><td  class="table_author">철수사랑</td><td class="table_date">2014-10-27</td><td class="table_hit">5</td></tr>
+
+                                </tbody>
+                            </table><!-- /.List-->
+
+                            <nav class="text-center">
+                                <ul class="pagination pagination-sm table_paging">
+                                    <li class="disabled">
+                                        <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
+                                    </li>
+                                    <li class="disabled">
+                                        <a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
+                                    </li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li>
+                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
+                                    </li>
+                                </ul>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                        </div><!-- /.sub_contents_body -->
+
+                        <div class="sub_contents_ads" style="display:none;">
+                            <div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> <!-- rows -->
+
+
+        </div><!-- container-fluid -->
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div class="copyright_foot">
+            <br /><br />
+            <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+                <hr style="margin:0 15px 0 15px;" />
+
+                <center>
+                    <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+                </center>
+            </nav>
+        </div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
+
+    </div>
+
+    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
+        <div class="row">
+            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
+                우측바
+            </div>
+        </div>
+    </div>
+
+    <!-- /Main Page Layout Set -->
+</div>

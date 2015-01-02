@@ -22,6 +22,7 @@ define([
     '../../../partials/ange/story/list',
     '../../../partials/ange/people/home',
     '../../../partials/ange/people/poll-list',
+    '../../../partials/ange/people/board-list',
 
     // ADMIN 로그인
     '../../../partials/ange/signin',
