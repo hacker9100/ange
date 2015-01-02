@@ -1,3 +1,9 @@
+
+
+
+
+
+
 .peoplepoll_view_comment {
 	padding:0; 
 	font-size:0.86em;
@@ -98,7 +104,7 @@
 	height: 14px;
 	left: -18px;
 	top: 5px;
-	background-image: url('../../imgs/ange/icon_qt.png');
+	background-image: url('/imgs/ange/icon_qt.png');
 	background-repeat: none;
 	background-position: left top;
 }
@@ -109,7 +115,7 @@
 	height: 14px;
 	right: -18px;
 	bottom: 12px;
-	background-image: url('../../imgs/ange/icon_qt.png');
+	background-image: url('/imgs/ange/icon_qt.png');
 	background-repeat: none;
 	background-position: right top;
 }

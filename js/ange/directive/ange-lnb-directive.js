@@ -82,9 +82,7 @@ define(['./directives'], function (directives) {
             controller: ['$scope', '$location', function($scope, $location) {
 
                 $scope.click_selectMenu = function(url, link) {
-                    alert(url)
-                    alert(link)
-//                    $location.url(menu.MENU_URL);
+                    $location.url(url);
                 };
             }]
         }

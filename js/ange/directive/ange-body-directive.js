@@ -24,7 +24,7 @@ define(['./directives'], function (directives) {
                     case 3 :
                         url = menu[1] + '/' + menu[2];
                         break;
-                    case 4 :
+                    default :
                         url = menu[1] + '/' + menu[2] + '-' + menu[3];
                         break;
                 }

@@ -1,4 +1,4 @@
-/* Nanum Gothic (Korean) http://www.google.com/webfonts/earlyaccess  */
+/ * Nanum Gothic (Korean) http://www.google.com/webfonts/earlyaccess  */
 
 @font-face {
   font-family: 'Nanum Gothic';
@@ -18,7 +18,7 @@
   src: url('../../fonts/NanumGothic-Regular.eot?#iefix') format('embedded-opentype'),
        url('../../fonts/NanumGothic-Regular.woff2') format('woff2'),
        url('../../fonts/NanumGothic-Regular.woff') format('woff'),
-       url('../../fonts/NanumGothic-Regular.ttf') format('truetype');
+       url('../../fonts//NanumGothic-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Nanum Gothic';
@@ -178,7 +178,7 @@ body {
 		background-color:#FFF;
 		max-width:215px;
 		overflow: auto;
-		overflow-y: visible;
+		overflow-y: none;
 	}
 
 	.sub_content_wrap {
@@ -223,7 +223,7 @@ body {
 .copyright_foot {
 	display:none; 
 	float:left; 
-	margin:0px;
+	margin:0px; auto;
 	margin-top:10px;
 	width: 100%;
 	padding-bottom: 32px;
@@ -381,7 +381,7 @@ body {
 @media (min-width: 1680px) {
 
 	.sub-slide {
-		width: calc(100% - 215px);
+		width: calc(100% - (215px));
 	}
 
 	.sub-slide0 {
@@ -425,7 +425,7 @@ body {
 	margin:0 0 0 10px;
 	text-indent: -9999px;
 	cursor:pointer;
-	background-repeat: no-repeat;
+	background-repeat: none;
 }
 
 .gnb_right{
@@ -449,7 +449,7 @@ body {
 	margin:0 18px 0 0;
 	text-indent: -9999px;
 	cursor:pointer;
-	background-repeat: no-repeat;
+	background-repeat: none;
 }
 
 .gnb_search {
@@ -459,7 +459,7 @@ body {
 	margin:10px 18px 0 5px;
 	text-indent: -9999px;
 	cursor:pointer;
-	background-repeat: no-repeat;
+	background-repeat: none;
 }
 
 .search_form{
@@ -531,7 +531,7 @@ a.tablet_arrow:hover, a.tablet_arrow:focus {
 }
 
 
-/*�α��� ��ƿ��Ƽ */
+/*로그인*/
 .comp_userlog{
 	position:relative;
 	margin-top:36px; 
@@ -539,18 +539,165 @@ a.tablet_arrow:hover, a.tablet_arrow:focus {
 	border-bottom:1px solid #b1b1b1;
 }
 
-.userlog_login {
+.userlog_login {	
 	width:210px; 
 	height:185px; 
 	background:#fff; 
+	padding-top:25px;
 	border:1px solid #e3e3e3;
 	border-top:2px solid #8d8d8d;
 	border-bottom:1px solid #b1b1b1;
+	text-align:center;
 }
 
+/** 로그아웃 상태 구성 **/
 .userlog_utility{
 	margin:2px 0 2px 0;
 }
+
+.userlog_login_btn { 	opacity: 0.7; }
+
+.userlog_login_btn:hover {	opacity: 1; }
+
+
+.userlog_login_func{
+	position:relative;
+	width:100%;
+	height:30px;
+	margin-top:20px;
+	text-align:center;
+}
+
+a.forgotidpw {
+	float:left;
+	width:109px;
+	height:30px;
+	margin-left:10px;
+	background-image: url('/imgs/ange/btn_forgotidpw_bg.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	text-indent: -9999px;
+}
+
+a.joinus {
+	float:left;
+	width:70px;
+	height:30px;
+	margin-left:8px;
+	background-image: url('/imgs/ange/btn_joinus_bg.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	text-indent: -9999px;
+}
+
+a.forgotidpw:hover, a.joinus:hover {
+	background-position: left -30px;
+}
+
+/** 로그인 후 구성 **/
+
+.userlog_login_now {	
+	width:210px; 
+	height:185px; 
+	background:#fff; 
+	padding-top:15px;
+	border:1px solid #e3e3e3;
+	border-top:2px solid #8d8d8d;
+	border-bottom:1px solid #b1b1b1;
+	text-align:center;
+}
+
+.userconfig{
+	position: absolute;
+	font-size:1.2em;
+	top:10px;
+	right:10px;
+	color:#888;
+}
+
+.userconfig:hover {
+	color:#111;
+}
+
+.userlog_user_func {
+	float:left;
+	width:100%;
+	height:22px;
+	font-size: 0.86em;
+	margin-top:2px;
+	text-align:center;
+	padding:0 12px;
+}
+
+img.userlog_login_pic {
+	width:85px;
+	height:85px;
+	border:1px solid transparent;
+	border-radius: 50%;
+}
+
+.userlog_login_info {
+	position:relative;
+	width:100%;
+	height:22px;
+	font-size: 0.86em;
+	margin-top:4px;
+	text-align:center;
+	margin-bottom:2px;
+	padding:0 12px;
+}
+
+.userlog_user_subinfo{
+	float:left;
+	width:100%;
+	height:22px;
+	font-size: 0.86em;
+	margin-top:4px;
+	text-align:center;
+	margin-bottom:2px;
+	padding:0 12px;
+}
+
+
+.usernickname {
+	font-weight: bold;
+}
+
+.user_grade {
+	float: left;
+}
+
+.user_mileage {
+	float: right;
+}
+
+.babyinfo {
+	float: left;
+}
+
+a.logout {
+	float:right;
+	width:63px;
+	height:18px;
+	margin-left:8px;
+	background-image: url('/imgs/ange/btn_logout_bg.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	text-indent: -9999px;
+}
+
+a.logout:hover {
+	background-position: left -18px;
+}
+
+
+
+
+
+
+
+
+
 
 a.util1 {
 	float: left;
@@ -889,6 +1036,208 @@ a.lnb_handle_close:hover {
 	margin-bottom: 10px; 
 	height:55px; 
 }
+
+
+/****** 서브페이지 콘텐츠 공용 ************/
+
+.people_view_wrap {
+	width:100%; 
+	margin:0; 
+	padding:0; 
+	line-height:18px;
+}
+
+.table_blue { color: #019bd4; font-weight:bold; }
+.table_red { color: #e25d4c; font-weight:bold;}
+.table_gray { color: #646464; }
+.table_green { color: #71b528; }
+
+tr.ended { background-color:#FAFAFA; opacity: 0.75; }
+tr.desabled { background-color:#EDEDED; opacity: 0.5; pointer-events:none; cursor: default;}
+tr.primary { background-color:#fcfaec; }
+
+#comp_board_table {
+	border-bottom:2px solid #ddd;
+}
+
+tbody.on{
+	cursor: pointer;
+}
+
+.sub_contents_wrap{
+	position:relative; 
+	width:100%; 
+	line-height:22px;
+}
+
+.sub_contents_bullet { 
+	position:absolute; 
+	top:0; 
+	left:0; 
+	width:50px; 
+	height:6px; 
+	background-color: #000; 
+}
+
+.sub_contents_title {
+	position:relative; 
+	border:1px solid transparent; 
+	margin-bottom:40px;
+}
+
+.sub_contents_body {
+	margin-top:20px;
+	position:relative; 
+	width:100%; 
+	line-height:22px;
+}
+
+.board_thead{
+	color:blue; 
+	background-image:url(/imgs/ange/comp_miniboard_hr.png);
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+
+.board_th {
+	color: #019bd4;
+	font-weight: 700;
+}
+
+td.table_no {
+	font-family: arial, san-serif;
+	font-weight: 700;
+	font-size: 0.86em;
+	text-align: center;
+}
+
+td.table_date {
+	font-family: arial, san-serif;
+	word-break: keep-all; 
+	font-size: 0.86em;
+}
+
+td.table_author {
+	word-break: keep-all; 
+	font-size: 0.86em;
+	text-align: center;
+}
+
+td.table_hit {
+	font-family: arial, san-serif;
+	word-break: keep-all; 
+	font-size: 0.86em;
+	text-align: center;
+}
+
+
+.sub_contents_ads {
+	margin-top:20px;
+	position:relative; 
+	width:100%; 
+	line-height:22px;
+}
+
+
+/* 게시판 공용 */
+
+.reply_num { 
+	font-family: arial, san-serif; 
+	font-size: 0.78em; 
+	font-weight:normal; 
+	color: #666; 
+	margin-left:5px;
+}
+
+.table_icon_lock { 
+	font-size: 0.86em; 
+	vertical-align:bottom; 
+	line-height: 19px; 
+	color: #111; 
+	padding: 0; 
+	margin-left:1px;
+}
+
+.table_icon_new { 
+	font-family: arial, san-serif; 
+	font-size: 0.64em; 
+	font-weight: bold;
+	color: #fbffdc;
+	padding: 0 2px; 
+	margin-left:5px;
+	background-color: #ffa405;
+	border:1px solid transparent;
+	border-radius: 2px;
+}
+
+.table_icon_pic {
+	font-size: 0.86em; 
+	vertical-align:bottom; 
+	line-height: 19px; 
+	color: #22ade1; 
+	padding: 0; 
+	margin-left:1px;
+}
+
+.table_icon_clip {
+	font-size: 0.78em; 
+	vertical-align:bottom; 
+	line-height: 16px; 
+	color: #a027de; 
+	padding: 0; 
+	margin-left:1px;
+}
+
+
+a.people_boardmanager {
+	margin: 0px 0 0 12px;
+	padding: 4px 0 4px 22px;
+	position: absolute;
+	font-size: 0.56em;
+	font-weight: 400;
+	color: #868686;
+	background-image: url('/imgs/ange/icon_peoplemanager.png');
+	background-repeat: no-repeat;
+	background-position: left 4px;
+}
+
+a.people_boardmanager .people_boardmanager_id {
+	margin-left: 3px;
+	color: #22ade1;
+	font-weight: 700;
+}
+
+a.people_boardmanager:hover {
+	text-decoration: none;
+}
+
+a.people_btn{
+	width: 63px;
+	height: 25px;
+	padding:0px;
+	opacity: 0.8;
+	background-repeat: no-repeat;
+	text-indent: -9999px;
+	margin: 0 4px;
+}
+
+a.people_btn:hover {
+	opacity: 1;
+}
+
+a.people_btn.submit {	 float:right; background-image: url('/imgs/ange/people_btn_submit.png'); }
+a.people_btn.list { float:left; background-image: url('/imgs/ange/people_btn_list.png'); }
+a.people_btn.modify { float:right; background-image: url('/imgs/ange/people_btn_modify.png'); }
+a.people_btn.cancel {	float:right; background-image: url('/imgs/ange/people_btn_cancel.png'); }
+a.people_btn.vote {	 float:right; background-image: url('/imgs/ange/people_btn_vote.png'); }
+
+
+
+/* 이벤트(맘스) 공용 버튼 */
+
+
+
+/* 스토어 공용 버튼 */
 
 
 

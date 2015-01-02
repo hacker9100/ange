@@ -118,6 +118,8 @@
 <link rel="stylesheet" type="text/css" href="css/ange/ange_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_storylist.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_people_main.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_peoplepoll.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_peopleboard.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_moms_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_myange_main.css" />
 
