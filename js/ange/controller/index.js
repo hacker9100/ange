@@ -31,6 +31,7 @@ define([
     '../../../partials/ange/people/clinic-view',
     '../../../partials/ange/people/photo-list',
     '../../../partials/ange/people/photo-edit',
+    '../../../partials/ange/people/photo-view',
 
     // ADMIN 로그인
     '../../../partials/ange/signin',

@@ -720,7 +720,7 @@
             $sql = "DELETE FROM COM_BOARD WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+            /*$no = $_d->mysql_insert_id;*/
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -758,15 +758,19 @@
                 }
             }
 
-/*
+            $sql = "DELETE FROM COM_BOARD WHERE PARENT_NO = ".$_key;
+            $_d->sql_query($sql);
+
             $sql = "DELETE FROM COM_REPLY WHERE TARGET_NO = ".$_key;
 
             $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
             if($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
             }
-*/
+
 
             if($err > 0){
                 $_d->sql_rollback();

@@ -15,45 +15,6 @@
                             <h3 style="font-weight:bold;">앙쥬 POLL</h3>
                         </div>
 
-<!--                        <div class="container-fluid sub_contents_search">
-                            <div class="row">
-                                <div class="col-xs-12" style="padding:0">
-
-                                    <div class="btn-group" style="float:left;">
-                                        <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
-
-                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        <span class="caret"></span>
-                                        <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">제목+내용</a></li>
-                                            <li><a href="#">작성자</a></li>
-                                        </ul>
-                                    </div>&lt;!&ndash; /btn-group &ndash;&gt;
-
-                                    <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                        <input type="text" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
-
-                                        <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                                        </span>
-                                    </div>
-
-                                    <div style="float:right; width:120px; margin:0px; padding:0px;">
-                                        <div class="input-group input-group-sm">
-                                            <span class="input-group-addon">
-                                                <input type="checkbox" />
-                                            </span>
-                                            <input type="text" class="form-control table_filtercheck" placeholder="진행중" style="background:#fff; padding-top: 2px; cursor:default; font-size: 0.86em;" disabled />
-                                        </div>
-                                    </div>
-
-                                </div>&lt;!&ndash; /.col-xs-12&ndash;&gt;
-                            </div>&lt;!&ndash; /.row &ndash;&gt;
-                        </div>&lt;!&ndash; /.container &ndash;&gt;-->
-
                     </div><!-- /.sub_contents_wrap -->
 
 
@@ -69,7 +30,7 @@
                                     <div class="col-xs-9 peoplepoll_view_comment">
 
                                         <span style="line-height: 24px; ">설문 참여하고 마일리지 받자!! 많은 참여 바랍니다.</span> <br />
-                                        <span class="table_red">설문기간 : 2014/10/28~2014/11/04</span>
+                                        <span class="table_red">설문기간 : {{item.START_YMD}} ~ {{item.END_YMD}}</span>
 
                                     </div><!-- /.col-xs-9-->
 
@@ -98,30 +59,17 @@
                                         <div class="peoplepoll_view_title">
 												<span class="peoplepoll_view_title_qt">
 													<span class="icon_qt_left"></span>
-													산부인과/산후조리원 선택 기준은?
+													{{item.SUBJECT}}
 													<span class="icon_qt_right"></span>
 												</span>
                                         </div>
                                     </div><!-- /.col-01-->
 
                                     <div class="col-xs-12 peoplepoll_view_contentbody">
-                                        <div class="peoplepoll_view_content">
-                                            <dl>
-                                                <dt>Q1. 산부인과 최우선 선택 기준은 무엇인가요?</dt>
-                                                <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios1" value="q1a1">집과의 거리가 가깝고 모든 직원들이 친절한 병원</label></div></dd>
-                                                <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios2" value="q1a2">위급한 상황에 유리한 산부인과 전문병원과 종합병원</label></div></dd>
-                                                <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios3" value="q1a3">원하는 분만법의 유무</label></div></dd>
-                                                <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios3" value="q1a3">산후조리원과 연계되어 있는 곳</label></div></dd>
-                                                <dd><div class="radio"><label><input type="radio" name="q1" id="optionsRadios3" value="q1a3">출산 준비 교육이나 태교 프로그램이 있는 곳</label></div></dd>
-                                            </dl>
-
-                                            <dl>
-                                                <dt>Q2. 산후조리원 최우선 선택 기준은 무엇인가요?</dt>
-                                                <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios1" value="q2a1">집(또는 남편 회사, 산부인과)과의 거리가 가까운 곳</label></div></dd>
-                                                <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios2" value="q2a2">가격이 비싸도 위생, 안전, 편의시설과 다양한 프로그램을 갖춘 곳</label></div></dd>
-                                                <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios3" value="q2a3">가격 대비 시설과 프로그램이 괜찮은 곳	</label></div></dd>
-                                                <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios3" value="q2a3">산부인과, 소아과와 연계 진료가 가능한 곳, 산부인과, 소아과와 연계 진료가 가능한 곳, 산부인과, 소아과와 연계 진료가 가능한 곳</label></div></dd>
-                                                <dd><div class="radio"><label><input type="radio" name="q2" id="optionsRadios3" value="q2a3">신생아 케어 시설이 잘되어 있고, 베테랑 전문가가 신생아를 안전하게 돌봐주는 곳</label></div></dd>
+                                        <div class="peoplepoll_view_content" data-ng-repeat="query in queue"> <!--data-ng-repeat="query in queue"-->
+                                           <dl  data-ng-repeat="select in query.SELECT">
+                                                <dt >{{query.QUERY}}</dt>
+                                                <dd><div class="radio"><label><input type="radio" name="q2" id="select_sort_{{select.SELECT_SORT}}" value="{{select.SELECT_SORT}}">{{select.NOTE}}</label></div></dd>
                                             </dl>
                                         </div>
 

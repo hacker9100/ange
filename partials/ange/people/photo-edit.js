@@ -76,6 +76,7 @@ define([
         // 게사판 저장 버튼 클릭
         $scope.click_savePeoplePhoto = function () {
             $scope.item.SYSTEM_GB = 'ANGE';
+            $scope.item.BOARD_GB = 'PHOTO';
             $scope.item.FILES = $scope.queue;
 
             for(var i in $scope.item.FILES) {
@@ -84,12 +85,12 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-            if ($stateParams.menu == 'peopletaste') {
-                $scope.item.COMM_NO = '06';
-            } else if($stateParams.menu == 'angemodel') {
-                $scope.item.COMM_NO = '07';
+            if ($stateParams.menu == 'angemodel') {
+                $scope.item.COMM_NO = '6';
             } else if($stateParams.menu == 'recipearcade') {
-                $scope.item.COMM_NO = '08';
+                $scope.item.COMM_NO = '7';
+            } else if($stateParams.menu == 'peopletaste') {
+                $scope.item.COMM_NO = '8';
             }
 
             if ($stateParams.id == 0) {

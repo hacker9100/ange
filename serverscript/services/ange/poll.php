@@ -75,13 +75,12 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $msg = $_d->mysql_error;
                 }
 
-                $sql = "SELECT
-                          POLL_NO, QUERY_NO, QUERY_ORD, QUERY_GB, QUERY
-                        FROM
-                          ANGE_POLL_QUERY
+                $sql = "SELECT QUERY_NO, QUERY_SORT, BOARD_NO, QUERY_GB, QUERY
+                    FROM
+                      ANGE_POLL_QUERY
                         WHERE
-                          POLL_NO = ".$data[NO]."
-                        ORDER BY QUERY_ORD
+                          BOARD_NO = ".$data[NO]."
+                        ORDER BY QUERY_SORT
                         ";
 
                 $__trn = '';
@@ -89,14 +88,12 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-                    $sql = "SELECT
-                                POLL_NO, QUERY_NO, SELECT_ORD, NOTE
-                            FROM
-                                ANGE_POLL_SELECT
+                    $sql = "SELECT QUERY_NO, QUERY_SORT, SELECT_SORT, BOARD_NO, NOTE
+                        FROM ANGE_POLL_SELECT
                             WHERE
-                                POLL_NO = ".$row[POLL_NO]."
+                                BOARD_NO = ".$row[BOARD_NO]."
                                 AND QUERY_NO = ".$row[QUERY_NO]."
-                            ORDER BY SELECT_ORD
+                            ORDER BY SELECT_SORT
                             ";
 
                     $file_data = $_d->getData($sql);

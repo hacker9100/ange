@@ -1,3 +1,14 @@
+<style>
+    /* img-lst */
+    .img-lst li{float:left; width:250px; margin-left:60px; height:300px;}
+    .img-lst li.ml-none{margin-left:0;}
+    .img-lst .thum{width:250px; height:200px;  min-width:0; padding:0; margin-top:5px;}
+    /*.img-lst .thum.no-img {background:url(../img/etc/no_images.gif) no-repeat 0 0;}*/ /*2014.10.07 첨가*/
+    .img-lst .tit{display:block; overflow:hidden; width:230px; padding:5px 10px 0; white-space:nowrap; text-overflow:ellipsis; letter-spacing: -1px}
+    .img-lst .date{display:block; overflow:hidden; width:134px; padding:0 10px 0; white-space:nowrap; text-overflow:ellipsis;}
+    .img-lst p{width:230px; padding:0 10px 0; white-space:nowrap; text-overflow:ellipsis;}
+</style>
+
 <div ng-controller="photo-list">
     <!-- mainbar -->
     <div class="mainbar sub-slide0">
@@ -114,7 +125,8 @@
                                                 <!--<img ng-src={{item.THUMBNAILURL}} class='img key' style='width:230px; height:180px;'>-->
                                             </span>
                                             <br/>
-                                            <strong class='tit' style='margin-left:-10px;'>{{item.SUBJECT}}</strong><!--임신부, 여름 음식 안전하게 먹기-->
+                                            <strong class='tit' style='margin-left:-10px;font-size: 15'>{{item.SUBJECT}}</strong><!--임신부, 여름 음식 안전하게 먹기-->
+                                            <br/>
                                             {{item.REG_NM}}&nbsp;&nbsp;|&nbsp;&nbsp;{{item.REG_DT}}
                                         </li>
                                     </a>
@@ -124,6 +136,8 @@
                                  <p>조회 데이터가 없습니다.</p>
                             </div>
 
+
+                            <br/><br/><br/><br/><br/><br/><br/><br/>
                             <nav class="text-center">
                                 <ul class="pagination pagination-sm table_paging">
                                     <li class="disabled">

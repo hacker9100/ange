@@ -208,6 +208,30 @@ define([
 
         };
 
+        $scope.click_showPeopleClinicDelete = function(item) {
+            var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
+
+            dialog.result.then(function(btn){
+                $scope.deleteItem('com/webboard', 'item', item.NO, true)
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                        if ($stateParams.menu == 'childdevelop') {
+                            $location.url('/people/childdevelop/list');
+                        } else if($stateParams.menu == 'chlidoriental') {
+                            $location.url('/people/chlidoriental/list');
+                        } else if($stateParams.menu == 'obstetrics') {
+                            $location.url('/people/obstetrics/list');
+                        } else if($stateParams.menu == 'momshealth') {
+                            $location.url('/people/momshealth/list');
+                        } else if($stateParams.menu == 'financial') {
+                            $location.url('/people/financial/list');
+                        }
+                        ;})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
+        }
+
         /********** 화면 초기화 **********/
         /*        $scope.getSession()
          .then($scope.sessionCheck)

@@ -14,7 +14,9 @@ define([
     controllers.controller("poll-edit", ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
 
         // 게시판 초기화
-/*        $scope.item = {};
+        $scope.item = {};
+        // 첨부파일 초기화
+        $scope.queue = [];
 
         // 초기화
         $scope.init = function() { // function(session)
@@ -27,11 +29,20 @@ define([
                 $scope.getItem('ange/poll', 'item', $stateParams.id, {}, false)
                     .then(function(data){
 
-                        for(var i=0; i<=data.length; i++){
-                            $scope.item.SUBJECT = data[0].SUBJECT;
+                        $scope.item = data;
+
+                        var query = data.QUERY;
+
+                        console.log('query =' +query);
+                        console.log('end');
+
+                        for(var i in query) {
+                            $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
                         }
 
-                        $scope.item = data;
+                        console.log('$scope.queue ='+$scope.queue);
+                        console.log('end');
+
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -48,8 +59,10 @@ define([
         }
 
         $scope.click_showAngePollList = function() {
-            $location.url('/peoplepoll/list');
-        }*/
+            $location.url('/people/peoplepoll/list');
+        }
 
+
+        $scope.getAngePoll();
     }]);
 });

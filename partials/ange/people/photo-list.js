@@ -118,8 +118,8 @@ define([
                 $location.url('/people/angemodel/view/'+key);
             } else if($stateParams.menu == 'recipearcade') {
                 $location.url('/people/recipearcade/view/'+key);
-            } else if($stateParams.menu == 'recipearcade') {
-                $location.url('/people/recipearcade/view/'+key);
+            } else if($stateParams.menu == 'peopletaste') {
+                $location.url('/people/peopletaste/view/'+key);
             }
         };
 
@@ -130,8 +130,8 @@ define([
                 $location.url('/people/angemodel/edit/0');
             } else if($stateParams.menu == 'recipearcade') {
                 $location.url('/people/recipearcade/edit/0');
-            } else if($stateParams.menu == 'recipearcade') {
-                $location.url('/people/recipearcade/edit/0');
+            } else if($stateParams.menu == 'peopletaste') {
+                $location.url('/people/peopletaste/edit/0');
             }
         };
 
