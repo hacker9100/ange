@@ -116,7 +116,7 @@ define([
         };
 
         // 등록 버튼 클릭
-        $scope.click_showCreatePeopleBoard = function () {
+        $scope.click_showCreatePeopleClinic = function () {
 
             if ($stateParams.menu == 'childdevelop') {
                 $location.url('/people/childdevelop/edit/0');

@@ -88,6 +88,40 @@
 
                                     </div><!-- /.row -->
 
+                                    <div class="form-horizontal">
+                                        <table summary="이전글 다음글 목록">
+                                            <colgroup>
+                                                <col width="10%" />
+                                                <col width="90%" />
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">다음글</th>
+                                                    <td>
+                                                        <div data-ng-show="nextBoardView != ''">
+                                                            <a data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>
+                                                        </div>
+                                                        <div data-ng-show="nextBoardView == false">
+                                                            다음 글이 없습니다
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row">이전글</th>
+                                                    <td>
+                                                        <div data-ng-show="preBoardView != ''">
+                                                            <a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>
+                                                        </div>
+                                                        <div data-ng-show="preBoardView == false">
+                                                            이전 글이 없습니다
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <br/><br/><br/><br/>
                                     <div class="form-horizontal form_basic_100">
                                         <p><strong>의견쓰기</strong></p>
                                         <table>
@@ -107,24 +141,25 @@
                                     </div>
                                 </div><!-- /.container -->
 
-                                <div class="form-horizontal form_basic_100">
+                                <div class="form-horizontal form_basic_100" ng-model="reply">
                                     <p><strong>댓글 리스트</strong></p>
 
                                     <!-- Reply List -->
                                     <table class="table" style="border-bottom: 1px solid #868686;">
                                         <tr ng-repeat="item in replyList">
                                             <td style="width:100px; font-size:0.94em; line-height:38px;">
-                                                <input type="hidden" ng-model="item.PARENT_NO" value="{{item.NO}}"/>
+                                                <input type="hidden" ng-model="item.PARENT_NO"/>
                                                 <strong>{{item.REG_NM}}</strong>&nbsp;({{item.REG_UID}})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 {{item.COMMENT}}
                                                 <button type="button" class="btn btn-primary btn-xs start"  ng-click="showDetails = ! showDetails">
                                                     └ 댓글
                                                 </button>
                                                 <div ng-class="{ 'hidden': ! showDetails }">
-                                                    <input type="hidden" ng-model="item.LEVEL" id="level" value="{{item.LEVEL}}"/>
-                                                    <input type="hidden" ng-model="item.REPLY_NO" id="reply_no" value="{{item.REPLY_NO}}" />
-                                                    <textarea ng-model="item.RE_COMMENT" cols="100" rows="1" id="reply_comment" ></textarea>
-                                                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePeopleBoardReComment(comment);" ng-disabled="comment_form.$invalid">
+                                                    <input type="hidden" ng-model="reply.PARENT_NO" id="parent_no" value="{{item.NO}}"/>
+                                                    <input type="hidden" ng-model="reply.LEVEL" id="level" value="{{item.LEVEL}}"/>
+                                                    <input type="hidden" ng-model="reply.REPLY_NO" id="reply_no"   value="{{item.REPLY_NO}}"/>
+                                                    <textarea ng-model="reply.COMMENT" cols="100" rows="1" id="reply_comment" ></textarea>
+                                                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePeopleBoardReComment();" ng-disabled="comment_form.$invalid">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                         <span>등록</span>
                                                     </button>

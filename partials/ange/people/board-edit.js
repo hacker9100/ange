@@ -48,15 +48,15 @@ define([
             // 게시판 목록 이동
         $scope.click_showPeopleBoardList = function () {
             if ($stateParams.menu == 'angeroom') {
-                $location.url('/angeroom/list');
+                $location.url('/people/angeroom/list');
             } else if($stateParams.menu == 'momstalk') {
-                $location.url('/momstalk/list');
+                $location.url('/people/momstalk/list');
             } else if($stateParams.menu == 'babycare') {
-                $location.url('/babycare/list');
+                $location.url('/people/babycare/list');
             } else if($stateParams.menu == 'firstbirthtalk') {
-                $location.url('/firshbirthtalk/list');
+                $location.url('/people/firstbirthtalk/list');
             } else if($stateParams.menu == 'booktalk') {
-                $location.url('/booktalk/list');
+                $location.url('/people/booktalk/list');
             }
         };
 
@@ -89,15 +89,15 @@ define([
             }
 
             if ($stateParams.menu == 'angeroom') {
-                $scope.item.BOARD_GB = '01';
+                $scope.item.COMM_NO = '1';
             } else if($stateParams.menu == 'momstalk') {
-                $scope.item.BOARD_GB = '02';
+                $scope.item.COMM_NO = '2';
             } else if($stateParams.menu == 'babycare') {
-                $scope.item.BOARD_GB = '03';
+                $scope.item.COMM_NO = '3';
             } else if($stateParams.menu == 'firstbirthtalk') {
-                $scope.item.BOARD_GB = '04';
+                $scope.item.COMM_NO = '4';
             } else if($stateParams.menu == 'booktalk') {
-                $scope.item.BOARD_GB = '05';
+                $scope.item.COMM_NO = '5';
             }
 
             if ($stateParams.id == 0) {
@@ -107,15 +107,15 @@ define([
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
                         if ($stateParams.menu == 'angeroom') {
-                            $location.url('/angeroom/list');
+                            $location.url('/people/angeroom/list');
                         } else if($stateParams.menu == 'momstalk') {
-                            $location.url('/momstalk/list');
+                            $location.url('/people/momstalk/list');
                         } else if($stateParams.menu == 'babycare') {
-                            $location.url('/babycare/list');
+                            $location.url('/people/babycare/list');
                         } else if($stateParams.menu == 'firstbirthtalk') {
-                            $location.url('/firstbirthtalk/list');
+                            $location.url('/people/firstbirthtalk/list');
                         } else if($stateParams.menu == 'booktalk') {
-                            $location.url('/booktalk/list');
+                            $location.url('/people/booktalk/list');
                         }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -126,15 +126,15 @@ define([
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
                         if ($stateParams.menu == 'angeroom') {
-                            $location.url('/angeroom/list');
+                            $location.url('/people/angeroom/list');
                         } else if($stateParams.menu == 'momstalk') {
-                            $location.url('/momstalk/list');
+                            $location.url('/people/momstalk/list');
                         } else if($stateParams.menu == 'babycare') {
-                            $location.url('/babycare/list');
+                            $location.url('/people/babycare/list');
                         } else if($stateParams.menu == 'firstbirthtalk') {
-                            $location.url('/firstbirthtalk/list');
+                            $location.url('/people/firstbirthtalk/list');
                         } else if($stateParams.menu == 'booktalk') {
-                            $location.url('/booktalk/list');
+                            $location.url('/people/booktalk/list');
                         }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});

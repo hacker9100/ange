@@ -83,8 +83,8 @@ define([
             }
 
             $scope.search.SYSTEM_GB = 'ANGE';
-            $scope.search.SORT = 'NOTICE_FL';
-            $scope.search.ORDER = 'DESC'
+/*            $scope.search.SORT = 'NOTICE_FL';
+            $scope.search.ORDER = 'DESC'*/
 
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){

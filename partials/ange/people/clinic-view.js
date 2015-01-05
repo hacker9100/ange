@@ -17,7 +17,7 @@ define([
         $scope.queue = [];
         // 게시판 초기화
         $scope.item = {};
-        $scope.comment = {};
+        $scope.reply = {};
         $scope.search = {SYSTEM_GB: 'ANGE'};
 
         // 초기화
@@ -29,32 +29,32 @@ define([
             // 수정 버튼 클릭
         $scope.click_showPeopleClinicEdit = function (item) {
 
-            if ($stateParams.menu == 'childrendevelopment') {
-                $location.url('/childrendevelopment/edit/'+item.NO);
-            } else if($stateParams.menu == 'orientalpediatrics') {
-                $location.url('/orientalpediatrics/edit/'+item.NO);
+            if ($stateParams.menu == 'childdevelop') {
+                $location.url('/people/childdevelop/edit/'+item.NO);
+            } else if($stateParams.menu == 'chlidoriental') {
+                $location.url('/people/chlidoriental/edit/'+item.NO);
             } else if($stateParams.menu == 'obstetrics') {
-                $location.url('/obstetrics/edit/'+item.NO);
+                $location.url('/people/obstetrics/edit/'+item.NO);
             } else if($stateParams.menu == 'momshealth') {
-                $location.url('/momshealth/edit/'+item.NO);
+                $location.url('/people/momshealth/edit/'+item.NO);
             } else if($stateParams.menu == 'financial') {
-                $location.url('/financial/edit/'+item.NO);
+                $location.url('/people/financial/edit/'+item.NO);
             }
 
         };
 
         // 목록 버튼 클릭
         $scope.click_showPeopleClinicList = function () {
-            if ($stateParams.menu == 'childrendevelopment') {
-                $location.url('/childrendevelopment/list');
-            } else if($stateParams.menu == 'orientalpediatrics') {
-                $location.url('/orientalpediatrics/list');
+            if ($stateParams.menu == 'childdevelop') {
+                $location.url('/people/childdevelop/list');
+            } else if($stateParams.menu == 'chlidoriental') {
+                $location.url('/people/chlidoriental/list');
             } else if($stateParams.menu == 'obstetrics') {
-                $location.url('/obstetrics/list');
+                $location.url('/people/obstetrics/list');
             } else if($stateParams.menu == 'momshealth') {
-                $location.url('/momshealth/list');
+                $location.url('/people/momshealth/list');
             } else if($stateParams.menu == 'financial') {
-                $location.url('/financial/list');
+                $location.url('/people/financial/list');
             }
         };
 
@@ -74,17 +74,15 @@ define([
                     .then(function(data){
                         $scope.item = data;
 
-                        $scope.item.PARENT_NO = 0;
-                        $scope.item.LEVEL = 1;
-                        $scope.item.REPLY_NO = 1;
-                        $scope.item.TARGET_NO = $scope.item.NO;
-                        $scope.item.TARGET_GB = "BOARD";
-                        $scope.item.RE_COMMENT = "";
-
-                        var files = data.FILES;
-                        for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                        if(data.REPLY_FL == 'N'){
+                            $scope.item.BODY;
+                        } else {
+                            $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
                         }
+
+                        $scope.reply.SUBJECT = "[답변]"+$scope.item.SUBJECT;
+                        $scope.reply.PARENT_NO = $scope.item.NO;
+
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -92,56 +90,123 @@ define([
 
         // 답글 등록
         $scope.click_savePeopleBoardComment = function () {
-            $scope.insertItem('com/reply', 'item', $scope.item, false)
+
+            $scope.reply.SYSTEM_GB = 'ANGE';
+
+            if ($stateParams.menu == 'childdevelop') {
+                $scope.reply.COMM_NO = '09';
+            } else if($stateParams.menu == 'chlidoriental') {
+                $scope.reply.COMM_NO = '10';
+            } else if($stateParams.menu == 'obstetrics') {
+                $scope.reply.COMM_NO = '11';
+            } else if($stateParams.menu == 'momshealth') {
+                $scope.reply.COMM_NO = '12';
+            } else if($stateParams.menu == 'financial') {
+                $scope.reply.COMM_NO = '13';
+            }
+
+            $scope.insertItem('com/webboard', 'item', $scope.reply, false)
                 .then(function(){
-                    $scope.item.COMMENT = "";
-                    $scope.tableParams.reload();
+
+                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+
+/*                    if ($stateParams.menu == 'childdevelop') {
+                        $location.url('/people/childdevelop/view/'+$scope.item.NO);
+                    } else if($stateParams.menu == 'chlidoriental') {
+                        $location.url('/people/chlidoriental/view/'+$scope.item.NO);
+                    } else if($stateParams.menu == 'obstetrics') {
+                        $location.url('/people/obstetrics/view/'+$scope.item.NO);
+                    } else if($stateParams.menu == 'momshealth') {
+                        $location.url('/people/momshealth/view/'+$scope.item.NO);
+                    } else if($stateParams.menu == 'financial') {
+                        $location.url('/people/financial/view/'+$scope.item.NO);
+                    }*/
+                    if ($stateParams.menu == 'childdevelop') {
+                        $location.url('/people/childdevelop/list');
+                    } else if($stateParams.menu == 'chlidoriental') {
+                        $location.url('/people/chlidoriental/list');
+                    } else if($stateParams.menu == 'obstetrics') {
+                        $location.url('/people/obstetrics/list');
+                    } else if($stateParams.menu == 'momshealth') {
+                        $location.url('/people/momshealth/list');
+                    } else if($stateParams.menu == 'financial') {
+                        $location.url('/people/financial/list');
+                    }
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-        // 대댓글 등록
-        $scope.click_savePeopleBoardReComment = function () {
+        // 이전글
+        $scope.getPreBoard = function (){
 
-            $scope.item.LEVEL = parseInt($scope.item.LEVEL+1);
-            $scope.item.REPLY_NO = parseInt($scope.item.REPLY_NO+1);
 
-            $scope.insertItem('com/reply', 'item', $scope.item, false)
-                .then(function(){
-                    $scope.item.COMMENT = "";
-                    $scope.item.RE_COMMENT = "";
-                    $scope.tableParams.reload();
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            if ($stateParams.menu == 'childdevelop') {
+                $scope.search['COMM_NO'] = '09';
+            } else if($stateParams.menu == 'chlidoriental') {
+                $scope.search['COMM_NO'] = '10';
+            } else if($stateParams.menu == 'obstetrics') {
+                $scope.search['COMM_NO'] = '11';
+            } else if($stateParams.menu == 'momshealth') {
+                $scope.search['COMM_NO'] = '12';
+            } else if($stateParams.menu == 'financial') {
+                $scope.search['COMM_NO'] = '13';
+            }
+
+            $scope.search.KEY = $stateParams.id;
+            $scope.search.BOARD_PRE = true;
+
+            if ($stateParams.id != 0) {
+                return $scope.getItem('com/webboard', 'list',{} , $scope.search, false)
+                    .then(function(data){
+                        $scope.preBoardView = data;
+                    })
+                    .catch(function(error){$scope.preBoardView = "";})
+            }
         }
 
-        // 댓글 리스트
-        $scope.getPeopleReplyList = function () {
+        // 다음글
+        $scope.getNextBoard = function (){
 
-            $scope.tableParams = new ngTableParams({
-                page: 1,                    // show first page
-                count: 20,    // count per page
-                sorting: {                  // initial sorting
-                    REG_DT: 'desc'
-                }
-            }, {
-                counts: [],         // hide page counts control
-                total: 0,           // length of data
-                getData: function($defer, params) {
+            if ($stateParams.menu == 'childdevelop') {
+                $scope.search['COMM_NO'] = '09';
+            } else if($stateParams.menu == 'chlidoriental') {
+                $scope.search['COMM_NO'] = '10';
+            } else if($stateParams.menu == 'obstetrics') {
+                $scope.search['COMM_NO'] = '11';
+            } else if($stateParams.menu == 'momshealth') {
+                $scope.search['COMM_NO'] = '12';
+            } else if($stateParams.menu == 'financial') {
+                $scope.search['COMM_NO'] = '13';
+            }
 
-                    $scope.search.TARGET_NO = $stateParams.id;
+            $scope.search.KEY = $stateParams.id;
+            $scope.search.BOARD_NEXT = true;
 
-                    $scope.getList('com/reply', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-                        .then(function(data){
-                            $defer.resolve(data);
+            if ($stateParams.id != 0) {
+                return $scope.getItem('com/webboard', 'list',{} , $scope.search, false)
+                    .then(function(data){
+                        $scope.nextBoardView = data;
+                    })
+                    .catch(function(error){$scope.preBoardView = "";})
+            }
+        }
 
-                            $scope.item.PARENT_NO = data.NO;
-                        })
-                        .catch(function(error){ $defer.resolve([]);});
-                }
-            });
+        // 조회 화면 이동
+        $scope.click_showViewPeopleBoard = function (key) {
+
+            if ($stateParams.menu == 'childdevelop') {
+                $location.url('/people/childdevelop/view/'+key);
+            } else if($stateParams.menu == 'chlidoriental') {
+                $location.url('/people/chlidoriental/view/'+key);
+            } else if($stateParams.menu == 'obstetrics') {
+                $location.url('/people/obstetrics/view/'+key);
+            } else if($stateParams.menu == 'momshealth') {
+                $location.url('/people/momshealth/view/'+key);
+            } else if($stateParams.menu == 'financial') {
+                $location.url('/people/financial/view/'+key);
+            }
+
         };
-
 
         /********** 화면 초기화 **********/
         /*        $scope.getSession()
@@ -151,7 +216,8 @@ define([
          .catch($scope.reportProblems);*/
         //$scope.addHitCnt();
         $scope.getPeopleClinic();
-        $scope.getPeopleReplyList();
+        $scope.getPreBoard();
+        $scope.getNextBoard();
 
 
     }]);

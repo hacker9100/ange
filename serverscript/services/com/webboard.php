@@ -58,13 +58,17 @@
                 $err = 0;
                 $msg = "";
 
-                $sql = "SELECT
-                          NO, PARENT_NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG
+                $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG,
+                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_FL
+                    FROM (
+                        SELECT
+                          B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
+                          (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY
                         FROM
-                          COM_BOARD
+                          COM_BOARD B
                         WHERE
-                          NO = ".$_key."
-                        ";
+                          B.NO = ".$_key."
+                        )  A";
                 $result = $_d->sql_query($sql);
                 $data = $_d->sql_fetch_array($result);
 
@@ -92,18 +96,19 @@
                     $err++;
                     $msg = $_d->mysql_error;
                 }
-/*
-                $sql = "SELECT
-                            NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
-                        FROM
-                            COM_REPLY
-                        WHERE
-                            TARGET_NO = ".$_key."
-                        ";
 
-                $reply_data = $_d->getData($sql);
-                $data['REPLY'] = $reply_data;
-*/
+                /*
+                                $sql = "SELECT
+                                            NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
+                                        FROM
+                                            COM_REPLY
+                                        WHERE
+                                            TARGET_NO = ".$_key."
+                                        ";
+
+                                $reply_data = $_d->getData($sql);
+                                $data['REPLY'] = $reply_data;
+                */
 
                 if($_d->mysql_errno > 0) {
                     $err++;
@@ -150,29 +155,34 @@
                 $sql = "SELECT
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                           SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NM,
-                          (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT
+                          (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT, BOARD_REPLY_COUNT,
+	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL
                         FROM
                         (";
 
                 $select1 = "SELECT
                                 '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, '' AS COMM_NM,
-                                        (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT
+                                        (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
                             WHERE
                                 NOTICE_FL = 'Y'
+                                AND PARENT_NO = 0
                                 ".$search_common;
 
                 $select2 = "SELECT
                                 '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, IFNULL(C.COMM_NM, '') AS COMM_NM,
-                                        (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT
+                                        (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
                             WHERE
                                 1=1
                                 AND NOTICE_FL = 'N'
+                                AND PARENT_NO = 0
                                 ".$search_where;
 
                 if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] == "Y") {
@@ -183,7 +193,7 @@
                     $sql .= $select1." UNION ".$select2;
                 }
 
-                $sql .= "   ORDER BY NOTICE_FL DESC, SORT_GB".$sort_order."
+                $sql .= "   ORDER BY NOTICE_FL DESC, SORT_GB, REG_DT DESC".$sort_order."
                              ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -230,7 +240,32 @@
                     }else{
                         $_d->dataEnd2($data);
                     }
-                } else {
+                }else if(isset($_search[BOARD_NEXT]) && $_search[BOARD_NEXT] != "") {
+
+                    $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND PARENT_NO = 0  AND COMM_NO=".$_search[COMM_NO]." ORDER BY REG_DT DESC, NO LIMIT 1";
+                    $result = $_d->sql_query($sql);
+                    $data = $_d->sql_fetch_array($result);
+
+                    if($_d->mysql_errno > 0){
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    }else{
+                        $_d->dataEnd2($data);
+                    }
+
+                }else if(isset($_search[BOARD_PRE]) && $_search[BOARD_PRE] != "") {
+
+                    $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND PARENT_NO = 0 AND COMM_NO=".$_search[COMM_NO]." ORDER BY NO DESC LIMIT 1";
+                    $result = $_d->sql_query($sql);
+                    $data = $_d->sql_fetch_array($result);
+
+                    if($_d->mysql_errno > 0){
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    }else{
+                        $_d->dataEnd2($data);
+                    }
+
+                }
+                else {
                     $data = $_d->sql_query($sql);
 
                     if($_d->mysql_errno > 0){

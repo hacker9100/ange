@@ -48,16 +48,16 @@ define([
         /********** 이벤트 **********/
             // 게시판 목록 이동
         $scope.click_showPeopleClinicList = function () {
-            if ($stateParams.menu == 'childrendevelopment') {
-                $location.url('/childrendevelopment/list');
-            } else if($stateParams.menu == 'orientalpediatrics') {
-                $location.url('/orientalpediatrics/list');
+            if ($stateParams.menu == 'childdevelop') {
+                $location.url('/people/childdevelop/list');
+            } else if($stateParams.menu == 'chlidoriental') {
+                $location.url('/people/chlidoriental/list');
             } else if($stateParams.menu == 'obstetrics') {
-                $location.url('/obstetrics/list');
+                $location.url('/people/obstetrics/list');
             } else if($stateParams.menu == 'momshealth') {
-                $location.url('/momshealth/list');
+                $location.url('/people/momshealth/list');
             } else if($stateParams.menu == 'financial') {
-                $location.url('/financial/list');
+                $location.url('/people/financial/list');
             }
         };
 
@@ -89,16 +89,16 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-            if ($stateParams.menu == 'childrendevelopment') {
-                $scope.item.BOARD_GB = '09';
-            } else if($stateParams.menu == 'orientalpediatrics') {
-                $scope.item.BOARD_GB = '10';
+            if ($stateParams.menu == 'childdevelop') {
+                $scope.item.COMM_NO = '09';
+            } else if($stateParams.menu == 'chlidoriental') {
+                $scope.item.COMM_NO = '10';
             } else if($stateParams.menu == 'obstetrics') {
-                $scope.item.BOARD_GB = '11';
+                $scope.item.COMM_NO = '11';
             } else if($stateParams.menu == 'momshealth') {
-                $scope.item.BOARD_GB = '12';
+                $scope.item.COMM_NO = '12';
             } else if($stateParams.menu == 'financial') {
-                $scope.item.BOARD_GB = '13';
+                $scope.item.COMM_NO = '13';
             }
 
             if ($stateParams.id == 0) {
@@ -107,16 +107,16 @@ define([
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
-                        if ($stateParams.menu == 'childrendevelopment') {
-                            $location.url('/childrendevelopment/list');
-                        } else if($stateParams.menu == 'orientalpediatrics') {
-                            $location.url('/orientalpediatrics/list');
+                        if ($stateParams.menu == 'childdevelop') {
+                            $location.url('/people/childdevelop/list');
+                        } else if($stateParams.menu == 'chlidoriental') {
+                            $location.url('/people/chlidoriental/list');
                         } else if($stateParams.menu == 'obstetrics') {
-                            $location.url('/obstetrics/list');
+                            $location.url('/people/obstetrics/list');
                         } else if($stateParams.menu == 'momshealth') {
-                            $location.url('/momshealth/list');
+                            $location.url('/people/momshealth/list');
                         } else if($stateParams.menu == 'financial') {
-                            $location.url('/financial/list');
+                            $location.url('/people/financial/list');
                         }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -126,16 +126,16 @@ define([
 
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
-                        if ($stateParams.menu == 'childrendevelopment') {
-                            $location.url('/childrendevelopment/list');
-                        } else if($stateParams.menu == 'orientalpediatrics') {
-                            $location.url('/orientalpediatrics/list');
+                        if ($stateParams.menu == 'childdevelop') {
+                            $location.url('/people/childdevelop/list');
+                        } else if($stateParams.menu == 'chlidoriental') {
+                            $location.url('/people/chlidoriental/list');
                         } else if($stateParams.menu == 'obstetrics') {
-                            $location.url('/obstetrics/list');
+                            $location.url('/people/obstetrics/list');
                         } else if($stateParams.menu == 'momshealth') {
-                            $location.url('/momshealth/list');
+                            $location.url('/people/momshealth/list');
                         } else if($stateParams.menu == 'financial') {
-                            $location.url('/financial/list');
+                            $location.url('/people/financial/list');
                         }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});

@@ -104,13 +104,13 @@
 
                                 </tbody>
                             </table>--><!-- /.List-->
-                            <div class="img-lst" id="listr" ng-init="count=6">  <!--when-scrolled="loadMore();"-->
-                                <ul ng-repeat='item in items | limitTo:count' > <!--ng-mouseover="loadMore();" ng-mouseleave="loadMore();"-->
+                            <div class="img-lst" id="listr" >  <!--when-scrolled="loadMore();"-->
+                                <ul ng-repeat='item in item' > <!--ng-mouseover="loadMore();" ng-mouseleave="loadMore();"-->
                                     <a ng-click="click_showViewPeoplePhoto(item.NO)" title="{{ item.SUBJECT + ' 내용보기' }}">
-                                        <li data-ng-class="$index % 3 == 0? 'ml-none' : ''">
+                                        <li data-ng-class="$index % 2 == 0? 'ml-none' : ''">
                                             <span class='thum key'>
                                                 <!--<img ng-src='{{item.thumbnailUrl}}'  class='img key' style='width:230px; height:180px;'>-->
-                                                <img ng-src='http://localhost/imgs/ange/img/img05.jpg'  class='img key' style='width:200px; height:160px;'>
+                                                <img ng-src='http://localhost/imgs/ange/img/img04.jpg'  class='img key' style='width:200px; height:160px;'>
                                                 <!--<img ng-src={{item.THUMBNAILURL}} class='img key' style='width:230px; height:180px;'>-->
                                             </span>
                                             <br/>
@@ -119,9 +119,9 @@
                                         </li>
                                     </a>
                                 </ul>
-                                <div ng-show="items == null">
-                                    <p>조회 데이터가 없습니다.</p>
-                                </div>
+                            </div>
+                            <div ng-show="item == null">
+                                 <p>조회 데이터가 없습니다.</p>
                             </div>
 
                             <nav class="text-center">
@@ -148,6 +148,12 @@
                             <!-- /peoplepoll_list -->
 
                         </div><!-- /.sub_contents_body -->
+
+                        <button class="btn btn-lg btn-success fileinput-button" ng-click="click_showCreatePeopleBoard();"> <!--data-ng-click="click_showCreatePeopleBoard();"-->
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>등록</span>
+                        </button>
+
 
                         <div class="sub_contents_ads" style="display:none;">
                             <div>

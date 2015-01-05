@@ -84,14 +84,14 @@
                                     <td>
                                         <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
                                         {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
-                                        <span class="reply_num">[2]</span>
+                                        <!--<span class="reply_num">[2]</span>-->
                                         <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                         <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                         <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
                                     </td>
                                     <td  class="table_author">{{item.NICK_NM}}</td>
                                     <td class="table_date">{{item.REG_DT}}</td>
-                                    <td class="table_hit">{{item.HIT_CNT}}</td></tr>
+                                    <td class="table_hit">{{item.BOARD_REPLY_FL}}</td></tr>
                                 </tr>
 
                                 </tbody>
@@ -129,6 +129,12 @@
                             <!-- /peoplepoll_list -->
 
                         </div><!-- /.sub_contents_body -->
+
+                        <!-- 등록 -->
+                        <button class="btn btn-lg btn-success fileinput-button" data-ng-click="click_showCreatePeopleClinic();">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>등록</span>
+                        </button>
 
                         <div class="sub_contents_ads" style="display:none;">
                             <div>

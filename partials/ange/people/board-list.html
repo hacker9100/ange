@@ -42,6 +42,7 @@
 												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
 												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
 												</span>
+
                                         </div>
 
                                         <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
@@ -79,7 +80,7 @@
 
                                     <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
                                         <td class="table_no">
-                                            <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y'? '공지' : item.RNUM}}</span>
+                                            <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.RNUM}}</span>
                                         </td>
                                         <td>
                                             <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
@@ -129,6 +130,12 @@
                             <!-- /peoplepoll_list -->
 
                         </div><!-- /.sub_contents_body -->
+
+                        <!-- 등록 -->
+                        <button class="btn btn-lg btn-success fileinput-button" data-ng-click="click_showCreatePeopleBoard();">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>등록</span>
+                        </button>
 
                         <div class="sub_contents_ads" style="display:none;">
                             <div>

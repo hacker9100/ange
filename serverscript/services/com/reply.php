@@ -53,7 +53,7 @@
             } else if ($_type == 'list') {
 
                 if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                    $search_where .= "AND TARGET_NO =".$_search[TARGET_NO]."";
+                    $search_where .= "AND R.TARGET_NO =".$_search[TARGET_NO]."";
                 }
 
                 $sql = "SELECT
@@ -67,9 +67,9 @@
                                 @level := 0
                             ) TMP, COM_REPLY
                             WHERE   @NO IS NOT NULL
-                            ".$search_where."
                         ) REPLY_CTE, COM_REPLY R
-                        WHERE REPLY_CTE.NO = R.NO";
+                        WHERE REPLY_CTE.NO = R.NO
+                        ".$search_where." ";
 
                 //TODO: 목록 조회
                 $data = $_d->sql_query($sql);
