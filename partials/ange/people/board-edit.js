@@ -29,7 +29,17 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-
+            if ($stateParams.menu == 'angeroom') {
+                $scope.community = "앙쥬맘 수다방";
+            } else if($stateParams.menu == 'momstalk') {
+                $scope.community = "예비맘 출산맘";
+            } else if($stateParams.menu == 'babycare') {
+                $scope.community = "육아방";
+            } else if($stateParams.menu == 'firshbirthtalk') {
+                $scope.community = "돌잔치 톡톡톡";
+            } else if($stateParams.menu == 'booktalk') {
+                $scope.community = "책수다";
+            }
         };
 
         // CK Editor

@@ -117,9 +117,9 @@
                 $sort_order = "";
                 $limit = "";
 
-//                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-//                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
-//                }
+                if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
+                    $search_where .= "AND TARGET_GB = '".$_search[TARGET_GB]."' ";
+                }
 
 //                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
 //                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";

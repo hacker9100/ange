@@ -16,7 +16,7 @@ ul {padding: 0 0 0 0px;}
 	height:100%; 
 	border:1px solid #eedfc0; 
 	background-color:#fffdf4; 
-	background-image:url('../../imgs/ange/comp_angepoll_bg_01.jpg');  /*수정필-오른쪽테두리..*/
+	background-image:url('/imgs/ange/comp_angepoll_bg_01.jpg');  /*수정필-오른쪽테두리..*/
 	background-position: center 55px;
 	background-repeat: no-repeat;
 	border-radius:12px;
@@ -26,7 +26,7 @@ ul {padding: 0 0 0 0px;}
 	position:absolute; 
 	width:96px; 
 	height:69px; 
-	background-image:url('../../imgs/ange/angepoll_poll_h.png');
+	background-image:url('/imgs/ange/angepoll_poll_h.png');
 	background-repeat:no-repeat;
 	left:0px; 
 	top:0px;
@@ -36,7 +36,7 @@ ul {padding: 0 0 0 0px;}
 	position:absolute;
 	width:40px;
 	height:39px;
-	background-image:url('../../imgs/ange/poll_right.png');
+	background-image:url('/imgs/ange/poll_right.png');
 	background-repeat:no-repeat;
 	right:0px;
 	top:0px;
@@ -84,7 +84,7 @@ ul {padding: 0 0 0 0px;}
 
 .peoplepoll_gotopoll a{
 	float:left;
-	background-image:url('../../imgs/ange/comp_angepoll_btn_01_gotopoll.png');
+	background-image:url('/imgs/ange/comp_angepoll_btn_01_gotopoll.png');
 	height:20px;
 	width:71px;
 	cursor:pointer;
@@ -170,7 +170,7 @@ a.people_miniboard_tab_more{
 	height: 21px;
 	width: 21px;
 	cursor:pointer;
-	background-image: url('../../imgs/ange/comp_miniboard_btn_more.png');
+	background-image: url('/imgs/ange/comp_miniboard_btn_more.png');
 	background-repeat: no-repeat;
 	text-indent: -9999px;
 	margin-right:8px;
@@ -185,7 +185,7 @@ a.people_miniboard_tab_more:hover, a.people_miniboard_tab_more:focus {
 	margin:0 auto;
 	margin-top:52px;
 	padding-top:20px; 
-	background-image:url('../../imgs/ange/comp_miniboard_hr.png'); 
+	background-image:url('/imgs/ange/comp_miniboard_hr.png'); 
 	background-repeat:repeat-x;
 }
 
@@ -230,7 +230,7 @@ ul.mini_board_feeds {
 	width:80%; 
 	right:0;
 	width:116px; height:153px;
-	background-image: url('../../imgs/ange/mini_peoplelinetalk_bg.png');
+	background-image: url('/imgs/ange/mini_peoplelinetalk_bg.png');
 	background-repeat: no-repeat;
 }
 
@@ -239,7 +239,7 @@ ul.mini_board_feeds {
 	right:0px;
 	top:0px;
 	width:30px; height:25px;
-	background-image: url('../../imgs/ange/mini_peoplelinetalk_bg_r.png');
+	background-image: url('/imgs/ange/mini_peoplelinetalk_bg_r.png');
 	background-repeat: no-repeat;
 	z-index:20
 }
@@ -283,7 +283,7 @@ ul.mini_board_feeds {
 	top:0;
 	left:0;
 	height:72px;
-	background-image: url('../../imgs/ange/mini_peoplebabymodel_top.png');
+	background-image: url('/imgs/ange/mini_peoplebabymodel_top.png');
 	z-index:10;
 }
 
@@ -303,7 +303,7 @@ ul.mini_board_feeds {
 	width:80px; height:88px;
 	margin-left:10px;
 	margin-top:10px;
-	background-image: url('../../imgs/ange/mini_peoplebabymodel_logo.png');
+	background-image: url('/imgs/ange/mini_peoplebabymodel_logo.png');
 	background-repeat: no-repeat;
 	z-index:30;
 }
@@ -312,7 +312,7 @@ ul.mini_board_feeds {
 	position:absolute; 
 	right:0;
 	width:211px; height:92px;
-	background-image: url('../../imgs/ange/mini_peoplebabymodel_banner.png');
+	background-image: url('/imgs/ange/mini_peoplebabymodel_banner.png');
 	background-repeat: no-repeat;
 	z-index:40
 }
@@ -365,7 +365,7 @@ ul.mini_board_feeds {
 	position:absolute; 
 	top:52px; left:0;
 	width:15px; height:35px;
-	background-image: url('../../imgs/ange/mini_prev.png');
+	background-image: url('/imgs/ange/mini_prev.png');
 	background-repeat: no-repeat;
 	cursor:pointer;
 	text-indent: -9999px;
@@ -375,7 +375,7 @@ ul.mini_board_feeds {
 	position:absolute; 
 	top:52px; right:0px;
 	width:15px; height:35px;
-	background-image: url('../../imgs/ange/mini_next.png');
+	background-image: url('/imgs/ange/mini_next.png');
 	background-repeat: no-repeat;
 	cursor:pointer;
 	text-indent: -9999px;
@@ -448,16 +448,16 @@ ul.mini_board_feeds {
 	margin:0px 8px 0px 0px;
 }
 
-.clinic_q1 {width:62px; height:62px; background-image:url(../../imgs/ange/mini_peopleclinic_01.png);}
-.clinic_q1:hover {background-image:url(../../imgs/ange/mini_peopleclinic_01.png); background-position:left -62px;}
-.clinic_q2{width:62px; height:62px; background-image:url(../../imgs/ange/mini_peopleclinic_02.png);}
-.clinic_q2:hover {background-image:url(../../imgs/ange/mini_peopleclinic_02.png); background-position:left -62px;}
-.clinic_q3{width:62px; height:62px; background-image:url(../../imgs/ange/mini_peopleclinic_03.png);}
-.clinic_q3:hover {background-image:url(../../imgs/ange/mini_peopleclinic_03.png); background-position:left -62px;}
-.clinic_q4{width:62px; height:62px; background-image:url(../../imgs/ange/mini_peopleclinic_04.png);}
-.clinic_q4:hover {background-image:url(../../imgs/ange/mini_peopleclinic_04.png); background-position:left -62px;}
-.clinic_q5{width:62px; height:62px; background-image:url(../../imgs/ange/mini_peopleclinic_05.png);}
-.clinic_q5:hover {background-image:url(../../imgs/ange/mini_peopleclinic_05.png); background-position:left -62px;}
+.clinic_q1 {width:62px; height:62px; background-image:url(/imgs/ange/mini_peopleclinic_01.png);}
+.clinic_q1:hover {background-image:url(/imgs/ange/mini_peopleclinic_01.png); background-position:left -62px;}
+.clinic_q2{width:62px; height:62px; background-image:url(/imgs/ange/mini_peopleclinic_02.png);}
+.clinic_q2:hover {background-image:url(/imgs/ange/mini_peopleclinic_02.png); background-position:left -62px;}
+.clinic_q3{width:62px; height:62px; background-image:url(/imgs/ange/mini_peopleclinic_03.png);}
+.clinic_q3:hover {background-image:url(/imgs/ange/mini_peopleclinic_03.png); background-position:left -62px;}
+.clinic_q4{width:62px; height:62px; background-image:url(/imgs/ange/mini_peopleclinic_04.png);}
+.clinic_q4:hover {background-image:url(/imgs/ange/mini_peopleclinic_04.png); background-position:left -62px;}
+.clinic_q5{width:62px; height:62px; background-image:url(/imgs/ange/mini_peopleclinic_05.png);}
+.clinic_q5:hover {background-image:url(/imgs/ange/mini_peopleclinic_05.png); background-position:left -62px;}
 
 .clinic_q1 span, .clinic_q2 span, .clinic_q3 span, .clinic_q4 span, .clinic_q5 span {
 	position:absolute;
@@ -498,7 +498,7 @@ ul.mini_board_feeds {
 	position:absolute;
 	top:0;left:42px;
 	width:20px; height:18px;
-	background-image: url('../../imgs/ange/mini_peopleclinic_box_arrow.png');
+	background-image: url('/imgs/ange/mini_peopleclinic_box_arrow.png');
 	background-repeat: no-repeat;
 }
 
@@ -529,7 +529,7 @@ ul.mini_board_feeds {
 	height:100%; 
 	background-color:#a9a9a9;
 	border-radius:12px;
-	background-image:url('../../imgs/ange/mini_peoplebooktalk_.png');
+	background-image:url('/imgs/ange/mini_peoplebooktalk_.png');
 	background-position: center bottom;
 	background-repeat: no-repeat;
 }
@@ -545,7 +545,7 @@ ul.mini_board_feeds {
 	position:absolute; 
 	top:0; left:0;
 	width:179px; height:90px;
-	background-image: url('../../imgs/ange/mini_peoplebooktalk_title1.png');
+	background-image: url('/imgs/ange/mini_peoplebooktalk_title1.png');
 	background-repeat: no-repeat;
 
 }
@@ -555,7 +555,7 @@ ul.mini_board_feeds {
 	top:60px; left:0;
 	width:145px; height:50px;
 	margin-left:20px;
-	background-image: url('../../imgs/ange/mini_peoplebooktalk_title2.png');
+	background-image: url('/imgs/ange/mini_peoplebooktalk_title2.png');
 	background-repeat: no-repeat;
 
 }
@@ -631,7 +631,7 @@ a.taste_people_miniboard_tab_more{
 	height: 21px;
 	width: 21px;
 	cursor:pointer;
-	background-image: url('../../imgs/ange/comp_miniboard_btn_more.png');
+	background-image: url('/imgs/ange/comp_miniboard_btn_more.png');
 	background-repeat: no-repeat;
 	text-indent: -9999px;
 	margin-right:8px;
@@ -647,7 +647,7 @@ a.taste_people_miniboard_tab_more:hover, a.taste_people_miniboard_tab_more:focus
 	margin:0 auto;
 	margin-top:52px;
 	padding-top:20px; 
-	background-image:url('../../imgs/ange/comp_miniboard_hr.png'); 
+	background-image:url('/imgs/ange/comp_miniboard_hr.png'); 
 	background-repeat:repeat-x;
 }
 
@@ -686,7 +686,7 @@ a.taste_people_miniboard_tab_more:hover, a.taste_people_miniboard_tab_more:focus
 	float:left;
 	width:36%; height:175px;
 	background-color:black;
-	/*background-image: url('../../imgs/ange/mini_peoplephoto_img.png');
+	/*background-image: url('/imgs/ange/mini_peoplephoto_img.png');
 	background-repeat: no-repeat; */
 	margin-top:10px;
 }
@@ -704,7 +704,7 @@ span .bold {font-weight:bold; margin-right:5px;}
 	border-radius:70%;
 	text-indent:-9999px;
 	background-color:#837b6a;
-	background-image:url('../../imgs/ange/mini_angegrouplink_.png');
+	background-image:url('/imgs/ange/mini_angegrouplink_.png');
 	background-position: center right;
 	background-repeat: no-repeat;
 	margin-top:22%;
@@ -716,7 +716,7 @@ span .bold {font-weight:bold; margin-right:5px;}
 	top:-1px; 
 	width:71px; 
 	height: 44px; 
-	background-image: url('../../imgs/ange/mini_event_closed.png'); 
+	background-image: url('/imgs/ange/mini_event_closed.png'); 
 	background-repeat: no-repeat;
 	z-index:9;
 }

@@ -47,10 +47,10 @@ define([
             $scope.option_r4_c1 = {title: '체험단&이벤트', api:'ange/event', size: 6, id: 'event', dots: false, autoplay: true, centerMode: true, showNo: 3, fade: 'false'};
 
             // ange-portlet-piece-image
-            $scope.option_r5_c1 = {title: '도전 앙쥬모델', api:'com/webboard', size: 10, type: 'photo', url: '/people/board'};
+            $scope.option_r5_c1 = {title: '도전 앙쥬모델', api:'com/webboard', size: 10, type: 'photo', url: '/people/photo'};
 
             // ange-portlet-basic-list
-            $scope.option_r5_c2 = {title: '전문가상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/board', image: false, head: false, date: false, nick: false};
+            $scope.option_r5_c2 = {title: '전문가상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/clinic', image: false, head: false, date: false, nick: false};
 
             // ange-portlet-basic-list
             $scope.option_r6_c2 = {title: '공지사항&당첨자발표', api:'com/webboard', size: 5, type: 'board', url: '/people/board', image: false, head: true, date: false, nick: false};

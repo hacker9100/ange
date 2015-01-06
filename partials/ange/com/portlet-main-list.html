@@ -22,8 +22,8 @@
 <!--</div>-->
 
 <div ng-class="option.type == 'review' ? 'mini_story' : option.type == 'clinic' ? 'comp_clinic' : 'mini_community'">
-    <div ng-class="option.type == 'review' ? 'comp_clinic_top' : 'peopleboard_top'">
-        <div class="mini_community_titlebar">
+    <div ng-class="option.type == 'review' ? '' : option.type == 'clinic' ? 'comp_clinic_top' : 'peopleboard_top'">
+        <div ng-class="option.type == 'review' ? 'miniboard_titlebar' : 'mini_community_titlebar'">
             <span class="mini_community_title">{{ portletTitle }}</span>
             <a class="miniboard_tab_more" ng-click="click_showList();">더보기</a>
 
@@ -35,11 +35,11 @@
         전문의 상담! 무엇이든 물어보세요.
     </div>
 
-    <div ng-class="option.type == 'clinic' ? 'comp_clinic_contents' : 'miniboard_community_contents'">
+    <div ng-class="option.type == 'review' ? 'miniboard_review_contents' : option.type == 'clinic' ? 'comp_clinic_contents' : 'miniboard_community_contents'">
 
-        <div ng-if="option.image" class="mini_review_kingimg" style="background-image: url('/imgs/ange/temp/temp_reviewbest.png'); background-repeat: no-repeat; background-position:center 50%;"></div>
+        <div ng-if="option.image" class="mini_review_kingimg" ng-style="{'background-image': 'url('+img+')', 'background-repeat': 'no-repeat', 'background-position': 'center 50%'}"></div>
 
-        <div class="mini_community_contents" ng-repeat="item in list">
+        <div ng-class="option.type == 'review' ? 'mini_review_contents' : 'mini_community_contents'" ng-repeat="item in list">
             <!--<img src="" class="mini_board_contents_img" />-->
             <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">
 

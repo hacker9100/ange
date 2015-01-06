@@ -2,22 +2,58 @@
 <!-- Utility Panel -->
 <div class="panel_user" ng-controller="ui-utility">
 	<div class="inven_1stClass">
-		<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('/imgs/ange/temp/temp_maineventbanner.png'); background-position:center;">1st Class Banner</a>
+		<a class="ADbanner_normal shadowed" title="배너타이틀" style="background-image:url('imgs/ange/temp/allbanner.png'); background-position:center;">1st Class Banner</a>
 	</div>	
 
 	<div class="comp_userlog">
-		<div class="userlog_login">
-		User info
+
+		<!-- 로그인 전 -->
+		<div ng-if="!uid" class="userlog_login">
+				<img src="/imgs/ange/login.png" class="userlog_login_btn" ng-click="click_login()">
+
+				<div class="userlog_login_func">
+					<a href="#" class="forgotidpw">아이디/비번찾기</a>
+					<a href="#" class="joinus">회원가입</a>
+				</div>
 		</div>
+		<!-- /로그인 전 -->
+
+		<!-- 로그인 후 -->
+		<div ng-if="uid" class="userlog_login_now">
+				<a class="userconfig" href="#" title="개인정보설정"><span class="glyphicon glyphicon-cog"></span></a>
+				<img src="/imgs/ange/temp/comp_rank_champion.jpg" class="userlog_login_pic">
+
+				<div class="userlog_login_info">
+					<span class="usernickname">서현맘쥬</span> 님, 안녕하세요.
+				</div>
+
+				<div class="userlog_user_func">
+					<a href="#" class="babyinfo"><span class="glyphicon glyphicon-heart" style="color:#fb6362; margin-right:4px;"></span>아기정보보기</a>
+					<a class="logout" ng-click="logoutMe()">로그아웃</a>
+				</div>
+
+				<div class="userlog_user_subinfo">
+					<span class="user_grade"><span class="glyphicon glyphicon-star-empty"></span> 별초보맘</span>
+					<span class="user_mileage"><small>Mileage</small> <span style="color:#fb6362; font-weight:bold">555,000</span></span>
+				</div>
+
+		</div>
+		<!-- /로그인 후 -->
 
 		<div class="userlog_utility">
 		<a href="/?page_channel=myange&page_controller=myangewriting&ui_type=sub" class="util1">내 게시물</a>
 		<a href="/?page_channel=myange&page_controller=myangemessage&ui_type=sub" class="util2">메시지</a>
 		<a href="/?page_channel=infodesk&page_controller=infodeskhome&ui_type=single" class="util3">고객센터</a>
 		</div>
-	</div>
+
+		<a href="/?page_channel=club&page_controller=clubintro&ui_type=nomenu"><img src="/imgs/ange/temp/club_banner_25.png" style="margin-top:8px;"/></a>
+    </div>
 
 	<div class="comp_calm">
+		<img src="/imgs/ange/temp/keepcalm.png" />
+	</div>
+
+	<!--div class="comp_calm">
 		<div class="comp_minialbum">
 		User info
 		</div>
@@ -25,16 +61,37 @@
 		<div class="comp_calendar">
 		Calendar
 		</div>
-	</div>
+	</div -->
+
 
 	<div class="comp_subbanner">
 		<div class="inven_catchup">
-			<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('/imgs/ange/temp/temp_maineventbanner.png'); background-position:center;">Premium [Catch-Up] #1</a>
+			<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('imgs/ange/temp/util_banner_01.jpg'); background-position:center;">Premium [Catch-Up] #1</a>
 		</div>
 		<div class="inven_catchup">
-			<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('/imgs/ange/temp/temp_maineventbanner.png'); background-position:center;">Premium [Catch-Up] #2</a>
+			<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('imgs/ange/temp/util_banner_02.jpg'); background-position:center;">Premium [Catch-Up] #2</a>
 		</div>
 	</div>
 
 </div>
 <!-- /Utility Panel -->
+
+<script type="text/ng-template" id="login_modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">로그인</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-model="approval" lass="row" class="form-horizontal">
+            <div class= "form-group">
+                <input type="text" class="form-control" ng-model="item.id" class= "form-control" placeholder="아이디"/>
+            </div>
+            <div class= "form-group">
+                <input type="password" class="form-control" ng-model="item.password" class= "form-control" placeholder="비밀번호"/>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_ok()">로그인</button>
+        <button class="btn btn-warning" ng-click="click_cancel()">취소</button>
+    </div>
+</script>

@@ -121,19 +121,19 @@ define([
 
             dataService.getSession(function(data, status) {
                 if (status != 200) {
-                    $location.path("/signin");
+//                    $location.path("/signin");
                     console.log('조회에 실패 했습니다.');
                     deferred.reject('조회에 실패 했습니다.');
                 } else {
                     if (data.err == true) {
-                        $location.path("/signin");
+//                        $location.path("/signin");
                         console.log(data.msg);
                         deferred.reject(data.msg);
                     } else {
                         if (angular.isObject(data)) {
                             deferred.resolve(data);
                         } else {
-                            $location.path("/signin");
+//                            $location.path("/signin");
                             // TODO: 데이터가 없을 경우 처리
                             console.log('조회 데이터가 없습니다.');
                             deferred.reject('조회 데이터가 없습니다.');
@@ -148,12 +148,12 @@ define([
         // 세션 체크
         $scope.sessionCheck = function(session) {
             if (session.USER_ID == undefined) {
-                $location.path("/signin");
-                throw( new String('세션이 만료되었습니다.') );
+//                $location.path("/signin");
+//                throw( new String('세션이 만료되었습니다.') );
 //            throw( new Error("세션이 만료되었습니다.") );
             } else if (session.USER_ID == '') {
-                $location.path("/signin");
-                throw( new String('로그인 후 사용가능합니다.') );
+//                $location.path("/signin");
+//                throw( new String('로그인 후 사용가능합니다.') );
             } else {
                 $rootScope.session = session;
 

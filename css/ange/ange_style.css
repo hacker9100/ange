@@ -1,34 +1,34 @@
-/ * Nanum Gothic (Korean) http://www.google.com/webfonts/earlyaccess  */
+/* Nanum Gothic (Korean) http://www.google.com/webfonts/earlyaccess  */
 
 @font-face {
   font-family: 'Nanum Gothic';
   font-style: normal;
   font-weight: 700;
-  src: url('../../fonts/NanumGothic-Bold.eot');
-  src: url('../../fonts/NanumGothic-Bold.eot?#iefix') format('embedded-opentype'),
-       url('../../fonts/NanumGothic-Bold.woff2') format('woff2'),
-       url('../../fonts/NanumGothic-Bold.woff') format('woff'),
-       url('../../fonts/NanumGothic-Bold.ttf') format('truetype');
+  src: url('/fonts/NanumGothic-Bold.eot');
+  src: url('/fonts/NanumGothic-Bold.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/NanumGothic-Bold.woff2') format('woff2'),
+       url('/fonts/NanumGothic-Bold.woff') format('woff'),
+       url('/fonts/NanumGothic-Bold.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Nanum Gothic';
   font-style: normal;
   font-weight: 400;
-  src: url('../../fonts/NanumGothic-Regular.eot');
-  src: url('../../fonts/NanumGothic-Regular.eot?#iefix') format('embedded-opentype'),
-       url('../../fonts/NanumGothic-Regular.woff2') format('woff2'),
-       url('../../fonts/NanumGothic-Regular.woff') format('woff'),
-       url('../../fonts//NanumGothic-Regular.ttf') format('truetype');
+  src: url('/fonts/NanumGothic-Regular.eot');
+  src: url('/fonts/NanumGothic-Regular.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/NanumGothic-Regular.woff2') format('woff2'),
+       url('/fonts/NanumGothic-Regular.woff') format('woff'),
+       url('/fonts/NanumGothic-Regular.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Nanum Gothic';
   font-style: normal;
   font-weight: 800;
-  src: url('../../fonts/NanumGothic-ExtraBold.eot');
-  src: url('../../fonts/NanumGothic-ExtraBold.eot?#iefix') format('embedded-opentype'),
-       url('../../fonts/NanumGothic-ExtraBold.woff2') format('woff2'),
-       url('../../fonts/NanumGothic-ExtraBold.woff') format('woff'),
-       url('../../fonts/NanumGothic-ExtraBold.ttf') format('truetype');
+  src: url('/fonts/NanumGothic-ExtraBold.eot');
+  src: url('/fonts/NanumGothic-ExtraBold.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/NanumGothic-ExtraBold.woff2') format('woff2'),
+       url('/fonts/NanumGothic-ExtraBold.woff') format('woff'),
+       url('/fonts/NanumGothic-ExtraBold.ttf') format('truetype');
 }
 
 html {
@@ -40,7 +40,7 @@ html {
 
 body {
 	font-family: "Nanum Gothic", Helvetica, Arial, sans-serif;
-	background: URL("../../imgs/ange/body_bg_01.png");
+	background: URL("/imgs/ange/body_bg_01.png");
 	height: 100%;
 }
 
@@ -215,10 +215,10 @@ body {
 	margin:0;
 }
 
-.mini_ad_roll_1 {background:url('../../imgs/ange/left_banner_01_01.png') no-repeat;	background-position:left bottom;}
-.mini_ad_roll_2 {background:url('../../imgs/ange/left_banner_02_01.png') no-repeat;	background-position:left bottom;}
-.mini_ad_roll_3 {background:url('../../imgs/ange/left_banner_03_01.png') no-repeat;	background-position:left bottom;}
-.mini_ad_roll_4 {background:url('../../imgs/ange/left_banner_04_01.png') no-repeat;	background-position:left bottom;}
+.mini_ad_roll_1 {background:url('/imgs/ange/left_banner_01_01.png') no-repeat;	background-position:left bottom;}
+.mini_ad_roll_2 {background:url('/imgs/ange/left_banner_02_01.png') no-repeat;	background-position:left bottom;}
+.mini_ad_roll_3 {background:url('/imgs/ange/left_banner_03_01.png') no-repeat;	background-position:left bottom;}
+.mini_ad_roll_4 {background:url('/imgs/ange/left_banner_04_01.png') no-repeat;	background-position:left bottom;}
 
 .copyright_foot {
 	display:none; 
@@ -413,10 +413,10 @@ body {
 	border-bottom: 1px solid #EFEFEF;
 }
 
-.chnnel1 { 	background:url('../../imgs/ange/ui_gnbbtn_01_story.png'); }
-.chnnel2 { 	background:url('../../imgs/ange/ui_gnbbtn_02_people.png'); }
-.chnnel3 { 	background:url('../../imgs/ange/ui_gnbbtn_03_moms.png'); }
-.chnnel4 { 	background:url('../../imgs/ange/ui_gnbbtn_04_my.png'); }
+.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story.png'); }
+.chnnel2 { 	background:url('/imgs/ange/ui_gnbbtn_02_people.png'); }
+.chnnel3 { 	background:url('/imgs/ange/ui_gnbbtn_03_moms.png'); }
+.chnnel4 { 	background:url('/imgs/ange/ui_gnbbtn_04_my.png'); }
 
 .gnb_chnnel {
 	float:left;
@@ -468,8 +468,8 @@ body {
 	height:25px;
 }
 
-.ch_search { background:url('../../imgs/ange/ui_gnbbtn_06_search.png'); }
-.ch_store { background:url('../../imgs/ange/ui_gnbbtn_05_store.png'); }
+.ch_search { background:url('/imgs/ange/ui_gnbbtn_06_search.png'); }
+.ch_store { background:url('/imgs/ange/ui_gnbbtn_05_store.png'); }
 
 .gnb_chnnel:hover, .gnb_store:hover {
 	background-position:left -47px;
@@ -514,13 +514,13 @@ a.tablet_arrow:hover, a.tablet_arrow:focus {
 
 .tablet_arrow_left {
 	left:0px;
-	background-image: url('../../imgs/ange/tablet_arrow_left.png');
+	background-image: url('/imgs/ange/tablet_arrow_left.png');
 	z-index:498;
 }
 
 .tablet_arrow_right {
 	right:16px;
-	background-image: url('../../imgs/ange/tablet_arrow_right.png');
+	background-image: url('/imgs/ange/tablet_arrow_right.png');
 	z-index:499;
 }
 
@@ -703,7 +703,7 @@ a.util1 {
 	float: left;
 	width:77px;
 	height:28px;
-	background-image:url('../../imgs/ange/comp_login_btn_01_myboard.jpg');
+	background-image:url('/imgs/ange/comp_login_btn_01_myboard.jpg');
 	text-indent: -9999px;
 }
 
@@ -711,7 +711,7 @@ a.util2 {
 	float: left;
 	width:65px;
 	height:28px;
-	background-image:url('../../imgs/ange/comp_login_btn_02_message.jpg');
+	background-image:url('/imgs/ange/comp_login_btn_02_message.jpg');
 	text-indent: -9999px;
 }
 
@@ -719,7 +719,7 @@ a.util3 {
 	float: left;
 	width:68px;
 	height:28px;
-	background-image:url('../../imgs/ange/comp_login_btn_03_customer.jpg');
+	background-image:url('/imgs/ange/comp_login_btn_03_customer.jpg');
 	text-indent: -9999px;
 }
 
@@ -762,7 +762,7 @@ a.footer_ask {
 	float:left;
 	height:20px;
 	width:56px;
-	background-image: url('../../imgs/ange/footer_btn_01_ask.png');
+	background-image: url('/imgs/ange/footer_btn_01_ask.png');
 	background-repeat: no-repeat;
 	text-indent: -9999px;
 	cursor: pointer;
@@ -776,7 +776,7 @@ a.footer_mailto {
 	float:left;
 	height:14px;
 	width:22px;
-	background-image: url('../../imgs/ange/footer_btn_02_mailto.png');
+	background-image: url('/imgs/ange/footer_btn_02_mailto.png');
 	background-repeat: no-repeat;
 	text-indent: -9999px;
 	cursor:pointer;
@@ -787,7 +787,7 @@ a.footer_fbto {
 	float:left;
 	height:20px;
 	width:9px;
-	background-image: url('../../imgs/ange/footer_btn_03_fbto.png');
+	background-image: url('/imgs/ange/footer_btn_03_fbto.png');
 	background-repeat: no-repeat;
 	text-indent: -9999px;
 	cursor:pointer;
@@ -798,7 +798,7 @@ a.footer_blogto {
 	float:left;
 	height:16px;
 	width:31px;
-	background-image: url('../../imgs/ange/footer_btn_04_blogto.png');
+	background-image: url('/imgs/ange/footer_btn_04_blogto.png');
 	background-repeat: no-repeat;
 	text-indent: -9999px;
 	cursor:pointer;
@@ -1040,7 +1040,7 @@ a.lnb_handle_close:hover {
 
 /****** 서브페이지 콘텐츠 공용 ************/
 
-.people_view_wrap {
+.people_view_wrap, .people_edit_wrap {
 	width:100%; 
 	margin:0; 
 	padding:0; 
@@ -1049,12 +1049,39 @@ a.lnb_handle_close:hover {
 
 .table_blue { color: #019bd4; font-weight:bold; }
 .table_red { color: #e25d4c; font-weight:bold;}
+.table_white { color: #ffffff; font-weight:bold;}
 .table_gray { color: #646464; }
 .table_green { color: #71b528; }
 
 tr.ended { background-color:#FAFAFA; opacity: 0.75; }
 tr.desabled { background-color:#EDEDED; opacity: 0.5; pointer-events:none; cursor: default;}
 tr.primary { background-color:#fcfaec; }
+
+.feed_count {
+	float: left;
+	padding-left: 15px;
+	margin-top: 2px;
+	margin-right:5px;
+	line-height: 14px;
+	background-repeat: no-repeat;
+	background-position : left 2px;
+}
+
+.feed_count.countlike {
+	background-image: url('/imgs/ange/heart_icon.png');
+}
+
+.feed_count.countreply {
+	background-image: url('/imgs/ange/comment_icon.png');
+}
+
+.feed_count.countlike_color {
+	background-image: url('/imgs/ange/heart_coloricon.png');
+}
+
+.feed_count.countreply_color {
+	background-image: url('/imgs/ange/comment_coloricon.png');
+}
 
 #comp_board_table {
 	border-bottom:2px solid #ddd;
@@ -1150,8 +1177,8 @@ td.table_hit {
 }
 
 .table_icon_lock { 
-	font-size: 0.86em; 
-	vertical-align:bottom; 
+	font-size: 0.78em; 
+	vertical-align:baseline; 
 	line-height: 19px; 
 	color: #111; 
 	padding: 0; 
@@ -1171,17 +1198,18 @@ td.table_hit {
 }
 
 .table_icon_pic {
-	font-size: 0.86em; 
-	vertical-align:bottom; 
-	line-height: 19px; 
+	font-size: 0.94em; 
+	vertical-align:middle; 
+	line-height: 18px; 
 	color: #22ade1; 
 	padding: 0; 
 	margin-left:1px;
+	border-bottom: 2px solid transparent;
 }
 
 .table_icon_clip {
 	font-size: 0.78em; 
-	vertical-align:bottom; 
+	vertical-align:middle; 
 	line-height: 16px; 
 	color: #a027de; 
 	padding: 0; 
@@ -1211,11 +1239,16 @@ a.people_boardmanager:hover {
 	text-decoration: none;
 }
 
+.people_view_btnwrap {
+	margin:8px 0 0px 0;
+	padding:15px 0px;
+}
+
 a.people_btn{
 	width: 63px;
 	height: 25px;
 	padding:0px;
-	opacity: 0.8;
+	opacity: 0.75;
 	background-repeat: no-repeat;
 	text-indent: -9999px;
 	margin: 0 4px;
@@ -1230,6 +1263,68 @@ a.people_btn.list { float:left; background-image: url('/imgs/ange/people_btn_lis
 a.people_btn.modify { float:right; background-image: url('/imgs/ange/people_btn_modify.png'); }
 a.people_btn.cancel {	float:right; background-image: url('/imgs/ange/people_btn_cancel.png'); }
 a.people_btn.vote {	 float:right; background-image: url('/imgs/ange/people_btn_vote.png'); }
+a.people_btn.confirm {	 float:right; background-image: url('/imgs/ange/people_btn_confirm.png'); }
+
+
+.dragzone {
+	display: block;
+	height:100%; 
+	font-size: 0.86em; 
+	padding: 5px 10px; 
+	border:1px solid #ddd; 
+	border-radius:4px; 
+	line-height:18px; 
+	overflow:auto; 
+	overflow-x:none;
+
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.dragzone_wrap{
+	padding:0; 
+	height:100%;
+}
+
+.dagbox_btn {
+	float:left;
+	background-color:#fff; 
+	font-size:0.78em;
+	width:100%; 
+	border:1px solid transparent; 
+	border-radius:18px;
+	text-align:center;
+	height:25px;
+	margin: 2px 0; 
+	color:#fff;
+	opacity: 0.75;
+}
+
+.dagbox_btn.selectall{ background-color: #9ab251; }
+.dagbox_btn.add{ background-color: #5888ad; }
+.dagbox_btn.delete{ background-color: #f75d00; }
+
+.dagbox_btn:hover {
+	opacity: 1;
+}
+
+.people_editor_wrap {
+	margin:0px auto; 
+	margin-bottom:10px; 
+	height:600px;
+ }
+
+.people_editor {
+	height:100%; 
+	padding:0;
+	border-bottom:1px solid #ddd;
+}
+
+.peopleboard_options {
+	float: left;
+	font-size: 0.86em;
+	margin: 2px 5px 0 4px;
+}
 
 
 
@@ -1243,7 +1338,9 @@ a.people_btn.vote {	 float:right; background-image: url('/imgs/ange/people_btn_v
 
 /*** 레이아웃 작업 시 아래 하애 주석 해제 필요함 ***/
 
+/*
 .comp_basic {
 	background:#FEFEFE;
 	border:1px solid #DEDEDE;
 }
+*/
