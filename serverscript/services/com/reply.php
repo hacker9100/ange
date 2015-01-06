@@ -50,34 +50,66 @@
         case "GET":
             if ($_type == 'item') {
                 //TODO: 조회
-            } else if ($_type == 'list') {
+                $sql = "SELECT NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO
+                    FROM
+                      COM_REPLY R
+                        WHERE 1=1
+                          AND TARGET_NO = ".$_search[TARGET_NO]."
+                          AND PARENT_NO = 0
+                        ";
 
-                if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                    $search_where .= "AND R.TARGET_NO =".$_search[TARGET_NO]."";
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                    $sql = "SELECT
+                                REPLY_CTE.LEVEL, R.NO, PARENT_NO, PARENT_NO, REPLY_NO, REPLY_GB, COMMENT, REG_UID, NICK_NM, REG_NM, R.TARGET_NO, TARGET_GB,
+                                DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i') AS REG_DT,
+                                (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT
+                            FROM (
+                                SELECT
+                                    REPLY_CONNET_BY_PRIOR_ID(NO) AS NO, @level AS LEVEL, TARGET_NO
+                                FROM    (
+                                    SELECT  @start_with := 0,
+                                    @NO := @start_with,
+                                    @level := 0
+                                ) TMP, COM_REPLY
+                                WHERE   @NO IS NOT NULL
+                            ) REPLY_CTE, COM_REPLY R
+                            WHERE REPLY_CTE.NO = R.NO
+                            AND R.PARENT_NO = ".$row[NO]."";
+
+                    $file_data = $_d->getData($sql);
+                    $row['REPLY_COMMENT'] = $file_data;
+
+                    $__trn->rows[$i] = $row;
                 }
 
-                $sql = "SELECT
-                            REPLY_CTE.LEVEL, R.NO, PARENT_NO, PARENT_NO, REPLY_NO, REPLY_GB, COMMENT, REG_UID, NICK_NM, REG_NM, TARGET_NO, TARGET_GB
-                        FROM (
-                            SELECT
-                                REPLY_CONNET_BY_PRIOR_ID(NO) AS NO, @level AS LEVEL
-                            FROM    (
-                                SELECT  @start_with := 0,
-                                @NO := @start_with,
-                                @level := 0
-                            ) TMP, COM_REPLY
-                            WHERE   @NO IS NOT NULL
-                        ) REPLY_CTE, COM_REPLY R
-                        WHERE REPLY_CTE.NO = R.NO
-                        ".$search_where." ";
+                $_d->sql_free_result($result);
+                $data['COMMENT'] = $__trn->{'rows'};
 
                 //TODO: 목록 조회
-                $data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd($sql);
+                /*                $data = $_d->sql_query($sql);
+                                if ($_d->mysql_errno > 0) {
+                                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                                } else {
+                                    $_d->dataEnd($sql);
+                                }*/
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
                 }
+
+                if($err > 0){
+                    $_d->failEnd("조회실패입니다:".$msg);
+                }else{
+                    $_d->dataEnd2($data);
+                }
+            } else if ($_type == 'list') {
+
+
             }
 
             break;

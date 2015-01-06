@@ -18,8 +18,11 @@ define([
         // 첨부파일 초기화
         $scope.queue = [];
 
+        $scope.answer = {}
+        $scope.showDetails = false;
+
         // 초기화
-        $scope.init = function() { // function(session)
+        $scope.init = function() { // function(session){
 
         };
 
@@ -33,29 +36,50 @@ define([
 
                         var query = data.QUERY;
 
-                        console.log('query =' +query);
-                        console.log('end');
-
                         for(var i in query) {
                             $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
                         }
-
-                        console.log('$scope.queue ='+$scope.queue);
-                        console.log('end');
 
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
-
         $scope.click_saveAngePoll = function () {
-            $scope.insertItem('ange/poll', 'item', $scope.item, false)
-                .then(function(){
-                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                    $location.url('/peoplepoll/list');
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+
+
+             $("input[id=select_sort]:checked").each(function(index,element){
+
+
+                $scope.answer.SELECT_ANSWER = $(element).val();
+
+                 $("input[name=query_no]").each(function(index,element){
+                     $scope.answer.QUERY_NO = $(element).val();
+                     console.log($scope.answer.QUERY_NO);
+                 });
+
+                 $("input[name=query_sort]").each(function(index,element){
+                     $scope.answer.QUERY_SORT = $(element).val();
+                     console.log($scope.answer.QUERY_SORT);
+                 });
+
+                 $("input[name=note]").each(function(index,element){
+                     $scope.answer.NOTE = $(element).val();
+                     console.log($scope.answer.NOTE);
+                 });
+
+                 $scope.insertItem('ange/poll', 'answear', $scope.answer, false)
+                      .then(function(){
+                          dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                      })
+                      .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+             });
+
+
+            console.log('end');
+
         }
 
         $scope.click_showAngePollList = function() {
@@ -63,6 +87,7 @@ define([
         }
 
 
+        $scope.init();
         $scope.getAngePoll();
     }]);
 });

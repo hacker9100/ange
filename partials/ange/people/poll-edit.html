@@ -6,7 +6,7 @@
         <div class="row">
 
             <div class="col-xs-12 v-cell-3">
-            <div class="comp_basic h-cell-dynamic">
+                <div class="comp_basic h-cell-dynamic">
 
                     <div class="sub_contents_wrap">
 
@@ -17,11 +17,11 @@
 
                     </div><!-- /.sub_contents_wrap -->
 
-
+                    <form>
                     <div class="sub_contents_body">
 
                         <!-- peoplepoll_view -->
-                        <div class="people_view_wrap">
+                        <div class="people_view_wrap" ng-model="answer">
 
 
                             <div class="container-fluid peoplepoll_view_top" style="height:45px;">
@@ -65,11 +65,22 @@
                                         </div>
                                     </div><!-- /.col-01-->
 
-                                    <div class="col-xs-12 peoplepoll_view_contentbody">
-                                        <div class="peoplepoll_view_content" data-ng-repeat="query in queue"> <!--data-ng-repeat="query in queue"-->
-                                           <dl  data-ng-repeat="select in query.SELECT">
+                                    <div class="col-xs-12 peoplepoll_view_contentbody" >
+                                        <div class="peoplepoll_view_content" > <!--data-ng-repeat="query in queue"-->
+                                            <dl data-ng-repeat="query in queue">
                                                 <dt >{{query.QUERY}}</dt>
-                                                <dd><div class="radio"><label><input type="radio" name="q2" id="select_sort_{{select.SELECT_SORT}}" value="{{select.SELECT_SORT}}">{{select.NOTE}}</label></div></dd>
+                                                <dd data-ng-repeat="select in query.SELECT">
+                                                    <div class="radio">
+                                                        <label>
+                                                            <input type="radio" name="q2_{{select.QUERY_NO}}" id="select_sort" value="{{select.SELECT_SORT}}" >{{select.NOTE}}
+                                                            <div >
+                                                                <input type="hidden"  ng-model="answer.QUERY_NO" name="query_no" id="query_no{{select.QUERY_NO}}" value="{{select.QUERY_NO}}"/>
+                                                                <input type="hidden" ng-model="answer.QUERY_SORT" name="query_sort" id="query_sort{{select.QUERY_SORT}}" value="{{select.QUERY_SORT}}"/>
+                                                                <input type="hidden"   ng-model="answer.NOTE" name="note" id="note{{select.NOTE}}" value="{{select.NOTE}}"/>
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </dd>
                                             </dl>
                                         </div>
 
@@ -96,7 +107,8 @@
                                     </div>
 
                                     <div class="col-xs-8">
-                                        <a href="#" class="btn people_btn vote" title="투표하기" style="display:block;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
+                                        <a class="btn people_btn vote" title="투표하기" style="display:block;" ng-click="click_saveAngePoll();">투표</a>
+                                        	<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
                                         <a href="#" class="btn people_btn submit" title="등록하기" style="display:none;">등록</a>
                                         <a href="#" class="btn people_btn cancel" title="작성취소" style="display:none;">취소</a>
                                         <a href="#" class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>
@@ -108,13 +120,13 @@
                         <!-- /peoplepoll_view -->
 
                     </div><!-- /.sub_contents_body -->
-
+                    </form>
                     <div class="sub_contents_ads" style="display:none;">
                         <div>
                         </div>
                     </div>
 
-            </div>
+                </div>
             </div>
 
         </div> <!-- rows -->
@@ -127,11 +139,11 @@
         <br /><br />
         <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
 
-                <hr style="margin:0 15px 0 15px;" />
+            <hr style="margin:0 15px 0 15px;" />
 
-                <center>
-                    <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
-                </center>
+            <center>
+                <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+            </center>
         </nav>
     </div>
     <!-- /1200px 이하일 경우 표시되는 footer -->

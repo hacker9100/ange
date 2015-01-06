@@ -242,28 +242,27 @@
                     }
                 }else if(isset($_search[BOARD_NEXT]) && $_search[BOARD_NEXT] != "") {
 
-                    $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND PARENT_NO = 0  AND COMM_NO=".$_search[COMM_NO]." ORDER BY REG_DT DESC, NO LIMIT 1";
-                    $result = $_d->sql_query($sql);
-                    $data = $_d->sql_fetch_array($result);
+                    $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND PARENT_NO = 0  AND COMM_NO=".$_search[COMM_NO]." ORDER BY NO LIMIT 1";
 
                     if($_d->mysql_errno > 0){
                         $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                     }else{
+                        $result = $_d->sql_query($sql);
+                        $data = $_d->sql_fetch_array($result);
                         $_d->dataEnd2($data);
                     }
 
                 }else if(isset($_search[BOARD_PRE]) && $_search[BOARD_PRE] != "") {
 
-                    $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND PARENT_NO = 0 AND COMM_NO=".$_search[COMM_NO]." ORDER BY NO DESC LIMIT 1";
-                    $result = $_d->sql_query($sql);
-                    $data = $_d->sql_fetch_array($result);
+                    $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND PARENT_NO = 0 AND COMM_NO=".$_search[COMM_NO]." ORDER BY  NO DESC LIMIT 1";
 
                     if($_d->mysql_errno > 0){
                         $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                     }else{
+                        $result = $_d->sql_query($sql);
+                        $data = $_d->sql_fetch_array($result);
                         $_d->dataEnd2($data);
                     }
-
                 }
                 else {
                     $data = $_d->sql_query($sql);

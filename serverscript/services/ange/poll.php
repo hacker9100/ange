@@ -192,9 +192,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $err = 0;
                 $msg = "";
 
-                if( trim($_model[SUBJECT]) == "" ){
+/*                if( trim($_model[SUBJECT]) == "" ){
                     $_d->failEnd("제목을 작성 하세요");
-                }
+                }*/
 
                 $_d->sql_beginTransaction();
 
@@ -285,43 +285,57 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $_d->succEnd($no);
                 }
             } else if ($_type == "answear") {
+
+                /*".$_SESSION['uid']."*/
                 $j = 0;
-                foreach ($_model[SELECT] as $s) {
-                    if (isset($s[NOTE]) && $s[NOTE] != "") {
-                        $sql = "INSERT INTO ANGE_POLL_ANSWEAR
+                /*foreach ($_model[SELECT_ANSWER] as $s) {*/
+/*                    if (isset($s[NOTE]) && $s[NOTE] != "") {
+
+                    }*/
+                    $sql = "INSERT INTO ANGE_POLL_ANSWEAR
                                 (
-                                    POLL_NO
-                                    ,QUERY_NO
+                                    QUERY_NO
+                                    ,QUERY_SORT
                                     ,USER_UID
+                                    ,NICK_NM
                                     ,SELECT_ANSWEAR
                                     ,NOTE
                                     ,REG_DT
                                 ) VALUES (
-                                    '".$s[POLL_NO]."'
-                                    ,'".$s[QUERY_NO]."'
-                                    ,'".$_SESSION['uid']."'
-                                    ,'".$s[SELECT_ANSWEAR]."'
-                                    ,'".$s[NOTE]."'
+                                    '".$_model[QUERY_NO]."'
+                                    ,'".$_model[QUERY_SORT]."'
+                                    ,'hong".$_model[SELECT_ANSWER]."'
+                                    , '므에에롱'
+                                    ,'".$_model[SELECT_ANSWER]."'
+                                    ,'".$_model[NOTE]."'
                                     ,SYSDATE()
                                 )";
 
-                        $_d->sql_query($sql);
+                    $_d->sql_query($sql);
+                    $no = $_d->mysql_insert_id;
 
-                        if($_d->mysql_errno > 0) {
-                            $err++;
-                            $msg = $_d->mysql_error;
-                        }
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
+                    if ($_d->mysql_errno > 0) {
+                        $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                    } else {
+                        $_d->succEnd($no);
                     }
                 }
+                /*}*/
 
-                if($err > 0){
+/*                if($err > 0){
                     $_d->sql_rollback();
                     $_d->failEnd("등록실패입니다:".$msg);
                 }else{
                     $_d->sql_commit();
                     $_d->succEnd("0");
-                }
-            }
+                }*/
+
+
 
             break;
 
