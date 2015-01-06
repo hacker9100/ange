@@ -21,6 +21,9 @@ define([
         $scope.showDetails = false;
         $scope.search = {SYSTEM_GB: 'ANGE'};
 
+
+        $scope.replyList = [];
+
         // 초기화
         $scope.init = function(session) {
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
@@ -56,6 +59,9 @@ define([
 
         // 목록 버튼 클릭
         $scope.click_showPeopleBoardList = function () {
+
+            console.log('$stateParams.menu = '+$stateParams.menu);
+
             if ($stateParams.menu == 'angeroom') {
                 $location.url('/people/angeroom/list');
             } else if($stateParams.menu == 'momstalk') {
@@ -93,7 +99,30 @@ define([
             }
         };
 
-        // 답글 등록
+        // 댓글 리스트
+        $scope.getPeopleReplyList = function () {
+
+            $scope.search.TARGET_NO = $stateParams.id;
+
+            $scope.getItem('com/reply', 'item', {}, $scope.search, true)
+                .then(function(data){
+
+                    var reply = data.COMMENT;
+
+                    console.log('reply =' +reply);
+                    console.log('end');
+
+                    for(var i in reply) {
+                        $scope.replyList.push({"NO":reply[i].NO,"PARENT_NO":reply[i].PARENT_NO,"COMMENT":reply[i].COMMENT,"RE_COUNT":reply[i].RE_COUNT,"REPLY_COMMENT":reply[i].REPLY_COMMENT,"LEVEL":reply[i].LEVEL,"REPLY_NO":reply[i].REPLY_NO});
+                    }
+
+                    console.log('RE = '+data.COMMENT);
+                    console.log('end');
+                })
+                .catch(function(error){$scope.replyList = "";});
+        };
+
+        // 의견 등록
         $scope.click_savePeopleBoardComment = function () {
 
             $scope.item.PARENT_NO = 0;
@@ -107,45 +136,37 @@ define([
                 .then(function(){
 
                     $scope.search.TARGET_NO = $stateParams.id;
+                    $scope.replyList = [];
                     $scope.getPeopleReplyList();
+
+                    //$scope.replyList.push({"NO":0,"PARENT_NO":$scope.item.PARENT_NO,"COMMENT":$scope.item.COMMENT,"RE_COUNT":0,"REPLY_COMMENT":'',"LEVEL":$scope.item.LEVEL,"REPLY_NO":$scope.item.REPLY_NO});
+
+                    $scope.item.COMMENT = "";
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-        // 대댓글
-        $scope.click_savePeopleBoardReComment = function () {
-            //  console.log( $scope.reply.PARENT_NO);
+        // 답글 등록
+        $scope.click_savePeopleBoardReComment = function (item) {
 
-            $scope.reply.PARENT_NO = $("#parent_no").val();
-            $scope.reply.LEVEL = parseInt($("#level").val())+1;
-            $scope.reply.REPLY_NO = parseInt($("#reply_no").val())+1;
+            $scope.reply.PARENT_NO = item.NO;
+            $scope.reply.LEVEL = parseInt(item.LEVEL)+1;
+            $scope.reply.REPLY_NO = parseInt(item.REPLY_NO)+1;
             $scope.reply.TARGET_GB = "BOARD";
             $scope.reply.TARGET_NO = $stateParams.id;
 
-            console.log('$("#parent_no").val() = '+$("#parent_no").val());
-            console.log('$("#level").val() = '+$("#level").val());
-            console.log('$scope.reply.REPLY_NO = '+$scope.reply.REPLY_NO);
+            $scope.REPLY_COMMENT = $scope.reply;
 
            $scope.insertItem('com/reply', 'item', $scope.reply, false)
                 .then(function(){
-
                    $scope.search.TARGET_NO = $stateParams.id;
+                   $scope.replyList = [];
                    $scope.getPeopleReplyList();
-                })
+                   $scope.reply.COMMENT = "";
+               })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-        // 댓글 리스트
-        $scope.getPeopleReplyList = function () {
-
-            $scope.search.TARGET_NO = $stateParams.id;
-
-            $scope.getList('com/reply', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-                .then(function(data){
-                    $scope.replyList = data;
-                })
-                .catch(function(error){$scope.replyList = "";});
-        };
 
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
@@ -183,7 +204,7 @@ define([
             $scope.search.BOARD_PRE = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getItem('com/webboard', 'list',{} , $scope.search, false)
+                return $scope.getList('com/webboard', 'list',{} , $scope.search, false)
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
@@ -210,7 +231,7 @@ define([
             $scope.search.BOARD_NEXT = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getItem('com/webboard', 'list',{} , $scope.search, false)
+                return $scope.getList('com/webboard', 'list',{} , $scope.search, false)
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
