@@ -6,6 +6,7 @@
  */
 define([
     './slick-directive',
+    './checklist-directive',
 
     './ckeditor-directive',
     './animate-directive',
