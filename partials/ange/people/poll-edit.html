@@ -69,18 +69,17 @@
                                         <div class="peoplepoll_view_content" > <!--data-ng-repeat="query in queue"-->
                                             <dl data-ng-repeat="query in queue">
                                                 <dt >{{query.QUERY}}</dt>
-                                                <dd data-ng-repeat="select in query.SELECT">
-                                                    <div class="radio">
+                                               <dd data-ng-repeat="select in query.SELECT">
+                                                    <div class="radio-inline">
                                                         <label>
-                                                            <input type="radio" name="q2_{{select.QUERY_NO}}" id="select_sort" value="{{select.SELECT_SORT}}" >{{select.NOTE}}
-                                                            <div >
-                                                                <input type="hidden"  ng-model="answer.QUERY_NO" name="query_no" id="query_no{{select.QUERY_NO}}" value="{{select.QUERY_NO}}"/>
-                                                                <input type="hidden" ng-model="answer.QUERY_SORT" name="query_sort" id="query_sort{{select.QUERY_SORT}}" value="{{select.QUERY_SORT}}"/>
-                                                                <input type="hidden"   ng-model="answer.NOTE" name="note" id="note{{select.NOTE}}" value="{{select.NOTE}}"/>
-                                                            </div>
+                                                            <!--<input type="radio" ng-model="select.SELECT_SORT" name="q2_{{select.QUERY_NO}}" id="select_sort" value="{{select.SELECT_SORT}}" >{{select.NOTE}}-->
+                                                            <input ng-model="query.SELECT_ANSWER" type="radio" name="q2_{{select.QUERY_NO}}" id="select_sort" ng-value="select" />{{select.NOTE}}
                                                         </label>
                                                     </div>
                                                 </dd>
+                                               <!--<div class="radio-inline" ng-repeat="select in query.SELECT" >-->
+                                                    <!--<input ng-model="select.SELECT" type= "radio" ng-value="select.SELECT_SORT" /> {{select.NOTE}}-->
+                                                <!--</div>-->
                                             </dl>
                                         </div>
 

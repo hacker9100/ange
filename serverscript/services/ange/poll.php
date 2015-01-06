@@ -286,12 +286,12 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }
             } else if ($_type == "answear") {
 
-                /*".$_SESSION['uid']."*/
+               /* ".$_SESSION['uid']."*/
                 $j = 0;
-                /*foreach ($_model[SELECT_ANSWER] as $s) {*/
-/*                    if (isset($s[NOTE]) && $s[NOTE] != "") {
-
-                    }*/
+                foreach ($_model as $s) {
+//                    if (isset($s[NOTE]) && $s[NOTE] != "") {
+//
+//                    }
                     $sql = "INSERT INTO ANGE_POLL_ANSWEAR
                                 (
                                     QUERY_NO
@@ -302,12 +302,12 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                     ,NOTE
                                     ,REG_DT
                                 ) VALUES (
-                                    '".$_model[QUERY_NO]."'
-                                    ,'".$_model[QUERY_SORT]."'
-                                    ,'hong".$_model[SELECT_ANSWER]."'
+                                    '".$s[SELECT_ANSWER][QUERY_NO]."'
+                                    ,'".$s[SELECT_ANSWER][QUERY_SORT]."'
+                                    ,'hong'
                                     , '므에에롱'
-                                    ,'".$_model[SELECT_ANSWER]."'
-                                    ,'".$_model[NOTE]."'
+                                    ,'".$s[SELECT_ANSWER][SELECT_SORT]."'
+                                    ,'".$s[SELECT_ANSWER][NOTE]."'
                                     ,SYSDATE()
                                 )";
 
@@ -319,24 +319,19 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                         $msg = $_d->mysql_error;
                     }
 
-                    if ($_d->mysql_errno > 0) {
-                        $_d->failEnd("등록실패입니다:".$_d->mysql_error);
-                    } else {
-                        $_d->succEnd($no);
-                    }
                 }
-                /*}*/
 
-/*                if($err > 0){
+
+                if($err > 0){
                     $_d->sql_rollback();
                     $_d->failEnd("등록실패입니다:".$msg);
                 }else{
                     $_d->sql_commit();
                     $_d->succEnd("0");
-                }*/
+                }
 
 
-
+        }
             break;
 
         case "PUT":

@@ -48,11 +48,32 @@ define([
         $scope.click_saveAngePoll = function () {
 
 
+            $scope.insertItem('ange/poll', 'answear', $scope.queue, false)
+                .then(function(){
+                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                    $location.url('/people/poll/list');
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
-             $("input[id=select_sort]:checked").each(function(index,element){
 
+             /*$("input[id=select_sort]:checked").each(function(index,element){
 
-                $scope.answer.SELECT_ANSWER = $(element).val();
+                 var check = $("input[id=select_sort]:checked").val();
+
+                 $scope.answer.SELECT_ANSWER = $(element).val();
+
+*//*                $scope.answer.QUERY_NO = 3;
+                $scope.answer.QUERY_SORT = 3;
+                $scope.answer.NOTE = '설문조사 3';*//*
+
+                 console.log(queue);
+
+                 for(var i=0; i< check.length; i++){
+                     console.log(queue[i].SELECT[i].QUERY_NO);
+                     console.log(queue[i].SELECT);
+                     console.log(queue[i].SELECT);
+                 }
+*//*
 
                  $("input[name=query_no]").each(function(index,element){
                      $scope.answer.QUERY_NO = $(element).val();
@@ -68,22 +89,28 @@ define([
                      $scope.answer.NOTE = $(element).val();
                      console.log($scope.answer.NOTE);
                  });
+*//*
 
                  $scope.insertItem('ange/poll', 'answear', $scope.answer, false)
                       .then(function(){
                           dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                         $location.url('/people/poll/list');
                       })
                       .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
-             });
+             });*/
 
-
-            console.log('end');
-
+/*            for(var i = 0 ; i < $scope.queue.length ; i++) {
+*//*                if(! $scope.queue[i].SELECT[i]) {
+                    return false;
+                }*//*
+                console.log($scope.queue[i].SELECT);
+            }
+            console.log('end');*/
         }
 
         $scope.click_showAngePollList = function() {
-            $location.url('/people/peoplepoll/list');
+            $location.url('/people/poll/list');
         }
 
 
