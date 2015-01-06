@@ -31,7 +31,7 @@
 }
 
 .peoplep_list_tab {
-	padding: 0px 10px; 
+	padding: 0px 10px 6px 10px; 
 	background-image:url(/imgs/ange/comp_miniboard_hr.png); 
 	background-repeat: repeat-x; 
 	background-position: bottom;
@@ -89,7 +89,7 @@
 
 .people_photo_info {
 	padding: 4px; 
-	font-size:0.78em; 
+	font-size:0.76em; 
 	color: #868686; 
 }
 
@@ -123,11 +123,51 @@
 }
 
 .board_basicinfo_photosubject {
-
+	font-size: 1.54em; 
+	line-height:24px; 
+	font-weight: 600;
 }
 
+.peoplephoto_view_basicinfo {
+	padding: 0px 0 25px 0; 
+	background-image:url(/imgs/ange/comp_miniboard_hr.png); 
+	background-repeat: repeat-x; 
+	background-position: bottom;
+	font-size: 0.86em;
+}
 
+/*공유 영역용*/
+.people_photo_sharewrap {
+	position:absolute; 
+	right:0; 
+	bottom:15px; 
+	margin:10px;
+}
 
+.people_sharebtn {
+	background-color:#fff; 
+	border-radius:20px; 
+	opacity: 0.75;
+}
+
+.people_sharebtn.redbtn {
+	border:1px solid #e60000; 
+	color:#e60000; 
+}
+
+.people_sharebtn.blackbtn {
+	border:1px solid #111; 
+	color:#111; 
+}
+
+.sharebtn_icon {
+	font-size:0.88em; 
+	margin-right:4px;
+}
+
+.people_sharebtn:hover {
+	opacity: 1;
+}
 
 
 .people_searchresult {
@@ -138,6 +178,7 @@
 .peopleboard_view_contentbody {
 	padding:25px;
 	border-bottom:2px solid #111;
+	line-height:24px;
 }
 
 
@@ -316,3 +357,99 @@ a.reply_sort:hover {
 	padding:10px 5px;"
 }
 
+.thumbnails_func {
+	float:right; 
+	padding: 10px 0;
+}
+
+
+.thumbnails_func_selectall {
+	float:left;
+	width: 63px;
+	height:12px;
+	text-indent: -9999px;
+	background-image: url('/imgs/ange/btn_thumnails_selectall.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	opacity: 0.75;
+	margin-left:10px;
+	margin-top:6px;
+}
+
+.thumbnails_func_selectall:hover {
+	opacity: 1;
+}
+
+.thumbnails_func_selectall.allselected {
+	background-position: left -12px;
+}
+
+.thumbnails_func_selectadd {
+	float:left;
+	width: 104px;
+	height:28px;
+	text-indent: -9999px;
+	background-image: url('/imgs/ange/btn_thumnails_selectadd.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	margin-left:10px;
+}
+
+.thumbnails_func_selectdel {
+	float:left;
+	width: 79px;
+	height:28px;
+	text-indent: -9999px;
+	background-image: url('/imgs/ange/btn_thumnails_selectdel.png');
+	background-repeat: no-repeat;
+	background-position: left top;
+	margin-left:6px;
+}
+
+
+.thumbnails_func_selectadd:hover, .thumbnails_func_selectdel:hover {
+	background-position: left -28px;
+}
+
+/** Template **/
+
+.template_recipe {
+	width:100%;
+	float: left;
+	margin-bottom:10px;
+	word-break: break-all;
+	line-height:20px;
+}
+
+.template_recipe .infobox_row {
+	float: left;
+	width:100%;
+	margin-bottom: 8px;
+}
+
+.template_recipe .template_col_title{
+	float:left;
+	font-weight:600;
+	width:15%;
+	margin:0px;
+	padding:4px 0px;
+	text-align:left;
+	color: #019bd4;
+}
+
+.template_recipe .template_col_body{
+	float:right;
+	position: relative;
+	width:84%;
+	margin:0px;
+	padding:4px 0px;
+}
+
+.template_recipe .template_col_body span{
+	float:left;
+	color:#464646;
+}
+
+.template_recipe .template_col_body span.recipe_material {
+	margin-left:55px;
+}

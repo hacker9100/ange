@@ -37,8 +37,11 @@ define(['./directives'], function (directives) {
                     case 'myange' :
                         channelNo = '4';
                         break;
+                    case 'join' :
+                        channelNo = '7';
+                        break;
                     default :
-                        $scope.ui_wraptype = 'sub_content_wrap';
+                        channelNo = '0';
                 }
 
                 for (var i in scope.ange_channel) {

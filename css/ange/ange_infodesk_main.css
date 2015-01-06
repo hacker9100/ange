@@ -1,0 +1,170 @@
+/* mini_infodeskfaq  */
+.comp_infodeskfaq, .comp_infodesknotice, .comp_infodeskqna, .comp_infodeskpds {
+	float:left;
+	width:100%;
+	line-height: 18px;
+}
+
+.comp_infodeskfaq {
+	float:left;
+}
+
+.comp_infodeskfaq_titlewrap {
+	width:100%;
+	height:56px;
+	background-color: #333;
+	border: 1px solid transparent;
+	border-radius:12px;
+	border-bottom-left-radius:0px;
+	border-bottom-right-radius:0px;
+	color: #fff;
+}
+
+.comp_infodeskfaq_title{
+	float: left;
+	width: 25%;
+	line-height: 56px;
+	font-weight: 400;
+	font-size:1.08em;
+	padding-left: 15px;
+}
+
+.comp_infodeskfaq_search {
+	float: right;
+	margin:0px; 
+	padding:0px; 
+	width:70%;
+}
+
+.comp_infodeskfaq_input{
+	margin-top:10px;
+	border-radius: 24px;
+	border-top-right-radius: 24px;
+	font-size: 0.86em;
+
+}
+
+.comp_infodeskfaq_btn {
+	padding:0px;
+	margin-top:10px;
+	margin-right:20px; 
+	height: 34px; 
+	width: 32px; 
+	background-color:#333;
+	color:#EEE;
+	border-radius:50%;
+}
+
+.comp_infodeskfaq_btn:hover {
+	background-color: #111;
+	color:#fff;
+}
+
+.comp_infodeskfaq_guidewrap {
+	border-left: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+	padding: 15px 20px;
+}
+
+.comp_infodeskfaq_guide {
+	font-size: 0.86em;
+	color: #646464;
+}
+
+.comp_infodeskfaq_guide a{
+	color: #ea4241;
+	cursor:pointer;
+	line-height:34px;
+}
+
+.comp_infodeskfaq_guide a:hover{
+	text-decoration: none;
+	color: #b81615;
+}
+
+
+.comp_infodeskfaq_contentwrap {
+	border: 1px solid #DDD;
+	border-top: none;
+	padding:0 12px;
+	font-size: 0.78em;
+}
+
+#comp_faq_table td{
+	cursor:pointer;
+}
+
+.faq_th  { font-weight:600; color: #019bd4; }
+.faq_blue { color: #019bd4; }
+
+
+/* mini_infodesknotice  */
+.comp_infodesknotice {
+	height:100%;
+}
+
+/* mini_infodeskqna  */
+.comp_infodeskqna {
+	height:100%;
+}
+
+
+/* mini_infodeskpds  */
+.comp_infodeskpds {
+	padding:5%;
+}
+
+.mini_infodeskpds_title {
+	position:relative;
+	width:100%;
+	height: 60px;
+	margin:6px auto;
+	font-size:0.78em;
+	padding-left:8px;
+	background-image: url('/imgs/ange/CS_datadown_title_book.png');
+	background-repeat: no-repeat;
+	background-position: 155px bottom;
+}
+
+.mini_infodeskpds_title a {
+	color: #2eaed3;
+}
+
+
+.mini_infodeskpds_name {
+	font-size:1.42em;
+	font-weight: 700;
+	padding: 0 0 5px 0;
+	margin:0;
+	color: #fb6362;
+}
+
+.mini_infodeskpds_link {
+	position:relative;
+	width:100%;
+	height: 65px;
+	margin:2px 0 6px 0;
+	background-color:#fff;
+	border:1px solid #ddd;
+	border-radius:12px;
+	cursor: pointer;
+}
+
+.mini_infodeskpds_link p {
+	font-size: 0.86em;
+	margin:4% 0 0 6%
+}
+
+.mini_infodeskpds_link a {
+	position: absolute;
+	font-size: 0.78em;
+	right:15%;
+	bottom:12%;
+	color: #2eaed3;
+}
+
+.mini_infodeskpds_link a:hover {
+	text-decoration: none;
+	color: #0586ab;
+}
+/* common */

@@ -50,7 +50,7 @@ define([
                 $scope.community = "예비맘 출산맘";
             } else if($stateParams.menu == 'babycare') {
                 $scope.community = "육아방";
-            } else if($stateParams.menu == 'firshbirthtalk') {
+            } else if($stateParams.menu == 'firstbirthtalk') {
                 $scope.community = "돌잔치 톡톡톡";
             } else if($stateParams.menu == 'booktalk') {
                 $scope.community = "책수다";

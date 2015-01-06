@@ -1691,7 +1691,7 @@ output {
 .form-control {
   display: block;
   width: 100%;
-  height: 30px;
+  height: 34px;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -1724,7 +1724,8 @@ output {
 .form-control[disabled],
 .form-control[readonly],
 fieldset[disabled] .form-control {
-  cursor: not-allowed;
+  /* cursor: not-allowed;*/
+  cursor: default;
   background-color: #eee;
   opacity: 1;
 }
@@ -1791,7 +1792,8 @@ fieldset[disabled] .radio,
 fieldset[disabled] .radio-inline,
 fieldset[disabled] .checkbox,
 fieldset[disabled] .checkbox-inline {
-  cursor: not-allowed;
+  /* cursor: not-allowed;*/
+  cursor: default;
 }
 .input-sm {
   height: 30px;
@@ -2032,7 +2034,8 @@ select[multiple].input-lg {
 .btn[disabled],
 fieldset[disabled] .btn {
   pointer-events: none;
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
+  cursor: default;
   filter: alpha(opacity=65);
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -2376,8 +2379,8 @@ input[type="button"].btn-block {
 @font-face {
   font-family: 'Glyphicons Halflings';
 
-    src: url('/fonts/glyphicons-halflings-regular.eot');
-    src: url('/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -3068,7 +3071,8 @@ input[type="button"].btn-block {
 .dropdown-menu > .disabled > a:hover,
 .dropdown-menu > .disabled > a:focus {
   text-decoration: none;
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
+  cursor: default;
   background-color: transparent;
   background-image: none;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
@@ -3473,7 +3477,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li.disabled > a:focus {
   color: #999;
   text-decoration: none;
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
+  cursor: default;
   background-color: transparent;
 }
 .nav .open > a,
@@ -4186,7 +4191,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .pagination > .disabled > a:hover,
 .pagination > .disabled > a:focus {
   color: #999;
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
+  cursor: default;
   background-color: #fff;
   border-color: #ddd;
 }
@@ -4255,7 +4261,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .pager .disabled > a:focus,
 .pager .disabled > span {
   color: #999;
-  cursor: not-allowed;
+  /* cursor: not-allowed; */
+  cursor: default;
   background-color: #fff;
 }
 .label {

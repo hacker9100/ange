@@ -20,6 +20,10 @@ define([
             $scope.openModal(null, 'md');
         };
 
+        $scope.click_joinMember = function () {
+            $location.url('join/join-terms');
+        };
+
         // 로그인 모달창
         $scope.openModal = function (content, size) {
             var dlg = dialogs.create('login_modal.html',

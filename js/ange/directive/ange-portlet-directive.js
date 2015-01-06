@@ -174,10 +174,8 @@ define([
 
                 // 더보기 버튼 클릭
                 $scope.click_showList = function () {
-                    alert($scope.option.url);
-                    return;
                     if ($scope.option.tab != undefined) {
-                        $location.url('/people'+'/'+$scope.option.tab[$scope.tabIdx].menu+'/list');
+                        $location.url($scope.option.tab[$scope.tabIdx].menu+'/list');
                     } else {
                         $location.url($scope.option.url+'/list');
                     }
@@ -185,9 +183,7 @@ define([
 
                 // 리스트 선택
                 $scope.click_showView = function (key) {
-                    alert($scope.option.url + '/view/' + key)
-                    return;
-                    $location.url($scope.option.url+'/view/'+key);
+                    $location.url($scope.option.tab[$scope.tabIdx].menu+'/view/'+key);
                 };
 
                 // 리스트 조회
@@ -195,10 +191,10 @@ define([
                     $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, false)
                         .then(function(data){
                             $scope.list = data;
-                            if ($scope.option.image != undefined && $scope.option.image) {
-                                $scope.key = data[0].NO;
-                                $scope.img = UPLOAD.BASE_URL + data[0].FILE[0].PATH + 'thumbnail/' + data[0].FILE[0].FILE_ID;
-                            }
+//                            if ($scope.option.image != undefined && $scope.option.image) {
+//                                $scope.key = data[0].NO;
+//                                $scope.img = UPLOAD.BASE_URL + data[0].FILE[0].PATH + 'thumbnail/' + data[0].FILE[0].FILE_ID;
+//                            }
                         })
                         .catch(function(error){$scope.list = [];});
                 };
@@ -775,8 +771,7 @@ define([
                 /********** 이벤트 **********/
                 // 투표 클릭
                 $scope.click_showPoll = function (key) {
-                    alert($scope.option.url + '/view/' + key)
-//                    $location.url($scope.option.url + '/view/' + key)
+                    $location.url($scope.option.url + '/edit/' + key)
                 };
 
                 // 설문 조회
@@ -804,7 +799,11 @@ define([
 //                $scope.PAGE_NO = 0;
 //                $scope.PAGE_SIZE = 1;
 //
-//                /********** 이벤트 **********/
+                /********** 이벤트 **********/
+                // 메뉴 이동
+                $scope.click_moveMenu = function () {
+                    $location.url($scope.option.url);
+                };
 //                    // 투표 클릭
 //                $scope.click_showPoll = function (key) {
 //                    alert($scope.option.url + '/view/' + key)

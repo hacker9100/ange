@@ -1,0 +1,321 @@
+/* comp_mileage  */
+.comp_mileage {
+	float:left; 
+	width:100%; 
+	background-color:#fff; 
+	background-image: url('/imgs/ange/color_bg_skyblue.jpg'); 
+	background-repeat: no-repeat; 
+	background-position: left bottom; 
+}
+
+.comp_mileage_text {
+	position:absolute; 
+	width:100%; 
+	text-align:center; 
+	top:5px;
+	line-height:40px; 
+	font-size:1.4em; 
+	font-weight:700; 
+	color:#2eaed3;
+}
+
+.comp_mileage_circle {
+	position: absolute; 
+	left:calc(50% - 62px); 
+	top:calc(50% - 62px); 
+	width:124px; 
+	height:124px; 
+	border:5px solid #59bad9; 
+	border-radius:50%; 
+	z-index:49; 
+	background:#fff;
+	line-height:12px;
+	color:#888;
+	text-align:center;
+	padding-top:45px;
+}
+
+p.txt_mileage{
+	font-family: arial, san-serif;
+	font-size: 1.48em;
+	font-weight: 700;
+	color:#2eaed3;
+}
+
+.comp_mileage_btn {
+	position: absolute;
+	width: 100%; 
+	height: 30px; 
+	left: 0; 
+	bottom: 4%;
+	text-align:center;
+}
+
+a.goton_mileagemall {
+	position:absolute;
+	width:131px;
+	height:24px;
+	left:calc(50% - 65px); 
+	line-height:16px;
+	background-image: url('/imgs/ange/goto_mileagemall_btn.png'); 
+	background-repeat: no-repeat; 
+	background-position: left top; 
+	text-indent: -9999px;
+	cursor:pointer; 
+}
+
+a.goton_mileagemall:hover {
+	background-position: left -24px; 
+}
+
+
+/* mini_commerce  */
+.comp_commerce {
+	float:left; 
+	height:100%; 
+	width:100%; 
+	border:1px solid #DDD; 
+	background-color:#fff; 
+}
+
+.comp_commerce_titlewrap {
+	position:absolute;
+	width:100%;
+	padding:10px 0 0 8px;
+}
+
+.comp_commerce_imgwrap {
+	float:left;
+	width:100%;
+	height:100%;
+	text-align:center;	
+}
+
+.comp_commerce_img {
+	width:100%;
+	margin:auto;
+}
+
+.comp_dream {
+	height:100%; 
+	width:100%; 
+	border:1px solid #DDD; 
+	border-radius:12px;
+	background-color:#f8f6f8; 
+	line-height:18px;
+}
+
+.comp_naming_desc, .comp_dream_desc{
+	float:left;
+	color:#646464;
+	font-size: 0.78em;
+}
+
+.comp_naming_desc {
+	width:60%;
+	margin: 18px 0 0 8%;
+}
+
+.comp_dream_desc {
+	width:48%;
+	margin: 25px 0 0 8%;
+}
+
+.comp_naming_title, .comp_dream_title {
+	float:left;
+	font-size: 1.56em;
+	line-height:24px;
+	width:100%;
+	margin:5px 0 0 8%;
+}
+
+.comp_naming_title {
+	color: #2eaed3;
+}
+
+.comp_dream_title {
+	color: #71b528;
+}
+
+a.comp_naming_goto, a.comp_dream_goto {
+	float:left;
+	width:100%;
+	color:#666;
+	font-size: 0.78em;
+	cursor:pointer;
+	margin:5px 0 0 8%;
+	vertical-align:bottom;
+}
+
+a.comp_naming_goto:hover, a.comp_dream_goto:hover {
+	text-decoration: none;
+	color:#000;
+}
+
+/* mini_goods */
+.comp_goods {
+	float:left; 
+	height:100%; 
+	width:100%; 
+	border:1px solid #DDD; 
+	background-color:#fff; 
+}
+
+
+.mini_mileagemall_menuwrap {
+	float:left; 
+	width:100%; 
+	height:100%; 
+
+}
+
+.mini_mileagemall_menuwrap dl {
+	float:left; 
+	width:100%; 
+	padding:0px; 
+	margin:0px;
+}
+
+.mini_mileagemall_menuwrap dt {
+	font-size: 0.86em;
+	font-weight: 400;
+	line-height:40px;
+	background-color: #111;
+	color: #fff;
+	padding:0 0 0 16px;
+}
+
+.mini_mileagemall_menuwrap dd {
+	font-size: 0.86em;
+	line-height:33px;
+	color:#333;
+	border-bottom: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+	border-top: none;
+	cursor:pointer;
+	padding-left: 18%;
+}
+
+.mini_mileagemall_menuwrap dd:hover {
+	background-color:#eee;
+}
+
+.mini_mileagemall_menuwrap dd.selected {
+	pointer-events:none;
+	cursor: default;
+	background-image: url('/imgs/ange/bg_mileagemall_selected.png');
+	background-repeat: no-repeat;
+	background-position: top right;
+	border-right: none;
+	color:#fff;
+}
+
+.mini_mileagemall_price {
+	padding-left:20px; 
+	background-image: url('/imgs/ange/icon_pig.png');
+	background-repeat: no-repeat;
+}
+
+
+
+/* mini_photozone */
+
+.comp_photozone, .comp_photozone_row{
+	height:100%;
+	margin:0px;
+	padding:0px;
+}
+
+.comp_photozone_row {
+	border:1px solid #ddd;
+}
+
+.photoznoe_box {
+	float:left;
+	width:100%;
+	height:100%;
+	font-size: 0.86em;
+	line-height:16px;
+	padding:24px 18px 30px 25px;
+}
+
+.photoznoe_box.knowhow {
+	background-image: url('/imgs/ange/photozone_bg01.png');	
+	background-repeat: no-repeat;
+	background-position: bottom right;
+}
+
+.photoznoe_box.editing {
+	background-image: url('/imgs/ange/photozone_bg02.png');	
+	background-repeat: no-repeat;
+	background-position: bottom left;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+}
+
+.photoznoe_box.birthday {
+	background-image: url('/imgs/ange/photozone_bg03.png');	
+	background-repeat: no-repeat;
+	background-position: top right;
+}
+
+.photozone_blackbar {
+}
+
+.photozone_titleimg {
+	margin-top: 10px;
+	margin-bottom: 18px;
+}
+
+.photoznoe_txt {
+	word-break: keep-all;
+}
+
+a.goto_photozone {
+	position: absolute;
+	right: 15px;
+	bottom: 28px;
+	color: #666;
+}
+
+a.goto_photozone:hover {
+	text-decoration: none;
+	color:#000;
+}
+
+/* mini_charedservice */
+.comp_iconbox {
+	height:100%; 
+	width:100%; 
+	background-color:#fff; 
+	line-height:18px;
+	text-align:center;
+	cursor:pointer;
+	opacity:0.75;
+}
+
+.comp_iconbox:hover {
+	opacity:1;
+}
+
+.comp_iconbox_img {
+	margin:0px auto;
+}
+
+.comp_iconbox_txt {
+	margin:20px 4px;
+}
+
+
+
+/* ++ common  */
+
+span.comp_blacktitle {
+	color:#EEE;
+	line-height:20px;
+	font-weight:700;
+	background-color: #111;
+	padding:2px 12px; 
+	border:1px solid transparent;
+	border-radius:15px;
+}

@@ -122,6 +122,9 @@
 <link rel="stylesheet" type="text/css" href="css/ange/ange_peopleboard.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_moms_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_myange_main.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_store_main.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_infodesk_main.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_join.css" />
 
 <!-- IE6,7,8에서도 HTML5 element를 인식시켜주기 위한 코드 -->
 <!--[if lt IE 9]>

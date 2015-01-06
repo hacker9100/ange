@@ -1,77 +1,484 @@
-<!-- Contents Include -->
 <div ng-controller="photo-edit">
     <!-- mainbar -->
     <div class="mainbar sub-slide0">
         <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
-    <div ng-model="item" class="row form_basic_wrap">
-        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
-            <!--            <div class= "form-group form_basic_group">
-                            <label class= "form_basic_label">공지사항 여부</label>
-                            <div class="form_basic_input">
-                                <input ng-model="item.NOTICE_FL" type="checkbox" ng-checked="item.NOTICE_FL" ng-disabled="role != 'CMS_ADMIN' && role != 'MANAGER'">
+
+
+            <div class="row">
+
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
+
+                        <div class="sub_contents_wrap">
+
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a></h3>
                             </div>
-                        </div>-->
-            <input ng-model="item.NOTICE_FL" type="hidden" value="false">
 
-            <div class= "form-group form_basic_group">
-                <div class="col-xs-6 form_basic_input">
-                    <label class= "form_basic_label">제목</label>
-                    <input ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder= "제목"/>
-                </div>
-            </div>
+                        </div><!-- /.sub_contents_wrap -->
 
-            <div class= "form-group form_basic_group">
-                <div class="col-xs-6 form_basic_input">
-                    <label class= "form_basic_label">썸네일 이미지</label>
-                    <input ng-model="item.THUMNAIL" type= "text" class= "form-control" placeholder= "제목"/>
-                </div>
-            </div>
 
-            <div class= "form-group form_basic_group">
-                <div class="col-xs-6 form_basic_input">
-                    <label class= "form_basic_label">본문 상단 이미지</label>
-                    <input ng-model="item.CONTENT" type= "text" class= "form-control" placeholder= "제목"/>
-                </div>
-            </div>
+                        <div ng-model="item" class="sub_contents_body">
 
-            <div style="border:1px solid #DEDEDE; width:100%; float:left;">
-                <div>
-                    <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>
+                        <!-- peopleboard_edit -->
+                        <div class="people_edit_wrap">
+
+                        <div class="container-fluid peopleboard_edit_topwrap">
+
+                        <div class="row" style="margin:0px auto; margin-bottom:10px;">
+
+                            <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">제목</label>
+
+                            <div class="col-xs-3" style="padding:0;">
+                                <div class="input-group">
+
+                                    <input type="text" class="form-control input-sm" aria-label="..." value="게시판 선택" disabled style="background-color:#fff;">
+
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
+
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">앙쥬맘 수다방</a></li>
+                                            <li><a href="#">예비맘 출산맘</a></li>
+                                            <li><a href="#">육아방</a></li>
+                                            <li><a href="#">돌잔치 톡톡톡</a></li>
+                                            <li><a href="#">책수다</a></li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">앙쥬모델 선발대회</a></li>
+                                            <li><a href="#">레시피 아케이드</a></li>
+                                            <li><a href="#">피플 맛집</a></li>
+                                        </ul>
+                                    </div><!-- /btn-group -->
+
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-xs-4 -->
+
+                            <div class="col-xs-8" style="padding-left:5px;">
+                                <input type="text" class="input-sm form-control" placeholder="제목을 입력하세요">
+                            </div><!-- /.col-xs-7 -->
+                        </div><!-- /.row -->
+
+                        <!-- 비밀번호 : 상담게시판에서만 보입니다. -->
+                        <!--<div class="row" style="margin:0px auto; margin-bottom:10px;">-->
+
+                            <!--<label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">암호</label>-->
+
+                            <!--<div class="col-xs-3" style="padding:0;">-->
+                                <!--<input type="password" class="form-control input-sm" id="exampleInputPassword1" placeholder="비밀번호 4자리">&lt;!&ndash; /btn-group &ndash;&gt;-->
+                            <!--</div>&lt;!&ndash; /.col-xs-4 &ndash;&gt;-->
+
+                            <!--<div class="col-xs-8" style="padding-left:5px; padding-top:6px;">-->
+                                <!--<small class="table_gray">비밀번호를 입력하지 않으면 공개글로 설정됩니다.</small>-->
+                            <!--</div>&lt;!&ndash; /.col-xs-7 &ndash;&gt;-->
+                        <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
+                        <!-- /비밀번호 : 상담게시판에서만 보입니다. -->
+
+                        <!-- file drag-in Box -->
+                        <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
+
+                            <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">
+                                파일
+                            </label>
+
+                            <div class="col-xs-8 dragzone_wrap">
+                                <div class="dragzone">
+
+                                    <div class="files_row">
+                                        <input type="checkbox" style="vertical-align: top;" aria-label="...">
+                                        <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
+                                        <span class="filename">첨부파일_1.jpg</span>
+                                        <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">38.56KB</div>
+                                    </div>
+
+                                    <div class="files_row">
+                                        <input type="checkbox" style="vertical-align: top;" aria-label="...">
+                                        <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
+                                        <span class="filename">첨부파일_111111111.jpg</span>
+                                        <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">1038.56KB</div>
+                                    </div>
+
+                                    <div class="files_row">
+                                        <input type="checkbox" style="vertical-align: top;" aria-label="...">
+                                        <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
+                                        <span class="filename">첨부파일_1.jpg</span>
+                                        <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">38.56KB</div>
+                                    </div>
+
+                                    <div class="files_row">
+                                        <input type="checkbox" style="vertical-align: top;" aria-label="...">
+                                        <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
+                                        <span class="filename">첨부파일_1.jpg</span>
+                                        <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">38.56KB</div>
+                                    </div>
+
+                                    <div class="files_row">
+                                        <input type="checkbox" style="vertical-align: top;" aria-label="...">
+                                        <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
+                                        <span class="filename">첨부파일_1.jpg</span>
+                                        <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">38.56KB</div>
+                                    </div>
+
+                                </div>
+                            </div><!-- /.col-xs-4 -->
+
+                            <div class="col-xs-3" style="padding:0 0 0 4px; height:100%;">
+                                <button class="dagbox_btn fil2com large">
+                                    <div>
+                                        <div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>
+                                        <div style="width:63%; float:right; text-align:left;">
+                                            <strong>내 PC에서</strong><br/>
+                                            <span style="font-size:0.72em;">첨부파일 찾기</span>
+                                        </div>
+                                    </div>
+                                </button>
+                                <!-- span class="glyphicon glyphicon-ok"></span -->
+                                <!-- button class="dagbox_btn selectall"><span class="glyphicon glyphicon-ok"></span> 전체선택</button>
+                                <button class="dagbox_btn add"><span class="glyphicon glyphicon-circle-arrow-right"></span> 본문추가</button>
+                                <button class="dagbox_btn delete"><span class="glyphicon glyphicon-remove"></span> 선택삭제</button -->
+                            </div><!-- /.col-xs-2 -->
+
+                        </div><!-- /.row -->
+                        <!-- /file drag-in Box -->
+
+                        <!-- image thumbnails -->
+                        <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
+
+                            <label class="col-xs-1">
+
+                            </label>
+
+                            <div class="col-xs-11 col-xs-offset-1" style="padding:0;">
+                                <div class="thumbnailzone">
+
+                                    <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
+                                        별모양을 클릭하여 대표이미지를 지정하세요.
+                                        <span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>
+                                    </div>
+
+                                    <!-- Thumbnail List -->
+                                    <div class="thumbnails selectedthumb" style="background-image: url('/imgs/ange/temp/temp_recipe_01.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:none;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:block;"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_03.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_01.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_03.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_01.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_03.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+                                    <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox"></div>
+                                        <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                            <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                            <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
+                                        </div>
+                                    </div>
+                                    <!-- /Thumbnail List -->
+
+                                    <div class="thumbnails_func" style="float:right; padding: 10px 0;">
+                                        <a href="#" class="thumbnails_func_selectall"></a>
+                                        <!-- span class="thumbnails_func_selectall allselected"></span -->	<!-- allselected : 토글 -->
+                                        <a href="#" class="thumbnails_func_selectadd"></a>
+                                        <a href="#" class="thumbnails_func_selectdel"></a>
+                                    </div>
+                                </div>
+                            </div><!-- /.col-xs-4 -->
+
+                        </div><!-- /.row -->
+                        <!-- image thumbnails -->
+
+                        <!-- 비밀번호 : 상담게시판에서만 보입니다. -->
+                        <div class="row" style="float:left; width:100%; padding-top: 20px; border-top:1px dashed #DDD; margin:10px auto;">
+
+                            <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:6px 0;">추가<br />항목</label>
+
+                            <div class="col-xs-11" style="padding:0;">
+                                <p>
+                                    <span class="table_blue" style="float:left; line-height:30px; width:10%; margin:auto;">주재료</span>
+                                    <textarea ng-model="item.ETC1" class="form-control" rows="2" style="width:90%; min-width:90%; max-width:90%;" placeholder="콤마로 구분하여 작성 예) 닭가슴살, 감자, 당근"></textarea>
+                                </p>
+
+                                <p>
+                                    <span class="table_blue" style="float:left; line-height:30px; width:10%; margin:auto;">부재료</span>
+                                    <textarea ng-model="item.ETC2" class="form-control" rows="2" style="width:90%; min-width:90%; max-width:90%;" placeholder="콤마로 구분하여 작성 예) 레몬즙, 레드와인, 올리브오일"></textarea>
+                                </p>
+
+                                <p>
+                                    <span class="table_blue" style="float:left; line-height:30px; width:10%; margin:auto;">양 념</span>
+                                    <textarea ng-model="item.ETC3" class="form-control" rows="2" style="width:90%; min-width:90%; max-width:90%;" placeholder="콤마로 구분하여 작성 예) 소금, 후추, 간장, 된장"></textarea>
+                                </p>
+                            </div><!-- /.col-xs-4 -->
+
+                        </div><!-- /.row -->
+                        <!-- /비밀번호 : 상담게시판에서만 보입니다. -->
+
+                        </div> <!-- /.peopleboard_edit_topwrap -->
+
+                        <!-- Ediotr Box -->
+                        <div class="row people_editor_wrap">
+                            <div class="col-xs-12 people_editor">
+                                <!--에디터 넣을자리 <br/>-->
+                                <!--- (글꼴, 글색, 글크기(12,14,16,18pt)/  <br/>-->
+                                <!--- 본문 정렬   <br/>-->
+                                <!--- 굵게,기울기,취소,밑줄  <br/>-->
+                                <!--- HTML  <br/>  <br/>-->
+
+                                <!--- 템플릿 추가-->
+                                <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+                                    <div>
+                                        <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>
+                                    </div>
+                                </div>
+                            </div><!-- /.people_editor -->
+                        </div><!-- /.row -->
+                        <!-- /Ediotr  Box -->
+
+                        <!-- Option-->
+                        <div class="row">
+                            <div class="col-xs-12">
+
+                                <div class="peopleboard_options">
+                                    <input type="checkbox" style="vertical-align: top;" checked disabled/>
+                                    <span class="filename">전체 공개</span>
+                                </div>
+
+                                <div class="peopleboard_options">
+                                    <input type="checkbox" style="vertical-align: top;" checked />
+                                    <span class="filename">댓글 허용</span>
+                                </div>
+
+                                <div class="peopleboard_options">
+                                    <input type="checkbox" style="vertical-align: top;" checked />
+                                    <span class="filename">스크랩 허용</span>
+                                </div>
+
+
+                                <div class="peopleboard_management" style="float:right;display:block;"> <!-- 관리기능 - 관리자 및 방장에게만 보임 -->
+                                    <div class="peopleboard_options">
+                                        <input type="checkbox" style="vertical-align: top;" />
+                                        <span class="filename">공지글</span>
+                                    </div>
+
+                                    <div class="peopleboard_options">
+                                        <input type="checkbox" style="vertical-align: top;" />
+                                        <span class="filename table_gray">블라인드 처리</span>
+                                    </div>
+                                </div>
+
+                            </div><!-- /.people_editor -->
+                        </div><!-- /.row -->
+                        <!-- /Option -->
+
+                        <div class="container-fluid people_view_btnwrap">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <a href="#" class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeoplePhotoList();">리스트</a>
+                                </div>
+
+                                <div class="col-xs-8">
+                                    <a href="#" class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
+                                    <a href="#" class="btn people_btn confirm" title="확인" style="display:none;">확인</a>
+                                    <a href="#" class="btn people_btn submit" title="등록하기" style="display:block;" ng-click="click_savePeoplePhoto();">등록</a>
+                                    <a href="#" class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeoplePhotoList();">취소</a>
+                                    <a href="#" class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>
+                                </div>
+                            </div><!-- /.row -->
+                        </div><!-- /.people_view_btnwrap -->
+
+                        </div>
+                        <!-- /peopleboard_edit -->
+
+                        </div><!-- /.sub_contents_body -->
+
+                        <div class="sub_contents_ads" style="display:none;">
+                            <div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
-            </div>
-        </form>
-        <!--<img id="dropzone" src="http://localhost/serverscript/upload/../../upload/files/medium/Koala%20%285%29.jpg" />-->
-        <!--<div class= "form-group" id="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">-->
-        <!--이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />-->
-        <!--(gif, jpg, png만 등록 가능)-->
-        <!--</div>-->
-        <div class= "form-group form_basic_group" style="float:left;">
-            <div class= "form-group form_basic_group" style="float:left;">
-                <H5 style="line-height:8px; margin:0;">
-                    <span class="glyphicon glyphicon-floppy-disk" style="color:#2486ED;"></span> 파일첨부
-                </H5>
-                <div ng-include=" '/partials/ange/com/file-list.html' " style="width:100%; float:left;"></div> <!-- margin-top:20px;  -->
-            </div>
+
+            </div> <!-- rows -->
+
+
+        </div><!-- container-fluid -->
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div class="copyright_foot">
+            <br /><br />
+            <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+                <hr style="margin:0 15px 0 15px;" />
+
+                <center>
+                    <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+                </center>
+            </nav>
         </div>
-
-        <!-- 하단 버튼 -->
-        <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
-            <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
-                <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showPeoplePhotoList();" >
-                    <i class="glyphicon glyphicon-list"></i>
-                    <span>목록</span>
-                </button>
-            </div>
-            <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
-                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePeoplePhoto();" ng-disabled="edit_form.$invalid">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>저장</span>
-                </button>
-            </div>
-        </div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
 
     </div>
+
+    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
+        <div class="row">
+            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
+                우측바
+            </div>
         </div>
     </div>
+
+    <!-- /Main Page Layout Set -->
 </div>
-<!-- ////Contents Include -->
+
+<!--&lt;!&ndash; Contents Include &ndash;&gt;-->
+<!--<div ng-controller="photo-edit">-->
+    <!--&lt;!&ndash; mainbar &ndash;&gt;-->
+    <!--<div class="mainbar sub-slide0">-->
+        <!--<div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">-->
+    <!--<div ng-model="item" class="row form_basic_wrap">-->
+        <!--<form role="form" name="edit_form" class="form-horizontal form_basic_100">-->
+            <!--&lt;!&ndash;            <div class= "form-group form_basic_group">-->
+                            <!--<label class= "form_basic_label">공지사항 여부</label>-->
+                            <!--<div class="form_basic_input">-->
+                                <!--<input ng-model="item.NOTICE_FL" type="checkbox" ng-checked="item.NOTICE_FL" ng-disabled="role != 'CMS_ADMIN' && role != 'MANAGER'">-->
+                            <!--</div>-->
+                        <!--</div>&ndash;&gt;-->
+            <!--<input ng-model="item.NOTICE_FL" type="hidden" value="false">-->
+
+            <!--<div class= "form-group form_basic_group">-->
+                <!--<div class="col-xs-6 form_basic_input">-->
+                    <!--<label class= "form_basic_label">제목</label>-->
+                    <!--<input ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder= "제목"/>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class= "form-group form_basic_group">-->
+                <!--<div class="col-xs-6 form_basic_input">-->
+                    <!--<label class= "form_basic_label">썸네일 이미지</label>-->
+                    <!--<input ng-model="item.THUMNAIL" type= "text" class= "form-control" placeholder= "제목"/>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class= "form-group form_basic_group">-->
+                <!--<div class="col-xs-6 form_basic_input">-->
+                    <!--<label class= "form_basic_label">본문 상단 이미지</label>-->
+                    <!--<input ng-model="item.CONTENT" type= "text" class= "form-control" placeholder= "제목"/>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div style="border:1px solid #DEDEDE; width:100%; float:left;">-->
+                <!--<div>-->
+                    <!--<textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
+        <!--&lt;!&ndash;<img id="dropzone" src="http://localhost/serverscript/upload/../../upload/files/medium/Koala%20%285%29.jpg" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class= "form-group" id="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">&ndash;&gt;-->
+        <!--&lt;!&ndash;이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />&ndash;&gt;-->
+        <!--&lt;!&ndash;(gif, jpg, png만 등록 가능)&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--<div class= "form-group form_basic_group" style="float:left;">-->
+            <!--<div class= "form-group form_basic_group" style="float:left;">-->
+                <!--<H5 style="line-height:8px; margin:0;">-->
+                    <!--<span class="glyphicon glyphicon-floppy-disk" style="color:#2486ED;"></span> 파일첨부-->
+                <!--</H5>-->
+                <!--<div ng-include=" '/partials/ange/com/file-list.html' " style="width:100%; float:left;"></div> &lt;!&ndash; margin-top:20px;  &ndash;&gt;-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; 하단 버튼 &ndash;&gt;-->
+        <!--<div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">-->
+            <!--<div class= "col-xs-6 form-group form_basic" style="text-align:left;">-->
+                <!--<button class="btn btn-success btn-xs fileinput-button" ng-click="click_showPeoplePhotoList();" >-->
+                    <!--<i class="glyphicon glyphicon-list"></i>-->
+                    <!--<span>목록</span>-->
+                <!--</button>-->
+            <!--</div>-->
+            <!--<div class= "col-xs-6 form-group form_basic" style="text-align:right;">-->
+                <!--<button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePeoplePhoto();" ng-disabled="edit_form.$invalid">-->
+                    <!--<i class="glyphicon glyphicon-plus"></i>-->
+                    <!--<span>저장</span>-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash; ////Contents Include &ndash;&gt;-->

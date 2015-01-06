@@ -33,6 +33,13 @@ define([
     '../../../partials/ange/people/photo-edit',
     '../../../partials/ange/people/photo-view',
 
+
+    '../../../partials/ange/join/join-terms',
+    '../../../partials/ange/join/join-userinfo',
+    '../../../partials/ange/join/join-certification',
+    '../../../partials/ange/join/join-result',
+
+
     // ADMIN 로그인
     '../../../partials/ange/signin',
     // ADMIN 회원현황

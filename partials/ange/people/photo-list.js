@@ -70,7 +70,7 @@ define([
                 $scope.community = "앙쥬모델 선발대회";
             } else if($stateParams.menu == 'recipearcade') {
                 $scope.community = "레시피 아케이드";
-                } else if($stateParams.menu == 'peopletaste') {
+            } else if($stateParams.menu == 'peopletaste') {
                 $scope.community = "피플 맛집";
             }
         };
@@ -106,7 +106,7 @@ define([
                     $scope.TOTAL_COUNT = total_cnt;
 
                     /*$scope.total(total_cnt);*/
-                    $scope.item = data;
+                    $scope.list = data;
                 })
                 .catch(function(error){$scope.item = ""});
         };

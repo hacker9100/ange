@@ -23,6 +23,13 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+            if ($stateParams.menu == 'angemodel') {
+                $scope.community = "앙쥬모델 선발대회";
+            } else if($stateParams.menu == 'recipearcade') {
+                $scope.community = "레시피 아케이드";
+            } else if($stateParams.menu == 'peopletaste') {
+                $scope.community = "피플 맛집";
+            }
         };
 
         /********** 이벤트 **********/
@@ -214,6 +221,7 @@ define([
          .then($scope.init)
          .then($scope.getCmsBoard)
          .catch($scope.reportProblems);*/
+        $scope.init();
         $scope.addHitCnt();
         $scope.getPeopleBoard();
         $scope.getPeopleReplyList();

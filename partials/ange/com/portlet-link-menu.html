@@ -1,4 +1,4 @@
-<div ng-if="linkGb == 'talk'" class="mini_peoplelinetalk">
+<div ng-if="linkGb == 'talk'" class="mini_peoplelinetalk" ng-click="click_moveMenu()">
     <div class="mini_peoplelinetalk_contents">
         <div class="mini_peoplelinetalk_contents_bg"> <img src="" /> </div>
     </div >
@@ -10,13 +10,13 @@
     </div>
 </div>
 
-<div ng-if="linkGb == 'book'" class="mini_peoplebooktalk">
+<div ng-if="linkGb == 'book'" class="mini_peoplebooktalk" ng-click="click_moveMenu()">
     <div class="mini_peoplebooktalk_bg"></div>
     <div class="mini_peoplebooktalk_title1"></div>
     <div class="mini_peoplebooktalk_title2"></div>
 </div>
 
-<div ng-if="linkGb == 'group'" class="mini_angegrouplink">
+<div ng-if="linkGb == 'group'" class="mini_angegrouplink" ng-click="click_moveMenu()">
     <div class="mini_angegrouplink_go">
         앙쥬그룹 홈으로 가기
     </div>
