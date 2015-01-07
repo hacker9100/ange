@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2015-01-06
- * Description : join-terms.html 화면 콘트롤러
+ * Description : jointerms.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('join-terms', ['$scope', '$rootScope', '$location', '$controller', 'dialogs', function ($scope, $rootScope, $location, $controller, dialogs) {
+    controllers.controller('jointerms', ['$scope', '$rootScope', '$location', '$controller', 'dialogs', function ($scope, $rootScope, $location, $controller, dialogs) {
 
         /********** 초기화 **********/
         $scope.init = function () {

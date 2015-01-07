@@ -32,6 +32,7 @@ require('UploadHandler.php');
 //    'upload_url' => $this->get_full_url().'/../../upload/files/'.$newDir
 //);
 
+
 $options = array();
 
 if (isset($_REQUEST['version'])) {

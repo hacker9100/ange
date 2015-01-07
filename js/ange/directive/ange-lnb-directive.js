@@ -37,6 +37,12 @@ define(['./directives'], function (directives) {
                     case 'myange' :
                         channelNo = '4';
                         break;
+                    case 'store' :
+                        channelNo = '5';
+                        break;
+                    case 'infodesk' :
+                        channelNo = '6';
+                        break;
                     case 'join' :
                         channelNo = '7';
                         break;

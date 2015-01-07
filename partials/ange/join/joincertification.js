@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2015-01-06
- * Description : join-userinfo.html 화면 콘트롤러
+ * Description : joincertification.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('join-userinfo', ['$scope', '$rootScope', '$location', '$controller', 'dialogs', function ($scope, $rootScope, $location, $controller, dialogs) {
+    controllers.controller('joincertification', ['$scope', '$rootScope', '$location', '$controller', 'dialogs', function ($scope, $rootScope, $location, $controller, dialogs) {
 
         /********** 초기화 **********/
         $scope.init = function () {

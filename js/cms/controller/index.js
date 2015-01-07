@@ -17,7 +17,7 @@ define([
     '../../../partials/cms/com/gnb.min',
     '../../../partials/cms/com/lnb.min',
     '../../../partials/cms/com/locater.min',
-    '../../../partials/cms/com/file-list.min',
+    '../../../partials/cms/com/file-list',
     // CMS 로그인
     '../../../partials/cms/signin.min',
     '../../../partials/cms/forgot-idpw.min',

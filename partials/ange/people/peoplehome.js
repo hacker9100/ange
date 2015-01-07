@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('home', ['$scope', '$stateParams', '$location', '$controller', function ($scope, $stateParams, $location, $controller) {
+    controllers.controller('peoplehome', ['$scope', '$stateParams', '$location', '$controller', function ($scope, $stateParams, $location, $controller) {
 
         /********** 초기화 **********/
         // 메인 화면 모드

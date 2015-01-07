@@ -48,7 +48,7 @@
                             AND R.ROLE_ID = MR.ROLE_ID
                             AND MR.MENU_ID = M.MENU_ID
                         ORDER BY
-                            M.CHANNEL_NO ASC, M.SORT_IDX
+                            M.CHANNEL_NO ASC, M.MENU_ORD
                         ";
 
                 $data = $_d->sql_query($sql);
