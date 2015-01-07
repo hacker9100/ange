@@ -59,11 +59,11 @@
                 $msg = "";
 
                 $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG,
-                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_FL
+                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL
                     FROM (
                         SELECT
                           B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
-                          (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY
+                          (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL
                         FROM
                           COM_BOARD B
                         WHERE
@@ -346,6 +346,8 @@
                         ,REG_NM
                         ,REG_DT
                         ,NOTICE_FL
+                        ,SCRAP_FL
+                        ,REPLY_FL
                         ,TAG
                     ) VALUES (
                         '".$_model[PARENT_NO]."'
@@ -359,6 +361,8 @@
                         , '".$_SESSION['name']."'
                         , SYSDATE()
                         , '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
+                        , '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
+                        , '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
                         , '".$_model[TAG]."'
                     )";
 
