@@ -447,12 +447,12 @@ define([
         if ($stateParams.menu == 'article' || $stateParams.menu == 'edit') {
             $scope.isCommit = true;
             $scope.isApproval = false;
-        } else if ($stateParams.menu == 'article-confirm' || $stateParams.menu == 'edit_confirm') {
+        } else if ($stateParams.menu == 'article-confirm' || $stateParams.menu == 'edit-confirm') {
             $scope.isCommit = false;
             $scope.isApproval = true;
         }
 
-        if ($stateParams.menu == 'edit' || $stateParams.menu == 'edit_confirm') {
+        if ($stateParams.menu == 'edit' || $stateParams.menu == 'edit-confirm') {
             $scope.isTemplet = true;
         }
 

@@ -18,7 +18,7 @@ define([
 //            scope: { code:'=' },
 //            replace: true,
             templateUrl: function(element, attr) {
-                return '/partials/ange/com/portlet-main-list.html';
+                return '/partials/ange/main/mini-main-list.html';
             },
             controller: ['$scope', '$attrs', '$location', 'UPLOAD', function($scope, $attrs, $location, UPLOAD) {
 
@@ -120,6 +120,120 @@ define([
         }
     }]);
 
+    // 메인 맘스그라운드 리스트를 동적으로 생성
+    directives.directive('angeMiniStoryList', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+            scope: true,
+//            scope: { code:'=' },
+//            replace: true,
+            templateUrl: function(element, attr) {
+                return '/partials/ange/main/mini-story-list.html';
+            },
+            controller: ['$scope', '$attrs', '$location', 'UPLOAD', function($scope, $attrs, $location, UPLOAD) {
+
+                /********** 초기화 **********/
+                $scope.option = $scope.$eval($attrs.ngModel);
+
+                // 검색 조건
+                $scope.search = {PHASE: '30, 31'};
+
+                // 상단 타이틀
+                $scope.portletTitle = $scope.option.title;
+
+                // 탭 번호
+                $scope.tabIdx = $scope.option.defIdx;
+
+                // 카테고리 번호
+                $scope.categoryIdx = 0;
+
+                // 페이징
+                $scope.PAGE_NO = 0;
+                $scope.PAGE_SIZE = $scope.option.size;
+
+                // 검색 조건 추가
+                $scope.search.SYSTEM_GB = 'ANGE';
+                $scope.search.NOTICE_FL = 'N';
+
+                // 검색 조건에 커뮤니티 번호 추가
+                if ($scope.option.tab != undefined) {
+                    if ($scope.option.type == 'board') {
+                        $scope.search.COMM_NO = $scope.option.tab[$scope.tabIdx].no;
+                    } else if ($scope.option.type == 'review') {
+                        $scope.search.TARGET_GB = $scope.option.tab[$scope.tabIdx].no;
+                    }
+                }
+
+                // 검색 조건에 대표 이미지 여부 추가
+                if ($scope.option.image != undefined) {
+                    $scope.search.FILE = true;
+                }
+
+                // 검색 조건에 게시판 종류 추가
+                if ($scope.option.type != undefined) {
+                    if ($scope.option.type == 'review') {
+//                        $scope.search.TARGET_GB = angular.uppercase($scope.option.type);
+                    } else {
+                        $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
+                    }
+                }
+
+//                if ($scope.option.type != 'board') {
+//                    $scope.search.COMM_NO
+//                }
+
+                /********** 이벤트 **********/
+                    // 탭 클릭
+                $scope.click_tabIndex = function (idx) {
+                    $scope.tabIdx = idx;
+
+                    // 탭 번호로 리스트 조회
+                    $scope.getMiniList();
+                }
+
+                // 더보기 버튼 클릭
+                $scope.click_showList = function () {
+                    alert($scope.option.url);
+                    return;
+                    if ($scope.option.tab != undefined) {
+                        $location.url('/people'+'/'+$scope.option.tab[$scope.tabIdx].menu+'/list');
+                    } else {
+                        $location.url($scope.option.url+'/list');
+                    }
+                };
+
+                $scope.click_selectCategory = function (idx, category) {
+                    $scope.categoryIdx = idx;
+                }
+
+                // 리스트 선택
+                $scope.click_showView = function (key) {
+                    alert($scope.option.url + '/view/' + key)
+                    return;
+                    $location.url($scope.option.url+'/view/'+key);
+                };
+
+                // 리스트 조회
+                $scope.getMiniList = function () {
+                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, false)
+                        .then(function(data){
+                            for(var i in data) {
+                                if (data[i].FILE != null) {
+                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                    data[i].MAIN_FILE = img;
+                                }
+                            }
+
+                            $scope.list = data;
+                        })
+                        .catch(function(error){$scope.list = [];});
+                };
+
+                $scope.getMiniList();
+            }]
+        }
+    }]);
+
     // 채널 미니 리스트를 동적으로 생성
     directives.directive('angePortletChannelList', ['$controller', function($controller) {
         return {
@@ -128,7 +242,7 @@ define([
 //            scope: { code:'=' },
 //            replace: true,
             templateUrl: function(element, attr) {
-                return '/partials/ange/com/portlet-channel-list.html';
+                return '/partials/ange/main/portlet-channel-list.html';
             },
             controller: ['$scope', '$attrs', '$location', 'UPLOAD', function($scope, $attrs, $location, UPLOAD) {
 
@@ -211,7 +325,7 @@ define([
             scope: true,
 //            replace: true,
             templateUrl: function(element, attr) {
-                return '/partials/ange/com/portlet-slide-page.html';
+                return '/partials/ange/main/portlet-slide-page.html';
             },
             controller: ['$scope', '$attrs', '$location', 'UPLOAD', function($scope, $attrs, $location, UPLOAD) {
 
@@ -311,7 +425,7 @@ define([
             scope: true,
 //            replace: true,
             templateUrl: function(element, attr) {
-                return '/partials/ange/com/portlet-slide-baby.html';
+                return '/partials/ange/main/portlet-slide-baby.html';
             },
             controller: ['$scope', '$attrs', '$location', 'UPLOAD', function($scope, $attrs, $location, UPLOAD) {
 
@@ -412,7 +526,7 @@ define([
 //            scope: { data: '=', ngModel: '=', dots: '=', autoplay: '=', centerMode: '=' },
 //            replace: true,
             templateUrl: function(element, attrs) {
-                return '/partials/ange/com/portlet-slide-banner.html';
+                return '/partials/ange/main/portlet-slide-banner.html';
             },
             controller: ['$scope', '$attrs', '$location', '$window', 'UPLOAD', function($scope, $attrs, $location, $window, UPLOAD) {
 
@@ -691,7 +805,7 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             templateUrl: function(element, attr) {
-                return '/partials/ange/com/portlet-piece-image.html';
+                return '/partials/ange/main/portlet-piece-image.html';
             },
             controller: ['$scope', '$attrs', '$location', '$window', 'UPLOAD', function($scope, $attrs, $location, $window, UPLOAD) {
 
@@ -759,7 +873,7 @@ define([
             scope: true,
 //            scope: { images:'=' },
 //            replace: true,
-            templateUrl: '/partials/ange/com/portlet-link-poll.html',
+            templateUrl: '/partials/ange/main/portlet-link-poll.html',
             controller: ['$scope', '$attrs', '$location', '$window', function($scope, $attrs, $location, $window) {
 
                 /********** 초기화 **********/
@@ -789,7 +903,7 @@ define([
             scope: true,
 //            scope: { images:'=' },
 //            replace: true,
-            templateUrl: '/partials/ange/com/portlet-link-menu.html',
+            templateUrl: '/partials/ange/main/portlet-link-menu.html',
             controller: ['$scope', '$attrs', '$location', '$window', function($scope, $attrs, $location, $window) {
 
                 /********** 초기화 **********/

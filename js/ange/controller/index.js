@@ -29,9 +29,9 @@ define([
     '../../../partials/ange/people/clinic-list',
     '../../../partials/ange/people/clinic-edit',
     '../../../partials/ange/people/clinic-view',
-    '../../../partials/ange/people/photo-list',
-    '../../../partials/ange/people/photo-edit',
-    '../../../partials/ange/people/photo-view',
+    '../../../partials/ange/people/peoplephoto-list',
+    '../../../partials/ange/people/peoplephoto-edit',
+    '../../../partials/ange/people/peoplephoto-view',
 
     // 앙쥬맘스
     '../../../partials/ange/moms/momshome',

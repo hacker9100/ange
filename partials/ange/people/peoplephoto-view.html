@@ -1,4 +1,4 @@
-<div ng-controller="photo-view">
+<div ng-controller="peoplephoto-view">
     <!-- mainbar -->
     <div class="mainbar sub-slide0">
         <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
@@ -26,7 +26,7 @@
 
                                 <div class="row peoplephoto_view_basicinfo" style="position:relative;">
                                     <div class="col-xs-6 board_basicinfo_photofeature">
-                                        <img class="feature_pic" src="/imgs/ange/temp/temp_cook.png" style="width:100%;" />
+                                        <img class="feature_pic" ng-src="{{item.MAIN_FILE}}" style="width:100%;" />
                                     </div><!-- /.col-xs-2-->
                                     <div class="col-xs-6  board_basicinfo_photosubject">
                                         {{item.SUBJECT}}
@@ -38,8 +38,8 @@
 
                                         <div style="float:left; padding:3px; font-size:0.74em;">
                                             <div style="display:inline; bottom:8px; right:0;">
-                                                <span class="feed_count countlike_color table_gray">9999</span>		<!-- 공감수 -->
-                                                <span class="feed_count countreply_color table_gray">9999</span>	<!-- 댓글수 -->
+                                                <span class="feed_count countlike_color table_gray">{{item.LIKE_CNT}}</span>		<!-- 공감수 -->
+                                                <span class="feed_count countreply_color table_gray">{{item.REPLY_CNT}}</span>	<!-- 댓글수 -->
                                             </div>
                                         </div>
                                     </div><!-- /.col-xs-10-->

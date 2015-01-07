@@ -94,7 +94,7 @@
 <meta name="author" content="">
 
 <link rel="stylesheet" type="text/css" href="css/ange/normalize.css" >
-<link rel="stylesheet" type="text/css" href="css/ange/ange_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="css/ange_bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_style.css" />
 
 <link rel="stylesheet" type="text/css" href="lib/jquery/css/base/jquery-ui-1.10.2.min.css" />

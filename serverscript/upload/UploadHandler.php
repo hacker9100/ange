@@ -531,6 +531,7 @@ class UploadHandler
 
     protected function handle_form_data($file, $index) {
         $file->kind = isset($_REQUEST['kind']) ? $_REQUEST['kind'] : null;
+        $file->version = isset($_REQUEST['version']) ? $_REQUEST['version'] : null;
         // Handle form data, e.g. $_REQUEST['description'][$index]
     }
 

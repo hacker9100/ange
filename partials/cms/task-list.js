@@ -260,7 +260,7 @@ define([
             $scope.search = {PHASE: '13, 20, 21, 22'};
             $scope.viewContentBtn = '편집 조회';
             $scope.editContentBtn = '편집 작성';
-        } else if ($stateParams.menu == "edit_confirm") {
+        } else if ($stateParams.menu == "edit-confirm") {
             $scope.search = {PHASE: '21, 22, 30'};
             $scope.viewContentBtn = '편집 조회';
             $scope.editContentBtn = '편집 검수';

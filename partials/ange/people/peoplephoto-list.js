@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-12-31
- * Description : board-list.html 화면 콘트롤러
+ * Description : peoplephoto-list.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('photo-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
+    controllers.controller('peoplephoto-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
 
         $scope.search = {};
 
@@ -98,12 +98,20 @@ define([
 
             $scope.search.SYSTEM_GB = 'ANGE';
             $scope.search.SORT = 'NOTICE_FL';
-            $scope.search.ORDER = 'DESC'
+            $scope.search.ORDER = 'DESC';
+            $scope.search.FILE = true;
 
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
+
+                    for(var i in data) {
+                        if (data[i].FILE != null) {
+                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                            data[i].MAIN_FILE = img;
+                        }
+                    }
 
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;

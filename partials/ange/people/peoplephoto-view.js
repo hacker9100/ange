@@ -2,7 +2,7 @@
  * Author : Yiseul.Choi
  * Email  : cys1128@marveltree.com
  * Date   : 2014-12-29
- * Description : peopleboard-view.html 화면 콘트롤러
+ * Description : peoplephoto-view.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('photo-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('peoplephoto-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
         /********** 초기화 **********/
             // 첨부파일 초기화
         $scope.queue = [];
@@ -67,6 +67,16 @@ define([
             if ($stateParams.id != 0) {
                 return $scope.getItem('com/webboard', 'item', $stateParams.id, {}, false)
                     .then(function(data){
+                        var files = data.FILES;
+                        console.log(JSON.stringify(data));
+                        for(var i in files) {
+                            if (files[i].FILE_GB == 'MAIN') {
+//                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                                var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
+                                data.MAIN_FILE = img;
+                            }
+                        }
+
                         $scope.item = data;
 
                         $scope.item.PARENT_NO = 0;
@@ -75,11 +85,6 @@ define([
                         $scope.item.TARGET_NO = $scope.item.NO;
                         $scope.item.TARGET_GB = "BOARD";
                         $scope.item.RE_COMMENT = "";
-
-                        var files = data.FILES;
-                        for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                        }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -222,7 +227,7 @@ define([
          .then($scope.getCmsBoard)
          .catch($scope.reportProblems);*/
         $scope.init();
-        $scope.addHitCnt();
+//        $scope.addHitCnt();
         $scope.getPeopleBoard();
         $scope.getPeopleReplyList();
         $scope.getPreBoard();

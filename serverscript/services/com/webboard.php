@@ -58,16 +58,17 @@
                 $err = 0;
                 $msg = "";
 
-                $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG,
-                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_FL
-                    FROM (
-                        SELECT
-                          B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
-                          (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY
-                        FROM
-                          COM_BOARD B
-                        WHERE
-                          B.NO = ".$_key."
+                $sql = "SELECT
+                            NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,NICK_NM,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG,
+                            REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL
+                        FROM (
+                            SELECT
+                              B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.NICK_NM,B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
+                              (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL
+                            FROM
+                              COM_BOARD B
+                            WHERE
+                              B.NO = ".$_key."
                         )  A";
                 $result = $_d->sql_query($sql);
                 $data = $_d->sql_fetch_array($result);
@@ -78,7 +79,7 @@
                 }
 
                 $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.FILE_GB, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
                             FILE F, CONTENT_SOURCE S
                         WHERE
@@ -86,7 +87,6 @@
                             AND S.CONTENT_GB = 'FILE'
                             AND S.TARGET_GB = 'BOARD'
                             AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
                         ";
 
                 $file_data = $_d->getData($sql);
@@ -223,8 +223,8 @@
                                     F.NO = S.SOURCE_NO
                                     AND S.CONTENT_GB = 'FILE'
                                     AND S.TARGET_GB = 'BOARD'
+                                    AND F.FILE_GB = 'MAIN'
                                     AND S.TARGET_NO = ".$row['NO']."
-                                    AND F.THUMB_FL = '0'
                                 ";
 
                         $category_data = $_d->getData($sql);
@@ -313,12 +313,19 @@
                             $uid = uniqid();
                             rename($upload_path.$file[name], $source_path.$uid);
                             rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $insert_path[$i] = array(path => $file_path, uid => $uid);
+
+                            if ($file[version] == 6 ) {
+                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                            } else {
+                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                            }
+
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
                             MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+
                         }
                     }
                 }
@@ -343,9 +350,12 @@
                         ,BOARD_GB
                         ,SYSTEM_GB
                         ,REG_UID
+                        ,NICK_NM
                         ,REG_NM
                         ,REG_DT
                         ,NOTICE_FL
+                        ,SCRAP_FL
+                        ,REPLY_FL
                         ,TAG
                     ) VALUES (
                         '".$_model[PARENT_NO]."'
@@ -356,9 +366,12 @@
                         , '".$_model[BOARD_GB]."'
                         , '".$_model[SYSTEM_GB]."'
                         , '".$_SESSION['uid']."'
+                        , '".$_SESSION['nick']."'
                         , '".$_SESSION['name']."'
                         , SYSDATE()
                         , '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
+                        , '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
+                        , '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
                         , '".$_model[TAG]."'
                     )";
 
@@ -385,6 +398,7 @@
                         ,PATH
                         ,FILE_EXT
                         ,FILE_SIZE
+                        ,FILE_GB
                         ,THUMB_FL
                         ,REG_DT
                         ,FILE_ST
@@ -394,6 +408,7 @@
                         , '".$insert_path[$i][path]."'
                         , '".$file[type]."'
                         , '".$file[size]."'
+                        , '".$file[kind]."'
                         , '0'
                         , SYSDATE()
                         , 'C'
@@ -498,13 +513,18 @@
                             $uid = uniqid();
                             rename($upload_path.$file[name], $source_path.$uid);
                             rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $insert_path[$i] = array(path => $file_path, uid => $uid);
+
+                            if ($file[version] == 6 ) {
+                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                            } else {
+                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                            }
+
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
                             MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
                             MtUtil::_c("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
-
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
 
                             MtUtil::_c("------------>>>>> body_str : ".$body_str);
                         } else {
@@ -624,6 +644,7 @@
                             ,PATH
                             ,FILE_EXT
                             ,FILE_SIZE
+                            ,FILE_GB
                             ,THUMB_FL
                             ,REG_DT
                             ,FILE_ST
@@ -633,6 +654,7 @@
                             , '".$insert_path[$i][path]."'
                             , '".$file[type]."'
                             , '".$file[size]."'
+                            , '".$file[kind]."'
                             , '0'
                             , SYSDATE()
                             , 'C'

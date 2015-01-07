@@ -180,12 +180,13 @@
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                            CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM, (SELECT SECTION_NM FROM CMS_SECTION S WHERE S.NO = SECTION_NO) AS SECTION_NM
+                            CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM, (SELECT SECTION_NM FROM CMS_SECTION S WHERE S.NO = SECTION_NO) AS SECTION_NM,
+                            HIT_CNT, SCRAP_CNT, LIKE_CNT, REPLY_CNT
                         FROM
                         (
                             SELECT
                                 P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
-                                T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, S.SERIES_NM
+                                T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, T.HIT_CNT, T.SCRAP_CNT, T.LIKE_CNT, T.REPLY_CNT, S.SERIES_NM
                             FROM
                                 CMS_TASK T, CMS_PROJECT P
                                 LEFT OUTER JOIN CMS_SERIES S ON S.NO = P.SERIES_NO
@@ -227,37 +228,57 @@
                     $category_data = $_d->getData($sql);
                     $row['CATEGORY'] = $category_data;
 
-                    if ($_search[CONETNT]) {
-                        $sql = "SELECT
-                                    NO, SUPER_NO, PHASE, VERSION, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                                    CURRENT_FL, MODIFY_FL, HIT_CNT, SCRAP_CNT, TASK_NO
-                                FROM
-                                    CMS_CONTENT
-                                WHERE
-                                    CURRENT_FL = 'Y'
-                                    AND TASK_NO = ".$row['NO']."
-                                ";
-
-                        $content_result = $_d->sql_query($sql);
-                        $content_data  = $_d->sql_fetch_array($content_result);
-                        $row['CONTENT'] = $content_data;
-
+                    if ($_search[FILE]) {
                         $sql = "SELECT
                                     F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                                 FROM
-                                    FILE F, CONTENT_SOURCE S
+                                    CMS_CONTENT C, FILE F, CONTENT_SOURCE S
                                 WHERE
-                                    F.NO = S.SOURCE_NO
+                                    C.NO = S.TARGET_NO
+                                    AND F.NO = S.SOURCE_NO
+                                    AND C.TASK_NO = ".$row['NO']."
+                                    AND C.CURRENT_FL = 'Y'
                                     AND S.CONTENT_GB = 'FILE'
                                     AND S.TARGET_GB = 'CONTENT'
-                                    AND S.TARGET_NO = ".$content_data[NO]."
-                                    AND F.THUMB_FL = '1'
+                                    AND F.FILE_GB = 'MAIN'
                                 ";
 
                         $file_result = $_d->sql_query($sql);
                         $file_data = $_d->sql_fetch_array($file_result);
                         $row['FILE'] = $file_data;
                     }
+
+//                    if ($_search[CONETNT]) {
+//                        $sql = "SELECT
+//                                    NO, SUPER_NO, PHASE, VERSION, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+//                                    CURRENT_FL, MODIFY_FL, HIT_CNT, SCRAP_CNT, TASK_NO
+//                                FROM
+//                                    CMS_CONTENT
+//                                WHERE
+//                                    CURRENT_FL = 'Y'
+//                                    AND TASK_NO = ".$row['NO']."
+//                                ";
+//
+//                        $content_result = $_d->sql_query($sql);
+//                        $content_data  = $_d->sql_fetch_array($content_result);
+//                        $row['CONTENT'] = $content_data;
+//
+//                        $sql = "SELECT
+//                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+//                                FROM
+//                                    FILE F, CONTENT_SOURCE S
+//                                WHERE
+//                                    F.NO = S.SOURCE_NO
+//                                    AND S.CONTENT_GB = 'FILE'
+//                                    AND S.TARGET_GB = 'CONTENT'
+//                                    AND S.TARGET_NO = ".$content_data[NO]."
+//                                    AND F.THUMB_FL = '1'
+//                                ";
+//
+//                        $file_result = $_d->sql_query($sql);
+//                        $file_data = $_d->sql_fetch_array($file_result);
+//                        $row['FILE'] = $file_data;
+//                    }
 
                     $__trn->rows[$i] = $row;
                 }
