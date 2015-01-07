@@ -13,6 +13,50 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('board-edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
+        $(document).ready(function(){
+            $("#checkall").click(function(){
+                //클릭되었으면
+                if($("#checkall").prop("checked")){
+                    $("input[name=check]").prop("checked",true);
+                    //클릭이 안되있으면
+                }else{
+                    $("input[name=check]").prop("checked",false);
+                }
+            })
+            $("#check_scrap").click(function(){
+                if(!$("#check_scrap").is(":checked")){
+                    $("#check_scrap").val("Y");
+                }else{
+                    $("#check_scrap").val("N");
+                }
+            });
+
+            $("#check_reply").click(function(){
+                if(!$("#check_reply").is(":checked")){
+                    $("#check_reply").val("Y");
+                }else{
+                    $("#check_reply").val("N");
+                }
+            });
+        });
+
+/*        $(function(){
+            $("#check_scrap").click(function(){
+                if(!$("#check_scrap").is(":checked")){
+                    $("#check_scrap").val("Y");
+                }else{
+                    $("#check_scrap").val("N");
+                }
+            });
+
+            $("#check_reply").click(function(){
+                if(!$("#check_reply").is(":checked")){
+                    $("#check_reply").val("Y");
+                }else{
+                    $("#check_reply").val("N");
+                }
+            });
+        });*/
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
         // 파일 업로드 설정
@@ -112,7 +156,23 @@ define([
             }
 
             if ($stateParams.id == 0) {
-                $scope.insertItem('com/webboard', 'item', $scope.item, false)
+
+
+
+                if($("#check_scrap").is(":checked")){
+                    $scope.item.REPLY_FL = "true"
+                }else{
+                    $scope.item.REPLY_FL = "false"
+                }
+
+                if($("#check_scrap").is(":checked")){
+                    $scope.item.SCRAP_FL = "true"
+                }else{
+                    $scope.item.SCRAP_FL = "false"
+                }
+
+
+               $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
@@ -130,6 +190,7 @@ define([
                         }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
             } else {
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){

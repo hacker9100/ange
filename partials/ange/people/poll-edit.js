@@ -21,24 +21,51 @@ define([
         $scope.answer = {}
         $scope.showDetails = false;
 
-        // 초기화
-        $scope.init = function() { // function(session){
+        $scope.page = 1;
+        $scope.lastPage = 0;
+        $scope.firstIndex=0;
 
-        };
+        $scope.currentPage = 0;
+
+
+        $scope.next_click = function(){
+
+            $scope.firstIndex = parseInt($scope.firstIndex+1);
+            $scope.page =  $scope.page + 2;
+            $scope.currentPage = $scope.currentPage+1;
+
+        }
+
+        $scope.pre_click = function(){
+            $scope.firstIndex = parseInt($scope.firstIndex-1);
+            $scope.page =  $scope.page - 2;
+            $scope.currentPage = $scope.currentPage-1;
+
+        }
 
         // 게시판 조회
         $scope.getAngePoll = function () {
+            $("#select_sort").attr("checked", 'checked');
+
             if ($stateParams.id != 0) {
                 $scope.getItem('ange/poll', 'item', $stateParams.id, {}, false)
                     .then(function(data){
 
                         $scope.item = data;
+                        $scope.lastPage = Math.round(data.QUERY_CNT/2);
 
                         var query = data.QUERY;
 
+                        var select_sort = [];
                         for(var i in query) {
                             $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
+
+
+                            //$("#select_sort").attr('checked', true);
+
+                            $('input:radio[name=q2_'+query[i].QUERY_NO+']').attr('checked','checked');
                         }
+
 
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -114,7 +141,7 @@ define([
         }
 
 
-        $scope.init();
+        //$scope.init();
         $scope.getAngePoll();
     }]);
 });

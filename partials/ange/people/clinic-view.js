@@ -74,7 +74,7 @@ define([
                     .then(function(data){
                         $scope.item = data;
 
-                        if(data.REPLY_FL == 'N'){
+                        if(data.REPLY_YN == 'N'){
                             $scope.item.BODY;
                         } else {
                             $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
