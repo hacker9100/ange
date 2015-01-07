@@ -235,7 +235,7 @@
                     break;
                 }
 
-                if ( !isset($_model[PHASE]) || $_model[PHASE] == "" ) {
+                if ( !isset($_model[PHASE]) || $_model[PHASE] == "" || $_model[PHASE] == "0") {
                     $_model[PHASE] = '10';
                 }
 

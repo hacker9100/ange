@@ -13,11 +13,11 @@
     $_d = new MtJson();
 
     $sql = "SELECT
-                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, CHANNEL_GB, DROP_FL, POSITION
+                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION
             FROM
                 COM_CHANNEL
             WHERE
-                CHANNEL_GB = 'CMS'
+                SYSTEM_GB = 'CMS'
                 AND CHANNEL_ST = 'Y'
             ORDER BY CHANNEL_NO ASC
             ";
@@ -27,14 +27,14 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_ID, MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
+                    MENU_ID, MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
                 FROM
                     COM_MENU
                 WHERE
-                    MENU_GB = 'CMS'
+                    SYSTEM_GB = 'CMS'
                     AND MENU_ST = 'Y'
                     AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
-                ORDER BY SORT_IDX ASC
+                ORDER BY MENU_ORD ASC
                 ";
 
         $menu_data = $_d->getData($sql);
@@ -46,12 +46,13 @@
     $channel_data = $__trn->{'rows'};
 
     $sql = "SELECT
-                MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, MENU_DESC, TAIL_DESC
+                MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, MENU_DESC, TAIL_DESC
             FROM
                 COM_MENU
             WHERE
-                MENU_GB  = 'CMS'
-            ORDER BY SORT_IDX ASC
+                SYSTEM_GB  = 'CMS'
+                AND MENU_ST  = 'Y'
+            ORDER BY MENU_ORD ASC
             ";
 
     $__trn = '';
@@ -64,7 +65,7 @@
                     COM_SUB_MENU
                 WHERE
                     MENU_URL = '".$row[MENU_URL]."'
-                ORDER BY SORT_IDX ASC
+                ORDER BY ROW_ORD ASC
                 ";
 
         $sub_menu_data = $_d->getData($sql);

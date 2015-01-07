@@ -20,7 +20,7 @@ define([
     '../../../partials/ange/main',
 
     '../../../partials/ange/story/list',
-    '../../../partials/ange/people/home',
+    '../../../partials/ange/people/peoplehome',
     '../../../partials/ange/people/poll-list',
     '../../../partials/ange/people/board-list',,
     '../../../partials/ange/people/board-edit',
@@ -33,11 +33,56 @@ define([
     '../../../partials/ange/people/photo-edit',
     '../../../partials/ange/people/photo-view',
 
+    // 앙쥬맘스
+    '../../../partials/ange/moms/momshome',
+    '../../../partials/ange/moms/momsboard-list',
+    '../../../partials/ange/moms/momsexperience-list',
+    '../../../partials/ange/moms/momsexperience-edit',
+    '../../../partials/ange/moms/momsexperience-view',
+    '../../../partials/ange/moms/momsevent-list',
+    '../../../partials/ange/moms/momsevent-edit',
+    '../../../partials/ange/moms/momsevent-view',
+    '../../../partials/ange/moms/momsreview-list',
+    '../../../partials/ange/moms/momsreview-edit',
+    '../../../partials/ange/moms/momsreview-view',
+    '../../../partials/ange/moms/samplepack-intro',
+    '../../../partials/ange/moms/samplepack-edit',
+    '../../../partials/ange/moms/supporter-intro',
 
-    '../../../partials/ange/join/join-terms',
-    '../../../partials/ange/join/join-userinfo',
-    '../../../partials/ange/join/join-certification',
-    '../../../partials/ange/join/join-result',
+    // 마이앙쥬
+    '../../../partials/ange/myange/myangehome',
+    '../../../partials/ange/myange/myangecalendar',
+    '../../../partials/ange/myange/myangealbum',
+    '../../../partials/ange/myange/myangeaccount',
+    '../../../partials/ange/myange/myangebaby',
+    '../../../partials/ange/myange/myangegroup',
+    '../../../partials/ange/myange/myangemate',
+    '../../../partials/ange/myange/myangewriting',
+    '../../../partials/ange/myange/myangescrap',
+    '../../../partials/ange/myange/myangemileage',
+    '../../../partials/ange/myange/myangemessage',
+    '../../../partials/ange/myange/myangecoupon',
+
+    // 앙쥬스토어
+    '../../../partials/ange/store/storehome',
+    '../../../partials/ange/store/storemall-list',
+    '../../../partials/ange/store/storemall-view',
+    '../../../partials/ange/store/storeauction-intro',
+    '../../../partials/ange/store/storeauction-list',
+    '../../../partials/ange/store/storeauction-view',
+    '../../../partials/ange/store/storephotozone-list',
+    '../../../partials/ange/store/storenaming-intro',
+    '../../../partials/ange/store/storenaming-request',
+    '../../../partials/ange/store/storenaming-dream',
+
+    // 고객센터
+    '../../../partials/ange/infodesk/infodeskhome',
+
+    // 회원가입
+    '../../../partials/ange/join/jointerms',
+    '../../../partials/ange/join/joinuserinfo',
+    '../../../partials/ange/join/joincertification',
+    '../../../partials/ange/join/joinresult',
 
 
     // ADMIN 로그인

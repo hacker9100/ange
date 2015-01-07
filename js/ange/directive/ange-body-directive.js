@@ -22,15 +22,32 @@ define(['./directives'], function (directives) {
                         url = menu[1];
                         break;
                     case 3 :
-                        url = menu[1] + '/' + menu[2];
+                        url = menu[1] + '/' + menu[1] + menu[2];
                         break;
                     default :
+                        // 앙쥬피플
                         if (menu[2] == 'angeroom' || menu[2] == 'momstalk' || menu[2] == 'babycare' || menu[2] == 'firstbirthtalk' || menu[2] == 'booktalk'){
                             menu[2] = 'board';
                         } else if (menu[2] == 'angemodel' || menu[2] == 'recipearcade' || menu[2] == 'peopletaste'){
                             menu[2] = 'photo';
                         } else if (menu[2] == 'childdevelop' || menu[2] == 'chlidoriental' || menu[2] == 'obstetrics' || menu[2] == 'momshealth' || menu[2] == 'financial'){
                             menu[2] = 'clinic';
+                        // 앙쥬맘스
+                        } else if (menu[2] == 'experienceprocess' || menu[2] == 'experiencepast') {
+                            menu[2] = menu[1] + 'experience';
+                        } else if (menu[2] == 'eventprocess' || menu[2] == 'eventperformance') {
+                            menu[2] = menu[1] + 'event';
+                        } else if (menu[2] == 'experiencewinner' || menu[2] == 'eventwinner' || menu[2] == 'supporterboard') {
+                            menu[2] = menu[1] + 'board';
+                        } else if (menu[2] == 'experiencereview' || menu[2] == 'productreview' || menu[2] == 'angereview' || menu[2] == 'samplereview' || menu[2] == 'samplepackreview') {
+                            menu[2] = menu[1] + 'review';
+                        } else if (menu[2] == 'ranknow' || menu[2] == 'rankbest') {
+                            menu[2] = menu[1] + 'rank';
+                        // 앙쥬스토어
+                        } else if (menu[2] == 'mileagemall' || menu[2] == 'cummerce') {
+                            menu[2] = menu[1] + 'mall';
+                        } else {
+                            menu[2] = menu[1] + menu[2];
                         }
 
                         url = menu[1] + '/' + menu[2] + '-' + menu[3];
