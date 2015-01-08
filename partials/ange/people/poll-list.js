@@ -13,6 +13,19 @@ define([
     // 사용할 서비스를 주입
     controllers.controller("poll-list", ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
 
+        $(function(){
+            $("#poll_st").click(function(){
+                // 진행중 체크박스
+                if($("#poll_st").is(":checked")){ // 진행중 체크했을때
+                    $scope.search['POLL_ST'] = 0;
+                    $scope.getAngePollList();
+                }else{
+                    $scope.search['POLL_ST'] = ''; // 안했을때
+                    $scope.getAngePollList();
+                }
+            });
+        });
+
         // 페이징
         $scope.PAGE_NO = 0;
         $scope.PAGE_SIZE = 20;
