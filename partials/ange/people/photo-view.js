@@ -21,6 +21,8 @@ define([
         $scope.search = {SYSTEM_GB: 'ANGE'};
         $scope.reply = {};
 
+        $scope.replyList = [];
+
         // 초기화
         $scope.init = function(session) {
             if ($stateParams.menu == 'angemodel') {
@@ -85,7 +87,30 @@ define([
             }
         };
 
-        // 답글 등록
+        // 댓글 리스트
+        $scope.getPeopleReplyList = function () {
+
+            $scope.search.TARGET_NO = $stateParams.id;
+
+            $scope.getItem('com/reply', 'item', {}, $scope.search, true)
+                .then(function(data){
+
+                    var reply = data.COMMENT;
+
+                    console.log('reply =' +reply);
+                    console.log('end');
+
+                    for(var i in reply) {
+                        $scope.replyList.push({"NO":reply[i].NO,"PARENT_NO":reply[i].PARENT_NO,"COMMENT":reply[i].COMMENT,"RE_COUNT":reply[i].RE_COUNT,"REPLY_COMMENT":reply[i].REPLY_COMMENT,"LEVEL":reply[i].LEVEL,"REPLY_NO":reply[i].REPLY_NO});
+                    }
+
+                    console.log('RE = '+data.COMMENT);
+                    console.log('end');
+                })
+                .catch(function(error){$scope.replyList = "";});
+        };
+
+        // 의견 등록
         $scope.click_savePeopleBoardComment = function () {
 
             $scope.item.PARENT_NO = 0;
@@ -99,42 +124,36 @@ define([
                 .then(function(){
 
                     $scope.search.TARGET_NO = $stateParams.id;
+                    $scope.replyList = [];
                     $scope.getPeopleReplyList();
+
+                    //$scope.replyList.push({"NO":0,"PARENT_NO":$scope.item.PARENT_NO,"COMMENT":$scope.item.COMMENT,"RE_COUNT":0,"REPLY_COMMENT":'',"LEVEL":$scope.item.LEVEL,"REPLY_NO":$scope.item.REPLY_NO});
+
+                    $scope.item.COMMENT = "";
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-        // 대댓글
-        $scope.click_savePeopleBoardReComment = function () {
-            //  console.log( $scope.reply.PARENT_NO);
+        // 답글 등록
+        $scope.click_savePeopleBoardReComment = function (item) {
 
-            $scope.reply.PARENT_NO = $("#parent_no").val();
-            $scope.reply.LEVEL = parseInt($("#level").val())+1;
-            $scope.reply.REPLY_NO = parseInt($("#reply_no").val())+1;
+            $scope.reply.PARENT_NO = item.NO;
+            $scope.reply.LEVEL = parseInt(item.LEVEL)+1;
+            $scope.reply.REPLY_NO = parseInt(item.REPLY_NO)+1;
             $scope.reply.TARGET_GB = "BOARD";
             $scope.reply.TARGET_NO = $stateParams.id;
 
+            $scope.REPLY_COMMENT = $scope.reply;
 
             $scope.insertItem('com/reply', 'item', $scope.reply, false)
                 .then(function(){
-
                     $scope.search.TARGET_NO = $stateParams.id;
+                    $scope.replyList = [];
                     $scope.getPeopleReplyList();
+                    $scope.reply.COMMENT = "";
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
-
-        // 댓글 리스트
-        $scope.getPeopleReplyList = function () {
-
-            $scope.search.TARGET_NO = $stateParams.id;
-
-            $scope.getList('com/reply', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-                .then(function(data){
-                    $scope.replyList = data;
-                })
-                .catch(function(error){$scope.replyList = "";});
-        };
 
         // 이전글
         $scope.getPreBoard = function (){
@@ -215,6 +234,58 @@ define([
             });
         }
 
+        // 공감
+        $scope.click_likeCntAdd = function(item){
+
+            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
+                .then(function(){
+
+                    dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
+                    $scope.getPeopleBoard();
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
+        // 스크랩
+        $scope.click_scrapAdd = function(item){
+
+            $scope.search['TARGET_NO'] = item.NO;
+
+            // $scope.search['USER_UID'] = 'test'; 세션 uid를 저장해야함
+            $scope.search['REG_UID'] = 'hong'; // 테스트
+
+            $scope.getList('com/scrap', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var scrap_cnt = data[0].SCRAP_CNT;
+
+                    if (scrap_cnt == 1) {
+                        dialogs.notify('알림', '이미 스크랩 된 게시물 입니다.', {size: 'md'});
+                    } else {
+
+                        $scope.scrap = {};
+
+                        $scope.scrap.TARGET_NO = item.NO;
+                        $scope.scrap.TARGET_GB = item.BOARD_GB;
+
+                        // [테스트] 등록자아이디, 등록자명, 닉네임 은 세션처리 되면 삭제할예정
+                        $scope.scrap.REG_UID = 'hong';
+                        $scope.scrap.NICK_NM = '므에에롱';
+                        $scope.scrap.REG_NM = '홍길동';
+
+                        $scope.insertItem('com/scrap', 'item', $scope.scrap, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '스크랩 되었습니다.', {size: 'md'});
+                                $scope.getPeopleBoard();
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+        };
+
         /********** 화면 초기화 **********/
         /*        $scope.getSession()
          .then($scope.sessionCheck)
@@ -224,10 +295,9 @@ define([
         $scope.init();
         $scope.addHitCnt();
         $scope.getPeopleBoard();
-        $scope.getPeopleReplyList();
         $scope.getPreBoard();
         $scope.getNextBoard();
-
+        $scope.getPeopleReplyList();
 
     }]);
 });

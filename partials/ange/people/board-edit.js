@@ -16,8 +16,10 @@ define([
         $(document).ready(function(){
             $("#checkall").click(function(){
                 //클릭되었으면
-                if($("#checkall").prop("checked")){
-                    $("input[name=check]").prop("checked",true);
+                if($("#checkall").is(":checked")){
+                    $("input[name=check]").attr("checked",true);
+                    $scope.item.SCRAP_FL = "true";
+                    $scope.item.REPLY_FL = "true";
                     //클릭이 안되있으면
                 }else{
                     $("input[name=check]").prop("checked",false);
@@ -202,20 +204,6 @@ define([
 
             } else {
 
-/*
-                if($("#check_scrap").is(":checked")){
-                    $scope.item.REPLY_FL = "true"
-                }else{
-                    $scope.item.REPLY_FL = "false"
-                }
-
-                if($("#check_scrap").is(":checked")){
-                    $scope.item.SCRAP_FL = "true"
-                }else{
-                    $scope.item.SCRAP_FL = "false"
-                }
-*/
-
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
 
@@ -236,6 +224,8 @@ define([
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
+
+
 
         /********** 화면 초기화 **********/
 /*        $scope.getSession()

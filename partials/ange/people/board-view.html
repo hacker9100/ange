@@ -94,6 +94,7 @@
                                             <a class="btn people_btn submit" title="등록하기" style="display:none;">등록</a>
                                             <a class="btn people_btn cancel" title="작성취소" style="display:none;">취소</a>
                                             <a class="btn people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeopleBoardEdit(item);">수정</a>
+                                            <a class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeopleBoardDelete(item);">삭제</a>
                                         </div>
                                     </div><!-- /.row -->
                                 </div><!-- /.container -->
@@ -142,7 +143,7 @@
                                             <div class="col-xs-2 peopleboard_view_btns">
 
                                                 <span>(500자 이내)</span>
-                                                <a class="reply_submit" ng-click="click_savePeopleBoardComment(comment);">댓글등록</a>
+                                                <a class="reply_submit" ng-click="click_savePeopleBoardComment();">댓글등록</a>
 
                                             </div><!-- /.col-xs-2-->
                                         </div><!-- /.row -->
