@@ -11,7 +11,10 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('board-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
+    controllers.controller('board-list', ['$scope', '$rootScope','$stateParams','$q', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $q, $location, dialogs, ngTableParams) {
+
+        /********** 공통 controller 호출 **********/
+        //angular.extend(this, $controller('ange-common', {$scope: $rootScope}));
 
         $scope.search = {};
 
@@ -37,6 +40,8 @@ define([
         var today = year+'-'+mm+'-'+dd;
 
         $scope.todayDate = today;
+
+        //$scope.uid = $rootScope.uid;
 
 
 
@@ -137,8 +142,22 @@ define([
             $scope.getPeopleBoardList();
         }
 
+        /********** 화면 초기화 **********/
+
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .catch($scope.reportProblems);
+
+
         $scope.init();
         $scope.getPeopleBoardList();
 
+/*        $scope.test = function(session){
+            console.log(session);
+        }
+
+        $scope.test();*/
+
+        //console.log($scope.$parent.sessionInfo);
     }]);
 });

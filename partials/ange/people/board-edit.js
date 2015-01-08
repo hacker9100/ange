@@ -304,6 +304,11 @@ define([
             .then($scope.init)
             .then($scope.getCmsBoard)
             .catch($scope.reportProblems);*/
+
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .catch($scope.reportProblems);
+
         $scope.init();
         $scope.getPeopleBoard();
 

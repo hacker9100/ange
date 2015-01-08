@@ -352,6 +352,7 @@
                         ,SYSTEM_GB
                         ,REG_UID
                         ,REG_NM
+                        ,NICK_NM
                         ,REG_DT
                         ,NOTICE_FL
                         ,SCRAP_FL
@@ -372,6 +373,7 @@
                         , '".$_model[BOARD_GB]."'
                         , '".$_model[SYSTEM_GB]."'
                         , '".$_SESSION['uid']."'
+                        , '".$_SESSION['nick_nm']."'
                         , '".$_SESSION['name']."'
                         , SYSDATE()
                         , '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
