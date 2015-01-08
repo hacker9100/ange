@@ -552,8 +552,9 @@
                         ,BODY = '".$_model[BODY]."'
                         ,REG_UID = '".$_model[REG_UID]."'
                         ,REG_NM = '".$_model[REG_NM]."'
-                        ,REG_DT = SYSDATE()
                         ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
+                        ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
+                        ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
                         ,TAG = '".$_model[TAG]."'
                     WHERE
                         NO = ".$_key."
