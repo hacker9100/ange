@@ -51,6 +51,19 @@
                                         </div><!-- /.col-xs-4-->
                                     </div><!-- /.row -->
 
+                                    <div style="float:left; padding:3px; font-size:0.80em;">
+                                        <div style="display:inline; bottom:8px; right:0;">
+                                            <span class="feed_count countlike_color table_gray">{{item.LIKE_CNT}}</span>		<!-- 공감수 -->
+                                            <span class="feed_count countreply_color table_gray">{{item.REPLY_COUNT}}</span>	<!-- 댓글수 -->
+                                        </div>
+
+                                        <!--<div class="people_share" style="float:right; line-height:20px; vertical-align:top;">-->
+                                        <button class="people_sharebtn redbtn" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공 감</button>
+                                        <button ng-show="item.SCRAP_FL == 'Y'" class="people_sharebtn redbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>스크랩</button>
+                                        <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>프린트</button>
+                                        <!--</div>-->
+                                    </div>
+
                                 </div><!-- /.container -->
 
                                 <div class="container-fluid peopleboard_view_contentwrap">
@@ -124,7 +137,7 @@
                                 </div><!-- /.container -->
 
 
-                                <div class="container-fluid peopleboard_view_commentwrap">
+                                <div class="container-fluid peopleboard_view_commentwrap" ng-show="item.REPLY_YN == 'N'">
                                     <div class="row peopleboard_view_commenttop">
                                         <div class="col-xs-12 peopleboard_view_commenttitle">
                                             <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">전문가 답변</span>

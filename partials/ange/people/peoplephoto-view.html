@@ -1,4 +1,4 @@
-<div ng-controller="photo-view">
+<div ng-controller="peoplephoto-view">
     <!-- mainbar -->
     <div class="mainbar sub-slide0">
         <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
@@ -63,7 +63,7 @@
 
                                         <!-- Editor CSS 적용 -->
                                         <!-- template -->
-                                        <div class="template_recipe">
+                                        <div class="template_recipe" ng-show="community_show == 'recipearcade'">
                                             <div class="infobox_row">
                                                 <div class="template_col_title">카테고리</div>
                                                 <div class="template_col_body">
@@ -88,13 +88,13 @@
                                             <div class="infobox_row">
                                                 <div class="template_col_title">조리시간</div>
                                                 <div class="template_col_body">
-                                                    <span>연어뱃살,  아스파라거스, 양송이버섯(선호하는 다른 채소 등등)</span>
+                                                    <span>{{item.ETC4}}</span>
                                                 </div>
                                             </div>
                                             <div class="infobox_row">
                                                 <div class="template_col_title">분량</div>
                                                 <div class="template_col_body">
-                                                    <span>연어뱃살,  아스파라거스, 양송이버섯(선호하는 다른 채소 등등)</span>
+                                                    <span>{{item.ETC5}}</span>
                                                 </div>
                                             </div>
                                             <p>&nbsp;</p>
@@ -159,7 +159,7 @@
                                     <div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">
                                         <a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>
                                     </div><!-- /.col-xs-10-->
-                                    <div data-ng-show="preBoardView == false" class="col-xs-10  board_basicinfo_subject">
+                                    <div data-ng-show="preBoardView == false || preBoardView == '' || preBoardView == null" class="col-xs-10  board_basicinfo_subject">
                                         이전 글이 없습니다
                                     </div><!-- /.col-xs-10-->
                                 </div><!-- /.row -->

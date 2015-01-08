@@ -27,10 +27,13 @@ define([
         $scope.init = function(session) {
             if ($stateParams.menu == 'angemodel') {
                 $scope.community = "앙쥬모델 선발대회";
+                $scope.community_show = "angemodel";
             } else if($stateParams.menu == 'recipearcade') {
                 $scope.community = "레시피 아케이드";
+                $scope.community_show = "recipearcade";
             } else if($stateParams.menu == 'peopletaste') {
                 $scope.community = "피플 맛집";
+                $scope.community_show = "peopletaste";
             }
         };
 
@@ -135,6 +138,8 @@ define([
                     //$scope.replyList.push({"NO":0,"PARENT_NO":$scope.item.PARENT_NO,"COMMENT":$scope.item.COMMENT,"RE_COUNT":0,"REPLY_COMMENT":'',"LEVEL":$scope.item.LEVEL,"REPLY_NO":$scope.item.REPLY_NO});
 
                     $scope.item.COMMENT = "";
+
+                    $scope.getPeopleBoard();
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
@@ -156,6 +161,8 @@ define([
                     $scope.replyList = [];
                     $scope.getPeopleReplyList();
                     $scope.reply.COMMENT = "";
+
+                    $scope.getPeopleBoard();
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
@@ -202,7 +209,7 @@ define([
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
-                    .catch(function(error){$scope.preBoardView = "";})
+                    .catch(function(error){$scope.nextBoardView = "";})
             }
         }
 

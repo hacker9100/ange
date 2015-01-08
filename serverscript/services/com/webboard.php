@@ -59,11 +59,12 @@
                 $msg = "";
 
                 $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG,
-                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL
+                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5
                     FROM (
                         SELECT
                           B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
-                          (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL
+                          (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT, B.BOARD_GB
+                          , B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5
                         FROM
                           COM_BOARD B
                         WHERE
@@ -78,7 +79,7 @@
                 }
 
                 $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
                         FROM
                             FILE F, CONTENT_SOURCE S
                         WHERE
@@ -156,14 +157,14 @@
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                           SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NM,
                           (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT, BOARD_REPLY_COUNT,
-	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL
+	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, IFNULL (PASSWORD, 0) AS PASSWORD_FL
                         FROM
                         (";
 
                 $select1 = "SELECT
                                 '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, '' AS COMM_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -175,7 +176,7 @@
                 $select2 = "SELECT
                                 '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, IFNULL(C.COMM_NM, '') AS COMM_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -356,6 +357,12 @@
                         ,SCRAP_FL
                         ,REPLY_FL
                         ,TAG
+                        ,ETC1
+                        ,ETC2
+                        ,ETC3
+                        ,ETC4
+                        ,ETC5
+                        ,PASSWORD
                     ) VALUES (
                         '".$_model[PARENT_NO]."'
                         ,'".$_model[COMM_NO]."'
@@ -374,6 +381,9 @@
                         , '".$_model[ETC1]."'
                         , '".$_model[ETC2]."'
                         , '".$_model[ETC3]."'
+                        , '".$_model[ETC4]."'
+                        , '".$_model[ETC5]."'
+                        , '".$_model[PASSWORD]."'
                     )";
 
             $_d->sql_query($sql);
@@ -402,6 +412,7 @@
                         ,THUMB_FL
                         ,REG_DT
                         ,FILE_ST
+                        ,FILE_GB
                     ) VALUES (
                         '".$file[name]."'
                         , '".$insert_path[$i][uid]."'
@@ -411,6 +422,7 @@
                         , '0'
                         , SYSDATE()
                         , 'C'
+                        , '".$file[kind]."'
                     )";
 
                     $_d->sql_query($sql);
@@ -560,9 +572,16 @@
                             ,BODY = '".$_model[BODY]."'
                             ,REG_UID = '".$_model[REG_UID]."'
                             ,REG_NM = '".$_model[REG_NM]."'
-                            ,REG_DT = SYSDATE()
                             ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
+                            ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
+                            ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
                             ,TAG = '".$_model[TAG]."'
+                            ,ETC1 = '".$_model[ETC1]."'
+                            ,ETC2 = '".$_model[ETC2]."'
+                            ,ETC3 = '".$_model[ETC3]."'
+                            ,ETC4 = '".$_model[ETC4]."'
+                            ,ETC5 = '".$_model[ETC5]."'
+                            ,PASSWORD = '".$_model[PASSWORD]."'
                         WHERE
                             NO = ".$_key."
                         ";
@@ -639,6 +658,7 @@
                                 ,THUMB_FL
                                 ,REG_DT
                                 ,FILE_ST
+                                ,FILE_GB
                             ) VALUES (
                                 '".$file[name]."'
                                 , '".$insert_path[$i][uid]."'
@@ -648,6 +668,8 @@
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
+                                , '".$file[size]."'
+                                , '".$file[kind]."'
                             )";
     
                             $_d->sql_query($sql);

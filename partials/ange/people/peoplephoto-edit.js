@@ -119,10 +119,13 @@ define([
         $scope.init = function(session) {
             if ($stateParams.menu == 'angemodel') {
                 $scope.community = "앙쥬모델 선발대회";
+                $scope.community_show = "angemodel";
             } else if($stateParams.menu == 'recipearcade') {
                 $scope.community = "레시피 아케이드";
+                $scope.community_show = "recipearcade";
             } else if($stateParams.menu == 'peopletaste') {
                 $scope.community = "피플 맛집";
+                $scope.community_show = "peopletaste";
             }
         };
 
@@ -157,6 +160,18 @@ define([
                     .then(function(data){
                         $scope.item = data;
                         $scope.item.NOTICE_FL == 'Y' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
+
+                        if($scope.item.SCRAP_FL == 'Y'){
+                            $("#check_scrap").attr("checked",true);
+                        }else{
+                            $("#check_scrap").attr("checked",false);
+                        }
+
+                        if($scope.item.REPLY_FL == 'Y'){
+                            $("#check_reply").attr("checked",true);
+                        }else{
+                            $("#check_reply").attr("checked",false);
+                        }
 
                         var files = data.FILES;
                         for(var i in files) {

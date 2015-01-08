@@ -15,6 +15,18 @@ define([
 
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
+        $(document).ready(function(){
+
+            $("#check_scrap").click(function(){
+                if(!$("#check_scrap").is(":checked")){
+                    $scope.item.SCRAP_FL = "true";
+                }else{
+                    $scope.item.SCRAP_FL = "false";
+                }
+            });
+
+        });
+
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
@@ -102,6 +114,13 @@ define([
             }
 
             if ($stateParams.id == 0) {
+
+                if($("#check_scrap").is(":checked")){
+                    $scope.item.SCRAP_FL = "true"
+                }else{
+                    $scope.item.SCRAP_FL = "false"
+                }
+
                 $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
 
@@ -121,6 +140,13 @@ define([
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
+
+                if($("#check_scrap").is(":checked")){
+                    $scope.item.SCRAP_FL = "true"
+                }else{
+                    $scope.item.SCRAP_FL = "false"
+                }
+
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
 

@@ -71,7 +71,7 @@
                                     <td><span class="board_th">제목</span></td>
                                     <td width="92" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80"><span class="board_th">작성일</span></td>
-                                    <td width="60" align="center"><span class="board_th">상태</span></td>
+                                    <td width="60" align="center"><span class="board_th">답변</span></td>
                                 </tr>
                                 </thead>
 
@@ -82,7 +82,7 @@
                                         <span>{{item.RNUM}}</span>
                                     </td>
                                     <td>
-                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                        <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
                                         {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
                                         <!--<span class="reply_num">[2]</span>-->
                                         <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>

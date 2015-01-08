@@ -73,192 +73,95 @@
                                     <!-- /비밀번호 : 상담게시판에서만 보입니다. -->
 
                                     <!-- file drag-in Box -->
-                                    <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
+                                    <!--<form id="fileupload" method="POST" enctype="multipart/form-data" ng-controller="file" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">-->
+                                    <form id="fileupload" method="POST" enctype="multipart/form-data" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
+                                        <input type="hidden" id="version" name="version" value="6">
 
-                                        <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">
-                                            파일
-                                        </label>
+                                        <!-- file drag-in Box -->
+                                        <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
 
-                                        <div class="col-xs-8 dragzone_wrap">
-                                            <div class="dragzone">
+                                            <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">
+                                                파일
+                                            </label>
 
-                                                <div class="files_row">
-                                                    <input type="checkbox" style="vertical-align: top;" aria-label="...">
-                                                    <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
-                                                    <span class="filename">첨부파일_1.jpg</span>
-                                                    <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">38.56KB</div>
+                                            <div class="col-xs-8 dragzone_wrap">
+                                                <div id="dropzone" name="dropzone" class="dragzone">
+
+                                                    <div data-ng-repeat="file in queue">
+                                                        <div class="files_row">
+                                                            <input type="checkbox" checklist-model="checkFile" checklist-value="file" style="vertical-align: top;" aria-label="...">
+                                                            <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
+                                                            <span class="filename">{{file.name}}</span>
+                                                            <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">{{file.size | formatFileSize}}</div>
+                                                            <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;" data-ng-show="file.error">{{file.error}}</div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
+                                            </div><!-- /.col-xs-4 -->
 
-                                                <div class="files_row">
-                                                    <input type="checkbox" style="vertical-align: top;" aria-label="...">
-                                                    <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
-                                                    <span class="filename">첨부파일_111111111.jpg</span>
-                                                    <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">1038.56KB</div>
-                                                </div>
+                                            <div class="col-xs-3" style="padding:0 0 0 4px; height:100%;">
+                                                <button class="dagbox_btn fil2com large">
+                                                    <div>
+                                                        <div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>
+                                                        <div style="width:63%; float:right; text-align:left;">
+                                                            <strong>내 PC에서</strong><br/>
+                                                            <span style="font-size:0.72em;">첨부파일 찾기</span>
+                                                        </div>
+                                                        <input type="file" name="files[]" multiple ng-disabled="disabled" />
+                                                    </div>
+                                                </button>
+                                                <!-- span class="glyphicon glyphicon-ok"></span -->
+                                                <!-- button class="dagbox_btn selectall"><span class="glyphicon glyphicon-ok"></span> 전체선택</button>
+                                                <button class="dagbox_btn add"><span class="glyphicon glyphicon-circle-arrow-right"></span> 본문추가</button>
+                                                <button class="dagbox_btn delete"><span class="glyphicon glyphicon-remove"></span> 선택삭제</button -->
+                                            </div><!-- /.col-xs-2 -->
 
-                                                <div class="files_row">
-                                                    <input type="checkbox" style="vertical-align: top;" aria-label="...">
-                                                    <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
-                                                    <span class="filename">첨부파일_1.jpg</span>
-                                                    <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">38.56KB</div>
-                                                </div>
+                                        </div><!-- /.row -->
+                                        <!-- /file drag-in Box -->
 
-                                                <div class="files_row">
-                                                    <input type="checkbox" style="vertical-align: top;" aria-label="...">
-                                                    <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
-                                                    <span class="filename">첨부파일_1.jpg</span>
-                                                    <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">38.56KB</div>
-                                                </div>
+                                        <!-- image thumbnails -->
+                                        <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
 
-                                                <div class="files_row">
-                                                    <input type="checkbox" style="vertical-align: top;" aria-label="...">
-                                                    <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
-                                                    <span class="filename">첨부파일_1.jpg</span>
-                                                    <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">38.56KB</div>
-                                                </div>
+                                            <label class="col-xs-1">
 
-                                            </div>
-                                        </div><!-- /.col-xs-4 -->
+                                            </label>
 
-                                        <div class="col-xs-3" style="padding:0 0 0 4px; height:100%;">
-                                            <button class="dagbox_btn fil2com large">
-                                                <div>
-                                                    <div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>
-                                                    <div style="width:63%; float:right; text-align:left;">
-                                                        <strong>내 PC에서</strong><br/>
-                                                        <span style="font-size:0.72em;">첨부파일 찾기</span>
+                                            <div class="col-xs-11 col-xs-offset-1" style="padding:0;">
+                                                <div class="thumbnailzone">
+
+<!--                                                    <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
+                                                        별모양을 클릭하여 대표이미지를 지정하세요.
+                                                        <span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>
+                                                    </div>-->
+
+                                                    <!-- Thumbnail List -->
+                                                    <div data-ng-repeat="file in queue">
+                                                        <div class="thumbnails selectedthumb" ng-style="{'background-image': 'url({{file.thumbnailUrl}})'}">
+                                                            <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                                            <div  class="thumbnails_img_check"><input type="checkbox" checklist-model="checkFile" checklist-value="file"></div>
+                                                            <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                                                <a title="대표이미지로 지정" ng-click="click_selectMainImage(file)" ng-show="file.kind != 'MAIN'"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                                                <img src="/imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" ng-show="file.kind == 'MAIN'"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /Thumbnail List -->
+
+                                                    <div class="thumbnails_func" style="padding: 10px 0;">
+                                                        <a ng-class="checkAll ? 'thumbnails_func_selectall allselected' : 'thumbnails_func_selectall'" ng-click="click_checkAllToggle()"></a>
+                                                        <!-- span class="thumbnails_func_selectall allselected"></span -->	<!-- allselected : 토글 -->
+                                                        <a class="thumbnails_func_selectadd" ng-click="click_checkFileEditor()"></a>
+                                                        <a class="thumbnails_func_selectdel" ng-click="click_checkFileDestroy()"></a>
                                                     </div>
                                                 </div>
-                                            </button>
-                                            <!-- span class="glyphicon glyphicon-ok"></span -->
-                                            <!-- button class="dagbox_btn selectall"><span class="glyphicon glyphicon-ok"></span> 전체선택</button>
-                                            <button class="dagbox_btn add"><span class="glyphicon glyphicon-circle-arrow-right"></span> 본문추가</button>
-                                            <button class="dagbox_btn delete"><span class="glyphicon glyphicon-remove"></span> 선택삭제</button -->
-                                        </div><!-- /.col-xs-2 -->
+                                            </div><!-- /.col-xs-4 -->
 
-                                    </div><!-- /.row -->
+                                        </div><!-- /.row -->
+                                        <!-- image thumbnails -->
+                                    </form><!-- /.row -->
                                     <!-- /file drag-in Box -->
 
-                                    <!-- image thumbnails -->
-                                    <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
-
-                                        <label class="col-xs-1">
-
-                                        </label>
-
-                                        <div class="col-xs-11 col-xs-offset-1" style="padding:0;">
-                                            <div class="thumbnailzone">
-
-                                                <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
-                                                    별모양을 클릭하여 대표이미지를 지정하세요.
-                                                    <span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>
-                                                </div>
-
-                                                <!-- Thumbnail List -->
-                                                <div class="thumbnails selectedthumb" style="background-image: url('/imgs/ange/temp/temp_recipe_01.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:none;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:block;"/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_03.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_01.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_03.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_01.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_03.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-                                                <div class="thumbnails" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');">
-                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                                    <div  class="thumbnails_img_check"><input type="checkbox"></div>
-                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
-                                                        <a href="#" title="대표이미지로 지정" style="display:block;"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
-                                                        <img src="imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" style="display:none;"/>
-                                                    </div>
-                                                </div>
-                                                <!-- /Thumbnail List -->
-
-                                                <div class="thumbnails_func" style="float:right; padding: 10px 0;">
-                                                    <a href="#" class="thumbnails_func_selectall"></a>
-                                                    <!-- span class="thumbnails_func_selectall allselected"></span -->	<!-- allselected : 토글 -->
-                                                    <a href="#" class="thumbnails_func_selectadd"></a>
-                                                    <a href="#" class="thumbnails_func_selectdel"></a>
-                                                </div>
-                                            </div>
-                                        </div><!-- /.col-xs-4 -->
-
-                                    </div><!-- /.row -->
-                                    <!-- image thumbnails -->
 
                                 </div> <!-- /.peopleboard_edit_topwrap -->
 

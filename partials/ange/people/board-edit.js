@@ -67,6 +67,65 @@ define([
         // 파일 업로드 완료 후 에디터에 중간 사이즈 이미지 추가
         $scope.addEditor = true;
 
+        $scope.checkAll = false;
+        $scope.checkFile = [];
+
+        $scope.click_selectMainImage = function (file) {
+
+            angular.forEach($scope.queue, function(file) {
+                file.kind = '';
+            });
+
+            if (file.kind == 'MAIN') {
+                file.kind = '';
+            } else {
+                file.kind = 'MAIN';
+            }
+        };
+
+        $scope.click_checkAllToggle = function () {
+            $scope.checkAll = !$scope.checkAll;
+
+            if ($scope.checkAll) {
+                $scope.checkFile = angular.copy($scope.queue);
+            } else {
+//                angular.forEach($scope.select, function(file) {
+//                    $scope.select.pop();
+//                });
+                $scope.checkFile = [];
+//                $scope.checkFile.splice(0, $scope.checkFile.length);
+            }
+//            console.log($scope.checkFile)
+        };
+
+        var state;
+        $scope.click_checkFileDestroy = function () {
+            angular.forEach($scope.checkFile, function(file) {
+                state = 'pending';
+                return $http({
+                    url: file.deleteUrl,
+                    method: file.deleteType
+                }).then(
+                    function () {
+                        state = 'resolved';
+                        $scope.clear(file);
+                    },
+                    function () {
+                        state = 'rejected';
+                    }
+                );
+            });
+        };
+
+        $scope.click_checkFileEditor = function () {
+            angular.forEach($scope.checkFile, function(file) {
+                if (!angular.isUndefined(CKEDITOR)) {
+                    var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.url+'" />' );
+                    CKEDITOR.instances.editor1.insertElement( element );
+                }
+            });
+        };
+
         /********** 초기화 **********/
             // 첨부파일 초기화
         $scope.queue = [];
@@ -203,6 +262,18 @@ define([
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             } else {
+
+                if($("#check_scrap").is(":checked")){
+                    $scope.item.REPLY_FL = "true"
+                }else{
+                    $scope.item.REPLY_FL = "false"
+                }
+
+                if($("#check_scrap").is(":checked")){
+                    $scope.item.SCRAP_FL = "true"
+                }else{
+                    $scope.item.SCRAP_FL = "false"
+                }
 
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
