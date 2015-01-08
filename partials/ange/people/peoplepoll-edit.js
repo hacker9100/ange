@@ -2,7 +2,7 @@
  * Author : Yiseul.Choi
  * Email  : cys1128@marveltree.com
  * Date   : 2015-01-02
- * Description : poll-edit.html 화면 콘트롤러
+ * Description : peoplepoll-edit.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller("poll-edit", ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
+    controllers.controller("peoplepoll-edit", ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
 
         // 게시판 초기화
         $scope.item = {};

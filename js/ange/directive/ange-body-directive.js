@@ -32,8 +32,8 @@ define(['./directives'], function (directives) {
                             menu[2] = menu[1] + 'photo';
                         } else if (menu[2] == 'childdevelop' || menu[2] == 'chlidoriental' || menu[2] == 'obstetrics' || menu[2] == 'momshealth' || menu[2] == 'financial'){
                             menu[2] = 'clinic';
-                        }else if (menu[2] == 'poll'){
-                            menu[2] = 'poll';
+//                        }else if (menu[2] == 'poll'){
+//                            menu[2] = 'poll';
                         // 앙쥬맘스
                         } else if (menu[2] == 'experienceprocess' || menu[2] == 'experiencepast') {
                             menu[2] = menu[1] + 'experience';
