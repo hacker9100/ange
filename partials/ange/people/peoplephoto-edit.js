@@ -15,6 +15,35 @@ define([
 
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
+        $(document).ready(function(){
+            $("#checkall").click(function(){
+                //클릭되었으면
+                if($("#checkall").is(":checked")){
+                    $("input[name=check]").attr("checked",true);
+                    $scope.item.SCRAP_FL = "true";
+                    $scope.item.REPLY_FL = "true";
+                    //클릭이 안되있으면
+                }else{
+                    $("input[name=check]").prop("checked",false);
+                }
+            })
+            $("#check_scrap").click(function(){
+                if(!$("#check_scrap").is(":checked")){
+                    $scope.item.SCRAP_FL = "true";
+                }else{
+                    $scope.item.SCRAP_FL = "false";
+                }
+            });
+
+            $("#check_reply").click(function(){
+                if(!$("#check_reply").is(":checked")){
+                    $scope.item.REPLY_FL = "true";
+                }else{
+                    $scope.item.REPLY_FL = "false";
+                }
+            });
+        });
+
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 

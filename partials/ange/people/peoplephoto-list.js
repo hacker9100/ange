@@ -116,7 +116,7 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
                 })
-                .catch(function(error){$scope.item = ""});
+                .catch(function(error){$scope.list = ""});
         };
 
         // 조회 화면 이동
