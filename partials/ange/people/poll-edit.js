@@ -27,6 +27,7 @@ define([
 
         $scope.currentPage = 0;
 
+        $scope.search = {};
 
         $scope.next_click = function(){
 
@@ -72,16 +73,35 @@ define([
             }
         };
 
-        $scope.click_saveAngePoll = function () {
+        $scope.click_saveAngePoll = function (no) {
 
 
-            $scope.insertItem('ange/poll', 'answear', $scope.queue, false)
-                .then(function(){
-                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                    $location.url('/people/poll/list');
+            $scope.search['BOARD_NO'] = no;
+
+            // $scope.search['USER_UID'] = 'test'; 세션 uid를 저장해야함
+            $scope.search['USER_UID'] = 'test'; // 테스트
+
+            // 설문조사 참여여부 체크
+            // 사용자아이디와 설문조사 번호를 가지고 조회하여
+            // cnt가 1일때 목록으로 이동 아니면 저장
+            $scope.getList('ange/poll', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var answer_cnt = data[0].POLL_ANSWER_CNT;
+
+                    if (answer_cnt == 1) {
+                        dialogs.notify('알림', '이미 이 설문조사에 참여하셨습니다.', {size: 'md'});
+                        $location.url('/people/poll/list');
+                    } else {
+                        $scope.insertItem('ange/poll', 'answear', $scope.queue, false)
+                            .then(function(){
+                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                                $location.url('/people/poll/list');
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
 
              /*$("input[id=select_sort]:checked").each(function(index,element){
 

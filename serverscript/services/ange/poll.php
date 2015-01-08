@@ -60,6 +60,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 $sql = "SELECT
                             NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, REG_DT
+                            , (SELECT COUNT(DISTINCT USER_UID) AS POLL_ANSWER_CNT FROM ANGE_POLL_ANSWEAR WHERE BOARD_NO = ".$_key.") AS POLL_ANSWER_CNT
                         FROM
                             ANGE_POLL
                         WHERE
@@ -181,6 +182,20 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }else{
                     $_d->dataEnd($sql);
                 }
+            } else if ($_type == "check") {
+
+                $sql = "SELECT COUNT(DISTINCT USER_UID) AS POLL_ANSWER_CNT
+                        FROM ANGE_POLL_ANSWEAR
+                        WHERE POLL_NO = ".$_search[BOARD_NO]."
+                          AND USER_UID = '".$_search[USER_UID]."'";
+
+                $data = $_d->sql_query($sql);
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
+
             }
 
             break;
@@ -297,6 +312,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                     QUERY_NO
                                     ,QUERY_SORT
                                     ,USER_UID
+                                    ,POLL_NO
                                     ,NICK_NM
                                     ,SELECT_ANSWEAR
                                     ,NOTE
@@ -305,6 +321,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                     '".$s[SELECT_ANSWER][QUERY_NO]."'
                                     ,'".$s[SELECT_ANSWER][QUERY_SORT]."'
                                     ,'hong'
+                                    ,'".$s[SELECT_ANSWER][BOARD_NO]."'
                                     , '므에에롱'
                                     ,'".$s[SELECT_ANSWER][SELECT_SORT]."'
                                     ,'".$s[SELECT_ANSWER][NOTE]."'

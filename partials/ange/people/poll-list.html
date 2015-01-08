@@ -78,9 +78,11 @@
 
                                 <!--<tr class="primary"><td class="table_no"><span class="table_blue">공지</span></td><td></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>-->
 
-                                    <tr ng-class="item.END_DT <= todayDate ? '' : 'ended'" ng-click="click_showViewAngePoll(item.BOARD_NO)">
+                                    <!--<tr ng-class="item.END_YMD <= todayDate ? '' : 'ended'" ng-click="click_showViewAngePoll(item.NO)">-->
+                                    <tr ng-class="item.POLL_ST == 0 ? '' : 'ended'" ng-click="click_showViewAngePoll(item.NO)">
                                         <td class="table_no">{{item.RNUM}}</td>
-                                        <td><span ng-class="item.END_DT <= todayDate ? 'table_red' : 'table_gray'">{{item.END_DT <= todayDate ? '진행중' : '완료'}}</span></td>
+                                        <td><span ng-class="item.POLL_ST == 0 ? 'table_red' : 'table_gray'">{{item.POLL_ST == 0 ? '진행중' : '완료'}}</span></td>
+                                        <!--<td><span ng-class="item.END_YMD <= todayDate ? 'table_red' : 'table_gray'">{{item.END_YMD <= todayDate ? '진행중' : '완료'}}</span></td>-->
                                         <td valign="middle">{{item.SUBJECT}}</td>
                                         <td class="table_date">{{item.START_YMD}}~<br />{{item.END_YMD}}</td>
                                     </tr>

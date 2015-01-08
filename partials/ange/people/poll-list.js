@@ -84,6 +84,9 @@ define([
                 }
             });*/
 
+            $scope.search['SORT'] = 'REG_DT';
+            $scope.search['ORDER'] = 'DESC';
+
             $scope.getList('ange/poll', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
@@ -98,7 +101,7 @@ define([
         // 조회 화면 이동
         $scope.click_showViewAngePoll = function (key) {
             /*$location.url('/people/poll/edit/'+key);*/
-            $location.url('/people/poll/edit/1');
+            $location.url('/people/poll/edit/'+key);
         };
 
         /********** 화면 초기화 **********/
