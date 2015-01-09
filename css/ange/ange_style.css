@@ -1107,9 +1107,17 @@ tbody.on{
 }
 
 .sub_contents_title {
-    position:relative;
+    position: relative;
     border:1px solid transparent;
     margin-bottom:40px;
+}
+
+.sub_contents_slogan {
+    position: absolute;
+    font-size:0.64em;
+    color: #fb6362;
+    line-height:18px;
+    margin-top:5px;
 }
 
 .sub_contents_title p {
