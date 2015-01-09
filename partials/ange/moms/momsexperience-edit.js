@@ -13,6 +13,19 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsexperience-edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
+
+        $(document).ready(function(){
+
+            $("#check_pregfl").click(function(){
+                if(!$("#check_pregfl").is(":checked")){
+                    $scope.item.PREG_FL = "true";
+                }else{
+                    $scope.item.PREG_FL = "false";
+                }
+            });
+
+        });
+
         // 초기화
         $scope.init = function(session) {
             if ($stateParams.menu == 'experienceprocess') {
@@ -22,6 +35,25 @@ define([
             }
         };
 
+        $scope.click_savePeopleClinic = function () {
+            $scope.item.SYSTEM_GB = 'ANGE';
+
+
+            if($("#check_pregfl").is(":checked")){
+                $scope.item.PREG_FL = "true";
+            }else{
+                $scope.item.PREG_FL = "false"
+            }
+
+                $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                    .then(function(){
+
+                        dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                        $location.url('/moms/experienceprocess/list');
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+        };
         /********** 이벤트 **********/
         // 게시판 목록 이동
 //        $scope.click_showPeopleBoardList = function () {

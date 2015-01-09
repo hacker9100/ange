@@ -13,12 +13,17 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsexperience-list', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
+        $scope.search = {};
         // 초기화
         $scope.init = function(session) {
             if ($stateParams.menu == 'experienceprocess') {
                 $scope.community = "진행중인 체험단";
+                $scope.search.EVENT_GB = "EXPERIENCE";
+                $scope.search.PROCESS = "process";
             } else if ($stateParams.menu == 'experiencepast') {
                 $scope.community = "지난 체험단";
+                $scope.search.EVENT_GB = "EXPERIENCE";
+                $scope.search.PAST = "past";
             }
         };
 
@@ -38,5 +43,25 @@ define([
             .catch($scope.reportProblems);*/
         $scope.init();
 
+        // 게시판 목록 조회
+        $scope.getPeopleBoardList = function () {
+
+            $scope.search.SYSTEM_GB = 'ANGE';
+            /*            $scope.search.SORT = 'NOTICE_FL';
+             $scope.search.ORDER = 'DESC'*/
+
+            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
+
+                    /*$scope.total(total_cnt);*/
+                    $scope.list = data;
+
+                })
+                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+        };
+
+        $scope.getPeopleBoardList();
     }]);
 });
