@@ -41,6 +41,9 @@ define([
                     $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){
                         $scope.item = data;
                     }),
+                    $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:5}, {EDITOR_ID: data.EDITOR_ID}, false).then(function(data){
+                        $scope.editor = data;
+                    }),
                     $scope.getList('ad/banner', 'list', {NO:$scope.PAGE_NO, SIZE:1}, $scope.search, false).then(function(data){
                         for (var i in data) {
                             if (data[i].FILE.PATH != undefined) {

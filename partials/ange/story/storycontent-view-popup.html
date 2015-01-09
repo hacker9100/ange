@@ -12,9 +12,50 @@
 
         </div>
 
-        - 에디터 -
-        <div ng-model="edit">
+        - 에디터 - {{item.EDITOR_ID}}
+        <div>
+            <!-- peoplepoll_list -->
+            <table id="comp_board_table" class="table table-hover">
 
+                <thead>
+                <tr class="board_thead" height="48">
+                    <td width="9%" align="center"><span class="board_th">번호</span></td>
+                    <td><span class="board_th">제목</span></td>
+                    <td width="92" align="center"><span class="board_th">작성자</span></td>
+                    <td width="80"><span class="board_th">작성일</span></td>
+                    <td width="60" align="center"><span class="board_th">조회</span></td>
+                </tr>
+                </thead>
+
+                <tbody class="on" ng-repeat="item in editor">
+
+                <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                    <td class="table_no">
+                        <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.RNUM}}</span>
+                    </td>
+                    <td>
+                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                        {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                        <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? [item.REPLY_COUNT] : ''}}</span>
+                        <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                        <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                        <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                    </td>
+                    <td  class="table_author">{{item.NICK_NM}}</td>
+                    <td class="table_date">{{item.REG_DT}}</td>
+                    <td class="table_hit">{{item.HIT_CNT}}</td></tr>
+                </tr>
+
+                </tbody>
+
+                <tbody class="on" data-ng-show="editor == '' || editor == null">
+
+                <tr>
+                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                </tr>
+
+                </tbody>
+            </table><!-- /.List-->
         </div>
 
         - 관련상품 -
@@ -29,7 +70,7 @@
 
         </div>
 
-        <div ng-model="reply">
+        <div>
 
             <div>
                 <div class="container-fluid peopleboard_view_commentwrap">
