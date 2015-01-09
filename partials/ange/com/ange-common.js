@@ -15,15 +15,22 @@ define([
 
         $scope.path = $location.path();
 
+        $scope.channel = '1';
+
+        // 현재 메뉴 정보
+        for (var i in $rootScope.ange_menu) {
+            if ($rootScope.ange_menu[i].MENU_URL == $location.path()) {
+                $scope.menu = $rootScope.ange_menu[i];
+            }
+        }
+
+        // url 주소 분리
+        $scope.url = $scope.location.split('/');
+
         // 메인 화면 class
         $scope.ui_wraptype = "content_wrap";
 
-        $scope.channel = '1';
-
-        // url 주소 분리
-        $scope.menu = $scope.location.split('/');
-
-        switch($scope.menu[1]) {
+        switch($scope.url[1]) {
             case 'main' :
                 $scope.ui_wraptype = 'content_wrap';
                 break;
@@ -118,7 +125,6 @@ define([
 
         // 세션 조회
         $scope.getSession = function() {
-            console.log("--->>getSession");
             var deferred = $q.defer();
 
             dataService.getSession(function(data, status) {
@@ -149,7 +155,6 @@ define([
 
         // 세션 체크
         $scope.sessionCheck = function(session) {
-            console.log("--->>sessionCheck");
             if (session.USER_ID == undefined || session.USER_ID == '') {
                 $rootScope.session = null;
 

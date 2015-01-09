@@ -76,11 +76,7 @@ define([
                 $scope.community = "피플 맛집";
             }
 
-            for (var i in $rootScope.ange_menu) {
-                if ($rootScope.ange_menu[i].MENU_URL == $location.url()) {
-                    $scope.tabs = $rootScope.ange_menu[i].SUB_MENU_INFO;
-                }
-            }
+            $scope.tabs = $scope.menu.SUB_MENU_INFO;
         };
 
         /********** 이벤트 **********/

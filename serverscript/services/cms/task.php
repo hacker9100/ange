@@ -154,40 +154,72 @@
                     if (isset($_search[EDITOR_ID]) && $_search[EDITOR_ID] != "") {
                         $search_where .= "AND T.EDITOR_ID  = '".$_search[EDITOR_ID]."' ";
                     }
-                    if (isset($_search[CATEGORY]) && $_search[CATEGORY] != "") {
+                    if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
+//                        $where_category = $_search[CATEGORY_NO];
+//
+//                        if (!isset($_search[CATEGORY]) || $_search[CATEGORY] == "") {
+                            $from_category .= ",(
+                                              SELECT
+                                                  TARGET_NO
+                                              FROM
+                                                  CONTENT_CATEGORY
+                                              WHERE CATEGORY_NO IN (".$_search[CATEGORY_NO].")
+                                              GROUP BY TARGET_NO
+                                          ) AS TEMP1 ";
+
+                            $search_where .= "AND TEMP1.TARGET_NO = T.NO ";
+//                        }
+                    }
+
+                    if (isset($_search[CATEGORY]) && count($_search[CATEGORY]) != 0) {
                         $where_category = "";
 
-                        MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".(count($_search[CATEGORY]) == 1));
-                        MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".($_search[CATEGORY][CATEGORY_GB] == "2"));
-                        MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".($_search[CATEGORY][PARENT_NO] == "0"));
-
-                        if (count($_search[CATEGORY]) == 1 && $_search[CATEGORY][0][CATEGORY_GB] == 2 && $_search[CATEGORY][0][PARENT_NO] == 0) {
-                            $from_category = ",(
-                                              SELECT
-                                                    TARGET_NO
-                                              FROM
-                                                    CONTENT_CATEGORY CC, CMS_CATEGORY C
-                                              WHERE CC.CATEGORY_NO = C.NO
-                                              AND C.PARENT_NO = ".$_search[CATEGORY][0][NO]."
-                                              GROUP BY TARGET_NO
-                                          ) AS C ";
-                        } else {
+//                        if (count($_search[CATEGORY]) == 1 && $_search[CATEGORY][0][CATEGORY_GB] == 2 && $_search[CATEGORY][0][PARENT_NO] == 0) {
+//                            $from_category = ",(
+//                                              SELECT
+//                                                    TARGET_NO
+//                                              FROM
+//                                                    CONTENT_CATEGORY CC, CMS_CATEGORY C
+//                                              WHERE CC.CATEGORY_NO = C.NO
+//                                              AND C.PARENT_NO = ".$_search[CATEGORY][0][NO]."
+//                                              GROUP BY TARGET_NO
+//                                          ) AS C ";
+//                        } else {
                             for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
                                 $category = $_search[CATEGORY][$i];
-                                $where_category .= $category[NO].($i != count($_search[CATEGORY]) - 1 ? "," : "");
-                            }
 
-                            $from_category = ",(
+                                if ($category[CATEGORY_GB] == 2 && $category[PARENT_NO] == 0) {
+                                    $sql = "SELECT
+                                                NO
+                                            FROM
+                                                CMS_CATEGORY
+                                            WHERE
+                                                CATEGORY_ST = '0'
+                                                AND CATEGORY_GB = '2'
+                                                AND PARENT_NO = ".$category[PARENT_NO]."
+                                            ";
+
+                                    $result = $_d->sql_query($sql,true);
+
+                                    for ($j=0; $row=$_d->sql_fetch_array($result); $j++) {
+                                        $where_category .= $row[NO].($j != $_d->mysql_num_rows - 1 ? "," : "");
+                                    }
+                                } else {
+                                    $where_category .= $category[NO].($i != count($_search[CATEGORY]) - 1 ? "," : "");
+                                }
+//                            }
+
+                            $from_category .= ",(
                                               SELECT
                                                   TARGET_NO
                                               FROM
                                                   CONTENT_CATEGORY
                                               WHERE CATEGORY_NO IN (".$where_category.")
                                               GROUP BY TARGET_NO
-                                          ) AS C ";
+                                          ) AS TEMP2 ";
                         }
 
-                        $search_where .= "AND C.TARGET_NO = T.NO ";
+                        $search_where .= "AND TEMP2.TARGET_NO = T.NO ";
                     }
                 }
 
