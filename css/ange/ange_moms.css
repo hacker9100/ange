@@ -37,10 +37,12 @@
     line-height:20px;
     font-size:0.86em;
     padding: 15px;
+    width: 100%;
+    border-bottom: 2px solid #ccc;
 }
 
 .webzine_list_infowrap dl{
-
+    margin:0px;
 }
 
 .webzine_list_infowrap dt{
@@ -48,7 +50,7 @@
 }
 
 .webzine_list_infowrap dd{
-    padding: 4px 0;
+    padding: 4px 0 4px 8px;
 }
 
 .webzine_list_item {
