@@ -320,9 +320,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                 ) VALUES (
                                     '".$s[SELECT_ANSWER][QUERY_NO]."'
                                     ,'".$s[SELECT_ANSWER][QUERY_SORT]."'
-                                    ,'hong'
+                                    ,'".$_SESSION['uid']."'
                                     ,'".$s[SELECT_ANSWER][BOARD_NO]."'
-                                    , '므에에롱'
+                                    ,'".$_SESSION['name']."'
                                     ,'".$s[SELECT_ANSWER][SELECT_SORT]."'
                                     ,'".$s[SELECT_ANSWER][NOTE]."'
                                     ,SYSDATE()
