@@ -1,0 +1,174 @@
+<div ng-controller="peopleclinic-list">
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+            <div class="row">
+
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
+
+                        <div class="sub_contents_wrap">
+
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a></h3>
+                            </div>
+
+                            <div class="container-fluid sub_contents_search">
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding:0">
+
+                                        <!--                                        <div class="btn-group" style="float:left;">
+                                                                                    <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
+
+                                                                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                                                        <span class="caret"></span>
+                                                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                                                    </button>
+
+                                                                                    <ul class="dropdown-menu" role="menu">
+                                                                                        <li><a href="#">제목+내용</a></li>
+                                                                                        <li><a href="#">작성자</a></li>
+                                                                                    </ul>-->
+                                        <div class="btn-group" style="float:left;">
+                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
+                                        </div><!-- /btn-group -->
+
+                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
+                                            <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+
+												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+												</span>
+                                        </div>
+
+                                        <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" />
+                                                </span>
+                                                <input type="text" class="form-control table_filtercheck" placeholder="진행중" style="background:#fff; padding-top: 2px; cursor:default; font-size: 0.86em;" disabled />
+                                            </div>
+                                        </div -->
+
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
+                        </div><!-- /.sub_contents_wrap -->
+
+
+                        <div class="sub_contents_body">
+
+                            <!-- peoplepoll_list -->
+                            <table id="comp_board_table" class="table table-hover">
+
+                                <thead>
+                                <tr class="board_thead" height="48">
+                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
+                                    <td><span class="board_th">제목</span></td>
+                                    <td width="92" align="center"><span class="board_th">작성자</span></td>
+                                    <td width="80"><span class="board_th">작성일</span></td>
+                                    <td width="60" align="center"><span class="board_th">답변</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody class="on" ng-repeat="item in list">
+
+                                <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                    <td class="table_no">
+                                        <span>{{item.RNUM}}</span>
+                                    </td>
+                                    <td>
+                                        <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
+                                        {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                        <!--<span class="reply_num">[2]</span>-->
+                                        <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                                        <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                        <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                                    </td>
+                                    <td  class="table_author">{{item.NICK_NM}}</td>
+                                    <td class="table_date">{{item.REG_DT}}</td>
+                                    <td class="table_hit">{{item.BOARD_REPLY_FL}}</td></tr>
+                                </tr>
+
+                                </tbody>
+
+                                <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                <tr>
+                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                </tr>
+
+                                </tbody>
+                            </table><!-- /.List-->
+
+                            <nav class="text-center">
+                                <ul class="pagination pagination-sm table_paging">
+                                    <li class="disabled">
+                                        <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
+                                    </li>
+                                    <li class="disabled">
+                                        <a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
+                                    </li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li>
+                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
+                                    </li>
+                                </ul>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                        </div><!-- /.sub_contents_body -->
+
+                        <!-- 등록 -->
+                        <a class="btn people_btn submit" title="등록하기" ng-click="click_showCreatePeopleClinic()();">등록</a>
+
+                        <div class="sub_contents_ads" style="display:none;">
+                            <div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> <!-- rows -->
+
+
+        </div><!-- container-fluid -->
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div class="copyright_foot">
+            <br /><br />
+            <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+                <hr style="margin:0 15px 0 15px;" />
+
+                <center>
+                    <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+                </center>
+            </nav>
+        </div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
+
+    </div>
+
+    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
+        <div class="row">
+            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
+                우측바
+            </div>
+        </div>
+    </div>
+
+    <!-- /Main Page Layout Set -->
+</div>

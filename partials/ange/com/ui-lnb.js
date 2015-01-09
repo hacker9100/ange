@@ -25,6 +25,36 @@ define([
 //            }
 //        });
 
+        /********** 초기화 **********/
+        // 카테고리 데이터
+        $scope.category = [];
+
+        // 초기화
+        $scope.init = function() {
+            $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
+
+                $scope.category = data;
+
+                var category_a = [];
+                var category_b = [];
+
+                for (var i in data) {
+                    var item = data[i];
+
+                    if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
+                        category_a.push(item);
+                    } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
+                        category_b.push(item);
+                    }
+                }
+
+                $scope.category_a = category_a;
+                $scope.category_b = category_b;
+                alert(category_b);
+            })
+            .catch(function(error){$scope.projects = []; console.log(error)});
+        };
+
         /********** 좌측 메뉴 **********/
 //        var menu = $filter('filter')($rootScope.ange_menu, function (data) {
 //            return (data.MENU_URL.indexOf(menu[1]) > -1)
@@ -37,6 +67,9 @@ define([
         })[0];
 
         $scope.item = channel;
+
+        /********** 화면 초기화 **********/
+        $scope.init();
 
 //        $scope.selectMenu = function(menu) {
 //            if ($scope.permissionCheck(menu.MENU_URL, false)) {

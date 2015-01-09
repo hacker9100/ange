@@ -19,19 +19,22 @@ define([
 
     '../../../partials/ange/main',
 
-    '../../../partials/ange/story/list',
+    // 앙쥬스토리
+    '../../../partials/ange/story/storycontent-list',
+
+    // 앙쥬피플
     '../../../partials/ange/people/peoplehome',
-    '../../../partials/ange/people/poll-list',
-    '../../../partials/ange/people/board-list',,
-    '../../../partials/ange/people/board-edit',
-    '../../../partials/ange/people/board-view',
-    '../../../partials/ange/people/poll-edit',
-    '../../../partials/ange/people/clinic-list',
-    '../../../partials/ange/people/clinic-edit',
-    '../../../partials/ange/people/clinic-view',
-    '../../../partials/ange/people/photo-list',
-    '../../../partials/ange/people/photo-edit',
-    '../../../partials/ange/people/photo-view',
+    '../../../partials/ange/people/peoplepoll-list',
+    '../../../partials/ange/people/peoplepoll-edit',
+    '../../../partials/ange/people/peopleboard-list',,
+    '../../../partials/ange/people/peopleboard-edit',
+    '../../../partials/ange/people/peopleboard-view',
+    '../../../partials/ange/people/peopleclinic-list',
+    '../../../partials/ange/people/peopleclinic-edit',
+    '../../../partials/ange/people/peopleclinic-view',
+    '../../../partials/ange/people/peoplephoto-list',
+    '../../../partials/ange/people/peoplephoto-edit',
+    '../../../partials/ange/people/peoplephoto-view',
 
     // 앙쥬맘스
     '../../../partials/ange/moms/momshome',

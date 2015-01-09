@@ -1,0 +1,54 @@
+<div class="lnb_filter">
+
+    <span style="float:left; width:100%; text-align:center; line-height:18px; font-size:0.86em; color:#646464;"> - 콘텐츠 모아보기 - </span>
+
+    <!-- bootstrap form style -->
+    <div class="btn-group" style="float:left; width:100%; margin:10px 0 4px 0;">
+        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="width:100%;">
+        육아단계별 <span class="caret" style="float:right; margin:8px 4px 0 0"></span>
+        </button>
+
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="category in category_a">
+                <a ng-click="click_selectCategory(category)">{{category.CATEGORY_NM}}</a>
+            </li>
+        </ul>
+
+        <!--<ul class="dropdown-menu" role="menu">-->
+            <!--<li><a href="#">Action</a></li>-->
+            <!--<li><a href="#">Another action</a></li>-->
+            <!--<li><a href="#">Something else here</a></li>-->
+            <!--<li class="divider"></li>-->
+            <!--<li><a href="#">Separated link</a></li>-->
+        <!--</ul>-->
+    </div>
+
+    <div class="btn-group" style="float:left; width:100%; margin:0 0 10px 0;">
+        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false"  style="width:100%;">
+        주제별 <span class="caret" style="float:right; margin:8px 4px 0 0"></span>
+        </button>
+
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="category in category_b">
+                <a ng-click="click_selectCategory(category)">{{category.CATEGORY_NM}}</a>
+            </li>
+        </ul>
+
+        <!--<ul class="dropdown-menu" role="menu">-->
+            <!--<li><a href="#">Action</a></li>-->
+            <!--<li><a href="#">Another action</a></li>-->
+            <!--<li><a href="#">Something else here</a></li>-->
+            <!--<li class="divider"></li>-->
+            <!--<li><a href="#">Separated link</a></li>-->
+        <!--</ul>-->
+    </div>
+
+    <div style="float:left; width:100%; font-size:0.86em; padding-left:4px; border-top:1px dotted #AAA;">
+        <div class="checkbox">
+            <input type="checkbox" value="">
+            내게 필요한 정보 모아보기
+        </div>
+    </div>
+    <!-- /bootstrap form style -->
+
+</div>
