@@ -1,0 +1,57 @@
+/* ++moms common css  */
+
+.webzine_moms_list {
+    width:100%;
+    margin:15px auto;
+}
+
+.webzine_list_title {
+    float:left;
+    position:relative;
+    height:100%;
+    font-size:1.08em;
+    word-break:keep-all;
+    margin-left:260px;
+    font-weight:700;
+    line-height:18px;
+    padding: 4px;
+}
+
+.webzine_moms_featureimg {
+    width:250px;
+    border:1px solid #d7d7d7;
+}
+
+.webzine_list_bottomwrap {
+    position:absolute;
+    bottom:10px;
+    font-size:0.78em;
+    font-weight:400;
+    line-height:14px;
+}
+
+.webzine_list_item {
+    margin-top:10px;
+    padding-left:4px;
+    border-left: 2px solid #fb6362;
+}
+
+.webzine_list_btn {
+    margin-bottom: 6px;
+    font-size: 0.76em;
+    background: none;
+}
+
+.webzine_list_btn.default {
+    border:1px solid #888;
+    border-radius: 10px;
+    background-color: #fff;
+    color:#444;
+}
+
+.webzine_list_btn.red {
+    border:1px solid #fb6362;
+    border-radius: 10px;
+    background-color: #fb6362;
+    color:#fff;
+}

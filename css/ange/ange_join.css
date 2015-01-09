@@ -54,3 +54,145 @@
 	font-size: 1.42em; 
 	padding-bottom:16px;
 }
+
+.join_agree_wrap {
+    margin-top:40px;
+}
+
+.join_agree_title {
+    color:#464646;
+}
+
+.join_agree_box {
+    height:196px;
+    border:1px solid #ddd;
+    overflow:auto;
+    overflow-x:hidden;
+}
+
+.ange_terms {
+    font-family: 돋움, arial, san-serif;
+    color: #666;
+    border:none;
+    background-color:#fff;
+}
+
+.join_agree_check {
+    float:right;
+    font-size:0.92em;
+    text-align:right;
+    line-height: 21px;
+}
+
+.join_agree_totalcheck {
+    margin-top:80px;
+    border-top:2px solid #000;
+}
+
+.join_step_btn {
+    float:left;
+    width:100%;
+    padding: 40px 0;
+    text-align:center;
+    display:block;
+    margin-bottom:40px;
+}
+.join_stepbtn {
+    padding:18px 24px;
+    margin:0 2px;
+    font-size:1.28em;
+    background: #AAA;
+    border:1px solid transparent;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 600;
+    opacity: 0.75;
+    line-height:14px;
+}
+
+.join_stepbtn:hover {
+    opacity: 1;
+}
+
+
+.join_stepbtn.cancel {
+    background-color: #8f8f8f;
+}
+
+.join_stepbtn.prev {
+    background-color: #4cace8;
+}
+
+.join_stepbtn.next {
+    background-color: #4cace8;
+}
+
+.join_stepbtn.cancel span {
+    font-weight: 400;
+    font-size: 0.94em;
+    vertical-align: bottom;
+}
+
+.join_stepbtn.next span, .join_stepbtn.prev span{
+    font-weight: 400;
+    font-size: 0.94em;
+}
+
+
+.form_rows {
+    float:left;
+    margin:0px auto;
+    width:100%;
+    padding:0;
+    border-bottom:1px solid #ddd
+}
+
+.form_rows.bottom {
+    margin-bottom: 60px;
+}
+
+.form_basicinfo {
+    float:left;
+    width:100%;
+    padding:0;
+}
+
+.basicinfo {
+    margin:0;
+    padding:6px 0;
+    line-height: 32px;
+    vertical-align: bottom;
+}
+
+.basicinfo.divide{
+    padding-bottom:8px;
+    margin-top:8px;
+    border-top:1px dashed #ddd;
+}
+
+.basicinfo.title{
+    text-align: center;
+}
+
+.basicinfo.subtitle {
+    text-align: center;
+    font-size: 0.86em;
+    padding-left: 8px;
+    color:#646464;
+}
+
+.basicinfo.desc{
+    text-align: left;
+    font-size: 0.86em;
+    padding-left: 8px;
+}
+
+.inline_input {
+    margin:0px;
+}
+
+.form_col_lg {
+    float:left;
+    padding: 50px 0;
+    margin-bottom: 25px;
+}
