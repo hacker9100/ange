@@ -58,7 +58,7 @@ define(['./directives'], function (directives) {
 
                 templet = '<div ng-if="'+ (menu[1] != 'main') + '" id="lnb" class="lnb"' +
                         '   <div class="localmenu_wrap">' +
-                        '       <div ng-include=" \'/partials/ange/com/lnb_filter.html\' "></div>';
+                        '       <div ng-include=" \'/partials/ange/com/lnb-filter.html\' "></div>';
 
                 for (var j in channel.MENU_INFO) {
                     if (channel.MENU_INFO[j].DIVIDER_FL == 'Y' && j != 0) {
@@ -82,7 +82,7 @@ define(['./directives'], function (directives) {
                     }
                 }
 
-                templet += '       <div ng-include=" \'/partials/ange/com/lnb_handle.html\' "></div>' +
+                templet += '       <div ng-include=" \'/partials/ange/com/lnb-handle.html\' "></div>' +
                         '   </div>' +
                         '</div>';
 
@@ -90,9 +90,47 @@ define(['./directives'], function (directives) {
             },
             controller: ['$scope', '$location', function($scope, $location) {
 
+                /********** 초기화 **********/
+                // 카테고리 데이터
+                $scope.category = [];
+
+                // 초기화
+                $scope.init = function() {
+                    $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
+
+                        $scope.category = data;
+
+                        var category_a = [];
+                        var category_b = [];
+
+                        for (var i in data) {
+                            var item = data[i];
+
+                            if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
+                                category_a.push(item);
+                            } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
+                                category_b.push(item);
+                            }
+                        }
+
+                        $scope.category_a = category_a;
+                        $scope.category_b = category_b;
+                    })
+                        .catch(function(error){$scope.projects = []; console.log(error)});
+                };
+
+                /********** 이벤트 **********/
                 $scope.click_selectMenu = function(url, link) {
                     $location.url(url);
                 };
+
+                $scope.click_selectCategory = function(category) {
+                    $scope.category = category;
+                    $scope.getContentList();
+                };
+
+                /********** 화면 초기화 **********/
+                $scope.init();
             }]
         }
     }]);

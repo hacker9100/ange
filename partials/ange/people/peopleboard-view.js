@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-12-31
- * Description : board-view.html 화면 콘트롤러
+ * Description : peopleboard-view.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('board-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('peopleboard-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
 
         $scope.queue = [];
         // 게시판 초기화

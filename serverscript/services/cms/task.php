@@ -107,9 +107,6 @@
                     $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
-                MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".$_search);
-                MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".count($_search));
-
 //                if ($_SESSION['role'] != 'CMS_ADMIN' && $_SESSION['role'] != 'MANAGER') {
 //                    $search_where .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
 //                }
@@ -159,12 +156,28 @@
                     }
                     if (isset($_search[CATEGORY]) && $_search[CATEGORY] != "") {
                         $where_category = "";
-                        for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
-                            $category = $_search[CATEGORY][$i];
-                            $where_category .= $category[NO].($i != count($_search[CATEGORY]) - 1 ? "," : "");
-                        }
 
-                        $from_category = ",(
+                        MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".(count($_search[CATEGORY]) == 1));
+                        MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".($_search[CATEGORY][CATEGORY_GB] == "2"));
+                        MtUtil::_c("### [search>>>>>>>>>>>>>>>>>>>>>>>>]".($_search[CATEGORY][PARENT_NO] == "0"));
+
+                        if (count($_search[CATEGORY]) == 1 && $_search[CATEGORY][0][CATEGORY_GB] == 2 && $_search[CATEGORY][0][PARENT_NO] == 0) {
+                            $from_category = ",(
+                                              SELECT
+                                                    TARGET_NO
+                                              FROM
+                                                    CONTENT_CATEGORY CC, CMS_CATEGORY C
+                                              WHERE CC.CATEGORY_NO = C.NO
+                                              AND C.PARENT_NO = ".$_search[CATEGORY][0][NO]."
+                                              GROUP BY TARGET_NO
+                                          ) AS C ";
+                        } else {
+                            for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
+                                $category = $_search[CATEGORY][$i];
+                                $where_category .= $category[NO].($i != count($_search[CATEGORY]) - 1 ? "," : "");
+                            }
+
+                            $from_category = ",(
                                               SELECT
                                                   TARGET_NO
                                               FROM
@@ -172,6 +185,7 @@
                                               WHERE CATEGORY_NO IN (".$where_category.")
                                               GROUP BY TARGET_NO
                                           ) AS C ";
+                        }
 
                         $search_where .= "AND C.TARGET_NO = T.NO ";
                     }
@@ -248,37 +262,37 @@
                         $row['FILE'] = $file_data;
                     }
 
-//                    if ($_search[CONETNT]) {
-//                        $sql = "SELECT
-//                                    NO, SUPER_NO, PHASE, VERSION, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-//                                    CURRENT_FL, MODIFY_FL, HIT_CNT, SCRAP_CNT, TASK_NO
-//                                FROM
-//                                    CMS_CONTENT
-//                                WHERE
-//                                    CURRENT_FL = 'Y'
-//                                    AND TASK_NO = ".$row['NO']."
-//                                ";
-//
-//                        $content_result = $_d->sql_query($sql);
-//                        $content_data  = $_d->sql_fetch_array($content_result);
-//                        $row['CONTENT'] = $content_data;
-//
-//                        $sql = "SELECT
-//                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-//                                FROM
-//                                    FILE F, CONTENT_SOURCE S
-//                                WHERE
-//                                    F.NO = S.SOURCE_NO
-//                                    AND S.CONTENT_GB = 'FILE'
-//                                    AND S.TARGET_GB = 'CONTENT'
-//                                    AND S.TARGET_NO = ".$content_data[NO]."
-//                                    AND F.THUMB_FL = '1'
-//                                ";
-//
-//                        $file_result = $_d->sql_query($sql);
-//                        $file_data = $_d->sql_fetch_array($file_result);
-//                        $row['FILE'] = $file_data;
-//                    }
+                    if ($_search[CONETNT]) {
+                        $sql = "SELECT
+                                    NO, SUPER_NO, PHASE, VERSION, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                                    CURRENT_FL, MODIFY_FL, HIT_CNT, SCRAP_CNT, TASK_NO
+                                FROM
+                                    CMS_CONTENT
+                                WHERE
+                                    CURRENT_FL = 'Y'
+                                    AND TASK_NO = ".$row['NO']."
+                                ";
+
+                        $content_result = $_d->sql_query($sql);
+                        $content_data  = $_d->sql_fetch_array($content_result);
+                        $row['CONTENT'] = $content_data;
+
+                        $sql = "SELECT
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    F.NO = S.SOURCE_NO
+                                    AND S.CONTENT_GB = 'FILE'
+                                    AND S.TARGET_GB = 'CONTENT'
+                                    AND F.FILE_GB = 'MAIN'
+                                    AND S.TARGET_NO = ".$content_data[NO]."
+                                ";
+
+                        $file_result = $_d->sql_query($sql);
+                        $file_data = $_d->sql_fetch_array($file_result);
+                        $row['FILE'] = $file_data;
+                    }
 
                     $__trn->rows[$i] = $row;
                 }

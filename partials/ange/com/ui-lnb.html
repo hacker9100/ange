@@ -4,7 +4,7 @@
 
     <div class="localmenu_wrap">
 
-        <div ng-include=" '/partials/ange/com/lnb_filter.html' "></div><!-- 1680이상 모드일 때 필터메뉴 -->
+        <div ng-include=" '/partials/ange/com/lnb-filter.html' "></div><!-- 1680이상 모드일 때 필터메뉴 -->
 
         <div ng-repeat="menuInfo in item.MENU_INFO">
             <div ng-if="menuInfo.DIVIDER_FL == 'Y'" class="localmenu_col_5 localmenu_block">
@@ -58,7 +58,7 @@
         <!--</div>-->
     <!--</div>-->
 
-        <div ng-include=" '/partials/ange/com/lnb_handle.html' "></div><!-- 1680 미만 모드일 때 핸들러 -->
+        <div ng-include=" '/partials/ange/com/lnb-handle.html' "></div><!-- 1680 미만 모드일 때 핸들러 -->
 
     </div>
 </div>

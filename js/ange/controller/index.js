@@ -20,18 +20,18 @@ define([
     '../../../partials/ange/main',
 
     // 앙쥬스토리
-    '../../../partials/ange/story/storylist',
+    '../../../partials/ange/story/storycontent-list',
 
     // 앙쥬피플
     '../../../partials/ange/people/peoplehome',
     '../../../partials/ange/people/peoplepoll-list',
     '../../../partials/ange/people/peoplepoll-edit',
-    '../../../partials/ange/people/board-list',,
-    '../../../partials/ange/people/board-edit',
-    '../../../partials/ange/people/board-view',
-    '../../../partials/ange/people/clinic-list',
-    '../../../partials/ange/people/clinic-edit',
-    '../../../partials/ange/people/clinic-view',
+    '../../../partials/ange/people/peopleboard-list',,
+    '../../../partials/ange/people/peopleboard-edit',
+    '../../../partials/ange/people/peopleboard-view',
+    '../../../partials/ange/people/peopleclinic-list',
+    '../../../partials/ange/people/peopleclinic-edit',
+    '../../../partials/ange/people/peopleclinic-view',
     '../../../partials/ange/people/peoplephoto-list',
     '../../../partials/ange/people/peoplephoto-edit',
     '../../../partials/ange/people/peoplephoto-view',

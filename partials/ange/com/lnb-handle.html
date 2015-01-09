@@ -10,12 +10,18 @@
             </button>
 
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                <li ng-repeat="category in category_a">
+                    <a ng-click="click_selectCategory(category)">{{category.CATEGORY_NM}}</a>
+                </li>
             </ul>
+
+            <!--<ul class="dropdown-menu" role="menu">-->
+            <!--<li><a href="#">Action</a></li>-->
+            <!--<li><a href="#">Another action</a></li>-->
+            <!--<li><a href="#">Something else here</a></li>-->
+            <!--<li class="divider"></li>-->
+            <!--<li><a href="#">Separated link</a></li>-->
+            <!--</ul>-->
         </div>
 
         <div class="btn-group">
@@ -24,12 +30,18 @@
             </button>
 
             <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Separated link</a></li>
+                <li ng-repeat="category in category_b">
+                    <a ng-click="click_selectCategory(category)">{{category.CATEGORY_NM}}</a>
+                </li>
             </ul>
+
+            <!--<ul class="dropdown-menu" role="menu">-->
+            <!--<li><a href="#">Action</a></li>-->
+            <!--<li><a href="#">Another action</a></li>-->
+            <!--<li><a href="#">Something else here</a></li>-->
+            <!--<li class="divider"></li>-->
+            <!--<li><a href="#">Separated link</a></li>-->
+            <!--</ul>-->
         </div>
 
 
