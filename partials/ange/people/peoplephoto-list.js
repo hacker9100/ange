@@ -13,6 +13,8 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('peoplephoto-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
 
+        $scope.selectIdx = 0;
+
         $scope.search = {};
 
         // 페이징
@@ -73,10 +75,21 @@ define([
             } else if($stateParams.menu == 'peopletaste') {
                 $scope.community = "피플 맛집";
             }
+
+            for (var i in $rootScope.ange_menu) {
+                if ($rootScope.ange_menu[i].MENU_URL == $location.url()) {
+                    $scope.tabs = $rootScope.ange_menu[i].SUB_MENU_INFO;
+                }
+            }
         };
 
         /********** 이벤트 **********/
-            // 우측 메뉴 클릭
+        // 탭 클릭 이동
+        $scope.click_selectTab = function (idx) {
+            $scope.selectIdx = idx;
+        };
+
+        // 우측 메뉴 클릭
         $scope.click_showViewBoard = function(item) {
             $location.url('people/board/view/1');
 //            $location.url('people/poll/edit/'+item.NO);

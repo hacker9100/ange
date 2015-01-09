@@ -91,14 +91,20 @@
                             <!-- peoplephoto_list -->
                             <div class="peoplep_list_tab">
                                 <ul class="nav nav-tabs">
-                                    <li role="presentation" class="active"><a>전체</a></li>
-                                    <li role="presentation"><a>이유식</a></li>
-                                    <li role="presentation"><a>반찬</a></li>
-                                    <li role="presentation"><a>한끼식사</a></li>
-                                    <li role="presentation"><a>간식</a></li>
-                                    <li role="presentation"><a>나들이</a></li>
-                                    <li role="presentation"><a>스페셜</a></li>
+                                    <li role="presentation" ng-repeat="tab in tabs" ng-class="selectIdx == $index ? 'active' : ''">
+                                        <a ng-click="click_selectTab($index)">{{tab.TITLE}}</a>
+                                    </li>
                                 </ul>
+
+                                <!--<ul class="nav nav-tabs">-->
+                                    <!--<li role="presentation" class="active"><a>전체</a></li>-->
+                                    <!--<li role="presentation"><a>이유식</a></li>-->
+                                    <!--<li role="presentation"><a>반찬</a></li>-->
+                                    <!--<li role="presentation"><a>한끼식사</a></li>-->
+                                    <!--<li role="presentation"><a>간식</a></li>-->
+                                    <!--<li role="presentation"><a>나들이</a></li>-->
+                                    <!--<li role="presentation"><a>스페셜</a></li>-->
+                                <!--</ul>-->
                             </div><!-- /.peoplep_list_tab -->
 
                             <div class="container-fluid peoplephoto_list_wrap">
