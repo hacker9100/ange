@@ -338,7 +338,6 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 }
 
-
                 if($err > 0){
                     $_d->sql_rollback();
                     $_d->failEnd("등록실패입니다:".$msg);
@@ -346,8 +345,6 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $_d->sql_commit();
                     $_d->succEnd("0");
                 }
-
-
         }
             break;
 
