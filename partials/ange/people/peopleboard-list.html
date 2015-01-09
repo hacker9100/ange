@@ -132,7 +132,10 @@
                         </div><!-- /.sub_contents_body -->
 
                         <!-- 등록 -->
-                        <a class="btn people_btn submit" title="등록하기" ng-click="click_showCreatePeopleBoard();">등록</a>
+                        <a class="btn people_btn submit" title="등록하기" ng-show="uid != '' && uid != null" ng-click="click_showCreatePeopleBoard();">등록</a>
+
+                        <!--<div ng-show="uid != '' && uid != null" ng-click="test()">세션이 있을때만 보입니다.</div>
+                        <div ng-show="uid == '' || uid == null" ng-click="test()">세션이 없을때 보입니다.</div>   -->
 
                         <div class="sub_contents_ads" style="display:none;">
                             <div>

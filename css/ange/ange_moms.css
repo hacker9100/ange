@@ -2,7 +2,7 @@
 
 .webzine_moms_list {
     width:100%;
-    margin:15px auto;
+    margin:25px auto;
 }
 
 .webzine_list_title {
@@ -15,6 +15,8 @@
     font-weight:700;
     line-height:18px;
     padding: 4px;
+    border-top:1px solid #ddd;
+    border-bottom:1px solid #ddd;
 }
 
 .webzine_moms_featureimg {
@@ -30,10 +32,37 @@
     line-height:14px;
 }
 
+.webzine_list_infowrap {
+    float:left;
+    line-height:20px;
+    font-size:0.86em;
+    padding: 15px;
+    width: 100%;
+    border-bottom: 2px solid #ccc;
+}
+
+.webzine_list_infowrap dl{
+    margin:0px;
+}
+
+.webzine_list_infowrap dt{
+    font-size: 1.24em;
+}
+
+.webzine_list_infowrap dd{
+    padding: 4px 0 4px 8px;
+}
+
 .webzine_list_item {
     margin-top:10px;
     padding-left:4px;
     border-left: 2px solid #fb6362;
+}
+
+.webzine_list_btnwrap {
+    position:absolute;
+    right:0px;
+    bottom:0px;
 }
 
 .webzine_list_btn {

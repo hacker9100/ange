@@ -60,7 +60,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 $sql = "SELECT
                             NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, REG_DT
-                            , (SELECT COUNT(DISTINCT USER_UID) AS POLL_ANSWER_CNT FROM ANGE_POLL_ANSWEAR WHERE BOARD_NO = ".$_key.") AS POLL_ANSWER_CNT
+                            , (SELECT COUNT(DISTINCT USER_UID) AS POLL_ANSWER_CNT FROM ANGE_POLL_ANSWEAR WHERE POLL_NO = ".$_key.") AS POLL_ANSWER_CNT
                         FROM
                             ANGE_POLL
                         WHERE
@@ -89,12 +89,13 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-                    $sql = "SELECT QUERY_NO, QUERY_SORT, SELECT_SORT, BOARD_NO, NOTE
-                        FROM ANGE_POLL_SELECT
+                    $sql = "SELECT AP.QUERY_NO, AP.QUERY_SORT, AP.SELECT_SORT, AP.BOARD_NO, AP.NOTE,
+                               (SELECT COUNT(*) FROM ANGE_POLL_ANSWEAR WHERE QUERY_NO = AP.QUERY_NO and QUERY_SORT = AP.QUERY_SORT) as POLL_CNT
+                        FROM ANGE_POLL_SELECT AP
                             WHERE
-                                BOARD_NO = ".$row[BOARD_NO]."
-                                AND QUERY_NO = ".$row[QUERY_NO]."
-                            ORDER BY SELECT_SORT
+                                AP.BOARD_NO = ".$row[BOARD_NO]."
+                                AND AP.QUERY_NO = ".$row[QUERY_NO]."
+                            ORDER BY AP.SELECT_SORT
                             ";
 
                     $file_data = $_d->getData($sql);

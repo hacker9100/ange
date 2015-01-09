@@ -64,6 +64,23 @@ define([
             });
         });
         */
+
+        $(function () {
+
+            $(".tab_content").hide();
+            $(".tab_content:first").show();
+
+            $("ul.nav-tabs li").click(function () {
+
+                $("ul.tabs li").removeClass("active");
+                $(this).addClass("active");
+                $(".tab_content").hide();
+                var activeTab = $(this).attr("rel");
+                $("#" + activeTab).fadeIn();
+            });
+
+        });
+
         /********** 초기화 **********/
             // 초기화
         $scope.init = function() {
@@ -77,12 +94,51 @@ define([
             }
 
             $scope.tabs = $scope.menu.SUB_MENU_INFO;
+
+            if ($stateParams.menu == 'angemodel') {
+                $scope.search['COMM_NO'] = '6';
+            } else if($stateParams.menu == 'recipearcade') {
+                $scope.search['COMM_NO'] = '7';
+            } else if($stateParams.menu == 'peopletaste') {
+                $scope.search['COMM_NO'] = '8';
+            }
+
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
+
+                    $scope.TOTAL_COUNT = total_cnt;
+
+                    /*$scope.total(total_cnt);*/
+                    $scope.list = data;
+                })
+                .catch(function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
         };
 
         /********** 이벤트 **********/
         // 탭 클릭 이동
         $scope.click_selectTab = function (idx) {
             $scope.selectIdx = idx;
+
+            //$scope.search.PHOTO_NO = idx;
+
+            if ($stateParams.menu == 'angemodel') {
+                $scope.search.PHOTO_GB= 'angemodel';
+            } else if($stateParams.menu == 'recipearcade') {
+                $scope.search.PHOTO_GB = 'recipearcade';
+            } else if($stateParams.menu == 'peopletaste') {
+                $scope.search.PHOTO_GB = 'peopletaste';
+            }
+
+            if(idx == 0){
+                $scope.search.PHOTO_TYPE = 'ALL';
+                $scope.selectPhoto = 'ALL';
+            }else{
+                $scope.selectPhoto = '0'+(idx).toString();
+                $scope.search.PHOTO_TYPE = $scope.selectPhoto;
+            }
+
+            $scope.getPeopleBoardList();
         };
 
         // 우측 메뉴 클릭
@@ -112,8 +168,8 @@ define([
 
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
-                    var total_cnt = data[0].TOTAL_COUNT;
-                    $scope.TOTAL_COUNT = total_cnt;
+                    var search_total_cnt = data[0].TOTAL_COUNT;
+                    $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
 
                     for(var i in data) {
                         if (data[i].FILE != null) {
@@ -125,7 +181,7 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
                 })
-                .catch(function(error){$scope.list = ""});
+                .catch(function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0});
         };
 
         // 조회 화면 이동

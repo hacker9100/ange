@@ -77,7 +77,7 @@
 
                                 <tbody class="on" ng-repeat="item in list">
 
-                                <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                <tr ng-click="click_showViewPeopleBoard(item.NO, item.REG_UID)" style="cursor:pointer;">
                                     <td class="table_no">
                                         <span>{{item.RNUM}}</span>
                                     </td>
@@ -131,7 +131,7 @@
                         </div><!-- /.sub_contents_body -->
 
                         <!-- 등록 -->
-                        <a class="btn people_btn submit" title="등록하기" ng-click="click_showCreatePeopleClinic()();">등록</a>
+                        <a class="btn people_btn submit" title="등록하기" ng-show="uid != '' && uid != null" ng-click="click_showCreatePeopleClinic()();">등록</a>
 
                         <div class="sub_contents_ads" style="display:none;">
                             <div>

@@ -44,7 +44,7 @@
                                         </div>
                                     </div><!-- /.col-xs-10-->
 
-                                    <div class="people_photo_sharewrap">
+                                    <div class="people_photo_sharewrap" ng-show="uid != '' && uid != null">
                                         <div class="people_share" style="float:right; line-height:20px; vertical-align:top;">
                                             <button class="people_sharebtn redbtn" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공 감</button>
                                             <button ng-show="item.SCRAP_FL == 'Y'" class="people_sharebtn redbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>스크랩</button>
@@ -140,11 +140,11 @@
                                         <a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeoplePhotoList();">리스트</a>
                                     </div>
 
-                                    <div class="col-xs-8">
+                                    <div class="col-xs-8" ng-show="uid == item.REG_UID && uid != '' && uid != null">
                                         <a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
                                         <a class="btn people_btn confirm" title="확인" style="display:none;" ng-click="click_showPeoplePhotoList();">확인</a>
                                         <a class="btn people_btn submit" title="등록하기" style="display:none;" >등록</a>
-                                        <!--<a class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeoplePhotoDelete(item);">취소</a>-->
+                                        <!--<a class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeoplePhotoDelete(item);">삭제</a>-->
                                         <a class="btn people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeoplePhotoEdit(item);">수정</a>
                                     </div>
                                 </div><!-- /.row -->
@@ -201,7 +201,7 @@
                             </div><!-- /.container -->
 
                             <div ng-show="item.REPLY_FL == 'Y'">
-                                <div class="container-fluid peopleboard_view_commentwrap">
+                                <div class="container-fluid peopleboard_view_commentwrap" ng-show="uid != '' && uid != null">
                                     <div class="row peopleboard_view_commenttop">
                                         <div class="col-xs-12 peopleboard_view_commenttitle">
                                             <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">의견쓰기</span>
@@ -239,7 +239,7 @@
                                                 <dd><div class="people_view_replys_date">{{item.REG_DT}}</div></dd>
                                                 <dd style="margin:0px;">
                                                     {{item.COMMENT}}
-                                                    <p style="font-size:0.86em; margin:4px 0 0 0; ">
+                                                    <p style="font-size:0.86em; margin:4px 0 0 0; " ng-show="uid != '' && uid != null">
                                                         <a ng-click="showDetails = ! showDetails"><span style="color: #df5348">({{item.RE_COUNT}})</span> 댓글</a>
                                                         &nbsp; | &nbsp;<a href="#">신고</a>
                                                         &nbsp; | &nbsp;<a href="#" class="table_red">블라인드</a> <!-- 관리자 또는 방장에게만 보여집니다. -->
@@ -262,7 +262,7 @@
                                                     <dd>{{reItem.COMMENT}}</dd>
                                                 </dl>
 
-                                                <center>
+                                                <center ng-show="uid != '' && uid != null">
                                                     <form class="form-inline reply_child_group" ng-model="reply">
                                                         <div class="form-group">
                                                             <p class="form-control-static table_blue">답글</p>
