@@ -12,7 +12,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task-edit', ['$scope', '$stateParams', '$location', '$controller', '$q', '$modal', 'dialogs', '$filter', function ($scope, $stateParams, $location, $controller, $q, $modal, dialogs, $filter) {
+    controllers.controller('task-edit', ['$scope', '$rootScope', '$stateParams', '$location', '$controller', '$q', '$modal', 'dialogs', '$filter', function ($scope, $rootScope, $stateParams, $location, $controller, $q, $modal, dialogs, $filter) {
 
         /********** 초기화 **********/
         // 태스크 모델 초기화
@@ -298,6 +298,8 @@ define([
             .then($scope.init)
             .then($scope.initUpdate)
             .catch($scope.reportProblems);
+
+        console.log($rootScope.uid);
 
     }]);
 });
