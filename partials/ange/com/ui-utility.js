@@ -75,9 +75,9 @@ define([
 
         };
 
-        $scope.getSession()
-            .then($scope.sessionCheck)
-            .catch($scope.reportProblems);
+//        $scope.getSession()
+//            .then($scope.sessionCheck)
+//            .catch($scope.reportProblems);
 
 	}]);
 });
