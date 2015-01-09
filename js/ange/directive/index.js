@@ -7,6 +7,7 @@
 define([
     './slick-directive',
     './checklist-directive',
+//    './module-masonry-directive',
 
     './ckeditor-directive',
     './animate-directive',

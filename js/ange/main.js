@@ -41,6 +41,11 @@ require.config({
 
         'slick-carousel': '../../lib/slick-carousel/slick', //
 
+//        'jquery-masonry': '../../lib/masonry/jquery.masonry.min', //
+//        'masonry': '../../lib/masonry/masonry.pkgd', //
+//        'imagesloaded': '../../lib/masonry/imagesloaded.pkgd.min', //
+//        'angular-masonry': '../../lib/masonry/angular-masonry', //
+
         'angular-masonry': '../../lib/angular-masonry/angular-masonry', //
         'ng-infinite-scroll': '../../lib/angular-masonry/ng-infinite-scroll.min', //
 
@@ -130,6 +135,15 @@ require.config({
         'slick-carousel':{
             deps: ['jquery']
         },
+//        'jquery-masonry':{
+//            deps: ['jquery']
+//        },
+//        'masonry':{
+//            deps: ['jquery']
+//        },
+//        'angular-masonry':{
+//            deps: ['angular', 'masonry']
+//        },
         'angular-masonry':{
             deps: ['angular']
         },
