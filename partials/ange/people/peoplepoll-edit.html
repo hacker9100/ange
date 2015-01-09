@@ -143,7 +143,7 @@
                                             <a ng-click="click_showAngePollList();" class="btn people_btn list" title="목록으로" style="display:block;">리스트</a>
                                         </div>
 
-                                        <div class="col-xs-8">
+                                        <div class="col-xs-8" ng-show="uid != '' && uid != null">
                                             <a class="btn people_btn vote" title="투표하기" style="display:block;" ng-class="{ 'hidden':  showPollView }" ng-click="click_saveAngePoll(item.NO);">투표</a>
                                                 <!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
                                             <a href="#" class="btn people_btn submit" title="등록하기" style="display:none;">등록</a>
