@@ -129,12 +129,12 @@ define([
         // 세션 체크
         $scope.sessionCheck = function(session) {
             if (session.USER_ID == undefined) {
-                $location.path("/signin");
-                throw( new String('세션이 만료되었습니다.') );
+                //$location.path("/signin");
+                //throw( new String('세션이 만료되었습니다.') );
 //            throw( new Error("세션이 만료되었습니다.") );
             } else if (session.USER_ID == '') {
-                $location.path("/signin");
-                throw( new String('로그인 후 사용가능합니다.') );
+                //$location.path("/signin");
+                //throw( new String('로그인 후 사용가능합니다.') );
             } else {
                 $rootScope.session = session;
 

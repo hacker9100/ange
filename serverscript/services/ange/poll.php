@@ -320,9 +320,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                 ) VALUES (
                                     '".$s[SELECT_ANSWER][QUERY_NO]."'
                                     ,'".$s[SELECT_ANSWER][QUERY_SORT]."'
-                                    ,'hong'
+                                    ,'".$_SESSION['uid']."'
                                     ,'".$s[SELECT_ANSWER][BOARD_NO]."'
-                                    , '므에에롱'
+                                    ,'".$_SESSION['name']."'
                                     ,'".$s[SELECT_ANSWER][SELECT_SORT]."'
                                     ,'".$s[SELECT_ANSWER][NOTE]."'
                                     ,SYSDATE()
@@ -338,7 +338,6 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 }
 
-
                 if($err > 0){
                     $_d->sql_rollback();
                     $_d->failEnd("등록실패입니다:".$msg);
@@ -346,8 +345,6 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $_d->sql_commit();
                     $_d->succEnd("0");
                 }
-
-
         }
             break;
 
