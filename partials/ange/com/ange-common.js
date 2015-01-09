@@ -95,7 +95,8 @@ define([
                         if (angular.isObject(data)) {
                             $rootScope.session = null;
 
-                            $rootScope.authenticated = true;
+                            $rootScope.login = false;
+                            $rootScope.authenticated = false;
                             $rootScope.uid = null;
                             $rootScope.name = null;
                             $rootScope.role = null;
@@ -117,6 +118,7 @@ define([
 
         // 세션 조회
         $scope.getSession = function() {
+            console.log("--->>getSession");
             var deferred = $q.defer();
 
             dataService.getSession(function(data, status) {
@@ -147,16 +149,28 @@ define([
 
         // 세션 체크
         $scope.sessionCheck = function(session) {
-            if (session.USER_ID == undefined) {
+            console.log("--->>sessionCheck");
+            if (session.USER_ID == undefined || session.USER_ID == '') {
+                $rootScope.session = null;
+
+                $rootScope.login = false;
+                $rootScope.authenticated = false;
+                $rootScope.uid = null;
+                $rootScope.name = null;
+                $rootScope.role = null;
+                $rootScope.menu_role = null;
+                $rootScope.email = null;
+
 //                $location.path("/signin");
 //                throw( new String('세션이 만료되었습니다.') );
 //            throw( new Error("세션이 만료되었습니다.") );
-            } else if (session.USER_ID == '') {
+//            } else if (session.USER_ID == '') {
 //                $location.path("/signin");
 //                throw( new String('로그인 후 사용가능합니다.') );
             } else {
                 $rootScope.session = session;
 
+                $rootScope.login = true;
                 $rootScope.authenticated = true;
                 $rootScope.uid = session.USER_ID;
                 $rootScope.name = session.USER_NM;
@@ -166,6 +180,10 @@ define([
             }
 
             return;
+        };
+
+        $scope.test = function() {
+            console.log($rootScope.uid);
         };
 
         $scope.permissionCheck = function(url, back) {
@@ -410,6 +428,10 @@ define([
 
             return deferred.promise;
         };
+
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .catch($scope.reportProblems);
 /*
         $scope.getMenu = function() {
             var deferred = $q.defer();

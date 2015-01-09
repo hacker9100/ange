@@ -49,14 +49,32 @@
     switch ($_method) {
         case "GET":
             if ($_type == 'item') {
+
+                $search_common = "";
+                $sort_order = "";
+
+                if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
+                    $search_common .= "AND TARGET_NO = ".$_search[TARGET_NO]."";
+                }
+
+                if (isset($_search[REPLY_GB]) && $_search[REPLY_GB] != "") {
+                    $search_common .= "AND REPLY_GB = '".$_search[REPLY_GB]."'";
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= "ORDER BY R.".$_search[SORT]." ".$_search[ORDER]."";
+                }
+
+
                 //TODO: 조회
-                $sql = "SELECT NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO
+                $sql = "SELECT NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
+                     ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT
                     FROM
                       COM_REPLY R
                         WHERE 1=1
-                          AND TARGET_NO = ".$_search[TARGET_NO]."
-                          AND PARENT_NO = 0
-                        ";
+                        AND PARENT_NO = 0
+                        ".$search_common."
+                        ".$sort_order."";
 
                 $__trn = '';
                 $result = $_d->sql_query($sql,true);
@@ -78,7 +96,8 @@
                                 WHERE   @NO IS NOT NULL
                             ) REPLY_CTE, COM_REPLY R
                             WHERE REPLY_CTE.NO = R.NO
-                            AND R.PARENT_NO = ".$row[NO]."";
+                            AND R.PARENT_NO = ".$row[NO]."
+                            ".$sort_order."";
 
                     $file_data = $_d->getData($sql);
                     $row['REPLY_COMMENT'] = $file_data;
@@ -147,9 +166,9 @@
                         '".$_model[REPLY_GB]."',
                         '".$_model[LEVEL]."',
                         '".$_model[COMMENT]."',
-                        'hong',
-                        '홍길동',
-                        '므에에롱',
+                        '".$_SESSION['uid']."',
+                        '".$_SESSION['name']."',
+                        '".$_SESSION['nick']."',
                         SYSDATE(),
                         '0',
                         '".$_model[TARGET_NO]."',

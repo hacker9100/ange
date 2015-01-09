@@ -71,13 +71,45 @@ define([
             }
         };
 
+/*        // 세션 체크
+        $scope.sessionCheck = function(session) {
+            if (session.USER_ID == undefined) {
+//                $location.path("/signin");
+//                throw( new String('세션이 만료되었습니다.') );
+//            throw( new Error("세션이 만료되었습니다.") );
+            } else if (session.USER_ID == '') {
+//                $location.path("/signin");
+//                throw( new String('로그인 후 사용가능합니다.') );
+            } else {
+                $rootScope.session = session;
+
+
+
+                $rootScope.authenticated = true;
+                $rootScope.uid = session.USER_ID;
+
+                //console.log($rootScope.uid);
+
+                $rootScope.name = session.USER_NM;
+                $rootScope.role = session.ROLE_ID;
+                $rootScope.menu_role = session.MENU_ROLE;
+                $rootScope.email = session.EMAIL;
+            }
+
+            //console.log($rootScope.uid);
+
+            return;
+
+        };*/
+
         $scope.click_mainLogo = function() {
 
         };
 
-        $scope.getSession()
-            .then($scope.sessionCheck)
-            .catch($scope.reportProblems);
+//        $scope.getSession()
+//            .then($scope.sessionCheck)
+//            .catch($scope.reportProblems);
+
 
 	}]);
 });

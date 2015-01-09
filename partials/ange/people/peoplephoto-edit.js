@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peoplephoto-edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', '$http', function ($scope, $stateParams, $location, dialogs, UPLOAD, $http) {
+    controllers.controller('peoplephoto-edit', ['$scope','$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD, $http) {
 
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
@@ -117,16 +117,29 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+
+            $scope.search = {};
+
             if ($stateParams.menu == 'angemodel') {
                 $scope.community = "앙쥬모델 선발대회";
                 $scope.community_show = "angemodel";
+                $scope.search.CATEGORY_GB = 'angemodel';
             } else if($stateParams.menu == 'recipearcade') {
                 $scope.community = "레시피 아케이드";
                 $scope.community_show = "recipearcade";
+                $scope.search.CATEGORY_GB = 'recipearcade';
             } else if($stateParams.menu == 'peopletaste') {
                 $scope.community = "피플 맛집";
                 $scope.community_show = "peopletaste";
+                $scope.search.CATEGORY_GB = 'peopletaste';
             }
+
+            $scope.getList('com/webboard', 'category', {}, $scope.search, true)
+                .then(function(data){
+                    $scope.categorylist = data;
+                    $scope.item.PHOTO_TYPE = data[0].TITLE;
+                })
+                .catch(function(error){$scope.categorylist = ""});
         };
 
         // CK Editor
@@ -173,6 +186,25 @@ define([
                             $("#check_reply").attr("checked",false);
                         }
 
+                       var idx = 0;
+                        for(var i=0; i < $scope.categorylist.length; i ++){
+
+                            console.log(data.PHOTO_TYPE);
+                            if(JSON.stringify(data.PHOTO_TYPE) == JSON.stringify($scope.categorylist[i].TYPE)){
+                                idx = i;
+                            }
+                        }
+                        $scope.item.PHOTO_TYPE = $scope.categorylist[idx];
+
+
+/*                        // 프로젝트
+                        angular.forEach($scope.categorylist,function(value, idx){
+                            if(value.TYPE == data.PHOTO_TYPE){
+                                $scope.item.PHOTO_TYPE = $scope.categorylist[idx];
+                                return;
+                            }
+                        });*/
+
                         var files = data.FILES;
                         for(var i in files) {
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
@@ -196,10 +228,13 @@ define([
 
             if ($stateParams.menu == 'angemodel') {
                 $scope.item.COMM_NO = '6';
+                $scope.item.PHOTO_GB = 'angemodel';
             } else if($stateParams.menu == 'recipearcade') {
                 $scope.item.COMM_NO = '7';
+                $scope.item.PHOTO_GB = 'recipearcade';
             } else if($stateParams.menu == 'peopletaste') {
                 $scope.item.COMM_NO = '8';
+                $scope.item.PHOTO_GB = 'peopletaste';
             }
 
             if ($stateParams.id == 0) {
@@ -236,11 +271,9 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
+        $scope.getSession()
          .then($scope.sessionCheck)
-         .then($scope.init)
-         .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
+         .catch($scope.reportProblems);
         $scope.init();
         $scope.getPeopleBoard();
 

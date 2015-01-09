@@ -22,7 +22,17 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-
+            if ($stateParams.menu == 'childdevelop') {
+                $scope.VIEW_ROLE = 'CHILDDEVELOP';
+            } else if($stateParams.menu == 'chlidoriental') {
+                $scope.VIEW_ROLE = 'CHILDORIENTAL';
+            } else if($stateParams.menu == 'obstetrics') {
+                $scope.VIEW_ROLE = 'OBSTETRICS';
+            } else if($stateParams.menu == 'momshealth') {
+                $scope.VIEW_ROLE = 'MOMSHEALTH';
+            } else if($stateParams.menu == 'financial') {
+                $scope.VIEW_ROLE = 'FINANCIAL';
+            }
         };
 
         /********** 이벤트 **********/

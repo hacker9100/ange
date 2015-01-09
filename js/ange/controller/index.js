@@ -24,6 +24,7 @@ define([
 
     // 앙쥬피플
     '../../../partials/ange/people/peoplehome',
+    '../../../partials/ange/people/peoplelinetalk-list',
     '../../../partials/ange/people/peoplepoll-list',
     '../../../partials/ange/people/peoplepoll-edit',
     '../../../partials/ange/people/peopleboard-list',,

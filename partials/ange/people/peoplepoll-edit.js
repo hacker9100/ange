@@ -19,7 +19,9 @@ define([
         $scope.queue = [];
 
         $scope.answer = {}
-        $scope.showDetails = false;
+        //$scope.showDetails = false;
+        $scope.showPollView = false;
+        $scope.showPoll = true;
 
         $scope.page = 1;
         $scope.lastPage = 0;
