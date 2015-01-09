@@ -24,6 +24,33 @@ define([
 
         $scope.replyList = [];
 
+        $(document).ready(function(){
+
+            $("#reply_sort_date").addClass("selected");
+            $scope.search.SORT = 'REG_DT';
+            $scope.search.ORDER = 'DESC';
+
+            $("#reply_sort_idx").click(function(){
+                $scope.search.SORT = 'NO';
+                $scope.search.ORDER = 'DESC';
+                $("#reply_sort_idx").addClass("selected");
+                $("#reply_sort_date").removeClass("selected");
+
+                $scope.replyList = [];
+                $scope.getPeopleReplyList();
+            });
+
+            $("#reply_sort_date").click(function(){
+                $scope.search.SORT = 'REG_DT';
+                $scope.search.ORDER = 'DESC';
+                $("#reply_sort_date").addClass("selected");
+                $("#reply_sort_idx").removeClass("selected");
+
+                $scope.replyList = [];
+                $scope.getPeopleReplyList();
+            });
+        });
+
         // 초기화
         $scope.init = function(session) {
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
@@ -113,7 +140,7 @@ define([
                     console.log('end');
 
                     for(var i in reply) {
-                        $scope.replyList.push({"NO":reply[i].NO,"PARENT_NO":reply[i].PARENT_NO,"COMMENT":reply[i].COMMENT,"RE_COUNT":reply[i].RE_COUNT,"REPLY_COMMENT":reply[i].REPLY_COMMENT,"LEVEL":reply[i].LEVEL,"REPLY_NO":reply[i].REPLY_NO});
+                        $scope.replyList.push({"NO":reply[i].NO,"PARENT_NO":reply[i].PARENT_NO,"COMMENT":reply[i].COMMENT,"RE_COUNT":reply[i].RE_COUNT,"REPLY_COMMENT":reply[i].REPLY_COMMENT,"LEVEL":reply[i].LEVEL,"REPLY_NO":reply[i].REPLY_NO,"NICK_NM":reply[i].NICK_NM,"REG_DT":reply[i].REG_DT});
                     }
 
                     console.log('RE = '+data.COMMENT);
