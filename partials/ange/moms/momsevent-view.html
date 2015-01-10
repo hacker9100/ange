@@ -77,7 +77,7 @@
 <div id="moms_state"  class="moms_state" style="padding-top:20px;">
     <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
 
-    <div class="moms_form" style="margin:0px; display:block;" ng-show="uid != '' && uid != null || item.END_YMD >= item.TODAY_YMD" ng-model="item">
+    <div class="moms_form" style="margin:0px; display:block;" ng-show="uid != '' && uid != null || item.END_YMD >= todayDate" ng-model="item">
         <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
             <h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>
         </div>
@@ -224,33 +224,31 @@
         </div>
     </div>
 
-    <div class="moms_reviews" style="display:none;" ng-show="item.END_YMD < item.TODAY_YMD">
+    <div class="moms_reviews" style="display:none;" ng-show="item.END_YMD < todayDate">
         <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
             <h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>리뷰</h4>
         </div>
 
         <!-- 리뷰 목록 -->
-        <div class="row webzine_moms_list">
+        <div class="row webzine_moms_list" data-ng-repeat="review in reviewList" ng-click="click_showViewReview(review.NO)">
             <div class="col-xs-12 v-cell-4" style="margin:0px;">
                 <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
-                    <div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>
+                    <div class="item" style="position:absolute;"><img ng-src="{{review.MAIN_FILE}}" class="webzine_moms_featureimg"></div>
                     <div class="webzine_list_title">
-                        모던 빈티지와 클래식을 재해석한 스타일리시하고 실용적인 캐나다 키즈백 SOYOUNG
+                        {{review.SUBJECT}}
 
                         <div class="webzine_list_bottomwrap">
-                            <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;03~2014&dash;11&dash;16</span></div>
-                            <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">10명</span></div>
-                            <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;19</span></div>
-                        </div>
-
-                        <div class="webzine_list_btnwrap">
-                            <button class="webzine_list_btn red" title="응모하기">응모하기</button><br />
-                            <button class="webzine_list_btn default" title="상세보기">상세보기</button>
+                            <div class="webzine_list_item"><strong>작성일</strong><span class="table_gray" style="margin-left:8px;">{{review.REG_DT}}</span></div>
+                            <div class="webzine_list_item"><strong>등록자</strong><span class="table_gray" style="margin-left:8px;">{{review.NICK_NM}}</span></div>
                         </div>
                     </div>
                 </div>  <!-- comp_basic -->
             </div>  <!-- col-xs-8 -->
         </div>  <!-- /.row -->
+
+        <div ng-show="reviewList == ''">
+            작성된 리뷰가 없습니다.
+        </div>
 
     </div>  <!-- /.moms_review -->
 

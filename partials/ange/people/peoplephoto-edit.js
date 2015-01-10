@@ -194,7 +194,7 @@ define([
                                 idx = i;
                             }
                         }
-                        $scope.item.PHOTO_TYPE = $scope.categorylist[idx];
+                        $scope.item.PHOTO_TYPE = $scope.categorylist[idx].TYPE;
 
 
 /*                        // 프로젝트

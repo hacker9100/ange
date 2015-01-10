@@ -837,9 +837,6 @@
             }
 
             $sql = "DELETE FROM COM_BOARD WHERE PARENT_NO = ".$_key;
-            $_d->sql_query($sql);
-
-            $sql = "DELETE FROM COM_REPLY WHERE TARGET_NO = ".$_key;
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

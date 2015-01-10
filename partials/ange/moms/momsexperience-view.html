@@ -49,7 +49,7 @@
                 </dl>
             </div>
             <div style="position:absolute; right:10px; bottom:25px;">
-                <button class="common_btn redbtn" title="공감" data-ng-click="click_focus();"><span class="glyphicon glyphicon-edit sharebtn_icon"></span>응모하기</button>
+                <button class="common_btn redbtn" title="공감" data-ng-click="click_focus();" ng-show="menu == 'experienceprocess'"><span class="glyphicon glyphicon-edit sharebtn_icon"></span>응모하기</button>
                 <button class="common_btn blackbtn" title="공감"><span class="glyphicon glyphicon-share sharebtn_icon"></span>공유하기</button>
             </div>
         </div>  <!-- comp_basic -->
@@ -154,8 +154,7 @@
                     </td>
                     <td>
                         <select ng-model="item.PRODUCT" class="form-control input-sm" >
-                            <option selected value="">제품 선택</option>
-                            <option value="{{products}}" data-ng-repeat="products in products">{{products}}</option>
+                            <option  data-ng-repeat="product in products" value="{{product}}">{{product}}</option>
                         </select>
                     </td>
                 </tr>
@@ -228,29 +227,29 @@
         </div>
 
         <!-- 리뷰 목록 -->
-        <div class="row webzine_moms_list">
+        <div class="row webzine_moms_list" data-ng-repeat="review in reviewList" ng-click="click_showViewReview(review.NO)>
             <div class="col-xs-12 v-cell-4" style="margin:0px;">
                 <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
-                    <div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>
+                    <!--<div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>-->
+                    <div class="item" style="position:absolute;"><img ng-src="{{review.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
                     <div class="webzine_list_title">
-                        모던 빈티지와 클래식을 재해석한 스타일리시하고 실용적인 캐나다 키즈백 SOYOUNG
+                        {{review.SUBJECT}}
 
                         <div class="webzine_list_bottomwrap">
-                            <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;03~2014&dash;11&dash;16</span></div>
-                            <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">10명</span></div>
-                            <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;19</span></div>
-                        </div>
-
-                        <div class="webzine_list_btnwrap">
-                            <button class="webzine_list_btn red" title="응모하기">응모하기</button><br />
-                            <button class="webzine_list_btn default" title="상세보기">상세보기</button>
+                            <div class="webzine_list_item"><strong>작성일</strong><span class="table_gray" style="margin-left:8px;">{{review.REG_DT}}</span></div>
+                            <div class="webzine_list_item"><strong>등록자</strong><span class="table_gray" style="margin-left:8px;">{{review.NICK_NM}}</span></div>
                         </div>
                     </div>
                 </div>  <!-- comp_basic -->
             </div>  <!-- col-xs-8 -->
         </div>  <!-- /.row -->
 
+        <div ng-show="reviewList == ''">
+            작성된 리뷰가 없습니다.
+        </div>
     </div>  <!-- /.moms_review -->
+
+
 
 </div>  <!-- /.moms_state -->
 

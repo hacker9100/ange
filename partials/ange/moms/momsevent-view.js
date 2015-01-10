@@ -99,11 +99,61 @@ define([
             }
         }
 
+        $scope.getExperienceReviewList = function() {
+
+            $scope.search.SYSTEM_GB = 'ANGE';
+            /*            $scope.search.SORT = 'NOTICE_FL';
+             $scope.search.ORDER = 'DESC'*/
+            $scope.search.FILE = true;
+            $scope.search.TARGET_NO = $stateParams.id;
+
+            $scope.getList('ange/review', 'list', {NO: $scope.PAGE_NO, SIZE: 5}, $scope.search, true)
+                .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
+
+                    for(var i in data) {
+                        if (data[i].FILE != null) {
+                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                            data[i].MAIN_FILE = img;
+
+                        }
+                    }
+
+
+                    $scope.reviewList = data;
+
+
+
+                })
+                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.reviewList = "";});
+        }
+
+        // 조회 화면 이동
+        $scope.click_showViewReview = function (key) {
+
+            if ($stateParams.menu == 'experiencereview') {
+                $location.url('/moms/experiencereview/view/'+key);
+            } else if ($stateParams.menu == 'productreview') {
+                $location.url('/moms/productreview/view/'+key);
+            } else if ($stateParams.menu == 'angereview') {
+                $location.url('/moms/angereview/view/'+key);
+            } else if ($stateParams.menu == 'samplereview') {
+                $$location.url('/moms/samplereview/view/'+key);
+            } else if ($stateParams.menu == 'samplepackreview') {
+                $location.url('/moms/samplepackreview/view/'+key);
+            }else if ($stateParams.menu == 'eventreview') {
+                $location.url('/moms/eventreview/view/'+key);
+            }
+
+        };
+
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.addHitCnt)
             .then($scope.getMomsEvent)
+            .then($scope.getExperienceReviewList)
             .catch($scope.reportProblems);
 
         /*        $scope.init();

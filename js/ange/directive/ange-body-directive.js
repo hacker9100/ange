@@ -44,7 +44,7 @@ define(['./directives'], function (directives) {
                             menu[2] = 'event';
                         } else if (menu[2] == 'experiencewinner' || menu[2] == 'eventwinner' || menu[2] == 'supporterboard') {
                             menu[2] = 'board';
-                        } else if (menu[2] == 'experiencereview' || menu[2] == 'productreview' || menu[2] == 'angereview' || menu[2] == 'samplereview' || menu[2] == 'samplepackreview') {
+                        } else if (menu[2] == 'experiencereview' || menu[2] == 'productreview' || menu[2] == 'angereview' || menu[2] == 'samplereview' || menu[2] == 'samplepackreview'|| menu[2] == 'eventreview') {
                             menu[2] = 'review';
                         } else if (menu[2] == 'ranknow' || menu[2] == 'rankbest') {
                             menu[2] = 'rank';

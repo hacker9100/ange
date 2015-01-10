@@ -17,12 +17,14 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+
             if ($stateParams.menu == 'eventprocess') {
                 $scope.community = "진행중인 이벤트";
                 $scope.search.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'eventperformance') {
                 $scope.community = "공연/체험 이벤트";
-                $scope.search.EVENT_GB = "EVENT_PERFORM";
+                $scope.search.EVENT_GB = "EVENT";
+                $scope.search.PERFORM_FL = "Y";
             }
         };
 

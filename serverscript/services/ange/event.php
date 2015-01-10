@@ -134,6 +134,10 @@
                 if (isset($_search[PAST]) && $_search[PAST] != "") {
                     $search_where .= "AND END_YMD < DATE_FORMAT(NOW(), '%Y-%m-%d')";
                 }
+
+                if (isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] != "") {
+                    $search_where .= "AND PERFORM_FL = '".$_search[PERFORM_FL]."' ";
+                }
 //                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
 //                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
 //                }
@@ -209,7 +213,23 @@
                 }else{
                     $_d->dataEnd($sql);
                 }
+            } else if ($_type == 'selectList') {
+                    $sql = "SELECT
+                                    NO, SUBJECT
+                                FROM
+                                    ANGE_EVENT
+                                WHERE 1 = 1
+                                AND EVENT_GB = '".$_search[EVENT_GB]."' ";
+
+                    $data = $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0){
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    }else{
+                        $_d->dataEnd($sql);
+                    }
             }
+
 
             break;
 

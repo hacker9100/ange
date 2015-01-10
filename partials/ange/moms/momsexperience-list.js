@@ -11,7 +11,28 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsexperience-list', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('momsexperience-list', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD' ,'$timeout', function ($scope, $stateParams, $location, dialogs, UPLOAD, $timeout) {
+
+        $(document).ready(function() {
+            $(window).scroll(function() {
+
+                $timeout(function(){
+                    //$scope.images;
+                    $scope.isLoading = false;
+                },1000);
+
+                $timeout(function() {
+                    $scope.isLoading = true;
+                });
+
+                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                    var scope = angular.element($("#listr")).scope();
+                    scope.$apply(function(){
+                        scope.count = scope.count + 4;
+                    });
+                }
+            });
+        });
 
         $scope.search = {};
         // 초기화
@@ -20,10 +41,12 @@ define([
                 $scope.community = "진행중인 체험단";
                 $scope.search.EVENT_GB = "EXPERIENCE";
                 $scope.search.PROCESS = "process";
+                $scope.menu = "experienceprocess"
             } else if ($stateParams.menu == 'experiencepast') {
                 $scope.community = "지난 체험단";
                 $scope.search.EVENT_GB = "EXPERIENCE";
                 $scope.search.PAST = "past";
+                $scope.menu = "experiencepast"
             }
         };
 
