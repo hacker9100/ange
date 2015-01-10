@@ -40,6 +40,16 @@
         $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
     }
 
+    $ip = "";
+
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+
     switch ($_method) {
         case "GET":
             if ($_type == 'item') {
@@ -49,9 +59,10 @@
                 $msg = "";
 
                 $sql = "SELECT
-	                        NO, SUBJECT, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD
+	                        NO, SUBJECT, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD, PEOPLE_CNT, WINNER_DT
+	                        ,(SELECT COUNT(*) FROM ANGE_COMP WHERE BOARD_NO = AE.NO) AS COMP_CNT, HIT_CNT, PRODUCT, DATE_FORMAT(NOW(), '%Y-%m-%d') AS TODAY_YMD
                         FROM
-                            ANGE_EVENT
+                            ANGE_EVENT AE
                         WHERE
                             NO = ".$_key."
                             ".$search_where."
@@ -117,7 +128,7 @@
                 }
 
                 if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
-                    $search_where .= "AND END_YMD > DATE_FORMAT(NOW(), '%Y-%m-%d')";
+                    $search_where .= "AND END_YMD >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
                 }
 
                 if (isset($_search[PAST]) && $_search[PAST] != "") {
@@ -130,6 +141,7 @@
 //                if (isset($_page)) {
 //                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
 //                }
+
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
@@ -163,17 +175,16 @@
                     $result = $_d->sql_query($sql,true);
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-                        $sql = "SELECT
-                                        F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                    FROM
-                                        COM_FILE F, CONTENT_SOURCE S
-                                    WHERE
-                                        F.NO = S.SOURCE_NO
-                                        AND S.CONTENT_GB = 'FILE'
-                                        AND S.TARGET_GB = 'EVENT'
-                                        AND S.TARGET_NO = ".$row[NO]."
-                                        AND F.THUMB_FL = '0'
-                                    ";
+                            $sql = "SELECT
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    F.NO = S.SOURCE_NO
+                                    AND S.CONTENT_GB = 'FILE'
+                                    AND S.TARGET_GB = 'EVENT'
+                                    AND S.TARGET_NO = ".$row['NO']."
+                                ";
 
                         $file_result = $_d->sql_query($sql);
                         $file_data = $_d->sql_fetch_array($file_result);
@@ -284,41 +295,52 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            if( trim($_model[SUBJECT]) == "" ){
-                $_d->failEnd("제목을 작성 하세요");
-            }
+
 
             $err = 0;
             $msg = "";
 
             $_d->sql_beginTransaction();
 
-            $sql = "UPDATE ANGE_COMM
-                    SET
-                        SUBJECT = '".$_model[SUBJECT]."',
-                        #REG_UID = '".$_SESSION['uid']."',
-                        #REG_DT = SYSDATE(),
-                        DELIV_COST = '".$_model[DELIV_COST]."',
-                        REVIEW_YMD = '".$_model[REVIEW_YMD]."',
-                        REVIEW_BEST = '".$_model[REVIEW_BEST]."',
-                        PERIOD = '".$_model[PERIOD]."',
-                        COMPANY_NM = '".$_model[COMPANY_NM]."',
-                        COMPANY_URL = '".$_model[COMPANY_URL]."',
-                        COMPANY_GB = '".$_model[COMPANY_GB]."',
-                        EVENT_GB = '".$_model[EVENT_GB]."',
-                        QUIZ_FL = '".$_model[QUIZ_FL]."',
-                        CHOIS1 = '".$_model[CHOIS1]."',
-                        CHOIS2 = '".$_model[CHOIS2]."',
-                        CHOIS3 = '".$_model[CHOIS3]."',
-                        CHOIS4 = '".$_model[CHOIS4]."',
-                        CHOIS5 = '".$_model[CHOIS5]."',
-                        GIFT_NM = '".$_model[GIFT_NM]."',
-                        CLUB_FL = '".$_model[CLUB_FL]."',
-                        MUSICAL_WATCH_YMD = '".$_model[MUSICAL_WATCH_YMD]."',
-                        NOTE = '".$_model[NOTE]."'
-                    WHERE
-                        NO = ".$_key."
-                    ";
+            if(isset($_model[ROLE]) && $_model[ROLE] != ""){
+                $sql = "UPDATE ANGE_EVENT
+                         SET HIT_CNT = HIT_CNT + 1
+                        WHERE
+                            NO = ".$_key."
+                        ";
+            }else{
+
+                if( trim($_model[SUBJECT]) == "" ){
+                    $_d->failEnd("제목을 작성 하세요");
+                }
+
+                $sql = "UPDATE ANGE_COMP
+                        SET
+                            SUBJECT = '".$_model[SUBJECT]."',
+                            #REG_UID = '".$_SESSION['uid']."',
+                            #REG_DT = SYSDATE(),
+                            DELIV_COST = '".$_model[DELIV_COST]."',
+                            REVIEW_YMD = '".$_model[REVIEW_YMD]."',
+                            REVIEW_BEST = '".$_model[REVIEW_BEST]."',
+                            PERIOD = '".$_model[PERIOD]."',
+                            COMPANY_NM = '".$_model[COMPANY_NM]."',
+                            COMPANY_URL = '".$_model[COMPANY_URL]."',
+                            COMPANY_GB = '".$_model[COMPANY_GB]."',
+                            EVENT_GB = '".$_model[EVENT_GB]."',
+                            QUIZ_FL = '".$_model[QUIZ_FL]."',
+                            CHOIS1 = '".$_model[CHOIS1]."',
+                            CHOIS2 = '".$_model[CHOIS2]."',
+                            CHOIS3 = '".$_model[CHOIS3]."',
+                            CHOIS4 = '".$_model[CHOIS4]."',
+                            CHOIS5 = '".$_model[CHOIS5]."',
+                            GIFT_NM = '".$_model[GIFT_NM]."',
+                            CLUB_FL = '".$_model[CLUB_FL]."',
+                            MUSICAL_WATCH_YMD = '".$_model[MUSICAL_WATCH_YMD]."',
+                            NOTE = '".$_model[NOTE]."'
+                        WHERE
+                            NO = ".$_key."
+                        ";
+            }
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

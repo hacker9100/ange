@@ -55,111 +55,22 @@
 
 
                             <!-- 체험단&이벤트 목록 -->
-                            <div class="row webzine_moms_list">
+                            <div class="row webzine_moms_list" ng-repeat="item in list">
                                 <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                        <div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>
+                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                        <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
                                         <div class="webzine_list_title">
-                                            모던 빈티지와 클래식을 재해석한 스타일리시하고 실용적인 캐나다 키즈백 SOYOUNG
+                                            {{item.SUBJECT}}
 
                                             <div class="webzine_list_bottomwrap">
-                                                <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;03~2014&dash;11&dash;16</span></div>
-                                                <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">10명</span></div>
-                                                <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;19</span></div>
+                                                <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.START_YMD}} ~ {{item.END_YMD}}</span></div>
+                                                <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.PEOPLE_CNT}}</span></div>
+                                                <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.WINNER_DT}}</span></div>
                                             </div>
 
                                             <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기">응모하기</button><br />
-                                                <button class="webzine_list_btn default" title="상세보기">상세보기</button>
-                                            </div>
-                                        </div>
-                                    </div>  <!-- comp_basic -->
-                                </div>  <!-- col-xs-8 -->
-                            </div>  <!-- /.row -->
-
-                            <!-- 체험단&이벤트 목록 -->
-                            <div class="row webzine_moms_list">
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                        <div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>
-                                        <div class="webzine_list_title">
-                                            모던 빈티지와 클래식을 재해석한 스타일리시하고 실용적인 캐나다 키즈백 SOYOUNG
-
-                                            <div class="webzine_list_bottomwrap">
-                                                <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;03~2014&dash;11&dash;16</span></div>
-                                                <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">10명</span></div>
-                                                <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;19</span></div>
-                                            </div>
-
-                                            <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기">응모하기</button><br />
-                                                <button class="webzine_list_btn default" title="상세보기">상세보기</button>
-                                            </div>
-                                        </div>
-                                    </div>  <!-- comp_basic -->
-                                </div>  <!-- col-xs-8 -->
-                            </div>  <!-- /.row -->
-                            <!-- 체험단&이벤트 목록 -->
-                            <div class="row webzine_moms_list">
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                        <div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>
-                                        <div class="webzine_list_title">
-                                            모던 빈티지와 클래식을 재해석한 스타일리시하고 실용적인 캐나다 키즈백 SOYOUNG
-
-                                            <div class="webzine_list_bottomwrap">
-                                                <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;03~2014&dash;11&dash;16</span></div>
-                                                <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">10명</span></div>
-                                                <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;19</span></div>
-                                            </div>
-
-                                            <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기">응모하기</button><br />
-                                                <button class="webzine_list_btn default" title="상세보기">상세보기</button>
-                                            </div>
-                                        </div>
-                                    </div>  <!-- comp_basic -->
-                                </div>  <!-- col-xs-8 -->
-                            </div>  <!-- /.row -->
-                            <!-- 체험단&이벤트 목록 -->
-                            <div class="row webzine_moms_list">
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                        <div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>
-                                        <div class="webzine_list_title">
-                                            모던 빈티지와 클래식을 재해석한 스타일리시하고 실용적인 캐나다 키즈백 SOYOUNG
-
-                                            <div class="webzine_list_bottomwrap">
-                                                <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;03~2014&dash;11&dash;16</span></div>
-                                                <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">10명</span></div>
-                                                <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;19</span></div>
-                                            </div>
-
-                                            <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기">응모하기</button><br />
-                                                <button class="webzine_list_btn default" title="상세보기">상세보기</button>
-                                            </div>
-                                        </div>
-                                    </div>  <!-- comp_basic -->
-                                </div>  <!-- col-xs-8 -->
-                            </div>  <!-- /.row -->
-                            <!-- 체험단&이벤트 목록 -->
-                            <div class="row webzine_moms_list">
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                        <div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>
-                                        <div class="webzine_list_title">
-                                            모던 빈티지와 클래식을 재해석한 스타일리시하고 실용적인 캐나다 키즈백 SOYOUNG
-
-                                            <div class="webzine_list_bottomwrap">
-                                                <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;03~2014&dash;11&dash;16</span></div>
-                                                <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">10명</span></div>
-                                                <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">2014&dash;11&dash;19</span></div>
-                                            </div>
-
-                                            <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기">응모하기</button><br />
-                                                <button class="webzine_list_btn default" title="상세보기">상세보기</button>
+                                                <button class="webzine_list_btn red" title="응모하기" ng-click="comp_momsevent(item.NO)">응모하기</button><br />
+                                                <button class="webzine_list_btn default" title="상세보기" ng-click="view_momsevent(item.NO)">상세보기</button>
                                             </div>
                                         </div>
                                     </div>  <!-- comp_basic -->

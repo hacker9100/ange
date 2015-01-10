@@ -47,6 +47,7 @@ define([
         $scope.getPeopleBoardList = function () {
 
             $scope.search.SYSTEM_GB = 'ANGE';
+            $scope.search.FILE = true;
             /*            $scope.search.SORT = 'NOTICE_FL';
              $scope.search.ORDER = 'DESC'*/
 
@@ -58,9 +59,39 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
 
+                    for(var i in data) {
+                        if (data[i].FILE != null) {
+                            var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                            data[i].MAIN_FILE = img;
+                        }
+                    }
+
+
                 })
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
+
+        // 상세보기
+        $scope.view_momsexperience = function(key){
+
+            if ($stateParams.menu == 'experienceprocess') {
+               $location.url('/moms/experienceprocess/view/'+key);
+            } else if ($stateParams.menu == 'experiencepast') {
+                $location.url('/moms/experiencepast/view/'+key);
+            }
+
+        }
+
+        //  응모하기
+        $scope.comp_momsexperience = function(key){
+
+            if ($stateParams.menu == 'experienceprocess') {
+                $location.url('/moms/experienceprocess/view/'+key);
+            } else if ($stateParams.menu == 'experiencepast') {
+                $location.url('/moms/experiencepast/view/'+key);
+            }
+
+        }
 
         $scope.getPeopleBoardList();
     }]);

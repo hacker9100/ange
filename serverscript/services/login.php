@@ -58,7 +58,7 @@
                 $msg = "";
 
                 $sql = "SELECT
-                            U.USER_ID, U.USER_NM, U.NICK_NM, U.EMAIL, UR.ROLE_ID, U.PASSWORD, U.USER_ST
+                            U.USER_ID, U.USER_NM, U.NICK_NM, U.EMAIL, UR.ROLE_ID, U.PASSWORD, U.USER_ST, U.ADDR, U.ADDR_DETAIL
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -143,6 +143,10 @@
                     $_SESSION['name'] = $data['USER_NM'];
                     $_SESSION['role'] = $data['ROLE_ID'];
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
+                    $_SESSION['addr'] = $data['ADDR'];
+                    $_SESSION['addr_detail'] = $data['ADDR_DETAIL'];
+                    $_SESSION['phone1'] = $data['PHONE1'];
+                    $_SESSION['phone2'] = $data['PHONE2'];
                     $_SESSION['timeout'] = time();
 
                     $_d->dataEnd2($data);

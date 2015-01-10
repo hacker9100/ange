@@ -58,7 +58,7 @@
                         <div class="row webzine_moms_list" ng-repeat="item in list">
                             <div class="col-xs-12 v-cell-4" style="margin:0px;">
                                 <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                    <div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>
+                                    <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
                                     <div class="webzine_list_title">
                                         {{item.SUBJECT}}
 
@@ -69,8 +69,8 @@
                                         </div>
 
                                         <div class="webzine_list_btnwrap">
-                                            <button class="webzine_list_btn red" title="응모하기">응모하기</button><br />
-                                            <button class="webzine_list_btn default" title="상세보기">상세보기</button>
+                                            <button class="webzine_list_btn red" title="응모하기" ng-click="comp_momsexperience(item.NO)">응모하기</button><br />
+                                            <button class="webzine_list_btn default" title="상세보기" ng-click="view_momsexperience(item.NO)">상세보기</button>
                                         </div>
                                     </div>
                                 </div>  <!-- comp_basic -->

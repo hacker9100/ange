@@ -20,11 +20,9 @@ define([
             if ($stateParams.menu == 'eventprocess') {
                 $scope.community = "진행중인 이벤트";
                 $scope.search.EVENT_GB = "EVENT";
-                $scope.search.PROCESS = "process";
             } else if ($stateParams.menu == 'eventperformance') {
                 $scope.community = "공연/체험 이벤트";
-                $scope.search.EVENT_GB = "EVENT";
-                $scope.search.PAST = "past";
+                $scope.search.EVENT_GB = "EVENT_PERFORM";
             }
         };
 
@@ -60,6 +58,7 @@ define([
             }
 
             $scope.search.SYSTEM_GB = 'ANGE';
+            $scope.search.FILE = true;
             /*            $scope.search.SORT = 'NOTICE_FL';
              $scope.search.ORDER = 'DESC'*/
 
@@ -68,12 +67,42 @@ define([
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
 
+
+                    for(var i in data) {
+                        if (data[i].FILE != null) {
+                            var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                            data[i].MAIN_FILE = img;
+                        }
+                    }
+
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
 
                 })
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
+
+        // 상세보기
+        $scope.view_momsevent = function(key){
+
+            if ($stateParams.menu == 'eventprocess') {
+                $location.url('/moms/eventprocess/view/'+key);
+            } else if ($stateParams.menu == 'eventperformance') {
+                $location.url('/moms/eventperformance/view/'+key);
+            }
+
+        }
+
+        //  응모하기
+        $scope.comp_momsevent = function(key){
+
+            if ($stateParams.menu == 'eventprocess') {
+                $location.url('/moms/eventprocess/view/'+key);
+            } else if ($stateParams.menu == 'eventperformance') {
+                $location.url('/moms/eventperformance/view/'+key);
+            }
+
+        }
 
         $scope.getPeopleBoardList();
 

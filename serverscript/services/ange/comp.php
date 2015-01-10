@@ -6,40 +6,49 @@
 //	header("Cache-Control: pre-check=0, post-check=0, max-age=0");
 //	header("Pragma: no-cache");
 
-@session_start();
+    @session_start();
 
-@extract($_GET);
-@extract($_POST);
-@extract($_SERVER);
+    @extract($_GET);
+    @extract($_POST);
+    @extract($_SERVER);
 
-date_default_timezone_set('Asia/Seoul');
+    date_default_timezone_set('Asia/Seoul');
 
-include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+    include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_c("### [START]");
-MtUtil::_c(print_r($_REQUEST,true));
+    MtUtil::_c("### [START]");
+    MtUtil::_c(print_r($_REQUEST,true));
 
-MtUtil::_c(json_encode(file_get_contents("php://input"),true));
+    MtUtil::_c(json_encode(file_get_contents("php://input"),true));
 
-//	MtUtil::_c(print_r($_REQUEST,true));
-/*
-    if (isset($_REQUEST['_category'])) {
-        $category = explode("/", $_REQUEST['_category']);
+    //	MtUtil::_c(print_r($_REQUEST,true));
+    /*
+        if (isset($_REQUEST['_category'])) {
+            $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+            Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
+            Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        }
+    */
+    $_d = new MtJson();
+
+    if ($_d->connect_db == "") {
+        $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
     }
-*/
-$_d = new MtJson();
 
-if ($_d->connect_db == "") {
-    $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
-}
+    if (!isset($_type) || $_type == "") {
+        $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
+    }
 
-if (!isset($_type) || $_type == "") {
-    $_d->failEnd("서버에 문제가 발생했습니다. 작업 유형이 없습니다.");
-}
+    $ip = "";
 
+    if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
 
 switch ($_method) {
     case "GET":
@@ -120,6 +129,7 @@ switch ($_method) {
     case "POST":
 
         //            $FORM = json_decode(file_get_contents("php://input"),true);
+        //$_d->sql_beginTransaction();
 
         $sql = "INSERT INTO ANGE_COMP
                         (
@@ -135,20 +145,29 @@ switch ($_method) {
                             ANSWER,
                             ADD1,
                             ADD2,
-                            ADD3
+                            ADD3,
+                            CHILD_CNT,
+                            PHONE1,
+                            PHONE2,
+                            PRODUCT
                         ) VALUES (
-                             '".$_model[BOARD_NO]."'
+                             '".$_model[NO]."'
                             , '".$_SESSION['uid']."'
                             , '".$_SESSION['nick']."'
                             , '".$_SESSION['name']."'
                             , SYSDATE()
                             , '".$_model[PREG_FL]."'
-                            , '".($_model[PREG_FL] == "true" ? "Y" : "N")."'
+                            ,'".$_model[BABY_MONTH]."'
                             ,'".$_model[BABY_AGE]."'
                             ,'".$_model[BLOG_URL]."'
+                            ,'".$_model[ANSWER]."'
                             ,'".$_model[ADD1]."'
                             ,'".$_model[ADD2]."'
                             ,'".$_model[ADD3]."'
+                            ,'".$_model[CHILD_CNT]."'
+                            , '".$_SESSION['phone1']."'
+                            , '".$_SESSION['phone2']."'
+                            ,'".$_model[PRODUCT]."'
                         )";
 
         $_d->sql_query($sql);
@@ -157,6 +176,7 @@ switch ($_method) {
         if ($_d->mysql_errno > 0) {
             $_d->failEnd("등록실패입니다:".$_d->mysql_error);
         } else {
+            $_d->sql_commit();
             $_d->succEnd($no);
         }
 
@@ -201,6 +221,9 @@ switch ($_method) {
                                 ,ADD1 = '".$_model[ADD1]."'
                                 ,ADD2 = '".$_model[ADD2]."'
                                 ,ADD3 = '".$_model[ADD3]."'
+                                ,CHILD_CNT  = '".$_model[CHILD_CNT]."'
+                                ,PHONE1  = '".$_SESSION['phone1']."'
+                                ,PHONE2  = '".$_SESSION['phone2']."'
                             WHERE
                                 NO = ".$_key."
 

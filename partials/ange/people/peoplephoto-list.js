@@ -175,6 +175,7 @@ define([
                         if (data[i].FILE != null) {
                             var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
                             data[i].MAIN_FILE = img;
+
                         }
                     }
 

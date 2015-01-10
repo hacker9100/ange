@@ -166,6 +166,11 @@ define([
                 $rootScope.menu_role = null;
                 $rootScope.email = null;
 
+
+                $rootScope.addr = session.ADDR;
+                $rootScope.addr_detail = session.ADDR_DETAIL;
+                $rootScope.phone1 = session.PHONE1;
+                $rootScope.phone2 = session.PHONE2;
 //                $location.path("/signin");
 //                throw( new String('세션이 만료되었습니다.') );
 //            throw( new Error("세션이 만료되었습니다.") );
@@ -182,6 +187,11 @@ define([
                 $rootScope.role = session.ROLE_ID;
                 $rootScope.menu_role = session.MENU_ROLE;
                 $rootScope.email = session.EMAIL;
+
+                $rootScope.addr = session.ADDR;
+                $rootScope.addr_detail = session.ADDR_DETAIL;
+                $rootScope.phone1 = session.PHONE1;
+                $rootScope.phone2 = session.PHONE2;
             }
 
             return;
