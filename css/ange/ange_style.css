@@ -1413,9 +1413,41 @@ a.people_btn.confirm {	 float:right; background-image: url('/imgs/ange/people_bt
 }
 
 
+/* 공용 버튼/아이콘*/
+
+.h4_icon {
+    margin-right:4px;
+    vertical-align: top;
+}
+
+.common_btn {
+    font-size: 0.86em;
+    line-height: 1em;
+    padding: 5px 12px;
+    background-color: #fff;
+    border:none;
+    opacity: 0.75;
+}
+
+.common_btn:hover {
+    opacity: 1;
+}
+
+.common_btn.blackbtn {
+    border: 1px solid #888888;
+    border-radius: 12px;
+    color:#333;
+}
+
+.common_btn.redbtn {
+    background-color: #fb6362;
+    border: 1px solid #fb6362;
+    border-radius: 12px;
+    color:#fff;
+}
+
 
 /* 이벤트(맘스) 공용 버튼 */
-
 
 
 /* 스토어 공용 버튼 */
