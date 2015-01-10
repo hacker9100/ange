@@ -46,7 +46,7 @@
     $channel_data = $__trn->{'rows'};
 
     $sql = "SELECT
-                MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC
+                MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC, ETC
             FROM
                 COM_MENU
             WHERE

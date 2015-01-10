@@ -93,12 +93,13 @@ define(['./directives'], function (directives) {
                 /********** 초기화 **********/
                 // 카테고리 데이터
                 $scope.category = [];
+//                $scope.category = new Array(2);
 
                 // 초기화
                 $scope.init = function() {
                     $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
 
-                        $scope.category = data;
+//                        $scope.category = data;
 
                         var category_a = [];
                         var category_b = [];
@@ -116,7 +117,7 @@ define(['./directives'], function (directives) {
                         $scope.category_a = category_a;
                         $scope.category_b = category_b;
                     })
-                        .catch(function(error){$scope.projects = []; console.log(error)});
+                        .catch(function(error){});
                 };
 
                 /********** 이벤트 **********/
@@ -124,8 +125,9 @@ define(['./directives'], function (directives) {
                     $location.url(url);
                 };
 
-                $scope.click_selectCategory = function(category) {
-                    $scope.category = category;
+                $scope.click_selectCategory = function(idx, category) {
+                    $scope.category[idx] = category;
+                    $scope.reload = true;
                     $scope.getContentList();
                 };
 

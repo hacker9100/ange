@@ -6,12 +6,16 @@
 
         <div class="btn-group" style="margin-left:5px;">
             <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="width:120px;">
-            육아단계별 <span class="caret" style="float:right; margin:8px 4px 0 0"></span>
+                <span ng-if="category[0] == null"> 육아단계별 </span>
+                <span ng-if="category[0] != null"> {{category[0].CATEGORY_NM}} </span>
+
+                <span class="caret" style="float:right; margin:8px 4px 0 0"></span>
             </button>
 
             <ul class="dropdown-menu" role="menu">
+                <li><a ng-click="click_selectCategory(0, null)">전체</a></li>
                 <li ng-repeat="category in category_a">
-                    <a ng-click="click_selectCategory(category)">{{category.CATEGORY_NM}}</a>
+                    <a ng-click="click_selectCategory(0, category)">{{category.CATEGORY_NM}}</a>
                 </li>
             </ul>
 
@@ -26,12 +30,16 @@
 
         <div class="btn-group">
             <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false"  style="width:120px;">
-            주제별 <span class="caret" style="float:right; margin:8px 4px 0 0"></span>
+                <span ng-if="category[1] == null"> 주제별 </span>
+                <span ng-if="category[1] != null"> {{category[1].CATEGORY_NM}} </span>
+
+                <span class="caret" style="float:right; margin:8px 4px 0 0"></span>
             </button>
 
             <ul class="dropdown-menu" role="menu">
+                <li><a ng-click="click_selectCategory(1, null)">전체</a></li>
                 <li ng-repeat="category in category_b">
-                    <a ng-click="click_selectCategory(category)">{{category.CATEGORY_NM}}</a>
+                    <a ng-click="click_selectCategory(1, category)">{{category.CATEGORY_NM}}</a>
                 </li>
             </ul>
 
