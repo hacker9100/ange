@@ -26,17 +26,65 @@
 
         <div class="row" style="margin:0px auto; margin-bottom:10px;">
             <div ng-show="menu == 'experiencereview' || menu == 'eventview'">
-                <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">참여한 이벤트</label>
-                <div class="col-xs-8" style="padding-left:5px;">
+
+                <label class="control-label" style="float:left; width:8%; padding:0; text-align:center; padding:3px 0;">선택</label>
+
+                <div style="float:left; width:91%; padding:0;">
+                    <div style="float:left; margin-left:1%;">
+                        <div class="table_gray" style="padding: 4px 0 20px 8px; font-size:0.86em;">회원님은 총 <span class="table_red">12</span> 건의 후기 미션이 있습니다.</div>
+
+                        <!-- /마감일 임박순 -->
+                        <div class="form-group" data-ng-repeat="list in event" style="float:left; font-size: 0.86em; margin:0 5px 15px 5px; line-height:18px;">
+                            <input type="radio" name="reveiw_mission" value="{{list.NO}}" style="float:left; margin:4px 6px 0 4px;">
+                            <div style="margin-left:22px; word-break: keep-all;">
+                            <span class="table_blue">[2014-11-25 마감] </span>{{list.SUBJECT}}
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="float:left; font-size: 0.86em; margin:0 5px 18px 5px; line-height:18px;">
+                            <input type="radio" name="reveiw_mission" value="{{list.NO}}" style="float:left; margin:4px 6px 0 4px;" checked>
+                            <div style="margin-left:22px;">
+                                <strong>일반 쓰기</strong> <span class="table_gray">(공유하고 싶은 정보를 언제든지 자유롭게 등록할 수 있습니다.)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- div class="col-xs-8" style="padding-left:5px;">
                     <select ng-model="item.TARGET_NO">
                         <option data-ng-repeat="list in event" value="{{list.NO}}">{{list.SUBJECT}}</option>
                     </select>
-                </div><!-- /.col-xs-7 -->
+                </div --><!-- /.col-xs-7 -->
             </div>
         </div>
 
         <div class="row" style="margin:0px auto; margin-bottom:10px;">
             <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">제목</label>
+            <div class="col-xs-3" style="padding:0px;">
+
+                <!-- select class="form-control input-sm" -->   <!-- 일반쓰기는 선택 -->
+                <select class="form-control input-sm" disabled> <!-- 미션 쓰기는 미션선택에 따라 자동 선택되고 disable 됨 -->
+                    <option>선택하세요.</option>
+                    <option selected>체험단/서평단</option>
+                    <option>이벤트</option>
+                    <option>샘플팩</option>
+                    <option>상품/브랜드</option>
+                    <option>앙쥬서비스</option>
+                </select>
+
+                <!-- div class="btn-group" style="width:100%;">
+                    <button class="btn btn-default btn-sm dropdown-toggle" style="width:100%;" type="button" data-toggle="dropdown" aria-expanded="false">
+                        후기 선택* <span class="caret" style="float:right; margin-top: 8px;"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">체험단/서평단</a></li>
+                        <li><a href="#">이벤트</a></li>
+                        <li><a href="#">샘플팩</a></li>
+                        <li><a href="#">앙쥬서비스</a></li>
+                        <li><a href="#">스토어/상품</a></li>
+                    </ul>
+                </div -->
+            </div>  <!-- /.col-xs-3 -->
             <div class="col-xs-8" style="padding-left:5px;">
                 <input ng-model="item.SUBJECT" type="text" class="input-sm form-control" placeholder="제목을 입력하세요">
             </div><!-- /.col-xs-7 -->
@@ -91,7 +139,7 @@
             <!-- /file drag-in Box -->
 
             <!-- image thumbnails -->
-            <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
+            <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px; display: block;">   <!-- 첨부이미지가 있을 경우 표시 -->
 
                 <label class="col-xs-1">
 
@@ -100,10 +148,10 @@
                 <div class="col-xs-11 col-xs-offset-1" style="padding:0;">
                     <div class="thumbnailzone">
 
-                        <!--                                                    <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
+                        <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
                                                                                 별모양을 클릭하여 대표이미지를 지정하세요.
                                                                                 <span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>
-                                                                            </div>-->
+                                                                            </div>
 
                         <!-- Thumbnail List -->
                         <div data-ng-repeat="file in queue">

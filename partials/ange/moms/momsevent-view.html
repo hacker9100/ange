@@ -1,268 +1,640 @@
 <div ng-controller="momsevent-view">
+
 <!-- mainbar -->
 <div class="mainbar sub-slide0">
-<div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
 
+    <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
 
-<div class="row">
-
-<div class="col-xs-12 v-cell-3">
-<div class="comp_basic h-cell-dynamic">
-
-<div class="sub_contents_wrap">
-
-<div class="sub_contents_title">
-    <span class="sub_contents_bullet"></span>
-    <h3 style="font-weight:bold;">
-        {{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>-->
-        <div class="sub_contents_slogan">{{item.SUBJECT}}</div>
-    </h3>
-</div>
-
-<!-- 체험단&이벤트 목록 -->
-<div class="row webzine_moms_list">
-    <div class="col-xs-12 v-cell-4" style="margin:0px;">
-        <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
-            <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}"  style="height: 155px;" class="webzine_moms_featureimg"></div>
-            <div class="webzine_list_title">
-                {{item.SUBJECT}}
-
-                <div class="webzine_list_bottomwrap">
-                    <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.START_YMD}} ~ {{item.END_YMD}}</span></div>
-                    <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.PEOPLE_CNT}}명</span></div>
-                    <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.WINNER_DT}}</span></div>
-                </div>
-
-            </div>
-        </div>  <!-- comp_basic -->
-    </div>  <!-- col-xs-12 -->
-    <div class="col-xs-12 v-cell-4" style="margin:0px;">
-        <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
-            <div class="webzine_list_infowrap">
-                <dl>
-                    <dt class="table_red">추가정보</dt>
-                    <dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>
-                    <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.DELIV_COST}}원</span></dd>
-                    <dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>
-                    <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.COMPANY_URL}}">{{item.COMPANY_NM}}</a></span></dd>
-                    <dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.COMP_CNT}}</span>명({{item.HIT_CNT}} 조회)</span></dd>
-                </dl>
-            </div>
-            <div style="position:absolute; right:10px; bottom:25px;">
-                <button class="common_btn redbtn" title="공감" data-ng-click="click_focus();"><span class="glyphicon glyphicon-edit sharebtn_icon"></span>응모하기</button>
-                <button class="common_btn blackbtn" title="공감"><span class="glyphicon glyphicon-share sharebtn_icon"></span>공유하기</button>
-            </div>
-        </div>  <!-- comp_basic -->
-    </div>  <!-- col-xs-12 -->
-</div>  <!-- /.row -->
-
-
-<div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-    <h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>상세정보</h4>
-</div>
-
-<div class="container-fluid peopleboard_view_contentwrap">
     <div class="row">
-        <div class="col-xs-12 peopleboard_view_contentbody">
 
-            <!-- Editor CSS 적용 img max-width: 720px -->
-            <!--<img src="/imgs/temp/temp_productimg.jpg" style="width:100%;"/>-->
-            <img ng-src="{{item.MAIN_FILE}}" style="width:100%;"/>
+        <div class="col-xs-12 v-cell-3">
+            <div class="comp_basic h-cell-dynamic">
 
-        </div><!-- /.col-12-->
-    </div><!-- /.row -->
-</div><!-- /.container -->
+                <div class="sub_contents_wrap">
 
-
-<div id="moms_state"  class="moms_state" style="padding-top:20px;">
-    <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
-
-    <div class="moms_form" style="margin:0px; display:block;" ng-show="uid != '' && uid != null || item.END_YMD >= todayDate" ng-model="item">
-        <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-            <h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>
-        </div>
-
-        <div class="moms_form_titlebar" style="float:left; height:45px; width:100%; color:#4cace8; background-color:#333;">
-            |회원정보
-            신청을 위해서 정확한 정보가 필요합니다. 정보가 다르신가요?
-            <button class="webzine_list_btn red" title="정보수정">정보수정</button><br />
-        </div>
-        <div class="moms_form_bodywrap">
-
-            <table id="moms_form_table" class="table" style="margin-bottom: 0px;">
-                <tbody>
-                <tr>
-                    <td width="100" align="center" class="table_td_gray">
-                        신청자
-                    </td>
-                    <td>
-                        {{name}}({{uid}})
-                    </td>
-                </tr>
-                <tr>
-                    <td width="100" align="center" class="table_td_gray">
-                        주소
-                    </td>
-                    <td>
-                        {{addr}}&nbsp;{{addr_detail}}
-                    </td>
-                </tr>
-                <tr>
-                    <td width="100" align="center" class="table_td_gray">
-                        연락처
-                    </td>
-                    <td>
-                        <span>전화번호</span>{{phone1}}
-                        <span>휴대폰</span>{{phone2}}
-                    </td>
-                </tr>
-                </tbody>
-            </table><!-- /.List-->
-
-            <div style="width:100%; padding:20px 18px; background-color:#faf0de;">
-                <h4 class="table_red" style="width:90px; height:100%; line-height:24px; float:left;">
-                    신청시<br/> 주의사항
-                </h4>
-                <div style="margin-left:90px; font-size:0.86em;">
-                    1. 체험자 정보(아기 개월수 / 임신주차)<br/>
-                    2. 체험단 페이지를 본인 블로그에 전체공개로 스크랩한 URL<br/>
-                    3. 디벨플래닛 아이디<br/>
-                    4. 아이성별<br/>
-                    5. 체험하고 싶은제품 선택(체험단/서평단)<br/>
-                    <br/>
-                    * 제품은 랜덤발송됩니다.
+                <div class="sub_contents_title">
+                    <span class="sub_contents_bullet"></span>
+                    <h3 style="font-weight:bold;">
+                        {{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>-->
+                        <div class="sub_contents_slogan">{{item.SLOGAN}}</div>
+                    </h3>
                 </div>
-            </div>
 
-            <div class="moms_form_titlebar" style="float:left; height:45px; width:100%; color:#4cace8; background-color:#333;">
-                | 신청정보
-            </div>
+                <!-- 체험단&이벤트 목록 -->
+                <div class="row webzine_moms_list">
+                    <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                        <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
+                            <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}"  style="height: 155px;" class="webzine_moms_featureimg"></div>
+                            <div class="webzine_list_title">
+                                {{item.SUBJECT}}
 
-            <table id="moms_form_table" class="table" style="margin-bottom: 0px;">
-                <tbody>
-                <tr>
-                    <td width="100" align="center" class="table_td_gray">
-                        제목
-                    </td>
-                    <td>
-                        {{item.SUBJECT}}
-                    </td>
-                </tr>
-                <!--<tr>
-                    <td align="center" class="table_td_gray">
-                        제품선택
-                    </td>
-                    <td>
-                        <select ng-model=item.PRODUCT" class="form-control input-sm">
-                            <option data-repeat>제품을 선택하세요.</option>
-                            <option>마린풀토이</option>
-                            <option>사파리블록</option>
-                            <option>서커스블록</option>
-                            <option>포레스트150</option>
-                        </select>
-                    </td>
-                </tr>-->
-                <tr>
-                    <td align="center" class="table_td_gray">
-                        체험자정보
-                    </td>
-                    <td>
-                        <div class="form-inline" style="margin:0 5px">
+                                <div class="webzine_list_bottomwrap">
+                                    <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.START_YMD}} ~ {{item.END_YMD}}</span></div>
+                                    <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.PEOPLE_CNT}}명</span></div>
+                                    <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.WINNER_DT}}</span></div>
+                                </div>
 
-                            <select id="preg_fl" ng-model="item.PREG_FL" class="form-control input-sm" style="width:110px; display:block;">
-                                <option selected value="">임신여부</option>
-                                <option value="Y">임신중</option>
-                                <option value="N">해당없음</option>
-                            </select>
+                            </div>
+                        </div>  <!-- comp_basic -->
+                    </div>  <!-- col-xs-12 -->
+                    <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                        <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
+                            <div class="webzine_list_infowrap">
+                                <dl>
+                                    <dt class="table_red">추가정보</dt>
+                                    <dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>
+                                    <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.DELIV_COST}}원</span></dd>
+                                    <dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>
+                                    <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.COMPANY_URL}}">{{item.COMPANY_NM}}</a></span></dd>
+                                    <dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.COMP_CNT}}</span>명({{item.HIT_CNT}} 조회)</span></dd>
+                                </dl>
+                            </div>
+                            <div style="position:absolute; right:10px; bottom:25px;">
+                                <button class="common_btn redbtn" title="공감" data-ng-click="click_focus();"><span class="glyphicon glyphicon-edit sharebtn_icon"></span>응모하기</button>
+                                <button class="common_btn blackbtn" title="공감"><span class="glyphicon glyphicon-share sharebtn_icon"></span>공유하기</button>
+                            </div>
+                        </div>  <!-- comp_basic -->
+                    </div>  <!-- col-xs-12 -->
+                </div>  <!-- /.row -->
 
-                            <select ng-model="item.CHILD_CNT" class="form-control input-sm" style="width:110px; display:block;">
-                                <option selected value="">자녀수</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5명 이상상</option>
-                            </select>
+
+                <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
+                    <h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>상세정보</h4>
+                </div>
+
+                <div class="container-fluid peopleboard_view_contentwrap">
+                    <div class="row">
+                        <div class="col-xs-12 peopleboard_view_contentbody">
+
+                            <!-- Editor CSS 적용 img max-width: 720px -->
+                            <!--<img src="/imgs/temp/temp_productimg.jpg" style="width:100%;"/>-->
+                            <img ng-src="{{item.MAIN_FILE}}" style="width:100%;"/>
+
+                        </div><!-- /.col-12-->
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+
+                <div id="moms_state" class="moms_state" style="padding-top:20px;">
+                    <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
+
+                    <!-- div class="moms_form" style="margin:0px;" ng-show="uid != '' && uid != null || item.END_YMD >= todayDate" ng-model="item" -->
+                    <div class="moms_form" style="margin:0px; display:block;" ng-show="item.END_YMD >= todayDate" ng-model="item">
+                    <!-- div class="moms_form" style="margin:0px; display:block;" -->
+
+                        <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
+                            <h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" class="table_td_gray">
-                        아기 개월
-                    </td>
-                    <td>
-                        <div class="form-inline" style="margin:0 5px">
-                            <input type="text" id="test" ng-model="item.BABY_MONTH" placeholder="아기 개월수"/>
+
+                        <div class="col-xs-12 v-cell-4" style="padding:0px;">
+                            <div class="comp_basic h-cell-dynamic" style="margin:0px;">
+
+                                <div class="moms_form_titlebar">
+                                    | 회원정보
+                                    <div style="float:right;">
+                                        <small>신청을 위해서 정확한 정보가 필요합니다. 정보가 다르신가요?</small>
+                                        <button class="webzine_list_btn red" style="line-height:18px;" title="정보수정">정보수정</button><br />
+                                    </div>
+                                </div>
+
+                                <div class="moms_form_bodywrap">
+
+                                    <table id="moms_form_table" class="table" style="float:left; margin-bottom: 0px;">
+                                        <tbody>
+                                        <tr>
+                                            <td width="100" align="center" class="table_td_gray">
+                                                신청자
+                                            </td>
+                                            <td>
+                                                {{name}}({{uid}})
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100" align="center" class="table_td_gray">
+                                                주소
+                                            </td>
+                                            <td>
+                                                {{addr}}&nbsp;{{addr_detail}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100" align="center" class="table_td_gray">
+                                                연락처
+                                            </td>
+                                            <td>
+                                                <span>전화번호</span>{{phone1}}
+                                                <span>휴대폰</span>{{phone2}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100" align="center" class="table_td_gray">
+                                                임신여부
+                                            </td>
+                                            <td>
+                                                <span style="display: none;">해당없음</span>
+                                                <span style="display: block;">임신 중 <small class="table_gray">(<strong>2015-12-25</strong> 출산예정)</span></small>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100" align="center" class="table_td_gray">
+                                                자녀정보
+                                            </td>
+                                            <td>
+                                                <span style="display:none;">없음</span>
+                                                <div style="display:block;">
+                                                    <small class="table_blue">10</span> 명 (남 <strong>10</strong> 명, 여 <strong>0</strong> 명)
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="100" align="center" class="table_td_gray">
+                                                블로그
+                                            </td>
+                                            <td>
+                                                <span style="display:none;">없음</span>
+                                                <a href="#" class="table_blue" style="font-size:0.94em;">http://blog.naver.com/abcdefg</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table><!-- /.List-->
+
+                                    <div class="clearfix" style="clear:both; width:100%; padding:20px 18px; background-color:#faf0de;">
+                                        <h4 class="table_red" style="width:90px; height:100%; line-height:28px; font-size:1.18em; float:left;">
+                                            신청시<br/> 주의사항
+                                        </h4>
+                                        <div style="margin-left:90px; line-height:18px; font-size:0.86em;">
+                                            1. 체험자 정보(아기 개월수 / 임신주차)<br/>
+                                            2. 체험단 페이지를 본인 블로그에 전체공개로 스크랩한 URL<br/>
+                                            3. 디벨플래닛 아이디<br/>
+                                            4. 아이성별<br/>
+                                            5. 체험하고 싶은제품 선택(체험단/서평단)<br/>
+                                            <br/>
+                                            * 제품은 랜덤발송됩니다.
+                                        </div>
+                                    </div>
+
+                                </div><!-- /.moms_form_bodywrap -->
+                            </div>  <!-- /.comp_basic -->
+                        </div>  <!-- /.col-xs-12 -->
+
+                        <div class="col-xs-12 v-cell-4" style="padding:0px;">
+                            <div class="comp_basic h-cell-dynamic" style="width:100%; margin:0px;">
+                                <div class="moms_form_bodywrap">
+
+                                    <div class="moms_form_titlebar" style="float:left; height:45px; line-height:45px; width:100%; padding:0px 10px; color:#4cace8; background-color:#333;">
+                                        | 신청서 작성
+                                    </div>
+
+                                    <table id="moms_form_table" class="table" style="float:left; border-bottom:1px solid #333; margin-bottom: 0px;">
+                                        <tbody>
+                                        <tr>
+                                            <td width="100" align="center" class="table_td_gray">
+                                                제목
+                                            </td>
+                                            <td>
+                                                <strong>{{item.SUBJECT}}</strong>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="table_td_gray">
+                                                제품선택
+                                            </td>
+                                            <td>
+                                                <select ng-model=item.PRODUCT" class="form-control input-sm">
+                                                    <option data-repeat>제품을 선택하세요.</option>
+                                                    <option>마린풀토이</option>
+                                                    <option>사파리블록</option>
+                                                    <option>서커스블록</option>
+                                                    <option>포레스트150</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="table_td_gray">
+                                                상품설명<br/>스크랩한<br/>
+                                                블로그 주소
+                                            </td>
+                                            <td>
+                                                <div class="form-inline" style="float:left; margin:0px; padding:0px;">
+
+                                                    <div class="row form_rows bottom" style="margin:0px;  border:none;">
+
+                                                        <div class="form_basicinfo" style="margin:0px;">
+                                                            <span class="col-xs-12 basicinfo input">
+                                                                <div class="form-inline">
+                                                                    <input type="text" style="width:92%;" class="form-control input-sm">
+                                                                    <div style="float:right; width:5%;">
+                                                                        <button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+
+                                                            <span class="col-xs-12 basicinfo input">
+                                                                <div class="form-inline">
+                                                                    <input type="text" style="width:92%;" class="form-control input-sm">
+                                                                    <div style="float:right; width:5%;">
+                                                                        <button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+
+                                                            <span class="col-xs-12 basicinfo input">
+                                                                <div class="form-inline">
+                                                                    <input type="text" style="width:92%;" class="form-control input-sm">
+                                                                    <div style="float:right; width:5%;">
+                                                                        <button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+
+                                                            <span class="col-xs-12 basicinfo divide" style="margin:0px; width:100%;"></span>
+
+                                                            <span class="col-xs-12 basicinfo input">
+                                                                <div style="text-align:right; padding:0 10px;">
+
+                                                                    <span class="table_blue"><small>미션에 따라 블로그 갯수만큼 추가해주세요</small></span>
+
+                                                                    <button type="button" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-plus"></span> 추가</button>
+
+                                                                </div>
+                                                            </span>
+
+                                                        </div>  <!-- /.form_basicinfo -->
+                                                    </div>  <!-- /.form_rows -->
+
+                                                </div>  <!-- /.form-inline -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="table_td_gray">
+                                                추가정보1
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="table_td_gray">
+                                                추가정보2
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="table_td_gray">
+                                                추가정보3
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control input-sm">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="table_td_gray">
+                                                신청이유
+                                            </td>
+                                            <td>
+                                                <textarea class="form-control input-sm" style="min-width:100%; max-width:100%;" rows="8"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="table_td_gray">
+                                                개인정보<br />
+                                                제3자<br />
+                                                정보제공 안내<br />
+                                            </td>
+                                            <td>
+                                                <div class="table_gray" style="font-size:0.94em;">
+                                                    체험단 선정 후 상품 발송을 위하여 개인정보(이름, 전화번호, 주소)를 체험단 상품 제공업체에
+                                                    제공되며, 해당업체는 상품 발송 완료시까지만 보유 및 이용하게 됩니다.
+                                                </div>
+                                                <div class="table_blue" style="font-size:0.94em; line-height:38px;">
+                                                    제 3자 정보제공에 동의하시나요?
+                                                </div>
+                                                <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                                    <input type="radio" name="credit_agreement" style="float: left; margin:10px 0 0 15px;" checked>
+                                                    <span class="credit_agreement_span">동의함</span>
+
+                                                    <input type="radio" name="credit_agreement" style="float: left; margin:10px 0 0 15px;">
+                                                    <span class="credit_agreement_span">동의안함</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <!-- tr>
+                                            <td align="center" class="table_td_gray">
+                                                아기 개월
+                                            </td>
+                                            <td>
+                                                <div class="form-inline" style="margin:0 5px">
+                                                    <input type="text" id="test" ng-model="item.BABY_MONTH" placeholder="아기 개월수"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="table_td_gray">
+                                                아기 나이
+                                            </td>
+                                            <td>
+                                                <div class="form-inline" style="margin:0 5px">
+                                                    <input type="text" ng-model="item.BABY_AGE" placeholder="아기 나이"/>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center" class="table_td_gray">
+                                                블로그 주소
+                                            </td>
+                                            <td>
+                                                <div class="form-inline" style="margin:0 5px">
+                                                    <input type="text" ng-model="item.BLOG_URL" placeholder="블로그 주소" style="width: 400px;"/>
+                                                </div>
+                                            </td>
+                                        </tr -->
+
+                                        </tbody>
+                                    </table><!-- /.List-->
+
+                                    <div class="moms_form_foot" style="border-bottom:2px solid #111;">
+                                        <div class="table_blue moms_form_footguide">모집기간 동안에는 신청내용을 수정할 수 있습니다. 기간을 확인해주세요.</div>
+
+                                        <div class="moms_form_footbtn">
+
+                                            <button ng-click="click_momseventlist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>
+                                            <button ng-click="click_momseventcomp();" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
+                                            <button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>
+
+                                        </div>
+                                    </div>
+
+                                </div><!-- /.moms_form_bodywrap -->
+                            </div>  <!-- /.comp_basic -->
+                        </div>  <!-- /.col-xs-12 -->
+                    </div>  <!-- /.moms_form -->
+
+                    <div class="moms_reviews" ng-show="item.END_YMD < todayDate">
+                        <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
+                            <h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>후기</h4>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" class="table_td_gray">
-                        아기 나이
-                    </td>
-                    <td>
-                        <div class="form-inline" style="margin:0 5px">
-                            <input type="text" ng-model="item.BABY_AGE" placeholder="아기 나이"/>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" class="table_td_gray">
-                        블로그 주소
-                    </td>
-                    <td>
-                        <div class="form-inline" style="margin:0 5px">
-                            <input type="text" ng-model="item.BLOG_URL" placeholder="블로그 주소" style="width: 400px;"/>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table><!-- /.List-->
-
-            <button ng-click="click_momseventlist();">목록</button>
-            <button ng-click="click_momseventcomp();">응모</button>
-        </div>
-    </div>
-
-    <div class="moms_reviews" style="display:none;" ng-show="item.END_YMD < todayDate">
-        <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-            <h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>리뷰</h4>
-        </div>
-
-        <!-- 리뷰 목록 -->
-        <div class="row webzine_moms_list" data-ng-repeat="review in reviewList" ng-click="click_showViewReview(review.NO)">
-            <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
-                    <div class="item" style="position:absolute;"><img ng-src="{{review.MAIN_FILE}}" class="webzine_moms_featureimg"></div>
-                    <div class="webzine_list_title">
-                        {{review.SUBJECT}}
-
-                        <div class="webzine_list_bottomwrap">
-                            <div class="webzine_list_item"><strong>작성일</strong><span class="table_gray" style="margin-left:8px;">{{review.REG_DT}}</span></div>
-                            <div class="webzine_list_item"><strong>등록자</strong><span class="table_gray" style="margin-left:8px;">{{review.NICK_NM}}</span></div>
-                        </div>
-                    </div>
-                </div>  <!-- comp_basic -->
-            </div>  <!-- col-xs-8 -->
-        </div>  <!-- /.row -->
-
-        <div ng-show="reviewList == ''">
-            작성된 리뷰가 없습니다.
-        </div>
-
-    </div>  <!-- /.moms_review -->
-
-</div>  <!-- /.moms_state -->
 
 
-</div><!-- /.sub_contents_wrap -->
-</div>
-</div>
+                        <!-- review_list -->
+                        <table id="comp_board_table" class="table table-hover">
 
-</div> <!-- rows -->
+                            <thead>
+                            <tr class="board_thead" height="48">
+                                <td width="9%" align="center"><span class="board_th">번호</span></td>
+                                <td colspan="2" width="15%"><span class="board_th">내용</span></td>
+                                <td width="60" align="center"><span class="board_th">조회</span></td>
+                            </tr>
+                            </thead>
+
+                            <tbody class="on">
+                            <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                <td class="table_no">
+                                    <span>99</span>
+                                </td>
+
+                                <td width="18%">
+                                    <div class="review_thumbnails" style="background-image:url('/imgs/ange/temp/temp_recipe_01.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                    </div>
+                                    <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
+                                </td>
+
+                                </td>
+                                <td>
+                                    <span style="font-size:1.08em; font-weight:600;">[앙쥬샘플팩시즌2]흑흑 둘째 태어나고 도착하다.. </span>
+                                    <span class="table_icon_new">N</span>
+                                    <span class="glyphicon glyphicon-picture table_icon_pic"></span>
+
+                                    <div class="table_date" style="font-size:0.86em; line-height:36px;">
+                                        <span class="table_blue">므에에에에롱</span> &nbsp;|&nbsp; <span style=""></span>2015-01-01
+
+                                        <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
+                                            <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">9999</span>		<!-- 공감수 -->
+                                            <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">9999</span>	<!-- 댓글수 -->
+                                        </div>
+
+                                    </div>
+                                    <div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: break-all;">
+                                        예전에 앙쥬에서 체험단할때 가입했다가..
+                                        샘플팩 있다는걸 모르고 넘어가는바람에 ㅠㅠ 시즌2로 신청하게된 샘플팩이예요~
+                                        임산부면 누구나 다 주시는 샘플팩 시즌2
+                                        포인트 차감후에 착불로 배송된다는점이 조금 슬프긴하지만~ //ㅅ//
+                                        12월에...<!-- 신청해서 얼마전에 받았어요~
+                                            그. 러. 나.. ㅠㅠ 콩이 태어나고 나서 왔다는점은 안비밀~
+                                            콩이가 예정일보다 3주나 일찍 태어나시는 바람에 샘플팩보다 먼저 태어나주셨네요~
+                                            대신 샘플을 바로바로 써볼수있는 장점도 있으니까요... -->
+                                    </div>
+                                </td>
+                                <td class="table_hit">99999</td></tr>
+                            </tr>
+                            <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                <td class="table_no">
+                                    <span>98</span>
+                                </td>
+
+                                <td width="18%">
+                                    <div class="review_thumbnails" style="background-image:url('/imgs/ange/temp/temp_recipe_01.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                    </div>
+                                    <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
+                                </td>
+
+                                </td>
+                                <td>
+                                    <span style="font-size:1.08em; font-weight:600;">[앙쥬샘플팩시즌2]흑흑 둘째 태어나고 도착하다.. </span>
+                                    <span class="table_icon_new">N</span>
+                                    <span class="glyphicon glyphicon-picture table_icon_pic"></span>
+
+                                    <div class="table_date" style="font-size:0.86em; line-height:36px;">
+                                        <span class="table_blue">므에에에에롱</span> &nbsp;|&nbsp; <span style=""></span>2015-01-01
+
+                                        <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
+                                            <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">9999</span>		<!-- 공감수 -->
+                                            <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">9999</span>	<!-- 댓글수 -->
+                                        </div>
+
+                                    </div>
+                                    <div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: break-all;">
+                                        예전에 앙쥬에서 체험단할때 가입했다가..
+                                        샘플팩 있다는걸 모르고 넘어가는바람에 ㅠㅠ 시즌2로 신청하게된 샘플팩이예요~
+                                        임산부면 누구나 다 주시는 샘플팩 시즌2
+                                        포인트 차감후에 착불로 배송된다는점이 조금 슬프긴하지만~ //ㅅ//
+                                        12월에...<!-- 신청해서 얼마전에 받았어요~
+                                            그. 러. 나.. ㅠㅠ 콩이 태어나고 나서 왔다는점은 안비밀~
+                                            콩이가 예정일보다 3주나 일찍 태어나시는 바람에 샘플팩보다 먼저 태어나주셨네요~
+                                            대신 샘플을 바로바로 써볼수있는 장점도 있으니까요... -->
+                                    </div>
+                                </td>
+                                <td class="table_hit">99999</td></tr>
+                            </tr>
+                            <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                <td class="table_no">
+                                    <span>97</span>
+                                </td>
+
+                                <td width="18%">
+                                    <div class="review_thumbnails" style="background-image:url('/imgs/ange/temp/temp_recipe_01.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                    </div>
+                                    <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
+                                </td>
+
+                                </td>
+                                <td>
+                                    <span style="font-size:1.08em; font-weight:600;">[앙쥬샘플팩시즌2]흑흑 둘째 태어나고 도착하다.. </span>
+                                    <span class="table_icon_new">N</span>
+                                    <span class="glyphicon glyphicon-picture table_icon_pic"></span>
+
+                                    <div class="table_date" style="font-size:0.86em; line-height:36px;">
+                                        <span class="table_blue">므에에에에롱</span> &nbsp;|&nbsp; <span style=""></span>2015-01-01
+
+                                        <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
+                                            <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">9999</span>		<!-- 공감수 -->
+                                            <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">9999</span>	<!-- 댓글수 -->
+                                        </div>
+
+                                    </div>
+                                    <div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: break-all;">
+                                        예전에 앙쥬에서 체험단할때 가입했다가..
+                                        샘플팩 있다는걸 모르고 넘어가는바람에 ㅠㅠ 시즌2로 신청하게된 샘플팩이예요~
+                                        임산부면 누구나 다 주시는 샘플팩 시즌2
+                                        포인트 차감후에 착불로 배송된다는점이 조금 슬프긴하지만~ //ㅅ//
+                                        12월에...<!-- 신청해서 얼마전에 받았어요~
+                                            그. 러. 나.. ㅠㅠ 콩이 태어나고 나서 왔다는점은 안비밀~
+                                            콩이가 예정일보다 3주나 일찍 태어나시는 바람에 샘플팩보다 먼저 태어나주셨네요~
+                                            대신 샘플을 바로바로 써볼수있는 장점도 있으니까요... -->
+                                    </div>
+                                </td>
+                                <td class="table_hit">99999</td></tr>
+
+                            </tr>
+                            <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                <td class="table_no">
+                                    <span>96</span>
+                                </td>
+
+                                <td width="18%">
+                                    <div class="review_thumbnails" style="background-image:url('/imgs/ange/temp/temp_recipe_01.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                    </div>
+                                    <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
+                                </td>
+
+                                </td>
+                                <td>
+                                    <span style="font-size:1.08em; font-weight:600;">[앙쥬샘플팩시즌2]흑흑 둘째 태어나고 도착하다.. </span>
+                                    <span class="table_icon_new">N</span>
+                                    <span class="glyphicon glyphicon-picture table_icon_pic"></span>
+
+                                    <div class="table_date" style="font-size:0.86em; line-height:36px;">
+                                        <span class="table_blue">므에에에에롱</span> &nbsp;|&nbsp; <span style=""></span>2015-01-01
+
+                                        <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
+                                            <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">9999</span>		<!-- 공감수 -->
+                                            <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">9999</span>	<!-- 댓글수 -->
+                                        </div>
+
+                                    </div>
+                                    <div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: break-all;">
+                                        예전에 앙쥬에서 체험단할때 가입했다가..
+                                        샘플팩 있다는걸 모르고 넘어가는바람에 ㅠㅠ 시즌2로 신청하게된 샘플팩이예요~
+                                        임산부면 누구나 다 주시는 샘플팩 시즌2
+                                        포인트 차감후에 착불로 배송된다는점이 조금 슬프긴하지만~ //ㅅ//
+                                        12월에...<!-- 신청해서 얼마전에 받았어요~
+                                            그. 러. 나.. ㅠㅠ 콩이 태어나고 나서 왔다는점은 안비밀~
+                                            콩이가 예정일보다 3주나 일찍 태어나시는 바람에 샘플팩보다 먼저 태어나주셨네요~
+                                            대신 샘플을 바로바로 써볼수있는 장점도 있으니까요... -->
+                                    </div>
+                                </td>
+                                <td class="table_hit">99999</td></tr>
+                            </tr>
+                            <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                <td class="table_no">
+                                    <span>95</span>
+                                </td>
+
+                                <td width="18%">
+                                    <div class="review_thumbnails" style="background-image:url('/imgs/ange/temp/temp_recipe_01.jpg');">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                    </div>
+                                    <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
+                                </td>
+
+                                </td>
+                                <td>
+                                    <span style="font-size:1.08em; font-weight:600;">[앙쥬샘플팩시즌2]흑흑 둘째 태어나고 도착하다.. </span>
+                                    <span class="table_icon_new">N</span>
+                                    <span class="glyphicon glyphicon-picture table_icon_pic"></span>
+
+                                    <div class="table_date" style="font-size:0.86em; line-height:36px;">
+                                        <span class="table_blue">므에에에에롱</span> &nbsp;|&nbsp; <span style=""></span>2015-01-01
+
+                                        <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
+                                            <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">9999</span>		<!-- 공감수 -->
+                                            <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">9999</span>	<!-- 댓글수 -->
+                                        </div>
+
+                                    </div>
+                                    <div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: break-all;">
+                                        예전에 앙쥬에서 체험단할때 가입했다가..
+                                        샘플팩 있다는걸 모르고 넘어가는바람에 ㅠㅠ 시즌2로 신청하게된 샘플팩이예요~
+                                        임산부면 누구나 다 주시는 샘플팩 시즌2
+                                        포인트 차감후에 착불로 배송된다는점이 조금 슬프긴하지만~ //ㅅ//
+                                        12월에...<!-- 신청해서 얼마전에 받았어요~
+                                            그. 러. 나.. ㅠㅠ 콩이 태어나고 나서 왔다는점은 안비밀~
+                                            콩이가 예정일보다 3주나 일찍 태어나시는 바람에 샘플팩보다 먼저 태어나주셨네요~
+                                            대신 샘플을 바로바로 써볼수있는 장점도 있으니까요... -->
+                                    </div>
+                                </td>
+                                <td class="table_hit">99999</td></tr>
+                            </tr>
+
+                            </tbody>
+
+                            <tbody class="on" data-ng-show="reviewList == '' || reviewList == null">
+
+                            <tr height="120">
+                                <td colspan="4" align="center" valign="middle" style="font-size: 0.92em;">
+                                    <span class="table_gray" style="line-height:100px;">조회 데이터가 없습니다.</span>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table><!-- /.List-->
+
+                        <!-- 리뷰 목록 -->
+                        <div class="row webzine_moms_list" data-ng-repeat="review in reviewList" ng-click="click_showViewReview(review.NO)">
+                            <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                                <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                    <div class="item" style="position:absolute;"><img ng-src="{{review.MAIN_FILE}}" class="webzine_moms_featureimg"></div>
+                                    <div class="webzine_list_title">
+                                        {{review.SUBJECT}}
+
+                                        <div class="webzine_list_bottomwrap">
+                                            <div class="webzine_list_item"><strong>작성일</strong><span class="table_gray" style="margin-left:8px;">{{review.REG_DT}}</span></div>
+                                            <div class="webzine_list_item"><strong>등록자</strong><span class="table_gray" style="margin-left:8px;">{{review.NICK_NM}}</span></div>
+                                        </div>
+                                    </div>
+                                </div>  <!-- comp_basic -->
+                            </div>  <!-- col-xs-8 -->
+                        </div>  <!-- /.row -->
+
+                        <!-- div ng-show="reviewList == ''">작성된 리뷰가 없습니다.</div -->
 
 
-</div><!-- container-fluid -->
+                    </div>  <!-- /.moms_review -->
+
+                </div> <!-- /.moms_state -->
+
+
+                </div><!-- /.sub_contents_wrap -->
+            </div>  <!-- /.comp_basic -->
+        </div>  <!-- /.col-xs-12 -->
+
+    </div> <!-- /.rows -->
+
+</div><!-- /.sub-slide0 -->
 
 <!-- 1200px 이하일 경우 표시되는 footer -->
 <div class="copyright_foot">

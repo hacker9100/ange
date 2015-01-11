@@ -84,3 +84,42 @@
     background-color: #fb6362;
     color:#fff;
 }
+
+.moms_form_titlebar {
+    float:left;
+    height:45px;
+    line-height:45px;
+    width:100%;
+    padding:0px 10px;
+    color:#4cace8;
+    background-color:#333;
+}
+
+.moms_form_foot {
+    float: left;
+    width: 100%;
+    padding: 25px 0 40px 0;
+    text-align: center;
+}
+
+.moms_form_footguide {
+    float: left;
+    font-weight: 400;
+    line-height: 32px;
+    width: 100%;
+}
+
+.moms_form_footbtn {
+    margin-top:50px;
+    line-height:18px;
+}
+
+.table_td_gray{
+    background-color: #f2f2f2;
+}
+
+.credit_agreement_span {
+    float:left;
+    font-size: 0.86em;
+    margin-left:5px;
+}

@@ -1114,7 +1114,7 @@ tbody.on{
 
 .sub_contents_slogan {
     position: absolute;
-    font-size:0.64em;
+    font-size: 0.54em;
     color: #fb6362;
     line-height:18px;
     margin-top:5px;
@@ -1361,6 +1361,22 @@ a.people_btn.confirm {	 float:right; background-image: url('/imgs/ange/people_bt
     background-repeat: no-repeat;
 }
 
+.review_thumbnails {
+    float:left;
+    position: relative;
+    margin:0;
+    padding:0;
+    width:100%;
+    text-align:center;
+    margin-bottom:10px;
+    margin-right:2.6%;
+    cursor: pointer;
+    overflow:hidden;
+    background-position:50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 
 .thumbnails_img {
     width:100%;
@@ -1425,6 +1441,7 @@ a.people_btn.confirm {	 float:right; background-image: url('/imgs/ange/people_bt
     line-height: 1em;
     padding: 5px 12px;
     background-color: #fff;
+    line-height: 18px;
     border:none;
     opacity: 0.75;
 }
@@ -1442,6 +1459,13 @@ a.people_btn.confirm {	 float:right; background-image: url('/imgs/ange/people_bt
 .common_btn.redbtn {
     background-color: #fb6362;
     border: 1px solid #fb6362;
+    border-radius: 12px;
+    color:#fff;
+}
+
+.common_btn.bluebtn {
+    background-color: #4cace8;
+    border: 1px solid #4cace8;
     border-radius: 12px;
     color:#fff;
 }
