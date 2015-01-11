@@ -1361,6 +1361,21 @@ a.people_btn.confirm {	 float:right; background-image: url('/imgs/ange/people_bt
     background-repeat: no-repeat;
 }
 
+.story_thumbnails {
+    float:left;
+    margin:0;
+    padding:0;
+    width:100%;
+    text-align:center;
+    margin-right:2.6%;
+    margin-bottom:15px;
+    cursor: pointer;
+    overflow:hidden;
+    background-position:50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
 .review_thumbnails {
     float:left;
     position: relative;
