@@ -13,8 +13,11 @@
 
         <div class="mini_story_rollcate_catenames">
             <ul class="mini_story_rollcate_ul">
-                <li ng-class="categoryIdx == 0 ? 'foucs' : ''"><a ng-if="categoryIdx != 0" class="rollcate_link" ng-click="click_selectCategory(0, 'Health')">Health</a><span ng-if="categoryIdx == 0">Health</span></li>
-                <li ng-class="categoryIdx == 1 ? 'foucs' : ''"><a ng-if="categoryIdx != 1" class="rollcate_link" ng-click="click_selectCategory(1, 'Food')">Food</a><span ng-if="categoryIdx == 1">Food</span></li>
+                <li ng-repeat="category in category_b" ng-class="categoryIdx == category.NO ? 'foucs' : ''">
+                    <a ng-if="categoryIdx != category.NO" class="rollcate_link" ng-click="click_selectCategory(category)">{{category.CATEGORY_NM}}</a>
+                    <span ng-if="categoryIdx == category.NO">{{category.CATEGORY_NM}}</span>
+                </li>
+                <!--<li ng-class="categoryIdx == 1 ? 'foucs' : ''"><a ng-if="categoryIdx != 1" class="rollcate_link" ng-click="click_selectCategory(1, 'Food')">Food</a><span ng-if="categoryIdx == 1">Food</span></li>-->
                 <!--<li ng-class="index == 2 : 'foucs'"><a ng-if="index != 2" class="rollcate_link" ng-click="click_selectCategory(2, 'DIY')">DIY</a><span ng-if="index == 2"></span></li>-->
                 <!--<li ng-class="index == 3 : 'foucs'"><a ng-if="index != 3" class="rollcate_link" ng-click="click_selectCategory(3, 'Travel')">Travel</a><span ng-if="index == 3"></span></li>-->
                 <!--<li ng-class="index == 4 : 'foucs'"><a ng-if="index != 4" class="rollcate_link" ng-click="click_selectCategory(4, 'Place')">Place</a><span ng-if="index == 4"></span></li>-->
@@ -31,7 +34,7 @@
         <a class="mini_story_rollcate_right">Next Category</a>
     </div>
 
-    <div class="mini_board_contents" ng-repeat="item in list">
+    <div class="mini_board_contents" ng-repeat="item in list" ng-click="click_showView(item.NO);">
         <img ng-src="{{item.MAIN_FILE}}" class="mini_board_contents_img" />
         <div class="mini_board_contents_txt">
 
@@ -57,37 +60,38 @@
 
             <div class="col-xs-10 mini_story_contentboxlist_roll">
                 <div class="mini_story_contentboxlist_wrap">
+                <!--<div class="mini_peoplebabymodel_slider_pic">-->
 
-                    <div class="mini_story_contentboxlist">
-                        <div class="mini_story_contentbox_img">
-                            <span class="mini_story_contentbox_cate">초기(4-6)</span>
-                            <img src="imgs/ange/temp/story_food_01.jpg" />
-                        </div>
-                        <span class="mini_story_contentbox_title">단호박 미음</span>
-                    </div>
+                    <slick id="{{option.id}}" dots="false" autoplay="true" center-mode="false" slides-to-show="4" slides-to-scroll="4" autoplay-speed="3000" fade="false" pause-on-hover="false"></slick>
 
-
-                    <div class="mini_story_contentboxlist">
-                        <div class="mini_story_contentbox_img">
-                            <span class="mini_story_contentbox_cate">중기(7-8)</span>
-                            <img src="imgs/ange/temp/story_food_02.jpg" />
-                        </div>
-                        <span class="mini_story_contentbox_title">비트닭고기밥</span>
-                    </div>
-                    <div class="mini_story_contentboxlist">
-                        <div class="mini_story_contentbox_img">
-                            <span class="mini_story_contentbox_cate">후기(9-11)</span>
-                            <img src="imgs/ange/temp/story_food_03.jpg" />
-                        </div>
-                        <span class="mini_story_contentbox_title">쇠고기애호박</span>
-                    </div>
-                    <div class="mini_story_contentboxlist">
-                        <div class="mini_story_contentbox_img">
-                            <span class="mini_story_contentbox_cate">완료기(12-15)</span>
-                            <img src="imgs/ange/temp/story_food_04.jpg" />
-                        </div>
-                        <span class="mini_story_contentbox_title">오색나물비빔밥</span>
-                    </div>
+                    <!--<div class="mini_story_contentboxlist">-->
+                        <!--<div class="mini_story_contentbox_img">-->
+                            <!--<span class="mini_story_contentbox_cate">초기(4-6)</span>-->
+                            <!--<img src="imgs/ange/temp/story_food_01.jpg" />-->
+                        <!--</div>-->
+                        <!--<span class="mini_story_contentbox_title">단호박 미음</span>-->
+                    <!--</div>-->
+                    <!--<div class="mini_story_contentboxlist">-->
+                        <!--<div class="mini_story_contentbox_img">-->
+                            <!--<span class="mini_story_contentbox_cate">중기(7-8)</span>-->
+                            <!--<img src="imgs/ange/temp/story_food_02.jpg" />-->
+                        <!--</div>-->
+                        <!--<span class="mini_story_contentbox_title">비트닭고기밥</span>-->
+                    <!--</div>-->
+                    <!--<div class="mini_story_contentboxlist">-->
+                        <!--<div class="mini_story_contentbox_img">-->
+                            <!--<span class="mini_story_contentbox_cate">후기(9-11)</span>-->
+                            <!--<img src="imgs/ange/temp/story_food_03.jpg" />-->
+                        <!--</div>-->
+                        <!--<span class="mini_story_contentbox_title">쇠고기애호박</span>-->
+                    <!--</div>-->
+                    <!--<div class="mini_story_contentboxlist">-->
+                        <!--<div class="mini_story_contentbox_img">-->
+                            <!--<span class="mini_story_contentbox_cate">완료기(12-15)</span>-->
+                            <!--<img src="imgs/ange/temp/story_food_04.jpg" />-->
+                        <!--</div>-->
+                        <!--<span class="mini_story_contentbox_title">오색나물비빔밥</span>-->
+                    <!--</div>-->
                 </div>
 
             </div>

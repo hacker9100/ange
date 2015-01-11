@@ -14,6 +14,7 @@ define([
     controllers.controller('momsevent-list', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
         $scope.search = {};
+        $scope.PAGE_SIZE = 10;
 
         // 초기화
         $scope.init = function(session) {

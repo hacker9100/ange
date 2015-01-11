@@ -92,7 +92,7 @@
 
                                     <div class="join_agree_check">
                                         <div class="checkbox">
-                                        <input type="checkbox" value="">동의합니다.
+                                        <input ng-model="join.checkTerms" ng-checked="join.checkTerms" type="checkbox" value="">동의합니다.
                                         </div>
                                     </div>
                             </div><!-- /.join_agree_wrap -->
@@ -127,7 +127,7 @@
 
                                     <div class="join_agree_check">
                                         <div class="checkbox">
-                                        <input type="checkbox" value="">동의합니다.
+                                        <input ng-model="join.checkInfo" ng-checked="join.checkInfo" type="checkbox" value="">동의합니다.
                                         </div>
                                     </div>
                             </div><!-- /.join_agree_wrap -->
@@ -161,7 +161,7 @@
 
                                     <div class="join_agree_check">
                                         <div class="checkbox">
-                                        <input type="checkbox" value="">동의합니다.
+                                        <input ng-model="join.checkOffer" ng-checked="join.checkOffer" type="checkbox" value="">동의합니다.
                                         </div>
                                     </div>
                             </div><!-- /.join_agree_wrap -->
@@ -169,7 +169,7 @@
                             <div class="join_agree_totalcheck">
                                     <div class="join_agree_check">
                                         <div class="checkbox">
-                                            <input type="checkbox" value=""><strong>[전체동의]</strong> 이용약관, 개인정보취급방침, 제 3자 정보제공 모두 동의합니다.
+                                            <input ng-model="join.checkAll" ng-checked="join.checkAll" type="checkbox" value="" ng-click="click_checkAll()"><strong>[전체동의]</strong> 이용약관, 개인정보취급방침, 제 3자 정보제공 모두 동의합니다.
                                         </div>
                                     </div>
                             </div>
@@ -180,8 +180,8 @@
 
                         <div class="join_step_btn">
 
-                            <button class="join_stepbtn cancel"><span class="glyphicon glyphicon-remove-circle"></span> 취소</button>
-                            <button class="join_stepbtn next">다음 <span class="glyphicon glyphicon-chevron-right"></span></button>
+                            <button class="join_stepbtn cancel" ng-click="click_cancel()"><span class="glyphicon glyphicon-remove-circle"></span> 취소</button>
+                            <button class="join_stepbtn next" ng-click="click_nextStep()">다음 <span class="glyphicon glyphicon-chevron-right"></span></button>
 
                         </div>
 

@@ -161,7 +161,7 @@
 
                 $sql = "SELECT
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                          SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NM,
+                          SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM,
                           (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT, BOARD_REPLY_COUNT,
 	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, IFNULL (PASSWORD, 0) AS PASSWORD_FL, PHOTO_TYPE, PHOTO_GB,
 	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/',PHOTO_GB,'/list') AND TYPE = PHOTO_TYPE) AS TITLE
@@ -169,7 +169,7 @@
                         (";
 
                 $select1 = "SELECT
-                                '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, '' AS COMM_NM,
+                                '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, '' AS COMM_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
                                         (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB
                             FROM
@@ -181,7 +181,7 @@
                                 ".$search_common;
 
                 $select2 = "SELECT
-                                '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, IFNULL(C.COMM_NM, '') AS COMM_NM,
+                                '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
                                         (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB
                             FROM
@@ -698,7 +698,6 @@
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                                , '".$file[size]."'
                                 , '".$file[kind]."'
                             )";
 

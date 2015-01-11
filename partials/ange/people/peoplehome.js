@@ -27,10 +27,10 @@ define([
             $scope.option_r1_c2 = {title: 'Talk&Talk', api:'com/webboard', size: 5, channel: "people", type: 'board', url: '/people/board', defIdx: 3, tab: [{no: '4', menu: '/people/firstbirthtalk', name: '돌잔치톡'}, {no: '3', menu: '/people/badycare', name: '육아방'}, {no: '2', menu: '/people/momstalk', name: '예비맘&출산맘'}, {no: '1', menu: '/people/angeroom', name: '수다방'}], image: false, head: false, date: true, nick: false};
 
             // ange-portlet-link-menu
-            $scope.option_r1_c3 = {title: '한줄 톡', api:'ad/banner', gb: 'talk', url: '/people/talk/list'};
+            $scope.option_r1_c3 = {title: '한줄 톡', api:'ad/banner', gb: 'talk', url: '/people/linetalk/list'};
 
             // ange-portlet-slide-baby
-            $scope.option_r2_c1 = {title: '앙쥬모델 선발대회', api:'ange/event', size: 6, id: 'baby', dots: false, autoplay: true, centerMode: true, showNo: 3, fade: 'false'};
+            $scope.option_r2_c1 = {title: '앙쥬모델 선발대회', api:'com/webboard', size: 6, id: 'baby', dots: false, autoplay: true, centerMode: true, showNo: 3, fade: 'false'};
 
             // ange-portlet-link-menu
             $scope.option_r3_c1 = {title: '책수다방', api:'ad/banner', gb: 'book', url: '/people/booktalk/list'};
@@ -40,20 +40,6 @@ define([
 
             // ange-portlet-link-menu
             $scope.option_r3_c3 = {title: '앙쥬그룹', api:'ad/banner', gb: 'group', url: '/people/group/list'};
-
-
-
-            // ange-portlet-slide-page
-            $scope.option_r4_c1 = {title: '체험단&이벤트', api:'ange/event', size: 6, id: 'event', dots: false, autoplay: true, centerMode: true, showNo: 3, fade: 'false'};
-
-            // ange-portlet-piece-image
-            $scope.option_r5_c1 = {title: '도전 앙쥬모델', api:'com/webboard', size: 10, type: 'photo', url: '/people/photo'};
-
-            // ange-portlet-basic-list
-            $scope.option_r5_c2 = {title: '전문가상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/clinic', image: false, head: false, date: false, nick: false};
-
-            // ange-portlet-basic-list
-            $scope.option_r6_c2 = {title: '공지사항&당첨자발표', api:'com/webboard', size: 5, type: 'board', url: '/people/board', image: false, head: true, date: false, nick: false};
         };
 
         /********** 이벤트 **********/
@@ -73,6 +59,10 @@ define([
                 $scope.slide = 'cover';
                 $scope.mode = '';
             }
+        };
+
+        $scope.click_showClinicList = function (menu) {
+            $location.url('/people/'+menu+'/list');
         };
 
         // 등록 버튼 클릭

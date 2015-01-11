@@ -11,11 +11,14 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller("storycontent-view-popup", ['$scope', '$sce', '$controller', '$rootScope', '$location', '$modalInstance', '$q', 'UPLOAD', 'data', function($scope, $sce, $controller, $rootScope, $location, $modalInstance, $q, UPLOAD, data) {
+    controllers.controller("storycontent-view-popup", ['$scope', '$sce', '$controller', '$rootScope', '$location', '$modalInstance', '$q', 'dialogs', 'UPLOAD', 'data', function($scope, $sce, $controller, $rootScope, $location, $modalInstance, $q, dialogs, UPLOAD, data) {
 
         angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
         /********** 초기화 **********/
+
+        $scope.TARGET_NO = data.NO;
+        $scope.TARGET_GB = 'CONTENT';
 
         // 초기화
         $scope.init = function () {
@@ -24,8 +27,8 @@ define([
 
         /********** 콘텐츠 랜더링 **********/
         $scope.renderHtml = function(html_code) {
-            return html_code;
-//            return $sce.trustAsHtml(html_code);
+            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
+//            return html_code;
         };
 
         /********** 이벤트 **********/
@@ -37,12 +40,12 @@ define([
         $scope.getContent = function () {
             var deferred = $q.defer();
             $q.all([
-                    $scope.getItem('cms/task', 'item', data.NO, {}, false).then(function(data){ /* $scope.task = data; */ }),
+                    $scope.getItem('cms/task', 'item', data.NO, {}, false).then(function(data){ $scope.task = data; }),
                     $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){
                         $scope.item = data;
                     }),
-                    $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:5}, {EDITOR_ID: data.EDITOR_ID}, false).then(function(data){
-                        $scope.editor = data;
+                    $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, PHASE: '30, 31'}, false).then(function(data){
+                        $scope.editorList = data;
                     }),
                     $scope.getList('ad/banner', 'list', {NO:$scope.PAGE_NO, SIZE:1}, $scope.search, false).then(function(data){
                         for (var i in data) {
@@ -52,9 +55,6 @@ define([
                                 $scope.ad = data[i];
                             }
                         }
-                    }),
-                    $scope.getItem('com/reply', 'item', {}, $scope.search, {TARGET_NO: data.NO, REPLY_GB: 'CONTENT'}).then(function(data){
-                        $scope.reply = data.COMMENT;
                     })
                 ])
                 .then( function(results) {
@@ -66,78 +66,16 @@ define([
             return deferred.promise;
         };
 
-        // 댓글 리스트
-        $scope.getPeopleReplyList = function () {
+        // 공감
+        $scope.click_likeCntAdd = function(){
 
-            $scope.search.TARGET_NO = data.NO;
-            $scope.search.REPLE_GB = 'CONTENT';
-
-            $scope.getItem('com/reply', 'item', {}, $scope.search, true)
-                .then(function(data){
-
-                    var reply = data.COMMENT;
-
-                    console.log('reply =' +reply);
-                    console.log('end');
-
-                    for(var i in reply) {
-                        $scope.replyList.push({"NO":reply[i].NO,"PARENT_NO":reply[i].PARENT_NO,"COMMENT":reply[i].COMMENT,"RE_COUNT":reply[i].RE_COUNT,"REPLY_COMMENT":reply[i].REPLY_COMMENT,"LEVEL":reply[i].LEVEL,"REPLY_NO":reply[i].REPLY_NO,"NICK_NM":reply[i].NICK_NM,"REG_DT":reply[i].REG_DT});
-                    }
-
-                    console.log('RE = '+data.COMMENT);
-                    console.log('end');
+            $scope.updateItem('cms/task', 'like', data.NO, {}, false)
+                .then(function(){
+                    dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
+                    $scope.task.LIKE_CNT = parseInt($scope.task.LIKE_CNT) + 1;
                 })
-                .catch(function(error){$scope.replyList = "";});
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
-
-        // 의견 등록
-        $scope.click_savePeopleBoardComment = function () {
-
-            $scope.item.PARENT_NO = 0;
-            $scope.item.LEVEL = 1;
-            $scope.item.REPLY_NO = 1;
-            $scope.item.TARGET_NO = $scope.item.NO;
-            $scope.item.TARGET_GB = "BOARD";
-
-
-            $scope.insertItem('com/reply', 'item', $scope.item, false)
-                .then(function(){
-
-                    $scope.search.TARGET_NO = $stateParams.id;
-                    $scope.replyList = [];
-                    $scope.getPeopleReplyList();
-
-                    $scope.getPeopleBoard();
-
-                    //$scope.replyList.push({"NO":0,"PARENT_NO":$scope.item.PARENT_NO,"COMMENT":$scope.item.COMMENT,"RE_COUNT":0,"REPLY_COMMENT":'',"LEVEL":$scope.item.LEVEL,"REPLY_NO":$scope.item.REPLY_NO});
-
-                    $scope.item.COMMENT = "";
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        }
-
-        // 답글 등록
-        $scope.click_savePeopleBoardReComment = function (item) {
-
-            $scope.reply.PARENT_NO = item.NO;
-            $scope.reply.LEVEL = parseInt(item.LEVEL)+1;
-            $scope.reply.REPLY_NO = parseInt(item.REPLY_NO)+1;
-            $scope.reply.TARGET_GB = "BOARD";
-            $scope.reply.TARGET_NO = $stateParams.id;
-
-            $scope.REPLY_COMMENT = $scope.reply;
-
-            $scope.insertItem('com/reply', 'item', $scope.reply, false)
-                .then(function(){
-                    $scope.search.TARGET_NO = $stateParams.id;
-                    $scope.replyList = [];
-                    $scope.getPeopleReplyList();
-                    $scope.reply.COMMENT = "";
-
-                    $scope.getPeopleBoard();
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        }
 
         $scope.init();
         $scope.getContent();

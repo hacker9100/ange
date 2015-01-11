@@ -20,7 +20,7 @@ define([
             templateUrl: function(element, attr) {
                 return '/partials/ange/main/mini-main-list.html';
             },
-            controller: ['$scope', '$attrs', '$location', 'UPLOAD', function($scope, $attrs, $location, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', 'dialogs', 'UPLOAD', function($scope, $attrs, $location, dialogs, UPLOAD) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -86,20 +86,57 @@ define([
 
                 // 더보기 버튼 클릭
                 $scope.click_showList = function () {
-                    alert($scope.option.url);
-                    return;
                     if ($scope.option.tab != undefined) {
                         $location.url('/people'+'/'+$scope.option.tab[$scope.tabIdx].menu+'/list');
                     } else {
-                        $location.url($scope.option.url+'/list');
+                        $location.url($scope.option.url);
                     }
                 };
 
                 // 리스트 선택
-                $scope.click_showView = function (key) {
-                    alert($scope.option.url + '/view/' + key)
-                    return;
-                    $location.url($scope.option.url+'/view/'+key);
+                $scope.click_showView = function (item) {
+                    var channel = $scope.option.url.split('/')[1];
+                    var menu = 'angeroom';
+
+                    switch(item.COMM_NO) {
+                        case '1' :
+                            menu = 'angeroom';
+                            break;
+                        case '2' :
+                            menu = 'momstalk';
+                            break;
+                        case '3' :
+                            menu = 'babycare';
+                            break;
+                        case '4' :
+                            menu = 'firstbirthtalk';
+                            break;
+                        case '5' :
+                            menu = 'booktalk';
+                            break;
+                        case '9' :
+                            menu = 'childdevelop';
+                            break;
+                        case '10' :
+                            menu = 'chlidoriental';
+                            break;
+                        case '11' :
+                            menu = 'obstetrics';
+                            break;
+                        case '12' :
+                            menu = 'momshealth';
+                            break;
+                        case '13' :
+                            menu = 'financial';
+                            break;
+                    }
+
+                    if (angular.uppercase($scope.option.type) == 'CLINIC' && $scope.uid != item.REG_UID && item.PASSWORD_FL != '0') {
+                        dialogs.notify('알림', '비밀글입니다. 작성자와 해당게시판 상담가만 볼 수 있습니다.', {size: 'md'});
+                        return;
+                    }
+
+                    $location.url(channel+'/'+menu+'/view/'+item.NO);
                 };
 
                 // 리스트 조회
@@ -124,7 +161,7 @@ define([
     directives.directive('angeMiniStoryList', ['$controller', function($controller) {
         return {
             restrict: 'EA',
-            scope: true,
+//            scope: true,
 //            scope: { code:'=' },
 //            replace: true,
             templateUrl: function(element, attr) {
@@ -144,48 +181,38 @@ define([
                 // 탭 번호
                 $scope.tabIdx = $scope.option.defIdx;
 
-                // 카테고리 번호
-                $scope.categoryIdx = 0;
-
                 // 페이징
                 $scope.PAGE_NO = 0;
                 $scope.PAGE_SIZE = $scope.option.size;
 
                 // 검색 조건 추가
                 $scope.search.SYSTEM_GB = 'ANGE';
-                $scope.search.NOTICE_FL = 'N';
+                $scope.search.FILE = true;
+                $scope.search.ORDER = 'DESC';
 
-                // 검색 조건에 커뮤니티 번호 추가
+                // 검색 조건에 탭조건 추가
                 if ($scope.option.tab != undefined) {
-                    if ($scope.option.type == 'board') {
-                        $scope.search.COMM_NO = $scope.option.tab[$scope.tabIdx].no;
-                    } else if ($scope.option.type == 'review') {
-                        $scope.search.TARGET_GB = $scope.option.tab[$scope.tabIdx].no;
+                    if ($scope.tabIdx == 0) {
+                        $scope.search.SORT = 'T.LIKE_CNT';
+                    } else if ($scope.tabIdx == 1) {
+                        $scope.search.SORT = 'T.REG_DT';
+                    } else if ($scope.tabIdx == 2) {
+                        $scope.search.SORT = 'T.REG_DT';
                     }
                 }
-
-                // 검색 조건에 대표 이미지 여부 추가
-                if ($scope.option.image != undefined) {
-                    $scope.search.FILE = true;
-                }
-
-                // 검색 조건에 게시판 종류 추가
-                if ($scope.option.type != undefined) {
-                    if ($scope.option.type == 'review') {
-//                        $scope.search.TARGET_GB = angular.uppercase($scope.option.type);
-                    } else {
-                        $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
-                    }
-                }
-
-//                if ($scope.option.type != 'board') {
-//                    $scope.search.COMM_NO
-//                }
 
                 /********** 이벤트 **********/
-                    // 탭 클릭
+                // 탭 클릭
                 $scope.click_tabIndex = function (idx) {
                     $scope.tabIdx = idx;
+
+                    if ($scope.tabIdx == 0) {
+                        $scope.search.SORT = 'T.LIKE_CNT';
+                    } else if ($scope.tabIdx == 1) {
+                        $scope.search.SORT = 'T.REG_DT';
+                    } else if ($scope.tabIdx == 2) {
+                        $scope.search.SORT = 'T.REG_DT';
+                    }
 
                     // 탭 번호로 리스트 조회
                     $scope.getMiniList();
@@ -193,24 +220,21 @@ define([
 
                 // 더보기 버튼 클릭
                 $scope.click_showList = function () {
-                    alert($scope.option.url);
-                    return;
-                    if ($scope.option.tab != undefined) {
-                        $location.url('/people'+'/'+$scope.option.tab[$scope.tabIdx].menu+'/list');
-                    } else {
-                        $location.url($scope.option.url+'/list');
-                    }
+                    $location.url($scope.option.url);
                 };
 
-                $scope.click_selectCategory = function (idx, category) {
-                    $scope.categoryIdx = idx;
+                $scope.click_selectCategory = function (category) {
+                    $scope.search.CATEGORY = [];
+
+                    $scope.categoryIdx = category.NO;
+                    $scope.search.CATEGORY.push(category);
+
+                    $scope.getMiniList();
                 }
 
                 // 리스트 선택
                 $scope.click_showView = function (key) {
-                    alert($scope.option.url + '/view/' + key)
-                    return;
-                    $location.url($scope.option.url+'/view/'+key);
+                    $location.url($scope.option.url + '/' + key);
                 };
 
                 // 리스트 조회
@@ -229,7 +253,47 @@ define([
                         .catch(function(error){$scope.list = [];});
                 };
 
+                // 리스트 조회
+                $scope.getFoodList = function () {
+                    $scope.getList($scope.option.api, 'food', {NO:$scope.PAGE_NO, SIZE:12}, {CATEGORY_NO: '18, 19, 20, 21', FILE: true}, true)
+                        .then(function(data){
+                            for (var i in data) {
+                                var img = '';
+
+                                if (data[i].FILE != null) {
+                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                    data[i].MAIN_FILE = img;
+                                }
+
+                                var time = '';
+
+                                switch(data[i].CATEGORY_NO) {
+                                    case '18' :
+                                        time = '초기(4-6)';
+                                        break;
+                                    case '19' :
+                                        time = '중기(7-8)';
+                                        break;
+                                    case '20' :
+                                        time = '후기(9-11)';
+                                        break;
+                                    case '21' :
+                                        time = '완료기(12-15)';
+                                        break;
+                                }
+
+                                // 슬라이드를 추가해 줌
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist"><a href="#/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="'+img+'" width="99" height="119"/></div><span class="mini_story_contentbox_title">'+data[i].SUBJECT+'</span></a></div>');
+                            }
+
+                            // 광고의 슬라이드을 실행
+                            angular.element('#'+$scope.option.id).slickPlay();
+                        })
+                        .catch(function(error){});
+                };
+
                 $scope.getMiniList();
+                $scope.getFoodList();
             }]
         }
     }]);
@@ -277,7 +341,7 @@ define([
                 }
 
                 /********** 이벤트 **********/
-                    // 탭 클릭
+                // 탭 클릭
                 $scope.click_tabIndex = function (idx) {
                     $scope.tabIdx = idx;
                     $scope.search.COMM_NO = $scope.option.tab[$scope.tabIdx].no;
@@ -300,15 +364,22 @@ define([
                     $location.url($scope.option.tab[$scope.tabIdx].menu+'/view/'+key);
                 };
 
+                // 이미지 클릭
+                $scope.click_firstImage = function (img) {
+                    $location.url($scope.option.tab[$scope.tabIdx].menu+'/view/'+img.NO);
+                };
+
                 // 리스트 조회
                 $scope.getPortletList = function () {
                     $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, false)
                         .then(function(data){
                             $scope.list = data;
-//                            if ($scope.option.image != undefined && $scope.option.image) {
-//                                $scope.key = data[0].NO;
-//                                $scope.img = UPLOAD.BASE_URL + data[0].FILE[0].PATH + 'thumbnail/' + data[0].FILE[0].FILE_ID;
-//                            }
+
+                            if ($scope.option.image != undefined && $scope.option.image) {
+                                $scope.img = {};
+                                $scope.img.NO = data[0].NO;
+                                $scope.img.URL = UPLOAD.BASE_URL + data[0].FILE[0].PATH + 'thumbnail/' + data[0].FILE[0].FILE_ID;
+                            }
                         })
                         .catch(function(error){$scope.list = [];});
                 };
@@ -345,6 +416,10 @@ define([
                 $scope.PAGE_NO = 0;
                 $scope.PAGE_SIZE = $scope.option.size;
 
+                // 검색 조건에 진행 상태 추가
+                $scope.search.FILE = true;
+                $scope.search.PROCESS = "process";
+
                 /********** 이벤트 **********/
                 // 일시 정지 버튼
                 $scope.click_slickPause = function() {
@@ -372,32 +447,58 @@ define([
                     angular.element('#'+$scope.option.id).slickNext();
                 };
 
-                // 목록 이동
+                // 더보기 버튼 클릭
                 $scope.click_showList = function () {
-                    $location.url('/'+$scope.api+'/list');
+                    $location.url($scope.option.url);
                 };
 
                 // 선택
-                $scope.click_showView = function (key) {
-                    $location.url('/'+$scope.api+'/view/'+key);
+                $scope.click_showView = function (item) {
+                    var menu = 'experienceprocess';
+
+                    switch(item.EVENT_GB) {
+                        case 'EXPERIENCE' :
+                            menu = 'experienceprocess';
+                            break;
+                        case 'EVENT' :
+                            menu = 'eventprocess';
+                            break;
+                    }
+
+                    $location.url('moms/'+menu+'/view/'+item.NO);
                 };
 
                 // 슬라이드 이미지 조회
                 $scope.getPortletList = function (api) {
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
+                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             for (var i in data) {
-                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
-                                // 슬라이드를 추가해 줌
-//                                angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="'+img+'"/><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' + data[i].SUBJECT +'</div><div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div></div></div>');
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="'+img+'"/><div class="mini_event_txt_title">'+( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') + data[i].SUBJECT +'</div><div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div></div></div>');
-                            }
+                                var img = '';
 
-                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단1</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
-                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단2</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
-                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단3</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
-                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단4</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
-                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단5</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
+                                if (data[i].FILE != null) {
+                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                    data[i].MAIN_FILE = img;
+                                }
+
+                                var menu = 'experienceprocess';
+
+                                switch(data[i].EVENT_GB) {
+                                    case 'EXPERIENCE' :
+                                        menu = 'experienceprocess';
+                                        break;
+                                    case 'EVENT' :
+                                        menu = 'eventprocess';
+                                        break;
+                                }
+
+                                // 슬라이드를 추가해 줌
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><a href="#/moms/'+menu+'/view/'+data[i].NO+'"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="'+img+'"/><div class="mini_event_txt_title">'+( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') + data[i].SUBJECT +'</div><div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div></div></a></div>');
+                            }
+//                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단1</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단2</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단3</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단4</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단5</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
 //                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단6</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
 
                             // 광고의 슬라이드을 실행
@@ -445,6 +546,10 @@ define([
                 $scope.PAGE_NO = 0;
                 $scope.PAGE_SIZE = $scope.option.size;
 
+                // 검색 조건에 도전 앙쥬 모델 추가
+                $scope.search.FILE = true;
+                $scope.search.COMM_NO = '6';
+
                 /********** 이벤트 **********/
                     // 일시 정지 버튼
                 $scope.click_slickPause = function() {
@@ -484,8 +589,16 @@ define([
 
                 // 슬라이드 이미지 조회
                 $scope.getPortletList = function (api) {
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
+                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
+                            for(var i in data) {
+                                if (data[i].FILE != null) {
+                                    var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                                    var url = "people/angemodel/view/"+data[i].NO;
+                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="#/'+url+'" ><img src="'+img+'" width="99" height="119" alt=""/></a></div>');
+                                }
+                            }
+
 //                            for (var i in data) {
 //                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
 //                                // 슬라이드를 추가해 줌
@@ -493,12 +606,12 @@ define([
 //                                angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="'+img+'"/><div class="mini_event_txt_title">'+( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') + data[i].SUBJECT +'</div><div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div></div></div>');
 //                            }
 
-                            angular.element('#'+$scope.option.id).slickAdd('<div><a href="http://www.naver.com" ><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt=""/></a>></div>');
-                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
-                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
-                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
-                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
-                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div><a href="http://www.naver.com" ><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt=""/></a>></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
+//                            angular.element('#'+$scope.option.id).slickAdd('<div><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" on-click="test(\'1\')"/></div>');
 
                             // 광고의 슬라이드을 실행
                             angular.element('#'+$scope.option.id).slickPlay();
@@ -828,19 +941,13 @@ define([
 //                    $scope.search.COMM_NO = $scope.option.comm;
                     $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
                     $scope.search.FILE = true;
+                    $scope.search.COMM_NO = '6';
                 }
 
                 /********** 이벤트 **********/
-                    // 이미지 클릭
-                $scope.click_linkImage = function () {
-                    alert($scope.item.URL);
-                    return;
-
-                    if ($scope.option.new) {
-                        $window.open($scope.item.URL, '', 'width=400,height=500');
-                    } else {
-                        $location.url($scope.item.URL);
-                    }
+                // 이미지 클릭
+                $scope.click_showImage = function (item) {
+                    $location.url($scope.option.url+'/view/'+item.NO);
                 };
 
                 // 이미지 조회

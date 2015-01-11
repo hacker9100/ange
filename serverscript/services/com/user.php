@@ -56,7 +56,24 @@
                 } else {
                     $_d->dataEnd2($data);
                 }
-            } else if ($_type == 'item') {
+            } else if ($_type == 'nick') {
+            $sql = "SELECT
+                            COUNT(*) AS COUNT
+                        FROM
+                            COM_USER
+                        WHERE
+                            NICK_NM = '".$_key."'
+                        ";
+
+            $result = $_d->sql_query($sql);
+            $data  = $_d->sql_fetch_array($result);
+
+            if ($_d->mysql_errno > 0) {
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            } else {
+                $_d->dataEnd2($data);
+            }
+        } else if ($_type == 'item') {
                 $search_where = "";
 
                 if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
@@ -275,6 +292,7 @@
                         USER_NM,
                         NICK_NM,
                         PASSWORD,
+                        BIRTH,
                         ZIP_CODE,
                         ADDR,
                         ADDR_DETAIL,
@@ -294,16 +312,23 @@
                         CENTER_VISIT_DT,
                         CENTER_OUT_DT,
                         EN_FL,
-                        EN_EMAIL_FL,
-                        EN_POST_FL,
-                        EN_SNS_FL,
-                        EN_PHONE_FL,
+#                        EN_EMAIL_FL,
+#                        EN_POST_FL,
+#                        EN_SMS_FL,
+#                        EN_PHONE_FL,
+                        EN_ANGE_EMAIL_FL,
+                        EN_ANGE_SMS_FL,
+                        EN_ALARM_EMAIL_FL,
+                        EN_ALARM_SMS_FL,
+                        EN_STORE_EMAIL_FL,
+                        EN_STORE_SMS_FL,
                         REG_DT
                     ) VALUES (
                         '".$_model[USER_ID]."',
                         '".$_model[USER_NM]."',
                         '".$_model[NICK_NM]."',
                         '".$hash."',
+                        '".$_model[BIRTH]."',
                         '".$_model[ZIP_CODE]."',
                         '".$_model[ADDR]."',
                         '".$_model[ADDR_DETAIL]."',
@@ -323,10 +348,16 @@
                         '".$_model[CENTER_VISIT_DT]."',
                         '".$_model[CENTER_OUT_DT]."',
                         '".$_model[EN_FL]."',
-                        '".$_model[EN_EMAIL_FL]."',
-                        '".$_model[EN_POST_FL]."',
-                        '".$_model[EN_SNS_FL]."',
-                        '".$_model[EN_PHONE_FL]."',
+#                        '".$_model[EN_EMAIL_FL]."',
+#                        '".$_model[EN_POST_FL]."',
+#                        '".$_model[EN_SMS_FL]."',
+#                        '".$_model[EN_PHONE_FL]."',
+                        '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
+                        '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : 'N' )."',
+                        '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : 'N' )."',
+                        '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
+                        '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
+                        '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."',
                         SYSDATE()
                     )";
 
@@ -370,7 +401,7 @@
                         ) VALUES (
                             '".$_model[USER_ID]."'
                             ,'".$e[BABY_NM]."'
-                            ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? '0'+$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? '0'+$e[BABY_DAY] : $e[BABY_DAY])."'
+                            ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? "0".$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? "0".$e[BABY_DAY] : $e[BABY_DAY])."'
                             ,'".$e[BABY_SEX_GB]."'
                         )";
 
@@ -405,6 +436,7 @@
                         ,'".$_model[BLOG][THEME]."'
                         ,'".$_model[BLOG][NEIGHBOR_CNT]."'
                         ,'".$_model[BLOG][POST_CNT]."'
+                        ,'".$_model[BLOG][VISIT_CNT]."'
                         ,'".$_model[BLOG][SNS]."'
                     )";
 
@@ -454,6 +486,7 @@
                         USER_NM = '".$_model[USER_NM]."',
                         NICK_NM = '".$_model[NICK_NM]."',
                         ".$update_password."
+                        BIRTH = '".$_model[BIRTH]."',
                         ZIP_CODE = '".$_model[ZIP_CODE]."',
                         ADDR = '".$_model[ADDR]."',
                         ADDR_DETAIL = '".$_model[ADDR_DETAIL]."',
@@ -473,10 +506,16 @@
                         CENTER_VISIT_DT = '".$_model[CENTER_VISIT_DT]."',
                         CENTER_OUT_DT = '".$_model[CENTER_OUT_DT]."',
                         EN_FL = '".$_model[EN_FL]."',
-                        EN_EMAIL_FL = '".$_model[EN_EMAIL_FL]."',
-                        EN_POST_FL = '".$_model[EN_POST_FL]."',
-                        EN_SNS_FL = '".$_model[EN_SNS_FL]."',
-                        EN_PHONE_FL = '".$_model[EN_PHONE_FL]."'
+//                        EN_EMAIL_FL = '".$_model[EN_EMAIL_FL]."',
+//                        EN_POST_FL = '".$_model[EN_POST_FL]."',
+//                        EN_SNS_FL = '".$_model[EN_SNS_FL]."',
+//                        EN_PHONE_FL = '".$_model[EN_PHONE_FL]."'
+                        EN_ANGE_EMAIL_FL = '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
+                        EN_ANGE_SMS_FL = '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : 'N' )."',
+                        EN_ALARM_EMAIL_FL = '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : 'N' )."',
+                        EN_ALARM_SMS_FL = '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
+                        EN_STORE_EMAIL_FL = '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
+                        EN_STORE_SMS_FL = '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."'
                     WHERE
                         USER_ID = '".$_key."'
                     ";

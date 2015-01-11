@@ -17,6 +17,9 @@ define([
     '../../../partials/ange/com/ui-lnb',
     '../../../partials/ange/com/ui-utility',
 
+    '../../../partials/ange/com/module-reply',
+
+    // 메인
     '../../../partials/ange/main',
 
     // 앙쥬스토리
@@ -84,6 +87,8 @@ define([
     '../../../partials/ange/infodesk/infodeskhome',
 
     // 회원가입
+    '../../../partials/ange/join/joinsignon',
+
     '../../../partials/ange/join/jointerms',
     '../../../partials/ange/join/joinuserinfo',
     '../../../partials/ange/join/joincertification',

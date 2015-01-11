@@ -27,19 +27,19 @@ define([
             $scope.option_r2_c2 = {title: '이벤트 배너', api:'ad/banner', size: 1, gb: 1, link: true, new: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};
 
             // ange-portlet-moms-list
-            $scope.option_r2_c1 = {title: '맘스그라운드', api:'cms/task', size: 5, type: 'content', url: '/cms/content', defIdx: 0, tab: [{no: '2', menu: 'popular', name: '인기'}, {no: '1', menu: 'current', name: '최신'}, {no: '0', menu: 'fit', name: '추천[맞춤서비스]'}], image: true, head: true, date: false, nick: true};
+            $scope.option_r2_c1 = {title: '맘스그라운드', api:'cms/task', size: 5, id: 'story', type: 'content', url: '/story/content/list', defIdx: 0, tab: [{no: '0', menu: 'popular', name: '인기'}, {no: '1', menu: 'current', name: '최신'}, {no: '2', menu: 'fit', name: '추천[맞춤서비스]'}], image: true, head: true, date: false, nick: true};
 
             // ange-portlet-basic-list
-            $scope.option_r3_c2 = {title: '커뮤니티', api:'com/webboard', size: 5, type: 'board', url: '/people/board', image: false, head: true, date: false, nick: false};
+            $scope.option_r3_c2 = {title: '커뮤니티', api:'com/webboard', size: 5, type: 'board', url: '/people/home', image: false, head: true, date: false, nick: false};
 
             // ange-portlet-slide-page
-            $scope.option_r4_c1 = {title: '체험단&이벤트', api:'ange/event', size: 6, id: 'event', dots: false, autoplay: true, centerMode: true, showNo: 3, fade: 'false'};
+            $scope.option_r4_c1 = {title: '체험단&이벤트', api:'ange/event', size: 6, url: '/moms/home', id: 'event', dots: false, autoplay: true, centerMode: true, showNo: 3, fade: 'false'};
 
             // ange-portlet-piece-image
-            $scope.option_r5_c1 = {title: '도전 앙쥬모델', api:'com/webboard', size: 10, type: 'photo', url: '/people/photo'};
+            $scope.option_r5_c1 = {title: '도전 앙쥬모델', api:'com/webboard', size: 10, type: 'photo', url: '/people/angemodel'};
 
             // ange-portlet-basic-list
-            $scope.option_r5_c2 = {title: '전문가상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/clinic', image: false, head: false, date: false, nick: false};
+            $scope.option_r5_c2 = {title: '전문가상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/home', image: false, head: false, date: false, nick: false};
 
             // ange-portlet-basic-list
             $scope.option_r6_c1 = {title: '앙쥬후기', api:'ange/review', size: 5, type: 'review', url: '/moms/review', defIdx: 3, tab: [{no: 'sample', menu: 'sample', name: '샘플팩'}, {no: 'event', menu: 'event', name: '이벤트/체험단'}, {no: 'shop', menu: 'shop', name: '상품'}, {no: 'ange', menu: 'ange', name: '앙쥬'}], image: true, head: true, date: false, nick: true};
@@ -68,7 +68,7 @@ define([
         };
 
         $scope.click_moveMenu = function(menu) {
-            alert(menu)
+            $location.url(menu);
         };
 
         // 등록 버튼 클릭

@@ -51,30 +51,36 @@
             if ($_type == 'item') {
 
                 $search_common = "";
-                $sort_order = "";
+                $sort_order = "ORDER BY R.REG_DT DESC";
 
                 if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                    $search_common .= "AND TARGET_NO = ".$_search[TARGET_NO]."";
+                    $search_common .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
+                }
+
+                if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
+                    $search_common .= "AND TARGET_GB = '".$_search[TARGET_GB]."' ";
                 }
 
                 if (isset($_search[REPLY_GB]) && $_search[REPLY_GB] != "") {
-                    $search_common .= "AND REPLY_GB = '".$_search[REPLY_GB]."'";
+                    $search_common .= "AND REPLY_GB = '".$_search[REPLY_GB]."' ";
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY R.".$_search[SORT]." ".$_search[ORDER]."";
+                    $sort_order = "ORDER BY R.".$_search[SORT]." ".$_search[ORDER];
                 }
 
 
                 //TODO: 조회
-                $sql = "SELECT NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
-                     ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT
-                    FROM
-                      COM_REPLY R
+                $sql = "SELECT
+                            NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
+                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT
+                        FROM
+                            COM_REPLY R
                         WHERE 1=1
-                        AND PARENT_NO = 0
-                        ".$search_common."
-                        ".$sort_order."";
+                            AND PARENT_NO = 0
+                            ".$search_common."
+                        ".$sort_order."
+                        ";
 
                 $__trn = '';
                 $result = $_d->sql_query($sql,true);

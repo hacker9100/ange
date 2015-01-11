@@ -17,8 +17,23 @@ define([
         $scope.init = function () {
 
         };
-
+alert($scope.$parent.join.checkTerms)
         /********** 이벤트 **********/
+        // 이전 단계 클릭
+        $scope.click_prevStep = function () {
+            $location.url('/join/terms');
+        };
+
+        // 다음 단계 클릭
+        $scope.click_nextStep = function () {
+
+//            $location.url('/join/userinfo');
+        };
+
+        //
+        $scope.click_cancel = function () {
+            $location.url('/main');
+        };
 
         $scope.init();
 	}]);

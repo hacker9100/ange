@@ -8,11 +8,11 @@
         </div>
     </div>
 
-    <div ng-class="option.type == '' ? 'comp_clinic_contents' : 'miniboard_contents'">
+    <div ng-class="option.type == '' ? 'comp_clinic_contents' : option.type == 'photo' ? 'taste_miniboard_contents' : 'miniboard_contents'">
 
-        <div ng-if="option.image" class="taste_miniboard_img"><a href=""><img src="" /></a></div>
+        <div ng-if="option.image" class="taste_miniboard_img" ng-click="click_firstImage(img)"><img ng-src="{{img.URL}}"></div>
 
-        <div class="mini_board_contents" ng-repeat="item in list">
+        <div ng-class="option.type == 'photo' ? 'taste_mini_board_contents' : 'mini_board_contents'" ng-repeat="item in list">
             <!--<img src="" class="mini_board_contents_img" />-->
             <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;" ng-click="click_showView(item.NO);">
 

@@ -22,17 +22,24 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+
             if ($stateParams.menu == 'childdevelop') {
+                $scope.community = "아동발달 전문가";
                 $scope.VIEW_ROLE = 'CHILDDEVELOP';
             } else if($stateParams.menu == 'chlidoriental') {
+                $scope.community = "한방소아과 전문가";
                 $scope.VIEW_ROLE = 'CHILDORIENTAL';
             } else if($stateParams.menu == 'obstetrics') {
+                $scope.community = "산부인과 전문가";
                 $scope.VIEW_ROLE = 'OBSTETRICS';
             } else if($stateParams.menu == 'momshealth') {
+                $scope.community = "엄마건강 전문가";
                 $scope.VIEW_ROLE = 'MOMSHEALTH';
             } else if($stateParams.menu == 'financial') {
+                $scope.community = "재테크 상담";
                 $scope.VIEW_ROLE = 'FINANCIAL';
             }
+
         };
 
         /********** 이벤트 **********/
@@ -301,6 +308,7 @@ define([
          .then($scope.getCmsBoard)
          .catch($scope.reportProblems);*/
         //$scope.addHitCnt();
+        $scope.init();
         $scope.getPeopleClinic();
         $scope.getPreBoard();
         $scope.getNextBoard();

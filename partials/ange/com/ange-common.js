@@ -17,6 +17,10 @@ define([
 
         $scope.channel = '1';
 
+
+        // 카테고리 데이터
+        $scope.category = [];
+
         // 현재 메뉴 정보
         for (var i in $rootScope.ange_menu) {
             if ($rootScope.ange_menu[i].MENU_URL == $location.path()) {
@@ -104,6 +108,7 @@ define([
 
                             $rootScope.login = false;
                             $rootScope.authenticated = false;
+                            $rootScope.user_info = null;
                             $rootScope.uid = null;
                             $rootScope.name = null;
                             $rootScope.role = null;
@@ -160,6 +165,7 @@ define([
 
                 $rootScope.login = false;
                 $rootScope.authenticated = false;
+                $rootScope.user_info = null;
                 $rootScope.uid = null;
                 $rootScope.name = null;
                 $rootScope.role = null;
@@ -182,6 +188,7 @@ define([
 
                 $rootScope.login = true;
                 $rootScope.authenticated = true;
+                $rootScope.user_info = session.USER_INFO;
                 $rootScope.uid = session.USER_ID;
                 $rootScope.name = session.USER_NM;
                 $rootScope.role = session.ROLE_ID;
@@ -447,6 +454,25 @@ define([
         $scope.getSession()
             .then($scope.sessionCheck)
             .catch($scope.reportProblems);
+
+        $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
+            var category_a = [];
+            var category_b = [];
+
+            for (var i in data) {
+                var item = data[i];
+
+                if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
+                    category_a.push(item);
+                } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
+                    category_b.push(item);
+                }
+            }
+
+            $scope.category_a = category_a;
+            $scope.category_b = category_b;
+        })
+        .catch(function(error){});
 /*
         $scope.getMenu = function() {
             var deferred = $q.defer();
