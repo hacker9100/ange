@@ -59,7 +59,10 @@
 
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.NICK_NM,  U.PASSWORD, U.PHONE_1, U.PHONE_2, U.EMAIL, U.ADDR, U.ADDR_DETAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
-                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT
+                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT,
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -185,10 +188,13 @@
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
                     $_SESSION['addr'] = $data['ADDR'];
                     $_SESSION['addr_detail'] = $data['ADDR_DETAIL'];
-                    $_SESSION['phone1'] = $data['PHONE1'];
-                    $_SESSION['phone2'] = $data['PHONE2'];
+                    $_SESSION['phone1'] = $data['PHONE_1'];
+                    $_SESSION['phone2'] = $data['PHONE_2'];
                     $_SESSION['pregnent_fl'] = $data['PREGNENT_FL'];
                     $_SESSION['baby_birth_dt'] = $data['BABY_BIRTH_DT'];
+                    $_SESSION['baby_cnt'] = $data['BABY_CNT'];
+                    $_SESSION['baby_male_cnt'] = $data['BABY_MALE_CNT'];
+                    $_SESSION['baby_female_cnt'] = $data['BABY_FEMALE_CNT'];
                     $_SESSION['timeout'] = time();
 
                     $_d->dataEnd2($data);
@@ -215,6 +221,9 @@
                         unset($_SESSION['phone2']);
                         unset($_SESSION['pregnent_fl']);
                         unset($_SESSION['baby_birth_dt']);
+                        unset($_SESSION['baby_cnt']);
+                        unset($_SESSION['baby_male_cnt']);
+                        unset($_SESSION['baby_female_cnt']);
                         unset($_SESSION['timeout']);
                     }
                 } else {
@@ -227,12 +236,16 @@
                         $sess['ROLE_ID'] = $_SESSION['role'];
                         $sess['MENU_ROLE'] = $_SESSION['menu_role'];
 
-                        $sess['ADDR'] = $_SESSION['ADDR'];
-                        $sess['ADDR_DETAIL'] = $_SESSION['ADDR_DETAIL'];
-                        $sess['PHONE1'] = $_SESSION['PHONE1'];
-                        $sess['PHONE2'] = $_SESSION['PHONE2'];
-                        $sess['PREGNENT_FL'] = $_SESSION['PREGNENT_FL'];
-                        $sess['BABY_BIRTH_DT'] = $_SESSION['BABY_BIRTH_DT'];
+                        $sess['ADDR'] = $_SESSION['addr'];
+                        $sess['ADDR_DETAIL'] = $_SESSION['addr_detail'];
+                        $sess['PHONE_1'] = $_SESSION['phone1'];
+                        $sess['PHONE_2'] = $_SESSION['phone2'];
+                        $sess['PREGNENT_FL'] = $_SESSION['pregnent_fl'];
+                        $sess['BABY_BIRTH_DT'] = $_SESSION['baby_birth_dt'];
+
+                        $sess['BABY_CNT'] = $_SESSION['baby_cnt'];
+                        $sess['BABY_MALE_CNT'] = $_SESSION['baby_male_cnt'];
+                        $sess['BABY_FEMALE_CNT'] = $_SESSION['baby_female_cnt'];
 
 //                    $sess['EMAIL'] = $_SESSION['email'];
                         $_SESSION['timeout'] = time();
@@ -252,6 +265,10 @@
                         $sess['PHONE2'] = '';
                         $sess['PREG_FL'] = '';
                         $sess['BABY_BIRTH_DT'] = '';
+
+                        $sess['BABY_CNT'] = '';
+                        $sess['BABY_MALE_CNT'] = '';
+                        $sess['BABY_FEMALE_CNT'] = '';
 //                    $sess['EMAIL'] = '';
                     }
                 }

@@ -16,6 +16,77 @@ define([
         $scope.queue = [];
         $scope.search = {};
 
+        $scope.click_update_user_info = function () {
+            $scope.openModal(null, 'md');
+        };
+
+        // 정보수정 모달창
+        $scope.openModal = function (content, size) {
+            var dlg = dialogs.create('user_info_modal.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+
+
+                    $(document).ready(function(){
+                        $('#birth_dt').css('display', 'none');
+
+                        $("#preg_Y").click(function(){
+                            if(!$("#preg_Y").is(":checked")){
+                                $scope.item.PREGNENT_FL = "Y";
+                                $('#birth_dt').css('display', 'block');
+                            }
+                        });
+
+                        $("#preg_N").click(function(){
+                            if(!$("#preg_N").is(":checked")){
+                                $scope.item.PREGNENT_FL = "N";
+                                $('#birth_dt').css('display', 'none');
+                            }
+                        });
+                    });
+
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.content = data;
+
+                    $scope.click_ok = function () {
+                        $scope.item.SYSTEM_GB = 'CMS';
+                        $scope.item.USER_NM = $scope.name;
+                        $scope.item.NICK_NM = $scope.nick;
+
+                        if($("#preg_Y").is(":checked")){
+                            $scope.item.PREGNENT_FL = "Y";
+                        }else{
+                            $scope.item.PREGNENT_FL = "N";
+                        }
+
+                        if($("#preg_N").is(":checked")){
+                            $scope.item.PREGNENT_FL = "N";
+                        }else{
+                            $scope.item.PREGNENT_FL = "Y";
+                        }
+
+                        $scope.updateItem('com/user', 'item',$scope.uid, $scope.item, false)
+                            .then(function(data){
+
+                                dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+                                $modalInstance.close();
+                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                    };
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+                }], content, {size:size,keyboard: true,backdrop: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+                if(angular.equals($scope.name,''))
+                    $scope.name = 'You did not enter in your name!';
+            });
+        };
+
         // 초기화
         $scope.init = function(session) {
             if ($stateParams.menu == 'experienceprocess') {

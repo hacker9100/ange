@@ -506,19 +506,32 @@
                         CENTER_VISIT_DT = '".$_model[CENTER_VISIT_DT]."',
                         CENTER_OUT_DT = '".$_model[CENTER_OUT_DT]."',
                         EN_FL = '".$_model[EN_FL]."',
-//                        EN_EMAIL_FL = '".$_model[EN_EMAIL_FL]."',
-//                        EN_POST_FL = '".$_model[EN_POST_FL]."',
-//                        EN_SNS_FL = '".$_model[EN_SNS_FL]."',
-//                        EN_PHONE_FL = '".$_model[EN_PHONE_FL]."'
                         EN_ANGE_EMAIL_FL = '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
                         EN_ANGE_SMS_FL = '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : 'N' )."',
                         EN_ALARM_EMAIL_FL = '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : 'N' )."',
                         EN_ALARM_SMS_FL = '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
                         EN_STORE_EMAIL_FL = '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
                         EN_STORE_SMS_FL = '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."'
+                        BABY_BIRTH_DT = '".$_model[BABY_BIRTH_DT]."'
                     WHERE
                         USER_ID = '".$_key."'
                     ";
+
+// 에러가 발생하여 주석처리
+//                        EN_EMAIL_FL = '".$_model[EN_EMAIL_FL]."',
+//                        EN_POST_FL = '".$_model[EN_POST_FL]."',
+//                        EN_SNS_FL = '".$_model[EN_SNS_FL]."',
+//                        EN_PHONE_FL = '".$_model[EN_PHONE_FL]."'
+            $_d->sql_query($sql);
+
+
+            $sql = "UPDATE ANGE_USER_BLOG
+                    SET
+                        BLOG_URL = '".$_model[BLOG_URL]."'
+                    WHERE
+                        USER_ID = '".$_key."'
+                    ";
+
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;

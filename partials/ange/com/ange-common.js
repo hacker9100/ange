@@ -207,10 +207,14 @@ define([
 
                 $rootScope.addr = session.ADDR;
                 $rootScope.addr_detail = session.ADDR_DETAIL;
-                $rootScope.phone1 = session.PHONE1;
-                $rootScope.phone2 = session.PHONE2;
+                $rootScope.phone1 = session.PHONE_1;
+                $rootScope.phone2 = session.PHONE_2;
                 $rootScope.preg_fl =session.PREGNENT_FL;
                 $rootScope.baby_birth_dt =session.BABY_BIRTH_DT;
+
+                $rootScope.baby_cnt =session.BABY_CNT;
+                $rootScope.baby_male_cnt =session.BABY_MALE_CNT;
+                $rootScope.baby_female_cnt =session.BABY_FEMALE_CNT;
 
             }
 
