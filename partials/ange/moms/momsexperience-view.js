@@ -169,18 +169,8 @@ define([
         // 조회 화면 이동
         $scope.click_showViewReview = function (key) {
 
-            if ($stateParams.menu == 'experiencereview') {
+            if ($stateParams.menu == 'experienceprocess' || $stateParams.menu == 'experiencepast') {
                 $location.url('/moms/experiencereview/view/'+key);
-            } else if ($stateParams.menu == 'productreview') {
-                $location.url('/moms/productreview/view/'+key);
-            } else if ($stateParams.menu == 'angereview') {
-                $location.url('/moms/angereview/view/'+key);
-            } else if ($stateParams.menu == 'samplereview') {
-                $$location.url('/moms/samplereview/view/'+key);
-            } else if ($stateParams.menu == 'samplepackreview') {
-                $location.url('/moms/samplepackreview/view/'+key);
-            }else if ($stateParams.menu == 'eventreview') {
-                $location.url('/moms/eventreview/view/'+key);
             }
 
         };
