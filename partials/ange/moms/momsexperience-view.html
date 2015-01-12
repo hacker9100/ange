@@ -78,175 +78,375 @@
     <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
     {{item.END_YMD}} {{todayDate}}
     <div class="moms_form" ng-model="item" style="margin:0px; display:block;" ng-show="uid != '' && uid != null && menu == 'experienceprocess'">
-        <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-            <h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>
-        </div>
+    <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
+        <h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>
+    </div>
 
-        <div class="moms_form_titlebar" style="float:left; height:45px; width:100%; color:#4cace8; background-color:#333;">
-            |회원정보
-            신청을 위해서 정확한 정보가 필요합니다. 정보가 다르신가요?
-            <button class="webzine_list_btn red" title="정보수정">정보수정</button><br />
-        </div>
-        <div class="moms_form_bodywrap">
+    <div class="col-xs-12 v-cell-4" style="padding:0px;">
+        <div class="comp_basic h-cell-dynamic" style="margin:0px;">
 
-            <table id="moms_form_table" class="table" style="margin-bottom: 0px;">
-                <tbody>
-                <tr>
-                    <td width="100" align="center" class="table_td_gray">
-                        신청자
-                    </td>
-                    <td>
-                        {{name}}({{uid}})
-                    </td>
-                </tr>
-                <tr>
-                    <td width="100" align="center" class="table_td_gray">
-                        주소
-                    </td>
-                    <td>
-                        {{addr}}&nbsp;{{addr_detail}}
-                    </td>
-                </tr>
-                <tr>
-                    <td width="100" align="center" class="table_td_gray">
-                        연락처
-                    </td>
-                    <td>
-                        <span>전화번호</span>{{phone1}}
-                        <span>휴대폰</span>{{phone2}}
-                    </td>
-                </tr>
-                </tbody>
-            </table><!-- /.List-->
-
-            <div style="width:100%; padding:20px 18px; background-color:#faf0de;">
-                <h4 class="table_red" style="width:90px; height:100%; line-height:24px; float:left;">
-                    신청시<br/> 주의사항
-                </h4>
-                <div style="margin-left:90px; font-size:0.86em;">
-                    1. 체험자 정보(아기 개월수 / 임신주차)<br/>
-                    2. 체험단 페이지를 본인 블로그에 전체공개로 스크랩한 URL<br/>
-                    3. 디벨플래닛 아이디<br/>
-                    4. 아이성별<br/>
-                    5. 체험하고 싶은제품 선택(체험단/서평단)<br/>
-                    <br/>
-                    * 제품은 랜덤발송됩니다.
+            <div class="moms_form_titlebar">
+                | 회원정보
+                <div style="float:right;">
+                    <small>신청을 위해서 정확한 정보가 필요합니다. 정보가 다르신가요?</small>
+                    <button class="webzine_list_btn red" ng-click="click_update_user_info();" style="line-height:18px;" title="정보수정">정보수정</button><br />
                 </div>
             </div>
 
-            <div class="moms_form_titlebar" style="float:left; height:45px; width:100%; color:#4cace8; background-color:#333;">
-                | 신청정보
-            </div>
+            <div class="moms_form_bodywrap">
 
-            <table id="moms_form_table2" class="table" style="margin-bottom: 0px;">
-                <tbody>
-                <tr>
-                    <td width="100" align="center" class="table_td_gray">
-                        제목
-                    </td>
-                    <td>
-                        {{item.SUBJECT}}
-                    </td>
-                </tr>
-                <tr ng-show="menu == 'experienceprocess'">
-                    <td align="center" class="table_td_gray">
-                        제품선택
-                    </td>
-                    <td>
-                        <select ng-model="item.PRODUCT" class="form-control input-sm" >
-                            <option  data-ng-repeat="product in products" value="{{product}}">{{product}}</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" class="table_td_gray">
-                        체험자정보
-                    </td>
-                    <td>
-                        <div class="form-inline" style="margin:0 5px">
+                <table id="moms_form_table" class="table" style="float:left; margin-bottom: 0px;">
+                    <tbody>
+                    <tr>
+                        <td width="100" align="center" class="table_td_gray">
+                            신청자
+                        </td>
+                        <td>
+                            {{name}}({{uid}})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100" align="center" class="table_td_gray">
+                            주소
+                        </td>
+                        <td>
+                            {{addr}}&nbsp;{{addr_detail}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100" align="center" class="table_td_gray">
+                            연락처
+                        </td>
+                        <td>
+                            <span>전화번호</span>{{phone1}}
+                            <span>휴대폰</span>{{phone2}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100" align="center" class="table_td_gray">
+                            임신여부
+                        </td>
+                        <td>
+                            <div ng-show="preg_fl == 'N'">
+                                <span style="display: block;">해당없음</span>
+                            </div>
+                            <div ng-show="preg_fl == 'Y'">
+                                <span style="display: block;">임신 중 <small class="table_gray">(<strong>{{baby_birth_dt}}</strong> 출산예정)</small></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100" align="center" class="table_td_gray">
+                            자녀정보
+                        </td>
+                        <td>
+                            <span style="display:none;">없음</span>
+                            <div style="display:block;">
+                                <small class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100" align="center" class="table_td_gray">
+                            블로그
+                        </td>
+                        <td>
+                            <span style="display:none;">없음</span>
+                            <a href="#" class="table_blue" style="font-size:0.94em;">http://blog.naver.com/abcdefg</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table><!-- /.List-->
 
-                            <select id="preg_fl" ng-model="item.PREG_FL" class="form-control input-sm" style="width:110px; display:block;">
-                                <option selected value="">임신여부</option>
-                                <option value="Y">임신중</option>
-                                <option value="N">해당없음</option>
-                            </select>
+                <div class="clearfix" style="clear:both; width:100%; padding:20px 18px; background-color:#faf0de;">
+                    <h4 class="table_red" style="width:90px; height:100%; line-height:28px; font-size:1.18em; float:left;">
+                        신청시<br/> 주의사항
+                    </h4>
+                    <div style="margin-left:90px; line-height:18px; font-size:0.86em;">
+                        1. 체험자 정보(아기 개월수 / 임신주차)<br/>
+                        2. 체험단 페이지를 본인 블로그에 전체공개로 스크랩한 URL<br/>
+                        3. 디벨플래닛 아이디<br/>
+                        4. 아이성별<br/>
+                        5. 체험하고 싶은제품 선택(체험단/서평단)<br/>
+                        <br/>
+                        * 제품은 랜덤발송됩니다.
+                    </div>
+                </div>
 
-                            <select ng-model="item.CHILD_CNT" class="form-control input-sm" style="width:110px; display:block;">
-                                <option selected value="">자녀수</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5명 이상상</option>
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" class="table_td_gray">
-                        아기 개월
-                    </td>
-                    <td>
-                        <div class="form-inline" style="margin:0 5px">
-                            <input type="text" id="test" ng-model="item.BABY_MONTH" placeholder="아기 개월수"/>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" class="table_td_gray">
-                        아기 나이
-                    </td>
-                    <td>
-                        <div class="form-inline" style="margin:0 5px">
-                            <input type="text" ng-model="item.BABY_AGE" placeholder="아기 나이"/>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" class="table_td_gray">
-                        블로그 주소
-                    </td>
-                    <td>
-                        <div class="form-inline" style="margin:0 5px">
-                            <input type="text" ng-model="item.BLOG_URL" placeholder="블로그 주소" style="width: 400px;"/>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table><!-- /.List-->
+            </div><!-- /.moms_form_bodywrap -->
+        </div>  <!-- /.comp_basic -->
+    </div>  <!-- /.col-xs-12 -->
 
-            <button ng-click="click_momsexperiencelist();">목록</button>
-            <button ng-click="click_momseventcomp();">응모</button>
+    <div class="col-xs-12 v-cell-4" style="padding:0px;">
+    <div class="comp_basic h-cell-dynamic" style="width:100%; margin:0px;">
+    <div class="moms_form_bodywrap">
+
+    <div class="moms_form_titlebar" style="float:left; height:45px; line-height:45px; width:100%; padding:0px 10px; color:#4cace8; background-color:#333;">
+        | 신청서 작성
+    </div>
+
+    <table id="moms_form_table" class="table" style="float:left; border-bottom:1px solid #333; margin-bottom: 0px;">
+        <tbody>
+        <tr>
+            <td width="100" align="center" class="table_td_gray">
+                제목
+            </td>
+            <td>
+                <strong>{{item.SUBJECT}}</strong>
+            </td>
+        </tr>
+        <tr ng-show="menu == 'experienceprocess'">
+            <td align="center" class="table_td_gray">
+                제품선택
+            </td>
+            <td>
+                <select ng-model="item.PRODUCT" class="form-control input-sm" >
+                    <option  data-ng-repeat="product in products" value="{{product}}">{{product}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="table_td_gray">
+                체험자정보
+            </td>
+            <td>
+                <div class="form-inline" style="margin:0 5px">
+
+                    <select id="preg_fl" ng-model="item.PREG_FL" class="form-control input-sm" style="width:110px; display:block;">
+                        <option selected value="">임신여부</option>
+                        <option value="Y">임신중</option>
+                        <option value="N">해당없음</option>
+                    </select>
+
+                    <select ng-model="item.CHILD_CNT" class="form-control input-sm" style="width:110px; display:block;">
+                        <option selected value="">자녀수</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5명 이상상</option>
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="table_td_gray">
+                아기 개월
+            </td>
+            <td>
+                <div class="form-inline" style="margin:0 5px">
+                    <input type="text" id="test" ng-model="item.BABY_MONTH" placeholder="아기 개월수" style="width:92%;" class="form-control input-sm"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="table_td_gray">
+                아기 나이
+            </td>
+            <td>
+                <div class="form-inline" style="margin:0 5px">
+                    <input type="text" ng-model="item.BABY_AGE" placeholder="아기 나이" style="width:92%;" class="form-control input-sm"/>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="table_td_gray">
+                상품설명<br/>스크랩한<br/>
+                블로그 주소
+            </td>
+            <td>
+                <div class="form-inline" style="float:left; margin:0px; padding:0px;">
+
+                    <div class="row form_rows bottom" style="margin:0px;  border:none;">
+
+                        <div class="form_basicinfo" style="margin:0px;">
+                                <span class="col-xs-12 basicinfo input" id="blog_url">
+                                    <div class="form-inline">
+                                        <input type="text" ng-model="item.BLOG_URL" style="width:92%;" class="form-control input-sm">
+                                        <div style="float:right; width:5%;">
+                                            <button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>
+                                        </div>
+                                    </div>
+                                </span>
+
+<!--                                                            <span class="col-xs-12 basicinfo input">
+                                                                <div class="form-inline">
+                                                                    <input type="text" ng-model="item.BLOG_URL" style="width:92%;" class="form-control input-sm">
+                                                                    <div style="float:right; width:5%;">
+                                                                        <button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </span>-->
+
+<!--                                                            <span class="col-xs-12 basicinfo input">
+                                                                <div class="form-inline">
+                                                                    <input type="text" ng-model="item.BLOG_URL" style="width:92%;" class="form-control input-sm">
+                                                                    <div style="float:right; width:5%;">
+                                                                        <button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                    </div>
+                                                                </div>
+                                                            </span>
+
+                                                            <span class="col-xs-12 basicinfo divide" style="margin:0px; width:100%;"></span>-->
+
+                                <span class="col-xs-12 basicinfo input">
+                                    <div style="text-align:right; padding:0 10px;">
+
+                                        <span class="table_blue"><small>미션에 따라 블로그 갯수만큼 추가해주세요</small></span>
+
+                                        <button type="button" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-plus"></span> 추가</button>
+
+                                    </div>
+                                </span>
+
+                        </div>  <!-- /.form_basicinfo -->
+                    </div>  <!-- /.form_rows -->
+
+                </div>  <!-- /.form-inline -->
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="table_td_gray">
+                추가정보1
+            </td>
+            <td>
+                <input ng-model="item.ADD1"type="text" class="form-control input-sm">
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="table_td_gray">
+                추가정보2
+            </td>
+            <td>
+                <input type="text" ng-model="item.ADD2" class="form-control input-sm">
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="table_td_gray">
+                추가정보3
+            </td>
+            <td>
+                <input type="text" ng-model="item.ADD3" class="form-control input-sm">
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="table_td_gray">
+                신청이유
+            </td>
+            <td>
+                <textarea class="form-control input-sm" ng-model="item.REASON" style="min-width:100%; max-width:100%;" rows="8"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="table_td_gray">
+                개인정보<br />
+                제3자<br />
+                정보제공 안내<br />
+            </td>
+            <td>
+                <div class="table_gray" style="font-size:0.94em;">
+                    체험단 선정 후 상품 발송을 위하여 개인정보(이름, 전화번호, 주소)를 체험단 상품 제공업체에
+                    제공되며, 해당업체는 상품 발송 완료시까지만 보유 및 이용하게 됩니다.
+                </div>
+                <div class="table_blue" style="font-size:0.94em; line-height:38px;">
+                    제 3자 정보제공에 동의하시나요?
+                </div>
+                <div class="form-group" style="margin:0 5px; line-height:32px;">
+                    <input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="Y" id="credit_agreement_Y" style="float: left; margin:10px 0 0 15px;">
+                    <span class="credit_agreement_span">동의함</span>
+
+                    <input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="N" id="credit_agreement_N" style="float: left; margin:10px 0 0 15px;">
+                    <span class="credit_agreement_span">동의안함</span>
+                </div>
+            </td>
+        </tr>
+
+        </tbody>
+    </table><!-- /.List-->
+
+    <div class="moms_form_foot" style="border-bottom:2px solid #111;">
+        <div class="table_blue moms_form_footguide">모집기간 동안에는 신청내용을 수정할 수 있습니다. 기간을 확인해주세요.</div>
+
+        <div class="moms_form_footbtn">
+
+            <button ng-click="click_momsexperiencelist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>
+            <button ng-click="click_momseventcomp();" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
+            <button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>
+
         </div>
+    </div>
+
+    </div><!-- /.moms_form_bodywrap -->
+    </div>  <!-- /.comp_basic -->
+    </div>  <!-- /.col-xs-12 -->
     </div>
 
 
     <div class="moms_reviews" style="display:block;" ng-show="menu == 'experiencepast'">
         <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-            <h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>리뷰</h4>
+            <h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>후기</h4>
         </div>
 
-        <!-- 리뷰 목록 -->
-        <div class="row webzine_moms_list" data-ng-repeat="review in reviewList" ng-click="click_showViewReview(review.NO)>
-            <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
-                    <!--<div class="item" style="position:absolute;"><img src="imgs/ange/temp/moms_jb_01.jpg" class="webzine_moms_featureimg"></div>-->
-                    <div class="item" style="position:absolute;"><img ng-src="{{review.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
-                    <div class="webzine_list_title">
-                        {{review.SUBJECT}}
 
-                        <div class="webzine_list_bottomwrap">
-                            <div class="webzine_list_item"><strong>작성일</strong><span class="table_gray" style="margin-left:8px;">{{review.REG_DT}}</span></div>
-                            <div class="webzine_list_item"><strong>등록자</strong><span class="table_gray" style="margin-left:8px;">{{review.NICK_NM}}</span></div>
-                        </div>
+        <!-- review_list -->
+        <table id="comp_board_table" class="table table-hover">
+
+            <thead>
+            <tr class="board_thead" height="48">
+                <td width="9%" align="center"><span class="board_th">번호</span></td>
+                <td colspan="2" width="15%"><span class="board_th">내용</span></td>
+                <td width="60" align="center"><span class="board_th">조회</span></td>
+            </tr>
+            </thead>
+
+            <tbody class="on">
+
+            <tr data-ng-repeat="review in reviewList" ng-click="click_showViewReview(review.NO)" style="cursor:pointer;">
+                <td class="table_no">
+                    <span>{{review.RNUM}}</span>
+                </td>
+
+                <td width="18%">
+                    <div class="review_thumbnails">
+                        <img class="thumbnails_img" ng-src="{{review.MAIN_FILE}}" />
                     </div>
-                </div>  <!-- comp_basic -->
-            </div>  <!-- col-xs-8 -->
-        </div>  <!-- /.row -->
+                    <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
+                </td>
 
-        <div ng-show="reviewList == ''">
-            작성된 리뷰가 없습니다.
-        </div>
+                </td>
+                <td>
+                    <span style="font-size:1.08em; font-weight:600;">{{ review.SUBJECT | limitTo: 60 }}{{review.SUBJECT > 60 ? '...' : ''}}</span>
+                    <span class="table_icon_new">N</span>
+                    <span class="glyphicon glyphicon-picture table_icon_pic"></span>
+
+                    <div class="table_date" style="font-size:0.86em; line-height:36px;">
+                        <span class="table_blue">{{review.NICK_NM}}</span> &nbsp;|&nbsp; <span style=""></span>{{review.REG_DT}}
+
+                        <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
+                            <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">{{review.LIKE_CNT}}</span>		<!-- 공감수 -->
+                            <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">{{review.REPLY_CNT}}</span>	<!-- 댓글수 -->
+                        </div>
+
+                    </div>
+                    <div class="table_gray" ng-bind-html="review.BODY | string_limit : 150" style="text-align: justify; font-size:0.92em; word-break: break-all;">
+                        <!--{{review.BODY}}-->
+                    </div>
+                </td>
+                <td class="table_hit">{{review.HIT_CNT}}</td></tr>
+            </tr>
+
+            </tbody>
+
+            <tbody class="on" data-ng-show="reviewList == '' || reviewList == null">
+
+                <tr height="120">
+                    <td colspan="4" align="center" valign="middle" style="font-size: 0.92em;">
+                        <span class="table_gray" style="line-height:100px;">조회 데이터가 없습니다.</span>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table><!-- /.List-->
     </div>  <!-- /.moms_review -->
 
 
@@ -289,3 +489,38 @@
 
 <!-- /Main Page Layout Set -->
 </div>
+
+<script type="text/ng-template" id="user_info_modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">정보수정</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-model="approval" lass="row" class="form-horizontal">
+            <div class= "form-group">
+                주소 <input type="text" class="form-control" ng-model="item.ADDR" class= "form-control" placeholder="주소"/>
+            </div>
+            <div class= "form-group">
+                세부주소 <input type="text" class="form-control" ng-model="item.ADDR_DETAIL" class= "form-control" placeholder="세부주소"/>
+            </div>
+            <div class= "form-group">
+                전화번호 <input type="text" class="form-control" ng-model="item.PHONE_1" class= "form-control" placeholder="전화번호"/>
+            </div>
+            <div class= "form-group">
+                휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
+            </div>
+            <div class= "form-group">
+                블로그 <input type="text" class="form-control" ng-model="item.BLOG_URL" class= "form-control" placeholder="블로그"/>
+            </div>
+            <div class= "form-group">
+                임신여부 <input type="radio" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y
+                &nbsp;
+                <input type="radio" id="preg_N" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N
+                <div id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 2015-01-12"/></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_ok()">수정</button>
+        <button class="btn btn-warning" ng-click="click_cancel()">취소</button>
+    </div>
+</script>

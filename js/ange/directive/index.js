@@ -13,18 +13,14 @@ define([
     './animate-directive',
     './display-directive',
 
+    './ange-layout-directive',
+    './ange-body-directive',
+    './ange-ui-lnb-directive',
+
     './ange-main-directive',
     './ange-banner-directive',
     './ange-portlet-directive',
-
-    './ange-layout-directive',
-    './ange-body-directive',
-    './ange-lnb-directive',
-
-    './cms-layout-directive',
-    './cms-body-directive',
-    './cms-main-directive',
-    './cms-portlet-directive',
+    './ange-module-reply-directive',
 
     './validation-directive',
     './dropdown-select-directive',

@@ -58,7 +58,11 @@
                 $msg = "";
 
                 $sql = "SELECT
-                            U.USER_ID, U.USER_NM, U.NICK_NM, U.EMAIL, UR.ROLE_ID, U.PASSWORD, U.USER_ST, U.ADDR, U.ADDR_DETAIL
+                            U.USER_ID, U.USER_NM, U.NICK_NM,  U.PASSWORD, U.PHONE_1, U.PHONE_2, U.EMAIL, U.ADDR, U.ADDR_DETAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
+                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT,
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -103,6 +107,44 @@
                         $err++;
                         $msg = $_d->mysql_error;
                     }
+
+                    $sql = "SELECT
+                                SUM_POINT, USE_POINT, REMAIN_POINT
+                            FROM
+                                ANGE_MILEAGE_STATUS
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $result = $_d->sql_query($sql);
+                    $mileage_data  = $_d->sql_fetch_array($result);
+
+                    $data['MILEAGE'] = $mileage_data;
+
+                    $sql = "SELECT
+                                BABY_NM, BABY_BIRTH, BABY_SEX_GB, CARE_CENTER, CENTER_VISIT_DT, CENTER_OUT_DT
+                            FROM
+                                ANGE_USER_BABY
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $baby_data = $_d->getData($sql);
+
+                    $data['BABY'] = $baby_data;
+
+                    $sql = "SELECT
+                                BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS
+                            FROM
+                                ANGE_USER_BLOG
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $result = $_d->sql_query($sql);
+                    $blog_data  = $_d->sql_fetch_array($result);
+
+                    $data['BLOG'] = $blog_data;
                 } else {
                     $_d->failEnd("아이디나 패스워드를 확인해주세요.");
                 }
@@ -138,6 +180,7 @@
                     if (!isset($_SESSION)) {
                         session_start();
                     }
+                    $_SESSION['user_info'] = $data;
                     $_SESSION['uid'] = $data['USER_ID'];
                     $_SESSION['nick'] = $data['NICK_NM'];
                     $_SESSION['name'] = $data['USER_NM'];
@@ -145,8 +188,13 @@
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
                     $_SESSION['addr'] = $data['ADDR'];
                     $_SESSION['addr_detail'] = $data['ADDR_DETAIL'];
-                    $_SESSION['phone1'] = $data['PHONE1'];
-                    $_SESSION['phone2'] = $data['PHONE2'];
+                    $_SESSION['phone1'] = $data['PHONE_1'];
+                    $_SESSION['phone2'] = $data['PHONE_2'];
+                    $_SESSION['pregnent_fl'] = $data['PREGNENT_FL'];
+                    $_SESSION['baby_birth_dt'] = $data['BABY_BIRTH_DT'];
+                    $_SESSION['baby_cnt'] = $data['BABY_CNT'];
+                    $_SESSION['baby_male_cnt'] = $data['BABY_MALE_CNT'];
+                    $_SESSION['baby_female_cnt'] = $data['BABY_FEMALE_CNT'];
                     $_SESSION['timeout'] = time();
 
                     $_d->dataEnd2($data);
@@ -161,31 +209,66 @@
                 if(isset($_SESSION['timeout']) && time() - $_SESSION['timeout'] > SESSION_TIMEOUT) {
                     if(isset($_SESSION['uid']))
                     {
+                        unset($_SESSION['user_info']);
                         unset($_SESSION['uid']);
                         unset($_SESSION['nick']);
                         unset($_SESSION['name']);
                         unset($_SESSION['role']);
                         unset($_SESSION['menu_role']);
+                        unset($_SESSION['addr']);
+                        unset($_SESSION['addr_detail']);
+                        unset($_SESSION['phone1']);
+                        unset($_SESSION['phone2']);
+                        unset($_SESSION['pregnent_fl']);
+                        unset($_SESSION['baby_birth_dt']);
+                        unset($_SESSION['baby_cnt']);
+                        unset($_SESSION['baby_male_cnt']);
+                        unset($_SESSION['baby_female_cnt']);
                         unset($_SESSION['timeout']);
                     }
                 } else {
                     if(isset($_SESSION['uid']))
                     {
+                        $sess['USER_INFO'] = $_SESSION['user_info'];
                         $sess['USER_ID'] = $_SESSION['uid'];
                         $sess['NICK_NM'] = $_SESSION['nick'];
                         $sess['USER_NM'] = $_SESSION['name'];
                         $sess['ROLE_ID'] = $_SESSION['role'];
                         $sess['MENU_ROLE'] = $_SESSION['menu_role'];
+
+                        $sess['ADDR'] = $_SESSION['addr'];
+                        $sess['ADDR_DETAIL'] = $_SESSION['addr_detail'];
+                        $sess['PHONE_1'] = $_SESSION['phone1'];
+                        $sess['PHONE_2'] = $_SESSION['phone2'];
+                        $sess['PREGNENT_FL'] = $_SESSION['pregnent_fl'];
+                        $sess['BABY_BIRTH_DT'] = $_SESSION['baby_birth_dt'];
+
+                        $sess['BABY_CNT'] = $_SESSION['baby_cnt'];
+                        $sess['BABY_MALE_CNT'] = $_SESSION['baby_male_cnt'];
+                        $sess['BABY_FEMALE_CNT'] = $_SESSION['baby_female_cnt'];
+
 //                    $sess['EMAIL'] = $_SESSION['email'];
                         $_SESSION['timeout'] = time();
                     }
                     else
                     {
+                        $sess['USER_INFO'] = '';
                         $sess['USER_ID'] = '';
                         $sess['NICK_NM'] = 'Guest';
                         $sess['USER_NM'] = 'Guest';
                         $sess['ROLE_ID'] = '';
                         $sess['MENU_ROLE'] = '';
+
+                        $sess['ADDR']= '';
+                        $sess['ADDR_DETAIL'] = '';
+                        $sess['PHONE1'] = '';
+                        $sess['PHONE2'] = '';
+                        $sess['PREG_FL'] = '';
+                        $sess['BABY_BIRTH_DT'] = '';
+
+                        $sess['BABY_CNT'] = '';
+                        $sess['BABY_MALE_CNT'] = '';
+                        $sess['BABY_FEMALE_CNT'] = '';
 //                    $sess['EMAIL'] = '';
                     }
                 }
@@ -227,6 +310,7 @@
 
                 $_d->sql_query($sql);
 
+                unset($_SESSION['user_info']);
                 unset($_SESSION['uid']);
                 unset($_SESSION['nick']);
                 unset($_SESSION['name']);

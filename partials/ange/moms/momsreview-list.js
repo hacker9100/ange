@@ -69,11 +69,7 @@ define([
 
                         }
                     }
-
-
                     $scope.list = data;
-
-
                 })
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
@@ -116,6 +112,9 @@ define([
 
         };
 
+        $scope.click_searchPeopleBoard = function(){
+            $scope.getMomsReviewList();
+        }
 
         $scope.getSession()
             .then($scope.sessionCheck)

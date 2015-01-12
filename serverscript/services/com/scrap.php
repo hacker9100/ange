@@ -73,17 +73,21 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             } else if($_type == 'list'){
 
                 // 검색조건 추가해야함
+                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+                    $search_where .= "AND CB.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                }
 
                 $sql = " SELECT TOTAL_COUNT, @RNUM := @RNUM+1 AS RNUM,
-                             TARGET_NO, NO, SUBJECT, BOARD_GB, REG_UID
+                             TARGET_NO, NO, SUBJECT, BOARD_GB, REG_UID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NICK_NM
                     FROM
                     (
-                        SELECT CS.TARGET_NO, CB.NO, CB.SUBJECT, CB.BOARD_GB, CS.REG_UID
+                        SELECT CS.TARGET_NO, CB.NO, CB.SUBJECT, CB.BOARD_GB, CS.REG_UID, CB.REG_DT, CB.NICK_NM
                         FROM COM_SCRAP CS
                         INNER JOIN COM_BOARD CB
                         ON CS.TARGET_NO = CB.NO
                         WHERE 1=1
-                         AND CS.REG_UID = '".$_search[REG_UID]."'
+                         AND CS.REG_UID = '".$_SESSION['uid']."'
+                         ".$search_where."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
                     (
@@ -93,22 +97,23 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                          INNER JOIN COM_BOARD CB
                          ON CS.TARGET_NO = CB.NO
                          WHERE 1=1
-                         AND CS.REG_UID = '".$_search[REG_UID]."'
+                         AND CS.REG_UID = '".$_SESSION['uid']."'
+                         ".$search_where."
                     ) CNT
                 ";
 
-                /*$data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
+                $data = $_d->sql_query($sql);
+                if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
+                }else{
                     $_d->dataEnd($sql);
-                }*/
+                }
             }  else if ($_type == "check") {
 
                 $sql = "SELECT COUNT(*) AS SCRAP_CNT
                         FROM COM_SCRAP
                         WHERE TARGET_NO = ".$_search[TARGET_NO]."
-                          AND REG_UID = '".$_search[REG_UID]."'";
+                          AND REG_UID = '".$_SESSION['uid']."'";
 
                 $data = $_d->sql_query($sql);
                 if($_d->mysql_errno > 0){
@@ -132,9 +137,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                         ) VALUES (
                              ".$_model[TARGET_NO]."
                             , '".$_model[TARGET_GB]."'
-                            , '".$_model[REG_UID]."'
-                            , '".$_model[NICK_NM]."'
-                            , '".$_model[REG_NM]."'
+                            , '".$_SESSION['uid']."'
+                            , '".$_SESSION['nick']."'
+                            , '".$_SESSION['name']."'
                             , SYSDATE()
                         )";
 

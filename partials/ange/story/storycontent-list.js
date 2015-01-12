@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller("storycontent-list", ['$scope', '$rootScope', '$location', '$modal', 'dialogs', 'UPLOAD', function($scope, $rootScope, $location, $modal, dialogs, UPLOAD) {
+    controllers.controller("storycontent-list", ['$scope', '$stateParams', '$sce', '$rootScope', '$location', '$modal', 'dialogs', 'UPLOAD', function($scope, $stateParams, $sce, $rootScope, $location, $modal, dialogs, UPLOAD) {
 
         /********** 초기화 **********/
         $scope.$parent.reload = false;
@@ -28,6 +28,12 @@ define([
             if ($scope.menu && $scope.menu.ETC != null) {
                 $scope.search.CATEGORY_NO = $scope.menu.ETC;
             }
+
+            console.log('$stateParams.id : '+$stateParams.id)
+
+            if ($stateParams.id) {
+                $scope.showContent();
+            }
         };
 
         /********** 이벤트 **********/
@@ -39,18 +45,25 @@ define([
 //            }
 //        };
 
-        // 이미지 조회
+            // 이미지 조회
         $scope.$parent.getContentList = function () {
 
             if ($scope.$parent.reload) $scope.list = [];
 
-            if ($scope.category != '') {
-                for (var i in $scope.category) {
-                    if ($scope.category[i] == null) $scope.category.splice(i, 1)
-                }
+//            if ($scope.category != '') {
+//                console.log($scope.category)
+//                for (var i in $scope.category) {
+//                    if ($scope.category[i] == null) $scope.category.splice(i, 1)
+//                }
+//                $scope.search.CATEGORY = $scope.category;
+//            }
+            $scope.search.CATEGORY = [];
 
-                $scope.search.CATEGORY = $scope.category;
-//                console.log(JSON.stringify($scope.search.CATEGORY)); // console_log
+            if ($scope.category != '') {
+                console.log($scope.category)
+                for (var i in $scope.category) {
+                    if ($scope.category[i] != null) $scope.search.CATEGORY.push($scope.category[i]);
+                }
             }
 
             $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
@@ -121,17 +134,41 @@ define([
         };
 
         // 콘텐츠 클릭 조회
+        $scope.click_addLike = function (idx, item) {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 공감 할 수 있습니다.', {size: 'md'});
+            }
+
+            $scope.likeItem = {};
+            $scope.likeItem.LIKE_FL = item.LIKE_FL;
+            $scope.likeItem.TARGET_NO = item.NO;
+            $scope.likeItem.TARGET_GB = 'CONTENT';
+
+            $scope.insertItem('com/like', 'item', $scope.likeItem, false)
+                .then(function(){
+                    var afterLike = item.LIKE_FL == 'Y' ? 'N' : 'Y';
+                    $scope.list[idx].LIKE_FL = afterLike;
+                    if (afterLike == 'Y') {
+                        dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
+                    } else {
+                        dialogs.notify('알림', '공감 취소되었습니다.', {size: 'md'});
+                    }
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
+        // 콘텐츠 클릭 조회
         $scope.click_showContentDetail = function (item) {
             $scope.openModal(item, 'lg');
         };
 
         // 콘텐츠보기 모달창
-        // 결재 모달창
         $scope.openModal = function (content, size) {
             var modalInstance = $modal.open({
                 templateUrl: 'partials/ange/story/storycontent-view-popup.html',
                 controller: 'storycontent-view-popup',
                 size: size,
+                scope: $scope,
                 resolve: {
                     data: function () {
                         return content;
@@ -146,16 +183,24 @@ define([
             });
         }
 
-        $scope.openModal = function (content, size) {
-            var dlg = dialogs.create('partials/ange/story/storycontent-view-popup.html', 'storycontent-view-popup',
-                content, {size:size, keyboard: true, backdrop: true});
-            dlg.result.then(function(){
+        $scope.showContent = function () {
+            $scope.getItem('cms/task', 'item', $stateParams.id, {}, true)
+                .then(function(data){
+                    $scope.openModal(data, 'lg');
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
 
-            },function(){
-                if(angular.equals($scope.name,''))
-                    $scope.name = 'You did not enter in your name!';
-            });
-        };
+//        $scope.openModal = function (content, size) {
+//            var dlg = dialogs.create('partials/ange/story/storycontent-view-popup.html', 'storycontent-view-popup',
+//                content, {size:size, keyboard: true, backdrop: true});
+//            dlg.result.then(function(){
+//
+//            },function(){
+//                if(angular.equals($scope.name,''))
+//                    $scope.name = 'You did not enter in your name!';
+//            });
+//        };
 
         $scope.init();
         $scope.getContentList();

@@ -215,11 +215,25 @@
                 }
             } else if ($_type == 'selectList') {
                     $sql = "SELECT
-                                    NO, SUBJECT
+                                NO, SUBJECT, TOTAL_COUNT
+                            FROM
+                            (
+                                SELECT
+                                     NO, SUBJECT
+                                 FROM
+                                     ANGE_EVENT
+                                 WHERE 1 = 1
+                                 AND EVENT_GB  ='".$_search[EVENT_GB]."'
+
+                            ) AS DATA,
+                            (
+                                SELECT
+                                    COUNT(*) AS TOTAL_COUNT
                                 FROM
-                                    ANGE_EVENT
-                                WHERE 1 = 1
-                                AND EVENT_GB = '".$_search[EVENT_GB]."' ";
+                                         ANGE_EVENT
+                                     WHERE 1 = 1
+                                     AND EVENT_GB  ='".$_search[EVENT_GB]."'
+                            ) CNT";
 
                     $data = $_d->sql_query($sql);
 

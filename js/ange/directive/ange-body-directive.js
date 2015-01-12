@@ -52,6 +52,12 @@ define(['./directives'], function (directives) {
                         } else if (menu[2] == 'mileagemall' || menu[2] == 'cummerce') {
                             menu[2] = 'mall';
                         }
+                        // 고객센터
+                        else if (menu[2] == 'notice' || menu[2] == 'system' || menu[2] == 'faq') {
+                            menu[2] = 'board';
+                        }else if(menu[2] == 'qna' || menu[2] == 'myqna'){
+                            menu[2] = 'board';
+                        }
 
                         url = menu[1] + '/' + menu[1] + menu[2] + '-' + menu[3];
                         break;

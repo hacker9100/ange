@@ -1,4 +1,4 @@
-<div ng-controller="momsreview-list">
+<div ng-controller="infodeskqna-list">
     <!-- mainbar -->
     <div class="mainbar sub-slide0">
         <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
@@ -19,19 +19,6 @@
                             <div class="container-fluid sub_contents_search">
                                 <div class="row">
                                     <div class="col-xs-12" style="padding:0">
-
-                                        <!--                                        <div class="btn-group" style="float:left;">
-                                                                                    <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
-
-                                                                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                                        <span class="caret"></span>
-                                                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                                                    </button>
-
-                                                                                    <ul class="dropdown-menu" role="menu">
-                                                                                        <li><a href="#">제목+내용</a></li>
-                                                                                        <li><a href="#">작성자</a></li>
-                                                                                    </ul>-->
                                         <div class="btn-group" style="float:left;">
                                             <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
                                         </div><!-- /btn-group -->
@@ -63,50 +50,38 @@
 
                         <div class="sub_contents_body">
 
-                            <!-- review_list -->
+                            <!-- peoplepoll_list -->
                             <table id="comp_board_table" class="table table-hover">
 
                                 <thead>
                                 <tr class="board_thead" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
-                                    <td colspan="2" width="15%"><span class="board_th">내용</span></td>
+                                    <td><span class="board_th">제목</span></td>
+                                    <td ng-show="menu == 'qna'" width="92" align="center"><span class="board_th">작성자</span></td>
+                                    <td width="80"><span class="board_th">작성일</span></td>
                                     <td width="60" align="center"><span class="board_th">조회</span></td>
                                 </tr>
                                 </thead>
 
                                 <tbody class="on" ng-repeat="item in list">
-                                <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+
+                                <tr ng-click="click_showViewQnaPeopleBoard(item.NO, item.REG_UID)" style="cursor:pointer;">
                                     <td class="table_no">
-                                        <span>{{item.RNUM}}</span>
-                                    </td>
-
-                                    <td width="18%">
-                                        <div class="review_thumbnails" >
-                                            <img class="thumbnails_img" ng-src="{{item.MAIN_FILE}}" />
-                                        </div>
-                                        <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
-                                    </td>
-
+                                        <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.RNUM}}</span>
                                     </td>
                                     <td>
-                                        <span style="font-size:1.08em; font-weight:600;"> {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
-                                        <span class="table_icon_new">N</span>
-                                        <span class="glyphicon glyphicon-picture table_icon_pic"></span>
-
-                                        <div class="table_date" style="font-size:0.86em; line-height:36px;">
-                                            <span class="table_blue">{{item.NICK_NM}}</span> &nbsp;|&nbsp; <span style=""></span>{{item.REG_DT}}
-
-                                                <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
-                                                    <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">{{item.LIKE_CNT}}</span>		<!-- 공감수 -->
-                                                    <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">{{item.REPLY_CNT}}</span>	<!-- 댓글수 -->
-                                                </div>
-
-                                        </div>
-                                        <div class="table_gray" ng-bind-html="review.BODY | string_limit : 200" style="text-align: justify; font-size:0.92em; word-break: break-all;">
-                                        </div>
+                                        <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
+                                        {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                        <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? [item.REPLY_COUNT] : ''}}</span>
+                                        <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                                        <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                        <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
                                     </td>
+                                    <td  ng-show="menu == 'qna'"  class="table_author">{{item.NICK_NM}}</td>
+                                    <td class="table_date">{{item.REG_DT}}</td>
                                     <td class="table_hit">{{item.HIT_CNT}}</td></tr>
                                 </tr>
+
                                 </tbody>
 
                                 <tbody class="on" data-ng-show="list == '' || list == null">
@@ -139,11 +114,12 @@
                                     </li>
                                 </ul>
                             </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
 
                         </div><!-- /.sub_contents_body -->
 
                         <!-- 등록 -->
-                        <a class="btn people_btn submit" title="등록하기" ng-show="uid != '' && uid != null" ng-click="click_showCreateReview();">등록</a>
+                        <a class="btn people_btn submit" title="등록하기" ng-show="uid != '' && uid != null" ng-click="click_showCreatePeopleBoard();">등록</a>
 
                         <!--<div ng-show="uid != '' && uid != null" ng-click="test()">세션이 있을때만 보입니다.</div>
                         <div ng-show="uid == '' || uid == null" ng-click="test()">세션이 없을때 보입니다.</div>   -->

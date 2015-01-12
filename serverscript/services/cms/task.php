@@ -51,7 +51,7 @@
             if ($_type == 'item') {
                 $sql = "SELECT
                             P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SERIES_NM, C.SEASON_NM, C.SECTION_NM, P.YEAR
+                            T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SERIES_NM, C.SEASON_NM, C.SECTION_NM, P.YEAR, T.LIKE_CNT, T.HIT_CNT, SCRAP_CNT, REPLY_CNT
                         FROM
                             CMS_TASK T
                             INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
@@ -101,10 +101,15 @@
             } else if ($_type == 'list') {
                 $search_where = "";
                 $from_category = "";
+                $sort_order = "T.REG_DT DESC";
                 $limit = "";
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit = "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order = $_search[SORT]." ".$_search[ORDER]." ";
                 }
 
 //                if ($_SESSION['role'] != 'CMS_ADMIN' && $_SESSION['role'] != 'MANAGER') {
@@ -196,7 +201,7 @@
                                             WHERE
                                                 CATEGORY_ST = '0'
                                                 AND CATEGORY_GB = '2'
-                                                AND PARENT_NO = ".$category[PARENT_NO]."
+                                                AND PARENT_NO = ".$category[NO]."
                                             ";
 
                                     $result = $_d->sql_query($sql,true);
@@ -227,20 +232,23 @@
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                             CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM, (SELECT SECTION_NM FROM CMS_SECTION S WHERE S.NO = SECTION_NO) AS SECTION_NM,
-                            HIT_CNT, SCRAP_CNT, LIKE_CNT, REPLY_CNT
+                            HIT_CNT, SCRAP_CNT, LIKE_CNT, REPLY_CNT, LIKE_FL
                         FROM
                         (
                             SELECT
                                 P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
-                                T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, T.HIT_CNT, T.SCRAP_CNT, T.LIKE_CNT, T.REPLY_CNT, S.SERIES_NM
+                                T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, T.HIT_CNT, T.SCRAP_CNT, T.LIKE_CNT, T.REPLY_CNT, S.SERIES_NM,
+                                CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL
                             FROM
-                                CMS_TASK T, CMS_PROJECT P
+                                CMS_TASK T
+                                INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
                                 LEFT OUTER JOIN CMS_SERIES S ON S.NO = P.SERIES_NO
+                                LEFT OUTER JOIN ANGE_USER_LIKE L ON T.NO = L.TARGET_NO AND L.TARGET_GB = 'CONTENT' AND L.USER_ID = '".$_SESSION['uid']."'
                                 ".$from_category."
                             WHERE
-                                T.PROJECT_NO = P.NO
+                                1 = 1
                                 ".$search_where."
-                            ORDER BY T.REG_DT DESC
+                            ORDER BY ".$sort_order."
                             ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -319,6 +327,120 @@
                                     AND S.TARGET_GB = 'CONTENT'
                                     AND F.FILE_GB = 'MAIN'
                                     AND S.TARGET_NO = ".$content_data[NO]."
+                                ";
+
+                        $file_result = $_d->sql_query($sql);
+                        $file_data = $_d->sql_fetch_array($file_result);
+                        $row['FILE'] = $file_data;
+                    }
+
+                    $__trn->rows[$i] = $row;
+                }
+                $_d->sql_free_result($result);
+                $data = $__trn->{'rows'};
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
+            } else if ($_type == 'food') {
+                $search_where = "";
+                $limit = "";
+
+                if (isset($_page)) {
+                    $limit = "LIMIT ".($_page[NO] * $_page[SIZE]).", ".($_page[SIZE]/4);
+                }
+
+                $search_where = "AND T.PHASE IN ('30', '31') ";
+
+                if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
+
+                    $select = "";
+
+                    $arr_category = explode(',', $_search[CATEGORY_NO]);
+                    for($i=0;$i< sizeof($arr_category);$i++){
+
+                        $sql = "SELECT
+                                    NO
+                                FROM
+                                    CMS_CATEGORY
+                                WHERE
+                                    CATEGORY_ST = '0'
+                                    AND CATEGORY_GB = '2'
+                                    AND ( PARENT_NO = 27 OR PARENT_NO = 38 )
+                                ";
+
+                        $result = $_d->sql_query($sql,true);
+
+                        for ($j=0; $row=$_d->sql_fetch_array($result); $j++) {
+                            $where_category .= $row[NO].($j != $_d->mysql_num_rows - 1 ? "," : "");
+                        }
+
+                        $select_where = "AND C.CATEGORY_NO = ".trim($arr_category[$i])." ";
+
+                        $select .= "SELECT
+                                        @RNUM := @RNUM + 1 AS RNUM,
+                                        NUM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                                        CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, HIT_CNT, SCRAP_CNT, LIKE_CNT, REPLY_CNT, CATEGORY_NO
+                                    FROM
+                                    (
+                                        SELECT
+                                            '".$i."' AS NUM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
+                                            T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, T.HIT_CNT, T.SCRAP_CNT, T.LIKE_CNT, T.REPLY_CNT,
+                                            C.CATEGORY_NO
+                                        FROM
+                                            CMS_TASK T, CONTENT_CATEGORY C,
+                                            (
+                                                SELECT
+                                                    TARGET_NO
+                                                FROM
+                                                    CONTENT_CATEGORY
+                                                WHERE CATEGORY_NO IN (".$where_category.")
+                                                GROUP BY TARGET_NO
+                                            ) AS TEMP
+                                        WHERE
+                                            T.NO = C.TARGET_NO
+                                            AND TEMP.TARGET_NO = T.NO
+                                            ".$select_where."
+                                            ".$search_where."
+                                        ORDER BY REG_DT DESC
+                                        ".$limit."
+                                    ) AS DATA,
+                                    (SELECT @RNUM := 0) R
+                                   ";
+
+                        if (sizeof($arr_category) - 1 != $i) $select .= "UNION ";
+                    }
+                }
+
+                $sql = "SELECT
+                            NUM, RNUM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                            CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, HIT_CNT, SCRAP_CNT, LIKE_CNT, REPLY_CNT, CATEGORY_NO
+                        FROM
+                        (
+                            ".$select."
+                        ) AS DATA
+                        ORDER BY RNUM ASC, NUM ASC
+                        ";
+
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                    if ($_search[FILE]) {
+                        $sql = "SELECT
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    CMS_CONTENT C, FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    C.NO = S.TARGET_NO
+                                    AND F.NO = S.SOURCE_NO
+                                    AND C.TASK_NO = ".$row['NO']."
+                                    AND C.CURRENT_FL = 'Y'
+                                    AND S.CONTENT_GB = 'FILE'
+                                    AND S.TARGET_GB = 'CONTENT'
+                                    AND F.FILE_GB = 'MAIN'
                                 ";
 
                         $file_result = $_d->sql_query($sql);
@@ -744,6 +866,21 @@
                             WHERE
                                 NO = ".$_key."
                             ";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == 'like') {
+
+                $sql = "UPDATE CMS_TASK SET
+                            LIKE_CNT = LIKE_CNT + 1
+                     WHERE NO = ".$_key."
+                        ";
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;

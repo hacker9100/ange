@@ -122,6 +122,7 @@ define([
                     .then(function(data){
                         $scope.event = data;
                         $scope.item.TARGET_NO = data[0].SUBJECT;
+                        $scope.CNT = data[0].TOTAL_CNT;
                     })
                     .catch(function(error){alert(error)});
             } else if ($stateParams.menu == 'eventreview') {
@@ -132,6 +133,7 @@ define([
                     .then(function(data){
                         $scope.event = data;
                         $scope.item.TARGET_NO = data[0].SUBJECT;
+                        $scope.CNT = data[0].TOTAL_CNT;
                     })
                     .catch(function(error){alert(error)});
             }
@@ -175,15 +177,19 @@ define([
                     .then(function(data){
                         $scope.item = data;
 
+
                         var idx = 0;
                         for(var i=0; i < $scope.event.length; i ++){
 
-                            console.log(data.PHOTO_TYPE);
                             if(JSON.stringify(data.TARGET_NO) == JSON.stringify($scope.event[i].NO)){
                                 idx = i;
                             }
                         }
-                        $scope.item.TARGET_NO = $scope.event[idx].SUBJECT;
+                        $scope.item.TARGET_NO = $scope.event[idx].NO;
+
+                        //$("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].NO+"']").attr("checked",true);
+
+                        $("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].NO+"']").attr("checked",true);
 
                         var files = data.FILES;
                         for(var i in files) {

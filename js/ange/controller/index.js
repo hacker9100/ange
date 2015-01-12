@@ -17,6 +17,9 @@ define([
     '../../../partials/ange/com/ui-lnb',
     '../../../partials/ange/com/ui-utility',
 
+    '../../../partials/ange/com/module-reply',
+
+    // 메인
     '../../../partials/ange/main',
 
     // 앙쥬스토리
@@ -82,8 +85,16 @@ define([
 
     // 고객센터
     '../../../partials/ange/infodesk/infodeskhome',
+    '../../../partials/ange/infodesk/infodeskboard-list',
+    '../../../partials/ange/infodesk/infodeskboard-view',
+    '../../../partials/ange/infodesk/infodeskboard-edit',
+    '../../../partials/ange/infodesk/infodeskqna-list',
+    '../../../partials/ange/infodesk/infodeskqna-view',
+    '../../../partials/ange/infodesk/infodeskqna-edit',
 
     // 회원가입
+    '../../../partials/ange/join/joinsignon',
+
     '../../../partials/ange/join/jointerms',
     '../../../partials/ange/join/joinuserinfo',
     '../../../partials/ange/join/joincertification',

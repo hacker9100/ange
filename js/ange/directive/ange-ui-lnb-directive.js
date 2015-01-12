@@ -1,12 +1,12 @@
 /**
  * Author : Sung-hwan Kim
  * Date   : 2014-12-30
- * Description : angeLnb 로드
+ * Description : uiLnb 로드
  */
 define(['./directives'], function (directives) {
     'use strict';
 
-    directives.directive('angeLnb', ['$controller', function($controller) {
+    directives.directive('uiLnb', ['$controller', function($controller) {
         return {
             restrict: 'EA',
 //            scope: true,
@@ -92,32 +92,31 @@ define(['./directives'], function (directives) {
 
                 /********** 초기화 **********/
                 // 카테고리 데이터
-                $scope.category = [];
-//                $scope.category = new Array(2);
+//                $scope.category = [];
 
                 // 초기화
                 $scope.init = function() {
-                    $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
-
-//                        $scope.category = data;
-
-                        var category_a = [];
-                        var category_b = [];
-
-                        for (var i in data) {
-                            var item = data[i];
-
-                            if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
-                                category_a.push(item);
-                            } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
-                                category_b.push(item);
-                            }
-                        }
-
-                        $scope.category_a = category_a;
-                        $scope.category_b = category_b;
-                    })
-                        .catch(function(error){});
+//                    $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
+//
+////                        $scope.category = data;
+//
+//                        var category_a = [];
+//                        var category_b = [];
+//
+//                        for (var i in data) {
+//                            var item = data[i];
+//
+//                            if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
+//                                category_a.push(item);
+//                            } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
+//                                category_b.push(item);
+//                            }
+//                        }
+//
+//                        $scope.category_a = category_a;
+//                        $scope.category_b = category_b;
+//                    })
+//                        .catch(function(error){});
                 };
 
                 /********** 이벤트 **********/

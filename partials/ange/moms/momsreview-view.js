@@ -202,7 +202,19 @@ define([
             $scope.item.LEVEL = 1;
             $scope.item.REPLY_NO = 1;
             $scope.item.TARGET_NO = $scope.item.NO;
-            $scope.item.TARGET_GB = "BOARD";
+            if ($stateParams.menu == 'experiencereview') {
+                $scope.item.TARGET_GB = 'EXPERIENCE';
+            } else if ($stateParams.menu == 'productreview') {
+                $scope.item.TARGET_GB = 'PRODUCT';
+            } else if ($stateParams.menu == 'angereview') {
+                $scope.item.TARGET_GB = 'ANGE';
+            } else if ($stateParams.menu == 'samplereview') {
+                $scope.item.TARGET_GB = 'SAMPLE';
+            } else if ($stateParams.menu == 'samplepackreview') {
+                $scope.search['TARGET_GB'] = 'SAMPLEPACK';
+            }else if ($stateParams.menu == 'eventreview') {
+                $scope.item.TARGET_GB = 'EVENT';
+            }
 
 
             $scope.insertItem('com/reply', 'item', $scope.item, false)
@@ -227,8 +239,20 @@ define([
             $scope.reply.PARENT_NO = item.NO;
             $scope.reply.LEVEL = parseInt(item.LEVEL)+1;
             $scope.reply.REPLY_NO = parseInt(item.REPLY_NO)+1;
-            $scope.reply.TARGET_GB = "BOARD";
             $scope.reply.TARGET_NO = $stateParams.id;
+            if ($stateParams.menu == 'experiencereview') {
+                $scope.item.TARGET_GB = 'EXPERIENCE';
+            } else if ($stateParams.menu == 'productreview') {
+                $scope.item.TARGET_GB = 'PRODUCT';
+            } else if ($stateParams.menu == 'angereview') {
+                $scope.item.TARGET_GB = 'ANGE';
+            } else if ($stateParams.menu == 'samplereview') {
+                $scope.item.TARGET_GB = 'SAMPLE';
+            } else if ($stateParams.menu == 'samplepackreview') {
+                $scope.search['TARGET_GB'] = 'SAMPLEPACK';
+            }else if ($stateParams.menu == 'eventreview') {
+                $scope.item.TARGET_GB = 'EVENT';
+            }
 
             $scope.REPLY_COMMENT = $scope.reply;
 
@@ -347,7 +371,7 @@ define([
             $scope.search['TARGET_NO'] = item.NO;
 
             // $scope.search['USER_UID'] = 'test'; 세션 uid를 저장해야함
-            $scope.search['REG_UID'] = 'hong'; // 테스트
+            //$scope.search['REG_UID'] = 'hong'; // 테스트
 
             $scope.getList('com/scrap', 'check', {}, $scope.search, false)
                 .then(function(data){
@@ -363,9 +387,9 @@ define([
                         $scope.scrap.TARGET_GB = item.BOARD_GB;
 
                         // [테스트] 등록자아이디, 등록자명, 닉네임 은 세션처리 되면 삭제할예정
-                        $scope.scrap.REG_UID = 'hong';
+                       /* $scope.scrap.REG_UID = 'hong';
                         $scope.scrap.NICK_NM = '므에에롱';
-                        $scope.scrap.REG_NM = '홍길동';
+                        $scope.scrap.REG_NM = '홍길동';*/
 
                         $scope.insertItem('com/scrap', 'item', $scope.scrap, false)
                             .then(function(){
@@ -390,19 +414,14 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.addHitCnt)
-            .then($scope.getPeopleBoard)
-            .then($scope.getPreBoard)
-            .then($scope.getPreBoard)
             .catch($scope.reportProblems);
 
-/*        $scope.init();
+        $scope.init();
         $scope.addHitCnt();
         $scope.getPeopleBoard();
         $scope.getPreBoard();
         $scope.getNextBoard();
-        $scope.getPeopleReplyList();*/
+        $scope.getPeopleReplyList();
 
     }]);
 });
