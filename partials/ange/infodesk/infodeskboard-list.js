@@ -62,7 +62,7 @@ define([
                 $scope.menu = "qna";
                 $scope.VIEW_ROLE = 'CMS_ADMIN';
             } else if($stateParams.menu == 'myqna') {
-                $scope.community_request = "내 질문과 답변";
+                $scope.community = "내 질문과 답변";
                 $scope.menu = "myqna";
                 $scope.VIEW_ROLE = 'CMS_ADMIN';
             }
