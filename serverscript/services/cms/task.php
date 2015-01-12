@@ -243,7 +243,7 @@
                                 CMS_TASK T
                                 INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
                                 LEFT OUTER JOIN CMS_SERIES S ON S.NO = P.SERIES_NO
-                                LEFT OUTER JOIN ANGE_USER_LIKE L ON T.NO = L.TARGET_NO AND L.TARGET_GB = 'CONTENT' AND L.USER_ID = '".$_SESSION['uid']."'
+                                LEFT OUTER JOIN ANGE_LIKE L ON T.NO = L.TARGET_NO AND L.TARGET_GB = 'CONTENT' AND L.REG_UID = '".$_SESSION['uid']."'
                                 ".$from_category."
                             WHERE
                                 1 = 1
@@ -304,7 +304,7 @@
 
                     if ($_search[CONETNT]) {
                         $sql = "SELECT
-                                    NO, SUPER_NO, PHASE, VERSION, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                                    NO, SUPER_NO, PHASE, VERSION, SUMMERY, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                                     CURRENT_FL, MODIFY_FL, HIT_CNT, SCRAP_CNT, TASK_NO
                                 FROM
                                     CMS_CONTENT
