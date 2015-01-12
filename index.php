@@ -115,6 +115,7 @@
 <noscript><link rel="stylesheet" href="css/file-upload/jquery.fileupload-noscript.css"></noscript>
 <noscript><link rel="stylesheet" href="css/file-upload/jquery.fileupload-ui-noscript.css"></noscript>
 
+<link rel="stylesheet" type="text/css" href="css/article.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_storylist.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_people_main.css" />

@@ -73,17 +73,21 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             } else if($_type == 'list'){
 
                 // 검색조건 추가해야함
+                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+                    $search_where .= "AND CB.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                }
 
                 $sql = " SELECT TOTAL_COUNT, @RNUM := @RNUM+1 AS RNUM,
-                             TARGET_NO, NO, SUBJECT, BOARD_GB, REG_UID
+                             TARGET_NO, NO, SUBJECT, BOARD_GB, REG_UID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NICK_NM
                     FROM
                     (
-                        SELECT CS.TARGET_NO, CB.NO, CB.SUBJECT, CB.BOARD_GB, CS.REG_UID
+                        SELECT CS.TARGET_NO, CB.NO, CB.SUBJECT, CB.BOARD_GB, CS.REG_UID, CB.REG_DT, CB.NICK_NM
                         FROM COM_SCRAP CS
                         INNER JOIN COM_BOARD CB
                         ON CS.TARGET_NO = CB.NO
                         WHERE 1=1
-                         AND CS.REG_UID = '".$_search[REG_UID]."'
+                         AND CS.REG_UID = '".$_SESSION['uid']."'
+                         ".$search_where."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
                     (
@@ -93,7 +97,8 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                          INNER JOIN COM_BOARD CB
                          ON CS.TARGET_NO = CB.NO
                          WHERE 1=1
-                         AND CS.REG_UID = '".$_search[REG_UID]."'
+                         AND CS.REG_UID = '".$_SESSION['uid']."'
+                         ".$search_where."
                     ) CNT
                 ";
 

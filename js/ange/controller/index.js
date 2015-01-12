@@ -85,6 +85,12 @@ define([
 
     // 고객센터
     '../../../partials/ange/infodesk/infodeskhome',
+    '../../../partials/ange/infodesk/infodeskboard-list',
+    '../../../partials/ange/infodesk/infodeskboard-view',
+    '../../../partials/ange/infodesk/infodeskboard-edit',
+    '../../../partials/ange/infodesk/infodeskqna-list',
+    '../../../partials/ange/infodesk/infodeskqna-view',
+    '../../../partials/ange/infodesk/infodeskqna-edit',
 
     // 회원가입
     '../../../partials/ange/join/joinsignon',
