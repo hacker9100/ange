@@ -304,7 +304,7 @@
 
                     if ($_search[CONETNT]) {
                         $sql = "SELECT
-                                    NO, SUPER_NO, PHASE, VERSION, SUMMERY, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                                    NO, SUPER_NO, PHASE, VERSION, SUMMARY, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                                     CURRENT_FL, MODIFY_FL, HIT_CNT, SCRAP_CNT, TASK_NO
                                 FROM
                                     CMS_CONTENT
