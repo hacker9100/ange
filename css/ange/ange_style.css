@@ -1012,6 +1012,22 @@ a.lnb_handle_close:hover {
     background-repeat: no-repeat;
 }
 
+.ADbanner_image {
+    float:left;
+    width:100%;
+    cursor: pointer;
+    padding:0px;
+}
+
+.ADbanner_image img {
+    width:100%;
+    margin:0px;
+    padding:0px;
+    border:1px solid #d7d7d7;
+    border-radius: 12px;
+}
+
+
 .shadowed {
     -webkit-box-shadow: 0 2px 8px #AAA;
     -moz-box-shadow: 0 2px 8px #AAA;
@@ -1035,6 +1051,12 @@ a.lnb_handle_close:hover {
     width:210px;
     margin-bottom: 10px;
     height:55px;
+}
+
+.inven_themeup {
+    float:left;
+    width:100%;
+    padding: 25px 0;
 }
 
 
