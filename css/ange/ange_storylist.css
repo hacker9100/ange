@@ -163,6 +163,7 @@
 	font-size: 0.86em;
 	color: #333;
 	margin: 0;
+    width:100%;
     word-break: break-all;
     word-wrap: break-word;
     border:1px solid transparent;
@@ -173,12 +174,15 @@
 }
 
 .pin .storybodytxt .story_bubbletitle {
-	float:left; 
+	float:left;
 	font-weight:700; 
 	font-size: 1.18em;
 	margin-bottom:5px;
-	width:100%; 
+	width:100%;
 	line-height:1.14em;
+    overflow-x:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 
 a.icon_like {
