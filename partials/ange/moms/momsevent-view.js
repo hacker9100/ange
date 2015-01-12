@@ -198,15 +198,12 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.addHitCnt)
-            .then($scope.getMomsEvent)
-            .then($scope.getExperienceReviewList)
             .catch($scope.reportProblems);
 
-        /*        $scope.init();
+         $scope.init();
          $scope.addHitCnt();
-         $scope.getMomsEvent();*/
+         $scope.getMomsEvent();
+         $scope.getExperienceReviewList();
 
 
 

@@ -59,7 +59,7 @@
 
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.NICK_NM,  U.PASSWORD, U.PHONE_1, U.PHONE_2, U.EMAIL, U.ADDR, U.ADDR_DETAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
-                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
+                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -123,7 +123,7 @@
                             FROM
                                 ANGE_USER_BABY
                             WHERE
-                                USER_ID = ".$_key."
+                                USER_ID = '".$_key."'
                             ";
 
                     $baby_data = $_d->getData($sql);
@@ -187,6 +187,8 @@
                     $_SESSION['addr_detail'] = $data['ADDR_DETAIL'];
                     $_SESSION['phone1'] = $data['PHONE1'];
                     $_SESSION['phone2'] = $data['PHONE2'];
+                    $_SESSION['pregnent_fl'] = $data['PREGNENT_FL'];
+                    $_SESSION['baby_birth_dt'] = $data['BABY_BIRTH_DT'];
                     $_SESSION['timeout'] = time();
 
                     $_d->dataEnd2($data);
@@ -207,6 +209,12 @@
                         unset($_SESSION['name']);
                         unset($_SESSION['role']);
                         unset($_SESSION['menu_role']);
+                        unset($_SESSION['addr']);
+                        unset($_SESSION['addr_detail']);
+                        unset($_SESSION['phone1']);
+                        unset($_SESSION['phone2']);
+                        unset($_SESSION['pregnent_fl']);
+                        unset($_SESSION['baby_birth_dt']);
                         unset($_SESSION['timeout']);
                     }
                 } else {
@@ -218,6 +226,14 @@
                         $sess['USER_NM'] = $_SESSION['name'];
                         $sess['ROLE_ID'] = $_SESSION['role'];
                         $sess['MENU_ROLE'] = $_SESSION['menu_role'];
+
+                        $sess['ADDR'] = $_SESSION['ADDR'];
+                        $sess['ADDR_DETAIL'] = $_SESSION['ADDR_DETAIL'];
+                        $sess['PHONE1'] = $_SESSION['PHONE1'];
+                        $sess['PHONE2'] = $_SESSION['PHONE2'];
+                        $sess['PREGNENT_FL'] = $_SESSION['PREGNENT_FL'];
+                        $sess['BABY_BIRTH_DT'] = $_SESSION['BABY_BIRTH_DT'];
+
 //                    $sess['EMAIL'] = $_SESSION['email'];
                         $_SESSION['timeout'] = time();
                     }
@@ -229,6 +245,13 @@
                         $sess['USER_NM'] = 'Guest';
                         $sess['ROLE_ID'] = '';
                         $sess['MENU_ROLE'] = '';
+
+                        $sess['ADDR']= '';
+                        $sess['ADDR_DETAIL'] = '';
+                        $sess['PHONE1'] = '';
+                        $sess['PHONE2'] = '';
+                        $sess['PREG_FL'] = '';
+                        $sess['BABY_BIRTH_DT'] = '';
 //                    $sess['EMAIL'] = '';
                     }
                 }

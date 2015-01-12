@@ -129,8 +129,12 @@
                                                 임신여부
                                             </td>
                                             <td>
-                                                <span style="display: none;">해당없음</span>
-                                                <span style="display: block;">임신 중 <small class="table_gray">(<strong>2015-12-25</strong> 출산예정)</span></small>
+                                                <div ng-show="preg_fl == 'N'">
+                                                    <span style="display: block;">해당없음</span>
+                                                </div>
+                                                <div ng-show="preg_fl == 'Y'">
+                                                    <span style="display: block;">임신 중 <small class="table_gray">(<strong>{{baby_birth_dt}}</strong> 출산예정)</small></span>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
