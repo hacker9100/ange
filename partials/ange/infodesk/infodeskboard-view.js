@@ -68,7 +68,7 @@ define([
                 $scope.menu = "qna";
                 $scope.VIEW_ROLE = 'CMS_ADMIN';
             } else if($stateParams.menu == 'myqna') {
-                $scope.community_request = "내 질문과 답변";
+                $scope.community = "내 질문과 답변";
                 $scope.menu = "myqna";
                 $scope.VIEW_ROLE = 'CMS_ADMIN';
             }
@@ -124,6 +124,12 @@ define([
                         var files = data.FILES;
                         for(var i in files) {
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                        }
+
+                        if(data.REPLY_YN == 'N'){
+                            $scope.item.BODY;
+                        } else {
+                            $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
                         }
 
                         $scope.search.TARGET_NO = $stateParams.id;

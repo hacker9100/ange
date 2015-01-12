@@ -139,6 +139,14 @@
                     $search_common .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
                 }
 
+                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+                    $search_common .= "AND B.REG_UID = '".$_search[REG_UID]."' ";
+                }
+
+                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+                    $search_where .= "AND REG_UID = '".$_search[REG_UID]."' ";
+                }
+
                 if (isset($_search[PHOTO_TYPE]) && $_search[PHOTO_TYPE] != "" && $_search[PHOTO_TYPE] != "ALL") {
                     $search_common .= "AND PHOTO_TYPE = '".$_search[PHOTO_TYPE]."'
                                     AND PHOTO_GB = '".$_search[PHOTO_GB]."'
@@ -191,7 +199,7 @@
                                 1=1
                                 AND NOTICE_FL = 'N'
                                 AND PARENT_NO = 0
-                                ".$search_where;
+                                ".$search_common;
 
                 if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] == "Y") {
                     $sql .= $select1;
@@ -209,7 +217,7 @@
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                COM_BOARD
+                                COM_BOARD B
                             WHERE
                                 1=1
                                 ".$search_where."
