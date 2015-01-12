@@ -78,16 +78,52 @@ define([
 
         $scope.click_momseventcomp = function () {
 
-            $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                .then(function(){
+            if($("#credit_agreement_Y").is(":checked")){
+                $scope.item.CREDIT_FL = 'Y';
+            }else{
+                alert('제 3자 정보제공에 동의 하셔야 상품 발송이 가능합니다.');
+                return;
+            }
 
-                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+            $scope.search.REG_UID = $scope.uid;
+            $scope.search.BOARD_NO = $scope.item.NO;
 
-                    if ($stateParams.menu == 'experienceprocess') {
-                        $location.url('/moms/experienceprocess/list');
-                    } else if($stateParams.menu == 'experiencepast') {
-                        $location.url('/moms/experiencepast/list');
+            $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var comp_cnt = data[0].COMP_CNT;
+
+                    if (comp_cnt == 1) {
+
+                        $scope.item.NO = data[0].NO;
+
+                        $scope.updateItem('ange/comp', 'item', $scope.item.NO, $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+
+                                if ($stateParams.menu == 'eventprocess') {
+                                    $location.url('/moms/eventprocess/list');
+                                } else if($stateParams.menu == 'eventperformance') {
+                                    $location.url('/moms/eventperformance/list');
+                                }
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    } else {
+
+                        $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+
+                                if ($stateParams.menu == 'eventprocess') {
+                                    $location.url('/moms/eventprocess/list');
+                                } else if($stateParams.menu == 'eventperformance') {
+                                    $location.url('/moms/eventperformance/list');
+                                }
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
+
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }

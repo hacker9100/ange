@@ -173,10 +173,10 @@ define([
                 $rootScope.email = null;
 
 
-                $rootScope.addr = session.ADDR;
-                $rootScope.addr_detail = session.ADDR_DETAIL;
-                $rootScope.phone1 = session.PHONE1;
-                $rootScope.phone2 = session.PHONE2;
+                $rootScope.addr = null;
+                $rootScope.addr_detail = null;
+                $rootScope.phone1 = null;
+                $rootScope.phone2 = null;
 //                $location.path("/signin");
 //                throw( new String('세션이 만료되었습니다.') );
 //            throw( new Error("세션이 만료되었습니다.") );

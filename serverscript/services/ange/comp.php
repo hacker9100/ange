@@ -115,15 +115,27 @@ switch ($_method) {
                              ".$search_where."
                         ) CNT
                         ";
-        }
+            $data = $_d->sql_query($sql);
+            if ($_d->mysql_errno > 0) {
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            } else {
+                $_d->dataEnd($sql);
+            }
+        } else if ($_type == "check") {
 
-        $data = $_d->sql_query($sql);
-        if ($_d->mysql_errno > 0) {
-            $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-        } else {
-            $_d->dataEnd($sql);
-        }
+            $sql = "SELECT COUNT(*) AS COMP_CNT, NO
+                        FROM ANGE_COMP
+                        WHERE BOARD_NO = ".$_search[BOARD_NO]."
+                          AND USER_ID = '".$_search[REG_UID]."'";
 
+            $data = $_d->sql_query($sql);
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
+
+        }
         break;
 
     case "POST":
@@ -149,7 +161,9 @@ switch ($_method) {
                             CHILD_CNT,
                             PHONE1,
                             PHONE2,
-                            PRODUCT
+                            PRODUCT,
+                            CREDIT_FL,
+                            REASON
                         ) VALUES (
                              '".$_model[NO]."'
                             , '".$_SESSION['uid']."'
@@ -168,6 +182,8 @@ switch ($_method) {
                             , '".$_SESSION['phone1']."'
                             , '".$_SESSION['phone2']."'
                             ,'".$_model[PRODUCT]."'
+                            ,'".$_model[CREDIT_FL]."'
+                            ,'".$_model[REASON]."'
                         )";
 
         $_d->sql_query($sql);
@@ -209,11 +225,10 @@ switch ($_method) {
                     }*/
         $sql = "UPDATE ANGE_COMP
                             SET
-                                BOARD_NO = '".$_model[SECTION_NM]."'
-                                ,USER_ID = '".$_SESSION['uid']."'
+                                USER_ID = '".$_SESSION['uid']."'
                                 ,NICK_NM = '".$_SESSION['nick']."'
                                 ,USER_NM = '".$_SESSION['name']."'
-                                ,PREG_FL = '".($_model[PREG_FL] == "true" ? "Y" : "N")."'
+                                ,PREG_FL = '".$_model[PREG_FL]."'
                                 ,BABY_MONTH = '".$_model[BABY_MONTH]."'
                                 ,BABY_AGE = '".$_model[BABY_AGE]."'
                                 ,BLOG_URL = '".$_model[BLOG_URL]."'
@@ -224,6 +239,8 @@ switch ($_method) {
                                 ,CHILD_CNT  = '".$_model[CHILD_CNT]."'
                                 ,PHONE1  = '".$_SESSION['phone1']."'
                                 ,PHONE2  = '".$_SESSION['phone2']."'
+                                ,CREDIT_FL = '".$_model['CREDIT_FL']."'
+                                ,REASON = '".$_model['REASON']."'
                             WHERE
                                 NO = ".$_key."
 

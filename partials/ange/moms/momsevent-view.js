@@ -13,17 +13,28 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsevent-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
+        $(document).ready(function(){
+
+            $('input:radio[name="credit_agreement"]:input[value="Y"]').attr("checked", true);
+
+            $("#credit_agreement_Y").click(function(){
+                if(!$("#credit_agreement_Y").is(":checked")){
+                    $scope.item.CREDIT_FL = "Y";
+                }
+            });
+
+            $("#credit_agreement_N").click(function(){
+                if(!$("#credit_agreement_N").is(":checked")){
+                    $scope.item.CREDIT_FL = "N";
+                }
+            });
+        });
 
         $scope.queue = [];
         $scope.search = {};
 
         // 초기화
         $scope.init = function(session) {
-            if ($stateParams.menu == 'eventprocess') {
-                $scope.community = "진행중인 이벤트";
-            } else if ($stateParams.menu == 'eventperformance') {
-                $scope.community = "공연/체험 이벤트";
-            }
 
             var date = new Date();
 
@@ -35,6 +46,15 @@ define([
             var today = year+'-'+mm+'-'+dd;
 
             $scope.todayDate = today;
+
+            if ($stateParams.menu == 'eventprocess') {
+                $scope.community = "진행중인 이벤트";
+                $scope.search.EVENT_GB = "EVENT";
+            } else if ($stateParams.menu == 'eventperformance') {
+                $scope.community = "공연/체험 이벤트";
+                $scope.search.EVENT_GB = "EVENT";
+                $scope.search.PERFORM_FL = "Y";
+            }
         };
 
         $scope.click_focus = function(){
@@ -58,7 +78,6 @@ define([
                 return $scope.getItem('ange/event', 'item', $stateParams.id, {}, false)
                     .then(function(data){
 
-                        $scope.item = data;
                         var files = data.FILES;
 
                         //console.log(JSON.stringify(data));
@@ -68,6 +87,14 @@ define([
                                 data.MAIN_FILE = img;
                         }
 
+                        $scope.item = data;
+                        $scope.item.BOARD_NO = data.BOARD_NO;
+
+                        if($scope.item.END_YMD >= $scope.todayDate){
+                            $scope.showForm = "compForm";
+                        }else{
+                            $scope.showForm = "reviewForm";
+                        }
 
                         $scope.search.TARGET_NO = $stateParams.id;
                     })
@@ -77,16 +104,52 @@ define([
 
         $scope.click_momseventcomp = function () {
 
-            $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                .then(function(){
+            if($("#credit_agreement_Y").is(":checked")){
+                $scope.item.CREDIT_FL = 'Y';
+            }else{
+                alert('제 3자 정보제공에 동의 하셔야 상품 발송이 가능합니다.');
+                return;
+            }
 
-                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+            $scope.search.REG_UID = $scope.uid;
+            $scope.search.BOARD_NO = $scope.item.NO;
 
-                    if ($stateParams.menu == 'eventprocess') {
-                        $location.url('/moms/eventprocess/list');
-                    } else if($stateParams.menu == 'eventperformance') {
-                        $location.url('/moms/eventperformance/list');
+            $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var comp_cnt = data[0].COMP_CNT;
+
+                    if (comp_cnt == 1) {
+
+                        $scope.item.NO = data[0].NO;
+
+                        $scope.updateItem('ange/comp', 'item', $scope.item.NO, $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+
+                                if ($stateParams.menu == 'eventprocess') {
+                                    $location.url('/moms/eventprocess/list');
+                                } else if($stateParams.menu == 'eventperformance') {
+                                    $location.url('/moms/eventperformance/list');
+                                }
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    } else {
+
+                        $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+
+                                if ($stateParams.menu == 'eventprocess') {
+                                    $location.url('/moms/eventprocess/list');
+                                } else if($stateParams.menu == 'eventperformance') {
+                                    $location.url('/moms/eventperformance/list');
+                                }
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
+
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
@@ -119,12 +182,7 @@ define([
 
                         }
                     }
-
-
                     $scope.reviewList = data;
-
-
-
                 })
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.reviewList = "";});
         }
@@ -132,17 +190,7 @@ define([
         // 조회 화면 이동
         $scope.click_showViewReview = function (key) {
 
-            if ($stateParams.menu == 'experiencereview') {
-                $location.url('/moms/experiencereview/view/'+key);
-            } else if ($stateParams.menu == 'productreview') {
-                $location.url('/moms/productreview/view/'+key);
-            } else if ($stateParams.menu == 'angereview') {
-                $location.url('/moms/angereview/view/'+key);
-            } else if ($stateParams.menu == 'samplereview') {
-                $$location.url('/moms/samplereview/view/'+key);
-            } else if ($stateParams.menu == 'samplepackreview') {
-                $location.url('/moms/samplepackreview/view/'+key);
-            }else if ($stateParams.menu == 'eventreview') {
+            if ($stateParams.menu == 'eventprocess' || $stateParams.menu == 'eventperformance') {
                 $location.url('/moms/eventreview/view/'+key);
             }
 

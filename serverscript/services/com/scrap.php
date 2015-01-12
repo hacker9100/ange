@@ -97,18 +97,18 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     ) CNT
                 ";
 
-                /*$data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
+                $data = $_d->sql_query($sql);
+                if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
+                }else{
                     $_d->dataEnd($sql);
-                }*/
+                }
             }  else if ($_type == "check") {
 
                 $sql = "SELECT COUNT(*) AS SCRAP_CNT
                         FROM COM_SCRAP
                         WHERE TARGET_NO = ".$_search[TARGET_NO]."
-                          AND REG_UID = '".$_search[REG_UID]."'";
+                          AND REG_UID = '".$_SESSION['uid']."'";
 
                 $data = $_d->sql_query($sql);
                 if($_d->mysql_errno > 0){
@@ -132,9 +132,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                         ) VALUES (
                              ".$_model[TARGET_NO]."
                             , '".$_model[TARGET_GB]."'
-                            , '".$_model[REG_UID]."'
-                            , '".$_model[NICK_NM]."'
-                            , '".$_model[REG_NM]."'
+                            , '".$_SESSION['uid']."'
+                            , '".$_SESSION['nick']."'
+                            , '".$_SESSION['name']."'
                             , SYSDATE()
                         )";
 
