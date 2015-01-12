@@ -257,3 +257,24 @@ a.icon_like:hover, a.icon_like_on:hover {
 	border:2px solid #cce8f0;
 	border-radius: 12px;
 }
+
+
+.story_plus_thumb {
+    width:80%;
+    margin:0px auto;
+    padding-bottom:10px;
+    margin-bottom:15px;
+    border-bottom:1px dashed #ddd;
+    cursor:pointer;
+}
+.story_plus_pic {
+    width:100%;
+    border:1px solid #ddd;
+}
+.story_plus_title {
+    font-size:0.86em;
+    padding:5px 0;
+}
+.story_plus_series {
+    font-size:0.78em;
+}

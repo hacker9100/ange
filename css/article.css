@@ -772,10 +772,12 @@ preface {
     width:100%;
     color: #51A3DF;
     text-align: justify;
-    word-break: break-all;
+    word-break: keep-all;
     word-wrap: break-word;
-    /* white-space: pre; */
+    /*
+    white-space: pre;
     white-space: pre-wrap;
+    */
     line-height: 14pt;
     margin-bottom: 39px;
 }
@@ -805,10 +807,12 @@ bodyscript {
     float:left;
     width:100%;
     text-align: justify;
-    word-break: break-all;
+    word-break: keep-all;
     word-wrap: break-word;
+    /*
     white-space: pre;
     white-space: pre-wrap;
+    */
     margin-bottom: 50px;
     line-height: 17pt;
     /* padding: 0 10px 0 10px; */
@@ -822,10 +826,12 @@ byline {
     font-size: 9pt;
     line-height:14pt;
 
-    word-break: break-all;
+    word-break: keep-all;
     word-wrap: break-word;
+    /*
     white-space: pre;
     white-space: pre-wrap;
+    */
     margin: 10px 0 25px 0;
 }
 
@@ -845,10 +851,12 @@ tips {
     padding: 20px 35px 30px 35px;
     line-height: 15pt;
     text-align: justify;
-    word-break: break-all;
+    word-break: keep-all;
     word-wrap: break-word;
+    /*
     white-space: pre;
     white-space: pre-wrap;
+    */
 }
 
 .tip_title {
