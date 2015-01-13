@@ -93,6 +93,7 @@ define([
         // 게사판 저장 버튼 클릭
         $scope.click_savePeopleClinic = function () {
             $scope.item.SYSTEM_GB = 'ANGE';
+            $scope.item.BOARD_GB = 'CLINIC';
             $scope.item.FILES = $scope.queue;
 
             for(var i in $scope.item.FILES) {
