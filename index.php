@@ -60,12 +60,12 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, ROW_ORD
+                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, COLUMN_ORD, ROW_ORD
                 FROM
                     COM_SUB_MENU
                 WHERE
                     MENU_URL = '".$row[MENU_URL]."'
-                ORDER BY ROW_ORD ASC
+                ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
                 ";
 
         $sub_menu_data = $_d->getData($sql);
@@ -115,6 +115,7 @@
 <noscript><link rel="stylesheet" href="css/file-upload/jquery.fileupload-noscript.css"></noscript>
 <noscript><link rel="stylesheet" href="css/file-upload/jquery.fileupload-ui-noscript.css"></noscript>
 
+<link rel="stylesheet" type="text/css" href="css/article.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_storylist.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_people_main.css" />

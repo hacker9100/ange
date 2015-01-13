@@ -15,7 +15,14 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+            // ange-portlet-slide-exprience
+            $scope.option_r1_c1 = {title: '롤링 체험단', api:'ange/event', size: 5, id: 'experience', type: 'experience', gb: 0, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
+            // ange-portlet-slide-exprience
+            $scope.option_r1_c2 = {title: '롤링 이벤트', api:'ange/event', size: 5, id: 'event', type: 'event', gb: 0, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
+            // ange-portlet-channel-list
+            $scope.option_r2_c1 = {title: '앙쥬후기', api:'ange/review', size: 10, channel: "moms", type: 'review', url: '/moms/board', image: false, head: true, date: true, nick: false, defIdx: 3, tab: [{no: 'SAMPLE', menu: '/moms/samplereview', name: '샘플팩'}, {no: 'EXPERIENCE', menu: '/moms/experiencereview', name: '이벤트/체험단'}, {no: 'PRODUCT', menu: '/moms/productreview', name: '상품'}, {no: 'ANGE', menu: '/moms/angereview', name: '앙쥬'}]};
         };
 
         /********** 이벤트 **********/

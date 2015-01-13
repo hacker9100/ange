@@ -60,12 +60,12 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_URL, SUB_MENU_GB, API, CSS, SORT_IDX
+                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, COLUMN_ORD, ROW_ORD
                 FROM
                     COM_SUB_MENU
                 WHERE
                     MENU_URL = '".$row[MENU_URL]."'
-                ORDER BY ROW_ORD ASC
+                ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
                 ";
 
         $sub_menu_data = $_d->getData($sql);

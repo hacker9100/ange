@@ -76,16 +76,16 @@
 
             if (isset($_model[LIKE_FL]) && $_model[LIKE_FL] != "") {
                 if ($_model[LIKE_FL] == "N") {
-                    $sql = "INSERT INTO ANGE_USER_LIKE
+                    $sql = "INSERT INTO ANGE_LIKE
                             (
-                                USER_ID,
                                 TARGET_NO,
                                 TARGET_GB,
+                                REG_UID,
                                 REG_DT
                             ) VALUES (
-                                '".$_SESSION['uid']."',
                                 '".$_model[TARGET_NO]."',
                                 '".$_model[TARGET_GB]."',
+                                '".$_SESSION['uid']."',
                                 SYSDATE()
                             )";
 
@@ -95,6 +95,47 @@
                     if($_d->mysql_errno > 0) {
                         $err++;
                         $msg = $_d->mysql_error;
+                    }
+
+                    if ($_model[TARGET_GB] == "CONTENT") {
+                        $sql = "SELECT
+                                    COUNT(*)
+                                FROM
+                                    ANGE_SCRAP
+                                WHERE
+                                    REG_UID = '".$_SESSION['uid']."'
+                                    AND TARGET_NO = '".$_model[TARGET_NO]."'
+                                    AND TARGET_GB = '".$_model[TARGET_GB]."'
+                                ";
+
+                        $result = $_d->sql_query($sql);
+                        $data  = $_d->sql_fetch_array($result);
+
+                        if (!$data) {
+                            $sql = "INSERT INTO COM_SCRAP
+                                    (
+                                        TARGET_NO,
+                                        TARGET_GB,
+                                        REG_UID,
+                                        NICK_NM,
+                                        REG_NM,
+                                        REG_DT
+                                    ) VALUES (
+                                         ".$_model[TARGET_NO]."
+                                        , '".$_model[TARGET_GB]."'
+                                        , '".$_SESSION['uid']."'
+                                        , '".$_SESSION['nick']."'
+                                        , '".$_SESSION['name']."'
+                                        , SYSDATE()
+                                    )";
+
+                            $_d->sql_query($sql);
+
+                            if($_d->mysql_errno > 0) {
+                                $err++;
+                                $msg = $_d->mysql_error;
+                            }
+                        }
                     }
 
                     $sql = "UPDATE ".$update_table." SET
@@ -109,9 +150,9 @@
                         $msg = $_d->mysql_error;
                     }
                 } else {
-                    $sql = "DELETE FROM ANGE_USER_LIKE
+                    $sql = "DELETE FROM ANGE_LIKE
                             WHERE
-                                USER_ID = '".$_SESSION['uid']."'
+                                REG_UID = '".$_SESSION['uid']."'
                                 AND TARGET_NO = '".$_model[TARGET_NO]."'
                                 AND TARGET_GB = '".$_model[TARGET_GB]."'
                             ";
@@ -123,6 +164,38 @@
                         $err++;
                         $msg = $_d->mysql_error;
                     }
+
+                    if ($_model[TARGET_GB] == "CONTENT") {
+//                        $sql = "SELECT
+//                                    COUNT(*)
+//                                FROM
+//                                    ANGE_LIKE
+//                                WHERE
+//                                    REG_UID = '".$_SESSION['uid']."'
+//                                    AND TARGET_NO = '".$_model[TARGET_NO]."'
+//                                    AND TARGET_GB = '".$_model[TARGET_GB]."'
+//                                ";
+//
+//                        $result = $_d->sql_query($sql);
+//                        $data  = $_d->sql_fetch_array($result);
+//
+//                        if (!$data) {
+                            $sql = "DELETE FROM COM_SCRAP
+                                    WHERE
+                                        REG_UID = '".$_SESSION['uid']."'
+                                        AND TARGET_NO = '".$_model[TARGET_NO]."'
+                                        AND TARGET_GB = '".$_model[TARGET_GB]."'
+                                    ";
+
+                            $_d->sql_query($sql);
+                            $no = $_d->mysql_insert_id;
+
+                            if($_d->mysql_errno > 0) {
+                                $err++;
+                                $msg = $_d->mysql_error;
+                            }
+                        }
+//                    }
 
                     $sql = "UPDATE ".$update_table." SET
                                     LIKE_CNT = LIKE_CNT - 1
@@ -160,19 +233,8 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "UPDATE COM_REPLY
+            $sql = "UPDATE COM_
                     SET
-                        PARENT_NO = '".$_model[SUBJECT]."',
-                        REPLY_NO = '".$_model[SUBJECT]."',
-                        REPLY_GB = '".$_model[SUBJECT]."',
-                        COMMENT = '".$_model[SUBJECT]."',
-                        #REG_UID = '".$_SESSION['uid']."',
-                        #NICK_NM = '".$_SESSION['nick']."',
-                        #REG_NM = '".$_SESSION['name']."',
-                        #REG_DT = SYSDATE(),
-                        LIKE_CNT = '".$_model[SUBJECT]."',
-                        TARGET_NO = '".$_model[SUBJECT]."',
-                        TARGET_GB = '".$_model[SUBJECT]."'
                     WHERE
                         NO = ".$_key."
                     ";

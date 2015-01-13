@@ -121,7 +121,9 @@ define(['./directives'], function (directives) {
 
                 /********** 이벤트 **********/
                 $scope.click_selectMenu = function(url, link) {
-                    $location.url(url);
+                    if (link != 'N') {
+                        $location.url(url);
+                    }
                 };
 
                 $scope.click_selectCategory = function(idx, category) {

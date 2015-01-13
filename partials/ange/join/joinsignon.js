@@ -26,7 +26,7 @@ define([
         $scope.checkCert = false;
 
         // 진행 단계
-        $scope.step = '03';
+        $scope.step = '01';
 
         // 이용약관 체크
         $scope.checkAll = false;
@@ -282,13 +282,13 @@ define([
             $scope.user.BABY = $scope.babies;
             $scope.user.BLOG = $scope.blog;
 
-            if (!$scope.checkID) {
+            if (!$scope.availableID) {
                 $('#user_id').focus();
                 dialogs.notify('알림', '아이디를 확인해주세요.', {size: 'md'});
                 return;
             }
 
-            if (!$scope.checkPW) {
+            if (!$scope.availablePW) {
                 $('#password').focus();
                 dialogs.notify('알림', '패스워드를 확인해주세요.', {size: 'md'});
                 return;
@@ -300,7 +300,7 @@ define([
                 return;
             }
 
-            if (!$scope.checkNick) {
+            if (!$scope.availableNick) {
                 $('#nick_nm').focus();
                 dialogs.notify('알림', '닉네임을 확인해주세요.', {size: 'md'});
                 return;
@@ -367,6 +367,8 @@ define([
         $scope.click_prevStep = function () {
             if ($scope.step == '02') {
                 $scope.step = '01'
+            } else if ($scope.step == '03') {
+                $scope.step = '02'
             }
         };
 
@@ -386,6 +388,11 @@ define([
                 $scope.step = '02';
             } else if ($scope.step == '02') {
                 $scope.saveUser();
+
+                if (!checkSave) {
+//                    dialogs.notify('알림', '입력 정보를 다시 확인해 주세요.', {size: 'md'});
+                    return;
+                }
 
                 $scope.step = '03';
             } else if ($scope.step == '03') {
