@@ -13,6 +13,53 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsreview-edit', ['$scope','$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD, $http) {
 
+
+        $(document).ready(function(){
+            $("#general").click(function(){
+                //클릭되었으면
+                if($("#general").is(":checked")){
+                    $('#menu_select').removeAttr('disabled');
+
+/*                    for(var i=0; i < $scope.event.length; i++){
+                        $('#value_select'+i).attr('disabled', 'disabled');
+                    }*/
+                    //클릭이 안되있으면
+                }else{
+                    $('#menu_select').attr('disabled', 'disabled');
+                }
+            })
+
+            $("#value_select").click(function(){
+
+                if(!$("#value_select").is(":checked")){
+                    $('#menu_select').attr('disabled', 'disabled');
+                }else{
+                    $('#menu_select').removeAttr('disabled');
+                }
+            });
+
+        });
+
+         $(function(){
+             $("#general").click(function(){
+                 //클릭되었으면
+                 if($("#general").is(":checked")){
+                     $('#menu_select').removeAttr('disabled');
+                     //클릭이 안되있으면
+                 }else{
+                     $('#menu_select').attr('disabled', 'true');
+                 }
+             })
+
+             $("#value_select").click(function(){
+                 if(!$("#value_select").is(":checked")){
+                     $('#menu_select').attr('disabled', 'disabled');
+                 }else{
+                     $('#menu_select').removeAttr('disabled');
+                 }
+             });
+         });
+
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
@@ -114,7 +161,7 @@ define([
             }
 
 
-            if ($stateParams.menu == 'experiencereview') {
+/*            if ($stateParams.menu == 'experiencereview') {
 
                 $scope.search.EVENT_GB = 'EXPERIENCE';
                 // 이벤트 및 서평단 / 체험단 셀렉트 박스 셋팅
@@ -136,8 +183,28 @@ define([
                         $scope.CNT = data[0].TOTAL_CNT;
                     })
                     .catch(function(error){alert(error)});
-            }
+            }*/
 
+            $scope.search.USER_ID = true;
+
+            if ($stateParams.id != 0) {
+                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+                    .then(function(data){
+                        $scope.event = data;
+                        var total_cnt = data[0].TOTAL_COUNT;
+                        $scope.total_cnt = total_cnt;
+                    })
+                    .catch(function(error){$scope.event = ""; $scope.total_cnt=0;});
+            }else{
+                $scope.search.REVIEW_FL = true;
+                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+                    .then(function(data){
+                        $scope.event = data;
+                        var total_cnt = data[0].TOTAL_COUNT;
+                        $scope.total_cnt = total_cnt;
+                    })
+                    .catch(function(error){$scope.event = ""; $scope.total_cnt=0;});
+            }
         };
 
         // CK Editor
@@ -177,19 +244,25 @@ define([
                     .then(function(data){
                         $scope.item = data;
 
+                        if(data.TARGET_NO > 0){
+                            var idx = 0;
+                            for(var i=0; i < $scope.event.length; i ++){
 
-                        var idx = 0;
-                        for(var i=0; i < $scope.event.length; i ++){
-
-                            if(JSON.stringify(data.TARGET_NO) == JSON.stringify($scope.event[i].NO)){
-                                idx = i;
+                                if(JSON.stringify(data.TARGET_NO) == JSON.stringify($scope.event[i].TARGET_NO)){
+                                    idx = i;
+                                }
                             }
+                            $scope.item.TARGET_NO = $scope.event[idx].TARGET_NO;
+
+                            //$("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].NO+"']").attr("checked",true);
+
+                            $("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].NO+"']").attr("checked",true);
+                        } else {
+
+                            $("#general").attr("checked",true);
+                            $('#menu_select').removeAttr('disabled');
+                            $scope.item.MENU = data.TARGET_GB;
                         }
-                        $scope.item.TARGET_NO = $scope.event[idx].NO;
-
-                        //$("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].NO+"']").attr("checked",true);
-
-                        $("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].NO+"']").attr("checked",true);
 
                         var files = data.FILES;
                         for(var i in files) {
@@ -211,19 +284,24 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-            if ($stateParams.menu == 'experiencereview') {
-                $scope.item.TARGET_GB = 'EXPERIENCE';
-            } else if ($stateParams.menu == 'productreview') {
-                $scope.item.TARGET_GB = 'PRODUCT';
-            } else if ($stateParams.menu == 'angereview') {
-                $scope.item.TARGET_GB = 'ANGE';
-            } else if ($stateParams.menu == 'samplereview') {
-                $scope.item.TARGET_GB = 'SAMPLE';
-            } else if ($stateParams.menu == 'samplepackreview') {
-                $scope.search['TARGET_GB'] = 'SAMPLEPACK';
-            }else if ($stateParams.menu == 'eventreview') {
-                $scope.item.TARGET_GB = 'EVENT';
+            if($scope.item.MENU != ''){
+                $scope.item.TARGET_GB = $scope.item.MENU;
+            }else{
+                if ($stateParams.menu == 'experiencereview') {
+                    $scope.item.TARGET_GB = 'EXPERIENCE';
+                } else if ($stateParams.menu == 'productreview') {
+                    $scope.item.TARGET_GB = 'PRODUCT';
+                } else if ($stateParams.menu == 'angereview') {
+                    $scope.item.TARGET_GB = 'ANGE';
+                } else if ($stateParams.menu == 'samplereview') {
+                    $scope.item.TARGET_GB = 'SAMPLE';
+                } else if ($stateParams.menu == 'samplepackreview') {
+                    $scope.item.TARGET_GB = 'SAMPLEPACK';
+                }else if ($stateParams.menu == 'eventreview') {
+                    $scope.item.TARGET_GB = 'EVENT';
+                }
             }
+
 
             if ($stateParams.id == 0) {
 

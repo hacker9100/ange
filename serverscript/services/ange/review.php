@@ -327,6 +327,17 @@
                     )";
 
             $_d->sql_query($sql);
+
+            $sql = "UPDATE ANGE_COMP_WINNER
+                        SET
+                            REVIEW_FL = 'Y'
+                        WHERE
+                            USER_ID = '".$_SESSION['uid']."'
+                         AND TARGET_NO = '".$_model[TARGET_NO]."'
+                        ";
+
+
+            $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
@@ -520,6 +531,17 @@
                         WHERE
                             NO = ".$_key."
                     ";
+
+                    $_d->sql_query($sql);
+
+                    $sql = "UPDATE ANGE_COMP_WINNER
+                        SET
+                            REVIEW_FL = 'Y'
+                        WHERE
+                            USER_ID = '".$_SESSION['uid']."'
+                         AND TARGET_NO = '".$_model[TARGET_NO]."'
+                        ";
+
 
                     $_d->sql_query($sql);
                     $no = $_d->mysql_insert_id;

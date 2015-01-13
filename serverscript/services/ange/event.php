@@ -214,25 +214,37 @@
                     $_d->dataEnd($sql);
                 }
             } else if ($_type == 'selectList') {
+
+                $search_where = "";
+/*                if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
+                    $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."' ";
+                }*/
+
+                if (isset($_search[USER_ID]) && $_search[USER_ID] != "") {
+                    $search_where .= "AND USER_ID = '".$_SESSION['uid']."' ";
+                }
+
+                if (isset($_search[REVIEW_FL]) && $_search[REVIEW_FL] != "") {
+                    $search_where .= "AND REVIEW_FL = 'N'";
+                }
+
                     $sql = "SELECT
-                                NO, SUBJECT, TOTAL_COUNT
+                                NO, SUBJECT, TARGET_NO, JOIN_NO, USER_ID, NICK_NM, REVIEW_FL, TOTAL_COUNT,REVIEW_YMD
                             FROM
                             (
-                                SELECT
-                                     NO, SUBJECT
-                                 FROM
-                                     ANGE_EVENT
+                                SELECT NO, (SELECT SUBJECT FROM ANGE_EVENT WHERE NO = ACW.TARGET_NO) AS SUBJECT, TARGET_NO, JOIN_NO,
+                                            USER_ID, NICK_NM, REVIEW_FL, (SELECT REVIEW_YMD FROM ANGE_EVENT WHERE NO = ACW.TARGET_NO) AS REVIEW_YMD
+                                FROM ANGE_COMP_WINNER ACW
                                  WHERE 1 = 1
-                                 AND EVENT_GB  ='".$_search[EVENT_GB]."'
+                                 ".$search_where."
 
                             ) AS DATA,
                             (
                                 SELECT
                                     COUNT(*) AS TOTAL_COUNT
-                                FROM
-                                         ANGE_EVENT
-                                     WHERE 1 = 1
-                                     AND EVENT_GB  ='".$_search[EVENT_GB]."'
+                                FROM ANGE_COMP_WINNER ACW
+                                 WHERE 1 = 1
+                                 ".$search_where."
                             ) CNT";
 
                     $data = $_d->sql_query($sql);
@@ -284,7 +296,7 @@
                         NOTE
                     ) VALUES (
                         '".$_model[SUBJECT]."',
-                        '".$_SESSION['name']."',
+                        '".$_SESSION['uid']."',
                         SYSDATE(),
                         '".$_model[DELIV_COST]."',
                         '".$_model[REVIEW_YMD]."',
