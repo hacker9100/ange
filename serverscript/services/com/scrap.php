@@ -72,7 +72,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }
             } else if($_type == 'list'){
 
-                // 검색조건 추가해야함
+                // 검색조건 추가
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_where .= "AND CB.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
                 }

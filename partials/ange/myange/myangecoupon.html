@@ -16,10 +16,72 @@
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
-                            </br>
-                            account
-
                         </div><!-- /.sub_contents_wrap -->
+
+                        <div class="sub_contents_body">
+
+                            <!-- peoplepoll_list -->
+                            <table id="comp_board_table" class="table table-hover">
+
+                                <thead>
+                                <tr class="board_thead" height="48">
+                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
+                                    <td><span class="board_th">내용</span></td>
+                                    <td width="95" align="center"><span class="board_th">보낸사람</span></td>
+                                    <td width="80"><span class="board_th">작성일</span></td>
+                                    <td width="60" align="center"><span class="board_th">확인여부</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody class="on" ng-repeat="item in list">
+
+                                <tr  style="cursor:pointer;"> <!--ng-click="click_showViewMessage(item.NO)"-->
+                                    <td class="table_no">
+                                        <span>{{item.RNUM}} </span>
+                                    </td>
+                                    <td>
+                                        <div class="table_gray" ng-bind-html="item.BODY | string_limit : 50"></div>
+                                    </td>
+                                    <td  class="table_author">{{item.FROM_NM}}</td>
+                                    <td class="table_date">{{item.REG_DT}}</td>
+                                    <td class="table_hit">{{item.CHECK_FL}}</td></tr>
+                                </tr>
+
+                                </tbody>
+
+                                <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                <tr>
+                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                </tr>
+
+                                </tbody>
+                            </table><!-- /.List-->
+
+                            <nav class="text-center">
+                                <ul class="pagination pagination-sm table_paging">
+                                    <li class="disabled">
+                                        <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
+                                    </li>
+                                    <li class="disabled">
+                                        <a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
+                                    </li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li>
+                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
+                                    </li>
+                                </ul>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                        </div><!-- /.sub_contents_body -->
                     </div>
                 </div>
 
