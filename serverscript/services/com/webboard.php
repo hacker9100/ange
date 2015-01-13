@@ -140,11 +140,11 @@
                 }
 
                 if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_common .= "AND B.REG_UID = '".$_search[REG_UID]."' ";
+                    $search_common .= "AND B.REG_UID = '".$_SESSION['uid']."' ";
                 }
 
                 if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_where .= "AND REG_UID = '".$_search[REG_UID]."' ";
+                    $search_where .= "AND REG_UID = '".$_SESSION['uid']."' ";
                 }
 
                 if (isset($_search[PHOTO_TYPE]) && $_search[PHOTO_TYPE] != "" && $_search[PHOTO_TYPE] != "ALL") {

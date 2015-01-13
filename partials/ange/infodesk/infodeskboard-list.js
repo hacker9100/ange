@@ -129,16 +129,22 @@ define([
         };
 
         // 조회 화면 이동
-        $scope.click_showViewQnaPeopleBoard = function (key, regid) {
+        $scope.click_showViewQnaPeopleBoard = function (password, key, regid) {
 
 
-            if($scope.uid == regid || $scope.role == $scope.VIEW_ROLE){
-                if($stateParams.menu == 'qna') {
-                    $location.url('/infodesk/qna/view/'+key);
-                }
+            if(password == 0){
+                $location.url('/infodesk/qna/view/'+key);
             }else{
-                dialogs.notify('알림', '비밀글입니다. 작성자와 관리자만 볼 수 있습니다.', {size: 'md'});
+
+                if($scope.uid == regid || $scope.role == $scope.VIEW_ROLE){
+                    if($stateParams.menu == 'qna') {
+                        $location.url('/infodesk/qna/view/'+key);
+                    }
+                }else{
+                    dialogs.notify('알림', '비밀글입니다. 작성자와 관리자만 볼 수 있습니다.', {size: 'md'});
+                }
             }
+
         }
 
         // 등록 버튼 클릭

@@ -79,7 +79,7 @@
 
                                 <tbody class="on" ng-repeat="item in list">
 
-                                <tr ng-click="menu == 'qna' ? click_showViewQnaPeopleBoard(item.NO, item.REG_UID) : click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                <tr ng-click="menu == 'qna' ? click_showViewQnaPeopleBoard(item.PASSWORD_FL, item.NO, item.REG_UID) : click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
                                     <td class="table_no">
                                         <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.RNUM}}</span>
                                     </td>
