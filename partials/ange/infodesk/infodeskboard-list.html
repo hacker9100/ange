@@ -72,8 +72,8 @@
                                     <td><span class="board_th">제목</span></td>
                                     <td ng-show="menu == 'qna' || menu == 'myqna'" width="92" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80"><span class="board_th">작성일</span></td>
-                                    <td width="60" ng-show="menu != 'qna' || menu != 'myqna'" align="center"><span class="board_th">조회</span></td>
-                                    <!--<td width="60" ng-show="menu == 'qna' || menu == 'myqna'" align="center"><span class="board_th">답변여부</span></td>-->
+                                    <!--<td width="60" ng-show="menu != 'qna' || menu != 'myqna'"  align="center"><span class="board_th">조회</span></td>-->
+                                    <td width="100" ng-show="menu == 'qna' || menu == 'myqna'" align="center"><span class="board_th">답변여부</span></td>
                                 </tr>
                                 </thead>
 
@@ -93,8 +93,8 @@
                                     </td>
                                     <td  ng-show="menu == 'qna' || menu == 'myqna'"  class="table_author">{{item.NICK_NM}}</td>
                                     <td class="table_date">{{item.REG_DT}}</td>
-                                    <td class="table_hit" ng-show="menu != 'qna' || menu != 'myqna'" align="center">{{item.HIT_CNT}}</td></tr>
-                                    <!--<td class="table_hit" ng-show="menu == 'qna' || menu == 'myqna'" align="center">{{item.BOARD_REPLY_FL}}</td></tr>-->
+                                    <!--<td ng-show="menu != 'qna' || menu != 'myqna'" align="center">{{item.HIT_CNT}}</td></tr>-->
+                                    <td ng-show="menu == 'qna' || menu == 'myqna'" align="center">{{item.BOARD_REPLY_FL}}</td></tr>
                                 </tr>
 
                                 </tbody>
