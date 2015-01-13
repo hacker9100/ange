@@ -46,7 +46,7 @@
 /* Dots */
 #.slick-slider { margin-bottom: 30px; }
 
-.slick-dots { position: absolute; bottom: 1px; left:58px; list-style: none; display: white; text-align: center; padding: 0; width: 100%; z-index: 999; }
+.slick-dots { position: absolute; bottom: -43px; left:58px; list-style: none; display: white; text-align: center; padding: 0; width: 100%; z-index: 999; }
 .slick-dots li { position: relative; float:left; display: inline-block; height: 20px; width: 10px; margin: 0 5px; padding: 0; cursor: pointer; }
 .slick-dots li button { border: 0; background: transparent; display: white; height: 20px; width: 20px; outline: none; line-height: 0; font-size: 0; color: transparent; padding: 5px; cursor: pointer; }
 .slick-dots li button:hover, .slick-dots li button:focus { outline: none; }

@@ -96,9 +96,16 @@ define([
 
             $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
-//                    console.log(JSON.stringify(data));
 
                     for (var i in data) {
+                        if ($scope.url[2] == 'special' && i < data.length - 1 ) {
+                            if (i == 0 || data[i].DEPLOY_YMD.substr(0, 7) != data[i-1].DEPLOY_YMD.substr(0, 7)) {
+                                data[i].TYPE = 'COVER';
+                                data[i].MONTH = data[i].DEPLOY_YMD.substr(5, 2);
+                                $scope.list.push(angular.copy(data[i]));
+                            }
+                        }
+
                         if (data[i].FILE.PATH != undefined) {
                             var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                             data[i].TYPE = 'CONTENT';

@@ -50,7 +50,7 @@ require.config({
         'ng-infinite-scroll': '../../lib/angular-masonry/ng-infinite-scroll.min', //
 
         // ng-table 모듈
-        'ng-table': '../../lib/ng-table/ng-table',
+        'ng-table': '../../lib/ng-table/ange-ng-table',
 
         // modal 모듈
         'dialog-translation': '../../lib/dialog/dialogs-default-translations.min',

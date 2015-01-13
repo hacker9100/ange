@@ -92,6 +92,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
+<meta name="fragment" content="!" />
+<base href="/">
 
 <link rel="stylesheet" type="text/css" href="css/ange/normalize.css" >
 <link rel="stylesheet" type="text/css" href="css/ange_bootstrap.css" />
@@ -102,7 +104,7 @@
 
 <link rel="stylesheet" type="text/css" href="lib/slick-carousel/slick.css" />
 
-<!--<link rel="stylesheet" type="text/css" href="css/ng-table/ng-table.min.css" />-->
+<link rel="stylesheet" type="text/css" href="css/ng-table/ange-ng-table.css" />
 <!--<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />-->
 
 <!-- file-upload -->

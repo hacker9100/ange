@@ -13,10 +13,11 @@ define([
 ], function(app, menu_ange) {
     'use strict';
 
-    app.config(function($stateProvider, $urlRouterProvider) {
+    app.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
 
         // use the HTML5 History API
-//        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(true);
+        $locationProvider.hashPrefix('!');
 
         // 무조건 처음에 호출하고 싶은 것이 있으면 여기서 호출
         $urlRouterProvider.otherwise('/main');

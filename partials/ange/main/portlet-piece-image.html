@@ -4,9 +4,8 @@
     <div class="comp_peoplebabymodel_info" ></div>
 
     <div class="comp_peoplebabymodel_pics">
-        <!--<img class="comp_peoplebabymodel_bigthumb" src="imgs/ange/temp/comp_peoplebabymodel_01.jpg" /> &lt;!&ndash; 큰이미지  (w)100px : (h)160px, 5:8 비율 (직사각형) &ndash;&gt;-->
-        <img class="comp_peoplebabymodel_thumb" src="{{item.FILE}}" ng-repeat="item in list" ng-click="click_showImage(item);"/>
-
+        <!--<img class="comp_peoplebabymodel_bigthumb" src="{{item.FILE}}" /> &lt;!&ndash; 큰이미지  (w)100px : (h)160px, 5:8 비율 (직사각형) &ndash;&gt;-->
+        <img ng-class=" $index == 0 ? 'comp_peoplebabymodel_bigthumb' : 'comp_peoplebabymodel_thumb'" src="{{item.FILE}}" ng-repeat="item in list" ng-click="click_showImage(item);"/>
         <!--<img class="comp_peoplebabymodel_bigthumb" src="imgs/ange/temp/comp_peoplebabymodel_02.jpg" /> &lt;!&ndash; 큰이미지  (w)100px : (h)160px, 5:8 비율 (직사각형) &ndash;&gt;-->
 
         <!--<img class="comp_peoplebabymodel_thumb" src="imgs/ange/temp/comp_peoplebabymodel_02.jpg" /> &lt;!&ndash; 작은이미지  (w)90px : (h)90px, 1:1 비율 (정사각형) &ndash;&gt;-->

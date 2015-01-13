@@ -10,7 +10,7 @@
             <div style="padding:15px 15px; font-size:0.78em; color:#e25d4c; font-weight:700;"><span class="glyphicon glyphicon-plus"></span> 같은 카테고리 스토리</div>
 
             <div class="story_plus_thumb" ng-repeat="item in plusList" ng-show="currentPage > ( $index / 2 ) && ( $index / 2 ) >= ( currentPage - 1 )">
-                <img class="story_plus_pic" ng-src="{{item.FILE}}">
+                <img class="story_plus_pic" ng-src="{{item.FILE}}" ng-click="click_showContentDetail(item)">
                 <div class="table_blue story_plus_title">{{ item.SUBJECT | limitTo: 10 }}{{item.SUBJECT > 10 ? '...' : ''}}</div>
                 <div class="table_gray story_plus_series">{{ item.PROJECT_NM }}</div>
             </div>
@@ -42,19 +42,21 @@
 
             <div class="story-row previewwrap">
 
-                <div class="story-col-xs-12 article_previewwrap" id="inBodyForm">
+                <!--<a ng-click="click_printDiv('content')" class="btn primary large no-print">Print this quote</a>-->
+
+                <div  ng-model="content" class="story-col-xs-12 article_previewwrap" id="inBodyForm">
 
                     <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
 
                     <div class="people_photo_sharewrap" style="position:absolute; top:10px; right:5px;">
                         <div class="people_share" style="float:right; line-height:20px; vertical-align:top;">
-                            <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
-                            <button class="people_sharebtn blackbtn" title="이 글을 공유하려면 클릭"><span class="glyphicon glyphicon-cloud-upload sharebtn_icon"></span>공 유</button>
-                            <button class="people_sharebtn redbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>
+                            <button class="people_sharebtn blackbtn" ng-click="click_printDiv('content')" title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
+                            <button class="people_sharebtn blackbtn" ng-click="click_shareContent()" title="이 글을 공유하려면 클릭"><span class="glyphicon glyphicon-cloud-upload sharebtn_icon"></span>공 유</button>
+                            <button class="people_sharebtn redbtn" ng-click="click_addScrap();" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>
                         </div>
                     </div>
 
-                    <div ng-bind-html="renderHtml(item.BODY)"></div>
+                    <div id="content" ng-bind-html="renderHtml(content.BODY)"></div>
 
                     <!--<p><plantitle><strong>섹션명</strong> | 제목</plantitle></p>-->
                     <!--<subtitle>5분 습관 </subtitle><maintitle>하루 5분,우리 아이 독서 습관기르기</maintitle>-->
@@ -185,7 +187,7 @@
                     </div>
 
                     <div class="col-xs-12">
-                        <div class="inven_themeup" ng-model="ad">
+                        <div ng-model="ad" class="inven_themeup">
                             <a class="ADbanner_image" title="배너타이틀">
                                 <!--<img ng-src="{{ad.FILE}}"/>-->
                                 <img img src="/imgs/ange/temp/story_banner.jpg"/>

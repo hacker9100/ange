@@ -456,7 +456,7 @@ div.mini_community_contents:hover {
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
-    width:45%;
+    width:60%;
 }
 
 /* - mini_community */

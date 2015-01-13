@@ -25,6 +25,9 @@ define([
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
 
+                // 현재 날짜
+                $scope.now = new Date();
+
                 // 검색 조건
                 $scope.search = {};
 
@@ -77,6 +80,7 @@ define([
                     if ($scope.option.type == 'board') {
                         $scope.search.COMM_NO = angular.uppercase($scope.option.tab[$scope.tabIdx].no);
                     } else if ($scope.option.type == 'review') {
+                        $scope.search.FILE = true;
                         $scope.search.TARGET_GB = angular.uppercase($scope.option.tab[$scope.tabIdx].no);
                     }
 
@@ -98,37 +102,41 @@ define([
                     var channel = $scope.option.url.split('/')[1];
                     var menu = 'angeroom';
 
-                    switch(item.COMM_NO) {
-                        case '1' :
-                            menu = 'angeroom';
-                            break;
-                        case '2' :
-                            menu = 'momstalk';
-                            break;
-                        case '3' :
-                            menu = 'babycare';
-                            break;
-                        case '4' :
-                            menu = 'firstbirthtalk';
-                            break;
-                        case '5' :
-                            menu = 'booktalk';
-                            break;
-                        case '9' :
-                            menu = 'childdevelop';
-                            break;
-                        case '10' :
-                            menu = 'chlidoriental';
-                            break;
-                        case '11' :
-                            menu = 'obstetrics';
-                            break;
-                        case '12' :
-                            menu = 'momshealth';
-                            break;
-                        case '13' :
-                            menu = 'financial';
-                            break;
+                    if ($scope.option.type == 'board') {
+                        switch(item.COMM_NO) {
+                            case '1' :
+                                menu = 'angeroom';
+                                break;
+                            case '2' :
+                                menu = 'momstalk';
+                                break;
+                            case '3' :
+                                menu = 'babycare';
+                                break;
+                            case '4' :
+                                menu = 'firstbirthtalk';
+                                break;
+                            case '5' :
+                                menu = 'booktalk';
+                                break;
+                            case '9' :
+                                menu = 'childdevelop';
+                                break;
+                            case '10' :
+                                menu = 'chlidoriental';
+                                break;
+                            case '11' :
+                                menu = 'obstetrics';
+                                break;
+                            case '12' :
+                                menu = 'momshealth';
+                                break;
+                            case '13' :
+                                menu = 'financial';
+                                break;
+                        }
+                    } else if ($scope.option.type == 'review') {
+                        menu = angular.lowercase(item.TARGET_GB) + $scope.option.type;
                     }
 
                     if (angular.uppercase($scope.option.type) == 'CLINIC' && $scope.uid != item.REG_UID && item.PASSWORD_FL != '0') {
@@ -145,7 +153,7 @@ define([
                         .then(function(data){
                             $scope.list = data;
                             if ($scope.option.image != undefined && $scope.option.image) {
-                                $scope.key = data[0].NO;
+                                $scope.imgItem = data[0];
                                 $scope.img = UPLOAD.BASE_URL + data[0].FILE[0].PATH + 'thumbnail/' + data[0].FILE[0].FILE_ID;
                             }
                         })
@@ -283,7 +291,7 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist"><a href="#/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="'+img+'" width="99" height="119"/></div><span class="mini_story_contentbox_title">'+data[i].SUBJECT+'</span></a></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist"><a href="/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="'+img+'" width="99" height="119"/></div><span class="mini_story_contentbox_title">'+data[i].SUBJECT+'</span></a></div>');
                             }
 
                             // 광고의 슬라이드을 실행
@@ -501,7 +509,7 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><a href="#/moms/'+menu+'/view/'+data[i].NO+'"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="'+img+'"/><div class="mini_event_txt_title">'+( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') + data[i].SUBJECT +'</div><div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div></div></a></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><a href="/moms/'+menu+'/view/'+data[i].NO+'"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="'+img+'"/><div class="mini_event_txt_title">'+( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') + data[i].SUBJECT +'</div><div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div></div></a></div>');
                             }
 //                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단1</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
 //                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단2</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
@@ -604,7 +612,7 @@ define([
                                 if (data[i].FILE != null) {
                                     var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
                                     var url = "people/angemodel/view/"+data[i].NO;
-                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="#/'+url+'" ><img src="'+img+'" width="99" height="119" alt=""/></a></div>');
+                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt=""/></a></div>');
                                 }
                             }
 
@@ -696,15 +704,17 @@ define([
                 $scope.getPortletList = function () {
                     $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
+                            $scope.list = data;
+
                             for (var i in data) {
 //                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
                                 var url = '';
                                 if ($scope.option.type == 'banner') {
                                     url = '<a href="'+data[i].URL+'" target="_blank">';
                                 } else if ($scope.option.type == 'experience') {
-                                    url = '<a href="#/moms/experienceprocess/view/'+data[i].NO+'">';
+                                    url = '<a href="/moms/experienceprocess/view/'+data[i].NO+'">';
                                 } else if ($scope.option.type == 'event') {
-                                    url = '<a href="#/moms/eventprocess/view/'+data[i].NO+'">';
+                                    url = '<a href="/moms/eventprocess/view/'+data[i].NO+'">';
                                 }
 
                                 // 슬라이드를 추가해 줌

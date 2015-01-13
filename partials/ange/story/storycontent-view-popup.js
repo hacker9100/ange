@@ -57,7 +57,7 @@ define([
                         }
                     }),
                     $scope.getItem('cms/task', 'item', data.NO, {}, false).then(function(data){ $scope.task = data; }),
-                    $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){ $scope.item = data; }),
+                    $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){ $scope.content = data; }),
                     $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, PHASE: '30, 31'}, false).then(function(data){
                         $scope.editorList = data;
                     }),
@@ -80,12 +80,80 @@ define([
             return deferred.promise;
         };
 
+        // 기사 프린트 버튼 클릭
+        $scope.click_printDiv = function (divName) {
+//            $( ".articlewrap" ).print();
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            var popupWin = window.open('', '_blank', 'width=1000,height=900');
+            popupWin.document.open()
+            popupWin.document.write('<html><head>' +
+                                        '<link rel="stylesheet" type="text/css" href="css/ange/normalize.css" >' +
+                                        '<link rel="stylesheet" type="text/css" href="css/ange_bootstrap.css" />' +
+                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_style.css" />' +
+                                        '<link rel="stylesheet" type="text/css" href="lib/jquery/css/base/jquery-ui-1.10.2.min.css" />' +
+                                        '<link rel="stylesheet" type="text/css" href="css/article.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_main.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_storylist.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_people_main.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_peoplepoll.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_peopleboard.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_moms_main.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_myange_main.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_store_main.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_infodesk_main.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_join.css" />' +
+//                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_moms.css" />' +
+                                    '</head><body onload="window.print()"><div class="modal-body"><div class="story-row previewwrap"><div class="story-col-xs-12 article_previewwrap">' + printContents + '</div></div></div></html>');
+            popupWin.document.close();
+        };
+
+        // 공유 버튼 클릭
+        $scope.click_shareContent = function () {
+            dialogs.notify('알림', '준비중 입니다.', {size: 'md'});
+        };
+
+        $scope.click_addScrap = function () {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 사용할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
+            $scope.search['TARGET_NO'] = $scope.task.NO;
+
+            $scope.getList('com/scrap', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var scrap_cnt = data[0].SCRAP_CNT;
+
+                    if (scrap_cnt == 1) {
+                        dialogs.notify('알림', '이미 스크랩 된 게시물 입니다.', {size: 'md'});
+                    } else {
+                        $scope.scrap = {};
+
+                        $scope.scrap.TARGET_NO = $scope.task.NO;
+                        $scope.scrap.TARGET_GB = 'CONTENT';
+
+                        $scope.insertItem('com/scrap', 'item', $scope.scrap, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '스크랩 되었습니다.', {size: 'md'});
+                                $scope.getPeopleBoard();
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 플러스 기사 이전 클릭
         $scope.click_prevPlus = function(){
             if ($scope.currentPage > 1) {
                 $scope.currentPage--;
             }
         };
 
+        // 플러스 기사 다음 클릭
         $scope.click_nextPlus = function(){
             if ($scope.currentPage < $scope.totalPage) {
                 $scope.currentPage++;
@@ -95,7 +163,7 @@ define([
         // 공감 클릭
         $scope.click_addLike = function () {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 공감 할 수 있습니다.', {size: 'md'});
+                dialogs.notify('알림', '로그인 후 사용할 수 있습니다.', {size: 'md'});
                 return;
             }
 

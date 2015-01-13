@@ -144,7 +144,9 @@
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            NO, SUBJECT, BODY, REG_UID, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, REPLY_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB
+                            NO, SUBJECT, BODY, REG_UID, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, REPLY_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB,
+                            (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
+                            CASE TARGET_GB WHEN 'EXPERIENCE' THEN '체험단' WHEN 'EVENT' THEN '이벤트' WHEN 'SAMPLE' THEN '샘플팩' WHEN 'PRODUCT' THEN '상품' ELSE '앙쥬' END AS SHORT_NM
                         FROM
                         (
                             SELECT
@@ -624,7 +626,6 @@
                                     , '0'
                                     , SYSDATE()
                                     , 'C'
-                                    , '".$file[size]."'
                                     , '".$file[kind]."'
                                 )";
 

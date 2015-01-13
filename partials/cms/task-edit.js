@@ -244,6 +244,7 @@ define([
         $scope.click_saveTask = function () {
             $scope.item.CATEGORY = $scope.CATEGORY;
             $scope.item.CLOSE_YMD = $filter('date')($scope.item.CLOSE_YMD, 'yyyy-MM-dd');
+            $scope.item.DEPLOY_YMD = $filter('date')($scope.item.DEPLOY_YMD, 'yyyy-MM-dd');
 
             if ($stateParams.id == 0) {
                 $scope.insertItem('cms/task', 'item', $scope.item, false)

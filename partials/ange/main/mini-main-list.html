@@ -37,16 +37,16 @@
 
     <div ng-class="option.type == 'review' ? 'miniboard_review_contents' : option.type == 'clinic' ? 'comp_clinic_contents' : 'miniboard_community_contents'">
 
-        <div ng-if="option.image" class="mini_review_kingimg" ng-style="{'background-image': 'url('+img+')', 'background-repeat': 'no-repeat', 'background-position': 'center 50%'}"></div>
+        <div ng-if="option.image" class="mini_review_kingimg" ng-style="{'background-image': 'url('+img+')', 'background-repeat': 'no-repeat', 'background-position': 'center 50%'}" ng-click="click_showView(imgItem);"></div>
 
         <div ng-class="option.type == 'review' ? 'mini_review_contents' : 'mini_community_contents'" ng-repeat="item in list">
             <!--<img src="" class="mini_board_contents_img" />-->
             <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;" ng-click="click_showView(item);">
 
-                <span ng-show="option.head" class="mini_community_txt_head">[{{ item.COMM_NM }}]&nbsp;</span>
+                <span ng-show="option.head" class="mini_community_txt_head">[{{ item.SHORT_NM }}]&nbsp;</span>
                 <span class="mini_community_txt_title">
-                    <span ng-show="item.PASSWORD_FL != '0'" class="glyphicon glyphicon-lock" style="color:#e25d4c; font-size:0.78em; margin-right:4px;"></span>
-                    {{ item.SUBJECT | string_limit:30 }}<kbd ng-show="item.NEW_FL == '1'" class="kbd_new">N</kbd>
+                    <span ng-show="item.PASSWORD_FL == '1'" class="glyphicon glyphicon-lock" style="color:#e25d4c; font-size:0.78em; margin-right:4px;"></span>
+                    {{ item.SUBJECT | string_limit:30 }}<kbd ng-show="item.NEW_FL  == '1'" class="kbd_new">N</kbd>
                 </span>
 
                 <ul ng-show="option.date" class="mini_board_feeds">
