@@ -195,6 +195,8 @@ define([
                             $("#check_scrap").attr("checked", false);
                         }
 
+                        $scope.item.COMM_NO = data.COMM_NO;
+
                         var files = data.FILES;
                         for(var i in files) {
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
@@ -216,7 +218,7 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-            if ($stateParams.menu == 'angeroom') {
+/*            if ($stateParams.menu == 'angeroom') {
                 $scope.item.COMM_NO = '1';
             } else if($stateParams.menu == 'momstalk') {
                 $scope.item.COMM_NO = '2';
@@ -226,7 +228,7 @@ define([
                 $scope.item.COMM_NO = '4';
             } else if($stateParams.menu == 'booktalk') {
                 $scope.item.COMM_NO = '5';
-            }
+            }*/
 
             if ($stateParams.id == 0) {
 
