@@ -76,25 +76,7 @@
                             </table><!-- /.List-->
 
                             <nav class="text-center">
-                                <ul class="pagination pagination-sm table_paging">
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                </ul>
+                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
                             <!-- /peoplepoll_list -->
 

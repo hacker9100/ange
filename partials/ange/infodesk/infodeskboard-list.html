@@ -109,7 +109,8 @@
                             </table><!-- /.List-->
 
                             <nav class="text-center">
-                                <ul class="pagination pagination-sm table_paging">
+                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+<!--                                <ul class="pagination pagination-sm table_paging">
                                     <li class="disabled">
                                         <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
                                     </li>
@@ -127,7 +128,7 @@
                                     <li>
                                         <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
                                     </li>
-                                </ul>
+                                </ul>-->
                             </nav><!-- /.Paging-->
                             <!-- /peoplepoll_list -->
 

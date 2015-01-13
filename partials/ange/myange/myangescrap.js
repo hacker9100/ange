@@ -19,7 +19,16 @@ define([
             $scope.community = "스크랩";
         };
 
-        $scope.PAGE_SIZE = 20;
+        // 페이징
+        $scope.PAGE_NO = 1;
+        $scope.PAGE_SIZE = 10;
+        $scope.TOTAL_COUNT = 0;
+
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getScarpList();
+        };
+
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "등록자", value: "NICK_NM"}];
 

@@ -16,8 +16,14 @@ define([
         $scope.search = {};
 
         // 페이징
-        $scope.PAGE_NO = 0;
-        $scope.PAGE_SIZE = 20;
+        $scope.PAGE_NO = 1;
+        $scope.PAGE_SIZE = 10;
+        $scope.TOTAL_COUNT = 0;
+
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getPeopleBoardList();
+        };
 
         $scope.search = {};
 
@@ -92,7 +98,7 @@ define([
             $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;

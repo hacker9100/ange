@@ -17,8 +17,14 @@ define([
         $scope.search = {};
 
         // 페이징
-        $scope.PAGE_NO = 0;
-        $scope.PAGE_SIZE = 20;
+        $scope.PAGE_NO = 1;
+        $scope.PAGE_SIZE = 10;
+        $scope.TOTAL_COUNT = 0;
+
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getPeopleBoardList();
+        };
 
         // 초기화
         $scope.init = function(session) {

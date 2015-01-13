@@ -20,10 +20,25 @@ define([
 
         $scope.search = {};
 
-        // 페이징
-        $scope.PAGE_NO = 0;
+        $scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = 5;
+        $scope.TOTAL_COUNT = 0;
 
+        //
+        $scope.pageBoardChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getPeopleBoardList();
+        };
+
+        $scope.pagePhotoChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getPeoplePhotoList();
+        };
+
+        $scope.pageClinicChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getPeopleClinicList();
+        };
 
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "등록자", value: "NICK_NM"}];
@@ -54,7 +69,7 @@ define([
             $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
@@ -91,7 +106,7 @@ define([
             $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
@@ -131,7 +146,7 @@ define([
             $scope.search.ORDER = 'DESC'
             $scope.search.BOARD_GB = 'CLINIC';
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
