@@ -19,6 +19,7 @@ define([
             $scope.community = "스크랩";
         };
 
+        $scope.PAGE_SIZE = 20;
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "등록자", value: "NICK_NM"}];
 
