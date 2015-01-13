@@ -76,22 +76,11 @@
     height:100%;
 }
 
-.bob_coverstory {
-    background-position: center bottom;
-}
-
-.bob_movies {
-    background-position: left bottom;
-}
-
-.bob_editornote {
-    background-position: right bottom;
-}
-
-.bob_special {
-    background-position: center center;
-}
-
+.bob_coverstory { background-position: center bottom;}
+.bob_movies { background-position: left bottom;}
+.bob_editornote { background-position: right bottom;}
+.bob_special { background-position: center center;}
+.bob_champion { background-position: right center;}
 
 .bob_title {
     position: absolute;
