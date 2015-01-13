@@ -79,25 +79,31 @@ switch ($_method) {
                 $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
             }
 
-            $sql = " SELECT NO, COUPON_NM, COUPON_GB, COUPON_CD, USE_FL, REG_DT, @RNUM := @RNUM+1 AS RNUM,
-                         DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,TOTAL_COUNT
+            // 검색조건 추가
+            if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+                $search_where .= "AND AUM.USER_ID = '".$_SESSION['uid']."'";
+            }
+
+            $sql = " SELECT USER_ID, COUPON_NM, COUPON_REG_DT, REG_DT, USE_FL,TOTAL_CNT,@RNUM := @RNUM + 1 AS RNUM,COUPON_CD
                         FROM
                         (
-                           SELECT NO, COUPON_NM, COUPON_GB, COUPON_CD, USE_FL, REG_DT
-                           FROM ANGE_COUPON
-                           WHERE 1=1
+                            SELECT AUC.USER_ID,
+                                     (SELECT COUPON_NM FROM ANGE_COUPON WHERE NO = AUC.COUPON_NO) AS COUPON_NM,
+                                     (SELECT REG_DT FROM ANGE_COUPON WHERE NO = AUC.COUPON_NO) AS COUPON_REG_DT,
+                                     (SELECT COUPON_CD FROM ANGE_COUPON WHERE NO = AUC.COUPON_NO) AS COUPON_CD,
+                                     AUC.REG_DT, AUC.USE_FL
+                            FROM ANGE_USER_COUPON AUC
+                            WHERE 1=1
+                         ".$search_where."
+                         ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
-                            FROM
-                                ANGE_COUPON B
-                            WHERE
-                                1=1
+                            SELECT COUNT(*) TOTAL_CNT
+                            FROM ANGE_USER_COUPON AUC
+                            WHERE 1=1
+                            ".$search_where."
                         ) TO_CNT
-                        ORDER BY NO DESC
-                        ".$limit."
                 ";
 
             $data = $_d->sql_query($sql);

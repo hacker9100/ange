@@ -28,7 +28,6 @@
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td><span class="board_th">쿠폰번호</span></td>
                                     <td><span class="board_th">쿠폰명</span></td>
-                                    <td width="95" align="center"><span class="board_th">구분</span></td>
                                     <td width="80"><span class="board_th">작성일</span></td>
                                     <td width="90" align="center"><span class="board_th">사용여부</span></td>
                                 </tr>
@@ -40,8 +39,7 @@
                                     <td class="table_no"><span>{{item.RNUM}}</span></td>
                                     <td>{{item.COUPON_CD}}</td>
                                     <td>{{item.COUPON_NM}}</td>
-                                    <td  class="table_author">{{item.COUPON_GB}}</td>
-                                    <td class="table_date">{{item.REG_DT}}</td>
+                                    <td class="table_date">{{item.COUPON_REG_DT}}</td>
                                     <td class="table_hit">{{item.USE_FL}}</td></tr>
                                 </tr>
 
@@ -50,7 +48,7 @@
                                 <tbody class="on" data-ng-show="list == '' || list == null">
 
                                 <tr>
-                                    <td colspan="6" style="text-align: center">조회 데이터가 없습니다.</td>
+                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
                                 </tr>
 
                                 </tbody>

@@ -27,6 +27,7 @@ define([
         $scope.init();
 
         $scope.search.REG_UID = true;
+        $scope.search.STATUS = true;
 
         // 일반 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
