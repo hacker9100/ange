@@ -64,7 +64,35 @@
                         <div class="sub_contents_body">
 
                             <!-- peoplepoll_list -->
-                            <table id="comp_board_table" class="table table-hover">
+                            <!--<table id="comp_board_table" ng-table="tableParams" class="table table-hover">-->
+
+                                <!--<tr header-class="board_thead" ng-repeat="item in $data" ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">-->
+                                    <!--<td width="9%" header-class="board_thead board_th text-center" class="table_no" data-title="'번호'">-->
+                                        <!--<span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.RNUM}}</span>-->
+                                    <!--</td>-->
+                                    <!--<td header-class="board_thead board_th text-left" data-title="'제목'">-->
+                                        <!--{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}-->
+                                        <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? [item.REPLY_COUNT] : ''}}</span>-->
+                                        <!--<span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>-->
+                                        <!--&lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;-->
+                                        <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                    <!--</td>-->
+                                    <!--<td width="92" header-class="board_thead text-center board_th" class="table_author" data-title="'작성자'">-->
+                                        <!--{{item.NICK_NM}}-->
+                                    <!--</td>-->
+                                    <!--<td width="80" header-class="board_thead text-center board_th" class="table_date" data-title="'작성일'">-->
+                                        <!--{{item.REG_DT}}-->
+                                    <!--</td>-->
+                                    <!--<td width="60" header-class="board_thead text-center board_th" class="table_hit" data-title="'조회'">-->
+                                        <!--{{item.HIT_CNT}}-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+                                <!--<tr ng-show="$data == ''">-->
+                                    <!--<td colspan="5" style="text-align: center; font-size:0.86em; line-height:38px;">조회 데이터가 없습니다.</td>-->
+                                <!--</tr>-->
+                            <!--</table>-->
+
+                            <table class="table table-hover">
 
                                 <thead>
                                 <tr class="board_thead" height="48">
@@ -107,25 +135,27 @@
                             </table><!-- /.List-->
 
                             <nav class="text-center">
-                                <ul class="pagination pagination-sm table_paging">
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                </ul>
+                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+
+                                <!--<ul class="pagination pagination-sm table_paging">-->
+                                    <!--<li class="disabled">-->
+                                        <!--<a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>-->
+                                    <!--</li>-->
+                                    <!--<li class="disabled">-->
+                                        <!--<a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>-->
+                                    <!--</li>-->
+                                    <!--<li class="active"><a href="#">1</a></li>-->
+                                    <!--<li><a href="#">2</a></li>-->
+                                    <!--<li><a href="#">3</a></li>-->
+                                    <!--<li><a href="#">4</a></li>-->
+                                    <!--<li><a href="#">5</a></li>-->
+                                    <!--<li>-->
+                                        <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>-->
+                                    <!--</li>-->
+                                    <!--<li>-->
+                                        <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>-->
+                                    <!--</li>-->
+                                <!--</ul>-->
                             </nav><!-- /.Paging-->
                             <!-- /peoplepoll_list -->
 

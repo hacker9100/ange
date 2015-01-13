@@ -19,9 +19,9 @@ define([
         $scope.search = {};
 
         // 페이징
-        $scope.PAGE_NO = 0;
-        $scope.PAGE_SIZE = 20;
-
+        $scope.PAGE_NO = 1;
+        $scope.PAGE_SIZE = 10;
+        $scope.TOTAL_COUNT = 0;
 
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "등록자", value: "NICK_NM"}];
@@ -42,59 +42,45 @@ define([
 
         //$scope.uid = $rootScope.uid;
 
-
-
         /********** 초기화 **********/
             // 초기화
         $scope.init = function() {
 
             if ($stateParams.menu == 'angeroom') {
                 $scope.community = "앙쥬맘 수다방";
+                $scope.search['COMM_NO'] = '1';
             } else if($stateParams.menu == 'momstalk') {
                 $scope.community = "예비맘 출산맘";
+                $scope.search['COMM_NO'] = '2';
             } else if($stateParams.menu == 'babycare') {
                 $scope.community = "육아방";
+                $scope.search['COMM_NO'] = '3';
             } else if($stateParams.menu == 'firstbirthtalk') {
                 $scope.community = "돌잔치 톡톡톡";
+                $scope.search['COMM_NO'] = '4';
             } else if($stateParams.menu == 'booktalk') {
                 $scope.community = "책수다";
+                $scope.search['COMM_NO'] = '5';
             }
+
+            $scope.search.SYSTEM_GB = 'ANGE';
         };
 
         /********** 이벤트 **********/
-            // 우측 메뉴 클릭
+        // 우측 메뉴 클릭
         $scope.click_showViewBoard = function(item) {
             $location.url('people/board/view/1');
 //            $location.url('people/poll/edit/'+item.NO);
         };
 
-        /********** 화면 초기화 **********/
-        $scope.init();
-
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
-
-            if ($stateParams.menu == 'angeroom') {
-                $scope.search['COMM_NO'] = '1';
-            } else if($stateParams.menu == 'momstalk') {
-                $scope.search['COMM_NO'] = '2';
-            } else if($stateParams.menu == 'babycare') {
-                $scope.search['COMM_NO'] = '3';
-            } else if($stateParams.menu == 'firstbirthtalk') {
-                $scope.search['COMM_NO'] = '4';
-            } else if($stateParams.menu == 'booktalk') {
-                $scope.search['COMM_NO'] = '5';
-            }
-
-            $scope.search.SYSTEM_GB = 'ANGE';
 /*            $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'*/
-
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
-
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
 
@@ -102,38 +88,55 @@ define([
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getPeopleBoardList();
+        };
+
+//        if ($stateParams.menu == 'angeroom') {
+//            $scope.search['COMM_NO'] = '1';
+//        } else if($stateParams.menu == 'momstalk') {
+//            $scope.search['COMM_NO'] = '2';
+//        } else if($stateParams.menu == 'babycare') {
+//            $scope.search['COMM_NO'] = '3';
+//        } else if($stateParams.menu == 'firstbirthtalk') {
+//            $scope.search['COMM_NO'] = '4';
+//        } else if($stateParams.menu == 'booktalk') {
+//            $scope.search['COMM_NO'] = '5';
+//        }
+//
+//        $scope.search.SYSTEM_GB = 'ANGE';
+//
+//        // 게시판 목록 조회
+//        $scope.getPeopleBoardList = function () {
+//            $scope.tableParams = new ngTableParams({
+//                page: 1,                    // show first page
+//                count: $scope.PAGE_SIZE     // count per page
+//            }, {
+//                counts: [],         // hide page counts control
+//                total: 0,           // length of data
+//                getData: function($defer, params) {
+//                    $scope.getList('com/webboard', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+//                        .then(function(data){
+//                            var total_cnt = data[0].TOTAL_COUNT;
+//                            $scope.TOTAL_COUNT = total_cnt;
+//
+//                            params.total(total_cnt);
+//                            $defer.resolve(data);
+//                        })
+//                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+//                }
+//            });
+//        };
+
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
-
-            if ($stateParams.menu == 'angeroom') {
-                $location.url('/people/angeroom/view/'+key);
-            } else if($stateParams.menu == 'momstalk') {
-                $location.url('/people/momstalk/view/'+key);
-            } else if($stateParams.menu == 'babycare') {
-                $location.url('/people/babycare/view/'+key);
-            } else if($stateParams.menu == 'firstbirthtalk') {
-                $location.url('/people/firstbirthtalk/view/'+key);
-            } else if($stateParams.menu == 'booktalk') {
-                $location.url('/people/booktalk/view/'+key);
-            }
-
+            $location.url('/people/'+$stateParams.menu+'/view/'+key);
         };
 
         // 등록 버튼 클릭
         $scope.click_showCreatePeopleBoard = function () {
-
-            if ($stateParams.menu == 'angeroom') {
-                $location.url('/people/angeroom/edit/0');
-            } else if($stateParams.menu == 'momstalk') {
-                $location.url('/people/momstalk/edit/0');
-            } else if($stateParams.menu == 'babycare') {
-                $location.url('/people/babycare/edit/0');
-            } else if($stateParams.menu == 'firstbirthtalk') {
-                $location.url('/people/firstbirthtalk/edit/0');
-            } else if($stateParams.menu == 'booktalk') {
-                $location.url('/people/booktalk/edit/0');
-            }
-
+            $location.url('/people/'+$stateParams.menu+'/edit/0');
         };
 
         // 검색
