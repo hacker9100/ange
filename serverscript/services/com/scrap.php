@@ -72,16 +72,16 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }
             } else if($_type == 'list'){
 
-                // 검색조건 추가해야함
+                // 검색조건 추가
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_where .= "AND CB.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
                 }
 
                 $sql = " SELECT TOTAL_COUNT, @RNUM := @RNUM+1 AS RNUM,
-                             TARGET_NO, NO, SUBJECT, BOARD_GB, REG_UID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NICK_NM
+                             TARGET_NO, NO, SUBJECT, BOARD_GB, REG_UID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NICK_NM,COMM_NO
                     FROM
                     (
-                        SELECT CS.TARGET_NO, CB.NO, CB.SUBJECT, CB.BOARD_GB, CS.REG_UID, CB.REG_DT, CB.NICK_NM
+                        SELECT CS.TARGET_NO, CB.NO, CB.SUBJECT, CB.BOARD_GB, CS.REG_UID, CB.REG_DT, CB.NICK_NM, CB.COMM_NO
                         FROM COM_SCRAP CS
                         INNER JOIN COM_BOARD CB
                         ON CS.TARGET_NO = CB.NO

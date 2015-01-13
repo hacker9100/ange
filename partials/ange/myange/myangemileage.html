@@ -16,10 +16,87 @@
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
-                            </br>
-                            account
-
                         </div><!-- /.sub_contents_wrap -->
+
+                        <div class="sub_contents_body">
+
+                            <h4 style="font-weight:bold;">마일리지현황 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
+                            <ul>
+                                <li>마일리지는 앙쥬 콘텐츠의 다양한 활동을 통해 적립이 가능합니다.</li>
+                                <li>마일리지는 부여된 일자부터 3년 이내에 사용하셔야 합니다.</li>
+                                <li>마일리지에 따라 구매 가능한 상품이 다릅니다</li>
+                            </ul>
+                            <br/>
+                            <div style="border:2px solid skyblue;text-align: center;">
+                                <span style="color: green"> {{nick}}&nbsp;님</span><br/>
+                                별초모맘 등급입니다
+
+                                <h2>마일리지&nbsp;&nbsp;&nbsp;{{SUM_POINT}}&nbsp;&nbsp;&nbsp;점</h2>
+                            </div>
+
+                            <br/><br/><br/>
+                            <!-- peoplepoll_list -->
+                            <table id="comp_board_table" class="table table-hover">
+
+                                <thead>
+                                <tr class="board_thead" height="48">
+                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
+                                    <td><span class="board_th">적립내용</span></td>
+                                    <td width="92" align="center"><span class="board_th">마일리지</span></td>
+                                    <!--<td width="80"><span class="board_th">작성일</span></td>
+                                    <td width="60" align="center"><span class="board_th">조회</span></td>-->
+                                </tr>
+                                </thead>
+
+                                <tbody class="on" ng-repeat="item in list">
+
+                                <tr> <!--ng-click="click_showViewPeopleBoard(item.NO)"-->
+                                    <td class="table_no">
+                                        <span>{{item.RNUM}}</span>
+                                    </td>
+                                    <td>
+                                        {{ item.REASON | limitTo: 100 }}{{item.REASON > 100 ? '...' : ''}}
+                                    </td>
+                                    <td  class="table_author">{{item.POINT}}P</td>
+                                    <!--<td class="table_date">{{item.REG_DT}}</td>
+                                    <td class="table_hit">{{item.HIT_CNT}}</td></tr>-->
+                                </tr>
+
+                                </tbody>
+
+                                <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                <tr>
+                                    <td colspan="3" style="text-align: center">조회 데이터가 없습니다.</td>
+                                </tr>
+
+                                </tbody>
+                            </table><!-- /.List-->
+
+                            <nav class="text-center">
+                                <ul class="pagination pagination-sm table_paging">
+                                    <li class="disabled">
+                                        <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
+                                    </li>
+                                    <li class="disabled">
+                                        <a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
+                                    </li>
+                                    <li class="active"><a href="#">1</a></li>
+                                    <li><a href="#">2</a></li>
+                                    <li><a href="#">3</a></li>
+                                    <li><a href="#">4</a></li>
+                                    <li><a href="#">5</a></li>
+                                    <li>
+                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
+                                    </li>
+                                </ul>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                        </div><!-- /.sub_contents_body -->
                     </div>
                 </div>
 

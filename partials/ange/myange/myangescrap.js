@@ -19,6 +19,7 @@ define([
             $scope.community = "스크랩";
         };
 
+        $scope.PAGE_SIZE = 20;
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "등록자", value: "NICK_NM"}];
 
@@ -78,15 +79,28 @@ define([
         }
 
         // 상세조회 버튼 클릭
-        $scope.click_showViewScrap = function (key) {
-            $scope.openViewScrapModal({NO : key}, 'lg');
+        $scope.click_showViewScrap = function (comm_no, key) {
+            //$scope.openViewScrapModal({NO : key}, 'lg');
+
+            if (comm_no == 1) {
+                $location.url('/people/angeroom/view/'+key);
+            } else if(comm_no == 2) {
+                $location.url('/people/momstalk/view/'+key);
+            } else if(comm_no == 3) {
+                $location.url('/people/babycare/view/'+key);
+            } else if(comm_no == 4) {
+                $location.url('/people/firstbirthtalk/view/'+key);
+            } else if(comm_no == 5) {
+                $location.url('/people/booktalk/view/'+key);
+            }
         };
 
-        $scope.openViewScrapModal = function (item, size) {
+
+        /*$scope.openViewScrapModal = function (item, size) {
             var dlg = dialogs.create('myangescrap_view.html',
                 ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
 
-                   /* $scope.getItem('com/webboard', 'item', item, {}, false)
+                   *//* $scope.getItem('com/webboard', 'item', item, {}, false)
                         .then(function(data){
                             $scope.item = data;
                             var files = data.FILES;
@@ -99,8 +113,8 @@ define([
                         .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 
-                    $scope.item = data;*/
-                    /********** 공통 controller 호출 **********/
+                    $scope.item = data;*//*
+                    *//********** 공통 controller 호출 **********//*
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
                     $scope.getItem('com/webboard', 'item', item.NO, {}, false)
@@ -125,13 +139,16 @@ define([
             },function(){
 
             });
-        };
+        };*/
         /********** 화면 초기화 **********/
 /*        $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoard)
             .catch($scope.reportProblems);*/
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .catch($scope.reportProblems);
         $scope.init();
         $scope.getScarpList();
 

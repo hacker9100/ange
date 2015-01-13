@@ -204,6 +204,7 @@ define([
                 $rootScope.role = session.ROLE_ID;
                 $rootScope.menu_role = session.MENU_ROLE;
                 $rootScope.email = session.EMAIL;
+                $rootScope.nick = session.NICK_NM;
 
                 $rootScope.addr = session.ADDR;
                 $rootScope.addr_detail = session.ADDR_DETAIL;

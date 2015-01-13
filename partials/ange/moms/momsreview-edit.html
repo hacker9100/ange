@@ -25,24 +25,24 @@
     <div class="container-fluid peopleboard_edit_topwrap">
 
         <div class="row" style="margin:0px auto; margin-bottom:10px;">
-            <div ng-show="menu == 'experiencereview' || menu == 'eventview'">
+            <div>
 
                 <label class="control-label" style="float:left; width:8%; padding:0; text-align:center; padding:3px 0;">선택</label>
 
                 <div style="float:left; width:91%; padding:0;">
                     <div style="float:left; margin-left:1%;">
-                        <div class="table_gray" style="padding: 4px 0 20px 8px; font-size:0.86em;">회원님은 총 <span class="table_red">{{CNT}}</span> 건의 후기 미션이 있습니다.</div>
+                        <div class="table_gray" style="padding: 4px 0 20px 8px; font-size:0.86em;">회원님은 총 <span class="table_red">{{total_cnt}}</span> 건의 후기 미션이 있습니다.</div>
 
                         <!-- /마감일 임박순 -->
                         <div class="form-group" data-ng-repeat="list in event" style="float:left; font-size: 0.86em; margin:0 5px 15px 5px; line-height:18px;">
-                            <input ng-model="item.TARGET_NO" type="radio" name="reveiw_mission" ng-value="{{list.NO}}" style="float:left; margin:4px 6px 0 4px;">
+                            <input ng-model="item.TARGET_NO" type="radio" id="value_select{{$index}}" name="reveiw_mission1" ng-value="{{list.TARGET_NO}}" style="float:left; margin:4px 6px 0 4px;">
                             <div style="margin-left:22px; word-break: keep-all;">
-                            <span class="table_blue">[2014-11-25 마감] </span>{{list.SUBJECT}}
+                            <span class="table_blue">[{{list.REVIEW_YMD}}] </span>{{list.SUBJECT}}
                             </div>
                         </div>
 
                         <div class="form-group" style="float:left; font-size: 0.86em; margin:0 5px 18px 5px; line-height:18px;">
-                            <input type="radio" name="reveiw_mission" value="{{list.NO}}" style="float:left; margin:4px 6px 0 4px;">
+                            <input ng-model="item.TARGET_NO" type="radio" name="reveiw_mission1" id="general" value="0" style="float:left; margin:4px 6px 0 4px;">
                             <div style="margin-left:22px;">
                                 <strong>일반 쓰기</strong> <span class="table_gray">(공유하고 싶은 정보를 언제든지 자유롭게 등록할 수 있습니다.)</span>
                             </div>
@@ -63,13 +63,13 @@
             <div class="col-xs-3" style="padding:0px;">
 
                 <!-- select class="form-control input-sm" -->   <!-- 일반쓰기는 선택 -->
-                <select class="form-control input-sm" disabled> <!-- 미션 쓰기는 미션선택에 따라 자동 선택되고 disable 됨 -->
+                <select ng-model="item.MENU" id="menu_select" name="menu_select" class="form-control input-sm" disabled> <!-- 미션 쓰기는 미션선택에 따라 자동 선택되고 disable 됨 -->
                     <option>선택하세요.</option>
-                    <option selected>체험단/서평단</option>
-                    <option>이벤트</option>
-                    <option>샘플팩</option>
-                    <option>상품/브랜드</option>
-                    <option>앙쥬서비스</option>
+                    <option value="EXPERIENCE" selected>체험단/서평단</option>
+                    <option value="EVENT">이벤트</option>
+                    <option value="SAMPLE">샘플팩</option>
+                    <option value="PRODUCT">상품/브랜드</option>
+                    <option value="ANGE">앙쥬서비스</option>
                 </select>
 
                 <!-- div class="btn-group" style="width:100%;">
