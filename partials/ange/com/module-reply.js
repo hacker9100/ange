@@ -86,6 +86,43 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
+        // 블라인드 처리 의견
+        $scope.click_blind = function (replyList){
+
+            for(var i=0; i< replyList.length; i++){
+                $scope.item.NO = replyList[i].NO;
+            }
+
+            $scope.updateItem('com/reply', 'blind', {}, $scope.item, false)
+                .then(function(){
+
+                    dialogs.notify('알림', '블라인드 처리가 되었습니다.', {size: 'md'});
+
+                    $scope.replyList = [];
+                    $scope.getReplyList();
+                    $scope.reply.COMMENT = "";
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 블라인드 처리 댓글
+        $scope.click_reblind = function (replyList){
+
+            for(var i=0; i< replyList.length; i++){
+                $scope.item.NO = replyList[i].NO;
+            }
+            $scope.updateItem('com/reply', 'blind', {}, $scope.item, false)
+                .then(function(){
+
+                    dialogs.notify('알림', '블라인드 처리가 되었습니다.', {size: 'md'});
+
+                    $scope.replyList = [];
+                    $scope.getReplyList();
+                    $scope.reply.COMMENT = "";
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
         /********** 화면 초기화 **********/
         $scope.init();
         $scope.getReplyList();

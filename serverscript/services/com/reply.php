@@ -73,7 +73,7 @@
                 //TODO: 조회
                 $sql = "SELECT
                             NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
-                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT
+                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL
                         FROM
                             COM_REPLY R
                         WHERE 1=1
@@ -90,7 +90,7 @@
                     $sql = "SELECT
                                 REPLY_CTE.LEVEL, R.NO, PARENT_NO, PARENT_NO, REPLY_NO, REPLY_GB, COMMENT, REG_UID, NICK_NM, REG_NM, R.TARGET_NO, TARGET_GB,
                                 DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i') AS REG_DT,
-                                (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT
+                                (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, BLIND_FL
                             FROM (
                                 SELECT
                                     REPLY_CONNET_BY_PRIOR_ID(NO) AS NO, @level AS LEVEL, TARGET_NO
@@ -200,48 +200,77 @@
             break;
 
         case "PUT":
-            if (!isset($_key) || $_key == '') {
-                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
-            }
 
-            $err = 0;
-            $msg = "";
+            if($_type == 'blind'){
 
-            $_d->sql_beginTransaction();
+                $_d->sql_beginTransaction();
 
-            $sql = "UPDATE COM_REPLY
-                    SET
-                        PARENT_NO = '".$_model[SUBJECT]."',
-                        REPLY_NO = '".$_model[SUBJECT]."',
-                        REPLY_GB = '".$_model[SUBJECT]."',
-                        COMMENT = '".$_model[SUBJECT]."',
-                        #REG_UID = '".$_SESSION['uid']."',
-                        #NICK_NM = '".$_SESSION['nick']."',
-                        #REG_NM = '".$_SESSION['name']."',
-                        #REG_DT = SYSDATE(),
-                        LIKE_CNT = '".$_model[SUBJECT]."',
-                        TARGET_NO = '".$_model[SUBJECT]."',
-                        TARGET_GB = '".$_model[SUBJECT]."'
-                    WHERE
-                        NO = ".$_key."
-                    ";
+                $sql = "UPDATE COM_REPLY
+                        SET
+                            BLIND_FL = 'Y'
+                        WHERE
+                            NO = ".$_model[NO]."
+                        ";
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("수정실패입니다:".$msg);
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+
             }else{
-                $_d->sql_commit();
-                $_d->succEnd($no);
-            }
+                if (!isset($_key) || $_key == '') {
+                    $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
+                }
 
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
+
+                $sql = "UPDATE COM_REPLY
+                        SET
+                            PARENT_NO = '".$_model[SUBJECT]."',
+                            REPLY_NO = '".$_model[SUBJECT]."',
+                            REPLY_GB = '".$_model[SUBJECT]."',
+                            COMMENT = '".$_model[SUBJECT]."',
+                            #REG_UID = '".$_SESSION['uid']."',
+                            #NICK_NM = '".$_SESSION['nick']."',
+                            #REG_NM = '".$_SESSION['name']."',
+                            #REG_DT = SYSDATE(),
+                            LIKE_CNT = '".$_model[SUBJECT]."',
+                            TARGET_NO = '".$_model[SUBJECT]."',
+                            TARGET_GB = '".$_model[SUBJECT]."'
+                        WHERE
+                            NO = ".$_key."
+                        ";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+            }
             break;
 
         case "DELETE":

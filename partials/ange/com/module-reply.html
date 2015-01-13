@@ -32,11 +32,11 @@
                 <dt>{{replyItem.NICK_NM}}</dt>
                 <dd><div class="people_view_replys_date">{{replyItem.REG_DT}}</div></dd>
                 <dd style="margin:0px;">
-                    {{replyItem.COMMENT}}
+                    {{replyItem.BLIND_FL == 'N' ? replyItem.COMMENT : '관리자에 의해 블라인드 된 의견입니다'}}<!--{{replyItem.COMMENT}}-->
                     <p style="font-size:0.86em; margin:4px 0 0 0; ">
                         <a ng-click="showDetails = ! showDetails"><span style="color: #df5348">({{replyItem.RE_COUNT}})</span> 댓글</a>
                         &nbsp; | &nbsp;<a href="#">신고</a>
-                        &nbsp; | &nbsp;<a href="#" class="table_red">블라인드</a> <!-- 관리자 또는 방장에게만 보여집니다. -->
+                        &nbsp; | &nbsp;<a ng-click="click_blind(replyList);" class="table_red">블라인드</a> <!-- 관리자 또는 방장에게만 보여집니다. -->
                     </p>
                 </dd>
             </dl>
@@ -49,11 +49,11 @@
                             <div class="smalldate">
                                 {{reItem.REG_DT}}
                                 <a href="#">신고</a>
-                                <a href="#" class="table_red">블라인드</a> <!-- 관리자 또는 방장에게만 보여집니다. -->
+                                <a ng-click="click_reblind(replyItem.REPLY_COMMENT);" class="table_red">블라인드</a> <!-- 관리자 또는 방장에게만 보여집니다. -->
                             </div>
                         </small>
                     </dt>
-                    <dd>{{reItem.COMMENT}}</dd>
+                    <dd>{{reItem.BLIND_FL == 'N' ? reItem.COMMENT : '관리자에 의해 블라인드된 댓글입니다'}}</dd>
                 </dl>
 
                 <center>
