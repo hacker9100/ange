@@ -320,7 +320,7 @@ define([
                 $scope.portletTitle = $scope.option.title;
 
                 // 탭 번호
-                $scope.tabIdx = 0;
+                $scope.tabIdx = $scope.option.defIdx;
 
                 // 페이징
                 $scope.PAGE_NO = 0;
@@ -332,7 +332,11 @@ define([
 
                 // 검색 조건에 커뮤니티 번호 추가
                 if ($scope.option.tab != undefined) {
-                    $scope.search.COMM_NO = $scope.option.tab[$scope.tabIdx].no;
+                    if ($scope.option.type == 'review') {
+                        $scope.search.TARGET_GB = $scope.option.tab[$scope.tabIdx].no;
+                    } else {
+                        $scope.search.COMM_NO = $scope.option.tab[$scope.tabIdx].no;
+                    }
                 }
 
                 // 검색 조건에 대표 이미지 여부 추가
@@ -344,10 +348,15 @@ define([
                 // 탭 클릭
                 $scope.click_tabIndex = function (idx) {
                     $scope.tabIdx = idx;
-                    $scope.search.COMM_NO = $scope.option.tab[$scope.tabIdx].no;
+
+                    if ($scope.option.type == 'review') {
+                        $scope.search.TARGET_GB = $scope.option.tab[$scope.tabIdx].no;
+                    } else {
+                        $scope.search.COMM_NO = $scope.option.tab[$scope.tabIdx].no;
+                    }
 
                     // 탭 번호로 리스트 조회
-                    $scope.getPortletList();
+                    $scope.getMiniList();
                 }
 
                 // 더보기 버튼 클릭
@@ -370,7 +379,7 @@ define([
                 };
 
                 // 리스트 조회
-                $scope.getPortletList = function () {
+                $scope.getMiniList = function () {
                     $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, false)
                         .then(function(data){
                             $scope.list = data;
@@ -384,7 +393,7 @@ define([
                         .catch(function(error){$scope.list = [];});
                 };
 
-                $scope.getPortletList();
+                $scope.getMiniList();
             }]
         }
     }]);
@@ -657,8 +666,13 @@ define([
                 $scope.PAGE_SIZE = $scope.option.size;
 
                 // 검색 조건 추가
-                if ($scope.option.api == 'ad/banner') {
+                if ($scope.option.type == 'banner') {
                     $scope.search.LOCATION_GB = $scope.option.gb;
+                } else if ($scope.option.type == 'experience') {
+                    $scope.search.EVENT_GB = "EXPERIENCE";
+                    $scope.search.PROCESS = "process";
+                } else if ($scope.option.type == 'event') {
+                    $scope.search.EVENT_GB = "EVENT";
                 }
 
                 /********** 이벤트 **********/
@@ -683,9 +697,19 @@ define([
                     $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             for (var i in data) {
-                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+//                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+                                var url = '';
+                                if ($scope.option.type == 'banner') {
+                                    url = '<a href="'+data[i].URL+'" target="_blank">';
+                                } else if ($scope.option.type == 'experience') {
+                                    url = '<a href="#/moms/experienceprocess/view/'+data[i].NO+'">';
+                                } else if ($scope.option.type == 'event') {
+                                    url = '<a href="#/moms/eventprocess/view/'+data[i].NO+'">';
+                                }
+
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><a href="'+data[i].URL+'" target="_blank"><img src="'+img+'"/></a></div></div>');
+//                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><a href="'+data[i].URL+'" target="_blank"><img src="'+img+'"/></a></div></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
                             }
 
                             // 광고의 롤링을 실행

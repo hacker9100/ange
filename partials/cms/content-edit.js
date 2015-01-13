@@ -300,7 +300,7 @@ define([
         $scope.getTask = function () {
             var deferred = $q.defer();
             $q.all([
-                    $scope.getItem('cms/task', 'item', $stateParams.id, {}, false).then(function(data){console.log(data); $scope.task = data;}),
+                    $scope.getItem('cms/task', 'item', $stateParams.id, {}, false).then(function(data){$scope.task = data;}),
                     $scope.getItem('cms/content', 'item', $stateParams.id, {}, false).then(function(data){
                         $scope.item = data;
 

@@ -59,7 +59,7 @@
 
                 $sql = "SELECT
                             C.NO, C.SUPER_NO, C.PHASE, C.VERSION, C.BODY, C.CONTENT_ST, C.REG_UID, C.REG_NM, DATE_FORMAT(C.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            C.CURRENT_FL, C.MODIFY_FL, C.HIT_CNT, C.SCRAP_CNT, C.TASK_NO, T.EDITOR_ID
+                            C.CURRENT_FL, C.MODIFY_FL, C.HIT_CNT, C.SCRAP_CNT, C.TASK_NO, T.EDITOR_ID, T.SUMMARY
                         FROM
                             CMS_CONTENT C, CMS_TASK T
                         WHERE
@@ -303,7 +303,8 @@
 
                 $sql = "UPDATE CMS_TASK
                         SET
-                            PHASE = '".$_model[PHASE]."'
+                            PHASE = '".$_model[PHASE]."',
+                            SUMMARY = '".$_model[SUMMARY]."'
                         WHERE
                             NO = ".$task_no."
                         ";
@@ -830,7 +831,8 @@
                 if (trim($task_phase) != "") {
                     $sql = "UPDATE CMS_TASK
                             SET
-                                PHASE = '".$task_phase."'
+                                PHASE = '".$task_phase."',
+                                SUMMARY = '".$_model[SUMMARY]."'
                             WHERE
                                 NO = ".$task_no."
                             ";

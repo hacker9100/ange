@@ -1,45 +1,46 @@
-<div class="comp_basic h-cell-dynamic">
-    <!-- jumbotron_cover -->
-    <div class="jumbotron_cover">
+<!-- jumbotron_cover -->
+<div class="jumbotron_cover">
 
-        <div class="jumbotron_cover_imgs">
-            <div id="jumbotron_cover" class="carousel slide" data-ride="carousel">
-                <!-- 슬라이드 주요 속성
-                    dots: 하단 점 표시,
-                    autoplay: 자동 롤링,
-                    center-mode: 해당 이미지를 가운데로,
-                    slides-to-show: 슬라이드에 보여지는 이미지 수,
-                    slides-to-scroll: 슬라이드되는 이미지 수,
-                    autoplay-speed: 자동 롤링 속도,
-                    pause-on-hove: 마우스 오버 시 동작
-                -->
-                <slick id="{{ option.id }}" current-index="0" dots="true" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false"></slick>
+    <div ng-show="option.id ==  'experience'" style="position:absolute; width:100%; z-index:9; text-align:center;"><img src="/imgs/ange/ribon_exper_now.jpg" style="opacity:0.8"/></div>
+    <div ng-show="option.id ==  'event'" style="position:absolute; width:100%; z-index:9; text-align:center;"><img src="/imgs/ange/ribon_event_now.jpg" style="opacity:0.8"/></div>
 
-                <!--<div class="carousel-inner" role="listbox">-->
-                <!--<div class="item active"><img src="imgs/ange/temp/events_bg_001_pic.jpg" alt="First Label"></div>-->
-                <!--<div class="item"><img src="storage/ad/thumbnail/2" alt="First Label"></div>-->
-                <!--</div>-->
-            </div>
-        </div>
+    <div class="jumbotron_cover_imgs" style="padding-bottom:45px;">
+        <div id="jumbotron_cover" class="carousel slide" data-ride="carousel">
+            <!-- 슬라이드 주요 속성
+                dots: 하단 점 표시,
+                autoplay: 자동 롤링,
+                center-mode: 해당 이미지를 가운데로,
+                slides-to-show: 슬라이드에 보여지는 이미지 수,
+                slides-to-scroll: 슬라이드되는 이미지 수,
+                autoplay-speed: 자동 롤링 속도,
+                pause-on-hove: 마우스 오버 시 동작
+            -->
+            <slick id="{{ option.id }}" current-index="0" dots="true" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false"></slick>
 
-        <div class="jumbotron_cover_controlbar">
-            <div class="black_shade_nomargin"></div>
-
-            <div class="jumbotron_cover_controlset">
-                <a ng-show="toggle" class="jumbotron_cover_pause" ng-click="click_slickPause()">일시정지</a>
-                <a ng-show="!toggle" class="jumbotron_cover_play" ng-click="click_slickPlay()">동작</a>
-                <!-- a class="jumbotron_cover_play">재생</a --> <!-- 일시정지 시에 표시 -->
-
-                <!--<ol class="carousel-indicators jumbotron_indicators_wrap">-->
-                <!--<li data-target="#jumbotron_cover" data-slide-to="0" class="jumbotron_indicators_actived"></li>-->
-                <!--<li data-target="#jumbotron_cover" data-slide-to="1" class="jumbotron_indicators"></li>-->
-                <!--<li data-target="#jumbotron_cover" data-slide-to="2" class="jumbotron_indicators"></li>-->
-                <!--</ol>-->
-            </div>
-
-            <div class="jumbotron_cover_controlbar_title">{{ coverTitle }}</div>
-
+            <!--<div class="carousel-inner" role="listbox">-->
+            <!--<div class="item active"><img src="imgs/ange/temp/events_bg_001_pic.jpg" alt="First Label"></div>-->
+            <!--<div class="item"><img src="storage/ad/thumbnail/2" alt="First Label"></div>-->
+            <!--</div>-->
         </div>
     </div>
-    <!-- /jumbotron_cover -->
+
+    <div class="jumbotron_cover_controlbar">
+        <div class="black_shade_nomargin"></div>
+
+        <div class="jumbotron_cover_controlset">
+            <a ng-show="toggle" class="jumbotron_cover_pause" ng-click="click_slickPause()">일시정지</a>
+            <a ng-show="!toggle" class="jumbotron_cover_play" ng-click="click_slickPlay()">동작</a>
+            <!-- a class="jumbotron_cover_play">재생</a --> <!-- 일시정지 시에 표시 -->
+
+            <!--<ol class="carousel-indicators jumbotron_indicators_wrap">-->
+            <!--<li data-target="#jumbotron_cover" data-slide-to="0" class="jumbotron_indicators_actived"></li>-->
+            <!--<li data-target="#jumbotron_cover" data-slide-to="1" class="jumbotron_indicators"></li>-->
+            <!--<li data-target="#jumbotron_cover" data-slide-to="2" class="jumbotron_indicators"></li>-->
+            <!--</ol>-->
+        </div>
+
+        <div class="jumbotron_cover_controlbar_title">{{ coverTitle }}</div>
+
+    </div>
 </div>
+<!-- /jumbotron_cover -->

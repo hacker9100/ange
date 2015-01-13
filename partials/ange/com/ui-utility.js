@@ -21,7 +21,7 @@ define([
         };
 
         $scope.click_joinMember = function () {
-            $location.url('join/join-terms');
+            $location.url('join/signon');
         };
 
         // 로그인 모달창

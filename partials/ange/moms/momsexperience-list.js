@@ -29,6 +29,7 @@ define([
                     var scope = angular.element($("#listr")).scope();
                     scope.$apply(function(){
                         scope.count = scope.count + 4;
+                        alert("-->>")
                     });
                 }
             });

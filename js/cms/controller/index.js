@@ -32,7 +32,7 @@ define([
     '../../../partials/cms/task-list',
     '../../../partials/cms/task-edit.min',
     '../../../partials/cms/task-view.min',
-    '../../../partials/cms/content-edit.min',
+    '../../../partials/cms/content-edit',
     '../../../partials/cms/content-view.min',
     '../../../partials/cms/publish-list.min',
     '../../../partials/cms/publish-edit.min',

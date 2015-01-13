@@ -115,39 +115,39 @@
                     <!-- 앙쥬 스페셜 -->
 
 
-                    <div class="pin" ng-repeat="item in list" ng-switch="item.TYPE">
-                        <!-- 광고유형 -->
-                        <div ng-switch-when="ADVERT" ng-click="click_showContentDetail(item)">
-                            <div class="story_thumbnails" style="background-image: url('{{item.FILE}}');">
-                                <img src="/imgs/ange/_blank_4by3.gif" />
-                            </div>
+                    <!--<div class="pin" ng-repeat="item in list" ng-switch="item.TYPE">-->
+                        <!--&lt;!&ndash; 광고유형 &ndash;&gt;-->
+                        <!--<div ng-switch-when="ADVERT" ng-click="click_showContentDetail(item)">-->
+                            <!--<div class="story_thumbnails" style="background-image: url('{{item.FILE}}');">-->
+                                <!--<img src="/imgs/ange/_blank_4by3.gif" />-->
+                            <!--</div>-->
 
-                            <!-- img src="{{item.FILE}}" /-->
-                            <div class="storybodytxt">
-                                <span class="table_red story_bubbletitle">AD 임신부, 여름 음식 안전...</span>
-                                임신을 하면 많은 변화를 경험하게 된다. 월경을 하지 않고, 유방 통증, 잦은 배뇨, 입덧 등의 신체 변화를 비롯해 롤러코스터를 탄 듯 종잡을 수 없는 감정 기복을 겪는 등 심리적 변화도 경험한다. 이 중에서도 심리적 변화는 자신은 물론, 주변 사람들에게까지 영향을 미치기 때문에 신체 변화보다 심각한 상황을 초래하기도
-                            </div>
+                            <!--&lt;!&ndash; img src="{{item.FILE}}" /&ndash;&gt;-->
+                            <!--<div class="storybodytxt">-->
+                                <!--<span class="table_red story_bubbletitle">AD 임신부, 여름 음식 안전...</span>-->
+                                <!--임신을 하면 많은 변화를 경험하게 된다. 월경을 하지 않고, 유방 통증, 잦은 배뇨, 입덧 등의 신체 변화를 비롯해 롤러코스터를 탄 듯 종잡을 수 없는 감정 기복을 겪는 등 심리적 변화도 경험한다. 이 중에서도 심리적 변화는 자신은 물론, 주변 사람들에게까지 영향을 미치기 때문에 신체 변화보다 심각한 상황을 초래하기도-->
+                            <!--</div>-->
 
-                            <a ng-class="item.LIKE_FL == 1 ? 'icon_like_on' : 'icon_like'" title="공감한 스토리는 자동으로 스크랩됩니다.">좋아요?</a>
-                            <a class="miniboard_tab_more" tytle="더보기" style="margin-right:0;">더보기</a>
-                        </div>
-                        <!-- 광고유형 -->
+                            <!--<a ng-class="item.LIKE_FL == 1 ? 'icon_like_on' : 'icon_like'" title="공감한 스토리는 자동으로 스크랩됩니다.">좋아요?</a>-->
+                            <!--<a class="miniboard_tab_more" tytle="더보기" style="margin-right:0;">더보기</a>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash; 광고유형 &ndash;&gt;-->
 
-                        <div ng-switch-when="CONTENT" ng-click="click_showContentDetail(item)">
-                            <div class="story_thumbnails" style="background-image: url('{{item.FILE}}');">
-                                <img src="/imgs/ange/_blank_4by3.gif" />
-                            </div>
+                        <!--<div ng-switch-when="CONTENT" ng-click="click_showContentDetail(item)">-->
+                            <!--<div class="story_thumbnails" style="background-image: url('{{item.FILE}}');">-->
+                                <!--<img src="/imgs/ange/_blank_4by3.gif" />-->
+                            <!--</div>-->
 
-                            <!-- img src="{{item.FILE}}" /-->
-                            <div class="storybodytxt">
-                                <span class="table_blue story_bubbletitle">임신부, 여름 음식 안전...</span>
-                                임신을 하면 많은 변화를 경험하게 된다. 월경을 하지 않고, 유방 통증, 잦은 배뇨, 입덧 등의 신체 변화를 비롯해 롤러코스터를 탄 듯 종잡을 수 없는 감정 기복을 겪는 등 심리적 변화도 경험한다. 이 중에서도 심리적 변화는 자신은 물론, 주변 사람들에게까지 영향을 미치기 때문에 신체 변화보다 심각한 상황을 초래하기도
-                            </div>
+                            <!--&lt;!&ndash; img src="{{item.FILE}}" /&ndash;&gt;-->
+                            <!--<div class="storybodytxt">-->
+                                <!--<span class="table_blue story_bubbletitle">임신부, 여름 음식 안전...</span>-->
+                                <!--임신을 하면 많은 변화를 경험하게 된다. 월경을 하지 않고, 유방 통증, 잦은 배뇨, 입덧 등의 신체 변화를 비롯해 롤러코스터를 탄 듯 종잡을 수 없는 감정 기복을 겪는 등 심리적 변화도 경험한다. 이 중에서도 심리적 변화는 자신은 물론, 주변 사람들에게까지 영향을 미치기 때문에 신체 변화보다 심각한 상황을 초래하기도-->
+                            <!--</div>-->
 
-                            <a ng-class="item.LIKE_FL == 'Y' ? 'icon_like_on' : 'icon_like'" title="공감한 스토리는 자동으로 스크랩됩니다." ng-click="click_addLike($index, item)">좋아요?</a>
-                            <a class="miniboard_tab_more" tytle="더보기" style="margin-right:0;">더보기</a>
-                        </div>
-                    </div>
+                            <!--<a ng-class="item.LIKE_FL == 'Y' ? 'icon_like_on' : 'icon_like'" title="공감한 스토리는 자동으로 스크랩됩니다." ng-click="click_addLike($index, item)">좋아요?</a>-->
+                            <!--<a class="miniboard_tab_more" tytle="더보기" style="margin-right:0;">더보기</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
                 </div>
 
             <div ng-show="busy && !end"><center><span> - 리스트가 로딩 중입니다. - </span></center></div>

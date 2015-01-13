@@ -123,11 +123,23 @@
 
     <div ng-model="item" class="col-xs-12 row" style="margin:0px auto;" ng-init="scope = { isDisabled: false }">
         <form role="form" name="editForm" class="form-horizontal form_basic_100">
-            <!-- div class= "form-group form_basic_group">
+            <!--<div class= "form-group form_basic_group">-->
+                <!--<H5 style="line-height:8px; margin:0;">-->
+                    <!--<span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> <span class="label label-default">편집기</span>를 이용하여 작성합니다.-->
+                <!--</H5>-->
+            <!--</div>-->
+
+            <div class= "form-group form_basic_group">
                 <H5 style="line-height:8px; margin:0;">
-                    <span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> <span class="label label-default">편집기</span>를 이용하여 작성합니다.
+                    <span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> <span class="label label-default"></span>요약
                 </H5>
-            </div -->
+            </div>
+
+            <div class= "form-group form_basic_group" style="padding-bottom:20px;">
+                <div class= "col-xs-12">
+                    <textarea ng-model="item.SUMMARY" class= "form-control" placeholder= "내용 요약.."/>
+                </div>
+            </div>
 
             <div class= "form-group form_basic_group" style="float:left;">
 

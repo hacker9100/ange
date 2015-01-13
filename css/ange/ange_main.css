@@ -87,6 +87,10 @@ li.jumbotron_indicators_actived {
 	position:absolute; 
 	right: 16px;
 	color: #fff;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width: 55%;
 }
 
 /* --- jumbotron_cover  */
@@ -286,9 +290,13 @@ div.mini_board_contents:hover {
 }
 
 .mini_story_txt_title {
-	float:left; 
+    float:left;
 	margin-left:5px;
-	color:#333333; 
+	color:#333333;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width: 55%;
 }
 
 .mini_story_contentbox{
@@ -445,6 +453,10 @@ div.mini_community_contents:hover {
 	margin-left:5px;
 	color:#333333; 
 	line-height: 1.08em;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    width:45%;
 }
 
 /* - mini_community */

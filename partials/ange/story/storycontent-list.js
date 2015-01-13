@@ -11,11 +11,39 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller("storycontent-list", ['$scope', '$stateParams', '$sce', '$rootScope', '$location', '$modal', 'dialogs', 'UPLOAD', function($scope, $stateParams, $sce, $rootScope, $location, $modal, dialogs, UPLOAD) {
+    controllers.controller("storycontent-list", ['$scope', '$stateParams', '$sce', '$rootScope', '$location', '$modal', '$timeout', 'dialogs', 'UPLOAD', function($scope, $stateParams, $sce, $rootScope, $location, $modal, $timeout, dialogs, UPLOAD) {
+        angular.element(document).ready(function () {
+            angular.element(window).scroll(function () {
+                $timeout(function(){
+                    //$scope.images;
+                    $scope.isLoading = false;
+                },1000);
+
+                $timeout(function() {
+                    $scope.isLoading = true;
+                });
+
+//                console.log("scrollTop : "+Math.round(angular.element(document).scrollTop()));
+//                console.log("document-window : "+ (angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)));
+
+                if (Math.round(angular.element(window).scrollTop()) >= angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)) {
+                    if (!$scope.busy) {
+                        $scope.PAGE_NO++;
+                        $scope.getContentList();
+                    }
+//                    var scope = angular.element($("#listr")).scope();
+//                    scope.$apply(function(){
+//                        scope.PAGE_NO++;
+//                        $scope.getContentList();
+//                    });
+                }
+            });
+        });
 
         /********** 초기화 **********/
         $scope.$parent.reload = false;
         $scope.busy = false;
+        $scope.end = false;
         $scope.list = [];
         $scope.search = {PHASE: '30, 31', CONETNT: true};
 
@@ -45,9 +73,9 @@ define([
 //            }
 //        };
 
-            // 이미지 조회
+        // 이미지 조회
         $scope.$parent.getContentList = function () {
-
+            $scope.busy = true;
             if ($scope.$parent.reload) $scope.list = [];
 
 //            if ($scope.category != '') {
@@ -112,7 +140,7 @@ define([
                     $scope.$parent.reload = false;
                     $scope.busy = false;
                 })
-                .catch(function(error){});
+                .catch(function(error){$scope.end = true;});
         };
 
         // 광고 조회
@@ -133,10 +161,11 @@ define([
                 .catch(function(error){});
         };
 
-        // 콘텐츠 클릭 조회
+        // 공감 클릭
         $scope.click_addLike = function (idx, item) {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
                 dialogs.notify('알림', '로그인 후 공감 할 수 있습니다.', {size: 'md'});
+                return;
             }
 
             $scope.likeItem = {};
@@ -148,6 +177,7 @@ define([
                 .then(function(){
                     var afterLike = item.LIKE_FL == 'Y' ? 'N' : 'Y';
                     $scope.list[idx].LIKE_FL = afterLike;
+                    $scope.list[idx].LIKE_CNT = item.LIKE_FL == 'Y' ? parseInt($scope.list[idx].LIKE_CNT) + 1 : parseInt($scope.list[idx].LIKE_CNT) - 1;
                     if (afterLike == 'Y') {
                         dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
                     } else {

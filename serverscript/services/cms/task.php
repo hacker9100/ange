@@ -50,13 +50,15 @@
         case "GET":
             if ($_type == 'item') {
                 $sql = "SELECT
-                            P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
-                            T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SERIES_NM, C.SEASON_NM, C.SECTION_NM, P.YEAR, T.LIKE_CNT, T.HIT_CNT, SCRAP_CNT, REPLY_CNT
+                            P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
+                            T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SERIES_NM, C.SEASON_NM, C.SECTION_NM, P.YEAR, T.LIKE_CNT, T.HIT_CNT, SCRAP_CNT, REPLY_CNT,
+                            CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL
                         FROM
                             CMS_TASK T
                             INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
                             LEFT OUTER JOIN CMS_SERIES S ON S.NO = P.SERIES_NO
                             LEFT OUTER JOIN CMS_SECTION C ON T.SECTION_NO = C.NO
+                            LEFT OUTER JOIN ANGE_LIKE L ON T.NO = L.TARGET_NO AND L.TARGET_GB = 'CONTENT' AND L.REG_UID = '".$_SESSION['uid']."'
                         WHERE
                             T.NO = ".$_key."
                         ";
@@ -213,8 +215,9 @@
                                     $where_category .= $category[NO].($i != count($_search[CATEGORY]) - 1 ? "," : "");
                                 }
 //                            }
+                        }
 
-                            $from_category .= ",(
+                        $from_category .= ",(
                                               SELECT
                                                   TARGET_NO
                                               FROM
@@ -222,7 +225,6 @@
                                               WHERE CATEGORY_NO IN (".$where_category.")
                                               GROUP BY TARGET_NO
                                           ) AS TEMP2 ";
-                        }
 
                         $search_where .= "AND TEMP2.TARGET_NO = T.NO ";
                     }
@@ -230,13 +232,13 @@
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            PROJECT_NM, NO, PHASE, SUBJECT, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+                            PROJECT_NM, NO, PHASE, SUBJECT, SUMMARY, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                             CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM, (SELECT SECTION_NM FROM CMS_SECTION S WHERE S.NO = SECTION_NO) AS SECTION_NM,
                             HIT_CNT, SCRAP_CNT, LIKE_CNT, REPLY_CNT, LIKE_FL
                         FROM
                         (
                             SELECT
-                                P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
+                                P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
                                 T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, T.HIT_CNT, T.SCRAP_CNT, T.LIKE_CNT, T.REPLY_CNT, S.SERIES_NM,
                                 CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL
                             FROM
