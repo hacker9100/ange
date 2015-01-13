@@ -109,7 +109,7 @@ define([
                 $scope.search['COMM_NO'] = '8';
             }
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
 
@@ -172,7 +172,7 @@ define([
             $scope.search.ORDER = 'DESC';
             $scope.search.FILE = true;
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
@@ -205,6 +205,11 @@ define([
 
         // 등록 버튼 클릭
         $scope.click_showCreatePeopleBoard = function () {
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
 
             if ($stateParams.menu == 'angemodel') {
                 $location.url('/people/angemodel/edit/0');

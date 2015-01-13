@@ -136,6 +136,11 @@ define([
 
         // 등록 버튼 클릭
         $scope.click_showCreatePeopleBoard = function () {
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
             $location.url('/people/'+$stateParams.menu+'/edit/0');
         };
 

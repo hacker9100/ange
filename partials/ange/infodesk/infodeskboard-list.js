@@ -150,6 +150,11 @@ define([
         // 등록 버튼 클릭
         $scope.click_showCreatePeopleBoard = function () {
 
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
             if ($stateParams.menu == 'notice') {
                 $location.url('/infodesk/notice/edit/0');
             } else if($stateParams.menu == 'system') {

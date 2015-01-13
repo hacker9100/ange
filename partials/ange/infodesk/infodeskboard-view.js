@@ -314,6 +314,11 @@ define([
         // 공감
         $scope.click_likeCntAdd = function(item){
 
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 공감이 가능합니다.', {size: 'md'});
+                return;
+            }
+
             $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
                 .then(function(){
 
@@ -325,6 +330,11 @@ define([
 
         // 스크랩
         $scope.click_scrapAdd = function(item){
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 스크랩이 가능합니다.', {size: 'md'});
+                return;
+            }
 
             $scope.search['TARGET_NO'] = item.NO;
 
