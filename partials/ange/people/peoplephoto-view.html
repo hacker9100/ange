@@ -201,35 +201,35 @@
                             </div><!-- /.container -->
 
                             <div ng-show="item.REPLY_FL == 'Y'">
-                                <div class="container-fluid peopleboard_view_commentwrap" ng-show="uid != '' && uid != null">
+                                <!--<div class="container-fluid peopleboard_view_commentwrap" ng-show="uid != '' && uid != null">
                                     <div class="row peopleboard_view_commenttop">
                                         <div class="col-xs-12 peopleboard_view_commenttitle">
                                             <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">의견쓰기</span>
                                             <small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>
-                                        </div><!-- /.col-xs-12-->
-                                    </div><!-- /.row -->
+                                        </div>&lt;!&ndash; /.col-xs-12&ndash;&gt;
+                                    </div>&lt;!&ndash; /.row &ndash;&gt;
 
                                     <div class="row peopleboard_view_commentbox">
                                         <div class="col-xs-10 peopleboard_view_text">
                                             <textarea ng-model="item.COMMENT" class="form-control" rows="4"></textarea>
-                                        </div><!-- /.col-xs-10-->
+                                        </div>&lt;!&ndash; /.col-xs-10&ndash;&gt;
                                         <div class="col-xs-2 peopleboard_view_btns">
 
                                             <span>(500자 이내)</span>
                                             <a class="reply_submit" ng-click="click_savePeopleBoardComment();">댓글등록</a>
 
-                                        </div><!-- /.col-xs-2-->
-                                    </div><!-- /.row -->
-                                </div><!-- /.container -->
+                                        </div>&lt;!&ndash; /.col-xs-2&ndash;&gt;
+                                    </div>&lt;!&ndash; /.row &ndash;&gt;
+                                </div>&lt;!&ndash; /.container &ndash;&gt;-->
 
 
-                                <div class="container-fluid people_view_replywrap" >
+                                <!--<div class="container-fluid people_view_replywrap" >
                                     <div class="row">
 
                                         <div class="col-xs-12 people_view_replytop">
                                             <a class="reply_sort idx" title="등록순으로 정렬"></a>
-                                            <a class="reply_sort date selected" title="최신글 순으로 정렬"></a> <!-- 선택되어 있을 경우 class에 selected 추가 -->
-                                        </div><!-- /.col-xs-12-->
+                                            <a class="reply_sort date selected" title="최신글 순으로 정렬"></a> &lt;!&ndash; 선택되어 있을 경우 class에 selected 추가 &ndash;&gt;
+                                        </div>&lt;!&ndash; /.col-xs-12&ndash;&gt;
 
 
 
@@ -242,12 +242,12 @@
                                                     <p style="font-size:0.86em; margin:4px 0 0 0; " ng-show="uid != '' && uid != null">
                                                         <a ng-click="showDetails = ! showDetails"><span style="color: #df5348">({{item.RE_COUNT}})</span> 댓글</a>
                                                         &nbsp; | &nbsp;<a href="#">신고</a>
-                                                        &nbsp; | &nbsp;<a href="#" class="table_red">블라인드</a> <!-- 관리자 또는 방장에게만 보여집니다. -->
+                                                        &nbsp; | &nbsp;<a href="#" class="table_red">블라인드</a> &lt;!&ndash; 관리자 또는 방장에게만 보여집니다. &ndash;&gt;
                                                     </p>
                                                 </dd>
                                             </dl>
 
-                                            <div class="reply_child"  ng-class="{ 'hidden': ! showDetails }"> <!--ng-class="{ 'hidden': ! showDetails }"-->
+                                            <div class="reply_child"  ng-class="{ 'hidden': ! showDetails }"> &lt;!&ndash;ng-class="{ 'hidden': ! showDetails }"&ndash;&gt;
                                                 <dl ng-repeat="reItem in item.REPLY_COMMENT">
                                                     <dt>
                                                         <span>└&nbsp;</span>{{reItem.NICK_NM}}
@@ -255,7 +255,7 @@
                                                             <div class="smalldate">
                                                                 {{reItem.REG_DT}}
                                                                 <a href="#">신고</a>
-                                                                <a href="#" class="table_red">블라인드</a> <!-- 관리자 또는 방장에게만 보여집니다. -->
+                                                                <a href="#" class="table_red">블라인드</a> &lt;!&ndash; 관리자 또는 방장에게만 보여집니다. &ndash;&gt;
                                                             </div>
                                                         </small>
                                                     </dt>
@@ -276,8 +276,8 @@
                                                         <button type="button" class="btn btn-default" ng-click="click_savePeopleBoardReComment(item);">등록</button>
                                                     </form>
                                                 </center>
-                                            </div><!-- /.reply_child -->
-                                        </div><!-- /.people_view_replys-->
+                                            </div>&lt;!&ndash; /.reply_child &ndash;&gt;
+                                        </div>&lt;!&ndash; /.people_view_replys&ndash;&gt;
 
                                         <div class="col-xs-12 people_view_replys" data-ng-show="replyList == ''">
                                             <dl class="dl-horizontal" >
@@ -289,8 +289,11 @@
                                             </dl>
                                         </div>
 
-                                    </div><!-- /.row -->
-                                </div><!-- /.container -->
+                                    </div>&lt;!&ndash; /.row &ndash;&gt;
+                                </div>&lt;!&ndash; /.container &ndash;&gt;-->
+                                <div class="people_view_replys">
+                                    <module-reply></module-reply>
+                                </div>
                             </div>
 
                     </div>

@@ -21,6 +21,9 @@ define([
         $scope.showDetails = false;
         $scope.search = {SYSTEM_GB: 'ANGE'};
 
+        $scope.TARGET_NO = $stateParams.id;
+        $scope.TARGET_GB = 'BOARD';
+
 
         $scope.replyList = [];
 
