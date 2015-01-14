@@ -159,11 +159,13 @@
                                 ";
                 }
 
+                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+                    $search_common .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                }
+
                 $search_where = $search_common;
 
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' AND BODY LIKE '%".$_search[KEYWORD]."%'";
-                }
+
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
                     $sort_order .= ", ".$_search[SORT]." ".$_search[ORDER]." ";
@@ -193,7 +195,7 @@
                             WHERE
                                 NOTICE_FL = 'Y'
                                 AND PARENT_NO = 0
-                                ".$search_common;
+                                ".$search_common."";
 
                 $select2 = "SELECT
                                 '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
@@ -206,7 +208,7 @@
                                 1=1
                                 AND NOTICE_FL = 'N'
                                 AND PARENT_NO = 0
-                                ".$search_common;
+                                ".$search_common;"";
 
                 if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] == "Y") {
                     $sql .= $select1;
