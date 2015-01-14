@@ -164,11 +164,15 @@ define([
                         $scope.item = data;
                         $scope.item.BOARD_NO = data.BOARD_NO;
 
+                        console.log($scope.item.END_YMD);
+
                         if($scope.item.END_YMD >= $scope.todayDate){
                             $scope.showForm = "compForm";
                         }else{
                             $scope.showForm = "reviewForm";
                         }
+
+                        console.log($scope.showForm);
 
                         $scope.search.TARGET_NO = $stateParams.id;
                     })

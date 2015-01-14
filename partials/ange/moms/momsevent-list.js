@@ -27,6 +27,17 @@ define([
                 $scope.search.EVENT_GB = "EVENT";
                 $scope.search.PERFORM_FL = "Y";
             }
+
+            var date = new Date();
+
+            // GET YYYY, MM AND DD FROM THE DATE OBJECT
+            var year = date.getFullYear().toString();
+            var mm = (date.getMonth()+1).toString();
+            var dd  = date.getDate().toString();
+
+            var today = year+'-'+mm+'-'+dd;
+
+            $scope.todayDate = today;
         };
 
         /********** 이벤트 **********/
@@ -65,10 +76,19 @@ define([
             /*            $scope.search.SORT = 'NOTICE_FL';
              $scope.search.ORDER = 'DESC'*/
 
-            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: 10}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
+
+
+                    var endDate = data[0].END_YMD;
+
+                    if(endDate >= $scope.todayDate){
+                        $scope.showForm = "compForm";
+                    }else{
+                        $scope.showForm = "reviewForm";
+                    }
 
 
                     for(var i in data) {
