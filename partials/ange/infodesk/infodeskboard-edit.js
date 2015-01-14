@@ -38,6 +38,7 @@ define([
         $scope.queue = [];
         // 게시판 초기화
         $scope.item = {};
+        $scope.search = {};
 
         // 초기화
         $scope.init = function(session) {
@@ -45,19 +46,31 @@ define([
             if ($stateParams.menu == 'notice') {
                 $scope.community = "공지사항";
                 $scope.menu = "notice";
+                $scope.search.CATEGORY_GB = 'notice';
             } else if($stateParams.menu == 'system') {
                 $scope.community = "시스템공지";
                 $scope.menu = "system";
+                $scope.search.CATEGORY_GB = 'system';
             } else if($stateParams.menu == 'faq') {
                 $scope.community = "자주묻는질문";
                 $scope.menu = "faq";
+                $scope.search.CATEGORY_GB = 'faq';
             } else if($stateParams.menu == 'qna') {
                 $scope.community = "문의/게시판";
                 $scope.menu = "qna";
+                $scope.search.CATEGORY_GB = 'qna';
             } else if($stateParams.menu == 'myqna') {
                 $scope.community_request = "내 질문과 답변";
                 $scope.menu = "myqna";
+                $scope.search.CATEGORY_GB = 'myqna';
             }
+
+            $scope.getList('com/webboard', 'faqcategory', {}, $scope.search, true)
+                .then(function(data){
+                    $scope.categoryfaqlist = data;
+                    $scope.item.FAQ_TYPE = data[0].TITLE;
+                })
+                .catch(function(error){$scope.categoryfaqlist = ""});
             //$scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
         };
 
@@ -101,6 +114,20 @@ define([
                         for(var i in files) {
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
+
+                        var idx = 0;
+                        for(var i=0; i < $scope.categoryfaqlist.length; i ++){
+
+                            //console.log(data.FAQ_TYPE);
+                            if(JSON.stringify(data.FAQ_TYPE) == JSON.stringify($scope.categoryfaqlist[i].TYPE)){
+                                idx = i;
+                                //console.log($scope.categoryfaqlist[i].TYPE);
+                            }
+                        }
+
+                        console.log($scope.categoryfaqlist[idx].TYPE);
+
+                        $scope.item.FAQ_TYPE = $scope.categoryfaqlist[idx].TYPE;
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -125,6 +152,7 @@ define([
                 //$scope.search['NOTICE_FL'] = 'Y';
             } else if($stateParams.menu == 'faq') {
                 $scope.item.COMM_NO = '16';
+                $scope.item.FAQ_GB = 'faq';
             }else if($stateParams.menu == 'qna') {
                 $scope.item.COMM_NO = '17';
             } else if($stateParams.menu == 'myqna') {

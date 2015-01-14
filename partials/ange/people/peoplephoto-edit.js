@@ -217,7 +217,7 @@ define([
         // 게사판 저장 버튼 클릭
         $scope.click_savePeoplePhoto = function () {
             $scope.item.SYSTEM_GB = 'ANGE';
-            $scope.item.BOARD_GB = 'BOARD';
+            $scope.item.BOARD_GB = 'PHOTO';
             $scope.item.FILES = $scope.queue;
 
             for(var i in $scope.item.FILES) {

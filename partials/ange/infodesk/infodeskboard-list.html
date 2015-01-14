@@ -63,6 +63,25 @@
 
                         <div class="sub_contents_body">
 
+                            <!-- peoplephoto_list -->
+                            <div class="peoplep_list_tab" ng-show="infomenu == 'faq'">
+                                <ul class="nav nav-tabs">
+                                    <li role="presentation" ng-repeat="tab in tabs" ng-class="selectIdx == $index ? 'active' : ''">
+                                        <a ng-click="click_selectTab($index)">{{tab.TITLE}}</a>
+                                    </li>
+                                </ul>
+
+                                <!--<ul class="nav nav-tabs">-->
+                                <!--<li role="presentation" class="active"><a>전체</a></li>-->
+                                <!--<li role="presentation"><a>이유식</a></li>-->
+                                <!--<li role="presentation"><a>반찬</a></li>-->
+                                <!--<li role="presentation"><a>한끼식사</a></li>-->
+                                <!--<li role="presentation"><a>간식</a></li>-->
+                                <!--<li role="presentation"><a>나들이</a></li>-->
+                                <!--<li role="presentation"><a>스페셜</a></li>-->
+                                <!--</ul>-->
+                            </div><!-- /.peoplep_list_tab -->
+
                             <!-- peoplepoll_list -->
                             <table id="comp_board_table" class="table table-hover">
 
@@ -70,31 +89,31 @@
                                 <tr class="board_thead" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td><span class="board_th">제목</span></td>
-                                    <td ng-show="menu == 'qna' || menu == 'myqna'" width="92" align="center"><span class="board_th">작성자</span></td>
+                                    <td ng-show="infomenu == 'qna' || infomenu == 'myqna'" width="92" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80"><span class="board_th">작성일</span></td>
                                     <!--<td width="60" ng-show="menu != 'qna' || menu != 'myqna'"  align="center"><span class="board_th">조회</span></td>-->
-                                    <td width="100" ng-show="menu == 'qna' || menu == 'myqna'" align="center"><span class="board_th">답변여부</span></td>
+                                    <td width="100" ng-show="infomenu == 'qna' || infomenu == 'myqna'" align="center"><span class="board_th">답변여부</span></td>
                                 </tr>
                                 </thead>
 
                                 <tbody class="on" ng-repeat="item in list">
 
-                                <tr ng-click="menu == 'qna' ? click_showViewQnaPeopleBoard(item.PASSWORD_FL, item.NO, item.REG_UID) : click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                <tr ng-click="infomenu == 'qna' ? click_showViewQnaPeopleBoard(item.PASSWORD_FL, item.NO, item.REG_UID) : click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
                                     <td class="table_no">
-                                        <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.RNUM}}</span>
+                                        <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.BOARD_NO}}</span>
                                     </td>
                                     <td>
                                         <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
-                                        {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                        <span ng-show="infomenu == 'faq'">{{item.FAQ_TYPE == 'ALL' ? '' : '['+item.FAQ_TITLE+']'}}</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
                                         <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? [item.REPLY_COUNT] : ''}}</span>
                                         <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                         <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                         <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
                                     </td>
-                                    <td  ng-show="menu == 'qna' || menu == 'myqna'"  class="table_author">{{item.NICK_NM}}</td>
+                                    <td  ng-show="infomenu == 'qna' || infomenu == 'myqna'"  class="table_author">{{item.NICK_NM}}</td>
                                     <td class="table_date">{{item.REG_DT}}</td>
                                     <!--<td ng-show="menu != 'qna' || menu != 'myqna'" align="center">{{item.HIT_CNT}}</td></tr>-->
-                                    <td ng-show="menu == 'qna' || menu == 'myqna'" align="center">{{item.BOARD_REPLY_FL}}</td></tr>
+                                    <td ng-show="infomenu == 'qna' || infomenu == 'myqna'" align="center">{{item.BOARD_REPLY_FL}}</td></tr>
                                 </tr>
 
                                 </tbody>

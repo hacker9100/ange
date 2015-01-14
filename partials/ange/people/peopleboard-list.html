@@ -108,12 +108,12 @@
 
                                     <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
                                         <td class="table_no">
-                                            <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.RNUM}}</span>
+                                            <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.BOARD_NO}}</span>
                                         </td>
                                         <td>
                                             <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
                                             {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
-                                            <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? [item.REPLY_COUNT] : ''}}</span>
+                                            <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>
                                             <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                             <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                             <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>

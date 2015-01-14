@@ -20,23 +20,32 @@ define([
 
         $scope.search = {};
 
-        $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 5;
-        $scope.TOTAL_COUNT = 0;
+        $scope.BOARD_PAGE_NO = 1;
+        $scope.BOARD_PAGE_SIZE = 5;
+        $scope.BOARD_TOTAL_COUNT = 0;
+
+        $scope.PHOTO_PAGE_NO = 1;
+        $scope.PHOTO_PAGE_SIZE = 6;
+        $scope.PHOTO_TOTAL_COUNT = 0;
+
+        $scope.CLINIC_PAGE_NO = 1;
+        $scope.CLINIC_PAGE_SIZE = 5;
+        $scope.CLINIC_TOTAL_COUNT = 0;
+
 
         //
         $scope.pageBoardChanged = function() {
-            console.log('Page changed to: ' + $scope.PAGE_NO);
+            console.log('Page changed to: ' + $scope.BOARD_PAGE_NO);
             $scope.getPeopleBoardList();
         };
 
         $scope.pagePhotoChanged = function() {
-            console.log('Page changed to: ' + $scope.PAGE_NO);
+            console.log('Page changed to: ' + $scope.PHOTO_PAGE_NO);
             $scope.getPeoplePhotoList();
         };
 
         $scope.pageClinicChanged = function() {
-            console.log('Page changed to: ' + $scope.PAGE_NO);
+            console.log('Page changed to: ' + $scope.CLINIC_PAGE_NO);
             $scope.getPeopleClinicList();
         };
 
@@ -69,16 +78,16 @@ define([
             $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.BOARD_PAGE_NO- 1, SIZE: $scope.BOARD_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
-                    $scope.TOTAL_COUNT = total_cnt;
+                    $scope.BOARD_TOTAL_COUNT = total_cnt;
 
                     /*$scope.total(total_cnt);*/
                     $scope.boardList = data;
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.boardList = "";});
+                .catch(function(error){$scope.BOARD_TOTAL_COUNT = 0; $scope.boardList = "";});
         };
 
         // 일반 게시판 조회 화면 이동
@@ -106,10 +115,10 @@ define([
             $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PHOTO_PAGE_NO- 1, SIZE: $scope.PHOTO_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var search_total_cnt = data[0].TOTAL_COUNT;
-                    $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
+                    $scope.PHOTO_TOTAL_COUNT = search_total_cnt;
 
                     for(var i in data) {
                         if (data[i].FILE != null) {
@@ -122,7 +131,7 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.photoList = data;
                 })
-                .catch(function(error){$scope.photoList = ""; $scope.SEARCH_TOTAL_COUNT = 0});
+                .catch(function(error){$scope.photoList = ""; $scope.PHOTO_TOTAL_COUNT = 0});
         };
 
         // 사진 게시판 조회 화면 이동
@@ -146,16 +155,16 @@ define([
             $scope.search.ORDER = 'DESC'
             $scope.search.BOARD_GB = 'CLINIC';
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.CLINIC_PAGE_NO-1, SIZE: $scope.CLINIC_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
-                    $scope.TOTAL_COUNT = total_cnt;
+                    $scope.CLINIC_TOTAL_COUNT = total_cnt;
 
                     /*$scope.total(total_cnt);*/
                     $scope.clinicList = data;
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.clinicList = "";});
+                .catch(function(error){$scope.CLINIC_TOTAL_COUNT = 0; $scope.clinicList = "";});
         };
 
         // 상담 게시판 조회 화면 이동

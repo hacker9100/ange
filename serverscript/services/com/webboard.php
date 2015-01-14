@@ -59,12 +59,12 @@
                 $msg = "";
 
                 $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO,
-                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, PHOTO_TYPE, PHOTO_GB,NICK_NM
+                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, PHOTO_TYPE, PHOTO_GB,NICK_NM, FAQ_TYPE, FAQ_GB, BOARD_NO
                     FROM (
                         SELECT
                           B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
                           (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT, B.BOARD_GB, B.COMM_NO
-                          , B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.PHOTO_TYPE, B.PHOTO_GB, B.NICK_NM
+                          , B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.PHOTO_TYPE, B.PHOTO_GB, B.NICK_NM, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO
                         FROM
                           COM_BOARD B
                         WHERE
@@ -153,6 +153,12 @@
                                 ";
                 }
 
+                if (isset($_search[FAQ_TYPE]) && $_search[FAQ_TYPE] != "" && $_search[FAQ_TYPE] != "ALL") {
+                    $search_common .= "AND FAQ_TYPE = '".$_search[FAQ_TYPE]."'
+                                    AND FAQ_GB = '".$_search[FAQ_GB]."'
+                                ";
+                }
+
                 $search_where = $search_common;
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
@@ -172,14 +178,15 @@
                           SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM, SHORT_NM,
                           (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT, BOARD_REPLY_COUNT,
 	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, PHOTO_TYPE, PHOTO_GB,
-	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/',PHOTO_GB,'/list') AND TYPE = PHOTO_TYPE) AS TITLE
+	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/',PHOTO_GB,'/list') AND TYPE = PHOTO_TYPE) AS TITLE, FAQ_TYPE, FAQ_GB, BOARD_NO,
+	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'infodesk' AND MENU_URL = CONCAT('/infodesk/',FAQ_GB,'/list') AND TYPE = FAQ_TYPE) AS FAQ_TITLE
                         FROM
                         (";
 
                 $select1 = "SELECT
                                 '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, '' AS COMM_NM, '' AS SHORT_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -191,7 +198,7 @@
                 $select2 = "SELECT
                                 '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -304,6 +311,21 @@
                 }else{
                     $_d->dataEnd($sql);
                 }
+            }else if ($_type == 'faqcategory') {
+
+                $sql = "SELECT TITLE, MENU_URL, TYPE
+                        FROM COM_SUB_MENU
+                        WHERE SYSTEM_GB = 'ANGE'
+                          AND MENU_ID = 'infodesk'
+                          AND MENU_URL = CONCAT('/infodesk/','".$_search[CATEGORY_GB]."','/list')";
+
+                $data = $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
             }
 
             break;
@@ -339,6 +361,7 @@
 
                     for ($i = 0 ; $i < count($_model[FILES]); $i++) {
                         $file = $files[$i];
+
 
                         if (file_exists($upload_path.$file[name])) {
                             $uid = uniqid();
@@ -396,6 +419,9 @@
                         ,PASSWORD
                         ,PHOTO_TYPE
                         ,PHOTO_GB
+                        ,FAQ_TYPE
+                        ,FAQ_GB
+                        ,BOARD_NO
                     ) VALUES (
                         '".$_model[PARENT_NO]."'
                         ,'".$_model[COMM_NO]."'
@@ -418,8 +444,11 @@
                         , '".$_model[ETC4]."'
                         , '".$_model[ETC5]."'
                         , '".$_model[PASSWORD]."'
-                        , '0".$_model[PHOTO_TYPE]."'
+                        , '".$_model[PHOTO_TYPE]."'
                         , '".$_model[PHOTO_GB]."'
+                        , '".$_model[FAQ_TYPE]."'
+                        , '".$_model[FAQ_GB]."'
+                        , (SELECT COUNT(*)+1 FROM COM_BOARD A WHERE A.COMM_NO = '".$_model[COMM_NO]."')
                     )";
 
             $_d->sql_query($sql);
@@ -437,6 +466,10 @@
                     $file = $files[$i];
                     MtUtil::_c("------------>>>>> file : ".$file['name']);
                     MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+
+                    if($file[kind] != 'MAIN'){
+                        $_d->failEnd("대표이미지를 선택하세요.");
+                    }
 
                     $sql = "INSERT INTO FILE
                     (
@@ -618,8 +651,10 @@
                             ,ETC4 = '".$_model[ETC4]."'
                             ,ETC5 = '".$_model[ETC5]."'
                             ,PASSWORD = '".$_model[PASSWORD]."'
-                            ,PHOTO_TYPE = '0".$_model[PHOTO_TYPE]."'
+                            ,PHOTO_TYPE = '".$_model[PHOTO_TYPE]."'
                             ,PHOTO_GB = '".$_model[PHOTO_GB]."'
+                            ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
+                            ,FAQ_GB = '".$_model[FAQ_GB]."'
                         WHERE
                             NO = ".$_key."
                         ";

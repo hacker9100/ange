@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('infodeskboard-list', ['$scope', '$rootScope','$stateParams','$q', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $q, $location, dialogs, ngTableParams) {
+    controllers.controller('infodeskboard-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
 
         /********** 공통 controller 호출 **********/
             //angular.extend(this, $controller('ange-common', {$scope: $rootScope}));
@@ -40,9 +40,21 @@ define([
 
         $scope.todayDate = today;
 
-        //$scope.uid = $rootScope.uid;
+        $(function () {
 
+            $(".tab_content").hide();
+            $(".tab_content:first").show();
 
+            $("ul.nav-tabs li").click(function () {
+
+                $("ul.tabs li").removeClass("active");
+                $(this).addClass("active");
+                $(".tab_content").hide();
+                var activeTab = $(this).attr("rel");
+                $("#" + activeTab).fadeIn();
+            });
+
+        });
 
         /********** 초기화 **********/
             // 초기화
@@ -50,22 +62,27 @@ define([
 
             if ($stateParams.menu == 'notice') {
                 $scope.community = "공지사항";
-                $scope.menu = "notice";
+                $scope.infomenu = "notice";
+                $scope.VIEW_ROLE = 'CMS_ADMIN';
             } else if($stateParams.menu == 'system') {
                 $scope.community = "시스템공지";
-                $scope.menu = "system";
+                $scope.infomenu = "system";
+                $scope.VIEW_ROLE = 'CMS_ADMIN';
             } else if($stateParams.menu == 'faq') {
                 $scope.community = "자주묻는질문";
-                $scope.menu = "faq";
+                $scope.infomenu = "faq";
+                $scope.VIEW_ROLE = 'CMS_ADMIN';
             } else if($stateParams.menu == 'qna') {
                 $scope.community = "문의/게시판";
-                $scope.menu = "qna";
+                $scope.infomenu = "qna";
                 $scope.VIEW_ROLE = 'CMS_ADMIN';
             } else if($stateParams.menu == 'myqna') {
                 $scope.community = "내 질문과 답변";
-                $scope.menu = "myqna";
+                $scope.infomenu = "myqna";
                 $scope.VIEW_ROLE = 'CMS_ADMIN';
             }
+
+            $scope.tabs = $scope.menu.SUB_MENU_INFO;
         };
 
         /********** 이벤트 **********/
@@ -76,7 +93,25 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        $scope.init();
+        // 탭 클릭 이동
+        $scope.click_selectTab = function (idx) {
+            $scope.selectIdx = idx;
+
+            //$scope.search.PHOTO_NO = idx;
+
+            if ($stateParams.menu == 'faq') {
+                $scope.search.FAQ_GB= 'faq';
+            }
+            if(idx == 0){
+                $scope.search.FAQ_TYPE = 'ALL';
+                $scope.selectPhoto = 'ALL';
+            }else{
+                $scope.selectPhoto = '0'+(idx).toString();
+                $scope.search.FAQ_TYPE = $scope.selectPhoto;
+            }
+
+            $scope.getPeopleBoardList();
+        };
 
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
@@ -156,8 +191,17 @@ define([
             }
 
             if ($stateParams.menu == 'notice') {
+
+                if ($rootScope.uid == '' || $rootScope.uid == null || $rootScope.role != $scope.VIEW_ROLE) {
+                    dialogs.notify('알림', '관리자만 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                    return;
+                }
                 $location.url('/infodesk/notice/edit/0');
             } else if($stateParams.menu == 'system') {
+                if ($rootScope.uid == '' || $rootScope.uid == null|| $rootScope.role != $scope.VIEW_ROLE) {
+                    dialogs.notify('알림', '관리자만 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                    return;
+                }
                 $location.url('/infodesk/system/edit/0');
             } else if($stateParams.menu == 'faq') {
                 $location.url('/infodesk/faq/edit/0');
