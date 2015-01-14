@@ -84,6 +84,8 @@ define([
 
                     var endDate = data[0].END_YMD;
 
+                    console.log('end'+endDate);
+
                     if(endDate >= $scope.todayDate){
                         $scope.showForm = "compForm";
                     }else{

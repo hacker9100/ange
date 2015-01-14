@@ -38,14 +38,6 @@ define([
                 }
             });
 
-            $("#check_reply").click(function(){
-                if(!$("#check_reply").is(":checked")){
-                    $scope.item.REPLY_FL = "true";
-                }else{
-                    $scope.item.REPLY_FL = "false";
-                }
-            });
-
         });
 
          $(function(){
@@ -64,14 +56,6 @@ define([
                      $('#menu_select').attr('disabled', 'disabled');
                  }else{
                      $('#menu_select').removeAttr('disabled');
-                 }
-             });
-
-             $("#check_reply").click(function(){
-                 if(!$("#check_reply").is(":checked")){
-                     $scope.item.REPLY_FL = "true";
-                 }else{
-                     $scope.item.REPLY_FL = "false";
                  }
              });
          });
@@ -164,15 +148,15 @@ define([
                 $scope.menu = 'experiencereview';
             } else if ($stateParams.menu == 'samplereview') {
                 $scope.community = "샘플팩 후기";
-                $scope.search.JOIN_GB = 'SAMPLE';
+                $scope.item.TARGET_GB = 'SAMPLE';
                 $scope.menu = 'experiencereview';
             } else if ($stateParams.menu == 'samplepackreview') {
                 $scope.community = "앙쥬 샘플팩 후기";
-                $scope.search.JOIN_GB = 'SAMPLEPACK';
+                $scope.search['TARGET_GB'] = 'SAMPLEPACK';
                 $scope.menu = 'experiencereview';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.community = "이벤트 후기";
-                $scope.search.JOIN_GB = 'EVENT';
+                $scope.item.TARGET_GB = 'EVENT';
                 $scope.menu = 'experiencereview';
             }
 

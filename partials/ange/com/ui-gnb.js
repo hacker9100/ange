@@ -34,7 +34,7 @@ define([
 
         });
 
-/*        $(function(){
+        $(function(){
             $("#myange_home").click(function(){
 
                 if ($rootScope.uid == '' || $rootScope.uid == null) {
@@ -44,7 +44,7 @@ define([
 
                 $location.url('/myange/home');
             });
-         });*/
+         });
 
 	}]);
 });
