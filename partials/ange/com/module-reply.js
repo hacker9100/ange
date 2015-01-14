@@ -18,6 +18,9 @@ define([
         $scope.reply = {};
         $scope.replySearch = {};
 
+        $scope.showCommentDetails = false;
+        $scope.showReCommentDetails = false;
+
         /********** 이벤트 **********/
         // 댓글 리스트
         $scope.getReplyList = function () {
@@ -121,6 +124,46 @@ define([
                 $scope.reply.COMMENT = "";
             })
             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 댓글 수정
+        $scope.click_updateReply = function (key, comment) {
+
+            console.log(key);
+
+            $scope.replyItem = {};
+            $scope.replyItem.COMMENT = comment;
+
+            $scope.updateItem('com/reply', 'item', key, $scope.replyItem, false)
+                .then(function(){
+
+                    $scope.replyItem.COMMENT = "";
+
+                    dialogs.notify('알림', '댓글이 수정 되었습니다.', {size: 'md'});
+
+                    $scope.replyList = [];
+                    $scope.getReplyList();
+                    $scope.reply.COMMENT = "";
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 댓글 삭제
+        $scope.click_deleteReply = function (item) {
+
+            var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
+
+            dialog.result.then(function(btn){
+                $scope.deleteItem('com/reply', 'item', item.NO, true)
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                        $scope.replyList = [];
+                        $scope.getReplyList();
+                        $scope.reply.COMMENT = "";
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
         }
 
         /********** 화면 초기화 **********/

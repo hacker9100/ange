@@ -73,7 +73,7 @@
                 //TODO: 조회
                 $sql = "SELECT
                             NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
-                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL
+                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID
                         FROM
                             COM_REPLY R
                         WHERE 1=1
@@ -90,7 +90,7 @@
                     $sql = "SELECT
                                 REPLY_CTE.LEVEL, R.NO, PARENT_NO, PARENT_NO, REPLY_NO, REPLY_GB, COMMENT, REG_UID, NICK_NM, REG_NM, R.TARGET_NO, TARGET_GB,
                                 DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i') AS REG_DT,
-                                (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, BLIND_FL
+                                (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, BLIND_FL, REG_UID
                             FROM (
                                 SELECT
                                     REPLY_CONNET_BY_PRIOR_ID(NO) AS NO, @level AS LEVEL, TARGET_NO
@@ -269,17 +269,10 @@
 
                 $sql = "UPDATE COM_REPLY
                         SET
-                            PARENT_NO = '".$_model[SUBJECT]."',
-                            REPLY_NO = '".$_model[SUBJECT]."',
-                            REPLY_GB = '".$_model[SUBJECT]."',
-                            COMMENT = '".$_model[SUBJECT]."',
-                            #REG_UID = '".$_SESSION['uid']."',
-                            #NICK_NM = '".$_SESSION['nick']."',
-                            #REG_NM = '".$_SESSION['name']."',
-                            #REG_DT = SYSDATE(),
-                            LIKE_CNT = '".$_model[SUBJECT]."',
-                            TARGET_NO = '".$_model[SUBJECT]."',
-                            TARGET_GB = '".$_model[SUBJECT]."'
+                            COMMENT = '".$_model[COMMENT]."',
+                            REG_UID = '".$_SESSION['uid']."',
+                            NICK_NM = '".$_SESSION['nick']."',
+                            REG_NM = '".$_SESSION['name']."'
                         WHERE
                             NO = ".$_key."
                         ";
@@ -303,7 +296,94 @@
             break;
 
         case "DELETE":
-            //TODO: 삭제
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
+            }
+
+            $err = 0;
+            $msg = "";
+
+            $_d->sql_beginTransaction();
+
+            $sql = "DELETE FROM COM_REPLY WHERE PARENT_NO = ".$_key;
+            $_d->sql_query($sql);
+
+            $sql = "DELETE FROM COM_REPLY WHERE NO = ".$_key;
+            $_d->sql_query($sql);
+
+            /*$no = $_d->mysql_insert_id;*/
+
+            /*$sql = "SELECT
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        FILE F, CONTENT_SOURCE S
+                    WHERE
+                        F.NO = S.SOURCE_NO
+                        AND S.TARGET_GB = 'REVIEW'
+                        AND S.TARGET_NO = ".$_key."
+                        AND F.THUMB_FL = '0'
+                    ";
+
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                $_d->sql_query($sql);
+
+                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'REVIEW' AND TARGET_NO = ".$row[NO];
+
+                $_d->sql_query($sql);
+
+                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+
+                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                }
+            }
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("삭제실패입니다:".$msg);
+            }else{
+                $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                    ) VALUES (
+                        '".$_model[WORK_ID]."'
+                        ,'DELETE'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'.$_key.'
+                        ,'BOARD'
+                        ,'DELETE'
+                        ,'".$ip."'
+                        ,'/webboard'
+                    )";*/
+
+                $_d->sql_query($sql);
+
+                $_d->sql_commit();
+                $_d->succEnd($no);
 
             break;
     }
