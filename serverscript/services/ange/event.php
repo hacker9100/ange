@@ -160,7 +160,6 @@
                             WHERE
                                 1 = 1
                                 ".$search_where."
-                            ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
