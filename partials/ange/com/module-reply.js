@@ -86,14 +86,16 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-        // 블라인드 처리 의견
-        $scope.click_blind = function (replyList){
+        // 블라인드 처리
+        $scope.click_blind = function (key){
 
-            for(var i=0; i< replyList.length; i++){
+            /*for(var i=0; i< replyList.length; i++){
                 $scope.item.NO = replyList[i].NO;
-            }
+            }*/
 
-            $scope.updateItem('com/reply', 'blind', {}, $scope.item, false)
+            console.log(key);
+
+            $scope.updateItem('com/reply', 'blind', key, {}, false)
                 .then(function(){
 
                     dialogs.notify('알림', '블라인드 처리가 되었습니다.', {size: 'md'});
@@ -105,22 +107,20 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-        // 블라인드 처리 댓글
-        $scope.click_reblind = function (replyList){
+        // 블라인드 처리 해제
+        $scope.click_blind_clear = function (key){
 
-            for(var i=0; i< replyList.length; i++){
-                $scope.item.NO = replyList[i].NO;
-            }
-            $scope.updateItem('com/reply', 'blind', {}, $scope.item, false)
-                .then(function(){
+            console.log(key);
+            $scope.updateItem('com/reply', 'blind_clear', key, {}, false)
+            .then(function(){
 
-                    dialogs.notify('알림', '블라인드 처리가 되었습니다.', {size: 'md'});
+                dialogs.notify('알림', '블라인드 처리가 해제 되었습니다.', {size: 'md'});
 
-                    $scope.replyList = [];
-                    $scope.getReplyList();
-                    $scope.reply.COMMENT = "";
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                $scope.replyList = [];
+                $scope.getReplyList();
+                $scope.reply.COMMENT = "";
+            })
+            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         /********** 화면 초기화 **********/

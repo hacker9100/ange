@@ -65,23 +65,6 @@ define([
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
-        // 조회 화면 이동
-        $scope.click_showViewScrap = function (key) {
-
-            if ($stateParams.menu == 'angeroom') {
-                $location.url('/people/angeroom/view/'+key);
-            } else if($stateParams.menu == 'momstalk') {
-                $location.url('/people/momstalk/view/'+key);
-            } else if($stateParams.menu == 'babycare') {
-                $location.url('/people/babycare/view/'+key);
-            } else if($stateParams.menu == 'firstbirthtalk') {
-                $location.url('/people/firstbirthtalk/view/'+key);
-            } else if($stateParams.menu == 'booktalk') {
-                $location.url('/people/booktalk/view/'+key);
-            }
-
-        };
-
         // 검색
         $scope.click_searchScrap = function(){
             $scope.getScarpList();
@@ -90,6 +73,9 @@ define([
         // 상세조회 버튼 클릭
         $scope.click_showViewScrap = function (comm_no, key) {
             //$scope.openViewScrapModal({NO : key}, 'lg');
+
+            console.log(comm_no);
+            console.log(key);
 
             if (comm_no == 1) {
                 $location.url('/people/angeroom/view/'+key);

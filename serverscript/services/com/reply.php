@@ -211,8 +211,35 @@
                         SET
                             BLIND_FL = 'Y'
                         WHERE
-                            NO = ".$_model[NO]."
+                            NO = ".$_key."
                         ";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+
+            }if($_type == 'blind_clear'){
+
+                $_d->sql_beginTransaction();
+
+                $sql = "UPDATE COM_REPLY
+                            SET
+                                BLIND_FL = 'N'
+                            WHERE
+                                NO = ".$_key."
+                            ";
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;

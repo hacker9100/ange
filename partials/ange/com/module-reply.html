@@ -36,7 +36,9 @@
                     <p style="font-size:0.86em; margin:4px 0 0 0; ">
                         <a ng-click="showDetails = ! showDetails"><span style="color: #df5348">({{replyItem.RE_COUNT}})</span> 댓글</a>
                         &nbsp; | &nbsp;<a href="#">신고</a>
-                        &nbsp; | &nbsp;<a ng-click="click_blind(replyList);" class="table_red">블라인드</a> <!-- 관리자 또는 방장에게만 보여집니다. -->
+                        &nbsp; | &nbsp;<a ng-click="click_blind(replyItem.NO);" ng-show="replyItem.BLIND_FL == 'N'" class="table_red">블라인드</a>
+                                        <a ng-click="click_blind_clear(replyItem.NO);" ng-show="replyItem.BLIND_FL == 'Y'" class="table_red">블라인드해제</a>
+                        <!-- 관리자 또는 방장에게만 보여집니다. -->
                     </p>
                 </dd>
             </dl>
@@ -49,7 +51,8 @@
                             <div class="smalldate">
                                 {{reItem.REG_DT}}
                                 <a href="#">신고</a>
-                                <a ng-click="click_reblind(replyItem.REPLY_COMMENT);" class="table_red">블라인드</a> <!-- 관리자 또는 방장에게만 보여집니다. -->
+                                <a ng-click="click_blind(replyItem.NO);" ng-show="replyItem.BLIND_FL == 'N'" class="table_red">블라인드</a>
+                                <a ng-click="click_blind_clear(replyItem.NO);" ng-show="replyItem.BLIND_FL == 'Y'" class="table_red">블라인드해제</a>
                             </div>
                         </small>
                     </dt>
