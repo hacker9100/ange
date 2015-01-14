@@ -16,10 +16,99 @@
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
-                            </br>
-                            list
+                            <div class="container-fluid sub_contents_search">
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding:0">
+                                        <div class="btn-group" style="float:left;">
+                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
+                                        </div><!-- /btn-group -->
+
+                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
+                                            <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+
+												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+												</span>
+
+                                        </div>
+
+                                        <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" />
+                                                </span>
+                                                <input type="text" class="form-control table_filtercheck" placeholder="진행중" style="background:#fff; padding-top: 2px; cursor:default; font-size: 0.86em;" disabled />
+                                            </div>
+                                        </div -->
+
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
 
                         </div><!-- /.sub_contents_wrap -->
+
+                        <div class="sub_contents_body">
+
+                            <table id="comp_board_table" class="table table-hover">
+
+                                <thead>
+                                <tr class="board_thead" height="48">
+                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
+                                    <td><span class="board_th">제목</span></td>
+                                    <td width="80"><span class="board_th">작성일</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody class="on" ng-repeat="item in list">
+
+                                <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                    <td class="table_no">
+                                        <span>{{item.RNUM}}</span>
+                                    </td>
+                                    <td>
+                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                        {{item.EVENT_GB == 'EVENT' ? '이벤트' : '체험단'}}{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}} 발표
+                                    </td>
+                                    <td class="table_date">{{item.WINNER_DT}}</td>
+                                </tr>
+
+                                </tbody>
+
+                                <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                <tr>
+                                    <td colspan="3" style="text-align: center">조회 데이터가 없습니다.</td>
+                                </tr>
+
+                                </tbody>
+                            </table><!-- /.List-->
+
+                            <nav class="text-center">
+                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+
+                                <!--<ul class="pagination pagination-sm table_paging">-->
+                                <!--<li class="disabled">-->
+                                <!--<a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>-->
+                                <!--</li>-->
+                                <!--<li class="disabled">-->
+                                <!--<a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>-->
+                                <!--</li>-->
+                                <!--<li class="active"><a href="#">1</a></li>-->
+                                <!--<li><a href="#">2</a></li>-->
+                                <!--<li><a href="#">3</a></li>-->
+                                <!--<li><a href="#">4</a></li>-->
+                                <!--<li><a href="#">5</a></li>-->
+                                <!--<li>-->
+                                <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                        </div><!-- /.sub_contents_body -->
                     </div>
                 </div>
 

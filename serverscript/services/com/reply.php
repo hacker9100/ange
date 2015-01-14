@@ -165,7 +165,8 @@
                         REG_DT,
                         LIKE_CNT,
                         TARGET_NO,
-                        TARGET_GB
+                        TARGET_GB,
+                        BLIND_FL
                     ) VALUES (
                         ".$_model[PARENT_NO].",
                         '".$_model[REPLY_NO]."',
@@ -178,7 +179,8 @@
                         SYSDATE(),
                         '0',
                         '".$_model[TARGET_NO]."',
-                        '".$_model[TARGET_GB]."'
+                        '".$_model[TARGET_GB]."',
+                        'N'
                     )";
 
             $_d->sql_query($sql);

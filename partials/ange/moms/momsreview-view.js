@@ -21,6 +21,8 @@ define([
         $scope.showDetails = false;
         $scope.search = {SYSTEM_GB: 'ANGE'};
 
+        $scope.TARGET_NO = $stateParams.id;
+        $scope.TARGET_GB = 'REVIEW';
 
         $scope.replyList = [];
 
@@ -431,7 +433,7 @@ define([
         $scope.getPeopleBoard();
         $scope.getPreBoard();
         $scope.getNextBoard();
-        $scope.getPeopleReplyList();
+        //$scope.getPeopleReplyList();
 
     }]);
 });

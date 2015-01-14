@@ -44,6 +44,7 @@ define([
     // 앙쥬맘스
     '../../../partials/ange/moms/momshome',
     '../../../partials/ange/moms/momsboard-list',
+    '../../../partials/ange/moms/momsboard-view',
     '../../../partials/ange/moms/momsexperience-list',
     //'../../../partials/ange/moms/momsexperience-edit',
     '../../../partials/ange/moms/momsexperience-view',
