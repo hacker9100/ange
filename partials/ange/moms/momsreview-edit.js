@@ -38,6 +38,14 @@ define([
                 }
             });
 
+            $("#check_reply").click(function(){
+                if(!$("#check_reply").is(":checked")){
+                    $scope.item.REPLY_FL = "true";
+                }else{
+                    $scope.item.REPLY_FL = "false";
+                }
+            });
+
         });
 
          $(function(){
@@ -56,6 +64,14 @@ define([
                      $('#menu_select').attr('disabled', 'disabled');
                  }else{
                      $('#menu_select').removeAttr('disabled');
+                 }
+             });
+
+             $("#check_reply").click(function(){
+                 if(!$("#check_reply").is(":checked")){
+                     $scope.item.REPLY_FL = "true";
+                 }else{
+                     $scope.item.REPLY_FL = "false";
                  }
              });
          });
@@ -136,27 +152,27 @@ define([
         $scope.init = function(session) {
             if ($stateParams.menu == 'experiencereview') {
                 $scope.community = "체험단/서평단 후기";
-                $scope.item.TARGET_GB = 'EXPERIENCE';
+                $scope.search.JOIN_GB = 'EXPERIENCE';
                 $scope.menu = 'experiencereview';
             } else if ($stateParams.menu == 'productreview') {
                 $scope.community = "상품 후기";
-                $scope.item.TARGET_GB = 'PRODUCT';
+                $scope.search.JOIN_GB = 'PRODUCT';
                 $scope.menu = 'productreview';
             } else if ($stateParams.menu == 'angereview') {
                 $scope.community = "앙쥬 후기";
-                $scope.item.TARGET_GB = 'ANGE';
+                $scope.search.JOIN_GB = 'ANGE';
                 $scope.menu = 'experiencereview';
             } else if ($stateParams.menu == 'samplereview') {
                 $scope.community = "샘플팩 후기";
-                $scope.item.TARGET_GB = 'SAMPLE';
+                $scope.search.JOIN_GB = 'SAMPLE';
                 $scope.menu = 'experiencereview';
             } else if ($stateParams.menu == 'samplepackreview') {
                 $scope.community = "앙쥬 샘플팩 후기";
-                $scope.search['TARGET_GB'] = 'SAMPLEPACK';
+                $scope.search.JOIN_GB = 'SAMPLEPACK';
                 $scope.menu = 'experiencereview';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.community = "이벤트 후기";
-                $scope.item.TARGET_GB = 'EVENT';
+                $scope.search.JOIN_GB = 'EVENT';
                 $scope.menu = 'experiencereview';
             }
 
@@ -284,7 +300,7 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-            if($scope.item.MENU != ''){
+/*            if($scope.item.MENU != '' || $scope.item.MENU == undefined){
                 $scope.item.TARGET_GB = $scope.item.MENU;
             }else{
                 if ($stateParams.menu == 'experiencereview') {
@@ -300,8 +316,27 @@ define([
                 }else if ($stateParams.menu == 'eventreview') {
                     $scope.item.TARGET_GB = 'EVENT';
                 }
+            }*/
+
+            if($scope.item.MENU == undefined){
+                if ($stateParams.menu == 'experiencereview') {
+                    $scope.item.TARGET_GB = 'EXPERIENCE';
+                } else if ($stateParams.menu == 'productreview') {
+                    $scope.item.TARGET_GB = 'PRODUCT';
+                } else if ($stateParams.menu == 'angereview') {
+                    $scope.item.TARGET_GB = 'ANGE';
+                } else if ($stateParams.menu == 'samplereview') {
+                    $scope.item.TARGET_GB = 'SAMPLE';
+                } else if ($stateParams.menu == 'samplepackreview') {
+                    $scope.item.TARGET_GB = 'SAMPLEPACK';
+                }else if ($stateParams.menu == 'eventreview') {
+                    $scope.item.TARGET_GB = 'EVENT';
+                }
+            }else{
+                $scope.item.TARGET_GB = $scope.item.MENU;
             }
 
+            console.log($scope.item.TARGET_GB);
 
             if ($stateParams.id == 0) {
 

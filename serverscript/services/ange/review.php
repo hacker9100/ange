@@ -311,7 +311,8 @@
                         BEST_FL,
                         BLOG_URL,
                         TARGET_NO,
-                        TARGET_GB
+                        TARGET_GB,
+                        REPLY_FL
                     ) VALUES (
                         '".$_model[SUBJECT]."',
                         '".$_model[BODY]."',
@@ -325,7 +326,8 @@
                         '".$_model[BEST_FL]."',
                         '".$_model[BLOG_URL]."',
                         '".$_model[TARGET_NO]."',
-                        '".$_model[TARGET_GB]."'
+                        '".$_model[TARGET_GB]."',
+                        '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
                     )";
 
             $_d->sql_query($sql);
@@ -533,7 +535,8 @@
                             BEST_FL = '".$_model[BEST_FL]."',
                             BLOG_URL = '".$_model[BLOG_URL]."',
                             TARGET_NO = '".$_model[TARGET_NO]."',
-                            TARGET_GB = '".$_model[TARGET_GB]."'
+                            TARGET_GB = '".$_model[TARGET_GB]."',
+                            REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
                         WHERE
                             NO = ".$_key."
                     ";

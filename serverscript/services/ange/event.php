@@ -228,6 +228,10 @@
                     $search_where .= "AND REVIEW_FL = 'N'";
                 }
 
+                if (isset($_search[JOIN_GB]) && $_search[JOIN_GB] != "") {
+                    $search_where .= "AND JOIN_GB = '".$_search[JOIN_GB]."' ";
+                }
+
                     $sql = "SELECT
                                 NO, SUBJECT, TARGET_NO, JOIN_NO, USER_ID, NICK_NM, REVIEW_FL, TOTAL_COUNT,REVIEW_YMD
                             FROM
