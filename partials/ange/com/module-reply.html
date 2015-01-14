@@ -51,8 +51,8 @@
                             <div class="smalldate">
                                 {{reItem.REG_DT}}
                                 <a href="#">신고</a>
-                                <a ng-click="click_blind(replyItem.NO);" ng-show="replyItem.BLIND_FL == 'N'" class="table_red">블라인드</a>
-                                <a ng-click="click_blind_clear(replyItem.NO);" ng-show="replyItem.BLIND_FL == 'Y'" class="table_red">블라인드해제</a>
+                                <a ng-click="click_blind(reItem.NO);" ng-show="reItem.BLIND_FL == 'N'" class="table_red">블라인드</a>
+                                <a ng-click="click_blind_clear(reItem.NO);" ng-show="reItem.BLIND_FL == 'Y'" class="table_red">블라인드해제</a>
                             </div>
                         </small>
                     </dt>
