@@ -13,7 +13,7 @@ define(['./directives'], function (directives) {
             scope: { code:'=' },
             replace: true,
             templateUrl: function(element, attr) {
-                return 'partials/cms/'+attr.type+'_list.html';
+                return '/partials/cms/'+angular.lowercase(attr.type)+'-list.html';
             },
             controller: 'portlet-list',
 //            controller: function($scope, $location) {
@@ -43,6 +43,7 @@ define(['./directives'], function (directives) {
 //                };
 //            },
             link: function (scope, element, attr) {
+                scope.url = attr.url;
                 scope.api = attr.api;
                 scope.portletTitle = attr.title;
                 scope.portletCss = attr.css;

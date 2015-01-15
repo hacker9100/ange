@@ -124,7 +124,7 @@ define(['./directives'], function (directives) {
             link: function (scope, element, attrs, ctrls) {
                 var ngModel = ctrls[0];
                 var form    = ctrls[1] || null;
-                var EMPTY_HTML = '<p></p>',
+                var EMPTY_HTML = '</br></br>',
 //                                '<img id="dropzone" src="http://localhost/serverscript/upload/../../upload/files/medium/Koala%20%285%29.jpg" />',
                     isTextarea = element[0].tagName.toLowerCase() == 'textarea',
                     data = [],
@@ -136,7 +136,11 @@ define(['./directives'], function (directives) {
 
                 var onLoad = function () {
                     var options = {
+                        allowedContent: true,
+//                        allowedContent: {div: {style: true, id: true, class:true}},
+                        extraAllowedContent: 'img{!width,!height}',
                         toolbar: 'full',
+//                        toolbar_full: [
                         toolbar_full: [
                             { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Strike', 'Underline' ] },
                             { name: 'paragraph', items: [ 'BulletedList', 'NumberedList', 'Blockquote' ] },
@@ -145,16 +149,43 @@ define(['./directives'], function (directives) {
                             { name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
 //                            { name: 'tools', items: [ 'SpellChecker', 'Maximize' ] },
                             '/',
-                            { name: 'styles', items: [ 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
-                            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar' ] },
+                            { name: 'styles', items: [ 'Font', 'Format', 'FontSize', 'TextColor', 'PasteText', 'PasteFromWord', 'RemoveFormat' ] },
+//                            { name: 'insert', items: [ 'Image', 'Table', 'SpecialChar' ] },
+                            { name: 'insert', items: [ 'Table', 'SpecialChar' ] },
                             { name: 'forms', items: [ 'Outdent', 'Indent' ] },
                             { name: 'clipboard', items: [ 'Undo', 'Redo' ] },
                             { name: 'document', items: [ 'PageBreak', 'Source' ] }
                         ],
-                        disableNativeSpellChecker: false,
+                        format_tags: 'p;h2;h3;pre;links;test;test2',
+                        format_links: {
+                            name: 'Links',
+                            element: 'span',
+                            styles: {
+                                color: 'red',
+                                'font-family': 'arial',
+                                'font-weight': 'bold'
+                            }
+                        },
+                        format_test: {
+                            name: 'Test',
+                            element: 'span',
+                            styles: {
+                                color: 'red',
+                                'font-family': 'arial',
+                                'font-weight': 'bold'
+                            }
+                        },
+                        format_test2: {
+                            name: 'Test2',
+                            element: 'span',
+                            attributes : {
+                                'class' : 'contentTitle2'
+                            }
+                        },
+//                        disableNativeSpellChecker: false,
                         uiColor: '#FAFAFA',
-                        height: '400px',
-                        width: '780px'
+                        height: '400px'
+//                        width: '780px'
 //                        filebrowserBrowseUrl : 'lib/ckfinder/ckfinder.html',
 //                        filebrowserImageBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Images',
 //                        filebrowserFlashBrowseUrl : 'lib/ckfinder/ckfinder.html?type=Flash',
@@ -180,13 +211,17 @@ define(['./directives'], function (directives) {
                      * 파일 업로드 선택 화면을 화면에 출력하고 업로드 후 화면에 이미지를 대체한다.
                      **/
                     var dbClick = function(a, b) {
-                        alert(a.data.element.is("img"));
-                        if (a.data.element.getAttribute("id") == "img") {
-                        }
+//                        if (a.data.element.getAttribute("id") == "img") {
+//                        }
+//
+//                        var data = instance.getData();
+//                        data = data.replace('thumbnail', 'medium');
+////                        ngModel.$setViewValue(data);
+//                        instance.setData(data);
                     }
                     var setModelData = function(setPristine) {
-//                        alert(instance.getData())
                         var data = instance.getData();
+
                         if (data == '') {
                             data = null;
                         }
@@ -208,7 +243,6 @@ define(['./directives'], function (directives) {
 
 //                        CKFinder.setupCKEditor( instance, '../lib/ckfinder/' );
                     }
-
                     //instance.on('pasteState',   setModelData);
                     instance.on('change',       setModelData);
                     instance.on('blur',         setModelData);
@@ -222,6 +256,7 @@ define(['./directives'], function (directives) {
                     instance.on('doubleclick',        dbClick);
 
                     instance.on('instanceReady', function() {
+//                        console.log( instance.filter.allowedContent );
                         scope.$broadcast("ckeditor.ready");
                         scope.$apply(function() {
                             onUpdateModelData(true);

@@ -7,7 +7,7 @@
 define(['./directives'], function (directives) {
     'use strict';
 
-    directives.directive('cmsLayout', ['$controller', function($controller) {
+    directives.directive('cmsMain', ['$controller', function($controller) {
         return {
             restrict: 'EA',
             scope: { code:'=' },
@@ -21,7 +21,7 @@ define(['./directives'], function (directives) {
                 angular.forEach(scope.cms_menu, function(menu) {
                     if (scope.path == menu.MENU_URL) {
                         angular.forEach(menu.SUB_MENU_INFO, function(sub_menu) {
-                            var templet = '<'+sub_menu.SUB_MENU+' type="'+sub_menu.SUB_MENU_GB+'" api="'+sub_menu.API+'" title="'+sub_menu.TITLE+'" css="'+sub_menu.CSS+'" />'
+                            var templet = '<'+sub_menu.SUB_MENU+' type="'+sub_menu.SUB_MENU_GB+'" url="'+sub_menu.SUB_MENU_URL+'" api="'+sub_menu.API+'" title="'+sub_menu.TITLE+'" css="'+sub_menu.CSS+'" />'
                             element.append(templet);
                         });
                     }

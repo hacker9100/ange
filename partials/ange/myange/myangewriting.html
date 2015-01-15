@@ -28,7 +28,6 @@
 
                                 <thead>
                                 <tr class="board_thead" height="48">
-                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td><span class="board_th">제목</span></td>
                                     <td width="92" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80"><span class="board_th">작성일</span></td>
@@ -39,9 +38,6 @@
                                 <tbody class="on" ng-repeat="item in boardList">
 
                                 <tr ng-click="click_showViewPeopleBoard(item.COMM_NO, item.NO)" style="cursor:pointer;">
-                                    <td class="table_no">
-                                        <span>{{item.BOARD_NO}}</span>
-                                    </td>
                                     <td>
                                         <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
                                         {{item.SHORT_NM != ''? '['+item.SHORT_NM+']' : ''}}&nbsp;{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
@@ -60,7 +56,7 @@
                                 <tbody class="on" data-ng-show="boardList == '' || boardList == null">
 
                                 <tr>
-                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                    <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
                                 </tr>
 
                                 </tbody>
@@ -122,7 +118,6 @@
 
                                 <thead>
                                 <tr class="board_thead" height="48">
-                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td><span class="board_th">제목</span></td>
                                     <td width="92" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80"><span class="board_th">작성일</span></td>
@@ -133,9 +128,6 @@
                                 <tbody class="on" ng-repeat="item in clinicList">
 
                                     <tr ng-click="click_showViewPeopleClinic(item.COMM_NO, item.NO)" style="cursor:pointer;">
-                                        <td class="table_no">
-                                            <span>{{item.BOARD_NO}}</span>
-                                        </td>
                                         <td>
                                             <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
                                             [{{item.SHORT_NM}}]&nbsp;{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
@@ -154,7 +146,7 @@
                                 <tbody class="on" data-ng-show="clinicList == '' || clinicList == null">
 
                                     <tr>
-                                        <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                        <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
                                     </tr>
 
                                 </tbody>

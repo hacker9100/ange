@@ -1,8 +1,8 @@
 /**
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
- * Date   : 2014-09-23
- * Description : project.html 화면 콘트롤러
+ * Date   : 2015-01-14
+ * Description : user-edit.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('user_edit', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', function ($scope, $stateParams, $location, $filter, dialogs) {
+    controllers.controller('user-edit', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', function ($scope, $stateParams, $location, $filter, dialogs) {
 
         /********** 초기화 **********/
         // 사용자 모델

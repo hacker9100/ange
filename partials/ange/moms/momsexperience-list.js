@@ -13,9 +13,16 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsexperience-list', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD' ,'$timeout', function ($scope, $stateParams, $location, dialogs, UPLOAD, $timeout) {
 
-        $(document).ready(function() {
-            $(window).scroll(function() {
 
+        $scope.$parent.reload = false;
+        $scope.busy = false;
+        $scope.end = false;
+        // 페이징
+        $scope.PAGE_NO = 0;
+        $scope.PAGE_SIZE = 6;
+
+        angular.element(document).ready(function () {
+            angular.element(window).scroll(function () {
                 $timeout(function(){
                     //$scope.images;
                     $scope.isLoading = false;
@@ -25,12 +32,21 @@ define([
                     $scope.isLoading = true;
                 });
 
-                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-                    var scope = angular.element($("#listr")).scope();
-                    scope.$apply(function(){
-                        scope.count = scope.count + 4;
-                        alert("-->>")
-                    });
+//                console.log("scrollTop : "+Math.round(angular.element(document).scrollTop()));
+//                console.log("document-window : "+ (angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)));
+
+                if (Math.round(angular.element(window).scrollTop()) >= angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)) {
+                    if (!$scope.busy) {
+                        //$scope.PAGE_NO++;
+                        $scope.PAGE_SIZE++;
+                        console.log($scope.PAGE_SIZE);
+                        $scope.getPeopleBoardList();
+                    }
+//                    var scope = angular.element($("#listr")).scope();
+//                    scope.$apply(function(){
+//                        scope.PAGE_NO++;
+//                        $scope.getContentList();
+//                    });
                 }
             });
         });
@@ -52,23 +68,14 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 게시판 목록 이동
-//        $scope.click_showPeopleBoardList = function () {
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            }
-//        };
-
-        /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
-        $scope.init();
-
         // 게시판 목록 조회
-        $scope.getPeopleBoardList = function () {
+        $scope.$parent.getPeopleBoardList = function () {
+
+            $scope.busy = true;
+            if ($scope.$parent.reload) {
+                $scope.end = false;
+                $scope.PAGE_NO = 0;
+            }
 
             $scope.search.SYSTEM_GB = 'ANGE';
             $scope.search.FILE = true;
@@ -80,7 +87,6 @@ define([
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
 
-                    /*$scope.total(total_cnt);*/
                     $scope.list = data;
 
                     for(var i in data) {
@@ -90,6 +96,8 @@ define([
                         }
                     }
 
+                    $scope.$parent.reload = false;
+                    $scope.busy = false;
 
                 })
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
@@ -117,6 +125,7 @@ define([
 
         }
 
+        $scope.init();
         $scope.getPeopleBoardList();
     }]);
 });

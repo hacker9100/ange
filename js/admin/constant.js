@@ -9,14 +9,16 @@ define([
 ], function(app, menu) {
     'use strict';
     app.constant(
-        "COMMON", {
-            "TEST" : "test"
+        "CONSTANT", {
+            "SYSTEM_GB" : "ADMIN",
+            "DASHBOARD_PAGE_SIZE" : 5,
+            "PAGE_SIZE" : 20,
+            "BASE_URL" : "http://localhost"
         }
     );
     app.constant(
-        "ADMIN", {
-            "SYSTEM_GB" : "ADMIN",
-            "" : ""
+        "SERVER", {
+            "SERVER_URL" : "/serverscript/services/"
         }
     );
     app.constant(

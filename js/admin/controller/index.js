@@ -6,18 +6,18 @@
  */
 
 define([
-    // Component Test
-//    '../../../partials/admin/portlet-list',
-
     // ADMIN 공통
-    '../../../partials/admin/admin_common',
-    '../../../partials/admin/gnb',
-    '../../../partials/admin/lnb',
-    '../../../partials/admin/locater',
+    '../../../partials/admin/com/content',
+    '../../../partials/admin/com/gnb',
+    '../../../partials/admin/com/lnb',
+    '../../../partials/admin/com/locater',
+
     // ADMIN 로그인
     '../../../partials/admin/signin',
+    '../../../partials/admin/message',
+
     // ADMIN 회원현황
-    '../../../partials/admin/user_list',
-    '../../../partials/admin/user_edit'
+    '../../../partials/admin/user-list',
+    '../../../partials/admin/user-edit'
 //    '../../../partials/admin/user_view'
 ], function () {});

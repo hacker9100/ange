@@ -11,14 +11,13 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('cms-common', ['$scope', '$rootScope', '$stateParams', '$location', '$q', 'dataService', 'dialogs', function ($scope, $rootScope, $stateParams, $location, $q, dataService, dialogs) {
+    controllers.controller('cms-common', ['$scope', '$rootScope', '$location', '$q', 'dataService', 'dialogs', function ($scope, $rootScope, $location, $q, dataService, dialogs) {
 
         $scope.path = $location.path();
 
 //        alert(localStorage.getItem('userToken'))
 
         /********** CMS 공통 함수 **********/
-        // 시스템 별로 분리 해야할지??
         // 파일 사이즈 변환
         $scope.formatFileSize = function (bytes) {
 //            if (typeof bytes !== 'number') {

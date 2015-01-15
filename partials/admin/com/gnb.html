@@ -1,0 +1,55 @@
+<nav class="navbar navbar-inverse navbar-static-top" role="navigation" ng-controller="gnb" style="min-width:990px; margin:0;">
+	<div class="container-fluid" style="padding-left:170px;">
+	<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+
+			<a class="navbar-brand navbar-brand-logo" ng-click="selectMenu('/dashboard/main')" style="position:absolute; left:0; margin-left:5px; margin-right:20px;">
+                <!-- img alt="ANGE CMS" title="ANGE CMS" src="./imgs/gnb_brand_01_brandlogo.png" / -->
+            </a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="navbar-collapse" id="bs-example-navbar-collapse-1">
+
+			<ul ng-repeat="item in list" ng-class="item.POSITION  == 'LEFT' ? 'nav navbar-nav' : 'nav navbar-nav navbar-right'" style="min-width:110px;">
+                <!-- li class="active" -->
+                <li class="item.DROP_FL == 'Y' : dropdown">
+                    <a ng-if="item.DROP_FL == 'N'" ng-click="selectMenu(item.CHANNEL_URL)" style="padding-top:20px;">
+                        <span class="smalltag">{{item.TAG}}</span>
+                        <span ng-if="item.TAG == 'dashboard'" class="glyphicon glyphicon-home"></span> {{item.CHANNEL_NM}}
+                    </a>
+
+                    <a ng-if="item.DROP_FL == 'Y' && item.TAG != 'setting'" ng-hide="item.TAG == 'admin' && role != 'CMS_ADMIN' && role != 'MANAGER'" href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top:20px;">
+                        <span class="smalltag">{{item.TAG}}</span>
+                        {{item.CHANNEL_NM}} <span class="caret"></span>
+                    </a>
+
+                    <a ng-if="item.DROP_FL == 'Y' && item.TAG == 'setting'" href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top:20px;">
+                        <span class="glyphicon glyphicon-cog" style="margin-right:5px;"></span>정보
+                    </a>
+
+                    <ul ng-if="item.DROP_FL == 'Y'" class="dropdown-menu" role="menu">
+                        <li ng-if="item.CHANNEL_NO == '7' && uid != undefined">
+                            <div style="display:inline; margin-left:20px; font-size:0.82em; line-height:22px; height:40px;"><span style="font-weight:bold; font-size:1.24em; ">{{name}}</span> 님 환영합니다.</div><div class="divider"></div>
+                        </li>
+                        <li ng-repeat="sub_item in item.MENU_INFO">
+                            <a ng-if="sub_item.MENU_URL != '/logout'" ng-click="selectMenu(sub_item.MENU_URL)">{{sub_item.MENU_NM}}</a>
+                            <a ng-if="sub_item.MENU_URL == '/logout'" ng-click="logoutMe()">{{sub_item.MENU_NM}}</a>
+                            <div ng-if="sub_item.DIVIDER_FL == 'Y'" class="divider"></div>
+                        </li>
+
+
+                    </ul>
+
+                </li>
+
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>

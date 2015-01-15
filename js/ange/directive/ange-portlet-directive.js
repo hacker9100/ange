@@ -509,7 +509,21 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><a href="/moms/'+menu+'/view/'+data[i].NO+'"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="'+img+'"/><div class="mini_event_txt_title">'+( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') + data[i].SUBJECT +'</div><div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div></div></a></div>');
+                                angular.element('#'+$scope.option.id).slickAdd(
+                                    '<div class="col-xs-4 mini_event_contentcol">' +
+                                        '<a href="/moms/'+menu+'/view/'+data[i].NO+'">' +
+                                            '<div class="mini_event_content">' +
+//                                                '<div class="mini_event_closed"></div>' +
+                                                ( data[i].EVENT_ST == "P" ? '<div class="mini_event_closed"></div>' : '' ) +
+                                                '<img class="mini_event_txt_img" src="'+img+'"/>' +
+                                                '<div class="mini_event_txt_title">' +
+                                                    ( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') +
+                                                    data[i].SUBJECT +'' +
+                                                '</div>' +
+                                                '<div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div>' +
+                                            '</div>' +
+                                        '</a>' +
+                                    '</div>');
                             }
 //                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단1</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
 //                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단2</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');

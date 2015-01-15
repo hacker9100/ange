@@ -166,7 +166,7 @@ define([
 
                         console.log($scope.item.END_YMD);
 
-                        if($scope.item.END_YMD >= $scope.todayDate){
+                        if($scope.item.END_YMD <= $scope.todayDate){
                             $scope.showForm = "compForm";
                         }else{
                             $scope.showForm = "reviewForm";
@@ -191,10 +191,13 @@ define([
 
             $scope.search.REG_UID = $scope.uid;
             $scope.search.BOARD_NO = $scope.item.NO;
+            $scope.search.TARGET_GB = 'EVENT';
 
             $scope.getList('ange/comp', 'check', {}, $scope.search, false)
                 .then(function(data){
                     var comp_cnt = data[0].COMP_CNT;
+
+                    $scope.item.TARGET_GB = 'EVENT';
 
                     if (comp_cnt == 1) {
 

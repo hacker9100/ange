@@ -1,0 +1,8 @@
+<ol class="breadcrumb locatorbar"  style="font-size:0.84em; background-color: #fff; border:none;" ng-controller="locater">
+    <li>
+        <a href="#/dashboard/main"><span class="glyphicon glyphicon-home"></span></a>
+    </li>
+    <li ng-repeat="item in items" ng-class="{active: isActive(item)}">
+        <span ng-else="item.CHANNEL_FL == 'Y' && item.CHANNEL_NO == '1'">{{item.LOCATOR_NM}}</span>
+    </li>
+</ol>

@@ -76,7 +76,11 @@ define([
         // 이미지 조회
         $scope.$parent.getContentList = function () {
             $scope.busy = true;
-            if ($scope.$parent.reload) $scope.list = [];
+            if ($scope.$parent.reload) {
+                $scope.end = false;
+                $scope.list = [];
+                $scope.PAGE_NO = 0;
+            }
 
 //            if ($scope.category != '') {
 //                console.log($scope.category)
