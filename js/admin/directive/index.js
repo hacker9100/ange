@@ -5,14 +5,15 @@
  * Description : 사용할 모든 directive를 로드
  */
 define([
-    './checklistDirective',
+    './checklist-directive',
+    './ckeditor-directive',
 
-    './adminLayoutDirective',
-    './adminPortletDirective',
-    './validationDirective',
-    './dropdownSelectDirective',
-    './ckEditorDirective',
-    './focusDirective'//,
+    './admin-layout-directive',
+    './admin-body-directive',
+
+    './validation-directive',
+    './dropdown-select-directive',
+    './focus-directive'//,
 //    './plUploadDirective'
 ], function (){
 

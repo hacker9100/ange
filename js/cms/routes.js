@@ -25,7 +25,6 @@ define([
 //            $location.path('/signin')
 //        });
 
-        stateProvider = $stateProvider;
         // 메뉴 정보를 별도의 파일로 분리해 관리
         // menu.json에 정의된 메뉴들을 루프를 돌리면서 바인딩
 //        if (config.states !== undefined) {
