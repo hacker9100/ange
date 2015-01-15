@@ -31,19 +31,38 @@ define([
 
         $scope.search = {};
 
+
+        $scope.init = function (){
+            $scope.nextclick = true;
+            $scope.preclick = false;
+        }
+
         $scope.next_click = function(){
+
+            $scope.nextclick = false;
 
             $scope.firstIndex = parseInt($scope.firstIndex+1);
             $scope.page =  $scope.page + 2;
             $scope.currentPage = $scope.currentPage+1;
 
+            if($scope.currentPage +1 == $scope.lastPage){
+                $scope.preclick = true;
+            }
+
         }
 
         $scope.pre_click = function(){
+
             $scope.firstIndex = parseInt($scope.firstIndex-1);
             $scope.page =  $scope.page - 2;
             $scope.currentPage = $scope.currentPage-1;
 
+            $scope.preclick = false;
+
+            if($scope.currentPage == 0){
+                $scope.nextclick = true;
+
+            }
         }
 
         // 게시판 조회
@@ -173,7 +192,7 @@ define([
         }
 
 
-        //$scope.init();
+        $scope.init();
         $scope.getAngePoll();
     }]);
 });

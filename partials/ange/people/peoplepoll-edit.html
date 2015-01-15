@@ -90,10 +90,10 @@
                                             </div>
 
                                             <div class="peoplepoll_view_paging">
-                                                <button type="button" class="btn btn-default btn-xs" style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  <!--ng-click="pre_click();"-->
+                                                <button type="button" class="btn btn-default btn-xs" ng-disabled="nextclick" style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  <!--ng-click="pre_click();"-->
                                                 <!--<center><span class="table_red">{{page}}</span>/3</center>-->
                                                 <center><span class="table_red">{{currentPage+1}}</span>/{{lastPage}}</center>
-                                                <button type="button" class="btn btn-default btn-xs" style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> <!--ng-disabled="!last"-->
+                                                <button type="button" class="btn btn-default btn-xs" ng-disabled="preclick"  style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> <!--ng-disabled="!last"-->
                                             </div>
                                         </div><!-- /.col-02-->
 
@@ -120,10 +120,10 @@
                                             </div>
 
                                             <div class="peoplepoll_view_paging">
-                                                <button type="button" class="btn btn-default btn-xs" style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  <!--ng-click="pre_click();"-->
+                                                <button type="button" class="btn btn-default btn-xs"  style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  <!--ng-click="pre_click();"-->
                                                 <!--<center><span class="table_red">{{page}}</span>/3</center>-->
                                                 <center><span class="table_red">{{currentPage+1}}</span>/{{lastPage}}</center>
-                                                <button type="button" class="btn btn-default btn-xs" style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> <!--ng-disabled="!last"-->
+                                                <button type="button"  class="btn btn-default btn-xs" style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> <!--ng-disabled="!last"-->
                                             </div>
 
                                         </div><!-- /.col-02-->
