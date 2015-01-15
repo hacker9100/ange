@@ -15,9 +15,23 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-//            if ($stateParams.menu == 'angeroom') {
             $scope.community = "샘플팩 소개";
-//            }
+
+            var date = new Date();
+
+            // GET YYYY, MM AND DD FROM THE DATE OBJECT
+            var year = date.getFullYear().toString();
+            var mm = (date.getMonth()+1).toString();
+            var dd  = date.getDate().toString();
+
+            var today = year+'-'+mm+'-'+dd;
+
+            $scope.todayDay = dd;
+            console.log($scope.todayDay);
+
+            var dt = new Date(year, mm, 0);
+            $scope.Day = dt;
+            console.log(dt.getDate());
         };
 
         $scope.PAGE_NO = 0;
@@ -25,6 +39,7 @@ define([
 
         $scope.search = {};
         $scope.item = {};
+
         /********** 이벤트 **********/
         // 게시판 목록 이동
         $scope.click_sampleSeason1List = function () {
@@ -57,6 +72,15 @@ define([
                 dialogs.notify('알림', '로그인 후 신청이 가능 합니다.', {size: 'md'});
                 return;
             }
+
+            if(season == 'sesaon2'){
+                if($scope.todayDay < 25){
+                    console.log('a');
+                    dialogs.notify('알림', '기존회원 샘플팩 신청기간이 아닙니다.', {size: 'md'});
+                    return;
+                }
+            }
+
 
             $location.url('/moms/samplepack/edit/'+season);
         }

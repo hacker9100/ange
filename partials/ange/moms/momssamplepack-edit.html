@@ -105,7 +105,7 @@
                 <span class="table_blue" style="font-size:1.18em; float:left;">| 샘플팩 신청양식</span>
                 <div style="float:right;">
                     <small><span class="table_blue">정보가 다르신가요?</span></small>
-                    <button class="btn btn-xs btn-primary" style="margin:0 5px;">정보수정</button>
+                    <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">정보수정</button>
                 </div>
             </div>
 
@@ -594,3 +594,44 @@
 
 <!-- /Main Page Layout Set -->
 </div>
+
+<script type="text/ng-template" id="user_info_modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">정보수정</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-model="approval" lass="row" class="form-horizontal">
+            <div class= "form-group">
+                아이디 <input type="text" class="form-control" ng-model="item.USER_ID" class= "form-control" placeholder="주소"/>
+            </div>
+            <div class= "form-group">
+                이름 <input type="text" class="form-control" ng-model="item.USER_NM" class= "form-control" placeholder="이름"/>
+            </div>
+            <div class= "form-group">
+                닉네임 <input type="text" class="form-control" ng-model="item.NICK_NM" class= "form-control" placeholder="닉네임"/>
+            </div>
+            <div class= "form-group">
+                주소 <input type="text" class="form-control" ng-model="item.ADDR" class= "form-control" placeholder="주소"/>
+            </div>
+            <div class= "form-group">
+                세부주소 <input type="text" class="form-control" ng-model="item.ADDR_DETAIL" class= "form-control" placeholder="세부주소"/>
+            </div>
+            <div class= "form-group">
+                전화번호 <input type="text" class="form-control" ng-model="item.PHONE_1" class= "form-control" placeholder="전화번호"/>
+            </div>
+            <div class= "form-group">
+                휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
+            </div>
+            <div class= "form-group">
+                임신여부 <input type="radio"  value="Y" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y
+                &nbsp;
+                <input type="radio" id="preg_N"  name="preg" value="N"  ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N
+                <div ng-show="checked == 'Y'" id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 20150112"/></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_ok()">수정</button>
+        <button class="btn btn-warning" ng-click="click_cancel()">취소</button>
+    </div>
+</script>
