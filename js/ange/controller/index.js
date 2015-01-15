@@ -54,8 +54,8 @@ define([
     '../../../partials/ange/moms/momsreview-list',
     '../../../partials/ange/moms/momsreview-edit',
     '../../../partials/ange/moms/momsreview-view',
-    '../../../partials/ange/moms/samplepack-intro',
-    '../../../partials/ange/moms/samplepack-edit',
+    '../../../partials/ange/moms/momssamplepack-intro',
+    '../../../partials/ange/moms/momssamplepack-edit',
     '../../../partials/ange/moms/supporter-intro',
 
     // 마이앙쥬

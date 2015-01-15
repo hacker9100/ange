@@ -123,3 +123,292 @@
     font-size: 0.86em;
     margin-left:5px;
 }
+
+
+/* samplepack */
+.samplepack_introduction {
+    position:relative;
+    padding: 60px 25px;
+    border-top:1px solid #333;
+    background-image: url('/imgs/ange/smaplepack_bg_01.png');
+    background-repeat: no-repeat;
+    background-position: right -20px top 60px;
+}
+
+.samplepack_introduction p {
+    font-size:1.98em;
+    line-height:32px;
+}
+
+.samplepack_introduction_txt {
+    font-size:0.94em;
+    width:70%;
+    word-break: keep-all;
+}
+
+.samplepack_types {
+    position:relative;
+    padding: 25px 25px;
+    border:1px solid #EDEDED;
+}
+
+.samplepack_types.newpack {
+    border-top:1px solid #333;
+    background-image: url('/imgs/ange/smaplepack_bg_02.png');
+    background-repeat: no-repeat;
+    background-position: right 8px top 5px;
+}
+
+.samplepack_types.subs {
+    border-top:1px solid #333;
+    background-image: url('/imgs/ange/smaplepack_bg_02.png');
+    background-repeat: no-repeat;
+    background-position: right 8px top 100px;
+}
+
+.samplepack_types.oldpack {
+    border-top:none;
+    border-bottom: 1px solid #333;
+    background-image: url('/imgs/ange/smaplepack_bg_03.png');
+    background-repeat: no-repeat;
+    background-position: right -10px top -15px;
+}
+
+a.samplepack_showdetail{
+    position: absolute;
+    width: 152px;
+    height: 50px;
+    right:20px;
+    bottom:40px;
+    background-image: url('/imgs/ange/samplepack_btn_viewdetail.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+a.samplepack_showdetail:hover {
+    background-position: left -49px;
+}
+
+a.samplepack_gotoreview {
+    position: absolute;
+    width: 140px;
+    height: 26px;
+    right:25px;
+    top:32px;
+    background-image: url('/imgs/ange/samplepack_btn_go2review.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+a.samplepack_gotoreview:hover {
+    background-position: left -26px;
+}
+
+.samplepack_smalltitle {
+
+}
+
+.samplepack_subguide {
+
+}
+
+.samplepack_howto {
+    font-size:0.86em;
+    margin-left:30px;
+    margin-top:40px;
+}
+
+.samplepack_new_howto {
+    font-size:0.86em;
+    margin-top:40px;
+    margin-bottom: 40px;
+
+}
+
+.samplepack_new_howto dt {
+    width: 80px;
+}
+
+.samplepack_new_howto dd {
+    margin-left:90px;
+}
+
+.samplepack_guidebox {
+    position:relative;
+    padding: 25px 25px;
+    background-color:#F0F0F0;
+}
+
+.samplepack_btnbox {
+    position:relative;
+    padding: 25px 25px;
+    background-color:#F0F0F0;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.samplepack_gotojoin {
+    width: 137px;
+    height: 27px;
+    border:none;
+    padding:0px;
+    background-image: url('/imgs/ange/samplepack_btn_newange01.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+.samplepack_newrequest {
+    width: 180px;
+    height: 27px;
+    border:none;
+    padding:0px;
+    background-image: url('/imgs/ange/samplepack_btn_newange02.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+.samplepack_oldrequest {
+    width: 180px;
+    height: 27px;
+    border:none;
+    padding:0px;
+    background-image: url('/imgs/ange/samplepack_btn_oldange02.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+.samplepack_cofirmfirst {
+    width: 120px;
+    height: 27px;
+    border:none;
+    padding:0px;
+    background-image: url('/imgs/ange/samplepack_btn_oldange01.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+.samplepack_cofirmfirst_now {
+    width: 120px;
+    height: 27px;
+    border:none;
+    padding:0px;
+    background-image: url('/imgs/ange/samplepack_btn_oldange01_now.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
+.samplepack_newrequest:hover, .samplepack_gotojoin:hover, .samplepack_cofirmfirst:hover {
+    background-position: left -27px;
+}
+
+.tabox_body {
+    border:1px solid #ddd;
+    border-top:none;
+    height:650px;
+    padding:25px 20px;
+    overflow:auto;
+    overflow-x:hidden;
+    font-weight: 400;
+    word-break: keep-all;
+}
+
+.tabox_body .tabox_title {
+    font-size: 1.24em;
+    padding-bottom: 2px;
+    font-weight: 600;
+    border-bottom:2px solid black;
+}
+
+.tabox_body ol {
+    margin: 15px 0 40px 25px;
+}
+
+.tabox_body ul {
+    margin: 15px 0 40px 25px;
+}
+
+.samplepack_goodsbox_td {
+    display:inline-block;
+    position:relative;
+    border-top:1px solid #ddd;
+}
+.samplepack_goodsbox {
+    float:left;
+    position:relative;
+    line-height:16px;
+    width:48%;
+    margin:5px 1%;
+    padding:5px 10px;
+    /*border:1px solid #ddd; */
+    /*border-radius: 4px;   */
+}
+
+.samplepack_goodsbox img {
+    float:left;
+    width:30%;
+    background-position:50%;
+    background-size: cover;
+}
+
+.samplepack_goodsboxtxt {
+    float:right;
+    width: 70%;
+    padding-left:5px;
+}
+
+.samplepack_tagwrap {
+    position:relative;
+    height:60px;
+    text-align:right;
+    margin:5px 0 10px 0;
+}
+
+.samplepack_tags {
+    position:absolute;
+    right:-26px;
+    line-height:36px;
+    text-align:center;
+    width:250px;
+    border:1px solid transparent;
+    font-size:0.92em;
+
+    -moz-box-shadow: inset 1px 1px 10px rgba(0,0,0,.4);
+    -webkit-box-shadow: inset 1px 1px 10px rgba(0,0,0,.4);
+    box-shadow: inset 4px 0px 8px rgba(0,0,0,.4);
+}
+
+.samplepack_tags.blue {
+    background-color:#25a9df;
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+    color:#fff;
+}
+
+ .samplepack_tags.orange {
+     background-color:#ff8400;
+     border-top-left-radius: 24px;
+     border-bottom-left-radius: 24px;
+     color:#fff;
+ }
+
+.samplepack_submit {
+    float:left;
+    width:101px;
+    height:41px;
+    margin:20px 5px;
+    background-repeat: no-repeat;
+    background-position: left top;
+    text-indent: -9999px;
+}
+
+.samplepack_submit:hover {
+    background-position: left -41px;
+}
+
+.samplepack_submit.cancelbtn {
+    background-image: url('/imgs/ange/samplepack_btn_cancel.png');
+}
+
+.samplepack_submit.submitbtn {
+    background-image: url('/imgs/ange/samplepack_btn_submit.png');
+}
