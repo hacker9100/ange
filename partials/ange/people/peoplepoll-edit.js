@@ -75,8 +75,18 @@ define([
             }
         };
 
-        $scope.click_saveAngePoll = function (no) {
+        $scope.click_saveAngePoll = function (no, poll_st) {
 
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 설문조사에 참여 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
+            if(poll_st == 1){
+                dialogs.notify('알림', '종료된 설문조사 입니다.', {size: 'md'});
+                return;
+            }
 
             $scope.search['BOARD_NO'] = no;
 
