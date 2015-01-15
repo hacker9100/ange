@@ -166,7 +166,7 @@ define([
 
                         console.log($scope.item.END_YMD);
 
-                        if($scope.item.END_YMD >= $scope.todayDate){
+                        if($scope.item.END_YMD <= $scope.todayDate){
                             $scope.showForm = "compForm";
                         }else{
                             $scope.showForm = "reviewForm";
