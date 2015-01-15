@@ -71,7 +71,7 @@
             } else if ($_model[TARGET_GB] == "EVENT") {
                 $update_table = "ANGE_EVENT";
             } else if ($_model[TARGET_GB] == "REVIEW") {
-                $update_table = "COM_REVIEW";
+                $update_table = "ANGE_REVIEW";
             }
 
             if (isset($_model[LIKE_FL]) && $_model[LIKE_FL] != "") {
