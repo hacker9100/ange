@@ -1,25 +1,25 @@
 {
     "states": [
-        { "signin": {
+        { "message": {
+            "url": "/message",
+            "templateUrl": "/partials/admin/message.html",
+            "controller": "message"
+        }},{ "signin": {
             "url": "/signin",
             "templateUrl": "/partials/admin/signin.html",
             "controller": "signin"
-        }}, { "user_list": {
-            "url": "/user/list",
-            "views": {
-                "" : { "templateUrl": "/partials/admin/admin_common.html", "controller": "admin_common" },
-                "lnbView@user_list": { "templateUrl": "/partials/admin/lnb.html", "controller": "lnb" },
-                "locaterView@user_list": { "templateUrl": "/partials/admin/locater.html", "controller" : "locater" },
-                "contentView@user_list": { "templateUrl": "/partials/admin/user_list.html", "controller" : "user_list" }
-            }
-        }}, { "user_edit": {
-            "url": "/user/edit/:key",
-            "views": {
-                "" : { "templateUrl": "/partials/admin/admin_common.html", "controller": "admin_common" },
-                "lnbView@user_edit": { "templateUrl": "/partials/admin/lnb.html", "controller": "lnb" },
-                "locaterView@user_edit": { "templateUrl": "/partials/admin/locater.html", "controller" : "locater" },
-                "contentView@user_edit": { "templateUrl": "/partials/admin/user_edit.html", "controller" : "user_edit" }
-            }
+        }},{ "forgot-idpw": {
+            "url": "/forgot-idpw",
+            "templateUrl": "/partials/cms/forgot-idpw.html",
+            "controller": "forgot-idpw"
+        }},{ "admin_list": {
+            "url": "/:menu/:type",
+            "templateUrl": "/partials/admin/com/content.html",
+            "controller": "content"
+        }},{ "admin_edit": {
+            "url": "/:menu/:type/:id",
+            "templateUrl": "/partials/admin/com/content.html",
+            "controller": "content"
         }}
     ]
 }

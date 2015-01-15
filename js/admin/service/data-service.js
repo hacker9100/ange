@@ -7,18 +7,21 @@
 define(['./services'], function (services) {
     'use strict';
 
-    services.service('dataService', ['$http', '$location', function($http, $location){
+    services.service('dataService', ['$http', '$location', 'SERVER', function($http, $location, SERVER){
         var helpers = {
-            uri : '/serverscript/services/',
+            uri : SERVER.SERVER_URL,
             serviceUri : 'webboard',
             getParam : function(){
                 return {
                     db         : 'ange'
-                    ,_method    : ''
-                    ,_key       : ''
-                    ,_phase     : ''
-                    ,_model     : {}
-                    ,_category  : {}
+                    ,_method    : ''        // CRUD 정보 (GET : 조회, POST : 등록, PUT : 수정, DELETE : 삭제)
+                    ,_key       : ''        // 기본키
+                    ,_type      : ''        // CRUD 타입 (list : 목록, item : 모델, )
+                    ,_page      : {}        // 리스트 페이징 정보
+                    ,_search    : {}        // 검색 조건 및 정렬
+                    ,_phase     : ''        // CMS 컨텐츠 단계 (0 : 태스크등록, 10 : 원고작성, 11 : 원고승인대기, 12 : 원고반려, 13 : 원고승인완료, 20 : 편집작성, 21 : 편집승인대기, 22 : 편집반려, 23 : 편집승인완료, 30 : 출판대기, 40 : 완료)
+                    ,_model     : {}        // 모델 정보 (json 형태에서 object 형태로 그대로 넘기는 방법으로 변경)
+                    ,_category  : {}        // 카테고리 정보 (CMS에서는 사용안함)
                 };
             }
         };
@@ -29,6 +32,7 @@ define(['./services'], function (services) {
 
             login : function(key, model, callback){
                 param._method = 'GET';
+                param._type = '';
                 param._key = key;
                 param._model = model;
                 $http({
@@ -38,8 +42,11 @@ define(['./services'], function (services) {
                     ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
-            }, getSession : function(callback){
-                param._method = 'GET';
+            }, logout : function(key, callback){
+                param._method = 'DELETE';
+                param._type = '';
+                param._key = key;
+                param._model = {};
                 $http({
                     url : helpers.uri+'login.php'
                     ,method : 'POST'
@@ -47,24 +54,21 @@ define(['./services'], function (services) {
                     ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
-            }, excelDownload : function(uri,data,callback){
-
-                param._data = data;
+            }, getSession : function(callback){
+                param._method = 'GET';
+                param._type = '';
+                param._key = '';
+                param._model = {};
                 $http({
-                    url : helpers.uri+uri+'.php'
+                    url : helpers.uri+'login.php'
                     ,method : 'POST'
                     ,data : $.param(param)
-                    ,headers : {'Content-Type': 'application/x-www-form-urlencoded'
-//                        , 'Accept': 'application/vnd.ms-excel; charset=utf-8'
-                    }
-                }).success(function(data, status, headers, config) {
-//                    window.location = helpers.uri+uri+'.php';
-                }).error(function(data, status, headers, config) { alert("2")});
-            }, updateStatus : function(uri,key,phase,callback){
-
-                //console.log("getProject() : projectid = [" + projectid + "]");
-
+                    ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
+                }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
+            }, updateStatus : function(uri,type,key,phase,callback){
                 param._method = 'PUT';
+                param._type = type;
                 param._key = key;
                 param._phase = phase;
                 $http({
@@ -77,8 +81,9 @@ define(['./services'], function (services) {
             }, db : (function(uri,dbname) {
                 var param = {
                     db         : dbname
-                    ,_method    : ""
-                    ,_key       : ""
+                    ,_method    : ''
+                    ,_type      : ''
+                    ,_key       : ''
                     ,_page      : {}
                     ,_search    : {}
                     ,_model     : {}
@@ -88,23 +93,15 @@ define(['./services'], function (services) {
                 return ( function(uri) {
                     return {
                         find : function(){
-                            var callback = function(result,stat){ console.log(result); } ;
+                            var callback;
 
-                            if(arguments.length===2){
-                                param._method = 'GET';
-                                param._key = "";
-                                param._page = {};
-                                param._search = arguments[0];
-                                param._model = {};
-                                callback = arguments[1];
-                            }else if(arguments.length===3){
-                                param._method = 'GET';
-                                param._key = "";
-                                param._page = arguments[0];
-                                param._search = arguments[1];
-                                param._model = {};
-                                callback = arguments[2];
-                            }
+                            param._method = 'GET';
+                            param._type = arguments[0];
+                            param._key = '';
+                            param._page = arguments[1];
+                            param._search = arguments[2];
+                            param._model = {};
+                            callback = arguments[3];
 
                             return $http({
                                 url : helpers.uri+uri+'.php'
@@ -118,21 +115,13 @@ define(['./services'], function (services) {
                         findOne : function(){
                             var callback ;
 
-                            if(arguments.length===2){
-                                param._method = 'GET';
-                                param._key = arguments[0];
-                                param._page = {};
-                                param._search = {};
-                                param._model = {};
-                                callback = arguments[1];
-                            }else if(arguments.length===3){
-                                param._method = 'GET';
-                                param._key = arguments[0];
-                                param._page = {};
-                                param._search = arguments[1];
-                                param._model = {};
-                                callback = arguments[2];
-                            }
+                            param._method = 'GET';
+                            param._type = arguments[0];
+                            param._key = arguments[1];
+                            param._page = {};
+                            param._search = arguments[2];
+                            param._model = {};
+                            callback = arguments[3];
 
                             $http({
                                 url : helpers.uri+uri+'.php'
@@ -146,11 +135,12 @@ define(['./services'], function (services) {
                         },
                         insert : function(){
                             param._method = 'POST';
+                            param._type = arguments[0];
                             param._key = "";
                             param._page = {};
                             param._search = {};
-                            param._model = arguments[0];
-                            var callback = arguments[1];
+                            param._model = arguments[1];
+                            var callback = arguments[2];
 
                             $http({
                                 url : helpers.uri+uri+'.php'
@@ -163,11 +153,12 @@ define(['./services'], function (services) {
                         },
                         update : function(){
                             param._method = 'PUT';
-                            param._key = arguments[0];
+                            param._type = arguments[0];
+                            param._key = arguments[1];
                             param._page = {};
                             param._search = {};
-                            param._model = arguments[1];
-                            var callback = arguments[2];
+                            param._model = arguments[2];
+                            var callback = arguments[3];
 
                             $http({
                                 url : helpers.uri+uri+'.php'
@@ -181,11 +172,12 @@ define(['./services'], function (services) {
                         },
                         remove : function(){
                             param._method = 'DELETE';
-                            param._key = arguments[0];
+                            param._type = arguments[0];
+                            param._key = arguments[1];
                             param._page = {};
                             param._search = {};
                             param._model = {};
-                            var callback = arguments[1];
+                            var callback = arguments[2];
 
                             $http({
                                 url : helpers.uri+uri+'.php'

@@ -14,11 +14,12 @@
     $_d = new MtJson();
 
     $sql = "SELECT
-                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, CHANNEL_GB, DROP_FL, POSITION
+                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION
             FROM
                 COM_CHANNEL
             WHERE
-                CHANNEL_GB = 'ADMIN'
+                SYSTEM_GB = 'ADMIN'
+                AND CHANNEL_ST = 'Y'
             ORDER BY CHANNEL_NO ASC
             ";
 
@@ -27,13 +28,14 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
+                    MENU_ID, MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
                 FROM
                     COM_MENU
                 WHERE
-                    MENU_GB = 'ADMIN'
+                    SYSTEM_GB = 'ADMIN'
+                    AND MENU_ST = 'Y'
                     AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
-                ORDER BY SORT_IDX ASC
+                ORDER BY MENU_ORD ASC
                 ";
 
         $menu_data = $_d->getData($sql);
@@ -45,12 +47,13 @@
     $channel_data = $__trn->{'rows'};
 
     $sql = "SELECT
-                MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, MENU_DESC, TAIL_DESC
+                MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, MENU_DESC, TAIL_DESC
             FROM
                 COM_MENU
             WHERE
-                MENU_GB  = 'ADMIN'
-            ORDER BY SORT_IDX ASC
+                SYSTEM_GB  = 'ADMIN'
+                AND MENU_ST  = 'Y'
+            ORDER BY MENU_ORD ASC
             ";
 
     $__trn = '';
@@ -58,12 +61,12 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, SORT_IDX
+                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, COLUMN_ORD, ROW_ORD
                 FROM
                     COM_SUB_MENU
                 WHERE
                     MENU_URL = '".$row[MENU_URL]."'
-                ORDER BY SORT_IDX ASC
+                ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
                 ";
 
         $sub_menu_data = $_d->getData($sql);
@@ -83,7 +86,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>ANGE CMS</title>
+<title>ANGE ADMIN</title>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -93,7 +96,6 @@
 <!--<meta name="content-type" content="text/html; charset=UTF-8"" >-->
 <meta name="author" content="">
 
-<link rel="stylesheet" type="text/css" href="/lib/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
 <link rel="stylesheet" type="text/css" href="/lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
 <link rel="stylesheet" type="text/css" href="/lib/ngActivityIndicator/css/ngActivityIndicator.css" />
@@ -102,11 +104,12 @@
 <link rel="stylesheet" type="text/css" href="/css/calendarDemo.css" />
 <link rel="stylesheet" type="text/css" href="/css/ng-table/ng-table.min.css" />
 <link rel="stylesheet" type="text/css" href="/css/dialog/dialogs.min.css" />
+<link rel="stylesheet" type="text/css" href="/css/app_d.css">
 
-<link rel="stylesheet" type="text/css" href="/css/admin/normalize.css" >
-<link rel="stylesheet" type="text/css" href="/css/admin/angeCMS_bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="/css/admin/style.css" />
-
+<link rel="stylesheet" type="text/css" href="/css/normalize.css" >
+<link rel="stylesheet" type="text/css" href="/css/angeCMS_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/article.css" />
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
 <link rel="stylesheet" href="/css/file-upload/blueimp-gallery.css">
@@ -183,9 +186,10 @@
 <![endif]-->
 
 <script>
-    function admin_init($rootScope) {
+    function admin_init($rootScope, $location) {
         $rootScope.admin_channel = <?=$channel_info?>;
         $rootScope.admin_menu = <?=$menu_info?>;
+        $rootScope.location = $location.path();
     }
 </script>
 

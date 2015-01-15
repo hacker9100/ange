@@ -16,7 +16,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'ng-table',
     'dialog',
     'dialog-translation',
-    'lodash', // dropdownMultiSelect 관련 라이브러리
+//    'lodash', // dropdownMultiSelect 관련 라이브러리
     'ckeditor-jquery', // ckeditor 관련 라이브러리
     'ui-widget', // fileUpload ui 관련 라이브러리
     'fileupload', // fileUpload 관련 라이브러리

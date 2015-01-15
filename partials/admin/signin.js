@@ -9,7 +9,7 @@ define([
     controllers.controller('signin', ['$scope', '$rootScope', '$state', '$stateParams', 'dataService', '$location', '$controller', function ($scope, $rootScope, $state, $stateParams, dataService, $location, $controller) {
 
         /********** 공통 컨트롤러 호출 **********/
-        angular.extend(this, $controller('admin_common', {$scope: $scope}));
+        angular.extend(this, $controller('content', {$scope: $scope}));
 
         /********** 초기화 **********/
 		//CSS 설정

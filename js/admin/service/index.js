@@ -6,5 +6,5 @@
  */
 define([
     // 공통
-    './dataService'
+    './data-service'
 ], function () {});
