@@ -11,30 +11,151 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('samplepack-edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('samplepack-edit', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
+
+
+        $scope.search = {};
+        $scope.item = {};
+
+        $scope.PAGE_NO = 0;
+        $scope.PAGE_SIZE = 1;
+
+        $scope.showSamplepackDetails = false;
 
         // 초기화
         $scope.init = function(session) {
 //            if ($stateParams.menu == 'angeroom') {
             $scope.community = "샘플팩 신청";
 //            }
+            if($stateParams.id == 'season1'){
+                $scope.season_gb = 'SAMPLE1';
+            }else {
+                $scope.season_gb = 'SAMPLE2';
+            }
+
+            $scope.checked = 'N';
         };
 
         /********** 이벤트 **********/
         // 게시판 목록 이동
-//        $scope.click_showPeopleBoardList = function () {
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            }
-//        };
+        $scope.click_sampleSeasonList = function () {
 
+           if($stateParams.id == 'season1'){
+               $scope.search.EVENT_GB = 'SAMPLE1';
+           }else{
+               $scope.search.EVENT_GB = 'SAMPLE2';
+           }
+
+           $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                .then(function(data){
+                    var target_gb = data[0].EVENT_GB;
+                    var target_no = data[0].NO;
+
+                    $scope.season_gb = target_gb;
+
+                    $scope.item.TARGET_GB = target_gb;
+                    $scope.item.NO = target_no;
+
+                   $scope.item.USER_ID = $rootScope.user_info.USER_ID;
+                   $scope.item.NICK_NM = $rootScope.user_info.NICK_NM;
+                   $scope.item.ADDR = $rootScope.user_info.ADDR;
+                   $scope.item.ADDR_DETAIL = $rootScope.user_info.ADDR_DETAIL;
+                   $scope.item.REG_DT = $rootScope.user_info.REG_DT;
+                   $scope.item.REG_DT = $rootScope.user_info.REG_DT;
+                   $scope.item.PHONE_1 = $rootScope.user_info.PHONE_1;
+                   $scope.item.PHONE_2 = $rootScope.user_info.PHONE_2;
+
+                   var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
+
+                   $scope.item.YEAR = babyBirthDt.substr(0,4);
+                   $scope.item.MONTH = babyBirthDt.substr(4,2);
+                   $scope.item.DAY = babyBirthDt.substr(6,2);
+
+                   console.log($scope.item.YEAR);
+                   console.log($scope.item.MONTH);
+                   console.log($scope.item.DAY);
+
+                })
+                .catch(function(error){});
+        };
+
+        // 회원가입 화면 이동
+        $scope.click_joinon = function (){
+            $location.url('/join/signon');
+        }
+
+        // 샘플팩 신청
+        $scope.click_saveSamplepackComp = function (){
+
+            if($scope.checked == 'N'){
+                dialogs.notify('알림', '신청 자격을 확인해주세요.', {size: 'md'});
+                return;
+            }
+
+            $scope.search.REG_UID = $rootScope.uid;
+            $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var comp_cnt = data[0].COMP_CNT;
+
+                    if(comp_cnt == 0){
+                        $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
+
+                                $location.url('/moms/samplepack/intro');
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }else{
+                        dialogs.notify('알림', '이미 샘플팩 신청을 했습니다.', {size: 'md'});
+                        $location.url('/moms/samplepack/intro');
+                    }
+
+            })
+            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+
+        }
         /********** 화면 초기화 **********/
 /*        $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoard)
             .catch($scope.reportProblems);*/
+
+        // 신청자격 여부 체크
+        $scope.click_samplepackCheck = function (){
+
+            $scope.search.TARGET_NO = $scope.item.NO;
+            $scope.search.TARGET_GB = $scope.item.TARGET_GB;
+
+            $scope.getList('ange/comp', 'samplepackCheck', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                .then(function(data){
+
+                    var checkCnt = data[0].COUNT;
+
+                    if(checkCnt ==0){
+                        dialogs.notify('알림', '신청이 가능합니다.', {size: 'md'});
+                        $scope.checked = 'Y';
+                        $scope.showSamplepackDetails = true;
+                    }else{
+                        dialogs.notify('알림', '임신중이 아니시거나 이전에 당첨되셨기 때문에 신청이 불가능합니다.', {size: 'md'});
+                        $scope.checked = 'N';
+                        return;
+                    }
+
+                })
+                .catch(function(error){});
+        }
+
+
         $scope.init();
+        $scope.click_sampleSeasonList();
+
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .catch($scope.reportProblems);
+
 
     }]);
 });

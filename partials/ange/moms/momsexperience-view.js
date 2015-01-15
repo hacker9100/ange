@@ -157,7 +157,7 @@ define([
             }
 
             $scope.search.REG_UID = $scope.uid;
-            $scope.search.BOARD_NO = $scope.item.NO;
+            $scope.search.TARGET_NO = $scope.item.NO;
             $scope.search.TARGET_GB = 'EXPERIENCE';
 
             $scope.getList('ange/comp', 'check', {}, $scope.search, false)
