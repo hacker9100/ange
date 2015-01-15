@@ -126,7 +126,8 @@ switch ($_method) {
             $sql = "SELECT COUNT(*) AS COMP_CNT, NO
                         FROM ANGE_COMP
                         WHERE BOARD_NO = ".$_search[BOARD_NO]."
-                          AND USER_ID = '".$_search[REG_UID]."'";
+                          AND USER_ID = '".$_search[REG_UID]."'
+                          AND TARGET_GB = '".$_search[TARGET_GB]."'";
 
             $data = $_d->sql_query($sql);
             if($_d->mysql_errno > 0){
@@ -163,7 +164,8 @@ switch ($_method) {
                             PHONE2,
                             PRODUCT,
                             CREDIT_FL,
-                            REASON
+                            REASON,
+                            TARGET_GB
                         ) VALUES (
                              '".$_model[NO]."'
                             , '".$_SESSION['uid']."'
@@ -184,6 +186,7 @@ switch ($_method) {
                             ,'".$_model[PRODUCT]."'
                             ,'".$_model[CREDIT_FL]."'
                             ,'".$_model[REASON]."'
+                            ,'".$_model[TARGET_GB]."'
                         )";
 
         $_d->sql_query($sql);

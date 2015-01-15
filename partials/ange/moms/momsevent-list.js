@@ -14,7 +14,43 @@ define([
     controllers.controller('momsevent-list', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
         $scope.search = {};
-        $scope.PAGE_SIZE = 10;
+
+        $scope.$parent.reload = false;
+        $scope.busy = false;
+        $scope.end = false;
+        // 페이징
+        $scope.PAGE_NO = 0;
+        $scope.PAGE_SIZE = 6;
+
+        angular.element(document).ready(function () {
+            angular.element(window).scroll(function () {
+                $timeout(function(){
+                    //$scope.images;
+                    $scope.isLoading = false;
+                },1000);
+
+                $timeout(function() {
+                    $scope.isLoading = true;
+                });
+
+//                console.log("scrollTop : "+Math.round(angular.element(document).scrollTop()));
+//                console.log("document-window : "+ (angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)));
+
+                if (Math.round(angular.element(window).scrollTop()) >= angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)) {
+                    if (!$scope.busy) {
+                        //$scope.PAGE_NO++;
+                        $scope.PAGE_SIZE++;
+                        console.log($scope.PAGE_SIZE);
+                        $scope.getPeopleBoardList();
+                    }
+//                    var scope = angular.element($("#listr")).scope();
+//                    scope.$apply(function(){
+//                        scope.PAGE_NO++;
+//                        $scope.getContentList();
+//                    });
+                }
+            });
+        });
 
         // 초기화
         $scope.init = function(session) {
@@ -41,23 +77,8 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 게시판 목록 이동
-//        $scope.click_showPeopleBoardList = function () {
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            }
-//        };
-
-        /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
-        $scope.init();
-
         // 게시판 목록 조회
-        $scope.getPeopleBoardList = function () {
+        $scope.$parent.getPeopleBoardList = function () {
 
             if ($stateParams.menu == 'angeroom') {
                 $scope.search['COMM_NO'] = '1';
@@ -73,15 +94,11 @@ define([
 
             $scope.search.SYSTEM_GB = 'ANGE';
             $scope.search.FILE = true;
-            /*            $scope.search.SORT = 'NOTICE_FL';
-             $scope.search.ORDER = 'DESC'*/
 
-            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: 10}, $scope.search, true)
+            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
-
-
                     var endDate = data[0].END_YMD;
 
                     console.log('end'+endDate);
@@ -92,7 +109,7 @@ define([
                         $scope.showForm = "reviewForm";
                     }
 
-
+                    // 메인이미지
                     for(var i in data) {
                         if (data[i].FILE != null) {
                             var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
@@ -100,7 +117,6 @@ define([
                         }
                     }
 
-                    /*$scope.total(total_cnt);*/
                     $scope.list = data;
 
                 })
@@ -129,6 +145,7 @@ define([
 
         }
 
+        $scope.init();
         $scope.getPeopleBoardList();
 
     }]);
