@@ -54,7 +54,7 @@ switch ($_method) {
     case "GET":
         if ($_type == 'item') {
             $sql = "SELECT
-                                NO, BOARD_NO, USER_ID, NICK_NM, USER_NM, REG_DT, PREG_FL, BABY_MONTH,
+                                NO, TARGET_NO, USER_ID, NICK_NM, USER_NM, REG_DT, PREG_FL, BABY_MONTH,
                                 BABY_AGE, BLOG_URL, ANSWER,
                                 ADD1, ADD2, ADD3
                             FROM
@@ -125,7 +125,7 @@ switch ($_method) {
 
             $sql = "SELECT COUNT(*) AS COMP_CNT, NO
                         FROM ANGE_COMP
-                        WHERE BOARD_NO = ".$_search[BOARD_NO]."
+                        WHERE TARGET_NO = ".$_search[TARGET_NO]."
                           AND USER_ID = '".$_search[REG_UID]."'
                           AND TARGET_GB = '".$_search[TARGET_GB]."'";
 
@@ -136,6 +136,33 @@ switch ($_method) {
                 $_d->dataEnd($sql);
             }
 
+        } else if ($_type == 'samplepackCheck') {
+
+            $search_where = "";
+            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
+                $search_where .= "AND ACW.TARGET_NO =".$_search[TARGET_NO]."";
+            }
+
+            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
+                $search_where .= "  AND ACW.TARGET_GB ='".$_search[TARGET_GB]."'";
+            }
+
+            $sql = "SELECT COUNT(*) COUNT
+                    FROM COM_USER CU
+                    INNER JOIN ANGE_COMP_WINNER ACW
+                    ON CU.USER_ID = ACW.USER_ID
+                    WHERE 1=1
+                      AND CU.PREGNENT_FL = 'Y'
+                      AND CU.USER_ID = '".$_SESSION['uid']."'
+                      ".$search_where."
+                      ";
+
+            $data = $_d->sql_query($sql);
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
         }
         break;
 
@@ -146,7 +173,7 @@ switch ($_method) {
 
         $sql = "INSERT INTO ANGE_COMP
                         (
-                            BOARD_NO,
+                            TARGET_NO,
                             USER_ID,
                             NICK_NM,
                             USER_NM,

@@ -235,6 +235,38 @@
                 }else{
                     $_d->dataEnd($sql);
                 }
+            }else if ($_type == 'like'){
+
+                $search_where = "";
+
+                if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
+                    $search_where .= "AND L.TARGET_GB = '".$_search[TARGET_GB]."' ";
+                }
+                /*
+                                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+                                    $search_common .= "AND L.REG_UID = '".$_search[REG_UID]."' ";
+                                }*/
+
+                if (isset($_search[NO]) && $_search[NO] != "") {
+                    $search_common .= "AND B.NO = '".$_search[NO]."' ";
+                }
+
+                $sql = "SELECT    CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL, COUNT(*) AS TOTAL_COUNT
+                        FROM ANGE_REVIEW B
+                        INNER JOIN ANGE_LIKE L
+                        ON B.NO = L.TARGET_NO
+                        WHERE 1=1
+                         AND L.REG_UID = '".$_SESSION['uid']."'
+                         AND B.NO = ".$_key."
+                        ".$search_where."";
+
+                if($_d->mysql_errno > 0){
+                    //$_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $result = $_d->sql_query($sql);
+                    $data = $_d->sql_fetch_array($result);
+                    $_d->dataEnd2($data);
+                }
             }
 
             break;

@@ -355,21 +355,82 @@ define([
             });
         }
 
+        $scope.likeFl = function (){
+            if($rootScope.uid != '' && $rootScope.uid != null){
+
+                $scope.search.NO = $stateParams.id;
+
+                /*if ($stateParams.menu == 'experiencereview') {
+                    $scope.search['TARGET_GB'] = 'EXPERIENCE';
+                } else if ($stateParams.menu == 'productreview') {
+                    $scope.search['TARGET_GB'] = 'PRODUCT';
+                } else if ($stateParams.menu == 'angereview') {
+                    $scope.search['TARGET_GB'] = 'ANGE';
+                } else if ($stateParams.menu == 'samplereview') {
+                    $scope.search['TARGET_GB'] = 'SAMPLE';
+                } else if ($stateParams.menu == 'samplepackreview') {
+                    $scope.search['TARGET_GB'] = 'SAMPLEPACK';
+                }else if ($stateParams.menu == 'eventreview') {
+                    $scope.search['TARGET_GB'] = 'EVENT';
+                }*/
+
+                $scope.search['TARGET_GB'] = 'REVIEW';
+
+                $scope.getItem('ange/review', 'like', $stateParams.id, $scope.search, false)
+                    .then(function(data){
+
+                        if(data.TOTAL_COUNT == 0){
+                            $scope.LIKE_FL = 'N';
+                        }else{
+                            $scope.LIKE_FL = data.LIKE_FL;
+                            console.log($scope.LIKE_FL);
+                        }
+
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }else{
+                $scope.LIKE_FL = 'N';
+            }
+
+        }
+
         // 공감
-        $scope.click_likeCntAdd = function(item){
+        $scope.click_likeCntAdd = function(item, like_fl){
 
             if ($rootScope.uid == '' || $rootScope.uid == null) {
                 dialogs.notify('알림', '로그인 후 공감이 가능합니다.', {size: 'md'});
                 return;
             }
 
-            $scope.updateItem('ange/review', 'likeCntitem', item.NO, {}, false)
-                .then(function(){
+            $scope.likeItem = {};
+            $scope.likeItem.LIKE_FL = like_fl;
+            $scope.likeItem.TARGET_NO = item.NO;
+            $scope.likeItem.TARGET_GB = 'REVIEW';
 
-                    dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
-                    $scope.getPeopleBoard();
+            $scope.insertItem('com/like', 'item', $scope.likeItem, false)
+                .then(function(){
+                    var afterLike = $scope.likeItem.LIKE_FL == 'Y' ? 'N' : 'Y';
+                    if (afterLike == 'Y') {
+                        dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
+
+                        $scope.likeFl();
+                        $scope.getPeopleBoard();
+                    } else {
+                        dialogs.notify('알림', '공감 취소되었습니다.', {size: 'md'});
+
+                        $scope.likeFl();
+                        $scope.getPeopleBoard();
+                    }
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+            /*            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
+             .then(function(){
+
+             dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
+             $scope.getPeopleBoard();
+             })
+             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
         };
 
         // 스크랩
@@ -429,6 +490,7 @@ define([
             .catch($scope.reportProblems);
 
         $scope.init();
+        $scope.likeFl();
         $scope.addHitCnt();
         $scope.getPeopleBoard();
         $scope.getPreBoard();
