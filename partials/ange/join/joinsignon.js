@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('joinsignon', ['$scope', '$rootScope', '$location', '$controller', 'dialogs', function ($scope, $rootScope, $location, $controller, dialogs) {
+    controllers.controller('joinsignon', ['$rootScope', '$scope', '$window', '$location', 'dialogs', function ($rootScope, $scope, $window, $location, dialogs) {
 
         /********** 초기화 **********/
         // 날짜 콤보박스
@@ -26,7 +26,7 @@ define([
         $scope.checkCert = false;
 
         // 진행 단계
-        $scope.step = '01';
+        $scope.step = '02';
 
         // 이용약관 체크
         $scope.checkAll = false;
@@ -79,7 +79,7 @@ define([
             $scope.babies = [{}, {}, {}];
 
             $scope.user = {USER_ID: '', USER_NM: '', NICK_NM: '', PASSWORD: '', LUNAR_FL: '0', BIRTH: '', ZIP_CODE: '', ADDR: '', ADDR_DETAIL: '', PHONE_1: '', PHONE_2: '', USER_GB: '', USER_ST: '', EMAIL: '', SEX_GB: '',
-                            INTRO: '', NOTE: '', MARRIED_FL: 'Y', PREGNENT_FL: 'N', EN_ANGE_EMAIL_FL: true, EN_ANGE_SMS_FL: true, EN_ALARM_EMAIL_FL: true, EN_ALARM_SMS_FL: true, EN_STORE_EMAIL_FL: true, EN_STORE_SMS_FL: true}
+                INTRO: '', NOTE: '', MARRIED_FL: 'Y', PREGNENT_FL: 'N', EN_ANGE_EMAIL_FL: true, EN_ANGE_SMS_FL: true, EN_ALARM_EMAIL_FL: true, EN_ALARM_SMS_FL: true, EN_STORE_EMAIL_FL: true, EN_STORE_SMS_FL: true}
             $scope.user.YEAR = '';
             $scope.user.MONTH = '';
             $scope.user.DAY = '';
@@ -97,6 +97,28 @@ define([
         };
 
         /********** 이벤트 **********/
+        // 우편번호 검색
+        $scope.click_openDaumPostcode = function () {
+            $window.open(
+                new daum.Postcode({
+                    oncomplete: function(data) {
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                        // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
+                        document.getElementById('post_1').value = data.postcode1;
+                        document.getElementById('post_2').value = data.postcode2;
+                        document.getElementById('addr').value = data.address;
+
+                        //전체 주소에서 연결 번지 및 ()로 묶여 있는 부가정보를 제거하고자 할 경우,
+                        //아래와 같은 정규식을 사용해도 된다. 정규식은 개발자의 목적에 맞게 수정해서 사용 가능하다.
+                        //var addr = data.address.replace(/(\s|^)\(.+\)$|\S+~\S+/g, '');
+                        //document.getElementById('addr').value = addr;
+
+                        document.getElementById('addr_detail').focus();
+                    }
+                }).open()
+            );
+        };
+
         // 이용약관 체크
         $scope.click_checkItem = function (item) {
             if (item == 'checkTerms')
@@ -318,6 +340,14 @@ define([
                 $scope.user.PHONE_1 = $scope.user.PHONE_1_1 + $scope.user.PHONE_1_2 + $scope.user.PHONE_1_3;
             }
 
+            if ($scope.user.POST_1 == '' || $scope.user.POST_2 == '') {
+                $('#post_1').focus();
+                dialogs.notify('알림', '주소를 확인해주세요.', {size: 'md'});
+                return;
+            } else {
+                $scope.user.ZIP_CODE = $scope.user.POST_1 + $scope.user.POST_2;
+            }
+
             if ($scope.user.PHONE_2_1 == '' || $scope.user.PHONE_2_2 == '' || $scope.user.PHONE_2_3 == '') {
                 $('#phone_2').focus();
                 dialogs.notify('알림', '휴대폰을 확인해주세요.', {size: 'md'});
@@ -334,9 +364,21 @@ define([
                 $scope.user.EMAIL = $scope.user.EMAIL_ID + '@' + $scope.user.EMAIL_TYPE;
             }
 
-            if ($scope.blog.BLOG_URL != '' && $scope.user.BLOG_DETAIL != '') {
-                $scope.blog.BLOG_URL = $scope.blog.BLOG_URL + $scope.user.BLOG_DETAIL;
+            if ($scope.blog.BLOG_URL != '' && $scope.blog.BLOG_DETAIL != '') {
+                $scope.blog.BLOG_URL = $scope.blog.BLOG_DETAIL;
             }
+
+            if ($scope.blog.THEME.length != 0) {
+                var strTheme = '';
+                for(var i = 0; i < $scope.blog.THEME.length; i++) {
+                    strTheme += $scope.blog.THEME[i];
+
+                    if (i != $scope.blog.THEME.length - 1) strTheme += ',';
+                }
+            }
+
+            $scope.user.BABY = $scope.babies;
+            $scope.user.BLOG = $scope.blog;
 
             if ($scope.checkSave) {
                 $scope.insertItem('com/user', 'item', $scope.user, false)

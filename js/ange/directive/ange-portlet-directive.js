@@ -102,7 +102,9 @@ define([
                     var channel = $scope.option.url.split('/')[1];
                     var menu = 'angeroom';
 
-                    if ($scope.option.type == 'board') {
+                    if (angular.uppercase($scope.option.type) == 'REVIEW') {
+                        menu = angular.lowercase(item.TARGET_GB) + $scope.option.type;
+                    } else {
                         switch(item.COMM_NO) {
                             case '1' :
                                 menu = 'angeroom';
@@ -135,8 +137,6 @@ define([
                                 menu = 'financial';
                                 break;
                         }
-                    } else if ($scope.option.type == 'review') {
-                        menu = angular.lowercase(item.TARGET_GB) + $scope.option.type;
                     }
 
                     if (angular.uppercase($scope.option.type) == 'CLINIC' && $scope.uid != item.REG_UID && item.PASSWORD_FL != '0') {

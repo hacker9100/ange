@@ -88,6 +88,8 @@ require.config({
         'uiCalendar': '../../lib/fullcalendar/calendar',
         'moment': '../../lib/fullcalendar/lib/moment.min',
 
+//        'daum-postcode' : '//dmaps.daum.net/map_js_init/postcode',
+
         'library': '../../lib'
     },
 

@@ -175,7 +175,7 @@ define([
         // 공감 클릭
         $scope.click_addLike = function (idx, item) {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 공감 할 수 있습니다.', {size: 'md'});
+                dialogs.notify('알림', '로그인 후 사용할 수 있습니다.', {size: 'md'});
                 return;
             }
 

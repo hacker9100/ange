@@ -29,16 +29,19 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-            if ($stateParams.menu == 'angemodel') {
-                $scope.community = "앙쥬모델 선발대회";
-                $scope.community_show = "angemodel";
-            } else if($stateParams.menu == 'recipearcade') {
-                $scope.community = "레시피 아케이드";
-                $scope.community_show = "recipearcade";
-            } else if($stateParams.menu == 'peopletaste') {
-                $scope.community = "피플 맛집";
-                $scope.community_show = "peopletaste";
-            }
+
+            $scope.community_show = $stateParams.menu;
+
+//            if ($stateParams.menu == 'angemodel') {
+//                $scope.community = "앙쥬모델 선발대회";
+//                $scope.community_show = "angemodel";
+//            } else if($stateParams.menu == 'recipearcade') {
+//                $scope.community = "레시피 아케이드";
+//                $scope.community_show = "recipearcade";
+//            } else if($stateParams.menu == 'peopletaste') {
+//                $scope.community = "피플 맛집";
+//                $scope.community_show = "peopletaste";
+//            }
         };
 
         $scope.likeFl = function (){
@@ -109,24 +112,28 @@ define([
         /********** 이벤트 **********/
             // 수정 버튼 클릭
         $scope.click_showPeoplePhotoEdit = function (item) {
-            if ($stateParams.menu == 'peopletaste') {
-                $location.url('/people/peopletaste/edit/'+item.NO);
-            } else if($stateParams.menu == 'angemodel') {
-                $location.url('/people/angemodel/edit/'+item.NO);
-            } else if($stateParams.menu == 'recipearcade') {
-                $location.url('/people/recipearcade/edit/'+item.NO);
-            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/'+item.NO);
+
+//            if ($stateParams.menu == 'peopletaste') {
+//                $location.url('/people/peopletaste/edit/'+item.NO);
+//            } else if($stateParams.menu == 'angemodel') {
+//                $location.url('/people/angemodel/edit/'+item.NO);
+//            } else if($stateParams.menu == 'recipearcade') {
+//                $location.url('/people/recipearcade/edit/'+item.NO);
+//            }
         };
 
         // 목록 버튼 클릭
         $scope.click_showPeoplePhotoList = function () {
-            if ($stateParams.menu == 'peopletaste') {
-                $location.url('/people/peopletaste/list');
-            } else if($stateParams.menu == 'angemodel') {
-                $location.url('/people/angemodel/list');
-            } else if($stateParams.menu == 'recipearcade') {
-                $location.url('/people/recipearcade/list');
-            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+
+//            if ($stateParams.menu == 'peopletaste') {
+//                $location.url('/people/peopletaste/list');
+//            } else if($stateParams.menu == 'angemodel') {
+//                $location.url('/people/angemodel/list');
+//            } else if($stateParams.menu == 'recipearcade') {
+//                $location.url('/people/recipearcade/list');
+//            }
         };
 
         $scope.addHitCnt = function () {
@@ -168,13 +175,15 @@ define([
         // 이전글
         $scope.getPreBoard = function (){
 
-            if ($stateParams.menu == 'angemodel') {
-                $scope.search['COMM_NO'] = '6';
-            } else if($stateParams.menu == 'recipearcade') {
-                $scope.search['COMM_NO'] = '7';
-            } else if($stateParams.menu == 'peopletaste') {
-                $scope.search['COMM_NO'] = '8';
-            }
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+
+//            if ($stateParams.menu == 'angemodel') {
+//                $scope.search['COMM_NO'] = '6';
+//            } else if($stateParams.menu == 'recipearcade') {
+//                $scope.search['COMM_NO'] = '7';
+//            } else if($stateParams.menu == 'peopletaste') {
+//                $scope.search['COMM_NO'] = '8';
+//            }
 
             $scope.search.KEY = $stateParams.id;
             $scope.search.BOARD_PRE = true;
@@ -191,13 +200,15 @@ define([
         // 다음글
         $scope.getNextBoard = function (){
 
-            if ($stateParams.menu == 'angemodel') {
-                $scope.search['COMM_NO'] = '6';
-            } else if($stateParams.menu == 'recipearcade') {
-                $scope.search['COMM_NO'] = '7';
-            } else if($stateParams.menu == 'peopletaste') {
-                $scope.search['COMM_NO'] = '8';
-            }
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+
+//            if ($stateParams.menu == 'angemodel') {
+//                $scope.search['COMM_NO'] = '6';
+//            } else if($stateParams.menu == 'recipearcade') {
+//                $scope.search['COMM_NO'] = '7';
+//            } else if($stateParams.menu == 'peopletaste') {
+//                $scope.search['COMM_NO'] = '8';
+//            }
 
             $scope.search.KEY = $stateParams.id;
             $scope.search.BOARD_NEXT = true;
@@ -214,13 +225,15 @@ define([
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
 
-            if ($stateParams.menu == 'angemodel') {
-                $location.url('/people/angemodel/view/'+key);
-            } else if($stateParams.menu == 'recipearcade') {
-                $location.url('/people/recipearcade/view/'+key);
-            } else if($stateParams.menu == 'peopletaste') {
-                $location.url('/people/peopletaste/view/'+key);
-            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+
+//            if ($stateParams.menu == 'angemodel') {
+//                $location.url('/people/angemodel/view/'+key);
+//            } else if($stateParams.menu == 'recipearcade') {
+//                $location.url('/people/recipearcade/view/'+key);
+//            } else if($stateParams.menu == 'peopletaste') {
+//                $location.url('/people/peopletaste/view/'+key);
+//            }
 
         };
 
@@ -230,13 +243,15 @@ define([
             dialog.result.then(function(btn){
                 $scope.deleteItem('com/webboard', 'item', item.NO, true)
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
-                        if ($stateParams.menu == 'peopletaste') {
-                            $location.url('/people/peopletaste/list');
-                        } else if($stateParams.menu == 'angemodel') {
-                            $location.url('/people/angemodel/list');
-                        } else if($stateParams.menu == 'recipearcade') {
-                            $location.url('/people/recipearcade/list');
-                        }
+                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+
+//                        if ($stateParams.menu == 'peopletaste') {
+//                            $location.url('/people/peopletaste/list');
+//                        } else if($stateParams.menu == 'angemodel') {
+//                            $location.url('/people/angemodel/list');
+//                        } else if($stateParams.menu == 'recipearcade') {
+//                            $location.url('/people/recipearcade/list');
+//                        }
                      ;})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {

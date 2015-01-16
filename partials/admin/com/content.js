@@ -15,6 +15,12 @@ define([
 
         $scope.path = $location.path();
 
+//        var menu = $filter('filter')($rootScope.ange_menu, function (data) {
+//            return (data.MENU_ID.indexOf(menu[2]) > -1)
+//        })[0];
+//
+//        $scope.community = menu.MENU_NM;
+
         /********** ADMIN 공통 함수 **********/
         // 파일 사이즈 변환
         $scope.formatFileSize = function (bytes) {
@@ -74,6 +80,7 @@ define([
                             $rootScope.session = null;
 
                             $rootScope.authenticated = true;
+                            $rootScope.user_info = null;
                             $rootScope.uid = null;
                             $rootScope.name = null;
                             $rootScope.role = null;
@@ -136,6 +143,7 @@ define([
                 $rootScope.session = session;
 
                 $rootScope.authenticated = true;
+                $rootScope.user_info = session.USER_INFO;
                 $rootScope.uid = session.USER_ID;
                 $rootScope.name = session.USER_NM;
                 $rootScope.role = session.ROLE_ID;
