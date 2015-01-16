@@ -11,18 +11,24 @@
     width:100%;
 }
 
+.store_col_btn {
+    float:left;
+    width:100%;
+    padding:10px;
+    text-align: center;
+}
 
 .store_list_item {
     position: relative;
     width:100%;
     margin-top:10px;
     margin-bottom: 6px;
-    line-height:24px;
+    line-height:22px;
 }
 
 .store_list_item.maininfo {
     border-left: 2px solid #DEDEDE;
-    padding:4px 8px;
+    padding: 2px 8px;
 }
 
 .store_optiontitle {
@@ -73,10 +79,26 @@
     text-align:right;
 }
 
-
 .store_view_tab {
     padding: 2px 10px 0px 10px;
     background-color:#EDEDED;
 }
 
+.store_auctiontime {
+    border:1px solid #EAEAEA;
+    border-radius:26px;
+    font-size:1.04em;
+    text-align: center;
+    line-height:42px;
+    margin-bottom: 20px;
+    background-color:#ededed;
+}
 
+.store_bg_auctionhowto {
+    position:relative;
+    width:100%;
+    padding:40px 20px 40px 50px;
+    background-image: url('/imgs/ange/store_bg_auctionhowto.png');
+    background-repeat: no-repeat;
+    background-position: right 25px top -75px;
+}
