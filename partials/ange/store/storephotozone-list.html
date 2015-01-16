@@ -1,25 +1,33 @@
 <div ng-controller="storephotozone-list">
     <!-- mainbar -->
-    <div class="mainbar sub-slide0">
-        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
-
+    <div class="mainbar sub-slide" style="padding:0px;">
+        <div class="container-fluid common_container" style="width:100%; margin:0px; min-width:980px; max-width:1600px;">
 
             <div class="row">
-
                 <div class="col-xs-12 v-cell-3">
                     <div class="comp_basic h-cell-dynamic">
 
                         <div class="sub_contents_wrap">
 
-                            <div class="sub_contents_title">
+                            <div class="sub_contents_title" style="margin-left:40px;">
                                 <span class="sub_contents_bullet"></span>
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
-                            </br>
-                            list
+                            <div class="container-fluid sub_contents_customizewrap">
+                                <div class="row">
+                                    <div class="col-xs-12" style="border:none; border-top:1px solid #ddd; padding-top:25px; overflow:auto;">
+
+                                        <iframe id="photozone" name="photozone" height="3000" width="980" scrolling="no" frameborder="0" src="http://jumbo.ange.co.kr/main/index.php"></iframe>
+
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
 
                         </div><!-- /.sub_contents_wrap -->
+
+
                     </div>
                 </div>
 
@@ -42,14 +50,6 @@
         </div>
         <!-- /1200px 이하일 경우 표시되는 footer -->
 
-    </div>
-
-    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
-        <div class="row">
-            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
-                우측바
-            </div>
-        </div>
     </div>
 
     <!-- /Main Page Layout Set -->
