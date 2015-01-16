@@ -37,6 +37,11 @@
 	background-position: bottom;
 }
 
+.peoplep_list_tab .tab_nopadding {
+    padding-right:0px; padding-left:0px;
+}
+
+
 .people_photo_contentlist {
 	width:100%;
 	margin:0px auto;
@@ -64,6 +69,8 @@
 
 .people_photo_img {
 	width:100%;
+    background-size: cover;
+    background-position: center center;
 }
 
 .people_photo_cate, .people_photo_cate a {
