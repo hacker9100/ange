@@ -13,7 +13,7 @@
     $_d = new MtJson();
 
     $sql = "SELECT
-                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION, COLUMN_CNT
+                CHANNEL_NO, CHANNEL_ID, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION, COLUMN_CNT
             FROM
                 COM_CHANNEL
             WHERE
@@ -46,13 +46,14 @@
     $channel_data = $__trn->{'rows'};
 
     $sql = "SELECT
-                MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC, ETC
+                CM.MENU_ID, CM.MENU_URL, CM.CHANNEL_NO, CM.MENU_NM, CM.SYSTEM_GB, CM.DIVIDER_FL, DEPTH, CM.LINK_FL, CM.CLASS_GB, CM.MENU_DESC, CM.TAIL_DESC, CM.ETC, AC.NO AS COMM_NO
             FROM
-                COM_MENU
+                COM_MENU CM
+                LEFT OUTER JOIN ANGE_COMM AC ON CM.MENU_ID = AC.MENU_ID
             WHERE
-                SYSTEM_GB  = 'ANGE'
-                AND MENU_ST  = 'Y'
-            ORDER BY MENU_ORD ASC
+                CM.SYSTEM_GB  = 'ANGE'
+                AND CM.MENU_ST  = 'Y'
+            ORDER BY CM.MENU_ORD ASC
             ";
 
     $__trn = '';
@@ -129,12 +130,16 @@
 <link rel="stylesheet" type="text/css" href="css/ange/ange_infodesk_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_join.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_moms.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_store.css" />
 
 <!-- IE6,7,8에서도 HTML5 element를 인식시켜주기 위한 코드 -->
 <!--[if lt IE 9]>
 <script src="lib/html5shiv/html5shiv.js"></script>
 <script src="lib/respond/respond.min.js"></script>
 <![endif]-->
+
+<!-- 다음 무편번호 서비스 추가 -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>
 
 <script>
     function ange_init($rootScope) {

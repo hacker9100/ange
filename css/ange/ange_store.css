@@ -1,0 +1,82 @@
+/* ++store common css  */
+
+.store_col_info {
+    clear:both;
+    float:left;
+    color:#464646;
+    font-size:0.92em;
+    line-height:18px;
+    border-bottom:1px solid #ddd;
+    padding: 15px 0;
+    width:100%;
+}
+
+
+.store_list_item {
+    position: relative;
+    width:100%;
+    margin-top:10px;
+    margin-bottom: 6px;
+    line-height:24px;
+}
+
+.store_list_item.maininfo {
+    border-left: 2px solid #DEDEDE;
+    padding:4px 8px;
+}
+
+.store_optiontitle {
+    float:left;
+    width:58%;
+}
+.store_optionea {
+    float:left;
+    width:30%;
+}
+
+.store_optionea input {
+    float:left;
+    height:25px;
+    padding-top:1px;
+    width:38px;
+}
+
+.store_optionea span {
+    float:left;
+    font-size:0.86em;
+    margin:0 5px;
+}
+
+.store_optionea button {
+    float:left;
+    margin:2px 2px;
+}
+
+.store_optionprice {
+    float:left;
+    font-size: 0.86em;
+    width:12%;
+    text-align:right;
+}
+
+.store_pricevalue {
+    float:left;
+    width:20%;
+    font-size:0.86em;
+    color:#686868;
+}
+
+.store_totalprice {
+    float:left;
+    font-size: 0.92em;
+    width:22%;
+    text-align:right;
+}
+
+
+.store_view_tab {
+    padding: 2px 10px 0px 10px;
+    background-color:#EDEDED;
+}
+
+

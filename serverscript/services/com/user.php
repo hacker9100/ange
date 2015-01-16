@@ -85,7 +85,10 @@
                 }
 
                 $sql = "SELECT
-                            U.USER_ID, U.USER_NM, U.PHONE_1, U.PHONE_2, U.EMAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
+                            U.USER_ID, U.USER_NM, U.NICK_NM, U.LUNAR_FL, U.BIRTH, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST,
+                            U.REG_DT, U.FINAL_LOGIN_DT, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_YMD, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_YMD,
+                            U.INTRO, U.NOTE, U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT,
+                            U.EN_ANGE_EMAIL_FL, U.EN_ANGE_SMS_FL, U.EN_ALARM_EMAIL_FL, U.EN_ALARM_SMS_FL, U.EN_STORE_EMAIL_FL, U.EN_STORE_SMS_FL,
                             UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
@@ -122,9 +125,8 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $result = $_d->sql_query($sql);
-                    $mileage_data  = $_d->sql_fetch_array($result);
-
+                    $mileage_result = $_d->sql_query($sql);
+                    $mileage_data  = $_d->sql_fetch_array($mileage_result);
                     $data['MILEAGE'] = $mileage_data;
 
                     $sql = "SELECT
@@ -132,11 +134,10 @@
                             FROM
                                 ANGE_USER_BABY
                             WHERE
-                                USER_ID = ".$_key."
+                                USER_ID = '".$_key."'
                             ";
 
                     $baby_data = $_d->getData($sql);
-
                     $data['BABY'] = $baby_data;
 
                     $sql = "SELECT
@@ -147,9 +148,8 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $result = $_d->sql_query($sql);
-                    $blog_data  = $_d->sql_fetch_array($result);
-
+                    $blog_result = $_d->sql_query($sql);
+                    $blog_data  = $_d->sql_fetch_array($blog_result);
                     $data['BLOG'] = $blog_data;
                 }
 
@@ -421,6 +421,7 @@
                         USER_NM,
                         NICK_NM,
                         PASSWORD,
+                        LUNAR_FL,
                         BIRTH,
                         ZIP_CODE,
                         ADDR,
@@ -433,6 +434,7 @@
                         SEX_GB,
                         INTRO,
                         NOTE,
+                        MARRIED_FL,
                         PREGNENT_FL,
                         BLOG_FL,
                         JOIN_PATH,
@@ -457,6 +459,7 @@
                         '".$_model[USER_NM]."',
                         '".$_model[NICK_NM]."',
                         '".$hash."',
+                        '".$_model[LUNAR_FL]."',
                         '".$_model[BIRTH]."',
                         '".$_model[ZIP_CODE]."',
                         '".$_model[ADDR]."',
@@ -469,6 +472,7 @@
                         '".$_model[SEX_GB]."',
                         '".$_model[INTRO]."',
                         '".$_model[NOTE]."',
+                        '".$_model[MARRIED_FL]."',
                         '".$_model[PREGNENT_FL]."',
                         '".$_model[BLOG_FL]."',
                         '".$_model[JOIN_PATH]."',
@@ -616,6 +620,7 @@
                             USER_NM = '".$_model[USER_NM]."',
                             NICK_NM = '".$_model[NICK_NM]."',
                             ".$update_password."
+                            LUNAR_FL = '".$_model[LUNAR_FL]."',
                             BIRTH = '".$_model[BIRTH]."',
                             ZIP_CODE = '".$_model[ZIP_CODE]."',
                             ADDR = '".$_model[ADDR]."',
@@ -628,6 +633,7 @@
                             SEX_GB = '".$_model[SEX_GB]."',
                             INTRO = '".$_model[INTRO]."',
                             NOTE = '".$_model[NOTE]."',
+                            MARRIED_FL = '".$_model[MARRIED_FL]."',
                             PREGNENT_FL = '".$_model[PREGNENT_FL]."',
                             BLOG_FL = '".$_model[BLOG_FL]."',
                             JOIN_PATH = '".$_model[JOIN_PATH]."',
@@ -642,7 +648,6 @@
                             EN_ALARM_SMS_FL = '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
                             EN_STORE_EMAIL_FL = '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
                             EN_STORE_SMS_FL = '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."'
-                            BABY_BIRTH_DT = '".$_model[BABY_BIRTH_DT]."'
                         WHERE
                             USER_ID = '".$_key."'
                         ";

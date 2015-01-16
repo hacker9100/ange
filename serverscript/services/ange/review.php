@@ -363,6 +363,7 @@
                     )";
 
             $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
 
             $sql = "UPDATE ANGE_COMP_WINNER
                         SET
@@ -374,7 +375,6 @@
 
 
             $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
                 $err++;

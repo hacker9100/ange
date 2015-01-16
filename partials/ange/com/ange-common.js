@@ -11,22 +11,34 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('ange-common', ['$scope', '$rootScope', '$stateParams', '$location', '$q', 'dataService', 'dialogs', function ($scope, $rootScope, $stateParams, $location, $q, dataService, dialogs) {
+    controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$location', '$q', 'dataService', '$filter', 'dialogs', function ($rootScope, $scope, $stateParams, $location, $q, dataService, $filter, dialogs) {
 
-        $scope.path = $location.path();
+        // 주소 경로
+        $scope.path = $location.path().split('/');
 
-        $scope.channel = '1';
+        // 현재 채널 정보
+        $scope.channel = $filter('filter')($rootScope.ange_channel, function (data) {
+            return (data.CHANNEL_ID.indexOf($scope.path[1]) > -1)
+        })[0];
 
+        // 현재 메뉴 정보
+        $scope.menu = $filter('filter')($rootScope.ange_menu, function (data) {
+            return (data.MENU_ID.indexOf($scope.path[2]) > -1)
+        })[0];
 
         // 카테고리 데이터
         $scope.category = [];
 
-        // 현재 메뉴 정보
-        for (var i in $rootScope.ange_menu) {
-            if ($rootScope.ange_menu[i].MENU_URL == $location.path()) {
-                $scope.menu = $rootScope.ange_menu[i];
-            }
+        if ($rootScope.menu != undefined) {
+            $scope.community = $rootScope.menu.MENU_NM;
         }
+
+//        for (var i in $rootScope.ange_menu) {
+//            if ($rootScope.ange_menu[i].MENU_URL == $location.path()) {
+//                $scope.menu = $rootScope.ange_menu[i];
+//                console.log(JSON.stringify($scope.menu));
+//            }
+//        }
 
         // url 주소 분리
         $scope.url = $scope.location.split('/');

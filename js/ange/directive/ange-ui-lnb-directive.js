@@ -15,50 +15,18 @@ define(['./directives'], function (directives) {
 //            name: "controllerName",
             template: function(element, attr) {
                 var scope = element.scope();
-                var menu = scope.location.split('/');
-
-                var channelNo = '';
+                var path = scope.location.split('/');
                 var channel = null;
-                var templet = '';
-
-                switch(menu[1]) {
-                    case 'main' :
-                        channelNo = '0';
-                        break;
-                    case 'story' :
-                        channelNo = '1';
-                        break;
-                    case 'people' :
-                        channelNo = '2';
-                        break;
-                    case 'moms' :
-                        channelNo = '3';
-                        break;
-                    case 'myange' :
-                        channelNo = '4';
-                        break;
-                    case 'store' :
-                        channelNo = '5';
-                        break;
-                    case 'infodesk' :
-                        channelNo = '6';
-                        break;
-                    case 'join' :
-                        channelNo = '7';
-                        break;
-                    default :
-                        channelNo = '0';
-                }
 
                 for (var i in scope.ange_channel) {
-                    if (scope.ange_channel[i].CHANNEL_NO == channelNo) {
+                    if (scope.ange_channel[i].CHANNEL_ID == path[1]) {
                         channel = scope.ange_channel[i];
                     }
                 }
 
-                templet = '<div ng-if="'+ (menu[1] != 'main') + '" id="lnb" class="lnb"' +
-                        '   <div class="localmenu_wrap">' +
-                        '       <div ng-include=" \'/partials/ange/com/lnb-filter.html\' "></div>';
+                var templet = '<div ng-if="'+ (path[1] != 'main') + '" id="lnb" class="lnb"' +
+                                '   <div class="localmenu_wrap">' +
+                                '       <div ng-include=" \'/partials/ange/com/lnb-filter.html\' "></div>';
 
                 for (var j in channel.MENU_INFO) {
                     if (channel.MENU_INFO[j].DIVIDER_FL == 'Y' && j != 0) {

@@ -46,22 +46,24 @@ define([
             // 초기화
         $scope.init = function() {
 
-            if ($stateParams.menu == 'angeroom') {
-                $scope.community = "앙쥬맘 수다방";
-                $scope.search['COMM_NO'] = '1';
-            } else if($stateParams.menu == 'momstalk') {
-                $scope.community = "예비맘 출산맘";
-                $scope.search['COMM_NO'] = '2';
-            } else if($stateParams.menu == 'babycare') {
-                $scope.community = "육아방";
-                $scope.search['COMM_NO'] = '3';
-            } else if($stateParams.menu == 'firstbirthtalk') {
-                $scope.community = "돌잔치 톡톡톡";
-                $scope.search['COMM_NO'] = '4';
-            } else if($stateParams.menu == 'booktalk') {
-                $scope.community = "책수다";
-                $scope.search['COMM_NO'] = '5';
-            }
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+
+//            if ($stateParams.menu == 'angeroom') {
+//                $scope.community = "앙쥬맘 수다방";
+//                $scope.search['COMM_NO'] = '1';
+//            } else if($stateParams.menu == 'momstalk') {
+//                $scope.community = "예비맘 출산맘";
+//                $scope.search['COMM_NO'] = '2';
+//            } else if($stateParams.menu == 'babycare') {
+//                $scope.community = "육아방";
+//                $scope.search['COMM_NO'] = '3';
+//            } else if($stateParams.menu == 'firstbirthtalk') {
+//                $scope.community = "돌잔치 톡톡톡";
+//                $scope.search['COMM_NO'] = '4';
+//            } else if($stateParams.menu == 'booktalk') {
+//                $scope.community = "책수다";
+//                $scope.search['COMM_NO'] = '5';
+//            }
 
             $scope.search.SYSTEM_GB = 'ANGE';
         };
@@ -131,7 +133,7 @@ define([
 
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
-            $location.url('/people/'+$stateParams.menu+'/view/'+key);
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
         };
 
         // 등록 버튼 클릭
@@ -141,7 +143,7 @@ define([
                 dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
                 return;
             }
-            $location.url('/people/'+$stateParams.menu+'/edit/0');
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/0');
         };
 
         // 검색

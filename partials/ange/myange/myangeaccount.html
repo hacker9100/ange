@@ -16,10 +16,704 @@
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
-                            </br>
-                            account
-
                         </div><!-- /.sub_contents_wrap -->
+
+                        <div ng-if="step == '01'" class="sub_contents_body">
+
+                            <div class="sub_pagetitle_hr">비밀번호 확인</div>
+
+                            <div class="join_agree_wrap">
+
+                            </div>
+                        </div>
+
+                        <div ng-if="step == '02'" class="sub_contents_body">
+                        <form ng-model="user" role="form" name="join_form">
+
+                        <div class="sub_pagetitle_hr">기본정보</div>
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>아이디</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-4 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input id="user_id" ng-model="user.USER_ID" type="text" class="form-control" style="cursor: default; background-color: #fff; margin:0px;" placeholder="ID" disabled>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-6 basicinfo desc">
+                                    <span class="table_gray" ng-show="!checkID">6~12자리 영문,숫자 (특수문자 사용불가)</span>
+                                    <span class="table_blue" ng-show="checkID && availableID">사용가능</span>
+                                    <span class="table_red" ng-show="checkID && !availableID">이미 사용 중</span>
+                                </span>
+
+                                <!--<button type="button" class="btn btn-sm btn-info" ng-click="click_checkUserId();" >중복확인</button>-->
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>비밀번호</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-4 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input id="password" ng-model="user.PASSWORD" type="password" class="form-control" style="margin:0px;" placeholder="Password">
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-6 basicinfo desc">
+                                    <span class="table_gray" ng-show="!checkPW">6~12자리 공백없이 영문,숫자,특수문자 조합</span>
+                                    <span class="table_blue" ng-show="checkPW && availablePW">사용가능</span>
+                                    <span class="table_red" ng-show="checkPW && !availablePW">사용불가</span>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>비밀번호확인</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-4 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input ng-model="user.PASSWORD_CP" type="password" class="form-control" style="margin:0px;" placeholder="Password Confirm">
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-6 basicinfo desc">
+                                    <!--<span class="table_gray" ng-show="!checkPW">다시한번 입력하세요</span>-->
+                                    <span class="table_blue" ng-show="checkPW && comparePW">비밀번호가 동일합니다</span>
+                                    <span class="table_red" ng-show="checkPW && !comparePW">비밀번호 틀립니다</span>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>이름</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-4 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input id="user_nm" ng-model="user.USER_NM" type="text" class="form-control" style="margin:0px;" placeholder="Name">
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-6 basicinfo desc">
+                                    <span class="table_gray" style="display:block;">실명을 입력하세요</span>
+                                    <span class="table_blue" style="display:none;">사용가능</span>
+                                    <span class="table_red" style="display:none;">사용불가</span>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>닉네임</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-4 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input id="nick_nm" ng-model="user.NICK_NM" type="text" class="form-control" style="cursor: default; background-color: #fff; margin:0px;" placeholder="Nick name" disabled>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-6 basicinfo desc">
+                                    <span class="table_gray" ng-show="!checkNick">한글 2~6자리, 영문/특수기호 4~12자리</span>
+                                    <span class="table_blue" ng-show="checkNick && availableNick">사용가능</span>
+                                    <span class="table_red" ng-show="checkNick && !availableNick">이미 사용 중</span>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>생년월일</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-10 basicinfo input">
+                                    <div class="form-inline" style="margin:0 5px">
+                                        <select ng-model="user.LUNAR_FL" class="form-control" style="width:90px;">
+                                            <option value="0">양력</option>
+                                            <option value="1">음력</option>
+                                        </select>
+
+                                        <select id="birth" ng-model="user.YEAR" ng-options="v for v in year" class= "form-control" style="width:110px;">
+                                            <option value="">년</option>
+                                        </select>
+
+                                        <select ng-model="user.MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;">
+                                            <option value="">월</option>
+                                        </select>
+
+                                        <select ng-model="user.DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                            <option value="">일</option>
+                                        </select>
+                                    </div>
+                                </span>
+
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>주소</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">우편번호</div>
+                                </span>
+
+                                <span class="col-xs-8 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <div class="form-inline postno_search">
+                                            <input id="post_1" ng-model="user.POST_1" type="text" class="form-control postno_search" style="cursor:default; width:65px; background-color: #fff;" disabled>
+                                            <span style="margin:0 4px;"> &dash; </span>
+                                            <input id="post_2" ng-model="user.POST_2" type="text" class="form-control postno_search" style="cursor:default; width:65px; background-color: #fff;" disabled>
+                                            <button type="button" class="btn btn-sm btn-info" ng-click="click_openDaumPostcode()"><span class="glyphicon glyphicon-plus"></span> 우편번호</button>
+                                        </div>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo title"></span>
+                                    <span class="col-xs-2 basicinfo subtitle">
+                                        <div class="form-group" style="margin:0 5px">주소</div>
+                                    </span>
+
+                                    <span class="col-xs-8 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input id="addr" ng-model="user.ADDR" type="text" class="form-control inline_input" style="cursor:default; background-color: #fff;" disabled>
+                                        </div>
+                                    </span>
+
+                                <span class="col-xs-2 basicinfo title"></span>
+                                    <span class="col-xs-2 basicinfo subtitle">
+                                        <div class="form-group" style="margin:0 5px">상세주소</div>
+                                    </span>
+
+                                    <span class="col-xs-8 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input id="addr_detail" ng-model="user.ADDR_DETAIL" type="text" class="form-control" style="margin:0px;">
+                                        </div>
+                                    </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>유선전화</strong>
+                                </span>
+
+                                <span class="col-xs-10 basicinfo input">
+                                    <div class="form-inline" style="margin:0 5px">
+                                        <select ng-model="user.PHONE_1_1" class="form-control" style="width:110px;">
+                                            <option value="">지역번호</option>
+                                            <option value="02">02</option>
+                                            <option value="031">031</option>
+                                            <option value="032">032</option>
+                                            <option value="033">033</option>
+                                        </select>
+                                        <span style="margin:0 4px;"> &dash; </span>
+                                        <input ng-model="user.PHONE_1_2" class="form-control" style="width:110px;">
+                                        <span style="margin:0 4px;"> &dash; </span>
+                                        <input ng-model="user.PHONE_1_3" class="form-control" style="width:110px;">
+                                    </div>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>휴대폰</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-10 basicinfo input">
+                                    <div class="form-inline" style="margin:0 5px">
+                                        <select ng-model="user.TELECOM" class="form-control" style="width:110px;">
+                                            <option value="">통신사</option>
+                                            <option value="1">SK</option>
+                                            <option value="2">KT</option>
+                                            <option value="3">LG</option>
+                                            <option value="4">알뜰폰</option>
+                                        </select>
+                                        <span style="margin:0 4px;"> &nbsp; </span>
+                                        <input id="phone_2" ng-model="user.PHONE_2_1" class="form-control" style="width:110px;">
+                                        <span style="margin:0 4px;"> &dash; </span>
+                                        <input ng-model="user.PHONE_2_2" class="form-control" style="width:110px;">
+                                        <span style="margin:0 4px;"> &dash; </span>
+                                        <input ng-model="user.PHONE_2_3" class="form-control" style="width:110px;">
+                                    </div>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>이메일</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-10 basicinfo input">
+                                    <div class="form-inline" style="margin:0 5px">
+                                        <input id="email" ng-model="user.EMAIL_ID" class="form-control" style="width:132px;">
+                                        <span style="margin:0 4px;"> @ </span>
+                                        <input ng-model="user.EMAIL_TYPE" class="form-control" style="cursor:default; width:180px; background-color: #fff;" ng-disabled="disabledEmail">
+
+                                        <select ng-model="user.EMAIL_SELECT" class="form-control" style="width:110px; display:black;">
+                                            <option value="">직접입력</option>
+                                            <option value="naver.com">네이버</option>
+                                            <option value="daum.net">다음</option>
+                                            <option value="gmail.com">구글</option>
+                                            <!--<option value="etc">기타</option>-->
+                                        </select>
+                                    </div>
+                                </span>
+
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>정보수신동의</strong>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo title">
+                                    <div class="form-group" style="margin:0 5px"><stong>앙쥬</stong></div>
+                                </span>
+                                <span class="col-xs-5 basicinfo subtitle">
+                                    <div class="form-group" style="text-align:left; margin:0 5px">각종소식(Event/체험단/정보/당첨안내 등)</div>
+                                </span>
+                                <span class="col-xs-3 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                        <input ng-model="user.EN_ANGE_EMAIL_FL" type="checkbox" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">이메일</span>
+
+                                        <input ng-model="user.EN_ANGE_SMS_FL" type="checkbox" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">SMS</span>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo title"><small class="table_blue" style="line-height:16px;">(수신동의체크)</small></span>
+                                <span class="col-xs-2 basicinfo title">
+                                    <div class="form-group" style="margin:0 5px"><stong>알람</stong></div>
+                                </span>
+                                <span class="col-xs-5 basicinfo subtitle">
+                                    <div class="form-group" style="text-align:left; margin:0 5px">스케쥴(캘린더알람/일정소식/맞춤정보 등)</div>
+                                </span>
+                                <span class="col-xs-3 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                        <input ng-model="user.EN_ALARM_EMAIL_FL" type="checkbox" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">이메일</span>
+
+                                        <input ng-model="user.EN_ALARM_SMS_FL" type="checkbox" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">SMS</span>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo title"></span>
+                                <span class="col-xs-2 basicinfo title">
+                                    <div class="form-group" style="margin:0 5px"><stong>스토어</stong></div>
+                                </span>
+                                <span class="col-xs-5 basicinfo subtitle">
+                                    <div class="form-group" style="text-align:left; margin:0 5px">스토어(스토어 이벤트/빅딜정보/맞춤추천/알림 등)</div>
+                                </span>
+                                <span class="col-xs-3 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                        <input ng-model="user.EN_STORE_EMAIL_FL" type="checkbox" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">이메일</span>
+
+                                        <input ng-model="user.EN_STORE_SMS_FL" type="checkbox" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">SMS</span>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-2"></span>
+                                <span class="col-xs-10 basicinfo divide"></span>
+
+                                <span class="col-xs-2 basicinfo title"></span>
+                                <span class="col-xs-10 basicinfo input">
+                                    <div style="text-align:right; padding:0 10px;">
+
+                                        <span class="table_blue"><small>앙쥬/알람서비스/스토어 각종소식 수신에 동의합니다.</small></span>
+
+                                        <input ng-model="checkAllAgree" type="checkbox" style="margin:10px 0 0 15px;" ng-click="click_checkAllAgree()">
+                                        <span style="margin-left:5px;"><strong>모두동의</strong></span>
+
+                                    </div>
+                                </span>
+
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows bottom">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>가입일시</strong>
+                                </span>
+
+                                <span class="col-xs-10 basicinfo subtitle">
+                                    <div class="form-group" style="text-align:left; margin:0 5px">{{ user.REG_DT | date:'yyyy년 MM월 dd일 HH:mm:ss Z'}}</div>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+
+
+                        <div class="sub_pagetitle_hr">추가정보</div>
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>결혼여부</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-10 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                        <input ng-model="user.MARRIED_FL" type="radio" value="Y" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">기혼</span>
+
+                                        <input ng-model="user.MARRIED_FL" type="radio" value="N" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">미혼</span>
+                                    </div>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>임신여부</strong>
+                                    <span class="table_blue">*</span>
+                                </span>
+
+                                <span class="col-xs-3 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                        <input ng-model="user.PREGNENT_FL" type="radio" value="N" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">해당없음</span>
+
+                                        <input ng-model="user.PREGNENT_FL" type="radio" value="Y" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">해당됨</span>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo subtitle" style="text-align: right;">
+                                    <span style="display:block;">출산예정일</span>
+                                </span>
+                                <span class="col-xs-5 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <div class="form-inline" style="margin:0 5px">
+                                            <select ng-model="user.YEAR1" ng-options="v for v in babyYear" class= "form-control" style="cursor: default; width:100px;" ng-disabled="disabledPregnent">
+                                                <option value="">년</option>
+                                            </select>
+
+                                            <select ng-model="user.MONTH1" ng-options="v for v in month" class= "form-control" style="cursor: default; width:70px;" ng-disabled="disabledPregnent">
+                                                <option value="">월</option>
+                                            </select>
+
+                                            <select ng-model="user.DAY1" ng-options="v for v in day" class= "form-control" style="cursor: default; width:70px;" ng-disabled="disabledPregnent">
+                                                <option value="">일</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows bottom">
+                            <div class="form_basicinfo" ng-repeat="baby in babies">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong ng-if="$index == 0">아이정보</strong>
+                                </span>
+
+                                <span class="col-xs-4 basicinfo input">
+                                    <div class="form-inline" style="margin:0 5px">
+                                        <span>이름</span>
+                                        <span style="margin:0 4px;"></span>
+                                        <input ng-model="baby.BABY_NM" class="form-control" style="width:80px;">
+                                        <div style="float:right; padding-right:8%;">
+                                            <input ng-model="baby.BABY_SEX_GB" type="radio" value="M" style="float: left; margin:10px 0 0 15px;">
+                                            <span style="float:left; margin-left:5px;">남</span>
+
+                                            <input ng-model="baby.BABY_SEX_GB" type="radio" value="F" style="float: left; margin:10px 0 0 15px;">
+                                            <span style="float:left; margin-left:5px;">여</span>
+                                        </div>
+                                    </div>
+                                </span>
+                                <span class="col-xs-1 basicinfo subtitle">
+                                    생년월일
+                                </span>
+                                <span class="col-xs-5 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <div class="form-inline" style="margin:0 5px">
+                                            <select ng-model="baby.BABY_YEAR" ng-options="v for v in babyYear" class= "form-control" style="width:100px;">
+                                                <option value="">년</option>
+                                            </select>
+
+                                            <select ng-model="baby.BABY_MONTH" ng-options="v for v in month" class= "form-control" style="width:70px;">
+                                                <option value="">월</option>
+                                            </select>
+
+                                            <select ng-model="baby.BABY_DAY" ng-options="v for v in day" class= "form-control" style="width:70px;">
+                                                <option value="">일</option>
+                                            </select>
+                                            <button type="button" class="btn btn-sm btn-info" ng-click="click_removeBaby($index);" ng-show="$index > 2"><span class="glyphicon glyphicon-minus"></span> 삭제</button>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+
+                            <span class="col-xs-2"></span>
+                            <span class="col-xs-10 basicinfo divide"></span>
+
+                            <span class="col-xs-2 basicinfo title"></span>
+                                <span class="col-xs-10 basicinfo input">
+                                    <div style="text-align:right; padding:0 10px;">
+
+                                        <span class="table_blue"><small>아이 명수에 맞춰 입력란을 추가해주세요.(10명까지 가능)</small></span>
+
+                                        <button type="button" class="btn btn-sm btn-info" ng-click="click_addBaby();"><span class="glyphicon glyphicon-plus"></span> 추가</button>
+
+                                    </div>
+                                </span>
+                        </div>  <!-- /.form_rows -->
+
+
+                        <div class="sub_pagetitle_hr">
+                            블로그정보
+                            <br />
+                            <span style="font-weight:400; color:#646464; font-size: 0.76em;"><small>정보를 입력하시면 당첨확률이 높아집니다. 이벤트 당첨 후에도 허위정보 적발시 마일리지 발급 등 취소처리 될 수 있습니다.</small></span>
+                        </div>
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>내 Blog 주소</strong>
+                                </span>
+
+                                <span class="col-xs-10 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                        <input ng-model="blog.BLOG_GB" type="radio" name="user_portalblog" value="NAVER" style="float: left; margin:10px 0 0 15px;" ng-checked>
+                                        <span style="float:left; margin-left:5px;">네이버</span>
+
+                                        <input ng-model="blog.BLOG_GB" type="radio" value="DAUM" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">다음</span>
+
+                                        <input ng-model="blog.BLOG_GB" type="radio" value="TSTORY" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">티스토리</span>
+
+                                        <input ng-model="blog.BLOG_GB" type="radio" value="ETC" style="float: left; margin:10px 0 0 15px;">
+                                        <span style="float:left; margin-left:5px;">직접입력</span>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo title"></span>
+                                    <span class="col-xs-10 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                            <span style="float:left; margin-left:15px;">{{blog.BLOG_URL}}</span>
+                                            <input ng-model="blog.BLOG_DETAIL" type="text" class="form-control" style="float:left; width:250px; margin:0px 8px;" placeholder="">
+                                        </div>
+                                    </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>Blog 주제</strong>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="1" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">일상/생각</span>
+                                    </div>
+                                </span>
+                                <span class="col-xs-2 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="2" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">육아</span>
+                                    </div>
+                                </span>
+                                <span class="col-xs-2 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="3" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">요리/레시피</span>
+                                    </div>
+                                </span>
+                                <span class="col-xs-2 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="4" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">상품리뷰</span>
+                                    </div>
+                                </span>
+                                <span class="col-xs-2 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="5" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">맛집</span>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo title"></span>
+                                <span class="col-xs-2 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="6" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">문학/책</span>
+                                    </div>
+                                </span>
+                                <span class="col-xs-4 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="7" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">홈스쿨링(교육/교구/교재)</span>
+                                    </div>
+                                </span>
+                                <span class="col-xs-4 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="8" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">문화생활(영화/공연/전시)</span>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-2 basicinfo title"></span>
+                                <span class="col-xs-3 basicinfo subtitle">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="9" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">인테리어/DIY</span>
+                                    </div>
+                                </span>
+
+                                <span class="col-xs-7 basicinfo desc">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input checklist-model="blog.THEME" type="checkbox" checklist-value="10" style="float: left; margin:10px 0 0 15px;" checked>
+                                        <span style="float:left; margin-left:5px;">기타</span>
+                                        <input ng-model="blog.THEME_ETC" type="text" class="form-control" style="cursor: default; float:left; width:300px; margin:0px 8px;" placeholder="ex) 취미, 사진...">
+                                    </div>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>나를 추가한 이웃수</strong>
+                                </span>
+
+                                <span class="col-xs-1 basicinfo subtitle">
+                                    <span class="table_gray" style="display:block;">현재</span>
+                                </span>
+                                <span class="col-xs-3 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input ng-model="blog.NEIGHBOR_CNT" type="text" class="form-control" style="margin:0px;" placeholder="">
+                                    </div>
+                                </span>
+                                <span class="col-xs-4 basicinfo desc">
+                                    <span class="table_gray" style="display:block;">명</span>
+                                </span>
+                                <span class="col-xs-2 basicinfo desc">
+                                    <button type="button" style="float:right; margin-top:2px;" class="btn btn-sm btn-info" ng-show="false"><span class="glyphicon glyphicon-refresh"></span> 새로고침</button>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>전체 게시물 수</strong>
+                                </span>
+
+                                <span class="col-xs-1 basicinfo subtitle">
+                                    <span class="table_gray" style="display:block;">현재</span>
+                                </span>
+                                <span class="col-xs-3 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input ng-model="blog.POST_CNT" type="text" class="form-control" style="margin:0px;" placeholder="">
+                                    </div>
+                                </span>
+                                <span class="col-xs-4 basicinfo desc">
+                                    <span class="table_gray" style="display:block;">건</span>
+                                </span>
+                                <span class="col-xs-2 basicinfo desc">
+                                    <button type="button" style="float:right; margin-top:2px;" class="btn btn-sm btn-info" ng-show="false"><span class="glyphicon glyphicon-refresh"></span> 새로고침</button>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>방문자 수</strong>
+                                </span>
+
+                                <span class="col-xs-1 basicinfo subtitle">
+                                    <span class="table_gray" style="display:block;">어제기준</span>
+                                </span>
+                                <span class="col-xs-3 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input ng-model="blog.VISIT_CNT" type="text" class="form-control" style="margin:0px;" placeholder="">
+                                    </div>
+                                </span>
+                                <span class="col-xs-4 basicinfo desc">
+                                    <span class="table_gray" style="display:block;">명</span>
+                                </span>
+                                <span class="col-xs-2 basicinfo desc">
+                                    <button type="button" style="float:right; margin-top:2px;" class="btn btn-sm btn-info" ng-show="false"><span class="glyphicon glyphicon-refresh"></span> 새로고침</button>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <div class="row form_rows">
+                            <div class="form_basicinfo">
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>SNS 주소</strong>
+                                </span>
+
+                                <span class="col-xs-10 basicinfo input">
+                                    <div class="form-group" style="margin:0 5px">
+                                        <input ng-model="blog.SNS" type="text" class="form-control" style="margin:0px;" placeholder="SNS URL">
+                                    </div>
+                                </span>
+                            </div>  <!-- /.form_basicinfo -->
+                        </div>  <!-- /.form_rows -->
+
+                        <button class="join_stepbtn cancel" ng-click="saveAngeUser()"><span class="glyphicon glyphicon-remove-circle"></span> 등록</button>
+
+                        </form>
+                        </div><!-- /.sub_contents_body -->
+
+                        <div ng-if="step == '01'" class="join_step_btn">
+
+                            <button class="join_stepbtn next" ng-click="click_nextStep()">다음 <span class="glyphicon glyphicon-chevron-right"></span></button>
+
+                        </div>
+
+                        <div ng-if="step == '02'" class="join_step_btn">
+
+                            <button class="join_stepbtn cancel" ng-click="click_moveHome()"><span class="glyphicon glyphicon-home"></span> 저장</button>
+                            <button class="join_stepbtn cancel" ng-click="click_cancel()"><span class="glyphicon glyphicon-remove-circle"></span> 취소</button>
+
+                        </div>
                     </div>
                 </div>
 
