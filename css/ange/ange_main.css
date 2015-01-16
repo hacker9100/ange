@@ -90,6 +90,7 @@ li.jumbotron_indicators_actived {
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
+    text-align: right;
     width: 55%;
 }
 
