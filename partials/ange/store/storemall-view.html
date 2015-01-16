@@ -174,58 +174,42 @@
 
                                                 </div><!-- /.peoplep_list_tab -->
 
+                                                <table id="comp_board_table" class="table table-hover">
 
-                                                <div class="col-xs-12 v-cell-4">
-                                                    <div class="comp_basic h-cell-1-dynamic">
-                                                        <!-- mini_mileagemall -->
-                                                        <div class="comp_goods" ng-model="store" style="border:none; border-bottom: 1px solid #dedede;">
-                                                            <div class="row mini_event_contentlist">
+                                                    <tbody class="on" ng-repeat="item in list">
 
-                                                                <a class="comp_slide_btn_w30 prev" title="이전" style="margin-left:0%;">이전</a>
-                                                                <a class="comp_slide_btn_w30 next" title="다음">다음</a>
+                                                    <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                                        <td width="9%" class="table_no">
+                                                            <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.BOARD_NO}}</span>
+                                                        </td>
+                                                        <td>
+                                                            <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                                            {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                                            <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>
+                                                            <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                                                            <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                                            <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                                                        </td>
+                                                        <td width="92" class="table_author">{{item.NICK_NM}}</td>
+                                                        <td width="80" class="table_date">{{item.REG_DT}}</td>
+                                                    </tr>
 
+                                                    </tbody>
 
-                                                                <div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">
-                                                                    <div class="mini_event_content" style="border:none; text-align:center;">
-                                                                        <img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_01.jpg"  style="float:none; width:85%; max-width:100px;"/>
-                                                                        <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">(주)대웅제약</div>
-                                                                        <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">이지덤플러스 밴드 5매</div>
+                                                    <tbody class="on" data-ng-show="list == '' || list == null">
 
-                                                                        <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
-                                                                            <span class="mini_mileagemall_price"> 5,000</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                    <tr>
+                                                        <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                                    </tr>
 
-                                                                <div class="col-xs-4 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">
-                                                                    <div class="mini_event_content" style="border:none; text-align:center;">
-                                                                        <img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_02.jpg"  style="float:none; width:85%; max-width:100px;"/>
-                                                                        <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">쁘띠마리에</div>
-                                                                        <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em;  text-align:center; color: #2eaed3;">블루코어 일회용 수유패드 26매</div>
+                                                    </tbody>
+                                                </table><!-- /.List-->
 
-                                                                        <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
-                                                                            <span class="mini_mileagemall_price"> 5,000</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                <nav class="text-center">
+                                                    <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                                </nav><!-- /.Paging-->
+                                                <!-- /peoplepoll_list -->
 
-                                                                <div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">
-                                                                    <div class="mini_event_content" style="border:none; text-align:center;">
-                                                                        <img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_03.jpg"  style="float:none; width:85%; max-width:100px;"/>
-                                                                        <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">누비</div>
-                                                                        <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">몬스터 스텐 커틀러리 세트</div>
-
-                                                                        <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
-                                                                            <span class="mini_mileagemall_price"> 5,000</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                        <!-- /mini_mileagemall -->
-                                                    </div>  <!-- /.comp_basic -->
-                                                </div>  <!-- /.col-xs-12 -->
                                             </div>  <!-- /.row -->
 
                                         </div><!-- /.col-12-->
