@@ -598,7 +598,7 @@
                                 FILE F, CONTENT_SOURCE S
                             WHERE
                                 F.NO = S.SOURCE_NO
-                                AND S.TARGET_GB = 'BOARD'
+                                AND S.TARGET_GB = 'REVIEW'
                                 AND S.CONTENT_GB = 'FILE'
                                 AND S.TARGET_NO = ".$_key."
                                 AND F.THUMB_FL = '0'
@@ -623,7 +623,7 @@
 
                             $_d->sql_query($sql);
 
-                            $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
+                            $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'PRODUCT' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
 
                             $_d->sql_query($sql);
 
