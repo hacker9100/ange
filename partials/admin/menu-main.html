@@ -1,0 +1,102 @@
+<div ng-controller="menu-main">
+    <div>
+        <div class="col-md-6">
+            <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(0)">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>메인페이지 관리</span>
+            </button>
+            <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(1)">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>앙쥬스토리 메뉴관리</span>
+            </button>
+            <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(2)">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>앙쥬피플 메뉴관리</span>
+            </button>
+        </div>
+    </div>
+
+    <div ng-show="tab == 0" class= "form-group">
+
+    </div>
+    <div ng-show="tab == 1" class= "form-group">
+        <table class="table table-striped table-condensed" >
+            <thead>
+            <tr>
+                <th>채널</th>
+                <th>메뉴명</th>
+                <th>카테고리</th>
+                <th>유형</th>
+                <th>순번</th>
+                <th>기능</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in list">
+                <td>{{ item.CHANNEL_NO  }}</td>
+                <td>{{ item.MENU_NM }}</td>
+                <td>
+                    <div class="bnt_ball_group" ng-repeat="category in item.CATEGORY">
+                        <button type="button" class="btn btn-default cate_ball_normal">
+                            {{ category.CATEGORY_NM }}
+                        </button>
+                    </div>
+                </td>
+                <td>{{ item.DEPTH }}</td>
+                <td>{{ item.MENU_ORD }}</td>
+                <td>
+                    <a ng-click="click_showViewMenu(item.USER_ID)">V</a>
+                    <a ng-click="click_editMenu(item)">수정</a>
+                    <a ng-click="click_deleteUser(item)">B</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <div ng-model="item" class="row form_basic_wrap">
+            <div class="form-group form_basic_group" ng-class="{error: edit_form.item_id.$invalid}">
+                <label class= "form_basic_label">메뉴명 <span style="color:#b94a48">*</span></label>
+                <div class="form_basic_input">
+                    <input id="item_id" name="item_id" ng-model="item.MENU_NM" type= "text" class= "form-control" placeholder="메뉴명" required/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">카테고리 <span style="color:#b94a48">*</span></label>
+                <div class= "form_basic_input">
+                    <div class="form_basic_input">
+                        <div ng-dropdown-multiselect="" options="category_a" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주기선택'}" extra-settings="select_settings" checkboxes="true"></div>
+                    </div>
+                    <div class="form_basic_input" style="margin-left:250px;">
+                        <select ng-model="CATEGORY_M" ng-options="category.CATEGORY_NM for category in category_b" class= "form-control" placeholder="주제 대분류">
+                            <option name="category_b" value="">- 주제 대분류</option>
+                        </select>
+                    </div>
+                    <div class="form_basic_input" style="margin-left:390px;">
+                        <div ng-dropdown-multiselect="" options="category_s" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주제 소분류'}" extra-settings="select_settings" checkboxes="true"></div>
+                    </div>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group" style="padding: 0 50px 0 110px;">
+                <!--<pre>{{CATEGORY|json}}</pre>-->
+                <div class="bnt_ball_group" ng-model="item.CATEGORY" ng-repeat="category in CATEGORY">
+                    <button type="button" ng-click="click_removeCategory($index)" class="btn btn-default cate_ball_normal">
+                        {{category.CATEGORY_NM}}
+                    </button>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.user_name.$invalid}">
+                <label class= "form_basic_label">순번 <span style="color:#b94a48">*</span></label>
+                <div class="form_basic_input">
+                    <input ng-model="item.MENU_ORD" type= "text" class= "form-control" placeholder="순번" required/>
+                </div>
+            </div>
+        </div>
+        <a ng-click="click_updateMenu(item)">B</a>
+    </div>
+
+    <div ng-show="tab == 2" class= "form-group">
+
+    </div>
+</div>

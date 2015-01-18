@@ -37,7 +37,7 @@ require.config({
         'angular-translate': '../../lib/angular/angular-translate.min', //
 
 ////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
-//        'lodash' : '../../lib/dropdown_multiselect/lodash',
+        'lodash' : '../../lib/dropdown-multiselect/lodash',
 
         // ng-table 모듈
         'ng-table': '../../lib/ng-table/ng-table',

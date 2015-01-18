@@ -18,6 +18,8 @@ define([
 
     // ADMIN 회원현황
     '../../../partials/admin/user-list',
-    '../../../partials/admin/user-edit'
+    '../../../partials/admin/user-edit',
 //    '../../../partials/admin/user_view'
+
+    '../../../partials/admin/menu-main'
 ], function () {});
