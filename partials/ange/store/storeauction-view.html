@@ -1,7 +1,8 @@
-<div ng-controller="storeauction-list">
+<div ng-controller="storeauction-view">
 <!-- mainbar -->
 <div class="mainbar sub-slide0">
 <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
 
 <div class="row">
 
@@ -10,94 +11,121 @@
 
 <div class="sub_contents_wrap">
 
-    <div class="sub_contents_title">
-        <span class="sub_contents_bullet"></span>
-        <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
-        <p>가격은 반으로 즐거움은 두배로 마일리지 경매소가 운영됩니다.</p>
+<div class="sub_contents_title">
+    <span class="sub_contents_bullet"></span>
+    <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
+    <p>적립된 마일리지로 구매가 가능합니다</p>
+</div>
+
+<!-- 체험단&이벤트 목록 -->
+<div class="row webzine_moms_list">
+    <div class="col-xs-4 v-cell-4" style="margin:0px;">
+        <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
+            <div class="item" style="border:1px solid #ddd;">
+                <img ng-src="{{item.MAIN_FILE}}" style="width:100%;" />
+            </div>
+        </div>
     </div>
 
-    <!-- 체험단&이벤트 목록 -->
-    <div class="row webzine_moms_list">
-        <div class="col-xs-12 v-cell-4" style="margin:0px;">
-            <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
-                <div class="store_auctiontime">
-                    <strong>마일리지 경매소 운영시간</strong> :
-                    <span class="table_red">AM 10:00 ~ PM 3:00</span> <span class="table_gray">/ 상품 당일 발송</span>
-                </div>
-            </div>
-        </div>
+    <div class="col-xs-8 v-cell-4" style="margin:0px;">
+        <div class="comp_basic h-cell-dynamic" style="width:100%; padding:2px; 0px; padding-left:25px; margin:0px;">
 
-        <div class="col-xs-4 v-cell-4" style="margin:0px;">
-            <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
-                <div class="item" style="border:1px solid #ddd;">
-                    <img ng-src="/imgs/ange/temp/brandmall_01.jpg" style="width:100%;" />
-                </div>
-            </div>
-        </div>
+            <div class="">
 
-        <div class="col-xs-8 v-cell-4" style="margin:0px;">
-            <div class="comp_basic h-cell-dynamic" style="width:100%; padding:2px; 0px; padding-left:25px; margin:0px;">
+                <p style="font-size:1.24em; line-height:22px; font-weight:600; word-break: keep-all;">{{item.PRODUCT_NM}}</p>
 
-                <div class="">
-                    <div class="table_gray" style="height:24px;">
-                        <small>
-                            <div class="table_blue" style="float:left;">2015-01-12 경매</div>
-                            <div style="float:right;">[상품번호 M20141023]</div>
-                        </small>
-                    </div>
-
-                    <p style="font-size:1.24em; line-height:22px; font-weight:600; word-break: keep-all;">
-                        프로그넌시 마사지 로션
-                    </p>
-
-                    <div class="store_col_info">
-                        <div class="store_list_item maininfo"><strong>소비자금액</strong><span class="table_gray" style="position:absolute; left:120px;">55,000 원</span></div>
-                        <div class="store_list_item maininfo"><strong>바로구매가</strong><span class="table_gray" style="position:absolute; left:120px;">22,500 원</span></div>
-                        <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">아이앤와이</span></div>
-                        <div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="#">http://www.inyinternational.com</a></span></div>
-                        <div class="store_list_item maininfo"><strong>외부링크</strong>
+                <div class="store_col_info">
+                    <div class="store_list_item maininfo" ng-show="menu == 'mileage'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE}} P</span></div>
+                    <div class="store_list_item maininfo" ng-show="menu == 'cummerce'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE}} 원</span></div>
+                    <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DELEIVERY_PRICE}} 원({{item.DELEIVERY_ST == 1 ? '착불' : '선불'}})</span></div>
+                    <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">아이앤와이</span></div>
+                    <div class="store_list_item maininfo"><strong>수량</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.SUM_IN_CNT}}</span></div>
+                    <div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="#">http://www.inyinternational.com</a></span></div>
+                    <div class="store_list_item maininfo"><strong>외부링크</strong>
                                                     <span class="table_gray" style="position:absolute; top:8px; left:120px; line-height:12px; word-break:break-all; width:65%;">
                                                         <a style="font-size:0.86em;" href="#">http://www.inyinternational.com/sub/sub2_3.asp</a>
                                                     </span>
-                        </div>
-                    </div>  <!-- /.store_col_info -->
+                    </div>
+                </div>  <!-- /.store_col_info -->
 
-                    <div class="store_col_progress" style="position:relative; float:left; background-color:#ededed; padding:20px 10px; width:100%;">
-                        <div style="float:left;">
-                            <strong>경매현황</strong>
-                                                    <span class="table_gray" style="position:absolute; left:120px;">
-                                                        현재 <strong>1,500</strong> 원
-                                                        <a href="#" style="margin-left:18px;"><small>입찰 : 40건</small></a>
+                <div class="store_col_info">
+                    <div class="store_list_item" style="width:100%; height:30px; line-height:24px;">
+                        <span class="" style="float:left; width:30%;">제품선택(필수)</span>
+                                                    <span class="" style="float:left; width:70%;" data-ng-show="products != null">
+                                                        <select ng-options="p.PRODUCT_NM for p in products" ng-model="item.PRODUCT_NO" class="form-control input-sm" ng-change="addProductList(item.PRODUCT_NO, item)">
+                                                            <option value="" selected>선택</option>
+                                                        </select>
                                                     </span>
-                        </div>
-                    </div>  <!-- /.store_col_info -->
+                                                    <span class="" style="float:left; width:70%;" data-ng-show="products == null">
+                                                        <!--<select ng-options="p.PRODUCT_NM for p in item" ng-model="item.PRODUCT_NO" class="form-control input-sm" ng-change="addProductList(item.PRODUCT_NO, item)">
+                                                            &lt;!&ndash;<option value="item.NO" selected>{{item.PRODUCT_NM}}</option>&ndash;&gt;
+                                                            <option value="" selected>선택</option>
+                                                        </select>-->
+                                                        <input type="checkbox" ng-model="item.PRODUCT_NO" id="checkProduct" ng-value="item.NO" ng-click="addProductList(item, item)"> {{item.PRODUCT_NM}}
+                                                    </span>
+                    </div>
+                </div>  <!-- /.store_col_info -->
 
-                    <div class="store_col_btn">
-                        <button class="btn btn-lg btn-info">경매참여하기</button>
-                        <button class="btn btn-lg btn-warning">바로구매하기</button>
-                    </div>  <!-- /.store_col_info -->
+                <div class="store_col_info" ng-repeat="product in productsList">
+                    <!-- 제품을 선택하면 리스트 추가됨 -->
+                    <div class="store_list_item" >
+                        <input type="hidden" ng-model="product.NO"/>
+                        <span class="store_optiontitle">{{product.PRODUCT_NM}}</span>
+                                                    <span class="store_optionea">
+                                                        <input type="text" ng-model="product.CNT" class="form-control input-sm" ng-change="addSumPrice(item.PRICE, product.CNT, $index)" placeholder="" />
+                                                        <span> 개</span>
+                                                        <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>
+                                                        <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeProduct($index);">x</button>
+                                                    </span>
+                        <span class="store_optionprice">{{item.PRICE * product.CNT}}</span>
+                        <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">x</button>-->
+                    </div>
+                </div>  <!-- /.store_col_info -->
 
+                <div ng-show="productsList != ''">
+                    <button type="button" ng-show="uid != '' && uid != null" ng-click="click_addcart()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">장바구니</button>
+                    <button type="button" ng-click="click_addOrder()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">구매하기</button>
                 </div>
-            </div>  <!-- comp_basic -->
 
-        </div>  <!-- col-xs-9 -->
-    </div>  <!-- /.row -->
+                <div class="store_col_info" style="border-bottom:none">
+                    <div class="store_list_item">
+                        <span class="store_optiontitle">&nbsp;</span>
+                                                    <span class="store_pricevalue">
+                                                        <span>
+                                                            마일리지<br />현금<br />배송비
+                                                        </span>
+                                                    </span>
+                                                    <span class="store_totalprice">
+                                                        {{TOTAL_MILEAGE}} P
+                                                        <br />
+                                                        {{TOTAL_PRICE}} 원
+                                                        <br />
+                                                        {{item.DELEIVERY_ST == 1 ? '착불' : '선불'}}
+                                                    </span>
+                    </div>
 
-</div>  <!-- /.sub_contents_wrap -->
+                </div>  <!-- /.store_col_info -->
 
-<div class="sub_contents_body" style="border-top:2px solid #000; margin-top:0px;">
+            </div>
+        </div>  <!-- comp_basic -->
 
+    </div>  <!-- col-xs-9 -->
+</div>  <!-- /.row -->
+
+
+<div tabsclass="sub_contents_body" style="border-top:2px solid #000; margin-top:0px;">
+
+<!-- store_view -->
 <div class="store_view_tab">
-    <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a>상품안내</a></li>
+    <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
+        <li role="presentation"><a>상품안내</a></li>  <!--class="active"-->
         <li role="presentation"><a>상품후기</a></li>
         <li role="presentation"><a>관련상품</a></li>
-        <li role="presentation"><a>이용안내</a></li>
         <li role="presentation"><a>주의사항</a></li>
     </ul>
 </div>  <!-- /.store_view_tab -->
 
-<div class="container-fluid peopleboard_view_contentwrap">
+<div id="tabs-1" class="container-fluid peopleboard_view_contentwrap">
     <div class="row">
         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -105,21 +133,12 @@
             <img src="/imgs/temp/temp_productimg.jpg" style="width:100%;"/>
             <!-- img ng-src="{{item.MAIN_FILE}}" style="width:100%;"/ -->
 
-        </div>  <!-- /.col-12-->
-    </div>  <!-- /.row -->
-</div>  <!-- /.container -->
+        </div><!-- /.col-12-->
+    </div><!-- /.row -->
+</div><!-- /.container -->
 
-<div class="store_view_tab">
-    <ul class="nav nav-tabs">
-        <li role="presentation"><a>상품안내</a></li>
-        <li role="presentation" class="active"><a>상품후기</a></li>
-        <li role="presentation"><a>관련상품</a></li>
-        <li role="presentation"><a>이용안내</a></li>
-        <li role="presentation"><a>주의사항</a></li>
-    </ul>
-</div>  <!-- /.store_view_tab -->
 
-<div class="container-fluid peopleboard_view_contentwrap">
+<div id="tabs-2" class="container-fluid peopleboard_view_contentwrap">
     <div class="row">
         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -183,27 +202,16 @@
 </div><!-- /.container -->
 <!-- /후기 -->
 
-<div class="store_view_tab">
-    <ul class="nav nav-tabs">
-        <li role="presentation"><a>상품안내</a></li>
-        <li role="presentation"><a>상품후기</a></li>
-        <li role="presentation" class="active"><a>관련상품</a></li>
-        <li role="presentation"><a>이용안내</a></li>
-        <li role="presentation"><a>주의사항</a></li>
-    </ul>
-</div>  <!-- /.store_view_tab -->
 
-<div class="container-fluid peopleboard_view_contentwrap">
+<div id="tabs-3" class="container-fluid peopleboard_view_contentwrap">
     <div class="row">
         <div class="col-xs-12 peopleboard_view_contentbody">
 
             <div class="row" style="width:100%; margin:0px auto;">
 
                 <div class="peoplep_list_tab">
-                    <span class="board_th" style="font-size:1.44em;">지난 경매소 물품</span>
-                    <small class="table_gray">이전 경매소 물품을 확인할 수 있습니다.</small>
-
-                    <a class="miniboard_tab_more">더보기</a>
+                    <span class="board_th" style="font-size:1.44em;">판매사의 다른 상품</span>
+                    <small class="table_gray">이 상품이 속한 판매사의 다른 상품</small>
                 </div><!-- /.peoplep_list_tab -->
 
 
@@ -328,78 +336,49 @@
 </div><!-- /.container -->
 <!-- /관련상품 -->
 
-<div class="store_view_tab">
-    <ul class="nav nav-tabs">
-        <li role="presentation"><a>상품안내</a></li>
-        <li role="presentation"><a>상품후기</a></li>
-        <li role="presentation"><a>관련상품</a></li>
-        <li role="presentation" class="active"><a>이용안내</a></li>
-        <li role="presentation"><a>주의사항</a></li>
-    </ul>
-</div>  <!-- /.store_view_tab -->
 
-<div class="container-fluid peopleboard_view_contentwrap">
-    <div class="row">
-        <div class="col-xs-12 peopleboard_view_contentbody" style="padding:0px;">
-
-            <div class="store_bg_auctionhowto">
-
-                <div style="margin-top:20px; margin-bottom:40px;">
-                    <div style="font-size:1.82em;">마일리지 경매소</div>
-                    <div style="font-size:2em; margin-top: 10px; font-weight: 700;">진행방법</div>
-                </div>
-
-                <ul class="store_warning" style="font-size:0.92em; color:#464646;">
-                    <li>마일리지 경매소는 <span class="table_red">오전 10시부터 오후 3시까지 운영</span>되며 낙찰된 상품은 당일 발송을 원칙으로 합니다.</li>
-                    <li><span class="table_red">[경매참여하기]</span>를 누르면 자동적으로 입찰가가 100원씩 올라가며(마일리지 차감안됨) 종료시간까지 마지막으로 입찰한 회원에게 낙찰됩니다.</li>
-                    <li>
-                        낙찰된 가격만큼 마일리지가 차감되며 제품은 회원정보의 주소로 착불 (2,500원) 발송됩니다.
-                        <br />
-                        ※ 알림 : 도서ㆍ산간지역은 추가요금이 발생하며, 택배사 배송정책으로 제주도 및 도서지역은 배송비를 선불로 입금해주셔야 합니다.(문자로 계좌안내)
-                    </li>
-                    <li><span class="table_red">[바로구매]</span>는 남은 시간에 상관없이 입찰하지 않고 바로구매가로 상품을 구매할 수 있습니다. (단, 1개월 1회만 가능)</li>
-                    <li><span class="table_red">[경매참여하기]</span>는 중복으로 가능합니다. <br />(입찰금액을 높이기 위해 정당하지 않은 행위 적발 시 회원활동에 제약이 있을 수 있습니다.)</li>
-                </ul>
-            </div>
-
-        </div>  <!-- /.col-12-->
-    </div>  <!-- /.row -->
-</div>  <!-- /.container -->
-<!-- /이용안내 -->
-
-
-<div class="store_view_tab">
-    <ul class="nav nav-tabs">
-        <li role="presentation"><a>상품안내</a></li>
-        <li role="presentation"><a>상품후기</a></li>
-        <li role="presentation"><a>관련상품</a></li>
-        <li role="presentation"><a>이용안내</a></li>
-        <li role="presentation" class="active"><a>주의사항</a></li>
-    </ul>
-</div>  <!-- /.store_view_tab -->
-
-<div class="container-fluid peopleboard_view_contentwrap">
+<div id="tabs-4"class="container-fluid peopleboard_view_contentwrap">
     <div class="row">
         <div class="col-xs-12 peopleboard_view_contentbody">
 
             <ul class="store_warning" style="font-size:0.92em; color:#464646;">
 
-                <li>마일리지 경매소 물품으니 [월간 앙쥬] 내지 촬영으로 입고된 제품으로 촬영을 위해 개봉된 제품으로 일부 포장상태가 좋지 않을 수 있습니다.</li>
-                <li>상품을 낙찰받으면 취소는 불가능하며, 받으신 제품은 교환, 마일리지 환불처리는 되지 않습니다.</li>
-                <li>마일리지 경매소 경매방식 및 운영원칙은 차후 변경 될 수 있습니다.</li>
+                <li>부정적인 방법으로 마일리지 취득 시 공지없이 취득한 마일리지는 차감됩니다.</li>
+                <li>마일리지 상품은 모두 착불로 발송됩니다</li>
+
+                <ul class="list-unstyled">
+                    <li style="margin-left:15px;">- 도서/산간지역 추가요금 발생하며 배송료 선불입금하셔야 합니다(문자로 계좌안내)</li>
+                    <li style="margin-left:15px;">- 상품의 크기, 무게, 형태에 따라 차이가 있을 수 있습니다.</li>
+                </ul>
+
+                <li>마일리지는 마일리지몰에서만 사용가능합니다.</li>
+                <li>마일리지 적립방법은 업체 사정상 변경될 수 있습니다</li>
+                <li>마일리지는 소멸기간이 없으며 회원을 탈퇴할 경우 소멸됩니다.
+                    (단, 2년간 로그인 기록이 없는 경우 마일리지 소멸)</li>
+                <li>나눔방/경매소/이벤트 당첨 등 배송건이 있을 시 꼭, 배송요청란에 사유와 함께 '합포장'이라고 명시해주세요.</li>
+                <li>마일리지몰 상품은 제품의 하자가 아닌경우를 제외하고 교환 및 반품이 불가능합니다.</li>
+                <li>배송은 주문일로부터 2~3일내 발송을 원칙으로 하며 토,일,공휴일은 배송기간에 포함되지 않습니다.</li>
+                <li>상품은 업체 사정상 변경이나 사진과 상이할 수 있습니다.</li>
 
             </ul>
 
-        </div>  <!-- /.col-12-->
-    </div>  <!-- /.row -->
-</div>  <!-- /.container -->
+        </div><!-- /.col-12-->
+    </div><!-- /.row -->
+</div><!-- /.container -->
+
 <!-- /주의사항 -->
 
+
 </div>  <!-- /.sub_contents_body -->
+
+
+</div><!-- /.sub_contents_wrap -->
 </div>
 </div>
 
 </div> <!-- rows -->
+
+
 </div><!-- container-fluid -->
 
 <!-- 1200px 이하일 경우 표시되는 footer -->
@@ -428,3 +407,274 @@
 
 <!-- /Main Page Layout Set -->
 </div>
+
+
+<script type="text/ng-template" id="storemall_cart.html">
+    <div class="modal-header">
+        <h3 class="modal-title">장바구니</h3>
+    </div>
+    <div class="modal-body">
+        <div class="body_wrap">
+            <div class="panel panel-master contentpannel" style="border:none; display:block;">
+                <div class="contentpannel-body" >
+                    <div class="sub_contents_body">
+
+                        <!-- review_list -->
+                        <table id="comp_board_table" class="table table-hover">
+
+                            <thead>
+                            <tr class="board_thead" height="48">
+                                <td width="10%" align="center"><span class="board_th">선택</span></td>
+                                <td align="center"><span class="board_th">상품정보</span></td>
+                                <td width="15%"><span class="board_th">금액</span></td>
+                                <td width="60" align="center"><span class="board_th">수량</span></td>
+                                <td width="100" align="center"><span class="board_th">결제금액</span></td>
+                                <td width="60" align="center"><span class="board_th">삭제</span></td>
+                            </tr>
+                            </thead>
+
+                            <tbody class="on" ng-repeat="item in list">
+                            <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                <td>
+                                    <input type="hidden" ng-model="item.PRODUCT_NO" value="{{item.PRODUCT_NO}}"/>
+                                    <input type="hidden" ng-model="item.PRICE" value="{{item.PRICE}}"/>
+                                    <input type="hidden" ng-model="item.CNT" value="{{item.CNT}}"/>
+                                    <input type="hidden" ng-model="item.PRODUCT_NM" value="{{item.PRODUCT_NM}}"/>
+                                    <input type="hidden" ng-model="item.SUM_PRICE" value="{{item.SUM_PRICE}}"/>
+                                    <input type="checkbox"  class="select_check" model="item.selected" ng-value="item" name="name" id="name{{$index}}"/>
+                                </td>
+                                <td>
+                                    <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
+                                    <span style="font-size:1.08em; font-weight:600;"> {{ item.PRODUCT_NM}}</span>
+                                </td>
+                                <td>{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                <td>{{item.CNT}}</td>
+                                <td>{{item.SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                <td><button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeCartProduct($index);">x</button></td>
+                            </tr>
+                            </tbody>
+
+                            <tbody class="on" data-ng-show="list == '' || list == null">
+
+                            <tr>
+                                <td colspan="6" style="text-align: center">조회 데이터가 없습니다.</td>
+                            </tr>
+
+                            </tbody>
+                        </table><!-- /.List-->
+                    </div><!-- /.sub_contents_body -->
+
+                    <div  class="sub_contents_body">
+
+                        <!-- review_list -->
+                        <table id="comp_board_table" class="table table-hover">
+
+                            <thead>
+                            <tr class="board_thead" height="48">
+                                <td width="33%" align="center"><span class="board_th">현재 내 마일리지</span></td>
+                                <td align="33%" align="center"><span class="board_th">결제 마일리지</span></td>
+                                <td width="33%" align="center"><span class="board_th">잔여 마일리지</span></td>
+                            </tr>
+                            </thead>
+
+                            <tbody class="on">
+                            <tr>
+                                <td>{{user_info.MILEAGE.REMAIN_POINT}}P</td>
+                                <td>{{sum_price}}P</td>
+                                <td>{{total_mileage}}P</td>
+                            </tr>
+                            <tr ng-show="total_mileage < 0">
+                                <td colspan="3"><font color="red">마일리지가 부족합니다.</font></td>
+                            </tr>
+                            </tbody>
+                        </table><!-- /.List-->
+                    </div><!-- /.sub_contents_body -->
+
+                </div><!-- /.container -->
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_reg(list);">전체구매</button>
+        <button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>
+        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="storemall_order.html">
+    <div class="modal-header">
+        <h3 class="modal-title">주문</h3>
+    </div>
+    <div class="modal-body">
+        <div class="body_wrap">
+            <div class="panel panel-master contentpannel" style="border:none; display:block;">
+                <div class="contentpannel-body" >
+                    <div class="sub_contents_body">
+
+                        <!-- review_list -->
+                        <table id="comp_board_table" class="table table-hover">
+
+                            <thead>
+                            <tr class="board_thead" height="48">
+                                <td align="center"><span class="board_th">상품정보</span></td>
+                                <td width="15%"><span class="board_th">금액</span></td>
+                                <td width="60" align="center"><span class="board_th">수량</span></td>
+                                <td width="100" align="center"><span class="board_th">결제금액</span></td>
+                            </tr>
+                            </thead>
+
+                            <tbody class="on" ng-repeat="item in list">
+                            <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                <td>
+                                    <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
+                                    <span style="font-size:1.08em; font-weight:600;"> {{ item.PRODUCT_NM}}</span>
+                                </td>
+                                <td>{{item.PRICE}}</td>
+                                <td>{{item.CNT}}</td>
+                                <td>{{item.SUM_PRICE}}</td>
+                            </tr>
+                            </tbody>
+
+                            <tbody class="on" data-ng-show="list == '' || list == null">
+
+                            <tr>
+                                <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                            </tr>
+
+                            </tbody>
+                        </table><!-- /.List-->
+                    </div><!-- /.sub_contents_body -->
+                </div><!-- /.container -->
+
+                <br/>
+                <div>
+                    <div class="row form_rows">
+                        <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>총 금액</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-4 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                결제 금액 : {{TOTAL_SUM_PRICE}} &nbsp;
+                                <span ng-show="list[0].DELEIVERY_ST == 2">배송비 : {{TOTAL_DELEIVERY_PRICE}} ({{list[0].DELEIVERY_ST == '2' ? '선불' : '착불'}})</span> &nbsp;
+                                <br/>
+                                합계 : {{item.SUM_PRICE}}
+                            </div>
+                        </span>
+                        </div>  <!-- /.form_basicinfo -->
+                    </div>
+                </div>
+
+                <div class="row form_rows">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>수신자 정보</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-4 basicinfo input" ng-show="uid != '' && uid != null">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="radio"  value="Y" name="info" placeholder="기존주소" ng-click="click_basic('Y');" checked/>기존주소
+                                &nbsp;
+                                <input type="radio" name="info" value="N"  ng-click="click_basic('N');" placeholder="새주소"/>새주소
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>
+
+
+                <div class="row form_rows" ng-show="uid !== '' && uid != null">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>아이디</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-4 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="">
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>  <!-- /.form_rows -->
+
+                <br/>
+                <div class="row form_rows">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>주문자명</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-4 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="text" ng-model="item.RECEIPTOR_NM" class="form-control input-sm" style="margin:0px;"  placeholder="">
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>  <!-- /.form_rows -->
+
+                <div class="row form_rows">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>연락처</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-2 basicinfo input">
+                            <div class="form-group" style="margin:0 5px; text-align:right;">
+                                <small class="table_gray">전화번호</small>
+                            </div>
+                        </span>
+                        <span class="col-xs-3 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="">
+                            </div>
+                        </span>
+                        <span class="col-xs-1 basicinfo input">
+                            <div class="form-group" style="margin:0 5px; text-align:right;">
+                                <small class="table_gray">휴대폰</small>
+                            </div>
+                        </span>
+                        <span class="col-xs-3 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="text" ng-model="item.RECEIPT_PHONE" class="form-control input-sm" style="margin:0px;" placeholder="">
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>  <!-- /.form_rows -->
+
+                <div class="row form_rows">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>받으실 곳</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-10 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <p><input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder=""></p>
+                                <p><input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.RECEIPT_ADDR" placeholder=""></p>
+                                <input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.RECEIPT_ADDR_DETAIL" placeholder="">
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>  <!-- /.form_rows -->
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_order();">주문하기</button>
+        <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+    </div>
+</script>

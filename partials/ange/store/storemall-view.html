@@ -22,7 +22,7 @@
                                 <div class="col-xs-4 v-cell-4" style="margin:0px;">
                                     <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
                                         <div class="item" style="border:1px solid #ddd;">
-                                            <img ng-src="/imgs/ange/temp/brandmall_01.jpg" style="width:100%;" />
+                                            <img ng-src="{{item.MAIN_FILE}}" style="width:100%;" />
                                         </div>
                                     </div>
                                 </div>
@@ -32,13 +32,14 @@
 
                                         <div class="">
 
-                                            <p style="font-size:1.24em; line-height:22px; font-weight:600; word-break: keep-all;">[아이앤아이] 베이비 다용도 홀더베이비 다용도 홀더베이비 다용도 홀더</p>
+                                            <p style="font-size:1.24em; line-height:22px; font-weight:600; word-break: keep-all;">{{item.PRODUCT_NM}}</p>
 
                                             <div class="store_col_info">
-                                                <div class="store_list_item maininfo"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">5,000 P</span></div>
-                                                <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">2,500 원(착불)</span></div>
+                                                <div class="store_list_item maininfo" ng-show="menu == 'mileage'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE}} P</span></div>
+                                                <div class="store_list_item maininfo" ng-show="menu == 'cummerce'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE}} 원</span></div>
+                                                <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DELEIVERY_PRICE}} 원({{item.DELEIVERY_ST == 1 ? '착불' : '선불'}})</span></div>
                                                 <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">아이앤와이</span></div>
-                                                <div class="store_list_item maininfo"><strong>수량</strong><span class="table_gray" style="position:absolute; left:120px;"></span></div>
+                                                <div class="store_list_item maininfo"><strong>수량</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.SUM_IN_CNT}}</span></div>
                                                 <div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="#">http://www.inyinternational.com</a></span></div>
                                                 <div class="store_list_item maininfo"><strong>외부링크</strong>
                                                     <span class="table_gray" style="position:absolute; top:8px; left:120px; line-height:12px; word-break:break-all; width:65%;">
@@ -50,47 +51,41 @@
                                             <div class="store_col_info">
                                                 <div class="store_list_item" style="width:100%; height:30px; line-height:24px;">
                                                     <span class="" style="float:left; width:30%;">제품선택(필수)</span>
-                                                    <span class="" style="float:left; width:70%;">
-                                                        <select class="form-control input-sm">
-                                                            <option>[아이앤와이]다용도 홀더(화이트)</option>
-                                                            <option>[아이앤와이]다용도 홀더(블랙)</option>
-                                                            <option>[아이앤와이]다용도 홀더(고추냉이)</option>
+                                                    <span class="" style="float:left; width:70%;" data-ng-show="products != null">
+                                                        <select ng-options="p.PRODUCT_NM for p in products" ng-model="item.PRODUCT_NO" class="form-control input-sm" ng-change="addProductList(item.PRODUCT_NO, item)">
+                                                            <option value="" selected>선택</option>
                                                         </select>
+                                                    </span>
+                                                    <span class="" style="float:left; width:70%;" data-ng-show="products == null">
+                                                        <!--<select ng-options="p.PRODUCT_NM for p in item" ng-model="item.PRODUCT_NO" class="form-control input-sm" ng-change="addProductList(item.PRODUCT_NO, item)">
+                                                            &lt;!&ndash;<option value="item.NO" selected>{{item.PRODUCT_NM}}</option>&ndash;&gt;
+                                                            <option value="" selected>선택</option>
+                                                        </select>-->
+                                                        <input type="checkbox" ng-model="item.PRODUCT_NO" id="checkProduct" ng-value="item.NO" ng-click="addProductList(item, item)"> {{item.PRODUCT_NM}}
                                                     </span>
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
 
-                                            <div class="store_col_info">
+                                            <div class="store_col_info" ng-repeat="product in productsList">
                                                 <!-- 제품을 선택하면 리스트 추가됨 -->
-                                                <div class="store_list_item">
-                                                    <span class="store_optiontitle">[아이앤와이] 다용도 홀더(화이트)</span>
+                                                <div class="store_list_item" >
+                                                    <input type="hidden" ng-model="product.NO"/>
+                                                    <span class="store_optiontitle">{{product.PRODUCT_NM}}</span>
                                                     <span class="store_optionea">
-                                                        <input type="text" class="form-control input-sm" value="99" placeholder="" />
+                                                        <input type="text" ng-model="product.CNT" class="form-control input-sm" ng-change="addSumPrice(item.PRICE, product.CNT, $index)" placeholder="" />
                                                         <span> 개</span>
                                                         <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>
+                                                        <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeProduct($index);">x</button>
                                                     </span>
-                                                    <span class="store_optionprice">10,000</span>
-                                                </div>
-                                                <!-- /제품을 선택하면 리스트 추가됨 -->
-                                                <div class="store_list_item">
-                                                    <span class="store_optiontitle">[아이앤와이] 다용도 홀더(화이트)</span>
-                                                    <span class="store_optionea">
-                                                        <input type="text" class="form-control input-sm" value="99" placeholder="" />
-                                                        <span> 개</span>
-                                                        <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>
-                                                    </span>
-                                                    <span class="store_optionprice">10,000</span>
-                                                </div>
-                                                <div class="store_list_item">
-                                                    <span class="store_optiontitle">[아이앤와이] 다용도 홀더(화이트)</span>
-                                                    <span class="store_optionea">
-                                                        <input type="text" class="form-control input-sm" value="99" placeholder="" />
-                                                        <span> 개</span>
-                                                        <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>
-                                                    </span>
-                                                    <span class="store_optionprice">10,000</span>
+                                                    <span class="store_optionprice">{{item.PRICE * product.CNT}}</span>
+                                                    <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">x</button>-->
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
+
+                                            <div ng-show="productsList != ''">
+                                                <button type="button" ng-show="uid != '' && uid != null" ng-click="click_addcart()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">장바구니</button>
+                                                <button type="button" ng-click="click_addOrder()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">구매하기</button>
+                                            </div>
 
                                             <div class="store_col_info" style="border-bottom:none">
                                                 <div class="store_list_item">
@@ -101,11 +96,11 @@
                                                         </span>
                                                     </span>
                                                     <span class="store_totalprice">
-                                                        30,000 P
+                                                        {{TOTAL_MILEAGE}} P
                                                         <br />
-                                                        0 원
+                                                        {{TOTAL_PRICE}} 원
                                                         <br />
-                                                        착불
+                                                        {{item.DELEIVERY_ST == 1 ? '착불' : '선불'}}
                                                     </span>
                                                 </div>
 
@@ -118,19 +113,19 @@
                             </div>  <!-- /.row -->
 
 
-                            <div class="sub_contents_body" style="border-top:2px solid #000; margin-top:0px;">
+                            <div tabsclass="sub_contents_body" style="border-top:2px solid #000; margin-top:0px;">
 
                                 <!-- store_view -->
                                 <div class="store_view_tab">
-                                    <ul class="nav nav-tabs">
-                                        <li role="presentation" class="active"><a>상품안내</a></li>
-                                        <li role="presentation"><a>상품후기</a></li>
-                                        <li role="presentation"><a>관련상품</a></li>
-                                        <li role="presentation"><a>주의사항</a></li>
+                                    <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
+                                        <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">상품안내</a></li>  <!--class="active"-->
+                                        <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''"><a ng-click="click_selectTab('2');">상품후기</a></li>
+                                        <li role="presentation" ng-class="selectIdx == '3' ? 'active' : ''"><a ng-click="click_selectTab('3');">관련상품</a></li>
+                                        <li role="presentation" ng-class="selectIdx == '4' ? 'active' : ''"><a ng-click="click_selectTab('4');">주의사항</a></li>
                                     </ul>
                                 </div>  <!-- /.store_view_tab -->
 
-                                <div class="container-fluid peopleboard_view_contentwrap">
+                                <div id="tabs-1" ng-show="selectIdx == 1" class="container-fluid peopleboard_view_contentwrap">
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -143,17 +138,7 @@
                                 </div><!-- /.container -->
 
 
-                                <!-- 후기 -->
-                                <div class="store_view_tab">
-                                    <ul class="nav nav-tabs">
-                                        <li role="presentation"><a>상품안내</a></li>
-                                        <li role="presentation" class="active"><a>상품후기</a></li>
-                                        <li role="presentation"><a>관련상품</a></li>
-                                        <li role="presentation"><a>주의사항</a></li>
-                                    </ul>
-                                </div>  <!-- /.store_view_tab -->
-
-                                <div class="container-fluid peopleboard_view_contentwrap">
+                                <div id="tabs-2" ng-show="selectIdx == 2"  class="container-fluid peopleboard_view_contentwrap">
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -169,7 +154,7 @@
                                                     </div>
 
                                                     <div style="position:absolute; top:42px; right:25px;">
-                                                        <button type="button" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-pencil"></span> 상품후기 작성하기</button>
+                                                        <button type="button" ng-click="click_reivew()" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-pencil"></span> 상품후기 작성하기</button>
                                                     </div>
 
                                                 </div><!-- /.peoplep_list_tab -->
@@ -217,17 +202,8 @@
                                 </div><!-- /.container -->
                                 <!-- /후기 -->
 
-                                <!-- 관련상품 -->
-                                <div class="store_view_tab">
-                                    <ul class="nav nav-tabs">
-                                        <li role="presentation"><a>상품안내</a></li>
-                                        <li role="presentation"><a>상품후기</a></li>
-                                        <li role="presentation" class="active"><a>관련상품</a></li>
-                                        <li role="presentation"><a>주의사항</a></li>
-                                    </ul>
-                                </div>  <!-- /.store_view_tab -->
 
-                                <div class="container-fluid peopleboard_view_contentwrap">
+                                <div id="tabs-3" ng-show="selectIdx == 3"  class="container-fluid peopleboard_view_contentwrap">
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -361,17 +337,7 @@
                                 <!-- /관련상품 -->
 
 
-                                <!-- 주의사항 -->
-                                <div class="store_view_tab">
-                                    <ul class="nav nav-tabs">
-                                        <li role="presentation"><a>상품안내</a></li>
-                                        <li role="presentation"><a>상품후기</a></li>
-                                        <li role="presentation"><a>관련상품</a></li>
-                                        <li role="presentation" class="active"><a>주의사항</a></li>
-                                    </ul>
-                                </div>  <!-- /.store_view_tab -->
-
-                                <div class="container-fluid peopleboard_view_contentwrap">
+                                <div id="tabs-4" ng-show="selectIdx ==4"  class="container-fluid peopleboard_view_contentwrap">
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -441,3 +407,274 @@
 
     <!-- /Main Page Layout Set -->
 </div>
+
+
+<script type="text/ng-template" id="storemall_cart.html">
+    <div class="modal-header">
+        <h3 class="modal-title">장바구니</h3>
+    </div>
+    <div class="modal-body">
+        <div class="body_wrap">
+            <div class="panel panel-master contentpannel" style="border:none; display:block;">
+                <div class="contentpannel-body" >
+                    <div class="sub_contents_body">
+
+                        <!-- review_list -->
+                        <table id="comp_board_table" class="table table-hover">
+
+                            <thead>
+                            <tr class="board_thead" height="48">
+                                <td width="10%" align="center"><span class="board_th">선택</span></td>
+                                <td align="center"><span class="board_th">상품정보</span></td>
+                                <td width="15%"><span class="board_th">금액</span></td>
+                                <td width="60" align="center"><span class="board_th">수량</span></td>
+                                <td width="100" align="center"><span class="board_th">결제금액</span></td>
+                                <td width="60" align="center"><span class="board_th">삭제</span></td>
+                            </tr>
+                            </thead>
+
+                            <tbody class="on" ng-repeat="item in list">
+                            <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                <td>
+                                    <input type="hidden" ng-model="item.PRODUCT_NO" value="{{item.PRODUCT_NO}}"/>
+                                    <input type="hidden" ng-model="item.PRICE" value="{{item.PRICE}}"/>
+                                    <input type="hidden" ng-model="item.CNT" value="{{item.CNT}}"/>
+                                    <input type="hidden" ng-model="item.PRODUCT_NM" value="{{item.PRODUCT_NM}}"/>
+                                    <input type="hidden" ng-model="item.SUM_PRICE" value="{{item.SUM_PRICE}}"/>
+                                    <input type="checkbox"  class="select_check" model="item.selected" ng-value="item" name="name" id="name{{$index}}"/>
+                                </td>
+                                <td>
+                                    <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
+                                    <span style="font-size:1.08em; font-weight:600;"> {{ item.PRODUCT_NM}}</span>
+                                </td>
+                                <td>{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                <td>{{item.CNT}}</td>
+                                <td>{{item.SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                <td><button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeCartProduct($index);">x</button></td>
+                            </tr>
+                            </tbody>
+
+                            <tbody class="on" data-ng-show="list == '' || list == null">
+
+                            <tr>
+                                <td colspan="6" style="text-align: center">조회 데이터가 없습니다.</td>
+                            </tr>
+
+                            </tbody>
+                        </table><!-- /.List-->
+                    </div><!-- /.sub_contents_body -->
+
+                    <div ng-show="PRODUCT_GB == 'MILEAGE'" class="sub_contents_body">
+
+                        <!-- review_list -->
+                        <table id="comp_board_table" class="table table-hover">
+
+                            <thead>
+                                <tr class="board_thead" height="48">
+                                    <td width="33%" align="center"><span class="board_th">현재 내 마일리지</span></td>
+                                    <td align="33%" align="center"><span class="board_th">결제 마일리지</span></td>
+                                    <td width="33%" align="center"><span class="board_th">잔여 마일리지</span></td>
+                                </tr>
+                            </thead>
+
+                            <tbody class="on">
+                                <tr>
+                                    <td>{{user_info.MILEAGE.REMAIN_POINT}}P</td>
+                                    <td>{{sum_price}}P</td>
+                                    <td>{{total_mileage}}P</td>
+                                </tr>
+                                <tr ng-show="total_mileage < 0">
+                                    <td colspan="3"><font color="red">마일리지가 부족합니다.</font></td>
+                                </tr>
+                            </tbody>
+                        </table><!-- /.List-->
+                    </div><!-- /.sub_contents_body -->
+
+                </div><!-- /.container -->
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_reg(list);">전체구매</button>
+        <button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>
+        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="storemall_order.html">
+    <div class="modal-header">
+        <h3 class="modal-title">주문</h3>
+    </div>
+    <div class="modal-body">
+        <div class="body_wrap">
+            <div class="panel panel-master contentpannel" style="border:none; display:block;">
+                <div class="contentpannel-body" >
+                    <div class="sub_contents_body">
+
+                        <!-- review_list -->
+                        <table id="comp_board_table" class="table table-hover">
+
+                            <thead>
+                            <tr class="board_thead" height="48">
+                                <td align="center"><span class="board_th">상품정보</span></td>
+                                <td width="15%"><span class="board_th">금액</span></td>
+                                <td width="60" align="center"><span class="board_th">수량</span></td>
+                                <td width="100" align="center"><span class="board_th">결제금액</span></td>
+                            </tr>
+                            </thead>
+
+                            <tbody class="on" ng-repeat="item in list">
+                            <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                <td>
+                                    <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
+                                    <span style="font-size:1.08em; font-weight:600;"> {{ item.PRODUCT_NM}}</span>
+                                </td>
+                                <td>{{item.PRICE}}</td>
+                                <td>{{item.CNT}}</td>
+                                <td>{{item.SUM_PRICE}}</td>
+                            </tr>
+                            </tbody>
+
+                            <tbody class="on" data-ng-show="list == '' || list == null">
+
+                            <tr>
+                                <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                            </tr>
+
+                            </tbody>
+                        </table><!-- /.List-->
+                    </div><!-- /.sub_contents_body -->
+                </div><!-- /.container -->
+
+                <br/>
+                <div>
+                    <div class="row form_rows">
+                        <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>총 금액</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-4 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                   결제 금액 : {{TOTAL_SUM_PRICE}} &nbsp;
+                                   <span ng-show="list[0].DELEIVERY_ST == 2">배송비 : {{TOTAL_DELEIVERY_PRICE}} ({{list[0].DELEIVERY_ST == '2' ? '선불' : '착불'}})</span> &nbsp;
+                                    <br/>
+                                   합계 : {{item.SUM_PRICE}}
+                            </div>
+                        </span>
+                        </div>  <!-- /.form_basicinfo -->
+                    </div>
+                </div>
+
+                <div class="row form_rows">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>수신자 정보</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-4 basicinfo input" ng-show="uid != '' && uid != null">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="radio"  value="Y" name="info" placeholder="기존주소" ng-click="click_basic('Y');" checked/>기존주소
+                                &nbsp;
+                                <input type="radio" name="info" value="N"  ng-click="click_basic('N');" placeholder="새주소"/>새주소
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>
+
+
+                <div class="row form_rows" ng-show="uid !== '' && uid != null">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>아이디</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-4 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="">
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>  <!-- /.form_rows -->
+
+                <br/>
+                <div class="row form_rows">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>주문자명</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-4 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="text" ng-model="item.RECEIPTOR_NM" class="form-control input-sm" style="margin:0px;"  placeholder="">
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>  <!-- /.form_rows -->
+
+                <div class="row form_rows">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>연락처</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-2 basicinfo input">
+                            <div class="form-group" style="margin:0 5px; text-align:right;">
+                                <small class="table_gray">전화번호</small>
+                            </div>
+                        </span>
+                        <span class="col-xs-3 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="">
+                            </div>
+                        </span>
+                        <span class="col-xs-1 basicinfo input">
+                            <div class="form-group" style="margin:0 5px; text-align:right;">
+                                <small class="table_gray">휴대폰</small>
+                            </div>
+                        </span>
+                        <span class="col-xs-3 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="text" ng-model="item.RECEIPT_PHONE" class="form-control input-sm" style="margin:0px;" placeholder="">
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>  <!-- /.form_rows -->
+
+                <div class="row form_rows">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>받으실 곳</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-10 basicinfo input">
+                            <div class="form-group" style="margin:0 5px">
+                                <p><input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder=""></p>
+                                <p><input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.RECEIPT_ADDR" placeholder=""></p>
+                                <input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.RECEIPT_ADDR_DETAIL" placeholder="">
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>  <!-- /.form_rows -->
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_order();">주문하기</button>
+        <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+    </div>
+</script>

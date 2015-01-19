@@ -1,0 +1,241 @@
+<div ng-controller="myangeorderlist">
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+            <div class="row">
+
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
+
+                        <div class="sub_contents_wrap">
+
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
+                            </div>
+
+                            <div class="container-fluid sub_contents_search">
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding:0">
+                                        <div class="btn-group" style="float:left;">
+                                            <!--<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>-->
+                                            기간검색
+                                            <input  type="text" ng-model="search.START_DT" placeholder="2015-01-17" />&nbsp;&nbsp;~ <!--my-datepicker-->
+                                            <input  type="text" ng-model="search.END_DT" id="end_dt" placeholder="2015-01-17"  /><!--my-datepicker-->
+
+                                        </div><!-- /btn-group -->
+                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
+                                            <input type="text" ng-model="search.PRODUCT_NM" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+
+												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+												</span>
+
+                                        </div>
+
+                                        <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" />
+                                                </span>
+                                                <input type="text" class="form-control table_filtercheck" placeholder="진행중" style="background:#fff; padding-top: 2px; cursor:default; font-size: 0.86em;" disabled />
+                                            </div>
+                                        </div -->
+
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
+                        </div><!-- /.sub_contents_wrap -->
+
+
+                        <div class="sub_contents_body">
+
+                            <table id="comp_board_table" class="table table-hover">
+
+                                <thead>
+                                <tr class="board_thead" height="48">
+                                    <td width="15%" align="center"><span class="board_th">주문일자</span></td>
+                                    <td align="center"><span class="board_th">주문번호/주문상품</span></td>
+                                    <!--<td width="15%" align="center"><span class="board_th">구매금액</span></td>-->
+                                    <td width="8%" align="center"><span class="board_th">수량</span></td>
+                                    <td width="8%" align="center"><span class="board_th">금액</span></td>
+                                    <td width="8%" align="center"><span class="board_th">상태</span></td>
+                                    <td width="8%" align="center"><span class="board_th">상태변경신청</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody class="on" ng-repeat="item in list">
+
+                                <tr> <!--ng-click="click_showViewPeopleBoard(item.NO)"-->
+                                    <td class="table_no">
+                                        <span>{{item.ORDER_DT}}</span>
+                                    </td>
+                                    <td>
+                                        <img class="thumbnails_img" style="width:80px; height:80px;" ng-src="{{item.MAIN_FILE}}" />
+                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                        <!--{{item.PRODUCT_NO}}-->
+                                        [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}]
+                                        {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}}
+                                        {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+                                    </td>
+                                    <!--<td  class="table_author">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>-->
+                                    <td  class="table_author">{{item.PRODUCT_CNT}}</td>
+                                    <td  class="table_author">{{item.SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                    <td class="table_date">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</td>
+                                    <td class="table_hit">
+                                        <button ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">상태변경</button>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+
+                                <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                <tr>
+                                    <td colspan="6" style="text-align: center">조회 데이터가 없습니다.</td>
+                                </tr>
+
+                                </tbody>
+                            </table><!-- /.List-->
+
+                            <nav class="text-center">
+                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+
+                                <!--<ul class="pagination pagination-sm table_paging">-->
+                                <!--<li class="disabled">-->
+                                <!--<a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>-->
+                                <!--</li>-->
+                                <!--<li class="disabled">-->
+                                <!--<a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>-->
+                                <!--</li>-->
+                                <!--<li class="active"><a href="#">1</a></li>-->
+                                <!--<li><a href="#">2</a></li>-->
+                                <!--<li><a href="#">3</a></li>-->
+                                <!--<li><a href="#">4</a></li>-->
+                                <!--<li><a href="#">5</a></li>-->
+                                <!--<li>-->
+                                <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                        </div><!-- /.sub_contents_body -->
+
+                        <!--<div ng-show="uid != '' && uid != null" ng-click="test()">세션이 있을때만 보입니다.</div>
+                        <div ng-show="uid == '' || uid == null" ng-click="test()">세션이 없을때 보입니다.</div>   -->
+
+                        <div class="sub_contents_ads" style="display:none;">
+                            <div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> <!-- rows -->
+
+
+        </div><!-- container-fluid -->
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div class="copyright_foot">
+            <br /><br />
+            <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+                <hr style="margin:0 15px 0 15px;" />
+
+                <center>
+                    <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+                </center>
+            </nav>
+        </div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
+
+    </div>
+
+    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
+        <div class="row">
+            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
+                우측바
+            </div>
+        </div>
+    </div>
+
+    <!-- /Main Page Layout Set -->
+</div>
+
+<script type="text/ng-template" id="order_counsel.html">
+    <div class="modal-header">
+        <h3 class="modal-title">상태변경</h3>
+    </div>
+    <div class="modal-body">
+        <div class="body_wrap">
+            <div class="panel panel-master contentpannel" style="border:none; display:block;">
+
+                <div class="row" style="margin:0px auto; margin-bottom:10px;">
+                    <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">상품명</label>
+                    <div class="form-group" style="margin:0 5px">
+                        {{item.PRODUCT_NM}}
+                    </div>
+                </div>  <!-- /.form_rows -->
+
+                <div class="row" style="margin:0px auto; margin-bottom:10px;">
+
+                    <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">상태변경</label>
+
+                    <div class="col-xs-3" style="padding:0;">
+                        <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="1"/>주문취소
+                        <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="2"/>환불
+                        <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="3"/>교환
+                        <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="4"/>반품
+                    </div><!-- /.col-xs-4 -->
+
+                </div><!-- /.row -->
+
+                <div class="row" style="margin:0px auto; margin-bottom:10px;">
+                    <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">제목</label>
+
+                    <div class="col-xs-8" style="padding-left:5px;">
+                        <input ng-model="item.SUBJECT" type="text" class="input-sm form-control" placeholder="제목을 입력하세요">
+                    </div><!-- /.col-xs-7 -->
+                </div><!-- /.row -->
+
+                <br/>
+
+
+                <!-- Ediotr Box -->
+                <div class="row people_editor_wrap">
+                    <div class="col-xs-12 people_editor">
+                        <!--에디터 넣을자리 <br/>-->
+                        <!--- (글꼴, 글색, 글크기(12,14,16,18pt)/  <br/>-->
+                        <!--- 본문 정렬   <br/>-->
+                        <!--- 굵게,기울기,취소,밑줄  <br/>-->
+                        <!--- HTML-->
+                        <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+                            <div>
+                                <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>
+                            </div>
+                        </div>
+                    </div><!-- /.people_editor -->
+                </div><!-- /.row -->
+                <!-- /Ediotr  Box -->
+
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_savecounsel();">신청하기</button>
+        <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+    </div>
+</script>

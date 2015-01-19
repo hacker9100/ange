@@ -71,6 +71,8 @@ define([
     '../../../partials/ange/myange/myangemileage',
     '../../../partials/ange/myange/myangemessage',
     '../../../partials/ange/myange/myangecoupon',
+    '../../../partials/ange/myange/myangeorderlist',
+    '../../../partials/ange/myange/myangeorderstatus',
 
     // 앙쥬스토어
     '../../../partials/ange/store/storehome',

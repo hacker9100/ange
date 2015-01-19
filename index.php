@@ -138,6 +138,12 @@
 <script src="lib/respond/respond.min.js"></script>
 <![endif]-->
 
+<!-- jquery ui datepicker -->
+
+<!--<script src='http://codepen.io/assets/libs/fullpage/jquery_and_jqueryui.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js'></script>-->
+<!-- //jquery ui datepicker -->
+
 <!-- 다음 무편번호 서비스 추가 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>
 
