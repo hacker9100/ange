@@ -61,7 +61,7 @@ define([
 
         };
 
-/*        $scope.$watch('product.CNT', function() {
+        $scope.$watch('product.CNT', function() {
             if ($scope.product.CNT != undefined) {
                 if ($stateParams.menu == 'mileagemall') {
                     console.log($scope.product.cnt);
@@ -79,7 +79,7 @@ define([
                     $scope.TOTAL_PRICE = 0;
                 }
             }
-        });*/
+        });
 
         // 상품 추가
         $scope.addProductList = function (products, item){
@@ -313,6 +313,7 @@ define([
 
             $scope.productsList[index].SUM_PRICE = price * cnt;
 
+
             if ($stateParams.menu == 'mileagemall') {
                 $scope.TOTAL_MILEAGE += price * cnt;
                 $scope.TOTAL_PRICE = 0;
@@ -320,6 +321,7 @@ define([
                 $scope.TOTAL_PRICE += price * cnt;
                 $scope.TOTAL_MILEAGE = 0;
             }
+
         }
 
         // 주문
