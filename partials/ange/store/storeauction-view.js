@@ -21,6 +21,8 @@ define([
         $scope.productsList = [];
         $scope.product = {};
 
+        $scope.selectIdx = 1;
+
         $(function () {
 
             $(".tab_content").hide();
@@ -36,6 +38,10 @@ define([
             });
 
         });
+
+        $scope.click_selectTab = function (idx) {
+            $scope.selectIdx = idx;
+        };
 
         // 초기화
         $scope.init = function(session) {
