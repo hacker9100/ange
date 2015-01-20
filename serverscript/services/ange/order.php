@@ -122,8 +122,16 @@ switch ($_method) {
             $sort_order = "";
             $limit = "";
 
-            if (isset($_search[PRODUCT_GB]) && $_search[PRODUCT_GB] != "") {
-                $search_where .= "AND PRODUCT_GB = '".$_search[PRODUCT_GB]."' ";
+            if (isset($_search[ORDER_GB]) && $_search[ORDER_GB] != "") {
+                $search_where .= "AND AC.ORDER_GB = '".$_search[ORDER_GB]."' ";
+            }
+
+            if ($_search[ORDER_GB] == 'MILEAGE') {
+                $search_where .= "AND AC.ORDER_GB IN ('MILEAGE','AUCTION') ";
+            }if ($_search[ORDER_GB] == 'CUMMERCE') {
+                $search_where .= "AND AC.ORDER_GB = 'CUMMERCE'";
+            }if ($_search[ORDER_GB] == 'NAMING') {
+                $search_where .= "AND AC.ORDER_GB = 'NAMING' ";
             }
 
             /*            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
@@ -313,7 +321,7 @@ switch ($_method) {
         $_d->sql_beginTransaction();
 
         // 주문코드 생성
-        $sql = "SELECT IFNULL(MAX(NO)+1, CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B))) AS PRODUCT_CODE FROM ANGE_ORDER";
+        $sql = "SELECT CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)) AS PRODUCT_CODE FROM ANGE_ORDER";
 
         $result = $_d->sql_query($sql,true);
         for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {

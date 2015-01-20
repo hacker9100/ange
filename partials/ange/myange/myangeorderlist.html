@@ -53,82 +53,113 @@
 
                         <div class="sub_contents_body">
 
-                            <table id="comp_board_table" class="table table-hover">
+                            <h4 style="font-weight:bold;">마일리지 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
 
-                                <thead>
-                                <tr class="board_thead" height="48">
-                                    <td width="15%" align="center"><span class="board_th">주문일자</span></td>
-                                    <td align="center"><span class="board_th">주문번호/주문상품</span></td>
-                                    <!--<td width="15%" align="center"><span class="board_th">구매금액</span></td>-->
-                                    <td width="8%" align="center"><span class="board_th">수량</span></td>
-                                    <td width="8%" align="center"><span class="board_th">금액</span></td>
-                                    <td width="8%" align="center"><span class="board_th">상태</span></td>
-                                    <td width="8%" align="center"><span class="board_th">주문취소</span></td>
-                                    <td width="8%" align="center"><span class="board_th">상태변경</span></td>
-                                </tr>
-                                </thead>
+                            <!-- 마일리지 & 경매소 목록 -->
+                            <div class="row webzine_moms_list" ng-repeat="item in mileagelist">
+                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                        <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="webzine_list_title" style="width: 65%">
+                                            [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
 
-                                <tbody class="on" ng-repeat="item in list">
+                                            <div class="webzine_list_bottomwrap">
+                                                <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
+                                                <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>
+                                                <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
+                                            </div>
 
-                                <tr> <!--ng-click="click_showViewPeopleBoard(item.NO)"-->
-                                    <td class="table_no">
-                                        <span>{{item.ORDER_DT}}</span>
-                                    </td>
-                                    <td>
-                                        <img class="thumbnails_img" style="width:80px; height:80px;" ng-src="{{item.MAIN_FILE}}" />
-                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                        <!--{{item.PRODUCT_NO}}-->
-                                        [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}]
-                                        {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}}
-                                        {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
-                                    </td>
-                                    <!--<td  class="table_author">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>-->
-                                    <td  class="table_author">{{item.PRODUCT_CNT}}</td>
-                                    <td  class="table_author">{{item.SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
-                                    <td class="table_date">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</td>
-                                    <td class="table_hit">
-                                        <button ng-show="item.ORDER_ST == 0" ng-click="click_cancel(item)" type="button">취소</button>
-                                    </td>
-                                    <td class="table_hit">
-                                        <button ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>
-                                    </td>
-                                </tr>
+                                            <div class="webzine_list_btnwrap">
+                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0" ng-click="click_cancel(item)">주문취소</button><br />
+                                                <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>
+                                            </div>
+                                        </div>
+                                    </div>  <!-- comp_basic -->
+                                </div>  <!-- col-xs-8 -->
+                            </div>  <!-- /.row -->
 
-                                </tbody>
-
-                                <tbody class="on" data-ng-show="list == '' || list == null">
-
-                                <tr>
-                                    <td colspan="7" style="text-align: center">조회 데이터가 없습니다.</td>
-                                </tr>
-
-                                </tbody>
-                            </table><!-- /.List-->
+                            <div class="row webzine_moms_list" ng-show="list == ''">
+                                조회데이터가 없습니다.
+                            </div>
 
                             <nav class="text-center">
-                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-
-                                <!--<ul class="pagination pagination-sm table_paging">-->
-                                <!--<li class="disabled">-->
-                                <!--<a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>-->
-                                <!--</li>-->
-                                <!--<li class="disabled">-->
-                                <!--<a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>-->
-                                <!--</li>-->
-                                <!--<li class="active"><a href="#">1</a></li>-->
-                                <!--<li><a href="#">2</a></li>-->
-                                <!--<li><a href="#">3</a></li>-->
-                                <!--<li><a href="#">4</a></li>-->
-                                <!--<li><a href="#">5</a></li>-->
-                                <!--<li>-->
-                                <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>-->
-                                <!--</li>-->
-                                <!--</ul>-->
+                                <pagination boundary-links="true" total-items="BOARD_TOTAL_COUNT" ng-model="BOARD_PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
                             <!-- /peoplepoll_list -->
+
+                            <br/>
+
+                            <h4 style="font-weight:bold;">커머스 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
+
+                            <!-- 커머스 목록 -->
+                            <div class="row webzine_moms_list" ng-repeat="item in cummercelist">
+                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                        <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="webzine_list_title" style="width: 65%">
+                                            [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+
+                                            <div class="webzine_list_bottomwrap">
+                                                <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
+                                                <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>
+                                                <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
+                                            </div>
+
+                                            <div class="webzine_list_btnwrap">
+                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0" ng-click="click_cancel(item)">주문취소</button><br />
+                                                <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>
+                                            </div>
+                                        </div>
+                                    </div>  <!-- comp_basic -->
+                                </div>  <!-- col-xs-8 -->
+                            </div>  <!-- /.row -->
+
+                            <div class="row webzine_moms_list" ng-show="cummercelist == ''">
+                                조회데이터가 없습니다.
+                            </div>
+
+                            <nav class="text-center">
+                                <pagination boundary-links="true" total-items="PHOTO_TOTAL_COUNT" ng-model="PHOTO_PAGE_NO" class="pagination-sm" ng-change="pagePhotoChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                            <br/>
+
+                            <h4 style="font-weight:bold;">네이밍 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
+
+                            <!-- 네이밍 목록 -->
+                            <div class="row webzine_moms_list" ng-repeat="item in naminglist">
+                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                        <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="webzine_list_title" style="width: 65%">
+                                            [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+
+                                            <div class="webzine_list_bottomwrap">
+                                                <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
+                                                <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>
+                                                <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
+                                            </div>
+
+                                            <div class="webzine_list_btnwrap">
+                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0" ng-click="click_cancel(item)">주문취소</button><br />
+                                                <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>
+                                            </div>
+                                        </div>
+                                    </div>  <!-- comp_basic -->
+                                </div>  <!-- col-xs-8 -->
+                            </div>  <!-- /.row -->
+
+                            <div class="row webzine_moms_list" ng-show="naminglist == ''">
+                                조회데이터가 없습니다.
+                            </div>
+
+                            <nav class="text-center">
+                                <pagination boundary-links="true" total-items="CLINIC_TOTAL_CNT" ng-model="CLINIC_PAGE_NO" class="pagination-sm" ng-change="pageClinicChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                            <br/>
 
                         </div><!-- /.sub_contents_body -->
 
