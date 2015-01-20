@@ -29,6 +29,8 @@ define([
 
         $scope.search = {};
 
+        $scope.item = {};
+
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "등록자", value: "NICK_NM"}];
 
@@ -140,6 +142,26 @@ define([
         // 검색
         $scope.click_searchPeopleBoard = function(){
             $scope.getPeopleBoardList();
+        }
+
+        // 주문취소
+        $scope.click_cancel = function (item){
+
+            var dialog = dialogs.confirm('알림', '주문취소를 하시겠습니까.', {size: 'md'});
+
+            dialog.result.then(function(btn){
+                $scope.item.ORDER_ST = 1;
+                $scope.item.PRODUCT_NO = item.PRODUCT_NO;
+                $scope.item.PRODUCT_NM = item.PRODUCT_NM;
+                $scope.updateItem('ange/order', 'item', item.NO, $scope.item, false)
+                    .then(function(){
+                        dialogs.notify('알림', '주문취소 되었습니다.', {size: 'md'});
+                        $scope.getPeopleBoardList();
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
         }
 
         $scope.init();

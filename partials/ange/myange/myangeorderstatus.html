@@ -73,8 +73,8 @@
                                     <td>
                                         <img class="thumbnails_img" style="width:80px; height:80px;" ng-src="{{item.MAIN_FILE}}" />
                                         <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                        {{item.PRODUCT_NO}}
-                                        [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}]{{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+                                        <!--{{item.PRODUCT_NO}}-->
+                                        [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}]{{item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
                                     </td>
                                     <td  class="table_author">{{item.SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
                                     <td class="table_date">{{item.PROGRESS_ST_NM}}</td>

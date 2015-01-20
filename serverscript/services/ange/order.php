@@ -148,7 +148,7 @@ switch ($_method) {
             }
 
             $sql = "SELECT    NO, PRODUCT_CNT, SUM_PRICE, PRODUCT_NO, USER_ID, ORDER_DT,DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_DT,
-                            CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' ELSE 5 end AS ORDER_GB_NM, PRODUCT_NM, PRODUCT_GB, TOTAL_COUNT, PRICE, ORDER_GB,ORDER_ST,
+                            CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_GB_NM, PRODUCT_NM, PRODUCT_GB, TOTAL_COUNT, PRICE, ORDER_GB,ORDER_ST,
                             CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, PARENT_PRODUCT_NM
                   FROM (
                                 SELECT AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.PRODUCT_NO, AC.USER_ID,  AC.ORDER_GB, AP.PRODUCT_NM, AP.PRODUCT_GB, AP.PRICE, AC.ORDER_DT, AC.ORDER_ST,
@@ -292,7 +292,8 @@ switch ($_method) {
                             RECEIPT_PHONE,
                             REQUEST_NOTE,
                             ORDER_ST,
-                            USER_ID
+                            USER_ID,
+                            ORDER_GB
                         ) VALUES (
                             ".$e[PRODUCT_NO].",
                             ".$e[CNT].",
@@ -304,7 +305,8 @@ switch ($_method) {
                             '".$_model[RECEIPT_PHONE]."',
                             '".$_model[REQUEST_NOTE]."',
                             0,
-                            '".$_SESSION['uid']."'
+                            '".$_SESSION['uid']."',
+                            '".$_model[ORDER_GB]."'
                         )";
 
                 $_d->sql_query($sql);
@@ -489,6 +491,28 @@ switch ($_method) {
                         ";
 
             $result = $_d->sql_query($sql,true);
+
+
+            $sql = "INSERT INTO ANGE_ORDER_COUNSEL
+                    (
+                        PRODUCT_NO,
+                        SUBJECT,
+                        BODY,
+                        COUNSEL_ST,
+                        PROGRESS_ST,
+                        USER_ID,
+                        REG_DT
+                    ) VALUES (
+                        ".$_model[PRODUCT_NO].",
+                        '".$_model[PRODUCT_NM]."',
+                        '주문취소합니다',
+                        1,
+                        3,
+                        '".$_SESSION['uid']."',
+                        SYSDATE()
+                    )";
+
+            $_d->sql_query($sql);
 
             if($err > 0){
                 $_d->sql_rollback();

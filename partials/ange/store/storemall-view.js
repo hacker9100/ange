@@ -200,10 +200,17 @@ define([
                     // 선택 상품 주문
                     $scope.click_select_reg = function(list){
 
-                       var idx = 0;
+                        if($stateParams.menu == 'mileagemall'){
+                            var cnt = list.length;
 
+                            if(cnt > 2){
+                                dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
+                                return;
+                            }
+                        }
+
+                       var idx = 0;
                        var count = $("input:checkbox[name='name']:checked").length;
-                       console.log(count);
 
                        for(var i =0; i<list.length; i++){
 
@@ -226,6 +233,15 @@ define([
                     }
 
                     $scope.openOrderModal = function (item, size){
+
+                        if($stateParams.menu == 'mileagemall'){
+                            var cnt = item.length;
+
+                            if(cnt > 2){
+                                dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
+                                return;
+                            }
+                        }
 
                         var dlg = dialogs.create('storemall_order.html',
                             ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
@@ -340,6 +356,15 @@ define([
         // 주문팝업 삭제예정
         $scope.openOrderModal = function (item, size){
 
+            if($stateParams.menu == 'mileagemall'){
+                var cnt = item.length;
+
+                if(cnt > 2){
+                    dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
+                    return;
+                }
+            }
+
             var dlg = dialogs.create('storemall_order.html',
                 ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
                     /********** 공통 controller 호출 **********/
@@ -366,6 +391,13 @@ define([
                         $scope.DELEIVERY_ST = item[i].DELEIVERY_ST;
                     }
 
+                    if($scope.DELEIVERY_ST == 1){
+                        $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE);
+                    }else if($scope.DELEIVERY_ST == 2){
+                        $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE) + parseInt($scope.TOTAL_DELEIVERY_PRICE);
+                    }
+
+
                     $scope.click_basic = function(val){
                         if(val == 'Y'){
                             $scope.item.USER_ID = $scope.user_info.USER_ID;
@@ -384,16 +416,17 @@ define([
 
                        if($stateParams.menu == 'mileagemall'){
                            $scope.item.ORDER_GB = 'MILEAGE'
+
                        }else if($stateParams.menu == 'cummerce'){
                            $scope.item.ORDER_GB = 'CUMMERCE'
-                       };
+                       }
 
-                        $scope.insertItem('ange/order', 'item', $scope.item, false)
-                            .then(function(){
-                                dialogs.notify('알림', '주문이 완료되었습니다. 나의 주문 내역에서 확인하실 수 있습니다', {size: 'md'});
-                                $modalInstance.close();
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                       $scope.insertItem('ange/order', 'item', $scope.item, false)
+                          .then(function(){
+                              dialogs.notify('알림', '주문이 완료되었습니다. 나의 주문 내역에서 확인하실 수 있습니다', {size: 'md'});
+                              $modalInstance.close();
+                          })
+                          .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                     $scope.click_cancel = function () {
