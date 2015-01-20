@@ -591,6 +591,22 @@
                     </div>  <!-- /.form_basicinfo -->
                 </div>
 
+                <div class="row form_rows">
+                    <div class="form_basicinfo">
+                        <span class="col-xs-2 basicinfo title">
+                            <strong>결제수단</strong>
+                            <span class="table_blue">*</span>
+                        </span>
+
+                        <span class="col-xs-4 basicinfo input" ng-show="uid != '' && uid != null">
+                            <div class="form-group" style="margin:0 5px">
+                                <input type="radio"  ng-model="item.PAY_GB" value="CREDIT" name="pay_gb" placeholder="신용카드" checked/>신용카드
+                                &nbsp;
+                                <input type="radio" ng-model="item.PAY_GB" value="NOBANKBOOK" name="pay_gb" placeholder="무통장"/>무통장
+                            </div>
+                        </span>
+                    </div>  <!-- /.form_basicinfo -->
+                </div>
 
                 <div class="row form_rows" ng-show="uid !== '' && uid != null">
                     <div class="form_basicinfo">

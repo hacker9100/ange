@@ -216,6 +216,41 @@ switch ($_method) {
             }else{
                 $_d->dataEnd($sql);
             }
+        }else if($_type == 'productnolist'){
+
+            $sql = "SELECT PRODUCT_CODE
+                    FROM ANGE_ORDER
+                    WHERE USER_ID = '".$_SESSION['uid']."'
+                    GROUP BY PRODUCT_CODE
+                    ";
+
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
+        }else if($_type == 'productnmlist'){
+
+            $sql ="SELECT (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AO.PRODUCT_NO) AS PRODUCT_NM
+                    FROM ANGE_ORDER AO
+                    WHERE AO.PRODUCT_CODE = '".$_search[PRODUCT_CODE][PRODUCT_CODE]."' ";
+
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
+        }else if($_type == 'namingnoList'){
+
+            $sql ="SELECT NO, PRODUCT_NM
+                    FROM ANGE_PRODUCT
+                    WHERE PRODUCT_GB = 'NAMING'";
+
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
         }
 
         break;
@@ -275,10 +310,113 @@ switch ($_method) {
             $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
             break;
         }*/
-
         $_d->sql_beginTransaction();
 
+        // 주문코드 생성
+        $sql = "SELECT IFNULL(MAX(NO)+1, CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B))) AS PRODUCT_CODE FROM ANGE_ORDER";
+
+        $result = $_d->sql_query($sql,true);
+        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+            $_model[PRODUCT_CODE] = $row[PRODUCT_CODE];
+        }
+
         if (isset($_model[ORDER]) && $_model[ORDER] != "") {
+            foreach ($_model[ORDER] as $e) {
+                $sql = "INSERT INTO ANGE_ORDER
+                    (
+                        PRODUCT_NO,
+                        CHANGE_NAME_NO,
+                        PRODUCT_CNT,
+                        SUM_PRICE,
+                        ORDER_DT,
+                        RECEIPTOR_NM,
+                        RECEIPT_ADDR,
+                        RECEIPT_ADDR_DETAIL,
+                        RECEIPT_PHONE,
+                        REQUEST_NOTE,
+                        ORDER_ST,
+                        USER_ID,
+                        ORDER_GB,
+                        PAY_GB,
+                        PAY_DT,
+                        PRODUCT_CODE
+                    ) VALUES (
+                        ".$e[PRODUCT_NO].",
+                        ".$e[CHANGE_NAME_NO].",
+                        ".$e[CNT].",
+                        ".$_model[SUM_PRICE].",
+                        SYSDATE(),
+                        '".$_model[RECEIPTOR_NM]."',
+                        '".$_model[RECEIPT_ADDR]."',
+                        '".$_model[RECEIPT_ADDR_DETAIL]."',
+                        '".$_model[RECEIPT_PHONE]."',
+                        '".$_model[REQUEST_NOTE]."',
+                        0,
+                        '".$_SESSION['uid']."',
+                        '".$_model[ORDER_GB]."',
+                        '".$_model[PAY_GB]."',
+                        SYSDATE(),
+                        '".$_model[PRODUCT_CODE]."'
+                    )";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                $sql = "UPDATE ANGE_PRODUCT
+                    SET
+                        SUM_IN_CNT = SUM_IN_CNT - ".$e[CNT].",
+                        SUM_OUT_CNT = SUM_OUT_CNT + ".$e[CNT]."
+                    WHERE
+                        NO = $e[PRODUCT_NO]
+                    ";
+                $_d->sql_query($sql);
+
+                $sql = "UPDATE ANGE_MILEAGE_STATUS
+                    SET
+                        USE_POINT = USE_POINT + ".$e[SUM_PRICE].",
+                        REMAIN_POINT = REMAIN_POINT - ".$e[SUM_PRICE]."
+                    WHERE
+                        USER_ID = '".$_SESSION['uid']."'
+                    ";
+                $_d->sql_query($sql);
+
+                $sql = "UPDATE ANGE_MILEAGE_STATUS
+                    SET
+                        SUM_POINT = (USE_POINT + ".$e[SUM_PRICE].") + (REMAIN_POINT - ".$e[SUM_PRICE].")
+                    WHERE
+                        USER_ID = '".$_SESSION['uid']."'
+                    ";
+                $_d->sql_query($sql);
+
+                if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
+
+                    $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
+                           SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
+                       FROM ANGE_PRODUCT
+                       WHERE PARENT_NO = ".$e[PARENT_NO]."
+                ";
+
+                    $result = $_d->sql_query($sql,true);
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                        $sql = "UPDATE ANGE_PRODUCT
+                        SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
+                            SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
+                        WHERE NO = ".$e[PARENT_NO]."
+                    ";
+                        $_d->sql_query($sql);
+                    }
+                }
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+            }
+        }
+
+
+        /*if (isset($_model[ORDER]) && $_model[ORDER] != "") {
             foreach ($_model[ORDER] as $e) {
                 $sql = "INSERT INTO ANGE_ORDER
                         (
@@ -359,7 +497,7 @@ switch ($_method) {
                     $msg = $_d->mysql_error;
                 }
             }
-        }
+        }*/
 
 
         if($_d->mysql_errno > 0) {

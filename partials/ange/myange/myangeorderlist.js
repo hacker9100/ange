@@ -116,9 +116,148 @@ define([
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
                     $scope.item = item;
+                    $scope.search = {};
 
+                    $scope.showDetails = false;
+
+                    // 파일 업로드 설정
+                    $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+
+                    // 파일 업로드 완료 후 에디터에 중간 사이즈 이미지 추가
+                    $scope.addEditor = false;
+                    $scope.checkAll = false;
+
+                    $scope.click_selectMainImage = function (file) {
+
+                        angular.forEach($scope.queue, function(file) {
+                            file.kind = '';
+                        });
+
+                        if (file.kind == 'MAIN') {
+                            file.kind = '';
+                        } else {
+                            file.kind = 'MAIN';
+                        }
+                    };
+
+                    $scope.click_checkAllToggle = function () {
+                        $scope.checkAll = !$scope.checkAll;
+
+                        if ($scope.checkAll) {
+                            $scope.item.queue = angular.copy($scope.queue);
+                        } else {
+//                angular.forEach($scope.select, function(file) {
+//                    $scope.select.pop();
+//                });
+                            $scope.item.queue = [];
+//                $scope.item.queue.splice(0, $scope.item.queue.length);
+                        }
+//            console.log(JSON.stringify($scope.item.queue))
+                    };
+
+                    var state;
+                    $scope.click_checkFileDestroy = function () {
+                        angular.forEach($scope.item.queue, function(file) {
+                            state = 'pending';
+                            return $http({
+                                url: file.deleteUrl,
+                                method: file.deleteType
+                            }).then(
+                                function () {
+                                    $scope.item.queue.splice($scope.checkFile.indexOf(file), 1);
+
+                                    state = 'resolved';
+                                    $scope.clear(file);
+                                },
+                                function () {
+                                    state = 'rejected';
+                                }
+                            );
+                        });
+                    };
+
+                    $scope.click_checkFileEditor = function () {
+                        angular.forEach($scope.item.queue, function(file) {
+                            if (!angular.isUndefined(CKEDITOR)) {
+                                var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.url+'" />' );
+                                CKEDITOR.instances.editor1.insertElement( element );
+                            }
+                        });
+                    };
+
+                    /********** 초기화 **********/
+                        // 첨부파일 초기화
+                    $scope.queue = [];
+
+                    $(document).ready(function() {
+
+                        /*// radio change 이벤트
+                        $("input[name='counsel']").change(function() {
+
+                            var radioValue = $(this).val();
+
+                            console.log('radioValue = '+radioValue);
+
+
+                        });*/
+                        $("#product_notice").hide();
+
+                    });
+
+                    $scope.productnoList = function(){
+                        $scope.getList('ange/order', 'productnolist', {}, {}, true)
+                            .then(function(data){
+                                $scope.productnolist = data;
+                            })
+                            .catch(function(error){$scope.productnolist = "";});
+                    }
+
+                    $scope.searchProductNm = function(productno){
+
+                        $scope.search.PRODUCT_CODE = productno;
+
+                        $scope.getList('ange/order', 'productnmlist', {}, $scope.search, true)
+                            .then(function(data){
+                                $scope.productnmlist = data;
+                            })
+                            .catch(function(error){$scope.productnmlist = "";});
+                    }
+
+                    $scope.namingnoList = function(){
+                        $scope.getList('ange/order', 'namingnoList', {}, {}, true)
+                            .then(function(data){
+                                $scope.namingnolist = data;
+                            })
+                            .catch(function(error){$scope.namingnolist = "";});
+                    }
+
+                    $scope.radio_change = function (value){
+                        if (value == "9" || value == "10" || value == "11" || value == "12" || value == "13") {
+                            $("#product_info").hide();
+                            $("#product_change").hide();
+                            $("#product_notice").hide();
+                            $(".product_note").show();
+                        } else if (value == "1" || value == "2" || value == "3" || value == "4" || value == "6" || value == "8") {
+                            $("#product_info").show();
+                            $("#product_change").hide();
+                            $("#product_notice").hide();
+                            $(".product_note").show();
+                        } else if (value == "7") {
+                            $("#product_info").show();
+                            $("#product_change").show();
+                            $(".product_note").hide();
+                            $("#product_notice").show();
+                        }
+                    }
 
                     $scope.click_savecounsel = function (){
+
+                        for(var i in $scope.item.FILES) {
+                            $scope.item.FILES[i].$destroy = '';
+                            $scope.item.FILES[i].$editor = '';
+//                $scope.item.FILES[i].$submit();
+                        }
+
                         $scope.insertItem('ange/counsel', 'item', $scope.item, false)
                             .then(function(){
                                 dialogs.notify('알림', '신청이 완료되었습니다. 나의 변경신청에서 확인하실 수 있습니다', {size: 'md'});
@@ -130,6 +269,9 @@ define([
                     $scope.click_cancel = function () {
                         $modalInstance.close();
                     };
+
+                    $scope.productnoList();
+                    $scope.namingnoList();
 
                 }], item, {size:size,keyboard: true}, $scope);
             dlg.result.then(function(){

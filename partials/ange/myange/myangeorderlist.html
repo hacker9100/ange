@@ -63,7 +63,7 @@
                                     <td width="8%" align="center"><span class="board_th">수량</span></td>
                                     <td width="8%" align="center"><span class="board_th">금액</span></td>
                                     <td width="8%" align="center"><span class="board_th">상태</span></td>
-                                    <td width="8%" align="center"><span class="board_th">취소</span></td>
+                                    <td width="8%" align="center"><span class="board_th">주문취소</span></td>
                                     <td width="8%" align="center"><span class="board_th">상태변경</span></td>
                                 </tr>
                                 </thead>
@@ -177,7 +177,7 @@
 
 <script type="text/ng-template" id="order_counsel.html">
     <div class="modal-header">
-        <h3 class="modal-title">상태변경</h3>
+        <h3 class="modal-title">일대일상담 상태변경신청</h3>
         <br/>
     </div>
 
@@ -200,36 +200,50 @@
                     <tr>
                         <td style="vertical-align: middle">쇼핑몰 구매 관련</td>
                         <td colspan="2">
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="1"/>주문취소
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="2"/>환불
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="3"/>교환
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="4"/>반품
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="5"/>상품관련
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="1" ng-click="radio_change(1);"/>주문취소&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="2" ng-click="radio_change(2);"/>환불&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="3" ng-click="radio_change(3);"/>교환&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="4" ng-click="radio_change(4);"/>반품&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="5" ng-click="radio_change(5);"/>상품관련&nbsp;&nbsp;&nbsp;
                         </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle">네이밍 서비스 관련</td>
                         <td colspan="2">
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="6"/>서비스신청
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="7"/>신청서비스전환
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="8"/>기타문의
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="6" ng-click="radio_change(6);"/>서비스신청&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="7" ng-click="radio_change(7);"/>신청서비스전환&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="8" ng-click="radio_change(8);"/>기타문의&nbsp;&nbsp;&nbsp;
                         </td>
                     </tr>
                     <tr>
                         <td style="vertical-align: middle">일반상담</td>
                         <td colspan="2">
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="9" class="general"/>회원정보
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="10" class="general"/>마일리지
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="11" class="general"/>시스템
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="12" class="general"/>결제
-                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="13" class="general"/>기타
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="9" ng-click="radio_change(9);"/>회원정보&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="10" ng-click="radio_change(10);"/>마일리지&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="11" ng-click="radio_change(11);"/>시스템&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="12"  ng-click="radio_change(11);"/>결제&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="13" ng-click="radio_change(13);"/>기타&nbsp;&nbsp;&nbsp;
                         </td>
                     </tr>
-                    <tr class="product_info">
+                    <tr id="product_info">
                         <td style="vertical-align: middle">상품정보</td>
                         <td colspan="3">
-                            <input type="text" ng-model="item.PRODUCT_NM" class="form-group"/>
-                            <input type="text" ng-model="item.PRODUCT_NM" class="form-group"/>
+                            <!--<input type="hidden" ng-model="item.PRODUCT_NM" class="form-group"/>-->
+                            <select ng-options="p.PRODUCT_CODE for p in productnolist" ng-model="item.PRODUCT_NO" style="float:left; width:20%;" class="form-control input-sm" ng-change="searchProductNm(item.PRODUCT_NO)">
+                                <option value="" selected>선택</option>
+                            </select>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <select ng-options="v.PRODUCT_NM for v in productnmlist" ng-model="item.PRODUCT_NM" style="float:left; width:50%;" class="form-control input-sm">
+                                <option value="" selected>선택</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="product_change">
+                        <td style="vertical-align: middle">상품전환</td>
+                        <td colspan="3">
+                            <select ng-options="v.PRODUCT_NM for v in namingnolist" ng-model="item.CHANGE_NAME_NO" class="form-control input-sm">
+                                <option value="" selected>선택</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -244,11 +258,11 @@
                         <td style="vertical-align: middle">휴대푠</td>
                         <td>{{user_info.PHONE_2}}</td>
                     </tr>
-                    <tr>
+                    <tr class="product_note">
                         <td style="vertical-align: middle">제목</td>
                         <td colspan="3"><input ng-model="item.SUBJECT" type="text" class="input-sm form-control" placeholder="제목을 입력하세요"></td>
                     </tr>
-                    <tr>
+                    <tr class="product_note">
                         <td style="vertical-align: middle">내용</td>
                         <td colspan="3">
                             <form id="fileupload" method="POST" enctype="multipart/form-data" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
@@ -347,12 +361,23 @@
                                     <!--- HTML-->
                                     <div style="border:1px solid #DEDEDE; width:100%; float:left;">
                                         <div>
-                                            <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" rows="1" disabled="{{scope.isDisabled}}"></textarea>
+                                            <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" style="height: 30%" rows="1" disabled="{{scope.isDisabled}}"></textarea>
                                         </div>
                                     </div>
                                 </div><!-- /.people_editor -->
                             </div><!-- /.row -->
                             <!-- /Ediotr  Box -->
+                        </td>
+                    </tr>
+                    <tr id="product_notice">
+                        <td style="vertical-align: middle">유의사항</td>
+                        <td colspan="3">
+                            <ul>
+                                <li>네이밍서비스 실시간/셀프작명 신청시 스페셜 또는 프리미엄 작명으로 전환가능합니다.</li>
+                                <li>스페셜 또는 프리미엄 작명서비스로 전환신청시 이전 신청 서비스는 사용하실 수 없습니다.</li>
+                                <li>서비스별 차액비용이 발생합니다.</li>
+                                <li>하단 [등록]시 결제창으로 이동합니다.</li>
+                            </ul>
                         </td>
                     </tr>
                 </table>

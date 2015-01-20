@@ -200,17 +200,13 @@ define([
                     // 선택 상품 주문
                     $scope.click_select_reg = function(list){
 
-                        if($stateParams.menu == 'mileagemall'){
-                            var cnt = list.length;
-
-                            if(cnt > 2){
-                                dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
-                                return;
-                            }
-                        }
-
                        var idx = 0;
                        var count = $("input:checkbox[name='name']:checked").length;
+
+                       if(count > 2){
+                           alert('마일리지 몰에서는 2개까지 구매가 가능합니다');
+                           return;
+                       }
 
                        for(var i =0; i<list.length; i++){
 
@@ -228,20 +224,29 @@ define([
                     // 전체 상품 주문
                     $scope.click_reg = function (list){
 
-                        $scope.openOrderModal($scope.list, 'lg');
-                        $modalInstance.close();
-                    }
-
-                    $scope.openOrderModal = function (item, size){
-
                         if($stateParams.menu == 'mileagemall'){
-                            var cnt = item.length;
+                            var cnt = list.length;
 
                             if(cnt > 2){
                                 dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
                                 return;
                             }
                         }
+
+                        $scope.openOrderModal($scope.list, 'lg');
+                        $modalInstance.close();
+                    }
+
+                    $scope.openOrderModal = function (item, size){
+
+                        /*if($stateParams.menu == 'mileagemall'){
+                            var cnt = item.length;
+
+                            if(cnt > 2){
+                                dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
+                                return;
+                            }
+                        }*/
 
                         var dlg = dialogs.create('storemall_order.html',
                             ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
@@ -306,6 +311,7 @@ define([
 
                                 $scope.click_cancel = function () {
                                     $modalInstance.close();
+                                    $scope.list = [{}];
                                 };
 
                             }], item, {size:size,keyboard: true}, $scope);
@@ -431,6 +437,7 @@ define([
 
                     $scope.click_cancel = function () {
                         $modalInstance.close();
+                        $scope.list = [{}];
                     };
 
                 }], item, {size:size,keyboard: true}, $scope);
