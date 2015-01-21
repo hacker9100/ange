@@ -123,17 +123,97 @@ define([
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
-                    $scope.getItem('ange/counsel', 'item', item, {}, false)
+                    $scope.search = {};
+
+                    $scope.radio_change = function (value){
+                        if (value == "9" || value == "10" || value == "11" || value == "12" || value == "13") {
+                            $("#product_info").hide();
+                            $("#product_change").hide();
+                            $("#product_notice").hide();
+                            $(".product_note").show();
+                        } else if (value == "1" || value == "2" || value == "3" || value == "4" || value == "6" || value == "8") {
+                            $("#product_info").show();
+                            $("#product_change").hide();
+                            $("#product_notice").hide();
+                            $(".product_note").show();
+                        } else if (value == "7") {
+                            $("#product_info").show();
+                            $("#product_change").show();
+                            $(".product_note").hide();
+                            $("#product_notice").show();
+                        }
+                    }
+
+                    console.log(item);
+
+                    $scope.getItem('ange/counsel', 'item', item.NO, {}, false)
                         .then(function(data){
                             $scope.item = data;
 
-                            $("input:radio[name='counsel']:radio[value='"+data.COUNSER_ST+"']").attr("checked",true);
+                            $("input:radio[name='counsel']:radio[value='"+data.COUNSEL_ST+"']").attr("checked",true);
+                            $scope.radio_change(data.COUNSEL_ST);
                         })
                         .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                    // 상품코드 selectbox
+                    $scope.productnoList = function(){
+                        $scope.getList('ange/order', 'productnolist', {}, {}, true)
+                            .then(function(data){
+                                $scope.productnolist = data;
+
+                                var idx = 0;
+                                for(var i =0; i<$scope.productnolist.length; i++){
+
+                                    if(JSON.stringify(item.PRODUCT_CODE) == JSON.stringify($scope.productnolist[i].PRODUCT_CODE)){
+                                        idx = i;
+                                    }
+                                }
+                                $scope.item.PRODUCT_CODE = $scope.productnolist[idx];
+
+                                // 상품명 조회
+                                $scope.searchProductNm($scope.item.PRODUCT_CODE);
+
+
+                            })
+                            .catch(function(error){$scope.productnolist = "";});
+                    }
+
+                    // 상품명 selectbox
+                    $scope.searchProductNm = function(productno){
+
+                        $scope.search.PRODUCT_CODE = productno;
+
+                        $scope.getList('ange/order', 'productnmlist', {}, $scope.search, true)
+                            .then(function(data){
+                                $scope.productnmlist = data;
+
+                                var idx = 0;
+                                for(var i =0; i<$scope.productnmlist.length; i++){
+
+                                    if(JSON.stringify(item.PRODUCT_NO) == JSON.stringify($scope.productnmlist[i].PRODUCT_NO)){
+                                        idx = i;
+                                    }
+                                }
+
+                                $scope.item.PRODUCT = $scope.productnmlist[idx];
+                            })
+                            .catch(function(error){$scope.productnmlist = "";});
+                    }
+
+                    $scope.namingnoList = function(){
+                        $scope.getList('ange/order', 'namingnoList', {}, {}, true)
+                            .then(function(data){
+                                $scope.namingnolist = data;
+                            })
+                            .catch(function(error){$scope.namingnolist = "";});
+                    }
 
                     $scope.click_cancel = function () {
                         $modalInstance.close();
                     };
+
+                    $scope.productnoList();
+                    $scope.namingnoList();
 
                 }], item, {size:size,keyboard: true}, $scope);
             dlg.result.then(function(){

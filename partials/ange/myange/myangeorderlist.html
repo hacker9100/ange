@@ -70,8 +70,8 @@
                                             </div>
 
                                             <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0" ng-click="click_cancel(item)">주문취소</button><br />
-                                                <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>
+                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''" ng-click="click_cancel(item)">주문취소</button><br />
+                                                <button class="webzine_list_btn default" title="상세보기"  ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" type="button">변경</button>
                                             </div>
                                         </div>
                                     </div>  <!-- comp_basic -->
@@ -106,7 +106,7 @@
                                             </div>
 
                                             <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0" ng-click="click_cancel(item)">주문취소</button><br />
+                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.PROGRESS_ST_NM == ''"ng-click="click_cancel(item)">주문취소</button><br />
                                                 <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>
                                             </div>
                                         </div>
@@ -142,8 +142,8 @@
                                             </div>
 
                                             <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0" ng-click="click_cancel(item)">주문취소</button><br />
-                                                <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>
+                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_cancel(item)">주문취소</button><br />
+                                                <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" type="button">변경</button>
                                             </div>
                                         </div>
                                     </div>  <!-- comp_basic -->

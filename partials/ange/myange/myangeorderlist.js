@@ -274,17 +274,43 @@ define([
                         $scope.getList('ange/order', 'productnolist', {}, {}, true)
                             .then(function(data){
                                 $scope.productnolist = data;
+
+                                var idx = 0;
+                                for(var i =0; i<$scope.productnolist.length; i++){
+
+                                    if(JSON.stringify(item.PRODUCT_CODE) == JSON.stringify($scope.productnolist[i].PRODUCT_CODE)){
+                                        idx = i;
+                                    }
+                                }
+                                item.PRODUCT_CODE = $scope.productnolist[idx];
+
+                                $scope.searchProductNm(item.PRODUCT_CODE);
+
+
                             })
                             .catch(function(error){$scope.productnolist = "";});
                     }
 
+
                     $scope.searchProductNm = function(productno){
 
                         $scope.search.PRODUCT_CODE = productno;
-
                         $scope.getList('ange/order', 'productnmlist', {}, $scope.search, true)
                             .then(function(data){
                                 $scope.productnmlist = data;
+
+                                var idx = 0;
+                                for(var i =0; i<$scope.productnmlist.length; i++){
+
+                                    if(JSON.stringify(item.PRODUCT_NO) == JSON.stringify($scope.productnmlist[i].PRODUCT_NO)){
+                                        idx = i;
+                                    }
+                                }
+
+                                console.log($scope.productnmlist[idx].PRODUCT_NO);
+
+                                $scope.item.PRODUCT = $scope.productnmlist[idx];
+
                             })
                             .catch(function(error){$scope.productnmlist = "";});
                     }
