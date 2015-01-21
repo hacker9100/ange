@@ -87,8 +87,8 @@
 
                                 <thead>
                                 <tr class="board_thead" height="48">
-                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
-                                    <td><span class="board_th">제목</span></td>
+                                    <td ng-show="infomenu != 'faq'" width="9%" align="center"><span class="board_th">번호</span></td>
+                                    <td align="center"><span class="board_th">제목</span></td>
                                     <td ng-show="infomenu == 'qna' || infomenu == 'myqna'" width="92" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80"><span class="board_th">작성일</span></td>
                                     <!--<td width="60" ng-show="menu != 'qna' || menu != 'myqna'"  align="center"><span class="board_th">조회</span></td>-->
@@ -99,7 +99,7 @@
                                 <tbody class="on" ng-repeat="item in list">
 
                                 <tr ng-click="infomenu == 'qna' ? click_showViewQnaPeopleBoard(item.PASSWORD_FL, item.NO, item.REG_UID) : click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
-                                    <td class="table_no">
+                                    <td class="table_no" ng-show="infomenu != 'faq'">
                                         <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.BOARD_NO}}</span>
                                     </td>
                                     <td>
