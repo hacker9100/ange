@@ -275,10 +275,18 @@ switch ($_method) {
         }
 
         $_d->sql_beginTransaction();
+        $_change_product_no = 0;
+        if(!isset($_model[CHANGE_PRODUCT_NO][NO]) || $_model[CHANGE_PRODUCT_NO][NO] == ''){
+           $_change_product_no = 0;
+        }else{
+           $_change_product_no = $_model[CHANGE_PRODUCT_NO][NO];
+        }
 
         $sql = "INSERT INTO ANGE_ORDER_COUNSEL
                     (
                         PRODUCT_NO,
+                        PRODUCT_CODE,
+                        CHANGE_PRODUCT_NO,
                         SUBJECT,
                         BODY,
                         COUNSEL_ST,
@@ -286,7 +294,9 @@ switch ($_method) {
                         USER_ID,
                         REG_DT
                     ) VALUES (
-                        ".$_model[PRODUCT_NO].",
+                        ".$_model[PRODUCT][PRODUCT_NO].",
+                        '".$_model[PRODUCT_CODE][PRODUCT_CODE]."',
+                        ".$_change_product_no.",
                         '".$_model[SUBJECT]."',
                         '".$_model[BODY]."',
                         '".$_model[COUNSEL_ST]."',
@@ -321,9 +331,9 @@ switch ($_method) {
                 MtUtil::_c("------------>>>>> file : ".$file['name']);
                 MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
-                if($file[kind] != 'MAIN'){
+                /*if($file[kind] != 'MAIN'){
                     $_d->failEnd("대표이미지를 선택하세요.");
-                }
+                }*/
 
                 $sql = "INSERT INTO FILE
                     (

@@ -61,7 +61,7 @@
                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
                                         <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
                                         <div class="webzine_list_title" style="width: 65%">
-                                            [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+                                            [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
 
                                             <div class="webzine_list_bottomwrap">
                                                 <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
@@ -97,7 +97,7 @@
                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
                                         <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
                                         <div class="webzine_list_title" style="width: 65%">
-                                            [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+                                            [{{item.PRODUCT_GB == 'CUMMERCE' ? '커머스' : ''}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
 
                                             <div class="webzine_list_bottomwrap">
                                                 <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
@@ -133,7 +133,7 @@
                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
                                         <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
                                         <div class="webzine_list_title" style="width: 65%">
-                                            [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+                                            [{{item.PRODUCT_GB == 'NAMING' ? '네이밍' : ''}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
 
                                             <div class="webzine_list_bottomwrap">
                                                 <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
@@ -260,11 +260,11 @@
                         <td style="vertical-align: middle">상품정보</td>
                         <td colspan="3">
                             <!--<input type="hidden" ng-model="item.PRODUCT_NM" class="form-group"/>-->
-                            <select ng-options="p.PRODUCT_CODE for p in productnolist" ng-model="item.PRODUCT_NO" style="float:left; width:20%;" class="form-control input-sm" ng-change="searchProductNm(item.PRODUCT_NO)">
+                            <select ng-options="p.PRODUCT_CODE for p in productnolist" ng-model="item.PRODUCT_CODE" style="float:left; width:20%;" class="form-control input-sm" ng-change="searchProductNm(item.PRODUCT_CODE)">
                                 <option value="" selected>선택</option>
                             </select>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <select ng-options="v.PRODUCT_NM for v in productnmlist" ng-model="item.PRODUCT_NM" style="float:left; width:50%;" class="form-control input-sm">
+                            <select ng-options="v.PRODUCT_NM for v in productnmlist" ng-model="item.PRODUCT" style="float:left; width:50%;" class="form-control input-sm">
                                 <option value="" selected>선택</option>
                             </select>
                         </td>
@@ -272,7 +272,7 @@
                     <tr id="product_change">
                         <td style="vertical-align: middle">상품전환</td>
                         <td colspan="3">
-                            <select ng-options="v.PRODUCT_NM for v in namingnolist" ng-model="item.CHANGE_NAME_NO" class="form-control input-sm">
+                            <select ng-options="v.PRODUCT_NM for v in namingnolist" ng-model="item.CHANGE_PRODUCT" class="form-control input-sm">
                                 <option value="" selected>선택</option>
                             </select>
                         </td>

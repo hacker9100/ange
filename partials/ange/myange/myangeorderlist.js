@@ -316,6 +316,8 @@ define([
                         }
                     }
 
+                    $scope.item.FILES = $scope.queue;
+
                     $scope.click_savecounsel = function (){
 
                         for(var i in $scope.item.FILES) {
@@ -324,6 +326,7 @@ define([
 //                $scope.item.FILES[i].$submit();
                         }
 
+                        console.log($scope.item);
                         $scope.insertItem('ange/counsel', 'item', $scope.item, false)
                             .then(function(){
                                 dialogs.notify('알림', '신청이 완료되었습니다. 나의 변경신청에서 확인하실 수 있습니다', {size: 'md'});
