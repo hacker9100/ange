@@ -83,6 +83,8 @@ define([
     '../../../partials/ange/store/storeauction-view',
     '../../../partials/ange/store/storephotozone-list',
     '../../../partials/ange/store/storenaming-intro',
+    '../../../partials/ange/store/storenaming-list',
+    '../../../partials/ange/store/storenaming-view',
     '../../../partials/ange/store/storenaming-request',
     '../../../partials/ange/store/storenaming-dream',
 

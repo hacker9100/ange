@@ -1,0 +1,126 @@
+<div ng-controller="storenaming-list">
+<!-- mainbar -->
+<div class="mainbar sub-slide0">
+    <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+        <div class="row">
+
+            <div class="col-xs-12 v-cell-3">
+                <div class="comp_basic h-cell-dynamic">
+
+                    <div class="sub_contents_wrap">
+
+                        <div class="sub_contents_title">
+                            <span class="sub_contents_bullet"></span>
+                            <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a></h3>
+                        </div>
+
+                    </div><!-- /.sub_contents_wrap -->
+
+
+                    <div class="sub_contents_body">
+
+                        <table id="comp_board_table" class="table table-hover">
+
+                            <thead>
+                            <tr class="board_thead" height="48">
+                                <td width="9%" align="center"><span class="board_th">번호</span></td>
+                                <td><span class="board_th">제목</span></td>
+                                <td width="92" align="center"><span class="board_th">작성자</span></td>
+                            </tr>
+                            </thead>
+
+                            <tbody class="on" ng-repeat="item in list">
+
+                            <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                <td class="table_no">
+                                    <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.BOARD_NO}}</span>
+                                </td>
+                                <td>
+                                    <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                    {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                </td>
+                                <td  class="table_author">{{item.NICK_NM}}</td>
+                            </tr>
+
+                            </tbody>
+
+                            <tbody class="on" data-ng-show="list == '' || list == null">
+
+                            <tr>
+                                <td colspan="3" style="text-align: center">조회 데이터가 없습니다.</td>
+                            </tr>
+
+                            </tbody>
+                        </table><!-- /.List-->
+
+                        <nav class="text-center">
+                            <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+
+                            <!--<ul class="pagination pagination-sm table_paging">-->
+                            <!--<li class="disabled">-->
+                            <!--<a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>-->
+                            <!--</li>-->
+                            <!--<li class="disabled">-->
+                            <!--<a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>-->
+                            <!--</li>-->
+                            <!--<li class="active"><a href="#">1</a></li>-->
+                            <!--<li><a href="#">2</a></li>-->
+                            <!--<li><a href="#">3</a></li>-->
+                            <!--<li><a href="#">4</a></li>-->
+                            <!--<li><a href="#">5</a></li>-->
+                            <!--<li>-->
+                            <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>-->
+                            <!--</li>-->
+                            <!--<li>-->
+                            <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>-->
+                            <!--</li>-->
+                            <!--</ul>-->
+                        </nav><!-- /.Paging-->
+                        <!-- /peoplepoll_list -->
+
+                    </div><!-- /.sub_contents_body -->
+
+                    <!--<div ng-show="uid != '' && uid != null" ng-click="test()">세션이 있을때만 보입니다.</div>
+                    <div ng-show="uid == '' || uid == null" ng-click="test()">세션이 없을때 보입니다.</div>   -->
+
+                    <div class="sub_contents_ads" style="display:none;">
+                        <div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div> <!-- rows -->
+
+
+    </div><!-- container-fluid -->
+
+    <!-- 1200px 이하일 경우 표시되는 footer -->
+    <div class="copyright_foot">
+        <br /><br />
+        <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+            <hr style="margin:0 15px 0 15px;" />
+
+            <center>
+                <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+            </center>
+        </nav>
+    </div>
+    <!-- /1200px 이하일 경우 표시되는 footer -->
+
+</div>
+
+<div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
+    <div class="row">
+        <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
+            우측바
+        </div>
+    </div>
+</div>
+
+<!-- /Main Page Layout Set -->
+</div>
