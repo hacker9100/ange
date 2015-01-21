@@ -52,6 +52,7 @@ define([
         // 초기화
         $scope.init = function(session) {
 
+            $scope.selectIdx = 'ALL';
 /*         if($rootScope.uid == '' || $rootScope.uid == null){
              dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
              $location.url('/store/home');
