@@ -275,7 +275,8 @@ switch ($_method) {
 
         if($_type == 'item'){
             // 주문코드 생성
-            $sql = "SELECT CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)) AS PRODUCT_CODE FROM ANGE_ORDER";
+            $sql = "SELECT if (IFNULL(MAX(NO), 0)+1, CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)),CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B))) AS PRODUCT_CODE
+                    FROM ANGE_ORDER";
 
             $result = $_d->sql_query($sql,true);
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
