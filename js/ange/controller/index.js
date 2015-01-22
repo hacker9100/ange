@@ -87,12 +87,16 @@ define([
     '../../../partials/ange/store/storenaming-view',
     '../../../partials/ange/store/storenaming-request',
     '../../../partials/ange/store/storenaming-dream',
+    '../../../partials/ange/store/storecart-list',
+    '../../../partials/ange/store/storeorder-list',
 
     // 고객센터
     '../../../partials/ange/infodesk/infodeskhome',
     '../../../partials/ange/infodesk/infodeskboard-list',
     '../../../partials/ange/infodesk/infodeskboard-view',
     '../../../partials/ange/infodesk/infodeskboard-edit',
+    '../../../partials/ange/infodesk/infodeskforgot-request',
+
     // 회원가입
     '../../../partials/ange/join/joinsignon',
 
