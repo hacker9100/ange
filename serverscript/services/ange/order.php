@@ -252,7 +252,7 @@ switch ($_method) {
             }
         }else if($_type == 'namingnoList'){
 
-            $sql ="SELECT NO, PRODUCT_NM
+            $sql ="SELECT NO, PRODUCT_NM, PRICE
                     FROM ANGE_PRODUCT
                     WHERE PRODUCT_GB = 'NAMING'";
 
@@ -271,164 +271,20 @@ switch ($_method) {
         $err = 0;
         $msg = "";
 
-/*        if( trim($_model[PRODUCT_NM]) == "" ){
-            $_d->failEnd("상품명을 작성 하세요");
-        }*/
-
-        /*$upload_path = '../../../upload/files/';
-        $file_path = '/storage/product/';
-        $source_path = '../../..'.$file_path;
-        $insert_path = array();
-
-        $body_str = $_model[BODY];
-
-        try {
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
-                if (!file_exists($source_path) && !is_dir($source_path)) {
-                    @mkdir($source_path);
-                    @mkdir($source_path.'thumbnail/');
-                    @mkdir($source_path.'medium/');
-                }
-
-                for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                    $file = $files[$i];
-
-                    if (file_exists($upload_path.$file[name])) {
-                        $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-
-                        if ($file[version] == 6 ) {
-                            $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
-                        } else {
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-                        }
-
-                        $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
-
-                        MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
-
-
-                    }
-                }
-            }
-
-            $_model[BODY] = $body_str;
-        } catch(Exception $e) {
-            $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-            break;
-        }*/
         $_d->sql_beginTransaction();
 
-        // 주문코드 생성
-        $sql = "SELECT CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)) AS PRODUCT_CODE FROM ANGE_ORDER";
+        if($_type == 'item'){
+            // 주문코드 생성
+            $sql = "SELECT CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)) AS PRODUCT_CODE FROM ANGE_ORDER";
 
-        $result = $_d->sql_query($sql,true);
-        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-            $_model[PRODUCT_CODE] = $row[PRODUCT_CODE];
-        }
-
-        if (isset($_model[ORDER]) && $_model[ORDER] != "") {
-            foreach ($_model[ORDER] as $e) {
-                $sql = "INSERT INTO ANGE_ORDER
-                    (
-                        PRODUCT_NO,
-                        CHANGE_NAME_NO,
-                        PRODUCT_CNT,
-                        SUM_PRICE,
-                        ORDER_DT,
-                        RECEIPTOR_NM,
-                        RECEIPT_ADDR,
-                        RECEIPT_ADDR_DETAIL,
-                        RECEIPT_PHONE,
-                        REQUEST_NOTE,
-                        ORDER_ST,
-                        USER_ID,
-                        ORDER_GB,
-                        PAY_GB,
-                        PAY_DT,
-                        PRODUCT_CODE
-                    ) VALUES (
-                        ".$e[PRODUCT_NO].",
-                        ".$e[CHANGE_NAME_NO].",
-                        ".$e[CNT].",
-                        ".$_model[SUM_PRICE].",
-                        SYSDATE(),
-                        '".$_model[RECEIPTOR_NM]."',
-                        '".$_model[RECEIPT_ADDR]."',
-                        '".$_model[RECEIPT_ADDR_DETAIL]."',
-                        '".$_model[RECEIPT_PHONE]."',
-                        '".$_model[REQUEST_NOTE]."',
-                        0,
-                        '".$_SESSION['uid']."',
-                        '".$_model[ORDER_GB]."',
-                        '".$_model[PAY_GB]."',
-                        SYSDATE(),
-                        '".$_model[PRODUCT_CODE]."'
-                    )";
-
-                $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
-
-                $sql = "UPDATE ANGE_PRODUCT
-                    SET
-                        SUM_IN_CNT = SUM_IN_CNT - ".$e[CNT].",
-                        SUM_OUT_CNT = SUM_OUT_CNT + ".$e[CNT]."
-                    WHERE
-                        NO = $e[PRODUCT_NO]
-                    ";
-                $_d->sql_query($sql);
-
-                $sql = "UPDATE ANGE_MILEAGE_STATUS
-                    SET
-                        USE_POINT = USE_POINT + ".$e[SUM_PRICE].",
-                        REMAIN_POINT = REMAIN_POINT - ".$e[SUM_PRICE]."
-                    WHERE
-                        USER_ID = '".$_SESSION['uid']."'
-                    ";
-                $_d->sql_query($sql);
-
-                $sql = "UPDATE ANGE_MILEAGE_STATUS
-                    SET
-                        SUM_POINT = (USE_POINT + ".$e[SUM_PRICE].") + (REMAIN_POINT - ".$e[SUM_PRICE].")
-                    WHERE
-                        USER_ID = '".$_SESSION['uid']."'
-                    ";
-                $_d->sql_query($sql);
-
-                if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
-
-                    $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
-                           SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
-                       FROM ANGE_PRODUCT
-                       WHERE PARENT_NO = ".$e[PARENT_NO]."
-                ";
-
-                    $result = $_d->sql_query($sql,true);
-                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-                        $sql = "UPDATE ANGE_PRODUCT
-                        SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
-                            SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
-                        WHERE NO = ".$e[PARENT_NO]."
-                    ";
-                        $_d->sql_query($sql);
-                    }
-                }
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $_model[PRODUCT_CODE] = $row[PRODUCT_CODE];
             }
-        }
 
-
-        /*if (isset($_model[ORDER]) && $_model[ORDER] != "") {
-            foreach ($_model[ORDER] as $e) {
-                $sql = "INSERT INTO ANGE_ORDER
+            if (isset($_model[ORDER]) && $_model[ORDER] != "") {
+                foreach ($_model[ORDER] as $e) {
+                    $sql = "INSERT INTO ANGE_ORDER
                         (
                             PRODUCT_NO,
                             PRODUCT_CNT,
@@ -441,7 +297,10 @@ switch ($_method) {
                             REQUEST_NOTE,
                             ORDER_ST,
                             USER_ID,
-                            ORDER_GB
+                            ORDER_GB,
+                            PAY_GB,
+                            PAY_DT,
+                            PRODUCT_CODE
                         ) VALUES (
                             ".$e[PRODUCT_NO].",
                             ".$e[CNT].",
@@ -454,61 +313,168 @@ switch ($_method) {
                             '".$_model[REQUEST_NOTE]."',
                             0,
                             '".$_SESSION['uid']."',
-                            '".$_model[ORDER_GB]."'
+                            '".$_model[ORDER_GB]."',
+                            '".$_model[PAY_GB]."',
+                            SYSDATE(),
+                            '".$_model[PRODUCT_CODE]."'
                         )";
 
-                $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
+                    $_d->sql_query($sql);
+                    $no = $_d->mysql_insert_id;
 
-                $sql = "UPDATE ANGE_PRODUCT
+                    $sql = "UPDATE ANGE_PRODUCT
                         SET
-                            SUM_IN_CNT = SUM_IN_CNT - ".$e[CNT]."
-                        WHERE
-                            NO = $e[PRODUCT_NO]
-                        ";
-                $_d->sql_query($sql);
-
-
-                $sql = "UPDATE ANGE_PRODUCT
-                        SET
+                            SUM_IN_CNT = SUM_IN_CNT - ".$e[CNT].",
                             SUM_OUT_CNT = SUM_OUT_CNT + ".$e[CNT]."
                         WHERE
                             NO = $e[PRODUCT_NO]
                         ";
-                $_d->sql_query($sql);
+                    $_d->sql_query($sql);
 
-                if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
+                    $sql = "UPDATE ANGE_MILEAGE_STATUS
+                        SET
+                            USE_POINT = USE_POINT + ".$e[SUM_PRICE].",
+                            REMAIN_POINT = REMAIN_POINT - ".$e[SUM_PRICE]."
+                        WHERE
+                            USER_ID = '".$_SESSION['uid']."'
+                        ";
+                    $_d->sql_query($sql);
 
-                    $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
+                    $sql = "UPDATE ANGE_MILEAGE_STATUS
+                        SET
+                            SUM_POINT = (USE_POINT + ".$e[SUM_PRICE].") + (REMAIN_POINT - ".$e[SUM_PRICE].")
+                        WHERE
+                            USER_ID = '".$_SESSION['uid']."'
+                        ";
+                    $_d->sql_query($sql);
+
+                    if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
+
+                        $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
                                SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
                            FROM ANGE_PRODUCT
                            WHERE PARENT_NO = ".$e[PARENT_NO]."
                     ";
 
-                    $result = $_d->sql_query($sql,true);
-                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                        $result = $_d->sql_query($sql,true);
+                        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-                        $sql = "UPDATE ANGE_PRODUCT
-                            SET SUM_IN_CNT = ".$row['SUM_IN_CNT']."
+                            $sql = "UPDATE ANGE_PRODUCT
+                            SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
+                                SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
                             WHERE NO = ".$e[PARENT_NO]."
                         ";
-                        $_d->sql_query($sql);
+                            $_d->sql_query($sql);
+                        }
+                    }
 
-                        $sql = "UPDATE ANGE_PRODUCT
-                            SET SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
-                            WHERE NO = ".$e[PARENT_NO]."
-                        ";
-                        $_d->sql_query($sql);
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
                     }
                 }
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
             }
-        }*/
+        }else if($_type == "namingitem"){
 
+            $sql = "SELECT CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)) AS PRODUCT_CODE FROM ANGE_ORDER";
+
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $_model[PRODUCT_CODE] = $row[PRODUCT_CODE];
+            }
+
+            $sql = "INSERT INTO ANGE_ORDER
+                        (
+                            PRODUCT_NO,
+                            PRODUCT_CNT,
+                            SUM_PRICE,
+                            ORDER_DT,
+                            RECEIPTOR_NM,
+                            RECEIPT_ADDR,
+                            RECEIPT_ADDR_DETAIL,
+                            RECEIPT_PHONE,
+                            REQUEST_NOTE,
+                            ORDER_ST,
+                            USER_ID,
+                            ORDER_GB,
+                            PAY_GB,
+                            PAY_DT,
+                            PRODUCT_CODE
+                        ) VALUES (
+                            ".$_model[PRODUCT][NO].",
+                            1,
+                            ".$_model[PRODUCT][PRICE].",
+                            SYSDATE(),
+                            '".$_model[RECEIPTOR_NM]."',
+                            '".$_model[RECEIPT_ADDR]."',
+                            '".$_model[RECEIPT_ADDR_DETAIL]."',
+                            '".$_model[RECEIPT_PHONE]."',
+                            '".$_model[REQUEST_NOTE]."',
+                            0,
+                            '".$_SESSION['uid']."',
+                            '".$_model[ORDER_GB]."',
+                            '".$_model[PAY_GB]."',
+                            SYSDATE(),
+                            '".$_model[PRODUCT_CODE]."'
+                        )";
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            $sql = "INSERT INTO ANGE_ORDER_NAMING
+                        (
+                            ORDER_NO,
+                            PRODUCT_NO,
+                            REQUEST_RELATION,
+                            BABY_SEX_GB,
+                            BABY_LUNAR_FL,
+                            BABY_BIRTH,
+                            BABY_BIRTH_TIME,
+                            BABY_LEAP_FL,
+                            BABY_LAST_NM,
+                            DAD_NM,
+                            DAD_LUNAR_FL,
+                            DAD_BIRTH,
+                            DAD_BIRTH_TIME,
+                            DAD_LEAP_FL,
+                            MOM_NM,
+                            MOM_LUNAR_FL,
+                            MOM_BIRTH,
+                            MOM_BIRTH_TIME,
+                            MOM_LEAP_FL,
+                            BABY_BIRTH_AREA,
+                            BABY_BRO_RANK,
+                            BABY_BRO_NAME,
+                            BABY_COMM_NM,
+                            REQUEST_NOTE
+                        ) VALUES (
+                            ".$no.",
+                            ".$_model[PRODUCT][NO].",
+                            '".$_model[REQUEST_RELATION]."',
+                            '".$_model[BABY_SEX_GB]."',
+                            '".$_model[BABY_LUNAR_FL]."',
+                            CONCAT('".$_model[BABY_YEAR]."','".$_model[BABY_MONTH]."','".$_model[BABY_DAY]."'),
+                            CONCAT('".$_model[BABY_BIRTH_HOUR]."',':','".$_model[BABY_BIRTH_MIN]."'),
+                            '".$_model[BABY_LEAP_FL]."',
+                            '".$_model[BABY_LAST_NM]."',
+                            '".$_model[DAD_NM]."',
+                            '".$_model[DAD_LUNAR_FL]."',
+                            CONCAT('".$_model[DAD_YEAR]."','".$_model[DAD_MONTH]."','".$_model[DAD_DAY]."'),
+                            CONCAT('".$_model[DAD_BIRTH_HOUR]."',':','".$_model[DAD_BIRTH_MIN]."'),
+                            '".$_model[DAD_LEAP_FL]."',
+                            '".$_model[MOM_NM]."',
+                            '".$_model[MOM_LUNAR_FL]."',
+                            CONCAT('".$_model[MOM_YEAR]."','".$_model[MOM_MONTH]."','".$_model[MOM_DAY]."'),
+                            CONCAT('".$_model[MOM_BIRTH_HOUR]."',':','".$_model[MOM_BIRTH_MIN]."'),
+                            '".$_model[MOM_LEAP_FL]."',
+                            '".$_model[BABY_BIRTH_AREA]."',
+                            '".$_model[BABY_BRO_RANK]."',
+                            '".$_model[BABY_BRO_NAME]."',
+                            '".$_model[BABY_COMM_NM]."',
+                            '".$_model[REQUEST_NOTE]."'
+                        )";
+            $_d->sql_query($sql);
+        }
 
         if($_d->mysql_errno > 0) {
             $err++;
