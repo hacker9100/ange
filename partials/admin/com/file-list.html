@@ -1,10 +1,7 @@
 <!--<div class="container">-->
 <div class="col-md-12">
-    <form id="fileupload" action="/app/serverscript/upload/" method="POST" enctype="multipart/form-data" ng-controller="file" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
-        <!-- Redirect browsers with JavaScript disabled to the origin page -->
-        <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
-        <input type="hidden" name="newDir" value="{{newDir}}">
-        <!--<input type="hidden" id="version" name="version" value="2">-->
+    <form id="fileupload" method="POST" enctype="multipart/form-data" ng-controller="file" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
+        <input type="hidden" id="version" name="version" value="6">
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
         <div class="col-xs-12 row fileupload-buttonbar" style="margin:0px auto;">
             <div class="col-sm-9">
@@ -19,8 +16,6 @@
                     <input type="file" name="files[]" multiple ng-disabled="disabled" />
                 </span>
                 <input type="file" name="files[]" multiple ng-disabled="disabled" />
-
-
 
                 <button type="button" class="btn btn-primary btn-xs start" data-ng-click="submit()" ng-show="false">
                     <i class="glyphicon glyphicon-upload"></i>
@@ -50,6 +45,7 @@
                     <div class="preview" data-ng-switch-when="true">
                         <!--<a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>-->
                         <img src="{{file.thumbnailUrl}}" alt="">
+                        <img src="/imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" ng-show="file.kind == 'MAIN'"/>
                     </div>
                     <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
                 </td>
@@ -87,6 +83,10 @@
                     <button data-ng-controller="file_editor" type="button" class="btn btn-primary btn-xs start" data-ng-click="file.$editor()" data-ng-hide="!file.$destroy">
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>에디터 추가</span>
+                    </button>
+                    <button data-ng-controller="file_destroy" type="button" class="btn btn-success btn-xs start" data-ng-click="click_selectMainImage(file)" data-ng-hide="!file.$destroy">
+                        <i class="glyphicon glyphicon-star"></i>
+                        <span>메인이미지</span>
                     </button>
                 </td>
             </tr>

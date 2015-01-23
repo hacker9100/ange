@@ -55,15 +55,14 @@ switch ($_method) {
             $msg = "";
 
             $sql = "SELECT
-	                        NO, PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE,DELEIVERY_PRICE,
-                            DELEIVERY_ST
-                        FROM
-                            ANGE_PRODUCT
-                        WHERE
-                            NO = ".$_key."
-                            ".$search_where."
-
-                        ";
+                        NO, PRODUCT_NM, PRODUCT_GB, COMPANY_NO, COMPANY_NM, URL, BODY, PRICE, STOCK_FL, SUM_IN_CNT, SUM_OUT_CNT, NOTE, DELEIVERY_PRICE,
+                        DELEIVERY_ST
+                    FROM
+                        ANGE_PRODUCT
+                    WHERE
+                        NO = ".$_key."
+                        ".$search_where."
+                    ";
 
             $result = $_d->sql_query($sql);
             $data = $_d->sql_fetch_array($result);
@@ -74,28 +73,28 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                            NO, PARENT_NO, PRODUCT_NM
-                        FROM
-                            ANGE_PRODUCT
-                        WHERE
-                            PARENT_NO = ".$_key."
-                        ";
+                        NO, PARENT_NO, PRODUCT_NM
+                    FROM
+                        ANGE_PRODUCT
+                    WHERE
+                        PARENT_NO = ".$_key."
+                    ";
 
             $file_data = $_d->getData($sql);
             $data['PRODUCTS'] = $file_data;
 
 
             $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'PRODUCT'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
+                    FROM
+                        FILE F, CONTENT_SOURCE S
+                    WHERE
+                        F.NO = S.SOURCE_NO
+                        AND S.CONTENT_GB = 'FILE'
+                        AND S.TARGET_GB = 'PRODUCT'
+                        AND S.TARGET_NO = ".$_key."
+                        AND F.THUMB_FL = '0'
+                    ";
 
             $file_data = $_d->getData($sql);
             $data['FILES'] = $file_data;
@@ -172,30 +171,30 @@ switch ($_method) {
                 }
 
             $sql = "SELECT
-                            NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, TOTAL_COUNT, PERIOD
+                        NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, TOTAL_COUNT, PERIOD
+                    FROM
+                    (
+                        SELECT NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, PERIOD
                         FROM
-                        (
-                            SELECT NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, PERIOD
-                            FROM
-                                ANGE_PRODUCT AP
-                            WHERE
-                                1 = 1
-                                AND PARENT_NO = 0
-                                ".$search_where."
-                             ORDER BY NO DESC
-                        ) AS DATA,
-                        (SELECT @RNUM := 0) R,
-                        (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
-                            FROM
-                                ANGE_PRODUCT
-                            WHERE
-                                1 = 1
-                                AND PARENT_NO = 0
-                                ".$search_where."
-                        ) CNT
-                        ";
+                            ANGE_PRODUCT AP
+                        WHERE
+                            1 = 1
+                            AND PARENT_NO = 0
+                            ".$search_where."
+                         ORDER BY NO DESC
+                    ) AS DATA,
+                    (SELECT @RNUM := 0) R,
+                    (
+                        SELECT
+                            COUNT(*) AS TOTAL_COUNT
+                        FROM
+                            ANGE_PRODUCT
+                        WHERE
+                            1 = 1
+                            AND PARENT_NO = 0
+                            ".$search_where."
+                    ) CNT
+                    ";
 
             $data = null;
 
@@ -205,16 +204,16 @@ switch ($_method) {
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    FILE F, CONTENT_SOURCE S
-                                WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'PRODUCT'
-                                    AND F.FILE_GB = 'MAIN'
-                                    AND S.TARGET_NO = ".$row['NO']."
-                                ";
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                FILE F, CONTENT_SOURCE S
+                            WHERE
+                                F.NO = S.SOURCE_NO
+                                AND S.CONTENT_GB = 'FILE'
+                                AND S.TARGET_GB = 'PRODUCT'
+                                AND F.FILE_GB = 'MAIN'
+                                AND S.TARGET_NO = ".$row['NO']."
+                            ";
 
                     $category_data = $_d->getData($sql);
                     $row['FILE'] = $category_data;
@@ -261,6 +260,47 @@ switch ($_method) {
             }else{
                 $_d->dataEnd($sql);
             }
+        } else if ($_type == 'stock') {
+            $search_where = "";
+            $sort_order = "";
+            $limit = "";
+
+            if (isset($_page)) {
+                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+            }
+
+            $sql = "SELECT
+                        TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                        NO, IN_OUT_GB, IN_OUT_ST, IN_OUT_CNT, REG_DT, ORDER_NO
+                    FROM
+                    (
+                        SELECT
+                            NO, IN_OUT_GB, IN_OUT_ST, IN_OUT_CNT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, ORDER_NO
+                        FROM
+                            ANGE_PRODUCT_STOCK
+                        WHERE
+                            PRODUCT_NO = '".$_search[PRODUCT_NO]."'
+                        ".$limit."
+                    ) AS DATA,
+                    (SELECT @RNUM := 0) R,
+                    (
+                        SELECT
+                            COUNT(*) AS TOTAL_COUNT
+                        FROM
+                            ANGE_PRODUCT_STOCK
+                        WHERE
+                            PRODUCT_NO = '".$_search[PRODUCT_NO]."'
+                            ".$search_where."
+                    ) CNT
+                    ";
+
+            $data = $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
         }
 
         break;
@@ -268,195 +308,307 @@ switch ($_method) {
     case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
 
-        $err = 0;
-        $msg = "";
+        if ($_type == 'item') {
 
-        if( trim($_model[PRODUCT_NM]) == "" ){
-            $_d->failEnd("상품명을 작성 하세요");
-        }
+            $err = 0;
+            $msg = "";
 
-        $upload_path = '../../../upload/files/';
-        $file_path = '/storage/product/';
-        $source_path = '../../..'.$file_path;
-        $insert_path = array();
+            if( trim($_model[PRODUCT_NM]) == "" ){
+                $_d->failEnd("상품명을 작성 하세요");
+            }
 
-        $body_str = $_model[BODY];
+            $upload_path = '../../../upload/files/';
+            $file_path = '/storage/product/';
+            $source_path = '../../..'.$file_path;
+            $insert_path = array();
 
-        try {
+            $body_str = $_model[BODY];
+
+            try {
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
+                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                        @mkdir($source_path);
+                        @mkdir($source_path.'thumbnail/');
+                        @mkdir($source_path.'medium/');
+                    }
+
+                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        $file = $files[$i];
+
+                        if (file_exists($upload_path.$file[name])) {
+                            $uid = uniqid();
+                            rename($upload_path.$file[name], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+
+                            if ($file[version] == 6 ) {
+                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                            } else {
+                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                            }
+
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+
+                            MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+
+
+                        }
+                    }
+                }
+
+                $_model[BODY] = $body_str;
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
+
+            $_d->sql_beginTransaction();
+
+            $sql = "INSERT INTO ANGE_PRODUCT
+                        (
+                            PRODUCT_NM,
+                            PRODUCT_GB,
+                            COMPANY_NO,
+                            COMPANY_NM,
+                            BODY,
+                            URL,
+                            PRICE,
+                            SUM_IN_CNT,
+                            SUM_OUT_CNT,
+                            NOTE,
+                            DELEIVERY_PRICE,
+                            DELEIVERY_ST
+                        ) VALUES (
+                            '".$_model[PRODUCT_NM]."',
+                            '".$_model[PRODUCT_GB][value]."',
+                            '".$_model[COMPANY_NO]."',
+                            '".$_model[COMPANY_NM]."',
+                            '".$_model[BODY]."',
+                            '".$_model[URL]."',
+                            '".$_model[PRICE]."',
+                            '".$_model[SUM_IN_CNT]."',
+                            '".$_model[SUM_OUT_CNT]."',
+                            '".$_model[NOTE]."',
+                            '".$_model[DELEIVERY_PRICE]."',
+                            '".$_model[DELEIVERY_ST]."'
+                        )";
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $sql = "INSERT INTO ANGE_PRODUCT_STOCK
+                        (
+                            PRODUCT_NO,
+                            IN_OUT_GB,
+                            IN_OUT_ST,
+                            IN_OUT_CNT,
+                            REG_DT
+                        ) VALUES (
+                            '".$no."',
+                            'IN',
+                            '0',
+                            ".$_model[SUM_IN_CNT].",
+                            SYSDATE()
+                        )";
+
+            $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
             if (count($_model[FILES]) > 0) {
                 $files = $_model[FILES];
-                if (!file_exists($source_path) && !is_dir($source_path)) {
-                    @mkdir($source_path);
-                    @mkdir($source_path.'thumbnail/');
-                    @mkdir($source_path.'medium/');
-                }
 
                 for ($i = 0 ; $i < count($_model[FILES]); $i++) {
                     $file = $files[$i];
+                    MtUtil::_c("------------>>>>> file : ".$file['name']);
+                    MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
-                    if (file_exists($upload_path.$file[name])) {
-                        $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                    if(strtoupper($file[kind]) != 'MAIN'){
+                        $_d->failEnd("대표이미지를 선택하세요.");
+                    }
 
-                        if ($file[version] == 6 ) {
-                            $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
-                        } else {
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-                        }
+                    $sql = "INSERT INTO FILE
+                        (
+                            FILE_NM
+                            ,FILE_ID
+                            ,PATH
+                            ,FILE_EXT
+                            ,FILE_SIZE
+                            ,THUMB_FL
+                            ,REG_DT
+                            ,FILE_ST
+                            ,FILE_GB
+                        ) VALUES (
+                            '".$file[name]."'
+                            , '".$insert_path[$i][uid]."'
+                            , '".$insert_path[$i][path]."'
+                            , '".$file[type]."'
+                            , '".$file[size]."'
+                            , '0'
+                            , SYSDATE()
+                            , 'C'
+                            , '".$file[kind]."'
+                        )";
 
-                        $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                    $_d->sql_query($sql);
+                    $file_no = $_d->mysql_insert_id;
 
-                        MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
 
+                    $sql = "INSERT INTO CONTENT_SOURCE
+                        (
+                            TARGET_NO
+                            ,SOURCE_NO
+                            ,CONTENT_GB
+                            ,TARGET_GB
+                            ,SORT_IDX
+                        ) VALUES (
+                            '".$no."'
+                            , '".$file_no."'
+                            , 'FILE'
+                            , 'PRODUCT'
+                            , '".$i."'
+                        )";
 
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
                     }
                 }
             }
 
-            $_model[BODY] = $body_str;
-        } catch(Exception $e) {
-            $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-            break;
-        }
+            MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
 
-        $_d->sql_beginTransaction();
-
-        $sql = "INSERT INTO ANGE_PRODUCT
-                    (
-                        PRODUCT_NM,
-                        PRODUCT_GB,
-                        COMPANY_NO,
-                        PRICE,
-                        SUM_IN_CNT,
-                        SUM_OUT_CNT,
-                        NOTE,
-                        DELEIVERY_PRICE,
-                        DELEIVERY_ST
-                    ) VALUES (
-                        '".$_model[PRODUCT_NM]."',
-                        '".$_model[PRODUCT_GB]."',
-                        ".$_model[COMPANY_NO].",
-                        ".$_model[PRICE].",
-                        '".$_model[PRICE]."',
-                        ".$_model[SUM_IN_CNT].",
-                        ".$_model[SUM_OUT_CNT].",
-                        '".$_model[NOTE]."',
-                        ".$_model[DELEIVERY_PRICE].",
-                        ".$_model[DELEIVERY_ST]."
-                    )";
-
-        $_d->sql_query($sql);
-
-        $_d->sql_query($sql);
-        $no = $_d->mysql_insert_id;
-
-        if($_d->mysql_errno > 0) {
-            $err++;
-            $msg = $_d->mysql_error;
-        }
-
-        if (count($_model[FILES]) > 0) {
-            $files = $_model[FILES];
-
-            for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                $file = $files[$i];
-                MtUtil::_c("------------>>>>> file : ".$file['name']);
-                MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
-
-                if($file[kind] != 'MAIN'){
-                    $_d->failEnd("대표이미지를 선택하세요.");
-                }
-
-                $sql = "INSERT INTO FILE
-                    (
-                        FILE_NM
-                        ,FILE_ID
-                        ,PATH
-                        ,FILE_EXT
-                        ,FILE_SIZE
-                        ,THUMB_FL
-                        ,REG_DT
-                        ,FILE_ST
-                        ,FILE_GB
-                    ) VALUES (
-                        '".$file[name]."'
-                        , '".$insert_path[$i][uid]."'
-                        , '".$insert_path[$i][path]."'
-                        , '".$file[type]."'
-                        , '".$file[size]."'
-                        , '0'
-                        , SYSDATE()
-                        , 'C'
-                        , '".$file[kind]."'
-                    )";
-
-                $_d->sql_query($sql);
-                $file_no = $_d->mysql_insert_id;
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "INSERT INTO CONTENT_SOURCE
-                    (
-                        TARGET_NO
-                        ,SOURCE_NO
-                        ,CONTENT_GB
-                        ,TARGET_GB
-                        ,SORT_IDX
-                    ) VALUES (
-                        '".$no."'
-                        , '".$file_no."'
-                        , 'FILE'
-                        , 'PRODUCT'
-                        , '".$i."'
-                    )";
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            }else{
+                $sql = "INSERT INTO ANGE_HISTORY
+                        (
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
+                        ) VALUES (
+                            '".$_model[WORK_ID]."'
+                            ,'CREATE'
+                            ,SYSDATE()
+                            ,'".$_SESSION['uid']."'
+                            ,'.$no.'
+                            ,'PRODUCT'
+                            ,'CREATE'
+                            ,'".$ip."'
+                            ,'/product/edit'
+                        )";
 
                 $_d->sql_query($sql);
 
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
+                $_d->sql_commit();
+                $_d->succEnd($no);
             }
-        }
+        } else if ($_type == 'stock') {
 
-        MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
+            $err = 0;
+            $msg = "";
 
-        if($err > 0){
-            $_d->sql_rollback();
-            $_d->failEnd("등록실패입니다:".$msg);
-        }else{
-            $sql = "INSERT INTO CMS_HISTORY
+            $_d->sql_beginTransaction();
+
+            $sql = "INSERT INTO ANGE_PRODUCT_STOCK
                     (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
+                        PRODUCT_NO,
+                        IN_OUT_GB,
+                        IN_OUT_ST,
+                        IN_OUT_CNT,
+                        REG_DT
                     ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'CREATE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$no.'
-                        ,'BOARD'
-                        ,'CREATE'
-                        ,'".$ip."'
-                        ,'/webboard'
+                        '".$_model[PRODUCT_NO]."',
+                        '".$_model[IN_OUT_GB]."',
+                        '0',
+                        '".$_model[IN_OUT_CNT]."',
+                        SYSDATE()
                     )";
 
             $_d->sql_query($sql);
 
-            $_d->sql_commit();
-            $_d->succEnd($no);
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $update_set = '';
+
+            if ($_model[IN_OUT_GB] == 'IN') {
+                $update_set = "SUM_IN_CNT = SUM_IN_CNT + ".$_model[IN_OUT_CNT];
+            } else {
+                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT + ".$_model[IN_OUT_CNT];
+            }
+
+            $sql = "UPDATE ANGE_PRODUCT
+                    SET
+                        ".$update_set."
+                    WHERE
+                        NO = ".$_model[PRODUCT_NO]."
+                ";
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            }else{
+                $sql = "INSERT INTO ANGE_HISTORY
+                        (
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
+                        ) VALUES (
+                            '".$_model[WORK_ID]."'
+                            ,'STOCK'
+                            ,SYSDATE()
+                            ,'".$_SESSION['uid']."'
+                            ,'.$no.'
+                            ,'PRODUCT'
+                            ,'".$_model[IN_OUT_GB]."'
+                            ,'".$ip."'
+                            ,'/product/list'
+                        )";
+
+                $_d->sql_query($sql);
+
+                $_d->sql_commit();
+                $_d->succEnd($no);
+            }
         }
 
         break;
@@ -487,17 +639,21 @@ switch ($_method) {
                             $uid = uniqid();
                             rename($upload_path.$file[name], $source_path.$uid);
                             rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $insert_path[$i] = array(path => $file_path, uid => $uid);
+
+                            if ($file[version] == 6 ) {
+                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                            } else {
+                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                            }
+
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
                             MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
                             MtUtil::_c("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
 
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-
-                            MtUtil::_c("------------>>>>> body_str : ".$body_str);
                         } else {
-                            $insert_path[$i] = array(path => '', uid => '');
+                            $insert_path[$i] = array(path => '', uid => '', kind => '');
                         }
                     }
                 }
@@ -523,8 +679,10 @@ switch ($_method) {
             $sql = "UPDATE ANGE_PRODUCT
                     SET
                         PRODUCT_NM = '".$_model[PRODUCT_NM]."',
-                        PRODUCT_GB = '".$_model[PRODUCT_GB]."',
+                        PRODUCT_GB = '".$_model[PRODUCT_GB][value]."',
                         COMPANY_NO = '".$_model[COMPANY_NO]."',
+                        COMPANY_NM = '".$_model[COMPANY_NM]."',
+                        BODY = '".$_model[BODY]."',
                         PRICE = ".$_model[PRICE].",
                         SUM_IN_CNT = ".$_model[SUM_IN_CNT].",
                         SUM_OUT_CNT = ".$_model[SUM_OUT_CNT].",
@@ -550,7 +708,6 @@ switch ($_method) {
                             AND S.TARGET_GB = 'PRODUCT'
                             AND S.CONTENT_GB = 'FILE'
                             AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
                         ";
 
             $result = $_d->sql_query($sql,true);
@@ -654,7 +811,7 @@ switch ($_method) {
                 $_d->sql_rollback();
                 $_d->failEnd("수정실패입니다:".$msg);
             }else{
-                $sql = "INSERT INTO CMS_HISTORY
+                $sql = "INSERT INTO ANGE_HISTORY
                         (
                             WORK_ID
                             ,WORK_GB
@@ -671,19 +828,18 @@ switch ($_method) {
                             ,SYSDATE()
                             ,'".$_SESSION['uid']."'
                             ,'.$_key.'
-                            ,'BOARD'
+                            ,'PRODUCT'
                             ,'UPDATE'
                             ,'".$ip."'
-                            ,'/webboard'
+                            ,'/product/edit'
                         )";
 
+                $_d->sql_query($sql);
+
+                $_d->sql_commit();
+                $_d->succEnd($no);
             }
         }
-        $_d->sql_query($sql);
-
-        $_d->sql_commit();
-        $_d->succEnd($no);
-
 
         break;
 

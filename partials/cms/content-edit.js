@@ -254,6 +254,8 @@ define([
         // 첨부 파일
         $scope.queue = [];
 
+//        $scope.isUpdate = false;
+
         // 초기화
         $scope.init = function() {
 
@@ -306,8 +308,10 @@ define([
 
                         var files = data.FILES;
                         for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                            $scope.queue.push({"no":files[i].NO, "name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE", "isUpdate": true});
                         }
+
+//                        $scope.isUpdate = true;
                     })
                 ])
                 .then( function(results) {
@@ -441,7 +445,13 @@ define([
             if ( $stateParams.id != 0) {
                 $scope.getTask();
             }
-        }
+        };
+
+        $scope.click_deleteFile = function (file) {
+            $scope.updateItem('com/file', 'item', file.NO, false)
+                .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
 
         /********** 화면 초기화 **********/
         if ($stateParams.menu == 'article' || $stateParams.menu == 'edit') {

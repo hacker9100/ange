@@ -14,7 +14,7 @@ define([
     controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$location', '$q', 'dataService', '$filter', 'dialogs', function ($rootScope, $scope, $stateParams, $location, $q, dataService, $filter, dialogs) {
 
         // 주소 경로
-        $scope.path = $location.path().split('/');
+        $scope.path = $scope.location.split('/');
 
         // 현재 채널 정보
         $scope.channel = $filter('filter')($rootScope.ange_channel, function (data) {
@@ -29,8 +29,8 @@ define([
         // 카테고리 데이터
         $scope.category = [];
 
-        if ($rootScope.menu != undefined) {
-            $scope.community = $rootScope.menu.MENU_NM;
+        if ($scope.path.length > 2 && $scope.menu != undefined) {
+            $scope.community = $scope.menu.MENU_NM;
         }
 
 //        for (var i in $rootScope.ange_menu) {
@@ -40,13 +40,10 @@ define([
 //            }
 //        }
 
-        // url 주소 분리
-        $scope.url = $scope.location.split('/');
-
         // 메인 화면 class
         $scope.ui_wraptype = "content_wrap";
 
-        switch($scope.url[1]) {
+        switch($scope.path[1]) {
             case 'main' :
                 $scope.ui_wraptype = 'content_wrap';
                 break;
@@ -59,7 +56,7 @@ define([
 
 //        alert(localStorage.getItem('userToken'))
 
-        /********** CMS 공통 함수 **********/
+        /********** ANGE 공통 함수 **********/
         // 시스템 별로 분리 해야할지??
         // 파일 사이즈 변환
         $scope.formatFileSize = function (bytes) {

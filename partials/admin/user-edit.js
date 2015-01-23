@@ -26,7 +26,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            var type = [{name: "일반회원", value: "M"}, {name: "앙쥬클럽", value: "C"}, {name: "서포터즈", value: "S"}];
+            var type = [{name: "일반회원", value: "MEMBER"}, {name: "앙쥬클럽", value: "CLUB"}, {name: "서포터즈", value: "SUPPORTERS"}];
             $scope.type = type;
             $scope.item.USER_GB = type[0];
 

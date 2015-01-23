@@ -13,7 +13,9 @@ define(['./directives'], function (directives) {
 //            scope: true,
             replace: true,
             compile: function(element, attrs){
-                var menu = element.scope().location.split('/');
+                var scope = element.scope();
+                var path = scope.location.split('/');
+//                var menu = element.scope().location.split('/');
 
 //                if (menu[1] == 'archive' || menu[1] == 'article' || menu[1] == 'article-confirm' || menu[1] == 'edit' || menu[1] == 'edit_confirm') {
 //                    if (menu[2] == 'list') {
@@ -23,7 +25,7 @@ define(['./directives'], function (directives) {
 //                    }
 //                }
 
-                element.append('<admin-body menu="'+menu[1]+'" type="'+menu[2]+'" controller-name="'+menu[1]+'-'+menu[2]+'"></admin-body>');
+                element.append('<admin-body menu="'+path[1]+'" type="'+path[2]+'" controller-name="'+path[1]+'-'+path[2]+'"></admin-body>');
             }
         }
     }]);

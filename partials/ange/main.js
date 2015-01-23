@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('main', ['$scope', '$stateParams', '$location', '$controller', function ($scope, $stateParams, $location, $controller) {
+    controllers.controller('main', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
 
         /********** 초기화 **********/
         // 메인 화면 모드
@@ -81,8 +81,37 @@ define([
             $location.url('/project/view/'+key);
         };
 
+        $scope.main1 = [];
+        $scope.main2 = [];
+
+        // 메뉴 목록 조회
+        $scope.getMenuList = function () {
+            $scope.getList('admin/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, true)
+                .then(function(data){
+                    for (var i=0; i<data.length; i++) {
+                        var file = data[i].FILES;
+                        for(var j in file) {
+                            if (file[j].FILE_GB == 'ICON')
+                                data[i].ICON_IMAGE = UPLOAD.BASE_URL+file[j].PATH+file[j].FILE_ID;
+                            else
+                                data[i].DETAIL_IMAGE = UPLOAD.BASE_URL+file[j].PATH+file[j].FILE_ID;
+                        }
+
+                        if (data[i].COLUMN_ORD == '1') {
+                            $scope.main1.push(data[i]);
+                        } else if (data[i].COLUMN_ORD == '2') {
+                            $scope.main2.push(data[i]);
+                        }
+                    }
+
+//                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
+                })
+                .catch(function(error){alert(error)});
+        };
+
         /********** 화면 초기화 **********/
         $scope.init();
+        $scope.getMenuList();
 
     }]);
 });

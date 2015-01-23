@@ -14,7 +14,7 @@
     $_d = new MtJson();
 
     $sql = "SELECT
-                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION
+                CHANNEL_NO, CHANNEL_ID, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION, COLUMN_CNT
             FROM
                 COM_CHANNEL
             WHERE
@@ -28,7 +28,7 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_ID, MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
+                    MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC
                 FROM
                     COM_MENU
                 WHERE
@@ -189,7 +189,7 @@
     function admin_init($rootScope, $location) {
         $rootScope.admin_channel = <?=$channel_info?>;
         $rootScope.admin_menu = <?=$menu_info?>;
-        $rootScope.location = $location.path();
+//        $rootScope.location = $location.path();
     }
 </script>
 
