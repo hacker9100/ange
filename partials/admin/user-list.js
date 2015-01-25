@@ -34,7 +34,7 @@ define([
             // 검색조건
             var condition = [{name: "이름", value: "USER_NM", index: 0}, {name: "아이디", value: "USER_ID", index: 1}, {name: "닉네임", value: "NICK_NM", index: 2}, {name: "전화번호", value: "PHONE", index: 3}, {name: "주소", value: "ADDR", index: 4}, {name: "이메일", value: "EMAIL", index: 5}, {name: "생일", value: "BIRTH", index: 6}, {name: "가입기간", value: "REG_DT", index: 7}];
             var type = [{name: "일반회원", value: "MEMBER"}, {name: "앙쥬클럽", value: "CLUB"}, {name: "서포터즈", value: "SUPPORTERS"}];
-            // N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION
+            // N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING
             var status = [{name: "전체", value: "A"}, {name: "정상", value: "N"}, {name: "불량", value: "P"}, {name: "휴면", value: "D"}, {name: "탈퇴", value: "S"}];
             var act = [{name: "일반정보", value: "A"}, {name: "커뮤니티활동", value: "C"}, {name: "참여활동", value: "P"}, {name: "블로거활동", value: "B"}];
             var sort = [{name: "가입일", value: "REG_DT", index: 0}, {name: "이름", value: "USER_NM", index: 1}, {name: "포인트", value: "POINT", index: 2}, {name: "스코어", value: "SCORE", index: 3}];

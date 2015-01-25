@@ -21,6 +21,7 @@ define([
     '../../../partials/admin/user-list',
     '../../../partials/admin/user-edit',
 //    '../../../partials/admin/user_view'
+    '../../../partials/admin/pagehit-main',
 
     // ADMIN 상품 관리
     '../../../partials/admin/product-list',

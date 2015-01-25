@@ -260,7 +260,7 @@
                 } else {
                     $_d->dataEnd($sql);
                 }
-            }  else if ($_type == 'admin') {
+            } else if ($_type == 'admin') {
                 $search_from = "";
                 $search_where = "";
                 $sort_order = "";
@@ -384,6 +384,83 @@
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 } else {
                     $_d->dataEnd($sql);
+                }
+            } else if ($_type == 'statistics') {
+                $search_where = "";
+                $sort_order = "";
+
+                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
+                    $search_where .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                }
+
+                if (isset($_search[START_DT]) && $_search[START_DT] != "") {
+                    $search_where .= "AND CU.REG_DT BETWEEN '".$_search[START_DT]."-01' AND DATE_ADD('".$_search[START_DT]."-01', interval ".$_search[PERIOD]." month)  ";
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                }
+
+                $sql = "# N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING
+                        SELECT
+                            REG_YM,
+                            SUM(1) AS TOTAL_CNT,
+                            SUM(IF(USER_ST = 'N', 1, 0)) AS NORMAL_CNT,
+                            SUM(IF(USER_ST = 'P', 1, 0)) AS POOR_CNT,
+                            SUM(IF(USER_ST = 'D', 1, 0)) AS DORMANCY_CNT,
+                            SUM(IF(USER_ST = 'S', 1, 0)) AS SECESSION_CNT,
+                            SUM(IF(USER_ST = 'S' AND ROLE_ID = 'CLUB', 1, 0)) AS CLUB_CNT,
+                            SUM(IF(USER_ST = 'W', 1, 0)) AS WAITING_CNT
+                        FROM
+                        (
+                            SELECT
+                                CU.USER_ID, CU.USER_ST, DATE_FORMAT(CU.REG_DT, '%Y-%m') AS REG_YM, DATE_FORMAT(CU.FINAL_LOGIN_DT, '%Y-%m') AS FINAL_LOGIN_YM,
+                                CR.ROLE_ID
+                            FROM
+                                COM_USER CU, USER_ROLE UR, COM_ROLE CR
+                            WHERE
+                                CU.USER_ID = UR.USER_ID
+                                AND UR.ROLE_ID = CR.ROLE_ID
+                                AND CR.SYSTEM_GB = 'ANGE'
+                                ".$search_where."
+                        ) AS DATA
+                        GROUP BY REG_YM
+                        ORDER BY REG_YM ASC
+                        $sort_order
+                        ";
+
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                    $sql = "# N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING
+                            SELECT
+                                SUM(1) AS TOTAL_CNT
+                            FROM
+                            (
+                                SELECT
+                                    CU.USER_ID, CU.USER_ST, DATE_FORMAT(CU.REG_DT, '%Y-%m') AS REG_YM, DATE_FORMAT(CU.FINAL_LOGIN_DT, '%Y-%m') AS FINAL_LOGIN_YM,
+                                    CR.ROLE_ID
+                                FROM
+                                    COM_USER CU, USER_ROLE UR, COM_ROLE CR
+                                WHERE
+                                    CU.USER_ID = UR.USER_ID
+                                  AND UR.ROLE_ID = CR.ROLE_ID
+                                  AND CR.SYSTEM_GB = 'ANGE'
+                                    AND CU.REG_DT <= DATE_ADD('".$row[REG_YM]."-01', interval 1 month)
+                            ) AS DATA
+                            ";
+
+                    $menu_data = $_d->getData($sql);
+                    $row['DETAIL'] = $menu_data;
+                    $__trn->rows[$i] = $row;
+                }
+                $_d->sql_free_result($result);
+                $data = $__trn->{'rows'};
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($sql);
                 }
             }
 
