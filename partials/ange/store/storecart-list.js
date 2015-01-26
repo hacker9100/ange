@@ -76,15 +76,18 @@ define([
         // 선택 상품 삭제
         $scope.click_removeCartProduct = function (idx){
 
-            var no = $scope.list[idx].NO;
-            $scope.CART_NO = no;
+            if($rootScope.uid != null && $rootScope.uid != ''){
+                var no = $scope.list[idx].NO;
+                $scope.CART_NO = no;
 
-            $scope.deleteItem('ange/cart', 'item', $scope.CART_NO, true)
-                .then(function(){
-                    $scope.list.splice(idx, 1);
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
+                $scope.deleteItem('ange/cart', 'item', $scope.CART_NO, true)
+                    .then(function(){
+                        $scope.list.splice(idx, 1);
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }else{
+                $scope.list.splice(idx, 1);
+            }
 /*            var dialog = dialogs.confirm('알림', '선택 상품을 삭제 하시겠습니까.', {size: 'md'});
 
             dialog.result.then(function(btn){
