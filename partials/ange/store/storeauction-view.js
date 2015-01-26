@@ -133,6 +133,7 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
+
         // 임시 장바구니 모달 팝업창 --> 삭제예정
         $scope.openViewScrapModal = function (item, size) {
             var dlg = dialogs.create('storemall_cart.html',
@@ -274,9 +275,10 @@ define([
             });
         };
 
+        // 전체 금액 계산
         $scope.addSumPrice = function(price, cnt, index){
+            $scope.productsList[index].TOTAL_PRICE += price * cnt;
 
-            $scope.productsList[index].SUM_PRICE = price * cnt;
         }
 
         // 전체 합계
@@ -289,7 +291,6 @@ define([
 
             return total;
         }
-
 
         // 주문
         $scope.click_addOrder = function(){

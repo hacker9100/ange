@@ -71,7 +71,7 @@
                         <input type="hidden" ng-model="product.NO"/>
                         <span class="store_optiontitle">{{product.PRODUCT_NM}}</span>
                             <span class="store_optionea">
-                                <input type="text" ng-model="product.CNT" numbers-only value="1" class="form-control input-sm" placeholder="" /> <!--ng-change="addSumPrice(item.PRICE, product.CNT, $index)" -->
+                                <input type="text" ng-model="product.CNT" numbers-only value="1" class="form-control input-sm" placeholder=""  ng-change="addSumPrice(item.PRICE, product.PRODUCT_CNT, $index)"/> <!--ng-change="addSumPrice(item.PRICE, product.CNT, $index)" -->
                                 <span> 개</span>
                                 <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>-->
                                 <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeProduct($index);">x</button>
@@ -95,7 +95,7 @@
                             </span>
                         </span>
                         <span class="store_totalprice">
-                            {{menu == 'auction' ? total() : 0}} P P
+                            {{menu == 'auction' ? total() : 0}} P
                             <br />
                             0 원
                             <br />
