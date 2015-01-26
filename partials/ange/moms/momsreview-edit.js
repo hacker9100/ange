@@ -156,20 +156,21 @@ define([
                 $scope.menu = 'experiencereview';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.community = "이벤트 후기";
-                $scope.item.JOIN_GB = 'EVENT';
+                $scope.search.JOIN_GB = 'EVENT';
                 $scope.menu = 'experiencereview';
             }
 
             $scope.search.USER_ID = true;
 
             if ($stateParams.id != 0) {
+
                 $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
-                    .then(function(data){
-                        $scope.event = data;
-                        var total_cnt = data[0].TOTAL_COUNT;
-                        $scope.total_cnt = total_cnt;
-                    })
-                    .catch(function(error){$scope.event = ""; $scope.total_cnt=0;});
+                .then(function(data){
+                    $scope.event = data;
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.total_cnt = total_cnt;
+                })
+                .catch(function(error){$scope.event = ""; $scope.total_cnt=0;});
             }else{
                 $scope.search.REVIEW_FL = true;
                 $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
