@@ -24,6 +24,8 @@ define([
 
         $scope.click_update_user_info = function () {
             $scope.openModal(null, 'md');
+
+            //$location.url("https://www.ange.co.kr/naming/findhanja2.asp?val=sp_fname&inname=최");
         };
 
         // 날짜 셀렉트 박스셋팅

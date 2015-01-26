@@ -16,8 +16,180 @@
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
-                            </br>
-                            order
+                            <div class="sub_contents_body">
+
+                                <!-- review_list -->
+                                <table id="comp_board_table" class="table table-hover">
+
+                                    <thead>
+                                    <tr class="board_thead" height="48">
+                                        <td align="center"><span class="board_th">상품정보</span></td>
+                                        <td width="15%"><span class="board_th">금액</span></td>
+                                        <td width="60" align="center"><span class="board_th">수량</span></td>
+                                        <td width="100" align="center"><span class="board_th">결제금액</span></td>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="on" ng-repeat="item in list">
+                                    <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                        <td>
+                                            <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
+                                            <span style="font-size:1.08em; font-weight:600;"> {{ item.PRODUCT_NM}}</span>
+                                        </td>
+                                        <td>{{item.PRICE}}</td>
+                                        <td>{{item.PRODUCT_CNT}}</td>
+                                        <td>{{item.TOTAL_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                    </tr>
+                                    </tbody>
+
+                                    <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                    <tr>
+                                        <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table><!-- /.List-->
+                            </div>
+
+                            <br/>
+                            <div>
+                                <div class="row form_rows">
+                                    <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>총 금액</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
+
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                결제 금액 : {{TOTAL_SUM_PRICE}} &nbsp;
+                                                <span ng-show="list[0].DELEIVERY_ST == 2">배송비 : {{TOTAL_DELEIVERY_PRICE}} ({{list[0].DELEIVERY_ST == '2' ? '선불' : '착불'}})</span> &nbsp;
+                                                <br/>
+                                                합계 : {{TOTAL_PRICE}}
+                                            </div>
+                                        </span>
+                                    </div>  <!-- /.form_basicinfo -->
+                                </div>
+                            </div>
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>수신자 정보</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-4 basicinfo input" ng-show="uid != '' && uid != null">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="radio"  value="Y" name="info" placeholder="기존주소" ng-click="click_basic('Y');" checked/>기존주소
+                                            &nbsp;
+                                            <input type="radio" name="info" value="N"  ng-click="click_basic('N');" placeholder="새주소"/>새주소
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>결제수단</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-4 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="radio"  ng-model="item.PAY_GB" value="CREDIT" name="pay_gb" placeholder="신용카드" checked/>신용카드
+                                            &nbsp;
+                                            <input type="radio" ng-model="item.PAY_GB" value="NOBANKBOOK" name="pay_gb" placeholder="무통장"/>무통장
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>
+
+                            <div class="row form_rows" ng-show="uid !== '' && uid != null">
+                                <div class="form_basicinfo">
+                                     <span class="col-xs-2 basicinfo title">
+                                        <strong>아이디</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-4 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="">
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <br/>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>주문자명</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-4 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="text" ng-model="item.RECEIPTOR_NM" class="form-control input-sm" style="margin:0px;"  placeholder="">
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>연락처</strong>
+                                            <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-2 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px; text-align:right;">
+                                            <small class="table_gray">전화번호</small>
+                                        </div>
+                                    </span>
+                                    <span class="col-xs-3 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="">
+                                        </div>
+                                    </span>
+                                    <span class="col-xs-1 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px; text-align:right;">
+                                            <small class="table_gray">휴대폰</small>
+                                        </div>
+                                    </span>
+                                    <span class="col-xs-3 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="text" ng-model="item.RECEIPT_PHONE" class="form-control input-sm" style="margin:0px;" placeholder="">
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>받으실 곳</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-10 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <p><input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder=""></p>
+                                            <p><input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.RECEIPT_ADDR" placeholder=""></p>
+                                            <input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.RECEIPT_ADDR_DETAIL" placeholder="">
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                        </div>
+
+                        <button class="btn btn-primary" ng-click="click_order();">주문하기</button>
+                        <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+                        <button class="btn btn-primary" ng-click="click_cancel();">주문취소</button>
 
                         </div><!-- /.sub_contents_wrap -->
                     </div>

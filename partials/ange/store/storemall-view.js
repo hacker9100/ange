@@ -23,6 +23,13 @@ define([
 
         $scope.selectIdx = 1;
 
+        // 페이징
+        $scope.PAGE_NO = 1;
+        $scope.PAGE_SIZE = 10;
+        $scope.TOTAL_COUNT = 0;
+
+        $scope.search = {};
+
         $(function () {
 
             $(".tab_content").hide();
@@ -39,6 +46,7 @@ define([
 
         });
 
+        // 탭 선택시 해당 화면으로 포커스 이동
         $scope.click_selectTab = function (idx) {
             $scope.selectIdx = idx;
 
@@ -61,8 +69,24 @@ define([
                 $scope.TOTAL_PRICE = 0;
             }
 
-            $scope.tabs =  [{title: '상품안내'},{title: '상품후기'},{title: '관련상품'},{title: '주의사항'}];
+            // 리뷰 리스트
+            $scope.search.JOIN_GB = 'PRODUCT';
 
+        };
+
+        $scope.getReviewList = function (){
+            $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+                .then(function(data){
+                    $scope.reviewList = data;
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
+                })
+                .catch(function(error){$scope.reviewList = ""; $scope.TOTAL_COUNT=0;});
+        }
+
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getReviewList();
         };
 
         $scope.$watch('product.CNT', function() {
@@ -91,7 +115,7 @@ define([
                 $scope.productsList = [];
             }else{
                 $scope.product.CNT = 1;
-                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "CNT" : 0, "SUM_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
 
 
                 // , "RECEIPTOR_NM" : $rootScope.user_info.USER_NM, "RECEIPT_ADDR" :$rootScope.user_info.ADDR, "RECEIPT_ADDR_DETAIL" : $rootScope.user_info.ADDR_DETAIL, "RECEIPT_PHONE" : $rootScope.user_info.PHONE_2
@@ -111,7 +135,6 @@ define([
             });
 
         });
-
 
         // 상품 삭제
         $scope.click_removeProduct = function (idx) {
@@ -155,190 +178,26 @@ define([
         // 장바구니추가
         $scope.click_addcart = function (){
 
-            console.log($scope.productsList[0].CNT);
-
             $scope.item.CART = $scope.productsList;
 
             $scope.insertItem('ange/cart', 'item', $scope.item, false)
                 .then(function(){
-                    dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
+                    //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
+                    //$scope.openViewScrapModal($scope.item.CART, 'lg');
 
-                    $scope.openViewScrapModal($scope.item.CART, 'lg');
+                    alert('장바구니에 등록되었습니다');
+
+                    $location.url('store/cart/list/'+$stateParams.menu);
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+
         }
 
-        // 임시 장바구니 모달 팝업창 --> 삭제예정
-        $scope.openViewScrapModal = function (item, size) {
-            var dlg = dialogs.create('storemall_cart.html',
-                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
-
-                    /********** 공통 controller 호출 **********/
-                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
-
-
-                    $scope.list = item;
-
-                    $scope.click_cancel = function () {
-                        $modalInstance.close();
-                    };
-
-                    $scope.orderlist = [];
-
-                    $scope.click_removeCartProduct = function (idx){
-                        $scope.list.splice(idx, 1);
-                    }
-
-
-                    $scope.sum_price = 0;
-
-                    for(var i =0;i <item.length; i++){
-                        $scope.sum_price += item[i].SUM_PRICE;
-                        $scope.PRODUCT_GB = item[i].PRODUCT_GB;
-                    }
-
-                    console.log($scope.user_info.MILEAGE);
-
-                    $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
-
-                    // 선택 상품 주문
-                    $scope.click_select_reg = function(list){
-
-                       var idx = 0;
-                       var count = $("input:checkbox[name='name']:checked").length;
-
-                       if(count > 2){
-                           alert('마일리지 몰에서는 2개까지 구매가 가능합니다');
-                           return;
-                       }
-
-                       for(var i =0; i<list.length; i++){
-
-                           if($("#name"+i).is(":checked")){
-
-                               idx = i;
-                               console.log(i);
-                               $scope.orderlist.push(list[idx]);
-                           }
-
-                       }
-                       $scope.openOrderModal($scope.orderlist, 'lg');
-                    }
-
-                    // 전체 상품 주문
-                    $scope.click_reg = function (list){
-
-                        if($stateParams.menu == 'mileagemall'){
-                            var cnt = list.length;
-
-                            if(cnt > 2){
-                                dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
-                                return;
-                            }
-                        }
-
-                        $scope.openOrderModal($scope.list, 'lg');
-                        $modalInstance.close();
-                    }
-
-                    $scope.openOrderModal = function (item, size){
-
-                        /*if($stateParams.menu == 'mileagemall'){
-                            var cnt = item.length;
-
-                            if(cnt > 2){
-                                dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
-                                return;
-                            }
-                        }*/
-
-                        var dlg = dialogs.create('storemall_order.html',
-                            ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
-                                /********** 공통 controller 호출 **********/
-                                angular.extend(this, $controller('ange-common', {$scope: $scope}));
-
-                                $scope.item = {};
-
-                                if($scope.uid != '' && $scope.uid != null){
-                                    $scope.item.USER_ID = $scope.user_info.USER_ID;
-                                    $scope.item.RECEIPTOR_NM = $scope.user_info.USER_NM;
-                                    $scope.item.RECEIPT_PHONE = $scope.user_info.PHONE_2;
-                                    $scope.item.RECEIPT_ADDR = $scope.user_info.ADDR;
-                                    $scope.item.RECEIPT_ADDR_DETAIL = $scope.user_info.ADDR_DETAIL;
-                                }
-
-                                $scope.list = item;
-
-                                console.log($scope.list);
-
-                                $scope.TOTAL_SUM_PRICE = 0;
-                                $scope.TOTAL_DELEIVERY_PRICE = 0;
-                                for(var i=0; i<item.length; i++){
-
-                                    $scope.TOTAL_SUM_PRICE += item[i].SUM_PRICE;
-                                    $scope.TOTAL_DELEIVERY_PRICE = item[i].DELEIVERY_PRICE;
-                                    $scope.DELEIVERY_ST = item[i].DELEIVERY_ST;
-                                }
-
-                                if($scope.DELEIVERY_ST == 1){
-                                    $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE);
-                                }else if($scope.DELEIVERY_ST == 2){
-                                    $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE) + parseInt($scope.TOTAL_DELEIVERY_PRICE);
-                                }
-
-                                $scope.click_basic = function(val){
-                                    if(val == 'Y'){
-                                        $scope.item.USER_ID = $scope.user_info.USER_ID;
-                                        $scope.item.RECEIPTOR_NM = $scope.user_info.USER_NM;
-                                        $scope.item.RECEIPT_PHONE = $scope.user_info.PHONE_2;
-                                        $scope.item.RECEIPT_ADDR = $scope.user_info.ADDR;
-                                        $scope.item.RECEIPT_ADDR_DETAIL = $scope.user_info.ADDR_DETAIL;
-                                    }else if('N'){
-                                        $scope.item = {};
-                                    }
-                                }
-
-                                $scope.item.ORDER = $scope.list;
-
-                                $scope.click_order = function (){
-
-                                    if($stateParams.menu == 'mileagemall'){
-                                        $scope.item.ORDER_GB = 'MILEAGE'
-                                    }else if($stateParams.menu == 'cummerce'){
-                                        $scope.item.ORDER_GB = 'CUMMERCE'
-                                    };
-
-                                    $scope.insertItem('ange/order', 'item', $scope.item, false)
-                                        .then(function(){dialogs.notify('알림', '주문이 완료되었습니다. 나의 주문 내역에서 확인하실 수 있습니다', {size: 'md'});})
-                                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-                                }
-
-                                $scope.click_cancel = function () {
-                                    $modalInstance.close();
-                                    $scope.list = [{}];
-                                };
-
-                            }], item, {size:size,keyboard: true}, $scope);
-                        dlg.result.then(function(){
-
-                        },function(){
-
-                        });
-                    };
-
-
-                }], item, {size:size,keyboard: true}, $scope);
-            dlg.result.then(function(){
-
-            },function(){
-
-            });
-        };
-
+        // 전체 금액 계산
         $scope.addSumPrice = function(price, cnt, index){
 
-            $scope.productsList[index].SUM_PRICE = price * cnt;
-
+            $scope.productsList[index].TOTAL_PRICE += price * cnt;
 
             if ($stateParams.menu == 'mileagemall') {
                 $scope.TOTAL_MILEAGE += price * cnt;
@@ -353,104 +212,27 @@ define([
         // 주문
         $scope.click_addOrder = function(){
 
-            $scope.item.ORDER = $scope.productsList;
+            $rootScope.orderlist = [];
+            $rootScope.orderlist = $scope.productsList;
 
-            console.log($scope.item.ORDER);
-/*            $scope.insertItem('ange/order', 'item', $scope.item, false)
-                .then(function(){dialogs.notify('알림', '주문이 완료되었습니다. 나의 주문 내역에서 확인하실 수 있습니다', {size: 'md'});})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
+            var cnt = $scope.productsList.length;
 
-            $scope.openOrderModal($scope.item.ORDER, 'lg');
-        }
 
-        // 주문팝업 삭제예정
-        $scope.openOrderModal = function (item, size){
-
+            console.log($rootScope.orderlist)
             if($stateParams.menu == 'mileagemall'){
-                var cnt = item.length;
-
                 if(cnt > 2){
                     dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
                     return;
                 }
+
+                if($scope.TOTAL_MILEAGE > $scope.user_info.MILEAGE.REMAIN_POINT){
+                    dialogs.notify('알림', '잔여 마일리지가 부족합니다', {size: 'md'});
+                    return;
+                }
             }
 
-            var dlg = dialogs.create('storemall_order.html',
-                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
-                    /********** 공통 controller 호출 **********/
-                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
-
-                    $scope.item = {};
-
-                    if($scope.uid != '' && $scope.uid != null){
-                        $scope.item.USER_ID = $scope.user_info.USER_ID;
-                        $scope.item.RECEIPTOR_NM = $scope.user_info.USER_NM;
-                        $scope.item.RECEIPT_PHONE = $scope.user_info.PHONE_2;
-                        $scope.item.RECEIPT_ADDR = $scope.user_info.ADDR;
-                        $scope.item.RECEIPT_ADDR_DETAIL = $scope.user_info.ADDR_DETAIL;
-                    }
-
-                    $scope.list = item;
-
-                    $scope.TOTAL_SUM_PRICE = 0;
-                    $scope.TOTAL_DELEIVERY_PRICE = 0;
-                    for(var i=0; i<item.length; i++){
-
-                        $scope.TOTAL_SUM_PRICE += item[i].SUM_PRICE;
-                        $scope.TOTAL_DELEIVERY_PRICE = item[i].DELEIVERY_PRICE;
-                        $scope.DELEIVERY_ST = item[i].DELEIVERY_ST;
-                    }
-
-                    if($scope.DELEIVERY_ST == 1){
-                        $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE);
-                    }else if($scope.DELEIVERY_ST == 2){
-                        $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE) + parseInt($scope.TOTAL_DELEIVERY_PRICE);
-                    }
-
-
-                    $scope.click_basic = function(val){
-                        if(val == 'Y'){
-                            $scope.item.USER_ID = $scope.user_info.USER_ID;
-                            $scope.item.RECEIPTOR_NM = $scope.user_info.USER_NM;
-                            $scope.item.RECEIPT_PHONE = $scope.user_info.PHONE_2;
-                            $scope.item.RECEIPT_ADDR = $scope.user_info.ADDR;
-                            $scope.item.RECEIPT_ADDR_DETAIL = $scope.user_info.ADDR_DETAIL;
-                        }else if('N'){
-                            $scope.item = {};
-                        }
-                    }
-
-                    $scope.item.ORDER = $scope.list;
-
-                   $scope.click_order = function (){
-
-                       if($stateParams.menu == 'mileagemall'){
-                           $scope.item.ORDER_GB = 'MILEAGE'
-
-                       }else if($stateParams.menu == 'cummerce'){
-                           $scope.item.ORDER_GB = 'CUMMERCE'
-                       }
-
-                       $scope.insertItem('ange/order', 'item', $scope.item, false)
-                          .then(function(){
-                              dialogs.notify('알림', '주문이 완료되었습니다. 나의 주문 내역에서 확인하실 수 있습니다', {size: 'md'});
-                              $modalInstance.close();
-                          })
-                          .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-                    }
-
-                    $scope.click_cancel = function () {
-                        $modalInstance.close();
-                        $scope.list = [{}];
-                    };
-
-                }], item, {size:size,keyboard: true}, $scope);
-            dlg.result.then(function(){
-
-            },function(){
-
-            });
-        };
+            $location.url('store/order/list/'+$rootScope.orderlist);
+        }
 
         // 목록 버튼 클릭
         $scope.click_showPeoplePhotoList = function () {
@@ -476,6 +258,7 @@ define([
             .catch($scope.reportProblems);*/
         $scope.init();
         $scope.getPeopleBoard();
+        $scope.getReviewList();
         //s$scope.addSumPrice($scope.item.PRICE, 1 , 0);
 
     }]);

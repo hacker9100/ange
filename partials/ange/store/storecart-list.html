@@ -16,8 +16,85 @@
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
-                            </br>
-                            cart
+
+                            <div class="sub_contents_body">
+
+                                <!-- review_list -->
+                                <table id="comp_board_table" class="table table-hover">
+
+                                    <thead>
+                                    <tr class="board_thead" height="48">
+                                        <td width="10%" align="center"><span class="board_th">선택</span></td>
+                                        <td align="center"><span class="board_th">상품정보</span></td>
+                                        <td width="15%"><span class="board_th">금액</span></td>
+                                        <td width="60" align="center"><span class="board_th">수량</span></td>
+                                        <td width="100" align="center"><span class="board_th">결제금액</span></td>
+                                        <td width="60" align="center"><span class="board_th">삭제</span></td>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="on" ng-repeat="item in list">
+                                    <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                        <td>
+                                            <input type="hidden" ng-model="item.PRODUCT_NO" value="{{item.PRODUCT_NO}}"/>
+                                            <input type="hidden" ng-model="item.PRICE" value="{{item.PRICE}}"/>
+                                            <input type="hidden" ng-model="item.PRODUCT_CNT" value="{{item.PRODUCT_CNT}}"/>
+                                            <input type="hidden" ng-model="item.PRODUCT_NM" value="{{item.PRODUCT_NM}}"/>
+                                            <input type="hidden" ng-model="item.TOTAL_PRICE" value="{{item.TOTAL_PRICE}}"/>
+                                            <input type="checkbox" ng-click='click_sumprice($index);' class="select_check" model="item.selected" ng-value="item" name="name" id="name{{$index}}"/>
+                                        </td>
+                                        <td>
+                                            <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
+                                            <span style="font-size:1.08em; font-weight:600;"> [{{item.PRODUCT_GB_NM}}]{{ item.PRODUCT_NM}}</span>
+                                        </td>
+                                        <td>{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                        <td>{{item.PRODUCT_CNT}}</td>
+                                        <td>{{item.TOTAL_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                        <td><button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeCartProduct($index);">x</button></td>
+                                    </tr>
+                                    </tbody>
+
+                                    <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                    <tr>
+                                        <td colspan="6" style="text-align: center">조회 데이터가 없습니다.</td>
+                                    </tr>
+                                    </tr>
+
+                                    </tbody>
+                                </table><!-- /.List-->
+                            </div><!-- /.sub_contents_body -->
+
+                            <div ng-show="product_gb == 'mileage'" class="sub_contents_body">
+
+                                <!-- review_list -->
+                                <table id="comp_board_table" class="table table-hover">
+
+                                    <thead>
+                                    <tr class="board_thead" height="48">
+                                        <td width="33%" align="center"><span class="board_th">현재 내 마일리지</span></td>
+                                        <td align="33%" align="center"><span class="board_th">결제 마일리지</span></td>
+                                        <td width="33%" align="center"><span class="board_th">잔여 마일리지</span></td>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="on">
+                                    <tr>
+                                        <td>{{user_info.MILEAGE.REMAIN_POINT}}P</td>
+                                        <td>{{sum_price}}P</td>
+                                        <td>{{total_mileage}}P</td>
+                                    </tr>
+                                    <tr ng-show="total_mileage < 0">
+                                        <td colspan="3" style="text-align: center"><font color="red">마일리지가 부족합니다.</font></td>
+                                    </tr>
+                                    </tbody>
+                                </table><!-- /.List-->
+
+                            </div><!-- /.sub_contents_body -->
+
+                            <button class="btn btn-primary" ng-click="click_reg(list);">전체구매</button>
+                            <button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>
+                            <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
 
                         </div><!-- /.sub_contents_wrap -->
                     </div>

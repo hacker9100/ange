@@ -124,9 +124,11 @@ define([
 
             $scope.insertItem('ange/cart', 'item', $scope.item, false)
                 .then(function(){
-                    dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
+                    /*dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
+                    $scope.openViewScrapModal($scope.item.CART, 'lg');*/
+                    alert('장바구니에 등록되었습니다');
 
-                    $scope.openViewScrapModal($scope.item.CART, 'lg');
+                    $location.url('store/cart/list/'+$stateParams.menu);
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }

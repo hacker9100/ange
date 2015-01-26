@@ -144,9 +144,11 @@ switch ($_method) {
             }
 
             $sql = "SELECT    PRODUCT_NO, USER_ID, PRODUCT_CNT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PRODUCT_NM, PRICE,
-                           TOTAL_COUNT, PRODUCT_CNT * PRICE AS TOTAL_PRICE, PRODUCT_GB
+                           TOTAL_COUNT, PRODUCT_CNT * PRICE AS TOTAL_PRICE, PRODUCT_GB, NO, DELEIVERY_ST, DELEIVERY_PRICE,
+                           CASE PRODUCT_GB WHEN 'CUMMERCE' THEN '커머스' WHEN 'AUCTION' THEN '경매소' WHEN 'MILEAGE' THEN '마일리지' ELSE '기타' END AS PRODUCT_GB_NM
                   FROM (
-                            SELECT AC.PRODUCT_NO, AC.USER_ID, AC.PRODUCT_CNT, AC.REG_DT, AP.PRODUCT_NM, AP.PRICE, AP.PRODUCT_GB
+                            SELECT AC.PRODUCT_NO, AC.USER_ID, AC.PRODUCT_CNT, AC.REG_DT, AP.PRODUCT_NM, AP.PRICE, AP.PRODUCT_GB, AC.NO,
+                                    AP.DELEIVERY_ST, AP.DELEIVERY_PRICE
                             FROM
                                 ANGE_CART AC INNER JOIN ANGE_PRODUCT AP
                             ON AC.PRODUCT_NO = AP.NO
@@ -476,7 +478,7 @@ switch ($_method) {
 
         $_d->sql_beginTransaction();
 
-        $sql = "DELETE FROM ANGE_CART WHERE PRODUCT_NO = ".$_key;
+        $sql = "DELETE FROM ANGE_CART WHERE NO = ".$_key;
 
         $_d->sql_query($sql);
         /*$no = $_d->mysql_insert_id;*/
