@@ -274,6 +274,8 @@ define([
 
         // 전체 금액 계산
         $scope.addSumPrice = function(price, cnt, index){
+
+            console.log('aa');
             $scope.productsList[index].TOTAL_PRICE += price * cnt;
 
         }

@@ -92,7 +92,6 @@ define([
         $scope.$watch('product.CNT', function() {
             if ($scope.product.CNT != undefined) {
                 if ($stateParams.menu == 'mileagemall') {
-                    console.log($scope.product.cnt);
 
                     $scope.TOTAL_MILEAGE = 0;
                     $scope.TOTAL_PRICE = 0;
