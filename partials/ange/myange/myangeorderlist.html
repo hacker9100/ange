@@ -57,7 +57,7 @@
 
                             <!-- 마일리지 & 경매소 목록 -->
                             <div class="row webzine_moms_list" ng-repeat="item in mileagelist">
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                                <div class="col-xs-12 v-cell-4" style="margin:0px;cursor:pointer;" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)">
                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
                                         <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
                                         <div class="webzine_list_title" style="width: 65%">
@@ -78,7 +78,7 @@
                                 </div>  <!-- col-xs-8 -->
                             </div>  <!-- /.row -->
 
-                            <div class="row webzine_moms_list" ng-show="list == ''">
+                            <div class="row webzine_moms_list" ng-show="mileagelist == ''">
                                 조회데이터가 없습니다.
                             </div>
 
@@ -92,7 +92,7 @@
                             <h4 style="font-weight:bold;">커머스 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
 
                             <!-- 커머스 목록 -->
-                            <div class="row webzine_moms_list" ng-repeat="item in cummercelist">
+                            <div class="row webzine_moms_list" ng-repeat="item in cummercelist" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)">
                                 <div class="col-xs-12 v-cell-4" style="margin:0px;">
                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
                                         <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
@@ -188,11 +188,6 @@
 
                                 </tbody>
                             </table><!-- /.List-->
-
-
-                            <div class="row webzine_moms_list" ng-show="naminglist == ''">
-                                조회데이터가 없습니다.
-                            </div>
 
                             <nav class="text-center">
                                 <pagination boundary-links="true" total-items="CLINIC_TOTAL_CNT" ng-model="CLINIC_PAGE_NO" class="pagination-sm" ng-change="pageClinicChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>

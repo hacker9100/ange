@@ -163,10 +163,17 @@ define([
                 .catch(function(error){$scope.naminglist = ""; $scope.CLINIC_PAGE_COUNT = 0});
         };
 
-        // 조회 화면 이동
-        $scope.click_showViewPeoplePhoto = function (key) {
+        // 조회 화면 이동(마일리지 & 경매소)
+        $scope.click_showStoreView = function (product_gb, key) {
 
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+            if(product_gb == 'MILEAGE'){
+                $location.url('/store/mileagemall/view/'+key);
+            }else if(product_gb == 'AUCTION'){
+                $location.url('/store/auction/view/'+key);
+            }else if(product_gb == 'CUMMERCE'){
+                $location.url('/store/cummerce/view/'+key);
+            }
+
         };
 
         // 상태변경
