@@ -108,8 +108,6 @@ define([
 
                         $scope.products = data.PRODUCTS;
 
-                        console.log($scope.products);
-
                         $scope.item = data;
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
