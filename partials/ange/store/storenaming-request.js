@@ -54,18 +54,35 @@ define([
             }
 
             for (var i = 1; i <= 12; i++) {
+
+                if(i < 10){
+                    i = '0'+i;
+                }
                 month.push(i+'');
             }
 
             for (var i = 1; i <= 31; i++) {
+
+                if(i < 10){
+                    i = '0'+i;
+                }
                 day.push(i+'');
             }
 
             for(var i = 0; i < 24; i++){
+
+                if(i < 10){
+                    i = '0'+i;
+                }
+
                 hour.push(i+'');
             }
 
             for(var i = 0; i < 60; i++){
+
+                if(i < 10){
+                    i = '0'+i;
+                }
                 minute.push(i+'');
             }
 
