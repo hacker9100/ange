@@ -178,36 +178,46 @@ define([
         // 장바구니추가
         $scope.click_addcart = function (){
 
-            $scope.item.CART = $scope.productsList;
+            if($rootScope.uid == '' || $rootScope.uid == null){
 
-            $scope.insertItem('ange/cart', 'item', $scope.item, false)
-                .then(function(){
-                    //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
-                    //$scope.openViewScrapModal($scope.item.CART, 'lg');
+                $rootScope.cartlist = $scope.productsList;
 
-                    alert('장바구니에 등록되었습니다');
+                alert('장바구니에 등록되었습니다');
 
-                    $location.url('store/cart/list/'+$stateParams.menu);
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                $location.url('store/cart/list/'+$rootScope.cartlist);
+            }else{
+                $scope.item.CART = $scope.productsList;
 
+                $scope.insertItem('ange/cart', 'item', $scope.item, false)
+                    .then(function(){
+                        //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
+                        //$scope.openViewScrapModal($scope.item.CART, 'lg');
 
+                        alert('장바구니에 등록되었습니다');
+
+                        $location.url('store/cart/list/'+$stateParams.menu);
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }
         }
 
         // 전체 금액 계산
-        $scope.addSumPrice = function(price, cnt, index){
-
+       $scope.addSumPrice = function(price, cnt, index){
             $scope.productsList[index].TOTAL_PRICE += price * cnt;
 
-            if ($stateParams.menu == 'mileagemall') {
-                $scope.TOTAL_MILEAGE += price * cnt;
-                $scope.TOTAL_PRICE = 0;
-            } else if ($stateParams.menu == 'cummerce') {
-                $scope.TOTAL_PRICE += price * cnt;
-                $scope.TOTAL_MILEAGE = 0;
-            }
+       }
 
+        // 전체 합계
+        $scope.total = function() {
+
+            var total = 0;
+            angular.forEach($scope.productsList, function(item) {
+                total += item.PRODUCT_CNT * item.PRICE;
+            })
+
+            return total;
         }
+
 
         // 주문
         $scope.click_addOrder = function(){

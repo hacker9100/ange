@@ -73,14 +73,14 @@
                                 </div>
                             </div>
 
-                            <div class="row form_rows">
+                            <div class="row form_rows"  ng-show="uid != '' && uid != null">
                                 <div class="form_basicinfo">
                                     <span class="col-xs-2 basicinfo title">
                                         <strong>수신자 정보</strong>
                                         <span class="table_blue">*</span>
                                     </span>
 
-                                    <span class="col-xs-4 basicinfo input" ng-show="uid != '' && uid != null">
+                                    <span class="col-xs-4 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
                                             <input type="radio"  value="Y" name="info" placeholder="기존주소" ng-click="click_basic('Y');" checked/>기존주소
                                             &nbsp;

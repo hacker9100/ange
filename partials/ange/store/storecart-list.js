@@ -28,29 +28,33 @@ define([
 
         // 장바구니 리스트
         $scope.cartList = function (){
-            $scope.search.FILE = true;
 
-            $scope.getList('ange/cart', 'list', {}, $scope.search, true)
-                .then(function(data){
-                    var total_cnt = data[0].TOTAL_COUNT;
-                    $scope.TOTAL_COUNT = total_cnt;
+            if($rootScope.uid == null || $rootScope.uid == ''){
+                $scope.list = $rootScope.cartlist;
+            }else{
+                $scope.search.FILE = true;
 
-                    $scope.sum_price = 0;
-                    for(var i in data) {
-                        if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
-                            data[i].MAIN_FILE = img;
+                $scope.getList('ange/cart', 'list', {}, $scope.search, true)
+                    .then(function(data){
+                        var total_cnt = data[0].TOTAL_COUNT;
+                        $scope.TOTAL_COUNT = total_cnt;
 
+                        $scope.sum_price = 0;
+                        for(var i in data) {
+                            if (data[i].FILE != null) {
+                                var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                                data[i].MAIN_FILE = img;
+
+                            }
+                            $scope.sum_price += parseInt(data[i].TOTAL_PRICE);
                         }
-                        $scope.sum_price += parseInt(data[i].TOTAL_PRICE);
-                    }
-                    $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
+                        $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
 
 
-                    $scope.list = data;
-                })
-                .catch(function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
-
+                        $scope.list = data;
+                    })
+                    .catch(function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
+            }
         }
 
 
@@ -78,7 +82,6 @@ define([
             $scope.deleteItem('ange/cart', 'item', $scope.CART_NO, true)
                 .then(function(){
                     $scope.list.splice(idx, 1);
-                    $scope.cartList();
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 

@@ -122,6 +122,11 @@ switch ($_method) {
             $sort_order = "";
             $limit = "";
 
+
+            /*if (isset($_SESSION['uid']) && $_SESSION['uid'] != "") {
+                $search_where .= "AND AC.USER_ID = '".$_SESSION['uid']."'";
+            }*/
+
             if (isset($_search[PRODUCT_GB]) && $_search[PRODUCT_GB] != "") {
                 $search_where .= "AND PRODUCT_GB = '".$_search[PRODUCT_GB]."' ";
             }
@@ -274,7 +279,7 @@ switch ($_method) {
         if (isset($_model[CART]) && $_model[CART] != "") {
             foreach ($_model[CART] as $e) {
 
-            if( trim($e[CNT]) == "" ){
+            if( trim($e[PRODUCT_CNT]) == "" ){
                 $_d->failEnd("수량을 선택 하세요");
             }
 
@@ -287,7 +292,7 @@ switch ($_method) {
                         ) VALUES (
                            '".$_SESSION['uid']."',
                             ".$e[PRODUCT_NO].",
-                            ".$e[CNT].",
+                            ".$e[PRODUCT_CNT].",
                             SYSDATE()
                         )";
 

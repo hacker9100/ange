@@ -279,6 +279,18 @@ define([
             $scope.productsList[index].SUM_PRICE = price * cnt;
         }
 
+        // 전체 합계
+        $scope.total = function() {
+
+            var total = 0;
+            angular.forEach($scope.productsList, function(item) {
+                total += item.PRODUCT_CNT * item.PRICE;
+            })
+
+            return total;
+        }
+
+
         // 주문
         $scope.click_addOrder = function(){
 

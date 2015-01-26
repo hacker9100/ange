@@ -71,7 +71,7 @@
                         <input type="hidden" ng-model="product.NO"/>
                         <span class="store_optiontitle">{{product.PRODUCT_NM}}</span>
                             <span class="store_optionea">
-                                <input type="text" ng-model="product.CNT" value="1" class="form-control input-sm" placeholder="" /> <!--ng-change="addSumPrice(item.PRICE, product.CNT, $index)" -->
+                                <input type="text" ng-model="product.CNT" numbers-only value="1" class="form-control input-sm" placeholder="" /> <!--ng-change="addSumPrice(item.PRICE, product.CNT, $index)" -->
                                 <span> 개</span>
                                 <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>-->
                                 <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeProduct($index);">x</button>
@@ -83,7 +83,7 @@
 
                 <div ng-show="productsList != ''">
                     <button type="button" ng-show="uid != '' && uid != null" ng-click="click_addcart()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">장바구니</button>
-                    <button type="button" ng-click="click_addOrder()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">구매하기</button>
+                    <!--<button type="button" ng-click="click_addOrder()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">구매하기</button>-->
                 </div>
 
                 <div class="store_col_info" style="border-bottom:none">
@@ -95,9 +95,9 @@
                             </span>
                         </span>
                         <span class="store_totalprice">
-                            {{TOTAL_MILEAGE}} P
+                            {{menu == 'auction' ? total() : 0}} P P
                             <br />
-                            {{TOTAL_PRICE}} 원
+                            0 원
                             <br />
                             {{item.DELEIVERY_ST == 1 ? '착불' : '선불'}}
                         </span>

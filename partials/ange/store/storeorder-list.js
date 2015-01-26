@@ -19,6 +19,7 @@ define([
         console.log('id = '+$stateParams.id);
 
 
+        console.log($scope.list = $rootScope.orderlist);
 
         $scope.init = function(session) {
 
