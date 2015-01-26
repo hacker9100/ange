@@ -111,6 +111,7 @@ define([
 
         // 상품 추가
         $scope.addProductList = function (products, item){
+
             if(products.NO == null){
                 $scope.productsList = [];
             }else{
@@ -166,8 +167,6 @@ define([
                         }
 
                         $scope.products = data.PRODUCTS;
-
-                        console.log($scope.products);
 
                         $scope.item = data;
                     })
