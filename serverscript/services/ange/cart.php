@@ -123,20 +123,10 @@ switch ($_method) {
             $limit = "";
 
 
-            /*if (isset($_SESSION['uid']) && $_SESSION['uid'] != "") {
-                $search_where .= "AND AC.USER_ID = '".$_SESSION['uid']."'";
-            }*/
-
-            if (isset($_search[PRODUCT_GB]) && $_search[PRODUCT_GB] != "") {
-                $search_where .= "AND PRODUCT_GB = '".$_search[PRODUCT_GB]."' ";
-            }
-
-            /*            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                            $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
-                        }*/
-
-            if (isset($_search[PRODUCT_NM]) && $_search[PRODUCT_NM] != "") {
-                $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[PRODUCT_NM]."%'";
+            if ($_search[PRODUCT_GB] == "mileage") {
+                $search_where .= "AND AP.PRODUCT_GB IN ('MILEAGE', 'AUCTION')";
+            }else if ($_search[PRODUCT_GB] == "cummerce") {
+                $search_where .= "AND AP.PRODUCT_GB IN ('CUMMERCE', 'NAMING')";
             }
 
             /*AND BODY LIKE '%".$_search[KEYWORD]."%'";*/
