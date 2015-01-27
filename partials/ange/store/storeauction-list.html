@@ -31,29 +31,30 @@
                                 <div class="col-xs-4 v-cell-4" style="margin:0px;">
                                     <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
                                         <div class="item" style="border:1px solid #ddd;">
-                                            <img ng-src="/imgs/ange/temp/brandmall_01.jpg" style="width:100%;" />
+                                            <!--<img ng-src="/imgs/ange/temp/brandmall_01.jpg" style="width:100%;" />-->
+                                            <img ng-src="item.MAIN_FILE" style="width:100%;" />
                                         </div>
                                     </div>
                                 </div>  <!-- /.col-xs-4 -->
 
-                                <div class="col-xs-8 v-cell-4" style="margin:0px;">
+                                <div class="col-xs-8 v-cell-4" style="margin:0px;" data-ng-repeat="item in list">
                                     <div class="comp_basic h-cell-dynamic" style="width:100%; padding:2px; 0px; padding-left:25px; margin:0px;">
 
                                         <div class="">
                                             <div class="table_gray" style="height:24px;">
                                                 <small>
-                                                    <div class="table_blue" style="float:left;">2015-01-12 경매</div>
-                                                    <div style="float:right;">[상품번호 M20141023]</div>
+                                                    <div class="table_blue" style="float:left;">{{item.PERIOD}} 경매</div>
+                                                    <!--<div style="float:right;">[상품번호 M20141023]</div>-->
                                                 </small>
                                             </div>
 
                                             <p style="font-size:1.24em; line-height:22px; font-weight:600; word-break: keep-all;">
-                                                프로그넌시 마사지 로션
+                                                {{item.PRODUCT_NM}}
                                             </p>
 
                                             <div class="store_col_info">
-                                                <div class="store_list_item maininfo"><strong>소비자금액</strong><span class="table_gray" style="position:absolute; left:120px;">55,000 원</span></div>
-                                                <div class="store_list_item maininfo"><strong>바로구매가</strong><span class="table_gray" style="position:absolute; left:120px;">22,500 원</span></div>
+                                                <div class="store_list_item maininfo"><strong>소비자금액</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE}} 원</span></div>
+                                                <div class="store_list_item maininfo"><strong>바로구매가</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DIRECT_PRICE}} 원</span></div>
                                                 <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">아이앤와이</span></div>
                                                 <div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="#">http://www.inyinternational.com</a></span></div>
                                                 <div class="store_list_item maininfo"><strong>외부링크</strong>
@@ -67,16 +68,16 @@
                                                 <div style="float:left;">
                                                     <strong>경매현황</strong>
                                                     <span class="table_gray" style="position:absolute; left:120px;">
-                                                        현재 <strong>1,500</strong> 원
-                                                        <a href="#" style="margin-left:18px;"><small>입찰 : 40건</small></a>
+                                                        현재 <strong>{{item.AUCTION_AMOUNT > 0 ? item.AUCTION_AMOUNT : '0'}}</strong> 원
+                                                        <a href="#" style="margin-left:18px;"><small>입찰 : {{item.AUCTION_COUNT > 0 ? item.AUCTION_COUNT : '0'}}건</small></a>
                                                     </span>
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
 
                                             <div class="store_col_btn">
-                                                <button class="btn btn-default">상세정보</button>
-                                                <button class="btn btn-info">경매참여</button>
-                                                <button class="btn btn-warning">바로구매</button>
+                                                <button ng-click="click_showViewPeoplePhoto(item.NO)" class="btn btn-default">상세정보</button>
+                                                <button ng-click="click_auction(item.NO)" class="btn btn-info">경매참여</button>
+                                                <button ng-click="click_addcart(list)" class="btn btn-warning">바로구매</button>
                                             </div>  <!-- /.store_col_info -->
 
                                         </div>
@@ -176,57 +177,34 @@
                                         <div class="comp_basic h-cell-dynamic">
 
                                             <!-- 경매소 리스트 타입 -->
-                                            <div class="row webzine_moms_list" style="display: block; margin-top:0px;">
+                                            <div class="row webzine_moms_list" style="display: block; margin-top:0px;" ng-repeat='item in prevlist'>
                                                 <div class="col-xs-12 v-cell-4" style="margin:0px;">
                                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
                                                         <div class="item" style="position:absolute;">
                                                             <!-- img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg" -->
-                                                            <img src="/imgs/ange/_blank.gif" class="webzine_moms_featureimg" style="height: 155px; background-image: url(/imgs/ange/temp/temp_recipe_02.jpg);">
+                                                            <img ng-src="{{item.MAIN_FILE}}" class="webzine_moms_featureimg" style="height: 155px; background-image: url(/imgs/ange/temp/temp_recipe_02.jpg);">
                                                         </div>
                                                         <div class="webzine_list_title">
                                                             <!-- {{item.SUBJECT}} -->
-                                                            [92차 2014년판] 공룡 유치원 시리즈 세트(전 12권)[양장본] 공룡유치원 DVD+캐릭터 만들기 클레이(총8색) 증정
+                                                            {{item.PRODUCT_NM}}
 
                                                             <div class="webzine_list_bottomwrap">
                                                                 <div class="webzine_list_item"><strong>경매일자</strong><span class="table_gray" style="margin-left:8px;">2015-11-15</span></div>
                                                                 <div class="webzine_list_item"><strong>낙찰유형</strong><span class="table_gray" style="margin-left:8px;">마일리지</span></div> <!-- /마일리지/바로구매 -->
-                                                                <div class="webzine_list_item"><strong>낙차가격</strong><span class="table_gray" style="margin-left:8px;">1,500 P</span></div>
+                                                                <div class="webzine_list_item"><strong>낙차가격</strong><span class="table_gray" style="margin-left:8px;">{{item.PRICE}} P</span></div>
                                                             </div>
 
                                                             <div class="webzine_list_btnwrap">
-                                                                <button class="webzine_list_btn default" title="상세보기" ng-click="view_momsevent(item.NO)">상세보기</button>
+                                                                <button class="webzine_list_btn default" title="상세보기" ng-click="click_showViewPeoplePhoto(item.NO)">상세보기</button>
                                                             </div>
                                                         </div>
                                                     </div>  <!-- comp_basic -->
                                                 </div>  <!-- col-xs-8 -->
                                             </div>  <!-- /.row -->
 
-                                            <!-- 경매소 리스트 타입 -->
-                                            <div class="row webzine_moms_list" style="display: block; margin-top:0px;">
-                                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                                        <div class="item" style="position:absolute;">
-                                                            <!-- img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg" -->
-                                                            <img src="/imgs/ange/_blank.gif" class="webzine_moms_featureimg" style="height: 155px; background-image: url(/imgs/ange/temp/temp_recipe_01.jpg);">
-                                                        </div>
-                                                        <div class="webzine_list_title">
-                                                            <!-- {{item.SUBJECT}} -->
-                                                            [92차 2014년판] 공룡 유치원 시리즈 세트(전 12권)[양장본] 공룡유치원 DVD+캐릭터 만들기 클레이(총8색) 증정
-
-                                                            <div class="webzine_list_bottomwrap">
-                                                                <div class="webzine_list_item"><strong>경매일자</strong><span class="table_gray" style="margin-left:8px;">2015-11-12</span></div>
-                                                                <div class="webzine_list_item"><strong>낙찰유형</strong><span class="table_gray" style="margin-left:8px;">바로구매</span></div> <!-- /마일리지/바로구매 -->
-                                                                <div class="webzine_list_item"><strong>낙차가격</strong><span class="table_gray" style="margin-left:8px;">25,000 원</span></div>
-                                                            </div>
-
-                                                            <div class="webzine_list_btnwrap">
-                                                                <button class="webzine_list_btn default" title="상세보기" ng-click="view_momsevent(item.NO)">상세보기</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>  <!-- comp_basic -->
-                                                </div>  <!-- col-xs-8 -->
-                                            </div>  <!-- /.row -->
-
+                                            <div class="row webzine_moms_list" style="display: block; margin-top:0px;" ng-show="prevlist == ''">
+                                                  <p style="text-align: center;">조회 데이터가 없습니다</p>
+                                            </div>
 
                                         </div>  <!-- /.comp_basic -->
                                     </div>  <!-- /.v-cell-4 -->

@@ -19,19 +19,11 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 게시판 목록 이동
-//        $scope.click_showPeopleBoardList = function () {
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            }
-//        };
 
-        /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
+        $scope.click_naming_request = function(key){
+            $location.url('store/naming/request/'+key);
+        }
+
         $scope.init();
 
     }]);

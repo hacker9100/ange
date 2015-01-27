@@ -42,7 +42,7 @@ define([
         $scope.click_selectTab = function (idx) {
             $scope.selectIdx = idx;
 
-            $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
+//            $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
         };
 
         // 초기화
@@ -113,21 +113,76 @@ define([
             }
         };
 
-        // 장바구니추가
-        $scope.click_addcart = function (){
+        // 경매 참여
+        $scope.click_auction = function (item){
 
-            $scope.item.CART = $scope.productsList;
-            $scope.item.CART.USER_ID = $rootScope.uid;
+            $scope.item.NO = item;
 
-            $scope.insertItem('ange/cart', 'item', $scope.item, false)
+            $scope.insertItem('ange/auction', 'item', $scope.item, false)
                 .then(function(){
-                    /*dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
-                    $scope.openViewScrapModal($scope.item.CART, 'lg');*/
-                    alert('장바구니에 등록되었습니다');
 
-                    $location.url('store/cart/list/'+$stateParams.menu);
+                    dialogs.notify('알림', '정상적으로 참여했습니다.', {size: 'md'});
+
+                    $scope.getPeopleBoard();
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        //찜
+        $scope.click_addcart = function (){
+
+            if($rootScope.uid == '' || $rootScope.uid == null){
+
+                $rootScope.cartlist = $scope.productsList;
+
+                alert('장바구니에 등록되었습니다');
+
+                $location.url('store/cart/list/'+$rootScope.cartlist);
+            }else{
+                $scope.item.CART = $scope.productsList;
+
+                $scope.insertItem('ange/cart', 'item', $scope.item, false)
+                    .then(function(){
+                        //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
+                        //$scope.openViewScrapModal($scope.item.CART, 'lg');
+
+                        alert('장바구니에 등록되었습니다');
+
+                        $location.url('store/cart/list/'+$stateParams.menu);
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }
+        }
+
+        //즉시 구매
+        $scope.click_adddirectcart = function (list){
+
+            if($rootScope.uid == '' || $rootScope.uid == null){
+
+                //$rootScope.cartlist = list;
+                $scope.productsList.push({"MAIN_FILE": list.MAIN_FILE, "PRODUCT_NO" : list.NO, "PRODUCT_NM" : list.PRODUCT_NM , "PRICE" : list.DIRECT_PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : list.DIRECT_PRICE, "DELEIVERY_PRICE" : list.DELEIVERY_PRICE, "DELEIVERY_ST" : list.DELEIVERY_ST, "PRODUCT_GB" : list.PRODUCT_GB});
+                $rootScope.cartlist = $scope.productsList;
+                alert('장바구니에 등록되었습니다');
+
+                $location.url('store/cart/list/'+$rootScope.cartlist);
+            }else{
+
+                console.log(list.NO);
+                $scope.productsList.push({"MAIN_FILE": list.MAIN_FILE, "PRODUCT_NO" : list.NO, "PRODUCT_NM" : list.PRODUCT_NM , "PRICE" : list.DIRECT_PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : list.DIRECT_PRICE, "DELEIVERY_PRICE" : list.DELEIVERY_PRICE, "DELEIVERY_ST" : list.DELEIVERY_ST, "PRODUCT_GB" : list.PRODUCT_GB});
+
+                $scope.item.CART = $scope.productsList;
+
+                $scope.insertItem('ange/cart', 'item', $scope.item, false)
+                    .then(function(){
+                        //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
+                        //$scope.openViewScrapModal($scope.item.CART, 'lg');
+
+                        alert('장바구니에 등록되었습니다');
+
+                        $location.url('store/cart/list/'+$stateParams.menu);
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }
         }
 
 

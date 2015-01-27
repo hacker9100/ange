@@ -148,9 +148,9 @@ switch ($_method) {
 
             }
 
-/*            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
-            }*/
+            /*            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
+                            $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
+                        }*/
 
             if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                 $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
@@ -161,9 +161,9 @@ switch ($_method) {
 //                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
 //                }
 
-                if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
-                }
+            if (isset($_page)) {
+                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+            }
 
             $sql = "SELECT
                         NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, TOTAL_COUNT, PERIOD, ORDER_YN, DIRECT_PRICE,AUCTION_AMOUNT,AUCTION_COUNT
@@ -311,263 +311,24 @@ switch ($_method) {
             $err = 0;
             $msg = "";
 
-            if( trim($_model[PRODUCT_NM]) == "" ){
-                $_d->failEnd("상품명을 작성 하세요");
-            }
-
-            $upload_path = '../../../upload/files/';
-            $file_path = '/storage/product/';
-            $source_path = '../../..'.$file_path;
-            $insert_path = array();
-
-            $body_str = $_model[BODY];
-
-            try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
-                    if (!file_exists($source_path) && !is_dir($source_path)) {
-                        @mkdir($source_path);
-                        @mkdir($source_path.'thumbnail/');
-                        @mkdir($source_path.'medium/');
-                    }
-
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                        $file = $files[$i];
-
-                        if (file_exists($upload_path.$file[name])) {
-                            $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-
-                            if ($file[version] == 6 ) {
-                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
-                            } else {
-                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-                            }
-
-                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
-
-                            MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
-
-
-                        }
-                    }
-                }
-
-                $_model[BODY] = $body_str;
-            } catch(Exception $e) {
-                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-                break;
-            }
-
             $_d->sql_beginTransaction();
 
-            $sql = "INSERT INTO ANGE_PRODUCT
-                        (
-                            PRODUCT_NM,
-                            PRODUCT_GB,
-                            COMPANY_NO,
-                            COMPANY_NM,
-                            BODY,
-                            URL,
-                            PRICE,
-                            SUM_IN_CNT,
-                            SUM_OUT_CNT,
-                            NOTE,
-                            DELEIVERY_PRICE,
-                            DELEIVERY_ST
-                        ) VALUES (
-                            '".$_model[PRODUCT_NM]."',
-                            '".$_model[PRODUCT_GB][value]."',
-                            '".$_model[COMPANY_NO]."',
-                            '".$_model[COMPANY_NM]."',
-                            '".$_model[BODY]."',
-                            '".$_model[URL]."',
-                            '".$_model[PRICE]."',
-                            '".$_model[SUM_IN_CNT]."',
-                            '".$_model[SUM_OUT_CNT]."',
-                            '".$_model[NOTE]."',
-                            '".$_model[DELEIVERY_PRICE]."',
-                            '".$_model[DELEIVERY_ST]."'
-                        )";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            $sql = "INSERT INTO ANGE_PRODUCT_STOCK
+            $sql = "INSERT INTO ANGE_AUCTION
                         (
                             PRODUCT_NO,
-                            IN_OUT_GB,
-                            IN_OUT_ST,
-                            IN_OUT_CNT,
+                            AMOUNT,
+                            USER_ID,
+                            NICK_NM,
                             REG_DT
                         ) VALUES (
-                            '".$no."',
-                            'IN',
-                            '0',
-                            ".$_model[SUM_IN_CNT].",
+                            ".$_model[NO].",
+                            100,
+                            '".$_SESSION['uid']."',
+                            '".$_SESSION['nick']."',
                             SYSDATE()
                         )";
 
             $_d->sql_query($sql);
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
-
-                for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                    $file = $files[$i];
-                    MtUtil::_c("------------>>>>> file : ".$file['name']);
-                    MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
-
-                    if(strtoupper($file[kind]) != 'MAIN'){
-                        $_d->failEnd("대표이미지를 선택하세요.");
-                    }
-
-                    $sql = "INSERT INTO FILE
-                        (
-                            FILE_NM
-                            ,FILE_ID
-                            ,PATH
-                            ,FILE_EXT
-                            ,FILE_SIZE
-                            ,THUMB_FL
-                            ,REG_DT
-                            ,FILE_ST
-                            ,FILE_GB
-                        ) VALUES (
-                            '".$file[name]."'
-                            , '".$insert_path[$i][uid]."'
-                            , '".$insert_path[$i][path]."'
-                            , '".$file[type]."'
-                            , '".$file[size]."'
-                            , '0'
-                            , SYSDATE()
-                            , 'C'
-                            , '".$file[kind]."'
-                        )";
-
-                    $_d->sql_query($sql);
-                    $file_no = $_d->mysql_insert_id;
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO CONTENT_SOURCE
-                        (
-                            TARGET_NO
-                            ,SOURCE_NO
-                            ,CONTENT_GB
-                            ,TARGET_GB
-                            ,SORT_IDX
-                        ) VALUES (
-                            '".$no."'
-                            , '".$file_no."'
-                            , 'FILE'
-                            , 'PRODUCT'
-                            , '".$i."'
-                        )";
-
-                    $_d->sql_query($sql);
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-                }
-            }
-
-            MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
-
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            }else{
-                $sql = "INSERT INTO ANGE_HISTORY
-                        (
-                            WORK_ID
-                            ,WORK_GB
-                            ,WORK_DT
-                            ,WORKER_ID
-                            ,OBJECT_ID
-                            ,OBJECT_GB
-                            ,ACTION_GB
-                            ,IP
-                            ,ACTION_PLACE
-                        ) VALUES (
-                            '".$_model[WORK_ID]."'
-                            ,'CREATE'
-                            ,SYSDATE()
-                            ,'".$_SESSION['uid']."'
-                            ,'.$no.'
-                            ,'PRODUCT'
-                            ,'CREATE'
-                            ,'".$ip."'
-                            ,'/product/edit'
-                        )";
-
-                $_d->sql_query($sql);
-
-                $_d->sql_commit();
-                $_d->succEnd($no);
-            }
-        } else if ($_type == 'stock') {
-
-            $err = 0;
-            $msg = "";
-
-            $_d->sql_beginTransaction();
-
-            $sql = "INSERT INTO ANGE_PRODUCT_STOCK
-                    (
-                        PRODUCT_NO,
-                        IN_OUT_GB,
-                        IN_OUT_ST,
-                        IN_OUT_CNT,
-                        REG_DT
-                    ) VALUES (
-                        '".$_model[PRODUCT_NO]."',
-                        '".$_model[IN_OUT_GB]."',
-                        '0',
-                        '".$_model[IN_OUT_CNT]."',
-                        SYSDATE()
-                    )";
-
-            $_d->sql_query($sql);
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            $update_set = '';
-
-            if ($_model[IN_OUT_GB] == 'IN') {
-                $update_set = "SUM_IN_CNT = SUM_IN_CNT + ".$_model[IN_OUT_CNT];
-            } else {
-                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT + ".$_model[IN_OUT_CNT];
-            }
-
-            $sql = "UPDATE ANGE_PRODUCT
-                    SET
-                        ".$update_set."
-                    WHERE
-                        NO = ".$_model[PRODUCT_NO]."
-                ";
-
-            $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
@@ -575,40 +336,13 @@ switch ($_method) {
                 $msg = $_d->mysql_error;
             }
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            }else{
-                $sql = "INSERT INTO ANGE_HISTORY
-                        (
-                            WORK_ID
-                            ,WORK_GB
-                            ,WORK_DT
-                            ,WORKER_ID
-                            ,OBJECT_ID
-                            ,OBJECT_GB
-                            ,ACTION_GB
-                            ,IP
-                            ,ACTION_PLACE
-                        ) VALUES (
-                            '".$_model[WORK_ID]."'
-                            ,'STOCK'
-                            ,SYSDATE()
-                            ,'".$_SESSION['uid']."'
-                            ,'.$no.'
-                            ,'PRODUCT'
-                            ,'".$_model[IN_OUT_GB]."'
-                            ,'".$ip."'
-                            ,'/product/list'
-                        )";
 
-                $_d->sql_query($sql);
+            $_d->sql_query($sql);
 
-                $_d->sql_commit();
-                $_d->succEnd($no);
-            }
+            $_d->sql_commit();
+            $_d->succEnd($no);
+
         }
-
         break;
 
     case "PUT":

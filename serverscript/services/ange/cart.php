@@ -215,126 +215,126 @@ switch ($_method) {
         $err = 0;
         $msg = "";
 
-        if( trim($_model[PRODUCT_NM]) == "" ){
+        /*if( trim($_model[PRODUCT_NM]) == "" ){
             $_d->failEnd("상품명을 작성 하세요");
-        }
+        }*/
 
         $upload_path = '../../../upload/files/';
         $file_path = '/storage/product/';
         $source_path = '../../..'.$file_path;
         $insert_path = array();
 
-        $body_str = $_model[BODY];
+            $body_str = $_model[BODY];
 
-        try {
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
-                if (!file_exists($source_path) && !is_dir($source_path)) {
-                    @mkdir($source_path);
-                    @mkdir($source_path.'thumbnail/');
-                    @mkdir($source_path.'medium/');
+            try {
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
+                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                        @mkdir($source_path);
+                        @mkdir($source_path.'thumbnail/');
+                        @mkdir($source_path.'medium/');
+                    }
+
+                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        $file = $files[$i];
+
+                        if (file_exists($upload_path.$file[name])) {
+                            $uid = uniqid();
+                            rename($upload_path.$file[name], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+
+                            if ($file[version] == 6 ) {
+                                $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                            } else {
+                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                            }
+
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+
+                            MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+
+
+                        }
+                    }
                 }
 
-                for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                    $file = $files[$i];
+                $_model[BODY] = $body_str;
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
 
-                    if (file_exists($upload_path.$file[name])) {
-                        $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+            $_d->sql_beginTransaction();
+            if (isset($_model[CART]) && $_model[CART] != "") {
+                foreach ($_model[CART] as $e) {
 
-                        if ($file[version] == 6 ) {
-                            $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
-                        } else {
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-                        }
+                if( trim($e[PRODUCT_CNT]) == "" ){
+                    $_d->failEnd("수량을 선택 하세요");
+                }
 
-                        $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                $sql = "INSERT INTO ANGE_CART
+                            (
+                                USER_ID,
+                                PRODUCT_NO,
+                                PRODUCT_CNT,
+                                REG_DT
+                            ) VALUES (
+                               '".$_SESSION['uid']."',
+                                ".$e[PRODUCT_NO].",
+                                ".$e[PRODUCT_CNT].",
+                                SYSDATE()
+                            )";
 
-                        MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                    $_d->sql_query($sql);
 
-
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
                     }
                 }
             }
 
-            $_model[BODY] = $body_str;
-        } catch(Exception $e) {
-            $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-            break;
-        }
 
-        $_d->sql_beginTransaction();
-        if (isset($_model[CART]) && $_model[CART] != "") {
-            foreach ($_model[CART] as $e) {
-
-            if( trim($e[PRODUCT_CNT]) == "" ){
-                $_d->failEnd("수량을 선택 하세요");
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
             }
 
-            $sql = "INSERT INTO ANGE_CART
+            MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            }else{
+                $sql = "INSERT INTO CMS_HISTORY
                         (
-                            USER_ID,
-                            PRODUCT_NO,
-                            PRODUCT_CNT,
-                            REG_DT
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
                         ) VALUES (
-                           '".$_SESSION['uid']."',
-                            ".$e[PRODUCT_NO].",
-                            ".$e[PRODUCT_CNT].",
-                            SYSDATE()
+                            '".$_model[WORK_ID]."'
+                            ,'CREATE'
+                            ,SYSDATE()
+                            ,'".$_SESSION['uid']."'
+                            ,'.$no.'
+                            ,'BOARD'
+                            ,'CREATE'
+                            ,'".$ip."'
+                            ,'/webboard'
                         )";
 
                 $_d->sql_query($sql);
 
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
+                $_d->sql_commit();
+                $_d->succEnd($no);
             }
-        }
-
-
-        if($_d->mysql_errno > 0) {
-            $err++;
-            $msg = $_d->mysql_error;
-        }
-
-        MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
-
-        if($err > 0){
-            $_d->sql_rollback();
-            $_d->failEnd("등록실패입니다:".$msg);
-        }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'CREATE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$no.'
-                        ,'BOARD'
-                        ,'CREATE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-            $_d->sql_query($sql);
-
-            $_d->sql_commit();
-            $_d->succEnd($no);
-        }
 
         break;
 

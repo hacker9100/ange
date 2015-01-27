@@ -50,10 +50,12 @@ define([
         $scope.init = function() {
 
             if($rootScope.uid == '' || $rootScope.uid == null){
-                $scope.step = '01';
-            }else {
                 $scope.step = '02';
+                $scope.orderlist();
+            }else {
+                $scope.step = '01';
             }
+
             $scope.community = "찜목록";
 
         };
@@ -79,7 +81,7 @@ define([
         $scope.cartList = function (){
 
             if($rootScope.uid == null || $rootScope.uid == ''){
-                $scope.list = $rootScope.cartlist;
+                $scope.mileagelist = $rootScope.cartlist;
             }else{
                 $scope.search.FILE = true;
 
@@ -111,7 +113,7 @@ define([
         $scope.cartCummerceList = function (){
 
             if($rootScope.uid == null || $rootScope.uid == ''){
-                $scope.list = $rootScope.cartlist;
+                $scope.cummercelist = $rootScope.cartlist;
             }else{
                 $scope.search.FILE = true;
 
@@ -263,7 +265,11 @@ define([
             console.log($rootScope.user_info);
             console.log($rootScope.uid);
 
-            $scope.list = $rootScope.orderlist;
+            if($rootScope.uid == '' || $rootScope.uid == null){
+                $scope.list = $rootScope.cartlist;
+            }else{
+                $scope.list = $rootScope.orderlist;
+            }
 
             if($rootScope.uid != '' && $rootScope.uid != null){
                 $scope.item.USER_ID = $rootScope.user_info.USER_ID;
@@ -277,7 +283,6 @@ define([
                 $scope.item.RECEIPT_ADDR1 = $rootScope.user_info.ADDR;
                 $scope.item.RECEIPT_ADDR_DETAIL1 = $rootScope.user_info.ADDR_DETAIL;
             }
-
 
             $scope.TOTAL_SUM_PRICE = 0;
             $scope.TOTAL_DELEIVERY_PRICE = 0;
@@ -339,8 +344,8 @@ define([
         /********** 이벤트 **********/
 
         $scope.init();
+
         $scope.cartList();
         $scope.cartCummerceList();
-
     }]);
 });

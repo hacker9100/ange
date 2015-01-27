@@ -52,7 +52,7 @@ define([
 
             //$("#tabs-"+idx).focus();
 
-            $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
+            //$("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
         };
 
         // 초기화
