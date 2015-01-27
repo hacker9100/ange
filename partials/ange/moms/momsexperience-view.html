@@ -23,7 +23,7 @@
 <div class="row webzine_moms_list">
     <div class="col-xs-12 v-cell-4" style="margin:0px;">
         <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
-            <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}"  style="height: 155px;" class="webzine_moms_featureimg"></div>
+            <div class="item" style="position:absolute;"><img ng-src="{{item.THUMB_FILE}}"  style="height: 155px;" class="webzine_moms_featureimg"></div>
             <div class="webzine_list_title">
                 {{item.SUBJECT}}
 
@@ -479,12 +479,8 @@
 
 </div>
 
-<div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
-    <div class="row">
-        <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
-            우측바
-        </div>
-    </div>
+<div class="subar sub-slide1">
+    <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
 </div>
 
 <!-- /Main Page Layout Set -->
