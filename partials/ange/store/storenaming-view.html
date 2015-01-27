@@ -1,0 +1,159 @@
+<div ng-controller="storenaming-view">
+<!-- mainbar -->
+    <div class="mainbar sub-slide0">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+        <div class="row">
+
+        <div class="col-xs-12 v-cell-3">
+        <div class="comp_basic h-cell-dynamic">
+
+        <div class="sub_contents_wrap">
+
+            <div class="sub_contents_title">
+                <span class="sub_contents_bullet"></span>
+                <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a></h3>
+            </div>
+        </div><!-- /.sub_contents_wrap -->
+
+        <div ng-model="item" class="sub_contents_body">
+
+        <!-- peopleboard_view -->
+        <div class="people_view_wrap">
+
+        <div class="container-fluid peopleboard_view_topwrap">
+
+
+            <div class="row peopleboard_view_basicinfo">
+                <div class="col-xs-2 board_basicinfo_label">
+                    제목
+                </div><!-- /.col-xs-2-->
+                <div class="col-xs-10  board_basicinfo_subject">
+                    {{item.SUBJECT}}
+                </div><!-- /.col-xs-10-->
+            </div><!-- /.row -->
+
+
+            <div class="row peopleboard_view_basicinfo">
+                <div class="col-xs-2  board_basicinfo_label">
+                    작성자
+                </div><!-- /.col-xs-2-->
+                <div class="col-xs-4 board_basicinfo_subject">
+                    {{item.NICK_NM}}
+                </div><!-- /.col-xs-4-->
+                <div class="col-xs-1  board_basicinfo_label">
+                    작성일
+                </div><!-- /.col-xs-2-->
+                <div class="col-xs-5 board_basicinfo_subject date">
+                    {{item.REG_DT}}
+                </div><!-- /.col-xs-4-->
+            </div><!-- /.row -->
+
+
+        </div><!-- /.container -->
+
+
+        <div class="container-fluid peopleboard_view_contentwrap">
+            <div class="row">
+                <div class="col-xs-12 peopleboard_view_contentbody">
+
+                    <!-- Editor CSS 적용 -->
+                    <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>
+                    <!-- Editor CSS 적용 -->
+
+                </div><!-- /.col-12-->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+
+
+        <div class="container-fluid people_view_btnwrap">
+            <div class="row">
+                <div class="col-xs-4">
+                    <a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>
+                </div>
+
+                <div class="col-xs-8" ng-show="uid == item.REG_UID && uid != '' && uid != null">
+                    <a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
+                    <a class="btn people_btn confirm" title="확인" style="display:block;" ng-click="click_showPeopleBoardList();">확인</a>
+                    <a class="btn people_btn submit" title="등록하기" style="display:none;">등록</a>
+                    <a class="btn people_btn cancel" title="작성취소" style="display:none;">취소</a>
+                    <a class="btn people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeopleBoardEdit(item);">수정</a>
+                    <a class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeopleBoardDelete(item);">삭제</a>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+
+        <div class="container-fluid peopleboard_view_otherswrap">
+
+            <div class="row peopleboard_view_others">
+                <div class="col-xs-2 board_basicinfo_label">
+                    <span class="glyphicon glyphicon-chevron-up"></span> 이전글
+                </div><!-- /.col-xs-2-->
+                <div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">
+                    <a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>
+                </div><!-- /.col-xs-10-->
+                <div data-ng-show="preBoardView == false" class="col-xs-10  board_basicinfo_subject">
+                    이전 글이 없습니다
+                </div><!-- /.col-xs-10-->
+            </div><!-- /.row -->
+
+            <div class="row peopleboard_view_others">
+                <div class="col-xs-2  board_basicinfo_label">
+                    <span class="glyphicon glyphicon-chevron-down"></span> 다음글
+                </div><!-- /.col-xs-2-->
+                <div data-ng-show="nextBoardView != ''" class="col-xs-10 board_basicinfo_subject">
+                    <a data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>
+                </div><!-- /.col-xs-10-->
+                <div data-ng-show="nextBoardView == false || nextBoardView == '' || nextBoardView == null" class="col-xs-10 board_basicinfo_subject">
+                    다음 글이 없습니다
+                </div><!-- /.col-xs-10-->
+            </div><!-- /.row -->
+
+        </div><!-- /.container -->
+        </div>
+        </div>
+        <!-- /peopleboard_view -->
+
+        </div>
+        <!-- /peopleboard_edit -->
+        </div><!-- /.sub_contents_body -->
+
+        <div class="sub_contents_ads" style="display:none;">
+            <div>
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+    </div> <!-- rows -->
+
+</div><!-- container-fluid -->
+
+    <!-- 1200px 이하일 경우 표시되는 footer -->
+    <div class="copyright_foot">
+        <br /><br />
+        <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+            <hr style="margin:0 15px 0 15px;" />
+
+            <center>
+                <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+            </center>
+        </nav>
+    </div>
+    <!-- /1200px 이하일 경우 표시되는 footer -->
+
+</div>
+
+<div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
+    <div class="row">
+        <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
+            우측바
+        </div>
+    </div>
+</div>
+<!-- /Main Page Layout Set -->
+
+

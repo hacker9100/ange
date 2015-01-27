@@ -1,0 +1,307 @@
+<div ng-controller="myangeorderstatus">
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+            <div class="row">
+
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
+
+                        <div class="sub_contents_wrap">
+
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
+                            </div>
+
+                            <div class="container-fluid sub_contents_search">
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding:0">
+                                        <div class="btn-group" style="float:left;">
+                                            <!--<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>-->
+                                            기간검색
+                                            <input  type="text" ng-model="search.START_DT" placeholder="2015-01-17" />&nbsp;&nbsp;~ <!--my-datepicker-->
+                                            <input  type="text" ng-model="search.END_DT" placeholder="2015-01-17" /> <!--my-datepicker-->
+
+                                        </div><!-- /btn-group -->
+                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
+                                            <input type="text" ng-model="search.PRODUCT_NM" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+
+												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+												</span>
+
+                                        </div>
+
+                                        <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" />
+                                                </span>
+                                                <input type="text" class="form-control table_filtercheck" placeholder="진행중" style="background:#fff; padding-top: 2px; cursor:default; font-size: 0.86em;" disabled />
+                                            </div>
+                                        </div -->
+
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
+                        </div><!-- /.sub_contents_wrap -->
+
+
+                        <div class="sub_contents_body">
+
+                            <table id="comp_board_table" class="table table-hover">
+
+                                <thead>
+                                <tr class="board_thead" height="48">
+                                    <td align="center"><span class="board_th">처리일자</span></td>
+                                    <td align="center"><span class="board_th">주문번호/주문상품</span></td>
+                                    <td width="20%" align="center"><span class="board_th">구매금액</span></td>
+                                    <td width="10%" align="center"><span class="board_th">상태</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody class="on" ng-repeat="item in list">
+
+                                <tr ng-click="click_counsel_view(item)"> <!--ng-click="click_showViewPeopleBoard(item.NO)"-->
+                                    <td class="table_no">
+                                        <span>{{item.REG_DT}}</span>
+                                    </td>
+                                    <td>
+                                        <img class="thumbnails_img" style="width:80px; height:80px;" ng-src="{{item.MAIN_FILE}}" />
+                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                        <!--{{item.PRODUCT_NO}}-->
+                                        [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '커머스'}}]{{item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                    </td>
+                                    <td  class="table_author">{{item.SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                    <td class="table_date">{{item.PROGRESS_ST_NM}}</td>
+                                </tr>
+
+                                </tbody>
+
+                                <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                <tr>
+                                    <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                                </tr>
+
+                                </tbody>
+                            </table><!-- /.List-->
+
+                            <nav class="text-center">
+                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+
+                                <!--<ul class="pagination pagination-sm table_paging">-->
+                                <!--<li class="disabled">-->
+                                <!--<a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>-->
+                                <!--</li>-->
+                                <!--<li class="disabled">-->
+                                <!--<a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>-->
+                                <!--</li>-->
+                                <!--<li class="active"><a href="#">1</a></li>-->
+                                <!--<li><a href="#">2</a></li>-->
+                                <!--<li><a href="#">3</a></li>-->
+                                <!--<li><a href="#">4</a></li>-->
+                                <!--<li><a href="#">5</a></li>-->
+                                <!--<li>-->
+                                <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>-->
+                                <!--</li>-->
+                                <!--<li>-->
+                                <!--<a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>-->
+                                <!--</li>-->
+                                <!--</ul>-->
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                        </div><!-- /.sub_contents_body -->
+
+                        <!--<div ng-show="uid != '' && uid != null" ng-click="test()">세션이 있을때만 보입니다.</div>
+                        <div ng-show="uid == '' || uid == null" ng-click="test()">세션이 없을때 보입니다.</div>   -->
+
+                        <div class="sub_contents_ads" style="display:none;">
+                            <div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> <!-- rows -->
+
+
+        </div><!-- container-fluid -->
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div class="copyright_foot">
+            <br /><br />
+            <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+                <hr style="margin:0 15px 0 15px;" />
+
+                <center>
+                    <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+                </center>
+            </nav>
+        </div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
+
+    </div>
+
+    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
+        <div class="row">
+            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
+                우측바
+            </div>
+        </div>
+    </div>
+
+    <!-- /Main Page Layout Set -->
+</div>
+
+
+<script type="text/ng-template" id="order_counsel_view.html">
+<div class="modal-header">
+    <h3 class="modal-title">일대일상담 상태변경신청</h3>
+    <br/>
+</div>
+
+<div class="modal-header" style="margin-left: 15px;">
+    <ul>
+        <li>문의하실 분야를 선택하시군 후 내용을 입력하신 다음 [신청하기]버튼을 눌러주세요.</li>
+        <li>한번 등록한 상담내용은 수정이 불가능합니다.</li>
+        <li>이메일 및 휴대폰 정보로 답변이 발송됩니다.</li>
+    </ul>
+</div>
+
+<div class="modal-body">
+    <div class="body_wrap">
+        <!--<div class="panel panel-master contentpannel" style="border:#000000; display:block;">-->
+
+        <table id="comp_board_table" class="table table-hover">
+            <tr>
+                <td style="vertical-align: middle" rowspan="4">문의문야</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle">쇼핑몰 구매 관련</td>
+                <td colspan="2">
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="1" ng-click="radio_change(1);"/>주문취소&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="2" ng-click="radio_change(2);"/>환불&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="3" ng-click="radio_change(3);"/>교환&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="4" ng-click="radio_change(4);"/>반품&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="5" ng-click="radio_change(5);"/>상품관련&nbsp;&nbsp;&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle">네이밍 서비스 관련</td>
+                <td colspan="2">
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="6" ng-click="radio_change(6);"/>서비스신청&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="7" ng-click="radio_change(7);"/>신청서비스전환&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="8" ng-click="radio_change(8);"/>기타문의&nbsp;&nbsp;&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle">일반상담</td>
+                <td colspan="2">
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="9" ng-click="radio_change(9);"/>회원정보&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="10" ng-click="radio_change(10);"/>마일리지&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="11" ng-click="radio_change(11);"/>시스템&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="12"  ng-click="radio_change(11);"/>결제&nbsp;&nbsp;&nbsp;
+                    <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" disabled value="13" ng-click="radio_change(13);"/>기타&nbsp;&nbsp;&nbsp;
+                </td>
+            </tr>
+            <tr id="product_info">
+                <td style="vertical-align: middle">상품정보</td>
+                <td colspan="3">
+                    <!--<input type="hidden" ng-model="item.PRODUCT_NM" class="form-group"/>-->
+                    <select ng-options="p.PRODUCT_CODE for p in productnolist" disabled ng-model="item.PRODUCT_CODE" style="float:left; width:20%;" class="form-control input-sm" ng-change="searchProductNm(item.PRODUCT_NO)">
+                        <option value="" selected>선택</option>
+                    </select>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <select ng-options="v.PRODUCT_NM for v in productnmlist" disabled ng-model="item.PRODUCT" style="float:left; width:50%;" class="form-control input-sm">
+                        <option value="" selected>선택</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="product_change">
+                <td style="vertical-align: middle">상품전환</td>
+                <td colspan="3">
+                    <select ng-options="v.PRODUCT_NM for v in namingnolist" disabled ng-model="item.CHANGE_PRODUCT" class="form-control input-sm">
+                        <option value="" selected>선택</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle">상담자</td>
+                <td>{{name}}</td>
+                <td style="vertical-align: middle">아이디</td>
+                <td>{{uid}}</td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle">이메일</td>
+                <td>{{user_info.EMAIL}}</td>
+                <td style="vertical-align: middle">휴대푠</td>
+                <td>{{user_info.PHONE_2}}</td>
+            </tr>
+            <tr class="product_note">
+                <td style="vertical-align: middle">제목</td>
+                <td colspan="3"><input ng-model="item.SUBJECT" type="text" readonly="readonly" class="input-sm form-control" placeholder="제목을 입력하세요"></td>
+            </tr>
+            <tr class="product_note">
+                <td style="vertical-align: middle">내용</td>
+                <td colspan="3">
+
+                    <!-- /file drag-in Box -->
+                    <div class="container-fluid peopleboard_view_contentwrap">
+                        <div class="row">
+                            <div class="col-xs-12 peopleboard_view_contentbody">
+
+                                <!-- Editor CSS 적용 -->
+                                <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>
+
+                                <!--<p>산부인과와 산후조리원에 관한 앙쥬폴 떳네요.</p>-->
+                                <!--<p>얼른하고왔어요</p>-->
+                                <!--<p>참여인수가 3명이니..</p>-->
+                                <!--<p>이제 올라온지 얼마 안되서 그런가봐여</p>-->
+                                <!--<p>얼른하시고 마일리지 적립받으세요.ㅎㅎ</p>-->
+                                <!--<p>아아..좀만 더더 노력하면 앞자리 숫자 바뀔듯한데</p>-->
+                                <!--<p>힘드네요....</p>-->
+                                <!--<p>&nbsp;</p>-->
+                                <!--<p>아아 앙플이 전같지 않고</p>-->
+                                <!--<p>또 말일 다가오니 다들 주춤모드 같고</p>-->
+                                <!--<p>확실히 글도 많지 않고</p>-->
+                                <!--<p>그리고 앙플기간인데도 불구하고 랭킹이 떨어졌다는 것도 참....</p>-->
+
+                                <!-- Editor CSS 적용 -->
+
+                            </div><!-- /.col-12-->
+                        </div><!-- /.row -->
+                    </div><!-- /.container -->
+                    <!-- /Ediotr  Box -->
+                </td>
+            </tr>
+            <tr id="product_notice">
+                <td style="vertical-align: middle">유의사항</td>
+                <td colspan="3">
+                    <ul>
+                        <li>네이밍서비스 실시간/셀프작명 신청시 스페셜 또는 프리미엄 작명으로 전환가능합니다.</li>
+                        <li>스페셜 또는 프리미엄 작명서비스로 전환신청시 이전 신청 서비스는 사용하실 수 없습니다.</li>
+                        <li>서비스별 차액비용이 발생합니다.</li>
+                        <li>하단 [등록]시 결제창으로 이동합니다.</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+
+        <!--</div>-->
+    </div>
+</div>
+
+<div class="modal-footer">
+    <!--<button class="btn btn-primary" ng-click="click_savecounsel();">신청하기</button>-->
+    <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+    <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+</div>
+</script>
