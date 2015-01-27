@@ -30,7 +30,7 @@
 
     switch ($_method) {
         case "GET":
-            if ($_type == 'item') {
+            if (isset($_key) && $_key != "") {
                 $sql = "SELECT
                             MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
                         FROM
@@ -62,118 +62,85 @@
                 } else {
                     $_d->dataEnd2($data);
                 }
-            } else if ($_type == 'channel') {
+            } else {
                 $where_search = "";
 
-                if (isset($_search[CHANNEL_NO]) && $_search[CHANNEL_NO] != "") {
-                    $where_search .= "AND CHANNEL_NO = '".$_search[CHANNEL_NO]."' ";
-                }
+                if (isset($_search[CHANNEL_GB]) && $_search[CHANNEL_GB] != "") {
 
-                $sql = "SELECT
-                            CHANNEL_NO, CHANNEL_ID, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION, COLUMN_CNT
-                        FROM
-                            COM_CHANNEL
-                        WHERE
-                            SYSTEM_GB  = '".$_search[CHANNEL_GB]."'
-                            ".$where_search."
-                        ORDER BY CHANNEL_NO ASC
-                        ";
+                    $sql = "SELECT
+                                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, CHANNEL_GB, DROP_FL, POSITION
+                            FROM
+                                COM_CHANNEL
+                            WHERE
+                                CHANNEL_GB  = '".$_search[CHANNEL_GB]."'
+                            ORDER BY CHANNEL_NO ASC
+                            ";
 
-                $__trn = '';
-                $result = $_d->sql_query($sql,true);
-                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                    $__trn = '';
+                    $result = $_d->sql_query($sql,true);
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-                    if ($_search[MENU]) {
                         $sql = "SELECT
-                                    MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC
+                                    MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
                                 FROM
                                     COM_MENU
                                 WHERE
-                                    SYSTEM_GB  = '".$_search[CHANNEL_GB]."'
-                                    AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
-                                ORDER BY MENU_ORD ASC
+                                    CHANNEL_NO  = '".$row[CHANNEL_NO]."'
+                                ORDER BY SORT_IDX ASC
                                 ";
 
                         $menu_data = $_d->getData($sql);
                         $row['MENU_INFO'] = $menu_data;
+
+                        $__trn->rows[$i] = $row;
                     }
+                    $_d->sql_free_result($result);
+                    $data = $__trn->{'rows'};
 
-                    $__trn->rows[$i] = $row;
-                }
-                $_d->sql_free_result($result);
-                $data = $__trn->{'rows'};
-
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd2($data);
-                }
-            } else if ($_type == 'menu') {
-                $where_search = "";
-
-                if (isset($_search[CHANNEL_NO]) && $_search[CHANNEL_NO] != "") {
-                    $where_search .= "AND CHANNEL_NO = '".$_search[CHANNEL_NO]."' ";
-                }
-
-                $sql = "SELECT
-                            MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_ORD, MENU_DESC, TAIL_DESC, ETC
-                        FROM
-                            COM_MENU
-                        WHERE
-                            SYSTEM_GB  = '".$_search[CHANNEL_GB]."'
-                            ".$where_search."
-                        ORDER BY MENU_ORD ASC
-                        ";
-
-                $__trn = '';
-                $result = $_d->sql_query($sql,true);
-                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-                    $in_str = "";
-                    $arr_category = explode(',', $row['ETC']);
-                    for($j=0;$j< sizeof($arr_category);$j++){
-                        $in_str = $in_str."'".trim($arr_category[$j])."'";
-                        if (sizeof($arr_category) - 1 != $j) $in_str = $in_str.",";
+                    if ($_d->mysql_errno > 0) {
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    } else {
+                        $_d->dataEnd2($data);
                     }
-
+                } else if (isset($_search[MENU_GB]) && $_search[MENU_GB] != "") {
                     $sql = "SELECT
-                                NO, PARENT_NO, CATEGORY_NM, CATEGORY_GB, CATEGORY_ST
+                                MENU_URL, CHANNEL_NO, MENU_NM, MENU_GB, MENU_DESC, TAIL_DESC
                             FROM
-                                CMS_CATEGORY
+                                COM_MENU
                             WHERE
-                                CATEGORY_ST = '0'
-                                AND NO IN (".$in_str.")
+                                MENU_GB  = '".$_search[MENU_GB]."'
+                            ORDER BY SORT_IDX ASC
                             ";
 
-                    $category_data = $_d->getData($sql);
-                    $row['CATEGORY'] = $category_data;
+                    $__trn = '';
+                    $result = $_d->sql_query($sql,true);
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-                    if ($_search[SUB_MENU]) {
                         $sql = "SELECT
-                                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, COLUMN_ORD, ROW_ORD
+                                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, SORT_IDX
                                 FROM
                                     COM_SUB_MENU
                                 WHERE
                                     MENU_URL = '".$row[MENU_URL]."'
-                                ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
+                                ORDER BY SORT_IDX ASC
                                 ";
 
                         $sub_menu_data = $_d->getData($sql);
                         $row['SUB_MENU_INFO'] = $sub_menu_data;
+
+                        $__trn->rows[$i] = $row;
                     }
+                    $_d->sql_free_result($result);
+                    $data = $__trn->{'rows'};
 
-                    $__trn->rows[$i] = $row;
-                }
-                $_d->sql_free_result($result);
-                $data = $__trn->{'rows'};
-
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    if ($_d->mysql_errno > 0) {
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    } else {
+                        $_d->dataEnd2($data);
+                    }
                 } else {
-                    $_d->dataEnd2($data);
+                    $_d->failEnd("조회실패입니다:");
                 }
-            } else {
-                $_d->failEnd("조회실패입니다:");
             }
 
             break;
@@ -186,6 +153,17 @@
             $msg = "";
 
             $_d->sql_beginTransaction();
+
+            $password = $_model[USER_ID];
+//            $iterations = 1000;
+//
+//            // Generate a random IV using mcrypt_create_iv(),
+//            // openssl_random_pseudo_bytes() or another suitable source of randomness
+//            $salt = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
+//
+//            $hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
+
+            $hash = create_hash($password);
 
             $sql = "INSERT INTO CMS_USER
                     (
@@ -251,65 +229,66 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            if ($_type == 'menu') {
+            $err = 0;
+            $msg = "";
 
-                $err = 0;
-                $msg = "";
+//            $FORM = json_decode(file_get_contents("php://input"),true);
+//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-                $_d->sql_beginTransaction();
+            $update_password = "";
 
-                $etc_str = "";
-                $categories = $_model[CATEGORY];
+            if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
+                $password = $_model[PASSWORD];
+                $hash = create_hash($password);
 
-                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
-                    $category = $categories[$i];
+                $update_password = ",PASSWORD = '".$hash."'";
+            }
 
-                    $etc_str .= $category[NO];
-                    if (sizeof($_model[CATEGORY]) - 1 != $i) $etc_str .= ",";
-                }
+            $_d->sql_beginTransaction();
 
-                $sql = "UPDATE COM_MENU
+            $sql = "UPDATE CMS_USER
+                    SET
+                        USER_NM = '".$_model[USER_NM]."'
+                        ".$update_password."
+                        ,USER_ST = '".$_model[USER_ST]."'
+                        ,PHONE = '".$_model[PHONE]."'
+                        ,EMAIL = '".$_model[EMAIL]."'
+                        ,NOTE = '".$_model[NOTE]."'
+                    WHERE
+                        USER_ID = '".$_key."'
+                    ";
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if (isset($_model[ROLE]) && $_model[ROLE] != "") {
+                $sql = "UPDATE USER_ROLE
                         SET
-                            MENU_NM = '".$_model[MENU_NM]."'
-                            ,DEPTH = '".$_model[DEPTH]."'
-                            #,MENU_ORD = '".$_model[MENU_ORD]."'
-                            ,ETC = '".$etc_str."'
+                            ROLE_ID = '".$_model[ROLE][ROLE_ID]."'
+                            ,REG_DT = SYSDATE()
                         WHERE
-                            MENU_URL = '".$_key."'
+                            USER_ID = '".$_key."'
                         ";
 
                 $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
 
                 if($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
                 }
+            }
 
-//                if (isset($_model[ROLE]) && $_model[ROLE] != "") {
-//                    $sql = "UPDATE USER_ROLE
-//                            SET
-//                                ROLE_ID = '".$_model[ROLE][ROLE_ID]."'
-//                                ,REG_DT = SYSDATE()
-//                            WHERE
-//                                USER_ID = '".$_key."'
-//                            ";
-//
-//                    $_d->sql_query($sql);
-//
-//                    if($_d->mysql_errno > 0) {
-//                        $err++;
-//                        $msg = $_d->mysql_error;
-//                    }
-//                }
-
-                if ($err > 0) {
-                    $_d->sql_rollback();
-                    $_d->failEnd("수정실패입니다:".$msg);
-                } else {
-                    $_d->sql_commit();
-                    $_d->succEnd($no);
-                }
+            if ($err > 0) {
+                $_d->sql_rollback();
+                $_d->failEnd("수정실패입니다:".$msg);
+            } else {
+                $_d->sql_commit();
+                $_d->succEnd($no);
             }
 
             break;

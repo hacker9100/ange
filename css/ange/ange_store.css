@@ -102,3 +102,195 @@
     background-repeat: no-repeat;
     background-position: right 25px top -75px;
 }
+
+/* cart & order */
+
+.cart_step_wrap{
+    position: relative;
+    width:100%;
+    height: 104px;
+    background-image: url('/imgs/ange/bg_store_topBG.png');
+    background-position: right top;
+    text-align: center;
+}
+
+.cart_step_no {
+    font-family: arial, sans-serif;
+    color: #adadad;
+    vertical-align: baseline;
+}
+.cart_step_title {
+    color: #adadad;
+    vertical-align: baseline;
+    font-size: 1.42em;
+}
+
+.cart_step_no.stepon {
+    color: #333;
+}
+.cart_step_title.stepon {
+    color: #0ba9d1;
+    font-weight: 600;
+}
+
+.cart_thumb {
+    width:100%;
+    /*border:1px solid #ddd;*/
+    margin-right:10px;
+    background-position:center center;
+    background-size: cover;
+}
+
+.cart_cacultop {
+    width:100%;
+    height:55px;
+    background-color:#f8f8f8;
+    border:1px solid #ddd;
+    border-bottom:1px dashed #ddd;
+}
+
+.cart_cacultop_cell {
+    float:left;
+    line-height:55px;
+    text-align:center;
+    font-weight:600;
+    color:#4d4d4d;
+    height:100%;
+    width:33.3%;
+}
+
+.cart_caculbody {
+    width:100%;
+    height:70px;
+    background-color:#fff;
+    border:1px solid #ddd;
+    border-top: none;
+    font-size:0.86em;
+}
+
+.cart_caculbody_cell {
+    float:left;
+    position:relative;
+    line-height:70px;
+    text-align:center;
+    font-weight:600;
+    color:#333;
+    height:100%;
+    width:33.3%;
+}
+
+.cart_cacultop_cell.bordered, .cart_caculbody_cell.bordered {
+    border-right:1px dashed #ddd;
+}
+
+.notenoughmileage {
+    position:absolute;
+    left:50%;
+    margin-left:-35px;
+    top:10px;
+    width:70px;
+    height:14px;
+    background-image:url('/imgs/ange/store_icon_notenoughmileage.png');
+    font-size:0.78em;
+}
+
+.cart_btn {
+    border: none;
+    background-color: #fff;
+    padding: 10px 18px;
+    border:1px solid #ddd;
+    border-radius: 4px;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.cart_btn:hover {
+    opacity: 1;
+}
+
+.cart_btn.line-black {
+    border:1px solid #666;
+}
+.cart_btn.line-red {
+    border:1px solid #f76363;
+    color: #f76363;
+}
+.cart_btn.solid-red {
+    border:1px solid #f76363;
+    background-color: #f76363;
+    color: #fff;
+}
+
+.cart_bodytxt {
+    font-size: 0.92em;
+    line-height:20px;
+}
+
+.cart_ordernum {
+    padding: 12px 50px;
+    margin-bottom:15px;
+    background-color: #ddd;
+    width:70%;
+    border:1px solid transparent;
+    font-size: 0.92em;
+    border-radius: 5px;
+    background-image: url('/imgs/ange/bg_cart_ordernum.jpg');
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+
+.maintitlebox {
+    font-size:1.94em;
+    color:#666;
+    padding-bottom:28px;
+    background-image: url('/imgs/ange/bg_titlebox_underlineptn.jpg');
+    background-repeat: repeat-x;
+    background-position: left bottom;
+
+}
+
+.namingservice_box{
+    position:relative;
+    width: 100%;
+    height: 125px;
+    margin-bottom: 20px;
+    background-image: url('/imgs/ange/bg_namingservice_box.jpg');
+    background-repeat: no-repeat;
+    background-position: right top;
+    cursor: pointer;
+    color: #464646;
+    word-break: keep-all;
+}
+
+.namingservice_box:hover{
+    background-position: right -125px;
+    color: #fff;
+}
+
+.namingservice_box.realtime .naming_icon{
+    position:absolute;
+    left:5%;
+    top:50%;
+    margin-top:-21px;
+}
+
+.namingservice_box.self .naming_icon{
+    position:absolute;
+    left:5%;
+    top:50%;
+    margin-top:-25px;
+}
+
+.namingservice_box.special .naming_icon{
+    position:absolute;
+    left:5%;
+    top:50%;
+    margin-top:-20px;
+}
+
+.namingservice_box.premium .naming_icon{
+    position:absolute;
+    left:2.5%;
+    top:50%;
+    margin-top:-27px;
+}

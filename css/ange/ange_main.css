@@ -450,8 +450,8 @@ div.mini_community_contents:hover {
 
 
 .mini_community_txt_title {
-	float:left; 
-	margin-left:5px;
+	float:left;
+    text-align: left;
 	color:#333333; 
 	line-height: 1.08em;
     overflow:hidden;

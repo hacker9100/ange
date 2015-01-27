@@ -22,6 +22,8 @@
 .webzine_moms_featureimg {
     width:250px;
     border:1px solid #d7d7d7;
+    background-size: cover;
+    background-position: center center;
 }
 
 .webzine_list_bottomwrap {

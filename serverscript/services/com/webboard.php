@@ -319,7 +319,7 @@
                         FROM COM_SUB_MENU
                         WHERE SYSTEM_GB = 'ANGE'
                           AND MENU_ID = 'infodesk'
-                          AND MENU_URL = CONCAT('/infodesk/faq/list')";
+                          AND MENU_URL = CONCAT('/infodesk/','".$_search[CATEGORY_GB]."','/list')";
 
                 $data = $_d->sql_query($sql);
 
