@@ -13,12 +13,12 @@ define(['./directives'], function (directives) {
 //            scope: true,
 //            replace: true,
             templateUrl: function(element, attr) {
-                var menu = element.scope().location.split('/');
+                var scope = element.scope();
+                var path = scope.location.split('/');
 
-                if (menu[1] == 'save') {
-                    menu[1] = 'user';
+                if (path[1] == 'save') {
+                    path[1] = 'user';
                 }
-
 //                if (menu[1] == 'archive' || menu[1] == 'article' || menu[1] == 'article-confirm' || menu[1] == 'edit' || menu[1] == 'edit-confirm') {
 //                    if (menu[2] == 'list') {
 //                        menu[1] = 'task';
@@ -26,7 +26,7 @@ define(['./directives'], function (directives) {
 //                        menu[1] = 'content';
 //                    }
 //                }
-                return '/partials/admin/'+menu[1]+'-'+menu[2]+'.html';
+                return '/partials/admin/'+path[1]+'-'+path[2]+'.html';
             }
         }
     }]);

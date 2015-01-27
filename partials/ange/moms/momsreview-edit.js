@@ -148,53 +148,29 @@ define([
                 $scope.menu = 'experiencereview';
             } else if ($stateParams.menu == 'samplereview') {
                 $scope.community = "샘플팩 후기";
-                $scope.item.TARGET_GB = 'SAMPLE';
+                $scope.item.JOIN_GB = 'SAMPLE';
                 $scope.menu = 'experiencereview';
             } else if ($stateParams.menu == 'samplepackreview') {
                 $scope.community = "앙쥬 샘플팩 후기";
-                $scope.search['TARGET_GB'] = 'SAMPLEPACK';
+                $scope.search['JOIN_GB'] = 'SAMPLEPACK';
                 $scope.menu = 'experiencereview';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.community = "이벤트 후기";
-                $scope.item.TARGET_GB = 'EVENT';
+                $scope.search.JOIN_GB = 'EVENT';
                 $scope.menu = 'experiencereview';
             }
-
-
-/*            if ($stateParams.menu == 'experiencereview') {
-
-                $scope.search.EVENT_GB = 'EXPERIENCE';
-                // 이벤트 및 서평단 / 체험단 셀렉트 박스 셋팅
-                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
-                    .then(function(data){
-                        $scope.event = data;
-                        $scope.item.TARGET_NO = data[0].SUBJECT;
-                        $scope.CNT = data[0].TOTAL_CNT;
-                    })
-                    .catch(function(error){alert(error)});
-            } else if ($stateParams.menu == 'eventreview') {
-
-                $scope.search.EVENT_GB = 'EVENT';
-                // 이벤트 및 서평단 / 체험단 셀렉트 박스 셋팅
-                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
-                    .then(function(data){
-                        $scope.event = data;
-                        $scope.item.TARGET_NO = data[0].SUBJECT;
-                        $scope.CNT = data[0].TOTAL_CNT;
-                    })
-                    .catch(function(error){alert(error)});
-            }*/
 
             $scope.search.USER_ID = true;
 
             if ($stateParams.id != 0) {
+
                 $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
-                    .then(function(data){
-                        $scope.event = data;
-                        var total_cnt = data[0].TOTAL_COUNT;
-                        $scope.total_cnt = total_cnt;
-                    })
-                    .catch(function(error){$scope.event = ""; $scope.total_cnt=0;});
+                .then(function(data){
+                    $scope.event = data;
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.total_cnt = total_cnt;
+                })
+                .catch(function(error){$scope.event = ""; $scope.total_cnt=0;});
             }else{
                 $scope.search.REVIEW_FL = true;
                 $scope.getList('ange/event', 'selectList', {}, $scope.search, false)

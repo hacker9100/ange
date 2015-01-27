@@ -1,13 +1,13 @@
 {
     "states": [
-        { "message": {
-            "url": "/message",
-            "templateUrl": "/partials/admin/message.html",
-            "controller": "message"
-        }},{ "signin": {
+        { "signin": {
             "url": "/signin",
             "templateUrl": "/partials/admin/signin.html",
             "controller": "signin"
+        }},{ "message": {
+            "url": "/message",
+            "templateUrl": "/partials/admin/message.html",
+            "controller": "message"
         }},{ "forgot-idpw": {
             "url": "/forgot-idpw",
             "templateUrl": "/partials/cms/forgot-idpw.html",

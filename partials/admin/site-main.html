@@ -1,0 +1,299 @@
+<div ng-controller="site-main">
+    <div>
+        <div class="col-md-6">
+            <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(0)">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>메인페이지 관리</span>
+            </button>
+            <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(1)">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>앙쥬스토리 메뉴관리</span>
+            </button>
+            <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(2)">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>앙쥬피플 메뉴관리</span>
+            </button>
+        </div>
+    </div>
+
+    <div ng-show="tab == 0" class= "form-group">
+        <table class="table">
+            <thead>
+            <tr style="background-color: #333; border-left:1px solid black;">
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">메뉴 ID</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">메뉴명</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">URL</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">유형</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">순번</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">기능</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in list0">
+                <td style="width:150px; font-size:0.94em; line-height:38px;">{{ item.MENU_ID }}</td>
+                <td style="font-size:0.94em; line-height:38px;">{{ item.TITLE }}</td>
+                <td style="font-size:0.94em; line-height:38px;">{{ item.SUB_MENU_URL }}</td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.COLUMN_ORD }}</td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.ROW_ORD }}</td>
+                <td style="width:200px; font-size:0.94em; line-height:38px;">
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="내용편집" ng-click="click_editSubMenu(item)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                    <a ng-click="click_showViewMenu(item.USER_ID)">V</a>
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-click="click_deleteMenu(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ng-show="tab == 1" class= "form-group">
+        <table class="table">
+            <thead>
+            <tr style="background-color: #333; border-left:1px solid black;">
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">채널</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">메뉴명</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">카테고리</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">유형</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">순번</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">기능</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in list1">
+                <td style="width:150px; font-size:0.94em; line-height:38px;">{{ item.CHANNEL_NO  }}</td>
+                <td style="font-size:0.94em; line-height:38px;">{{ item.MENU_NM }}</td>
+                <td style="width:400px; font-size:0.94em; line-height:38px;">
+                    <div class="bnt_ball_group" ng-repeat="category in item.CATEGORY">
+                        <button type="button" class="btn btn-default cate_ball_normal">
+                            {{ category.CATEGORY_NM }}
+                        </button>
+                    </div>
+                </td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.DEPTH }}</td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.MENU_ORD }}</td>
+                <td style="width:200px; font-size:0.94em; line-height:38px;">
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="내용편집" ng-click="click_editMenu(item)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                    <a ng-click="click_showViewMenu(item.USER_ID)">V</a>
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-click="click_deleteMenu(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-show="tab == 2" class= "form-group">
+        <table class="table">
+            <thead>
+            <tr style="background-color: #333; border-left:1px solid black;">
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">메뉴 ID</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">메뉴명</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">커뮤니티 구분</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">유형</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">순번</th>
+                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">기능</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in list2">
+                <td style="width:150px; font-size:0.94em; line-height:38px;">{{ item.MENU_ID  }}</td>
+                <td style="font-size:0.94em; line-height:38px;">{{ item.MENU_NM }}</td>
+                <td style="width:200px; font-size:0.94em; line-height:38px;">{{ item.COMM.COMM_GB }}</td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.DEPTH }}</td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.MENU_ORD }}</td>
+                <td style="width:200px; font-size:0.94em; line-height:38px;">
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="내용편집" ng-click="click_editMenu(item)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                    <a ng-click="click_showViewMenu(item.USER_ID)">V</a>
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-click="click_deleteMenu(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="list-group-item-labeling-gray" style="margin-bottom: 20px;">
+        <strong>Menu Detail</strong>
+    </div>
+
+    <div ng-show="tab == 0" class="col-md-12">
+        <div id="subItem" ng-model="subItem" class="row form_basic_wrap">
+            <form role="form" name="edit_form1" class="form-horizontal form_basic_100">
+                <div class="form-group form_basic_group" ng-class="{error: edit_form1.subItem_id.$invalid}">
+                    <label class= "form_basic_label">메뉴ID <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input id="subItem_id" name="subItem_id" ng-model="subItem.MENU_ID" type= "text" class= "form-control" placeholder="메뉴 ID" required/>
+                    </div>
+                </div>
+                <div class="form-group form_basic_group" ng-class="{error: edit_form1.subItem_url.$invalid}">
+                    <label class= "form_basic_label">메뉴URL <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input id="subItem_url" name="subItem_url" ng-model="subItem.MENU_URL" type= "text" class= "form-control" placeholder="메뉴 URL" required/>
+                    </div>
+                </div>
+                <div class="form-group form_basic_group" ng-class="{error: edit_form1.subItem_nm.$invalid}">
+                    <label class= "form_basic_label">메뉴명 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input id="subItem_nm" name="subItem_id" ng-model="subItem.TITLE" type= "text" class= "form-control" placeholder="메뉴명" required/>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">URL <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input ng-model="subItem.SUB_MENU_URL" type= "text" class= "form-control" placeholder="URL" required/>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">유형 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input ng-model="subItem.COLUMN_ORD" type= "text" class= "form-control" placeholder="유형" required/>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">순번 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input ng-model="subItem.ROW_ORD" type= "text" class= "form-control" placeholder="순번" required/>
+                    </div>
+                </div>
+            </form>
+            <form id="icon" name="icon" method="POST" enctype="multipart/form-data" data-file-upload="options">
+                <input type="hidden" id="version" name="version" value="1">
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">아이콘 이미지</label>
+                    <div class="row" style="margin-left:110px;">
+                        <div class="col-sm-2">
+                            <div ng-model="file1">
+                                <input ng-model="file1.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 files">
+                            <!-- The fileinput-button span is used to style the file input field as button -->
+                            <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>탐색기</span>
+                                <input type="file" name="files[]" ng-disabled="disabled">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form id="detail" name="detail" method="POST" enctype="multipart/form-data" data-file-upload="options">
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">상세 이미지</label>
+                    <div class="row" style="margin-left:110px;">
+                        <div class="col-sm-2">
+                            <div ng-model="file2">
+                                <input ng-model="file2.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 files">
+                            <!-- The fileinput-button span is used to style the file input field as button -->
+                            <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>탐색기</span>
+                                <input type="file" name="files[]" ng-disabled="disabled">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+        <!-- 하단 버튼 -->
+        <div class="raw" style="float:left; width:100%; margin-top:50px; padding-top:10px; border-top:1px solid #DEDEDE;">
+            <div class="col-xs-12 form-group form_basic" style="text-align:center;">
+                <!--<button type="button" class="btn btn-primary btn-xs start" ng-click="click_insertSubMenu();" ng-disabled="edit_form1.$invalid">-->
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_insertSubMenu();">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>등록</span>
+                </button>
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_updateSubMenu();" ng-disabled="edit_form1.$invalid">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>수정</span>
+                </button>
+                <button type="button" class="btn btn-warning btn-xs cancel" ng-click="click_cancel();">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>취소</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <div ng-show="tab != 0" class="col-md-12">
+
+        <form role="form" name="edit_form2" class="form-horizontal form_basic_100">
+            <div id="item" ng-model="item" class="row form_basic_wrap">
+                <div class="form-group form_basic_group" ng-class="{error: edit_form2.item_id.$invalid}">
+                    <label class= "form_basic_label">메뉴ID <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input id="item_id" name="item_id" ng-model="item.MENU_ID" type= "text" class= "form-control" placeholder="메뉴 ID" required/>
+                    </div>
+                </div>
+                <div class="form-group form_basic_group" ng-class="{error: edit_form2.item_nm.$invalid}">
+                    <label class= "form_basic_label">메뉴명 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input id="item_nm" name="item_id" ng-model="item.MENU_NM" type= "text" class= "form-control" placeholder="메뉴명" required/>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">카테고리 <span style="color:#b94a48">*</span></label>
+                    <div class= "form_basic_input">
+                        <div ng-dropdown-multiselect="" options="category_a" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주기선택'}" extra-settings="select_settings" checkboxes="true"></div>
+                    </div>
+                    <div class="form_basic_input" style="margin-left:250px;">
+                        <select ng-model="CATEGORY_M" ng-options="category.CATEGORY_NM for category in category_b" class= "form-control" placeholder="주제 대분류">
+                            <option name="category_b" value="">- 주제 대분류</option>
+                        </select>
+                    </div>
+                    <div class="form_basic_input" style="margin-left:390px;">
+                        <div ng-dropdown-multiselect="" options="category_s" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주제 소분류'}" extra-settings="select_settings" checkboxes="true"></div>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group" style="padding: 0 50px 0 110px;">
+                    <!--<pre>{{CATEGORY|json}}</pre>-->
+                    <div class="bnt_ball_group" ng-model="item.CATEGORY" ng-repeat="category in CATEGORY">
+                        <button type="button" ng-click="click_removeCategory($index)" class="btn btn-default cate_ball_normal">
+                            {{category.CATEGORY_NM}}
+                        </button>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">순번 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input ng-model="item.MENU_ORD" type= "text" class= "form-control" placeholder="순번" required/>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">커뮤니티 구분 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input ng-model="item.COMM_GB" type= "text" class= "form-control" placeholder="커뮤니티 구분" required/>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">유형 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input ng-model="item.DEPTH" type= "text" class= "form-control" placeholder="유형" required/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 하단 버튼 -->
+            <div class="raw" style="float:left; width:100%; margin-top:50px; padding-top:10px; border-top:1px solid #DEDEDE;">
+                <div class="col-xs-12 form-group form_basic" style="text-align:center;">
+                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_insertMenu();" ng-disabled="edit_form2.$invalid">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>등록</span>
+                    </button>
+                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_updateMenu();" ng-disabled="edit_form2.$invalid">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>수정</span>
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs cancel" ng-click="click_cancel();">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>취소</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

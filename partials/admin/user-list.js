@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('user-list', ['$scope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope, $stateParams, $location, dialogs, CONSTANT) {
+    controllers.controller('user-list', ['$scope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
 
         /********** 초기화 **********/
         // 검색 조건
@@ -33,8 +33,8 @@ define([
 
             // 검색조건
             var condition = [{name: "이름", value: "USER_NM", index: 0}, {name: "아이디", value: "USER_ID", index: 1}, {name: "닉네임", value: "NICK_NM", index: 2}, {name: "전화번호", value: "PHONE", index: 3}, {name: "주소", value: "ADDR", index: 4}, {name: "이메일", value: "EMAIL", index: 5}, {name: "생일", value: "BIRTH", index: 6}, {name: "가입기간", value: "REG_DT", index: 7}];
-            var type = [{name: "일반회원", value: "M"}, {name: "앙쥬클럽", value: "C"}, {name: "서포터즈", value: "S"}];
-            // N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION
+            var type = [{name: "일반회원", value: "MEMBER"}, {name: "앙쥬클럽", value: "CLUB"}, {name: "서포터즈", value: "SUPPORTERS"}];
+            // N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING
             var status = [{name: "전체", value: "A"}, {name: "정상", value: "N"}, {name: "불량", value: "P"}, {name: "휴면", value: "D"}, {name: "탈퇴", value: "S"}];
             var act = [{name: "일반정보", value: "A"}, {name: "커뮤니티활동", value: "C"}, {name: "참여활동", value: "P"}, {name: "블로거활동", value: "B"}];
             var sort = [{name: "가입일", value: "REG_DT", index: 0}, {name: "이름", value: "USER_NM", index: 1}, {name: "포인트", value: "POINT", index: 2}, {name: "스코어", value: "SCORE", index: 3}];
@@ -215,7 +215,7 @@ define([
 
         // 목록갱신 버튼 클릭
         $scope.click_refreshList = function () {
-            $scope.getUserList();
+            $scope.tableParams.reload();
         };
                 
         // 등록 버튼 클릭
@@ -328,26 +328,56 @@ define([
 
         // 검색 버튼 클릭
         $scope.click_searchUser = function () {
-            $scope.getUserList();
+            $scope.tableParams.reload();
         }
 
         // 사용자 목록 조회
+//        $scope.getUserList = function () {
+////            $scope.search.SORT = $scope.search.SORT.value;
+////            $scope.search.ORDER = $scope.search.ORDER.value;
+//
+//            $scope.getList('com/user', 'admin', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+//                .then(function(data){
+//                    $scope.list = data;
+//                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
+//                })
+//                .catch(function(error){alert(error)});
+//        };
+//
+//        $scope.pageChanged = function() {
+//            console.log('Page changed to: ' + $scope.PAGE_NO);
+//            $scope.getUserList();
+//            console.log('Page changed to: ' + $scope.PAGE_NO);
+//        };
+
+        // 사용자 목록 조회
         $scope.getUserList = function () {
-//            $scope.search.SORT = $scope.search.SORT.value;
-//            $scope.search.ORDER = $scope.search.ORDER.value;
+            $scope.tableParams = new ngTableParams({
+                page: 1,                    // show first page
+                count: $scope.PAGE_SIZE,    // count per page
+                sorting: {                  // initial sorting
+                    REG_DT: 'DESC'
+                }
+            }, {
+                counts: [],         // hide page counts control
+                total: 0,           // length of data
+                getData: function($defer, params) {
+                    var key = Object.keys(params.sorting())[0];
 
-            $scope.getList('com/user', 'admin', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-                .then(function(data){
-                    $scope.list = data;
-                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
-                })
-                .catch(function(error){alert(error)});
-        };
+//                    $scope.search['SORT'] = key;
+//                    $scope.search['ORDER'] = params.sorting()[key];
 
-        $scope.pageChanged = function() {
-            console.log('Page changed to: ' + $scope.PAGE_NO);
-            $scope.getUserList();
-            console.log('Page changed to: ' + $scope.PAGE_NO);
+                    $scope.getList('com/user', 'admin', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                        .then(function(data){
+                            var total_cnt = data[0].TOTAL_COUNT;
+                            $scope.TOTAL_COUNT = total_cnt;
+
+                            params.total(total_cnt);
+                            $defer.resolve(data);
+                        })
+                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+                }
+            });
         };
 
         /********** 화면 초기화 **********/

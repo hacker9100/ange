@@ -19,7 +19,7 @@ define([
 //        $locationProvider.html5Mode(true);
 
         // 무조건 처음에 호출하고 싶은 것이 있으면 여기서 호출
-        $urlRouterProvider.otherwise('/message');
+        $urlRouterProvider.otherwise('/signin');
 
         // 메뉴 정보를 별도의 파일로 분리해 관리
         // menu.json에 정의된 메뉴들을 루프를 돌리면서 바인딩

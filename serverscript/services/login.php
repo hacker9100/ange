@@ -152,7 +152,16 @@
                 if ($err > 0) {
                     $_d->failEnd("조회실패입니다:".$msg);
                 } else {
-                    $sql = "INSERT INTO CMS_HISTORY
+                    $sql = "UPDATE COM_USER
+                            SET
+                                FINAL_LOGIN_DT = SYSDATE()
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $_d->sql_query($sql);
+
+                    $sql = "INSERT INTO ".$_model[SYSTEM_GB]."_HISTORY
                     (
                         WORK_ID
                         ,WORK_GB
@@ -165,7 +174,7 @@
                         ,ACTION_PLACE
                     ) VALUES (
                         '".$_model[WORK_ID]."'
-                        ,'CMS_LOGIN'
+                        ,'LOGIN'
                         ,SYSDATE()
                         ,'".$data[USER_ID]."'
                         ,''

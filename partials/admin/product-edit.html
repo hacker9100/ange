@@ -1,0 +1,101 @@
+<!-- Contents Include -->
+<div class="col-md-12" ng-controller="product-edit">
+
+    <div ng-model="item" class="row form_basic_wrap">
+        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">상품 구분</label>
+                <div class="form_basic_input">
+                    <select ng-model="item.PRODUCT_GB" ng-options="product_gb.name for product_gb in product_gb" class= "form-control"></select>
+                    <!--<div class="radio-inline" ng-repeat="gb in product_gb" >-->
+                        <!--<input checklist-model="item.PRODUCT_GB" type= "radio" checklist-value="gb.value"/> {{gb.name}}-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">품절 여부</label>
+                <div class="form_basic_input">
+                    <input ng-model="item.STOCK_FL" type="checkbox" ng-checked="item.STOCK_FL">
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">상품명</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.PRODUCT_NM" type= "text" class= "form-control" placeholder= "상품명"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">판매사</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.COMPANY_NM" type= "text" class= "form-control" placeholder= "판매사"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">관련 URL</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.URL" type= "text" class= "form-control" placeholder= "URL"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">포인트 점수</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.PRICE" type= "text" class= "form-control" placeholder= "포인트 점수"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">재고수량</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.SUM_IN_CNT" type= "text" class= "form-control" placeholder= "재고수량"/>
+                </div>
+            </div>
+
+            <div class= "form-group form_basic_group">
+                <H5 style="line-height:8px; margin:0;">
+                    <span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> <span class="label label-default"></span>요약
+                </H5>
+            </div>
+
+            <div class= "form-group form_basic_group" style="padding-bottom:20px;">
+                <div class= "col-xs-12">
+                    <textarea ng-model="item.NOTE" class= "form-control" placeholder= "내용 요약.."/>
+                </div>
+            </div>
+
+            <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+                <div>
+                    <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>
+                </div>
+            </div>
+        </form>
+
+        <div class= "form-group form_basic_group" style="float:left;">
+            <H5 style="line-height:8px; margin:0;">
+                <span class="glyphicon glyphicon-floppy-disk" style="color:#2486ED;"></span> 파일첨부
+            </H5>
+            <!--<div id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">-->
+            <!--이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />-->
+            <!--(gif, jpg, png만 등록 가능)-->
+            <!--</div>-->
+            <div ng-include=" '/partials/admin/com/file-list.html' " style="margin-top:20px; width:100%; float:left;"></div>
+        </div>
+
+        <!-- 하단 버튼 -->
+        <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+            <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showProductList();" >
+                    <i class="glyphicon glyphicon-list"></i>
+                    <span>목록</span>
+                </button>
+            </div>
+            <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveProduct();" ng-disabled="edit_form.$invalid">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>저장</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- ////Contents Include -->

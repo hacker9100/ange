@@ -22,6 +22,8 @@ define([
 
             $scope.login($scope.item.id, $scope.item)
                 .then(function(data){
+                    $rootScope.session = data;
+
                     $rootScope.authenticated = true;
                     $rootScope.uid = data.USER_ID;
                     $rootScope.name = data.USER_NM;

@@ -24,7 +24,8 @@ define([
 
     './validation-directive',
     './dropdown-select-directive',
-    './focus-directive'//,
+    './focus-directive',
+    './numbersonly-directive'//,
 //    './plUploadDirective'
 ], function (){
 

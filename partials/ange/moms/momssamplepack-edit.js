@@ -26,6 +26,33 @@ define([
             $scope.openModal(null, 'md');
         };
 
+        $scope.selectIdx = 1;
+
+        $(function () {
+
+            $(".tab_content").hide();
+            $(".tab_content:first").show();
+
+            $("ul.nav-tabs li").click(function () {
+
+                $("ul.tabs li").removeClass("active");
+                $(this).addClass("active");
+                $(".tab_content").hide();
+                var activeTab = $(this).attr("rel");
+                $("#" + activeTab).fadeIn();
+            });
+
+        });
+
+        // 탭 선택시 해당 화면으로 포커스 이동
+        $scope.click_selectTab = function (idx) {
+            $scope.selectIdx = idx;
+
+            //$("#tabs-"+idx).focus();
+
+            $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
+        };
+
         // 정보수정 모달창
         $scope.openModal = function (content, size) {
             var dlg = dialogs.create('user_info_modal.html',

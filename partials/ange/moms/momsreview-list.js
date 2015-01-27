@@ -90,7 +90,7 @@ define([
             } else if ($stateParams.menu == 'angereview') {
                 $location.url('/moms/angereview/view/'+key);
             } else if ($stateParams.menu == 'samplereview') {
-                $$location.url('/moms/samplereview/view/'+key);
+                $location.url('/moms/samplereview/view/'+key);
             } else if ($stateParams.menu == 'samplepackreview') {
                 $location.url('/moms/samplepackreview/view/'+key);
             }else if ($stateParams.menu == 'eventreview') {
@@ -115,7 +115,7 @@ define([
             } else if ($stateParams.menu == 'angereview') {
                 $location.url('/moms/angereview/edit/0');
             } else if ($stateParams.menu == 'samplereview') {
-                $$location.url('/moms/samplereview/edit/0');
+                $location.url('/moms/samplereview/edit/0');
             } else if ($stateParams.menu == 'samplepackreview') {
                 $location.url('/moms/samplepackreview/edit/0');
             }else if ($stateParams.menu == 'eventreview') {

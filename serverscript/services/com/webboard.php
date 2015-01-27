@@ -637,8 +637,8 @@
                             } else {
                                 $insert_path[$i] = array(path => '', uid => '');
                             }
-                            }
                         }
+                    }
 
                     $_model[BODY] = $body_str;
                 } catch(Exception $e) {

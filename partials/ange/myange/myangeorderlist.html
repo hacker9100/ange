@@ -1,0 +1,460 @@
+<div ng-controller="myangeorderlist">
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+            <div class="row">
+
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
+
+                        <div class="sub_contents_wrap">
+
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
+                            </div>
+
+                            <div class="container-fluid sub_contents_search">
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding:0">
+                                        <div class="btn-group" style="float:left;">
+                                            <!--<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>-->
+                                            기간검색
+                                            <input  type="text" ng-model="search.START_DT" placeholder="2015-01-17" />&nbsp;&nbsp;~ <!--my-datepicker-->
+                                            <input  type="text" ng-model="search.END_DT" id="end_dt" placeholder="2015-01-17"  /><!--my-datepicker-->
+
+                                        </div><!-- /btn-group -->
+                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
+                                            <input type="text" ng-model="search.PRODUCT_NM" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+
+												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+												</span>
+
+                                        </div>
+
+                                        <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
+                                            <div class="input-group input-group-sm">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" />
+                                                </span>
+                                                <input type="text" class="form-control table_filtercheck" placeholder="진행중" style="background:#fff; padding-top: 2px; cursor:default; font-size: 0.86em;" disabled />
+                                            </div>
+                                        </div -->
+
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
+                        </div><!-- /.sub_contents_wrap -->
+
+
+                        <div class="sub_contents_body">
+
+                            <h4 style="font-weight:bold;">마일리지 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
+
+                            <!-- 마일리지 & 경매소 목록 -->
+                            <div class="row webzine_moms_list" ng-repeat="item in mileagelist">
+                                <div class="col-xs-12 v-cell-4" style="margin:0px;cursor:pointer;" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)">
+                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                        <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="webzine_list_title" style="width: 65%">
+                                            [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+
+                                            <div class="webzine_list_bottomwrap">
+                                                <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
+                                                <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>
+                                                <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
+                                            </div>
+
+                                            <div class="webzine_list_btnwrap">
+                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''" ng-click="click_cancel(item)">주문취소</button><br />
+                                                <button class="webzine_list_btn default" title="상세보기"  ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" type="button">변경</button>
+                                            </div>
+                                        </div>
+                                    </div>  <!-- comp_basic -->
+                                </div>  <!-- col-xs-8 -->
+                            </div>  <!-- /.row -->
+
+                            <div class="row webzine_moms_list" ng-show="mileagelist == ''">
+                                조회데이터가 없습니다.
+                            </div>
+
+                            <nav class="text-center">
+                                <pagination boundary-links="true" total-items="BOARD_TOTAL_COUNT" ng-model="BOARD_PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                            <br/>
+
+                            <h4 style="font-weight:bold;">커머스 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
+
+                            <!-- 커머스 목록 -->
+                            <div class="row webzine_moms_list" ng-repeat="item in cummercelist" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)">
+                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                        <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="webzine_list_title" style="width: 65%">
+                                            [{{item.PRODUCT_GB == 'CUMMERCE' ? '커머스' : ''}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+
+                                            <div class="webzine_list_bottomwrap">
+                                                <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
+                                                <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>
+                                                <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
+                                            </div>
+
+                                            <div class="webzine_list_btnwrap">
+                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.PROGRESS_ST_NM == ''"ng-click="click_cancel(item)">주문취소</button><br />
+                                                <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>
+                                            </div>
+                                        </div>
+                                    </div>  <!-- comp_basic -->
+                                </div>  <!-- col-xs-8 -->
+                            </div>  <!-- /.row -->
+
+                            <div class="row webzine_moms_list" ng-show="cummercelist == ''">
+                                조회데이터가 없습니다.
+                            </div>
+
+                            <nav class="text-center">
+                                <pagination boundary-links="true" total-items="PHOTO_TOTAL_COUNT" ng-model="PHOTO_PAGE_NO" class="pagination-sm" ng-change="pagePhotoChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                            <br/>
+
+                            <h4 style="font-weight:bold;">네이밍 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
+
+                            <!-- 네이밍 목록 -->
+                            <!--<div class="row webzine_moms_list" ng-repeat="item in naminglist">
+                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                        <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="webzine_list_title" style="width: 65%">
+                                            [{{item.PRODUCT_GB == 'NAMING' ? '네이밍' : ''}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+
+                                            <div class="webzine_list_bottomwrap">
+                                                <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
+                                                <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>
+                                                <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
+                                            </div>
+
+                                            <div class="webzine_list_btnwrap">
+                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_cancel(item)">주문취소</button><br />
+                                                <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" type="button">변경</button>
+                                            </div>
+                                        </div>
+                                    </div>  &lt;!&ndash; comp_basic &ndash;&gt;
+                                </div>  &lt;!&ndash; col-xs-8 &ndash;&gt;
+                            </div>  &lt;!&ndash; /.row &ndash;&gt;-->
+
+                            <table id="comp_board_table" class="table table-hover">
+
+                                <thead>
+                                <tr class="board_thead" height="48">
+                                    <td align="center"><span class="board_th">상품명</span></td>
+                                    <td align="center"><span class="board_th">수량</span></td>
+                                    <td align="center"><span class="board_th">가격</span></td>
+                                    <td align="center"><span class="board_th">신청일</span></td>
+                                    <td align="center"><span class="board_th">주문취소/변경</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody class="on" ng-repeat="item in naminglist">
+
+                                <tr style="cursor:pointer;">
+                                    <td>
+                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                        {{ item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+                                    </td>
+                                    <td class="table_hit">{{item.PRODUCT_CNT}}</td>
+                                    <td>{{item.SUM_PRICE}}</td>
+                                    <td class="table_date">{{item.ORDER_DT}}</td>
+                                    <td>
+                                        <button class="webzine_list_btn red" title="응모하기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_cancel(item)">주문취소</button><br />
+                                        <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" type="button">변경</button>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+
+                                <tbody class="on" data-ng-show="naminglist == '' || naminglist == null">
+
+                                <tr>
+                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                </tr>
+
+                                </tbody>
+                            </table><!-- /.List-->
+
+                            <nav class="text-center">
+                                <pagination boundary-links="true" total-items="CLINIC_TOTAL_CNT" ng-model="CLINIC_PAGE_NO" class="pagination-sm" ng-change="pageClinicChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                            <br/>
+
+                        </div><!-- /.sub_contents_body -->
+
+                        <!--<div ng-show="uid != '' && uid != null" ng-click="test()">세션이 있을때만 보입니다.</div>
+                        <div ng-show="uid == '' || uid == null" ng-click="test()">세션이 없을때 보입니다.</div>   -->
+
+                        <div class="sub_contents_ads" style="display:none;">
+                            <div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div> <!-- rows -->
+
+
+        </div><!-- container-fluid -->
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div class="copyright_foot">
+            <br /><br />
+            <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
+
+                <hr style="margin:0 15px 0 15px;" />
+
+                <center>
+                    <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
+                </center>
+            </nav>
+        </div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
+
+    </div>
+
+    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
+        <div class="row">
+            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
+                우측바
+            </div>
+        </div>
+    </div>
+
+    <!-- /Main Page Layout Set -->
+</div>
+
+<script type="text/ng-template" id="order_counsel.html">
+    <div class="modal-header">
+        <h3 class="modal-title">일대일상담 상태변경신청</h3>
+        <br/>
+    </div>
+
+    <div class="modal-header" style="margin-left: 15px;">
+        <ul>
+            <li>문의하실 분야를 선택하시군 후 내용을 입력하신 다음 [신청하기]버튼을 눌러주세요.</li>
+            <li>한번 등록한 상담내용은 수정이 불가능합니다.</li>
+            <li>이메일 및 휴대폰 정보로 답변이 발송됩니다.</li>
+        </ul>
+    </div>
+
+    <div class="modal-body">
+        <div class="body_wrap">
+            <!--<div class="panel panel-master contentpannel" style="border:#000000; display:block;">-->
+
+                <table id="comp_board_table" class="table table-hover">
+                    <tr>
+                        <td style="vertical-align: middle" rowspan="4">문의문야</td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">쇼핑몰 구매 관련</td>
+                        <td colspan="2">
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="1" ng-click="radio_change(1);"/>주문취소&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="2" ng-click="radio_change(2);"/>환불&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="3" ng-click="radio_change(3);"/>교환&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="4" ng-click="radio_change(4);"/>반품&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="5" ng-click="radio_change(5);"/>상품관련&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">네이밍 서비스 관련</td>
+                        <td colspan="2">
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="6" ng-click="radio_change(6);"/>서비스신청&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="7" ng-click="radio_change(7);"/>신청서비스전환&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="8" ng-click="radio_change(8);"/>기타문의&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">일반상담</td>
+                        <td colspan="2">
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="9" ng-click="radio_change(9);"/>회원정보&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="10" ng-click="radio_change(10);"/>마일리지&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="11" ng-click="radio_change(11);"/>시스템&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="12"  ng-click="radio_change(11);"/>결제&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="counsel" ng-model="item.COUNSEL_ST" value="13" ng-click="radio_change(13);"/>기타&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                    <tr id="product_info">
+                        <td style="vertical-align: middle">상품정보</td>
+                        <td colspan="3">
+                            <!--<input type="hidden" ng-model="item.PRODUCT_NM" class="form-group"/>-->
+                            <select ng-options="p.PRODUCT_CODE for p in productnolist" ng-model="item.PRODUCT_CODE" style="float:left; width:20%;" class="form-control input-sm" ng-change="searchProductNm(item.PRODUCT_CODE)">
+                                <option value="" selected>선택</option>
+                            </select>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <select ng-options="v.PRODUCT_NM for v in productnmlist" ng-model="item.PRODUCT" style="float:left; width:50%;" class="form-control input-sm">
+                                <option value="" selected>선택</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="product_change">
+                        <td style="vertical-align: middle">상품전환</td>
+                        <td colspan="3">
+                            <select ng-options="v.PRODUCT_NM for v in namingnolist" ng-model="item.CHANGE_PRODUCT" class="form-control input-sm">
+                                <option value="" selected>선택</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">상담자</td>
+                        <td>{{name}}</td>
+                        <td style="vertical-align: middle">아이디</td>
+                        <td>{{uid}}</td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">이메일</td>
+                        <td>{{user_info.EMAIL}}</td>
+                        <td style="vertical-align: middle">휴대푠</td>
+                        <td>{{user_info.PHONE_2}}</td>
+                    </tr>
+                    <tr class="product_note">
+                        <td style="vertical-align: middle">제목</td>
+                        <td colspan="3"><input ng-model="item.SUBJECT" type="text" class="input-sm form-control" placeholder="제목을 입력하세요"></td>
+                    </tr>
+                    <tr class="product_note">
+                        <td style="vertical-align: middle">내용</td>
+                        <td colspan="3">
+                            <form id="fileupload" method="POST" enctype="multipart/form-data" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
+                                <input type="hidden" id="version" name="version" value="6">
+
+                                <!-- file drag-in Box -->
+                                <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
+
+                                    <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">
+                                        파일
+                                    </label>
+
+                                    <div class="col-xs-8 dragzone_wrap">
+                                        <div id="dropzone" name="dropzone" class="dragzone">
+
+                                            <div data-ng-repeat="file in queue">
+                                                <div class="files_row">
+                                                    <input type="checkbox" checklist-model="item.queue" checklist-value="file" style="vertical-align: top;" aria-label="...">
+                                                    <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
+                                                    <span class="filename">{{file.name}}</span>
+                                                    <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">{{file.size | formatFileSize}}</div>
+                                                    <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;" data-ng-show="file.error">{{file.error}}</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div><!-- /.col-xs-4 -->
+
+                                    <div class="col-xs-3" style="padding:0 0 0 4px; height:100%;">
+                                        <button class="dagbox_btn fil2com large">
+                                            <div>
+                                                <div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>
+                                                <div style="width:63%; float:right; text-align:left;">
+                                                    <strong>내 PC에서</strong><br/>
+                                                    <span style="font-size:0.72em;">첨부파일 찾기</span>
+                                                </div>
+                                                <input type="file" name="files[]" multiple ng-disabled="disabled" />
+                                            </div>
+                                        </button>
+                                        <!-- span class="glyphicon glyphicon-ok"></span -->
+                                        <!-- button class="dagbox_btn selectall"><span class="glyphicon glyphicon-ok"></span> 전체선택</button>
+                                        <button class="dagbox_btn add"><span class="glyphicon glyphicon-circle-arrow-right"></span> 본문추가</button>
+                                        <button class="dagbox_btn delete"><span class="glyphicon glyphicon-remove"></span> 선택삭제</button -->
+                                    </div><!-- /.col-xs-2 -->
+
+                                </div><!-- /.row -->
+                                <!-- /file drag-in Box -->
+
+                                <!-- image thumbnails -->
+                                <div class="row" style="margin:0px auto; margin-bottom:10px; height:70px;">
+
+                                    <label class="col-xs-1">
+
+                                    </label>
+
+                                    <div class="col-xs-11 col-xs-offset-1" style="padding:0;">
+                                        <div class="thumbnailzone">
+
+                                            <!--     <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
+                                                            별모양을 클릭하여 대표이미지를 지정하세요.
+                                                            <span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>
+                                                        </div>-->
+
+                                            <!-- Thumbnail List -->
+                                            <div data-ng-repeat="file in queue">
+                                                <div class="thumbnails selectedthumb" ng-style="{'background-image': 'url({{file.thumbnailUrl}})'}">
+                                                    <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                                    <div  class="thumbnails_img_check"><input type="checkbox" checklist-model="item.queue" checklist-value="file"></div>
+                                                    <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                                        <a title="대표이미지로 지정" ng-click="click_selectMainImage(file)" ng-show="file.kind != 'MAIN'"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                                        <img src="/imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" ng-show="file.kind == 'MAIN'"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /Thumbnail List -->
+
+                                            <div class="thumbnails_func" style="padding: 10px 0;">
+                                                <a ng-class="checkAll ? 'thumbnails_func_selectall allselected' : 'thumbnails_func_selectall'" ng-click="click_checkAllToggle()"></a>
+                                                <!-- span class="thumbnails_func_selectall allselected"></span -->	<!-- allselected : 토글 -->
+                                                <a class="thumbnails_func_selectadd" ng-click="click_checkFileEditor()"></a>
+                                                <a class="thumbnails_func_selectdel" ng-click="click_checkFileDestroy()"></a>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.col-xs-4 -->
+
+                                </div><!-- /.row -->
+                                <!-- image thumbnails -->
+                            </form><!-- /.row -->
+                            <!-- /file drag-in Box -->
+                            <div class="row people_editor_wrap">
+                                <div class="col-xs-12 people_editor">
+                                    <!--에디터 넣을자리 <br/>-->
+                                    <!--- (글꼴, 글색, 글크기(12,14,16,18pt)/  <br/>-->
+                                    <!--- 본문 정렬   <br/>-->
+                                    <!--- 굵게,기울기,취소,밑줄  <br/>-->
+                                    <!--- HTML-->
+                                    <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+                                        <div>
+                                            <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" style="height: 30%" rows="1" disabled="{{scope.isDisabled}}"></textarea>
+                                        </div>
+                                    </div>
+                                </div><!-- /.people_editor -->
+                            </div><!-- /.row -->
+                            <!-- /Ediotr  Box -->
+                        </td>
+                    </tr>
+                    <tr id="product_notice">
+                        <td style="vertical-align: middle">유의사항</td>
+                        <td colspan="3">
+                            <ul>
+                                <li>네이밍서비스 실시간/셀프작명 신청시 스페셜 또는 프리미엄 작명으로 전환가능합니다.</li>
+                                <li>스페셜 또는 프리미엄 작명서비스로 전환신청시 이전 신청 서비스는 사용하실 수 없습니다.</li>
+                                <li>서비스별 차액비용이 발생합니다.</li>
+                                <li>하단 [등록]시 결제창으로 이동합니다.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+
+            <!--</div>-->
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_savecounsel();">신청하기</button>
+        <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+    </div>
+</script>

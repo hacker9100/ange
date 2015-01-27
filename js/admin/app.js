@@ -52,11 +52,11 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
 //    yourApp.controller('YourAppCtrl', function($scope) {
 //    });
 
-    //공통 컨트롤러 설정 - 모든 컨트롤러에서 공통적으로 사용하는 부분들 선언
-    app.controller('common', function($scope, $q, dataService, $location) {
-
-//        $scope.path = $location.path();
-
+    app.run(function ($rootScope, $location) {
+        $rootScope.$on("$stateChangeStart", function (event, next, current) {
+            // content에서 layout을 동적으로 생성하는데 url이 변경되는 경우 정보 이동을 위해
+            $rootScope.location = $location.path();
+        });
     });
 
     // 외부에 노출할 함수들만 반환한다.
