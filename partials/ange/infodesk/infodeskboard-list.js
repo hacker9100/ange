@@ -82,7 +82,12 @@ define([
                 $scope.VIEW_ROLE = 'CMS_ADMIN';
             }
 
-            $scope.tabs = $scope.menu.SUB_MENU_INFO;
+            $scope.getList('com/webboard', 'faqcategory', {}, {}, true)
+                .then(function(data){
+                    $scope.tabs = data;
+
+                })
+                .catch(function(error){ $scope.tabs = "";});
         };
 
         /********** 이벤트 **********/

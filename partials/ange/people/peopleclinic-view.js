@@ -99,14 +99,14 @@ define([
             }
         };
 
-/*
+
         $scope.addHitCnt = function () {
-            $scope.updateItem('com/webboard', 'item', $stateParams.id, {ROLE: true}, false)
+            $scope.updateItem('com/webboard', 'hit', $stateParams.id, {}, false)
                 .then(function(){
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
-*/
+
 
         // 게시판 조회
         $scope.getPeopleClinic = function () {

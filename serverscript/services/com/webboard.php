@@ -319,7 +319,7 @@
                         FROM COM_SUB_MENU
                         WHERE SYSTEM_GB = 'ANGE'
                           AND MENU_ID = 'infodesk'
-                          AND MENU_URL = CONCAT('/infodesk/','".$_search[CATEGORY_GB]."','/list')";
+                          AND MENU_URL = CONCAT('/infodesk/faq/list')";
 
                 $data = $_d->sql_query($sql);
 
@@ -653,46 +653,39 @@
 
                 $_d->sql_beginTransaction();
 
-                if(isset($_model[ROLE]) && $_model[ROLE] != ""){
-                    $sql = "UPDATE COM_BOARD
-                         SET HIT_CNT = HIT_CNT + 1
-                        WHERE
-                            NO = ".$_key."
-                        ";
-                }else{
 
-                    if( trim($_model[SUBJECT]) == '' ){
-                        $_d->failEnd("제목을 작성 하세요");
-                    }
-                    if( trim($_model[BODY]) == '' ){
-                        $_d->failEnd("내용이 비어있습니다");
-                    }
 
-                    $sql = "UPDATE COM_BOARD
-                        SET
-                            HEAD = '".$_model[HEAD]."'
-                            ,SUBJECT = '".$_model[SUBJECT]."'
-                            ,BODY = '".$_model[BODY]."'
-                            ,REG_UID = '".$_SESSION['uid']."'
-                            ,REG_NM = '".$_model[REG_NM]."'
-                            ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
-                            ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
-                            ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
-                            ,TAG = '".$_model[TAG]."'
-                            ,ETC1 = '".$_model[ETC1]."'
-                            ,ETC2 = '".$_model[ETC2]."'
-                            ,ETC3 = '".$_model[ETC3]."'
-                            ,ETC4 = '".$_model[ETC4]."'
-                            ,ETC5 = '".$_model[ETC5]."'
-                            ,PASSWORD = '".$_model[PASSWORD]."'
-                            ,PHOTO_TYPE = '".$_model[PHOTO_TYPE]."'
-                            ,PHOTO_GB = '".$_model[PHOTO_GB]."'
-                            ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
-                            ,FAQ_GB = '".$_model[FAQ_GB]."'
-                        WHERE
-                            NO = ".$_key."
-                        ";
+                if( trim($_model[SUBJECT]) == '' ){
+                    $_d->failEnd("제목을 작성 하세요");
                 }
+                if( trim($_model[BODY]) == '' ){
+                    $_d->failEnd("내용이 비어있습니다");
+                }
+
+                $sql = "UPDATE COM_BOARD
+                    SET
+                        HEAD = '".$_model[HEAD]."'
+                        ,SUBJECT = '".$_model[SUBJECT]."'
+                        ,BODY = '".$_model[BODY]."'
+                        ,REG_UID = '".$_SESSION['uid']."'
+                        ,REG_NM = '".$_model[REG_NM]."'
+                        ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
+                        ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
+                        ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
+                        ,TAG = '".$_model[TAG]."'
+                        ,ETC1 = '".$_model[ETC1]."'
+                        ,ETC2 = '".$_model[ETC2]."'
+                        ,ETC3 = '".$_model[ETC3]."'
+                        ,ETC4 = '".$_model[ETC4]."'
+                        ,ETC5 = '".$_model[ETC5]."'
+                        ,PASSWORD = '".$_model[PASSWORD]."'
+                        ,PHOTO_TYPE = '".$_model[PHOTO_TYPE]."'
+                        ,PHOTO_GB = '".$_model[PHOTO_GB]."'
+                        ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
+                        ,FAQ_GB = '".$_model[FAQ_GB]."'
+                    WHERE
+                        NO = ".$_key."
+                    ";
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;
@@ -848,6 +841,22 @@
                 $sql = "UPDATE COM_BOARD SET
                             LIKE_CNT = LIKE_CNT + 1
                      WHERE NO = ".$_key."
+                        ";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
+            }   else if ($_type == 'hit') {
+
+                $sql = "UPDATE COM_BOARD
+                         SET HIT_CNT = HIT_CNT + 1
+                        WHERE
+                            NO = ".$_key."
                         ";
 
                 $_d->sql_query($sql);
