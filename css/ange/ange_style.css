@@ -1638,6 +1638,132 @@ ul.contentguide {
 }
 
 
+
+
+/* Sub side banner */
+
+.subside_wrap {
+    margin:10px 0 5px 10px;
+    width:165px;
+}
+
+.subside_wrap img {
+    width: 100%;
+}
+.subside_inven_rolling {
+    position:relative;
+    border:1px solid #ddd;
+    width:100%;
+    margin-bottom:5px;
+}
+
+.subside_inven_basic {
+    border:1px solid #ddd;
+    width: 100%;
+}
+
+.subside_inven_basic.top {
+    border-bottom: none;
+}
+
+.subside_inven_basic.mid {
+
+}
+
+.subside_inven_basic.btm {
+    border-top: none;
+    margin-bottom:5px;
+}
+
+
+/* Sub side rank */
+.subside_rank {
+    margin:20px 0 20px 10px;
+    width:165px;
+}
+
+.subside_rank_wrap {
+    border:1px solid #ddd;
+    border-bottom:none;
+}
+
+.subside_rank_top {
+    height:60px;
+    font-weight: 600;
+    line-height: 58px;
+    padding-left: 18px;
+    background-color:#f6f6f6;
+    border-bottom:1px solid #ddd;
+    color: #464646;
+}
+
+.subside_rank_body {
+    font-size:0.86em;
+}
+
+.subside_rank_body dd {
+    padding:10px;
+    height:60px;
+    border-bottom:1px solid #ddd;
+}
+
+.rank_txt {
+    line-height: 28px;
+}
+
+.rank_txt.champion {
+    font-weight: 600;
+}
+
+.ranking_link {
+    float:left;
+    margin-top:8px;
+    margin-right:4px;
+    background-image: url('/imgs/ange/subside_rank_no.jpg');
+    background-repeat: no-repeat;
+    height: 13px;
+    width: 12px;
+}
+
+.rank_txt a {
+    cursor: pointer;
+}
+
+.rank_txt a:hover {
+    text-decoration: none !important;
+    color: #00b0ea !important;
+}
+
+.ranking_link.first.red {
+    background-position: left top;
+}
+
+.ranking_link.first.green {
+    background-position: center top;
+}
+
+.ranking_link.first.blue {
+    background-position: right top;
+}
+
+.ranking_link.second {
+    background-position: left -13px;
+}
+
+.ranking_link.thirth {
+    background-position: left -26px;
+}
+
+.ranking_link.fourth {
+    background-position: left -39px;
+}
+
+.ranking_link.fifth  {
+    background-position: left -52px;
+}
+
+
+
 /*** 레이아웃 작업 시 아래 하애 주석 해제 필요함 ***/
 
 /*
