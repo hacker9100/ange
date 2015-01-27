@@ -11,9 +11,18 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('joinsignon', ['$rootScope', '$scope', '$window', '$location', 'dialogs', function ($rootScope, $scope, $window, $location, dialogs) {
+    controllers.controller('joinsignon', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $window, $location, dialogs, UPLOAD) {
 
         /********** 초기화 **********/
+        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+
+        // 파일 업로드 후 파일 정보가 변경되면 화면에 썸네일을 로딩
+        $scope.$watch('newFile', function(data){
+            if (typeof data !== 'undefined') {
+                $scope.file = data[0];
+            }
+        });
+
         // 날짜 콤보박스
         var year = [];
         var babyYear = [];
@@ -26,7 +35,7 @@ define([
         $scope.checkCert = false;
 
         // 진행 단계
-        $scope.step = '02';
+        $scope.step = '01';
 
         // 이용약관 체크
         $scope.checkAll = false;
@@ -104,9 +113,9 @@ define([
                     oncomplete: function(data) {
                         // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
                         // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
-                        document.getElementById('post_1').value = data.postcode1;
-                        document.getElementById('post_2').value = data.postcode2;
-                        document.getElementById('addr').value = data.address;
+                        $scope.user.POST_1 = document.getElementById('post_1').value = data.postcode1;
+                        $scope.user.POST_2 = document.getElementById('post_2').value = data.postcode2;
+                        $scope.user.ADDR = document.getElementById('addr').value = data.address;
 
                         //전체 주소에서 연결 번지 및 ()로 묶여 있는 부가정보를 제거하고자 할 경우,
                         //아래와 같은 정규식을 사용해도 된다. 정규식은 개발자의 목적에 맞게 수정해서 사용 가능하다.
@@ -258,7 +267,7 @@ define([
         $scope.click_checkUserId = function () {
             $scope.checkID = true;
 
-            $scope.getItem('com/user', 'check', $scope.user.USER_ID, {SYSTEM_GB: 'ANGE'}, false)
+            $scope.getItem('com/user', 'check', $scope.user.USER_ID, {}, false)
                 .then(function(data) {
                     if (data.COUNT < 1) {
                         $scope.availableID = true;
@@ -368,25 +377,33 @@ define([
                 $scope.blog.BLOG_URL = $scope.blog.BLOG_DETAIL;
             }
 
-            if ($scope.blog.THEME.length != 0) {
-                var strTheme = '';
-                for(var i = 0; i < $scope.blog.THEME.length; i++) {
-                    strTheme += $scope.blog.THEME[i];
+            if ($scope.blog.THEME_CK != undefined && $scope.blog.THEME_CK.length != 0) {
+                    var strTheme = '';
+                    for(var i = 0; i < $scope.blog.THEME_CK.length; i++) {
+                        strTheme += $scope.blog.THEME_CK[i];
 
-                    if (i != $scope.blog.THEME.length - 1) strTheme += ',';
-                }
+                        if (i != $scope.blog.THEME_CK.length - 1) strTheme += ',';
+                        if ($scope.blog.THEME_CK[i] == 10) strTheme += ',' + $scope.blog.THEME_ETC;
+                    }
+
+                    $scope.blog.THEME = strTheme;
             }
 
             $scope.user.BABY = $scope.babies;
             $scope.user.BLOG = $scope.blog;
 
-            if ($scope.checkSave) {
+            if ($scope.file) {
+                $scope.user.FILE = $scope.file;
+                $scope.user.FILE.$destroy = '';
+            }
+
+            if (!$scope.checkSave) {
                 $scope.insertItem('com/user', 'item', $scope.user, false)
-                    .then(function(){ $scope.checkSave = true; /*dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});*/})
+                    .then(function(){ $scope.checkSave = true; $scope.step = '03';/*dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});*/})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
-                    .then(function(){ /*dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});*/})
+                    .then(function(){ $scope.step = '03';/*dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});*/})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
@@ -431,12 +448,12 @@ define([
             } else if ($scope.step == '02') {
                 $scope.saveUser();
 
-                if (!checkSave) {
+//                if (!$scope.checkSave) {
 //                    dialogs.notify('알림', '입력 정보를 다시 확인해 주세요.', {size: 'md'});
-                    return;
-                }
-
-                $scope.step = '03';
+//                    return;
+//                }
+//
+//                $scope.step = '03';
             } else if ($scope.step == '03') {
                 $scope.step = '04';
             } else if ($scope.step == '04') {
@@ -456,7 +473,48 @@ define([
 
         // 로그인 레이어 팝업
         $scope.click_viewLogin = function () {
-            $location.url('/main');
+            $scope.openModal(null, 'md');
+        };
+
+        // 로그인 모달창
+        $scope.openModal = function (content, size) {
+            var dlg = dialogs.create('login_modal.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.content = data;
+
+                    $scope.click_ok = function () {
+                        $scope.item.SYSTEM_GB = 'ANGE';
+
+                        $scope.login($scope.item.id, $scope.item)
+                            .then(function(data){
+                                $rootScope.authenticated = true;
+                                $rootScope.user_info = data;
+                                $rootScope.uid = data.USER_ID;
+                                $rootScope.name = data.USER_NM;
+                                $rootScope.role = data.ROLE_ID;
+                                $rootScope.system = data.SYSTEM_GB;
+                                $rootScope.menu_role = data.MENU_ROLE;
+                                $rootScope.email = data.EMAIL;
+
+                                $modalInstance.close();
+                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                    };
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.dismiss('Canceled');
+                    };
+                }], content, {size:size,keyboard: true,backdrop: true}, $scope);
+            dlg.result.then(function(){
+                $location.url('/main');
+            },function(){
+                if(angular.equals($scope.name,''))
+                    $scope.name = 'You did not enter in your name!';
+            });
         };
 
         $scope.init();

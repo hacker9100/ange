@@ -18,10 +18,14 @@ define([
     '../../../partials/admin/message',
 
     // ADMIN 회원현황
-    '../../../partials/admin/user-list',
-    '../../../partials/admin/user-edit',
+    '../../../partials/admin/member-list',
+    '../../../partials/admin/member-edit',
 //    '../../../partials/admin/user_view'
     '../../../partials/admin/pagehit-main',
+
+    // ADMIN 참여 관리
+    '../../../partials/admin/event-list',
+    '../../../partials/admin/event-edit',
 
     // ADMIN 상품 관리
     '../../../partials/admin/product-list',
@@ -30,6 +34,10 @@ define([
     // ADMIN 사이트 관리
     '../../../partials/admin/site-main',
     '../../../partials/admin/category-main',
+
+    // ADMIN 관리자
+    '../../../partials/admin/user-main',
+    '../../../partials/admin/permission-main',
 
     '../../../partials/admin/menu-main'
 ], function () {});

@@ -24,10 +24,40 @@ define([
             $location.url('join/signon');
         };
 
+        $scope.click_settingAccount = function () {
+            $location.url('myange/account');
+        };
+
+        $scope.click_settingBaby = function () {
+            $location.url('myange/baby');
+        };
+
+        $scope.click_myangeWriting = function () {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
+            $location.url('myange/writing');
+        };
+
+        $scope.click_myangeMessage = function () {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
+            $location.url('myange/message');
+        };
+
+        $scope.click_infodesk = function () {
+            $location.url('infodesk/home');
+        };
+
         // 로그인 모달창
         $scope.openModal = function (content, size) {
             var dlg = dialogs.create('login_modal.html',
-                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+                ['$scope', '$modalInstance', '$controller', 'data', 'UPLOAD', function($scope, $modalInstance, $controller, data, UPLOAD) {
 
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
@@ -35,7 +65,7 @@ define([
                     $scope.content = data;
 
                     $scope.click_ok = function () {
-                        $scope.item.SYSTEM_GB = 'CMS';
+                        $scope.item.SYSTEM_GB = 'ANGE';
 
                         $scope.login($scope.item.id, $scope.item)
                             .then(function(data){
@@ -44,9 +74,13 @@ define([
                                 $rootScope.uid = data.USER_ID;
                                 $rootScope.name = data.USER_NM;
                                 $rootScope.role = data.ROLE_ID;
+                                $rootScope.system = data.SYSTEM_GB;
                                 $rootScope.menu_role = data.MENU_ROLE;
                                 $rootScope.email = data.EMAIL;
 
+                                if (data.FILE) {
+                                    $rootScope.img = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                                }
                                 $modalInstance.close();
                             }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 

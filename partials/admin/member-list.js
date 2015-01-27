@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : user_list.html 화면 콘트롤러
+ * Description : member-list.html 화면 콘트롤러
  */
 
 define([
@@ -11,13 +11,13 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('user-list', ['$scope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
+    controllers.controller('member-list', ['$scope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
 
         /********** 초기화 **********/
         // 검색 조건
         $scope.menu = $stateParams.menu;
-//        $scope.search = {SYSTEM_GB: 'ANGE'};
-        $scope.search = {};
+        $scope.search = {SYSTEM_GB: 'ANGE'};
+//        $scope.search = {};
         $scope.action = {};
 
         // 목록 데이터
@@ -27,6 +27,8 @@ define([
         $scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = 10;
         $scope.TOTAL_CNT = 0;
+
+        var isFirst = true;
 
         // 초기화
         $scope.init = function() {
@@ -55,7 +57,21 @@ define([
 
                 $scope.$watch('search.ADMIN_SAVE_LIST', function(item) {
                     if (item != undefined) {
-                        $scope.getUserList();
+                        var arrType = {};
+                        if (item.TYPE != '') {
+                            arrType = item.TYPE.split(',')
+                        }
+                        $scope.search.TYPE = arrType;
+                        $scope.search.KEYWORD = item.KEYWORD;
+                        $scope.search.STATUS = item.STATUS;
+                        $scope.search.ACT = item.ACT;
+                        $scope.search.SORT = sort[item.SORT_IDX];
+                        $scope.search.ORDER = order[item.ORDER_IDX];
+
+                        if (isFirst)
+                            $scope.getUserList();
+                        else
+                        $scope.tableParams.reload();
                     }
                 })
             }
@@ -79,11 +95,6 @@ define([
 
 
         };
-
-        $scope.test = function() {
-            console.log($scope.search.ACT);
-            dialogs.notify('알림','test');
-        }
 
         /********** 이벤트 **********/
         $scope.check_user = [];
@@ -138,7 +149,19 @@ define([
 //                        .catch(function(error){alert(error)});
                     break;
                 case 'save' :
-                    $scope.click_saveSearch();
+                    var item = angular.copy($scope.search);
+                    item.CHECKED = $scope.action.CHECKED;
+
+                    if ($scope.action.CHECKED == 'C' ) {
+                        if ($scope.check_user.length == 0) {
+                            dialogs.notify('알림', '선택한 회원이 없습니다..', {size: 'md'});
+                            return;
+                        }
+
+                        item.USER_ID_LIST = angular.copy($scope.check_user);
+                    }
+
+                    $scope.openPopupSaveListRegModal(item);
                     break;
                 case 'remove' :
                     $scope.click_removeSearch();
@@ -181,7 +204,7 @@ define([
                         item.CHECKED = $scope.action.CHECKED;
                     }
 
-                    $scope.openViewMessageRegModal(item);
+                    $scope.openPopupMessageRegModal(item);
                     break;
                 case 'mileage' :
                     var item = {};
@@ -196,18 +219,14 @@ define([
                         item.CHECKED = $scope.action.CHECKED;
                         item.EARN_GB = 'EARN';
                         item.PLACE_GB = 'ADMIN';
-                        item.POINT = 500;
                     } else {
                         item = angular.copy($scope.search);
                         item.CHECKED = $scope.action.CHECKED;
                         item.EARN_GB = 'EARN';
                         item.PLACE_GB = 'ADMIN';
-                        item.POINT = 500;
                     }
 
-                    $scope.insertItem('ange/mileage', 'admin', item, false)
-                        .then(function(){dialogs.notify('알림', '사용자 상태가 변경되었습니다.', {size: 'md'}); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
+                    $scope.openPopupMileageRegModal(item);
                     break;
 
             };
@@ -220,46 +239,7 @@ define([
                 
         // 등록 버튼 클릭
         $scope.click_createNewUser = function () {
-            $location.url('/user/edit/0');
-        };
-
-        // 자주쓰는 목록 버튼 클릭
-        $scope.click_saveSearch = function () {
-            var item = angular.copy($scope.search);
-            item.LIST_NM = $scope.LIST_NM;
-            item.CHECKED = $scope.action.CHECKED;
-
-            if ($scope.action.CHECKED == 'C' ) {
-                if ($scope.check_user.length == 0) {
-                    dialogs.notify('알림', '선택한 회원이 없습니다..', {size: 'md'});
-                    return;
-                }
-
-                item.USER_ID_LIST = angular.copy($scope.check_user);
-            }
-
-            $scope.insertItem('admin/user_list', 'item', item, false)
-                .then(function(data){
-                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-
-//            var dlg = dialogs.create('save_list_modal.html',
-//                function($scope, $modalInstance, data) {
-//                    alert(data);
-//                    $scope.search = data;
-//
-//                    $scope.click_ok = function () {
-//                        $modalInstance.close();
-//                    };
-//                },$scope.search,{size:'lg',keyboard: true,backdrop: false});
-//            dlg.result.then(function(){
-//
-//            },function(){
-//                if(angular.equals($scope.name,''))
-//                    $scope.name = 'You did not enter in your name!';
-//            });
+            $location.url('/member/edit/0');
         };
 
         // 자주쓰는 목록 제외 버튼 클릭
@@ -274,8 +254,40 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
-        $scope.openViewMessageRegModal = function (user) {
-            var dlg = dialogs.create('myangemessage_edit.html',
+        $scope.openPopupSaveListRegModal = function (user) {
+            var dlg = dialogs.create('save_list_popup.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('content', {$scope: $scope}));
+
+                    $scope.item = data;
+
+                    $scope.click_reg = function () {
+                        $scope.insertItem('admin/user_list', 'item', $scope.item, false)
+                            .then(function(data){
+                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                        $modalInstance.close();
+                        //console.log($scope.item);
+                    };
+
+                    $scope.click_close = function(){
+                        $modalInstance.close();
+                    }
+
+                }], user, {size: 'lg',keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        };
+
+        $scope.openPopupMessageRegModal = function (user) {
+            var dlg = dialogs.create('myangemessage_popup.html',
                 ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
 
                     /********** 공통 controller 호출 **********/
@@ -306,14 +318,44 @@ define([
             });
         };
 
+        $scope.openPopupMileageRegModal = function (user) {
+            var dlg = dialogs.create('mileage_popup.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('content', {$scope: $scope}));
+
+                    $scope.item = data;
+
+                    $scope.click_reg = function () {
+                        $scope.insertItem('ange/mileage', 'admin', $scope.item, false)
+                            .then(function(){dialogs.notify('알림', '마일리지가 등록되었습니다.', {size: 'md'}); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
+
+                        $modalInstance.close();
+                        //console.log($scope.item);
+                    };
+
+                    $scope.click_close = function(){
+                        $modalInstance.close();
+                    }
+
+                }], user, {size: 'lg',keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        };
+
         // 조회 화면 이동
         $scope.click_showViewUser = function (key) {
-            $location.url('/user/view/'+key);
+            $location.url('/member/view/'+key);
         };
 
         // 수정 화면 이동
         $scope.click_showEditUser = function (item) {
-            $location.url('/user/edit/'+item.NO);
+            $location.url('/member/edit/'+item.NO);
         };
 
         // 자주쓰는 목록 사용자 제거
@@ -362,6 +404,7 @@ define([
                 counts: [],         // hide page counts control
                 total: 0,           // length of data
                 getData: function($defer, params) {
+                    isFirst = false;
                     var key = Object.keys(params.sorting())[0];
 
 //                    $scope.search['SORT'] = key;
@@ -370,12 +413,12 @@ define([
                     $scope.getList('com/user', 'admin', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             var total_cnt = data[0].TOTAL_COUNT;
-                            $scope.TOTAL_COUNT = total_cnt;
+                            $scope.TOTAL_CNT = total_cnt;
 
                             params.total(total_cnt);
                             $defer.resolve(data);
                         })
-                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+                        .catch(function(error){$scope.TOTAL_CNT = 0; $defer.resolve([]);});
                 }
             });
         };

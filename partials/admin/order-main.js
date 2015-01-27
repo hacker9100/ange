@@ -1,8 +1,8 @@
 /**
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
- * Date   : 2015-01-16
- * Description : site-main.html 화면 콘트롤러
+ * Date   : 2015-01-26
+ * Description : order-main.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('site-main', ['$scope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
+    controllers.controller('order-main', ['$scope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
 
         /********** 초기화 **********/
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
@@ -189,7 +189,7 @@ define([
                 return;
             }
 
-            if ($scope.file2 == undefined) {
+            if ($scope.file1 == undefined) {
                 dialogs.notify('알림', '상세 이미지를 등록해야합니다.', {size: 'md'});
                 return;
             }
@@ -199,7 +199,7 @@ define([
             $scope.subItem.FILES.push($scope.file1);
             $scope.subItem.FILES.push($scope.file2);
 
-            for(var i in $scope.subItem.FILES) {
+            for(var i in $scope.item.FILES) {
                 $scope.subItem.FILES[i].$destroy = '';
             }
 
@@ -322,7 +322,7 @@ define([
 
         $scope.init();
         $scope.getMenuList0();
-        $scope.getMenuList1();
-        $scope.getMenuList2();
+//        $scope.getMenuList1();
+//        $scope.getMenuList2();
     }]);
 });

@@ -28,10 +28,19 @@ define([
 
         /********** 이벤트 **********/
         // 목록갱신 버튼 클릭
-        $scope.click_refreshList = function () {
-//            $scope.tableParams.reload();
+        $scope.click_refresh = function () {
+            $scope.getSessionCount();
         };
-                
+
+        // 세션수 조회
+        $scope.getSessionCount = function () {
+            $scope.getItem('com/user', 'session', {}, {}, true)
+                .then(function(data){
+                    alert(JSON.stringify(data))
+                })
+                .catch(function(error){});
+        };
+
         // 사용자 목록 조회
         $scope.getUserList = function () {
             $scope.getList('com/user', 'statistics', {NO:0, SIZE:5}, $scope.search, true)
@@ -47,6 +56,7 @@ define([
             .catch($scope.reportProblems);
 
         $scope.init();
+        $scope.getSessionCount();
         $scope.getUserList();
     }]);
 });

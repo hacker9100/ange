@@ -1,0 +1,214 @@
+<div ng-controller="user-main">
+    <div class="panel panel-primary">
+        <div class="panel-body" ng-model="search" class="row" style="border-radius: 0px; border-left:8px solid #DEDEDE; border-right:2px solid #DEDEDE;">
+
+            <form role="form" name="search_form" class="form-horizontal form_basic_100">
+                <div class="col-md-9" style="padding-left:15px;">
+                    <div class= "form_basic_wrap">
+                        <div class="row form-group form_basic_group">
+                            <div class="col-xs-5" style="max-width:200px;">
+                                <label class= "form_basic_label">검색</label>
+                                <div class= "form_basic_input" style="margin-left:60px; width:135px;">
+                                    <select ng-model="search.ROLE" ng-options="role.ROLE_NM for role in roles" class= "form-control" >
+                                        <option name="" value="">- 권한</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-3" style="border-left:1px solid #DEDEDE; display:block;">
+                    <div class= "navbar-header" style="float:left; width:100%; margin:0px auto; line-height:40px; padding:10px; text-align:center;">
+                        <button class="btn btn-lg btn-primary start" ng-click="click_searchCmsUser();" ng-disabled="list_from.$invalid">
+                            <i class="glyphicon glyphicon-search"></i>
+                            <span>검색</span>
+                        </button>
+                        <button class="btn btn-lg btn-success fileinput-button" data-ng-click="click_focus()">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>등록</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!--<div id="feedLoading" ng-show="isLoading">Loading...</div>-->
+    <!---->
+    <!-- Contents Include -->
+    <!-- 목록 -->
+    <!--<table class="table table-striped table-condensed" >-->
+        <!--<thead>-->
+        <!--<tr>-->
+            <!--<th>이름</th>-->
+            <!--<th>권한</th>-->
+            <!--<th>등록일</th>-->
+            <!--<th>상태</th>-->
+            <!--<th>기능</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr ng-repeat="item in list">-->
+            <!--<td>{{ item.USER_NM }}</td>-->
+            <!--<td>{{ item.ROLE_NM }}</td>-->
+            <!--<td>{{ item.REG_DT }}</td>-->
+            <!--<td>{{ item.USER_ST == '0' ? '이용가능' : '이용정지' }}</td>-->
+            <!--<td>-->
+                <!--<a ng-click="click_getCmsUser(item.USER_ID)">편집</a>-->
+                <!--<a ng-click="click_updateStatus($index)">상태변경</a>-->
+                <!--<a ng-click="click_deleteCmsUser($index)">삭제</a>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
+
+    <div class="list-group-item-labeling-gray">
+        <strong>User List</strong>
+
+        <div class="list-group" style="float:right; margin-bottom: 0;">
+            <div style="text-align:left; font-size:0.8em; font-family: Arial, sans-serif; padding-top:2px;">
+                Total &nbsp; <span style="color:#fff; font-size:1.1em; ">{{TOTAL_COUNT}}</span> &nbsp; user(s)
+            </div>
+        </div>
+    </div>
+
+    <div ng-show="isLoading" style="position: absolute; margin-top: 40px; left: 48%; z-index: 1000" class="ai-circled ai-indicator ai-grey-spin"></div>
+
+    <div loading-container="tableParams.settings().$loading">
+        <table ng-table="tableParams" class="table" style="border-bottom: 1px solid #868686;">
+        <tbody ng-repeat="group in $groups">
+            <tr class="ng-table-group">
+                <td style="font-size:0.94em; line-height:38px;" colspan="{{$columns.length}}">
+                    <a href="" ng-click="group.$hideRows = !group.$hideRows">
+                        <span class="glyphicon" ng-class="{ 'glyphicon-chevron-right': group.$hideRows, 'glyphicon-chevron-down': !group.$hideRows }"></span>
+                        <strong>{{ group.value }}</strong>
+                    </a>
+                </td>
+            </tr>
+            <tr ng-hide="group.$hideRows" ng-repeat="item in group.data">
+                <td style="font-size:0.94em; line-height:38px;" data-title="'이름'" sortable="'USER_NM'">
+                    <a style="cursor:pointer;" ng-click="click_showViewCmsBoard(item.NO)" title="{{ item.USER_NM + ' 수정하기' }}">{{item.USER_NM}}</a>
+                </td>
+                <td style="width:250px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'권한'" sortable="'ROLE_NM'">
+                    {{item.ROLE_NM}}
+                </td>
+                <td style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'등록일'" sortable="'REG_DT'">
+                    {{item.REG_DT}}
+                </td>
+                <td style="width:200px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'기능'">
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="내용편집" ng-click="click_getCmsUser(item.USER_ID)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="상태변경" ng-click="click_updateStatus(item)">{{item.USER_ST == 'N' ? '이용가능' : '이용정지'}}</button>
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-click="click_deleteCmsUser($parent.$index, $index)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+                </td>
+            </tr>
+        </tbody>
+        <tbody ng-show="$groups == ''">
+            <tr>
+                <td colspan="5" style="text-align: center; font-size:0.86em; line-height:38px;">조회 데이터가 없습니다.</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+
+    <!-- ////Contents Include -->
+
+    <!-- Contents Include -->
+    <div class="list-group-item-labeling-gray" style="margin-bottom: 20px;">
+        <strong>User Detail</strong>
+    </div>
+
+    <div class="col-md-12">
+
+        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+            <div id="item" ng-model="item" class="row form_basic_wrap">
+                <div class="form-group form_basic_group" ng-class="{error: edit_form.item_id.$invalid}">
+                    <label class= "form_basic_label">아이디 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input id="item_id" name="item_id" ng-model="item.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디" required/>
+                        <span ng-show="edit_form.item_id.$dirty && edit_form.item_id.$invalid" class="help-inline">사용자 아이디가 누락되었습니다.</span>
+                    </div>
+                    <div class="form_basic_input" style="margin-left:290px;">
+                        <button class="btn btn-success fileinput-button" ng-click="click_checkUserId();" ng-disabled="edit_form.item_id.$invalid">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>아이디 확인</span>
+                        </button>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">권한 <span style="color:#b94a48">*</span></label>
+                    <div class= "form_basic_input">
+                        <select ng-model="item.ROLE" ng-options="role.ROLE_NM for role in user_roles" class= "form-control" ></select>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group" ng-class="{error: edit_form.user_name.$invalid}">
+                    <label class= "form_basic_label">이름 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input name="user_name" ng-model="item.USER_NM" type= "text" class= "form-control" placeholder="사용자 이름" required/>
+                        <span ng-show="edit_form.user_name.$dirty && edit_form.user_name.$invalid" class="help-inline">사용자 이름이 누락되었습니다.</span>
+                    </div>
+                </div>
+                <div class="form-group form_basic_group" ng-class="{error: edit_form.password.$invalid}">
+                    <label class= "form_basic_label">비밀번호</label>
+                    <div class="form_basic_input">
+                        <input id="password" name="password" ng-model="item.PASSWORD" type= "password" class= "form-control" placeholder= "사용자 비밀번호"/>
+                    </div>
+                </div>
+                <div class="form-group form_basic_group" ng-class="{error: edit_form.password_compare.$invalid}">
+                    <label class= "form_basic_label">비밀번호 확인</label>
+                    <div class="form_basic_input">
+                        <input name="passwordCompare" ng-model="item.PASSWORD_CP" type= "password" class= "form-control" password-check="password"  ng-match="item.PASSWORD" placeholder= "사용자 비밀번호 확인"/>
+                        <!--<span ng-show="edit_form.passwordCompare.$dirty && edit_form.passwordCompare.$invalid" class="help-inline">확인 비밀번호가 누락되었습니다.</span>-->
+                        <span ng-show="edit_form.password.$touched || ( edit_form.passwordCompare.$dirty && edit_form.passwordCompare.$error.pwmatch )" class="help-inline">비밀번호가 일치하지 않습니다.</span>
+                    </div>
+                </div>
+                <div class="form-group form_basic_group">
+                    <label class= "form_basic_label">연락처</label>
+                    <div class="form_basic_input">
+                        <input name="phone" ng-model="item.PHONE_1" type= "text" maxlength="15" ng-pattern="/^\d{0,15}(\.\d{1,9})?$/" class= "form-control" placeholder= "사용자 연락처"/>
+                        <span ng-show="edit_form.phone.$invalid" class="help-inline">숫자만 입력 가능합니다.</span>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">회신메일</label>
+                    <div class="form_basic_input">
+                        <input name="email" ng-model="item.EMAIL" type= "email" class= "form-control" placeholder= "사용자 이메일"/>
+                        <span ng-show="edit_form.email.$error.email" class="help-inline">이메일 형식이 맞지 않습니다.</span>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">소개</label>
+                    <div class= "col-xs-6 form_basic_input" style="min-width:610px;">
+                        <textarea ng-model="item.INTRO" class= "form-control" placeholder= "소개.."/>
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">메모</label>
+                    <div class= "col-xs-6 form_basic_input" style="min-width:610px;">
+                        <textarea ng-model="item.NOTE" class= "form-control" placeholder= "메모.."/>
+                    </div>
+                </div>
+
+                <!-- 하단 버튼 -->
+                <div class="raw" style="float:left; width:100%; margin-top:50px; padding-top:10px; border-top:1px solid #DEDEDE;">
+                    <div class="col-xs-12 form-group form_basic" style="text-align:center;">
+                        <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveCmsUser();" ng-disabled="edit_form.$invalid">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>저장</span>
+                        </button>
+                        <button type="button" class="btn btn-warning btn-xs cancel" ng-click="click_cancel();">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>취소</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+    <!-- ////Contents Include -->
+</div>

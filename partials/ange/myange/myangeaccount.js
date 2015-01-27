@@ -11,9 +11,18 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('myangeaccount', ['$rootScope', '$scope', '$window', '$location', 'dialogs', function ($rootScope, $scope, $window, $location, dialogs) {
+    controllers.controller('myangeaccount', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $window, $location, dialogs, UPLOAD) {
 
         /********** 초기화 **********/
+        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+
+        // 파일 업로드 후 파일 정보가 변경되면 화면에 썸네일을 로딩
+        $scope.$watch('newFile', function(data){
+            if (typeof data !== 'undefined') {
+                $scope.file = data[0];
+            }
+        });
+
         // 날짜 콤보박스
         var year = [];
         var babyYear = [];
@@ -99,9 +108,9 @@ define([
                     oncomplete: function(data) {
                         // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
                         // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
-                        document.getElementById('post_1').value = data.postcode1;
-                        document.getElementById('post_2').value = data.postcode2;
-                        document.getElementById('addr').value = data.address;
+                        $scope.user.POST_1 = document.getElementById('post_1').value = data.postcode1;
+                        $scope.user.POST_2 = document.getElementById('post_2').value = data.postcode2;
+                        $scope.user.ADDR = document.getElementById('addr').value = data.address;
 
                         //전체 주소에서 연결 번지 및 ()로 묶여 있는 부가정보를 제거하고자 할 경우,
                         //아래와 같은 정규식을 사용해도 된다. 정규식은 개발자의 목적에 맞게 수정해서 사용 가능하다.
@@ -132,37 +141,37 @@ define([
 //            }
 //        });
 
-        $scope.checkPW = true;
-        $scope.availablePW = true;
-        $scope.comparePW = true;
-//        $scope.$watch('user.PASSWORD', function() {
-//            if ($scope.user.PASSWORD != undefined && $scope.user.PASSWORD.length > 5) {
-//                $scope.checkPW = true;
-//
-////                var check = /[^a-zA-Z0-9~!@\#$%<>^&*\()\-=+_\']/gi;
-//                var check = /^(?=.+[0-9])(?=.+[a-zA-Z])(?=.+[!@#$%^*+=-]).{6,12}$/;
-//
-//                console.log($scope.user.PASSWORD)
-//                console.log(check.test($scope.user.PASSWORD))
-//                if (check.test($scope.user.PASSWORD)) {
-//                    $scope.availablePW = true;
-//                } else {
-//                    $scope.availablePW = false;
-//                }
-//            } else {
-//                $scope.checkPW = false;
-//            }
-//        });
+//        $scope.checkPW = true;
+//        $scope.availablePW = true;
+//        $scope.comparePW = true;
+        $scope.$watch('user.PASSWORD', function() {
+            if ($scope.user.PASSWORD != undefined && $scope.user.PASSWORD.length > 5) {
+                $scope.checkPW = true;
 
-//        $scope.$watch('user.PASSWORD_CP', function() {
-//            if ($scope.user.PASSWORD_CP != undefined && $scope.user.PASSWORD_CP.length > 5) {
-//                if ($scope.user.PASSWORD == $scope.user.PASSWORD_CP) {
-//                    $scope.comparePW = true;
-//                } else {
-//                    $scope.comparePW = false;
-//                }
-//            }
-//        });
+//                var check = /[^a-zA-Z0-9~!@\#$%<>^&*\()\-=+_\']/gi;
+                var check = /^(?=.+[0-9])(?=.+[a-zA-Z])(?=.+[!@#$%^*+=-]).{6,12}$/;
+
+                console.log($scope.user.PASSWORD)
+                console.log(check.test($scope.user.PASSWORD))
+                if (check.test($scope.user.PASSWORD)) {
+                    $scope.availablePW = true;
+                } else {
+                    $scope.availablePW = false;
+                }
+            } else {
+                $scope.checkPW = false;
+            }
+        });
+
+        $scope.$watch('user.PASSWORD_CP', function() {
+            if ($scope.user.PASSWORD_CP != undefined && $scope.user.PASSWORD_CP.length > 5) {
+                if ($scope.user.PASSWORD == $scope.user.PASSWORD_CP) {
+                    $scope.comparePW = true;
+                } else {
+                    $scope.comparePW = false;
+                }
+            }
+        });
 
 //        $scope.$watch('user.NICK_NM', function() {
 //            if ($scope.user.NICK_NM != undefined && $scope.user.NICK_NM.length > 1) {
@@ -307,7 +316,6 @@ define([
 //                return;
 //            }
 
-            alert($scope.user.YEAR == '');
             if ($scope.user.YEAR == '' || $scope.user.MONTH == '' || $scope.user.DAY == '') {
                 $('#birth').focus();
                 dialogs.notify('알림', '생년월일을 확인해주세요.', {size: 'md'});
@@ -348,17 +356,25 @@ define([
                 $scope.blog.BLOG_URL = $scope.blog.BLOG_DETAIL;
             }
 
-            if ($scope.blog.THEME.length != 0) {
+            if ($scope.blog.THEME_CK != undefined && $scope.blog.THEME_CK.length != 0) {
                 var strTheme = '';
-                for(var i = 0; i < $scope.blog.THEME.length; i++) {
-                    strTheme += $scope.blog.THEME[i];
+                for(var i = 0; i < $scope.blog.THEME_CK.length; i++) {
+                    strTheme += $scope.blog.THEME_CK[i];
 
-                    if (i != $scope.blog.THEME.length - 1) strTheme += ',';
+                    if (i != $scope.blog.THEME_CK.length - 1) strTheme += ',';
+                    if ($scope.blog.THEME_CK[i] == 10) strTheme += ',' + $scope.blog.THEME_ETC;
                 }
+
+                $scope.blog.THEME = strTheme;
             }
 
             $scope.user.BABY = $scope.babies;
             $scope.user.BLOG = $scope.blog;
+
+            if ($scope.file) {
+                $scope.user.FILE = $scope.file;
+                $scope.user.FILE.$destroy = '';
+            }
 
             $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
                 .then(function(){ dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});})
@@ -382,14 +398,11 @@ define([
 
         // 취소 버튼 클릭
         $scope.click_cancel = function () {
-            $location.url('/main');
+            $scope.getUser();
         };
 
         // 저장 버튼 클릭
-        $scope.click_moveHome = function () {
-
-            console.log(JSON.stringify($scope.user))
-
+        $scope.click_saveUser = function () {
             $scope.saveUser();
 //            $location.url('/main');
         };
@@ -397,7 +410,6 @@ define([
         $scope.getUser = function () {
             $scope.getItem('com/user', 'item', $rootScope.uid, {SYSTEM_GB: 'ANGE', DETAIL: true}, false)
                 .then(function(data) {
-                    console.log(JSON.stringify(data));
                     $scope.user = data;
 
                     $scope.user.YEAR = '';
@@ -413,6 +425,11 @@ define([
                     $scope.user.PHONE_2_3 = '';
                     $scope.user.EMAIL_ID = '';
                     $scope.user.EMAIL_TYPE = '';
+
+                    var file = data.FILE;
+                    if (file != undefined) {
+                        $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE"};
+                    }
 
                     if ($scope.user.BIRTH.length == 8) {
                         $scope.user.YEAR = $scope.user.BIRTH.substr(0, 4);
@@ -493,7 +510,7 @@ define([
                                 spTheme[i] = parseInt(spTheme[i]);
                             }
 
-                            $scope.blog.THEME = spTheme;
+                            $scope.blog.THEME_CK = spTheme;
                         }
                     }
 

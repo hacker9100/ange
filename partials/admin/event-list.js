@@ -1,8 +1,8 @@
 /**
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
- * Date   : 2015-01-16
- * Description : site-main.html 화면 콘트롤러
+ * Date   : 2015-01-26
+ * Description : event-list.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('site-main', ['$scope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
+    controllers.controller('event-list', ['$scope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
 
         /********** 초기화 **********/
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
@@ -28,69 +28,55 @@ define([
 
         // 탭 초기화
         $scope.tab = 0;
-//        $scope.tab = 1;
 
         // 메뉴 모델 초기화
         $scope.subItem = {};
         $scope.item = {};
 
-        // 선택 카테고리
-        $scope.CATEGORY = [];
-        // 카테고리 데이터
-        $scope.category = [];
-
-        // 카테고리 선택 콤보박스 설정
-        $scope.select_settings = {externalIdProp: '', idProp: 'NO', displayProp: 'CATEGORY_NM', dynamicTitle: false, showCheckAll: false, showUncheckAll: false};
+        // 페이징
+        $scope.PAGE_NO = 1;
+        $scope.PAGE_SIZE = 10;
+        $scope.TOTAL_COUNT = 0;
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('cms/category', 'list', {}, {}, false)
-                .then(function(data){
-                    $scope.category = data;
 
-                    var category_a = [];
-                    var category_b = [];
-
-                    for (var i in data) {
-                        var item = data[i];
-
-                        if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
-                            category_a.push(item);
-                        } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
-                            category_b.push(item);
-                        }
-                    }
-
-                    $scope.category_a = category_a;
-                    $scope.category_b = category_b;
-                })
         };
 
         /********** 이벤트 **********/
-            // 카테고리 주제 대분류 선택
-        $scope.$watch('CATEGORY_M', function(data) {
-            var category_s = [];
-
-            if (data != undefined) {
-                for (var i in $scope.category) {
-                    var item = $scope.category[i];
-
-                    if (item.PARENT_NO == data.NO && item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO != '0') {
-                        category_s.push(item);
-                    }
-                }
-            }
-            $scope.category_s = category_s;
-        });
-
-        // 추가된 카테고리 클릭
-        $scope.click_removeCategory = function(idx) {
-            $scope.CATEGORY.splice(idx, 1);
-        }
+        $scope.click_createEvent = function() {
+            $location.url('/event/edit/0');
+        };
 
         $scope.click_selectTab = function (tabIdx) {
             $scope.tab = tabIdx;
         };
+
+        $scope.click_editEvent = function (item) {
+            $location.url('/event/edit/'+item.NO);
+        };
+
+        $scope.click_deleteEvent = function (item) {
+            $scope.deleteItem('ange/event', 'item', item.NO, false)
+                .then(function(data){
+                    dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                    $scope.getEventList();
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
+        // 체험단/이벤트 목록 조회
+        $scope.getEventList = function () {
+            $scope.getList('ange/event', 'list', {}, {}, true)
+                .then(function(data){
+                    $scope.list0 = data;
+
+//                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
+                })
+                .catch(function(error){alert(error)});
+        };
+
+//------------------------------------------------------------
 
         // 목록갱신 버튼 클릭
         $scope.click_refreshList = function () {
@@ -189,7 +175,7 @@ define([
                 return;
             }
 
-            if ($scope.file2 == undefined) {
+            if ($scope.file1 == undefined) {
                 dialogs.notify('알림', '상세 이미지를 등록해야합니다.', {size: 'md'});
                 return;
             }
@@ -199,7 +185,7 @@ define([
             $scope.subItem.FILES.push($scope.file1);
             $scope.subItem.FILES.push($scope.file2);
 
-            for(var i in $scope.subItem.FILES) {
+            for(var i in $scope.item.FILES) {
                 $scope.subItem.FILES[i].$destroy = '';
             }
 
@@ -280,17 +266,7 @@ define([
             $scope.CATEGORY = {};
         };
 
-        // 메뉴 목록 조회
-        $scope.getMenuList0 = function () {
-            $scope.getList('admin/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, true)
-                .then(function(data){
-                    console.log(JSON.stringify(data))
-                    $scope.list0 = data;
 
-//                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
-                })
-                .catch(function(error){alert(error)});
-        };
 
         // 메뉴 목록 조회
         $scope.getMenuList1 = function () {
@@ -321,8 +297,8 @@ define([
 //            .catch($scope.reportProblems);
 
         $scope.init();
-        $scope.getMenuList0();
-        $scope.getMenuList1();
-        $scope.getMenuList2();
+        $scope.getEventList();
+//        $scope.getMenuList1();
+//        $scope.getMenuList2();
     }]);
 });

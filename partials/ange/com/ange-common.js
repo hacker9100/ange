@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$location', '$q', 'dataService', '$filter', 'dialogs', function ($rootScope, $scope, $stateParams, $location, $q, dataService, $filter, dialogs) {
+    controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$location', '$q', 'dataService', '$filter', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $stateParams, $location, $q, dataService, $filter, dialogs, UPLOAD) {
 
         // 주소 경로
         $scope.path = $scope.location.split('/');
@@ -214,6 +214,10 @@ define([
                 $rootScope.menu_role = session.MENU_ROLE;
                 $rootScope.email = session.EMAIL;
                 $rootScope.nick = session.NICK_NM;
+
+                if (session.USER_INFO.FILE) {
+                    $rootScope.img = UPLOAD.BASE_URL + session.USER_INFO.FILE.PATH + session.USER_INFO.FILE.FILE_ID;
+                }
 
                 $rootScope.addr = session.ADDR;
                 $rootScope.addr_detail = session.ADDR_DETAIL;
