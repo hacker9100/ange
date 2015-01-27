@@ -41,7 +41,9 @@ define([
         /********** 이벤트 **********/
         // 게시판 목록 이동
         $scope.click_showProductList = function () {
-            $location.url('/product/list');
+            alert(0)
+            history.back();
+//            $location.url('/product/list');
         };
 
         // 상품 조회

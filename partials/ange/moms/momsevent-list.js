@@ -112,7 +112,7 @@ define([
                     // 메인이미지
                     for(var i in data) {
                         if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                            var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
                             data[i].MAIN_FILE = img;
                         }
                     }

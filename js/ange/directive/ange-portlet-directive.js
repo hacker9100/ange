@@ -493,7 +493,7 @@ define([
                                 var img = '';
 
                                 if (data[i].FILE != null) {
-                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
                                     data[i].MAIN_FILE = img;
                                 }
 
@@ -517,7 +517,7 @@ define([
                                                 ( data[i].EVENT_ST == "P" ? '<div class="mini_event_closed"></div>' : '' ) +
                                                 '<img class="mini_event_txt_img" src="'+img+'"/>' +
                                                 '<div class="mini_event_txt_title">' +
-                                                    ( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') +
+                                                    ( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EXPERIENCE" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') +
                                                     data[i].SUBJECT +'' +
                                                 '</div>' +
                                                 '<div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div>' +
@@ -693,8 +693,10 @@ define([
                 } else if ($scope.option.type == 'experience') {
                     $scope.search.EVENT_GB = "EXPERIENCE";
                     $scope.search.PROCESS = "process";
+                    $scope.search.FILE = true;
                 } else if ($scope.option.type == 'event') {
                     $scope.search.EVENT_GB = "EVENT";
+                    $scope.search.FILE = true;
                 }
 
                 /********** 이벤트 **********/
@@ -721,7 +723,7 @@ define([
                             $scope.list = data;
 
                             for (var i in data) {
-//                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
                                 var url = '';
                                 if ($scope.option.type == 'banner') {
                                     url = '<a href="'+data[i].URL+'" target="_blank">';
@@ -732,8 +734,8 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-//                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><a href="'+data[i].URL+'" target="_blank"><img src="'+img+'"/></a></div></div>');
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><a href="'+data[i].URL+'" target="_blank"><img src="'+img+'"/></a></div></div>');
+//                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
                             }
 
                             // 광고의 롤링을 실행

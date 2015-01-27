@@ -73,18 +73,6 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                        NO, PARENT_NO, PRODUCT_NM
-                    FROM
-                        ANGE_PRODUCT
-                    WHERE
-                        PARENT_NO = ".$_key."
-                    ";
-
-            $file_data = $_d->getData($sql);
-            $data['PRODUCTS'] = $file_data;
-
-
-            $sql = "SELECT
                         F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
                     FROM
                         FILE F, CONTENT_SOURCE S
@@ -182,6 +170,7 @@ switch ($_method) {
                             AND PARENT_NO = 0
                             ".$search_where."
                          ORDER BY NO DESC
+                         ".$limit."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
                     (
@@ -271,11 +260,11 @@ switch ($_method) {
 
             $sql = "SELECT
                         TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                        NO, IN_OUT_GB, IN_OUT_ST, IN_OUT_CNT, REG_DT, ORDER_NO
+                        NO, PRODUCT_NO, IN_OUT_GB, IN_OUT_ST, IN_OUT_CNT, REG_DT, ORDER_NO
                     FROM
                     (
                         SELECT
-                            NO, IN_OUT_GB, IN_OUT_ST, IN_OUT_CNT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, ORDER_NO
+                            NO, PRODUCT_NO, IN_OUT_GB, IN_OUT_ST, IN_OUT_CNT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, ORDER_NO
                         FROM
                             ANGE_PRODUCT_STOCK
                         WHERE
@@ -839,6 +828,83 @@ switch ($_method) {
                 $_d->sql_commit();
                 $_d->succEnd($no);
             }
+        } else if ($_type == 'stock') {
+
+            $err = 0;
+            $msg = "";
+
+            $_d->sql_beginTransaction();
+
+            $sql = "UPDATE ANGE_PRODUCT_STOCK
+                    SET
+                        IN_OUT_GB = '".$_model[IN_OUT_GB]."',
+                        IN_OUT_CNT = '".$_model[IN_OUT_CNT]."'
+                    WHERE
+                        NO = '".$_key."'
+                    ";
+
+            $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $update_set = '';
+
+            if ($_model[IN_OUT_GB] == 'IN') {
+                $update_set = "SUM_IN_CNT = SUM_IN_CNT - ".($_model[OLD_IN_OUT_CNT] - $_model[IN_OUT_CNT]);
+            } else {
+                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT - ".($_model[OLD_IN_OUT_CNT] - $_model[IN_OUT_CNT]);
+            }
+
+            $sql = "UPDATE ANGE_PRODUCT
+                    SET
+                        ".$update_set."
+                    WHERE
+                        NO = ".$_model[PRODUCT_NO]."
+                ";
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            }else{
+                $sql = "INSERT INTO ANGE_HISTORY
+                        (
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
+                        ) VALUES (
+                            '".$_model[WORK_ID]."'
+                            ,'STOCK'
+                            ,SYSDATE()
+                            ,'".$_SESSION['uid']."'
+                            ,'.$no.'
+                            ,'PRODUCT'
+                            ,'".$_model[IN_OUT_GB]."'
+                            ,'".$ip."'
+                            ,'/product/list'
+                        )";
+
+                $_d->sql_query($sql);
+
+                $_d->sql_commit();
+                $_d->succEnd($no);
+            }
         }
 
         break;
@@ -848,17 +914,22 @@ switch ($_method) {
             $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
         }
 
-        $err = 0;
-        $msg = "";
+        if ($_type == "item") {
+            $err = 0;
+            $msg = "";
 
-        $_d->sql_beginTransaction();
+            $_d->sql_beginTransaction();
 
-        $sql = "DELETE FROM ANGE_PRODUCT WHERE NO = ".$_key;
+            $sql = "DELETE FROM ANGE_PRODUCT WHERE NO = ".$_key;
 
-        $_d->sql_query($sql);
-        /*$no = $_d->mysql_insert_id;*/
+            $_d->sql_query($sql);
+            /*$no = $_d->mysql_insert_id;*/
 
-        $sql = "SELECT
+            $sql = "DELETE FROM ANGE_PRODUCT_STOCK WHERE PRODUCT_NO = ".$_key;
+
+            $_d->sql_query($sql);
+
+            $sql = "SELECT
                         F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                     FROM
                         FILE F, CONTENT_SOURCE S
@@ -869,66 +940,147 @@ switch ($_method) {
                         AND F.THUMB_FL = '0'
                     ";
 
-        $result = $_d->sql_query($sql,true);
-        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-            MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
-            $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
 
-            $_d->sql_query($sql);
+                $_d->sql_query($sql);
 
-            $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'PRODUCT' AND TARGET_NO = ".$row[NO];
+                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'PRODUCT' AND TARGET_NO = ".$row[NO];
 
-            $_d->sql_query($sql);
+                $_d->sql_query($sql);
 
-            MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
 
-            if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                }
             }
-        }
 
-        $_d->sql_query($sql);
-        $no = $_d->mysql_insert_id;
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
 
-        if($_d->mysql_errno > 0) {
-            $err++;
-            $msg = $_d->mysql_error;
-        }
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
 
 
-        if($err > 0){
-            $_d->sql_rollback();
-            $_d->failEnd("삭제실패입니다:".$msg);
-        }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'DELETE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$_key.'
-                        ,'BOARD'
-                        ,'DELETE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("삭제실패입니다:".$msg);
+            }else{
+                $sql = "INSERT INTO ANGE_HISTORY
+                        (
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
+                        ) VALUES (
+                            '".$_model[WORK_ID]."'
+                            ,'PRODUCT'
+                            ,SYSDATE()
+                            ,'".$_SESSION['uid']."'
+                            ,'.$_key.'
+                            ,'PRODUCT'
+                            ,'DELETE'
+                            ,'".$ip."'
+                            ,'/product/list'
+                        )";
+
+                $_d->sql_query($sql);
+
+                $_d->sql_commit();
+                $_d->succEnd($no);
+            }
+        } else if ($_type == "stock") {
+            $err = 0;
+            $msg = "";
+
+            $_d->sql_beginTransaction();
+
+            $sql = "SELECT
+                        NO, PRODUCT_NO, IN_OUT_GB, IN_OUT_ST, IN_OUT_CNT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, ORDER_NO
+                    FROM
+                        ANGE_PRODUCT_STOCK
+                    WHERE
+                        NO = ".$_key."
+                    ";
+
+            $product_result = $_d->sql_query($sql,true);
+            $product_data = $_d->sql_fetch_array($product_result);
+
+            $update_set = '';
+
+            if ($product_data[IN_OUT_GB] == 'IN') {
+                $update_set = "SUM_IN_CNT = SUM_IN_CNT - ".$product_data[IN_OUT_CNT];
+            } else {
+                $update_set = "SUM_OUT_CNT = SUM_OUT_CNT - ".$product_data[IN_OUT_CNT];
+            }
+
+            $sql = "UPDATE ANGE_PRODUCT
+                    SET
+                        ".$update_set."
+                    WHERE
+                        NO = ".$product_data[PRODUCT_NO]."
+                    ";
 
             $_d->sql_query($sql);
 
-            $_d->sql_commit();
-            $_d->succEnd($no);
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $sql = "DELETE FROM ANGE_PRODUCT_STOCK WHERE NO = ".$_key;
+
+            $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("삭제실패입니다:".$msg);
+            }else{
+                $sql = "INSERT INTO ANGE_HISTORY
+                        (
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
+                        ) VALUES (
+                            '".$_model[WORK_ID]."'
+                            ,'STOCK'
+                            ,SYSDATE()
+                            ,'".$_SESSION['uid']."'
+                            ,'.$_key.'
+                            ,'PRODUCT'
+                            ,'DELETE'
+                            ,'".$ip."'
+                            ,'/product/list'
+                        )";
+
+                $_d->sql_query($sql);
+
+                $_d->sql_commit();
+                $_d->succEnd($no);
+            }
         }
 
         break;

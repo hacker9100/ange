@@ -1591,6 +1591,53 @@ ul.contentguide {
     background-size: 20%;
 }
 
+.login_exit {
+    float:right;
+    color:#ccc !important;
+    margin-right:10px;
+    cursor: pointer;
+}
+
+.login_exit:hover {
+    text-decoration: none;
+    color:#fff !important;
+}
+
+.login_side {
+    padding-top:24px;
+    height:100px;
+    width:100%;
+    margin:25px 0;
+    border-top:1px solid #ddd;
+}
+
+.login_side_link {
+    margin-top:12px;
+    font-weight: 600;
+}
+
+.login_side_link a {
+    cursor:pointer;
+}
+
+.login_side_link a:hover {
+    text-decoration:none;
+    color: #2fbcfe;
+}
+
+.submit_login {
+    position:absolute;
+    right: 25px;
+    top:38px;
+    color:#fff;
+    background-color:#4cace8;
+    height: 84px;
+    width: 84px;
+    border:1px solid transparent;
+    border-radius: 5px;
+}
+
+
 /*** 레이아웃 작업 시 아래 하애 주석 해제 필요함 ***/
 
 /*

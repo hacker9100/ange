@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2015-01-14
- * Description : user-edit.html 화면 콘트롤러
+ * Description : member-edit.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('user-edit', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', function ($scope, $stateParams, $location, $filter, dialogs) {
+    controllers.controller('member-edit', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', function ($scope, $stateParams, $location, $filter, dialogs) {
 
         /********** 초기화 **********/
         // 사용자 모델
@@ -58,7 +58,7 @@ define([
         /********** 이벤트 **********/
         // 사용자 목록 이동
         $scope.click_showCmsBoardList = function () {
-            $location.url('/user/list');
+            $location.url('/member/list');
         };
 
         // 사용자 저장 버튼 클릭

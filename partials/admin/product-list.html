@@ -40,7 +40,7 @@
                                     <i class="glyphicon glyphicon-plus"></i>
                                     <span>수정</span>
                                 </button>
-                                <button class="btn btn-success fileinput-button" data-ng-click="click_showStockProduct(item)">
+                                <button class="btn btn-success fileinput-button" data-ng-click="click_showStockProduct($index, item)">
                                     <i class="glyphicon glyphicon-plus"></i>
                                     <span>재고</span>
                                 </button>
@@ -50,10 +50,13 @@
                     <div ng-show="list == ''">
                         <p>조회 데이터가 없습니다.</p>
                     </div>
-
                 </div><!-- /.comp_basic -->
             </div><!-- /.v-cell-4 -->
         </div><!-- /.row -->
+        <nav class="text-center">
+            <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+
+        </nav>
     </div><!-- /.peoplephoto_list_wrap -->
 
 </div>
@@ -122,8 +125,8 @@
         <!--</div>-->
     </div>
     <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_editStock(product)">추가</button>
         <button class="btn btn-primary" ng-click="click_ok()">확인</button>
-        <button class="btn btn-warning" ng-click="click_cancel()">취소</button>
     </div>
 </script>
 
@@ -175,7 +178,7 @@
             <div class= "form-group">
                 <label class= "col-md-2">입출 구분</label>
                 <div class="col-md-9">
-                    <select ng-model="item.IN_OUT_GB" ng-init="item.IN_OUT_GB == '' ? item.IN_OUT_GB='IN' : item.IN_OUT_GB" class= "form-control">
+                    <select ng-model="item.IN_OUT_GB" class= "form-control" ng-disabled="isUpdate">
                         <option value="IN">입고</option>
                         <option value="OUT">출고</option>
                     </select>

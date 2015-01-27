@@ -40,8 +40,16 @@
     switch ($_method) {
         case "GET":
             if ($_type == 'session') {
-                $session_cnt = is_array($_SESSION['uid']) ? count($_SESSION['uid']) : 0;
+                session_start();
 
+                $session_cnt = is_array($_SESSION['uid']) ? count($_SESSION['uid']) : 0;
+                MtUtil::_c("################################### [count] ".count($_SESSION['uid']));
+                MtUtil::_c("################################### [count] ".count($_SESSION['count']));
+                MtUtil::_c("################################### [count] ".count($_SESSION));
+                MtUtil::_c("################################### [count] ".is_array($_SESSION['count']));
+                MtUtil::_c("################################### [count] ".is_array($_SESSION));
+                MtUtil::_c("################################### [count] ".$_SESSION['count']);
+                MtUtil::_c("################################### [count] ".$_SESSION['uid']);
                 $_d->dataEnd2($session_cnt);
             } else if ($_type == 'check') {
                 $sql = "SELECT
@@ -85,7 +93,7 @@
                 }
 
                 $sql = "SELECT
-                            U.USER_ID, U.USER_NM, U.NICK_NM, U.LUNAR_FL, U.BIRTH, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST,
+                            U.NO, U.USER_ID, U.USER_NM, U.NICK_NM, U.LUNAR_FL, U.BIRTH, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST,
                             U.REG_DT, U.FINAL_LOGIN_DT, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_YMD, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_YMD,
                             U.INTRO, U.NOTE, U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT,
                             U.EN_ANGE_EMAIL_FL, U.EN_ANGE_SMS_FL, U.EN_ALARM_EMAIL_FL, U.EN_ALARM_SMS_FL, U.EN_STORE_EMAIL_FL, U.EN_STORE_SMS_FL,
@@ -128,6 +136,23 @@
                     $mileage_result = $_d->sql_query($sql);
                     $mileage_data  = $_d->sql_fetch_array($mileage_result);
                     $data['MILEAGE'] = $mileage_data;
+
+                    $sql = "SELECT
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                COM_USER U, FILE F, CONTENT_SOURCE S
+                            WHERE
+                                U.NO = S.TARGET_NO
+                                AND F.NO = S.SOURCE_NO
+                                AND S.CONTENT_GB = 'FILE'
+                                AND S.TARGET_GB = 'USER'
+                                AND U.USER_ID = '".$_key."'
+                                AND F.FILE_GB = 'THUMB'
+                            ";
+
+                    $file_result = $_d->sql_query($sql);
+                    $file_data = $_d->sql_fetch_array($file_result);
+                    $data['FILE'] = $file_data;
 
                     $sql = "SELECT
                                 BABY_NM, BABY_BIRTH, BABY_SEX_GB, CARE_CENTER, CENTER_VISIT_DT, CENTER_OUT_DT
@@ -460,7 +485,7 @@
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 } else {
-                    $_d->dataEnd2($sql);
+                    $_d->dataEnd2($data);
                 }
             }
 
@@ -469,6 +494,29 @@
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
 //            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+
+            $upload_path = '../../../upload/files/';
+            $file_path = '/storage/user/'.$_model[USER_ID].'/';
+            $source_path = '../../..'.$file_path;
+            $insert_path = null;
+
+            try {
+                if (count($_model[FILE]) > 0) {
+                    $file = $_model[FILE];
+                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                        @mkdir($source_path);
+                    }
+
+                    if (file_exists($upload_path.$file[name])) {
+                        $uid = uniqid();
+                        rename($upload_path.$file[name], $source_path.$uid);
+                        $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                    }
+                }
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
 
             $err = 0;
             $msg = "";
@@ -597,6 +645,81 @@
                     $err++;
                     $msg = $_d->mysql_error;
                 }
+            } else {
+                $sql = "INSERT INTO USER_ROLE
+                    (
+                        ROLE_ID
+                        ,USER_ID
+                        ,REG_DT
+                    ) VALUES (
+                        'MEMBER'
+                        ,'".$_model[USER_ID]."'
+                        ,SYSDATE()
+                    )";
+
+                $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+            }
+
+            if (isset($_model[FILE]) && $_model[FILE] != "") {
+                $file = $_model[FILE];
+
+                $sql = "INSERT INTO FILE
+                        (
+                            FILE_NM
+                            ,FILE_ID
+                            ,PATH
+                            ,FILE_EXT
+                            ,FILE_SIZE
+                            ,THUMB_FL
+                            ,REG_DT
+                            ,FILE_ST
+                            ,FILE_GB
+                        ) VALUES (
+                            '".$file[name]."'
+                            , '".$insert_path[uid]."'
+                            , '".$insert_path[path]."'
+                            , '".$file[type]."'
+                            , '".$file[size]."'
+                            , '0'
+                            , SYSDATE()
+                            , 'C'
+                            , '".strtoupper($file[kind])."'
+                        )";
+
+                $_d->sql_query($sql);
+                $file_no = $_d->mysql_insert_id;
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                $sql = "INSERT INTO CONTENT_SOURCE
+                        (
+                            TARGET_NO
+                            ,SOURCE_NO
+                            ,CONTENT_GB
+                            ,TARGET_GB
+                            ,SORT_IDX
+                        ) VALUES (
+                            '".$no."'
+                            , '".$file_no."'
+                            , 'FILE'
+                            , 'USER'
+                            , '0'
+                        )";
+
+                $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
             }
 
             if (isset($_model[BABY]) && $_model[BABY] != "") {
@@ -628,27 +751,27 @@
             if (isset($_model[BLOG]) && $_model[BLOG] != "") {
                 if (isset($_model[BLOG][BLOG_URL]) && $_model[BLOG][BLOG_URL] != "") {
                     $sql = "INSERT INTO ANGE_USER_BLOG
-                    (
-                        USER_ID
-                        ,BLOG_GB
-                        ,BLOG_URL
-                        ,PHASE
-                        ,THEME
-                        ,NEIGHBOR_CNT
-                        ,POST_CNT
-                        ,VISIT_CNT
-                        ,SNS
-                    ) VALUES (
-                        '".$_model[USER_ID]."'
-                        ,'".$_model[BLOG][BLOG_GB]."'
-                        ,'".$_model[BLOG][BLOG_URL]."'
-                        ,'".$_model[BLOG][PHASE]."'
-                        ,'".$_model[BLOG][THEME]."'
-                        ,'".$_model[BLOG][NEIGHBOR_CNT]."'
-                        ,'".$_model[BLOG][POST_CNT]."'
-                        ,'".$_model[BLOG][VISIT_CNT]."'
-                        ,'".$_model[BLOG][SNS]."'
-                    )";
+                            (
+                                USER_ID
+                                ,BLOG_GB
+                                ,BLOG_URL
+                                ,PHASE
+                                ,THEME
+                                ,NEIGHBOR_CNT
+                                ,POST_CNT
+                                ,VISIT_CNT
+                                ,SNS
+                            ) VALUES (
+                                '".$_model[USER_ID]."'
+                                ,'".$_model[BLOG][BLOG_GB]."'
+                                ,'".$_model[BLOG][BLOG_URL]."'
+                                ,'".$_model[BLOG][PHASE]."'
+                                ,'".$_model[BLOG][THEME]."'
+                                ,'".$_model[BLOG][NEIGHBOR_CNT]."'
+                                ,'".$_model[BLOG][POST_CNT]."'
+                                ,'".$_model[BLOG][VISIT_CNT]."'
+                                ,'".$_model[BLOG][SNS]."'
+                            )";
 
                     $_d->sql_query($sql);
 
@@ -673,6 +796,31 @@
             if ($_type == 'item') {
                 if (!isset($_key) || $_key == '') {
                     $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
+                }
+
+                $upload_path = '../../../upload/files/';
+                $file_path = '/storage/user/'.$_key.'/';
+                $source_path = '../../..'.$file_path;
+                $insert_path = null;
+
+                try {
+                    if (count($_model[FILE]) > 0) {
+                        $file = $_model[FILE];
+                        if (!file_exists($source_path) && !is_dir($source_path)) {
+                            @mkdir($source_path);
+                        }
+
+                        if (file_exists($upload_path.$file[name])) {
+                            $uid = uniqid();
+                            rename($upload_path.$file[name], $source_path.$uid);
+                            $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                        } else {
+                            $insert_path = array(path => '', uid => '', kind => '');
+                        }
+                    }
+                } catch(Exception $e) {
+                    $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                    break;
                 }
 
                 $err = 0;
@@ -736,17 +884,155 @@
     //                        EN_PHONE_FL = '".$_model[EN_PHONE_FL]."'
                 $_d->sql_query($sql);
 
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                $sql = "SELECT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                        FROM
+                            COM_USER U, FILE F, CONTENT_SOURCE S
+                        WHERE
+                            U.NO = S.TARGET_NO
+                            AND F.NO = S.SOURCE_NO
+                            AND S.CONTENT_GB = 'FILE'
+                            AND S.TARGET_GB = 'USER'
+                            AND U.USER_ID = '".$_key."'
+                            AND F.FILE_GB = 'THUMB'
+                        ";
+
+                $result = $_d->sql_query($sql,true);
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                    $is_delete = true;
+
+                    if (count($_model[FILE]) > 0) {
+                        $file = $_model[FILE];
+                        if ($row[FILE_NM] == $file[name] && $row[FILE_SIZE] == $file[size]) {
+                            $is_delete = false;
+                        }
+                    }
+
+                    if ($is_delete) {
+                        $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                        $_d->sql_query($sql);
+
+                        $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'USER' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
+
+                        $_d->sql_query($sql);
+
+                        if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                            unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                        }
+                    }
+                }
+
+                if (count($_model[FILE]) > 0) {
+                    $file = $_model[FILE];
+                    MtUtil::_c("------------>>>>> file : ".$file['name']);
+
+                    if ($insert_path[uid] != "") {
+                        $sql = "INSERT INTO FILE
+                                (
+                                    FILE_NM
+                                    ,FILE_ID
+                                    ,PATH
+                                    ,FILE_EXT
+                                    ,FILE_SIZE
+                                    ,THUMB_FL
+                                    ,REG_DT
+                                    ,FILE_ST
+                                    ,FILE_GB
+                                ) VALUES (
+                                    '".$file[name]."'
+                                    , '".$insert_path[uid]."'
+                                    , '".$insert_path[path]."'
+                                    , '".$file[type]."'
+                                    , '".$file[size]."'
+                                    , '0'
+                                    , SYSDATE()
+                                    , 'C'
+                                    , '".strtoupper($file[kind])."'
+                                )";
+
+                        $_d->sql_query($sql);
+                        $file_no = $_d->mysql_insert_id;
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+
+                        $sql = "INSERT INTO CONTENT_SOURCE
+                                (
+                                    TARGET_NO
+                                    ,SOURCE_NO
+                                    ,CONTENT_GB
+                                    ,TARGET_GB
+                                    ,SORT_IDX
+                                ) VALUES (
+                                    '".$_model[NO]."'
+                                    , '".$file_no."'
+                                    , 'FILE'
+                                    , 'USER'
+                                    , '0'
+                                )";
+
+                        $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                }
+
+                if (isset($_model[BABY]) && $_model[BABY] != "") {
+                    $sql = "DELETE FROM ANGE_USER_BABY WHERE USER_ID = '".$_model[USER_ID]."'";
+
+                    $_d->sql_query($sql);
+
+                    foreach ($_model[BABY] as $e) {
+                        if (isset($e[BABY_NM]) && $e[BABY_NM] != "") {
+                            $sql = "INSERT INTO ANGE_USER_BABY
+                                    (
+                                        USER_ID
+                                        ,BABY_NM
+                                        ,BABY_BIRTH
+                                        ,BABY_SEX_GB
+                                    ) VALUES (
+                                        '".$_model[USER_ID]."'
+                                        ,'".$e[BABY_NM]."'
+                                        ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? "0".$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? "0".$e[BABY_DAY] : $e[BABY_DAY])."'
+                                        ,'".$e[BABY_SEX_GB]."'
+                                    )";
+
+                            $_d->sql_query($sql);
+
+                            if($_d->mysql_errno > 0) {
+                                $err++;
+                                $msg = $_d->mysql_error;
+                            }
+                        }
+                    }
+                }
 
                 $sql = "UPDATE ANGE_USER_BLOG
                         SET
-                            BLOG_URL = '".$_model[BLOG_URL]."'
+                            BLOG_URL = '".$_model[BLOG][BLOG_URL]."'
+                            ,PHASE = '".$_model[BLOG][PHASE]."'
+                            ,THEME = '".$_model[BLOG][THEME]."'
+                            ,NEIGHBOR_CNT = '".$_model[BLOG][NEIGHBOR_CNT]."'
+                            ,POST_CNT = '".$_model[BLOG][POST_CNT]."'
+                            ,VISIT_CNT = '".$_model[BLOG][VISIT_CNT]."'
+                            ,SNS = '".$_model[BLOG][SNS]."'
                         WHERE
                             USER_ID = '".$_key."'
                         ";
 
 
                 $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
 
                 if($_d->mysql_errno > 0) {
                     $err++;

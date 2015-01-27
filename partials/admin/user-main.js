@@ -6,7 +6,7 @@
  */
 
 define([
-    'controller/controllers'
+    '../../js/admin/controller/controllers'
 ], function (controllers) {
     'use strict';
 
@@ -17,11 +17,11 @@ define([
         var check = false;
         $scope.key = '';
         $scope.item = {};
-        $scope.search = {SYSTEM_GB: 'CMS'}
+        $scope.search = {SYSTEM_GB: 'ADMIN'}
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('com/permission', 'list', {}, {SYSTEM_GB: 'CMS'}, false)
+            $scope.getList('com/permission', 'list', {}, {SYSTEM_GB: 'ADMIN'}, false)
                 .then(function(data){
                     $scope.roles = data;
                     $scope.user_roles = data;
@@ -112,7 +112,7 @@ define([
             $scope.key = id;
 
             if ($scope.key != '') {
-                $scope.getItem('com/user', 'item', $scope.key, {SYSTEM_GB: 'CMS'}, false)
+                $scope.getItem('com/user', 'item', $scope.key, {SYSTEM_GB: 'ADMIN'}, false)
                     .then(function(data) {
                         var idx = 0;
                         for (var i=0; i < $scope.user_roles.length; i ++) {

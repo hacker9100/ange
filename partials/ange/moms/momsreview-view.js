@@ -143,7 +143,7 @@ define([
         };
 
         $scope.addHitCnt = function () {
-            $scope.updateItem('ange/review', 'item', $stateParams.id, {ROLE: true}, false)
+            $scope.updateItem('ange/review', 'hit', $stateParams.id, {}, false)
                 .then(function(){
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
