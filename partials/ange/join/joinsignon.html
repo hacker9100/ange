@@ -55,7 +55,7 @@
                         </div><!-- /.sub_contents_wrap -->
 
 
-                        <div ng-if="step == '01'" class="sub_contents_body">
+                        <div ng-show="step == '01'" class="sub_contents_body">
 
                             <div class="sub_pagetitle_hr">약관동의</div>
 
@@ -179,9 +179,7 @@
 
                         </div><!-- /.sub_contents_body -->
 
-                        <div ng-if="step == '02'" class="sub_contents_body">
-                        <form ng-model="user" role="form" name="join_form">
-
+                        <div ng-show="step == '02'" class="sub_contents_body">
                             <div class="sub_pagetitle_hr">기본정보</div>
 
                             <div class="row form_rows">
@@ -336,9 +334,9 @@
                                     <span class="col-xs-8 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
                                             <div class="form-inline postno_search">
-                                                <input id="post_1" ng-model="user.POST_1" type="text" class="form-control postno_search" style="cursor:default; width:65px; background-color: #fff;" disabled>
+                                                <input id="post_1" ng-model="user.POST_1" type="text" class="form-control postno_search" style="cursor:default; width:65px; background-color: #fff;" readonly>
                                                 <span style="margin:0 4px;"> &dash; </span>
-                                                <input id="post_2" ng-model="user.POST_2" type="text" class="form-control postno_search" style="cursor:default; width:65px; background-color: #fff;" disabled>
+                                                <input id="post_2" ng-model="user.POST_2" type="text" class="form-control postno_search" style="cursor:default; width:65px; background-color: #fff;" readonly>
                                                 <button type="button" class="btn btn-sm btn-info" ng-click="click_openDaumPostcode()"><span class="glyphicon glyphicon-plus"></span> 우편번호</button>
                                             </div>
                                         </div>
@@ -351,7 +349,7 @@
 
                                     <span class="col-xs-8 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input id="addr" ng-model="user.ADDR" type="text" class="form-control inline_input" style="cursor:default; background-color: #fff;" disabled>
+                                            <input id="addr" ng-model="user.ADDR" type="text" class="form-control inline_input" style="cursor:default; background-color: #fff;" readonly>
                                         </div>
                                     </span>
 
@@ -444,6 +442,36 @@
 
                                 </div>  <!-- /.form_basicinfo -->
                             </div>  <!-- /.form_rows -->
+
+                            <form id="thumb" name="thumb" method="POST" enctype="multipart/form-data" data-file-upload="options">
+                                <input type="hidden" id="version" name="version" value="3">
+                                <div class="row form_rows">
+                                    <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>이미지</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
+
+                                        <span class="col-xs-10 basicinfo input">
+                                            <div class="form-inline" style="margin:0 5px">
+                                                <div class="col-xs-5 basicinfo">
+                                                    <div ng-model="file">
+                                                        <input ng-model="file.name" type= "text" class= "form-control" style="width:260px; cursor:default; background-color: #fff;" readonly/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-2 basicinfo files">
+                                                    <!-- The fileinput-button span is used to style the file input field as button -->
+                                                    <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                        <span>탐색기</span>
+                                                        <input type="file" name="files[]" ng-disabled="disabled">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </div>  <!-- /.form_basicinfo -->
+                                </div>  <!-- /.form_rows -->
+                            </form>
 
                             <div class="row form_rows">
                                 <div class="form_basicinfo">
@@ -699,31 +727,31 @@
 
                                     <span class="col-xs-2 basicinfo subtitle">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="1" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="1" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">일상/생각</span>
                                         </div>
                                     </span>
                                     <span class="col-xs-2 basicinfo subtitle">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="2" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="2" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">육아</span>
                                         </div>
                                     </span>
                                     <span class="col-xs-2 basicinfo subtitle">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="3" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="3" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">요리/레시피</span>
                                         </div>
                                     </span>
                                     <span class="col-xs-2 basicinfo subtitle">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="4" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="4" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">상품리뷰</span>
                                         </div>
                                     </span>
                                     <span class="col-xs-2 basicinfo subtitle">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="5" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="5" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">맛집</span>
                                         </div>
                                     </span>
@@ -731,19 +759,19 @@
                                     <span class="col-xs-2 basicinfo title"></span>
                                     <span class="col-xs-2 basicinfo subtitle">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="6" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="6" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">문학/책</span>
                                         </div>
                                     </span>
                                     <span class="col-xs-4 basicinfo subtitle">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="7" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="7" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">홈스쿨링(교육/교구/교재)</span>
                                         </div>
                                     </span>
                                     <span class="col-xs-4 basicinfo subtitle">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="8" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="8" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">문화생활(영화/공연/전시)</span>
                                         </div>
                                     </span>
@@ -751,14 +779,14 @@
                                     <span class="col-xs-2 basicinfo title"></span>
                                     <span class="col-xs-3 basicinfo subtitle">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="9" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="9" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">인테리어/DIY</span>
                                         </div>
                                     </span>
 
                                     <span class="col-xs-7 basicinfo desc">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME" type="checkbox" checklist-value="10" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="10" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">기타</span>
                                             <input ng-model="blog.THEME_ETC" type="text" class="form-control" style="cursor: default; float:left; width:300px; margin:0px 8px;" placeholder="ex) 취미, 사진...">
                                         </div>
@@ -848,13 +876,9 @@
                                         </span>
                                 </div>  <!-- /.form_basicinfo -->
                             </div>  <!-- /.form_rows -->
-
-                            <button class="join_stepbtn cancel" ng-click="saveAngeUser()"><span class="glyphicon glyphicon-remove-circle"></span> 등록</button>
-
-                        </form>
                         </div><!-- /.sub_contents_body -->
 
-                        <div ng-if="step == '03'" class="sub_contents_body">
+                        <div ng-show="step == '03'" class="sub_contents_body">
 
                             <div class="sub_pagetitle_hr">본인인증</div>
 
@@ -905,7 +929,7 @@
                             </div>  <!-- /.form_rows -->
                         </div><!-- /.sub_contents_body -->
 
-                        <div ng-if="step == '04'" class="sub_contents_body">
+                        <div ng-show="step == '04'" class="sub_contents_body">
 
                             <div class="sub_pagetitle_hr">가입완료</div>
 
@@ -946,7 +970,7 @@
                             </div><!-- /.form_rows -->
                         </div><!-- /.sub_contents_body -->
 
-                        <div ng-if="step != '04'" class="join_step_btn">
+                        <div ng-show="step != '04'" class="join_step_btn">
 
                             <button ng-show="step != '01'" class="join_stepbtn prev" ng-click="click_prevStep()"><span class="glyphicon glyphicon-chevron-left"></span> 이전</button>
                             <button class="join_stepbtn cancel" ng-click="click_cancel()"><span class="glyphicon glyphicon-remove-circle"></span> 취소</button>
@@ -954,7 +978,7 @@
 
                         </div>
 
-                        <div ng-if="step == '04'" class="join_step_btn">
+                        <div ng-show="step == '04'" class="join_step_btn">
 
                             <button class="join_stepbtn cancel" ng-click="click_moveHome()"><span class="glyphicon glyphicon-home"></span> 홈으로</button>
                             <button class="join_stepbtn next" ng-click="click_viewLogin()"><span class="glyphicon glyphicon-off"></span> 로그인</button>

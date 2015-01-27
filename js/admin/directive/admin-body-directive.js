@@ -17,7 +17,7 @@ define(['./directives'], function (directives) {
                 var path = scope.location.split('/');
 
                 if (path[1] == 'save') {
-                    path[1] = 'user';
+                    path[1] = 'member';
                 }
 //                if (menu[1] == 'archive' || menu[1] == 'article' || menu[1] == 'article-confirm' || menu[1] == 'edit' || menu[1] == 'edit-confirm') {
 //                    if (menu[2] == 'list') {

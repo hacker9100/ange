@@ -20,20 +20,20 @@
 
 		<!-- 로그인 후 -->
 		<div ng-if="uid" class="userlog_login_now">
-				<a class="userconfig" href="#" title="개인정보설정"><span class="glyphicon glyphicon-cog"></span></a>
-				<img src="/imgs/ange/temp/comp_rank_champion.jpg" class="userlog_login_pic">
+				<a class="userconfig" title="개인정보설정" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
+				<img ng-src="{{img}}" class="userlog_login_pic">
 
 				<div class="userlog_login_info">
 					<span class="usernickname">{{user_info.NICK_NM}}</span> 님, 안녕하세요.
 				</div>
 
 				<div class="userlog_user_func">
-					<a href="#" class="babyinfo"><span class="glyphicon glyphicon-heart" style="color:#fb6362; margin-right:4px;"></span>아기정보보기</a>
+					<a class="babyinfo" ng-click="click_settingBaby()"><span class="glyphicon glyphicon-heart" style="color:#fb6362; margin-right:4px;"></span>아기정보보기</a>
 					<a class="logout" ng-click="logoutMe()">로그아웃</a>
 				</div>
 
 				<div class="userlog_user_subinfo">
-					<span class="user_grade"><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> 장바구니</a></span>
+					<span class="user_grade"><span class="glyphicon glyphicon-star-empty"></span> 별초보맘</span>
 					<span class="user_mileage"><small>Mileage</small> <span style="color:#fb6362; font-weight:bold">{{user_info.MILEAGE.REMAIN_POINT}}</span></span>
 				</div>
 
@@ -41,9 +41,9 @@
 		<!-- /로그인 후 -->
 
 		<div class="userlog_utility">
-		<a href="/?page_channel=myange&page_controller=myangewriting&ui_type=sub" class="util1">내 게시물</a>
-		<a href="/?page_channel=myange&page_controller=myangemessage&ui_type=sub" class="util2">메시지</a>
-		<a href="/infodesk/home" class="util3">고객센터</a>
+		<a class="util1" ng-click="click_myangeWriting()">내 게시물</a>
+		<a class="util2" ng-click="click_myangeMessage()">메시지</a>
+		<a class="util3" ng-click="click_infodesk()">고객센터</a>
 		</div>
 
 		<a href="/?page_channel=club&page_controller=clubintro&ui_type=nomenu"><img src="/imgs/ange/temp/club_banner_25.png" style="margin-top:8px;"/></a>

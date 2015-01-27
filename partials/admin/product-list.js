@@ -14,8 +14,6 @@ define([
     controllers.controller('product-list', ['$scope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
 
         /********** 초기화 **********/
-        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
-
         // 탭 초기화
         $scope.tab = 0;
 
@@ -25,11 +23,26 @@ define([
         // 검색조건 초기화
         $scope.search = {PRODUCT_GB: 'MILEAGE'};
 
+        // 페이징
+        $scope.PAGE_NO = 1;
+        $scope.PAGE_SIZE = 10;
+        $scope.TOTAL_COUNT = 0;
+
         // 카테고리 데이터
         $scope.category = [];
 
         // 초기화
         $scope.init = function() {
+            if ($stateParams.id != undefined) {
+                if ($stateParams.id == '0') {
+                    $scope.search = {PRODUCT_GB: 'MILEAGE'};
+                } else if ($stateParams.id == '1') {
+                    $scope.search = {PRODUCT_GB: 'AUCTION'};
+                } else if ($stateParams.id == '2') {
+                    $scope.search = {PRODUCT_GB: 'CUMMERCE'};
+                }
+            }
+
             $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'ANGE', CATEGORY_GB: '1'}, false)
                 .then(function(data){
                     $scope.category = data;
@@ -41,22 +54,24 @@ define([
             $location.url('/product/edit/0');
         };
 
-        $scope.click_showStockProduct = function(item) {
-            $scope.openStockModal(item, 'md')
+        $scope.click_showStockProduct = function(idx, item) {
+            $scope.openStockModal(idx, item, 'md')
         };
 
         $scope.click_selectTab = function (tabIdx) {
-            $scope.tab = tabIdx;
+            $location.url('/product/list/'+tabIdx);
 
-            if ($scope.tab == '0') {
-                $scope.search = {PRODUCT_GB: 'MILEAGE'};
-            } else if ($scope.tab == '1') {
-                $scope.search = {PRODUCT_GB: 'AUCTION'};
-            } else if ($scope.tab == '2') {
-                $scope.search = {PRODUCT_GB: 'CUMMERCE'};
-            }
-
-            $scope.getProductList();
+//            $scope.tab = tabIdx;
+//
+//            if ($scope.tab == '0') {
+//                $scope.search = {PRODUCT_GB: 'MILEAGE'};
+//            } else if ($scope.tab == '1') {
+//                $scope.search = {PRODUCT_GB: 'AUCTION'};
+//            } else if ($scope.tab == '2') {
+//                $scope.search = {PRODUCT_GB: 'CUMMERCE'};
+//            }
+//
+//            $scope.getProductList();
         };
 
         // 조회 화면 이동
@@ -84,12 +99,14 @@ define([
         // 상품 목록 조회
         $scope.getProductList = function () {
             $scope.search.FILE = true;
-            $scope.getList('ange/product', 'list', {}, $scope.search, true)
+            $scope.getList('ange/product', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
+
                     $scope.list = data;
 
                     for (var i=0; i<data.length; i++) {
-                        console.log(JSON.stringify(data[i].FILE))
                         var file = data[i].FILE;
                         for(var j in file) {
                             data[i].MAIN_FILE = UPLOAD.BASE_URL+file[j].PATH+file[j].FILE_ID;
@@ -101,9 +118,13 @@ define([
                 .catch(function(error){alert(error)});
         };
 
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getProductList();
+        };
 
         // 재고 관리 모달창
-        $scope.openStockModal = function (item, size) {
+        $scope.openStockModal = function (idx, item, size) {
             var dlg = dialogs.create('product_stock_modal.html',
                 ['$scope', '$modalInstance', '$controller', 'dialogs', 'data', function($scope, $modalInstance, $controller, dialogs, data) {
 
@@ -111,6 +132,12 @@ define([
                     angular.extend(this, $controller('content', {$scope: $scope}));
 
                     $scope.product = data;
+
+                    $scope.getProduct = function() {
+                        $scope.getItem('ange/product', 'item', $scope.product.NO, {}, true)
+                            .then(function(data){$scope.product = data;})
+                            .catch(function(error){});
+                    };
 
                     $scope.getStockList = function () {
                         $scope.getList('ange/product', 'stock', {}, {PRODUCT_NO: data.NO}, true)
@@ -128,6 +155,7 @@ define([
 //                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 //                    };
 
+//                    console.log(JSON.stringify(data));
                     // 재고 관리 모달창
                     $scope.openInoutModal = function (item, size) {
                         var dlg = dialogs.create('stock_edit_modal.html',
@@ -146,14 +174,32 @@ define([
 //                            .catch(function(error){alert(error)});
 //                    };
 
+                                $scope.isUpdate = false;
+
                                 $scope.item = data;
 
-                                $scope.click_ok = function () {
-                                    $scope.item.PRODUCT_NO = data.NO;
+                                if (data.PRODUCT_NO != undefined) {
+                                    $scope.isUpdate = true;
+                                    $scope.item.OLD_IN_OUT_CNT = data.IN_OUT_CNT;
+                                } else {
+                                    $scope.item.IN_OUT_GB = 'IN';
+                                }
 
-                                    $scope.insertItem('ange/product', 'stock', $scope.item, false)
-                                        .then(function(){$modalInstance.close();})
-                                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                $scope.click_ok = function () {
+                                    if (!$scope.isUpdate) {
+                                        $scope.item.PRODUCT_NO = data.NO;
+
+                                        $scope.insertItem('ange/product', 'stock', $scope.item, false)
+                                            .then(function(){$modalInstance.close();})
+                                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                    } else {
+                                        $scope.item.PRODUCT_NO = data.PRODUCT_NO;
+                                        $scope.item.NO = data.NO;
+
+                                        $scope.updateItem('ange/product', 'stock', $scope.item.NO, $scope.item, false)
+                                            .then(function(){$modalInstance.close();})
+                                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                    }
                                 };
 
                                 $scope.click_cancel = function () {
@@ -163,7 +209,8 @@ define([
 //                    $scope.getStockList();
                             }], item, {size:size,keyboard: true,backdrop: true}, $scope);
                         dlg.result.then(function(){
-
+                            $scope.getStockList();
+                            $scope.getProduct();
                         },function(){
                             if(angular.equals($scope.name,''))
                                 $scope.name = 'You did not enter in your name!';
@@ -176,18 +223,22 @@ define([
 
                     $scope.click_deleteStock = function(item) {
                         $scope.deleteItem('ange/product', 'stock', item.NO, false)
-                            .then(function(){$scope.getStockList();})
+                            .then(function(){
+                                $scope.getStockList();
+                                $scope.getProduct();
+                            })
                             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     };
 
-                    $scope.click_cancel = function () {
-                        $modalInstance.close();
+                    $scope.click_ok = function () {
+                        $modalInstance.close($scope.product);
                     };
 
                     $scope.getStockList();
                 }], item, {size:size,keyboard: true,backdrop: true}, $scope);
-            dlg.result.then(function(){
-
+            dlg.result.then(function(product){
+                $scope.list[idx].SUM_IN_CNT = product.SUM_IN_CNT;
+                $scope.list[idx].SUM_OUT_CNT = product.SUM_OUT_CNT;
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';

@@ -1,0 +1,189 @@
+<!-- Contents Include -->
+<div class="col-md-12" ng-controller="event-edit">
+
+    <div ng-model="item" class="row form_basic_wrap">
+        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">구분</label>
+                <div class="form_basic_input">
+                    <select ng-model="item.EVENT_GB" ng-options="event_gb.name for event_gb in event_gb" class= "form-control"></select>
+                    <!--<div class="radio-inline" ng-repeat="gb in product_gb" >-->
+                        <!--<input checklist-model="item.PRODUCT_GB" type= "radio" checklist-value="gb.value"/> {{gb.name}}-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">클럽 여부</label>
+                <div class="form_basic_input">
+                    <input ng-model="item.CLUB_FL" type="checkbox" ng-checked="item.CLUB_FL">
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">제목</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder= "제목"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">기간</label>
+                <div class="col-xs-2 form_basic_input">
+                    <input ng-model="item.START_YMD" type= "text" class= "form-control" placeholder= "시작일"/>
+                </div>
+                <!--<div class="col-xs-1 form_basic_input">~</div>-->
+                <div class="col-xs-2 form_basic_input" style="margin-left:290px;">
+                    <input ng-model="item.END_YMD" type= "text" class= "form-control" placeholder= "종료일"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">리뷰 마감일</label>
+                <div class="col-xs-3 form_basic_input">
+                    <input ng-model="item.REVIEW_YMD" type= "text" class= "form-control" placeholder= "리뷰 마감일"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">당첨자 발표일</label>
+                <div class="col-xs-3 form_basic_input">
+                    <input ng-model="item.WINNER_DT" type= "text" class= "form-control" placeholder= "당첨자 발표일"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">종류</label>
+                <div class="form_basic_input">
+                    <select ng-model="item.EVENT_TP" ng-options="event_tp.name for event_tp in event_tp" class= "form-control"></select>
+                    <!--<div class="radio-inline" ng-repeat="gb in product_gb" >-->
+                    <!--<input checklist-model="item.PRODUCT_GB" type= "radio" checklist-value="gb.value"/> {{gb.name}}-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">판매사</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.COMPANY_NM" type= "text" class= "form-control" placeholder= "판매사"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">관련 URL</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.COMPANY_URL" type= "text" class= "form-control" placeholder= "URL"/>
+                </div>
+            </div>
+
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">슬로건</label>
+                <div class= "col-xs-6 form_basic_input">
+                    <textarea ng-model="item.SLOGAN" class= "form-control" placeholder= "슬로건"/>
+                </div>
+            </div>
+
+            <!--<div style="border:1px solid #DEDEDE; width:100%; float:left;">-->
+                <!--<div>-->
+                    <!--<textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>-->
+                <!--</div>-->
+            <!--</div>-->
+        </form>
+
+        <form id="thumb" name="thumb" method="POST" enctype="multipart/form-data" data-file-upload="options">
+            <input type="hidden" id="version" name="version" value="1">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">썸네일 이미지</label>
+                <div class="row" style="margin-left:110px;">
+                    <div class="col-sm-2">
+                        <div ng-model="file1">
+                            <input ng-model="file1.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 files">
+                        <!-- The fileinput-button span is used to style the file input field as button -->
+                        <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>탐색기</span>
+                            <input type="file" name="files[]" ng-disabled="disabled">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form id="main" name="main" method="POST" enctype="multipart/form-data" data-file-upload="options">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">메인 이미지</label>
+                <div class="row" style="margin-left:110px;">
+                    <div class="col-sm-2">
+                        <div ng-model="file2">
+                            <input ng-model="file2.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 files">
+                        <!-- The fileinput-button span is used to style the file input field as button -->
+                        <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>탐색기</span>
+                            <input type="file" name="files[]" ng-disabled="disabled">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form id="banner" name="banner" method="POST" enctype="multipart/form-data" data-file-upload="options">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">배너 이미지</label>
+                <div class="row" style="margin-left:110px;">
+                    <div class="col-sm-2">
+                        <div ng-model="file3">
+                            <input ng-model="file3.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 files">
+                        <!-- The fileinput-button span is used to style the file input field as button -->
+                        <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>탐색기</span>
+                            <input type="file" name="files[]" ng-disabled="disabled">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form id="mobile" name="mobile" method="POST" enctype="multipart/form-data" data-file-upload="options">
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">모바일 이미지</label>
+                <div class="row" style="margin-left:110px;">
+                    <div class="col-sm-2">
+                        <div ng-model="file4">
+                            <input ng-model="file4.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 files">
+                        <!-- The fileinput-button span is used to style the file input field as button -->
+                        <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>탐색기</span>
+                            <input type="file" name="files[]" ng-disabled="disabled">
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- 하단 버튼 -->
+        <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+            <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showEventList();" >
+                    <i class="glyphicon glyphicon-list"></i>
+                    <span>목록</span>
+                </button>
+            </div>
+            <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveEvent();" ng-disabled="edit_form.$invalid">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>저장</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- ////Contents Include -->

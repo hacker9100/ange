@@ -116,10 +116,26 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $result = $_d->sql_query($sql);
-                    $mileage_data  = $_d->sql_fetch_array($result);
-
+                    $mileage_result = $_d->sql_query($sql);
+                    $mileage_data  = $_d->sql_fetch_array($mileage_result);
                     $data['MILEAGE'] = $mileage_data;
+
+                    $sql = "SELECT
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                COM_USER U, FILE F, CONTENT_SOURCE S
+                            WHERE
+                                U.NO = S.TARGET_NO
+                                AND F.NO = S.SOURCE_NO
+                                AND S.CONTENT_GB = 'FILE'
+                                AND S.TARGET_GB = 'USER'
+                                AND U.USER_ID = '".$_key."'
+                                AND F.FILE_GB = 'THUMB'
+                            ";
+
+                    $file_result = $_d->sql_query($sql);
+                    $file_data = $_d->sql_fetch_array($file_result);
+                    $data['FILE'] = $file_data;
 
                     $sql = "SELECT
                                 BABY_NM, BABY_BIRTH, BABY_SEX_GB, CARE_CENTER, CENTER_VISIT_DT, CENTER_OUT_DT
@@ -130,7 +146,6 @@
                             ";
 
                     $baby_data = $_d->getData($sql);
-
                     $data['BABY'] = $baby_data;
 
                     $sql = "SELECT
@@ -141,9 +156,8 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $result = $_d->sql_query($sql);
-                    $blog_data  = $_d->sql_fetch_array($result);
-
+                    $blog_result = $_d->sql_query($sql);
+                    $blog_data  = $_d->sql_fetch_array($blog_result);
                     $data['BLOG'] = $blog_data;
                 } else {
                     $_d->failEnd("아이디나 패스워드를 확인해주세요.");
@@ -189,12 +203,23 @@
                     if (!isset($_SESSION)) {
                         session_start();
                     }
+
+                    if (!isset($_SESSION['count'])) {
+                        $_SESSION['count'] = 1;
+                        MtUtil::_c("################################### [session1] ");
+                    } else {
+                        $_SESSION['count']++;
+                        MtUtil::_c("################################### [session2] ");
+                    }
+                    $_SESSION['count'][test] = $data['USER_ID'];
                     $_SESSION['user_info'] = $data;
                     $_SESSION['uid'] = $data['USER_ID'];
                     $_SESSION['nick'] = $data['NICK_NM'];
                     $_SESSION['name'] = $data['USER_NM'];
                     $_SESSION['role'] = $data['ROLE_ID'];
+                    $_SESSION['system'] = $_model[SYSTEM_GB];
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
+
                     $_SESSION['addr'] = $data['ADDR'];
                     $_SESSION['addr_detail'] = $data['ADDR_DETAIL'];
                     $_SESSION['phone1'] = $data['PHONE_1'];
@@ -223,7 +248,9 @@
                         unset($_SESSION['nick']);
                         unset($_SESSION['name']);
                         unset($_SESSION['role']);
+                        unset($_SESSION['system']);
                         unset($_SESSION['menu_role']);
+
                         unset($_SESSION['addr']);
                         unset($_SESSION['addr_detail']);
                         unset($_SESSION['phone1']);
@@ -234,6 +261,8 @@
                         unset($_SESSION['baby_male_cnt']);
                         unset($_SESSION['baby_female_cnt']);
                         unset($_SESSION['timeout']);
+
+                        session_destroy();
                     }
                 } else {
                     if(isset($_SESSION['uid']))
@@ -243,7 +272,8 @@
                         $sess['NICK_NM'] = $_SESSION['nick'];
                         $sess['USER_NM'] = $_SESSION['name'];
                         $sess['ROLE_ID'] = $_SESSION['role'];
-                        $sess['MENU_ROLE'] = $_SESSION['menu_role'];
+                        $sess['SYSTEM_GB'] = $_SESSION['role'];
+                        $sess['MENU_ROLE'] = $_SESSION['system'];
 
                         $sess['ADDR'] = $_SESSION['addr'];
                         $sess['ADDR_DETAIL'] = $_SESSION['addr_detail'];
@@ -266,6 +296,7 @@
                         $sess['NICK_NM'] = 'Guest';
                         $sess['USER_NM'] = 'Guest';
                         $sess['ROLE_ID'] = '';
+                        $sess['SYSTEM_GB'] = '';
                         $sess['MENU_ROLE'] = '';
 
                         $sess['ADDR']= '';
@@ -292,7 +323,7 @@
             if (!isset($_SESSION)) {
                 session_start();
             }
-            if(isSet($_SESSION['uid']))
+            if(isset($_SESSION['uid']))
             {
                 $sql = "INSERT INTO CMS_HISTORY
                     (
@@ -318,15 +349,17 @@
                     )";
 
                 $_d->sql_query($sql);
-
                 unset($_SESSION['user_info']);
                 unset($_SESSION['uid']);
                 unset($_SESSION['nick']);
                 unset($_SESSION['name']);
                 unset($_SESSION['role']);
+                unset($_SESSION['system']);
                 unset($_SESSION['menu_role']);
 //                unset($_SESSION['email']);
                 unset($_SESSION['timeout']);
+
+                session_destroy();
             }
 
             $_d->succEnd("ok");

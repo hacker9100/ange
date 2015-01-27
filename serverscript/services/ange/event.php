@@ -77,9 +77,9 @@
                 }
 
                 $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
                         FROM
-                            COM_FILE F, CONTENT_SOURCE S
+                            FILE F, CONTENT_SOURCE S
                         WHERE
                             F.NO = S.SOURCE_NO
                             AND S.CONTENT_GB = 'FILE'
@@ -149,7 +149,7 @@
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             NO, SUBJECT, SLOGAN, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD,
-                                PEOPLE_CNT, WINNER_DT
+                            PEOPLE_CNT, WINNER_DT
                         FROM
                         (
                             SELECT
@@ -188,6 +188,7 @@
                                     F.NO = S.SOURCE_NO
                                     AND S.CONTENT_GB = 'FILE'
                                     AND S.TARGET_GB = 'EVENT'
+                                    AND F.FILE_GB = 'THUMB'
                                     AND S.TARGET_NO = ".$row['NO']."
                                 ";
 
@@ -267,6 +268,38 @@
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
 
+            $upload_path = '../../../upload/files/';
+            $file_path = '/storage/event/';
+            $source_path = '../../..'.$file_path;
+            $insert_path = array();
+
+            $body_str = $_model[BODY];
+
+            try {
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
+                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                        @mkdir($source_path);
+                    }
+
+                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        $file = $files[$i];
+
+                        if (file_exists($upload_path.$file[name])) {
+                            $uid = uniqid();
+                            rename($upload_path.$file[name], $source_path.$uid);
+
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+
+                            MtUtil::_c("------------>>>>> url : ".$i.'--'.$insert_path[$i][path]);
+                        }
+                    }
+                }
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
+
             $err = 0;
             $msg = "";
 
@@ -298,7 +331,10 @@
                         GIFT_NM,
                         CLUB_FL,
                         MUSICAL_WATCH_YMD,
-                        NOTE
+                        NOTE,
+                        START_YMD,
+                        END_YMD,
+                        WINNER_DT
                     ) VALUES (
                         '".$_model[SUBJECT]."',
                         '".$_SESSION['uid']."',
@@ -310,7 +346,7 @@
                         '".$_model[COMPANY_NM]."',
                         '".$_model[COMPANY_URL]."',
                         '".$_model[COMPANY_GB]."',
-                        '".$_model[EVENT_GB]."',
+                        '".$_model[EVENT_GB][value]."',
                         '".$_model[QUIZ_FL]."',
                         '".$_model[CHOIS1]."',
                         '".$_model[CHOIS2]."',
@@ -320,7 +356,10 @@
                         '".$_model[GIFT_NM]."',
                         '".$_model[CLUB_FL]."',
                         '".$_model[MUSICAL_WATCH_YMD]."',
-                        '".$_model[NOTE]."'
+                        '".$_model[NOTE]."',
+                        '".$_model[START_YMD]."',
+                        '".$_model[END_YMD]."',
+                        '".$_model[WINNER_DT]."'
                     )";
 
             $_d->sql_query($sql);
@@ -329,6 +368,69 @@
             if($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
+            }
+
+            if (count($_model[FILES]) > 0) {
+                $files = $_model[FILES];
+
+                for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                    $file = $files[$i];
+                    MtUtil::_c("------------>>>>> file : ".$file['name']);
+                    MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+
+                    $sql = "INSERT INTO FILE
+                            (
+                                FILE_NM
+                                ,FILE_ID
+                                ,PATH
+                                ,FILE_EXT
+                                ,FILE_SIZE
+                                ,THUMB_FL
+                                ,REG_DT
+                                ,FILE_ST
+                                ,FILE_GB
+                            ) VALUES (
+                                '".$file[name]."'
+                                , '".$insert_path[$i][uid]."'
+                                , '".$insert_path[$i][path]."'
+                                , '".$file[type]."'
+                                , '".$file[size]."'
+                                , '0'
+                                , SYSDATE()
+                                , 'C'
+                                , '".strtoupper($file[kind])."'
+                            )";
+
+                    $_d->sql_query($sql);
+                    $file_no = $_d->mysql_insert_id;
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
+                    $sql = "INSERT INTO CONTENT_SOURCE
+                            (
+                                TARGET_NO
+                                ,SOURCE_NO
+                                ,CONTENT_GB
+                                ,TARGET_GB
+                                ,SORT_IDX
+                            ) VALUES (
+                                '".$no."'
+                                , '".$file_no."'
+                                , 'FILE'
+                                , 'EVENT'
+                                , '".$i."'
+                            )";
+
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
             }
 
             if($err > 0){
@@ -346,26 +448,49 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
+            if ($_type == 'item') {
+                $upload_path = '../../../upload/files/';
+                $file_path = '/storage/event/';
+                $source_path = '../../..'.$file_path;
+                $insert_path = null;
 
+                try {
+                    if (count($_model[FILES]) > 0) {
+                        $files = $_model[FILES];
+                        if (!file_exists($source_path) && !is_dir($source_path)) {
+                            @mkdir($source_path);
+                        }
 
-            $err = 0;
-            $msg = "";
+                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                            $file = $files[$i];
 
-            $_d->sql_beginTransaction();
+                            if (file_exists($upload_path.$file[name])) {
+                                $uid = uniqid();
+                                rename($upload_path.$file[name], $source_path.$uid);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
-            if(isset($_model[ROLE]) && $_model[ROLE] != ""){
-                $sql = "UPDATE ANGE_EVENT
-                         SET HIT_CNT = HIT_CNT + 1
-                        WHERE
-                            NO = ".$_key."
-                        ";
-            }else{
+                                MtUtil::_c("------------>>>>> mediumUrl : ".$file[name]);
+                                MtUtil::_c("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.$uid);
+                            } else {
+                                $insert_path[$i] = array(path => '', uid => '', kind => '');
+                            }
+                        }
+                    }
+                } catch(Exception $e) {
+                    $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                    break;
+                }
+
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
 
                 if( trim($_model[SUBJECT]) == "" ){
                     $_d->failEnd("제목을 작성 하세요");
                 }
 
-                $sql = "UPDATE ANGE_COMP
+                $sql = "UPDATE ANGE_EVENT
                         SET
                             SUBJECT = '".$_model[SUBJECT]."',
                             #REG_UID = '".$_SESSION['uid']."',
@@ -377,7 +502,7 @@
                             COMPANY_NM = '".$_model[COMPANY_NM]."',
                             COMPANY_URL = '".$_model[COMPANY_URL]."',
                             COMPANY_GB = '".$_model[COMPANY_GB]."',
-                            EVENT_GB = '".$_model[EVENT_GB]."',
+                            EVENT_GB = '".$_model[EVENT_GB][value]."',
                             QUIZ_FL = '".$_model[QUIZ_FL]."',
                             CHOIS1 = '".$_model[CHOIS1]."',
                             CHOIS2 = '".$_model[CHOIS2]."',
@@ -387,26 +512,161 @@
                             GIFT_NM = '".$_model[GIFT_NM]."',
                             CLUB_FL = '".$_model[CLUB_FL]."',
                             MUSICAL_WATCH_YMD = '".$_model[MUSICAL_WATCH_YMD]."',
-                            NOTE = '".$_model[NOTE]."'
+                            NOTE = '".$_model[NOTE]."',
+                            START_YMD = '".$_model[START_YMD]."',
+                            END_YMD = '".$_model[END_YMD]."',
+                            WINNER_DT = '".$_model[WINNER_DT]."'
                         WHERE
                             NO = ".$_key."
                         ";
-            }
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("수정실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
-                $_d->succEnd($no);
+                $sql = "SELECT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                        FROM
+                            FILE F, CONTENT_SOURCE S
+                        WHERE
+                            F.NO = S.SOURCE_NO
+                            AND S.TARGET_GB = 'EVENT'
+                            AND S.CONTENT_GB = 'FILE'
+                            AND S.TARGET_NO = ".$_key."
+                        ";
+
+                $result = $_d->sql_query($sql,true);
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                    $is_delete = true;
+
+                    if (count($_model[FILES]) > 0) {
+                        $files = $_model[FILES];
+                        for ($i = 0 ; $i < count($files); $i++) {
+                            if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                                $is_delete = false;
+                            }
+                        }
+                    }
+
+                    if ($is_delete) {
+                        MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                        $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                        $_d->sql_query($sql);
+
+                        $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'SUB_MENU' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
+
+                        $_d->sql_query($sql);
+
+                        MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+
+                        if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                            unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                        }
+                    }
+                }
+
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
+
+                    for ($i = 0 ; $i < count($files); $i++) {
+                        $file = $files[$i];
+                        MtUtil::_c("------------>>>>> file : ".$file['name']);
+
+                        if ($insert_path[$i][uid] != "") {
+                            $sql = "INSERT INTO FILE
+                                    (
+                                        FILE_NM
+                                        ,FILE_ID
+                                        ,PATH
+                                        ,FILE_EXT
+                                        ,FILE_SIZE
+                                        ,THUMB_FL
+                                        ,REG_DT
+                                        ,FILE_ST
+                                        ,FILE_GB
+                                    ) VALUES (
+                                        '".$file[name]."'
+                                        , '".$insert_path[$i][uid]."'
+                                        , '".$insert_path[$i][path]."'
+                                        , '".$file[type]."'
+                                        , '".$file[size]."'
+                                        , '0'
+                                        , SYSDATE()
+                                        , 'C'
+                                        , '".strtoupper($file[kind])."'
+                                    )";
+
+                            $_d->sql_query($sql);
+                            $file_no = $_d->mysql_insert_id;
+
+                            if($_d->mysql_errno > 0) {
+                                $err++;
+                                $msg = $_d->mysql_error;
+                            }
+
+                            $sql = "INSERT INTO CONTENT_SOURCE
+                                    (
+                                        TARGET_NO
+                                        ,SOURCE_NO
+                                        ,CONTENT_GB
+                                        ,TARGET_GB
+                                        ,SORT_IDX
+                                    ) VALUES (
+                                        '".$_key."'
+                                        , '".$file_no."'
+                                        , 'FILE'
+                                        , 'EVENT'
+                                        , '".$i."'
+                                    )";
+
+                            $_d->sql_query($sql);
+
+                            if($_d->mysql_errno > 0) {
+                                $err++;
+                                $msg = $_d->mysql_error;
+                            }
+                        }
+                    }
+                }
+
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == "hit") {
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
+
+                $sql = "UPDATE ANGE_EVENT
+                            SET HIT_CNT = HIT_CNT + 1
+                        WHERE
+                            NO = ".$_key."
+                        ";
+
+                $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
             }
 
             break;
@@ -421,20 +681,72 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM ANGE_COMM WHERE NO = ".$_key;
+            $sql = "DELETE FROM ANGE_EVENT WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
             }
 
+            $sql = "SELECT
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        FILE F, CONTENT_SOURCE S
+                    WHERE
+                        F.NO = S.SOURCE_NO
+                        AND S.TARGET_GB = 'EVENT'
+                        AND S.TARGET_NO = ".$_key."
+                    ";
+
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                $_d->sql_query($sql);
+
+                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'EVENT' AND TARGET_NO = ".$row[NO];
+
+                $_d->sql_query($sql);
+
+                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+
+                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                }
+            }
+
             if($err > 0){
                 $_d->sql_rollback();
                 $_d->failEnd("삭제실패입니다:".$msg);
             }else{
+                $sql = "INSERT INTO ANGE_HISTORY
+                        (
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
+                        ) VALUES (
+                            '".$_model[WORK_ID]."'
+                            ,'DELETE'
+                            ,SYSDATE()
+                            ,'".$_SESSION['uid']."'
+                            ,'.$_key.'
+                            ,'EVENT'
+                            ,'DELETE'
+                            ,'".$ip."'
+                            ,'/webboard'
+                        )";
+
+                $_d->sql_query($sql);
+
                 $_d->sql_commit();
                 $_d->succEnd($no);
             }
