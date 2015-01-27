@@ -334,6 +334,7 @@
                         NOTE,
                         START_YMD,
                         END_YMD,
+                        PEOPLE_CNT,
                         WINNER_DT
                     ) VALUES (
                         '".$_model[SUBJECT]."',
@@ -359,6 +360,7 @@
                         '".$_model[NOTE]."',
                         '".$_model[START_YMD]."',
                         '".$_model[END_YMD]."',
+                        '".$_model[PEOPLE_CNT]."',
                         '".$_model[WINNER_DT]."'
                     )";
 
@@ -515,6 +517,7 @@
                             NOTE = '".$_model[NOTE]."',
                             START_YMD = '".$_model[START_YMD]."',
                             END_YMD = '".$_model[END_YMD]."',
+                            PEOPLE_CNT = '".$_model[PEOPLE_CNT]."'
                             WINNER_DT = '".$_model[WINNER_DT]."'
                         WHERE
                             NO = ".$_key."

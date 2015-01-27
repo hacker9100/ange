@@ -138,8 +138,10 @@ define([
                         //console.log(JSON.stringify(data));
                         for(var i in files) {
 //                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                            var img = UPLOAD.BASE_URL + files[i].PATH + files[i].FILE_ID;
-                            data.MAIN_FILE = img;
+                            if (files[i].FILE_GB == 'THUMB' )
+                                data.THUMB_FILE = UPLOAD.BASE_URL + files[i].PATH + files[i].FILE_ID;
+                            else if (files[i].FILE_GB == 'MAIN' )
+                                data.MAIN_FILE = UPLOAD.BASE_URL + files[i].PATH + files[i].FILE_ID;
                         }
 
                     })

@@ -35,9 +35,27 @@
                 </div>
             </div>
             <div class= "form-group form_basic_group">
-                <label class= "form_basic_label">리뷰 마감일</label>
+                <label class= "form_basic_label">후기작성 기간</label>
                 <div class="col-xs-3 form_basic_input">
-                    <input ng-model="item.REVIEW_YMD" type= "text" class= "form-control" placeholder= "리뷰 마감일"/>
+                    <input ng-model="item.PERIOD" type= "text" class= "form-control" placeholder= "후기작성 기간"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">배송비</label>
+                <div class="col-xs-3 form_basic_input">
+                    <input ng-model="item.DELIV_COST" type= "text" class= "form-control" placeholder= "배송비"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">선물</label>
+                <div class="col-xs-3 form_basic_input">
+                    <input ng-model="item.GIFT_NM" type= "text" class= "form-control" placeholder= "선물"/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">당첨인원</label>
+                <div class="col-xs-3 form_basic_input">
+                    <input ng-model="item.PEOPLE_CNT" type= "text" class= "form-control" placeholder= "당첨인원"/>
                 </div>
             </div>
             <div class= "form-group form_basic_group">
@@ -46,6 +64,7 @@
                     <input ng-model="item.WINNER_DT" type= "text" class= "form-control" placeholder= "당첨자 발표일"/>
                 </div>
             </div>
+
             <div class= "form-group form_basic_group">
                 <label class= "form_basic_label">종류</label>
                 <div class="form_basic_input">

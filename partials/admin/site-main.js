@@ -176,8 +176,12 @@ define([
         // 메뉴 수정
         $scope.click_editMenu = function (item) {
             $scope.item = item;
-            $scope.item.COMM_GB = item.COMM.COMM_GB;
-            $scope.CATEGORY = angular.fromJson(item.CATEGORY);
+            if (item.COMM != undefined) {
+                $scope.item.COMM_GB = item.COMM.COMM_GB;
+            }
+            if (item.CATEGORY != undefined) {
+                $scope.CATEGORY = angular.fromJson(item.CATEGORY);
+            }
 
             $scope.click_focus('menu');
         }
@@ -251,7 +255,7 @@ define([
             $scope.insertItem('admin/menu', 'menu', $scope.item, false)
                 .then(function(data){
                     dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                    $scope.getMenuList();
+                    $scope.getMenuList1();
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
@@ -263,7 +267,7 @@ define([
             $scope.updateItem('admin/menu', 'menu', $scope.item.MENU_URL, $scope.item, false)
                 .then(function(data){
                     dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
-                    $scope.getMenuList();
+                    $scope.getMenuList1();
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };

@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div ng-show="tab == 0" class= "form-group">
+    <div ng-if="tab == 0" class= "form-group">
         <table class="table">
             <thead>
             <tr style="background-color: #333; border-left:1px solid black;">
@@ -44,7 +44,7 @@
             </tbody>
         </table>
     </div>
-    <div ng-show="tab == 1" class= "form-group">
+    <div ng-if="tab == 1" class= "form-group">
         <table class="table">
             <thead>
             <tr style="background-color: #333; border-left:1px solid black;">
@@ -79,7 +79,7 @@
         </table>
     </div>
 
-    <div ng-show="tab == 2" class= "form-group">
+    <div ng-if="tab == 2" class= "form-group">
         <table class="table">
             <thead>
             <tr style="background-color: #333; border-left:1px solid black;">
@@ -112,7 +112,7 @@
         <strong>Menu Detail</strong>
     </div>
 
-    <div ng-show="tab == 0" class="col-md-12">
+    <div ng-if="tab == 0" class="col-md-12">
         <div id="subItem" ng-model="subItem" class="row form_basic_wrap">
             <form role="form" name="edit_form1" class="form-horizontal form_basic_100">
                 <div class="form-group form_basic_group" ng-class="{error: edit_form1.subItem_id.$invalid}">

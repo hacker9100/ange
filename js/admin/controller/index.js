@@ -37,7 +37,7 @@ define([
 
     // ADMIN 관리자
     '../../../partials/admin/user-main',
-    '../../../partials/admin/permission-main',
+    '../../../partials/admin/permission-main'
 
-    '../../../partials/admin/menu-main'
+//    '../../../partials/admin/menu-main'
 ], function () {});
