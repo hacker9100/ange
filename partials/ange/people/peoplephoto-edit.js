@@ -125,20 +125,6 @@ define([
             $scope.search = {};
             $scope.search.CATEGORY_GB = $scope.community_show = $stateParams.menu;
 
-//            if ($stateParams.menu == 'angemodel') {
-//                $scope.community = "앙쥬모델 선발대회";
-//                $scope.community_show = "angemodel";
-//                $scope.search.CATEGORY_GB = 'angemodel';
-//            } else if($stateParams.menu == 'recipearcade') {
-//                $scope.community = "레시피 아케이드";
-//                $scope.community_show = "recipearcade";
-//                $scope.search.CATEGORY_GB = 'recipearcade';
-//            } else if($stateParams.menu == 'peopletaste') {
-//                $scope.community = "피플 맛집";
-//                $scope.community_show = "peopletaste";
-//                $scope.search.CATEGORY_GB = 'peopletaste';
-//            }
-
             $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
                     $scope.categorylist = data;
@@ -164,13 +150,6 @@ define([
         $scope.click_showPeoplePhotoList = function () {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
 
-//            if ($stateParams.menu == 'peopletaste') {
-//                $location.url('/people/peopletaste/list');
-//            } else if($stateParams.menu == 'angemodel') {
-//                $location.url('/people/angemodel/list');
-//            } else if($stateParams.menu == 'recipearcade') {
-//                $location.url('/people/recipearcade/list');
-//            }
         };
 
         // 게시판 조회
@@ -181,16 +160,22 @@ define([
                         $scope.item = data;
                         $scope.item.NOTICE_FL == 'Y' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
 
-                        if($scope.item.SCRAP_FL == 'Y'){
-                            $("#check_scrap").attr("checked",true);
+                        if($scope.item.REPLY_FL == "Y"){
+                            $("#check_reply").attr("checked", true);
                         }else{
-                            $("#check_scrap").attr("checked",false);
+                            $("#check_reply").attr("checked", false);
                         }
 
-                        if($scope.item.REPLY_FL == 'Y'){
-                            $("#check_reply").attr("checked",true);
+                        if($scope.item.SCRAP_FL== "Y"){
+                            $("#check_scrap").attr("checked", true);
                         }else{
-                            $("#check_reply").attr("checked",false);
+                            $("#check_scrap").attr("checked", false);
+                        }
+
+                        if($scope.item.REPLY_FL == "Y" && $scope.item.SCRAP_FL== "Y"){
+                            $("#checkall").attr("checked", true);
+                        }else{
+                            $("#checkall").attr("checked", false);
                         }
 
                        var idx = 0;
@@ -203,14 +188,6 @@ define([
                         }
                         $scope.item.PHOTO_TYPE = $scope.categorylist[idx].TYPE;
 
-
-/*                        // 프로젝트
-                        angular.forEach($scope.categorylist,function(value, idx){
-                            if(value.TYPE == data.PHOTO_TYPE){
-                                $scope.item.PHOTO_TYPE = $scope.categorylist[idx];
-                                return;
-                            }
-                        });*/
 
                         var files = data.FILES;
                         for(var i in files) {
