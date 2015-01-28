@@ -55,6 +55,9 @@
                 $search_where = "";
                 $sort_order = "";
 
+                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
+                    $search_where .= "AND C.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                }
                 if (isset($_search[CATEGORY_GB]) && $_search[CATEGORY_GB] != "") {
                     $search_where .= "AND C.CATEGORY_GB  = '".$_search[CATEGORY_GB]."' ";
                 }
@@ -118,7 +121,8 @@
                         CATEGORY_GB,
                         CATEGORY_ST,
                         REG_DT,
-                        NOTE
+                        NOTE,
+                        SYSTEM_GB
                     ) VALUES (
                         ".( isset($_model[PARENT]) && $_model[PARENT] != "" ? $_model[PARENT][NO] : 0 )."
                         , '".$_model[CATEGORY_NM]."'
@@ -126,6 +130,7 @@
                         , '0'
                         , SYSDATE()
                         , '".$_model[NOTE]."'
+                        , '".$_model[SYSTEM_GB]."'
                     )";
 
             MtUtil::_c("### [POST_DATA] ".$sql);

@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2015-01-26
- * Description : event-list.html 화면 콘트롤러
+ * Description : comp-list.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('event-list', ['$scope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
+    controllers.controller('comp-list', ['$scope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
 
         /********** 초기화 **********/
         // 검색 조건
@@ -32,7 +32,7 @@ define([
         };
 
         /********** 이벤트 **********/
-        // 목록갱신 버튼 클릭
+            // 목록갱신 버튼 클릭
         $scope.click_refreshList = function () {
             $scope.getEventList();
         };

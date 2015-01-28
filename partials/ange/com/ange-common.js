@@ -486,7 +486,7 @@ define([
             .then($scope.sessionCheck)
             .catch($scope.reportProblems);
 
-        $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
+        $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS'}, false).then(function(data){
             var category_a = [];
             var category_b = [];
 

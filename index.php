@@ -27,9 +27,11 @@
     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
         $sql = "SELECT
-                    MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC
+                    MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC, ETC, F.FILE_ID
                 FROM
-                    COM_MENU
+                    COM_MENU M
+                    LEFT OUTER JOIN CONTENT_SOURCE S ON M.NO = S.TARGET_NO AND S.CONTENT_GB = 'FILE' AND S.TARGET_GB = 'MENU'
+                    LEFT OUTER JOIN FILE F ON F.NO = S.SOURCE_NO
                 WHERE
                     SYSTEM_GB = 'ANGE'
                     AND MENU_ST  = 'Y'

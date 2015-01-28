@@ -578,7 +578,8 @@
                         EN_ALARM_SMS_FL,
                         EN_STORE_EMAIL_FL,
                         EN_STORE_SMS_FL,
-                        REG_DT
+                        REG_DT,
+                        CERT_HASH
                     ) VALUES (
                         '".$_model[USER_ID]."',
                         '".$_model[USER_NM]."',
@@ -592,7 +593,7 @@
                         '".$_model[PHONE_1]."',
                         '".$_model[PHONE_2]."',
                         '".$_model[USER_GB][value]."',
-                        'N',
+                        ".(!isset($_model[ROLE]) ? 'W' : 'N').",
                         '".$_model[EMAIL]."',
                         '".$_model[SEX_GB]."',
                         '".$_model[INTRO]."',
@@ -616,7 +617,8 @@
                         '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
                         '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
                         '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."',
-                        SYSDATE()
+                        SYSDATE(),
+                        'test'
                     )";
 
             $_d->sql_query($sql);
@@ -786,6 +788,16 @@
                 $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$msg);
             } else {
+                if(!isset($_model[ROLE])) {
+                    $to = $_model[EMAIL];
+                    $from_user = $_model[USER_NM];
+                    $from_email = "hacker9100@gmail.com";
+                    $subject = "[테스트 메일]앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
+                    $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/mail.php?_method=PUT&_type=cert&_key=hong&hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
+
+                    MtUtil::sendMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                }
+
                 $_d->sql_commit();
                 $_d->succEnd($no);
             }
@@ -1138,6 +1150,76 @@
                 } else {
                     $_d->sql_commit();
                     $_d->succEnd($no);
+                }
+            } else if ($_type == 'mail') {
+                $to = 'hacker9100@gmail.com';
+                $from_user = 'test';
+                $from_email = "hacker9100@gmail.com";
+                $subject = "[테스트 메일]앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
+                $message = "안녕하세요. test 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=hong&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
+
+                $return = MtUtil::sendMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                $_d->succEnd('');
+            } else if ($_type == 'cert') {
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
+
+                $sql = "SELECT
+                            CERT_HASH
+                        FROM
+                            COM_USER
+                        WHERE
+                            USER_ID = '".$_key."'
+                        ";
+
+                $data  = $_d->sql_fetch($sql);
+
+                if ($data[CERT_HASH] != $_hash) {
+                    $_d->failEnd("인증실패입니다:".$msg);
+                }
+
+                $sql = "UPDATE COM_USER
+                        SET
+                            USER_ST = 'N',
+                            CERT_GB = 'MAIL',
+                            CERT_DT = SYSDATE()
+                        WHERE
+                            USER_ID = '".$_key."'
+                        ";
+
+                $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+
+                    ob_end_clean();
+                    header('Content-type: text/html; charset=utf-8');
+
+                    echo '<script language="javascript">';
+                    echo 'alert("인증에 실패했습니다. 다시 인증 후 로그인 하세요.")';
+                    echo "window.location.href='".BASE_URL."';";
+                    echo "</script>";
+
+                    exit();
+                } else {
+                    $_d->sql_commit();
+
+                    ob_end_clean();
+//                    header("Location: http://localhost"); /* Redirect browser */
+                    header('Content-type: text/html; charset=utf-8');
+
+                    echo "<script language='javascript'>";
+                    echo "alert('인증에 성공했습니다.');";
+                    echo "window.location.href='".BASE_URL."';";
+                    echo "</script>";
+                    exit();
                 }
             }
 

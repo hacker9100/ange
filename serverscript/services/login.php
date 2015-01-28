@@ -272,8 +272,8 @@
                         $sess['NICK_NM'] = $_SESSION['nick'];
                         $sess['USER_NM'] = $_SESSION['name'];
                         $sess['ROLE_ID'] = $_SESSION['role'];
-                        $sess['SYSTEM_GB'] = $_SESSION['role'];
-                        $sess['MENU_ROLE'] = $_SESSION['system'];
+                        $sess['SYSTEM_GB'] = $_SESSION['system'];
+                        $sess['MENU_ROLE'] = $_SESSION['menu_role'];
 
                         $sess['ADDR'] = $_SESSION['addr'];
                         $sess['ADDR_DETAIL'] = $_SESSION['addr_detail'];

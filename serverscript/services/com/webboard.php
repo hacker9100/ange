@@ -501,9 +501,9 @@
                     MtUtil::_c("------------>>>>> file : ".$file['name']);
                     MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
-                    if($file[kind] != 'MAIN'){
-                        $_d->failEnd("대표이미지를 선택하세요.");
-                    }
+//                    if($file[kind] != 'MAIN'){
+//                        $_d->failEnd("대표이미지를 선택하세요.");
+//                    }
 
                     $sql = "INSERT INTO FILE
                     (

@@ -22,10 +22,10 @@
                 <li class="item.DROP_FL == 'Y' : dropdown">
                     <a ng-if="item.DROP_FL == 'N'" ng-click="selectMenu(item.CHANNEL_URL)" style="padding-top:20px;">
                         <span class="smalltag">{{item.TAG}}</span>
-                        <span ng-if="item.TAG == 'dashboard'" class="glyphicon glyphicon-home"></span> {{item.CHANNEL_NM}}
+                        <span ng-if="item.TAG == 'home'" class="glyphicon glyphicon-home"></span> {{item.CHANNEL_NM}}
                     </a>
 
-                    <a ng-if="item.DROP_FL == 'Y' && item.TAG != 'setting'" ng-hide="item.TAG == 'admin' && role != 'ANGE_ADMIN' && role != 'MANAGER'" href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top:20px;">
+                    <a ng-if="item.DROP_FL == 'Y' && item.TAG != 'setting'" ng-hide="item.TAG == 'admin' && role != 'ANGE_ADMIN'" href="#" class="dropdown-toggle" data-toggle="dropdown" style="padding-top:20px;">
                         <span class="smalltag">{{item.TAG}}</span>
                         {{item.CHANNEL_NM}} <span class="caret"></span>
                     </a>

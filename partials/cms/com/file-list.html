@@ -4,7 +4,7 @@
         <!-- Redirect browsers with JavaScript disabled to the origin page -->
         <noscript><input type="hidden" name="redirect" value="https://blueimp.github.io/jQuery-File-Upload/"></noscript>
         <input type="hidden" name="newDir" value="{{newDir}}">
-        <input type="hidden" id="version" name="version" value="6">
+        <input type="hidden" id="version" name="version" value="7">
         <!--<input type="hidden" id="version" name="version" value="2">-->
         <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
         <div class="col-xs-12 row fileupload-buttonbar" style="margin:0px auto;">
@@ -77,7 +77,7 @@
                         <i class="glyphicon glyphicon-ban-circle"></i>
                         <span>취소</span>
                     </button>
-                    <button data-ng-controller="file_destroy" type="button" class="btn btn-danger btn-xs destroy" data-ng-click="click_deleteFile(file)" data-ng-hide="!file.isUpdate">
+                    <button data-ng-controller="file_destroy" type="button" class="btn btn-danger btn-xs destroy" data-ng-click="click_deleteFile($index, file)" data-ng-hide="!file.isUpdate">
                         <i class="glyphicon glyphicon-trash"></i>
                         <span>바로 삭제</span>
                     </button>

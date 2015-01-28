@@ -25,6 +25,21 @@
                 </div>
             </div>
             <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">카테고리 <span style="color:#b94a48">*</span></label>
+                <div class="col-xs-6 form_basic_input">
+                    <div class="col-xs-4" style="padding-right:5px;">
+                        <select ng-model="category_1" ng-options="category.CATEGORY_NM for category in category_a" class= "form-control" placeholder="가격 분류">
+                            <option name="category_b" value="">- 가격 분류</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-4">
+                        <select ng-model="category_2" ng-options="category.CATEGORY_NM for category in category_b" class= "form-control" placeholder="상품 분류">
+                            <option name="category_b" value="">- 상품 분류</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
                 <label class= "form_basic_label">판매사</label>
                 <div class="col-xs-6 form_basic_input">
                     <input ng-model="item.COMPANY_NM" type= "text" class= "form-control" placeholder= "판매사"/>

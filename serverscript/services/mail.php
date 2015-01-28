@@ -1,6 +1,17 @@
 <?php
+@session_start();
+
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+
+date_default_timezone_set('Asia/Seoul');
+
+include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 require_once('../libs/PHPMailer/class.phpmailer.php');
 require_once('../libs/PHPMailer/class.smtp.php');
+
+MtUtil::_c("### [MAIL START]");
 
 function mail_utf8($to, $from_user, $from_email,
                    $subject = '(No subject)', $message = '')
@@ -89,8 +100,8 @@ function sendMail2($EMAIL, $NAME, $SUBJECT, $CONTENT, $MAILTO, $MAILTONAME){
 $to = "hacker9100@gmail.com";
 $from_user = "김성환";
 $from_email = "hacker9100@gmail.com";
-$subject = "테스트 메일";
-$message = "테스트로 보냅니다.";
+$subject = "[테스트 메일]앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
+$message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/mail.php?_method=PUT&_type=cert&_key=hong&hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
 
 sendMail2($from_email, $from_user, $subject, $message, $to, $from_user);
 //echo sendMail($from_email, $from_user, $to, $subject, $message);

@@ -88,7 +88,7 @@ define([
         $scope.click_updateMenu = function () {
             $scope.item.CATEGORY = $scope.CATEGORY;
 
-            $scope.updateItem('admin/menu', 'menu', $scope.item.MENU_URL, $scope.item, false)
+            $scope.updateItem('com/menu', 'menu', $scope.item.MENU_URL, $scope.item, false)
                 .then(function(data){
                     dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
                     $scope.getMenuList();

@@ -40,7 +40,7 @@ define([
             }
 
             // 카테고리 목록 조회
-            var ret = $scope.getList('cms/category', 'list', {}, {}, false)
+            var ret = $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS'}, false)
                 .then(function(data){
                     $scope.category = data;
 

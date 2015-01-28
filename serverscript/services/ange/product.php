@@ -73,6 +73,20 @@ switch ($_method) {
             }
 
             $sql = "SELECT
+                        C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
+                    FROM
+                        ANGE_PRODUCT P, CONTENT_CATEGORY CC, CMS_CATEGORY C
+                    WHERE
+                        P.NO = CC.TARGET_NO
+                        AND CC.CATEGORY_NO = C.NO
+                        AND CC.TARGET_GB = 'PRODUCT'
+                        AND P.NO = ".$_key."
+                    ";
+
+            $category_data = $_d->getData($sql);
+            $data['CATEGORY'] = $category_data;
+
+            $sql = "SELECT
                         F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
                     FROM
                         FILE F, CONTENT_SOURCE S
@@ -355,33 +369,33 @@ switch ($_method) {
             $_d->sql_beginTransaction();
 
             $sql = "INSERT INTO ANGE_PRODUCT
-                        (
-                            PRODUCT_NM,
-                            PRODUCT_GB,
-                            COMPANY_NO,
-                            COMPANY_NM,
-                            BODY,
-                            URL,
-                            PRICE,
-                            SUM_IN_CNT,
-                            SUM_OUT_CNT,
-                            NOTE,
-                            DELEIVERY_PRICE,
-                            DELEIVERY_ST
-                        ) VALUES (
-                            '".$_model[PRODUCT_NM]."',
-                            '".$_model[PRODUCT_GB][value]."',
-                            '".$_model[COMPANY_NO]."',
-                            '".$_model[COMPANY_NM]."',
-                            '".$_model[BODY]."',
-                            '".$_model[URL]."',
-                            '".$_model[PRICE]."',
-                            '".$_model[SUM_IN_CNT]."',
-                            '".$_model[SUM_OUT_CNT]."',
-                            '".$_model[NOTE]."',
-                            '".$_model[DELEIVERY_PRICE]."',
-                            '".$_model[DELEIVERY_ST]."'
-                        )";
+                    (
+                        PRODUCT_NM,
+                        PRODUCT_GB,
+                        COMPANY_NO,
+                        COMPANY_NM,
+                        BODY,
+                        URL,
+                        PRICE,
+                        SUM_IN_CNT,
+                        SUM_OUT_CNT,
+                        NOTE,
+                        DELEIVERY_PRICE,
+                        DELEIVERY_ST
+                    ) VALUES (
+                        '".$_model[PRODUCT_NM]."',
+                        '".$_model[PRODUCT_GB][value]."',
+                        '".$_model[COMPANY_NO]."',
+                        '".$_model[COMPANY_NM]."',
+                        '".$_model[BODY]."',
+                        '".$_model[URL]."',
+                        '".$_model[PRICE]."',
+                        '".$_model[SUM_IN_CNT]."',
+                        '".$_model[SUM_OUT_CNT]."',
+                        '".$_model[NOTE]."',
+                        '".$_model[DELEIVERY_PRICE]."',
+                        '".$_model[DELEIVERY_ST]."'
+                    )";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
@@ -391,20 +405,46 @@ switch ($_method) {
                 $msg = $_d->mysql_error;
             }
 
+            if (count($_model[CATEGORY]) > 0) {
+                $categories = $_model[CATEGORY];
+
+                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                    $category = $categories[$i];
+
+                    $sql = "INSERT INTO CONTENT_CATEGORY
+                            (
+                                CATEGORY_NO
+                                ,TARGET_NO
+                                ,TARGET_GB
+                            ) VALUES (
+                                '".$category[NO]."'
+                                , '".$no."'
+                                , 'PRODUCT'
+                            )";
+
+                    $_d->sql_query($sql);
+
+                    if ($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
+            }
+
             $sql = "INSERT INTO ANGE_PRODUCT_STOCK
-                        (
-                            PRODUCT_NO,
-                            IN_OUT_GB,
-                            IN_OUT_ST,
-                            IN_OUT_CNT,
-                            REG_DT
-                        ) VALUES (
-                            '".$no."',
-                            'IN',
-                            '0',
-                            ".$_model[SUM_IN_CNT].",
-                            SYSDATE()
-                        )";
+                    (
+                        PRODUCT_NO,
+                        IN_OUT_GB,
+                        IN_OUT_ST,
+                        IN_OUT_CNT,
+                        REG_DT
+                    ) VALUES (
+                        '".$no."',
+                        'IN',
+                        '0',
+                        ".$_model[SUM_IN_CNT].",
+                        SYSDATE()
+                    )";
 
             $_d->sql_query($sql);
 
@@ -426,27 +466,27 @@ switch ($_method) {
                     }
 
                     $sql = "INSERT INTO FILE
-                        (
-                            FILE_NM
-                            ,FILE_ID
-                            ,PATH
-                            ,FILE_EXT
-                            ,FILE_SIZE
-                            ,THUMB_FL
-                            ,REG_DT
-                            ,FILE_ST
-                            ,FILE_GB
-                        ) VALUES (
-                            '".$file[name]."'
-                            , '".$insert_path[$i][uid]."'
-                            , '".$insert_path[$i][path]."'
-                            , '".$file[type]."'
-                            , '".$file[size]."'
-                            , '0'
-                            , SYSDATE()
-                            , 'C'
-                            , '".$file[kind]."'
-                        )";
+                            (
+                                FILE_NM
+                                ,FILE_ID
+                                ,PATH
+                                ,FILE_EXT
+                                ,FILE_SIZE
+                                ,THUMB_FL
+                                ,REG_DT
+                                ,FILE_ST
+                                ,FILE_GB
+                            ) VALUES (
+                                '".$file[name]."'
+                                , '".$insert_path[$i][uid]."'
+                                , '".$insert_path[$i][path]."'
+                                , '".$file[type]."'
+                                , '".$file[size]."'
+                                , '0'
+                                , SYSDATE()
+                                , 'C'
+                                , '".$file[kind]."'
+                            )";
 
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
@@ -457,19 +497,19 @@ switch ($_method) {
                     }
 
                     $sql = "INSERT INTO CONTENT_SOURCE
-                        (
-                            TARGET_NO
-                            ,SOURCE_NO
-                            ,CONTENT_GB
-                            ,TARGET_GB
-                            ,SORT_IDX
-                        ) VALUES (
-                            '".$no."'
-                            , '".$file_no."'
-                            , 'FILE'
-                            , 'PRODUCT'
-                            , '".$i."'
-                        )";
+                            (
+                                TARGET_NO
+                                ,SOURCE_NO
+                                ,CONTENT_GB
+                                ,TARGET_GB
+                                ,SORT_IDX
+                            ) VALUES (
+                                '".$no."'
+                                , '".$file_no."'
+                                , 'FILE'
+                                , 'PRODUCT'
+                                , '".$i."'
+                            )";
 
                     $_d->sql_query($sql);
 
@@ -686,6 +726,46 @@ switch ($_method) {
             if($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
+            }
+
+            if (count($_model[CATEGORY]) > 0) {
+
+                $sql = "DELETE FROM CONTENT_CATEGORY
+                        WHERE
+                            TARGET_GB = 'PRODUCT'
+                            AND TARGET_NO = ".$_key."
+                        ";
+
+                $_d->sql_query($sql);
+
+                if ($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                $categories = $_model[CATEGORY];
+
+                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                    $category = $categories[$i];
+
+                    $sql = "INSERT INTO CONTENT_CATEGORY
+                            (
+                                CATEGORY_NO
+                                ,TARGET_NO
+                                ,TARGET_GB
+                            ) VALUES (
+                                '".$category[NO]."'
+                                , '".$_key."'
+                                , 'PRODUCT'
+                            )";
+
+                    $_d->sql_query($sql);
+
+                    if ($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
             }
 
             $sql = "SELECT

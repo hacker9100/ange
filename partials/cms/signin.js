@@ -37,6 +37,7 @@ define([
                     $rootScope.uid = data.USER_ID;
                     $rootScope.name = data.USER_NM;
                     $rootScope.role = data.ROLE_ID;
+                    $rootScope.system = data.SYSTEM_GB;
                     $rootScope.menu_role = data.MENU_ROLE;
                     $rootScope.email = data.EMAIL;
 
@@ -46,10 +47,15 @@ define([
 
         $scope.sessionCheck = function(session) {
             if (session.USER_ID != undefined && session.USER_ID != '') {
+                if (session.SYSTEM_GB != 'CMS') {
+                    dialogs.error('오류', '다른 시스템에 로그인되어있습니다. 로그아웃 후 다시 로그인 하세요', {size: 'md'});
+                }
+
                 $rootScope.authenticated = true;
                 $rootScope.uid = session.USER_ID;
                 $rootScope.name = session.USER_NM;
                 $rootScope.role = session.ROLE_ID;
+                $rootScope.system = session.SYSTEM_GB;
                 $rootScope.menu_role = session.MENU_ROLE;
                 $rootScope.email = session.EMAIL;
 

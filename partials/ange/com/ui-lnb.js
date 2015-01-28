@@ -31,7 +31,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
+            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS'}, false).then(function(data){
 
                 $scope.category = data;
 
@@ -50,7 +50,6 @@ define([
 
                 $scope.category_a = category_a;
                 $scope.category_b = category_b;
-                alert(category_b);
             })
             .catch(function(error){$scope.projects = []; console.log(error)});
         };

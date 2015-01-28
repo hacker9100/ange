@@ -12,10 +12,12 @@ define([
     '../../../partials/admin/com/lnb',
     '../../../partials/admin/com/locater',
     '../../../partials/admin/com/file-list',
+    '../../../partials/admin/contact-list',
 
     // ADMIN 로그인
     '../../../partials/admin/signin',
     '../../../partials/admin/message',
+    '../../../partials/admin/home-main',
 
     // ADMIN 회원현황
     '../../../partials/admin/member-list',
@@ -26,10 +28,21 @@ define([
     // ADMIN 참여 관리
     '../../../partials/admin/event-list',
     '../../../partials/admin/event-edit',
+    '../../../partials/admin/comp-list',
 
-    // ADMIN 상품 관리
+    // ADMIN 콘텐츠 관리
+    '../../../partials/admin/notice-list',
+    '../../../partials/admin/notice-edit',
+    '../../../partials/admin/notice-view',
+    '../../../partials/admin/clinic-list',
+//    '../../../partials/admin/clinic-edit',
+    '../../../partials/admin/download-main',
+
+    // ADMIN 스토어 관리
     '../../../partials/admin/product-list',
     '../../../partials/admin/product-edit',
+    '../../../partials/admin/order-list',
+    '../../../partials/admin/pcategory-main',
 
     // ADMIN 사이트 관리
     '../../../partials/admin/site-main',

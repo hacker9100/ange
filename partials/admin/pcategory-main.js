@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : category-main.html 화면 콘트롤러
+ * Description : pcategory-main.html 화면 콘트롤러
  */
 
 define([
@@ -11,16 +11,16 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('category-main', ['$scope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $stateParams, $location, dialogs, ngTableParams) {
+    controllers.controller('pcategory-main', ['$scope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $stateParams, $location, dialogs, ngTableParams) {
 
         /********** 초기화 **********/
         $scope.key = '';
         $scope.item = {};
-        $scope.search = {SYSTEM_GB: 'CMS'};
+        $scope.search = {SYSTEM_GB: 'ANGE'};
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS', CATEGORY_GB: '2', PARENT_NO: '0'}, false)
+            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'ANGE', CATEGORY_GB: '2', PARENT_NO: '0'}, false)
                 .then(function(data){$scope.parents = data;})
                 .catch(function(error){console.log(error)});
         };
@@ -83,7 +83,7 @@ define([
 
         // 카테고리 저장 버튼 클릭
         $scope.click_saveCategory = function () {
-            $scope.item.SYSTEM_GB = 'CMS';
+            $scope.item.SYSTEM_GB = 'ANGE';
 
             if ($scope.key == '') {
                 $scope.insertItem('cms/category', 'item', $scope.item, false)
@@ -105,12 +105,12 @@ define([
             if ($scope.key != '') {
                 $scope.getItem('cms/category', 'item', $scope.key, {}, false)
                     .then(function(data) {
-                        var idx = 0;
-                        for (var i=0; i < $scope.parents.length; i ++) {
-                            if (data.PARENT_NO == $scope.parents[i].NO) {
-                                idx = i;
-                            }
-                        }
+//                        var idx = 0;
+//                        for (var i=0; i < $scope.parents.length; i ++) {
+//                            if (data.PARENT_NO == $scope.parents[i].NO) {
+//                                idx = i;
+//                            }
+//                        }
 
                         $scope.item = data;
                         $scope.item.PARENT = data.PARENT_NO == '0' ? null : $scope.parents[idx];
@@ -139,7 +139,7 @@ define([
         // 취소
         $scope.click_cancel = function () {
             $scope.key = '';
-            $scope.item = {};
+            $scope.item = {CATEGORY_GB: 1};
         };
 
         /********** 화면 초기화 **********/

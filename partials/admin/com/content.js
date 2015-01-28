@@ -84,6 +84,7 @@ define([
                             $rootScope.uid = null;
                             $rootScope.name = null;
                             $rootScope.role = null;
+                            $rootScope.system = null;
                             $rootScope.menu_role = null;
                             $rootScope.email = null;
 
@@ -147,6 +148,7 @@ define([
                 $rootScope.uid = session.USER_ID;
                 $rootScope.name = session.USER_NM;
                 $rootScope.role = session.ROLE_ID;
+                $rootScope.system = session.SYSTEM_GB;
                 $rootScope.menu_role = session.MENU_ROLE;
                 $rootScope.email = session.EMAIL;
             }
@@ -174,11 +176,6 @@ define([
             var menuGb = '';
 
             if (spMenu.length > 1) menuGb = spMenu[2];
-
-            if (menuId == "content") {
-                menuId = spMenu[2];
-                menuGb = spMenu[3];
-            }
 
             for (var idx in $rootScope.session.MENU_ROLE) {
                 var permission = false;
