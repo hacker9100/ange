@@ -241,7 +241,7 @@ define([
                     $scope.item.SCRAP_FL = "false"
                 }
 
-               $scope.item.REMAIN_POINT =
+               $scope.item.REMAIN_POINT = 10;
                $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
 
@@ -273,6 +273,11 @@ define([
                 console.log($scope.item.REPLY_FL);
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
+
+                        $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
+                            .then(function(){
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
