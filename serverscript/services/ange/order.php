@@ -61,7 +61,6 @@ switch ($_method) {
                             ANGE_ORDER AO
                         WHERE
                             NO = ".$_key."
-                            ".$search_where."
 
                         ";
 
@@ -261,6 +260,20 @@ switch ($_method) {
             }else{
                 $_d->dataEnd($sql);
             }
+        }else if($_type == 'productcode'){
+
+            $sql = "SELECT if (IFNULL(MAX(NO), 0)+1, CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)),CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B))) AS PRODUCT_CODE
+                    FROM ANGE_ORDER";
+
+            $data = $_d->sql_query($sql);
+
+            if ($_d->mysql_errno > 0) {
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            } else {
+                $result = $_d->sql_query($sql);
+                $data = $_d->sql_fetch_array($result);
+                $_d->dataEnd2($data);
+            }
         }
 
         break;
@@ -275,13 +288,13 @@ switch ($_method) {
 
         if($_type == 'item'){
             // 주문코드 생성
-            $sql = "SELECT if (IFNULL(MAX(NO), 0)+1, CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)),CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B))) AS PRODUCT_CODE
+            /*$sql = "SELECT if (IFNULL(MAX(NO), 0)+1, CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)),CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B))) AS PRODUCT_CODE
                     FROM ANGE_ORDER";
 
             $result = $_d->sql_query($sql,true);
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                 $_model[PRODUCT_CODE] = $row[PRODUCT_CODE];
-            }
+            }*/
 
             if (isset($_model[ORDER]) && $_model[ORDER] != "") {
                 foreach ($_model[ORDER] as $e) {
@@ -323,6 +336,10 @@ switch ($_method) {
                     $_d->sql_query($sql);
                     $no = $_d->mysql_insert_id;
 
+                    // 찜했던 상품들 삭제
+                    $sql = "DELETE FROM ANGE_CART WHERE PRODUCT_NO = ".$e[PRODUCT_NO]."";
+                    $_d->sql_query($sql);
+
                     $sql = "UPDATE ANGE_PRODUCT
                         SET
                             SUM_IN_CNT = SUM_IN_CNT - ".$e[PRODUCT_CNT].",
@@ -332,22 +349,26 @@ switch ($_method) {
                         ";
                     $_d->sql_query($sql);
 
-                    $sql = "UPDATE ANGE_MILEAGE_STATUS
-                        SET
-                            USE_POINT = USE_POINT + ".$e[TOTAL_PRICE].",
-                            REMAIN_POINT = REMAIN_POINT - ".$e[TOTAL_PRICE]."
-                        WHERE
-                            USER_ID = '".$_SESSION['uid']."'
-                        ";
-                    $_d->sql_query($sql);
+                    // 상품구분 존재하면서 구분값이 마일리지몰 일때
+                    if(isset($e[PRODUCT_GB]) && $e[PRODUCT_GB] == 'MILEAGE'){
 
-                    $sql = "UPDATE ANGE_MILEAGE_STATUS
-                        SET
-                            SUM_POINT = (USE_POINT + ".$e[TOTAL_PRICE].") + (REMAIN_POINT - ".$e[TOTAL_PRICE].")
-                        WHERE
-                            USER_ID = '".$_SESSION['uid']."'
-                        ";
-                    $_d->sql_query($sql);
+                        $sql = "UPDATE ANGE_MILEAGE_STATUS
+                            SET
+                                USE_POINT = USE_POINT + ".$e[TOTAL_PRICE].",
+                                REMAIN_POINT = REMAIN_POINT - ".$e[TOTAL_PRICE]."
+                            WHERE
+                                USER_ID = '".$_SESSION['uid']."'
+                            ";
+                        $_d->sql_query($sql);
+
+                        $sql = "UPDATE ANGE_MILEAGE_STATUS
+                            SET
+                                SUM_POINT = (USE_POINT + ".$e[TOTAL_PRICE].") + (REMAIN_POINT - ".$e[TOTAL_PRICE].")
+                            WHERE
+                                USER_ID = '".$_SESSION['uid']."'
+                            ";
+                        $_d->sql_query($sql);
+                    }
 
                     if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
 
@@ -368,6 +389,28 @@ switch ($_method) {
                             $_d->sql_query($sql);
                         }
                     }
+
+                    /*if(isset($no) && $no != 0){
+                        $sql = "SELECT
+	                        NO, PRODUCT_NO, PRODUCT_CNT, SUM_PRICE, ORDER_DT, RECEIPTOR_NM, RECEIPT_ADDR, RECEIPT_ADDR_DETAIL, RECEIPT_PHONE, REQUEST_NOTE, ORDER_ST,
+	                        (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AO.PRODUCT_NO) AS PRODUCT_NM, ORDER_GB
+                        FROM
+                            ANGE_ORDER AO
+                        WHERE
+                            NO = ".$no."
+
+                        ";
+
+                        $result = $_d->sql_query($sql);
+
+                        if ($_d->mysql_errno > 0) {
+                            $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                        } else {
+                            $result = $_d->sql_query($sql);
+                            $data = $_d->sql_fetch_array($result);
+                            $_d->dataEnd2($data);
+                        }
+                    }*/
 
                     if($_d->mysql_errno > 0) {
                         $err++;
