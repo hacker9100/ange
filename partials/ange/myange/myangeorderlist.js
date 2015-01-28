@@ -172,6 +172,8 @@ define([
                 $location.url('/store/auction/view/'+key);
             }else if(product_gb == 'CUMMERCE'){
                 $location.url('/store/cummerce/view/'+key);
+            }else if(product_gb == 'NAMINIG'){
+                $location.url('/store/naming/request/'+key);
             }
 
         };
