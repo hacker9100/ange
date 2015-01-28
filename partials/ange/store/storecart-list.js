@@ -331,7 +331,9 @@ define([
                     $scope.step = 3;
                     $rootScope.REQUEST_NOTE = $scope.item.REQUEST_NOTE;
 
-                    $('input:radio[name=pay_info_gb]:input[value='+$scope.item.PAY_GB+']').attr("checked", true);
+                    /*$('input:radio[name=pay_info_gb]:input[value="NOBANKBOOK"]').prop("checked", true);*/
+
+                    $("input:radio[name='pay_info_gb']:radio[value='"+$scope.item.PAY_GB+"']").attr("checked",true);
                     $scope.PAY_INFO = $scope.item.PAY_GB;
 
                     $scope.orderlist();
