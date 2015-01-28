@@ -22,6 +22,8 @@ define([
 
         $scope.showSamplepackDetails = false;
 
+        $scope.selectIdx = '1';
+
         $scope.click_update_user_info = function () {
             $scope.openModal(null, 'md');
 
@@ -42,6 +44,8 @@ define([
 
         // 초기화
         $scope.init = function() {
+
+
 
             $scope.community = "작명 신청";
 
@@ -93,8 +97,73 @@ define([
             $scope.hour = hour;
             $scope.minute = minute;
 
+
+            $scope.getList('ange/order', 'namingnoList', {}, {}, true)
+                .then(function(data){
+                    $rootScope.namingnolist = data;
+
+                    if($stateParams.id != 0){
+                        var idx = 0;
+                        for(var i =0; i<$rootScope.namingnolist.length; i++){
+
+                            if(JSON.stringify($stateParams.id) == JSON.stringify($rootScope.namingnolist[i].NO)){
+                                idx = i;
+                            }
+                        }
+                        $scope.item.PRODUCT = $scope.namingnolist[idx];
+
+                        $scope.addProductList($scope.item.PRODUCT);
+                    }
+
+                })
+                .catch(function(error){$rootScope.namingnolist = "";});
+
+
             //console.log($scope.month);
         };
+
+
+        $(function () {
+
+            $(".tab_content").hide();
+            $(".tab_content:first").show();
+
+            $("ul.nav-tabs li").click(function () {
+
+                $("ul.tabs li").removeClass("active");
+                $(this).addClass("active");
+                $(".tab_content").hide();
+                var activeTab = $(this).attr("rel");
+                $("#" + activeTab).fadeIn();
+            });
+
+        });
+
+        // 탭 선택시 해당 화면으로 포커스 이동
+        $scope.click_selectTab = function (idx) {
+            if(idx == 2){
+                if($rootScope.uid == null || $rootScope.uid == ''){
+                    dialogs.notify('알림', '로그인 후 신청 할 수 있습니다.', {size: 'md'});
+                    $scope.click_selectTab(1);
+                    return;
+                }
+            }
+
+            $scope.selectIdx = idx;
+
+            //$("#tabs-"+idx).focus();
+
+            //$("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
+        };
+
+        $scope.addProductList = function (product){
+
+            $scope.productsList = [];
+
+            $scope.productsList.push({"PRODUCT_NO": product.NO, "PRODUCT_NM" : product.PRODUCT_NM, "PRICE" : product.PRICE});
+            $scope.TOTAL_PRICE = product.PRICE;
+            console.log(product);
+        }
 
         // 정보수정 모달창
         $scope.openModal = function (content, size) {
@@ -162,7 +231,7 @@ define([
             });
         };
 
-        // 샘플팩 신청
+        // 네이밍 신청
         $scope.click_saveNamingComp = function (){
 
             $scope.item.RECEIPTOR_NM = $rootScope.user_info.USER_NM;
@@ -178,20 +247,15 @@ define([
 
                     dialogs.notify('알림', '네이밍 신청이 완료되었습니다.', {size: 'md'});
 
-                    $location.url('/store/naming');
+                    $location.url('/store/naming/intro');
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 
         }
 
-        // 네이밍 셀렉트박스 셋팅
-        $scope.namingnoList = function(){
-            $scope.getList('ange/order', 'namingnoList', {}, {}, true)
-                .then(function(data){
-                    $scope.namingnolist = data;
-                })
-                .catch(function(error){$scope.namingnolist = "";});
+        $scope.click_intro = function(){
+            $location.url('store/naming/intro');
         }
 
         /*        $scope.getSession()
@@ -199,7 +263,6 @@ define([
          .catch($scope.reportProblems);*/
 
         $scope.init();
-        $scope.namingnoList();
 
 
 

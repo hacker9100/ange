@@ -40,11 +40,8 @@
                                                 <div class="store_list_item" style="width:100%; height:30px; line-height:24px;">
                                                     <span class="" style="float:left; width:30%;">제품선택(필수)</span>
                                                     <span class="" style="float:left; width:70%;">
-                                                        <select class="form-control input-sm">
-                                                            <option>실시간 작명서비스(50,000원)</option>
-                                                            <option>셀프 작명서비스(50,000원)</option>
-                                                            <option>스페셜 작명서비스(200,000원)</option>
-                                                            <option>프리미엄 작명서비스(500,000원)</option>
+                                                        <select ng-options="v.PRODUCT_NM for v in namingnolist" ng-model="item.PRODUCT" class="form-control input-sm" ng-change="addProductList(item.PRODUCT)">
+                                                            <option value="" selected>선택</option>
                                                         </select>
                                                         <ul class="table_gray" style="margin-left:15px; word-break:keep-all; margin-top:10px;">
                                                             <li>한 종류만 선택가능합니다.</li>
@@ -55,16 +52,16 @@
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
 
-                                            <div class="store_col_info">
+                                            <div class="store_col_info" data-ng-repeat="item in productsList">
                                                 <!-- 제품을 선택하면 리스트 추가됨 -->
                                                 <div class="store_list_item">
-                                                    <span class="store_optiontitle">프리미엄 작명서비스(500,000원)</span>
+                                                    <span class="store_optiontitle">{{item.PRODUCT_NM}}({{item.PRICE}}원)</span>
                                                     <span class="store_optionea">
                                                         <input type="text" class="form-control input-sm" value="1" placeholder="" disabled/>
                                                         <span> 개</span>
                                                         <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>-->
                                                     </span>
-                                                    <span class="store_optionprice">500,000</span>
+                                                    <span class="store_optionprice">{{item.PRICE}}</span>
                                                 </div>
                                                 <!-- /제품을 선택하면 리스트 추가됨 -->
                                             </div>  <!-- /.store_col_info -->
@@ -80,7 +77,7 @@
                                                     <span class="store_totalprice">
                                                         0 P
                                                         <br />
-                                                        500,000 원
+                                                        {{TOTAL_PRICE}} 원
                                                         <br />
                                                         무료
                                                     </span>
@@ -89,9 +86,9 @@
                                             </div>  <!-- /.store_col_info -->
 
                                             <div class="store_col_btn">
-                                                <button class="btn btn-info">신청서작성</button>
-                                                <button class="btn btn-info">구 매</button>
-                                                <button class="btn btn-default">취 소</button>
+                                                <button ng-click="click_selectTab('2');" class="btn btn-info">신청서작성</button>
+                                                <button ng-click="click_selectTab('2');" class="btn btn-info">구 매</button>
+                                                <button ng-click="click_intro();" class="btn btn-default">취 소</button>
                                             </div>  <!-- /.store_col_info -->
 
                                         </div>
@@ -103,16 +100,16 @@
 
 
                             <div class="store_view_tab">
-                                <ul class="nav nav-tabs">
-                                    <li role="presentation" class="active"><a>상품안내</a></li>
-                                    <li role="presentation"><a>서비스신청</a></li>
-                                    <li role="presentation"><a>상품후기</a></li>
-                                    <li role="presentation"><a>관련상품</a></li>
-                                    <li role="presentation"><a>주의사항</a></li>
+                                <ul class="nav nav-tabs" id="tab">
+                                    <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">상품안내</a></li>
+                                    <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''"><a ng-click="click_selectTab('2');">서비스신청</a></li>
+                                    <li role="presentation" ng-class="selectIdx == '3' ? 'active' : ''"><a ng-click="click_selectTab('3');">상품후기</a></li>
+                                    <li role="presentation" ng-class="selectIdx == '4' ? 'active' : ''"><a ng-click="click_selectTab('4');">관련상품</a></li>
+                                    <li role="presentation" ng-class="selectIdx == '5' ? 'active' : ''"><a ng-click="click_selectTab('5');">주의사항</a></li>
                                 </ul>
                             </div>  <!-- /.store_view_tab -->
 
-                            <div class="container-fluid peopleboard_view_contentwrap">
+                            <div id="tabs-1" data-ng-show="selectIdx == '1'" class="container-fluid peopleboard_view_contentwrap">
                                 <div class="row">
                                     <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -137,519 +134,449 @@
                             </div>  <!-- /.container -->
 
 
-                            <div class="store_view_tab">
-                                <ul class="nav nav-tabs">
-                                    <li role="presentation"><a>상품안내</a></li>
-                                    <li role="presentation" class="active"><a>서비스신청</a></li>
-                                    <li role="presentation"><a>상품후기</a></li>
-                                    <li role="presentation"><a>관련상품</a></li>
-                                    <li role="presentation"><a>주의사항</a></li>
-                                </ul>
-                            </div>  <!-- /.store_view_tab -->
-
-
                             <!-- 신청 폼 -->
-                            <div class="samplepack_formwrap" ng-model="item" style="display:block;">
-
-                                <div class="samplepack_form_title" style="background:#333; height:46px; padding:10px;">
-                                    <span class="table_blue" style="font-size:1.18em; float:left;">| 작명 신청양식</span>
-                                    <div style="float:right;">
-                                        <small><span class="table_blue">정보가 다르신가요?</span></small>
-                                        <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">정보수정</button>
-                                    </div>
+                            <div id="tabs-2" data-ng-show="selectIdx == '2'" class="samplepack_formwrap" ng-model="item" style="display:block;">
+                            <div class="samplepack_form_title" style="background:#333; height:46px; padding:10px;">
+                                <span class="table_blue" style="font-size:1.18em; float:left;">| 작명 신청양식</span>
+                                <div style="float:right;">
+                                    <small><span class="table_blue">정보가 다르신가요?</span></small>
+                                    <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">정보수정</button>
                                 </div>
+                            </div>
+                            <div class="row form_rows" style="background: #ffffff;">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>작명신청</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+                                    <span class="col-xs-4 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <select ng-options="v.PRODUCT_NM for v in namingnolist" ng-model="item.PRODUCT" class="form-control input-sm">
+                                                <option value="" selected>선택</option>
+                                            </select>
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>아이디</strong>
-                                                                                <span class="table_blue">*</span>
-                                                                            </span>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>아이디</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
 
-                                                                            <span class="col-xs-4 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <!-- <input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
-                                                                                    {{user_info.USER_ID}}
-                                                                                </div>
-                                                                            </span>
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <!-- <input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
+                                                {{user_info.USER_ID}}
+                                            </div>
+                                        </span>
 
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>닉네임</strong>
-                                                                                <span class="table_blue">*</span>
-                                                                            </span>
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>닉네임</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
 
-                                                                            <span class="col-xs-4 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <!--<input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
-                                                                                    {{user_info.NICK_NM}}
-                                                                                </div>
-                                                                            </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <!--<input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
+                                                {{user_info.NICK_NM}}
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>신청자명</strong>
-                                                                                <span class="table_blue">*</span>
-                                                                            </span>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>신청자명</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
 
-                                                                            <span class="col-xs-4 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <!--<input type="text" ng-model="item.USER_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
-                                                                                    {{user_info.USER_NM}}
-                                                                                </div>
-                                                                            </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <!--<input type="text" ng-model="item.USER_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
+                                                {{user_info.USER_NM}}
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>가입일자</strong>
-                                                                                <span class="table_blue">*</span>
-                                                                            </span>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>가입일자</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
 
-                                                                            <span class="col-xs-4 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <!--<input type="text" ng-model="item.REG_DT" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
-                                                                                    {{user_info.REG_DT}}
-                                                                                </div>
-                                                                            </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <!--<input type="text" ng-model="item.REG_DT" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
+                                                {{user_info.REG_DT}}
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                 <strong>연락처</strong>
-                                                                                 <span class="table_blue">*</span>
-                                                                            </span>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                             <strong>연락처</strong>
+                                             <span class="table_blue">*</span>
+                                        </span>
 
-                                                                            <span class="col-xs-2 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px; text-align:right;">
-                                                                                    <small class="table_gray">전화번호</small>
-                                                                                </div>
-                                                                            </span>
-                                                                            <span class="col-xs-3 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <!--<input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
-                                                                                    {{user_info.PHONE_1}}
-                                                                                </div>
-                                                                            </span>
-                                                                            <span class="col-xs-1 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px; text-align:right;">
-                                                                                    <small class="table_gray">휴대폰</small>
-                                                                                </div>
-                                                                            </span>
-                                                                            <span class="col-xs-3 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <!--<input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
-                                                                                    {{user_info.PHONE_2}}
-                                                                                </div>
-                                                                            </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
+                                        <span class="col-xs-2 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px; text-align:right;">
+                                                <small class="table_gray">전화번호</small>
+                                            </div>
+                                        </span>
+                                        <span class="col-xs-3 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <!--<input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
+                                                {{user_info.PHONE_1}}
+                                            </div>
+                                        </span>
+                                        <span class="col-xs-1 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px; text-align:right;">
+                                                <small class="table_gray">휴대폰</small>
+                                            </div>
+                                        </span>
+                                        <span class="col-xs-3 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <!--<input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
+                                                {{user_info.PHONE_2}}
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>주소</strong>
-                                                                                <span class="table_blue">*</span>
-                                                                            </span>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>주소</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
 
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <p><!--<input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder="" disabled>-->(123-456)<!--{{user_info.ZIP_CODE}}--></p>
-                                                                                    <p><!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR" placeholder="" disabled>-->{{user_info.ADDR}}</p>
-                                                                                    <!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>-->{{user_info.ADDR_DETAIL}}
-                                                                                </div>
-                                                                            </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
+                                        <span class="col-xs-10 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <p><!--<input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder="" disabled>-->(123-456)<!--{{user_info.ZIP_CODE}}--></p>
+                                                <p><!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR" placeholder="" disabled>-->{{user_info.ADDR}}</p>
+                                                <!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>-->{{user_info.ADDR_DETAIL}}
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
 
-                                <div class="samplepack_form_title" style="background:#333; height:46px; padding:10px;">
-                                    <span class="table_blue" style="font-size:1.18em; float:left;">| 작명 당사자(아기) 정보</span>
+                            <div class="samplepack_form_title" style="background:#333; height:46px;">
+                                <span class="table_blue" style="font-size:1.18em; float:left;">| 작명 당사자(아기) 정보</span>
+                            </div>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>신청인과의 관계</strong>
+                                        </span>
+
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <input type="text" ng-model="item.REQUEST_RELATION" class="form-control input-sm" style="margin:0px;" placeholder="본인, 아들, 손녀 등등">
+                                            </div>
+                                        </span>
+
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>성별</strong>
+                                        </span>
+
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <input type="radio" ng-model="item.BABY_SEX_GB" value="M" >남자
+                                                <input type="radio" ng-model="item.BABY_SEX_GB" value="F" >여자
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>생년월일</strong>
+                                        </span>
+
+                                        <span class="col-xs-11 basicinfo input"  style="margin-left:155px;">
+                                            <div class="form-inline">
+
+                                                <select ng-model="item.BABY_LUNAR_FL" class="form-control" style="width:130px; padding: 3px 3px">
+                                                    <option value="" selected>양력/음력 선택</option>
+                                                    <option value="0" selected>양력</option>
+                                                    <option value="1">음력</option>
+                                                </select>
+
+                                                <select id="birth" ng-model="item.BABY_YEAR" ng-options="v for v in babyYear" class= "form-control" style="width:110px;">
+                                                    <option value="" selected>년</option>
+                                                </select>
+
+                                                <select ng-model="item.BABY_MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;">
+                                                    <option value="" selected>월</option>
+                                                </select>
+
+                                                <select ng-model="item.BABY_DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                    <option value="" selected>일</option>
+                                                </select>
+
+                                                <br/>
+                                                태어난시&nbsp;
+                                                <select ng-model="item.BABY_BIRTH_HOUR" ng-options="v for v in hour" class= "form-control" style="width:75px;">
+                                                    <option value="" selected>시</option>
+                                                </select>
+
+                                                <select ng-model="item.BABY_BIRTH_MIN" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                    <option value="" selected>분</option>
+                                                </select>
+
+                                                <select ng-model="item.BABY_LEAP_FL" class="form-control" style="width:145px;">
+                                                    <option value="" selected>윤달/평달 선택</option>
+                                                    <option value="0">윤달</option>
+                                                    <option value="1">평달</option>
+                                                </select>
+
+                                                <br/>
+                                                <span class="table_red">* 생년월일 정보는 등록후 수정할수 없습니다. 정확히 선택해주세요.</span>
+                                            </div>
+                                        </span>
+
+
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>성(姓) 씨</strong>
+                                        </span>
+
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <input type="text" ng-model="item.BABY_LAST_NM" class="form-control input-sm"/>
+                                                <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">한자변환</button>
+                                            </div>
+                                        </span>
                                 </div>
+                            </div>
 
-                                <div class="row form_rows">
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title" style="vertical-align: middle">
+                                            <strong >부모정보</strong>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+
+                                <!--<div class="row form_rows" >-->
+                                <div class="form_basicinfo" style="margin-left: 155px; margin-bottom: 50px;">
+
+                                            <span class="col-xs-1 basicinfo title">
+                                                <strong style="vertical-align: middle">아버지</strong>
+                                            </span>
+
+                                            <span class="col-xs-11 basicinfo input">
+                                                <div class="form-inline">
+
+                                                    이름<input type="text" ng-model="item.DAD_NM" class="form-control" style="width: 140px; margin-left: 35px;"/>
+                                                    <br/>
+
+                                                    생년월일&nbsp;
+                                                    <select ng-model="item.DAD_LUNAR_FL" class="form-control" style="width:130px; padding: 3px 3px">
+                                                        <option value="" selected>양력/음력 선택</option>
+                                                        <option value="0" >양력</option>
+                                                        <option value="1">음력</option>
+                                                    </select>
+
+                                                    <select id="birth2" ng-model="item.DAD_YEAR" ng-options="v for v in year" class= "form-control" style="width:110px;">
+                                                        <option value="" selected>년</option>
+                                                    </select>
+
+                                                    <select ng-model="item.DAD_MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;">
+                                                        <option value="" selected>월</option>
+                                                    </select>
+
+                                                    <select ng-model="item.DAD_DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                        <option value="" selected>일</option>
+                                                    </select>
+
+                                                    <br/>
+                                                    태어난시&nbsp;
+                                                    <select ng-model="item.DAD_BIRTH_HOUR" ng-options="v for v in hour" class= "form-control" style="width:75px;">
+                                                        <option value="" selected>시</option>
+                                                    </select>
+
+                                                    <select ng-model="item.DAD_BIRTH_MIN" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                        <option value="" selected>분</option>
+                                                    </select>
+
+                                                    <select ng-model="item.DAD_LEAP_FL" class="form-control" style="width:145px;">
+                                                        <option value="" selected>윤달/평달 선택</option>
+                                                        <option value="0">윤달</option>
+                                                        <option value="1">평달</option>
+                                                    </select>
+                                                </div>
+                                             </span>
+
+                                    <!--</div>-->  <!-- /.form_rows -->
+
+                                    <!--<div class="row form_rows">-->
                                     <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>신청인과 관계</strong>
-                                                                            </span>
+                                                <span class="col-xs-1 basicinfo title">
+                                                   <strong style="vertical-align: middle">어머니</strong>
+                                                </span>
+                                            <span class="col-xs-11 basicinfo input">
+                                            <div class="form-inline">
 
-                                                                            <span class="col-xs-4 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <input type="text" ng-model="item.REQUEST_RELATION" class="form-control input-sm" style="margin:0px;" placeholder="본인, 아들, 손녀 등등">
-                                                                                </div>
-                                                                            </span>
+                                                이름&nbsp;<input type="text" ng-model="item.MOM_NM" class="form-control" style="width: 150px; margin-left: 33px;"/>
+                                                <br/>
 
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>성별</strong>
-                                                                            </span>
+                                                생년월일&nbsp;
+                                                <select ng-model="item.MOM_LUNAR_FL" class="form-control" style="width:130px; padding: 3px 3px">
+                                                    <option value="" selected>양력/음력 선택</option>
+                                                    <option value="0">양력</option>
+                                                    <option value="1">음력</option>
+                                                </select>
 
-                                                                            <span class="col-xs-4 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px; vertical-align: middle;">
-                                                                                    <input type="radio" ng-model="item.BABY_SEX_GB" value="M" style="margin-left:10px;"> 남자
-                                                                                    <input type="radio" ng-model="item.BABY_SEX_GB" value="F" style="margin-left:10px;"> 여자
-                                                                                </div>
-                                                                            </span>
+                                                <select id="birth3" ng-model="item.MOM_YEAR" ng-options="v for v in year" class= "form-control" style="width:110px;">
+                                                    <option value="" selected>년</option>
+                                                </select>
+
+                                                <select ng-model="item.MOM_MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;">
+                                                    <option value="" selected>월</option>
+                                                </select>
+
+                                                <select ng-model="item.MOM_DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                    <option value="" selected>일</option>
+                                                </select>
+
+                                                <br/>
+                                                태어난시&nbsp;
+                                                <select ng-model="item.MOM_BIRTH_HOUR" ng-options="v for v in hour" class= "form-control" style="width:75px;">
+                                                    <option value="" selected>시</option>
+                                                </select>
+
+                                                <select ng-model="item.MOM_BIRTH_MIN" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                    <option value="" selected>분</option>
+                                                </select>
+
+                                                <select ng-model="item.MOM_LEAP_FL" class="form-control" style="width:145px;">
+                                                    <option value="" selected>윤달/평달 선택</option>
+                                                    <option value="0">윤달</option>
+                                                    <option value="1">평달</option>
+                                                </select>
+                                            </div>
+                                        </span>
+
                                     </div>  <!-- /.form_basicinfo -->
+
+                                            <span class="table_red">
+                                                * 작명이나 개명시 부모의 사주를 꼭 참고하오니 태어난 시간까지 정확히 기재해 주십시오.<!--<br/>-->
+                                                <!--(기혼자의 개명시는 배우자 사주를 참고하오니 생년월일시를 아래 여백란에 기재하여 주십시오)-->
+                                            </span>
+                                    <!--</div>-->  <!-- /.form_basicinfo -->
                                 </div>  <!-- /.form_rows -->
+                            </div>  <!-- /.form_rows -->
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>생년월일</strong>
-                                                                            </span>
+                            <!-- 아빠 엄마 정보 -->
 
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                    <div class="form-group" style="margin:5px; float:left; margin-right:18px;">
-                                                                                        <input type="radio" name="baby_lunar" ng-model="item.BABY_LUNAR_FL" value="0" style="margin-left:10px;" checked> 양력
-                                                                                        <input type="radio" name="baby_lunar" ng-model="item.BABY_LUNAR_FL" value="1" style="margin-left:10px;"> 음력
-                                                                                    </div>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>출생지</strong>
+                                        </span>
 
-                                                                                    <select id="birth" ng-model="item.BABY_YEAR" ng-options="v for v in babyYear" class= "form-control input-sm" style="float:left; width:110px; margin-right:8px; margin-top:8px;">
-                                                                                        <option value="" selected>년</option>
-                                                                                    </select>
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <input type="text" ng-model="item.BABY_BIRTH_AREA" class="form-control input-sm" style="margin:0px;" placeholder="서울,대전,부산..">
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
 
-                                                                                    <select ng-model="item.BABY_MONTH" ng-options="v for v in month" class= "form-control input-sm" style="float:left; width:75px; margin-right:8px; margin-top:8px;">
-                                                                                        <option value="" selected>월</option>
-                                                                                    </select>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>형제서열</strong>
+                                        </span>
 
-                                                                                    <select ng-model="item.BABY_DAY" ng-options="v for v in day" class= "form-control input-sm" style="float:left; width:75px; margin-right:8px; margin-top:8px;">
-                                                                                        <option value="" selected>일</option>
-                                                                                    </select>
-                                                                            </span>
-
-                                                                            <span class="col-xs-2 basicinfo title"></span>
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                    <span style="color:#e25d4c; font-size:0.86em;">* 등록 후 수정할 수 없는 항목입니다. 정확히 선택해주세요.</span>
-                                                                            </span>
-
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
-
-
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>태어난시</strong>
-                                                                            </span>
-
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="form-group" style="margin:5px; float:left; margin-right:18px;">
-                                                                                    <input type="radio" name="baby_leap" ng-model="item.BABY_LEAP_FL" value="1" style="margin-left:10px;" checked> 평달
-                                                                                    <input type="radio" name="baby_leap" ng-model="item.BABY_LEAP_FL" value="0" style="margin-left:10px;"> 윤달
-                                                                                </div>
-
-                                                                                <select ng-model="item.BABY_BIRTH_HOUR" ng-options="v for v in hour" class="form-control input-sm" style="float:left; width:75px; margin-right:8px; margin-top:8px;">
-                                                                                    <option value="">시</option>
-                                                                                </select>
-
-                                                                                <select ng-model="item.BABY_BIRTH_MIN" ng-options="v for v in day" class="form-control input-sm" style="float:left; width:75px; margin-right:8px; margin-top:8px;">
-                                                                                    <option value="">분</option>
-                                                                                </select>
-                                                                            </span>
-
-                                                                            <span class="col-xs-2 basicinfo title"></span>
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                    <span style="color:#e25d4c; font-size:0.86em;">* 등록 후 수정할 수 없는 항목입니다. 정확히 선택해주세요.</span>
-                                                                            </span>
-
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
-
-
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>성(姓) 씨</strong>
-                                                                            </span>
-
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <input type="text" ng-model="item.BABY_LAST_NM" class="form-control input-sm" style="width:40px; float:left;"/>
-                                                                                    <button ng-click="click_update_user_info()" class="btn btn-sm btn-primary" style="float:left; margin:0 5px;">한자변환</button>
-                                                                                </div>
-                                                                            </span>
-                                    </div>
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <input type="text" ng-model="item.BABY_BRO_RANK" class="form-control input-sm" style="margin:0px;" placeholder="2남2녀중 차남(신생아의 형제서열)">
+                                            </div>
+                                        </span>
                                 </div>
+                            </div>
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title" style="vertical-align: middle">
-                                                                                <strong >부모정보</strong>
-                                                                            </span>
-                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>돌림자</strong>
+                                        </span>
 
-                                                                            <span class="col-xs-10 basicinfo input">
-
-                                                                                <span class="col-xs-2 basicinfo title">
-                                                                                    <strong style="vertical-align: middle">아버지</strong>
-                                                                                </span>
-
-                                                                                <span class="col-xs-10 basicinfo input">
-                                                                                    <div class="form">
-                                                                                        <span class="col-xs-2 basicinfo input">이 름</span>
-                                                                                        <span class="col-xs-10 basicinfo input">
-                                                                                            <input type="text" ng-model="item.DAD_NM" class="form-control input-sm" style="width: 140px;"/>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </span>
-
-                                                                                <span class="col-xs-2 basicinfo title"></span>
-                                                                                <span class="col-xs-10 basicinfo input">
-                                                                                    <div class="form">
-                                                                                        <span class="col-xs-2 basicinfo input">생년월일</span>
-                                                                                        <span class="col-xs-10 basicinfo input">
-
-                                                                                            <div class="form-group" style="margin:5px; line-height:12px;">
-                                                                                                <input type="radio" name="baby_lunar" ng-model="item.DAD_LUNAR_FL" value="0" style="" checked> 양력
-                                                                                                <input type="radio" name="baby_lunar" ng-model="item.DAD_LUNAR_FL" value="1" style="margin-left:10px;"> 음력
-                                                                                            </div>
-
-                                                                                            <div class="form-group" style="margin:5px; float:left; margin-right:18px;">
-                                                                                                <select id="birth" ng-model="item.DAD_YEAR" ng-options="v for v in year" class= "form-control input-sm" style="float:left; width:80px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="" selected>년</option>
-                                                                                                </select>
-
-                                                                                                <select ng-model="item.DAD_MONTH" ng-options="v for v in month" class= "form-control input-sm" style="float:left; width:75px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="" selected>월</option>
-                                                                                                </select>
-
-                                                                                                <select ng-model="item.DAD_DAY" ng-options="v for v in day" class= "form-control input-sm" style="float:left; width:75px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="" selected>일</option>
-                                                                                                </select>
-                                                                                            </div>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </span>
-
-                                                                                <span class="col-xs-2 basicinfo title"></span>
-                                                                                <span class="col-xs-10 basicinfo input">
-                                                                                    <div class="form">
-                                                                                        <span class="col-xs-2 basicinfo input">태어난시</span>
-                                                                                        <span class="col-xs-10 basicinfo input">
-
-                                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                                <div class="form-group" style="margin:5px; float:left; margin-right:18px;">
-                                                                                                    <input type="radio" name="dad_leap" ng-model="item.DAD_LEAP_FL" value="1" style="" checked> 평달
-                                                                                                    <input type="radio" name="dad_leap" ng-model="item.DAD_LEAP_FL" value="0" style="margin-left:10px;"> 윤달
-                                                                                                </div>
-
-                                                                                                <select ng-model="item.DAD_BIRTH_HOUR" ng-options="v for v in hour" class="form-control input-sm" style="float:left; width:60px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="">시</option>
-                                                                                                </select>
-
-                                                                                                <select ng-model="item.DAD_BIRTH_MIN" ng-options="v for v in day" class="form-control input-sm" style="float:left; width:60px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="">분</option>
-                                                                                                </select>
-                                                                                            </span>
-
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </span>
-
-                                                                                <span class="col-xs-12 basicinfo divide"></span>
-
-                                                                                <span class="col-xs-2 basicinfo title">
-                                                                                    <strong style="vertical-align: middle">어머니</strong>
-                                                                                </span>
-
-                                                                                <span class="col-xs-10 basicinfo input">
-                                                                                    <div class="form">
-                                                                                        <span class="col-xs-2 basicinfo input">이 름</span>
-                                                                                        <span class="col-xs-10 basicinfo input">
-                                                                                            <input type="text" ng-model="item.MOM_NM" class="form-control input-sm" style="width: 140px;"/>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </span>
-
-                                                                                <span class="col-xs-2 basicinfo title"></span>
-                                                                                <span class="col-xs-10 basicinfo input">
-                                                                                    <div class="form">
-                                                                                        <span class="col-xs-2 basicinfo input">생년월일</span>
-                                                                                        <span class="col-xs-10 basicinfo input">
-
-                                                                                            <div class="form-group" style="margin:5px; line-height:12px;">
-                                                                                                <input type="radio" name="baby_lunar" ng-model="item.MOM_LUNAR_FL" value="0" style="" checked> 양력
-                                                                                                <input type="radio" name="baby_lunar" ng-model="item.MOM_LUNAR_FL" value="1" style="margin-left:10px;"> 음력
-                                                                                            </div>
-
-                                                                                            <div class="form-group" style="margin:5px; float:left; margin-right:18px;">
-                                                                                                <select id="birth" ng-model="item.MOM_YEAR" ng-options="v for v in year" class= "form-control input-sm" style="float:left; width:80px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="" selected>년</option>
-                                                                                                </select>
-
-                                                                                                <select ng-model="item.MOM_MONTH" ng-options="v for v in month" class= "form-control input-sm" style="float:left; width:75px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="" selected>월</option>
-                                                                                                </select>
-
-                                                                                                <select ng-model="item.MOM_DAY" ng-options="v for v in day" class= "form-control input-sm" style="float:left; width:75px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="" selected>일</option>
-                                                                                                </select>
-                                                                                            </div>
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </span>
-
-                                                                                <span class="col-xs-2 basicinfo title"></span>
-                                                                                <span class="col-xs-10 basicinfo input">
-                                                                                    <div class="form">
-                                                                                        <span class="col-xs-2 basicinfo input">태어난시</span>
-                                                                                        <span class="col-xs-10 basicinfo input">
-
-                                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                                <div class="form-group" style="margin:5px; float:left; margin-right:18px;">
-                                                                                                    <input type="radio" name="mom_leap" ng-model="item.MOM_LEAP_FL" value="1" style="" checked> 평달
-                                                                                                    <input type="radio" name="mom_leap" ng-model="item.MOM_LEAP_FL" value="0" style="margin-left:10px;"> 윤달
-                                                                                                </div>
-
-                                                                                                <select ng-model="item.MOM_BIRTH_HOUR" ng-options="v for v in hour" class="form-control input-sm" style="float:left; width:60px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="">시</option>
-                                                                                                </select>
-
-                                                                                                <select ng-model="item.MOM_BIRTH_MIN" ng-options="v for v in day" class="form-control input-sm" style="float:left; width:60px; margin-right:8px; margin-top:8px;">
-                                                                                                    <option value="">분</option>
-                                                                                                </select>
-                                                                                            </span>
-
-                                                                                        </span>
-                                                                                    </div>
-                                                                                </span>
-
-                                                                                <span class="col-xs-12 basicinfo divide"></span>
-
-                                                                                <span class="col-xs-12 basicinfo input">
-                                                                                    <span style="color:#e25d4c; font-size:0.86em; line-height: 16px;">
-                                                                                        * 작명/개명시 부모의 사주를 꼭 참고하오니 태어난 시간까지 정확히 기재해 주십시오.
-                                                                                    </span>
-                                                                                </span>
-                                                                            </span>
-
-                                        </div>  <!-- /.form_basicinfo -->
-                                    </div>  <!-- /.form_rows -->
-                                </div>  <!-- /.form_rows -->
-
-                                <!-- 아빠 엄마 정보 -->
-
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>출생지</strong>
-                                                                            </span>
-
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <input type="text" ng-model="item.BABY_BIRTH_AREA" class="form-control input-sm" style="margin:0px;" placeholder="서울,대전,부산..">
-                                                                                </div>
-                                                                            </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
-
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>형제서열</strong>
-                                                                            </span>
-
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <input type="text" ng-model="item.BABY_BRO_RANK" class="form-control input-sm" style="margin:0px;" placeholder="2남2녀중 차남(신생아의 형제서열)">
-                                                                                </div>
-                                                                            </span>
-                                    </div>
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <input type="radio" ng-model="item.BABY_COMM_GB" value="">사용안함
+                                                <input type="radio" ng-model="item.BABY_COMM_GB" value="middle">중간자
+                                                <input type="radio" ng-model="item.BABY_COMM_GB" value="last">끝자
+                                                &nbsp;
+                                                <input type="text" ng-model="item.BABY_COMM_NM" class="form-control input-sm" style="margin:0px;">
+                                                <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">한자변환</button>
+                                                <!--앙쥬 홈페이지 한자변환 팝업 : https://www.ange.co.kr/naming/findhanja2.asp?val=sfname&inname=%C3%D6-->
+                                            </div>
+                                        </span>
                                 </div>
+                            </div>
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>돌림자</strong>
-                                                                            </span>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>형제명</strong>
+                                        </span>
 
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px; font-size:0.92em; line-height: 14px;">
-                                                                                    <input type="radio" ng-model="item.BABY_COMM_GB" style="vertical-align: bottom; " value=""> 사용안함
-                                                                                    <input type="radio" ng-model="item.BABY_COMM_GB" style="vertical-align: bottom; margin-left:12px;" value="middle"> 중간자
-                                                                                    <input type="radio" ng-model="item.BABY_COMM_GB" style="vertical-align: bottom; margin-left:12px;" value="last"> 끝자
-                                                                                </div>
-                                                                            </span>
-
-                                                                            <span class="col-xs-2 basicinfo title"></span>
-
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px; font-size:0.92em; line-height: 14px;">
-                                                                                    <input type="text" ng-model="item.BABY_COMM_NM" class="form-control input-sm" style="float:left; width:40px; margin:0px;">
-                                                                                    <button ng-click="click_update_user_info()" class="btn btn-sm btn-primary" style="float:left; margin:0 5px;">한자변환</button>
-                                                                                </div>
-                                                                            </span>
-                                    </div>
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <input type="text" ng-model="item.BABY_BRO_NAME" class="form-control input-sm" style="margin:0px;" placeholder="">
+                                            </div>
+                                        </span>
                                 </div>
+                            </div>
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>형제명</strong>
-                                                                            </span>
 
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <input type="text" ng-model="item.BABY_BRO_NAME" class="form-control input-sm" style="margin:0px;" placeholder="">
-                                                                                </div>
-                                                                            </span>
-                                    </div>
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>하고싶은말</strong>
+                                        </span>
+
+                                        <span class="col-xs-10 basicinfo input">
+                                            <span class="table_blue">
+                                                * 생각하신이름, 선호하는 이름의 느낌, 중복되면 안되는 친척이름, 기타 작명시 부탁하실 내용등을 간단히 적어주세요.
+                                                <br/>
+                                                <span class="table_red">가급적 친척, 조카 이름등을 모두 적어주시면 중복되거나 비슷한 이름을 제외하여 작명하는데 도움이 됩니다.</span>
+                                            </span>
+                                            <div class="form-group" style="margin:0 5px">
+                                                <p>
+                                                    <textarea ng-model="item.REQUEST_NOTE" class="form-control input-sm" rows="10" style="width:100%; min-width:100%; max-width:100%;"></textarea>
+                                                </p>
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div style="float:left; position:relative; width:100%;">
+                                <div style="clear:both; text-align: center; width:225px; margin:0px auto; padding-top:10px 0 40px 0;">
+                                    <a class="samplepack_submit cancelbtn" href="/store/naming/intros"></a>
+                                    <a class="samplepack_submit submitbtn" ng-click="click_saveNamingComp();"></a>
                                 </div>
-
-
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>하고싶은말</strong>
-                                                                            </span>
-
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="form-group" style="margin:0 5px">
-                                                                                    <p>
-                                                                                        <textarea ng-model="item.REQUEST_NOTE" class="form-control input-sm" rows="10" style="width:100%; min-width:100%; max-width:100%;"></textarea>
-                                                                                    </p>
-                                                                                </div>
-                                                                            </span>
-
-                                                                            <span class="col-xs-2 basicinfo title"></span>
-
-                                                                            <span class="col-xs-10 basicinfo input">
-                                                                                <div class="table_blue" style="font-size:0.86em; font-weight:400; line-height: 16px;">
-                                                                                * 생각하신이름, 선호하는 이름의 느낌, 중복되면 안되는 친척이름, 기타 작명시 부탁하실 내용등을 간단히 적어주세요.
-                                                                                </div>
-                                                                                <div class="table_blue" style="font-size:0.86em; font-weight:400; line-height: 16px; margin-top:4px;">
-                                                                                * 가급적 친척, 조카 이름등을 모두 적어주시면 중복되거나 비슷한 이름을 제외하여 작명하는데 도움이 됩니다.
-                                                                                </div>
-                                                                            </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
-
-                                <div style="position:relative; width:100%;">
-                                    <div style="clear:both; text-align: center; height:140px; width:225px; margin:0px auto; padding:10px 0px 40px 0px;">
-                                        <a class="samplepack_submit cancelbtn" href="/store/naming"></a>
-                                        <a class="samplepack_submit submitbtn" ng-click="click_saveNamingComp();"></a>
-                                    </div>
-                                </div>
+                            </div>
 
                             </div>
                             <!-- /신청폼 -->
 
-                            <div class="store_view_tab">
-                                <ul class="nav nav-tabs">
-                                    <li role="presentation"><a>상품안내</a></li>
-                                    <li role="presentation"><a>서비스신청</a></li>
-                                    <li role="presentation" class="active"><a>상품후기</a></li>
-                                    <li role="presentation"><a>관련상품</a></li>
-                                    <li role="presentation"><a>주의사항</a></li>
-                                </ul>
-                            </div>  <!-- /.store_view_tab -->
-
-                            <div class="container-fluid peopleboard_view_contentwrap">
+                            <div id="tabs-3"  data-ng-show="selectIdx == '3'" class="container-fluid peopleboard_view_contentwrap">
                                 <div class="row">
                                     <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -715,17 +642,7 @@
 
 
 
-                            <div class="store_view_tab">
-                                <ul class="nav nav-tabs">
-                                    <li role="presentation"><a>상품안내</a></li>
-                                    <li role="presentation"><a>서비스신청</a></li>
-                                    <li role="presentation"><a>상품후기</a></li>
-                                    <li role="presentation" class="active"><a>관련상품</a></li>
-                                    <li role="presentation"><a>주의사항</a></li>
-                                </ul>
-                            </div>  <!-- /.store_view_tab -->
-
-                            <div class="container-fluid peopleboard_view_contentwrap">
+                            <div id="tabs-4"  data-ng-show="selectIdx == '4'" class="container-fluid peopleboard_view_contentwrap">
                                 <div class="row">
                                     <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -797,17 +714,7 @@
                             <!-- /관련상품 -->
 
 
-                            <div class="store_view_tab">
-                                <ul class="nav nav-tabs">
-                                    <li role="presentation"><a>상품안내</a></li>
-                                    <li role="presentation"><a>서비스신청</a></li>
-                                    <li role="presentation"><a>상품후기</a></li>
-                                    <li role="presentation"><a>관련상품</a></li>
-                                    <li role="presentation" class="active"><a>주의사항</a></li>
-                                </ul>
-                            </div>  <!-- /.store_view_tab -->
-
-                            <div class="container-fluid peopleboard_view_contentwrap">
+                            <div id="tabs-5" data-ng-show="selectIdx == '5'" class="container-fluid peopleboard_view_contentwrap">
                                 <div class="row">
                                     <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -870,13 +777,9 @@
     </div><!-- /.mainbar -->
 
 
-    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
-        <div class="row">
-            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
-                우측바
-            </div>
-        </div>
-    </div><!-- /.subar -->
+    <div class="subar sub-slide1">
+        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+    </div>
 
     <!-- /Main Page Layout Set -->
 </div>  <!-- /.ng-controller -->

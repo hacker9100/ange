@@ -87,6 +87,24 @@ define([
                 $location.url('/people/firstbirthtalk/view/'+key);
             } else if(comm_no == 5) {
                 $location.url('/people/booktalk/view/'+key);
+            }else if(comm_no == 6) {
+                $location.url('/people/angemodel/'+key);
+            }else if(comm_no == 7) {
+                $location.url('/people/recipearcade/'+key);
+            }else if(comm_no == 8) {
+                $location.url('/people/peopletaste/'+key);
+            }else if(comm_no == 9) {
+                $location.url('/people/peopletaste/'+key);
+            }else if(comm_no == 10) {
+                $location.url('/people/childdevelop/view'+key);
+            }else if(comm_no == 11) {
+                $location.url('/people/chlidoriental/view'+key);
+            }else if(comm_no == 12) {
+                $location.url('/people/obstetrics/view'+key);
+            }else if(comm_no == 13) {
+                $location.url('/people/momshealth/view'+key);
+            }else if(comm_no == 14) {
+                $location.url('/people/financial/view'+key);
             }
         };
 

@@ -40,7 +40,7 @@
 
                         <div class="sub_contents_body">
 
-                            <div class="namingservice_box realtime">
+                            <div class="namingservice_box realtime" ng-click="click_naming_request(15);">
                                 <img class="naming_icon" src="/imgs/ange/naming_icon_01.png" />
 
                                 <div style="padding:28px 8% 0 16%;">
@@ -55,10 +55,10 @@
                                 <img src="/imgs/ange/naming_icon_arrow.png" style="position:absolute; right:3%; top:50%; margin-top:-15px;"/>
                             </div>
 
-                            <div class="namingservice_box self">
+                            <div class="namingservice_box self" ng-click="click_naming_request(16);">
                                 <img class="naming_icon" src="/imgs/ange/naming_icon_02.png" />
 
-                                <div style="padding:28px 8% 0 16%;">
+                                <div  style="padding:28px 8% 0 16%;">
                                     <span style="font-size:0.86em;">naming service</span>
                                     <span style="font-weight: 700; font-size:1.12em;">02</span>
                                     <span style="font-weight: 700; font-size:1.46em; margin-left:6px;">셀프 작명</span>
@@ -70,7 +70,7 @@
                                 <img src="/imgs/ange/naming_icon_arrow.png" style="position:absolute; right:3%; top:50%; margin-top:-15px;"/>
                             </div>
 
-                            <div class="namingservice_box special">
+                            <div class="namingservice_box special" ng-click="click_naming_request(17);">
                                 <img class="naming_icon" src="/imgs/ange/naming_icon_03.png" />
 
                                 <div style="padding:28px 8% 0 16%;">
@@ -85,7 +85,7 @@
                                 <img src="/imgs/ange/naming_icon_arrow.png" style="position:absolute; right:3%; top:50%; margin-top:-15px;"/>
                             </div>
 
-                            <div class="namingservice_box premium">
+                            <div class="namingservice_box premium" ng-click="click_naming_request(18);">
                                 <img class="naming_icon" src="/imgs/ange/naming_icon_04.png" />
 
                                 <div style="padding:28px 8% 0 16%;">
@@ -253,12 +253,8 @@
 
     </div>
 
-    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
-        <div class="row">
-            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
-                우측바
-            </div>
-        </div>
+    <div class="subar sub-slide1">
+        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
     </div>
 
     <!-- /Main Page Layout Set -->

@@ -56,31 +56,78 @@
                             <h4 style="font-weight:bold;">마일리지 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
 
                             <!-- 마일리지 & 경매소 목록 -->
-                            <div class="row webzine_moms_list" ng-repeat="item in mileagelist">
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;cursor:pointer;" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)">
-                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                        <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
-                                        <div class="webzine_list_title" style="width: 65%">
-                                            [{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+                            <!--<div class="row webzine_moms_list" ng-repeat="item in mileagelist">-->
+                                <!--<div class="col-xs-12 v-cell-4" style="margin:0px;cursor:pointer;">-->
+                                    <!--<div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">-->
+                                        <!--<div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>-->
+                                        <!--<div class="webzine_list_title" style="width: 65%">-->
+                                            <!--<a ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)">[{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}</a>-->
 
-                                            <div class="webzine_list_bottomwrap">
-                                                <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
-                                                <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>
-                                                <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
-                                            </div>
+                                            <!--<div class="webzine_list_bottomwrap">-->
+                                                <!--<div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>-->
+                                                <!--<div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>-->
+                                                <!--<div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>-->
+                                            <!--</div>-->
 
-                                            <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''" ng-click="click_cancel(item)">주문취소</button><br />
-                                                <button class="webzine_list_btn default" title="상세보기"  ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" type="button">변경</button>
-                                            </div>
+                                            <!--<div class="webzine_list_btnwrap">-->
+                                                <!--<button class="webzine_list_btn red" title="응모하기" ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''" ng-click="click_cancel(item)">주문취소</button><br />-->
+                                                <!--<button class="webzine_list_btn default" title="상세보기"  ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" type="button">변경</button>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>  &lt;!&ndash; comp_basic &ndash;&gt;-->
+                                <!--</div>  &lt;!&ndash; col-xs-8 &ndash;&gt;-->
+                            <!--</div>  &lt;!&ndash; /.row &ndash;&gt;-->
+
+                            <!--<div class="row webzine_moms_list" ng-show="mileagelist == ''">-->
+                                <!--조회데이터가 없습니다.-->
+                            <!--</div>-->
+
+                            <table id="comp_cart_table" class="table"  style="border-bottom:2px solid #ddd;">
+
+                                <thead>
+                                <tr class="board_thead" height="48" align="center">
+                                    <td colspan="2"><span class="board_th">상품정보</span></td>
+                                    <td width="88"><span class="board_th">금액</span></td>
+                                    <td width="55"><span class="board_th">수량</span></td>
+                                    <td width="95"><span class="board_th">결제액</span></td>
+                                    <td width="60"><span class="board_th">변경</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr style="border-bottom:1px solid #ddd;" ng-repeat="item in mileagelist">
+                                    <!--<td class="table_no">
+                                        &lt;!&ndash; 품절 또는 기간만료등으로 구매불가 상태일 경우에는 disabled &ndash;&gt;
+                                                            <input type="checkbox" name="name"  model="item.selected" ng-value="item" style="float:none;" ng-click='click_sumprice($index);'>
+                                                        </td>-->
+                                    <td class="table_title" style="width:70px; font-size: 0.92em;">
+                                        <div class="cart_thumb" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg');">
+                                            <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
                                         </div>
-                                    </div>  <!-- comp_basic -->
-                                </div>  <!-- col-xs-8 -->
-                            </div>  <!-- /.row -->
+                                    </td>
+                                    <td class="table_title" style="font-size: 0.92em;">
+                                        <a ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.PRODUCT_NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)"><strong>[{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}</strong></a>
 
-                            <div class="row webzine_moms_list" ng-show="mileagelist == ''">
-                                조회데이터가 없습니다.
-                            </div>
+                                    </td>
+                                    <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                    <td class="table_date" align="center"><!--<input type="text" class="form-control input-sm" value="99" placeholder="" />-->{{item.PRODUCT_CNT}}</td>
+                                    <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                    <td class="table_date" align="center">
+                                        <a ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''" ng-click="click_cancel(item)"  title="목록에서 삭제">주문취소</a>
+                                        <button class="btn btn-default btn-xs" ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" style="font-size:0.92em; padding-top:4px; margin-top:8px;"><span class="glyphicon glyphicon-shopping-cart"></span>변경</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                                <tbody ng-show="mileagelist == '' || mileagelist == null">
+                                <tr style="border-bottom:1px solid #ddd;">
+                                    <td colspan="7" height="120" align="center" style="line-height:32px; font-size:0.92em; color:#666; padding-top:25px;">
+                                        목록이 없습니다.
+                                        <br />
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
 
                             <nav class="text-center">
                                 <pagination boundary-links="true" total-items="BOARD_TOTAL_COUNT" ng-model="BOARD_PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
@@ -92,31 +139,78 @@
                             <h4 style="font-weight:bold;">커머스 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
 
                             <!-- 커머스 목록 -->
-                            <div class="row webzine_moms_list" ng-repeat="item in cummercelist" ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)">
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                        <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
-                                        <div class="webzine_list_title" style="width: 65%">
-                                            [{{item.PRODUCT_GB == 'CUMMERCE' ? '커머스' : ''}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+                            <!--<div class="row webzine_moms_list" ng-repeat="item in cummercelist" >-->
+                                <!--<div class="col-xs-12 v-cell-4" style="margin:0px;">-->
+                                    <!--<div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">-->
+                                        <!--<div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>-->
+                                        <!--<div class="webzine_list_title" style="width: 65%">-->
+                                            <!--<a ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)">[{{item.PRODUCT_GB == 'CUMMERCE' ? '커머스' : ''}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}</a>-->
 
-                                            <div class="webzine_list_bottomwrap">
-                                                <div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>
-                                                <div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>
-                                                <div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>
-                                            </div>
+                                            <!--<div class="webzine_list_bottomwrap">-->
+                                                <!--<div class="webzine_list_item"><strong>수량</strong><span class="table_gray" style="margin-left:8px;">{{item.PRODUCT_CNT}}</span></div>-->
+                                                <!--<div class="webzine_list_item"><strong>금액</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_PRICE}}</span></div>-->
+                                                <!--<div class="webzine_list_item"><strong>상태</strong><span class="table_gray" style="margin-left:8px;">{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}</span></div>-->
+                                            <!--</div>-->
 
-                                            <div class="webzine_list_btnwrap">
-                                                <button class="webzine_list_btn red" title="응모하기" ng-show="item.PROGRESS_ST_NM == ''"ng-click="click_cancel(item)">주문취소</button><br />
-                                                <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>
-                                            </div>
+                                            <!--<div class="webzine_list_btnwrap">-->
+                                                <!--<button class="webzine_list_btn red" title="응모하기" ng-show="item.PROGRESS_ST_NM == ''"ng-click="click_cancel(item)">주문취소</button><br />-->
+                                                <!--<button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''" ng-click="click_counsel(item)" type="button">변경</button>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>  &lt;!&ndash; comp_basic &ndash;&gt;-->
+                                <!--</div>  &lt;!&ndash; col-xs-8 &ndash;&gt;-->
+                            <!--</div>  &lt;!&ndash; /.row &ndash;&gt;-->
+
+                            <!--<div class="row webzine_moms_list" ng-show="cummercelist == ''">-->
+                                <!--조회데이터가 없습니다.-->
+                            <!--</div>-->
+
+                            <table id="comp_cart_table" class="table"  style="border-bottom:2px solid #ddd;">
+
+                                <thead>
+                                <tr class="board_thead" height="48" align="center">
+                                    <td colspan="2"><span class="board_th">상품정보</span></td>
+                                    <td width="88"><span class="board_th">금액</span></td>
+                                    <td width="55"><span class="board_th">수량</span></td>
+                                    <td width="95"><span class="board_th">결제액</span></td>
+                                    <td width="60"><span class="board_th">변경</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr style="border-bottom:1px solid #ddd;" ng-repeat="item in cummercelist">
+                                    <!--<td class="table_no">
+                                        &lt;!&ndash; 품절 또는 기간만료등으로 구매불가 상태일 경우에는 disabled &ndash;&gt;
+                                                            <input type="checkbox" name="name"  model="item.selected" ng-value="item" style="float:none;" ng-click='click_sumprice($index);'>
+                                                        </td>-->
+                                    <td class="table_title" style="width:70px; font-size: 0.92em;">
+                                        <div class="cart_thumb" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg');">
+                                            <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
                                         </div>
-                                    </div>  <!-- comp_basic -->
-                                </div>  <!-- col-xs-8 -->
-                            </div>  <!-- /.row -->
+                                    </td>
+                                    <td class="table_title" style="font-size: 0.92em;">
+                                        <a ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.PRODUCT_NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)"><strong>[{{item.PRODUCT_GB == 'MILEAGE' ? '마일리지' : '경매소'}}] {{item.PARENT_PRODUCT_NM | limitTo: 50 }}{{item.PARENT_PRODUCT_NM > 50 ? '...' : ''}} {{item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}</strong></a>
 
-                            <div class="row webzine_moms_list" ng-show="cummercelist == ''">
-                                조회데이터가 없습니다.
-                            </div>
+                                    </td>
+                                    <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                    <td class="table_date" align="center"><!--<input type="text" class="form-control input-sm" value="99" placeholder="" />-->{{item.PRODUCT_CNT}}</td>
+                                    <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                    <td class="table_date" align="center">
+                                        <a ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''" ng-click="click_cancel(item)"  title="목록에서 삭제">주문취소</a>
+                                        <button class="btn btn-default btn-xs" ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" style="font-size:0.92em; padding-top:4px; margin-top:8px;"><span class="glyphicon glyphicon-shopping-cart"></span>변경</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+
+                                <tbody ng-show="cummercelist == '' || cummercelist == null">
+                                <tr style="border-bottom:1px solid #ddd;">
+                                    <td colspan="7" height="120" align="center" style="line-height:32px; font-size:0.92em; color:#666; padding-top:25px;">
+                                        목록이 없습니다.
+                                        <br />
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
 
                             <nav class="text-center">
                                 <pagination boundary-links="true" total-items="PHOTO_TOTAL_COUNT" ng-model="PHOTO_PAGE_NO" class="pagination-sm" ng-change="pagePhotoChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
@@ -150,44 +244,91 @@
                                 </div>  &lt;!&ndash; col-xs-8 &ndash;&gt;
                             </div>  &lt;!&ndash; /.row &ndash;&gt;-->
 
-                            <table id="comp_board_table" class="table table-hover">
+                            <!--<table id="comp_board_table" class="table table-hover">-->
+
+                                <!--<thead>-->
+                                <!--<tr class="board_thead" height="48">-->
+                                    <!--<td align="center"><span class="board_th">상품명</span></td>-->
+                                    <!--<td align="center"><span class="board_th">수량</span></td>-->
+                                    <!--<td align="center"><span class="board_th">가격</span></td>-->
+                                    <!--<td align="center"><span class="board_th">신청일</span></td>-->
+                                    <!--<td align="center"><span class="board_th">주문취소/변경</span></td>-->
+                                <!--</tr>-->
+                                <!--</thead>-->
+
+                                <!--<tbody class="on" ng-repeat="item in naminglist">-->
+
+                                <!--<tr style="cursor:pointer;">-->
+                                    <!--<td>-->
+                                        <!--&lt;!&ndash;<span class="glyphicon glyphicon-lock table_icon_lock"></span>&ndash;&gt;-->
+                                        <!--{{ item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}-->
+                                    <!--</td>-->
+                                    <!--<td class="table_hit">{{item.PRODUCT_CNT}}</td>-->
+                                    <!--<td>{{item.SUM_PRICE}}</td>-->
+                                    <!--<td class="table_date">{{item.ORDER_DT}}</td>-->
+                                    <!--<td>-->
+                                        <!--<button class="webzine_list_btn red" title="응모하기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_cancel(item)">주문취소</button><br />-->
+                                        <!--<button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" type="button">변경</button>-->
+                                    <!--</td>-->
+                                <!--</tr>-->
+
+                                <!--</tbody>-->
+
+                                <!--<tbody class="on" data-ng-show="naminglist == '' || naminglist == null">-->
+
+                                <!--<tr>-->
+                                    <!--<td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>-->
+                                <!--</tr>-->
+
+                                <!--</tbody>-->
+                            <!--</table>&lt;!&ndash; /.List&ndash;&gt;-->
+
+                            <table id="comp_cart_table" class="table"  style="border-bottom:2px solid #ddd;">
 
                                 <thead>
-                                <tr class="board_thead" height="48">
-                                    <td align="center"><span class="board_th">상품명</span></td>
-                                    <td align="center"><span class="board_th">수량</span></td>
-                                    <td align="center"><span class="board_th">가격</span></td>
-                                    <td align="center"><span class="board_th">신청일</span></td>
-                                    <td align="center"><span class="board_th">주문취소/변경</span></td>
+                                <tr class="board_thead" height="48" align="center">
+                                    <td colspan="2"><span class="board_th">상품정보</span></td>
+                                    <td width="88"><span class="board_th">금액</span></td>
+                                    <td width="55"><span class="board_th">수량</span></td>
+                                    <td width="95"><span class="board_th">결제액</span></td>
+                                    <td width="60"><span class="board_th">변경</span></td>
                                 </tr>
                                 </thead>
 
-                                <tbody class="on" ng-repeat="item in naminglist">
-
-                                <tr style="cursor:pointer;">
-                                    <td>
-                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                        {{ item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}
+                                <tbody>
+                                <tr style="border-bottom:1px solid #ddd;" ng-repeat="item in naminglist">
+                                    <!--<td class="table_no">
+                                        &lt;!&ndash; 품절 또는 기간만료등으로 구매불가 상태일 경우에는 disabled &ndash;&gt;
+                                                            <input type="checkbox" name="name"  model="item.selected" ng-value="item" style="float:none;" ng-click='click_sumprice($index);'>
+                                                        </td>-->
+                                    <td class="table_title" style="width:70px; font-size: 0.92em;">
+                                        <div class="cart_thumb" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg');">
+                                            <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
+                                        </div>
                                     </td>
-                                    <td class="table_hit">{{item.PRODUCT_CNT}}</td>
-                                    <td>{{item.SUM_PRICE}}</td>
-                                    <td class="table_date">{{item.ORDER_DT}}</td>
-                                    <td>
-                                        <button class="webzine_list_btn red" title="응모하기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_cancel(item)">주문취소</button><br />
-                                        <button class="webzine_list_btn default" title="상세보기" ng-show="item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" type="button">변경</button>
+                                    <td class="table_title" style="font-size: 0.92em;">
+                                        <a ng-click="item.PARENT_NO == 0 ? click_showStoreView(item.PRODUCT_GB, item.PRODUCT_NO) : click_showStoreView(item.PRODUCT_GB, item.PARENT_NO)"><strong>{{ item.PRODUCT_NM | limitTo: 50 }}{{item.PRODUCT_NM > 50 ? '...' : ''}}</strong></a>
+
+                                    </td>
+                                    <td class="table_date" align="right" style="padding-top:14px;">{{item.SUM_PRICE}}원</td>
+                                    <td class="table_date" align="center"><!--<input type="text" class="form-control input-sm" value="99" placeholder="" />-->{{item.PRODUCT_CNT}}</td>
+                                    <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.SUM_PRICE}}원</td>
+                                    <td class="table_date" align="center">
+                                        <a ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''" ng-click="click_cancel(item)"  title="목록에서 삭제">주문취소</a>
+                                        <button class="btn btn-default btn-xs" ng-show="item.ORDER_ST == 0 && item.PROGRESS_ST_NM == ''"  ng-click="click_counsel(item)" style="font-size:0.92em; padding-top:4px; margin-top:8px;"><span class="glyphicon glyphicon-shopping-cart"></span>변경</button>
                                     </td>
                                 </tr>
-
                                 </tbody>
 
-                                <tbody class="on" data-ng-show="naminglist == '' || naminglist == null">
-
-                                <tr>
-                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                <tbody ng-show="naminglist == '' || naminglist == null">
+                                <tr style="border-bottom:1px solid #ddd;">
+                                    <td colspan="7" height="120" align="center" style="line-height:32px; font-size:0.92em; color:#666; padding-top:25px;">
+                                        목록이 없습니다.
+                                        <br />
+                                    </td>
                                 </tr>
-
                                 </tbody>
-                            </table><!-- /.List-->
+                            </table>
 
                             <nav class="text-center">
                                 <pagination boundary-links="true" total-items="CLINIC_TOTAL_CNT" ng-model="CLINIC_PAGE_NO" class="pagination-sm" ng-change="pageClinicChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>

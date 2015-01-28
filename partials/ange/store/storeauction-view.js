@@ -42,7 +42,7 @@ define([
         $scope.click_selectTab = function (idx) {
             $scope.selectIdx = idx;
 
-            $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
+//            $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
         };
 
         // 초기화
@@ -61,13 +61,19 @@ define([
         // 상품 추가
         $scope.addProductList = function (products, item){
 
-            console.log(products);
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 상품추가가 가능합니다.', {size: 'md'});
+                $("#checkProduct").attr("checked",false);
+                return;
+            }
 
             if(products.NO == null){
                 $scope.productsList = [];
             }else{
                 $scope.product.CNT = 1;
-                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+
+                // TOTAL_PRICE 경매 가격으로 으로 데이터 넣음
+                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : item.AUCTION_AMOUNT, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
                  // , "RECEIPTOR_NM" : $rootScope.user_info.USER_NM, "RECEIPT_ADDR" :$rootScope.user_info.ADDR, "RECEIPT_ADDR_DETAIL" : $rootScope.user_info.ADDR_DETAIL, "RECEIPT_PHONE" : $rootScope.user_info.PHONE_2
             }
         }
@@ -113,169 +119,62 @@ define([
             }
         };
 
-        // 장바구니추가
+        // 경매 참여
+        $scope.click_auction = function (item){
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 경매 참여가 가능합니다.', {size: 'md'});
+                return;
+            }
+
+            $scope.item.NO = item;
+            $scope.insertItem('ange/auction', 'item', $scope.item, false)
+                .then(function(){
+
+                    dialogs.notify('알림', '정상적으로 참여했습니다.', {size: 'md'});
+
+                    $scope.getPeopleBoard();
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        //찜
         $scope.click_addcart = function (){
 
             $scope.item.CART = $scope.productsList;
-            $scope.item.CART.USER_ID = $rootScope.uid;
 
             $scope.insertItem('ange/cart', 'item', $scope.item, false)
                 .then(function(){
-                    /*dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
-                    $scope.openViewScrapModal($scope.item.CART, 'lg');*/
                     alert('장바구니에 등록되었습니다');
+                    $location.url('store/cart/list/'+$stateParams.menu);
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
 
+        //즉시 구매
+        $scope.click_adddirectcart = function (list){
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 즉시 구매가 가능합니다.', {size: 'md'});
+                return;
+            }
+
+            // TOTAL_PRICE 즉시 구매 가격으로 데이터 넣음
+            $scope.productsList.push({"MAIN_FILE": list.MAIN_FILE, "PRODUCT_NO" : list.NO, "PRODUCT_NM" : list.PRODUCT_NM , "PRICE" : list.DIRECT_PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : list.DIRECT_PRICE, "DELEIVERY_PRICE" : list.DELEIVERY_PRICE, "DELEIVERY_ST" : list.DELEIVERY_ST, "PRODUCT_GB" : list.PRODUCT_GB});
+
+            $scope.item.CART = $scope.productsList;
+
+            $scope.insertItem('ange/cart', 'item', $scope.item, false)
+                .then(function(){
+                    alert('찜목록으로 이동합니다');
                     $location.url('store/cart/list/'+$stateParams.menu);
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
 
-        // 임시 장바구니 모달 팝업창 --> 삭제예정
-        $scope.openViewScrapModal = function (item, size) {
-            var dlg = dialogs.create('storemall_cart.html',
-                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
-
-                    /********** 공통 controller 호출 **********/
-                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
-
-
-                    $scope.list = item;
-
-                    $scope.click_cancel = function () {
-                        $modalInstance.close();
-                    };
-
-                    $scope.orderlist = [];
-
-                    $scope.click_removeCartProduct = function (idx){
-                        $scope.list.splice(idx, 1);
-                    }
-
-
-                    $scope.sum_price = 0;
-
-                    for(var i =0;i <item.length; i++){
-                        $scope.sum_price += item[i].SUM_PRICE;
-                        $scope.PRODUCT_GB = item[i].PRODUCT_GB;
-                    }
-
-                    console.log($scope.user_info.MILEAGE);
-
-                    $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
-
-                    // 선택 상품 주문
-                    $scope.click_select_reg = function(list){
-
-                        var idx = 0;
-
-                        var count = $("input:checkbox[name='name']:checked").length;
-                        console.log(count);
-
-                        for(var i =0; i<list.length; i++){
-
-                            if($("#name"+i).is(":checked")){
-
-                                idx = i;
-                                console.log(i);
-                                $scope.orderlist.push(list[idx]);
-                            }
-
-                        }
-                        $scope.openOrderModal($scope.orderlist, 'lg');
-                    }
-
-                    // 전체 상품 주문
-                    $scope.click_reg = function (list){
-
-                        $scope.openOrderModal($scope.list, 'lg');
-                        $modalInstance.close();
-                    }
-
-                    $scope.openOrderModal = function (item, size){
-
-                        var dlg = dialogs.create('storemall_order.html',
-                            ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
-                                /********** 공통 controller 호출 **********/
-                                angular.extend(this, $controller('ange-common', {$scope: $scope}));
-
-                                $scope.item = {};
-
-                                if($scope.uid != '' && $scope.uid != null){
-                                    $scope.item.USER_ID = $scope.user_info.USER_ID;
-                                    $scope.item.RECEIPTOR_NM = $scope.user_info.USER_NM;
-                                    $scope.item.RECEIPT_PHONE = $scope.user_info.PHONE_2;
-                                    $scope.item.RECEIPT_ADDR = $scope.user_info.ADDR;
-                                    $scope.item.RECEIPT_ADDR_DETAIL = $scope.user_info.ADDR_DETAIL;
-                                }
-
-                                $scope.list = item;
-
-                                console.log($scope.list);
-
-                                $scope.TOTAL_SUM_PRICE = 0;
-                                $scope.TOTAL_DELEIVERY_PRICE = 0;
-                                for(var i=0; i<item.length; i++){
-
-                                    $scope.TOTAL_SUM_PRICE += item[i].SUM_PRICE;
-                                    $scope.TOTAL_DELEIVERY_PRICE = item[i].DELEIVERY_PRICE;
-                                    $scope.DELEIVERY_ST = item[i].DELEIVERY_ST;
-                                }
-
-                                if($scope.DELEIVERY_ST == 1){
-                                    $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE);
-                                }else if($scope.DELEIVERY_ST == 2){
-                                    $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE) + parseInt($scope.TOTAL_DELEIVERY_PRICE);
-                                }
-
-                                $scope.click_basic = function(val){
-                                    if(val == 'Y'){
-                                        $scope.item.USER_ID = $scope.user_info.USER_ID;
-                                        $scope.item.RECEIPTOR_NM = $scope.user_info.USER_NM;
-                                        $scope.item.RECEIPT_PHONE = $scope.user_info.PHONE_2;
-                                        $scope.item.RECEIPT_ADDR = $scope.user_info.ADDR;
-                                        $scope.item.RECEIPT_ADDR_DETAIL = $scope.user_info.ADDR_DETAIL;
-                                    }else if('N'){
-                                        $scope.item = {};
-                                    }
-                                }
-
-                                $scope.item.ORDER = $scope.list;
-
-                                $scope.click_order = function (){
-
-                                    $scope.item.ORDER_GB = 'AUCTION';
-
-                                    $scope.insertItem('ange/order', 'item', $scope.item, false)
-                                        .then(function(){dialogs.notify('알림', '주문이 완료되었습니다. 나의 주문 내역에서 확인하실 수 있습니다', {size: 'md'});})
-                                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-                                }
-
-                                $scope.click_cancel = function () {
-                                    $modalInstance.close();
-                                };
-
-                            }], item, {size:size,keyboard: true}, $scope);
-                        dlg.result.then(function(){
-
-                        },function(){
-
-                        });
-                    };
-
-
-                }], item, {size:size,keyboard: true}, $scope);
-            dlg.result.then(function(){
-
-            },function(){
-
-            });
-        };
-
         // 전체 금액 계산
         $scope.addSumPrice = function(price, cnt, index){
-
-            console.log('aa');
             $scope.productsList[index].TOTAL_PRICE += price * cnt;
 
         }
@@ -291,93 +190,6 @@ define([
             return total;
         }
 
-        // 주문
-        $scope.click_addOrder = function(){
-
-            $scope.item.ORDER = $scope.productsList;
-
-            console.log($scope.item.ORDER);
-            /*            $scope.insertItem('ange/order', 'item', $scope.item, false)
-             .then(function(){dialogs.notify('알림', '주문이 완료되었습니다. 나의 주문 내역에서 확인하실 수 있습니다', {size: 'md'});})
-             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
-
-            $scope.openOrderModal($scope.item.ORDER, 'lg');
-        }
-
-        // 주문팝업 삭제예정
-        $scope.openOrderModal = function (item, size){
-
-            var dlg = dialogs.create('storemall_order.html',
-                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
-                    /********** 공통 controller 호출 **********/
-                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
-
-                    $scope.item = {};
-
-                    if($scope.uid != '' && $scope.uid != null){
-                        $scope.item.USER_ID = $scope.user_info.USER_ID;
-                        $scope.item.RECEIPTOR_NM = $scope.user_info.USER_NM;
-                        $scope.item.RECEIPT_PHONE = $scope.user_info.PHONE_2;
-                        $scope.item.RECEIPT_ADDR = $scope.user_info.ADDR;
-                        $scope.item.RECEIPT_ADDR_DETAIL = $scope.user_info.ADDR_DETAIL;
-                    }
-
-                    $scope.list = item;
-
-                    $scope.TOTAL_SUM_PRICE = 0;
-                    $scope.TOTAL_DELEIVERY_PRICE = 0;
-                    for(var i=0; i<item.length; i++){
-
-                        $scope.TOTAL_SUM_PRICE += item[i].SUM_PRICE;
-                        $scope.TOTAL_DELEIVERY_PRICE = item[i].DELEIVERY_PRICE;
-                        $scope.DELEIVERY_ST = item[i].DELEIVERY_ST;
-                    }
-
-                    if($scope.DELEIVERY_ST == 1){
-                        $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE);
-                    }else if($scope.DELEIVERY_ST == 2){
-                        $scope.item.SUM_PRICE = parseInt($scope.TOTAL_SUM_PRICE) + parseInt($scope.TOTAL_DELEIVERY_PRICE);
-                    }
-
-
-                    $scope.click_basic = function(val){
-                        if(val == 'Y'){
-                            $scope.item.USER_ID = $scope.user_info.USER_ID;
-                            $scope.item.RECEIPTOR_NM = $scope.user_info.USER_NM;
-                            $scope.item.RECEIPT_PHONE = $scope.user_info.PHONE_2;
-                            $scope.item.RECEIPT_ADDR = $scope.user_info.ADDR;
-                            $scope.item.RECEIPT_ADDR_DETAIL = $scope.user_info.ADDR_DETAIL;
-                        }else if('N'){
-                            $scope.item = {};
-                        }
-                    }
-
-                    $scope.item.ORDER = $scope.list;
-
-                    $scope.click_order = function (){
-
-                        $scope.item.ORDER_GB = 'AUCTION'
-
-                        $scope.insertItem('ange/order', 'item', $scope.item, false)
-                            .then(function(){
-                                dialogs.notify('알림', '주문이 완료되었습니다. 나의 주문 내역에서 확인하실 수 있습니다', {size: 'md'});
-                                $modalInstance.close();
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-                    }
-
-                    $scope.click_cancel = function () {
-                        $modalInstance.close();
-                    };
-
-                }], item, {size:size,keyboard: true}, $scope);
-            dlg.result.then(function(){
-
-            },function(){
-
-            });
-        };
-
         // 목록 버튼 클릭
         $scope.click_showPeoplePhotoList = function () {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
@@ -392,7 +204,6 @@ define([
          .catch($scope.reportProblems);*/
         $scope.init();
         $scope.getPeopleBoard();
-        //s$scope.addSumPrice($scope.item.PRICE, 1 , 0);
 
     }]);
 });

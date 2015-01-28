@@ -40,7 +40,7 @@ define([
         $scope.item = {};
 
         // 검색어 조건
-        var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "등록자", value: "NICK_NM"}];
+        var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "작성자", value: "NICK_NM"}];
 
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];
@@ -172,6 +172,8 @@ define([
                 $location.url('/store/auction/view/'+key);
             }else if(product_gb == 'CUMMERCE'){
                 $location.url('/store/cummerce/view/'+key);
+            }else if(product_gb == 'NAMINIG'){
+                $location.url('/store/naming/request/'+key);
             }
 
         };

@@ -84,7 +84,7 @@
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
 
-                                            <div ng-show="productsList != ''">
+                                            <div ng-if="uid != '' && uid != null" ng-show="productsList != ''">
                                                 <button type="button" ng-click="click_addcart()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">장바구니</button>
                                                 <!--<button type="button" ng-click="click_addOrder()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">구매하기</button>-->
                                             </div>
@@ -127,7 +127,7 @@
                                     </ul>
                                 </div>  <!-- /.store_view_tab -->
 
-                                <div id="tabs-1"  class="container-fluid peopleboard_view_contentwrap">
+                                <div id="tabs-1" data-ng-show="selectIdx == '1'"  class="container-fluid peopleboard_view_contentwrap">
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -141,7 +141,7 @@
                                 </div><!-- /.container -->
 
 
-                                <div id="tabs-2"  class="container-fluid peopleboard_view_contentwrap">
+                                <div id="tabs-2" data-ng-show="selectIdx == '2'"  class="container-fluid peopleboard_view_contentwrap">
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -231,7 +231,7 @@
                                 <!-- /후기 -->
 
 
-                                <div id="tabs-3"  class="container-fluid peopleboard_view_contentwrap">
+                                <div id="tabs-3" data-ng-show="selectIdx == '3'" class="container-fluid peopleboard_view_contentwrap">
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -365,7 +365,7 @@
                                 <!-- /관련상품 -->
 
 
-                                <div id="tabs-4" class="container-fluid peopleboard_view_contentwrap">
+                                <div id="tabs-4" data-ng-show="selectIdx == '4'" class="container-fluid peopleboard_view_contentwrap">
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -425,12 +425,8 @@
 
     </div>
 
-    <div class="subar sub-slide1" style="padding: 10px 0 0 10px;">
-        <div class="row">
-            <div class="side_wrap" style="width:100%; border:1px solid black; width: 180px; margin-left:4%; ">
-                우측바
-            </div>
-        </div>
+    <div class="subar sub-slide1">
+        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
     </div>
 
     <!-- /Main Page Layout Set -->

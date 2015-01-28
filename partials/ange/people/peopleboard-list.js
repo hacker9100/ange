@@ -24,7 +24,9 @@ define([
         $scope.TOTAL_COUNT = 0;
 
         // 검색어 조건
-        var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "등록자", value: "NICK_NM"}];
+        var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "작성자", value: "NICK_NM"}];
+
+        $scope.SEARCH_YN = 'N';
 
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];
@@ -149,6 +151,14 @@ define([
         // 검색
         $scope.click_searchPeopleBoard = function(){
             $scope.getPeopleBoardList();
+            $scope.SEARCH_YN = 'Y';
+        }
+
+        // 전체검색
+        $scope.click_searchAllPeopleBoard = function(){
+            $scope.search.KEYWORD = '';
+            $scope.getPeopleBoardList();
+            $scope.SEARCH_YN = 'N';
         }
 
         /********** 화면 초기화 **********/

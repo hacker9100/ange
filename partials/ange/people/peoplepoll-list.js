@@ -31,6 +31,8 @@ define([
         $scope.PAGE_SIZE = 20;
         $scope.TOTAL_COUNT = 0;
 
+        $scope.SEARCH_YN = 'N';
+
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
             $scope.getAngePollList();
@@ -39,7 +41,8 @@ define([
         $scope.search = {};
 
         // 검색어 조건
-        var condition = [{name: "제목+본문", value: "SUBJECT"},{name : "작성자", value : "REG_NM"}];
+        var condition = [{name: "제목+본문", value: "SUBJECT"}];
+//        ,{name : "작성자", value : "REG_NM"}
 
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];
@@ -69,40 +72,21 @@ define([
 //            $location.url('people/poll/edit/'+item.NO);
         };
 
+        // 검색
         $scope.click_searchPoll = function(){
             $scope.getAngePollList();
+            $scope.SEARCH_YN = 'Y';
+        }
+
+        // 전체검색
+        $scope.click_searchAllPeopleBoard = function(){
+            $scope.search.KEYWORD = '';
+            $scope.getAngePollList();
+            $scope.SEARCH_YN = 'N';
         }
 
         // 게시판 목록 조회
         $scope.getAngePollList = function () {
-/*            console.log('ddd');
-            $scope.tableParams = new ngTableParams({
-                page: 1,                    // show first page
-                count: 20,    // count per page $scope.PAGE_SIZE
-                sorting: {                  // initial sorting
-                    REG_DT: 'desc'
-                }
-            }, {
-                counts: [],         // hide page counts control
-                total: 0,           // length of data
-                getData: function($defer, params) {
-                    var key = Object.keys(params.sorting())[0];
-
-                    $scope.search['SORT'] = key;
-                    $scope.search['ORDER'] = params.sorting()[key];
-
-                    $scope.getList('ange/poll', 'list', {NO: params.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, {}, true)
-                        .then(function(data){
-                            var total_cnt = data[0].TOTAL_COUNT;
-                            $scope.TOTAL_COUNT = total_cnt;
-
-                            params.total(total_cnt);
-                            $defer.resolve(data);
-                        })
-                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
-                }
-            });*/
-
             $scope.search['SORT'] = 'REG_DT';
             $scope.search['ORDER'] = 'DESC';
 
@@ -120,6 +104,12 @@ define([
         // 조회 화면 이동
         $scope.click_showViewAngePoll = function (key) {
             /*$location.url('/people/poll/edit/'+key);*/
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 설문조사 참여가 가능합니다.', {size: 'md'});
+                return;
+            }
+
             $location.url('/people/poll/edit/'+key);
         };
 

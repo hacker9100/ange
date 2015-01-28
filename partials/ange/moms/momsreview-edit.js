@@ -99,13 +99,30 @@ define([
 
         var state;
         $scope.click_checkFileDestroy = function () {
-            angular.forEach($scope.checkFile, function(file) {
+//            angular.forEach($scope.checkFile, function(file) {
+//                state = 'pending';
+//                return $http({
+//                    url: file.deleteUrl,
+//                    method: file.deleteType
+//                }).then(
+//                    function () {
+//                        state = 'resolved';
+//                        $scope.clear(file);
+//                    },
+//                    function () {
+//                        state = 'rejected';
+//                    }
+//                );
+//            });
+            angular.forEach($scope.item.queue, function(file) {
                 state = 'pending';
                 return $http({
                     url: file.deleteUrl,
                     method: file.deleteType
                 }).then(
                     function () {
+                        $scope.item.queue.splice($scope.checkFile.indexOf(file), 1);
+
                         state = 'resolved';
                         $scope.clear(file);
                     },
@@ -131,6 +148,8 @@ define([
         // 게시판 초기화
         $scope.item = {};
         $scope.search = {};
+
+        $scope.item.queue = [];
 
         // 초기화
         $scope.init = function(session) {

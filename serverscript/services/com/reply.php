@@ -51,6 +51,7 @@
             if ($_type == 'item') {
 
                 $search_common = "";
+                $limit = "";
                 $sort_order = "ORDER BY R.REG_DT DESC";
 
                 if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
@@ -69,17 +70,21 @@
                     $sort_order = "ORDER BY R.".$_search[SORT]." ".$_search[ORDER];
                 }
 
+                if (isset($_search[PAGE_NO]) && $_search[PAGE_NO] != "") {
+                    $limit .= "LIMIT ".(($_search[PAGE_NO] - 1) * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                }
 
                 //TODO: 조회
                 $sql = "SELECT
                             NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
-                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID
+                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(*) FROM COM_REPLY WHERE REPLY_GB = 'linetalk') AS TOTAL_COUNT
                         FROM
                             COM_REPLY R
                         WHERE 1=1
                             AND PARENT_NO = 0
                             ".$search_common."
                         ".$sort_order."
+                        ".$limit."
                         ";
 
                 $__trn = '';
@@ -143,9 +148,9 @@
 //            $form = json_decode(file_get_contents("php://input"),true);
 //            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-/*            if ( trim($_model[TASK_NO]) == "" ) {
-                $_d->failEnd("댓글 순번이 없습니다");
-            }*/
+           if ( trim($_model[COMMENT]) == "" ) {
+                $_d->failEnd("내용을 입력하세요");
+            }
 
             $err = 0;
             $msg = "";

@@ -683,6 +683,7 @@
                         ,PHOTO_GB = '".$_model[PHOTO_GB]."'
                         ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
                         ,FAQ_GB = '".$_model[FAQ_GB]."'
+                        ,COMM_NO = '".$_model[COMM_NO]."'
                     WHERE
                         NO = ".$_key."
                     ";
