@@ -51,6 +51,8 @@ define([
         $scope.addEditor = false;
         $scope.checkAll = false;
 
+        $scope.checkFile = [];
+
         $scope.click_selectMainImage = function (file) {
 
             angular.forEach($scope.queue, function(file) {

@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peopleboard-edit', ['$scope', '$rootScope', '$stateParams', '$location', '$filter', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, $filter, dialogs, UPLOAD) {
+    controllers.controller('peopleboard-edit', ['$scope', '$rootScope', '$stateParams', '$location', '$filter', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, $filter, dialogs, UPLOAD, $http) {
 
         $(document).ready(function(){
             $("#checkall").click(function(){
@@ -25,8 +25,26 @@ define([
                     $("input[name=check]").prop("checked",false);
                 }
             })
+//            $("#check_scrap").click(function(){
+//                if(!$("#check_scrap").is(":checked")){
+//                    $scope.item.SCRAP_FL = "true";
+//                }else{
+//                    $scope.item.SCRAP_FL = "false";
+//                }
+//            });
+//
+//            $("#check_reply").click(function(){
+//                if(!$("#check_reply").is(":checked")){
+//                    $scope.item.REPLY_FL = "true";
+//                }else{
+//                    $scope.item.REPLY_FL = "false";
+//                }
+//            });
+        });
+
+        $(function(){
             $("#check_scrap").click(function(){
-                if(!$("#check_scrap").is(":checked")){
+                if($("#check_scrap").is(":checked")){
                     $scope.item.SCRAP_FL = "true";
                 }else{
                     $scope.item.SCRAP_FL = "false";
@@ -34,31 +52,13 @@ define([
             });
 
             $("#check_reply").click(function(){
-                if(!$("#check_reply").is(":checked")){
+                if($("#check_reply").is(":checked")){
                     $scope.item.REPLY_FL = "true";
                 }else{
                     $scope.item.REPLY_FL = "false";
                 }
             });
         });
-
-/*        $(function(){
-            $("#check_scrap").click(function(){
-                if(!$("#check_scrap").is(":checked")){
-                    $("#check_scrap").val("Y");
-                }else{
-                    $("#check_scrap").val("N");
-                }
-            });
-
-            $("#check_reply").click(function(){
-                if(!$("#check_reply").is(":checked")){
-                    $("#check_reply").val("Y");
-                }else{
-                    $("#check_reply").val("N");
-                }
-            });
-        });*/
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
         // 파일 업로드 설정
@@ -68,6 +68,7 @@ define([
         $scope.addEditor = true;
         $scope.checkAll = false;
 
+        $scope.checkFile = [];
         $scope.click_selectMainImage = function (file) {
 
             angular.forEach($scope.queue, function(file) {
@@ -137,18 +138,25 @@ define([
         $scope.item.queue = [];
 
         // 초기화
-        $scope.init = function(session) {
-//            if ($stateParams.menu == 'angeroom') {
-//                $scope.community = "앙쥬맘 수다방";
-//            } else if($stateParams.menu == 'momstalk') {
-//                $scope.community = "예비맘 출산맘";
-//            } else if($stateParams.menu == 'babycare') {
-//                $scope.community = "육아방";
-//            } else if($stateParams.menu == 'firshbirthtalk') {
-//                $scope.community = "돌잔치 톡톡톡";
-//            } else if($stateParams.menu == 'booktalk') {
-//                $scope.community = "책수다";
-//            }
+        $scope.init = function() {
+
+            if ($stateParams.menu == 'angeroom') {
+                //$scope.community = "앙쥬맘 수다방";
+                $scope.item.COMM_NO = 1;
+            } else if($stateParams.menu == 'momstalk') {
+                //$scope.community = "예비맘 출산맘";
+                $scope.item.COMM_NO = 2;
+            } else if($stateParams.menu == 'babycare') {
+                //$scope.community = "육아방";
+                $scope.item.COMM_NO = 3;
+            } else if($stateParams.menu == 'firstbirthtalk') {
+                //$scope.community = "돌잔치 톡톡톡";
+                $scope.item.COMM_NO = 4;
+            } else if($stateParams.menu == 'booktalk') {
+                //$scope.community = "책수다";
+                $scope.item.COMM_NO = 5;
+            }
+
         };
 
         // CK Editor
@@ -168,17 +176,6 @@ define([
         $scope.click_showPeopleBoardList = function () {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
 
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            } else if($stateParams.menu == 'momstalk') {
-//                $location.url('/people/momstalk/list');
-//            } else if($stateParams.menu == 'babycare') {
-//                $location.url('/people/babycare/list');
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                $location.url('/people/firstbirthtalk/list');
-//            } else if($stateParams.menu == 'booktalk') {
-//                $location.url('/people/booktalk/list');
-//            }
         };
 
         // 게시판 조회
@@ -199,6 +196,12 @@ define([
                             $("#check_scrap").attr("checked", true);
                         }else{
                             $("#check_scrap").attr("checked", false);
+                        }
+
+                        if($scope.item.REPLY_FL == "Y" && $scope.item.SCRAP_FL== "Y"){
+                            $("#checkall").attr("checked", true);
+                        }else{
+                            $("#checkall").attr("checked", false);
                         }
 
                         $scope.item.COMM_NO = data.COMM_NO;
@@ -224,21 +227,9 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-/*            if ($stateParams.menu == 'angeroom') {
-                $scope.item.COMM_NO = '1';
-            } else if($stateParams.menu == 'momstalk') {
-                $scope.item.COMM_NO = '2';
-            } else if($stateParams.menu == 'babycare') {
-                $scope.item.COMM_NO = '3';
-            } else if($stateParams.menu == 'firstbirthtalk') {
-                $scope.item.COMM_NO = '4';
-            } else if($stateParams.menu == 'booktalk') {
-                $scope.item.COMM_NO = '5';
-            }*/
-
             if ($stateParams.id == 0) {
 
-                if($("#check_scrap").is(":checked")){
+                if($("#check_reply").is(":checked")){
                     $scope.item.REPLY_FL = "true"
                 }else{
                     $scope.item.REPLY_FL = "false"
@@ -250,30 +241,24 @@ define([
                     $scope.item.SCRAP_FL = "false"
                 }
 
+               $scope.item.REMAIN_POINT =
                $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
+
+                       $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
+                           .then(function(){
+                           })
+                           .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
-
-//                        if ($stateParams.menu == 'angeroom') {
-//                            $location.url('/people/angeroom/list');
-//                        } else if($stateParams.menu == 'momstalk') {
-//                            $location.url('/people/momstalk/list');
-//                        } else if($stateParams.menu == 'babycare') {
-//                            $location.url('/people/babycare/list');
-//                        } else if($stateParams.menu == 'firstbirthtalk') {
-//                            $location.url('/people/firstbirthtalk/list');
-//                        } else if($stateParams.menu == 'booktalk') {
-//                            $location.url('/people/booktalk/list');
-//                        }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             } else {
 
-                if($("#check_scrap").is(":checked")){
+                if($("#check_reply").is(":checked")){
                     $scope.item.REPLY_FL = "true"
                 }else{
                     $scope.item.REPLY_FL = "false"
@@ -285,24 +270,13 @@ define([
                     $scope.item.SCRAP_FL = "false"
                 }
 
+                console.log($scope.item.REPLY_FL);
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
 
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
-
-//                        if ($stateParams.menu == 'angeroom') {
-//                            $location.url('/people/angeroom/list');
-//                        } else if($stateParams.menu == 'momstalk') {
-//                            $location.url('/people/momstalk/list');
-//                        } else if($stateParams.menu == 'babycare') {
-//                            $location.url('/people/babycare/list');
-//                        } else if($stateParams.menu == 'firstbirthtalk') {
-//                            $location.url('/people/firstbirthtalk/list');
-//                        } else if($stateParams.menu == 'booktalk') {
-//                            $location.url('/people/booktalk/list');
-//                        }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

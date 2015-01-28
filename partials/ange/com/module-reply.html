@@ -34,7 +34,7 @@
                 <dd style="margin:0px;">
                     {{replyItem.BLIND_FL == 'N' ? replyItem.COMMENT : '관리자에 의해 블라인드 된 의견입니다'}}<!--{{replyItem.COMMENT}}-->
                     <p style="font-size:0.86em; margin:4px 0 0 0; ">
-                        <a ng-click="showDetails = ! showDetails"><span style="color: #df5348">({{replyItem.RE_COUNT}})</span> 댓글</a>
+                        <a ng-click="showDetails = ! showDetails">댓글<span style="color: #df5348">({{replyItem.RE_COUNT}})</span></a>
                         &nbsp; | &nbsp;<a href="#">신고</a>
                         <span ng-if="uid == item.REG_UID || replyItem.BLIND_FL == 'N'  ">&nbsp; | &nbsp;<a ng-click="showCommentDetails = ! showCommentDetails">수정</a></span>
                         <span ng-if="uid == item.REG_UID || replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="click_deleteReply(replyItem);">삭제</a></span>
