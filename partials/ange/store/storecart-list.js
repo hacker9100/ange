@@ -319,6 +319,14 @@ define([
             }
         }
 
+        $scope.click_mileagehome = function(){
+            $location.url('/store/mileagemall/list');
+        }
+
+        $scope.click_cummercehome = function (){
+            $location.url('/store/cummerce/list');
+        }
+
         // 주문하기
         $scope.click_order = function (){
 
