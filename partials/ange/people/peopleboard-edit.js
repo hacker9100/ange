@@ -270,7 +270,7 @@ define([
                     $scope.item.SCRAP_FL = "false"
                 }
 
-                console.log($scope.item.REPLY_FL);
+                $scope.item.REMAIN_POINT = 10;
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
 
