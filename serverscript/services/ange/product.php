@@ -68,6 +68,17 @@ switch ($_method) {
             $result = $_d->sql_query($sql);
             $data = $_d->sql_fetch_array($result);
 
+            $sql = "SELECT
+                        NO, PARENT_NO, PRODUCT_NM
+                    FROM
+                        ANGE_PRODUCT
+                    WHERE
+                        PARENT_NO = ".$_key."
+                    ";
+
+            $file_data = $_d->getData($sql);
+            $data['PRODUCTS'] = $file_data;
+
             if($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
