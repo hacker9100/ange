@@ -292,14 +292,6 @@ define([
                     }
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-    /*            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
-                    .then(function(){
-
-                        dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
-                        $scope.getPeopleBoard();
-                    })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
         };
 
         // 스크랩

@@ -147,28 +147,28 @@ define([
         $scope.getPeopleBoard = function () {
             if ($stateParams.id != 0) {
                 return $scope.getItem('com/webboard', 'item', $stateParams.id, {}, false)
-                    .then(function(data){
-                        var files = data.FILES;
-                        console.log(JSON.stringify(data));
-                        for(var i in files) {
-                            if (files[i].FILE_GB == 'MAIN') {
+                .then(function(data){
+                    var files = data.FILES;
+                    console.log(JSON.stringify(data));
+                    for(var i in files) {
+                        if (files[i].FILE_GB == 'MAIN') {
 //                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                                var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
-                                data.MAIN_FILE = img;
-                            }
+                            var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
+                            data.MAIN_FILE = img;
                         }
+                    }
 
-                        $scope.item = data;
+                    $scope.item = data;
 
-                        $scope.item.PARENT_NO = 0;
-                        $scope.item.LEVEL = 1;
-                        $scope.item.REPLY_NO = 1;
-                        $scope.item.TARGET_NO = $scope.item.NO;
-                        $scope.item.TARGET_GB = "BOARD";
-                        $scope.item.RE_COMMENT = "";
-                    })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-            }
+                    $scope.item.PARENT_NO = 0;
+                    $scope.item.LEVEL = 1;
+                    $scope.item.REPLY_NO = 1;
+                    $scope.item.TARGET_NO = $scope.item.NO;
+                    $scope.item.TARGET_GB = "BOARD";
+                    $scope.item.RE_COMMENT = "";
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
         };
 
 

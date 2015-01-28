@@ -39,7 +39,8 @@ define([
         $scope.search = {};
 
         // 검색어 조건
-        var condition = [{name: "제목+본문", value: "SUBJECT"},{name : "작성자", value : "REG_NM"}];
+        var condition = [{name: "제목+본문", value: "SUBJECT"}];
+//        ,{name : "작성자", value : "REG_NM"}
 
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];
@@ -120,6 +121,12 @@ define([
         // 조회 화면 이동
         $scope.click_showViewAngePoll = function (key) {
             /*$location.url('/people/poll/edit/'+key);*/
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 설문조사 참여가 가능합니다.', {size: 'md'});
+                return;
+            }
+
             $location.url('/people/poll/edit/'+key);
         };
 

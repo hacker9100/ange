@@ -22,7 +22,7 @@
     <div class="container-fluid peopleboard_view_commentwrap">
         <div class="row peopleboard_view_commenttop">
             <div class="col-xs-12 peopleboard_view_commenttitle">
-                <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">의견쓰기</span>
+                <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">출석체크</span>
                 <small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>
             </div><!-- /.col-xs-12-->
         </div><!-- /.row -->
@@ -33,7 +33,7 @@
             </div><!-- /.col-xs-10-->
             <div class="col-xs-2 peopleboard_view_btns">
 
-                <span>(500자 이내)</span>
+                <span>(100자 이내)</span>
                 <a class="reply_submit" ng-click="click_savePeopleBoardComment();">댓글등록</a>
 
             </div><!-- /.col-xs-2-->
@@ -58,6 +58,16 @@
                     <dd style="margin:0px;">
                         {{item.COMMENT}}
                     </dd>
+                    <dd style="margin:0px;">
+                        <a ng-show="uid == item.REG_UID" ng-click="showCommentDetails = ! showCommentDetails">수정</a>
+                        <a ng-show="uid == item.REG_UID" ng-click="click_deleteReply(item.NO);">삭제</a>
+                        <a ng-click="click_blind(item.NO);" ng-show="item.BLIND_FL == 'N'" class="table_red">블라인드</a>
+                        <a ng-click="click_blind_clear(item.NO);" ng-show="item.BLIND_FL == 'Y'" class="table_red">블라인드해제</a>
+                    </dd>
+
+                    <p style="font-size:0.86em; margin:4px 0 0 0; "  ng-class="{ 'hidden': ! showCommentDetails }">
+                        &nbsp;&nbsp;&nbsp;<input type="text" ng-model="item.UPDATE_COMMENT" style="width:60%;"/>&nbsp;<a ng-click="click_updateReply(item.NO, item.UPDATE_COMMENT);">수정</a>
+                    </p>
                 </dl>
             </div><!-- /.people_view_replys-->
 
@@ -70,6 +80,10 @@
                     </dd>
                 </dl>
             </div>
+
+            <nav class="text-center">
+                <pagination boundary-links="true" total-items="search.TOTAL_COUNT" ng-model="search.PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+            </nav><!-- /.Paging-->
 
         </div><!-- /.row -->
     </div><!-- /.container -->

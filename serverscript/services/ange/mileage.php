@@ -305,32 +305,63 @@
 
             MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
+            if($type == 'item'){
+                $sql = "UPDATE ANGE_MILEAGE SET
+                                POINT = ".$_model[TARGET_GB]."
+                                , REASON = '".$_model[REASON]."'
+                                , COMM_GB = '".$_model[COMM_GB]."'
+                                , LIMIT_CNT = ".$_model[LIMIT_CNT]."
+                                , LIMIT_DAY = '".$_model[LIMIT_DAY]."'
+                                , POINT_ST = ".$_model[POINT_ST]."
+                         WHERE NO = '".$_key."'
+                            ";
 
-            $sql = "UPDATE ANGE_MILEAGE SET
-                            POINT = ".$_model[TARGET_GB]."
-                            , REASON = '".$_model[REASON]."'
-                            , COMM_GB = '".$_model[COMM_GB]."'
-                            , LIMIT_CNT = ".$_model[LIMIT_CNT]."
-                            , LIMIT_DAY = '".$_model[LIMIT_DAY]."'
-                            , POINT_ST = ".$_model[POINT_ST]."
-                     WHERE NO = '".$_key."'
-                        ";
+                $_d->sql_query($sql);
 
-            $_d->sql_query($sql);
+                $sql = "UPDATE ANGE_MILEAGE_STATUS SET
+                                SUM_POINT = ".$_model[SUM_POINT]."
+                                ,USE_POINT = ".$_model[USE_POINT]."
+                                ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
+                         WHERE USER_ID = '".$_SESSION['uid']."'";
 
-            $sql = "UPDATE ANGE_MILEAGE_STATUS SET
-                            SUM_POINT = ".$_model[SUM_POINT]."
-                            ,USE_POINT = ".$_model[USE_POINT]."
-                            ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
-                     WHERE USER_ID = '".$_SESSION['uid']."'";
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
+            }else if($_type == 'mileageitemplus'){
 
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-            } else {
-                $_d->succEnd($no);
+                $sql = "UPDATE ANGE_MILEAGE_STATUS SET
+                                SUM_POINT = USE_POINT + ".$_model[REMAIN_POINT]."
+                                ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
+                         WHERE USER_ID = '".$_SESSION['uid']."'";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
+            }else if($_type == 'mileageitemminus'){
+
+                $sql = "UPDATE ANGE_MILEAGE_STATUS SET
+                                SUM_POINT = SUM_POINT - ".$_model[REMAIN_POINT]."
+                                ,REMAIN_POINT = REMAIN_POINT - ".$_model[REMAIN_POINT]."
+                         WHERE USER_ID = '".$_SESSION['uid']."'";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
             }
 
             break;
