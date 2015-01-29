@@ -172,11 +172,13 @@ define([
                 $location.url('/store/auction/view/'+key);
             }else if(product_gb == 'CUMMERCE'){
                 $location.url('/store/cummerce/view/'+key);
-            }else if(product_gb == 'NAMINIG'){
-                $location.url('/store/naming/request/'+key);
             }
-
         };
+
+        // 네이밍 상세 화면 이동
+        $scope.click_showNamingView = function (key){
+            $location.url('/store/naming/request/'+key);
+        }
 
         // 상태변경
         $scope.click_counsel = function (item){
