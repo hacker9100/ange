@@ -279,7 +279,7 @@ define([
 
             $scope.TOTAL_SUM_PRICE = 0;
             $scope.TOTAL_DELEIVERY_PRICE = 0;
-            $scope.TOTAL_PRICE = 0;
+            $rootScope.TOTAL_PRICE = 0;
             for(var i=0; i<$scope.list.length; i++){
 
                 if($scope.list[i].PRODUCT_GB == 'MILEAGE' || $scope.list[i].PRODUCT_GB == 'CUMMERCE' ){
@@ -336,7 +336,6 @@ define([
         // 주문하기
         $scope.click_order = function (){
             $scope.item.ORDER = $scope.list;
-            console.log($scope.item);
 
             // 상품 주문 등록
             $scope.insertItem('ange/order', 'item', $scope.item, false)
