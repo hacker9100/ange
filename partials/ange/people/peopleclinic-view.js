@@ -20,26 +20,41 @@ define([
         $scope.reply = {};
         $scope.search = {SYSTEM_GB: 'ANGE'};
 
+        var date = new Date();
+
+        // GET YYYY, MM AND DD FROM THE DATE OBJECT
+        var year = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+
+        var today = year+'-'+mm+'-'+dd;
+
+        $scope.todayDate = today;
+
         // 초기화
         $scope.init = function(session) {
 
             if ($stateParams.menu == 'childdevelop') {
                 $scope.community = "아동발달 전문가";
-                $scope.VIEW_ROLE = 'CHILDDEVELOP';
+                $scope.VIEW_ROLE = 'CLINIC';
+                $scope.PROFILE = '아동발달 전문가 약력';
             } else if($stateParams.menu == 'chlidoriental') {
                 $scope.community = "한방소아과 전문가";
-                $scope.VIEW_ROLE = 'CHILDORIENTAL';
+                $scope.VIEW_ROLE = 'CLINIC';
+                $scope.PROFILE = '한방소아과 전문가 약력';
             } else if($stateParams.menu == 'obstetrics') {
                 $scope.community = "산부인과 전문가";
-                $scope.VIEW_ROLE = 'OBSTETRICS';
+                $scope.VIEW_ROLE = 'CLINIC';
+                $scope.PROFILE = '산부인과 전문가 약력';
             } else if($stateParams.menu == 'momshealth') {
                 $scope.community = "엄마건강 전문가";
-                $scope.VIEW_ROLE = 'MOMSHEALTH';
+                $scope.VIEW_ROLE = 'CLINIC';
+                $scope.PROFILE = '엄마건강 전문가 약력';
             } else if($stateParams.menu == 'financial') {
                 $scope.community = "재테크 상담";
-                $scope.VIEW_ROLE = 'FINANCIAL';
+                $scope.VIEW_ROLE = 'CLINIC';
+                $scope.PROFILE = '재테크 전문가 약력';
             }
-
         };
 
         $scope.likeFl = function (){
@@ -70,18 +85,87 @@ define([
             // 수정 버튼 클릭
         $scope.click_showPeopleClinicEdit = function (item) {
 
-            if ($stateParams.menu == 'childdevelop') {
-                $location.url('/people/childdevelop/edit/'+item.NO);
-            } else if($stateParams.menu == 'chlidoriental') {
-                $location.url('/people/chlidoriental/edit/'+item.NO);
-            } else if($stateParams.menu == 'obstetrics') {
-                $location.url('/people/obstetrics/edit/'+item.NO);
-            } else if($stateParams.menu == 'momshealth') {
-                $location.url('/people/momshealth/edit/'+item.NO);
-            } else if($stateParams.menu == 'financial') {
-                $location.url('/people/financial/edit/'+item.NO);
+            if(item.PASSWORD_FL != 0){
+                $scope.openCounselModal(item, 'lg');
+            }else{
+                if ($stateParams.menu == 'childdevelop') {
+                    $location.url('/people/childdevelop/edit/'+item.NO);
+                } else if($stateParams.menu == 'chlidoriental') {
+                    $location.url('/people/chlidoriental/edit/'+item.NO);
+                } else if($stateParams.menu == 'obstetrics') {
+                    $location.url('/people/obstetrics/edit/'+item.NO);
+                } else if($stateParams.menu == 'momshealth') {
+                    $location.url('/people/momshealth/edit/'+item.NO);
+                } else if($stateParams.menu == 'financial') {
+                    $location.url('/people/financial/edit/'+item.NO);
+                }
             }
 
+        };
+
+        // 수정클릭시 비밀번호 체크
+        $scope.openCounselModal = function (item, size){
+
+            var dlg = dialogs.create('peopleclinic_password_check.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.checkitem = {};
+                    $scope.checkitem.NO = item.NO;
+                    $scope.checkitem.BEFORE_PASSWORD = item.PASSWORD;
+
+                    $scope.click_checkpassword = function (){
+
+                        if($scope.checkitem.PASSWORD == ''){
+                            dialogs.notify('알림', '비밀번호를 입력하세요', {size: 'md'});
+                            return;
+                        }
+
+                        if($scope.checkitem.PASSWORD.length > 4){
+                            dialogs.notify('알림', '비밀번호는 4자리로 입력하세요', {size: 'md'});
+                            return;
+                        }
+
+                        $scope.getList('com/webboard', 'checkpassword', {} ,$scope.checkitem, false)
+                            .then(function(data){
+                                //dialogs.notify('알림', '수정화면으로 이동합니다', {size: 'md'});
+
+                                var check_count = data[0].CHECK_COUNT;
+
+                                if(check_count == 1){
+                                    $modalInstance.close();
+
+                                    if ($stateParams.menu == 'childdevelop') {
+                                        $location.url('/people/childdevelop/edit/'+item.NO);
+                                    } else if($stateParams.menu == 'chlidoriental') {
+                                        $location.url('/people/chlidoriental/edit/'+item.NO);
+                                    } else if($stateParams.menu == 'obstetrics') {
+                                        $location.url('/people/obstetrics/edit/'+item.NO);
+                                    } else if($stateParams.menu == 'momshealth') {
+                                        $location.url('/people/momshealth/edit/'+item.NO);
+                                    } else if($stateParams.menu == 'financial') {
+                                        $location.url('/people/financial/edit/'+item.NO);
+                                    }
+                                } else {
+                                    dialogs.notify('알림', '비밀번호가 일치하지 않습니다', {size: 'md'});
+                                    return;
+                                }
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'})});
+                    }
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
         };
 
         // 목록 버튼 클릭
@@ -114,6 +198,7 @@ define([
                 return $scope.getItem('com/webboard', 'item', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
+
 
                         if(data.REPLY_YN == 'N'){
                             $scope.item.BODY;

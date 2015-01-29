@@ -163,11 +163,11 @@ define([
 
                                 var idx = 0;
                                 for(var i =0; i<$scope.productnolist.length; i++){
-
                                     if(JSON.stringify(item.PRODUCT_CODE) == JSON.stringify($scope.productnolist[i].PRODUCT_CODE)){
                                         idx = i;
                                     }
                                 }
+
                                 $scope.item.PRODUCT_CODE = $scope.productnolist[idx];
 
                                 // 상품명 조회
@@ -204,6 +204,15 @@ define([
                         $scope.getList('ange/order', 'namingnoList', {}, {}, true)
                             .then(function(data){
                                 $scope.namingnolist = data;
+
+                                var idx = 0;
+                                for(var i =0; i<$scope.namingnolist.length; i++){
+                                    if(JSON.stringify(item.CHANGE_PRODUCT) == JSON.stringify($scope.namingnolist[i].NO)){
+                                        idx = i;
+                                    }
+                                }
+
+                                $scope.item.CHANGE_PRODUCT = $scope.namingnolist[idx];
                             })
                             .catch(function(error){$scope.namingnolist = "";});
                     }

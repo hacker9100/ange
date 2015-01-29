@@ -56,7 +56,7 @@ switch ($_method) {
 
             $sql = "SELECT NO, PRODUCT_NO, SUBJECT, BODY, COUNSEL_ST, PROGRESS_ST, USER_ID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                         (SELECT PRODUCT_CODE FROM ANGE_ORDER WHERE PRODUCT_NO = AO.PRODUCT_NO AND USER_ID = '".$_SESSION['uid']."') AS PRODUCT_CODE,
-		                (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AO.PRODUCT_NO) AS PRODUCT_NM
+		                (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AO.PRODUCT_NO) AS PRODUCT_NM, AO.CHANGE_PRODUCT_NO
                         FROM
                             ANGE_ORDER_COUNSEL AO
                         WHERE
@@ -149,11 +149,11 @@ switch ($_method) {
 
             $sql = "SELECT    TOTAL_COUNT, NO, PRODUCT_NO, SUBJECT, COUNSEL_ST, PROGRESS_ST,
                           CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE ' ' END AS PROGRESS_ST_NM,
-                          USER_ID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PRODUCT_NM, SUM_PRICE, PRODUCT_CNT, PRODUCT_GB, PRODUCT_CODE
+                          USER_ID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PRODUCT_NM, SUM_PRICE, PRODUCT_CNT, PRODUCT_GB, PRODUCT_CODE, CHANGE_PRODUCT_NO
                   FROM (
                              SELECT AC.NO, AC.PRODUCT_NO, AC.SUBJECT, AC.COUNSEL_ST, AC.PROGRESS_ST, AC.USER_ID, AC.REG_DT,
                                        AP.PRODUCT_NM, AP.PRODUCT_GB,
-                                        AO.PRODUCT_CODE, AO.SUM_PRICE,AO.PRODUCT_CNT
+                                        AO.PRODUCT_CODE, AO.SUM_PRICE,AO.PRODUCT_CNT, AC.CHANGE_PRODUCT_NO
                              FROM ANGE_ORDER_COUNSEL AC
                              LEFT OUTER JOIN ANGE_ORDER AO
                              ON AC.PRODUCT_NO = AO.PRODUCT_NO

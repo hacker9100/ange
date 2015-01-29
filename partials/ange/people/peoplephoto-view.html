@@ -31,7 +31,7 @@
                                     </div><!-- /.col-xs-2-->
                                     <div class="col-xs-6  board_basicinfo_photosubject">
                                         {{item.SUBJECT}}
-                                        <span class="table_icon_new">N</span>
+                                        <!--<span class="table_icon_new">N</span>-->
 
                                         <div class="people_photo_info">
                                             <span class="table_blue">{{item.NICK_NM}}</span> | {{item.REG_DT}}
@@ -69,7 +69,7 @@
                                             <div class="infobox_row">
                                                 <div class="template_col_title">카테고리</div>
                                                 <div class="template_col_body">
-                                                    <span>스페셜</span>
+                                                    <span>{{item.PHOTO_CATEGORY}}</span>
                                                 </div>
                                             </div>
                                             <div class="infobox_row">
@@ -109,24 +109,8 @@
                                         <center>
 
                                             <!-- Editor CSS 적용 -->
-                                            <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></d1iv>
+                                            <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>
 
-                                            <!--<p><img src="/imgs/ange/temp/temp_recipe_01.jpg" /></p>-->
-                                            <!--<p>1. 마블이 선명한 연어 뱃살을 준비합니다.</p>-->
-                                            <!--<p>2. 준비한 연어를 레몬즙, 화이트 와인, 후추 등을 살짝 뿌려 30분 정도 재워둡니다.</p>-->
-                                            <!--<p>(이때 허브잎이 있으시다면 살짝 넣어주세요)</p>-->
-                                            <!--<p>&nbsp;</p>-->
-                                            <!--<p><img src="/imgs/ange/temp/temp_recipe_02.jpg" /></p>-->
-                                            <!--<p>3. 팬에 오일을 살짝 두르고 연어를 노릇노릇하게 앞뒤로 잘 구워줍니다.</p>-->
-                                            <!--<p>(굽다 보면 연어에서 많은 기름이 빠져나오기 때문에 <br />절대 많은 양에 오일을 사용하실 필요가 없어용_!!)</p>-->
-                                            <!--<p>&nbsp;</p>-->
-                                            <!--<p>4. 원하시는 채소(아스파라가스, 양송이버섯, 파프리카등)를 선택하시고<br /> 팬에 버터를 살짝 녹이고 다진버터를 넣어서 볶아줍니다.</p>-->
-                                            <!--<p>(센불에 휘리릭 볶아내셔야 채소의 아삭함을 느끼실 수 있을거에요!)</p>-->
-                                            <!--<p>&nbsp;</p>-->
-                                            <!--<p><img src="/imgs/ange/temp/temp_recipe_03.jpg" /></p>-->
-                                            <!--<p>5. 이쁜 접시를 꺼내 이쁘게 데코를 합니다.</p>-->
-                                            <!--<p>(갈색 소스는 시중에 판매하는 데리야키 소스를 이용하시면 돼요 키키)</p>-->
-                                            <!--<p>* 빠른 준비시간으로 특별한 식사를 하고 싶다면 정말 추천드리는 메뉴입니다!<br>그럼 모두들 맛있는 식사하세요!!</p>-->
                                         </center>
 
                                         <!-- Editor CSS 적용 -->

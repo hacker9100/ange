@@ -39,16 +39,16 @@
                                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
                                             <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
-												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
-												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
-												</span>
+                                            <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+                                                <button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                            </span>
 
                                         </div>
 
                                         <div  ng-if="SEARCH_YN == 'Y'" class="input-group input-group-sm" style="width:100px; margin-left: 250px; float:left;">
                                             전체검색
                                             <span class="input-group-btn" ng-click="click_searchAllPeopleBoard();">
-                                            <button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                                <button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
                                             </span>
                                         </div>
 
@@ -104,9 +104,9 @@
                                 <thead>
                                 <tr class="board_thead" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
-                                    <td><span class="board_th">제목</span></td>
+                                    <td align="center"><span class="board_th">제목</span></td>
                                     <td width="92" align="center"><span class="board_th">작성자</span></td>
-                                    <td width="80"><span class="board_th">작성일</span></td>
+                                    <td width="80" align="center"><span class="board_th">작성일</span></td>
                                     <td width="60" align="center"><span class="board_th">조회</span></td>
                                 </tr>
                                 </thead>

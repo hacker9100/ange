@@ -59,12 +59,14 @@
                 $msg = "";
 
                 $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT , SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO,
-                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, PHOTO_TYPE, PHOTO_GB,NICK_NM, FAQ_TYPE, FAQ_GB, BOARD_NO
+                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, PHOTO_TYPE, PHOTO_GB,NICK_NM, FAQ_TYPE, FAQ_GB, BOARD_NO,
+                    CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD,
+                    (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/recipearcade/list') AND TYPE = PHOTO_TYPE) AS PHOTO_CATEGORY
                     FROM (
                         SELECT
                           B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
                           (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT, B.BOARD_GB, B.COMM_NO
-                          , B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.PHOTO_TYPE, B.PHOTO_GB, B.NICK_NM, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO
+                          , B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.PHOTO_TYPE, B.PHOTO_GB, B.NICK_NM, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO, B.PASSWORD
                         FROM
                           COM_BOARD B
                         WHERE
@@ -229,6 +231,7 @@
                                 COM_BOARD B
                             WHERE
                                 1=1
+                              AND PARENT_NO = 0
                                 ".$search_where."
                         ) CNT
                         ";
@@ -360,6 +363,21 @@
                     $data = $_d->sql_fetch_array($result);
                     $_d->dataEnd2($data);
                 }
+            }else if ($_type == 'checkpassword') {
+
+                $sql = "SELECT COUNT(*) AS CHECK_COUNT
+                        FROM COM_BOARD
+                        WHERE SYSTEM_GB = 'ANGE'
+                          AND NO = ".$_search[NO]."
+                          AND PASSWORD = ".$_search[PASSWORD]."";
+
+                $data = $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
             }
 
             break;
@@ -425,6 +443,11 @@
             }
 //            MtUtil::_c("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
+            if($_model[PARENT_NO] == ''){
+                $board_no = "(SELECT COUNT(*)+1 FROM COM_BOARD A WHERE A.COMM_NO = '".$_model[COMM_NO]."' AND A.PARENT_NO = 0)";
+            }else{
+                $board_no = 0;
+            }
 
             $_d->sql_beginTransaction();
 
@@ -482,7 +505,7 @@
                         , '".$_model[PHOTO_GB]."'
                         , '".$_model[FAQ_TYPE]."'
                         , '".$_model[FAQ_GB]."'
-                        , (SELECT COUNT(*)+1 FROM COM_BOARD A WHERE A.COMM_NO = '".$_model[COMM_NO]."')
+                        , $board_no
                     )";
 
             $_d->sql_query($sql);
