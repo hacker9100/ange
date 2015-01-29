@@ -126,12 +126,16 @@ define([
             $scope.mileage_gb = product_gb;
 
             if($("input:checkbox[id='name"+idx+"']").is(":checked")){
+                $scope.mileage_open = 'Y';
                 $scope.sum_price += parseInt($scope.mileagelist[idx].TOTAL_PRICE);
                 $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
+
             }else{
+                $scope.mileage_open = 'N';
                 $scope.sum_price -= parseInt($scope.mileagelist[idx].TOTAL_PRICE);
                 $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
             }
+
         }
 
 
@@ -188,7 +192,7 @@ define([
                 return;
             }
 
-            if($scope.product_gb == 'mileage'){
+            if($scope.mileage_gb == 'MILEAGE'){
                 if(count > 2){
                     dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
                     return;
@@ -256,12 +260,10 @@ define([
             console.log($rootScope.user_info);
             console.log($rootScope.uid);
 
-            if($rootScope.uid == '' || $rootScope.uid == null){
-                $scope.list = $rootScope.cartlist;
-            }else{
-                $scope.list = $rootScope.orderlist;
-            }
 
+            $scope.list = $rootScope.orderlist;
+
+            console.log($rootScope.orderlist);
             if($rootScope.uid != '' && $rootScope.uid != null){
                 $scope.item.USER_ID = $rootScope.user_info.USER_ID;
                 $scope.item.RECEIPTOR_NM = $rootScope.user_info.USER_NM;
@@ -277,18 +279,22 @@ define([
 
             $scope.TOTAL_SUM_PRICE = 0;
             $scope.TOTAL_DELEIVERY_PRICE = 0;
-            $scope.TOTAL_PRICE = 0;
+            $rootScope.TOTAL_PRICE = 0;
             for(var i=0; i<$scope.list.length; i++){
 
-                $scope.TOTAL_SUM_PRICE += parseInt($scope.list[i].TOTAL_PRICE);
+                if($scope.list[i].PRODUCT_GB == 'MILEAGE' || $scope.list[i].PRODUCT_GB == 'CUMMERCE' ){
+                    $scope.TOTAL_SUM_PRICE += parseInt($scope.list[i].TOTAL_PRICE);
+                }else if($scope.list[i].PRODUCT_GB == 'AUCTION'){
+                    $scope.TOTAL_SUM_PRICE += parseInt($scope.list[i].DIRECT_PRICE);
+                }
                 $scope.TOTAL_DELEIVERY_PRICE = parseInt($scope.list[i].DELEIVERY_PRICE);
                 $scope.DELEIVERY_ST = $scope.list[i].DELEIVERY_ST;
             }
 
             if($scope.DELEIVERY_ST == 1){
-                $scope.TOTAL_PRICE = parseInt($scope.TOTAL_SUM_PRICE);
+                $rootScope.TOTAL_PRICE = parseInt($scope.TOTAL_SUM_PRICE);
             }else if($scope.DELEIVERY_ST == 2){
-                $scope.TOTAL_PRICE = parseInt($scope.TOTAL_SUM_PRICE) + parseInt($scope.TOTAL_DELEIVERY_PRICE);
+                $rootScope.TOTAL_PRICE = parseInt($scope.TOTAL_SUM_PRICE) + parseInt($scope.TOTAL_DELEIVERY_PRICE);
             }
         }
 
@@ -329,9 +335,7 @@ define([
 
         // 주문하기
         $scope.click_order = function (){
-
             $scope.item.ORDER = $scope.list;
-            console.log($scope.item);
 
             // 상품 주문 등록
             $scope.insertItem('ange/order', 'item', $scope.item, false)
@@ -341,7 +345,14 @@ define([
 
                     /*$('input:radio[name=pay_info_gb]:input[value="NOBANKBOOK"]').prop("checked", true);*/
 
-                    $("input:radio[name='pay_info_gb']:radio[value='"+$scope.item.PAY_GB+"']").attr("checked",true);
+                    if($scope.item.PAY_GB == 'CREDIT'){
+                        $("#pay_info_gb1").attr("checked",true);
+                        $("#pay_info_gb2").attr("checked",false);
+                    } else if($scope.item.pay_gb == 'NOBANKBOOK'){
+                        $("#pay_info_gb1").attr("checked",false);
+                        $("#pay_info_gb2").attr("checked",true);
+                    }
+
                     $scope.PAY_INFO = $scope.item.PAY_GB;
 
                     $scope.orderlist();

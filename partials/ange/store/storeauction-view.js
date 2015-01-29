@@ -23,6 +23,14 @@ define([
 
         $scope.selectIdx = 1;
 
+        var d = new Date();
+
+        // 현재 시간
+        var hour = d.getHours();
+//        console.log(d.getHours());
+//        console.log(d.getMinutes());
+//        console.log(d.getSeconds());
+
         $(function () {
 
             $(".tab_content").hide();
@@ -62,8 +70,7 @@ define([
         $scope.addProductList = function (products, item){
 
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 상품추가가 가능합니다.', {size: 'md'});
-                $("#checkProduct").attr("checked",false);
+                dialogs.notify('알림', '로그인 후 상품선택이 가능합니다.', {size: 'md'});
                 return;
             }
 
@@ -78,18 +85,36 @@ define([
             }
         }
 
-        $(document).ready(function(){
+        // 체크박스일때 상품 추가
+        $scope.addcheckboxProductList = function (products, item){
 
-            $("#checkProduct").click(function(){
-                if(!$("#checkProduct").is(":checked")){
-                    $scope.addProductList($scope.item, $scope.item);
-                }else{
-                    $scope.productsList = [];
-                    //$("#checkProduct").attr("checked", false);
-                }
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 상품선택이 가능합니다.', {size: 'md'});
+                $("#checkProduct").attr("checked",false);
+                return;
+            }
 
-            });
-        });
+            if($("#checkProduct").is(":checked")){
+                $scope.product.CNT = 1;
+                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB, "SUM_IN_OUT" : item.SUM_IN_OUT});
+            }else{
+                $scope.productsList = [];
+            }
+
+        }
+
+//        $(document).ready(function(){
+//
+//            $("#checkProduct").click(function(){
+//                if(!$("#checkProduct").is(":checked")){
+//                    $scope.addProductList($scope.item, $scope.item);
+//                }else{
+//                    $scope.productsList = [];
+//                    //$("#checkProduct").attr("checked", false);
+//                }
+//
+//            });
+//        });
 
         // 상품 삭제
         $scope.click_removeProduct = function (idx) {
@@ -127,12 +152,16 @@ define([
                 return;
             }
 
+            if(hour < 10 || 15 < hour){
+                dialogs.notify('알림', '경매 참여 시간이 아닙니다.', {size: 'md'});
+                return;
+            }
+
             $scope.item.NO = item;
             $scope.insertItem('ange/auction', 'item', $scope.item, false)
                 .then(function(){
 
                     dialogs.notify('알림', '정상적으로 참여했습니다.', {size: 'md'});
-
                     $scope.getPeopleBoard();
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -145,7 +174,7 @@ define([
 
             $scope.insertItem('ange/cart', 'item', $scope.item, false)
                 .then(function(){
-                    alert('장바구니에 등록되었습니다');
+                    alert('찜목록으로 이동합니다');
                     $location.url('store/cart/list/'+$stateParams.menu);
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -155,7 +184,12 @@ define([
         $scope.click_adddirectcart = function (list){
 
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 즉시 구매가 가능합니다.', {size: 'md'});
+                dialogs.notify('알림', '로그인 후 경매 참여가 가능합니다.', {size: 'md'});
+                return;
+            }
+
+            if(hour < 10 || 15 < hour){
+                dialogs.notify('알림', '구매 시간이 아닙니다.', {size: 'md'});
                 return;
             }
 

@@ -113,7 +113,7 @@
                                                                 <a href="#"><strong>{{ item.PRODUCT_NM}}</strong> </a>
 
                                                                 <!-- 마일리지몰 목록에서 표시됩니다. -->
-                                                                <div ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all; display:block;">
+                                                                <div ng-if="item.PRODUCT_GB == 'MILEAGE'" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all; display:block;">
                                                                     <!-- div class="table_blue">구매가능</div -->
                                                                     <div class="table_red">품절</div>
                                                                 </div>
@@ -121,7 +121,7 @@
                                                             </td>
                                                             <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
                                                             <td class="table_date" align="center"><!--<input type="text" class="form-control input-sm" value="99" placeholder="" />-->{{item.PRODUCT_CNT}}</td>
-                                                            <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.TOTAL_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                                            <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.PRODUCT_GB == 'MILEAGE' ? item.TOTAL_PRICE : item.DIRECT_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
                                                             <td class="table_date" align="center" style="padding-top:14px;">
                                                                 <a ng-click="click_removeCartProduct('mileage',mileagelist ,$index);" title="목록에서 삭제"><span class="glyphicon glyphicon-remove-sign" style="font-size:1.28em;"></span></a>
                                                             </td>
@@ -202,7 +202,7 @@
                                 </div><!-- /.container -->
 
                                 <!-- 계산기 : 마일리지몰에서만 출력 -->
-                                <div class="container-fluid common_container" ng-if="mileage_gb == 'MILEAGE'" data-ng-class="{ 'hidden': ! mileage }" style="width:100%; margin:0px auto; padding:0px; margin-bottom:20px; display:block;">
+                                <div class="container-fluid common_container" ng-if="mileage_gb == 'MILEAGE' && mileage_open == 'Y'" data-ng-class="{ 'hidden': ! mileage }" style="width:100%; margin:0px auto; padding:0px; margin-bottom:20px; display:block;">
                                     <div class="row" style="margin:0px auto; display: block;">
                                         <div class="col-xs-12 v-cell-4" style="padding:0px; margin:0px;">
                                             <div class="row" style="width:100%; padding:0px; margin:0px;">
@@ -309,17 +309,16 @@
                                                         </td>
                                                         <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
                                                         <td class="table_date" align="center" style="padding-top:14px;">{{item.PRODUCT_CNT}}</td>
-                                                        <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.TOTAL_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                                        <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.PRODUCT_GB == 'MILEAGE' ? item.TOTAL_PRICE : item.DIRECT_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
                                                         <td class="table_date" align="center"></td>
                                                     </tr>
                                                     <tr class="table_td_gray" style="border-bottom:1px solid #ddd; height:60px; font-weight:600; line-height:55px;">
                                                         <td class="table_date" colspan="4" align="right" style="padding-top:22px;">합계 :</td>
 
                                                         <td class="table_date" align="right" style="padding-top:22px;">
-                                                            결제 금액 : {{TOTAL_SUM_PRICE}}
-                                                            <span ng-show="list[0].DELEIVERY_ST == 2">배송비 : {{TOTAL_DELEIVERY_PRICE}} ({{list[0].DELEIVERY_ST == '2' ? '선불' : '착불'}})</span> &nbsp;
-                                                            <br/>
-                                                            합계 : {{TOTAL_PRICE}}
+                                                            {{TOTAL_SUM_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}
+                                                            <span>배송비 : {{TOTAL_DELEIVERY_PRICE}} ({{list[0].DELEIVERY_ST == '2' ? '선불' : '착불'}})</span> &nbsp;
+                                                            결제금액 : {{TOTAL_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}
                                                         </td>
                                                         <td class="table_date"></td>
                                                     </tr>
@@ -1129,7 +1128,7 @@
                                                                                 <strong>결제금액</strong>
                                                                             </span>
                                                                             <span class="col-xs-10 basicinfo input" style="padding-left:18px;">
-                                                                                <span class="table_blue">9,000</span>
+                                                                                <span class="table_blue">{{TOTAL_PRICE}}</span>
                                                                             </span>
                                                     </div>  <!-- /.form_basicinfo -->
                                                 </div>  <!-- /.form_rows -->
@@ -1143,11 +1142,11 @@
                                                                         <span class="col-xs-10 basicinfo input">
                                                                             <div style="font-size:0.86em; padding:5px 0 0 0; width:100%; line-height:20px; color:#333;">
                                                                                 <label>
-                                                                                    <input type="radio" name="pay_info_gb" id="pay_info_gb1" value="CREDIT" style="margin-left:18px; vertical-align: top;">
+                                                                                    <input type="radio" name="pay_info_gb" id="pay_info_gb1" ng-value="CREDIT" style="margin-left:18px; vertical-align: top;">
                                                                                     신용카드
                                                                                 </label>
                                                                                 <label>
-                                                                                    <input type="radio" name="pay_info_gb" id="pay_info_gb2" value="NOBANKBOOK" style="margin-left:18px; vertical-align: top;">
+                                                                                    <input type="radio" name="pay_info_gb" id="pay_info_gb2" ng-value="NOBANKBOOK" style="margin-left:18px; vertical-align: top;">
                                                                                     가상계좌(무통장입금)
                                                                                 </label>
                                                                             </div>

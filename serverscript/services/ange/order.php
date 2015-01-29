@@ -157,11 +157,12 @@ switch ($_method) {
 
             $sql = "SELECT   NO, PRODUCT_CNT, SUM_PRICE, PRODUCT_NO, USER_ID, ORDER_DT,DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_DT,
                             CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_GB_NM, PRODUCT_NM, PRODUCT_GB, TOTAL_COUNT, PRICE, ORDER_GB,ORDER_ST,
-                            CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, PARENT_PRODUCT_NM, PRODUCT_CODE
+                            CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, PARENT_PRODUCT_NM, PRODUCT_CODE, DIRECT_PRICE
                   FROM (
                                 SELECT AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.PRODUCT_NO, AC.USER_ID,  AC.ORDER_GB, AP.PRODUCT_NM, AP.PRODUCT_GB, AP.PRICE, AC.ORDER_DT, AC.ORDER_ST,
                                 			(SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO) AS PROGRESS_ST, AP.PARENT_NO,
-                                        (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AP.PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE
+                                        (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AP.PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE,
+                                        AP.DIRECT_PRICE
                                 FROM ANGE_ORDER AC
                                 LEFT OUTER JOIN ANGE_PRODUCT AP
                                 ON AC.PRODUCT_NO = AP.NO
@@ -447,6 +448,7 @@ switch ($_method) {
                     $sql = "DELETE FROM ANGE_CART WHERE PRODUCT_NO = ".$e[PRODUCT_NO]."";
                     $_d->sql_query($sql);
 
+                    // 상품 재고 수정 SUM_IN_CNT(재고량) SUM_OUT_CNT(주문량)
                     $sql = "UPDATE ANGE_PRODUCT
                         SET
                             SUM_IN_CNT = SUM_IN_CNT - ".$e[PRODUCT_CNT].",
@@ -473,6 +475,16 @@ switch ($_method) {
                                 SUM_POINT = (USE_POINT + ".$e[TOTAL_PRICE].") + (REMAIN_POINT - ".$e[TOTAL_PRICE].")
                             WHERE
                                 USER_ID = '".$_SESSION['uid']."'
+                            ";
+                        $_d->sql_query($sql);
+                    }
+
+                    // 상품구분이 존재하면서 구분값이 경매소일때
+                    if(isset($e[PRODUCT_GB]) && $e[PRODUCT_GB] == 'AUCTION'){
+                        $sql = "UPDATE ANGE_PRODUCT
+                            SET ORDER_YN = 'Y'
+                            WHERE
+                                NO = $e[PRODUCT_NO]
                             ";
                         $_d->sql_query($sql);
                     }
