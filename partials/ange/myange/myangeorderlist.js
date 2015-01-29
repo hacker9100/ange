@@ -186,7 +186,7 @@ define([
         $scope.openCounselModal = function (item, size){
 
             var dlg = dialogs.create('order_counsel.html',
-                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
@@ -362,12 +362,24 @@ define([
                         }
 
                         console.log($scope.item);
-                        $scope.insertItem('ange/counsel', 'item', $scope.item, false)
-                            .then(function(){
-                                dialogs.notify('알림', '신청이 완료되었습니다. 나의 변경신청에서 확인하실 수 있습니다', {size: 'md'});
-                                $modalInstance.close();
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                        if($scope.item.ORDER_GB == 'NAMING'){
+                            $scope.insertItem('ange/counsel', 'item', $scope.item, false)
+                                .then(function(){
+                                    alert('해당 상품 신청화면으로 이동합니다');
+                                    $modalInstance.close();
+                                    $location.url('/store/naming/request/'+$scope.item.CHANGE_PRODUCT.NO);
+
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        }else{
+                            $scope.insertItem('ange/counsel', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '신청이 완료되었습니다. 나의 변경신청에서 확인하실 수 있습니다', {size: 'md'});
+                                    $modalInstance.close();
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        }
                     }
 
                     $scope.click_cancel = function () {
