@@ -44,27 +44,25 @@ define([
 
         $scope.todayDate = today;
 
-
-
         /********** 초기화 **********/
             // 초기화
         $scope.init = function() {
 
             if ($stateParams.menu == 'childdevelop') {
                 $scope.community = "아동발달 전문가";
-                $scope.VIEW_ROLE = 'CHILDDEVELOP';
+                $scope.VIEW_ROLE = 'CLINIC';
             } else if($stateParams.menu == 'chlidoriental') {
                 $scope.community = "한방소아과 전문가";
-                $scope.VIEW_ROLE = 'CHILDORIENTAL';
+                $scope.VIEW_ROLE = 'CLINIC';
             } else if($stateParams.menu == 'obstetrics') {
                 $scope.community = "산부인과 전문가";
-                $scope.VIEW_ROLE = 'OBSTETRICS';
+                $scope.VIEW_ROLE = 'CLINIC';
             } else if($stateParams.menu == 'momshealth') {
                 $scope.community = "엄마건강 전문가";
-                $scope.VIEW_ROLE = 'MOMSHEALTH';
+                $scope.VIEW_ROLE = 'CLINIC';
             } else if($stateParams.menu == 'financial') {
                 $scope.community = "재테크 상담";
-                $scope.VIEW_ROLE = 'FINANCIAL';
+                $scope.VIEW_ROLE = 'CLINIC';
             }
 
         };
@@ -110,12 +108,13 @@ define([
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
-        // 조회 화면 이동
-        $scope.click_showViewPeopleBoard = function (key, regid) {
+        // 조회 화면 이동(비밀글)
+        $scope.click_showViewPeopleBoard = function (key, regid, password_fl) {
 
             console.log(regid);
+            console.log($scope.role);
 
-            if($scope.uid == regid || $scope.role == $scope.VIEW_ROLE){
+            if(password_fl != 0 && $scope.uid == regid){
                 if ($stateParams.menu == 'childdevelop') {
                     $location.url('/people/childdevelop/view/'+key);
                 } else if($stateParams.menu == 'chlidoriental') {
@@ -127,8 +126,37 @@ define([
                 } else if($stateParams.menu == 'financial') {
                     $location.url('/people/financial/view/'+key);
                 }
-            }else{
+            }else if($scope.role == $scope.VIEW_ROLE){
+                if ($stateParams.menu == 'childdevelop') {
+                    $location.url('/people/childdevelop/view/'+key);
+                } else if($stateParams.menu == 'chlidoriental') {
+                    $location.url('/people/chlidoriental/view/'+key);
+                } else if($stateParams.menu == 'obstetrics') {
+                    $location.url('/people/obstetrics/view/'+key);
+                } else if($stateParams.menu == 'momshealth') {
+                    $location.url('/people/momshealth/view/'+key);
+                } else if($stateParams.menu == 'financial') {
+                    $location.url('/people/financial/view/'+key);
+                }
+            }
+            else{
                 dialogs.notify('알림', '비밀글입니다. 작성자와 해당게시판 상담가만 볼 수 있습니다.', {size: 'md'});
+            }
+
+        };
+
+        $scope.click_showViewPeopleBoard2 = function (key) {
+
+            if ($stateParams.menu == 'childdevelop') {
+                $location.url('/people/childdevelop/view/'+key);
+            } else if($stateParams.menu == 'chlidoriental') {
+                $location.url('/people/chlidoriental/view/'+key);
+            } else if($stateParams.menu == 'obstetrics') {
+                $location.url('/people/obstetrics/view/'+key);
+            } else if($stateParams.menu == 'momshealth') {
+                $location.url('/people/momshealth/view/'+key);
+            } else if($stateParams.menu == 'financial') {
+                $location.url('/people/financial/view/'+key);
             }
 
         };

@@ -28,11 +28,11 @@
                                             제목
                                         </div><!-- /.col-xs-2-->
                                         <div class="col-xs-10  board_basicinfo_subject">
-                                            <span class="glyphicon glyphicon-lock table_icon_lock"></span>
+                                            <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
                                             {{item.SUBJECT}}
-                                            <span class="table_icon_new">N</span>
-                                            <span class="glyphicon glyphicon-picture table_icon_pic"></span>
-                                            <span class="glyphicon glyphicon-paperclip table_icon_clip"></span>
+                                            <span  ng-show="item.REG_DT1 == todayDate" class="table_icon_new">N</span>
+                                            <!--<span class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                            <!--<span class="glyphicon glyphicon-paperclip table_icon_clip"></span>-->
                                         </div><!-- /.col-xs-10-->
                                     </div><!-- /.row -->
 
@@ -137,6 +137,15 @@
 
                                 </div><!-- /.container -->
 
+                                <br/>
+
+                                <div class="sub_contents_wrap">
+                                    <div class="sub_contents_title">
+                                        <span class="sub_contents_bullet"></span>
+                                        <h5 style="font-weight:bold;">{{PROFILE}}</h5>
+                                    </div>
+                                </div><!-- /.sub_contents_wrap -->
+
 
                                 <div class="container-fluid peopleboard_view_commentwrap" ng-show="item.REPLY_YN == 'N' && role == VIEW_ROLE">
 
@@ -206,3 +215,30 @@
 </div>
 <!-- /Main Page Layout Set -->
 
+<script type="text/ng-template" id="peopleclinic_password_check.html">
+<div class="modal-header">
+    <h3 class="modal-title">비밀번호 확인</h3>
+    <br/>
+</div>
+
+<div class="modal-body">
+    <div class="body_wrap">
+        <!--<div class="panel panel-master contentpannel" style="border:#000000; display:block;">-->
+
+        <table id="comp_board_table" class="table table-hover">
+            <tr class="product_note">
+                <td style="vertical-align: middle">비밀번호</td>
+                <td colspan="3"><input ng-model="checkitem.PASSWORD" type="password" class="input-sm form-control"></td>
+            </tr>
+        </table>
+
+        <!--</div>-->
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="click_checkpassword();">확인</button>
+    <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+    <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+</div>
+</script>

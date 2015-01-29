@@ -21,6 +21,18 @@ define([
         $scope.PAGE_SIZE = 10;
         $scope.TOTAL_COUNT = 0;
 
+
+        var date = new Date();
+
+        // GET YYYY, MM AND DD FROM THE DATE OBJECT
+        var year = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+
+        var today = year+'-'+mm+'-'+dd;
+
+        $scope.todayDate = today;
+
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
             $scope.getPeopleBoardList();

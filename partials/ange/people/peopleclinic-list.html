@@ -68,16 +68,16 @@
                                 <thead>
                                 <tr class="board_thead" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
-                                    <td><span class="board_th">제목</span></td>
+                                    <td align="center"><span class="board_th">제목</span></td>
                                     <td width="92" align="center"><span class="board_th">작성자</span></td>
-                                    <td width="80"><span class="board_th">작성일</span></td>
+                                    <td width="80" align="center"><span class="board_th">작성일</span></td>
                                     <td width="60" align="center"><span class="board_th">답변</span></td>
                                 </tr>
                                 </thead>
 
                                 <tbody class="on" ng-repeat="item in list">
 
-                                <tr ng-click="click_showViewPeopleBoard(item.NO, item.REG_UID)" style="cursor:pointer;">
+                                <tr ng-click="item.PASSWORD_FL != 0 ? click_showViewPeopleBoard(item.NO, item.REG_UID, item.PASSWORD_FL) : click_showViewPeopleBoard2(item.NO)" style="cursor:pointer;">
                                     <td class="table_no">
                                         <span>{{item.BOARD_NO}}</span>
                                     </td>
@@ -107,25 +107,6 @@
 
                             <nav class="text-center">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-                                <!--<ul class="pagination pagination-sm table_paging">
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                </ul>-->
                             </nav><!-- /.Paging-->
                             <!-- /peoplepoll_list -->
 

@@ -136,30 +136,22 @@
                                 <div class="col-xs-12" style="padding:0">
 
                                     <div class="btn-group" style="float:left;">
-                                        <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
-
-                                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-
-                                        <ul class="dropdown-menu" role="menu" style="font-size:0.92em;">
-                                            <li><a href="#">제목+내용</a></li>
-                                            <li><a href="#">작성자</a></li>
-                                        </ul>
+                                        <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
+                                    </div>
 
                                         <!--<div class="btn-group" style="float:left;">-->
                                         <!--<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>-->
                                         <!--</div>&lt;!&ndash; /btn-group &ndash;&gt;-->
 
-                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                            <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+                                    <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
+                                        <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
-                                                <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
-                                                <button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
-                                                </span>
-                                        </div>
-                                    </div>  <!-- /.btn-group -->
+                                        <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+                                        <button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                        </span>
+
+                                    </div>
+                                </div>  <!-- /.btn-group -->
 
                                 </div>  <!-- /.col-xs-12-->
 
@@ -202,7 +194,7 @@
                                                 </div>  <!-- col-xs-8 -->
                                             </div>  <!-- /.row -->
 
-                                            <div class="row webzine_moms_list" style="display: block; margin-top:0px;" ng-show="prevlist == ''">
+                                            <div class="row webzine_moms_list" style="display: block; margin-top:0px;" ng-show="prevlist == '' || prevlist == null">
                                                   <p style="text-align: center;">조회 데이터가 없습니다</p>
                                             </div>
 

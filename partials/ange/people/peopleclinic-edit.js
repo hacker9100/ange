@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peopleclinic-edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('peopleclinic-edit', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
@@ -42,7 +42,19 @@ define([
         // 초기화
         $scope.init = function(session) {
 
-            $scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
+            if ($stateParams.menu == 'childdevelop') {
+                $scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
+            } else if($stateParams.menu == 'chlidoriental') {
+                $scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
+            } else if($stateParams.menu == 'obstetrics') {
+                $scope.item.BODY = "<span style='color: #0000ff'>문의 대상 : <span style='color: #808080'>예) 아이, 본인</span></span> <br/><span style='color: #0000ff'>문의 나이:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
+            } else if($stateParams.menu == 'momshealth') {
+                $scope.item.BODY = "";
+            } else if($stateParams.menu == 'financial') {
+                $scope.item.BODY = "";
+            }
+
+
         };
 
         // CK Editor
@@ -80,6 +92,9 @@ define([
                     .then(function(data){
                         $scope.item = data;
                         $scope.item.NOTICE_FL == 'Y' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
+
+
+                        $rootScope.beforepasswrod = $scope.item.PASSWORD;
 
                         var files = data.FILES;
                         for(var i in files) {
@@ -122,6 +137,13 @@ define([
                     $scope.item.SCRAP_FL = "false"
                 }
 
+                if($scope.item.PASSWORD != undefined){
+                    if($scope.item.PASSWORD.length > 4){
+                        dialogs.notify('알림', '비밀번호는 4자리를 입력하세요', {size: 'md'});
+                        return;
+                    }
+                }
+
                 $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
 
@@ -146,6 +168,24 @@ define([
                     $scope.item.SCRAP_FL = "true"
                 }else{
                     $scope.item.SCRAP_FL = "false"
+                }
+
+                if($scope.item.PASSWORD.length > 4){
+                    dialogs.notify('알림', '비밀번호는 4자리를 입력하세요', {size: 'md'});
+                    return;
+                }
+
+                var afterpassword = $scope.item.PASSWORD;
+
+                console.log(afterpassword);
+
+                // 비밀번호
+                if(afterpassword == '' || afterpassword == null){
+                    $scope.item.PASSWORD = '';
+                } else if(afterpassword == $rootScope.beforepasswrod){
+                    $scope.item.PASSWORD = $rootScope.beforepasswrod;
+                } else {
+                    $scope.item.PASSWORD = afterpassword;
                 }
 
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)

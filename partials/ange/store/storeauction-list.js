@@ -171,7 +171,7 @@ define([
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
         };
 
-        // 검색
+        // 지난 공구 게시판 검색
         $scope.click_searchPeopleBoard = function(){
             $scope.click_showPeopleBoardList();
         }

@@ -146,18 +146,18 @@
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             NO, SUBJECT, BODY, REG_UID, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, REPLY_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB,
                             (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
-                            CASE TARGET_GB WHEN 'EXPERIENCE' THEN '체험단' WHEN 'EVENT' THEN '이벤트' WHEN 'SAMPLE' THEN '샘플팩' WHEN 'PRODUCT' THEN '상품' ELSE '앙쥬' END AS SHORT_NM
+                            CASE TARGET_GB WHEN 'EXPERIENCE' THEN '체험단' WHEN 'EVENT' THEN '이벤트' WHEN 'SAMPLE' THEN '샘플팩' WHEN 'PRODUCT' THEN '상품' ELSE '앙쥬' END AS SHORT_NM, REVIEW_NO
                         FROM
                         (
                             SELECT
                                 NO, SUBJECT, BODY, REG_UID, NICK_NM, REG_DT, HIT_CNT, LIKE_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB,
-                                (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = AR.NO) AS REPLY_CNT
+                                (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = AR.NO) AS REPLY_CNT, REVIEW_NO
                             FROM
                                 ANGE_REVIEW AR
                             WHERE
                                 1 = 1
                                 ".$search_where."
-                             ORDER BY REG_DT DESC
+                             ORDER BY REVIEW_NO DESC
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
@@ -344,7 +344,8 @@
                         BLOG_URL,
                         TARGET_NO,
                         TARGET_GB,
-                        REPLY_FL
+                        REPLY_FL,
+                        REVIEW_NO
                     ) VALUES (
                         '".$_model[SUBJECT]."',
                         '".$_model[BODY]."',
@@ -359,7 +360,8 @@
                         '".$_model[BLOG_URL]."',
                         '".$_model[TARGET_NO]."',
                         '".$_model[TARGET_GB]."',
-                        '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
+                        '".($_model[REPLY_FL] == "true" ? "Y" : "N")."',
+                        (SELECT COUNT(*)+1 FROM ANGE_REVIEW A WHERE A.TARGET_GB = '".$_model[TARGET_GB]."')
                     )";
 
             $_d->sql_query($sql);
