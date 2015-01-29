@@ -336,9 +336,6 @@ switch ($_method) {
                 $msg = $_d->mysql_error;
             }
 
-
-            $_d->sql_query($sql);
-
             $_d->sql_commit();
             $_d->succEnd($no);
 

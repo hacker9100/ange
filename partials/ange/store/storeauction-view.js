@@ -132,7 +132,6 @@ define([
                 .then(function(){
 
                     dialogs.notify('알림', '정상적으로 참여했습니다.', {size: 'md'});
-
                     $scope.getPeopleBoard();
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
