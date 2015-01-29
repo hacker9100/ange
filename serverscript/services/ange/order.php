@@ -340,6 +340,7 @@ switch ($_method) {
                     $sql = "DELETE FROM ANGE_CART WHERE PRODUCT_NO = ".$e[PRODUCT_NO]."";
                     $_d->sql_query($sql);
 
+                    // 상품 재고 수정 SUM_IN_CNT(재고량) SUM_OUT_CNT(주문량)
                     $sql = "UPDATE ANGE_PRODUCT
                         SET
                             SUM_IN_CNT = SUM_IN_CNT - ".$e[PRODUCT_CNT].",
@@ -366,6 +367,16 @@ switch ($_method) {
                                 SUM_POINT = (USE_POINT + ".$e[TOTAL_PRICE].") + (REMAIN_POINT - ".$e[TOTAL_PRICE].")
                             WHERE
                                 USER_ID = '".$_SESSION['uid']."'
+                            ";
+                        $_d->sql_query($sql);
+                    }
+
+                    // 상품구분이 존재하면서 구분값이 경매소일때
+                    if(isset($e[PRODUCT_GB]) && $e[PRODUCT_GB] == 'AUCTION'){
+                        $sql = "UPDATE ANGE_PRODUCT
+                            SET ORDER_YN = 'Y'
+                            WHERE
+                                NO = $e[PRODUCT_NO]
                             ";
                         $_d->sql_query($sql);
                     }

@@ -112,8 +112,8 @@ define([
         $scope.addProductList = function (products, item){
 
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 상품추가가 가능합니다.', {size: 'md'});
-                $("#checkProduct").attr("checked",false);
+                dialogs.notify('알림', '로그인 후 상품선택이 가능합니다.', {size: 'md'});
+                //$("#checkProduct").attr("checked",false);
                 return;
             }
 
@@ -128,19 +128,37 @@ define([
             }
         }
 
-        $(document).ready(function(){
+        // 체크박스 상품 추가
+        $scope.addcheckboxProductList = function (products, item){
 
-            $("#checkProduct").click(function(){
-                if(!$("#checkProduct").is(":checked")){
-                    $scope.addProductList($scope.item, $scope.item);
-                }else{
-                    $scope.productsList = [];
-                    //$("#checkProduct").attr("checked", false);
-                }
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 상품선택이 가능합니다.', {size: 'md'});
+                $("#checkProduct").attr("checked",false);
+                return;
+            }
 
-            });
+            if($("#checkProduct").is(":checked")){
+                $scope.product.CNT = 1;
+                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB, "SUM_IN_OUT" : item.SUM_IN_OUT});
+            }else{
+                $scope.productsList = [];
+            }
 
-        });
+        }
+
+//        $(document).ready(function(){
+//
+//            $("#checkProduct").click(function(){
+//                if(!$("#checkProduct").is(":checked")){
+//                    $scope.addProductList($scope.item, $scope.item);
+//                }else{
+//                    $scope.productsList = [];
+//                    //$("#checkProduct").attr("checked", false);
+//                }
+//
+//            });
+//
+//        });
 
         // 상품 삭제
         $scope.click_removeProduct = function (idx) {
