@@ -1,6 +1,6 @@
 <?php
-    include("./inc/easypay_config.php");
-    include("./easypay_client.php");
+    include($_SERVER["DOCUMENT_ROOT"]."/easypay70_plugin_php_window/web/inc/easypay_config.php");
+    include($_SERVER["DOCUMENT_ROOT"]."/easypay70_plugin_php_window/web/easypay_client.php");
 /* -------------------------------------------------------------------------- */
 /* ::: 처리구분 설정                                                          */
 /* -------------------------------------------------------------------------- */

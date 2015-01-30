@@ -57,12 +57,12 @@
 		};
 	 
 	 
-		//alert("EP_user_id : " + getParam("EP_user_id"));
+//		alert("EP_order_no : " + getParam("EP_order_no"));
 
 
         // 추가
 		frm_pay.EP_user_id.value = getParam("EP_user_id");
-		frm_pay.EP_order_no = getParam("EP_order_no");
+		frm_pay.EP_order_no.value = getParam("EP_order_no");
 		frm_pay.EP_user_mail.value = getParam("EP_user_mail");
 		frm_pay.EP_user_phone1.value = getParam("EP_user_phone1");
         frm_pay.EP_user_phone2.value = getParam("EP_user_phone2");
@@ -70,7 +70,11 @@
 		frm_pay.EP_product_nm.value = getParam("EP_product_nm");
 		frm_pay.EP_product_amt.value = getParam("EP_product_amt");
 		frm_pay.EP_user_nm.value = getParam("EP_user_nm");
-		frm_pay.EP_product_type.value = 0;
+		
+//		frm.pay.elements['EP_pay_type'].value = 22;
+
+		document.frm_pay.EP_product_type.value = 0;
+		document.frm_pay.EP_pay_type.value = 22;
 
         frm_pay.EP_mall_pwd.value = "1111";
         frm_pay.EP_vacct_end_date.value = "" + year + month + date;               //가상계좌입금만료일
@@ -231,7 +235,7 @@
         <td bgcolor="#EDEDED" width="150">&nbsp;*결제수단</td>
         <td bgcolor="#FFFFFF" width="750" colspan="3">&nbsp;
         	<select name="EP_pay_type" class="input_F">
-            <option value="11" selected>신용카드</option>            
+            <option value="11">신용카드</option>            
             <option value="21">계좌이체</option>
             <option value="22">무통장입금</option>
             <option value="31">휴대폰</option>

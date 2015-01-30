@@ -346,8 +346,19 @@ define([
                 total_price = parseInt($scope.item.ORDER[0].TOTAL_PRICE);
             }
 
+
+            var pay_gb = '';
+
+            if($scope.item.PAY_GB == "CREDIT"){
+                pay_gb = 11;
+            }else if($scope.item.PAY_GB == "NOBANKBOOK"){
+                pay_gb = 22;
+            }
+            // /easypay70_plugin_php_window/web/normal/order.php
+            // /easypay70_plugin_php_window/web/easypay_request.php
             var popUrl = "http://localhost/easypay70_plugin_php_window/web/normal/order.php?EP_user_id="+$scope.item.USER_ID+"&EP_user_nm="+$scope.item.RECEIPTOR_NM+"&EP_order_no="+$scope.item.ORDER[0].PRODUCT_NO+"&EP_product_nm="+$scope.item.ORDER[0].PRODUCT_NM+
-                           "&EP_product_amt="+total_price+"&EP_user_mail="+$rootScope.user_info.EMAIL+"&EP_user_phone1="+$rootScope.user_info.PHONE_1+"&EP_user_phone2="+$scope.item.RECEIPT_PHONE+"&EP_user_addr="+$scope.item.RECEIPT_ADDR;	//팝업창에 출력될 페이지 URL
+                           "&EP_product_amt="+total_price+"&EP_user_mail="+$rootScope.user_info.EMAIL+"&EP_user_phone1="+$rootScope.user_info.PHONE_1+"&EP_user_phone2="+$scope.item.RECEIPT_PHONE+"&EP_user_addr="+$scope.item.RECEIPT_ADDR+"&EP_pay_type="+pay_gb;
+                	//팝업창에 출력될 페이지 URL
             var popOption = "width=950, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
             window.open(popUrl+"","",popOption);
 
