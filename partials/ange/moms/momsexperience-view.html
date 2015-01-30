@@ -43,8 +43,8 @@
                     <dt class="table_red">추가정보</dt>
                     <dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>
                     <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.DELIV_COST}}원</span></dd>
-                    <dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>
-                    <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.COMPANY_URL}}">{{item.COMPANY_NM}}</a></span></dd>
+                    <dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM == '' ? '없음' : item.GIFT_NM}}</span></dd>
+                    <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.COMPANY_URL}}">{{item.COMPANY_NM}}({{item.COMPANY_URL}})</a></span></dd>
                     <dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.COMP_CNT}}</span>명({{item.HIT_CNT}} 조회)</span></dd>
                 </dl>
             </div>
@@ -57,8 +57,8 @@
 </div>  <!-- /.row -->
 
 
-<div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-    <h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>상세정보</h4>
+<div class="webzine_listbar" id="view_state"  style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
+    <h4><span id="experience_view" class="glyphicon glyphicon-th-large h4_icon table_gray"></span>상세정보</h4>
 </div>
 
 <div class="container-fluid peopleboard_view_contentwrap">
@@ -74,7 +74,7 @@
 </div><!-- /.container -->
 
 
-<div id="moms_state"   class="moms_state" style="padding-top:20px;">
+<div id="moms_state"  class="moms_state" style="padding-top:20px;">
     <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
     {{item.END_YMD}} {{todayDate}}
     <div class="moms_form" ng-model="item" style="margin:0px; display:block;" ng-show="uid != '' && uid != null && menu == 'experienceprocess'">

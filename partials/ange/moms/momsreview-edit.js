@@ -60,13 +60,21 @@ define([
              });
          });
 
+        $scope.menu_select = function (idx){
+            if($("#value_select"+idx).is(":checked")){
+                $('#menu_select').attr('disabled', 'disabled');
+            }else{
+                $('#menu_select').removeAttr('disabled');
+            }
+        }
+
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
         // 파일 업로드 완료 후 에디터에 중간 사이즈 이미지 추가
         $scope.addEditor = true;
-
         $scope.checkAll = false;
+
         $scope.checkFile = [];
 
         $scope.click_selectMainImage = function (file) {
@@ -86,34 +94,19 @@ define([
             $scope.checkAll = !$scope.checkAll;
 
             if ($scope.checkAll) {
-                $scope.checkFile = angular.copy($scope.queue);
+                $scope.item.queue = angular.copy($scope.queue);
             } else {
 //                angular.forEach($scope.select, function(file) {
 //                    $scope.select.pop();
 //                });
-                $scope.checkFile = [];
-//                $scope.checkFile.splice(0, $scope.checkFile.length);
+                $scope.item.queue = [];
+//                $scope.item.queue.splice(0, $scope.item.queue.length);
             }
-//            console.log($scope.checkFile)
+//            console.log(JSON.stringify($scope.item.queue))
         };
 
         var state;
         $scope.click_checkFileDestroy = function () {
-//            angular.forEach($scope.checkFile, function(file) {
-//                state = 'pending';
-//                return $http({
-//                    url: file.deleteUrl,
-//                    method: file.deleteType
-//                }).then(
-//                    function () {
-//                        state = 'resolved';
-//                        $scope.clear(file);
-//                    },
-//                    function () {
-//                        state = 'rejected';
-//                    }
-//                );
-//            });
             angular.forEach($scope.item.queue, function(file) {
                 state = 'pending';
                 return $http({
@@ -134,7 +127,7 @@ define([
         };
 
         $scope.click_checkFileEditor = function () {
-            angular.forEach($scope.checkFile, function(file) {
+            angular.forEach($scope.item.queue, function(file) {
                 if (!angular.isUndefined(CKEDITOR)) {
                     var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.url+'" />' );
                     CKEDITOR.instances.editor1.insertElement( element );
@@ -143,12 +136,13 @@ define([
         };
 
         /********** 초기화 **********/
-            // 첨부파일 초기화
+        // 첨부파일 초기화
         $scope.queue = [];
         // 게시판 초기화
         $scope.item = {};
         $scope.search = {};
 
+        // 에디터 안 첨부파일 초기화
         $scope.item.queue = [];
 
         // 초기화
@@ -184,7 +178,6 @@ define([
                 $scope.community = "이벤트 후기";
                 $scope.search.JOIN_GB = 'EVENT';
                 $scope.menu = 'experiencereview';
-                //$scope.item.MENU = 'EVENT';
             }
 
             $scope.search.USER_ID = true;
@@ -225,19 +218,7 @@ define([
         /********** 이벤트 **********/
             // 게시판 목록 이동
         $scope.click_showPeopleBoardList = function () {
-            if ($stateParams.menu == 'experiencereview') {
-                $location.url('/moms/experiencereview/list');
-            } else if ($stateParams.menu == 'productreview') {
-                $location.url('/moms/productreview/list');
-            } else if ($stateParams.menu == 'angereview') {
-                $location.url('/moms/angereview/list');
-            } else if ($stateParams.menu == 'samplereview') {
-                $location.url('/moms/samplereview/list');
-            } else if ($stateParams.menu == 'samplepackreview') {
-                $location.url('/moms/samplepackreview/list');
-            }else if ($stateParams.menu == 'eventreview') {
-                $location.url('/moms/eventreview/list');
-            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
         };
 
         // 게시판 조회
@@ -256,10 +237,8 @@ define([
                                 }
                             }
                             $scope.item.TARGET_NO = $scope.event[idx].TARGET_NO;
-
-                            //$("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].NO+"']").attr("checked",true);
-
                             $("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].NO+"']").attr("checked",true);
+
                         } else {
 
                             $("#general").attr("checked",true);
@@ -287,25 +266,9 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-/*            if($scope.item.MENU != '' || $scope.item.MENU == undefined){
-                $scope.item.TARGET_GB = $scope.item.MENU;
-            }else{
-                if ($stateParams.menu == 'experiencereview') {
-                    $scope.item.TARGET_GB = 'EXPERIENCE';
-                } else if ($stateParams.menu == 'productreview') {
-                    $scope.item.TARGET_GB = 'PRODUCT';
-                } else if ($stateParams.menu == 'angereview') {
-                    $scope.item.TARGET_GB = 'ANGE';
-                } else if ($stateParams.menu == 'samplereview') {
-                    $scope.item.TARGET_GB = 'SAMPLE';
-                } else if ($stateParams.menu == 'samplepackreview') {
-                    $scope.item.TARGET_GB = 'SAMPLEPACK';
-                }else if ($stateParams.menu == 'eventreview') {
-                    $scope.item.TARGET_GB = 'EVENT';
-                }
-            }*/
+            console.log($scope.item.MENU);
 
-            if($scope.item.MENU == undefined){
+            if($scope.item.MENU == undefined || $scope.item.MENU == '' || $scope.item.MENU == null){
                 if ($stateParams.menu == 'experiencereview') {
                     $scope.item.TARGET_GB = 'EXPERIENCE';
                 } else if ($stateParams.menu == 'productreview') {
@@ -322,8 +285,6 @@ define([
             }else{
                 $scope.item.TARGET_GB = $scope.item.MENU;
             }
-
-            console.log($scope.item.TARGET_GB);
 
             if ($stateParams.id == 0) {
 
@@ -349,8 +310,6 @@ define([
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             } else {
-
-
                 $scope.updateItem('ange/review', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
 

@@ -76,13 +76,13 @@
 
                                 <tbody class="on" ng-repeat="item in list">
                                 <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
-                                    <td class="table_no">
+                                    <td class="table_no" style="vertical-align: middle;">
                                         <span>{{item.REVIEW_NO}}</span>
                                     </td>
 
                                     <td width="18%">
                                         <div class="review_thumbnails" >
-                                            <!--<img class="thumbnails_img" ng-src="{{item.MAIN_FILE}}" />-->
+                                            <!--<img class="thumbnails_img" style="width: 157px;height: 116px;" ng-src="{{item.MAIN_FILE}}" />-->
                                             <img src="/imgs/ange/_blank_4by3.gif" class="people_photo_img" style="background-image:url({{item.MAIN_FILE}})" />
                                         </div>
                                         <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
@@ -90,8 +90,8 @@
 
                                     </td>
                                     <td>
-                                        <span style="font-size:1.08em; font-weight:600;"> {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
-                                        <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                                        <span style="font-size:1.08em; font-weight:600;"> {{ item.SUBJECT | string_limit: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span>
+                                        <span ng-show="item.NEW_FL == 1" class="table_icon_new">N</span>
                                         <!--<span class="glyphicon glyphicon-picture table_icon_pic"></span>-->
 
                                         <div class="table_date" style="font-size:0.86em; line-height:36px;">
@@ -99,12 +99,11 @@
 
                                                 <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
                                                     <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">{{item.LIKE_CNT}}</span>		<!-- 공감수 -->
-                                                    <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">{{item.REPLY_CNT}}</span>	<!-- 댓글수 -->
+                                                    <span ng-if="item.REPLY_FL == 'Y'" class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">{{item.REPLY_CNT}}</span>	<!-- 댓글수 -->
                                                 </div>
 
                                         </div>
-                                        <div class="table_gray" ng-bind-html="item.BODY | string_limit : 200" style="text-align: justify; font-size:0.92em; word-break: break-all;">
-                                        </div>
+                                        <div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: break-all;">{{item.BODY | string_limit : 50}}{{item.BODY > 50 ? '...' : ''}}</div>
                                     </td>
                                     <td class="table_hit">{{item.HIT_CNT}}</td></tr>
                                 </tr>
@@ -121,25 +120,6 @@
 
                             <nav class="text-center">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-                                <!--<ul class="pagination pagination-sm table_paging">
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                </ul>-->
                             </nav><!-- /.Paging-->
 
                         </div><!-- /.sub_contents_body -->

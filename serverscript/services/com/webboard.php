@@ -524,6 +524,11 @@
                     MtUtil::_c("------------>>>>> file : ".$file['name']);
                     MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
+                    if($_model[BOARD_GB] == 'PHOTO'){
+                        if(!isset($file[kind])){
+                            $_d->failEnd("대표이미지를 선택하세요.");
+                        }
+                    }
 //                    if($file[kind] != 'MAIN'){
 //                        $_d->failEnd("대표이미지를 선택하세요.");
 //                    }
