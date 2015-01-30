@@ -49,6 +49,46 @@ class MtUtil extends Mt {
         }
     }
 
+    //consoleLog 길어서 만듬(sql)
+    function _s($msg,$line=true) {
+        if (DEBUG) {
+            $access = date("Y.m.d");
+            $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/sql".$access.".log", "a");
+            $text = "";
+            if ($line) {
+                $text = chr(10).date("Y/m/d H:i:s").":::::::::>"."\n";
+                foreach (debug_backtrace() as $k => $v) {
+                    $text = $text.$v['file'].":line(".$v['line'].")\n";
+                }
+            } else {
+                $text = $text."\n";
+            }
+            $text = $text.$msg;
+            fwrite($file_pointer, $text);
+            fclose($file_pointer);
+        }
+    }
+
+    //consoleLog 길어서 만듬(batch)
+    function _b($msg,$line=true) {
+        if (DEBUG) {
+            $access = date("Y.m.d");
+            $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/batch".$access.".log", "a");
+            $text = "";
+            if ($line) {
+                $text = chr(10).date("Y/m/d H:i:s").":::::::::>"."\n";
+                foreach (debug_backtrace() as $k => $v) {
+                    $text = $text.$v['file'].":line(".$v['line'].")\n";
+                }
+            } else {
+                $text = $text."\n";
+            }
+            $text = $text.$msg;
+            fwrite($file_pointer, $text);
+            fclose($file_pointer);
+        }
+    }
+
     //consoleLog 길어서 만듬
     function _m($msg,$line=false) {
         $access = date("Y.m.d");

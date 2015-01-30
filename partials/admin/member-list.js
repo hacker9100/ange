@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('member-list', ['$scope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
+    controllers.controller('member-list', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $stateParams, $location, $filter, dialogs, ngTableParams, CONSTANT) {
 
         /********** 초기화 **********/
         // 검색 조건
@@ -93,7 +93,26 @@ define([
             $scope.action.CHECKED = range[0].value;
             $scope.action.FUNCTION = func[0];
 
+            // ui bootstrap 달력
+            $scope.format = 'yyyy-MM-dd';
 
+            $scope.today = function() {
+                $scope.search.START_YMD = new Date();
+                $scope.search.END_YMD = new Date();
+            };
+            $scope.today();
+
+            $scope.clear = function () {
+                $scope.search.START_YMD = null;
+                $scope.search.END_YMD = null;
+            };
+
+            $scope.open = function($event, opened) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope[opened] = true;
+            };
         };
 
         /********** 이벤트 **********/
@@ -414,6 +433,11 @@ define([
 
 //                    $scope.search['SORT'] = key;
 //                    $scope.search['ORDER'] = params.sorting()[key];
+
+                    if ($scope.search.CONDITION.index >= 6) {
+                        $scope.search.START_YMD = $filter('date')($scope.search.START_YMD, 'yyyy-MM-dd');
+                        $scope.search.END_YMD = $filter('date')($scope.search.END_YMD, 'yyyy-MM-dd');
+                    }
 
                     $scope.getList('com/user', 'admin', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){

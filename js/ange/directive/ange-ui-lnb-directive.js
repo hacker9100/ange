@@ -6,7 +6,7 @@
 define(['./directives'], function (directives) {
     'use strict';
 
-    directives.directive('uiLnb', ['$controller', function($controller) {
+    directives.directive('uiLnb', ['$controller', 'UPLOAD', function($controller, UPLOAD) {
         return {
             restrict: 'EA',
 //            scope: true,
@@ -41,7 +41,7 @@ define(['./directives'], function (directives) {
                         templet += '<a class="localmenu_link main '+angular.lowercase(channel.MENU_INFO[j].CLASS_GB)+'" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
                     } else {
                         if (channel.MENU_INFO[j].ETC == 'DOWNLOAD') {
-                            templet += '<a target="_self" href="http://localhost/storage/admin/'+channel.MENU_INFO[j].FILE_ID+'" download="'+channel.MENU_INFO[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                            templet += '<a target="_self" href="'+UPLOAD.BASE_URL+'/admin/'+channel.MENU_INFO[j].FILE_ID+'" download="'+channel.MENU_INFO[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
                         } else {
                             templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
                         }
