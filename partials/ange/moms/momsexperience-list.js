@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsexperience-list', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD' ,'$timeout', function ($scope, $stateParams, $location, dialogs, UPLOAD, $timeout) {
+    controllers.controller('momsexperience-list', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD' ,'$timeout', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD, $timeout) {
 
 
         $scope.$parent.reload = false;
@@ -39,7 +39,6 @@ define([
                     if (!$scope.busy) {
                         //$scope.PAGE_NO++;
                         $scope.PAGE_SIZE++;
-                        console.log($scope.PAGE_SIZE);
                         $scope.getPeopleBoardList();
                     }
 //                    var scope = angular.element($("#listr")).scope();
@@ -88,7 +87,6 @@ define([
                     $scope.TOTAL_COUNT = total_cnt;
 
                     $scope.list = data;
-                    console.log(JSON.stringify(data))
 
                     for(var i in data) {
                         if (data[i].FILE != null) {
@@ -107,6 +105,8 @@ define([
         // 상세보기
         $scope.view_momsexperience = function(key){
 
+            $rootScope.focus = 'view';
+
             if ($stateParams.menu == 'experienceprocess') {
                $location.url('/moms/experienceprocess/view/'+key);
             } else if ($stateParams.menu == 'experiencepast') {
@@ -117,6 +117,8 @@ define([
 
         //  응모하기
         $scope.comp_momsexperience = function(key){
+
+            $rootScope.focus = 'comp';
 
             if ($stateParams.menu == 'experienceprocess') {
                 $location.url('/moms/experienceprocess/view/'+key);

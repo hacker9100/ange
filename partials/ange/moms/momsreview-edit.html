@@ -35,7 +35,7 @@
 
                         <!-- /마감일 임박순 -->
                         <div class="form-group" data-ng-repeat="list in event" style="float:left; font-size: 0.86em; margin:0 5px 15px 5px; line-height:18px;">
-                            <input ng-model="item.TARGET_NO" type="radio" id="value_select{{$index}}" name="reveiw_mission1" ng-value="{{list.TARGET_NO}}" style="float:left; margin:4px 6px 0 4px;">
+                            <input ng-model="item.TARGET_NO" type="radio" id="value_select{{$index}}" ng-click="menu_select($index);" name="reveiw_mission1" ng-value="{{list.TARGET_NO}}" style="float:left; margin:4px 6px 0 4px;">
                             <div style="margin-left:22px; word-break: keep-all;">
                             <span class="table_blue">[{{list.REVIEW_YMD}}] </span>{{list.SUBJECT}}
                             </div>
@@ -107,7 +107,7 @@
 
                         <div data-ng-repeat="file in queue">
                             <div class="files_row">
-                                <input type="checkbox" checklist-model="checkFile" checklist-value="file" style="vertical-align: top;" aria-label="...">
+                                <input type="checkbox" checklist-model="item.queue" checklist-value="file" style="vertical-align: top;" aria-label="...">
                                 <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
                                 <span class="filename">{{file.name}}</span>
                                 <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">{{file.size | formatFileSize}}</div>
@@ -139,7 +139,7 @@
             <!-- /file drag-in Box -->
 
             <!-- image thumbnails -->
-            <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px; display: block;">   <!-- 첨부이미지가 있을 경우 표시 -->
+            <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
 
                 <label class="col-xs-1">
 
@@ -149,15 +149,15 @@
                     <div class="thumbnailzone">
 
                         <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
-                                                                                별모양을 클릭하여 대표이미지를 지정하세요.
-                                                                                <span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>
-                                                                            </div>
+                            별모양을 클릭하여 대표이미지를 지정하세요.
+                            <span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>
+                        </div>
 
                         <!-- Thumbnail List -->
                         <div data-ng-repeat="file in queue">
                             <div class="thumbnails selectedthumb" ng-style="{'background-image': 'url({{file.thumbnailUrl}})'}">
                                 <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                <div  class="thumbnails_img_check"><input type="checkbox" checklist-model="checkFile" checklist-value="file"></div>
+                                <div  class="thumbnails_img_check"><input type="checkbox" checklist-model="item.queue" checklist-value="file"></div>
                                 <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
                                     <a title="대표이미지로 지정" ng-click="click_selectMainImage(file)" ng-show="file.kind != 'MAIN'"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
                                     <img src="/imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" ng-show="file.kind == 'MAIN'"/>
@@ -166,8 +166,9 @@
                         </div>
                         <!-- /Thumbnail List -->
 
-                        <div class="thumbnails_func" style="padding: 10px 0;">
+                        <div class="thumbnails_func" style="float:right; padding: 10px 0;">
                             <a ng-class="checkAll ? 'thumbnails_func_selectall allselected' : 'thumbnails_func_selectall'" ng-click="click_checkAllToggle()"></a>
+                            <!--ng-class="checkAll ? 'thumbnails_func_selectall allselected' : 'thumbnails_func_selectall'"-->
                             <!-- span class="thumbnails_func_selectall allselected"></span -->	<!-- allselected : 토글 -->
                             <a class="thumbnails_func_selectadd" ng-click="click_checkFileEditor()"></a>
                             <a class="thumbnails_func_selectdel" ng-click="click_checkFileDestroy()"></a>
@@ -177,9 +178,9 @@
 
             </div><!-- /.row -->
             <!-- image thumbnails -->
-        </form><!-- /.row -->
-        <!-- /file drag-in Box -->
+        </form>
 
+        <!------------------------------------------------------------------- 파일 처리 -------------------------------------------------------------------->
 
     </div> <!-- /.peopleboard_edit_topwrap -->
 

@@ -105,7 +105,10 @@ define([
                             .then(function(data){
 
                                 dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+                                $scope.getSession();
                                 $modalInstance.close();
+
+
                             }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     };
