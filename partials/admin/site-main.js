@@ -44,7 +44,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('cms/category', 'list', {}, {}, false)
+            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS'}, false)
                 .then(function(data){
                     $scope.category = data;
 
@@ -207,7 +207,7 @@ define([
                 $scope.subItem.FILES[i].$destroy = '';
             }
 
-            $scope.insertItem('admin/menu', 'submenu', $scope.subItem, false)
+            $scope.insertItem('com/menu', 'submenu', $scope.subItem, false)
                 .then(function(data){
                     dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                     $scope.getMenuList0();
@@ -236,7 +236,7 @@ define([
                 $scope.subItem.FILES[i].$destroy = '';
             }
 
-            $scope.updateItem('admin/menu', 'submenu', $scope.subItem.NO, $scope.subItem, false)
+            $scope.updateItem('com/menu', 'submenu', $scope.subItem.NO, $scope.subItem, false)
                 .then(function(data){
                     dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
                     $scope.getMenuList0();
@@ -252,7 +252,7 @@ define([
             $scope.item.SYSTEM_GB = 'ANGE';
             $scope.item.MENU_ST = 'Y';
 
-            $scope.insertItem('admin/menu', 'menu', $scope.item, false)
+            $scope.insertItem('com/menu', 'menu', $scope.item, false)
                 .then(function(data){
                     dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                     $scope.getMenuList1();
@@ -264,7 +264,7 @@ define([
         $scope.click_updateMenu = function () {
             $scope.item.CATEGORY = $scope.CATEGORY;
 
-            $scope.updateItem('admin/menu', 'menu', $scope.item.MENU_URL, $scope.item, false)
+            $scope.updateItem('com/menu', 'menu', $scope.item.MENU_URL, $scope.item, false)
                 .then(function(data){
                     dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
                     $scope.getMenuList1();
@@ -286,7 +286,7 @@ define([
 
         // 메뉴 목록 조회
         $scope.getMenuList0 = function () {
-            $scope.getList('admin/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, true)
+            $scope.getList('com/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, true)
                 .then(function(data){
                     console.log(JSON.stringify(data))
                     $scope.list0 = data;
@@ -298,7 +298,7 @@ define([
 
         // 메뉴 목록 조회
         $scope.getMenuList1 = function () {
-            $scope.getList('admin/menu', 'menu', {}, {SYSTEM_GB: 'ANGE', CHANNEL_NO: '1'}, true)
+            $scope.getList('com/menu', 'menu', {}, {SYSTEM_GB: 'ANGE', CHANNEL_NO: '1'}, true)
                 .then(function(data){
                     $scope.list1 = data;
 
@@ -309,7 +309,7 @@ define([
 
         // 메뉴 목록 조회
         $scope.getMenuList2 = function () {
-            $scope.getList('admin/menu', 'menu', {}, {SYSTEM_GB: 'ANGE', CHANNEL_NO: '2'}, true)
+            $scope.getList('com/menu', 'menu', {}, {SYSTEM_GB: 'ANGE', CHANNEL_NO: '2'}, true)
                 .then(function(data){
                     $scope.list2 = data;
 

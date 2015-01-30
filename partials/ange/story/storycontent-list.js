@@ -53,6 +53,7 @@ define([
 
         // 초기화
         $scope.init = function () {
+
             if ($scope.menu && $scope.menu.ETC != null) {
                 $scope.search.CATEGORY_NO = $scope.menu.ETC;
             }

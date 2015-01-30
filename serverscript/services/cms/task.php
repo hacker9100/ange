@@ -74,6 +74,7 @@
                             WHERE
                                 T.NO = CC.TARGET_NO
                                 AND CC.CATEGORY_NO = C.NO
+                                AND CC.TARGET_GB = 'TASK'
                                 AND T.NO = ".$_key."
                             ";
 
@@ -170,7 +171,8 @@
                                                   TARGET_NO
                                               FROM
                                                   CONTENT_CATEGORY
-                                              WHERE CATEGORY_NO IN (".$_search[CATEGORY_NO].")
+                                              WHERE
+                                                  TARGET_GB = 'TASK' AND CATEGORY_NO IN (".$_search[CATEGORY_NO].")
                                               GROUP BY TARGET_NO
                                           ) AS TEMP1 ";
 
@@ -222,7 +224,7 @@
                                                   TARGET_NO
                                               FROM
                                                   CONTENT_CATEGORY
-                                              WHERE CATEGORY_NO IN (".$where_category.")
+                                              WHERE TARGET_GB = 'TASK' AND CATEGORY_NO IN (".$where_category.")
                                               GROUP BY TARGET_NO
                                           ) AS TEMP2 ";
 
@@ -279,6 +281,7 @@
                             C.CATEGORY_ST = '0'
                             AND T.NO = CC.TARGET_NO
                             AND CC.CATEGORY_NO = C.NO
+                            AND CC.TARGET_GB = 'TASK'
                             AND T.NO = ".$row['NO']."
                         ";
 
@@ -399,7 +402,7 @@
                                                     TARGET_NO
                                                 FROM
                                                     CONTENT_CATEGORY
-                                                WHERE CATEGORY_NO IN (".$where_category.")
+                                                WHERE TARGET_GB = 'TASK' AND CATEGORY_NO IN (".$where_category.")
                                                 GROUP BY TARGET_NO
                                             ) AS TEMP
                                         WHERE
@@ -550,15 +553,15 @@
                         $category = $categories[$i];
 
                         $sql = "INSERT INTO CONTENT_CATEGORY
-                        (
-                            CATEGORY_NO
-                            ,TARGET_NO
-                            ,TARGET_GB
-                        ) VALUES (
-                            '".$category[NO]."'
-                            , '".$no."'
-                            , 'T'
-                        )";
+                                (
+                                    CATEGORY_NO
+                                    ,TARGET_NO
+                                    ,TARGET_GB
+                                ) VALUES (
+                                    '".$category[NO]."'
+                                    , '".$no."'
+                                    , 'TASK'
+                                )";
 
                         $_d->sql_query($sql);
 
@@ -793,7 +796,8 @@
 
                     $sql = "DELETE FROM CONTENT_CATEGORY
                             WHERE
-                                TARGET_NO = ".$_key."
+                                TARGET_GB = 'TASK'
+                                AND TARGET_NO = ".$_key."
                             ";
 
                     $_d->sql_query($sql);
@@ -816,7 +820,7 @@
                                 ) VALUES (
                                     '".$category[NO]."'
                                     , '".$_key."'
-                                    , 'T'
+                                    , 'TASK'
                                 )";
 
                         $_d->sql_query($sql);

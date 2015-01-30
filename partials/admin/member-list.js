@@ -163,6 +163,11 @@ define([
 
                     $scope.openPopupSaveListRegModal(item);
                     break;
+                case 'blacklist' :
+                case 'mail' :
+                case 'sms' :
+                    alert("준비중입니다.")
+                    break;
                 case 'remove' :
                     $scope.click_removeSearch();
                     break;

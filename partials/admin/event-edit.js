@@ -16,7 +16,7 @@ define([
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
-        // 파일 업로드 후 파일 정보가 변경되면 화면에 썸네일을 로딩
+        // 파일 업로드 후 파일 정보가 변경되면 화면에 로딩
         $scope.$watch('newFile', function(data){
             if (typeof data[0] !== 'undefined') {
                 if (data[0].kind == 'thumb')

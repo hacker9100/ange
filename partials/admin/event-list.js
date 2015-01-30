@@ -14,24 +14,8 @@ define([
     controllers.controller('event-list', ['$scope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
 
         /********** 초기화 **********/
-        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
-
-        // 파일 업로드 후 파일 정보가 변경되면 화면에 썸네일을 로딩
-        $scope.$watch('newFile', function(data){
-            if (typeof data[0] !== 'undefined') {
-                if (data[0].kind == 'icon')
-                    $scope.file1 = data[0];
-                else if (data[0].kind == 'detail')
-                    $scope.file2 = data[0];
-            }
-        });
-
-        // 탭 초기화
-        $scope.tab = 0;
-
-        // 메뉴 모델 초기화
-        $scope.subItem = {};
-        $scope.item = {};
+        // 검색 조건
+        $scope.search = {};
 
         // 페이징
         $scope.PAGE_NO = 1;
@@ -40,18 +24,25 @@ define([
 
         // 초기화
         $scope.init = function() {
+            $scope.condition = [{name: "이벤트명", value: "SUBJECT", index: 1}, {name: "회사명", value: "COMPANY_NM", index: 2}];
+            $scope.event_gb = [{name: "이벤트", value: "EVENT", index: 0}, {name: "체험단", value: "EXPERIENCE", index: 1}];
 
+            $scope.search.CONDITION = $scope.condition[0];
+            $scope.search.EVENT_GB = $scope.event_gb[0];
         };
 
         /********** 이벤트 **********/
+        // 목록갱신 버튼 클릭
+        $scope.click_refreshList = function () {
+            $scope.getEventList();
+        };
+
+        // 등록 버튼 클릭
         $scope.click_createEvent = function() {
             $location.url('/event/edit/0');
         };
 
-        $scope.click_selectTab = function (tabIdx) {
-            $scope.tab = tabIdx;
-        };
-
+        // 수정 화면 이동
         $scope.click_editEvent = function (item) {
             $location.url('/event/edit/'+item.NO);
         };
@@ -67,7 +58,7 @@ define([
 
         // 체험단/이벤트 목록 조회
         $scope.getEventList = function () {
-            $scope.getList('ange/event', 'list', {}, {}, true)
+            $scope.getList('ange/event', 'list', {}, $scope.search, true)
                 .then(function(data){
                     $scope.list0 = data;
 
@@ -76,229 +67,13 @@ define([
                 .catch(function(error){alert(error)});
         };
 
-//------------------------------------------------------------
-
-        // 목록갱신 버튼 클릭
-        $scope.click_refreshList = function () {
-            $scope.getUserList();
-        };
-
-        // 등록 버튼 클릭
-        $scope.click_createNewUser = function () {
-            $location.url('/user/edit/0');
-        };
-
-        // 자주쓰는 목록 버튼 클릭
-        $scope.click_saveSearch = function () {
-            var item = angular.copy($scope.search);
-            item.LIST_NM = $scope.LIST_NM;
-            item.CHECKED = $scope.action.CHECKED;
-
-            if ($scope.action.CHECKED == 'C' ) {
-                if ($scope.check_user.length == 0) {
-                    dialogs.notify('알림', '선택한 회원이 없습니다..', {size: 'md'});
-                    return;
-                }
-
-                item.USER_ID_LIST = angular.copy($scope.check_user);
-            }
-
-            $scope.insertItem('admin/user_list', 'item', item, false)
-                .then(function(data){
-                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        };
-
-        // 자주쓰는 목록 제외 버튼 클릭
-        $scope.click_removeSearch = function () {
-            var item = $scope.search.ADMIN_SAVE_LIST;
-
-            $scope.deleteItem('admin/user_list', 'list', item.NO, false)
-                .then(function(data){
-                    dialogs.notify('알림', '정상적으로 제외되었습니다.', {size: 'md'});
-                    $scope.saveList.splice($scope.saveList.indexOf($scope.search.ADMIN_SAVE_LIST), 1);
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        };
-
-        // 조회 화면 이동
-        $scope.click_showViewUser = function (key) {
-            $location.url('/user/view/'+key);
-        };
-
-        // 수정 화면 이동
-        $scope.click_showEditUser = function (item) {
-            $location.url('/user/edit/'+item.NO);
-        };
-
-        // 자주쓰는 목록 사용자 제거
-        $scope.click_removeUser = function (item) {
-            $scope.deleteItem('admin/user_list', 'item', item.USER_ID, false)
-                .then(function(data){
-                    dialogs.notify('알림', '정상적으로 제외되었습니다.', {size: 'md'});
-                    $scope.getUserList();
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        };
-
-        // 메뉴 수정
-        $scope.click_editSubMenu = function (item) {
-            $scope.subItem = item;
-            $scope.file1 = {};
-            $scope.file2 = {};
-
-            var file = item.FILES;
-            for(var i in file) {
-                if (file[i].FILE_GB == 'ICON')
-                    $scope.file1 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":"icon"};
-                else
-                    $scope.file2 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":"detail"};
-            }
-
-            $scope.click_focus('subMenu');
-        }
-
-        // 메뉴 수정
-        $scope.click_editMenu = function (item) {
-            $scope.item = item;
-            $scope.item.COMM_GB = item.COMM.COMM_GB;
-            $scope.CATEGORY = angular.fromJson(item.CATEGORY);
-
-            $scope.click_focus('menu');
-        }
-
-        // 메뉴 등록
-        $scope.click_insertSubMenu = function () {
-            if ($scope.file1 == undefined) {
-                dialogs.notify('알림', '아이콘 이미지를 등록해야합니다.', {size: 'md'});
-                return;
-            }
-
-            if ($scope.file1 == undefined) {
-                dialogs.notify('알림', '상세 이미지를 등록해야합니다.', {size: 'md'});
-                return;
-            }
-
-            $scope.subItem.SYSTEM_GB = 'ANGE';
-            $scope.subItem.FILES = [];
-            $scope.subItem.FILES.push($scope.file1);
-            $scope.subItem.FILES.push($scope.file2);
-
-            for(var i in $scope.item.FILES) {
-                $scope.subItem.FILES[i].$destroy = '';
-            }
-
-            $scope.insertItem('admin/menu', 'submenu', $scope.subItem, false)
-                .then(function(data){
-                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                    $scope.getMenuList0();
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        };
-
-        // 메뉴 수정
-        $scope.click_updateSubMenu = function () {
-            if ($scope.file1 == undefined) {
-                dialogs.notify('알림', '아이콘 이미지를 등록해야합니다.', {size: 'md'});
-                return;
-            }
-
-            if ($scope.file1 == undefined) {
-                dialogs.notify('알림', '상세 이미지를 등록해야합니다.', {size: 'md'});
-                return;
-            }
-
-            $scope.subItem.SYSTEM_GB = 'ANGE';
-            $scope.subItem.FILES = [];
-            $scope.subItem.FILES.push($scope.file1);
-            $scope.subItem.FILES.push($scope.file2);
-
-            for(var i in $scope.item.FILES) {
-                $scope.subItem.FILES[i].$destroy = '';
-            }
-
-            $scope.updateItem('admin/menu', 'submenu', $scope.subItem.NO, $scope.subItem, false)
-                .then(function(data){
-                    dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
-                    $scope.getMenuList0();
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        };
-
-        // 메뉴 등록
-        $scope.click_insertMenu = function () {
-//            $scope.item.CATEGORY = $scope.CATEGORY;
-            $scope.item.CHANNEL_NO = '2';
-            $scope.item.MENU_URL = '/people/'+$scope.item.MENU_ID+'/list';
-            $scope.item.SYSTEM_GB = 'ANGE';
-            $scope.item.MENU_ST = 'Y';
-
-            $scope.insertItem('admin/menu', 'menu', $scope.item, false)
-                .then(function(data){
-                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                    $scope.getMenuList();
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        };
-
-        // 메뉴 수정
-        $scope.click_updateMenu = function () {
-            $scope.item.CATEGORY = $scope.CATEGORY;
-
-            $scope.updateItem('admin/menu', 'menu', $scope.item.MENU_URL, $scope.item, false)
-                .then(function(data){
-                    dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
-                    $scope.getMenuList();
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        };
-
-        // 카테고리 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
-        $scope.click_focus = function (id) {
-            $('html,body').animate({scrollTop:$('#'+id).offset().top}, 100);
-            $('#item_gb').focus();
-        }
-
-        // 취소
-        $scope.click_cancel = function () {
-            $scope.item = {};
-            $scope.CATEGORY = {};
-        };
-
-
-
-        // 메뉴 목록 조회
-        $scope.getMenuList1 = function () {
-            $scope.getList('admin/menu', 'menu', {}, {SYSTEM_GB: 'ANGE', CHANNEL_NO: '1'}, true)
-                .then(function(data){
-                    $scope.list1 = data;
-
-//                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
-                })
-                .catch(function(error){alert(error)});
-        };
-
-        // 메뉴 목록 조회
-        $scope.getMenuList2 = function () {
-            $scope.getList('admin/menu', 'menu', {}, {SYSTEM_GB: 'ANGE', CHANNEL_NO: '2'}, true)
-                .then(function(data){
-                    $scope.list2 = data;
-
-//                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
-                })
-                .catch(function(error){alert(error)});
-        };
-
         /********** 화면 초기화 **********/
-//        $scope.getSession()
-//            .then($scope.sessionCheck)
-////            .then($scope.permissionCheck)
-//            .catch($scope.reportProblems);
+        $scope.getSession()
+            .then($scope.sessionCheck)
+//            .then($scope.permissionCheck)
+            .catch($scope.reportProblems);
 
         $scope.init();
         $scope.getEventList();
-//        $scope.getMenuList1();
-//        $scope.getMenuList2();
     }]);
 });

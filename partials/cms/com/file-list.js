@@ -11,8 +11,15 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('file', ['$scope', 'UPLOAD', function ($scope, UPLOAD) {
+    controllers.controller('file', ['$scope', 'dialogs', 'UPLOAD', function ($scope, dialogs, UPLOAD) {
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+
+        $scope.click_deleteFile = function (idx, file) {
+            $scope.deleteItem('com/file', 'item', file.no, false)
+                .then(function(){$scope.queue.splice(idx, 1); dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
 //        $scope.newDir = 'test1/';
 /*
         $scope.loadingFiles = true;

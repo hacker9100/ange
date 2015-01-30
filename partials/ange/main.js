@@ -86,7 +86,7 @@ define([
 
         // 메뉴 목록 조회
         $scope.getMenuList = function () {
-            $scope.getList('admin/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, true)
+            $scope.getList('com/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, true)
                 .then(function(data){
                     for (var i=0; i<data.length; i++) {
                         var file = data[i].FILES;

@@ -61,6 +61,7 @@ switch ($_method) {
                             ANGE_ORDER AO
                         WHERE
                             NO = ".$_key."
+                            ".$search_where."
 
                         ";
 
@@ -255,6 +256,112 @@ switch ($_method) {
             $sql ="SELECT NO, PRODUCT_NM, PRICE
                     FROM ANGE_PRODUCT
                     WHERE PRODUCT_GB = 'NAMING'";
+
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
+        } else if ($_type == 'admin') {
+            $search_common = "";
+            $search_where = "";
+            $sort_order = "";
+            $limit = "";
+
+            if (isset($_search[ORDER_GB]) && $_search[ORDER_GB] != "") {
+                $search_where .= "AND AC.ORDER_GB = '".$_search[ORDER_GB][value]."' ";
+            }
+
+            if (isset($_search[ORDER_ST]) && $_search[ORDER_ST] != "") {
+                $search_where .= "AND AC.ORDER_ST = '".$_search[ORDER_ST][value]."' ";
+            }
+
+            if (isset($_search[CONDITION]) && $_search[CONDITION] != "") {
+                if ($_search[CONDITION][index] == 1 && isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+                    $search_where .= "AND AC.".$_search[CONDITION][value]." LIKE '".$_search[KEYWORD]."%' ";
+                } else if ($_search[CONDITION][index] == 2 && isset($_search[START_YMD]) && isset($_search[END_YMD])) {
+                    $search_where .= "AND DATE_FORMAT(AC.ORDER_DT, '%Y-%m-%d') BETWEEN '".$_search[START_YMD]."' AND '".$_search[END_YMD]."'";
+                }
+            }
+
+            if (isset($_search[PRODUCT_NM]) && $_search[PRODUCT_NM] != "") {
+                $search_where .= "AND AP.PRODUCT_NM LIKE '%".$_search[PRODUCT_NM]."%'";
+            }
+
+            if (isset($_search[SORT]) && $_search[SORT] != "") {
+                $sort_order .= "ORDER BY ".$_search[SORT][value]." ".$_search[ORDER][value]." ";
+            }
+
+            if (isset($_page)) {
+                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+            }
+
+            $sql = "SELECT
+                        TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                        NO, PRODUCT_CNT, SUM_PRICE, RECEIPTOR_NM, PRODUCT_NO, USER_ID, DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_YMD, PAY_GB, DATE_FORMAT(PAY_DT, '%Y-%m-%d') AS PAY_YMD,
+                        CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_GB_NM,
+                        PRODUCT_NM, PRODUCT_GB, PRICE, ORDER_GB, ORDER_ST,
+                        CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, PARENT_PRODUCT_NM, PRODUCT_CODE
+                    FROM
+                    (
+                        SELECT
+                            AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.RECEIPTOR_NM, AC.PRODUCT_NO, AC.USER_ID, AC.ORDER_GB, AP.PRODUCT_NM, AP.PRODUCT_GB, AP.PRICE, AC.ORDER_DT, AC.ORDER_ST,
+                            (SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO) AS PROGRESS_ST, AP.PARENT_NO,
+                            (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AP.PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE, AC.PAY_GB, AC.PAY_DT
+                        FROM
+                            ANGE_ORDER AC
+                        LEFT OUTER JOIN ANGE_PRODUCT AP
+                            ON AC.PRODUCT_NO = AP.NO
+                        WHERE  1 = 1
+                            ".$search_where."
+                        ".$sort_order."
+                        ".$limit."
+                    ) AS DATA,
+                    (SELECT @RNUM := 0) R,
+                    (
+                        SELECT COUNT(*) AS TOTAL_COUNT
+                        FROM ANGE_ORDER AC
+                        LEFT OUTER JOIN ANGE_PRODUCT AP
+                            ON AC.PRODUCT_NO = AP.NO
+                        WHERE  1 = 1
+                            ".$search_where."
+                    ) CNT
+                    ";
+
+            $data = null;
+
+            if (isset($_search[FILE])) {
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                    $sql = "SELECT
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    F.NO = S.SOURCE_NO
+                                    AND S.CONTENT_GB = 'FILE'
+                                    AND S.TARGET_GB = 'PRODUCT'
+                                    AND F.FILE_GB = 'MAIN'
+                                    AND S.TARGET_NO = ".$row['PRODUCT_NO']."
+                                ";
+
+                    $category_data = $_d->getData($sql);
+                    $row['FILE'] = $category_data;
+
+                    $__trn->rows[$i] = $row;
+                }
+                $_d->sql_free_result($result);
+                $data = $__trn->{'rows'};
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd2($data);
+                }
+            }
+            $data = $_d->sql_query($sql);
 
             if($_d->mysql_errno > 0){
                 $_d->failEnd("조회실패입니다:".$_d->mysql_error);

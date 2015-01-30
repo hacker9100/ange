@@ -58,30 +58,6 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         }
     );
 
-    app.directive('ngFocus', ['$parse', function($parse) {
-        return function(scope, element, attr) {
-            var fn = $parse(attr['ngFocus']);
-            alert("-->>"+element)
-            element.bind('focus', function(event) {
-                alert("-->>")
-                scope.$apply(function() {
-                    fn(scope, {$event:event});
-                });
-            });
-        }
-    }]);
-
-    app.directive('ngBlur', ['$parse', function($parse) {
-        return function(scope, element, attr) {
-            var fn = $parse(attr['ngBlur']);
-            element.bind('blur', function(event) {
-                scope.$apply(function() {
-                    fn(scope, {$event:event});
-                });
-            });
-        }
-    }]);
-
     // yourApp에 사용할 전체 controller를 설정.
     // 지금은 불필요하므로 remark.
 //    yourApp.controller('YourAppCtrl', function($scope) {
@@ -304,7 +280,7 @@ alert("resolvePendingState");
         };
     });
 
-    app.run(function ($rootScope, $stateParams, dataService, $location, $q) {
+    app.run(function ($rootScope, $location) {
         $rootScope.$on("$stateChangeStart", function (event, next, current) {
             // com_commom에서 layout을 동적으로 생성하는데 url이 변경되는 경우 정보 이동을 위해
             $rootScope.location = $location.path();

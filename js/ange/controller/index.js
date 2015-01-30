@@ -100,6 +100,9 @@ define([
     // 회원가입
     '../../../partials/ange/join/joinsignon',
 
+    // 앙쥬클럽
+    '../../../partials/ange/club/clubhome',
+
     '../../../partials/ange/join/jointerms',
     '../../../partials/ange/join/joinuserinfo',
     '../../../partials/ange/join/joincertification',

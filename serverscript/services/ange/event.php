@@ -124,7 +124,11 @@
                 $limit = "";
 
                 if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
-                    $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."' ";
+                    if (isset($_search[EVENT_GB][value])) {
+                        $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB][value]."' ";
+                    } else {
+                        $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."' ";
+                    }
                 }
 
                 if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {

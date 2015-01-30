@@ -28,6 +28,27 @@ define([
 
         // 초기화
         $scope.init = function() {
+            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'ANGE'}, false)
+                .then(function(data){
+                    $scope.category = data;
+
+                    var category_a = [];
+                    var category_b = [];
+
+                    for (var i in data) {
+                        var item = data[i];
+
+                        if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
+                            category_a.push(item);
+                        } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0') {
+                            category_b.push(item);
+                        }
+                    }
+
+                    $scope.category_a = category_a;
+                    $scope.category_b = category_b;
+                })
+
             $scope.product_gb = [{value: "MILEAGE", name: "마일리지몰"}, {value: "AUCTION", name: "경매소"}, {value: "CUMMERCE", name: "커머스"}];
 
             $scope.item.PRODUCT_GB = $scope.product_gb[0];
@@ -61,6 +82,24 @@ define([
                             }
                         }
 
+                        for (var i in data.CATEGORY) {
+                            if (data.CATEGORY[i].CATEGORY_GB == 1) {
+                                for (var j in $scope.category_a) {
+                                    if ($scope.category_a[j].NO == data.CATEGORY[i].NO) {
+                                        $scope.category_1 = $scope.category_a[j];
+                                        break;
+                                    }
+                                }
+                            } else if (data.CATEGORY[i].CATEGORY_GB == 2) {
+                                for (var j in $scope.category_b) {
+                                    if ($scope.category_b[j].NO == data.CATEGORY[i].NO) {
+                                        $scope.category_2 = $scope.category_b[j];
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
                         var files = data.FILES;
                         for (var i in files) {
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","vsersion":6,"kind":files[i].FILE_GB});
@@ -86,6 +125,14 @@ define([
             if (!ckMain) {
                 dialogs.notify('알림', '메인이미지를 선택하세요.', {size: 'md'});
                 return;
+            }
+
+            $scope.item.CATEGORY = [];
+            if ($scope.category_1 != '') {
+                $scope.item.CATEGORY.push($scope.category_1);
+            }
+            if ($scope.category_2 != '') {
+                $scope.item.CATEGORY.push($scope.category_2);
             }
 
             if ($stateParams.id == 0) {

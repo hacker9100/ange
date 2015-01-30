@@ -43,7 +43,7 @@ define([
 
             $q.all([
 //                    $scope.getList('cms/project', 'list', {}, {}, false).then(function(data){$scope.projects = data;}),
-                    $scope.getList('cms/category', 'list', {}, {}, false).then(function(data){
+                    $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS'}, false).then(function(data){
                         $scope.category = data;
 
                         var category_a = [];

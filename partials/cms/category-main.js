@@ -16,11 +16,11 @@ define([
         /********** 초기화 **********/
         $scope.key = '';
         $scope.item = {};
-        $scope.search = {};
+        $scope.search = {SYSTEM_GB: 'CMS'};
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('cms/category', 'list', {}, {CATEGORY_GB: '2', PARENT_NO: '0'}, false)
+            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS', CATEGORY_GB: '2', PARENT_NO: '0'}, false)
                 .then(function(data){$scope.parents = data;})
                 .catch(function(error){console.log(error)});
         };
@@ -83,6 +83,8 @@ define([
 
         // 카테고리 저장 버튼 클릭
         $scope.click_saveCategory = function () {
+            $scope.item.SYSTEM_GB = 'CMS';
+            
             if ($scope.key == '') {
                 $scope.insertItem('cms/category', 'item', $scope.item, false)
                     .then(function(){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'}); $scope.tableParams.reload();})

@@ -37,10 +37,15 @@ define(['./directives'], function (directives) {
                         templet += '<div class="localmenu_col_'+channel.COLUMN_CNT+'"><div class="localmenu_block">';
                     }
 
-                    if (channel.MENU_INFO[j].DEPTH == '1')
+                    if (channel.MENU_INFO[j].DEPTH == '1') {
                         templet += '<a class="localmenu_link main '+angular.lowercase(channel.MENU_INFO[j].CLASS_GB)+'" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
-                    else
-                        templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                    } else {
+                        if (channel.MENU_INFO[j].ETC == 'DOWNLOAD') {
+                            templet += '<a target="_self" href="http://localhost/storage/admin/'+channel.MENU_INFO[j].FILE_ID+'" download="'+channel.MENU_INFO[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                        } else {
+                            templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                        }
+                    }
 
                     if (channel.MENU_INFO[j].TAIL_DESC != null)
                         templet += '<span class="localmenu_comment">'+channel.MENU_INFO[j].TAIL_DESC+'</span>';
