@@ -108,6 +108,9 @@ define([
     '../../../partials/ange/join/joincertification',
     '../../../partials/ange/join/joinresult',
 
+    // 회사소개
+    '../../../partials/ange/company/companyintro',
+    '../../../partials/ange/company/companyaffiliates',
 
     // ADMIN 로그인
     '../../../partials/ange/signin',

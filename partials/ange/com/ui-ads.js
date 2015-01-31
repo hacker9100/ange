@@ -20,5 +20,13 @@ define([
             $location.url("/main");
         };
 
+        $scope.click_intro = function() {
+            $location.url("/company/intro")
+        };
+
+        $scope.click_affiliates = function() {
+            $location.url("/company/affiliates")
+        };
+
 	}]);
 });
