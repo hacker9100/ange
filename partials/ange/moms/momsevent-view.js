@@ -13,6 +13,16 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsevent-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
+        if($rootScope.focus == 'comp'){
+            $('html,body').animate({scrollTop:$('#moms_state').offset().top}, 300);
+            $('#preg_fl').focus();
+
+        }else if($rootScope.focus == 'view'){
+            $('html,body').animate({scrollTop:$('#view_state').offset().top}, 100);
+            $('#event_view').focus();
+        }
+
+
         $(document).ready(function(){
 
             $('input:radio[name="credit_agreement"]:input[value="Y"]').attr("checked", true);
@@ -28,10 +38,8 @@ define([
                     $scope.item.CREDIT_FL = "N";
                 }
             });
-
-
-
         });
+
         /********** 이벤트 **********/
         $scope.click_update_user_info = function () {
             $scope.openModal(null, 'md');

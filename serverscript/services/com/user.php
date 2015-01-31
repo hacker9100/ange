@@ -292,79 +292,76 @@
                 $limit = "";
 
                 if (isset($_page)) {
-                    $limit = "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit = "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_where .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
+                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
+                    $search_where .= "AND R.SYSTEM_GB  = '".$_search['SYSTEM_GB']."' ";
                 }
 
-                if ((isset($_search[CONDITION]) && $_search[CONDITION] != "") && (isset($_search[KEYWORD]) && $_search[KEYWORD] != "")) {
-                    if ($_search[CONDITION][value] == "USER_NM" || $_search[CONDITION][value] == "USER_ID" || $_search[CONDITION][value] == "NICK_NM") {
-                        $arr_keywords = explode(",", $_search[KEYWORD]);
+                if ((isset($_search['CONDITION']) && $_search['CONDITION']['index'] < 6) && (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "")) {
+                    if ($_search['CONDITION']['value'] == "USER_NM" || $_search['CONDITION']['value'] == "USER_ID" || $_search['CONDITION']['value'] == "NICK_NM") {
+                        $arr_keywords = explode(",", $_search['KEYWORD']);
                         $in_condition = "";
                         for ($i=0; $i< sizeof($arr_keywords); $i++) {
-                            $in_condition .= "'".trim($arr_keywords[$i])."'";
+                            $in_condition .= "'".trim($arr_keywords['$i'])."'";
                             if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
                         }
-//                        foreach ($keywords as $e) {
-//                            $in_condition .= trim($e).",";
-//                        }
 
-                        $search_where .= "AND U.".$_search[CONDITION][value]." IN (".$in_condition.") ";
-                    } else if ($_search[CONDITION][value] == "PHONE") {
-                        $search_where .= "AND ( U.PHONE_1 LIKE '%".$_search[KEYWORD]."%' OR U.PHONE_2 LIKE '%".$_search[KEYWORD]."%' ) ";
+                        $search_where .= "AND U.".$_search['CONDITION']['value']." IN (".$in_condition.") ";
+                    } else if ($_search['CONDITION']['value'] == "PHONE") {
+                        $search_where .= "AND ( U.PHONE_1 LIKE '%".$_search['KEYWORD']."%' OR U.PHONE_2 LIKE '%".$_search['KEYWORD']."%' ) ";
                     } else {
-                        $search_where .= "AND U.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                        $search_where .= "AND U.".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
                     }
+                } else if ((isset($_search['CONDITION']) && $_search['CONDITION']['index'] >= 6) && (isset($_search['START_YMD']) && isset($_search['END_YMD']))) {
+                    $search_where .= "AND DATE_FORMAT(U.".$_search['CONDITION']['value'].", '%Y-%m-%d') BETWEEN '".$_search['START_YMD']."' AND '".$_search['END_YMD']."'";
                 }
-                if (isset($_search[TYPE]) && $_search[TYPE] != "") {
+
+                if (isset($_search['TYPE']) && $_search['TYPE'] != "") {
 
                     $in_type = "";
-                    for ($i=0; $i< count($_search[TYPE]); $i++) {
-                        $in_type .= "'".$_search[TYPE][$i]."'";
-                        if (count($_search[TYPE]) - 1 != $i) $in_type .= ",";
+                    for ($i=0; $i< count($_search['TYPE']); $i++) {
+                        $in_type .= "'".$_search['TYPE']['$i']."'";
+                        if (count($_search['TYPE']) - 1 != $i) $in_type .= ",";
                     }
 
                     $search_where .= "AND U.USER_GB IN (".$in_type.") ";
                 }
-                if (isset($_search[STATUS]) && $_search[STATUS] != "" && $_search[STATUS][value] != "A") {
-                    $search_where .= "AND U.USER_ST  = '".$_search[STATUS][value]."' ";
+                if (isset($_search['STATUS']) && $_search['STATUS'] != "" && $_search['STATUS']['value'] != "A") {
+                    $search_where .= "AND U.USER_ST  = '".$_search['STATUS']['value']."' ";
                 }
 
-                if (isset($_search[JOIN_PATH]) && $_search[JOIN_PATH] != "") {
-                    $search_where .= "AND U.JOIN_PATH  = '".$_search[JOIN_PATH]."' ";
+                if (isset($_search['JOIN_PATH']) && $_search['JOIN_PATH'] != "") {
+                    $search_where .= "AND U.JOIN_PATH  = '".$_search['JOIN_PATH']."' ";
                 }
-                if (isset($_search[ROLE]) && $_search[ROLE] != "") {
-                    $search_where .= "AND R.ROLE_ID  = '".$_search[ROLE][ROLE_ID]."' ";
+                if (isset($_search['ROLE']) && $_search['ROLE'] != "") {
+                    $search_where .= "AND R.ROLE_ID  = '".$_search['ROLE']['ROLE_ID']."' ";
                 }
-                if (isset($_search[ROLE_ID]) && $_search[ROLE_ID] != "") {
-                    $arr_roles = explode(",", $_search[ROLE_ID]);
+                if (isset($_search['ROLE_ID']) && $_search['ROLE_ID'] != "") {
+                    $arr_roles = explode(",", $_search['ROLE_ID']);
                     $in_role = "";
                     for ($i=0; $i< sizeof($arr_roles); $i++) {
-                        $in_role .= "'".trim($arr_roles[$i])."'";
+                        $in_role .= "'".trim($arr_roles['$i'])."'";
                         if (sizeof($arr_roles) - 1 != $i) $in_role .= ",";
                     }
 
                     $search_where .= "AND R.ROLE_ID  IN (".$in_role.") ";
                 }
-                if (!isset($_search[CONDITION]) && isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND U.USER_NM LIKE '%".$_search[KEYWORD]."%' ";
+
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']['value']." ".$_search['ORDER']['value']." ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT][value]." ".$_search[ORDER][value]." ";
-                }
-
-                if (isset($_search[ADMIN_SAVE_LIST]) && $_search[ADMIN_SAVE_LIST] != "") {
-                    $search_from = "INNER JOIN ADMIN_SAVE_USER SU ON U.USER_ID = SU.USER_ID AND SU.LIST_NO = ".$_search[ADMIN_SAVE_LIST][NO];
+                if (isset($_search['ADMIN_SAVE_LIST']) && $_search['ADMIN_SAVE_LIST'] != "") {
+                    $search_from = "INNER JOIN ADMIN_SAVE_USER SU ON U.USER_ID = SU.USER_ID AND SU.LIST_NO = ".$_search['ADMIN_SAVE_LIST']['NO'];
                 }
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, INTRO, NOTE,
+                            USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, INTRO, NOTE,
                             MARRIED_FL, PREGNENT_FL, BLOG_FL, JOIN_PATH, CONTACT_ID, CARE_CENTER, CENTER_VISIT_DT, CENTER_OUT_DT, EN_FL, EN_EMAIL_FL, EN_POST_FL, EN_SMS_FL, EN_PHONE_FL,
-                            ROLE_ID, ROLE_NM,
+                            ROLE_ID, ROLE_NM, SUM_POINT, USE_POINT, REMAIN_POINT, BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS,
                             (SELECT COUNT(1) FROM ANGE_USER_BABY UB WHERE UB.USER_ID = DATA.USER_ID) AS BABY_CNT,
                             (SELECT COUNT(1) FROM COM_BOARD CB WHERE CB.REG_UID = DATA.USER_ID) AS BOARD_CNT,
                             (SELECT COUNT(1) FROM COM_REPLY CR WHERE CR.REG_UID = DATA.USER_ID) AS REPLY_CNT,
@@ -372,17 +369,22 @@
                             (SELECT COUNT(1) FROM ANGE_COMP AC WHERE AC.USER_ID = DATA.USER_ID AND TARGET_GB = 'EVENT') AS EVENT_COMP_CNT,
                             (SELECT COUNT(1) FROM ANGE_COMP_WINNER AW WHERE AW.USER_ID = DATA.USER_ID AND TARGET_GB = 'EXPERIENCE') AS EXPERIENCE_WINNER_CNT,
                             (SELECT COUNT(1) FROM ANGE_COMP_WINNER AW WHERE AW.USER_ID = DATA.USER_ID AND TARGET_GB = 'EVENT') AS EVENT_WINNER_CNT,
-                            (SELECT COUNT(1) FROM ANGE_REVIEW AR WHERE AR.REG_UID = DATA.USER_ID) AS REVIEW_CNT
+                            (SELECT COUNT(1) FROM ANGE_REVIEW AR WHERE AR.REG_UID = DATA.USER_ID) AS REVIEW_CNT,
+                            (SELECT COUNT(1) FROM ANGE_LIKE AL WHERE AL.REG_UID = DATA.USER_ID) AS LIKE_CNT
                         FROM
                         (
                             SELECT
-                                U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
+                                U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
                                 U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SMS_FL, U.EN_PHONE_FL,
-                                UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM
+                                UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID) AS ROLE_NM,
+                                M.SUM_POINT, M.USE_POINT, M.REMAIN_POINT,
+                                B.BLOG_GB, B.BLOG_URL, B.PHASE, B.THEME, B.NEIGHBOR_CNT, B.POST_CNT, B.VISIT_CNT, B.SNS
                             FROM
                                 COM_USER U
                                 INNER JOIN USER_ROLE UR ON U.USER_ID = UR.USER_ID
                                 INNER JOIN COM_ROLE R ON UR.ROLE_ID = R.ROLE_ID
+                                LEFT OUTER JOIN ANGE_MILEAGE_STATUS M ON U.USER_ID = M.USER_ID
+                                LEFT OUTER JOIN ANGE_USER_BLOG B ON U.USER_ID = B.USER_ID
                                 ".$search_from."
                             WHERE
                                 1 = 1

@@ -610,6 +610,7 @@
                                 ,THUMB_FL
                                 ,REG_DT
                                 ,FILE_ST
+                                ,FILE_GB
                             ) VALUES (
                                 '".$file[name]."'
                                 , '".($file[kind] == 'download' ? $file[name] : $insert_path[uid])."'
@@ -619,6 +620,7 @@
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
+                                , '".strtoupper($file[kind])."'
                             )";
 
                         $_d->sql_query($sql);

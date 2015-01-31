@@ -11,10 +11,21 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsexperience-view', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('momsexperience-view', ['$scope','$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
         $scope.queue = [];
         $scope.search = {};
+
+        if($rootScope.focus == 'comp'){
+            //$('#moms_state').get(0).scrollIntoView(true);
+
+            $('html,body').animate({scrollTop:$('#moms_state').offset().top}, 300);
+            $('#preg_fl').focus();
+
+        }else if($rootScope.focus == 'view'){
+            $('html,body').animate({scrollTop:$('#view_state').offset().top}, 100);
+            $('#experience_view').focus();
+        }
 
         $scope.click_update_user_info = function () {
             $scope.openModal(null, 'md');
@@ -89,6 +100,8 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+
+
             if ($stateParams.menu == 'experienceprocess') {
                 $scope.community = "진행중인 체험단";
                 $scope.menu = "experienceprocess"
@@ -96,6 +109,7 @@ define([
                 $scope.community = "지난 체험단";
                 $scope.menu = "experiencepast"
             }
+
 
             var date = new Date();
 
@@ -107,11 +121,20 @@ define([
             var today = year+'-'+mm+'-'+dd;
 
             $scope.todayDate = today;
+
+
         };
 
         $scope.click_focus = function(){
             //$('html,body').animate({scrollTop:$('#item').offset().top}, 150);
             $("#preg_fl").focus();
+            //$("#moms_state").attr("tabindex", -1).focus(); div로 포커스를 줄때 사용
+
+        }
+
+        $scope.click_viewfocus = function(){
+            //$('html,body').animate({scrollTop:$('#item').offset().top}, 150);
+            $("#view_state").focus();
 
             //$("#moms_state").attr("tabindex", -1).focus(); div로 포커스를 줄때 사용
 

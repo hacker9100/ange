@@ -80,12 +80,21 @@ define([
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
 
+
                     for(var i in data) {
                         if (data[i].FILE != null) {
                             var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
                             data[i].MAIN_FILE = img;
 
                         }
+                        var source = data[i].BODY;
+                        var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
+
+                        source = source.replace(pattern, '');
+                        source = source.replace(/&nbsp;/ig, '');
+                        source = source.trim();
+
+                        data[i].BODY = source;
                     }
                     $scope.list = data;
                 })

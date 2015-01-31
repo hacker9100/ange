@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsevent-list', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD','$timeout', function ($scope, $stateParams, $location, dialogs, UPLOAD, $timeout) {
+    controllers.controller('momsevent-list', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD','$timeout', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD, $timeout) {
 
         $scope.search = {};
 
@@ -126,6 +126,8 @@ define([
         // 상세보기
         $scope.view_momsevent = function(key){
 
+            $rootScope.focus = 'view';
+
             if ($stateParams.menu == 'eventprocess') {
                 $location.url('/moms/eventprocess/view/'+key);
             } else if ($stateParams.menu == 'eventperformance') {
@@ -136,6 +138,8 @@ define([
 
         //  응모하기
         $scope.comp_momsevent = function(key){
+
+            $rootScope.focus = 'comp';
 
             if ($stateParams.menu == 'eventprocess') {
                 $location.url('/moms/eventprocess/view/'+key);

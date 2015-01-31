@@ -146,12 +146,12 @@
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             NO, SUBJECT, BODY, REG_UID, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, REPLY_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB,
                             (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
-                            CASE TARGET_GB WHEN 'EXPERIENCE' THEN '체험단' WHEN 'EVENT' THEN '이벤트' WHEN 'SAMPLE' THEN '샘플팩' WHEN 'PRODUCT' THEN '상품' ELSE '앙쥬' END AS SHORT_NM, REVIEW_NO
+                            CASE TARGET_GB WHEN 'EXPERIENCE' THEN '체험단' WHEN 'EVENT' THEN '이벤트' WHEN 'SAMPLE' THEN '샘플팩' WHEN 'PRODUCT' THEN '상품' ELSE '앙쥬' END AS SHORT_NM, REVIEW_NO, REPLY_FL
                         FROM
                         (
                             SELECT
                                 NO, SUBJECT, BODY, REG_UID, NICK_NM, REG_DT, HIT_CNT, LIKE_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB,
-                                (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = AR.NO) AS REPLY_CNT, REVIEW_NO
+                                (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = AR.NO) AS REPLY_CNT, REVIEW_NO, REPLY_FL
                             FROM
                                 ANGE_REVIEW AR
                             WHERE
@@ -391,9 +391,18 @@
                     MtUtil::_c("------------>>>>> file : ".$file['name']);
                     MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
-                    if($file[kind] != 'MAIN'){
+                    if(isset($file[kind])){
                         $_d->failEnd("대표이미지를 선택하세요.");
                     }
+
+//                    $main_cnt = count(in_array("MAIN", $file[kind]));
+//
+//                    MtUtil::_c("main_cnt -->".$main_cnt);
+//
+//                    if($main_cnt == 0){
+//                        $_d->failEnd("대표이미지를 선택하세요.");
+//                    }
+
 
                     $sql = "INSERT INTO FILE
                     (
@@ -541,202 +550,203 @@
 
             $_d->sql_beginTransaction();
 
-            if(isset($_model[ROLE]) && $_model[ROLE] != ""){
-                $sql = "UPDATE ANGE_REVIEW
-                         SET HIT_CNT = HIT_CNT + 1
-                        WHERE
-                            NO = ".$_key."
-                        ";
-            }else{
-                    if( trim($_model[SUBJECT]) == '' ){
-                        $_d->failEnd("제목을 작성 하세요");
-                    }
-                    if( trim($_model[BODY]) == '' ){
-                        $_d->failEnd("내용이 비어있습니다");
-                    }
 
-                    $sql = "UPDATE ANGE_REVIEW
-                        SET
-                            SUBJECT = '".$_model[SUBJECT]."',
-                            BODY = '".$_model[BODY]."',
-                            REG_UID = '".$_SESSION['uid']."',
-                            NICK_NM = '".$_SESSION['nick']."',
-                            REG_DT = SYSDATE(),
-                            HIT_CNT = '".$_model[HIT_CNT]."',
-                            LIKE_CNT = '".$_model[LIKE_CNT]."',
-                            REPLY_CNT = '".$_model[REPLY_CNT]."',
-                            WARNING_FL = '".$_model[WARNING_FL]."',
-                            BEST_FL = '".$_model[BEST_FL]."',
-                            BLOG_URL = '".$_model[BLOG_URL]."',
-                            TARGET_NO = '".$_model[TARGET_NO]."',
-                            TARGET_GB = '".$_model[TARGET_GB]."',
-                            REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
-                        WHERE
-                            NO = ".$_key."
+            if( trim($_model[SUBJECT]) == '' ){
+                $_d->failEnd("제목을 작성 하세요");
+            }
+            if( trim($_model[BODY]) == '' ){
+                $_d->failEnd("내용이 비어있습니다");
+            }
+
+            $sql = "UPDATE ANGE_REVIEW
+                SET
+                    SUBJECT = '".$_model[SUBJECT]."',
+                    BODY = '".$_model[BODY]."',
+                    REG_UID = '".$_SESSION['uid']."',
+                    NICK_NM = '".$_SESSION['nick']."',
+                    REG_DT = SYSDATE(),
+                    HIT_CNT = '".$_model[HIT_CNT]."',
+                    LIKE_CNT = '".$_model[LIKE_CNT]."',
+                    REPLY_CNT = '".$_model[REPLY_CNT]."',
+                    WARNING_FL = '".$_model[WARNING_FL]."',
+                    BEST_FL = '".$_model[BEST_FL]."',
+                    BLOG_URL = '".$_model[BLOG_URL]."',
+                    TARGET_NO = '".$_model[TARGET_NO]."',
+                    TARGET_GB = '".$_model[TARGET_GB]."',
+                    REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
+                WHERE
+                    NO = ".$_key."
+            ";
+
+            $_d->sql_query($sql);
+
+            $sql = "UPDATE ANGE_COMP_WINNER
+                SET
+                    REVIEW_FL = 'Y'
+                WHERE
+                    USER_ID = '".$_SESSION['uid']."'
+                 AND TARGET_NO = '".$_model[TARGET_NO]."'
+                ";
+
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $sql = "SELECT
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        FILE F, CONTENT_SOURCE S
+                    WHERE
+                        F.NO = S.SOURCE_NO
+                        AND S.TARGET_GB = 'REVIEW'
+                        AND S.CONTENT_GB = 'FILE'
+                        AND S.TARGET_NO = ".$_key."
+                        AND F.THUMB_FL = '0'
                     ";
 
-                    $_d->sql_query($sql);
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $is_delete = true;
 
-                    $sql = "UPDATE ANGE_COMP_WINNER
-                        SET
-                            REVIEW_FL = 'Y'
-                        WHERE
-                            USER_ID = '".$_SESSION['uid']."'
-                         AND TARGET_NO = '".$_model[TARGET_NO]."'
-                        ";
-
-
-                    $_d->sql_query($sql);
-                    $no = $_d->mysql_insert_id;
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "SELECT
-                                F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                            FROM
-                                FILE F, CONTENT_SOURCE S
-                            WHERE
-                                F.NO = S.SOURCE_NO
-                                AND S.TARGET_GB = 'REVIEW'
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_NO = ".$_key."
-                                AND F.THUMB_FL = '0'
-                            ";
-
-                    $result = $_d->sql_query($sql,true);
-                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                        $is_delete = true;
-
-                        if (count($_model[FILES]) > 0) {
-                            $files = $_model[FILES];
-                            for ($i = 0 ; $i < count($files); $i++) {
-                                if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
-                                    $is_delete = false;
-                                }
-                            }
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
+                    for ($i = 0 ; $i < count($files); $i++) {
+                        if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                            $is_delete = false;
                         }
-
-                        if ($is_delete) {
-                            MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
-                            $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                            $_d->sql_query($sql);
-
-                            $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'PRODUCT' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
-
-                            $_d->sql_query($sql);
-
-                            MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
-
-                            if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                                unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                                unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                                unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
-                            }
-                        }
-                    }
-
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
-
-                        for ($i = 0 ; $i < count($files); $i++) {
-                            $file = $files[$i];
-                            MtUtil::_c("------------>>>>> file : ".$file['name']);
-
-                            if ($insert_path[$i][uid] != "") {
-                                $sql = "INSERT INTO FILE
-                                (
-                                    FILE_NM
-                                    ,FILE_ID
-                                    ,PATH
-                                    ,FILE_EXT
-                                    ,FILE_SIZE
-                                    ,THUMB_FL
-                                    ,REG_DT
-                                    ,FILE_ST
-                                    ,FILE_GB
-                                ) VALUES (
-                                    '".$file[name]."'
-                                    , '".$insert_path[$i][uid]."'
-                                    , '".$insert_path[$i][path]."'
-                                    , '".$file[type]."'
-                                    , '".$file[size]."'
-                                    , '0'
-                                    , SYSDATE()
-                                    , 'C'
-                                    , '".$file[kind]."'
-                                )";
-
-                                $_d->sql_query($sql);
-                                $file_no = $_d->mysql_insert_id;
-
-                                if($_d->mysql_errno > 0) {
-                                    $err++;
-                                    $msg = $_d->mysql_error;
-                                }
-
-                                $sql = "INSERT INTO CONTENT_SOURCE
-                                (
-                                    TARGET_NO
-                                    ,SOURCE_NO
-                                    ,CONTENT_GB
-                                    ,TARGET_GB
-                                    ,SORT_IDX
-                                ) VALUES (
-                                    '".$_key."'
-                                    , '".$file_no."'
-                                    , 'FILE'
-                                    , 'REVIEW'
-                                    , '".$i."'
-                                )";
-
-                                $_d->sql_query($sql);
-
-                                if($_d->mysql_errno > 0) {
-                                    $err++;
-                                    $msg = $_d->mysql_error;
-                                }
-                            }
-                        }
-                    }
-
-                    if($err > 0){
-                        $_d->sql_rollback();
-                        $_d->failEnd("수정실패입니다:".$msg);
-                    }else{
-                        $sql = "INSERT INTO CMS_HISTORY
-                            (
-                                WORK_ID
-                                ,WORK_GB
-                                ,WORK_DT
-                                ,WORKER_ID
-                                ,OBJECT_ID
-                                ,OBJECT_GB
-                                ,ACTION_GB
-                                ,IP
-                                ,ACTION_PLACE
-                            ) VALUES (
-                                '".$_model[WORK_ID]."'
-                                ,'UPDATE'
-                                ,SYSDATE()
-                                ,'".$_SESSION['uid']."'
-                                ,'.$_key.'
-                                ,'BOARD'
-                                ,'UPDATE'
-                                ,'".$ip."'
-                                ,'/webboard'
-                            )";
-
                     }
                 }
-                $_d->sql_query($sql);
 
-                $_d->sql_commit();
-                $_d->succEnd($no);
-            } else if ($_type == 'likeCntitem') {
+                if ($is_delete) {
+                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'PRODUCT' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+
+                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    }
+                }
+            }
+
+            if (count($_model[FILES]) > 0) {
+                $files = $_model[FILES];
+
+                for ($i = 0 ; $i < count($files); $i++) {
+                    $file = $files[$i];
+                    MtUtil::_c("------------>>>>> file : ".$file['name']);
+
+//                    if(!isset($file[kind])){
+//                        $_d->failEnd("대표이미지를 선택하세요.");
+//                    }
+
+                    if(!in_array("MAIN", $file[kind])){
+                        $_d->failEnd("대표이미지를 선택하세요.");
+                    }
+
+                    if ($insert_path[$i][uid] != "") {
+                        $sql = "INSERT INTO FILE
+                        (
+                            FILE_NM
+                            ,FILE_ID
+                            ,PATH
+                            ,FILE_EXT
+                            ,FILE_SIZE
+                            ,THUMB_FL
+                            ,REG_DT
+                            ,FILE_ST
+                            ,FILE_GB
+                        ) VALUES (
+                            '".$file[name]."'
+                            , '".$insert_path[$i][uid]."'
+                            , '".$insert_path[$i][path]."'
+                            , '".$file[type]."'
+                            , '".$file[size]."'
+                            , '0'
+                            , SYSDATE()
+                            , 'C'
+                            , '".$file[kind]."'
+                        )";
+
+                        $_d->sql_query($sql);
+                        $file_no = $_d->mysql_insert_id;
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+
+                        $sql = "INSERT INTO CONTENT_SOURCE
+                        (
+                            TARGET_NO
+                            ,SOURCE_NO
+                            ,CONTENT_GB
+                            ,TARGET_GB
+                            ,SORT_IDX
+                        ) VALUES (
+                            '".$_key."'
+                            , '".$file_no."'
+                            , 'FILE'
+                            , 'REVIEW'
+                            , '".$i."'
+                        )";
+
+                        $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                }
+            }
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("수정실패입니다:".$msg);
+            }else{
+                $sql = "INSERT INTO CMS_HISTORY
+                    (
+                        WORK_ID
+                        ,WORK_GB
+                        ,WORK_DT
+                        ,WORKER_ID
+                        ,OBJECT_ID
+                        ,OBJECT_GB
+                        ,ACTION_GB
+                        ,IP
+                        ,ACTION_PLACE
+                    ) VALUES (
+                        '".$_model[WORK_ID]."'
+                        ,'UPDATE'
+                        ,SYSDATE()
+                        ,'".$_SESSION['uid']."'
+                        ,'.$_key.'
+                        ,'BOARD'
+                        ,'UPDATE'
+                        ,'".$ip."'
+                        ,'/webboard'
+                    )";
+
+            }
+            $_d->sql_query($sql);
+
+            $_d->sql_commit();
+            $_d->succEnd($no);
+        } else if ($_type == 'likeCntitem') {
 
                 $sql = "UPDATE ANGE_REVIEW SET
                                 LIKE_CNT = LIKE_CNT + 1
@@ -751,7 +761,21 @@
                 } else {
                     $_d->succEnd($no);
                 }
+        } else if ($_type == 'hit'){
+            $sql = "UPDATE ANGE_REVIEW
+                     SET HIT_CNT = HIT_CNT + 1
+                    WHERE
+                        NO = ".$_key."
+                    ";
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if ($_d->mysql_errno > 0) {
+                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+            } else {
+                $_d->succEnd($no);
             }
+        }
 
             break;
 
@@ -768,6 +792,14 @@
             $sql = "DELETE FROM ANGE_REVIEW WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
+
+//            $sql = "UPDATE ANGE_COMP_WINNER
+//                 SET REVIEW_FL = 'N'
+//                 WHERE TARGET_NO = ".$_key."
+//                   AND USER_ID = '".$_SESSION['uid']."'
+//                 ";
+//
+//            $_d->sql_query($sql);
             /*$no = $_d->mysql_insert_id;*/
 
             $sql = "SELECT
