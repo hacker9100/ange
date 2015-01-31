@@ -1063,6 +1063,12 @@ a.lnb_handle_close:hover {
 
 /****** 서브페이지 콘텐츠 공용 ************/
 
+.no-margin {
+    margin: 0px;
+    padding: 0px;
+}
+
+
 .people_view_wrap, .people_edit_wrap {
     width:100%;
     margin:0;

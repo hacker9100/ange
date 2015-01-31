@@ -1,0 +1,369 @@
+/* ++ange club common css  */
+
+.club_tabs {
+    float:left;
+    padding:10px 0;
+    width:33%;
+    border:1px solid #ddd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #646464;
+    font-size: 0.92em;
+    cursor: pointer;
+    background-color: #ebebeb;
+}
+
+.club_tabs.center {
+    float:left;
+    width:.5%;
+    background: none;
+    border:none;
+    margin-top:1px;
+    border-bottom: 1px solid #ddd;
+}
+
+.club_tabs:hover {
+    background-color:#efefef;
+    color:#333;
+}
+
+.club_tabs.selected {
+    border-bottom: none;
+    background-color: #fff;
+    cursor: default;
+    z-index: 99;
+}
+
+.club_submenu {
+    float:left;
+    padding:16px 18px;
+    width:100%;
+    border:1px solid #ddd;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #fff;
+    margin-bottom: 60px;
+    font-size: 0.92em;
+    border-top:none;
+    color:#686868;
+}
+
+.club_submenu dd {
+    float:left;
+    padding:2px 16px;
+    border-right:1px solid #ddd;
+}
+
+.club_submenu dd.ended {
+    border:none;
+}
+
+.club_submenu dd a {
+    color: #333 !important;
+    cursor: pointer;
+}
+
+.club_submenu dd a:hover {
+    text-decoration: none;
+    color: #2da7cf !important;
+}
+
+.club_submenu dd a:focus {
+    text-decoration: none;
+    color: #2da7cf !important;
+}
+
+.club_introtxt_wrap {
+    float:left;
+    padding-bottom:38px;
+    margin-top:-25%;
+    top:180px;
+    width:66%;
+    color: #868686;
+    word-break: keep-all;
+    background-image: url('/imgs/ange/bg_titlebox_underlineptn.jpg');
+    background-repeat: repeat-x;
+    background-position: left bottom;
+}
+
+.club_introtxt_copy {
+    font-size:1.52em;
+    line-height:1.42em;
+    color:#666;
+    margin-bottom:10px;
+}
+
+.club_introtxt_message {
+    position:relative;
+    text-align: justify;
+    margin:32px 0 20px 0;
+    line-height:26px;
+    color:#868686;
+    font-size:1.18em;
+    padding: 10px 25px;
+    word-break:keep-all;
+    width:75%;
+    text-align:justify;
+    font-weight: 600;
+}
+
+.common_quote_gray {
+    position:absolute;
+    width:16px;
+    height:15px;
+    background-image: url('/imgs/ange/common_quote_gray.png');
+    background-repeat: no-repeat;
+    margin-top: 2px;
+}
+
+.common_quote_gray.left {
+    margin-left: -26px;
+    background-position: left top;
+}
+
+.common_quote_gray.right {
+    background-position: right top;
+    margin-left: 5px;
+}
+
+.club_qna_question {
+    margin-top:38px;
+    padding:16px 68px;
+    font-size:0.92em;
+    font-weight: 600;
+    /*background-color: #eee;*/
+    background-image: url('/imgs/ange/bg_clubqna_01_questionptn.gif');
+}
+
+.club_qna_answer {
+    margin-top:12px;
+    padding:8px 68px;
+    font-size:0.92em;
+}
+
+.club_qna_answer a {
+    cursor: pointer;
+}
+
+.club_qna_answer a:hover {
+    color: #04b5ff !important;
+    text-decoration: none;
+}
+
+.common_mqnmark {
+    position:absolute;
+    margin-left: -38px;
+    font-size: 1.76em;
+    font-weight: 600;
+}
+
+.common_mqnmark.queston {
+    color: #111;
+}
+
+.common_mqnmark.answer {
+    color: #7aa8dc;
+}
+
+
+.club_memberlogo_wrap {
+    float:left; width:30%;
+}
+
+.club_memberlogo {
+    width:100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.club_membertxt_wrap {
+    float:right;
+    padding:2px 25px;
+    width:70%;
+}
+.club_membertxt_title {
+    font-size: 1.36em;
+    margin-bottom:6px;
+    font-weight: 600;
+}
+
+.club_membertxt_phone {
+    font-family: arial, sans-serif;
+    margin-top:12px;
+    line-height:14px;
+    color:#666;
+}
+
+.club_membertxt_phone a {
+    color:#666 !important;
+    cursor: pointer;
+}
+
+.club_membertxt_phone a:hover {
+    color:#333 !important;
+    text-decoration: none;
+}
+
+.club_membertxt_url {
+    margin-bottom:12px;
+}
+
+.club_membertxt_url a {
+    color: #4eafd5 !important;
+    cursor: pointer;
+}
+
+.club_membertxt_url a:hover {
+    color: #04b5ff !important;
+    text-decoration: none;
+}
+
+.club_membertxt_desc {
+    font-size:0.92em;
+    line-height:22px;
+    color: #666;
+    text-align: justify;
+    word-break: keep-all;
+}
+
+.club_memberproduct_wrap {
+    float:left;
+    margin-top:16px;
+    width:100%;
+}
+
+.club_memberproductlogo_wrap {
+    float:left;
+    width:16%;
+    border:1px solid #ddd;
+}
+
+.club_memberproductlogo_box {
+    float:right;
+    background-color:#f8f8f8;
+    padding:25px;
+    width:82%;
+}
+
+.club_memberproduct_title {
+    font-size: 1.12em;
+    margin-bottom:6px;
+    font-weight: 600;
+}
+
+.club_memberproduct_desc {
+    font-size: 0.92em;
+    line-height:22px;
+    color:#666;
+    text-align: justify;
+    word-break: keep-all;
+}
+
+.club_memberproduct_divider {
+    float:left;
+    height:1px;
+    border-top:1px solid #ddd;
+    margin:20px 0px;
+    width:100%;
+}
+
+.club_supportlogo_wrap {
+    float:left;
+    width:20%;
+}
+
+.club_supporttxt_wrap {
+    float:right;
+    width:80%;
+    padding:2px 25px;
+}
+
+.club_titlebox {
+    float:left;
+    font-size: 1.68em;
+    background-image: url('/imgs/ange/bg_titlebox_underlineptn.jpg');
+    background-repeat: repeat-x;
+    background-position: left bottom;
+    margin-bottom:20px;
+    color:#666;
+    padding-bottom: 20px;
+}
+
+.contentbox_050 {
+    padding:5%;
+    font-size:0.86em;
+    height:380px;
+    width:50%;
+    word-break: keep-all;
+}
+
+.contentbox_050.txt_left {
+    float:left;
+    text-align: left;
+}
+
+.contentbox_050.txt_right {
+    float:right;
+    text-align: right;
+}
+
+.contentbox_050.box01{
+    background-image: url('/imgs/ange/bg_clubbenefit_01.png');
+    background-position: left 15% bottom 10%;
+    background-repeat: no-repeat;
+}
+.contentbox_050.box02{
+    background-image: url('/imgs/ange/bg_clubbenefit_02.png');
+    background-position: left 8px bottom 8%;
+    background-repeat: no-repeat;
+}
+.contentbox_050.box03{
+    background-image: url('/imgs/ange/bg_clubbenefit_03.png');
+    background-position: right 25px bottom 20%;
+    background-repeat: no-repeat;
+}
+.contentbox_050.box04{
+    background-image: url('/imgs/ange/bg_clubbenefit_04.png');
+    background-position: center bottom 15%;
+    background-repeat: no-repeat;
+}
+
+.clubbenefit_centerbox {
+    position:absolute;
+    bottom:-90px;
+    right:-90px;
+}
+
+.club_benefit_title {
+    background-color:#f76363;
+    color:#fff;
+    line-height: 22px;
+    font-size: 1.24em;
+    padding:2px 8px;
+}
+
+.club_benefit_body {
+    line-height:18px;
+    margin-top:18px;
+}
+
+.clubevent_box {
+    float:left;
+    position:relative;
+    width:59%;
+    border:1px solid #ddd;
+    background-image: url('/imgs/ange/clubevent_boxbg_01.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+}
+
+
+.club_book_thumb {
+    margin:10px auto;
+    width:100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
