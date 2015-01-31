@@ -1,7 +1,7 @@
 <div ng-controller="clubhome">
     <!--<script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>-->
     <!-- mainbar -->
-    <div class="mainbar sub-slide">
+    <div class="mainbar sub-slide0">
         <div class="container-fluid common_container">
 
             <div class="row">
@@ -12,64 +12,589 @@
 
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
-                                <h3 style="font-weight:bold;">회원가입</h3>
-                                <p>앙쥬를 방문해 주셔서 감사합니다. 회원가입을 하시면 다양한 서비스를 이용하실 수 있습니다.</p>
+                                <h3 style="font-weight:bold;">
+                                    앙쥬클럽
+                                </h3>
                             </div>
 
+                            <!-- 메뉴탭 -->
+                            <div class="container-fluid no-margin">
+                                <div class="row no-margin">
+                                    <div class="col-xs-12 no-margin" style="text-align:center;">
 
-                            <div class="container-fluid sub_contents_customizewrap">
-                                <div class="row">
-                                    <div class="col-xs-12 sub_join_customize">
-
-                                        <center>
-                                        <img id="join_customize_bg" name="join_customize_bg"  class="join_customize_bg" src="/imgs/ange/temp/join_custom_bgimg.png" />
-                                        </center>
-
-                                        <img id="join_custom_title" name="join_custom_title"  class="join_customize_title" src="/imgs/ange/temp/join_custom_title.png" />
-
-                                        <div class="join_customize_txt" style="color: #333;">
-                                            앙쥬의 <span class="table_blue">회원가입은 무료! 실명제로 운영</span>됩니다. <br />
-                                            한번의 회원가입으로 앙쥬의 모든 서비스 이용 가능~! <br />
-                                            앙쥬 회원만을 위한 마일리지 적립도 가능합니다. <br />
-                                            앙쥬에서는 개인정보의 안전한 관리를 위해 <br />
-                                            주민번호를 수집하지 않습니다.
+                                        <div class="club_tabs selected">
+                                            클럽안내
+                                        </div>
+                                        <div class="club_tabs center">&nbsp;</div>
+                                        <div class="club_tabs">
+                                            클럽혜택
+                                        </div>
+                                        <div class="club_tabs center">&nbsp;</div>
+                                        <div class="club_tabs">
+                                            클럽게시판
                                         </div>
 
                                     </div><!-- /.col-xs-12-->
-                                </div><!-- /.row -->
-                            </div><!-- /.container -->
 
-                            <div class="container-fluid sub_contents_search">
-                                <div class="row">
-                                    <div class="col-xs-12" style="padding:0; margin:40px auto;  text-align:center;">
+                                    <div class="col-xs-12 no-margin" style="text-align:center;">
+                                        <div class="club_submenu">
+                                            <dl style="display:none;">
+                                                <dd><a>클럽소개</a></dd>
+                                                <dd><a>앙쥬클럽 첫방문이신가요?</a></dd>
+                                                <dd><a>앙쥬클럽 회원사</a></dd>
+                                                <dd class="ended"><a>앙쥬클럽 후원사</a></dd>
+                                            </dl>
 
-                                        <span ng-class="step == '01' ? 'join_step now' : 'join_step'">01 약관동의</span>
-                                        <span ng-class="step == '02' ? 'join_step now' : 'join_step'">02 정보입력</span>
-                                        <span ng-class="step == '03' ? 'join_step now' : 'join_step'">03 본인인증</span>
-                                        <span ng-class="step == '04' ? 'join_step now' : 'join_step'">04 가입완료</span>
+                                            <dl style="display:none;"> <!-- 클럽혜택 메뉴 -->
+                                                <dd><a>회원혜택</a></dd>
+                                                <dd class="ended"><a>할인행사</a></dd>
+                                            </dl>
 
+                                            <dl style="display:block;"> <!-- 클럽혜택 메뉴 -->
+                                                <dd class="ended">앙쥬클럽 게시판</dd>
+                                            </dl>
+
+                                        </div>
                                     </div><!-- /.col-xs-12-->
+
                                 </div><!-- /.row -->
                             </div><!-- /.container -->
+                            <!-- /메뉴탭 -->
+
+
+
+
+                            <!-- 01. 클럽안내 > 클럽소개 -->
+                            <div style="display: block;">
+                                <div class="container-fluid no-margin">
+                                    <div class="row no-margin">
+                                        <div class="col-xs-12 no-margin" style="position: relative;">
+
+                                            <img src="/imgs/ange/bg_club_intro.png" style="width:100%;" />
+
+                                            <div class="club_introtxt_wrap">
+                                                <div class="club_introtxt_copy">
+                                                    사랑하는 만큼 아낌없이 좋은 것만 해주고 싶은
+                                                    엄마의 마음, 앙쥬클럽은 아기를 사랑하는
+                                                    <span class="table_blue" style="font-size:1.08em;">엄마들을 위한 육아 클럽</span>입니다.
+                                                </div>
+
+                                                <div>
+                                                    임신 기간 동안 엄마의 몸은 전신에 걸쳐 많은 변화가 일어납니다. 아기를 낳은 후 엄마의 몸이 예전의 상태로 돌아가기까지는 최소 6주의 시간이 걸리며, 그 중 에서도 특히 최초 2주의 산후 조리기간은 매우 중요한 시기입니다.
+                                                    <br />
+                                                    바로 이 중요한 시기에 <span class="table_blue">앙쥬클럽에서 산모와 신생아 돌보기에 관한 교육을 제공</span> 해드립니다.
+                                                </div>
+                                            </div>
+
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+
+                                <div class="container-fluid no-margin" style="margin-top:100px;">
+                                    <div class="row no-margin">
+                                        <div class="col-xs-12 no-margin">
+                                            <center>
+                                                <img src="/imgs/ange/img_club_intro.jpg" style="width:86%;" />
+                                                <div class="club_introtxt_message">
+                                                    <span class="common_quote_gray left"></span>
+                                                    묘목을 잘 키우기 위해서는 뿌리 멀리서부터 조금씩 거름을 주면서 나무가 작 적응할 수 있도록 기다려야 하듯, 앙쥬클럽은 인내를 바탕으로 한 지혜와 신뢰로 엄마들의 든든한 지지자와 후원자가 되겠습니다.
+                                                    <span class="common_quote_gray right"></span>
+                                                </div>
+                                            </center>
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+                            </div>
+                            <!-- /01. 클럽안내 > 클럽소개 -->
+
+
+                            <!-- 02. 클럽안내 > 앙쥬클럽 첫방문이신가요? -->
+                            <div style="display: block;">
+                                <div class="container-fluid no-margin">
+                                    <div class="row no-margin">
+                                        <div class="col-xs-12 no-margin" style="position: relative;">
+
+                                        <div style="font-size:1.42em;">
+                                            앙쥬클럽 <strong>첫 방문이신가요?</strong>
+                                        </div>
+
+
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+
+                                <div class="container-fluid no-margin">
+                                    <div class="row no-margin">
+                                        <div class="col-xs-12 no-margin" style="position: relative;">
+
+                                            <div class="club_qna_question">
+                                                <span class="common_mqnmark queston">Q.</span>
+                                                <span style="font-size:1.16em;">앙쥬클럽에 가입하셨나요?</span>
+                                            </div>
+
+                                            <div class="club_qna_answer">
+                                                <span class="common_mqnmark answer">A.</span>
+                                                <strong>조리원에서 가입하셨다면 앙쥬클럽회원이십니다.</strong><br />
+                                                로그인하시면 앙쥬 간호사 선생님들이 임신,수유,육아에 관련한 전문적인 상담으로 도와드립니다.
+                                                로그인 후 <a title="상담게시판 바로가기">[상담게시판]</a>을 이용하세요!
+                                            </div>  <!-- /.qustion 1 -->
+
+                                            <div class="club_qna_question">
+                                                <span class="common_mqnmark queston">Q.</span>
+                                                <span style="font-size:1.16em;">아이디와 비밀번호를 잊으셨나요?</span>
+                                            </div>
+
+                                            <div class="club_qna_answer">
+                                                <span class="common_mqnmark answer">A.</span>
+                                                아이디(이메일 전체주소)/비밀번호<small>(생년월일(주민번호상에 기재된 6자리)</small>로 로긴이 안되시는 경우
+                                                아이디/비밀번호 찾기를 통해 검색해 보세요.<br />
+                                                <a title="아이디/비번찾기 바로가기">[아이디/비밀번호찾기]</a><br />
+                                                로긴하셔서 <strong>새로운 아이디와 비번으로 변경하시면 포인트 적립을 통해 앙쥬에서 더 많은 혜택을 누리실 수 있습니다.</strong>
+                                            </div>  <!-- /.qustion 2 -->
+
+                                            <div class="club_qna_question">
+                                                <span class="common_mqnmark queston">Q.</span>
+                                                <span style="font-size:1.16em;">앙쥬클럽은 어떻게 가입하나요?</span>
+                                            </div>
+
+                                            <div class="club_qna_answer">
+                                                <span class="common_mqnmark answer">A.</span>
+                                                앙쥬클럽은 산후조리원에서 산모교육을 받으신 후 서면가입을 한 회원입니다.
+                                                앙쥬클럽에 가입하시고 싶으신분들은 산후조리원으로 문의하시기 바랍니다. <br />
+                                                <small>(현재 서울/경기, 부산지역만 가능)</small>
+                                            </div>  <!-- /.qustion 3 -->
+
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+                            </div>
+                            <!-- /02. 클럽안내 > 앙쥬클럽 첫방문이신가요? -->
+
+                            <!-- 03. 클럽안내 > 회원사 -->
+                            <div style="display: block;">
+                                <div class="container-fluid no-margin">
+                                    <div class="row no-margin">
+                                        <div class="col-xs-12 no-margin" style="position: relative;">
+
+
+                                            <div class="club_memberlogo_wrap">
+                                                <img class="club_memberlogo" src="/imgs/ange/_blank_4by3.gif" style="background-image:url('/imgs/ange/clubpartner_logo_01.jpg');" />
+                                            </div>
+                                            <div class="club_membertxt_wrap">
+                                                <div class="club_membertxt_title">
+                                                    MSD(한국엠에스디)
+                                                </div>
+                                                <div class="club_membertxt_url">
+                                                    <a href="http://www.msd-korea.com/" target="_blank"><small>http://www.msd-korea.com/</small></a>
+                                                </div>
+                                                <div class="club_membertxt_desc">
+                                                    한국MSD는 글로벌 헬스케어 기업인 머크(Merck & Co., Inc)의 한국법인으로 1994년 설립된 이후 우수 의약품과 전문 의학정보를 제공 해왔습니다. 머크의 창립자인 조지 W.머크(George W. Merck)가 남긴 “의약품은 환자를 위한 것이지 기업의 이윤을 위한 것이 아니다.”라는 말은 오늘날 머크의 ‘건강한 세계’ 를 만들기 위 한 모든 노력의 근간입니다.
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_wrap">
+                                                <div class="club_memberproductlogo_wrap">
+                                                    <img class="club_memberlogo" src="/imgs/ange/_blank.gif" style="background-image:url('/imgs/ange/thumb_clubpartner_goods_01.jpg');" />
+                                                </div>
+                                                <div class="club_memberproductlogo_box">
+                                                    <div class="club_memberproduct_title">로타바이러스</div>
+                                                    <div class="club_memberproduct_desc">
+                                                        로타바이러스는 매우 쉽게 감염되는 바이러스로, 전세계적으로 5세 미만의 거의 모든 아이들이 로타바이러스에 감염됩니다. 로타바이러스에 의한 위장관염은 영아와 어린아이들에게 설사를 일으키는 주요 원인입니다.
+                                                        로타바이러스 질환을 일으키는 로타바이러스에는 여러가지 타입이 있고 해마다 지역이 바뀌기 때문에 로타바이러스 백신으로 가장 흔한 5가지 로타바이러스 타입을 예방하는 것이 중요합니다.
+                                                    </div>
+
+                                                    <br />
+
+                                                    <div class="club_memberproduct_title">로타텍</div>
+                                                    <div class="club_memberproduct_desc">
+                                                        로타텍®은 전 세계적으로 로타바이러스 감염의 95%를 차지하는 가장 흔한 5가지 G타입에 대해 예방을 도울 수 있는 경구용 5가 로타바이러 스 생백신입니다. 로타텍은 액상제제의 경구용 백신으로 3회 접종합니다. 로타텍의 1차투여는 생후 6-12주에 하고, 이 후 각 투여간 4주내지 10주의 간격을 두고 추가투여 합니다.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_divider"></div>
+
+                                            <div class="club_memberlogo_wrap">
+                                                <img class="club_memberlogo" src="/imgs/ange/_blank_4by3.gif" style="background-image:url('/imgs/ange/clubpartner_logo_02.jpg');" />
+                                            </div>
+                                            <div class="club_membertxt_wrap">
+                                                <div class="club_membertxt_title">
+                                                    바이엘헬스케어
+                                                </div>
+                                                <div class="club_membertxt_url">
+                                                    <a href="http://www.healthcare.bayer.com/" target="_blank"><small>http://www.healthcare.bayer.com/</small></a>
+                                                </div>
+                                                <div class="club_membertxt_desc">
+                                                    한국화이자제약 바이엘 헬스케어는 바이엘 그룹(Bayer AG)의 자회사로, 헬스케어와 제약 산업 분야의 혁신적인 선두 기업입니다.독일 레버쿠젠에 본사를 두고 있으며, 크게 전문의약품 사업부 (Pharmaceuticals), 동물 의약 사업부(Animal Health), 일반의약품 사업부(Consumer Care) 그리고 메디컬케어(Medical Care)로 구성 되어있습니다. 전 세계 5만 5천여 명의 바이엘 헬스케어 직원들은 세계 인류와 동물을 위한 혁신적인 제품을 개발하고 생산하는데 노력을 기울이고 있습니다. 보다 자세한 정보는 홈페이지에서 확인 할 수 있습니다.
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_wrap">
+                                                <div class="club_memberproductlogo_wrap">
+                                                    <img class="club_memberlogo" src="/imgs/ange/_blank.gif" style="background-image:url('/imgs/ange/thumb_clubpartner_goods_02.jpg');" />
+                                                </div>
+                                                <div class="club_memberproductlogo_box">
+                                                    <div class="club_memberproduct_title">기저귀 발진(diaper rash)</div>
+                                                    <div class="club_memberproduct_desc">
+                                                        기저귀 발진은 흔하게 나타나는 피부 질환으로 아기의 엉덩이와 생식기 주변이 붉게 부풀어 오르며 짓무른 상태입니다. 기저귀 발진은 피부 표면의 각질층이 소변과 대변에 접촉하거나, 심한 마찰, 감염 등의 환경에 노출되었을 때 발생합니다. 때문에 매일 기저귀를 착용하는 아기 엉덩이에는 기저귀 발진이 발생하기 쉽습니다.
+                                                    </div>
+
+                                                    <br />
+
+                                                    <div class="club_memberproduct_title">비판텐 연고(Bepanthen Ointment)</div>
+                                                    <div class="club_memberproduct_desc">
+                                                        스테로이드, 색소, 향료를 첨가하지 않은 비판텐은 기저귀 발진은 물론 수유기 유두균열에도 효과적입니다. 전 세계 100여 국에서 판매되고 있고, 대한민국에서 25년 동안 꾸준히 판매되어 온 제품. 우리 아기 피부, 건강하게 지켜주세요. 프로비타민 B5 성분의 기저귀 발진 치료제입니다.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_divider"></div>
+
+                                            <div class="club_memberlogo_wrap">
+                                                <img class="club_memberlogo" src="/imgs/ange/_blank_4by3.gif" style="background-image:url('/imgs/ange/clubpartner_logo_03.jpg');" />
+                                            </div>
+                                            <div class="club_membertxt_wrap">
+                                                <div class="club_membertxt_title">
+                                                    한국화이자제약
+                                                </div>
+                                                <div class="club_membertxt_url">
+                                                    <a href="http://www.prevenar13.co.kr/" target="_blank"><small>http://www.prevenar13.co.kr/</small></a>
+                                                </div>
+                                                <div class="club_membertxt_desc">
+                                                    2015 한국화이자제약은 세계 제1위의 제약회사인 화이자 그룹의 한국법인으로 한국인들이 보다 오래, 보다 건강하게, 보다 행복하게 삶을 영위해 나갈 수 있도록 지속적인 R&D를 통해 혁신적인 의약품을 공급하고 있으며, 차별화된 서비스와 업계를 선도하는 프로그램을 통해 고객만족을 실천하고 국내 의약업계 발전에 기여하기 위해 노력하고 있습니다.
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_wrap">
+                                                <div class="club_memberproductlogo_wrap">
+                                                    <img class="club_memberlogo" src="/imgs/ange/_blank.gif" style="background-image:url('/imgs/ange/thumb_clubpartner_goods_03.jpg');" />
+                                                </div>
+                                                <div class="club_memberproductlogo_box">
+                                                    <div class="club_memberproduct_title">2개월 부터 시작하는 폐렴구균 단백 접합 백신, 프리베나13</div>
+                                                    <div class="club_memberproduct_desc">
+                                                        프리베나13은 지금까지 출시된 영유아 폐렴구균 백신 중 가장 많은 13개의 폐렴구균 혈청형을 포함하고 있는 폐렴구균 백신으로, 급성중이염뿐 아니라 심각한 침습성 폐렴구균 질환까지 잘 예방해줍니다. 최근 세계적으로 유행하고 있으며, 뇌수막염 뿐 아니라 급성중이염 등 중증 질환을 일으키는 주범인 혈청형 19A를 유일하게 포함하고 있어 우리 아이들이 19A에 미리 대비할 수 있습니다. OECD 29개국 중 24개국은 프리베나 13을 국가 필수예방접종에 도입했고, 접종을 통한 효과와 안전성이 입증된 제품입니다.“2014년 필수 예방접종! 전 세계, 그리고 국내 접종량 1위의 폐렴구균 단백 접합 백신 프리베나 13으로 제대로 누리세요”
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_divider"></div>
+
+
+                                            <div class="club_memberlogo_wrap">
+                                                <img class="club_memberlogo" src="/imgs/ange/_blank_4by3.gif" style="background-image:url('/imgs/ange/clubpartner_logo_04.jpg');" />
+                                            </div>
+                                            <div class="club_membertxt_wrap">
+                                                <div class="club_membertxt_title">
+                                                    유한킴벌리
+                                                </div>
+                                                <div class="club_membertxt_url">
+                                                    <a href="http://www.greenfinger.com/" target="_blank"><small>http://www.greenfinger.com/</small></a>
+                                                </div>
+                                                <div class="club_membertxt_desc">
+                                                    인간존중, 고객만족, 사회공헌, 가치창조,혁신주도 등 5대 경영방침을 바탕으로 '소비자가 선호하는 유익한 제품과 서비스를 공급하여 위생문화 발전을 선도하고 건강과 복지향상에 기여한다'는 사명을 실천하기 위해 노력하고 있습니다. 이는 아기에서 어르신까지 건강하고 편안한 생활이 되도록 돕는 제품들로 국내 선호 기업이 된 원동력입니다.
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_wrap">
+                                                <div class="club_memberproductlogo_wrap">
+                                                    <img class="club_memberlogo" src="/imgs/ange/_blank.gif" style="background-image:url('/imgs/ange/thumb_clubpartner_goods_04.jpg');" />
+                                                </div>
+                                                <div class="club_memberproductlogo_box">
+                                                    <div class="club_memberproduct_title">초록숲의 생명력을 담아 그린핑거</div>
+                                                    <div class="club_memberproduct_desc">
+                                                        그린핑거는 자연의 손길로 어루만져주는 식물성 스킨케어입니다. 0~3세 아기들을 위한 그린핑거 베이비 순한자연보습 제품과 4~10세 아이들을 위한 그린핑거 마이키즈 제품들을 만나보세요. 그린핑거는 고객에 대한
+                                                        이해와 우수한 제품개발력을 바탕으로 3년여에 걸친 연구개발과 철저한 안전성 테스트 및 임상테스트를 거쳐 개발됐습니다. 그린핑거에는 초록숲처럼 건강하게 자라는 힘을 길러주고 싶은 엄마의 마음이 담겨있습니다
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="club_memberproduct_wrap">
+                                                <div class="club_memberproductlogo_wrap">
+                                                    <img class="club_memberlogo" src="/imgs/ange/_blank.gif" style="background-image:url('/imgs/ange/thumb_clubpartner_goods_05.jpg');" />
+                                                </div>
+                                                <div class="club_memberproductlogo_box">
+                                                    <div class="club_memberproduct_title">엄마를 닮은 육아용품 더블하트</div>
+                                                    <div class="club_memberproduct_desc">
+                                                        엄마를 닮은 육아용품, 더블하트를 이제 유한킴벌리를 통해 더 쉽게 만날 수 있습니다. 지금까지 사랑 받아온 일본 피죤사 육아용품이 더블하트라는 새로운 이름으로 여러분을 찾아갑니다. 더블하트는 엄마와 아기의 마음이 만난다는 의미를 담고 있으며, 아기를 향한 엄마의 마음처럼 아기를 위해 아주 작은 부분까지 세심하게 배려한는 육아용품 브랜드입니다.
+                                                        더블하트 제품은 출산 전 여성 케어 제품부터 유아기 용품까지 시기별로 다양하게 구성되어 있습니다. 출산 전후 엄마를 위한 임산부용 마사지크림은 엄마의 아름다움을 지켜줄 것입니다. 신생아부터 모유 수유 기간 동안에는 엄마와 아기 모두 편안하게 수유를 할 수 있는 제품을 만나보세요 (젖병, 젖꼭지,수유패드 등). 엄마의 손길을 필요로 하는 영유아를 위한 헬스케어 제품은 아이의 편안한 성장을 가능하게 합니다 (면봉, 핀셋, 열내림시트, 투약기 등). 성장발육용품은 호기심이 늘어나는 아기의 작은 모험을 도와줍니다 (노리개, 젖꼭지, 치발기, 스파우트컵 등).
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="club_memberproduct_wrap">
+                                                <div class="club_memberproductlogo_wrap">
+                                                    <img class="club_memberlogo" src="/imgs/ange/_blank.gif" style="background-image:url('/imgs/ange/thumb_clubpartner_goods_06.jpg');" />
+                                                </div>
+                                                <div class="club_memberproductlogo_box">
+                                                    <div class="club_memberproduct_title">유한킴벌리 하기스 프리미엄 물티슈</div>
+                                                    <div class="club_memberproduct_desc">
+                                                        - 천연펄프 2겹 원단으로 도톰하고 부드러워, 연약한 아기피부를 자극 없이 부드럽게 닦아줘요<br />
+                                                        - Natural 99% Formulation으로 신생아나 민감한 피부의 아기에게도 안심하고 사용할 수 있어요<br />
+                                                        - 하기스만의 특허출원 된 캡형 스티커로 마지막 한 장까지 촉촉하게 사용할 수 있어요
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+                            </div>
+                            <!-- /03. 클럽안내 > 회원사 -->
+
+                            <!-- 04. 클럽안내 > 후원사 -->
+                            <div style="display: block;">
+                                <div class="container-fluid no-margin">
+                                    <div class="row no-margin">
+                                        <div class="col-xs-12 no-margin" style="position: relative;">
+
+
+                                            <div class="club_supportlogo_wrap">
+                                                <img class="club_memberlogo" src="/imgs/ange/_blank_4by3.gif" style="background-image:url('/imgs/ange/clubsupport_logo_01.jpg');" />
+                                            </div>
+                                            <div class="club_supporttxt_wrap">
+                                                <div class="club_membertxt_title">
+                                                    메리포핀스 스튜디오
+                                                </div>
+                                                <div class="club_membertxt_desc">
+                                                    유럽풍의 고급스러운 분위기에서 아기들의 자연스러운 몸짓과 표정을 담아내며 동화 속 꿈과 환상을 마음껏 표현해주는 유아 전문 스튜디오입니다.
+                                                </div>
+                                                <div class="club_membertxt_phone">
+                                                    <small>
+                                                        <!--<a href = "tel:02-544-7033"><span class="glyphicon glyphicon-phone-alt"></span> 02-544-7033~4</a>-->
+                                                        <span class="glyphicon glyphicon-phone-alt"></span> 02-544-7033~4
+                                                    </small>
+                                                </div>
+                                                <div class="club_membertxt_url">
+                                                    <a href="http://www.poppins.co.kr/" target="_blank"><small>http://www.poppins.co.kr/</small></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_divider"></div>
+
+                                            <div class="club_supportlogo_wrap">
+                                                <img class="club_memberlogo" src="/imgs/ange/_blank_4by3.gif" style="background-image:url('/imgs/ange/clubsupport_logo_02.jpg');" />
+                                            </div>
+                                            <div class="club_supporttxt_wrap">
+                                                <div class="club_membertxt_title">
+                                                    앙쥬
+                                                </div>
+                                                <div class="club_membertxt_desc">
+                                                    0~36개월 아기와 아기엄마를 위한 육아잡지. 전문가와 선배엄마들의 조언은 물론, 임신/출산/육아에 관련된 실질적이고 다양한 정보가 가득 실려있습니다.
+                                                </div>
+                                                <div class="club_membertxt_phone">
+                                                    <small>
+                                                        <!--<a href = "tel:02-333-4650"><span class="glyphicon glyphicon-phone-alt"></span> 02-333-4650</a>-->
+                                                        <span class="glyphicon glyphicon-phone-alt"></span> 02-333-4650
+                                                    </small>
+                                                </div>
+                                                <div class="club_membertxt_url">
+                                                    <a href="http://www.ange.co.kr/" target="_blank"><small>http://www.ange.co.kr/</small></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_divider"></div>
+
+                                            <div class="club_supportlogo_wrap">
+                                                <img class="club_memberlogo" src="/imgs/ange/_blank_4by3.gif" style="background-image:url('/imgs/ange/clubsupport_logo_03.jpg');" />
+                                            </div>
+                                            <div class="club_supporttxt_wrap">
+                                                <div class="club_membertxt_title">
+                                                    웨스턴 조선호텔(코엑스점)
+                                                </div>
+                                                <div class="club_membertxt_desc">
+                                                    1941년 개관된 우리나라 최초의 서양식 호텔로 우리나라 호텔 역사의 산 증인 입니다. 각종 부대시설을 비롯, 최첨단 장비를 완비한 특 1급 호텔입니다.
+                                                </div>
+                                                <div class="club_membertxt_phone">
+                                                    <small>
+                                                        <!--<a href = "tel:02-6002-7000"><span class="glyphicon glyphicon-phone-alt"></span> 02-6002-7000</a>-->
+                                                        <span class="glyphicon glyphicon-phone-alt"></span> 02-6002-7000
+                                                    </small>
+                                                </div>
+                                                <div class="club_membertxt_url">
+                                                    <a href="http://www.echosunhotel.com/" target="_blank"><small>http://www.echosunhotel.com/</small></a>
+                                                </div>
+                                            </div>
+
+                                            <div class="club_memberproduct_divider"></div>
+
+
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+                            </div>
+                            <!-- /04. 클럽안내 > 후원사 -->
+
+                            <!-- 05. 클럽혜택 > 앙쥬클럽 회원혜택 -->
+                            <div style="display: block;">
+                                <div class="container-fluid no-margin">
+                                    <div class="row no-margin">
+                                        <div class="col-xs-12 no-margin" style="position: relative;">
+
+                                            <div style="height:75px;">
+                                                <div class="club_titlebox">
+                                                    앙쥬클럽 <span class="table_blue">회원혜택</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="contentbox_050 txt_left box01" style="position:relative; background-color:#f7f9f7;">
+
+                                                <img class="clubbenefit_centerbox" src="/imgs/ange/bg_clubbenefit_centerbox.png" />
+
+                                                <span class="club_benefit_title">01. 사진촬영캐쉬백</span>
+                                                <div class="club_benefit_body">
+                                                메리포핀스 ange club 후원 스튜디오에서 아기백일/돌/성장 사진을 찍으시면 <span class="table_green">촬영금액의 20%를 회원 계좌로 송금</span> 해 드립니다. 촬영 후 이름, 전화번호, 촬영금액, 계좌번호를 적어서 메일로 보내주세요. 확인 후 3일이내에 입금해드립니다.
+                                                <br/>
+                                                <span class="table_red" style="font-size:0.92em;">단, 스튜디오 할인행사 시 중복할인이 되지 않습니다.</span>
+                                                </div>
+                                            </div>
+                                            <div class="contentbox_050 txt_right box02" style="border:1px solid #f7f9f7;">
+                                                <span class="club_benefit_title">02. 육아잡지 모델</span>
+                                                <div class="club_benefit_body" style="float:right; width:60%;">
+                                                    육아잡지 앙쥬를 통해 ‘아기얼짱대회’등에 참여해 푸짐한 상품도 받고 <span class="table_green">잡지 모델로 선정</span>될 수 있는 기회를 드립니다.
+                                                </div>
+                                            </div>
+
+                                            <div class="contentbox_050 txt_left box03" style="border:1px solid #f7f9f7;">
+                                                <span class="club_benefit_title"">
+                                                    03. 마일리지로&nbsp;&nbsp; <br />
+                                                    &nbsp;&nbsp;구매하는&nbsp;&nbsp; <br />
+                                                    &nbsp;&nbsp;유아/생활용품
+                                                </span>
+                                                <div class="club_benefit_body">
+                                                    <span class="table_blue">앙쥬활동만하면 쌓이는 마일리지</span> 로
+                                                    <br /><a href="" style="font-size: 1.12em;">앙쥬스토어 </a>에 오시면
+                                                    아이에게 필요한 기저귀, 젖병, 장난감 등 유아용품은 물론 생활용품까지 구매할 수 있습니다.
+                                                </div>
+                                            </div>
+                                            <div class="contentbox_050 txt_right box04" style="background-color:#f7f9f7;">
+                                                <span class="club_benefit_title">04. 호텔 외식상품권</span>
+                                                <div class="club_benefit_body" style="float:right; width:65%;">
+                                                    ange club 후원 특급호텔에서
+                                                    돌잔치를 하실 경우
+                                                    <span class="table_green">10만원 상당의 외식상품권</span>을 드립니다.
+                                                    <br/>
+                                                    <span class="table_red" style="font-size:0.92em;">돌잔치가 끝난 후 호텔측에 말씀해주세요</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12 no-margin">
+                                                <div ng-model="ad" class="inven_themeup">
+                                                    <a class="ADbanner_image" title="배너타이틀">
+                                                        <!--<img ng-src="{{ad.FILE}}"/>-->
+                                                        <img img src="/imgs/ange/temp/bn_jumbo.jpg"/>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+                            </div>
+                            <!-- /05. 클럽혜택 > 앙쥬클럽 회원혜택 -->
+
+                            <!-- 06. 클럽혜택 > 앙쥬클럽 할인행사 -->
+                            <div style="display: block;">
+                                <div class="container-fluid no-margin">
+                                    <div class="row no-margin">
+                                        <div class="col-xs-12 no-margin" style="position: relative;">
+
+                                            <div class="clubevent_box">
+                                                <img src="/imgs/ange/_blank.gif" style="width:100%;" />
+                                                <div class="table_gray" style="position:absolute; left:50%; top: 71%; width:94%; margin-left: -150px; max-width:300px; font-size:0.86em; line-height:16px; word-break: keep-all;">
+                                                아기와 엄마를 위한 육아서를 만들어온 (주)무크하우스가 <strong>앙쥬클럽 회원만을 위한 대폭 할인행사혜택을 드립니다.</strong> <br />
+                                                ‘내 아기를 가장 똑똑하고 건강하게 키우고 싶은’ 엄마의 마음을 그대로 담은 <strong>&lt;육아 시리즈&gt; 도서와 함께 행복한 육아를 만끽하시기 바랍니다.<strong>
+                                                </div>
+                                            </div>
+                                            <div class="clubroll_box" style="float:right; position:relative; width:40%; border:2px solid #00c2df;">
+
+                                                <img src="/imgs/ange/_blank_story.gif" style="width:100%; margin-top:7%;" />
+
+                                                <div style="position:absolute; left:5px; bottom:5px; z-index:98; font-size: 1.64em;">
+                                                    <abbr title="세상에서 가장 소중한 낸 아기가 평생동안 사용하게 될 이름. 우리 들은 지금 어떻게 아기 이름을 짓고 있을까? 이책은 소중한 아기 에게 이름을 직접 지우주고 싶어 하는 젊은 부모를 위한 아주 쉽고 알찬 길라잡이다.">
+                                                        <span class="table_blue glyphicon glyphicon-search"></span>
+                                                        <span style="font-size: 0.4em;"></span>
+                                                    </abbr>
+                                                </div>
+
+                                                <div style="position:absolute; right:5px; bottom:5px;">
+                                                    <a class="miniboard_tab_slideprev" style="margin-top:-12px;" title="이전">이전슬라이드</a>
+                                                    <a class="miniboard_tab_slidenext" style="margin-top:-12px;" title="다음">다음슬라이드</a>
+                                                </div>
+
+                                                <div style="position:absolute; top:0px; left:0px; width:100%; padding:8%; ">
+
+                                                    <img class="club_book_thumb" src="/imgs/ange/_blank.gif" style="background-image:url('/imgs/ange/temp/book_babynaming.jpg');" />
+
+                                                    <div style="height:90px; max-width:200px; margin:0px auto; margin-top:7.6%; font-size:0.78em; font-weight:400; color:#6a6a6a; line-height:14px;">
+                                                        <div style="width:100%; text-align:center; color:#888;">신세대 부모를 위한 작명 길라잡이</div>
+                                                        <div style="width:100%; text-align:center; font-weight:600; color:#0baad1; font-size:1.64em; margin-top:10px;">베이비 네이밍</div>
+                                                        <div style="width:100%; text-align:center; margin:12px 0;">
+                                                            <del><span style="margin-right:8px;">12,000원</span></del>
+                                                            <span class="label label-danger">30%</span>
+                                                            <span style="font-weight:600;">8,400원</span>
+                                                        </div>
+                                                        <!--<abbr title="세상에서 가장 소중한 낸 아기가 평생동안 사용하게 될 이름. 우리 들은 지금 어떻게 아기 이름을 짓고 있을까? 이책은 소중한 아기 에게 이름을 직접 지우주고 싶어 하는 젊은 부모를 위한 아주 쉽고 알찬 길라잡이다.">내용보기</abbr>-->
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                            <!-- store_view -->
+                                            <div class="store_view_tab" style="float:left; width:100%; margin-top:18px;">
+                                                <ul class="nav nav-tabs">   <!--class="nav nav-tabs"-->
+                                                    <li class="active"><a>주의사항</a></li>
+                                                </ul>
+                                            </div>  <!-- /.store_view_tab -->
+
+                                            <div class="container-fluid peopleboard_view_contentwrap">
+                                                <div class="row">
+                                                    <div class="col-xs-12 peopleboard_view_contentbody">
+
+                                                        <ul class="store_warning" style="font-size:0.92em; color:#464646;">
+
+                                                            <li>도서는 <span class="table_red">무료배송</span> 됩니다.</li>
+                                                            <li><span class="table_red">전화주문</span>만 가능합니다.</li>
+                                                            <li>주문 시 <span class="table_blue">&lt;앙쥬클럽회원&gt;</span> 임을 말씀하셔야 할인혜택을 받을수 있습니다.</li>
+                                                            <li><span class="table_red">현금결제만</span> 가능합니다.(무통장입금)</li>
+                                                            <li>주문한 도서는 <span class="table_red">반품,환불,취소가 되지 않습니다.</span></li>
+                                                            <li>상기 이벤트는 도서 재고에 다라 사전 공지없이 종료될 수 있습니다.</li>
+
+                                                        </ul>
+
+                                                    </div><!-- /.col-12-->
+                                                </div><!-- /.row -->
+                                            </div><!-- /.container -->
+                                            <!-- /주의사항 -->
+
+                                            <div class="col-xs-12 no-margin">
+                                                <div ng-model="ad" class="inven_themeup">
+                                                    <a class="ADbanner_image" title="배너타이틀">
+                                                        <!--<img ng-src="{{ad.FILE}}"/>-->
+                                                        <img img src="/imgs/ange/temp/bn_jumbo.jpg"/>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+                            </div>
+                            <!-- /06. 클럽혜택 > 앙쥬클럽 할인행사 -->
+
+                            <!-- 07. 클럽게시판 > 앙쥬클럽 게시판 -->
+                            <div style="display: block;">
+                                <div class="container-fluid no-margin">
+                                    <div class="row no-margin">
+                                        <div class="col-xs-12 no-margin" style="position: relative;">
+
+                                            일반게시판 삽입됩니다.<br />
+                                            게시판 접근권한은 앙쥬클럽 회원만 가능합니다.
+
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+                            </div>
+                            <!-- /07. 클럽게시판 > 앙쥬클럽 게시판 -->
 
                         </div><!-- /.sub_contents_wrap -->
-
-
-                        <div ng-show="step == '01'" class="sub_contents_body">
-
-                        </div><!-- /.sub_contents_body -->
-
-                        <div ng-show="step == '02'" class="sub_contents_body">
-
-                        </div><!-- /.sub_contents_body -->
-
-                        <div ng-show="step == '03'" class="sub_contents_body">
-
-                        </div><!-- /.sub_contents_body -->
-
-                        <div ng-show="step == '04'" class="sub_contents_body">
-
-                        </div><!-- /.sub_contents_body -->
 
                     </div>
                 </div>
@@ -95,7 +620,9 @@
 
     </div>
 
-
+    <div class="subar sub-slide1">
+        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+    </div>
 
     <!-- /Main Page Layout Set -->
 </div>
