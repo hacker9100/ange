@@ -1,0 +1,77 @@
+/* ++ange company common css  */
+
+.company_tabs {
+    float:left;
+    padding:10px 0;
+    width:24%;
+    border:1px solid #ddd;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #646464;
+    font-size: 0.92em;
+    cursor: pointer;
+    background-color: #ebebeb;
+}
+
+.company_tabs.center {
+    float:left;
+    width:1%;
+    background: none;
+    border:none;
+    margin-top:1px;
+    border-bottom: 1px solid #ddd;
+}
+
+.company_tabs:hover {
+    background-color:#efefef;
+    color:#333;
+}
+
+.company_tabs.selected {
+    border-bottom: none;
+    background-color: #fff;
+    cursor: default;
+    z-index: 99;
+}
+
+.company_intro_wrap {
+    float:left;
+    width:95%;
+    margin:0px auto;
+    margin-top:60px;
+}
+
+.company_introballoon {
+    float:left;
+    width:25%;
+    text-align:center;
+    padding:32px 0;
+    border:1px solid transparent;
+    border-radius:12px;
+    background-image: url('/imgs/ange/bg_cart_ordernum.jpg');
+    background-position: right -75px top 0px;
+    background-size: cover;
+}
+
+.company_introballoon_no {
+    font-family: arial, sans-serif;
+    font-size:1.42em;
+}
+
+.company_introballoon_title {
+    font-size:1.24em;
+    font-weight:400;
+    margin-top:10px;
+}
+
+.company_introtxt {
+    float:right;
+    width:74%;
+    color:#666;
+    word-break: keep-all;
+    line-height:24px;
+    text-align:justify;
+    padding:4px 12px;
+}
+
+
