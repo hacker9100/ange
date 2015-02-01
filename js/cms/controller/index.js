@@ -30,7 +30,7 @@ define([
     '../../../partials/cms/project-edit.min',
     '../../../partials/cms/project-view.min',
     '../../../partials/cms/task-list',
-    '../../../partials/cms/task-edit.min',
+    '../../../partials/cms/task-edit',
     '../../../partials/cms/task-view.min',
     '../../../partials/cms/content-edit',
     '../../../partials/cms/content-view.min',
@@ -47,7 +47,7 @@ define([
     '../../../partials/cms/series-main.min',
     '../../../partials/cms/section-main.min',
     // CMS 부가기능
-    '../../../partials/cms/contact-list.min'
+    '../../../partials/cms/contact-list'
 
 //    '../../../partials/cms/portlet-list',
 //

@@ -1,6 +1,6 @@
 
 <div class="lnb_handle">
-    <div class="lnb_handle_wrap">
+    <div ng-show="channel.CHANNEL_NO == 1" class="lnb_handle_wrap">
 
         <span class="label label-danger">콘텐츠 모아보기</span>
 
@@ -69,5 +69,12 @@
             <!-- a class="lnb_handle_close glyphicon glyphicon-chevron-down"></a -->
         </div>
 
+    </div>
+
+    <div ng-show="channel.CHANNEL_NO != 1" class="lnb_handle_wrap">
+        <div class="lnb_handle_wrap_right" style="float:right; height:22px; width:30px; padding:0; margin:0;">
+            <a class="lnb_handle_close glyphicon glyphicon-chevron-up"></a>
+            <!-- a class="lnb_handle_close glyphicon glyphicon-chevron-down"></a -->
+        </div>
     </div>
 </div>

@@ -151,16 +151,16 @@
         <!-- List -->
         <table ng-table="tableParams" class="table" style="border-bottom: 1px solid #868686;">
             <tr ng-repeat="item in $data">
-                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="''">
+                <td style="width:20px; font-size:0.94em; line-height:38px;" class="text-center" data-title="''">
                     <input ng-model="item.CHECKED" type= "checkbox" checklist-model="check_user" checklist-value="item.USER_ID"/>
                 </td>
-                <td style="font-size:0.94em; line-height:38px;" class="text-center" data-title="'계정'">
+                <td style="font-size:0.94em; line-height:38px;" class="text-center" data-title="'아이디(이름)/닉네임'">
                     <a style="cursor:pointer;" ng-click="click_showViewCmsBoard(item.NO)" title="{{ item.SUBJECT + ' 내용보기' }}">
-                        {{ item.USER_NM + '(' + item.NICK_NM + ')' + item.USER_ID }}
+                        {{ item.USER_ID + '(' + item.USER_NM + ')' }} <br> {{ item.NICK_NM }}
                     </a>
                 </td>
                 <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'연락처'">
-                    {{ item.PHONE_1 + item.PHONE_2 }}
+                    {{ item.PHONE_1 }} <br> {{ item.PHONE_2 }}
                 </td>
                 <td ng-show="search.ACT == 'A'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'현황'">
                     {{ item.SEX_GB == 'M' ? '남자': '여자'}} ( {{ item.MARRIED_FL == 'Y' ? '기혼' : '미혼' }} ) <br> 자녀 ( {{ item.BABY_CNT }} )
@@ -169,16 +169,20 @@
                     {{ item.EMAIL }} <br> ( {{ item.SNS }} )
                 </td>
                 <td ng-show="search.ACT == 'C'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'현황(글수)'">
-                    게시( {{ item.BOARD_CNT }} ) 댓글 ( {{ item.REPLY_CNT }} )
+                    게시(
+                    <a style="cursor:pointer;" ng-click="click_selectWriteList(item)" title="{{ item.USER_NM + ' 게시물 보기' }}">
+                        {{ item.BOARD_CNT }}
+                    </a>
+                    ) 댓글 ( {{ item.REPLY_CNT }} )
                 </td>
                 <td ng-show="search.ACT == 'C'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'공감/랭킹'">
                     {{ item.LIKE_CNT }} / {{ item.LANK}}
                 </td>
-                <td ng-show="search.ACT == 'P'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'현황(당첨/참여)'">
-                    이벤트 ( {{ item.EXPERIENCE_WINNER_CNT }} / {{ item.EXPERIENCE_COMP_CNT }} ) 체험단 ( {{ item.EVENT_WINNER_CNT }} / {{ item.EVENT_COMP_CNT }} )
+                <td ng-show="search.ACT == 'P'" style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'현황(당첨/참여)'">
+                    이벤트 ( {{ item.EXPERIENCE_WINNER_CNT }} / {{ item.EXPERIENCE_COMP_CNT }} ) <br> 체험단 ( {{ item.EVENT_WINNER_CNT }} / {{ item.EVENT_COMP_CNT }} )
                 </td>
                 <td ng-show="search.ACT == 'P'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'리뷰'">
-                    작성( {{ item.REVIEW_CNT }} ) 미작성( {{ item.REVIEW_CNT }} )
+                    작성( {{ item.REVIEW_CNT }} ) <br>  미작성( {{ item.REVIEW_CNT }} )
                 </td>
                 <td ng-show="search.ACT == 'B'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'현황(포스트)'">
                     {{ item.POST_CNT }}
@@ -190,10 +194,26 @@
                     {{ item.PHASE }}
                 </td>
                 <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'Point(Score)'">
-                    {{ item.REMAIN_POINT }} ( {{ item.SCORE }} )
+                    <a style="cursor:pointer;" ng-click="click_selectMileageList(item)" title="{{ item.USER_NM + ' 마일리지 보기' }}">
+                        {{ item.REMAIN_POINT }}
+                    </a>
+                    ( {{ item.SCORE }} )
                 </td>
                 <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'가입(최종접속)'">
                     {{ item.REG_DT }} <br> ( {{ item.FINAL_LOGIN_DT }} )
+                </td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'상태'">
+                    <div ng-show="item.USER_ID == selectUser && isStatus">
+                        <select ng-model="item.USER_ST" class= "form-control" ng-change="change_userStatus(item)">
+                            <option value="N">정상</option>
+                            <option value="P">불량</option>
+                            <option value="D">휴면</option>
+                            <option value="S">탈퇴</option>
+                        </select>
+                    </div>
+                    <div ng-show="item.USER_ID != selectUser">
+                        {{ item.USER_ST == "N" ? "정상" : item.USER_ST == "P" ? "불량" : item.USER_ST == "O" ? "휴면" : item.USER_ST == "S" ? "탈퇴" : "대기"  }}
+                    </div>
                 </td>
                 <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'유형'">
                     <span ng-if="item.NEW_USER == 'Y'">New</span>
@@ -202,6 +222,7 @@
                 <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'기능'">
                     <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="상세보기" ng-click="click_showViewCmsBoard(item.NO)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                     <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="내용편집" ng-click="click_showEditCmsBoard(item)" ng-disabled=""><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="상태변경" ng-click="click_changeStatusUser(item)" ng-disabled=""><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                     <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-click="click_deleteCmsBoard(item)" ng-disabled=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                     <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-if="menu == 'save'" ng-click="click_removeUser(item)" ng-disabled=""><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
                 </td>
@@ -213,69 +234,6 @@
         <!-- ////List -->
 
     </div>
-    <!--&lt;!&ndash; ////Contents Include &ndash;&gt;-->
-
-    <!--<div id="feedLoading" ng-show="isLoading">Loading...</div>-->
-
-    <!--&lt;!&ndash; Contents Include &ndash;&gt;-->
-    <!--&lt;!&ndash; 목록 &ndash;&gt;-->
-    <!--<table class="table table-striped table-condensed" >-->
-        <!--<thead>-->
-        <!--<tr>-->
-            <!--<th></th>-->
-            <!--<th>계정</th>-->
-            <!--<th>연락처</th>-->
-            <!--<th ng-if="search.ACT == 'A'">현황</th>-->
-            <!--<th ng-if="search.ACT == 'A'">Email/SNS</th>-->
-            <!--<th ng-if="search.ACT == 'C'">현황(글수)</th>-->
-            <!--<th ng-if="search.ACT == 'C'">공감/랭킹</th>-->
-            <!--<th ng-if="search.ACT == 'P'">현황(당첨/참여)</th>-->
-            <!--<th ng-if="search.ACT == 'P'">리뷰</th>-->
-            <!--<th ng-if="search.ACT == 'B'">현황(포스트)</th>-->
-            <!--<th ng-if="search.ACT == 'B'">방문(오늘/전체)</th>-->
-            <!--<th ng-if="search.ACT == 'B'">단계</th>-->
-            <!--<th>Point(Score)</th>-->
-            <!--<th>가입(최종접속)</th>-->
-            <!--<th>상태</th>-->
-            <!--<th>기능</th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-        <!--<tbody>-->
-        <!--<tr ng-repeat="item in list">-->
-            <!--<td><input ng-model="item.CHECKED" type= "checkbox" checklist-model="check_user" checklist-value="item.USER_ID"/></td>-->
-            <!--<td>{{ item.USER_NM + '(' + item.NICK_NM + ')' + item.USER_ID }}</td>-->
-            <!--<td>{{ item.PHONE_1 + item.PHONE_2 }}</td>-->
-            <!--<td ng-if="search.ACT == 'A'">{{ item.SEX_GB == 'M' ? '남자': '여자'}} ( {{ item.MARRIED_FL == 'Y' ? '기혼' : '미혼' }} ) <br> 자녀 ( {{ item.BABY_CNT }} )</td>-->
-            <!--<td ng-if="search.ACT == 'A'">{{ item.EMAIL }} <br> ( {{ item.SNS }} )</td>-->
-            <!--<td ng-if="search.ACT == 'C'">게시( {{ item.BOARD_CNT }} ) 댓글 ( {{ item.REPLY_CNT }} )</td>-->
-            <!--<td ng-if="search.ACT == 'C'">공감()</td>-->
-            <!--<td ng-if="search.ACT == 'P'">이벤트 ( {{ item.EXPERIENCE_WINNER_CNT }} / {{ item.EXPERIENCE_COMP_CNT }} ) 체험단 ( {{ item.EVENT_WINNER_CNT }} / {{ item.EVENT_COMP_CNT }} )</td>-->
-            <!--<td ng-if="search.ACT == 'P'">작성( {{ item.REVIEW_CNT }} ) 미작성( {{ item.REVIEW_CNT }} )</td>-->
-            <!--<td ng-if="search.ACT == 'B'">현황(포스트)</td>-->
-            <!--<td ng-if="search.ACT == 'B'">방문()</td>-->
-            <!--<td ng-if="search.ACT == 'B'">단계</td>-->
-            <!--<td>포인트</td>-->
-            <!--<td>{{ item.REG_DT }} <br> ( {{ item.FINAL_LOGIN_DT }} )</td>-->
-            <!--<td>-->
-                <!--<span ng-if="item.NEW_USER == 'Y'">New</span>-->
-                <!--{{ item.USER_GB == 'C' ? '앙쥬클럽' : item.USER_GB == 'S' ? '서포터즈' : '일반' }}-->
-            <!--</td>-->
-            <!--&lt;!&ndash;<td>{{ item.USER_ST == 'F' ? '불량' : item.USER_ST == 'D' ? '휴면' : item.USER_ST == 'S' ? '탈퇴' : '정상' }}</td>&ndash;&gt;-->
-            <!--<td>-->
-                <!--<a ng-click="test()">TEST</a>-->
-                <!--<a ng-click="click_showViewUser(item.USER_ID)">V</a>-->
-                <!--<a ng-if="menu != 'save'" ng-click="click_showEditUser(item)">수정</a>-->
-                <!--<a ng-if="menu != 'save'" ng-click="click_deleteUser(item)">B</a>-->
-
-                <!--<a ng-if="menu == 'save'" ng-click="click_removeUser(item)">-</a>-->
-            <!--</td>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-    <!--</table>-->
-
-    <!--&lt;!&ndash; 페이징 &ndash;&gt;-->
-    <!--<pagination boundary-links="true" total-items="TOTAL_CNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>-->
-    <!--&lt;!&ndash; ////Contents Include &ndash;&gt;-->
 </div>
 
 <script type="text/ng-template" id="save_list_popup.html">
@@ -295,9 +253,6 @@
                 </div><!-- /.row -->
             </div>
         </div>
-    </div>
-    </div>
-    </div>
     </div>
     <div class="modal-footer">
         <button class="btn btn-primary" ng-click="click_reg();">등록</button>
@@ -353,9 +308,6 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
     <div class="modal-footer">
         <button class="btn btn-primary" ng-click="click_reg();">등록</button>
         <button class="btn btn-primary" ng-click="click_close();">닫기</button>
@@ -363,28 +315,30 @@
 </script>
 
 <script type="text/ng-template" id="mileage_popup.html">
-    <div class="modal-header">
-        <h3 class="modal-title">마일리지 적립</h3>
+    <div class="modal-header article_windowtitle">
+        마일리지 적립
+        <a ng-click="click_ok()" style="float:right; cursor:pointer;">Close</a>
     </div>
     <div class="modal-body">
-        <div class="row" class="form-horizontal">
-            <div class= "form-group">
-                <div class="row peopleboard_view_basicinfo">
-                    <div class="col-xs-3" style="padding:0;">
-                        마일리지
-                    </div><!-- /.col-xs-2-->
-                    <div class="col-xs-8" style="padding-left:5px;">
-                        <input type="text" ng-model="item.POINT" placeholder="포인트"/><!--{{item.FROM_ID}}-->
-                    </div><!-- /.col-xs-4-->
-                </div><!-- /.row -->
+        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+            <div class="row form_basic_wrap">
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">마일리지 <span style="color:#b94a48">*</span></label>
+                    <div class= "col-md-4 form_basic_input">
+                        <input type="text" ng-model="item.POINT" class= "form-control" placeholder="포인트"/><!--{{item.FROM_ID}}-->
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">사유 </label>
+                    <div class= "col-md-6 form_basic_input">
+                        <input type="text" ng-model="item.REASON" class= "form-control" placeholder="사유"/><!--{{item.FROM_ID}}-->
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    </div>
-    </div>
+        </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="click_reg();">등록</button>
-        <button class="btn btn-primary" ng-click="click_close();">닫기</button>
+        <button class="btn btn-default btn-sm" style="margin:0px auto;" ng-click="click_reg();">등록</button>
+        <button class="btn btn-default btn-sm" style="margin:0px auto;" ng-click="click_close();">닫기</button>
     </div>
 </script>

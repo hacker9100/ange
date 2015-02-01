@@ -23,42 +23,44 @@ define(['./directives'], function (directives) {
                         channel = scope.ange_channel[i];
                     }
                 }
+                var templet = '';
 
-                var templet = '<div ng-if="'+ (path[1] != 'main') + '" id="lnb" class="lnb"' +
+                if (channel.CHANNEL_NO <= 6) {
+                    templet += '<div ng-if="'+ (path[1] != 'main') + '" id="lnb" class="lnb"' +
                                 '   <div class="localmenu_wrap">' +
                                 '       <div ng-include=" \'/partials/ange/com/lnb-filter.html\' "></div>';
 
-                for (var j in channel.MENU_INFO) {
-                    if (channel.MENU_INFO[j].DIVIDER_FL == 'Y' && j != 0) {
-                        templet += '</div></div>';
-                    }
+                    for (var j in channel.MENU_INFO) {
+                        if (channel.MENU_INFO[j].DIVIDER_FL == 'Y' && j != 0) {
+                            templet += '</div></div>';
+                        }
 
-                    if (channel.MENU_INFO[j].DIVIDER_FL == 'Y') {
-                        templet += '<div class="localmenu_col_'+channel.COLUMN_CNT+'"><div class="localmenu_block">';
-                    }
+                        if (channel.MENU_INFO[j].DIVIDER_FL == 'Y') {
+                            templet += '<div class="localmenu_col_'+channel.COLUMN_CNT+'"><div class="localmenu_block">';
+                        }
 
-                    if (channel.MENU_INFO[j].DEPTH == '1') {
-                        templet += '<a class="localmenu_link main '+angular.lowercase(channel.MENU_INFO[j].CLASS_GB)+'" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
-                    } else {
-                        if (channel.MENU_INFO[j].ETC == 'DOWNLOAD') {
-                            templet += '<a target="_self" href="'+UPLOAD.BASE_URL+'/admin/'+channel.MENU_INFO[j].FILE_ID+'" download="'+channel.MENU_INFO[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                        if (channel.MENU_INFO[j].DEPTH == '1') {
+                            templet += '<a class="localmenu_link main '+angular.lowercase(channel.MENU_INFO[j].CLASS_GB)+'" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
                         } else {
-                            templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                            if (channel.MENU_INFO[j].ETC == 'DOWNLOAD') {
+                                templet += '<a target="_self" href="'+UPLOAD.BASE_URL+'/admin/'+channel.MENU_INFO[j].FILE_ID+'" download="'+channel.MENU_INFO[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                            } else {
+                                templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                            }
+                        }
+
+                        if (channel.MENU_INFO[j].TAIL_DESC != null)
+                            templet += '<span class="localmenu_comment">'+channel.MENU_INFO[j].TAIL_DESC+'</span>';
+
+                        if (j == channel.MENU_INFO.length - 1 ) {
+                            templet += '</div></div>';
                         }
                     }
 
-                    if (channel.MENU_INFO[j].TAIL_DESC != null)
-                        templet += '<span class="localmenu_comment">'+channel.MENU_INFO[j].TAIL_DESC+'</span>';
-
-                    if (j == channel.MENU_INFO.length - 1 ) {
-                        templet += '</div></div>';
-                    }
+                    templet += '       <div ng-include=" \'/partials/ange/com/lnb-handle.html\' "></div>' +
+                            '   </div>' +
+                            '</div>';
                 }
-
-                templet += '       <div ng-include=" \'/partials/ange/com/lnb-handle.html\' "></div>' +
-                        '   </div>' +
-                        '</div>';
-
                 return templet;
             },
             controller: ['$scope', '$location', function($scope, $location) {

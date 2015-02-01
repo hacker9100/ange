@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('member-list', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $stateParams, $location, $filter, dialogs, ngTableParams, CONSTANT) {
+    controllers.controller('member-list', ['$scope', '$stateParams', '$location', '$filter', '$q', '$modal', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $stateParams, $location, $filter, $q, $modal, dialogs, ngTableParams, CONSTANT) {
 
         /********** 초기화 **********/
         // 검색 조건
@@ -372,6 +372,53 @@ define([
             });
         };
 
+        // 사용자 마일리지 선택 버튼 클릭
+        $scope.click_selectMileageList = function (item) {
+            $scope.openPopupMileageListModal(true, {USER_ID : item.USER_ID});
+        }
+
+        $scope.openPopupMileageListModal = function (modal, search, size) {
+            var dlg = dialogs.create('/partials/admin/popup/member-mileage-list.html',
+                ['$modalInstance', function ($modalInstance) {
+                    $scope.isModal = true;
+                    $scope._search = search;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+
+                }], search, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        }
+
+
+        // 사용자 게시물 선택 버튼 클릭
+        $scope.click_selectWriteList = function (item) {
+            $scope.openPopupWriteListModal(true, {USER_ID : item.USER_ID});
+        }
+
+        $scope.openPopupWriteListModal = function (modal, search, size) {
+            var dlg = dialogs.create('/partials/admin/popup/member-write-list.html',
+                ['$modalInstance', function ($modalInstance) {
+                    $scope.isModal = true;
+                    $scope._search = search;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+
+                }], search, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        }
+
         // 조회 화면 이동
         $scope.click_showViewUser = function (key) {
             $location.url('/member/view/'+key);
@@ -380,6 +427,26 @@ define([
         // 수정 화면 이동
         $scope.click_showEditUser = function (item) {
             $location.url('/member/edit/'+item.NO);
+        };
+
+        $scope.isStatus = false;
+        $scope.selectUser = '';
+
+        // 상태 변경 기능 클릭
+        $scope.click_changeStatusUser = function (item) {
+            $scope.isStatus = true;
+            $scope.selectUser = item.USER_ID;
+        };
+
+        // 상태 변경 기능 클릭
+        $scope.change_userStatus = function (item) {
+            $scope.updateItem('com/user', 'status', item.USER_ID, item, true)
+                .then(function(data){
+                    dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+                    $scope.isStatus = false;
+                    $scope.selectUser = '';
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 자주쓰는 목록 사용자 제거

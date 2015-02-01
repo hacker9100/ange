@@ -73,35 +73,41 @@
             } else if($_type == 'list'){
 
                 // 검색조건 추가
-                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+                if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
                     $search_where .= "AND AUM.USER_ID = '".$_SESSION['uid']."'";
+                }
+
+                // 검색조건 추가
+                if (isset($_search['USER_ID']) && $_search['USER_ID'] != "") {
+                    $search_where .= "AND AUM.USER_ID = '".$_search['USER_ID']."'";
                 }
 
                 $limit = "";
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
-                $sql = " SELECT USER_ID, REASON, POINT, EARN_GB, EARN_DT,@RNUM := @RNUM + 1 AS RNUM
-                    FROM
-                    (
-                        SELECT AUM.USER_ID,
+                $sql = "SELECT TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                            USER_ID, REASON, POINT, EARN_GB, PLACE_GB, EARN_DT
+                        FROM
+                        (
+                            SELECT AUM.USER_ID,
                                  (SELECT REASON FROM ANGE_MILEAGE WHERE NO = AUM.MILEAGE_NO) AS REASON,
                                  (SELECT POINT FROM ANGE_MILEAGE WHERE NO = AUM.MILEAGE_NO) AS POINT,
-                                 AUM.EARN_GB, AUM.EARN_DT
-                        FROM ANGE_USER_MILEAGE AUM
-                        WHERE 1=1
-                         ".$search_where."
-                         ".$limit."
-                    ) AS DATA,
-                    (SELECT @RNUM := 0) R,
-                    (
-                        SELECT COUNT(*) AS TOTAL_COUNT
-                        FROM ANGE_USER_MILEAGE AUM
-                        WHERE 1=1
-                         ".$search_where."
-                    ) CNT
+                                 AUM.EARN_GB, AUM.PLACE_GB, AUM.EARN_DT
+                            FROM ANGE_USER_MILEAGE AUM
+                            WHERE 1=1
+                             ".$search_where."
+                             ".$limit."
+                        ) AS DATA,
+                        (SELECT @RNUM := 0) R,
+                        (
+                            SELECT COUNT(*) AS TOTAL_COUNT
+                            FROM ANGE_USER_MILEAGE AUM
+                            WHERE 1=1
+                             ".$search_where."
+                        ) CNT
 
                 ";
 
@@ -244,7 +250,8 @@
                             MILEAGE_NO,
                             EARN_GB,
                             PLACE_GB,
-                            POINT
+                            POINT,
+                            REASON
                         ) VALUES (
                             '".$row[USER_ID]."'
                             , SYSDATE()
@@ -252,6 +259,7 @@
                             , '".$_model[EARN_GB]."'
                             , '".$_model[PLACE_GB]."'
                             , '".$_model[POINT]."'
+                            , '".$_model[REASON]."'
                         )";
 
                     $_d->sql_query($sql);

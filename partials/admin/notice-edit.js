@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('notice-edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('notice-edit', ['$scope', '$stateParams', '$location', '$q', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, $q, dialogs, UPLOAD) {
 
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
@@ -28,21 +28,25 @@ define([
         $scope.item = {};
 
         // 초기화
-        $scope.init = function(session) {
+        $scope.init = function() {
+            var deferred = $q.defer();
 
+            $scope.getList('ange/community', 'list', null, {SYSTEM_GB: 'ANGE', COMM_GB: 'NOTICE'}, false)
+                .then(function(data){
+                    $scope.comm = data;
+                    $scope.item.COMM = data[0];
+
+                    deferred.resolve();
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+            return deferred.promise;
         };
 
         // CK Editor
         $scope.$on("ckeditor.ready", function( event ) {
             $scope.isReady = true;
         });
-        $scope.ckeditor = '<p>Hello</p>';
-
-//        $scope.ckeditor = '<div><p>\n<p>aaa</div>'+
-//        '<div class= "form-group" id="dropzone" name="dropzone" style="width:100%; height:100px; background-color: #f5f5f5; border: 1px solid #ddd transparent; text-align: center; font-weight: bold;">' +
-//        '이미지를 여기에 드래그 앤 드롭하여 등록할 수 있습니다.<br />' +
-//        '(gif, jpg, png만 등록 가능)' +
-//        '</div>';
 
         /********** 이벤트 **********/
         // 게시판 목록 이동
@@ -62,6 +66,13 @@ define([
                         for(var i in files) {
                             $scope.queue.push({"no":files[i].NO, "name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE", "isUpdate": true});
                         }
+
+                        for (var i in $scope.comm) {
+                            if ($scope.comm[i].NO == $scope.item.COMM_NO) {
+                                $scope.item.COMM = $scope.comm[i];
+                                break;
+                            }
+                        }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -70,7 +81,7 @@ define([
         // 게사판 저장 버튼 클릭
         $scope.click_saveNotice = function () {
             $scope.item.SYSTEM_GB = 'ANGE';
-            $scope.item.COMM_NO = '14';
+            $scope.item.COMM_NO = $scope.item.COMM.COMM_NO;
             $scope.item.FILES = $scope.queue;
 
             for(var i in $scope.item.FILES) {

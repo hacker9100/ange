@@ -34,7 +34,7 @@ define([
         // 초기화
         $scope.init = function() {
             // 검색어 조건
-            var condition = [{name: "커뮤니티명", value: "COMM_NM"}, {name: "전문가", value: "COMM_MG"}];
+            var condition = [{name: "상담실명", value: "COMM_NM"}, {name: "전문가", value: "COMM_MG"}];
 
             $scope.conditions = condition;
             $scope.search.CONDITION = condition[0];
@@ -207,6 +207,7 @@ define([
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getCommunityList)
             .catch($scope.reportProblems);

@@ -50,6 +50,10 @@ define([
             case 'people' :
                 $scope.ui_wraptype = 'sub_content_wrap';
                 break;
+            case 'club' :
+            case 'company' :
+                $scope.ui_wraptype = '';
+                break;
             default :
                 $scope.ui_wraptype = 'sub_content_wrap';
         }

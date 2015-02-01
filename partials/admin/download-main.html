@@ -59,9 +59,9 @@
                 </div>
             </div>
             <div class= "form-group form_basic_group" ng-class="{error: edit_form.item_ord.$invalid}">
-                <label class= "form_basic_label">순번 <span style="color:#b94a48">*</span></label>
-                <div class="col-xs-6 form_basic_input">
-                    <input id="item_ord" name="item_ord" ng-model="item.MENU_ORD" type= "text" class= "form-control" placeholder="순번" required/>
+                <label class= "form_basic_label">순번</label>
+                <div class="col-xs-3 form_basic_input">
+                    <input id="item_ord" name="item_ord" ng-model="item.MENU_ORD" type= "text" class= "form-control" placeholder="순번" style="cursor:default; background-color: white;" readonly/>
                     <span ng-show="edit_form.item_ord.$dirty && edit_form.item_ord.$invalid" class="help-inline">순번이 누락되었습니다.</span>
                 </div>
             </div>
@@ -72,9 +72,9 @@
                 <div class= "form-group form_basic_group">
                     <label class= "form_basic_label">다운로드 파일</label>
                     <div class="row" style="margin-left:110px;">
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <div ng-model="file">
-                                <input ng-model="file.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                                <input ng-model="file.name" type= "text" class= "form-control" style="cursor:default; background-color: white;" readonly/>
                             </div>
                         </div>
                         <div class="col-sm-2 files">
