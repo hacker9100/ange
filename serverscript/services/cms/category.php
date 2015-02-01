@@ -61,6 +61,9 @@
                 if (isset($_search[CATEGORY_GB]) && $_search[CATEGORY_GB] != "") {
                     $search_where .= "AND C.CATEGORY_GB  = '".$_search[CATEGORY_GB]."' ";
                 }
+                if (isset($_search[CATEGORY_ST]) && $_search[CATEGORY_ST] != "") {
+                    $search_where .= "AND C.CATEGORY_ST  = '".$_search[CATEGORY_ST]."' ";
+                }
                 if (isset($_search[PARENT_NO])) {
                     $search_where .= "AND C.PARENT_NO = ".$_search[PARENT_NO]." ";
                 }

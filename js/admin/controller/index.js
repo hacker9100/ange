@@ -41,6 +41,8 @@ define([
 //    '../../../partials/admin/clinic-edit',
     '../../../partials/admin/download-main',
     '../../../partials/admin/faq-list',
+    '../../../partials/admin/faq-edit',
+    '../../../partials/admin/faq-view',
 
     // ADMIN 스토어 관리
     '../../../partials/admin/product-list',

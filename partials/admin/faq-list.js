@@ -14,7 +14,7 @@ define([
     controllers.controller('faq-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
 
         /********** 초기화 **********/
-        $scope.search = {SYSTEM_GB: 'ANGE', BOARD_GB: 'NOTICE'};
+        $scope.search = {SYSTEM_GB: 'ANGE', BOARD_GB: 'FAQ', CATEGORY: true};
 
         // 초기화
         $scope.init = function() {
@@ -27,32 +27,32 @@ define([
 
         /********** 이벤트 **********/
         // 등록 버튼 클릭
-        $scope.click_showCreateNewNotice = function () {
+        $scope.click_showCreateNewFaq = function () {
             if ($rootScope.role != 'ANGE_ADMIN') {
                 dialogs.notify('알림', "등록 권한이 없습니다.", {size: 'md'});
                 return;
             }
 
-            $location.url('/notice/edit/0');
+            $location.url('/faq/edit/0');
         };
 
         // 조회 화면 이동
-        $scope.click_showViewNotice = function (key) {
-            $location.url('/notice/view/'+key);
+        $scope.click_showViewFaq = function (key) {
+            $location.url('/faq/view/'+key);
         };
 
         // 수정 화면 이동
-        $scope.click_showEditNotice = function (item) {
+        $scope.click_showEditFaq = function (item) {
             if ($rootScope.role != 'ANGE_ADMIN' && $rootScope.uid != item.REG_UID) {
                 dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
                 return;
             }
 
-            $location.path('/notice/edit/'+item.NO);
+            $location.path('/faq/edit/'+item.NO);
         };
 
         // 삭제 버튼 클릭
-        $scope.click_deleteNotice = function (item) {
+        $scope.click_deleteFaq = function (item) {
             if ($rootScope.role != 'ANGE_ADMIN' && $rootScope.uid != item.REG_UID) {
                 dialogs.notify('알림', '삭제 권한이 없습니다.', {size: 'md'});
                 return;
@@ -70,7 +70,7 @@ define([
         };
 
         // 검색 버튼 클릭
-        $scope.click_searchNotice = function () {
+        $scope.click_searchFaq = function () {
             $scope.tableParams.$params.page = 1;
             $scope.tableParams.reload();
         };
@@ -79,7 +79,7 @@ define([
         $scope.PAGE_SIZE = 10;
 
         // 게시판 목록 조회
-        $scope.getNoticeList = function () {
+        $scope.getFaqList = function () {
             $scope.tableParams = new ngTableParams({
                 page: 1,                    // show first page
                 count: $scope.PAGE_SIZE,    // count per page
@@ -109,19 +109,13 @@ define([
                         .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
                 }
             });
-
-//            $scope.isLoading = true;
-//            $scope.getList('com/webboard', 'list', {NO:0, SIZE:20}, $scope.search, true)
-//                .then(function(data){$scope.listData = data; $scope.totalItems = data[0].TOTAL_COUNT;})
-//                .catch(function(error){$scope.list = []; console.log(error);})
-//                .finally(function(){$scope.isLoading = false;});
         };
 
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
-            .then($scope.getNoticeList)
+            .then($scope.getFaqList)
             .catch($scope.reportProblems);
     }]);
 });
