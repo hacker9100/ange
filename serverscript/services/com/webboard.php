@@ -58,20 +58,22 @@
                 $err = 0;
                 $msg = "";
 
-                $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT , SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO,
-                    REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, PHOTO_TYPE, PHOTO_GB,NICK_NM, FAQ_TYPE, FAQ_GB, BOARD_NO,
-                    CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD,
-                    (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/recipearcade/list') AND TYPE = PHOTO_TYPE) AS PHOTO_CATEGORY
-                    FROM (
-                        SELECT
-                          B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
-                          (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT, B.BOARD_GB, B.COMM_NO
-                          , B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.PHOTO_TYPE, B.PHOTO_GB, B.NICK_NM, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO, B.PASSWORD
-                        FROM
-                          COM_BOARD B
-                        WHERE
-                          B.NO = ".$_key."
-                        )  A";
+                $sql = "SELECT
+                            NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT , SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM,
+                            REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, PHOTO_TYPE, PHOTO_GB,NICK_NM, FAQ_TYPE, FAQ_GB, BOARD_NO,
+                            CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD,
+                            (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/recipearcade/list') AND TYPE = PHOTO_TYPE) AS PHOTO_CATEGORY
+                        FROM (
+                            SELECT
+                                B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
+                                (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT, B.BOARD_GB, B.COMM_NO, C.COMM_NM,
+                                B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.PHOTO_TYPE, B.PHOTO_GB, B.NICK_NM, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO, B.PASSWORD
+                            FROM
+                              COM_BOARD B
+                              LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
+                            WHERE
+                              B.NO = ".$_key."
+                            )  A";
                 $result = $_d->sql_query($sql);
                 $data = $_d->sql_fetch_array($result);
 
@@ -98,6 +100,20 @@
                 if($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
+                }
+
+                if (isset($_search['CATEGORY'])) {
+                    $sql = "SELECT
+                                C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
+                            FROM
+                                COM_BOARD B, CMS_CATEGORY C
+                            WHERE
+                                B.CATEGORY_NO = C.NO
+                                AND B.NO = ".$_key."
+                            ";
+
+                    $category_data = $_d->sql_fetch($sql);
+                    $data['CATEGORY'] = $category_data;
                 }
 
                 /*
@@ -145,10 +161,6 @@
                     $search_common .= "AND B.REG_UID = '".$_SESSION['uid']."' ";
                 }
 
-                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_where .= "AND REG_UID = '".$_SESSION['uid']."' ";
-                }
-
                 if (isset($_search[PHOTO_TYPE]) && $_search[PHOTO_TYPE] != "" && $_search[PHOTO_TYPE] != "ALL") {
                     $search_common .= "AND PHOTO_TYPE = '".$_search[PHOTO_TYPE]."'
                                     AND PHOTO_GB = '".$_search[PHOTO_GB]."'
@@ -181,7 +193,7 @@
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                           SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM, SHORT_NM,
                           (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT, BOARD_REPLY_COUNT,
-	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, PHOTO_TYPE, PHOTO_GB,
+	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, PHOTO_TYPE, PHOTO_GB, CATEGORY_NO,
 	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/',PHOTO_GB,'/list') AND TYPE = PHOTO_TYPE) AS TITLE, FAQ_TYPE, FAQ_GB, BOARD_NO,
 	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'infodesk' AND MENU_URL = CONCAT('/infodesk/',FAQ_GB,'/list') AND TYPE = FAQ_TYPE) AS FAQ_TITLE
                         FROM
@@ -190,11 +202,12 @@
                 $select1 = "SELECT
                                 '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, '' AS COMM_NM, '' AS SHORT_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO, B.CATEGORY_NO
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
                             WHERE
+
                                 NOTICE_FL = 'Y'
                                 AND PARENT_NO = 0
                                 ".$search_common."";
@@ -202,7 +215,7 @@
                 $select2 = "SELECT
                                 '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO, B.CATEGORY_NO
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -238,7 +251,7 @@
 
                 $data = null;
 
-                if (isset($_search[FILE])) {
+                if (isset($_search['FILE'])) {
                     $__trn = '';
                     $result = $_d->sql_query($sql,true);
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
@@ -268,7 +281,33 @@
                     }else{
                         $_d->dataEnd2($data);
                     }
-                }else if(isset($_search[BOARD_NEXT]) && $_search[BOARD_NEXT] != "") {
+                } else if (isset($_search['CATEGORY'])) {
+                    $__trn = '';
+                    $result = $_d->sql_query($sql,true);
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                        $sql = "SELECT
+                                    C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST
+                                FROM
+                                    COM_BOARD B, CMS_CATEGORY C
+                                WHERE
+                                    B.CATEGORY_NO = C.NO
+                                    AND B.NO = ".$row['NO']."
+                                ";
+
+                        $category_data = $_d->sql_fetch($sql);
+                        $row['CATEGORY'] = $category_data;
+
+                        $__trn->rows[$i] = $row;
+                    }
+                    $_d->sql_free_result($result);
+                    $data = $__trn->{'rows'};
+
+                    if($_d->mysql_errno > 0){
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    }else{
+                        $_d->dataEnd2($data);
+                    }
+                } else if(isset($_search[BOARD_NEXT]) && $_search[BOARD_NEXT] != "") {
 
                     $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND PARENT_NO = 0  AND COMM_NO=".$_search[COMM_NO]." ORDER BY NO LIMIT 1";
 
@@ -479,6 +518,7 @@
                         ,FAQ_TYPE
                         ,FAQ_GB
                         ,BOARD_NO
+                        ,CATEGORY_NO
                     ) VALUES (
                         '".$_model[PARENT_NO]."'
                         ,'".$_model[COMM_NO]."'
@@ -506,6 +546,7 @@
                         , '".$_model[FAQ_TYPE]."'
                         , '".$_model[FAQ_GB]."'
                         , $board_no
+                        , '".$_model[CATEGORY_NO]."'
                     )";
 
             $_d->sql_query($sql);
@@ -712,6 +753,7 @@
                         ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
                         ,FAQ_GB = '".$_model[FAQ_GB]."'
                         ,COMM_NO = '".$_model[COMM_NO]."'
+                        ,CATEGORY_NO = '".$_model[CATEGORY_NO]."'
                     WHERE
                         NO = ".$_key."
                     ";

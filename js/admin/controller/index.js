@@ -25,6 +25,9 @@ define([
 //    '../../../partials/admin/user_view'
     '../../../partials/admin/pagehit-main',
 
+    '../../../partials/admin/popup/member-write-list',
+    '../../../partials/admin/popup/member-mileage-list',
+
     // ADMIN 참여 관리
     '../../../partials/admin/event-list',
     '../../../partials/admin/event-edit',
@@ -37,6 +40,9 @@ define([
     '../../../partials/admin/clinic-list',
 //    '../../../partials/admin/clinic-edit',
     '../../../partials/admin/download-main',
+    '../../../partials/admin/faq-list',
+    '../../../partials/admin/faq-edit',
+    '../../../partials/admin/faq-view',
 
     // ADMIN 스토어 관리
     '../../../partials/admin/product-list',

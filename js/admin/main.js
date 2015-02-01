@@ -44,7 +44,7 @@ require.config({
 
         // modal 모듈
         'dialog-translation': '../../lib/dialog/dialogs-default-translations.min',
-        'dialog': '../../lib/dialog/dialogs.min',
+        'dialog': '../../lib/dialog/dialogs',
 
         // ckeditor 모듈
         'ckeditor-core': '../../lib/ckeditor/ckeditor', // ckeditor

@@ -497,284 +497,226 @@
 //            $form = json_decode(file_get_contents("php://input"),true);
 //            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
-            $upload_path = '../../../upload/files/';
-            $file_path = '/storage/user/'.$_model[USER_ID].'/';
-            $source_path = '../../..'.$file_path;
-            $insert_path = null;
+            if ($_type == 'item') {
+                $upload_path = '../../../upload/files/';
+                $file_path = '/storage/user/'.$_model[USER_ID].'/';
+                $source_path = '../../..'.$file_path;
+                $insert_path = null;
 
-            try {
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
-                    if (!file_exists($source_path) && !is_dir($source_path)) {
-                        @mkdir($source_path);
-                    }
+                try {
+                    if (count($_model[FILE]) > 0) {
+                        $file = $_model[FILE];
+                        if (!file_exists($source_path) && !is_dir($source_path)) {
+                            @mkdir($source_path);
+                        }
 
-                    if (file_exists($upload_path.$file[name])) {
-                        $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
-                    }
-                }
-            } catch(Exception $e) {
-                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-                break;
-            }
-
-            $err = 0;
-            $msg = "";
-
-            $_d->sql_beginTransaction();
-
-            $password = "";
-
-            if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
-                $password = $_model[PASSWORD];
-            } else {
-                $password = $_model[USER_ID];
-            }
-//            $iterations = 1000;
-//
-//            // Generate a random IV using mcrypt_create_iv(),
-//            // openssl_random_pseudo_bytes() or another suitable source of randomness
-//            $salt = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
-//
-//            $hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
-
-            $hash = create_hash($password);
-
-            $sql = "INSERT INTO COM_USER
-                    (
-                        USER_ID,
-                        USER_NM,
-                        NICK_NM,
-                        PASSWORD,
-                        LUNAR_FL,
-                        BIRTH,
-                        ZIP_CODE,
-                        ADDR,
-                        ADDR_DETAIL,
-                        PHONE_1,
-                        PHONE_2,
-                        USER_GB,
-                        USER_ST,
-                        EMAIL,
-                        SEX_GB,
-                        INTRO,
-                        NOTE,
-                        MARRIED_FL,
-                        PREGNENT_FL,
-                        BLOG_FL,
-                        JOIN_PATH,
-                        CONTACT_ID,
-                        CARE_CENTER,
-                        CENTER_VISIT_DT,
-                        CENTER_OUT_DT,
-                        EN_FL,
-#                        EN_EMAIL_FL,
-#                        EN_POST_FL,
-#                        EN_SMS_FL,
-#                        EN_PHONE_FL,
-                        EN_ANGE_EMAIL_FL,
-                        EN_ANGE_SMS_FL,
-                        EN_ALARM_EMAIL_FL,
-                        EN_ALARM_SMS_FL,
-                        EN_STORE_EMAIL_FL,
-                        EN_STORE_SMS_FL,
-                        REG_DT,
-                        CERT_HASH
-                    ) VALUES (
-                        '".$_model[USER_ID]."',
-                        '".$_model[USER_NM]."',
-                        '".$_model[NICK_NM]."',
-                        '".$hash."',
-                        '".$_model[LUNAR_FL]."',
-                        '".$_model[BIRTH]."',
-                        '".$_model[ZIP_CODE]."',
-                        '".$_model[ADDR]."',
-                        '".$_model[ADDR_DETAIL]."',
-                        '".$_model[PHONE_1]."',
-                        '".$_model[PHONE_2]."',
-                        '".$_model[USER_GB][value]."',
-                        ".(!isset($_model[ROLE]) ? 'W' : 'N').",
-                        '".$_model[EMAIL]."',
-                        '".$_model[SEX_GB]."',
-                        '".$_model[INTRO]."',
-                        '".$_model[NOTE]."',
-                        '".$_model[MARRIED_FL]."',
-                        '".$_model[PREGNENT_FL]."',
-                        '".$_model[BLOG_FL]."',
-                        '".$_model[JOIN_PATH]."',
-                        '".$_model[CONTACT_ID]."',
-                        '".$_model[CARE_CENTER]."',
-                        '".$_model[CENTER_VISIT_DT]."',
-                        '".$_model[CENTER_OUT_DT]."',
-                        '".$_model[EN_FL]."',
-#                        '".$_model[EN_EMAIL_FL]."',
-#                        '".$_model[EN_POST_FL]."',
-#                        '".$_model[EN_SMS_FL]."',
-#                        '".$_model[EN_PHONE_FL]."',
-                        '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                        '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : 'N' )."',
-                        '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                        '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
-                        '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                        '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."',
-                        SYSDATE(),
-                        'test'
-                    )";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            if (isset($_model[ROLE]) && $_model[ROLE] != "") {
-                $sql = "INSERT INTO USER_ROLE
-                    (
-                        ROLE_ID
-                        ,USER_ID
-                        ,REG_DT
-                    ) VALUES (
-                        '".$_model[ROLE][ROLE_ID]."'
-                        ,'".$_model[USER_ID]."'
-                        ,SYSDATE()
-                    )";
-
-                $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-            } else {
-                $sql = "INSERT INTO USER_ROLE
-                    (
-                        ROLE_ID
-                        ,USER_ID
-                        ,REG_DT
-                    ) VALUES (
-                        'MEMBER'
-                        ,'".$_model[USER_ID]."'
-                        ,SYSDATE()
-                    )";
-
-                $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-            }
-
-            if (isset($_model[FILE]) && $_model[FILE] != "") {
-                $file = $_model[FILE];
-
-                $sql = "INSERT INTO FILE
-                        (
-                            FILE_NM
-                            ,FILE_ID
-                            ,PATH
-                            ,FILE_EXT
-                            ,FILE_SIZE
-                            ,THUMB_FL
-                            ,REG_DT
-                            ,FILE_ST
-                            ,FILE_GB
-                        ) VALUES (
-                            '".$file[name]."'
-                            , '".$insert_path[uid]."'
-                            , '".$insert_path[path]."'
-                            , '".$file[type]."'
-                            , '".$file[size]."'
-                            , '0'
-                            , SYSDATE()
-                            , 'C'
-                            , '".strtoupper($file[kind])."'
-                        )";
-
-                $_d->sql_query($sql);
-                $file_no = $_d->mysql_insert_id;
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "INSERT INTO CONTENT_SOURCE
-                        (
-                            TARGET_NO
-                            ,SOURCE_NO
-                            ,CONTENT_GB
-                            ,TARGET_GB
-                            ,SORT_IDX
-                        ) VALUES (
-                            '".$no."'
-                            , '".$file_no."'
-                            , 'FILE'
-                            , 'USER'
-                            , '0'
-                        )";
-
-                $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-            }
-
-            if (isset($_model[BABY]) && $_model[BABY] != "") {
-                foreach ($_model[BABY] as $e) {
-                    if (isset($e[BABY_NM]) && $e[BABY_NM] != "") {
-                        $sql = "INSERT INTO ANGE_USER_BABY
-                        (
-                            USER_ID
-                            ,BABY_NM
-                            ,BABY_BIRTH
-                            ,BABY_SEX_GB
-                        ) VALUES (
-                            '".$_model[USER_ID]."'
-                            ,'".$e[BABY_NM]."'
-                            ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? "0".$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? "0".$e[BABY_DAY] : $e[BABY_DAY])."'
-                            ,'".$e[BABY_SEX_GB]."'
-                        )";
-
-                        $_d->sql_query($sql);
-
-                        if($_d->mysql_errno > 0) {
-                            $err++;
-                            $msg = $_d->mysql_error;
+                        if (file_exists($upload_path.$file[name])) {
+                            $uid = uniqid();
+                            rename($upload_path.$file[name], $source_path.$uid);
+                            $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
                         }
                     }
+                } catch(Exception $e) {
+                    $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                    break;
                 }
-            }
 
-            if (isset($_model[BLOG]) && $_model[BLOG] != "") {
-                if (isset($_model[BLOG][BLOG_URL]) && $_model[BLOG][BLOG_URL] != "") {
-                    $sql = "INSERT INTO ANGE_USER_BLOG
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
+
+                $password = "";
+
+                if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
+                    $password = $_model[PASSWORD];
+                } else {
+                    $password = $_model[USER_ID];
+                }
+    //            $iterations = 1000;
+    //
+    //            // Generate a random IV using mcrypt_create_iv(),
+    //            // openssl_random_pseudo_bytes() or another suitable source of randomness
+    //            $salt = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
+    //
+    //            $hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
+
+                $hash = create_hash($password);
+
+                $sql = "INSERT INTO COM_USER
+                        (
+                            USER_ID,
+                            USER_NM,
+                            NICK_NM,
+                            PASSWORD,
+                            LUNAR_FL,
+                            BIRTH,
+                            ZIP_CODE,
+                            ADDR,
+                            ADDR_DETAIL,
+                            PHONE_1,
+                            PHONE_2,
+                            USER_GB,
+                            USER_ST,
+                            EMAIL,
+                            SEX_GB,
+                            INTRO,
+                            NOTE,
+                            MARRIED_FL,
+                            PREGNENT_FL,
+                            BLOG_FL,
+                            JOIN_PATH,
+                            CONTACT_ID,
+                            CARE_CENTER,
+                            CENTER_VISIT_DT,
+                            CENTER_OUT_DT,
+                            EN_FL,
+    #                        EN_EMAIL_FL,
+    #                        EN_POST_FL,
+    #                        EN_SMS_FL,
+    #                        EN_PHONE_FL,
+                            EN_ANGE_EMAIL_FL,
+                            EN_ANGE_SMS_FL,
+                            EN_ALARM_EMAIL_FL,
+                            EN_ALARM_SMS_FL,
+                            EN_STORE_EMAIL_FL,
+                            EN_STORE_SMS_FL,
+                            REG_DT,
+                            CERT_HASH
+                        ) VALUES (
+                            '".$_model[USER_ID]."',
+                            '".$_model[USER_NM]."',
+                            '".$_model[NICK_NM]."',
+                            '".$hash."',
+                            '".$_model[LUNAR_FL]."',
+                            '".$_model[BIRTH]."',
+                            '".$_model[ZIP_CODE]."',
+                            '".$_model[ADDR]."',
+                            '".$_model[ADDR_DETAIL]."',
+                            '".$_model[PHONE_1]."',
+                            '".$_model[PHONE_2]."',
+                            '".$_model[USER_GB][value]."',
+                            ".(!isset($_model[ROLE]) ? 'W' : 'N').",
+                            '".$_model[EMAIL]."',
+                            '".$_model[SEX_GB]."',
+                            '".$_model[INTRO]."',
+                            '".$_model[NOTE]."',
+                            '".$_model[MARRIED_FL]."',
+                            '".$_model[PREGNENT_FL]."',
+                            '".$_model[BLOG_FL]."',
+                            '".$_model[JOIN_PATH]."',
+                            '".$_model[CONTACT_ID]."',
+                            '".$_model[CARE_CENTER]."',
+                            '".$_model[CENTER_VISIT_DT]."',
+                            '".$_model[CENTER_OUT_DT]."',
+                            '".$_model[EN_FL]."',
+    #                        '".$_model[EN_EMAIL_FL]."',
+    #                        '".$_model[EN_POST_FL]."',
+    #                        '".$_model[EN_SMS_FL]."',
+    #                        '".$_model[EN_PHONE_FL]."',
+                            '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
+                            '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : 'N' )."',
+                            '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : 'N' )."',
+                            '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
+                            '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
+                            '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."',
+                            SYSDATE(),
+                            'test'
+                        )";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if (isset($_model[ROLE]) && $_model[ROLE] != "") {
+                    $sql = "INSERT INTO USER_ROLE
+                        (
+                            ROLE_ID
+                            ,USER_ID
+                            ,REG_DT
+                        ) VALUES (
+                            '".$_model[ROLE][ROLE_ID]."'
+                            ,'".$_model[USER_ID]."'
+                            ,SYSDATE()
+                        )";
+
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                } else {
+                    $sql = "INSERT INTO USER_ROLE
+                        (
+                            ROLE_ID
+                            ,USER_ID
+                            ,REG_DT
+                        ) VALUES (
+                            'MEMBER'
+                            ,'".$_model[USER_ID]."'
+                            ,SYSDATE()
+                        )";
+
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
+
+                if (isset($_model[FILE]) && $_model[FILE] != "") {
+                    $file = $_model[FILE];
+
+                    $sql = "INSERT INTO FILE
                             (
-                                USER_ID
-                                ,BLOG_GB
-                                ,BLOG_URL
-                                ,PHASE
-                                ,THEME
-                                ,NEIGHBOR_CNT
-                                ,POST_CNT
-                                ,VISIT_CNT
-                                ,SNS
+                                FILE_NM
+                                ,FILE_ID
+                                ,PATH
+                                ,FILE_EXT
+                                ,FILE_SIZE
+                                ,THUMB_FL
+                                ,REG_DT
+                                ,FILE_ST
+                                ,FILE_GB
                             ) VALUES (
-                                '".$_model[USER_ID]."'
-                                ,'".$_model[BLOG][BLOG_GB]."'
-                                ,'".$_model[BLOG][BLOG_URL]."'
-                                ,'".$_model[BLOG][PHASE]."'
-                                ,'".$_model[BLOG][THEME]."'
-                                ,'".$_model[BLOG][NEIGHBOR_CNT]."'
-                                ,'".$_model[BLOG][POST_CNT]."'
-                                ,'".$_model[BLOG][VISIT_CNT]."'
-                                ,'".$_model[BLOG][SNS]."'
+                                '".$file[name]."'
+                                , '".$insert_path[uid]."'
+                                , '".$insert_path[path]."'
+                                , '".$file[type]."'
+                                , '".$file[size]."'
+                                , '0'
+                                , SYSDATE()
+                                , 'C'
+                                , '".strtoupper($file[kind])."'
+                            )";
+
+                    $_d->sql_query($sql);
+                    $file_no = $_d->mysql_insert_id;
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
+                    $sql = "INSERT INTO CONTENT_SOURCE
+                            (
+                                TARGET_NO
+                                ,SOURCE_NO
+                                ,CONTENT_GB
+                                ,TARGET_GB
+                                ,SORT_IDX
+                            ) VALUES (
+                                '".$no."'
+                                , '".$file_no."'
+                                , 'FILE'
+                                , 'USER'
+                                , '0'
                             )";
 
                     $_d->sql_query($sql);
@@ -784,24 +726,103 @@
                         $msg = $_d->mysql_error;
                     }
                 }
-            }
 
-            if ($err > 0) {
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            } else {
-                if(!isset($_model[ROLE])) {
-                    $to = $_model[EMAIL];
-                    $from_user = $_model[USER_NM];
-                    $from_email = "hacker9100@gmail.com";
-                    $subject = "[테스트 메일]앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-                    $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/mail.php?_method=PUT&_type=cert&_key=hong&hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
+                if (isset($_model[BABY]) && $_model[BABY] != "") {
+                    foreach ($_model[BABY] as $e) {
+                        if (isset($e[BABY_NM]) && $e[BABY_NM] != "") {
+                            $sql = "INSERT INTO ANGE_USER_BABY
+                            (
+                                USER_ID
+                                ,BABY_NM
+                                ,BABY_BIRTH
+                                ,BABY_SEX_GB
+                            ) VALUES (
+                                '".$_model[USER_ID]."'
+                                ,'".$e[BABY_NM]."'
+                                ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? "0".$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? "0".$e[BABY_DAY] : $e[BABY_DAY])."'
+                                ,'".$e[BABY_SEX_GB]."'
+                            )";
 
-                    MtUtil::sendMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                            $_d->sql_query($sql);
+
+                            if($_d->mysql_errno > 0) {
+                                $err++;
+                                $msg = $_d->mysql_error;
+                            }
+                        }
+                    }
                 }
 
-                $_d->sql_commit();
-                $_d->succEnd($no);
+                if (isset($_model[BLOG]) && $_model[BLOG] != "") {
+                    if (isset($_model[BLOG][BLOG_URL]) && $_model[BLOG][BLOG_URL] != "") {
+                        $sql = "INSERT INTO ANGE_USER_BLOG
+                                (
+                                    USER_ID
+                                    ,BLOG_GB
+                                    ,BLOG_URL
+                                    ,PHASE
+                                    ,THEME
+                                    ,NEIGHBOR_CNT
+                                    ,POST_CNT
+                                    ,VISIT_CNT
+                                    ,SNS
+                                ) VALUES (
+                                    '".$_model[USER_ID]."'
+                                    ,'".$_model[BLOG][BLOG_GB]."'
+                                    ,'".$_model[BLOG][BLOG_URL]."'
+                                    ,'".$_model[BLOG][PHASE]."'
+                                    ,'".$_model[BLOG][THEME]."'
+                                    ,'".$_model[BLOG][NEIGHBOR_CNT]."'
+                                    ,'".$_model[BLOG][POST_CNT]."'
+                                    ,'".$_model[BLOG][VISIT_CNT]."'
+                                    ,'".$_model[BLOG][SNS]."'
+                                )";
+
+                        $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                }
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("등록실패입니다:".$msg);
+                } else {
+                    if(!isset($_model[ROLE])) {
+                        $to = $_model[EMAIL];
+                        $from_user = $_model[USER_NM];
+                        $from_email = "hacker9100@gmail.com";
+                        $subject = "[테스트 메일]앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
+                        $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/mail.php?_method=PUT&_type=cert&_key=hong&hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
+
+                        MtUtil::sendMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                    }
+
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == 'response') {
+                $sql = "INSERT INTO ANGE_USER_RESPONSE
+                                (
+                                    USER_ID
+                                    ,NOTE
+                                    ,REG_DT
+                                ) VALUES (
+                                    '".$_model[USER_ID]."'
+                                    ,'".$_model[NOTE]."'
+                                    ,SYSDATE()
+                                )";
+
+                $_d->sql_query($sql);
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
             }
 
             break;
@@ -1077,6 +1098,22 @@
                     $_d->failEnd("수정실패입니다:".$msg);
                 } else {
                     $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+            }  else if ($_type == "status") {
+                $sql = "UPDATE COM_USER
+                            SET
+                                USER_ST = '".$_model[USER_ST]."'
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
                     $_d->succEnd($no);
                 }
             } else if ($_type == 'admin') {
