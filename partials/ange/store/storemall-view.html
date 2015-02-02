@@ -74,18 +74,20 @@
                                                     <span class="store_optionea">
                                                         <input type="text" ng-model="product.PRODUCT_CNT" numbers-only class="form-control input-sm" ng-change="addSumPrice(item.PRICE, product.PRODUCT_CNT, $index)" placeholder="" />
                                                         <span> 개</span>
-                                                        <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>
-                                                        <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeProduct($index);">x</button>
+                                                        <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>-->
+
                                                     </span>
                                                     <span class="store_optionprice">
                                                         {{item.PRICE * product.PRODUCT_CNT}}
+                                                        <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeProduct($index);">x</button>
                                                     </span>
+
                                                     <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">x</button>-->
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
 
                                             <div ng-if="uid != '' && uid != null" ng-show="productsList != ''">
-                                                <button type="button" ng-click="click_addcart()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">장바구니</button>
+                                                <button type="button" ng-click="click_addcart()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">찜목록</button>
                                                 <!--<button type="button" ng-click="click_addOrder()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">구매하기</button>-->
                                             </div>
 

@@ -91,7 +91,7 @@
 <title>ANGE - 엄마들의 즐거운 놀이터</title>
 
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -111,7 +111,7 @@
 <!--<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />-->
 
 <!-- chart -->
-<link rel="stylesheet" type="text/css" href="/lib/chart/angular-chart.css" />
+<link rel="stylesheet" type="text/css" href="/lib/chartjs/angular-chart.css" />
 
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
@@ -147,6 +147,8 @@
 
 <!-- 다음 무편번호 서비스 추가 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>
+
+
 
 <script>
     function ange_init($rootScope) {

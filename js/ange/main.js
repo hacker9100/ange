@@ -89,7 +89,7 @@ require.config({
         'moment': '../../lib/fullcalendar/lib/moment.min',
 
         // chartjs 모듈
-        'chartjs': '../../lib/chartjs/Chart.min',
+        'chartjs': '../../lib/chartjs/Chart',
         'angular-chart': '../../lib/chartjs/angular-chart',
 
 //        'daum-postcode' : '//dmaps.daum.net/map_js_init/postcode',

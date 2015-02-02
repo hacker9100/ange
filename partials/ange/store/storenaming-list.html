@@ -39,7 +39,7 @@
                                 </td>
                                 <td>
                                     <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                    {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                    {{ item.SUBJECT | string_limit: 100 }}{{item.SUBJECT > 100 ? '...' : ''}}
                                 </td>
                                 <td  class="table_author">{{item.NICK_NM}}</td>
                             </tr>

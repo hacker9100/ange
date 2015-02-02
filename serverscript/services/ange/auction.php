@@ -299,6 +299,42 @@ switch ($_method) {
             }else{
                 $_d->dataEnd($sql);
             }
+        } else if ($_type == "ordercheck"){
+            $search_where = "";
+            $sort_order = "";
+            $limit = "";
+
+
+            $sql = "SELECT
+                        NO, PRODUCT_NM, TOTAL_COUNT
+                    FROM
+                    (
+                        SELECT
+                            NO, PRODUCT_NM
+                        FROM
+                            ANGE_PRODUCT
+                        WHERE 1=1
+                          AND NO = '".$_search[NO]."'
+                          AND ORDER_YN = 'Y'
+                    ) AS DATA,
+                    (SELECT @RNUM := 0) R,
+                    (
+                        SELECT COUNT(*) AS TOTAL_COUNT
+                        FROM
+                            ANGE_PRODUCT
+                        WHERE 1=1
+                          AND  NO  = '".$_search[PRODUCT_NO]."'
+                          AND ORDER_YN = 'Y'
+                    ) CNT
+                    ";
+
+            $data = $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
         }
 
         break;

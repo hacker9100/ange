@@ -53,10 +53,10 @@
 
                                 <thead>
                                 <tr class="board_thead" height="48">
-                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
-                                    <td><span class="board_th">제목</span></td>
+                                    <td align="center" width="9%" align="center"><span class="board_th">번호</span></td>
+                                    <td align="center"><span class="board_th">제목</span></td>
                                     <!--<td width="92" align="center"><span class="board_th">작성자</span></td>-->
-                                    <td width="80"><span class="board_th">작성일</span></td>
+                                    <td align="center" width="80"><span class="board_th">작성일</span></td>
                                 </tr>
                                 </thead>
 
@@ -68,7 +68,7 @@
                                     </td>
                                     <td>
                                         <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
-                                        {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                        [{{item.SHORT_NM}}]{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
                                         <!--<span class="reply_num">[2]</span>-->
                                         <!--<span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                         &lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;

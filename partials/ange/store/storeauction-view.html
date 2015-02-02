@@ -37,7 +37,7 @@
                 <div class="store_col_info">
                     <div class="store_list_item maininfo"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE}} 원</span></div>
                     <div class="store_list_item maininfo"><strong>즉시구매가격</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DIRECT_PRICE}} 원</span></div>
-                    <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DELEIVERY_PRICE}} 원({{item.DELEIVERY_ST == 1 ? '착불' : '선불'}})</span></div>
+                    <!--<div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DELEIVERY_PRICE}} 원({{item.DELEIVERY_ST == 1 ? '착불' : '선불'}})</span></div>-->
                     <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">아이앤와이</span></div>
                     <div class="store_list_item maininfo"><strong>수량</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.SUM_IN_CNT}}</span></div>
                     <div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="#">http://www.inyinternational.com</a></span></div>
@@ -100,24 +100,24 @@
                     </div>
                 </div>  <!-- /.store_col_info -->
 
-                <div class="store_col_btn" data-ng-if="item.ORDER_YN == 'N'">
-                    <button class="btn btn-info" ng-click="click_auction(item.NO);">경매참여</button>
-                    <button class="btn btn-warning" ng-click="click_adddirectcart(item);">바로구매</button>
-                </div>  <!-- /.store_col_info -->
+                <!--<div class="store_col_btn" data-ng-if="item.ORDER_YN == 'N'">-->
+                    <!--<button class="btn btn-info" ng-click="click_auction(item.NO);">경매참여</button>-->
+                    <!--<button class="btn btn-warning" ng-click="click_adddirectcart(item);">바로구매</button>-->
+                <!--</div>  &lt;!&ndash; /.store_col_info &ndash;&gt;-->
 
                 <div ng-show="productsList != ''">
-                    <button type="button" ng-if="uid != '' && uid != null" ng-show="uid != '' && uid != null" ng-click="click_addcart()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">장바구니</button>
+                    <button type="button" ng-if="uid != '' && uid != null" ng-show="uid != '' && uid != null" ng-click="click_addcart()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">찜목록</button>
                     <!--<button type="button" ng-click="click_addOrder()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">구매하기</button>-->
                 </div>
 
                 <div class="store_col_info" style="border-bottom:none">
                     <div class="store_list_item">
                         <span class="store_optiontitle">&nbsp;</span>
-                        <span class="store_pricevalue">
-                            <span>
-                                마일리지<br />현금<br />배송비
-                            </span>
-                        </span>
+                        <!--<span class="store_pricevalue">-->
+                            <!--<span>-->
+                                <!--마일리지<br />현금<br />배송비-->
+                            <!--</span>-->
+                        <!--</span>-->
                         <span class="store_totalprice">
                             {{menu == 'auction' ? total() : 0}} P
                             <br />
@@ -367,7 +367,7 @@
 
                     <ul class="store_warning" style="font-size:0.92em; color:#464646;">
 
-                        <li>부정적인 방법으로 마일리지 취득 시 공지없이 취득한 마일리지는 차감됩니다.</li>
+                        <!--<li>부정적인 방법으로 마일리지 취득 시 공지없이 취득한 마일리지는 차감됩니다.</li>-->
                         <li>마일리지 상품은 모두 착불로 발송됩니다</li>
 
                         <ul class="list-unstyled">
@@ -376,13 +376,13 @@
                         </ul>
 
                         <li>마일리지는 마일리지몰에서만 사용가능합니다.</li>
-                        <li>마일리지 적립방법은 업체 사정상 변경될 수 있습니다</li>
+                        <!--<li>마일리지 적립방법은 업체 사정상 변경될 수 있습니다</li>-->
                         <li>마일리지는 소멸기간이 없으며 회원을 탈퇴할 경우 소멸됩니다.
                             (단, 2년간 로그인 기록이 없는 경우 마일리지 소멸)</li>
-                        <li>나눔방/경매소/이벤트 당첨 등 배송건이 있을 시 꼭, 배송요청란에 사유와 함께 '합포장'이라고 명시해주세요.</li>
-                        <li>마일리지몰 상품은 제품의 하자가 아닌경우를 제외하고 교환 및 반품이 불가능합니다.</li>
+                        <li>나눔방/경매소/이벤트 당첨 등 배송건이 있을 시 꼭, 배송요청란에 사유와 함께 '~합포장' 이라고 명시해주세요.</li>
+                        <li>마일리지몰 상품은 제품의 하자의 경우를 제외하고는 교환 및 반품이 불가능합니다.</li>
                         <li>배송은 주문일로부터 2~3일내 발송을 원칙으로 하며 토,일,공휴일은 배송기간에 포함되지 않습니다.</li>
-                        <li>상품은 업체 사정상 변경이나 사진과 상이할 수 있습니다.</li>
+                        <li>상품은 업체 사정상 변경될 수 있으며 사진과 상이할 수 있습니다.</li>
 
                     </ul>
 
