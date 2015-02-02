@@ -31,7 +31,7 @@ define([
     '../../../partials/ange/people/peoplelinetalk-list',
     '../../../partials/ange/people/peoplepoll-list',
     '../../../partials/ange/people/peoplepoll-edit',
-    '../../../partials/ange/people/peopleboard-list',,
+    '../../../partials/ange/people/peopleboard-list',
     '../../../partials/ange/people/peopleboard-edit',
     '../../../partials/ange/people/peopleboard-view',
     '../../../partials/ange/people/peopleclinic-list',

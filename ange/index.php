@@ -173,6 +173,7 @@
 */
 </style>
 
+<link type="text/css" rel="stylesheet" href="/lib/chartjs/angular-chart.css" />
 <!-- IE6,7,8에서도 HTML5 element를 인식시켜주기 위한 코드 -->
 <!--[if lt IE 9]>
 <script src="/lib/html5shiv/html5shiv.js"></script>

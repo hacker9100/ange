@@ -122,12 +122,12 @@ define([
         };
 
 
-        // 상세조회 버튼 클릭
+        // 등록 버튼 클릭
         $scope.click_regMessage = function () {
-            $scope.openViewMessageRegModal(null, 'lg');
+            $scope.openViewMessageRegModal(null, null, 'lg');
         };
 
-        $scope.openViewMessageRegModal = function (content, size) {
+        $scope.openViewMessageRegModal = function (content, item,  size) {
             var dlg = dialogs.create('myangemessage_edit.html',
                 ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
 
@@ -151,13 +151,177 @@ define([
                         $modalInstance.close();
                     }
 
-                }], content, {size:size,keyboard: true}, $scope);
+                    // 사용자 조회 검색 클릭
+                    $scope.click_searchUser = function (item) {
+                        $scope.openViewMessageSearchModal({TO_ID : item.TO_ID, TO_NM : item.TO_NM}, 'lg');
+                    };
+
+                    $scope.openViewMessageSearchModal = function (item, size) {
+                        var dlg = dialogs.create('myangemessage_search.html',
+                            ['$scope','$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+
+                                /********** 공통 controller 호출 **********/
+                                angular.extend(this, $controller('ange-common', {$scope: $scope}));
+                                $scope.item = {};
+
+                                $scope.PAGE_NO = 1;
+                                $scope.PAGE_SIZE = 10;
+                                $scope.TOTAL_COUNT = 0;
+
+
+                                $scope.search = {};
+
+                                $scope.search.NICK_NM = item.TO_NM;
+                                $scope.search.USER_ID = item.TO_ID;
+
+                                $scope.searchUserList = function () {
+
+                                    $scope.getList('ange/message', 'searchuserlist', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                                        .then(function(data){
+                                            var total_cnt = data[0].TOTAL_COUNT;
+                                            $scope.TOTAL_COUNT = total_cnt;
+
+                                            /*$scope.total(total_cnt);*/
+                                            $scope.list = data;
+
+                                        })
+                                        .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                                };
+
+                                $scope.pageChanged = function() {
+                                    console.log('Page changed to: ' + $scope.PAGE_NO);
+                                    $scope.searchUserList();
+                                };
+
+                                $scope.select_user = function (to_id, to_nm){
+                                    $scope.openViewMessageRegModal(null, {TO_ID : to_id, TO_NM: to_nm} ,'lg');
+                                    $modalInstance.close();
+
+                                }
+
+                                $scope.openViewMessageRegModal = function (content, item,  size) {
+                                    var dlg = dialogs.create('myangemessage_edit.html',
+                                        ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+
+                                            /********** 공통 controller 호출 **********/
+                                            angular.extend(this, $controller('ange-common', {$scope: $scope}));
+                                            $scope.content = data;
+
+                                            $scope.item = {};
+                                            if(item != null){
+                                                $scope.item.TO_ID = item.TO_ID;
+                                                $scope.item.TO_NM = item.TO_NM;
+                                            }
+
+                                            $scope.click_reg = function () {
+                                                $scope.insertItem('ange/message', 'item', $scope.item, true)
+                                                    .then(function(data){
+                                                        dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+
+                                                    })
+                                                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                                                $modalInstance.close();
+                                                //console.log($scope.item);
+                                            };
+
+                                            $scope.click_close = function(){
+                                                $modalInstance.close();
+                                            }
+
+                                            // 사용자 조회 검색 클릭
+                                            $scope.click_searchUser = function (item) {
+                                                $scope.openViewMessageSearchModal({TO_ID : item.TO_ID, TO_NM : item.TO_NM}, 'lg');
+                                            };
+
+                                            $scope.openViewMessageSearchModal = function (item, size) {
+                                                var dlg = dialogs.create('myangemessage_search.html',
+                                                    ['$scope','$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+
+                                                        /********** 공통 controller 호출 **********/
+                                                        angular.extend(this, $controller('ange-common', {$scope: $scope}));
+                                                        $scope.item = {};
+
+                                                        $scope.PAGE_NO = 1;
+                                                        $scope.PAGE_SIZE = 10;
+                                                        $scope.TOTAL_COUNT = 0;
+
+
+                                                        $scope.search = {};
+
+                                                        $scope.search.NICK_NM = item.TO_NM;
+                                                        $scope.search.USER_ID = item.TO_ID;
+
+                                                        $scope.searchUserList = function () {
+
+                                                            $scope.getList('ange/message', 'searchuserlist', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                                                                .then(function(data){
+                                                                    var total_cnt = data[0].TOTAL_COUNT;
+                                                                    $scope.TOTAL_COUNT = total_cnt;
+
+                                                                    /*$scope.total(total_cnt);*/
+                                                                    $scope.list = data;
+
+                                                                })
+                                                                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                                                        };
+
+                                                        $scope.pageChanged = function() {
+                                                            console.log('Page changed to: ' + $scope.PAGE_NO);
+                                                            $scope.searchUserList();
+                                                        };
+
+                                                        $scope.select_user = function (to_id, to_nm){
+                                                            $scope.openViewMessageRegModal(null, {TO_ID : to_id, TO_NM: to_nm} ,'lg');
+                                                            $modalInstance.close();
+
+                                                        }
+
+                                                        $scope.searchUserList();
+
+                                                        $scope.click_close = function(){
+                                                            $modalInstance.close();
+                                                        }
+
+                                                    }], item, {size:size,keyboard: true}, $scope);
+                                                dlg.result.then(function(){
+
+                                                },function(){
+
+                                                });
+                                            };
+
+                                        }], content, item, {size:size,keyboard: true}, $scope);
+                                    dlg.result.then(function(){
+
+                                    },function(){
+
+                                    });
+                                };
+
+                                $scope.searchUserList();
+
+                                $scope.click_close = function(){
+                                    $modalInstance.close();
+                                }
+
+                            }], item, {size:size,keyboard: true}, $scope);
+                        dlg.result.then(function(){
+
+                        },function(){
+
+                        });
+                    };
+
+                }], content, item, {size:size,keyboard: true}, $scope);
             dlg.result.then(function(){
 
             },function(){
 
             });
         };
+
+
 
         $scope.getSession()
             .then($scope.sessionCheck)

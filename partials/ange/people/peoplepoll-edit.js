@@ -31,6 +31,66 @@ define([
 
         $scope.search = {};
 
+        // 차트
+        $scope.chart;
+
+        // Chart.js Data
+        $scope.data = [
+            {
+                value: 300,
+                color:"#F7464A",
+                highlight: "#FF5A5E",
+                label: "Red"
+            },
+            {
+                value: 50,
+                color: "#46BFBD",
+                highlight: "#5AD3D1",
+                label: "Green"
+            },
+            {
+                value: 100,
+                color: "#FDB45C",
+                highlight: "#FFC870",
+                label: "Yellow"
+            }
+        ];
+
+        // Chart.js Options
+        $scope.options =  {
+
+            responsive: true,
+
+            maintainAspectRatio: true,
+
+            //Boolean - Whether we should show a stroke on each segment
+            segmentShowStroke : true,
+
+            //String - The colour of each segment stroke
+            segmentStrokeColor : "#fff",
+
+            //Number - The width of each segment stroke
+            segmentStrokeWidth : 2,
+
+            //Number - The percentage of the chart that we cut out of the middle
+            percentageInnerCutout : 50, // This is 0 for Pie charts
+
+            //Number - Amount of animation steps
+            animationSteps : 100,
+
+            //String - Animation easing effect
+            animationEasing : "easeOutBounce",
+
+            //Boolean - Whether we animate the rotation of the Doughnut
+            animateRotate : true,
+
+            //Boolean - Whether we animate scaling the Doughnut from the centre
+            animateScale : false,
+
+            legendTemplate : "<ul style=\"width:10px; height:10px\" class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"width:10px; height:10px;background-color:<%=segments[i].fillColor%>\"></span><font size=\"1pt\"><%if(segments[i].label){%><%=segments[i].label%><%}%></li></font></li></li><%}%></ul>"
+
+        }
+
 
         $scope.init = function (){
             $scope.nextclick = true;
@@ -67,6 +127,7 @@ define([
 
         // 게시판 조회
         $scope.getAngePoll = function () {
+
             $("#select_sort").attr("checked", 'checked');
 
             if ($stateParams.id != 0) {
@@ -110,7 +171,7 @@ define([
             $scope.search['BOARD_NO'] = no;
 
             // $scope.search['USER_UID'] = 'test'; 세션 uid를 저장해야함
-            $scope.search['USER_UID'] = 'test'; // 테스트
+            $scope.search['USER_UID'] = $rootScope.uid; // 테스트
 
             // 설문조사 참여여부 체크
             // 사용자아이디와 설문조사 번호를 가지고 조회하여
@@ -195,4 +256,7 @@ define([
         $scope.init();
         $scope.getAngePoll();
     }]);
+
 });
+
+

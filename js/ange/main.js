@@ -88,6 +88,10 @@ require.config({
         'uiCalendar': '../../lib/fullcalendar/calendar',
         'moment': '../../lib/fullcalendar/lib/moment.min',
 
+        // chartjs 모듈
+        'chartjs': '../../lib/chartjs/Chart',
+        'angular-chart': '../../lib/chartjs/angular-chart',
+
 //        'daum-postcode' : '//dmaps.daum.net/map_js_init/postcode',
 
         'library': '../../lib'
@@ -187,6 +191,9 @@ require.config({
         },
         'ngFileupload':{
             deps:['jquery','angular','jquery-blueimp-gallery','fileupload','fileupload-process','fileupload-image','fileupload-audio','fileupload-video','fileupload-validate']
+        },
+        'angular-chart':{
+            deps:['angular', 'chartjs']
         }
     },
 

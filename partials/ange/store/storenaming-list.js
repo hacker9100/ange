@@ -16,6 +16,8 @@ define([
         /********** 공통 controller 호출 **********/
             //angular.extend(this, $controller('ange-common', {$scope: $rootScope}));
 
+        $scope.community = "작명이야기";
+
         $scope.search = {};
 
         // 페이징

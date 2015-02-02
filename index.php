@@ -91,7 +91,7 @@
 <title>ANGE - 엄마들의 즐거운 놀이터</title>
 
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -109,6 +109,9 @@
 
 <link rel="stylesheet" type="text/css" href="css/ng-table/ange-ng-table.css" />
 <!--<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />-->
+
+<!-- chart -->
+<link rel="stylesheet" type="text/css" href="/lib/chartjs/angular-chart.css" />
 
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
@@ -145,6 +148,8 @@
 <!-- 다음 무편번호 서비스 추가 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>
 
+
+
 <script>
     function ange_init($rootScope) {
         $rootScope.ange_channel = <?=$channel_info?>;
@@ -162,7 +167,6 @@ http://plnkr.co/edit/KzjIMN
 <body>
 <!-- View가 표시될 영역 -->
 <div ui-view ng-controller="ange_init"></div>
-
 <!--
     requireJS를 사용하기 위한 부분으로,
     requireJS는 data-main에 설정한 main.js 파일을 최초로 로드한다.

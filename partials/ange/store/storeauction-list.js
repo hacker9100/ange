@@ -215,22 +215,38 @@ define([
                 return;
             }
 
-            console.log(list[0].DIRECT_PRICE);
+            $scope.search.NO = list[0].NO;
 
-            $scope.productsList.push({"MAIN_FILE": list[0].MAIN_FILE, "PRODUCT_NO" : list[0].NO, "PRODUCT_NM" : list[0].PRODUCT_NM , "PRICE" : list[0].DIRECT_PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : list[0].DIRECT_PRICE, "DELEIVERY_PRICE" : list[0].DELEIVERY_PRICE, "DELEIVERY_ST" : list[0].DELEIVERY_ST, "PRODUCT_GB" : list[0].PRODUCT_GB});
+            $scope.getList('ange/auction', 'ordercheck', {}, $scope.search, true)
+                .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
 
-            $scope.item.CART = $scope.productsList;
 
-            $scope.insertItem('ange/cart', 'item', $scope.item, false)
-                .then(function(){
-                    //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
-                    //$scope.openViewScrapModal($scope.item.CART, 'lg');
+                    if(total_cnt > 0){
+                        alert('이미 즉시구매가 완료되었습니다');
+                    } else {
+                        console.log(list[0].DIRECT_PRICE);
 
-                    alert('장바구니에 등록되었습니다');
+                        $scope.productsList.push({"MAIN_FILE": list[0].MAIN_FILE, "PRODUCT_NO" : list[0].NO, "PRODUCT_NM" : list[0].PRODUCT_NM , "PRICE" : list[0].DIRECT_PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : list[0].DIRECT_PRICE, "DELEIVERY_PRICE" : list[0].DELEIVERY_PRICE, "DELEIVERY_ST" : list[0].DELEIVERY_ST, "PRODUCT_GB" : list[0].PRODUCT_GB});
 
-                    $location.url('store/cart/list/'+$stateParams.menu);
+                        $scope.item.CART = $scope.productsList;
+
+                        $scope.insertItem('ange/cart', 'item', $scope.item, false)
+                            .then(function(){
+                                //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
+                                //$scope.openViewScrapModal($scope.item.CART, 'lg');
+
+                                alert('찜목록으로 이동합니다.');
+
+                                $location.url('store/cart/list/'+$stateParams.menu);
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+
+
         }
 
         $scope.init();
