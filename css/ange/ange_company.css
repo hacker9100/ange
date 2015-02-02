@@ -153,3 +153,14 @@
     line-height:28px;
 }
 
+.company_affiliates {
+    width:100%;
+    border:1px solid #ddd;
+    padding:36px;
+    font-size:1.08em;
+    color:#666;
+    background-image: url('/imgs/ange/company_qustionbg.png');
+    background-position: left -180px top -140px;
+    background-repeat: no-repeat;
+    margin-bottom: 40px;
+}
