@@ -18,7 +18,7 @@
     src: url('/fonts/NanumGothic-Regular.eot?#iefix') format('embedded-opentype'),
     url('/fonts/NanumGothic-Regular.woff2') format('woff2'),
     url('/fonts/NanumGothic-Regular.woff') format('woff'),
-    url('/fonts//NanumGothic-Regular.ttf') format('truetype');
+    url('/fonts/NanumGothic-Regular.ttf') format('truetype');
 }
 @font-face {
     font-family: 'Nanum Gothic';
@@ -178,7 +178,7 @@ body {
         background-color:#FFF;
         max-width:215px;
         overflow: auto;
-        overflow-y: none;
+        overflow-y: auto;
     }
 
     .sub_content_wrap {
