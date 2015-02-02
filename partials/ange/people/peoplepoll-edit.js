@@ -69,6 +69,8 @@ define([
         $scope.getAngePoll = function () {
             $("#select_sort").attr("checked", 'checked');
 
+
+
             if ($stateParams.id != 0) {
                 $scope.getItem('ange/poll', 'item', $stateParams.id, {}, false)
                     .then(function(data){
@@ -87,6 +89,7 @@ define([
 
                             $('input:radio[name=q2_'+query[i].QUERY_NO+']').attr('checked','checked');
                         }
+
 
 
                     })
@@ -110,7 +113,7 @@ define([
             $scope.search['BOARD_NO'] = no;
 
             // $scope.search['USER_UID'] = 'test'; 세션 uid를 저장해야함
-            $scope.search['USER_UID'] = 'test'; // 테스트
+            $scope.search['USER_UID'] = $rootScope.uid; // 테스트
 
             // 설문조사 참여여부 체크
             // 사용자아이디와 설문조사 번호를 가지고 조회하여
@@ -195,4 +198,7 @@ define([
         $scope.init();
         $scope.getAngePoll();
     }]);
+
 });
+
+

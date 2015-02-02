@@ -76,17 +76,26 @@
                                                 <dl data-ng-repeat="query in queue" ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page "><!--ng-show="$index < page || $index+2 ==page"-->
                                                     <!--{{firstIndex}}-->
                                                     <dt>{{query.QUERY}}</dt>
-                                                    <dd data-ng-repeat="select in query.SELECT">
+                                                    <dd ng-if="query.QUERY_GB == 'S'">
                                                         <div class="radio-inline">
                                                             <label>
-                                                                <input ng-model="query.SELECT_ANSWER" type="radio" name="q2_{{select.QUERY_NO}}" id="select_sort" ng-value="select"/>{{select.NOTE}}
+                                                                <input ng-model="query.SELECT_SHORT_ANSWER" type="input" style="width: 250px;"/>
                                                                 &nbsp;&nbsp;&nbsp;
                                                                 <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
                                                             </label>
                                                         </div>
                                                     </dd>
+                                                    <dd ng-if="query.QUERY_GB == 'M'" data-ng-repeat="select in query.SELECT">
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                <input ng-model="query.SELECT_ANSWER" type="radio" name="q2_{{select.QUERY_NO}}" id="select_sort" ng-value="select"/>{{select.NOTE}}
+                                                                &nbsp;&nbsp;&nbsp;
+                                                                <input ng-if="select.NOTE == '기타'" ng-model="query.SELECT_SHORT_ANSWER" type="input"/>
+                                                                <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                                            </label>
+                                                        </div>
+                                                    </dd>
                                                 </dl>
-
                                             </div>
 
                                             <div class="peoplepoll_view_paging">
@@ -120,10 +129,10 @@
                                             </div>
 
                                             <div class="peoplepoll_view_paging">
-                                                <button type="button" class="btn btn-default btn-xs"  style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  <!--ng-click="pre_click();"-->
+                                                <button type="button" class="btn btn-default btn-xs"   ng-disabled="nextclick" style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  <!--ng-click="pre_click();"-->
                                                 <!--<center><span class="table_red">{{page}}</span>/3</center>-->
                                                 <center><span class="table_red">{{currentPage+1}}</span>/{{lastPage}}</center>
-                                                <button type="button"  class="btn btn-default btn-xs" style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> <!--ng-disabled="!last"-->
+                                                <button type="button"  class="btn btn-default btn-xs"  ng-disabled="preclick" style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> <!--ng-disabled="!last"-->
                                             </div>
 
                                         </div><!-- /.col-02-->
@@ -193,3 +202,29 @@
 
     <!-- /Main Page Layout Set -->
 </div>
+
+
+<!--<script>-->
+
+    <!--google.load("visualization", "1", {packages:["corechart"]});-->
+    <!--google.setOnLoadCallback(drawChart);-->
+    <!--function drawChart() {-->
+        <!--var data = google.visualization.arrayToDataTable([-->
+            <!--['Language', 'Speakers (in millions)'],-->
+            <!--['German',  5.85],-->
+            <!--['French',  1.66],-->
+            <!--['Italian', 0.316],-->
+            <!--['Romansh', 0.0791]-->
+        <!--]);-->
+
+        <!--var options = {-->
+            <!--legend: 'none',-->
+            <!--pieSliceText: 'label',-->
+            <!--title: 'Swiss Language Use (100 degree rotation)',-->
+            <!--pieStartAngle: 100,-->
+        <!--};-->
+
+        <!--var chart = new google.visualization.PieChart(document.getElementById('piechart'));-->
+        <!--chart.draw(data, options);-->
+    <!--}-->
+<!--</script>-->

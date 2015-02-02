@@ -305,9 +305,42 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                /* ".$_SESSION['uid']."*/
                 $j = 0;
                 foreach ($_model as $s) {
-//                    if (isset($s[NOTE]) && $s[NOTE] != "") {
-//
-//                    }
+
+                   $query_no = "";
+                   $query_sort = "";
+                   $poll_no = "";
+                   $select_answer = "";
+                   $select_short_answer = "";
+                   $note = "";
+
+                    // 질문 유형이 주관식일때
+                    if ($s[QUERY_GB] == 'S') {
+                        $query_no = $s[QUERY_NO];
+                        $query_sort = $s[QUERY_SORT];
+                        $poll_no = $s[BOARD_NO];
+                        $select_answer = 0;
+                        $select_short_answer = $s[SELECT_SHORT_ANSWER];
+                        $note = '';
+                    } else if($s[QUERY_GB] == 'M'){ // 객관식일때
+
+                        if(!isset($s[SELECT_ANSWER])){
+                            $query_no = $s[QUERY_NO];
+                            $query_sort = $s[QUERY_SORT];
+                            $poll_no = $s[BOARD_NO];
+                            $select_answer = 0;
+                            $select_short_answer = '';
+                            $note = '';
+                        }else{
+                            $query_no = $s[SELECT_ANSWER][QUERY_NO];
+                            $query_sort = $s[SELECT_ANSWER][QUERY_SORT];
+                            $poll_no = $s[SELECT_ANSWER][BOARD_NO];
+                            $select_answer = $s[SELECT_ANSWER][SELECT_SORT];
+                            $note = $s[SELECT_ANSWER][NOTE];
+                            $select_short_answer = $s[SELECT_SHORT_ANSWER];
+                        }
+
+                    }
+
                     $sql = "INSERT INTO ANGE_POLL_ANSWEAR
                                 (
                                     QUERY_NO
@@ -316,16 +349,18 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                     ,POLL_NO
                                     ,NICK_NM
                                     ,SELECT_ANSWEAR
+                                    ,SELECT_SHORT_ANSWER
                                     ,NOTE
                                     ,REG_DT
                                 ) VALUES (
-                                    '".$s[SELECT_ANSWER][QUERY_NO]."'
-                                    ,'".$s[SELECT_ANSWER][QUERY_SORT]."'
+                                    '".$query_no."'
+                                    ,'".$query_sort."'
                                     ,'".$_SESSION['uid']."'
-                                    ,'".$s[SELECT_ANSWER][BOARD_NO]."'
+                                    ,'".$poll_no."'
                                     ,'".$_SESSION['name']."'
-                                    ,'".$s[SELECT_ANSWER][SELECT_SORT]."'
-                                    ,'".$s[SELECT_ANSWER][NOTE]."'
+                                    ,'".$select_answer."'
+                                    ,'".$select_short_answer."'
+                                    ,'".$note."'
                                     ,SYSDATE()
                                 )";
 
