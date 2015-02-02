@@ -110,6 +110,9 @@
 <link rel="stylesheet" type="text/css" href="css/ng-table/ange-ng-table.css" />
 <!--<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />-->
 
+<!-- chart -->
+<link rel="stylesheet" type="text/css" href="/lib/chart/angular-chart.css" />
+
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
 <link rel="stylesheet" href="css/file-upload/blueimp-gallery.css">
@@ -161,7 +164,6 @@ http://plnkr.co/edit/KzjIMN
 <body>
 <!-- View가 표시될 영역 -->
 <div ui-view ng-controller="ange_init"></div>
-
 <!--
     requireJS를 사용하기 위한 부분으로,
     requireJS는 data-main에 설정한 main.js 파일을 최초로 로드한다.

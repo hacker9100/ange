@@ -28,6 +28,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'angular-masonry',
     'ng-infinite-scroll',
 
+    'chartjs',
+    'angular-chart',
+
     // 각 컨트롤러 로딩
     './service/index',
     './directive/index',
@@ -53,7 +56,8 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'ange.portlet.tpls',
 
         'masonryLayout',
-        'infinite-scroll'
+        'infinite-scroll',
+        'chart.js'
         ], function () {
             // 여기서는 필요한 설정들을 진행.
         }
