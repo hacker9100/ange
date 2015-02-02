@@ -137,6 +137,7 @@
 <link rel="stylesheet" type="text/css" href="css/ange/ange_moms.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_store.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_club.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_company.css" />
 
 <!-- IE6,7,8에서도 HTML5 element를 인식시켜주기 위한 코드 -->
 <!--[if lt IE 9]>
