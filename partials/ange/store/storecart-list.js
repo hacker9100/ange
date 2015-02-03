@@ -43,6 +43,7 @@ define([
             $scope.step = '01';
             $scope.community = "찜목록";
 
+            $rootScope.info = {};
         };
 
         $scope.click_cartlist = function(){
@@ -175,8 +176,6 @@ define([
             $rootScope.orderlist = [];
             $rootScope.orderlist.push(list[idx]);
 
-            console.log($rootScope.orderlist);
-
             $scope.step = '02';
             $scope.orderlist();
         }
@@ -257,24 +256,31 @@ define([
         // 주문리스트
         $scope.orderlist = function (){
 
-            console.log($rootScope.user_info);
-            console.log($rootScope.uid);
-
-
             $scope.list = $rootScope.orderlist;
 
             console.log($rootScope.orderlist);
             if($rootScope.uid != '' && $rootScope.uid != null){
-                $scope.item.USER_ID = $rootScope.user_info.USER_ID;
-                $scope.item.RECEIPTOR_NM = $rootScope.user_info.USER_NM;
-                $scope.item.RECEIPT_PHONE = $rootScope.user_info.PHONE_2;
-                $scope.item.RECEIPT_ADDR = $rootScope.user_info.ADDR;
-                $scope.item.RECEIPT_ADDR_DETAIL = $rootScope.user_info.ADDR_DETAIL;
 
-                $scope.item.RECEIPTOR_NM1 = $rootScope.user_info.USER_NM;
-                $scope.item.RECEIPT_PHONE1 = $rootScope.user_info.PHONE_2;
-                $scope.item.RECEIPT_ADDR1 = $rootScope.user_info.ADDR;
-                $scope.item.RECEIPT_ADDR_DETAIL1 = $rootScope.user_info.ADDR_DETAIL;
+                $scope.getItem('com/user', 'item', $scope.uid, {} , false)
+                    .then(function(data){
+
+                        $rootScope.info = data;
+
+                        $scope.item.USER_ID = data.USER_ID;
+                        $scope.item.RECEIPTOR_NM = data.USER_NM;
+                        $scope.item.RECEIPT_PHONE = data.PHONE_2;
+                        $scope.item.RECEIPT_ADDR = data.ADDR;
+                        $scope.item.RECEIPT_ADDR_DETAIL = data.ADDR_DETAIL;
+
+                        $scope.item.RECEIPTOR_NM1 = data.USER_NM;
+                        $scope.item.RECEIPT_PHONE1 = data.PHONE_2;
+                        $scope.item.RECEIPT_ADDR1 = data.ADDR;
+                        $scope.item.RECEIPT_ADDR_DETAIL1 = data.ADDR_DETAIL;
+
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+
             }
 
             $scope.TOTAL_SUM_PRICE = 0;
@@ -282,8 +288,11 @@ define([
             $rootScope.TOTAL_PRICE = 0;
             for(var i=0; i<$scope.list.length; i++){
 
+                console.log($scope.list[i].TOTAL_PRICE);
                 if($scope.list[i].PRODUCT_GB == 'MILEAGE' || $scope.list[i].PRODUCT_GB == 'CUMMERCE' ){
                     $scope.TOTAL_SUM_PRICE += parseInt($scope.list[i].TOTAL_PRICE);
+
+                    console.log('aaa = '+$scope.TOTAL_SUM_PRICE);
                 }else if($scope.list[i].PRODUCT_GB == 'AUCTION'){
                     $scope.TOTAL_SUM_PRICE += parseInt($scope.list[i].DIRECT_PRICE);
                 }
@@ -306,16 +315,16 @@ define([
         // 사용자 기존 정보 or 새주소
         $scope.click_basic = function(val){
             if(val == 'Y'){
-                $scope.item.USER_ID = $rootScope.user_info.USER_ID;
-                $scope.item.RECEIPTOR_NM = $rootScope.user_info.USER_NM;
-                $scope.item.RECEIPT_PHONE = $rootScope.user_info.PHONE_2;
-                $scope.item.RECEIPT_ADDR = $rootScope.user_info.ADDR;
-                $scope.item.RECEIPT_ADDR_DETAIL = $rootScope.user_info.ADDR_DETAIL;
+                $scope.item.USER_ID = $rootScope.info.USER_ID;
+                $scope.item.RECEIPTOR_NM = $rootScope.info.USER_NM;
+                $scope.item.RECEIPT_PHONE = $rootScope.info.PHONE_2;
+                $scope.item.RECEIPT_ADDR = $rootScope.info.ADDR;
+                $scope.item.RECEIPT_ADDR_DETAIL = $rootScope.info.ADDR_DETAIL;
 
-                $scope.item.RECEIPTOR_NM1 = $rootScope.user_info.USER_NM;
-                $scope.item.RECEIPT_PHONE1 = $rootScope.user_info.PHONE_2;
-                $scope.item.RECEIPT_ADDR1 = $rootScope.user_info.ADDR;
-                $scope.item.RECEIPT_ADDR_DETAIL1 = $rootScope.user_info.ADDR_DETAIL;
+                $scope.item.RECEIPTOR_NM1 = $rootScope.info.USER_NM;
+                $scope.item.RECEIPT_PHONE1 = $rootScope.info.PHONE_2;
+                $scope.item.RECEIPT_ADDR1 = $rootScope.info.ADDR;
+                $scope.item.RECEIPT_ADDR_DETAIL1 = $rootScope.info.ADDR_DETAIL;
             }else if(val == 'N'){
                 $scope.item.USER_ID = '';
                 $scope.item.RECEIPTOR_NM = '';
@@ -385,6 +394,117 @@ define([
 //                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
+        $scope.click_update_user_info = function () {
+            $scope.openModal(null, 'md');
+        };
+
+        // 정보수정 모달창
+        $scope.openModal = function (content, size) {
+            var dlg = dialogs.create('user_info_modal.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+
+                    $scope.item = {};
+
+                    $scope.user_info = function () {
+                        $scope.getItem('com/user', 'item', $scope.uid, {} , false)
+                            .then(function(data){
+
+                                $scope.item.USER_ID = data.USER_ID;
+                                $scope.item.USER_NM = data.USER_NM;
+                                $scope.item.NICK_NM = data.NICK_NM;
+                                $scope.item.ADDR = data.ADDR;
+                                $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
+                                $scope.item.REG_DT = data.REG_DT;
+                                $scope.item.REG_DT = data.REG_DT;
+                                $scope.item.PHONE_1 = data.PHONE_1;
+                                $scope.item.PHONE_2 = data.PHONE_2;
+                                $scope.item.BLOG_URL = data.BLOG_URL;
+
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+
+
+                    $(document).ready(function(){
+                        $('#birth_dt').css('display', 'none');
+
+                        $("#preg_Y").click(function(){
+                            if(!$("#preg_Y").is(":checked")){
+                                $scope.item.PREGNENT_FL = "Y";
+                                $('#birth_dt').css('display', 'block');
+                            }
+                        });
+
+                        $("#preg_N").click(function(){
+                            if(!$("#preg_N").is(":checked")){
+                                $scope.item.PREGNENT_FL = "N";
+                                $('#birth_dt').css('display', 'none');
+                            }
+                        });
+                    });
+
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.content = data;
+
+                    $scope.click_ok = function () {
+                        $scope.item.SYSTEM_GB = 'CMS';
+                        $scope.item.USER_NM = $scope.name;
+                        $scope.item.NICK_NM = $scope.nick;
+
+                        if($("#preg_Y").is(":checked")){
+                            $scope.item.PREGNENT_FL = "Y";
+                        }else{
+                            $scope.item.PREGNENT_FL = "N";
+                        }
+
+                        if($("#preg_N").is(":checked")){
+                            $scope.item.PREGNENT_FL = "N";
+                        }else{
+                            $scope.item.PREGNENT_FL = "Y";
+                        }
+
+                        $scope.updateItem('com/user', 'item',$scope.uid, $scope.item, false)
+                            .then(function(data){
+
+                                dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+                                $modalInstance.close();
+                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                    };
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+                    $scope.user_info();
+
+                }], content, {size:size,keyboard: true,backdrop: true}, $scope);
+            dlg.result.then(function(){
+                $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+                    .then(function(data){
+
+                        $rootScope.info = data;
+
+                        $scope.item.USER_ID = data.USER_ID;
+                        $scope.item.RECEIPTOR_NM = data.USER_NM;
+                        $scope.item.RECEIPT_PHONE = data.PHONE_2;
+                        $scope.item.RECEIPT_ADDR = data.ADDR;
+                        $scope.item.RECEIPT_ADDR_DETAIL = data.ADDR_DETAIL;
+
+                        $scope.item.RECEIPTOR_NM1 = data.USER_NM;
+                        $scope.item.RECEIPT_PHONE1 = data.PHONE_2;
+                        $scope.item.RECEIPT_ADDR1 = data.ADDR;
+                        $scope.item.RECEIPT_ADDR_DETAIL1 = data.ADDR_DETAIL;
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            },function(){
+                if(angular.equals($scope.name,''))
+                    $scope.name = 'You did not enter in your name!';
+            });
+        };
 
         /********** 이벤트 **********/
 
