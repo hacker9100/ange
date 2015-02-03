@@ -92,6 +92,10 @@ require.config({
         'chartjs': '../../lib/chartjs/Chart',
         'angular-chart': '../../lib/chartjs/angular-chart',
 
+        // map 모듈
+//        'google-map': '//maps.google.com/maps/api/js',
+        'ng-map': '../../lib/ng-map/ng-map.min',
+
 //        'daum-postcode' : '//dmaps.daum.net/map_js_init/postcode',
 
         'library': '../../lib'
@@ -194,6 +198,9 @@ require.config({
         },
         'angular-chart':{
             deps:['angular', 'chartjs']
+        },
+        'ng-map':{
+            deps:['angular']
         }
     },
 

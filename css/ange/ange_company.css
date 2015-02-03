@@ -36,7 +36,7 @@
 
 .company_intro_wrap {
     float:left;
-    width:95%;
+    width:100%;
     margin:0px auto;
     margin-top:60px;
 }
@@ -75,3 +75,92 @@
 }
 
 
+.company_mapballoon {
+    float:left;
+    width:12%;
+    text-align:center;
+    padding:24px 0;
+    border:1px solid transparent;
+    border-radius:12px;
+    background-image: url('/imgs/ange/bg_cart_ordernum.jpg');
+    background-position: left top;
+    background-size: cover;
+    font-size:2.4em;
+    color:#fff;
+}
+
+.company_maptxt {
+    float:right;
+    width:86%;
+    color:#666;
+    word-break: keep-all;
+    line-height:24px;
+    text-align:justify;
+    padding:4px 12px;
+}
+
+.company_sectiontitle_wrap {
+    float:left;
+    width:100%;
+    line-height:46px;
+    margin:60px 0 30px 0;
+    padding-left:25px;
+    background-image: url('/imgs/ange/bg_store_topBG.png');
+    background-position: right center;
+}
+
+.company_sectiontitle_wrap .topbtn {
+    font-size:1.12em;
+    vertical-align: middle
+}
+
+.company_sectiontitle_wrap a {
+    float:right;
+    margin-right:15px;
+    cursor:pointer;
+}
+
+.company_sectiontitle_wrap a:hover {
+    text-decoration: none;
+}
+
+.company_partners_wrap {
+    margin: 15px 0;
+}
+
+.company_partners_box {
+    float:left;
+    width:18%;
+    margin:10px 1%;
+    text-align: center;
+    color:#868686;
+    font-size:0.86em;
+    cursor: pointer;
+}
+
+.company_partners_box img {
+    width:100%;
+    border:1px solid #ddd;
+    border-radius: 4px;
+}
+
+.company_partners_box img:hover {
+    border:1px solid #32d0f8;
+}
+
+
+.company_partners_box span {
+    line-height:28px;
+}
+
+.company_affiliates {
+    width:100%;
+    border:1px solid #ddd;
+    padding:36px;
+    font-size:1.08em;
+    color:#666;
+    background-image: url('/imgs/ange/company_qustionbg.png');
+    background-position: left -180px top -140px;
+    background-repeat: no-repeat;
+    margin-bottom: 40px;
+}

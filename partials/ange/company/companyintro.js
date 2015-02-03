@@ -21,5 +21,9 @@ define([
         /********** 이벤트 **********/
 
         $scope.init();
+
+        $scope.partnerLink = function (url) {
+            $window.open (url);
+        }
 	}]);
 });

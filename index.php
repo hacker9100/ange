@@ -147,8 +147,7 @@
 
 <!-- 다음 무편번호 서비스 추가 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>
-
-
+<script src="https://maps.google.com/maps/api/js?sensor=false"></script>
 
 <script>
     function ange_init($rootScope) {
@@ -166,11 +165,12 @@ http://plnkr.co/edit/KzjIMN
 
 <body>
 <!-- View가 표시될 영역 -->
-<div ui-view ng-controller="ange_init"></div>
+<div ui-view ng-controller="ange_init" class="wrap"></div>
 <!--
     requireJS를 사용하기 위한 부분으로,
     requireJS는 data-main에 설정한 main.js 파일을 최초로 로드한다.
  -->
+
 <script src="lib/require/require.js" data-main="js/ange/main.js"></script>
 </body>
 
