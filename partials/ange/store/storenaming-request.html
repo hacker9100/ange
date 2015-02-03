@@ -31,7 +31,7 @@
                                             <p style="font-size:1.24em; line-height:22px; font-weight:600; word-break: keep-all;">앙쥬 네이밍(작명) 서비스</p>
 
                                             <div class="store_col_info">
-                                                <div class="store_list_item maininfo"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">5,0000 ~ 500,000 원</span></div>
+                                                <div class="store_list_item maininfo"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">50,000 ~ 500,000 원</span></div>
                                                 <div class="store_list_item maininfo"><strong>결 제</strong><span class="table_gray" style="position:absolute; left:120px;">신용카드, 실시간계좌이체, 가상계좌</span></div>
                                                 <div class="store_list_item maininfo"><strong>이용방법</strong><span class="table_gray" style="position:absolute; left:120px;">결제 후 바로진행</span></div>
                                             </div>  <!-- /.store_col_info -->
@@ -88,7 +88,7 @@
                                             <div class="store_col_btn">
                                                 <button ng-click="click_selectTab('2');" class="btn btn-info">신청서작성</button>
                                                 <!--<button ng-click="click_selectTab('2');" class="btn btn-info">구 매</button>-->
-                                                <button ng-click="click_intro();" class="btn btn-default">취 소</button>
+                                                <!--<button ng-click="click_intro();" class="btn btn-default">취 소</button>-->
                                             </div>  <!-- /.store_col_info -->
 
                                         </div>
@@ -169,7 +169,7 @@
                                         <span class="col-xs-4 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
                                                 <!-- <input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
-                                                {{user_info.USER_ID}}
+                                                {{USER_ID}}
                                             </div>
                                         </span>
 
@@ -181,7 +181,7 @@
                                         <span class="col-xs-4 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
                                                 <!--<input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
-                                                {{user_info.NICK_NM}}
+                                                {{NICK_NM}}
                                             </div>
                                         </span>
                                 </div>  <!-- /.form_basicinfo -->
@@ -197,7 +197,7 @@
                                         <span class="col-xs-4 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
                                                 <!--<input type="text" ng-model="item.USER_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
-                                                {{user_info.USER_NM}}
+                                                {{USER_NM}}
                                             </div>
                                         </span>
                                 </div>  <!-- /.form_basicinfo -->
@@ -234,7 +234,7 @@
                                         <span class="col-xs-3 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
                                                 <!--<input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
-                                                {{user_info.PHONE_1}}
+                                                {{PHONE_1}}
                                             </div>
                                         </span>
                                         <span class="col-xs-1 basicinfo input">
@@ -245,7 +245,7 @@
                                         <span class="col-xs-3 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
                                                 <!--<input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
-                                                {{user_info.PHONE_2}}
+                                                {{PHONE_2}}
                                             </div>
                                         </span>
                                 </div>  <!-- /.form_basicinfo -->
@@ -261,8 +261,8 @@
                                         <span class="col-xs-10 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
                                                 <p><!--<input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder="" disabled>-->(123-456)<!--{{user_info.ZIP_CODE}}--></p>
-                                                <p><!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR" placeholder="" disabled>-->{{user_info.ADDR}}</p>
-                                                <!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>-->{{user_info.ADDR_DETAIL}}
+                                                <p><!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR" placeholder="" disabled>-->{{ADDR}}</p>
+                                                <!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>-->{{ADDR_DETAIL}}
                                             </div>
                                         </span>
                                 </div>  <!-- /.form_basicinfo -->
@@ -329,14 +329,14 @@
                                                     <option value="" selected>시</option>
                                                 </select>
 
-                                                <select ng-model="item.BABY_BIRTH_MIN" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                <select ng-model="item.BABY_BIRTH_MIN" ng-options="v for v in minute" class= "form-control" style="width:75px;">
                                                     <option value="" selected>분</option>
                                                 </select>
 
                                                 <select ng-model="item.BABY_LEAP_FL" class="form-control" style="width:145px;">
-                                                    <option value="" selected>윤달/평달 선택</option>
-                                                    <option value="0">윤달</option>
+                                                    <option value="" selected>평달/윤달 선택</option>
                                                     <option value="1">평달</option>
+                                                    <option value="0">윤달</option>
                                                 </select>
 
                                                 <br/>
@@ -357,7 +357,7 @@
                                         <span class="col-xs-4 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
                                                 <input type="text" ng-model="item.BABY_LAST_NM" class="form-control input-sm"/>
-                                                <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">한자변환</button>
+                                                <button ng-click="click_update_user_info(item.BABY_LAST_NM)" class="btn btn-xs btn-primary" style="margin:0 5px;">한자변환</button>
                                             </div>
                                         </span>
                                 </div>
@@ -408,14 +408,14 @@
                                                         <option value="" selected>시</option>
                                                     </select>
 
-                                                    <select ng-model="item.DAD_BIRTH_MIN" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                    <select ng-model="item.DAD_BIRTH_MIN" ng-options="v for v in minute" class= "form-control" style="width:75px;">
                                                         <option value="" selected>분</option>
                                                     </select>
 
                                                     <select ng-model="item.DAD_LEAP_FL" class="form-control" style="width:145px;">
-                                                        <option value="" selected>윤달/평달 선택</option>
-                                                        <option value="0">윤달</option>
+                                                        <option value="" selected>평달/윤달 선택</option>
                                                         <option value="1">평달</option>
+                                                        <option value="0">윤달</option>
                                                     </select>
                                                 </div>
                                              </span>
@@ -458,14 +458,14 @@
                                                     <option value="" selected>시</option>
                                                 </select>
 
-                                                <select ng-model="item.MOM_BIRTH_MIN" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                <select ng-model="item.MOM_BIRTH_MIN" ng-options="v for v in minute" class= "form-control" style="width:75px;">
                                                     <option value="" selected>분</option>
                                                 </select>
 
                                                 <select ng-model="item.MOM_LEAP_FL" class="form-control" style="width:145px;">
-                                                    <option value="" selected>윤달/평달 선택</option>
-                                                    <option value="0">윤달</option>
+                                                    <option value="" selected>평달/윤달 선택</option>
                                                     <option value="1">평달</option>
+                                                    <option value="0">윤달</option>
                                                 </select>
                                             </div>
                                         </span>
@@ -592,7 +592,7 @@
                                                 </div>
 
                                                 <div style="position:absolute; top:42px; right:25px;">
-                                                    <button type="button" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-pencil"></span> 상품후기 작성하기</button>
+                                                    <button type="button" ng-click="click_review()" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-pencil"></span> 상품후기 작성하기</button>
                                                 </div>
 
                                             </div><!-- /.peoplep_list_tab -->

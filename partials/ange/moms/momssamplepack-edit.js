@@ -50,7 +50,7 @@ define([
 
             //$("#tabs-"+idx).focus();
 
-            $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
+            //$("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
         };
 
         // 정보수정 모달창
@@ -66,17 +66,21 @@ define([
                     $scope.item = {};
 
                     //console.log($scope.user_info);
-                    $scope.item.USER_ID = $scope.user_info.USER_ID;
-                    $scope.item.USER_NM = $scope.user_info.USER_NM;
-                    $scope.item.NICK_NM = $scope.user_info.NICK_NM;
-                    $scope.item.ADDR = $scope.user_info.ADDR;
-                    $scope.item.ADDR_DETAIL = $scope.user_info.ADDR_DETAIL;
-                    $scope.item.REG_DT = $scope.user_info.REG_DT;
-                    $scope.item.REG_DT = $scope.user_info.REG_DT;
-                    $scope.item.PHONE_1 = $scope.user_info.PHONE_1;
-                    $scope.item.PHONE_2 = $scope.user_info.PHONE_2;
-                    $scope.item.PREGNENT_FL = $scope.user_info.PREGNENT_FL;
-                    $scope.item.BABY_BIRTH_DT = $scope.user_info.BABY_BIRTH_DT;
+                    $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+                        .then(function(data){
+
+                            $scope.item.USER_ID = data.USER_ID;
+                            $scope.item.NICK_NM = data.NICK_NM;
+                            $scope.item.ADDR = data.ADDR;
+                            $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
+                            $scope.item.REG_DT = data.REG_DT;
+                            $scope.item.REG_DT = data.REG_DT;
+                            $scope.item.PHONE_1 = data.PHONE_1;
+                            $scope.item.PHONE_2 = data.PHONE_2;
+                            $scope.item.BLOG_URL = data.BLOG_URL;
+
+                        })
+                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     if($scope.item.PREGNENT_FL == 'Y'){
                         $scope.checked = "Y";
@@ -119,10 +123,20 @@ define([
                 }], content, {size:size,keyboard: true,backdrop: true}, $scope);
             dlg.result.then(function(){
 
+                $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+                    .then(function(data){
+
+                        $scope.item = data;
+                        console.log($scope.item);
+
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';
             });
+
+            console.log(dlg);
         };
 
         // 초기화
@@ -137,6 +151,22 @@ define([
             }
 
             $scope.checked = 'N';
+
+            $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+                .then(function(data){
+
+                    $scope.item.USER_ID = data.USER_ID;
+                    $scope.item.USER_NM = data.USER_NM;
+                    $scope.item.NICK_NM = data.NICK_NM;
+                    $scope.item.ADDR = data.ADDR;
+                    $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
+                    $scope.item.REG_DT = data.REG_DT;
+                    $scope.item.REG_DT = data.REG_DT;
+                    $scope.item.PHONE_1 = data.PHONE_1;
+                    $scope.item.PHONE_2 = data.PHONE_2;
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
         };
 
@@ -160,14 +190,6 @@ define([
                     $scope.item.TARGET_GB = target_gb;
                     $scope.item.NO = target_no;
 
-                   $scope.item.USER_ID = $rootScope.user_info.USER_ID;
-                   $scope.item.NICK_NM = $rootScope.user_info.NICK_NM;
-                   $scope.item.ADDR = $rootScope.user_info.ADDR;
-                   $scope.item.ADDR_DETAIL = $rootScope.user_info.ADDR_DETAIL;
-                   $scope.item.REG_DT = $rootScope.user_info.REG_DT;
-                   $scope.item.REG_DT = $rootScope.user_info.REG_DT;
-                   $scope.item.PHONE_1 = $rootScope.user_info.PHONE_1;
-                   $scope.item.PHONE_2 = $rootScope.user_info.PHONE_2;
 
                    var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
 

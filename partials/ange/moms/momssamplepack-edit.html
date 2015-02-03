@@ -390,7 +390,7 @@
             <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''"><a ng-click="click_selectTab('2');">샘플팩 구성</a></li>
 
             <!-- 시즌1 주의사항 -->
-            <div id="tabs-1" class="tabox_body" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
+            <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
                 <span class="tabox_title">신청방법</span>
                 <ol>
                     <li>앙쥬 홈페이지 (www.ange.co.kr)에 회원가입합니다.</li>
@@ -420,7 +420,7 @@
             <!-- /시즌1 주의사항 -->
 
             <!-- 시즌2 주의사항 -->
-            <div id="tabs-1" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
+            <div id="tabs-1" class="tabox_body"  ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
                 <span class="tabox_title">신청방법</span>
                 <ol>
                     <li>상단 <mark><span class="table_red">신청자격확인</span></mark> 을 통해 신청자격을 먼저 확인하세요.</li>
@@ -447,7 +447,7 @@
             <!-- /시즌2 주의사항 -->
 
             <!-- 시즌 1 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'"style="display:block;">
+            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" ng-if="selectIdx == '2'" style="display:block;">
                 <span class="tabox_title">기존회원 샘플팩 구성</span>
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
@@ -502,7 +502,7 @@
             <!-- /시즌 1 샘플팩 구성 -->
 
             <!-- 시즌 2 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1'"style="display:block;">
+            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '2'"style="display:block;">
                 <span class="tabox_title">신규회원 샘플팩 구성</span>
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
@@ -588,32 +588,32 @@
     <div class="modal-body">
         <div ng-model="approval" lass="row" class="form-horizontal">
             <div class= "form-group">
-                아이디 <input type="text" class="form-control" ng-model="item.USER_ID" class= "form-control" placeholder="주소"/>
+                아이디 <input type="text" class="form-control" ng-model="item.USER_ID" disabled class= "form-control" placeholder="주소"/>
             </div>
             <div class= "form-group">
-                이름 <input type="text" class="form-control" ng-model="item.USER_NM" class= "form-control" placeholder="이름"/>
+                이름 <input type="text" class="form-control" ng-model="item.USER_NM" disabled class= "form-control" placeholder="이름"/>
             </div>
             <div class= "form-group">
-                닉네임 <input type="text" class="form-control" ng-model="item.NICK_NM" class= "form-control" placeholder="닉네임"/>
+                닉네임 <input type="text" class="form-control" ng-model="item.NICK_NM" disabled class= "form-control" placeholder="닉네임"/>
             </div>
             <div class= "form-group">
-                주소 <input type="text" class="form-control" ng-model="item.ADDR" class= "form-control" placeholder="주소"/>
+                주소 <input type="text" class="form-control" ng-model="item.ADDR"  class= "form-control" placeholder="주소"/>
             </div>
             <div class= "form-group">
-                세부주소 <input type="text" class="form-control" ng-model="item.ADDR_DETAIL" class= "form-control" placeholder="세부주소"/>
+                세부주소 <input type="text" class="form-control" ng-model="item.ADDR_DETAIL"  class= "form-control" placeholder="세부주소"/>
             </div>
             <div class= "form-group">
-                전화번호 <input type="text" class="form-control" ng-model="item.PHONE_1" class= "form-control" placeholder="전화번호"/>
+                전화번호 <input type="text" class="form-control" ng-model="item.PHONE_1"  class= "form-control" placeholder="전화번호"/>
             </div>
             <div class= "form-group">
                 휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
             </div>
-            <div class= "form-group">
-                임신여부 <input type="radio"  value="Y" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y
-                &nbsp;
-                <input type="radio" id="preg_N"  name="preg" value="N"  ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N
-                <div ng-show="checked == 'Y'" id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 20150112"/></div>
-            </div>
+            <!--<div class= "form-group">-->
+                <!--임신여부 <input type="radio"  value="Y" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y-->
+                <!--&nbsp;-->
+                <!--<input type="radio" id="preg_N"  name="preg" value="N"  ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N-->
+                <!--<div ng-show="checked == 'Y'" id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 20150112"/></div>-->
+            <!--</div>-->
         </div>
     </div>
     <div class="modal-footer">

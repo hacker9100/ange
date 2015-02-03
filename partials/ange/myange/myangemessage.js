@@ -153,7 +153,13 @@ define([
 
                     // 사용자 조회 검색 클릭
                     $scope.click_searchUser = function (item) {
-                        $scope.openViewMessageSearchModal({TO_ID : item.TO_ID, TO_NM : item.TO_NM}, 'lg');
+
+                        if(item == null || item == ''){
+                            alert('수신자 아이디 혹은 수신자명을 입력하세요');
+                            return;
+                        }else{
+                            $scope.openViewMessageSearchModal({TO_ID : item.TO_ID, TO_NM : item.TO_NM}, 'lg');
+                        }
                     };
 
                     $scope.openViewMessageSearchModal = function (item, size) {
@@ -231,6 +237,12 @@ define([
 
                                             // 사용자 조회 검색 클릭
                                             $scope.click_searchUser = function (item) {
+
+                                                if(item == null || item == ''){
+                                                    alert('수신자 아이디 혹은 수신자명을 입력하세요');
+                                                    return;
+                                                }
+
                                                 $scope.openViewMessageSearchModal({TO_ID : item.TO_ID, TO_NM : item.TO_NM}, 'lg');
                                             };
 
@@ -285,7 +297,7 @@ define([
 
                                                     }], item, {size:size,keyboard: true}, $scope);
                                                 dlg.result.then(function(){
-
+                                                    $modalInstance.close();
                                                 },function(){
 
                                                 });
@@ -293,7 +305,7 @@ define([
 
                                         }], content, item, {size:size,keyboard: true}, $scope);
                                     dlg.result.then(function(){
-
+                                        $modalInstance.close();
                                     },function(){
 
                                     });

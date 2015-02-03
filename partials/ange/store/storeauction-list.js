@@ -167,6 +167,7 @@ define([
 
         // 조회 화면 이동
         $scope.click_showViewPeoplePhoto = function (key) {
+            console.log('aaaaa');
 
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
         };

@@ -417,7 +417,11 @@ define([
                 $scope.updateItem('ange/order', 'item', item.NO, $scope.item, false)
                     .then(function(){
                         dialogs.notify('알림', '주문취소 되었습니다.', {size: 'md'});
-                        $scope.getPeopleBoardList();
+                        //$scope.getPeopleBoardList();
+
+                        $scope.getMileageList();
+                        $scope.getCummerceList();
+                        $scope.getNamingList();
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {

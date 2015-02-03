@@ -24,10 +24,18 @@ define([
 
         $scope.selectIdx = '1';
 
-        $scope.click_update_user_info = function () {
-            $scope.openModal(null, 'md');
+        $scope.click_update_user_info = function (name) {
+            //$scope.openModal(null, 'md');
+            alert(name);
 
             //$location.url("https://www.ange.co.kr/naming/findhanja2.asp?val=sp_fname&inname=최");
+
+            //var popUrl = "https://www.ange.co.kr/naming/findhanja2.asp?val=sp_fname&inname="+name;
+
+            var popUrl = "https://www.ange.co.kr/naming/findhanja2.asp?val=sfname&inname=%C3%D6";
+            //팝업창에 출력될 페이지 URL
+            var popOption = "width=400, height=450, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+            window.open(popUrl+"","",popOption);
         };
 
         // 날짜 셀렉트 박스셋팅
@@ -45,6 +53,24 @@ define([
         // 초기화
         $scope.init = function() {
 
+            $scope.getItem('com/user', 'item', $scope.uid, {} , false)
+                .then(function(data){
+
+                    data
+
+                    $scope.USER_ID = data.USER_ID;
+                    $scope.USER_NM = data.USER_NM;
+                    $scope.NICK_NM = data.NICK_NM;
+                    $scope.ADDR = data.ADDR;
+                    $scope.ADDR_DETAIL = data.ADDR_DETAIL;
+                    $scope.REG_DT = data.REG_DT;
+                    $scope.REG_DT = data.REG_DT;
+                    $scope.PHONE_1 = data.PHONE_1;
+                    $scope.PHONE_2 = data.PHONE_2;
+                    $scope.BLOG_URL = data.BLOG_URL;
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 
             $scope.community = "작명 신청";
@@ -224,7 +250,22 @@ define([
                     };
                 }], content, {size:size,keyboard: true,backdrop: true}, $scope);
             dlg.result.then(function(){
+                $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+                    .then(function(data){
 
+                        $scope.USER_ID = data.USER_ID;
+                        $scope.USER_NM = data.USER_NM;
+                        $scope.NICK_NM = data.NICK_NM;
+                        $scope.ADDR = data.ADDR;
+                        $scope.ADDR_DETAIL = data.ADDR_DETAIL;
+                        $scope.REG_DT = data.REG_DT;
+                        $scope.REG_DT = data.REG_DT;
+                        $scope.PHONE_1 = data.PHONE_1;
+                        $scope.PHONE_2 = data.PHONE_2;
+                        $scope.BLOG_URL = data.BLOG_URL;
+
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';
@@ -256,6 +297,17 @@ define([
 
         $scope.click_intro = function(){
             $location.url('store/naming/intro');
+        }
+
+        // 후기 작성 화면이동
+        $scope.click_review = function (){
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
+            $location.url('/moms/productreview/edit/0');
         }
 
         /*        $scope.getSession()

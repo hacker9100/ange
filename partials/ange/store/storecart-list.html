@@ -309,7 +309,7 @@
                                                         </td>
                                                         <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
                                                         <td class="table_date" align="center" style="padding-top:14px;">{{item.PRODUCT_CNT}}</td>
-                                                        <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.PRODUCT_GB == 'MILEAGE' ? item.TOTAL_PRICE : item.DIRECT_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                                        <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.PRODUCT_GB == 'MILEAGE' || item.PRODUCT_GB == 'CUMMERCE' ? item.TOTAL_PRICE : item.DIRECT_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
                                                         <td class="table_date" align="center"></td>
                                                     </tr>
                                                     <tr class="table_td_gray" style="border-bottom:1px solid #ddd; height:60px; font-weight:600; line-height:55px;">
@@ -1268,3 +1268,47 @@
 
     <!-- /Main Page Layout Set -->
 </div>  <!-- /ng-controller -->
+
+<script type="text/ng-template" id="user_info_modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">정보수정</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-model="approval" lass="row" class="form-horizontal">
+            <div class= "form-group">
+                아이디 <input type="text" class="form-control" ng-model="item.USER_ID" disabled class= "form-control" placeholder="주소"/>
+            </div>
+            <div class= "form-group">
+                이름 <input type="text" class="form-control" ng-model="item.USER_NM" disabled class= "form-control" placeholder="이름"/>
+            </div>
+            <div class= "form-group">
+                닉네임 <input type="text" class="form-control" ng-model="item.NICK_NM" disabled class= "form-control" placeholder="닉네임"/>
+            </div>
+            <div class= "form-group">
+                주소 <input type="text" class="form-control" ng-model="item.ADDR" class= "form-control" placeholder="주소"/>
+            </div>
+            <div class= "form-group">
+                세부주소 <input type="text" class="form-control" ng-model="item.ADDR_DETAIL" class= "form-control" placeholder="세부주소"/>
+            </div>
+            <div class= "form-group">
+                전화번호 <input type="text" class="form-control" ng-model="item.PHONE_1" class= "form-control" placeholder="전화번호"/>
+            </div>
+            <div class= "form-group">
+                휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
+            </div>
+            <!--<div class= "form-group">-->
+            <!--블로그 <input type="text" class="form-control" ng-model="item.BLOG_URL" class= "form-control" placeholder="블로그"/>-->
+            <!--</div>-->
+            <!--<div class= "form-group">-->
+            <!--임신여부 <input type="radio" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y-->
+            <!--&nbsp;-->
+            <!--<input type="radio" id="preg_N" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N-->
+            <!--<div id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 2015-01-12"/></div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_ok()">수정</button>
+        <button class="btn btn-warning" ng-click="click_cancel()">취소</button>
+    </div>
+</script>

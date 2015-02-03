@@ -50,6 +50,26 @@ define([
             var dlg = dialogs.create('user_info_modal.html',
                 ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
 
+                    $scope.item= {};
+
+                    $scope.user_info = function () {
+                        $scope.getItem('com/user', 'item', $scope.uid, {} , false)
+                            .then(function(data){
+
+                                $scope.item.USER_ID = data.USER_ID;
+                                $scope.item.USER_NM = data.USER_NM;
+                                $scope.item.NICK_NM = data.NICK_NM;
+                                $scope.item.ADDR = data.ADDR;
+                                $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
+                                $scope.item.REG_DT = data.REG_DT;
+                                $scope.item.REG_DT = data.REG_DT;
+                                $scope.item.PHONE_1 = data.PHONE_1;
+                                $scope.item.PHONE_2 = data.PHONE_2;
+                                $scope.item.BLOG_URL = data.BLOG_URL;
+
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
 
                     $(document).ready(function(){
                         $('#birth_dt').css('display', 'none');
@@ -103,9 +123,26 @@ define([
                     $scope.click_cancel = function () {
                         $modalInstance.close();
                     };
+
+                    $scope.user_info();
                 }], content, {size:size,keyboard: true,backdrop: true}, $scope);
             dlg.result.then(function(){
+                $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+                    .then(function(data){
 
+                        $scope.USER_ID = data.USER_ID;
+                        $scope.USER_NM = data.USER_NM;
+                        $scope.NICK_NM = data.NICK_NM;
+                        $scope.ADDR = data.ADDR;
+                        $scope.ADDR_DETAIL = data.ADDR_DETAIL;
+                        $scope.REG_DT = data.REG_DT;
+                        $scope.REG_DT = data.REG_DT;
+                        $scope.PHONE_1 = data.PHONE_1;
+                        $scope.PHONE_2 = data.PHONE_2;
+                        $scope.BLOG_URL = data.BLOG_URL;
+
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';
@@ -137,6 +174,23 @@ define([
                 $scope.search.EVENT_GB = "EVENT";
                 $scope.search.PERFORM_FL = "Y";
             }
+
+            $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+                .then(function(data){
+
+                    $scope.USER_ID = data.USER_ID;
+                    $scope.USER_NM = data.USER_NM;
+                    $scope.NICK_NM = data.NICK_NM;
+                    $scope.ADDR = data.ADDR;
+                    $scope.ADDR_DETAIL = data.ADDR_DETAIL;
+                    $scope.REG_DT = data.REG_DT;
+                    $scope.REG_DT = data.REG_DT;
+                    $scope.PHONE_1 = data.PHONE_1;
+                    $scope.PHONE_2 = data.PHONE_2;
+                    $scope.BLOG_URL = data.BLOG_URL;
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.click_focus = function(){
