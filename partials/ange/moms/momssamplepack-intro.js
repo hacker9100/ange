@@ -75,7 +75,6 @@ define([
 
             if(season == 'sesaon2'){
                 if($scope.todayDay < 25){
-                    console.log('a');
                     dialogs.notify('알림', '기존회원 샘플팩 신청기간이 아닙니다.', {size: 'md'});
                     return;
                 }
