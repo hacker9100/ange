@@ -104,7 +104,7 @@
                                                 신청자
                                             </td>
                                             <td>
-                                                {{name}}({{uid}})
+                                                {{USER_NM}}({{USER_ID}})
                                             </td>
                                         </tr>
                                         <tr>
@@ -112,7 +112,7 @@
                                                 주소
                                             </td>
                                             <td>
-                                                {{addr}}&nbsp;{{addr_detail}}
+                                                {{ADDR}}&nbsp;{{ADDR_DETAIL}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -120,8 +120,8 @@
                                                 연락처
                                             </td>
                                             <td>
-                                                <span>전화번호</span>&nbsp;&nbsp;{{phone1}}
-                                                <span>휴대폰</span>&nbsp;&nbsp;{{phone2}}
+                                                <span>전화번호</span>{{PHONE_1}}
+                                                <span>휴대폰</span>{{PHONE_2}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -144,7 +144,7 @@
                                             <td>
                                                 <span style="display:none;">없음</span>
                                                 <div style="display:block;">
-                                                    <small class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)
+                                                    <span class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)
                                                 </div>
                                             </td>
                                         </tr>
@@ -153,12 +153,8 @@
                                                 블로그
                                             </td>
                                             <td>
-                                                <div ng-show="user_info.BLOG == '' || user_info.BLOG == null">
-                                                    <span style="display:none;">없음</span>
-                                                </div>
-                                                <div ng-show="user_info.BLOG != '' || user_info.BLOG != null">
-                                                    <a class="table_blue" href="{{user_info.BLOG.BLOG_URL}}"  style="font-size:0.94em;">{{user_info.BLOG.BLOG_URL}}</a>
-                                                </div>
+                                                <span style="display:none;">없음</span>
+                                                <a href="#" class="table_blue" style="font-size:0.94em;">http://blog.naver.com/abcdefg</a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -496,6 +492,15 @@
     <div class="modal-body">
         <div ng-model="approval" lass="row" class="form-horizontal">
             <div class= "form-group">
+                아이디 <input type="text" class="form-control" ng-model="item.USER_ID" disabled class= "form-control" placeholder="주소"/>
+            </div>
+            <div class= "form-group">
+                이름 <input type="text" class="form-control" ng-model="item.USER_NM" disabled class= "form-control" placeholder="이름"/>
+            </div>
+            <div class= "form-group">
+                닉네임 <input type="text" class="form-control" ng-model="item.NICK_NM" disabled class= "form-control" placeholder="닉네임"/>
+            </div>
+            <div class= "form-group">
                 주소 <input type="text" class="form-control" ng-model="item.ADDR" class= "form-control" placeholder="주소"/>
             </div>
             <div class= "form-group">
@@ -507,15 +512,15 @@
             <div class= "form-group">
                 휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
             </div>
-            <div class= "form-group">
-                블로그 <input type="text" class="form-control" ng-model="item.BLOG_URL" class= "form-control" placeholder="블로그"/>
-            </div>
-            <div class= "form-group">
-                임신여부 <input type="radio" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y
-                         &nbsp;
-                         <input type="radio" id="preg_N" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N
-                <div id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 2015-01-12"/></div>
-            </div>
+            <!--<div class= "form-group">-->
+            <!--블로그 <input type="text" class="form-control" ng-model="item.BLOG_URL" class= "form-control" placeholder="블로그"/>-->
+            <!--</div>-->
+            <!--<div class= "form-group">-->
+            <!--임신여부 <input type="radio" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y-->
+            <!--&nbsp;-->
+            <!--<input type="radio" id="preg_N" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N-->
+            <!--<div id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 2015-01-12"/></div>-->
+            <!--</div>-->
         </div>
     </div>
     <div class="modal-footer">

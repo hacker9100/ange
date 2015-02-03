@@ -92,7 +92,6 @@
                     <button class="webzine_list_btn red" ng-click="click_update_user_info();" style="line-height:18px;" title="정보수정">정보수정</button><br />
                 </div>
             </div>
-
             <div class="moms_form_bodywrap">
 
                 <table id="moms_form_table" class="table" style="float:left; margin-bottom: 0px;">
@@ -102,7 +101,7 @@
                             신청자
                         </td>
                         <td>
-                            {{name}}({{uid}})
+                            {{USER_NM}}({{USER_ID}})
                         </td>
                     </tr>
                     <tr>
@@ -110,7 +109,7 @@
                             주소
                         </td>
                         <td>
-                            {{addr}}&nbsp;{{addr_detail}}
+                            {{ADDR}}&nbsp;{{ADDR_DETAIL}}
                         </td>
                     </tr>
                     <tr>
@@ -118,8 +117,8 @@
                             연락처
                         </td>
                         <td>
-                            <span>전화번호</span>{{phone1}}
-                            <span>휴대폰</span>{{phone2}}
+                            <span>전화번호</span>{{PHONE_1}}
+                            <span>휴대폰</span>{{PHONE_2}}
                         </td>
                     </tr>
                     <tr>
@@ -142,7 +141,7 @@
                         <td>
                             <span style="display:none;">없음</span>
                             <div style="display:block;">
-                                <small class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)
+                                <span class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)
                             </div>
                         </td>
                     </tr>
@@ -493,6 +492,15 @@
     <div class="modal-body">
         <div ng-model="approval" lass="row" class="form-horizontal">
             <div class= "form-group">
+                아이디 <input type="text" class="form-control" ng-model="item.USER_ID" disabled class= "form-control" placeholder="주소"/>
+            </div>
+            <div class= "form-group">
+                이름 <input type="text" class="form-control" ng-model="item.USER_NM" disabled class= "form-control" placeholder="이름"/>
+            </div>
+            <div class= "form-group">
+                닉네임 <input type="text" class="form-control" ng-model="item.NICK_NM" disabled class= "form-control" placeholder="닉네임"/>
+            </div>
+            <div class= "form-group">
                 주소 <input type="text" class="form-control" ng-model="item.ADDR" class= "form-control" placeholder="주소"/>
             </div>
             <div class= "form-group">
@@ -504,15 +512,15 @@
             <div class= "form-group">
                 휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
             </div>
-            <div class= "form-group">
-                블로그 <input type="text" class="form-control" ng-model="item.BLOG_URL" class= "form-control" placeholder="블로그"/>
-            </div>
-            <div class= "form-group">
-                임신여부 <input type="radio" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y
-                &nbsp;
-                <input type="radio" id="preg_N" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N
-                <div id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 2015-01-12"/></div>
-            </div>
+            <!--<div class= "form-group">-->
+                <!--블로그 <input type="text" class="form-control" ng-model="item.BLOG_URL" class= "form-control" placeholder="블로그"/>-->
+            <!--</div>-->
+            <!--<div class= "form-group">-->
+                <!--임신여부 <input type="radio" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y-->
+                <!--&nbsp;-->
+                <!--<input type="radio" id="preg_N" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N-->
+                <!--<div id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 2015-01-12"/></div>-->
+            <!--</div>-->
         </div>
     </div>
     <div class="modal-footer">

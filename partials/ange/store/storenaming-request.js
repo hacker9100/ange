@@ -45,6 +45,24 @@ define([
         // 초기화
         $scope.init = function() {
 
+            $scope.getItem('com/user', 'item', $scope.uid, {} , false)
+                .then(function(data){
+
+                    data
+
+                    $scope.USER_ID = data.USER_ID;
+                    $scope.USER_NM = data.USER_NM;
+                    $scope.NICK_NM = data.NICK_NM;
+                    $scope.ADDR = data.ADDR;
+                    $scope.ADDR_DETAIL = data.ADDR_DETAIL;
+                    $scope.REG_DT = data.REG_DT;
+                    $scope.REG_DT = data.REG_DT;
+                    $scope.PHONE_1 = data.PHONE_1;
+                    $scope.PHONE_2 = data.PHONE_2;
+                    $scope.BLOG_URL = data.BLOG_URL;
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 
             $scope.community = "작명 신청";
@@ -224,7 +242,22 @@ define([
                     };
                 }], content, {size:size,keyboard: true,backdrop: true}, $scope);
             dlg.result.then(function(){
+                $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+                    .then(function(data){
 
+                        $scope.USER_ID = data.USER_ID;
+                        $scope.USER_NM = data.USER_NM;
+                        $scope.NICK_NM = data.NICK_NM;
+                        $scope.ADDR = data.ADDR;
+                        $scope.ADDR_DETAIL = data.ADDR_DETAIL;
+                        $scope.REG_DT = data.REG_DT;
+                        $scope.REG_DT = data.REG_DT;
+                        $scope.PHONE_1 = data.PHONE_1;
+                        $scope.PHONE_2 = data.PHONE_2;
+                        $scope.BLOG_URL = data.BLOG_URL;
+
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';
