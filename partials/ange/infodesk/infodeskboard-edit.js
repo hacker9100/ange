@@ -47,23 +47,41 @@ define([
                 $scope.community = "공지사항";
                 $scope.menu = "notice";
                 $scope.search.CATEGORY_GB = 'notice';
+                $scope.search.COMM_NO = 14;
+                $scope.search.COMM_GB = 'NOTICE';
             } else if($stateParams.menu == 'system') {
                 $scope.community = "시스템공지";
                 $scope.menu = "system";
                 $scope.search.CATEGORY_GB = 'system';
+                $scope.search.COMM_NO = 15;
+                $scope.search.COMM_GB = 'NOTICE';
             } else if($stateParams.menu == 'faq') {
                 $scope.community = "자주묻는질문";
                 $scope.menu = "faq";
                 $scope.search.CATEGORY_GB = 'faq';
+                $scope.search.COMM_NO = 16;
+                $scope.search.COMM_GB = 'FAQ';
             } else if($stateParams.menu == 'qna') {
                 $scope.community = "문의/게시판";
                 $scope.menu = "qna";
                 $scope.search.CATEGORY_GB = 'qna';
+                $scope.search.COMM_NO = 17;
+                $scope.search.COMM_GB = 'QNA';
             } else if($stateParams.menu == 'myqna') {
                 $scope.community_request = "내 질문과 답변";
                 $scope.menu = "myqna";
                 $scope.search.CATEGORY_GB = 'myqna';
+                $scope.search.COMM_NO = 18;
+                $scope.search.COMM_GB = 'QNA';
             }
+
+            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+                .then(function(data){
+                    var comm_mg_nm = data[0].COMM_MG_NM;
+                    $scope.COMM_MG_NM = comm_mg_nm;
+
+                })
+                .catch(function(error){});
 
             $scope.getList('com/webboard', 'faqcategory', {}, $scope.search, true)
                 .then(function(data){

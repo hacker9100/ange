@@ -55,6 +55,17 @@ define([
                 $scope.VIEW_ROLE = 'CLINIC';
                 $scope.PROFILE = '재테크 전문가 약력';
             }
+
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+            $scope.search.COMM_GB = 'CLINIC';
+
+            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+                .then(function(data){
+                    var comm_mg_nm = data[0].COMM_MG_NM;
+                    $scope.COMM_MG_NM = comm_mg_nm;
+
+                })
+                .catch(function(error){});
         };
 
         $scope.likeFl = function (){

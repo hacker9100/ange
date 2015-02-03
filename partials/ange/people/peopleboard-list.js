@@ -49,25 +49,16 @@ define([
         $scope.init = function() {
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
-
-//            if ($stateParams.menu == 'angeroom') {
-//                $scope.community = "앙쥬맘 수다방";
-//                $scope.search['COMM_NO'] = '1';
-//            } else if($stateParams.menu == 'momstalk') {
-//                $scope.community = "예비맘 출산맘";
-//                $scope.search['COMM_NO'] = '2';
-//            } else if($stateParams.menu == 'babycare') {
-//                $scope.community = "육아방";
-//                $scope.search['COMM_NO'] = '3';
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                $scope.community = "돌잔치 톡톡톡";
-//                $scope.search['COMM_NO'] = '4';
-//            } else if($stateParams.menu == 'booktalk') {
-//                $scope.community = "책수다";
-//                $scope.search['COMM_NO'] = '5';
-//            }
-
+            $scope.search.COMM_GB = 'BOARD';
             $scope.search.SYSTEM_GB = 'ANGE';
+
+            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+                .then(function(data){
+                    var comm_mg_nm = data[0].COMM_MG_NM;
+                    $scope.COMM_MG_NM = comm_mg_nm;
+
+                })
+                .catch(function(error){});
         };
 
         /********** 이벤트 **********/

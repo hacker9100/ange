@@ -131,6 +131,17 @@ define([
                     $scope.item.PHOTO_TYPE = data[0].TYPE;
                 })
                 .catch(function(error){$scope.categorylist = ""});
+
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+            $scope.search.COMM_GB = 'PHOTO';
+
+            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+                .then(function(data){
+                    var comm_mg_nm = data[0].COMM_MG_NM;
+                    $scope.COMM_MG_NM = comm_mg_nm;
+
+                })
+                .catch(function(error){});
         };
 
         // CK Editor

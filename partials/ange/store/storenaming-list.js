@@ -50,6 +50,15 @@ define([
 
             $scope.search.COMM_NO = 19;
             $scope.search.SYSTEM_GB = 'ANGE';
+
+            $scope.search.COMM_GB = 'BOARD';
+            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+                .then(function(data){
+                    var comm_mg_nm = data[0].COMM_MG_NM;
+                    $scope.COMM_MG_NM = comm_mg_nm;
+
+                })
+                .catch(function(error){});
         };
 
         /********** 이벤트 **********/
