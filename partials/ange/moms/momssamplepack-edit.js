@@ -50,7 +50,7 @@ define([
 
             //$("#tabs-"+idx).focus();
 
-            $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
+            //$("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
         };
 
         // 정보수정 모달창
