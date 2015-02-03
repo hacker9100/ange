@@ -32,6 +32,17 @@ define([
 
             $scope.community_show = $stateParams.menu;
 
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+            $scope.search.COMM_GB = 'PHOTO';
+
+            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+                .then(function(data){
+                    var comm_mg_nm = data[0].COMM_MG_NM;
+                    $scope.COMM_MG_NM = comm_mg_nm;
+
+                })
+                .catch(function(error){});
+
 //            if ($stateParams.menu == 'angemodel') {
 //                $scope.community = "앙쥬모델 선발대회";
 //                $scope.community_show = "angemodel";

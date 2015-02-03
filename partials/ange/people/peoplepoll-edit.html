@@ -113,17 +113,21 @@
                                         </div><!-- /.col-02-->
 
 
-
-                                        <div class="col-xs-12 peoplepoll_view_contentbody" ng-class="{ 'hidden': showPollView }">
+                                        <div class="col-xs-12 peoplepoll_view_contentbody" ng-class="{ 'hidden': ! showPollView }">
 
                                             <div class="peoplepoll_view_content"> <!--ng-if="queue.length=2"--> <!--data-ng-repeat="query in queue" ng-show="true"-->
                                                 <!--<div class="radio-inline" ng-repeat="select in query.SELECT" >-->
                                                 <!--<input ng-model="select.SELECT" type= "radio" ng-value="select.SELECT_SORT" /> {{select.NOTE}}-->
                                                 <!--</div>-->
 
-                                                <dl data-ng-repeat="query in queue" ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page "><!--ng-show="$index < page || $index+2 ==page"-->
+                                                <dl data-ng-repeat="query in queue" ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page"><!--  ng-show="firstIndex == page || firstIndex+1 == page" -->
                                                     <!--{{firstIndex}}-->
                                                     <dt>{{query.QUERY}}</dt>
+                                                    <dt>
+                                                        <div ng-if="query.QUERY_GB == 'M'"style="width: 140px; height: 140px;">
+                                                            <canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>
+                                                        </div>
+                                                    </dt>
                                                     <dd data-ng-repeat="select in query.SELECT">
                                                         <div class="radio-inline">
                                                             <label>
@@ -134,13 +138,30 @@
                                                             </label>
                                                         </div>
                                                     </dd>
-                                                    <div  ng-if="query.QUERY_GB == 'M'" ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page " style="width: 100px; height: 100px;">
-                                                        <canvas id="chart{{$index}}" tc-chartjs-pie chart-options="options" chart-data="data" auto-legend></canvas>
-                                                    </div>
-
                                                 </dl>
 
 
+                                                <!--<div ng-if="query.QUERY_GB == 'M'"  data-ng-repeat="query in queue" style="width: 140px; height: 140px;">-->
+                                                    <!--<canvas id="pie1" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>-->
+                                                <!--</div>-->
+                                                <!--<div data-ng-repeat="query in queue"  style="width: 100px; height: 100px;">-->
+                                                    <!--<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>-->
+                                                <!--</div>-->
+                                                <!--<div style="width: 100px; height: 100px;">-->
+                                                    <!--<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>-->
+                                                <!--</div>-->
+                                                <!--<div style="width: 100px; height: 100px;">-->
+                                                    <!--<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>-->
+                                                <!--</div>-->
+                                                <!--<div style="width: 100px; height: 100px;">-->
+                                                    <!--<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>-->
+                                                <!--</div>-->
+                                                <!--<div style="width: 100px; height: 100px;">-->
+                                                    <!--<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>-->
+                                                <!--</div>-->
+                                                <!--<div style="width: 100px; height: 100px;">-->
+                                                    <!--<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>-->
+                                                <!--</div>-->
 
 
                                             </div>

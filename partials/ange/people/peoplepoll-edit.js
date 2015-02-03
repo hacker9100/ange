@@ -31,65 +31,81 @@ define([
 
         $scope.search = {};
 
+        $scope.piedata = [];
+        $scope.pielabels = [];
+
         // 차트
         $scope.chart;
-
+//        $scope.labels1 = ["예", "아니오"];
+//        $scope.data1 = [1, 0];
+        $scope.labels1 = [];
+        $scope.data1 = [];
+        $scope.labels2 = [];
+        $scope.data2 = [];
+        $scope.labels3 = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+        $scope.data3 = [300, 500, 100, 40, 120];
+        $scope.labels4 = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+        $scope.data4 = [300, 500, 100, 40, 120];
+        $scope.labels5 = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+        $scope.data5 = [300, 500, 100, 40, 120];
+        $scope.labels6 = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+        $scope.data6 = [300, 500, 100, 40, 120];
         // Chart.js Data
-        $scope.data = [
-            {
-                value: 300,
-                color:"#F7464A",
-                highlight: "#FF5A5E",
-                label: "Red"
-            },
-            {
-                value: 50,
-                color: "#46BFBD",
-                highlight: "#5AD3D1",
-                label: "Green"
-            },
-            {
-                value: 100,
-                color: "#FDB45C",
-                highlight: "#FFC870",
-                label: "Yellow"
-            }
-        ];
-
+//        $scope.data = [
+//            {
+//                value: 300,
+//                color:"#F7464A",
+//                highlight: "#FF5A5E",
+//                label: "Red"
+//            },
+//            {
+//                value: 50,
+//                color: "#46BFBD",
+//                highlight: "#5AD3D1",
+//                label: "Green"
+//            },
+//            {
+//                value: 100,
+//                color: "#FDB45C",
+//                highlight: "#FFC870",
+//                label: "Yellow"
+//            }
+//        ];
+//
         // Chart.js Options
-        $scope.options =  {
-
-            responsive: true,
-
-            maintainAspectRatio: true,
-
-            //Boolean - Whether we should show a stroke on each segment
-            segmentShowStroke : true,
-
-            //String - The colour of each segment stroke
-            segmentStrokeColor : "#fff",
-
-            //Number - The width of each segment stroke
-            segmentStrokeWidth : 2,
-
-            //Number - The percentage of the chart that we cut out of the middle
-            percentageInnerCutout : 50, // This is 0 for Pie charts
-
-            //Number - Amount of animation steps
-            animationSteps : 100,
-
-            //String - Animation easing effect
-            animationEasing : "easeOutBounce",
-
-            //Boolean - Whether we animate the rotation of the Doughnut
-            animateRotate : true,
-
-            //Boolean - Whether we animate scaling the Doughnut from the centre
-            animateScale : false,
-
-            legendTemplate : "<ul style=\"width:10px; height:10px\" class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"width:10px; height:10px;background-color:<%=segments[i].fillColor%>\"></span><font size=\"1pt\"><%if(segments[i].label){%><%=segments[i].label%><%}%></li></font></li></li><%}%></ul>"
-
-        }
+//        $scope.options =  {
+//
+//            responsive: true,
+//
+//            maintainAspectRatio: true,
+//
+//            //Boolean - Whether we should show a stroke on each segment
+//            segmentShowStroke : true,
+//
+//            //String - The colour of each segment stroke
+//            segmentStrokeColor : "#fff",
+//
+//            //Number - The width of each segment stroke
+//            segmentStrokeWidth : 2,
+//
+//            //Number - The percentage of the chart that we cut out of the middle
+//            percentageInnerCutout : 50, // This is 0 for Pie charts
+//
+//            //Number - Amount of animation steps
+//            animationSteps : 100,
+//
+//            //String - Animation easing effect
+//            animationEasing : "easeOutBounce",
+//
+//            //Boolean - Whether we animate the rotation of the Doughnut
+//            animateRotate : true,
+//
+//            //Boolean - Whether we animate scaling the Doughnut from the centre
+//            animateScale : false,
+//
+//            legendTemplate : "<ul style=\"width:10px; height:10px\" class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"width:10px; height:10px;background-color:<%=segments[i].fillColor%>\"></span><font size=\"1pt\"><%if(segments[i].label){%><%=segments[i].label%><%}%></li></font></li></li><%}%></ul>"
+//
+//        }
 
 
         $scope.init = function (){
@@ -140,16 +156,34 @@ define([
                         var query = data.QUERY;
 
                         var select_sort = [];
+
                         for(var i in query) {
+
+                            console.log(query[i].SELECT);
+
+                            var piechart = query[i].SELECT;
+
+                            for(var j in piechart){
+
+
+                                if(query[i].SELECT[j].QUERY_NO == 12){
+                                    $scope.data1.push(query[i].SELECT[j].POLL_CNT);
+                                    $scope.labels1.push(query[i].SELECT[j].NOTE);
+                                } else if (query[i].SELECT[j].QUERY_NO == 13){
+                                    $scope.data2.push(query[i].SELECT[j].POLL_CNT);
+                                    $scope.labels2.push(query[i].SELECT[j].NOTE);
+                                }
+
+                                //console.log($scope.data1);
+                                //console.log($scope.labels1);
+                            }
+
+
                             $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
-
-
                             //$("#select_sort").attr('checked', true);
 
                             $('input:radio[name=q2_'+query[i].QUERY_NO+']').attr('checked','checked');
                         }
-
-
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

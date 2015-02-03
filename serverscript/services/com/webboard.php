@@ -417,6 +417,21 @@
                 }else{
                     $_d->dataEnd($sql);
                 }
+            }else if ($_type == 'manager') {
+
+                $sql = "SELECT AC.COMM_MG, (SELECT USER_NM FROM COM_USER WHERE USER_ID = AC.COMM_MG) COMM_MG_NM
+                        FROM ANGE_COMM AC
+                        WHERE 1=1
+                          AND NO = '".$_search[COMM_NO]."'
+                          AND COMM_GB = '".$_search[COMM_GB]."'";
+
+                $data = $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
             }
 
             break;

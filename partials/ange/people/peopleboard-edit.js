@@ -137,6 +137,7 @@ define([
         // 첨부파일 체크박스 리스트 초기화
         $scope.item.queue = [];
 
+        $scope.search = {};
         // 초기화
         $scope.init = function() {
 
@@ -156,6 +157,17 @@ define([
                 //$scope.community = "책수다";
                 $scope.item.COMM_NO = 5;
             }
+
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+            $scope.search.COMM_GB = 'BOARD';
+
+            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+                .then(function(data){
+                    var comm_mg_nm = data[0].COMM_MG_NM;
+                    $scope.COMM_MG_NM = comm_mg_nm;
+
+                })
+                .catch(function(error){});
 
         };
 
