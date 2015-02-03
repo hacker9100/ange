@@ -67,6 +67,7 @@ define([
         $scope.init = function() {
 
             $scope.community = '주문/구매 현황';
+
         };
 
 
