@@ -24,10 +24,18 @@ define([
 
         $scope.selectIdx = '1';
 
-        $scope.click_update_user_info = function () {
-            $scope.openModal(null, 'md');
+        $scope.click_update_user_info = function (name) {
+            //$scope.openModal(null, 'md');
+            alert(name);
 
             //$location.url("https://www.ange.co.kr/naming/findhanja2.asp?val=sp_fname&inname=최");
+
+            //var popUrl = "https://www.ange.co.kr/naming/findhanja2.asp?val=sp_fname&inname="+name;
+
+            var popUrl = "https://www.ange.co.kr/naming/findhanja2.asp?val=sfname&inname=%C3%D6";
+            //팝업창에 출력될 페이지 URL
+            var popOption = "width=400, height=450, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+            window.open(popUrl+"","",popOption);
         };
 
         // 날짜 셀렉트 박스셋팅
