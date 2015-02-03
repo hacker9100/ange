@@ -18,8 +18,8 @@ define([
         $scope.item = {};
         $scope.search = {SYSTEM_GB: 'ANGE'};
 
-        $scope.search.COMM_NO = 19;
-        $scope.search.SYSTEM_GB = 'ANGE';
+        $scope.community = "작명이야기";
+
 
         // 댓글
         //$scope.TARGET_NO = $stateParams.id;
@@ -55,6 +55,17 @@ define([
         // 초기화
         $scope.init = function(session) {
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
+
+            $scope.search.COMM_NO = 19;
+            $scope.search.COMM_GB = 'BOARD';
+
+            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+                .then(function(data){
+                    var comm_mg_nm = data[0].COMM_MG_NM;
+                    $scope.COMM_MG_NM = comm_mg_nm;
+
+                })
+                .catch(function(error){});
         };
 
 
