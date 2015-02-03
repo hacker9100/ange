@@ -299,6 +299,17 @@ define([
             $location.url('store/naming/intro');
         }
 
+        // 후기 작성 화면이동
+        $scope.click_review = function (){
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
+            $location.url('/moms/productreview/edit/0');
+        }
+
         /*        $scope.getSession()
          .then($scope.sessionCheck)
          .catch($scope.reportProblems);*/
