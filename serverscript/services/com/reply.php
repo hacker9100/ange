@@ -177,7 +177,7 @@
                         '".$_model[REPLY_NO]."',
                         '".$_model[REPLY_GB]."',
                         '".$_model[LEVEL]."',
-                        '".$_model[COMMENT]."',
+                        '".str_replace("'", "\\'",$_model[COMMENT])."',
                         '".$_SESSION['uid']."',
                         '".$_SESSION['name']."',
                         '".$_SESSION['nick']."',

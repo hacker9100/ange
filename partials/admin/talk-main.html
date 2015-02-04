@@ -1,0 +1,111 @@
+<div ng-controller="talk-main">
+    <!-- Search Include -->
+    <div class="panel panel-default">
+        <div class="panel-body" id="search" ng-model="search" class="row" style="border-radius: 0px; border-left:8px solid #DEDEDE; border-right:2px solid #DEDEDE;">
+
+            <form role="form" name="list_form" class="form-horizontal form_basic_100">
+                <div class="col-xs-12" style="padding-left:15px;">
+                    <div class="form_basic_wrap">
+                        <div class="row form-group form_basic_group">
+                            <div class="col-xs-5" style="max-width:200px;">
+                                <label class= "form_basic_label">년</label>
+                                <div class= "form_basic_input" style="margin-left:30px; width:100px;">
+                                    <select ng-model="search.YEAR" ng-options="v for v in years" class= "form-control" ng-change="change_date()"></select>
+                                </div>
+
+                                <label class= "form_basic_label" style="position:absolute; margin-left:150px;">월</label>
+                                <div class= "form_basic_input" style="margin-left:190px; width:70px;">
+                                    <select ng-model="search.MONTH" ng-options="v for v in months" class= "form-control" ng-change="change_date()"></select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form_basic_wrap">
+                        <div class="row form-group form_basic_group">
+                            <label class= "form_basic_label">일</label>
+                            <div class= "form_basic_input" style="margin:10px 0 20px 20px;">
+                                <span ng-class="search.DAY == day ? 'task-header' : ''" ng-repeat="day in days" ng-click="click_day(day)" style="margin-left:10px;">{{day}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <!-- ////Search Include -->
+
+    <!-- Contents Include -->
+    <div class="list-group-item-labeling-gray" style="margin-bottom: 20px;">
+        <strong>Talk Detail</strong>
+    </div>
+
+    <div class="col-md-12">
+        <div id="item" ng-model="item" class="row form_basic_wrap">
+            <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.item_year.$invalid}">
+                <label class= "form_basic_label">년 <span style="color:#b94a48">*</span></label>
+                <div class="col-xs-2 form_basic_input">
+                    <input id="item_year" name="item_year" ng-model="item.YEAR" type= "text" class= "form-control" placeholder="해당 연도" required readonly/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.item_month.$invalid}">
+                <label class= "form_basic_label">월 <span style="color:#b94a48">*</span></label>
+                <div class="col-xs-2 form_basic_input">
+                    <input id="item_month" name="item_month" ng-model="item.MONTH" type= "text" class= "form-control" placeholder="해당 월" required readonly/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group" ng-class="{error: edit_form.item_day.$invalid}">
+                <label class= "form_basic_label">일 <span style="color:#b94a48">*</span></label>
+                <div class="col-xs-2 form_basic_input">
+                    <input id="item_day" name="item_day" ng-model="item.DAY" type= "text" class= "form-control" placeholder="해당 일" required readonly/>
+                </div>
+            </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">주제</label>
+                <div class= "col-xs-6 form_basic_input">
+                    <input ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder="주제"/>
+                </div>
+            </div>
+            </form>
+
+            <form id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
+                <input type="hidden" id="version" name="version" value="1">
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">이미지</label>
+                    <div class="row" style="margin-left:110px;">
+                        <div class="col-sm-4">
+                            <div ng-model="file">
+                                <input ng-model="file.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 files">
+                            <!-- The fileinput-button span is used to style the file input field as button -->
+                            <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>탐색기</span>
+                                <input type="file" name="files[]" ng-disabled="disabled">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <!-- 하단 버튼 -->
+            <div class="raw" style="float:left; width:100%; margin-top:50px; padding-top:10px; border-top:1px solid #DEDEDE;">
+                <div class="col-xs-12 form-group form_basic" style="text-align:center;">
+                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveTalk();" ng-disabled="edit_form.$invalid">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>저장</span>
+                    </button>
+                    <button type="button" class="btn btn-warning btn-xs cancel" ng-click="click_cancel();">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>취소</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- ////Contents Include -->
+</div>

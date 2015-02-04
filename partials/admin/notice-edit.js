@@ -80,8 +80,9 @@ define([
 
         // 게사판 저장 버튼 클릭
         $scope.click_saveNotice = function () {
+            $scope.item.BOARD_GB = 'NOTICE';
             $scope.item.SYSTEM_GB = 'ANGE';
-            $scope.item.COMM_NO = $scope.item.COMM.COMM_NO;
+            $scope.item.COMM_NO = $scope.item.COMM.NO;
             $scope.item.FILES = $scope.queue;
 
             for(var i in $scope.item.FILES) {

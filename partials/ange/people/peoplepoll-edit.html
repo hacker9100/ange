@@ -125,7 +125,8 @@
                                                     <dt>{{query.QUERY}}</dt>
                                                     <dt>
                                                         <div ng-if="query.QUERY_GB == 'M'"style="width: 140px; height: 140px;">
-                                                            <canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>
+                                                            <div google-chart chart="chart[$index]" style="height:200px; width:100%;"></div>
+                                                            <!--<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>-->
                                                         </div>
                                                     </dt>
                                                     <dd data-ng-repeat="select in query.SELECT">

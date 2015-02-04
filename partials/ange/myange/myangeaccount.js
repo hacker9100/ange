@@ -289,8 +289,6 @@ define([
         // 사용자 정보 저장
         $scope.saveUser = function () {
             $scope.user.SYSTEM_GB = 'ANGE';
-            $scope.user.BABY = $scope.babies;
-            $scope.user.BLOG = $scope.blog;
 
 //            if (!$scope.availableID) {
 //                $('#user_id').focus();

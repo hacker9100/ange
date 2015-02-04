@@ -22,11 +22,12 @@ define([
     // ADMIN 회원현황
     '../../../partials/admin/member-list',
     '../../../partials/admin/member-edit',
-//    '../../../partials/admin/user_view'
+    '../../../partials/admin/member-view',
     '../../../partials/admin/pagehit-main',
 
     '../../../partials/admin/popup/member-write-list',
     '../../../partials/admin/popup/member-mileage-list',
+    '../../../partials/admin/popup/member-response-list',
 
     // ADMIN 참여 관리
     '../../../partials/admin/event-list',
@@ -43,6 +44,7 @@ define([
     '../../../partials/admin/faq-list',
     '../../../partials/admin/faq-edit',
     '../../../partials/admin/faq-view',
+    '../../../partials/admin/talk-main',
 
     // ADMIN 스토어 관리
     '../../../partials/admin/product-list',

@@ -96,9 +96,7 @@ define([
     '../../../partials/ange/infodesk/infodeskboard-view',
     '../../../partials/ange/infodesk/infodeskboard-edit',
     '../../../partials/ange/infodesk/infodeskforgot-request',
-
-    // 회원가입
-    '../../../partials/ange/join/joinsignon',
+    '../../../partials/ange/infodesk/infodesksignon',
 
     // 앙쥬클럽
     '../../../partials/ange/club/clubhome',
@@ -111,11 +109,6 @@ define([
     // 회사소개
     '../../../partials/ange/company/companyintro',
     '../../../partials/ange/company/companyaffiliates',
-
-    // ADMIN 로그인
-    '../../../partials/ange/signin',
-    // ADMIN 회원현황
-    '../../../partials/ange/user_list',
 
     '../../../partials/ange/test/home-main',
     '../../../partials/ange/test/user-list'

@@ -38,11 +38,34 @@
             <a ng-click="click_ok()" style="float:right; font-size:1.24em; cursor:pointer;"><span class="glyphicon glyphicon-remove-circle"></span></a>
         </div>
 
-        <div class="modal-body">
+        <div ng-model="task" class="modal-body">
+
+        <div style="float:left; line-height:20px; vertical-align:top;">
+            <a socialshare
+               socialshare-provider="facebook"
+               socialshare-text="{{task.SUBJECT}}"
+               socialshare-url="{{task.URL}}">
+                Face Book
+            </a>
+
+            <a socialshare
+               socialshare-provider="twitter"
+               socialshare-text="{{task.SUBJECT}}"
+               socialshare-url="{{task.URL}}"
+               socialshare-hashtags="앙쥬, 유아포털">
+                Twitter
+            </a>
+
+            <p id="post-result">KAKAO</p>
+
+            <a id="kakao-login-btn" ng-controller="kakao_share"></a>
+        </div>
 
             <div class="story-row previewwrap">
 
                 <!--<a ng-click="click_printDiv('content')" class="btn primary large no-print">Print this quote</a>-->
+
+
 
                 <div  ng-model="content" class="story-col-xs-12 article_previewwrap" id="inBodyForm">
 
