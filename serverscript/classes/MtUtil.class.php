@@ -218,6 +218,26 @@ class MtUtil extends Mt {
 
     /*
      *
+     * $to : 보내는 사람 메일 주소
+     * $subject : 메일 제목
+     * $message : 메일 내용
+     * $headers : 받는 사람 메일 주소
+     */
+    function sendMail($to, $subject, $message, $headers){
+
+        $ret = mail($to, $subject, $message, $headers);
+
+        if(!$ret) {
+            MtUtil::_c("------------>>>>> mail error");
+            return false;
+        } else {
+            MtUtil::_c("------------>>>>> mail send");
+            return true;
+        }
+    }
+
+    /*
+     *
      * $EMAIL : 보내는 사람 메일 주소
      * $NAME : 보내는 사람 이름
      * $SUBJECT : 메일 제목
@@ -225,7 +245,7 @@ class MtUtil extends Mt {
      * $MAILTO : 받는 사람 메일 주소
      * $MAILTONAME : 받는 사람 이름
      */
-    function sendMail($EMAIL, $NAME, $SUBJECT, $CONTENT, $MAILTO, $MAILTONAME){
+    function smtpMail($EMAIL, $NAME, $SUBJECT, $CONTENT, $MAILTO, $MAILTONAME){
         $mail             = new PHPMailer();
         $body             = $CONTENT;
 

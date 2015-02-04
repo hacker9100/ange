@@ -25,6 +25,11 @@ define(['./directives'], function (directives) {
                 }
                 var templet = '';
 
+                if (channel == null) {
+                    alert(UPLOAD.BASE_URL + scope.location)
+                    location.url(UPLOAD.BASE_URL + scope.location);
+                }
+
                 if (channel.CHANNEL_NO <= 6) {
                     templet += '<div ng-if="'+ (path[1] != 'main') + '" id="lnb" class="lnb"' +
                                 '   <div class="localmenu_wrap">' +

@@ -28,9 +28,11 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'angular-masonry',
     'ng-infinite-scroll',
 
-    'chartjs',
-    'angular-chart',
+//    'chartjs',
+//    'angular-chart',
 
+    'angular-socialshare',
+    'ng-google-chart',
     'ng-map',
 
     // 각 컨트롤러 로딩
@@ -59,7 +61,11 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
 
         'masonryLayout',
         'infinite-scroll',
-        'chart.js',
+//        'chart.js',
+
+        'googlechart',
+//        'djds4rce.angular-socialshare',
+        '720kb.socialshare',
         'ngMap'
         ], function () {
             // 여기서는 필요한 설정들을 진행.
@@ -72,6 +78,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
 //    });
 
     app.run(function ($rootScope, $location) {
+        // 페이스북 연동 설정
+//        $FB.init('640241789454829');
+
         $rootScope.$on("$stateChangeStart", function (event, next, current) {
             // com_commom에서 layout을 동적으로 생성하는데 url이 변경되는 경우 정보 이동을 위해
             $rootScope.location = $location.path();

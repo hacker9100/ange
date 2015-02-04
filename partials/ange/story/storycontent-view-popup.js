@@ -24,6 +24,8 @@ define([
         $scope.currentPage = 1;
         $scope.totalPage = 1;
 
+        $scope.task = {};
+
         // 초기화
         $scope.init = function () {
 
@@ -72,6 +74,7 @@ define([
                     })
                 ])
                 .then( function(results) {
+                    $scope.task.URL = UPLOAD.BASE_URL + $location.path() + '/' + $scope.task.NO;
                     deferred.resolve();
                 },function(error) {
                     deferred.reject(error);

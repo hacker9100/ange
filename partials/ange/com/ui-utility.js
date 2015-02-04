@@ -21,7 +21,7 @@ define([
         };
 
         $scope.click_joinMember = function () {
-            $location.url('join/signon');
+            $location.url('infodesk/signon');
         };
 
         $scope.click_settingAccount = function () {
@@ -62,9 +62,27 @@ define([
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
+                    $scope.item = {};
+                    $scope.save_id = false;
                     $scope.content = data;
 
+                    if (localStorage.getItem('save_id')) {
+                        $scope.save_id = true;
+                        $scope.item.id = localStorage.getItem('user_id');
+                    }
+
                     $scope.click_ok = function () {
+                        if ($scope.item.id == null || $scope.item.id == '') {
+                            dialogs.notify('알림', '아이디를 입력하세요', {size: 'md'});
+                            return;
+                        }
+
+                        if ($scope.save_id) {
+                            localStorage.setItem('user_id', $scope.item.id);
+                        } else {
+                            localStorage.removeItem('user_id');
+                        }
+
                         $scope.item.SYSTEM_GB = 'ANGE';
 
                         $scope.login($scope.item.id, $scope.item)
@@ -79,7 +97,7 @@ define([
                                 $rootScope.email = data.EMAIL;
 
                                 if (data.FILE) {
-                                    $rootScope.img = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                                    $rootScope.profileImg = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
                                 }
                                 $modalInstance.close();
                             }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -88,6 +106,20 @@ define([
 
                     $scope.click_cancel = function () {
                         $modalInstance.close();
+                    };
+
+                    $scope.click_joinMember = function () {
+                        $location.url('infodesk/signon');
+                        $modalInstance.close();
+                    };
+
+                    $scope.check_saveId = function ($event) {
+                        var checkbox = $event.target;
+                        if (checkbox.checked) {
+                            localStorage.setItem('save_id', $scope.save_id);
+                        } else {
+                            localStorage.removeItem('save_id');
+                        }
                     };
                 }], content, {size:size,keyboard: true,backdrop: true}, $scope);
             dlg.result.then(function(){

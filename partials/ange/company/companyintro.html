@@ -22,19 +22,19 @@
                                 <div class="row no-margin">
                                     <div class="col-xs-12 no-margin" style="text-align:center;">
 
-                                        <div class="company_tabs selected">
+                                        <div class="company_tabs" ng-click="click_selectTab('1');" ng-class="selectIdx == '1' ? 'selected' : ''">
                                             회사소개
                                         </div>
                                         <div class="company_tabs center">&nbsp;</div>
-                                        <div class="company_tabs">
+                                        <div class="company_tabs" ng-click="click_selectTab('2');"  ng-class="selectIdx == '2' ? 'selected' : ''">
                                             찾아오시는 길
                                         </div>
                                         <div class="company_tabs center">&nbsp;</div>
-                                        <div class="company_tabs">
+                                        <div class="company_tabs" ng-click="click_selectTab('3');"  ng-class="selectIdx == '3' ? 'selected' : ''">
                                             앙쥬 협력업체
                                         </div>
                                         <div class="company_tabs center">&nbsp;</div>
-                                        <div class="company_tabs">
+                                        <div class="company_tabs" ng-click="click_selectTab('4');"  ng-class="selectIdx == '4' ? 'selected' : ''">
                                             개인정보 취급방침
                                         </div>
 
@@ -45,7 +45,7 @@
                             <!-- /메뉴탭 -->
 
                             <!-- 01. 회사소개 -->
-                            <div style="display: block;">
+                            <div style="display: block;" ng-show="selectIdx == '1'">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
@@ -113,7 +113,7 @@
                             <!-- /01. 회사소개 -->
 
                             <!-- 02. 찾아오시는길 -->
-                            <div style="display: block;">
+                            <div style="display: block;" ng-show="selectIdx == '2'">
 
                                 <div style="margin-top:60px; width:100%;border:1px solid #ddd;">
                                     <!--<map center="-34.397, 150.644" zoom="8"></map>-->
@@ -168,7 +168,7 @@
                             <!-- /02. 찾아오시는길 -->
 
                             <!-- 03. 협력업체 -->
-                            <div style="display: block;">
+                            <div style="display: block;" ng-show="selectIdx == '3'">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
@@ -248,7 +248,7 @@
 
 
                             <!-- 04. 개인정보 취급방침 -->
-                            <div style="display: block;">
+                            <div style="display: block;" ng-show="selectIdx == '4'">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">

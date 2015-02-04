@@ -15,6 +15,7 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+
             $scope.community = "샘플팩 소개";
 
             var date = new Date();
@@ -24,7 +25,18 @@ define([
             var mm = (date.getMonth()+1).toString();
             var dd  = date.getDate().toString();
 
-            var today = year+'-'+mm+'-'+dd;
+            $scope.month = mm; // 현재
+
+            if(mm < 10){
+                mm = '0'+mm;
+            }
+
+            if(dd < 10){
+                dd = '0'+dd;
+            }
+
+            $scope.check = year+mm; // 신규회원 이달말 체크
+
 
             $scope.todayDay = dd;
             console.log($scope.todayDay);
@@ -42,29 +54,29 @@ define([
 
         /********** 이벤트 **********/
         // 게시판 목록 이동
-        $scope.click_sampleSeason1List = function () {
-
-            $scope.search.EVENT_GB = 'SAMPLE1';
-            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-                .then(function(data){
-                    $scope.item.SEASON1 = 'season1';
-
-                })
-                .catch(function(error){});
-        };
+//        $scope.click_sampleSeason1List = function () {
+//
+//            $scope.search.EVENT_GB = 'SAMPLE1';
+//            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+//                .then(function(data){
+//                    $scope.item.SEASON1 = 'season1';
+//
+//                })
+//                .catch(function(error){});
+//        };
 
         // 게시판 목록 이동
-        $scope.click_sampleSeason2List = function () {
-
-            $scope.search.EVENT_GB = 'SAMPLE2';
-            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-                .then(function(data){
-                    var event_gb = data[0].EVENT_GB;
-                    $scope.item.SEASON2 = 'sesaon2';
-
-                })
-                .catch(function(error){});
-        };
+//        $scope.click_sampleSeason2List = function () {
+//
+//            $scope.search.EVENT_GB = 'SAMPLE2';
+//            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+//                .then(function(data){
+//                    var event_gb = data[0].EVENT_GB;
+//                    $scope.item.SEASON2 = 'season2';
+//
+//                })
+//                .catch(function(error){});
+//        };
 
         $scope.click_samplepackedit = function(season){
 
@@ -73,8 +85,21 @@ define([
                 return;
             }
 
-            if(season == 'sesaon2'){
-                if($scope.todayDay < 25){
+            if(season == 'season1'){ // 신규회원 --> 현재 이달에 회원가입한 신규회원 체크(조건 : 가입일이 현재달 1일 ~ 현재달 말일)
+
+                var reg_dt = $rootScope.user_info.REG_DT;
+                reg_dt = reg_dt.replace('-','');
+                reg_dt = reg_dt.substring(0,6);
+
+                console.log($scope.check);
+
+                if($scope.check != reg_dt){
+                    dialogs.notify('알림', $scope.month+'월에 가입한 신규회원만 신청이 가능합니다.', {size: 'md'});
+                    return;
+                }
+
+            }else if(season == 'season2'){
+                if($scope.todayDay < 25){ // 기존회원 --> 매달 25일 ~ 매달 말일
                     dialogs.notify('알림', '기존회원 샘플팩 신청기간이 아닙니다.', {size: 'md'});
                     return;
                 }
@@ -91,8 +116,8 @@ define([
             .then($scope.getCmsBoard)
             .catch($scope.reportProblems);*/
         $scope.init();
-        $scope.click_sampleSeason1List();
-        $scope.click_sampleSeason2List();
+        //$scope.click_sampleSeason1List();
+        //$scope.click_sampleSeason2List();
 
     }]);
 });

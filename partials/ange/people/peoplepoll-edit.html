@@ -67,7 +67,7 @@
                                             </div>
                                         </div><!-- /.col-01-->
 
-                                        <div class="col-xs-12 peoplepoll_view_contentbody" ng-class="{ 'hidden':  showPollView }">
+                                        <div class="col-xs-12 peoplepoll_view_contentbody" ng-class="{ 'hidden':   showPollView }">
                                             <div class="peoplepoll_view_content"  > <!--ng-if="queue.length=2"--> <!--data-ng-repeat="query in queue" ng-show="true"-->
                                                     <!--<div class="radio-inline" ng-repeat="select in query.SELECT" >-->
                                                     <!--<input ng-model="select.SELECT" type= "radio" ng-value="select.SELECT_SORT" /> {{select.NOTE}}-->
@@ -123,12 +123,7 @@
                                                 <dl data-ng-repeat="query in queue" ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page"><!--  ng-show="firstIndex == page || firstIndex+1 == page" -->
                                                     <!--{{firstIndex}}-->
                                                     <dt>{{query.QUERY}}</dt>
-                                                    <dt>
-                                                        <div ng-if="query.QUERY_GB == 'M'"style="width: 140px; height: 140px;">
-                                                            <canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>
-                                                        </div>
-                                                    </dt>
-                                                    <dd data-ng-repeat="select in query.SELECT">
+                                                    <dd  ng-show="query.QUERY_GB == 'M'" data-ng-repeat="select in query.SELECT">
                                                         <div class="radio-inline">
                                                             <label>
                                                                 <!--<input ng-model="query.SELECT_ANSWER" type="text" name="q2_{{select.QUERY_NO}}" id="select_sort_view" ng-value="select"/>-->{{select.QUERY_SORT}}.&nbsp;&nbsp;{{select.NOTE}}
@@ -136,6 +131,12 @@
                                                                 <span class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>
 
                                                             </label>
+                                                        </div>
+                                                    </dd>
+                                                    <dd ng-show="query.QUERY_GB == 'M'">
+                                                        <div  style="width: 400px; height: 200px;">
+                                                            <div google-chart chart="chart[$index]" style="height:200px; width:100%;"></div>
+                                                            <!--<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>-->
                                                         </div>
                                                     </dd>
                                                 </dl>

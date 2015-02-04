@@ -93,7 +93,7 @@
                 }
 
                 $sql = "SELECT
-                            U.NO, U.USER_ID, U.USER_NM, U.NICK_NM, U.LUNAR_FL, U.BIRTH, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST,
+                            U.NO, U.USER_ID, U.USER_NM, U.NICK_NM, U.LUNAR_FL, U.BIRTH, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_GB, U.USER_ST,
                             U.REG_DT, U.FINAL_LOGIN_DT, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_YMD, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_YMD,
                             U.INTRO, U.NOTE, U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT,
                             U.EN_ANGE_EMAIL_FL, U.EN_ANGE_SMS_FL, U.EN_ALARM_EMAIL_FL, U.EN_ALARM_SMS_FL, U.EN_STORE_EMAIL_FL, U.EN_STORE_SMS_FL,
@@ -304,7 +304,7 @@
                         $arr_keywords = explode(",", $_search['KEYWORD']);
                         $in_condition = "";
                         for ($i=0; $i< sizeof($arr_keywords); $i++) {
-                            $in_condition .= "'".trim($arr_keywords['$i'])."'";
+                            $in_condition .= "'".trim($arr_keywords[$i])."'";
                             if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
                         }
 
@@ -322,7 +322,7 @@
 
                     $in_type = "";
                     for ($i=0; $i< count($_search['TYPE']); $i++) {
-                        $in_type .= "'".$_search['TYPE']['$i']."'";
+                        $in_type .= "'".$_search['TYPE'][$i]."'";
                         if (count($_search['TYPE']) - 1 != $i) $in_type .= ",";
                     }
 
@@ -342,7 +342,7 @@
                     $arr_roles = explode(",", $_search['ROLE_ID']);
                     $in_role = "";
                     for ($i=0; $i< sizeof($arr_roles); $i++) {
-                        $in_role .= "'".trim($arr_roles['$i'])."'";
+                        $in_role .= "'".trim($arr_roles[$i])."'";
                         if (sizeof($arr_roles) - 1 != $i) $in_role .= ",";
                     }
 
@@ -596,7 +596,7 @@
                             '".$_model[PHONE_1]."',
                             '".$_model[PHONE_2]."',
                             '".$_model[USER_GB][value]."',
-                            ".(!isset($_model[ROLE]) ? 'W' : 'N').",
+                            '".(!isset($_model[ROLE]) ? 'W' : 'N')."',
                             '".$_model[EMAIL]."',
                             '".$_model[SEX_GB]."',
                             '".$_model[INTRO]."',
@@ -792,13 +792,13 @@
                     $_d->failEnd("등록실패입니다:".$msg);
                 } else {
                     if(!isset($_model[ROLE])) {
-                        $to = $_model[EMAIL];
-                        $from_user = $_model[USER_NM];
-                        $from_email = "hacker9100@gmail.com";
+                        $to = __SMTP_USR__;;
+                        $from_email = "From: hacker9100@gmail.com";
                         $subject = "[테스트 메일]앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
                         $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/mail.php?_method=PUT&_type=cert&_key=hong&hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
 
-                        MtUtil::sendMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                        MtUtil::sendMail($from_email, $subject, $message, $from_user);
+//                        MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $from_user);
                     }
 
                     $_d->sql_commit();
@@ -887,7 +887,7 @@
                             ADDR_DETAIL = '".$_model[ADDR_DETAIL]."',
                             PHONE_1 = '".$_model[PHONE_1]."',
                             PHONE_2 = '".$_model[PHONE_2]."',
-                            USER_GB = '".$_model[USER_GB]."',
+                            USER_GB = '".$_model[USER_GB][value]."',
                             USER_ST = '".$_model[USER_ST]."',
                             EMAIL = '".$_model[EMAIL]."',
                             SEX_GB = '".$_model[SEX_GB]."',
@@ -1100,10 +1100,26 @@
                     $_d->sql_commit();
                     $_d->succEnd($no);
                 }
-            }  else if ($_type == "status") {
+            } else if ($_type == "status") {
                 $sql = "UPDATE COM_USER
                             SET
                                 USER_ST = '".$_model[USER_ST]."'
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == "type") {
+                $sql = "UPDATE COM_USER
+                            SET
+                                USER_GB = '".$_model[USER_GB]."'
                             WHERE
                                 USER_ID = '".$_key."'
                             ";
@@ -1191,13 +1207,15 @@
                     $_d->succEnd($no);
                 }
             } else if ($_type == 'mail') {
-                $to = 'hacker9100@gmail.com';
-                $from_user = 'test';
-                $from_email = "hacker9100@gmail.com";
+                $to = __SMTP_USR__;
+                $from_email = "From: hacker9100@gmail.com";
                 $subject = "[테스트 메일]앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
                 $message = "안녕하세요. test 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=hong&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
 
-                $return = MtUtil::sendMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                MtUtil::_c("------------>>>>> mail : ");
+
+                $return = MtUtil::sendMail($to, $subject, $message, $from_email);
+//                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $from_user);
                 $_d->succEnd('');
             } else if ($_type == 'cert') {
                 $err = 0;

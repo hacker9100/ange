@@ -13,7 +13,7 @@ define([
     // 사용할 서비스를 주입
     controllers.controller("storycontent-list", ['$scope', '$stateParams', '$sce', '$rootScope', '$location', '$modal', '$timeout', 'dialogs', 'UPLOAD', function($scope, $stateParams, $sce, $rootScope, $location, $modal, $timeout, dialogs, UPLOAD) {
         angular.element(document).ready(function () {
-            angular.element(window).scroll(function () {
+            angular.element('#common').scroll(function () {
                 $timeout(function(){
                     //$scope.images;
                     $scope.isLoading = false;
@@ -23,8 +23,14 @@ define([
                     $scope.isLoading = true;
                 });
 
-//                console.log("scrollTop : "+Math.round(angular.element(document).scrollTop()));
-//                console.log("document-window : "+ (angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)));
+                console.log("scrollTop : "+Math.round($(window).scrollTop()));
+                console.log("scrollTop : "+Math.round($(window).height()));
+                console.log("scrollTop : "+Math.round($(document).height()));
+                console.log("scrollTop : "+Math.round(angular.element('#common').scrollTop()));
+                console.log("common : "+ (angular.element('#common').height()));
+                console.log("common : "+ (angular.element('#common').innerHeight()));
+                console.log("window : "+ (angular.element(window).height()));
+                console.log("document-window : "+ (angular.element('#common').height() - angular.element(window).height() - ($scope.PAGE_NO + 1)));
 
                 if (Math.round(angular.element(window).scrollTop()) >= angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)) {
                     if (!$scope.busy) {
