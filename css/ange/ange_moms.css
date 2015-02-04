@@ -285,6 +285,16 @@ a.samplepack_gotoreview:hover {
     background-position: left top;
 }
 
+.samplepack_postsend {
+    width: 180px;
+    height: 27px;
+    border:none;
+    padding:0px;
+    background-image: url('/imgs/ange/samplepack_btn_postsend.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
 .samplepack_cofirmfirst {
     width: 120px;
     height: 27px;
@@ -305,17 +315,18 @@ a.samplepack_gotoreview:hover {
     background-position: left top;
 }
 
-.samplepack_newrequest:hover, .samplepack_gotojoin:hover, .samplepack_cofirmfirst:hover {
+.samplepack_newrequest:hover, .samplepack_gotojoin:hover, .samplepack_cofirmfirst:hover, .samplepack_postsend:hover {
     background-position: left -27px;
 }
 
 .tabox_body {
     border:1px solid #ddd;
     border-top:none;
-    height:650px;
+    min-height:650px;
+    /*height:650px;*/
     padding:25px 20px;
-    overflow:auto;
-    overflow-x:hidden;
+    /*overflow:auto;*/
+    /*overflow-x:hidden;*/
     font-weight: 400;
     word-break: keep-all;
 }

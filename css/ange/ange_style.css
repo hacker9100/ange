@@ -330,6 +330,7 @@ body {
     float:left;
     height:100%;
     width:100%;
+    /*border:1px solid blue;*/
 }
 
 .sub_content_wrap {
@@ -344,6 +345,7 @@ body {
     overflow: auto;
     overflow-x: hidden;
     /*overflow-y: auto;*/
+    /*border: 1px solid red;*/
 }
 
 .main_subar_wrap {
@@ -478,7 +480,7 @@ body {
     }
 
     .sub-slide {
-        width: calc(100% - (215px));
+        width: 100%;
     }
 
     .sub-slide0 {

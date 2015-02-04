@@ -247,21 +247,22 @@
                                                     <div class="col-xs-12 v-cell-4" style="margin:0px;">
                                                         <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
                                                             <div class="item" style="position:absolute;"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
-                                                            <div class="webzine_list_title">
-                                                                <!-- {{item.SUBJECT}} -->
-                                                                {{item.PRODUCT_NM}}
+                                                            <div class="webzine_list_wrap">
+                                                                <div class="webzine_list_title">
+                                                                    <!-- {{item.SUBJECT}} -->
+                                                                    {{item.PRODUCT_NM}}
 
-                                                                <div class="webzine_list_bottomwrap">
-                                                                    <div class="webzine_list_item"><strong>공구기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></div>
-                                                                    <div class="webzine_list_item"><strong>공구가격</strong><span class="table_gray" style="margin-left:8px;"><del>25,000원</del> → {{item.PRICE}}원</span></div>
-                                                                    <div class="webzine_list_item"><strong>판매수량</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_IN_CNT}}</span></div>
-                                                                </div>
+                                                                    <div class="webzine_list_bottomwrap">
+                                                                        <div class="webzine_list_item"><strong>공구기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></div>
+                                                                        <div class="webzine_list_item"><strong>공구가격</strong><span class="table_gray" style="margin-left:8px;"><del>25,000원</del> → {{item.PRICE}}원</span></div>
+                                                                        <div class="webzine_list_item"><strong>판매수량</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_IN_CNT}}</span></div>
+                                                                    </div>
 
-                                                                <div class="webzine_list_btnwrap">
-                                                                    <button class="webzine_list_btn red" title="응모하기" ng-click="click_showViewPeoplePhoto(item.NO)">구매하기</button><br />
-                                                                    <button class="webzine_list_btn default" title="상세보기" ng-click="click_review()">후기작성</button>
+                                                                    <div class="webzine_list_btnwrap">
+                                                                        <button class="webzine_list_btn red" title="응모하기" ng-click="click_showViewPeoplePhoto(item.NO)">구매하기</button><br />
+                                                                        <button class="webzine_list_btn default" title="상세보기" ng-click="click_review()">후기작성</button>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
                                                         </div>  <!-- comp_basic -->
                                                     </div>  <!-- col-xs-8 -->
                                                 </div>  <!-- /.row -->

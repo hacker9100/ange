@@ -1,0 +1,593 @@
+<div ng-controller="postcard-edit" class="ng_wrap">
+
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
+
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+            <div class="row">
+
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
+
+                        <div class="sub_contents_wrap">
+
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">애독자 엽서</h3>
+                            </div>
+
+                            <!-- 애독자 엽서 -->
+                            <div ng-show="season_gb == 'SAMPLE2'" class="samplepack_types subs" style="display:block;">
+                                <div class="samplepack_tagwrap">
+                                    <div class="samplepack_tags blue">
+                                        &nbsp;<span style="font-size:1.32em; font-weight:bold;">2015-02월호</span> 월간앙쥬 애독자엽서
+                                    </div>
+                                </div>
+
+                                <div  class="samplepack_smalltitle">
+                                    <h2><strong>소중한 의견을 보내주세요</strong></h2>
+                                    <br />
+                                    <h4><strong>애독자 엽서 보내기!</strong></h4>
+                                    <p class="table_blue samplepack_subguide">
+                                        엄마들의 행복놀이터 매거진 앙쥬는 열려있습니다. <br>
+                                        소중한 의견을 보내주신 분께 당첨을 통해 선물을 드립니다.
+                                    </p>
+                                </div>
+
+
+                                <dl class="dl-horizontal samplepack_new_howto">
+                                    <dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-16</strong></dd>
+                                    <dt><span class="table_red">당첨발표</span></dt><dd><strong>{{next_year}}-{{next_month}}-01~05</strong> (이벤트 당첨자 발표 게시판)</dd>
+                                    <dt><span class="table_red">증정인원</span></dt><dd>선물 별 당첨자</dd>
+                                    <dt><span class="table_red">선물발송</span></dt><dd>{{next_year}}-{{next_month}}-09 전후 예정 (착불 2500원)</dd>
+                                    <dt><span class="table_red">신청방법</span></dt><dd><strong><mark>애독자 엽서 보내기</mark></strong> 버튼을 누른 후 내용 작성(회원만 가능)</dd>
+                                </dl>
+
+                                <div  class="samplepack_warning">
+                                    <blockquote class="table_red" style="font-size:0.92em;">한번 작성하여 보내주신 엽서는 수정할 수 없습니다.<br />
+                                        보내기에 문제가 생기신 분은 <a href="mailto:angeweb@ange.co.kr">angeweb@ange.co.kr</a> 메일로 해당내용을 보내주시기 바랍니다.
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <!-- /애독자 엽서 -->
+
+                            <!-- 애독자 엽서 -->
+                            <div ng-show="season_gb == 'SAMPLE2'" class="samplepack_btnbox" style="display:block;">
+                                <button ng-click="click_joinon();" class="samplepack_gotojoin"></button>
+                                <button ng-click="showSamplepackDetails = ! showSamplepackDetails" class="samplepack_postsend"></button>
+                            </div>
+                            <!-- /애독자 엽서 -->
+
+                            <!-- 신청 폼 -->
+                            <div class="samplepack_formwrap" ng-model="item" style="display:block;" ng-class="{ 'hidden': ! showSamplepackDetails }">
+                            <div class="samplepack_form_title" style="background:#333; height:46px; padding:10px;">
+                                <span class="table_blue" style="font-size:1.18em; float:left;">| 애독자엽서 양식</span>
+                                <div style="float:right;">
+                                    <small><span class="table_blue">정보가 다르신가요?</span></small>
+                                    <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">정보수정</button>
+                                </div>
+                            </div>
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>아이디</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-4 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>신청자명</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-4 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>가입일자</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-4 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="text" ng-model="item.REG_DT" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>연락처</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-2 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px; text-align:right;">
+                                            <small class="table_gray">전화번호</small>
+                                        </div>
+                                    </span>
+                                    <span class="col-xs-3 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>
+                                        </div>
+                                    </span>
+                                    <span class="col-xs-2 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px; text-align:right;">
+                                            <small class="table_gray">휴대폰</small>
+                                        </div>
+                                    </span>
+                                    <span class="col-xs-3 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows" style="border-bottom:1px dashed #ddd;">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>받으실 곳</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-10 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <p><input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder="" disabled></p>
+                                            <p><input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR" placeholder="" disabled></p>
+                                            <input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>소감내용</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-10 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px">
+                                            <p>
+                                                <textarea ng-model="item.REASON" class="form-control input-sm" rows="10" placeholder="이달의 앙쥬를 본 소감" style="width:100%; min-width:100%; max-width:100%;"></textarea>
+                                            </p>
+                                        </div>
+                                    </span>
+
+                                    <span class="col-xs-2 basicinfo title">
+                                            <strong>희망내용</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
+
+                                        <span class="col-xs-10 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <p>
+                                                    <textarea ng-model="item.REASON" class="form-control input-sm" rows="10" placeholder="다음 호에 실었으면 하는 기사 주제" style="width:100%; min-width:100%; max-width:100%;"></textarea>
+                                                </p>
+                                            </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>설문작성</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-10 basicinfo input">
+                                        <div style="margin-top:15px;">1. 앙쥬를 만난 곳은 어디입니까?</div>
+                                        <div class="form-group" style="margin:0 5px; line-height:18px;">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="firstMeet" id="01" value="병원" checked>
+                                                    병원
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="firstMeet" id="optionsRadios2" value="산후조리원">
+                                                    산후조리원
+                                                </label>
+                                            </div>
+                                            <div class="radio disabled">
+                                                <label>
+                                                    <input type="radio" name="firstMeet" id="optionsRadios3" value="백화점/마트">
+                                                    백화점/마트
+                                                </label>
+                                            </div>
+                                            <div class="radio disabled">
+                                                <label>
+                                                    <input type="radio" name="firstMeet" id="optionsRadios3" value="기타">
+                                                    기타
+                                                </label>
+                                            </div>
+
+                                            <div class="form-group" style="margin:5px 0">
+                                                <input type="text" class="form-control input-sm" style="margin:0px;"  placeholder="구체적인 장소명">
+                                            </div>
+                                        </div>
+
+                                        <div style="margin-top:15px;">2. 자녀가 있거나 임신중인가요?</div>
+                                        <div class="form-group" style="margin:0 5px; line-height:28px;">
+                                            <div class="checkbox" style="margin-top:20px;">
+                                                <label>
+                                                    <input type="checkbox" value="" style="margin-top:8px;">
+                                                    <div style="float:left; margin-right:10px;">현재 임신</div>
+                                                    <input type="text" class="form-control input-sm" style="float:left; margin:0px; width:60px; vertical-align: top;"  placeholder="숫자">
+                                                    <div style="float:left; margin-left:10px;">주차</div>
+                                                </label>
+                                            </div>
+
+                                            <div class="checkbox" style="margin-top:20px;">
+                                                <label>
+                                                    <input type="checkbox" value="" style="margin-top:8px;">
+                                                    <div style="float:left; margin-right:10px;">자녀</div>
+                                                    <input type="text" class="form-control input-sm" style="float:left; margin:0px; width:60px; vertical-align: top;"  placeholder="숫자">
+                                                    <div style="float:left; margin-left:10px;">명 /&nbsp;</div>
+                                                    <input type="text" class="form-control input-sm" style="float:left; margin:0px; width:150px; vertical-align: top;"  placeholder="자녀수만큼 ,로 구분">
+                                                    <div style="float:left; margin-left:10px;">개월</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>선물선택</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-10 basicinfo input">
+                                        <div class="store_list_item" style="float:left; width:53%; height:30px; line-height:24px;">
+                                            <select class="form-control input-sm">
+                                                <option value="">1지망 선택</option>
+                                                <option value="">제품 1</option>
+                                                <option value="">제품 2</option>
+                                                <option value="">제품 3</option>
+                                            </select>
+                                        </div>
+                                        <div class="store_list_item" style="float:left; margin-left:2%; width:45%; height:30px; line-height:24px;">
+                                            <select class="form-control input-sm" disabled>
+                                                <option value="">옵션 선택</option>
+                                                <option value="">사이즈 M(블랙)</option>
+                                                <option value="">사이즈 L(블랙)</option>
+                                                <option value="">사이즈 XL(블랙)</option>
+                                                <option value="">사이즈 M(그레이)</option>
+                                                <option value="">사이즈 L(그레이)</option>
+                                                <option value="">사이즈 XL(그레이)</option>
+                                                <option value="">사이즈 M(네이비)</option>
+                                                <option value="">사이즈 L(네이비)</option>
+                                                <option value="">사이즈 XL(네이비)</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="store_list_item" style="float:left; width:53%; height:30px; line-height:24px;">
+                                            <select class="form-control input-sm">
+                                                <option value="">2지망 선택</option>
+                                                <option value="">제품 1</option>
+                                                <option value="">제품 2</option>
+                                                <option value="">제품 3</option>
+                                            </select>
+                                        </div>
+                                        <div class="store_list_item" style="float:left; margin-left:2%; width:45%; height:30px; line-height:24px;">
+                                            <select class="form-control input-sm" disabled>
+                                                <option value="">옵션 선택</option>
+                                                <option value="">사이즈 M(블랙)</option>
+                                                <option value="">사이즈 L(블랙)</option>
+                                                <option value="">사이즈 XL(블랙)</option>
+                                                <option value="">사이즈 M(그레이)</option>
+                                                <option value="">사이즈 L(그레이)</option>
+                                                <option value="">사이즈 XL(그레이)</option>
+                                                <option value="">사이즈 M(네이비)</option>
+                                                <option value="">사이즈 L(네이비)</option>
+                                                <option value="">사이즈 XL(네이비)</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="store_list_item" style="float:left; width:53%; height:30px; line-height:24px;">
+                                            <select class="form-control input-sm">
+                                                <option value="">3지망 선택</option>
+                                                <option value="">제품 1</option>
+                                                <option value="">제품 2</option>
+                                                <option value="">제품 3</option>
+                                            </select>
+                                        </div>
+                                        <div class="store_list_item" style="float:left; margin-left:2%; width:45%; height:30px; line-height:24px;">
+                                            <select class="form-control input-sm" disabled>
+                                                <option value="">옵션 선택</option>
+                                                <option value="">사이즈 M(블랙)</option>
+                                                <option value="">사이즈 L(블랙)</option>
+                                                <option value="">사이즈 XL(블랙)</option>
+                                                <option value="">사이즈 M(그레이)</option>
+                                                <option value="">사이즈 L(그레이)</option>
+                                                <option value="">사이즈 XL(그레이)</option>
+                                                <option value="">사이즈 M(네이비)</option>
+                                                <option value="">사이즈 L(네이비)</option>
+                                                <option value="">사이즈 XL(네이비)</option>
+                                            </select>
+                                        </div>
+
+                                        <p style="margin-top:10px;"><small class="table_gray">아래 애독자선물 구성목록을 참고하세요.</small></p>
+                                    </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows" style="border-top:2px solid #333;">
+                                <div class="form_basicinfo">
+                                    <!-- 애독자 엽서 사은품 구성 -->
+                                    <div style="display:block;" style="widith:100%;">
+                                        <br />
+                                        <span class="table_blue" style="line-height: 38px; font-size:1.28em; margin-left:12px;">애독자선물 구성</span>
+                                        <br />
+
+                                        <!-- 사은품 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
+                                        <div class="samplepack_goodsbox_td">
+
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_02.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+
+                                        </div> <!-- /.samplepack_goodsbox_td -->
+                                        <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
+
+                                        <div class="samplepack_goodsbox_td">
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_03.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+                                        </div>  <!-- /.samplepack_goodsbox_td -->
+
+                                    </div>  <!-- /#samplepack_new_goods -->
+                                    <!-- /애독자 엽서 사은품 구성 -->
+
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+
+                            <div class="samplepack_guidebox" style="float:left; width:100%; border-bottom: 1px solid #333;">
+                                <center>
+                                    <div style="width:80px; height:80px; border:1px solid #4cace8; background-color:#4cace8; border-radius: 50%; line-height:80px; color:#fff; text-align: center;">
+                                        주의사항
+                                    </div>
+                                </center>
+
+                                <ol class="samplepack_howto">
+                                    <li class="table_red">한번 등록한 내용은 변경하실 수 없습니다.</li>
+                                    <li>임신부 레깅스 선택 시 사이즈(XS(44)/S(55)/M(66)) 및 색상(블랙/그레이) 을 선택하지 않으면 M(66) 블랙으로 발송됩니다.
+                                    <li>엽서등록확인은 마이페이지 <span class="table_blue">마이앙쥬 > 내 활동 조회</span>에서 확인가능 합니다.
+                                    <li>애독자 선물의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체 사정으로 공지없이 변경될 수 있습니다.</li>
+                                    <li>당첨자 발표 후 별도 주소확인은 하지 않으며 주소가 불분명할 경우 선물은 발송되지 않습니다. (번지수가 없거나 아파트 동, 호수 없는 경우)</li>
+                                    <li>회원 탈퇴 후 재가입하여 신청하더라도 신청기록은 남기 때문에 샘플팩 선정에서 제외됩니다.</li>
+                                </ol>
+                            </div>
+
+                            <div style="float:left; position:relative; width:100%;">
+                                <div style="clear:both; text-align: center; width:225px; margin:0px auto; padding-top:10px 0 40px 0;">
+                                    <a class="samplepack_submit cancelbtn" href="/moms/samplepack/intro"></a>
+                                    <a class="samplepack_submit submitbtn" ng-click="click_saveSamplepackComp();"></a>
+                                </div>
+                            </div>
+
+                            <!--<div class="col-xs-12">-->
+                            <!--<div ng-model="ad" class="inven_themeup">-->
+                            <!--<a class="ADbanner_image" title="배너타이틀">-->
+                            <!--&lt;!&ndash;<img ng-src="{{ad.FILE}}"/>&ndash;&gt;-->
+                            <!--<img img src="/imgs/ange/temp/story_banner.jpg"/>-->
+                            <!--</a>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+
+                            </div>
+                            <!-- /신청폼 -->
+
+
+                            <div class="samplepack_tabbox"  ng-class="{ 'hidden': showSamplepackDetails }" style="display:block;">
+
+                                <ul class="nav nav-tabs nav-justified" id="tab" style="font-size:0.92em; font-weight:700;">
+                                    <!--<li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">주의사항</a></li>-->
+                                    <li class="active"><a><span class="tabox_title" style="color:#2486ee; line-height:60px; font-size:1.46em;">애독자 선물 구성</span></a></li>
+
+                                    <!-- 애독자 엽서 사은품 구성 -->
+                                    <div class="tabox_body" style="display:block;">
+                                        <p><small class="table_gray">※종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
+
+                                        <!-- 샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
+                                        <div class="samplepack_goodsbox_td">
+
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_02.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+
+                                        </div> <!-- /.samplepack_goodsbox_td -->
+                                        <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
+
+                                        <div class="samplepack_goodsbox_td">
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_03.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+                                        </div>  <!-- /.samplepack_goodsbox_td -->
+                                        <div class="samplepack_goodsbox_td">
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_03.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+                                        </div>  <!-- /.samplepack_goodsbox_td -->
+                                        <div class="samplepack_goodsbox_td">
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_03.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+                                            <div class="samplepack_goodsbox">
+                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                                                <div class="samplepack_goodsboxtxt">
+                                                    <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
+                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
+                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                                                </div>
+                                            </div>
+                                        </div>  <!-- /.samplepack_goodsbox_td -->
+
+                                    </div>  <!-- /#samplepack_new_goods -->
+                                    <!-- /애독자 엽서 사은품 구성 -->
+
+                                </ul>   <!-- /.nav-tabs -->
+                            </div>  <!-- /.samplepack_tabbox -->
+
+                        </div><!-- /.sub_contents_wrap -->
+                    </div>
+                </div>
+
+            </div> <!-- rows -->
+        </div><!-- container-fluid -->
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
+
+    </div><!-- /.mainbar -->
+
+
+    <div class="subar sub-slide1">
+        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+    </div>
+
+    <!-- /Main Page Layout Set -->
+</div>  <!-- /.ng_wrap -->
+
+
+<script type="text/ng-template" id="user_info_modal.html">
+    <div class="modal-header">
+        <h3 class="modal-title">정보수정</h3>
+    </div>
+    <div class="modal-body">
+        <div ng-model="approval" lass="row" class="form-horizontal">
+            <div class= "form-group">
+                아이디 <input type="text" class="form-control" ng-model="item.USER_ID" disabled class= "form-control" placeholder="주소"/>
+            </div>
+            <div class= "form-group">
+                이름 <input type="text" class="form-control" ng-model="item.USER_NM" disabled class= "form-control" placeholder="이름"/>
+            </div>
+            <div class= "form-group">
+                닉네임 <input type="text" class="form-control" ng-model="item.NICK_NM" disabled class= "form-control" placeholder="닉네임"/>
+            </div>
+            <div class= "form-group">
+                주소 <input type="text" class="form-control" ng-model="item.ADDR"  class= "form-control" placeholder="주소"/>
+            </div>
+            <div class= "form-group">
+                세부주소 <input type="text" class="form-control" ng-model="item.ADDR_DETAIL"  class= "form-control" placeholder="세부주소"/>
+            </div>
+            <div class= "form-group">
+                전화번호 <input type="text" class="form-control" ng-model="item.PHONE_1"  class= "form-control" placeholder="전화번호"/>
+            </div>
+            <div class= "form-group">
+                휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
+            </div>
+            <!--<div class= "form-group">-->
+            <!--임신여부 <input type="radio"  value="Y" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y-->
+            <!--&nbsp;-->
+            <!--<input type="radio" id="preg_N"  name="preg" value="N"  ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N-->
+            <!--<div ng-show="checked == 'Y'" id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 20150112"/></div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_ok()">수정</button>
+        <button class="btn btn-warning" ng-click="click_cancel()">취소</button>
+    </div>
+</script>
