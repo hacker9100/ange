@@ -214,9 +214,9 @@ define([
 
                             // $routeParams.chartType == BarChart or PieChart or ColumnChart...
                             $scope.chart[i].type = 'PieChart';
-                            $scope.chart[i].options = {
-                                'title': 'How Much Pizza I Ate Last Night'
-                            }
+//                            $scope.chart[i].options = {
+//                                'title': 'How Much Pizza I Ate Last Night'
+//                            }
 
                         }
 
