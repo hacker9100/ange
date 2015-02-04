@@ -31,122 +31,15 @@ define([
 
         $scope.search = {};
 
-        $scope.piedata = [];
-        $scope.pielabels = [];
 
-        // 차트
-        $scope.chart;
-//        $scope.labels1 = ["예", "아니오"];
-//        $scope.data1 = [1, 0];
-        $scope.labels1 = [];
-        $scope.data1 = [];
-        $scope.labels2 = [];
-        $scope.data2 = [];
-        $scope.labels3 = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
-        $scope.data3 = [300, 500, 100, 40, 120];
-        $scope.labels4 = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
-        $scope.data4 = [300, 500, 100, 40, 120];
-        $scope.labels5 = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
-        $scope.data5 = [300, 500, 100, 40, 120];
-        $scope.labels6 = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
-        $scope.data6 = [300, 500, 100, 40, 120];
-
+// 차트
         $scope.chart = {};
 
-        $scope.onions = [
-            {v: "Onions"},
-            {v: 3},
-        ];
-
-        $scope.chart[1] = {};
-
-        $scope.chart[1].data = {"cols": [
-            {id: "t", label: "Topping", type: "string"},
-            {id: "s", label: "Slices", type: "number"}
-        ], "rows": [
-            {c: [
-                {v: "Mushrooms"},
-                {v: 3},
-            ]},
-            {c: $scope.onions},
-            {c: [
-                {v: "Olives"},
-                {v: 31}
-            ]},
-            {c: [
-                {v: "Zucchini"},
-                {v: 1},
-            ]},
-            {c: [
-                {v: "Pepperoni"},
-                {v: 2},
-            ]}
-        ]};
 
 
-        // $routeParams.chartType == BarChart or PieChart or ColumnChart...
-        $scope.chart[1].type = 'PieChart';
-        $scope.chart[1].options = {
-            'title': 'How Much Pizza I Ate Last Night'
-        }
 
 
-        // Chart.js Data
-//        $scope.data = [
-//            {
-//                value: 300,
-//                color:"#F7464A",
-//                highlight: "#FF5A5E",
-//                label: "Red"
-//            },
-//            {
-//                value: 50,
-//                color: "#46BFBD",
-//                highlight: "#5AD3D1",
-//                label: "Green"
-//            },
-//            {
-//                value: 100,
-//                color: "#FDB45C",
-//                highlight: "#FFC870",
-//                label: "Yellow"
-//            }
-//        ];
-//
-        // Chart.js Options
-//        $scope.options =  {
-//
-//            responsive: true,
-//
-//            maintainAspectRatio: true,
-//
-//            //Boolean - Whether we should show a stroke on each segment
-//            segmentShowStroke : true,
-//
-//            //String - The colour of each segment stroke
-//            segmentStrokeColor : "#fff",
-//
-//            //Number - The width of each segment stroke
-//            segmentStrokeWidth : 2,
-//
-//            //Number - The percentage of the chart that we cut out of the middle
-//            percentageInnerCutout : 50, // This is 0 for Pie charts
-//
-//            //Number - Amount of animation steps
-//            animationSteps : 100,
-//
-//            //String - Animation easing effect
-//            animationEasing : "easeOutBounce",
-//
-//            //Boolean - Whether we animate the rotation of the Doughnut
-//            animateRotate : true,
-//
-//            //Boolean - Whether we animate scaling the Doughnut from the centre
-//            animateScale : false,
-//
-//            legendTemplate : "<ul style=\"width:10px; height:10px\" class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"width:10px; height:10px;background-color:<%=segments[i].fillColor%>\"></span><font size=\"1pt\"><%if(segments[i].label){%><%=segments[i].label%><%}%></li></font></li></li><%}%></ul>"
-//
-//        }
+        //console.log($scope.chart[j+1]);
 
 
         $scope.init = function (){
@@ -197,36 +90,139 @@ define([
                         var query = data.QUERY;
 
                         var select_sort = [];
-
                         for(var i in query) {
 
-                            console.log(query[i].SELECT);
+                            $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
 
-                            var piechart = query[i].SELECT;
+                            var j = parseInt(i)+1;
 
-                            for(var j in piechart){
+                            $scope.search.BOARD_NO = $stateParams.id ;
 
+//                            $scope.getList('ange/poll', 'chartlist', {}, $scope.search, true)
+//                                .then(function(data){
+//                                    $scope.chartlist = data;
+//
+//                                    var note = [];
+//                                    var poll_cnt = [];
+//                                    var myJSON = "";
+//
+//                                    for(var k=0; k<$scope.chartlist.length; k++) {
+//                                        var item = {
+//                                            v: $scope.chartlist[k].NOTE
+//                                        };
+//
+//                                        var item2 = {
+//                                            v: $scope.chartlist[k].POLL_CNT
+//                                        };
+//
+//                                        note.push(item);
+//                                        poll_cnt.push(item2);
+//
+//                                        $rootScope.jsontext = '{"v":"'+ $scope.chartlist[k].NOTE+'"}';
+//                                        $rootScope.jsontext2 = '{"v":"'+ $scope.chartlist[k].POLL_CNT+'"}';
+//
+//                                        $rootScope.contact = JSON.parse($rootScope.jsontext);
+//                                        $rootScope.contact2 = JSON.parse($rootScope.jsontext2);
+//
+//                                    }
+//
+//                                })
+//                                .catch(function(error){});
 
-//                                if(query[i].SELECT[j].QUERY_NO == 12){
-//                                    $scope.data1.push(query[i].SELECT[j].POLL_CNT);
-//                                    $scope.labels1.push(query[i].SELECT[j].NOTE);
-//                                } else if (query[i].SELECT[j].QUERY_NO == 13){
-//                                    $scope.data2.push(query[i].SELECT[j].POLL_CNT);
-//                                    $scope.labels2.push(query[i].SELECT[j].NOTE);
-//                                }
+                            var myarray = [{}];
+                            var json = [];
 
-//                                console.log($scope.data1);
-//                                console.log($scope.labels1);
+                            var j = parseInt(i)+1;
+                            $scope.chart[i] = {};
+
+//                            $rootScope.jsontext1 = '{"cols": [ {id: "t", label: "Topping", type: "string"}, {id: "s", label: "Slices", type: "number"} ], "rows": {c:[]};';
+//
+//                            var obj = JSON.parse($rootScope.jsontext1);
+//                            obj["c"].push({"v":"title"},{"v": 500});
+//                            $rootScope.jsontext1 = JSON.stringify(obj);
+
+                            $rootScope.jsontext = new Array();
+                            $rootScope.jsontext2 = new Array();
+
+                            $rootScope.contact = new Array();
+                            $rootScope.contact2 = new Array();
+
+                            $rootScope.contact3 = new Array();
+
+                            $rootScope.test = '';
+                            for(var k in query[i].SELECT) {
+
+                                $rootScope.jsontext[k] = '{"v":"'+ query[i].SELECT[k].NOTE+'"}';
+                                $rootScope.jsontext2[k] = '{"v":'+ query[i].SELECT[k].POLL_CNT+'}';
+
+                                $rootScope.contact[k] = JSON.parse($rootScope.jsontext[k]);
+                                $rootScope.contact2[k] = JSON.parse($rootScope.jsontext2[k]);
+
+                                $rootScope.contact3[k] = $rootScope.contact[k] + $rootScope.contact2[k];
                             }
 
+                            for(var q=0; q < $rootScope.contact3.length; q++){
+                                console.log($rootScope.contact[q]);
+                                console.log($rootScope.contact2[q]);
+                            }
 
-                            $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
-                            //$("#select_sort").attr('checked', true);
+//                            for(var q=0; q < $rootScope.contact2.length; q++){
+//                                console.log($rootScope.contact2[q]);
+//                            }
 
-                            $('input:radio[name=q2_'+query[i].QUERY_NO+']').attr('checked','checked');
+                            var test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "Slices", "type": "number"} ], "rows": []}';
+                            var obj = JSON.parse(test);
+
+                            for(var q=0; q < $rootScope.contact3.length; q++){
+                                console.log($rootScope.contact[q]);
+                                console.log($rootScope.contact2[q]);
+                                obj['rows'].push({c:[$rootScope.contact[q], $rootScope.contact2[q]]});
+                            }
+
+                            //obj['rows'].push({c:[]});
+                            test = JSON.stringify(obj);
+                            var result = JSON.parse(test);
+                            console.log(result);
+
+//                            var jsonStr = '{"theTeam":[{"teamId":"1","status":"pending"},{"teamId":"2","status":"member"},{"teamId":"3","status":"member"}]}';
+//
+//                            var obj = JSON.parse(jsonStr);
+//                            obj['theTeam'].push({"teamId":"4","status":"pending"});
+//                            jsonStr = JSON.stringify(obj);
+//
+//
+//                            console.log(jsonStr);
+                            //{c:[]}
+//                            $scope.chart[i].data = {"cols": [
+//                                {id: "t", label: "Topping", type: "string"},
+//                                {id: "s", label: "Slices", type: "number"}
+//                            ], "rows": [
+//                                {c: [
+//                                    $rootScope.contact[0],
+//                                    $rootScope.contact2[0]
+//                                ]},
+//                                {c:[
+//                                    {v:"예(Q3번으로)"}
+//                                    ,{v:1}
+//                                ]},
+//                                {c:[
+//                                    {v:"아니오(Q4번으로)"}
+//                                    ,{v:1}
+//                                ]}
+//                            ]};
+                            $scope.chart[i].data = result;
+
+                            // $routeParams.chartType == BarChart or PieChart or ColumnChart...
+                            $scope.chart[i].type = 'PieChart';
+                            $scope.chart[i].options = {
+                                'title': 'How Much Pizza I Ate Last Night'
+                            }
+
                         }
-                    })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -326,6 +322,7 @@ define([
         $scope.click_showAngePollList = function() {
             $location.url('/people/poll/list');
         }
+
 
 
         $scope.init();

@@ -197,6 +197,41 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $_d->dataEnd($sql);
                 }
 
+            }else if ($_type == "chartlist") {
+                $search_where = "";
+                $sort_order = "";
+                $limit = "";
+
+                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
+                    $search_where .= "AND POLL_ST = '".$_search[POLL_ST]."' ";
+                }
+
+                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                }
+
+                if (isset($_page)) {
+                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                }
+
+                $sql = "SELECT AP.QUERY_NO, AP.QUERY_SORT, AP.SELECT_SORT, AP.BOARD_NO, AP.NOTE,
+                               (SELECT COUNT(*) FROM ANGE_POLL_ANSWEAR WHERE QUERY_NO = AP.QUERY_NO and QUERY_SORT = AP.QUERY_SORT) as POLL_CNT
+                        FROM ANGE_POLL_SELECT AP
+                            WHERE
+                                AP.BOARD_NO = ".$_search[BOARD_NO]."
+                            ORDER BY AP.SELECT_SORT ASC, AP.QUERY_SORT ASC
+                        ";
+
+                $data = $_d->sql_query($sql);
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
             }
 
             break;
