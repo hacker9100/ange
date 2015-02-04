@@ -20,14 +20,91 @@ define([
         $scope.PAGE_NO = 0;
         $scope.PAGE_SIZE = 1;
 
+        $scope.selectIdx = 1;
+
         $scope.showSamplepackDetails = false;
 
+        // 초기화
+        $scope.init = function(session) {
+//            if ($stateParams.menu == 'angeroom') {
+            $scope.community = "샘플팩 신청";
+//            }
+            if($stateParams.id == 'season1'){
+                $scope.season_gb = 'SAMPLE1';
+            }else if($stateParams.id == 'season2'){
+                $scope.season_gb = 'SAMPLE2';
+            }
+
+            var date = new Date();
+
+            // GET YYYY, MM AND DD FROM THE DATE OBJECT
+            var year = date.getFullYear().toString();
+            var mm = (date.getMonth()+1).toString();
+            var dd  = date.getDate().toString();
+
+             // 현재달+1
+            var next_mm = parseInt(mm)+1;
+
+            if(mm < 10){
+                mm = '0'+mm;
+            }
+
+            if(next_mm < 10){
+                next_mm = '0'+next_mm;
+            }
+
+            var next_year = '';
+
+            if(next_mm > 12){
+                next_mm = '01';
+                next_year = year + 1;
+            }else{
+                next_year = year
+            }
+
+            if(dd < 10){
+                dd = '0'+dd;
+            }
+
+            $scope.year = year;
+            $scope.next_year = next_year;
+            $scope.month = mm;
+            $scope.next_month = next_mm;// 신규회원 이달말 체크
+
+            $scope.todayDay = dd;
+
+            var dt = new Date(year, mm, 0);
+            $scope.Day = dt.getDate();
+
+            // 기존회원 신청자격 여부
+            $scope.checked = 'N';
+
+            // 회원정보 신청폼에 셋팅
+            $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+                .then(function(data){
+
+                    $scope.item.USER_ID = data.USER_ID;
+                    $scope.item.USER_NM = data.USER_NM;
+                    $scope.item.NICK_NM = data.NICK_NM;
+                    $scope.item.ADDR = data.ADDR;
+                    $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
+                    $scope.item.REG_DT = data.REG_DT;
+                    $scope.item.REG_DT = data.REG_DT;
+                    $scope.item.PHONE_1 = data.PHONE_1;
+                    $scope.item.PHONE_2 = data.PHONE_2;
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+        };
+
+        // 정보수정 팝업
         $scope.click_update_user_info = function () {
             $scope.openModal(null, 'md');
         };
 
-        $scope.selectIdx = 1;
 
+        // 탭
         $(function () {
 
             $(".tab_content").hide();
@@ -47,10 +124,6 @@ define([
         // 탭 선택시 해당 화면으로 포커스 이동
         $scope.click_selectTab = function (idx) {
             $scope.selectIdx = idx;
-
-            //$("#tabs-"+idx).focus();
-
-            //$("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
         };
 
         // 정보수정 모달창
@@ -60,8 +133,6 @@ define([
 
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
-
-
 
                     $scope.item = {};
 
@@ -91,7 +162,7 @@ define([
                     $scope.content = data;
 
                     $scope.click_ok = function () {
-                        $scope.item.SYSTEM_GB = 'CMS';
+                        $scope.item.SYSTEM_GB = 'ANGE';
 
                         if($("#preg_Y").is(":checked")){
                             $scope.item.PREGNENT_FL = "Y";
@@ -137,37 +208,6 @@ define([
             });
 
             console.log(dlg);
-        };
-
-        // 초기화
-        $scope.init = function(session) {
-//            if ($stateParams.menu == 'angeroom') {
-            $scope.community = "샘플팩 신청";
-//            }
-            if($stateParams.id == 'season1'){
-                $scope.season_gb = 'SAMPLE1';
-            }else {
-                $scope.season_gb = 'SAMPLE2';
-            }
-
-            $scope.checked = 'N';
-
-            $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
-                .then(function(data){
-
-                    $scope.item.USER_ID = data.USER_ID;
-                    $scope.item.USER_NM = data.USER_NM;
-                    $scope.item.NICK_NM = data.NICK_NM;
-                    $scope.item.ADDR = data.ADDR;
-                    $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
-                    $scope.item.REG_DT = data.REG_DT;
-                    $scope.item.REG_DT = data.REG_DT;
-                    $scope.item.PHONE_1 = data.PHONE_1;
-                    $scope.item.PHONE_2 = data.PHONE_2;
-
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
         };
 
         /********** 이벤트 **********/
@@ -218,7 +258,21 @@ define([
                 return;
             }
 
+            console.log($scope.season_gb);
+
             $scope.search.REG_UID = $rootScope.uid;
+
+
+            if($scope.season_gb == 'SAMPLE2'){
+
+                var mileage_point = $rootScope.user_info.MILEAGE.REMAIN_POINT;
+
+                if(mileage_point < 2000){
+                    alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
+                    return;
+                }
+            }
+
             $scope.getList('ange/comp', 'check', {}, $scope.search, false)
                 .then(function(data){
                     var comp_cnt = data[0].COMP_CNT;
@@ -226,6 +280,15 @@ define([
                     if(comp_cnt == 0){
                         $scope.insertItem('ange/comp', 'item', $scope.item, false)
                             .then(function(){
+
+//                                if($scope.season_gb == 'SAMPLE2'){ // 기존회원일때 마일리지 2000 차감
+//
+//                                    $scope.item.REMAIN_POINT = 2000;
+//                                    $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
+//                                        .then(function(){
+//                                        })
+//                                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                                }
 
                                 dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
 
