@@ -247,7 +247,7 @@ define([
 
         // 회원가입 화면 이동
         $scope.click_joinon = function (){
-            $location.url('/join/signon');
+            $location.url('/infodesk/signon');
         }
 
         // 샘플팩 신청

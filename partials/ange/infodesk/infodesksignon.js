@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2015-01-06
- * Description : joinsignon.html 화면 콘트롤러
+ * Description : infodesksignon.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('joinsignon', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $window, $location, dialogs, UPLOAD) {
+    controllers.controller('infodesksignon', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $window, $location, dialogs, UPLOAD) {
 
         /********** 초기화 **********/
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
@@ -170,7 +170,8 @@ define([
                 $scope.checkPW = true;
 
 //                var check = /[^a-zA-Z0-9~!@\#$%<>^&*\()\-=+_\']/gi;
-                var check = /^(?=.+[0-9])(?=.+[a-zA-Z])(?=.+[!@#$%^*+=-]).{6,12}$/;
+//                var check = /^(?=.+[0-9])(?=.+[a-zA-Z])(?=.+[!@#$%^*+=-]).{6,12}$/;
+                var check = /^(?=.+[0-9])(?=.+[a-zA-Z]).{6,12}$/;
 
                 console.log($scope.user.PASSWORD)
                 console.log(check.test($scope.user.PASSWORD))
@@ -417,6 +418,12 @@ define([
             }
         };
 
+        // 다음 버튼 클릭 시 등록하는 영역으로 focus 이동
+        $scope.click_focus = function (id) {
+            $('html,body').animate({scrollTop:$('#'+id).offset().top}, 100);
+            $('#'+id).focus();
+        }
+
         // 가입 완료
         $scope.finishUser = function () {
 
@@ -428,6 +435,8 @@ define([
                 $scope.step = '01'
             } else if ($scope.step == '03') {
                 $scope.step = '02'
+
+                $scope.click_focus('user_id');
             }
         };
 
@@ -445,6 +454,7 @@ define([
                 }
 
                 $scope.step = '02';
+                $scope.click_focus('user_id');
             } else if ($scope.step == '02') {
                 $scope.saveUser();
 

@@ -25,8 +25,8 @@ define([
     './validation-directive',
     './dropdown-select-directive',
     './focus-directive',
-    './numbersonly-directive',//,
-    './chartjs-directive'
+    './numbersonly-directive'//,
+//    './chartjs-directive'
 //    './plUploadDirective'
 ], function (){
 

@@ -50,6 +50,47 @@ define([
         $scope.data5 = [300, 500, 100, 40, 120];
         $scope.labels6 = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
         $scope.data6 = [300, 500, 100, 40, 120];
+
+        $scope.chart = {};
+
+        $scope.onions = [
+            {v: "Onions"},
+            {v: 3},
+        ];
+
+        $scope.chart[1] = {};
+
+        $scope.chart[1].data = {"cols": [
+            {id: "t", label: "Topping", type: "string"},
+            {id: "s", label: "Slices", type: "number"}
+        ], "rows": [
+            {c: [
+                {v: "Mushrooms"},
+                {v: 3},
+            ]},
+            {c: $scope.onions},
+            {c: [
+                {v: "Olives"},
+                {v: 31}
+            ]},
+            {c: [
+                {v: "Zucchini"},
+                {v: 1},
+            ]},
+            {c: [
+                {v: "Pepperoni"},
+                {v: 2},
+            ]}
+        ]};
+
+
+        // $routeParams.chartType == BarChart or PieChart or ColumnChart...
+        $scope.chart[1].type = 'PieChart';
+        $scope.chart[1].options = {
+            'title': 'How Much Pizza I Ate Last Night'
+        }
+
+
         // Chart.js Data
 //        $scope.data = [
 //            {
@@ -166,16 +207,16 @@ define([
                             for(var j in piechart){
 
 
-                                if(query[i].SELECT[j].QUERY_NO == 12){
-                                    $scope.data1.push(query[i].SELECT[j].POLL_CNT);
-                                    $scope.labels1.push(query[i].SELECT[j].NOTE);
-                                } else if (query[i].SELECT[j].QUERY_NO == 13){
-                                    $scope.data2.push(query[i].SELECT[j].POLL_CNT);
-                                    $scope.labels2.push(query[i].SELECT[j].NOTE);
-                                }
+//                                if(query[i].SELECT[j].QUERY_NO == 12){
+//                                    $scope.data1.push(query[i].SELECT[j].POLL_CNT);
+//                                    $scope.labels1.push(query[i].SELECT[j].NOTE);
+//                                } else if (query[i].SELECT[j].QUERY_NO == 13){
+//                                    $scope.data2.push(query[i].SELECT[j].POLL_CNT);
+//                                    $scope.labels2.push(query[i].SELECT[j].NOTE);
+//                                }
 
-                                //console.log($scope.data1);
-                                //console.log($scope.labels1);
+//                                console.log($scope.data1);
+//                                console.log($scope.labels1);
                             }
 
 

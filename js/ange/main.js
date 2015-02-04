@@ -89,8 +89,14 @@ require.config({
         'moment': '../../lib/fullcalendar/lib/moment.min',
 
         // chartjs 모듈
-        'chartjs': '../../lib/chartjs/Chart',
-        'angular-chart': '../../lib/chartjs/angular-chart',
+//        'chartjs': '../../lib/chartjs/Chart',
+//        'angular-chart': '../../lib/chartjs/angular-chart',
+
+        // google-chart 모듈
+        'ng-google-chart': '../../lib/ng-google-chart/ng-google-chart',
+
+        // socialshare 모듈
+        'angular-socialshare': '../../lib/angular-socialshare/angular-socialshare',
 
         // map 모듈
 //        'google-map': '//maps.google.com/maps/api/js',
@@ -196,8 +202,14 @@ require.config({
         'ngFileupload':{
             deps:['jquery','angular','jquery-blueimp-gallery','fileupload','fileupload-process','fileupload-image','fileupload-audio','fileupload-video','fileupload-validate']
         },
-        'angular-chart':{
-            deps:['angular', 'chartjs']
+//        'angular-chart':{
+//            deps:['angular', 'chartjs']
+//        },
+        'ng-google-chart':{
+            deps:['jquery', 'angular']
+        },
+        'angular-socialshare':{
+            deps:['angular']
         },
         'ng-map':{
             deps:['angular']

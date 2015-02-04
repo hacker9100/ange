@@ -115,6 +115,35 @@ define([
             };
         };
 
+        /********** 함수 **********/
+        function autoHypenPhone(str){
+            str = str.replace(/[^0-9]/g, '');
+            var tmp = '';
+            if( str.length < 4) {
+                return str;
+            } else if(str.length < 7) {
+                tmp += str.substr(0, 3);
+                tmp += '-';
+                tmp += str.substr(3);
+                return tmp;
+            } else if(str.length < 11) {
+                tmp += str.substr(0, 3);
+                tmp += '-';
+                tmp += str.substr(3, 3);
+                tmp += '-';
+                tmp += str.substr(6);
+                return tmp;
+            } else {
+                tmp += str.substr(0, 3);
+                tmp += '-';
+                tmp += str.substr(3, 4);
+                tmp += '-';
+                tmp += str.substr(7);
+                return tmp;
+            }
+            return str;
+        }
+
         /********** 이벤트 **********/
         $scope.check_user = [];
         $scope.check_cnt = 0;
@@ -395,7 +424,6 @@ define([
             });
         }
 
-
         // 사용자 게시물 선택 버튼 클릭
         $scope.click_selectWriteList = function (item) {
             $scope.openPopupWriteListModal(true, {USER_ID : item.USER_ID});
@@ -420,13 +448,13 @@ define([
         }
 
         // 조회 화면 이동
-        $scope.click_showViewUser = function (key) {
-            $location.url('/member/view/'+key);
+        $scope.click_showViewUser = function (item) {
+            $location.url('/member/view/'+item.USER_ID);
         };
 
         // 수정 화면 이동
         $scope.click_showEditUser = function (item) {
-            $location.url('/member/edit/'+item.NO);
+            $location.url('/member/edit/'+item.USER_ID);
         };
 
         $scope.isStatus = false;
@@ -448,6 +476,40 @@ define([
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
+
+        // 유형 변경 기능 클릭
+        $scope.change_userType = function (item) {
+            $scope.updateItem('com/user', 'type', item.USER_ID, item, true)
+                .then(function(data){
+                    dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+                    $scope.isStatus = false;
+                    $scope.selectUser = '';
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
+        // 고객응대 메모 버튼 클릭
+        $scope.click_responseUser = function (item) {
+            $scope.openPopupResponseListModal(true, {USER_ID : item.USER_ID});
+        }
+
+        $scope.openPopupResponseListModal = function (modal, search, size) {
+            var dlg = dialogs.create('/partials/admin/popup/member-response-list.html',
+                ['$modalInstance', function ($modalInstance) {
+                    $scope.isModal = true;
+                    $scope._search = search;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+
+                }], search, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        }
 
         // 자주쓰는 목록 사용자 제거
         $scope.click_removeUser = function (item) {
@@ -510,6 +572,11 @@ define([
                         .then(function(data){
                             var total_cnt = data[0].TOTAL_COUNT;
                             $scope.TOTAL_CNT = total_cnt;
+
+                            for(var i in data) {
+                                data[i].PHONE_1 = autoHypenPhone(data[i].PHONE_1);
+                                data[i].PHONE_2 = autoHypenPhone(data[i].PHONE_2);
+                            }
 
                             params.total(total_cnt);
                             $defer.resolve(data);

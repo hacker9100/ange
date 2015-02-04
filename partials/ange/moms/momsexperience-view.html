@@ -1,4 +1,4 @@
-<div ng-controller="momsexperience-view">
+<div ng-controller="momsexperience-view" class="ng_wrap">
 <!-- mainbar -->
 <div class="mainbar sub-slide0">
 <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
@@ -466,17 +466,7 @@
 </div><!-- container-fluid -->
 
 <!-- 1200px 이하일 경우 표시되는 footer -->
-<div class="copyright_foot">
-    <br /><br />
-    <nav class="navbar navbar-default navbar-bottom" style="background-color: #fff; border:none; margin:0; border-radius: 0;">
-
-        <hr style="margin:0 15px 0 15px;" />
-
-        <center>
-            <img src="imgs/ange/footer_horicopy_01.jpg" style="margin:0px auto;" />
-        </center>
-    </nav>
-</div>
+<div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
 <!-- /1200px 이하일 경우 표시되는 footer -->
 
 </div>

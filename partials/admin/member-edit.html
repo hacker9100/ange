@@ -45,17 +45,17 @@
                             </select>
                         </div>
                         <div class="col-xs-3" style="padding-right:5px;">
-                            <select id="birth" ng-model="item.YEAR" ng-options="v for v in year" class= "form-control">
+                            <select id="birth" ng-model="item.YEAR" ng-options="v for v in years" class= "form-control">
                                 <option value="">년</option>
                             </select>
                         </div>
                         <div class="col-xs-2" style="padding-right:5px;">
-                            <select ng-model="item.MONTH" ng-options="v for v in month" class= "form-control">
+                            <select ng-model="item.MONTH" ng-options="v for v in months" class= "form-control">
                                 <option value="">월</option>
                             </select>
                         </div>
                         <div class="col-xs-2" style="padding-right:5px;">
-                            <select ng-model="item.DAY" ng-options="v for v in day" class= "form-control">
+                            <select ng-model="item.DAY" ng-options="v for v in days" class= "form-control">
                                 <option value="">일</option>
                             </select>
                         </div>
@@ -65,10 +65,10 @@
                     <label class= "form_basic_label">주소 <span style="color:#b94a48">*</span></label>
                     <div class="col-md-6" style="margin-left: 77px;">
                         <div class="col-md-2" style="padding-right:5px;">
-                            <input id="post_1" ng-model="user.POST_1" type="text" class="form-control postno_search" style="cursor:default; background-color: #fff;" readonly>
+                            <input id="post_1" ng-model="item.POST_1" type="text" class="form-control postno_search" style="cursor:default; background-color: #fff;" readonly>
                         </div>
                         <div class="col-md-2" style="padding-right:5px;">
-                            <input id="post_2" ng-model="user.POST_2" type="text" class="form-control postno_search" style="cursor:default; background-color: #fff;" readonly>
+                            <input id="post_2" ng-model="item.POST_2" type="text" class="form-control postno_search" style="cursor:default; background-color: #fff;" readonly>
                         </div>
                         <div class="col-md-3">
                             <button type="button" class="btn btn-primary start" ng-click="click_openDaumPostcode();">
@@ -77,10 +77,10 @@
                             </button>
                         </div>
                         <div class="col-md-12" >
-                            <input id="addr" ng-model="user.ADDR" type="text" class="form-control inline_input" style="cursor:default; background-color: #fff;" readonly>
+                            <input id="addr" ng-model="item.ADDR" type="text" class="form-control inline_input" style="cursor:default; background-color: #fff;" readonly>
                         </div>
                         <div class="col-md-12" >
-                            <input id="addr_detail" ng-model="user.ADDR_DETAIL" type="text" class="form-control" style="margin:0px;">
+                            <input id="addr_detail" ng-model="item.ADDR_DETAIL" type="text" class="form-control" style="margin:0px;">
                         </div>
                     </div>
                 </div>
@@ -114,12 +114,68 @@
                 </div>
 
                 <div class= "form-group form_basic_group">
-                    <label class= "form_basic_label">수신동의 <span style="color:#b94a48">*</span></label>
-                    <div class="col-md-2 form_basic_input">
-                        <select ng-model="item.EN_FL" ng-init="item.EN_FL = 'Y'" class= "form-control">
-                            <option value="Y" selected="true">수신</option>
-                            <option value="N">거부</option>
-                        </select>
+                    <label class= "form_basic_label">정보수신동의 <span style="color:#b94a48">*</span></label>
+                    <div class="col-md-9" style="float: left; margin:10px 0 15px 30px;">
+                        <span class="col-xs-2 basicinfo title">
+                            <div class="form-group" style="margin:0 5px"><stong>앙쥬</stong></div>
+                        </span>
+                        <span class="col-xs-5 basicinfo subtitle">
+                            <div class="form-group" style="text-align:left; margin:0 5px">각종소식(Event/체험단/정보/당첨안내 등)</div>
+                        </span>
+                        <span class="col-xs-5 basicinfo input">
+                            <div class="form-group" style="margin:0 5px; line-height:19px;">
+                                <input ng-model="item.EN_ANGE_EMAIL_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                <span style="float:left; margin-left:5px;">이메일</span>
+
+                                <input ng-model="item.EN_ANGE_SMS_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                <span style="float:left; margin-left:5px;">SMS</span>
+                            </div>
+                        </span>
+
+                        <span class="col-xs-2 basicinfo title">
+                            <div class="form-group" style="margin:0 5px"><stong>알람</stong></div>
+                        </span>
+                        <span class="col-xs-5 basicinfo subtitle">
+                            <div class="form-group" style="text-align:left; margin:0 5px">스케쥴(캘린더알람/일정소식/맞춤정보 등)</div>
+                        </span>
+                        <span class="col-xs-5 basicinfo input">
+                            <div class="form-group" style="margin:0 5px; line-height:19px;">
+                                <input ng-model="item.EN_ALARM_EMAIL_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                <span style="float:left; margin-left:5px;">이메일</span>
+
+                                <input ng-model="item.EN_ALARM_SMS_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                <span style="float:left; margin-left:5px;">SMS</span>
+                            </div>
+                        </span>
+
+                        <span class="col-xs-2 basicinfo title">
+                            <div class="form-group" style="margin:0 5px"><stong>스토어</stong></div>
+                        </span>
+                        <span class="col-xs-5 basicinfo subtitle">
+                            <div class="form-group" style="text-align:left; margin:0 5px">스토어(스토어 이벤트/빅딜정보/맞춤추천/알림 등)</div>
+                        </span>
+                        <span class="col-xs-5 basicinfo input">
+                            <div class="form-group" style="margin:0 5px; line-height:19px;">
+                                <input ng-model="item.EN_STORE_EMAIL_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                <span style="float:left; margin-left:5px;">이메일</span>
+
+                                <input ng-model="item.EN_STORE_SMS_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                <span style="float:left; margin-left:5px;">SMS</span>
+                            </div>
+                        </span>
+
+                        <span class="col-xs-12 basicinfo divide"></span>
+
+                        <span class="col-xs-12 basicinfo input">
+                            <div style="text-align:right; padding:0 150px;">
+
+                                <span class="table_blue"><small>앙쥬/알람서비스/스토어 각종소식 수신에 동의합니다.</small></span>
+
+                                <input ng-model="checkAllAgree" type="checkbox" style="margin:10px 0 0 15px;" ng-click="click_checkAllAgree()">
+                                <span style="margin-left:5px;"><strong>모두동의</strong></span>
+
+                            </div>
+                        </span>
                     </div>
                 </div>
                 <div class= "form-group form_basic_group">
@@ -189,7 +245,7 @@
                             <span class="col-md-1"> 생년월일 : </span>
                             <div class="col-md-5">
                                 <div class="col-md-3">
-                                    <select ng-model="baby.BABY_YEAR" ng-options="v for v in years" class= "form-control">
+                                    <select ng-model="baby.BABY_YEAR" ng-options="v for v in babyYear" class= "form-control">
                                         <option value="">없음</option>
                                     </select>
                                 </div>
@@ -223,7 +279,7 @@
             </div>
 
             <div class="form_basic_wrap list-group-item-labeling-gray" style="margin: 40px 0 10px 0;">
-                <strong>추가 정보</strong>
+                <strong>블로그 정보</strong>
             </div>
 
             <div ng-model="blog" class="row form_basic_wrap form-horizontal">
@@ -284,13 +340,13 @@
             <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
                 <!-- 하단 버튼 -->
                 <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
-                    <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showCmsUserList();" >
+                    <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showUserList();" >
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>목록</span>
                     </button>
                 </div>
                 <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
-                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveCmsUser();" ng-disabled="edit_form.$invalid">
+                    <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveUser();" ng-disabled="edit_form.$invalid">
                         <i class="glyphicon glyphicon-plus"></i>
                         <span>저장</span>
                     </button>

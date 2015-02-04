@@ -89,7 +89,6 @@
 <html lang="en">
 <head>
 <title>ANGE - 엄마들의 즐거운 놀이터</title>
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,7 +110,10 @@
 <!--<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />-->
 
 <!-- chart -->
-<link rel="stylesheet" type="text/css" href="/lib/chartjs/angular-chart.css" />
+<!--<link rel="stylesheet" type="text/css" href="/lib/chartjs/angular-chart.css" />-->
+
+<!-- social -->
+<link rel="stylesheet" type="text/css" href="/lib/angular-socialshare/angular-socialshare.css" />
 
 <!-- file-upload -->
 <!-- blueimp Gallery styles -->
@@ -147,7 +149,12 @@
 
 <!-- 다음 무편번호 서비스 추가 -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>
+<!-- 구글 맵 서비스 추가 -->
 <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
+<!-- 트위터 공유 서비스 추가 -->
+<script src="http://platform.twitter.com/widgets.js"></script>
+<!-- 카카오 스토리 공유 서비스 추가 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <script>
     function ange_init($rootScope) {
@@ -170,6 +177,81 @@ http://plnkr.co/edit/KzjIMN
     requireJS를 사용하기 위한 부분으로,
     requireJS는 data-main에 설정한 main.js 파일을 최초로 로드한다.
  -->
+
+공유
+<!--<div facebook class="facebookShare" data-url='http://ange.marveltree.com' data-shares='shares'>{{ shares }}</div>-->
+<!--<div facebook class="facebookShare" data-url='http://ange.marveltree.com' data-shares='shares'>{{ shares }}</div>-->
+<!--<br /><br />-->
+<!--<a twitter  data-lang="en" data-count='horizontal' data-url='http://localhost' data-via='앙쥬' data-size="medium" data-text='Testing Twitter Share' ></a>-->
+
+<!--
+<a href="#"
+   socialshare
+   socialshare-provider="facebook"
+   socialshare-text="test"
+   socialshare-url="http://ange.marveltree.com/story/content/list/12">
+    Face Book
+</a>
+
+<a href="#"
+   socialshare
+   socialshare-provider="twitter"
+   socialshare-text="제목입니다."
+   socialshare-url="http://ange.marveltree.com"
+   socialshare-hashtags="앙쥬, 유아포털">
+    Twitter
+</a>
+
+<p id="post-result">KAKAO</p>
+
+<a id="kakao-login-btn" ng-controller="kakao_share"></a>
+-->
+
+<script>
+    function kakao_share($scope, $location, UPLOAD) {
+
+        // 사용할 앱의 Javascript 키를 설정해 주세요.
+        Kakao.init('207aa395bc0cb51730547fd97ee9d369');
+        Kakao.Auth.createLoginButton({
+            container: '#kakao-login-btn',
+            success: function() {
+
+                // 로그인 성공시, API를 호출합니다.
+                Kakao.API.request( {
+                    url : '/v1/api/story/linkinfo',
+                    data : {
+                        url : UPLOAD.BASE_URL + $location.path() + '/' + $scope.task.NO
+                    }
+                }).then(function(res) {
+                    res.title = $scope.task.SUBJECT;
+                    res.description = $scope.task.SUMMARY;
+                    res.site_name = UPLOAD.BASE_URL;
+                    // 이전 API 호출이 성공한 경우 다음 API를 호출합니다.
+                    return Kakao.API.request( {
+                        url : '/v1/api/story/post/link',
+                        data : {
+                            link_info : res
+                        }
+                    });
+                }).then(function(res) {
+                    return Kakao.API.request( {
+                        url : '/v1/api/story/mystory',
+                        data : { id : res.id }
+                    });
+                }).then(function(res) {
+                    alert("공유 되었습니다.")
+                    document.getElementById('post-result').innerHTML = JSON.stringify(res);
+                }, function (err) {
+                    alert(JSON.stringify(err));
+                });
+
+            },
+            fail: function(err) {
+                alert(JSON.stringify(err))
+            }
+        });
+    }
+</script>
 
 <script src="lib/require/require.js" data-main="js/ange/main.js"></script>
 </body>

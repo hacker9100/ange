@@ -80,6 +80,8 @@ body {
     margin:0px auto;
     border-left:1px solid #EFEFEF;
     border-right:1px solid #EFEFEF;
+
+    overflow-y: auto;
 }
 
 .panel_user {
@@ -202,23 +204,51 @@ body {
 
 .mini_ad_roll {
     float:left;
-    width:120px;
+    position:relative;
+    width:116px;
     height:76px;
     margin-top:20px;
-    background-position:left bottom;
+    /*background-color: #fff;*/
+    background: rgba(255,255,255,.55);
+    border:1px solid transparent;
+    border-radius: 5px;
+    text-align:center;
+    /*opacity: 0.5;*/
 }
+
+.ads_indicators_wrap {
+    width:100%;
+    padding:0px;
+    text-align: center;
+}
+
+.ads_indicators {
+    display:inline-block;
+    width:10px;
+    height:4px;
+    background-color: #afafaf;
+    margin:0px;
+    cursor: pointer;
+}
+
+.ads_indicators.now {
+    background-color: #000;
+    cursor: default;
+}
+
+/*.mini_ad_roll_1 {background:url('/imgs/ange/left_banner_01_01.png') no-repeat;}*/
+/*.mini_ad_roll_2 {background:url('/imgs/ange/left_banner_02_01.png') no-repeat;}*/
+/*.mini_ad_roll_3 {background:url('/imgs/ange/left_banner_03_01.png') no-repeat;}*/
+/*.mini_ad_roll_4 {background:url('/imgs/ange/left_banner_04_01.png') no-repeat;}*/
+
 
 .copyright_left {
     position:absolute;
     bottom:15px;
     float:left;
     margin:0;
+    background-position:left bottom;
 }
-
-.mini_ad_roll_1 {background:url('/imgs/ange/left_banner_01_01.png') no-repeat;	background-position:left bottom;}
-.mini_ad_roll_2 {background:url('/imgs/ange/left_banner_02_01.png') no-repeat;	background-position:left bottom;}
-.mini_ad_roll_3 {background:url('/imgs/ange/left_banner_03_01.png') no-repeat;	background-position:left bottom;}
-.mini_ad_roll_4 {background:url('/imgs/ange/left_banner_04_01.png') no-repeat;	background-position:left bottom;}
 
 .copyright_foot {
     display:none;
@@ -291,6 +321,19 @@ body {
     overflow-x: hidden;
 }
 
+.ng_mainwrap {
+    float:left;
+    height:100%;
+    width:100%;
+}
+
+.ng_wrap {
+    float:left;
+    height:100%;
+    width:100%;
+}
+
+
 .sub_content_wrap {
     overflow: auto;
     overflow-x: hidden;
@@ -301,6 +344,8 @@ body {
     padding-right: 5px;
     height:100%;
     overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .subar {
@@ -308,11 +353,11 @@ body {
     position:relative;
     border-left: 1px solid #eee;
     height:100%;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .mainbar:hover, .subar:hover  {
-    overflow-x: auto;
+    overflow-x: hidden;
     overflow-y: auto;
 }
 
@@ -395,16 +440,20 @@ body {
 
 @media (min-width: 1680px) {
 
+    .ng_wrap {
+        width: calc(100% - (215px));
+    }
+
     .sub-slide {
         width: calc(100% - (215px));
     }
 
     .sub-slide0 {
-        width:58%;
+        width:70%;
     }
 
     .sub-slide1 {
-        width:24%;
+        width:25%;
     }
 }
 /* - Sub Page Responsive Style Set - */
