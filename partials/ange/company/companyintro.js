@@ -16,6 +16,7 @@ define([
         /********** 초기화 **********/
         $scope.init = function () {
 
+            $scope.selectIdx = 1;
         };
 
         /********** 이벤트 **********/
@@ -24,6 +25,10 @@ define([
 
         $scope.partnerLink = function (url) {
             $window.open (url);
+        }
+
+        $scope.click_selectTab = function (idx){
+            $scope.selectIdx = idx;
         }
 	}]);
 });

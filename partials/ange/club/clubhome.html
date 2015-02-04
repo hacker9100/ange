@@ -22,15 +22,15 @@
                                 <div class="row no-margin">
                                     <div class="col-xs-12 no-margin" style="text-align:center;">
 
-                                        <div class="club_tabs selected">
+                                        <div class="club_tabs" data-ng-click="click_selectTab('1');" ng-class="selectIdx == '1' ? 'selected' : ''">
                                             클럽안내
                                         </div>
                                         <div class="club_tabs center">&nbsp;</div>
-                                        <div class="club_tabs">
+                                        <div class="club_tabs" data-ng-click="click_selectTab('2');" ng-class="selectIdx == '2' ? 'selected' : ''">
                                             클럽혜택
                                         </div>
                                         <div class="club_tabs center">&nbsp;</div>
-                                        <div class="club_tabs">
+                                        <div class="club_tabs" data-ng-click="click_selectTab('3');" ng-class="selectIdx == '3' ? 'selected' : ''">
                                             클럽게시판
                                         </div>
 
@@ -38,19 +38,19 @@
 
                                     <div class="col-xs-12 no-margin" style="text-align:center;">
                                         <div class="club_submenu">
-                                            <dl style="display:none;">
-                                                <dd><a>클럽소개</a></dd>
-                                                <dd><a>앙쥬클럽 첫방문이신가요?</a></dd>
-                                                <dd><a>앙쥬클럽 회원사</a></dd>
-                                                <dd class="ended"><a>앙쥬클럽 후원사</a></dd>
+                                            <dl ng-show="selectIdx == '1'" style="display:block;">
+                                                <dd><a data-ng-click="click_selectSubTab('1');">클럽소개</a></dd>
+                                                <dd><a data-ng-click="click_selectSubTab('2');">앙쥬클럽 첫방문이신가요?</a></dd>
+                                                <dd><a data-ng-click="click_selectSubTab('3');">앙쥬클럽 회원사</a></dd>
+                                                <dd class="ended"><a data-ng-click="click_selectSubTab('4');">앙쥬클럽 후원사</a></dd>
                                             </dl>
 
-                                            <dl style="display:none;"> <!-- 클럽혜택 메뉴 -->
-                                                <dd><a>회원혜택</a></dd>
-                                                <dd class="ended"><a>할인행사</a></dd>
+                                            <dl ng-show="selectIdx == '2'" style="display:block;"> <!-- 클럽혜택 메뉴 -->
+                                                <dd><a data-ng-click="click_selectSubTab('5');">회원혜택</a></dd>
+                                                <dd class="ended"><a data-ng-click="click_selectSubTab('6');">할인행사</a></dd>
                                             </dl>
 
-                                            <dl style="display:block;"> <!-- 클럽혜택 메뉴 -->
+                                            <dl ng-show="selectIdx == '3'" style="display:block;"> <!-- 클럽혜택 메뉴 -->
                                                 <dd class="ended">앙쥬클럽 게시판</dd>
                                             </dl>
 
@@ -62,10 +62,8 @@
                             <!-- /메뉴탭 -->
 
 
-
-
                             <!-- 01. 클럽안내 > 클럽소개 -->
-                            <div style="display: block;">
+                            <div ng-show="selectIdx == '1' && selectSubIdx == '1'" style="display: block;">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
@@ -109,7 +107,7 @@
 
 
                             <!-- 02. 클럽안내 > 앙쥬클럽 첫방문이신가요? -->
-                            <div style="display: block;">
+                            <div ng-show="selectIdx == '1' && selectSubIdx == '2'" style="display: block;">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
@@ -171,7 +169,7 @@
                             <!-- /02. 클럽안내 > 앙쥬클럽 첫방문이신가요? -->
 
                             <!-- 03. 클럽안내 > 회원사 -->
-                            <div style="display: block;">
+                            <div ng-show="selectIdx == '1' && selectSubIdx == '3'" style="display: block;">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
@@ -340,7 +338,7 @@
                             <!-- /03. 클럽안내 > 회원사 -->
 
                             <!-- 04. 클럽안내 > 후원사 -->
-                            <div style="display: block;">
+                            <div ng-show="selectIdx == '1' && selectSubIdx == '4'" style="display: block;">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
@@ -423,7 +421,7 @@
                             <!-- /04. 클럽안내 > 후원사 -->
 
                             <!-- 05. 클럽혜택 > 앙쥬클럽 회원혜택 -->
-                            <div style="display: block;">
+                            <div ng-show="selectIdx == '2' && selectSubIdx == '5'" style="display: block;">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
@@ -491,7 +489,7 @@
                             <!-- /05. 클럽혜택 > 앙쥬클럽 회원혜택 -->
 
                             <!-- 06. 클럽혜택 > 앙쥬클럽 할인행사 -->
-                            <div style="display: block;">
+                            <div ng-show="selectIdx == '2' && selectSubIdx == '6'" style="display: block;">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
@@ -580,7 +578,7 @@
                             <!-- /06. 클럽혜택 > 앙쥬클럽 할인행사 -->
 
                             <!-- 07. 클럽게시판 > 앙쥬클럽 게시판 -->
-                            <div style="display: block;">
+                            <div ng-show="selectIdx == '3'" style="display: block;">
                                 <div class="container-fluid no-margin">
                                     <div class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
