@@ -845,7 +845,7 @@ div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 }
 
 .menucontents_wrap {
-	float:left;
+	/*float:left;*/
 	margin-top:25px;
 	padding-bottom:25px;
 }

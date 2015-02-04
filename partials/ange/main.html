@@ -320,122 +320,128 @@
 
     </div> <!-- /mainbar -->
 
-    <div ng-class="slide == 'story' && mode == 'pan' ? 'subar slide1_pan' : 'subar slide1'">
-        <div class="main_channelbar_thumb">
 
-            <div class="channel_mark story_mark" ng-click="click_toggleSlide('story')"></div>
-            <div class="channel_label_note">디지털매거진</div>
-            <div class="channel_label_title">앙쥬스토리</div>
+    <!--<div ng-class="slide != 'cover' ? 'mainbar slide0_small' : 'mainbar slide0'">    -->
+    <div ng-class="slide != 'cover' ? 'main_subar_wrap_lg' : 'main_subar_wrap'">
 
-            <div class="menuicons_wrap" ng-hide="slide == 'story' && mode == 'pan'" ng-click="click_showSlide('story', 'pan')">
-                <img class="menuicons" src="imgs/ange/main01-01.png" />
-                <div class="menuicons_label">행복한 임신</div>
+        <div ng-class="slide == 'story' && mode == 'pan' ? 'subar slide1_pan' : 'subar slide1'">
 
-                <img class="menuicons" src="imgs/ange/main01-02.png" />
-                <div class="menuicons_label">기분좋은 출산</div>
+            <div class="main_channelbar_thumb">
 
-                <img class="menuicons" src="imgs/ange/main01-03.png" />
-                <div class="menuicons_label">즐거운 육아</div>
+                <div class="channel_mark story_mark" ng-click="click_toggleSlide('story')"></div>
+                <div class="channel_label_note">디지털매거진</div>
+                <div class="channel_label_title">앙쥬스토리</div>
 
-                <img class="menuicons" src="imgs/ange/main01-04.png" />
-                <div class="menuicons_label">건강한 임신준비</div>
+                <div class="menuicons_wrap" ng-hide="slide == 'story' && mode == 'pan'" ng-click="click_showSlide('story', 'pan')">
+                    <img class="menuicons" src="imgs/ange/main01-01.png" />
+                    <div class="menuicons_label">행복한 임신</div>
 
-                <img class="menuicons" src="imgs/ange/main01-05.png" />
-                <div class="menuicons_label">앙쥬 스페셜</div>
-            </div>
+                    <img class="menuicons" src="imgs/ange/main01-02.png" />
+                    <div class="menuicons_label">기분좋은 출산</div>
 
-            <div class="menucontents_wrap" ng-show="slide == 'story' && mode == 'pan'" ng-click="click_showSlide('cover', '')">
-                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_01.png" /></div>
-                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_02.png" /></div>
-                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_03.png" /></div>
-                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_04.png" /></div>
-                <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_05.png" /></div>
-            </div>
+                    <img class="menuicons" src="imgs/ange/main01-03.png" />
+                    <div class="menuicons_label">즐거운 육아</div>
 
-        </div>
-    </div>
+                    <img class="menuicons" src="imgs/ange/main01-04.png" />
+                    <div class="menuicons_label">건강한 임신준비</div>
 
-    <div ng-class="slide == 'people' && mode == 'pan' ? 'subar slide2_pan' : 'subar slide2'">
-        <div class="main_channelbar_thumb">
-
-            <div class="channel_mark story_mark" ng-click="click_toggleSlide('people')"></div>
-            <div class="channel_label_note">커뮤니티</div>
-            <div class="channel_label_title">앙쥬피플</div>
-
-            <div class="menuicons_wrap" ng-hide="slide == 'people' && mode == 'pan'" ng-click="click_showSlide('people', 'pan')">
-                <div ng-repeat="item in main1">
-                    <img class="menuicons" ng-src="{{item.ICON_IMAGE}}"/>
-                    <div class="menuicons_label">{{item.TITLE}}</div>
+                    <img class="menuicons" src="imgs/ange/main01-05.png" />
+                    <div class="menuicons_label">앙쥬 스페셜</div>
                 </div>
 
-                <!--<img class="menuicons" src="imgs/ange/main02-01.png" />-->
-                <!--<div class="menuicons_label">설문 POLL</div>-->
-
-                <!--<img class="menuicons" src="imgs/ange/main02-02.png" />-->
-                <!--<div class="menuicons_label">Talk Talk Talk</div>-->
-
-                <!--<img class="menuicons" src="imgs/ange/main02-03.png" />-->
-                <!--<div class="menuicons_label">GROUP</div>-->
-
-                <!--<img class="menuicons" src="imgs/ange/main02-04.png" />-->
-                <!--<div class="menuicons_label">전문가 상담실</div>-->
-
-                <!--<img class="menuicons" src="imgs/ange/main02-05.png" />-->
-                <!--<div class="menuicons_label">베이비모델 선발대회</div>-->
-            </div>
-
-            <div class="menucontents_wrap" ng-show="slide == 'people' && mode == 'pan'" >
-                <div class="menucontents_box" ng-click="click_moveMenu(item.SUB_MENU_URL)" ng-repeat="item in main1"><img class="menucontents_img" ng-src="{{item.DETAIL_IMAGE}}"/></div>
-
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/poll/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_01.png" /></div>-->
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/linetalk/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_02.png" /></div>-->
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/angeroom/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_03.png" /></div>-->
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/childdevelop/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_04.png" /></div>-->
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/angemodel/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_05.png" /></div>-->
-            </div>
-
-        </div>
-    </div>
-
-    <div ng-class="slide == 'moms' && mode == 'pan' ? 'subar slide3_pan' : 'subar slide3'">
-        <div class="main_channelbar_thumb">
-
-            <div class="channel_mark story_mark" ng-click="click_toggleSlide('moms')"></div>
-            <div class="channel_label_note">체험단/이벤트</div>
-            <div class="channel_label_title">앙쥬맘스</div>
-
-            <div class="menuicons_wrap" ng-hide="slide == 'moms' && mode == 'pan'" ng-click="click_showSlide('moms', 'pan')">
-                <div ng-repeat="item in main2">
-                    <img class="menuicons" ng-src="{{item.ICON_IMAGE}}"/>
-                    <div class="menuicons_label">{{item.TITLE}}</div>
+                <div class="menucontents_wrap" ng-show="slide == 'story' && mode == 'pan'" ng-click="click_showSlide('cover', '')">
+                    <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_01.png" /></div>
+                    <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_02.png" /></div>
+                    <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_03.png" /></div>
+                    <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_04.png" /></div>
+                    <div class="menucontents_box"><img class="menucontents_img" src="imgs/ange/temp/main_sub_story_05.png" /></div>
                 </div>
 
-                <!--<img class="menuicons" src="imgs/ange/main03-01.png"/>-->
-                <!--<div class="menuicons_label">체험단</div>-->
-
-                <!--<img class="menuicons" src="imgs/ange/main03-02.png" />-->
-                <!--<div class="menuicons_label">이벤트</div>-->
-
-                <!--<img class="menuicons" src="imgs/ange/main03-03.png" />-->
-                <!--<div class="menuicons_label">베스트 리뷰</div>-->
-
-                <!--<img class="menuicons" src="imgs/ange/main03-04.png" />-->
-                <!--<div class="menuicons_label">샘플팩</div>-->
-
-                <!--<img class="menuicons" src="imgs/ange/main03-05.png" />-->
-                <!--<div class="menuicons_label">앙쥬 랭킹</div>-->
             </div>
+        </div>
 
-            <div class="menucontents_wrap" ng-show="slide == 'moms' && mode == 'pan'">
-                <div class="menucontents_box" ng-click="click_moveMenu(item.SUB_MENU_URL)" ng-repeat="item in main2"><img class="menucontents_img" ng-src="{{item.DETAIL_IMAGE}}"/></div>
+        <div ng-class="slide == 'people' && mode == 'pan' ? 'subar slide2_pan' : 'subar slide2'">
+            <div class="main_channelbar_thumb">
 
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/experienceprocess/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_01.png" /></div>-->
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/eventprocess/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_02.png" /></div>-->
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/angereview/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_03.png" /></div>-->
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/angereview/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_04.png" /></div>-->
-                <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/angereview/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_05.png" /></div>-->
+                <div class="channel_mark story_mark" ng-click="click_toggleSlide('people')"></div>
+                <div class="channel_label_note">커뮤니티</div>
+                <div class="channel_label_title">앙쥬피플</div>
+
+                <div class="menuicons_wrap" ng-hide="slide == 'people' && mode == 'pan'" ng-click="click_showSlide('people', 'pan')">
+                    <div ng-repeat="item in main1">
+                        <img class="menuicons" ng-src="{{item.ICON_IMAGE}}"/>
+                        <div class="menuicons_label">{{item.TITLE}}</div>
+                    </div>
+
+                    <!--<img class="menuicons" src="imgs/ange/main02-01.png" />-->
+                    <!--<div class="menuicons_label">설문 POLL</div>-->
+
+                    <!--<img class="menuicons" src="imgs/ange/main02-02.png" />-->
+                    <!--<div class="menuicons_label">Talk Talk Talk</div>-->
+
+                    <!--<img class="menuicons" src="imgs/ange/main02-03.png" />-->
+                    <!--<div class="menuicons_label">GROUP</div>-->
+
+                    <!--<img class="menuicons" src="imgs/ange/main02-04.png" />-->
+                    <!--<div class="menuicons_label">전문가 상담실</div>-->
+
+                    <!--<img class="menuicons" src="imgs/ange/main02-05.png" />-->
+                    <!--<div class="menuicons_label">베이비모델 선발대회</div>-->
+                </div>
+
+                <div class="menucontents_wrap" ng-show="slide == 'people' && mode == 'pan'" >
+                    <div class="menucontents_box" ng-click="click_moveMenu(item.SUB_MENU_URL)" ng-repeat="item in main1"><img class="menucontents_img" ng-src="{{item.DETAIL_IMAGE}}"/></div>
+
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/poll/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_01.png" /></div>-->
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/linetalk/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_02.png" /></div>-->
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/angeroom/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_03.png" /></div>-->
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/childdevelop/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_04.png" /></div>-->
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/people/angemodel/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_people_05.png" /></div>-->
+                </div>
+
             </div>
+        </div>
 
+        <div ng-class="slide == 'moms' && mode == 'pan' ? 'subar slide3_pan' : 'subar slide3'">
+            <div class="main_channelbar_thumb">
+
+                <div class="channel_mark story_mark" ng-click="click_toggleSlide('moms')"></div>
+                <div class="channel_label_note">체험단/이벤트</div>
+                <div class="channel_label_title">앙쥬맘스</div>
+
+                <div class="menuicons_wrap" ng-hide="slide == 'moms' && mode == 'pan'" ng-click="click_showSlide('moms', 'pan')">
+                    <div ng-repeat="item in main2">
+                        <img class="menuicons" ng-src="{{item.ICON_IMAGE}}"/>
+                        <div class="menuicons_label">{{item.TITLE}}</div>
+                    </div>
+
+                    <!--<img class="menuicons" src="imgs/ange/main03-01.png"/>-->
+                    <!--<div class="menuicons_label">체험단</div>-->
+
+                    <!--<img class="menuicons" src="imgs/ange/main03-02.png" />-->
+                    <!--<div class="menuicons_label">이벤트</div>-->
+
+                    <!--<img class="menuicons" src="imgs/ange/main03-03.png" />-->
+                    <!--<div class="menuicons_label">베스트 리뷰</div>-->
+
+                    <!--<img class="menuicons" src="imgs/ange/main03-04.png" />-->
+                    <!--<div class="menuicons_label">샘플팩</div>-->
+
+                    <!--<img class="menuicons" src="imgs/ange/main03-05.png" />-->
+                    <!--<div class="menuicons_label">앙쥬 랭킹</div>-->
+                </div>
+
+                <div class="menucontents_wrap" ng-show="slide == 'moms' && mode == 'pan'">
+                    <div class="menucontents_box" ng-click="click_moveMenu(item.SUB_MENU_URL)" ng-repeat="item in main2"><img class="menucontents_img" ng-src="{{item.DETAIL_IMAGE}}"/></div>
+
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/experienceprocess/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_01.png" /></div>-->
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/eventprocess/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_02.png" /></div>-->
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/angereview/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_03.png" /></div>-->
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/angereview/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_04.png" /></div>-->
+                    <!--<div class="menucontents_box" ng-click="click_moveMenu('/moms/angereview/list')"><img class="menucontents_img" src="imgs/ange/temp/main_sub_moms_05.png" /></div>-->
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

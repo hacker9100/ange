@@ -81,7 +81,7 @@ body {
     border-left:1px solid #EFEFEF;
     border-right:1px solid #EFEFEF;
 
-    overflow-y: auto;
+    /*overflow-y: auto;*/
 }
 
 .panel_user {
@@ -317,8 +317,7 @@ body {
 /* Main Responsive Style Set */
 
 .content_wrap {
-    overflow: auto;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .ng_mainwrap {
@@ -333,9 +332,8 @@ body {
     width:100%;
 }
 
-
 .sub_content_wrap {
-    overflow: auto;
+    /*overflow: auto;*/
     overflow-x: hidden;
 }
 
@@ -345,15 +343,32 @@ body {
     height:100%;
     overflow: auto;
     overflow-x: hidden;
+    /*overflow-y: auto;*/
+}
+
+.main_subar_wrap {
+    float:left;
+    width:42%;  /*내용Open 할경우 68%로 확장해야 함 */
+    height:100%;
+    overflow-x: hidden;
     overflow-y: auto;
+}
+
+.main_subar_wrap_lg{
+    float:left;
+    width:68%;  /*내용Open 할경우 68%로 확장해야 함 */
+    height:100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .subar {
     float: left;
     position:relative;
     border-left: 1px solid #eee;
-    height:100%;
-    overflow-y: auto;
+    /*width: 33.3%;*/
+    /*height:100%;*/
+    /*overflow-y: auto;*/
 }
 
 .mainbar:hover, .subar:hover  {
@@ -366,9 +381,17 @@ body {
     min-width:720px;
 }
 
-.slide1, .slide2, .slide3 {
-    width:14%;
+.main_subar_wrap .subar.slide1, .main_subar_wrap .subar.slide2, .main_subar_wrap .subar.slide3 {
+    width:33%;
 }
+
+.main_subar_wrap_lg .subar.slide1, .main_subar_wrap_lg .subar.slide2, .main_subar_wrap_lg .subar.slide3 {
+    width:15%;
+}
+
+/*.subar.slide1, .subar.slide2, .subar.slide3 {*/
+    /*width:33%;*/
+/*}*/
 
 /** 서브페이지를 열었을 경우 **/
 .slide0_small {
@@ -376,7 +399,9 @@ body {
 }
 
 .slide1_pan, .slide2_pan, .slide3_pan {
-    width:40%;
+    height:100%;
+    width:70%;
+    overflow: auto;
 }
 
 /** 서브페이지를 열었을 경우 **/
@@ -386,8 +411,16 @@ body {
         width:70%;
     }
 
+    .main_subar_wrap {
+        width:30%;
+    }
+
+    .main_subar_wrap_lg {
+        width:66%;
+    }
+
     .slide1, .slide2, .slide3{
-        width:10%;
+        /*width:10%;*/
     }
 
     .slide0_small {
@@ -395,7 +428,7 @@ body {
     }
 
     .slide1_pan, .slide2_pan, .slide3_pan {
-        width:46%;
+        width:70%;
     }
 
 }
