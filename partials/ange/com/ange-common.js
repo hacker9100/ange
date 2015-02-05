@@ -52,7 +52,7 @@ define([
                 break;
             case 'club' :
             case 'company' :
-                $scope.ui_wraptype = '';
+                $scope.ui_wraptype = 'content_wrap';
                 break;
             default :
                 $scope.ui_wraptype = 'sub_content_wrap';
