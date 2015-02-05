@@ -89,9 +89,10 @@
 <html lang="en" itemscope itemtype="http://schema.org/website" xmlns:fb="http://ogp.me/ns/fb#">
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
 <title>ANGE - 엄마들의 즐거운 놀이터</title>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="author" content="앙쥬" />
     <meta name="copyright" content="앙쥬" />
@@ -103,7 +104,7 @@
 
     <meta name="keywords" content="임신, 출산,육아" />
     <meta name="robots" content="pregnancy, pregnant, childbirth, infant care, child care" />
-
+    <meta property="fb:app_id" content="640241789454829" />
     <meta property="og:title" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://ange.marveltree.com/story/content/list/12" />
