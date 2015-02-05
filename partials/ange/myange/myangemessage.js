@@ -22,7 +22,7 @@ define([
         //
         $scope.pageBoardChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
-            $scope.getCouponList();
+            $scope.getMessageList();
         };
 
         // 초기화

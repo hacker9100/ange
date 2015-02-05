@@ -96,6 +96,9 @@ define([
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
+            $scope.item.PREGNANT_WEEKS = 0;
+            $scope.item.CHILD_CNT = 0;
+
         };
 
         // 정보수정 팝업
@@ -253,17 +256,17 @@ define([
         // 샘플팩 신청
         $scope.click_saveSamplepackComp = function (){
 
-            if($scope.checked == 'N'){
-                dialogs.notify('알림', '신청 자격을 확인해주세요.', {size: 'md'});
-                return;
-            }
-
-            console.log($scope.season_gb);
 
             $scope.search.REG_UID = $rootScope.uid;
-
+            $scope.search.TARGET_NO = $scope.item.NO;
+            $scope.search.TARGET_GB = $scope.item.TARGET_GB;
 
             if($scope.season_gb == 'SAMPLE2'){
+
+                if($scope.checked == 'N'){
+                    dialogs.notify('알림', '신청 자격을 확인해주세요.', {size: 'md'});
+                    return;
+                }
 
                 var mileage_point = $rootScope.user_info.MILEAGE.REMAIN_POINT;
 

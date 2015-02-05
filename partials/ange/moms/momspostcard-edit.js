@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('samplepack-edit', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('momspostcard-edit', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
 
         $scope.search = {};
@@ -24,16 +24,32 @@ define([
 
         $scope.showSamplepackDetails = false;
 
+        $(document).ready(function(){
+        });
+
+        $(function(){
+            $("#pregnant_fl").click(function(){
+                if($("#pregnant_fl").is(":checked")){
+                    $scope.item.PREG_FL = "Y";
+                }else{
+                    $scope.item.PREG_FL = "N";
+                }
+            });
+
+            $("#child_fl").click(function(){
+                if($("#child_fl").is(":checked")){
+                    $scope.item.CHILD_FL = "Y";
+                }else{
+                    $scope.item.CHILD_FL = "N";
+                }
+            });
+        });
+
         // 초기화
         $scope.init = function(session) {
-//            if ($stateParams.menu == 'angeroom') {
-            $scope.community = "샘플팩 신청";
-//            }
-            if($stateParams.id == 'season1'){
-                $scope.season_gb = 'SAMPLE1';
-            }else if($stateParams.id == 'season2'){
-                $scope.season_gb = 'SAMPLE2';
-            }
+
+            $scope.community = "애독자엽서";
+            $scope.search.EVENT_GB = 'POSTCARD';
 
             var date = new Date();
 
@@ -76,10 +92,7 @@ define([
             var dt = new Date(year, mm, 0);
             $scope.Day = dt.getDate();
 
-            // 기존회원 신청자격 여부
-            $scope.checked = 'N';
-
-            // 회원정보 신청폼에 셋팅
+            // 신청폼에 회원정보를 셋팅
             $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                 .then(function(data){
 
@@ -95,6 +108,9 @@ define([
 
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+            $scope.item.PREGNANT_WEEKS = 0;
+            $scope.item.CHILD_CNT = 0;
 
         };
 
@@ -141,6 +157,7 @@ define([
                         .then(function(data){
 
                             $scope.item.USER_ID = data.USER_ID;
+                            $scope.item.USER_NM = data.USER_NM;
                             $scope.item.NICK_NM = data.NICK_NM;
                             $scope.item.ADDR = data.ADDR;
                             $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
@@ -196,10 +213,7 @@ define([
 
                 $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                     .then(function(data){
-
                         $scope.item = data;
-                        console.log($scope.item);
-
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
@@ -211,14 +225,8 @@ define([
         };
 
         /********** 이벤트 **********/
-            // 게시판 목록 이동
-        $scope.click_sampleSeasonList = function () {
-
-            if($stateParams.id == 'season1'){
-                $scope.search.EVENT_GB = 'SAMPLE1';
-            }else{
-                $scope.search.EVENT_GB = 'SAMPLE2';
-            }
+        // 구분값과 NO값 셋팅
+        $scope.click_postCardList = function () {
 
             $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
@@ -229,7 +237,6 @@ define([
 
                     $scope.item.TARGET_GB = target_gb;
                     $scope.item.NO = target_no;
-
 
                     var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
 
@@ -253,24 +260,20 @@ define([
         // 샘플팩 신청
         $scope.click_saveSamplepackComp = function (){
 
-            if($scope.checked == 'N'){
-                dialogs.notify('알림', '신청 자격을 확인해주세요.', {size: 'md'});
-                return;
+            $scope.search.REG_UID = $rootScope.uid;
+            $scope.search.TARGET_NO = $scope.item.NO;
+            $scope.search.TARGET_GB = $scope.item.TARGET_GB;
+
+            if($("#pregnant_fl").is(":checked")){
+                $scope.item.PREG_FL = "Y"
+            }else{
+                $scope.item.PREG_FL = "N"
             }
 
-            console.log($scope.season_gb);
-
-            $scope.search.REG_UID = $rootScope.uid;
-
-
-            if($scope.season_gb == 'SAMPLE2'){
-
-                var mileage_point = $rootScope.user_info.MILEAGE.REMAIN_POINT;
-
-                if(mileage_point < 2000){
-                    alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
-                    return;
-                }
+            if($("#child_fl").is(":checked")){
+                $scope.item.CHILD_FL = "Y"
+            }else{
+                $scope.item.CHILD_FL = "N"
             }
 
             $scope.getList('ange/comp', 'check', {}, $scope.search, false)
@@ -281,65 +284,24 @@ define([
                         $scope.insertItem('ange/comp', 'item', $scope.item, false)
                             .then(function(){
 
-//                                if($scope.season_gb == 'SAMPLE2'){ // 기존회원일때 마일리지 2000 차감
-//
-//                                    $scope.item.REMAIN_POINT = 2000;
-//                                    $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
-//                                        .then(function(){
-//                                        })
-//                                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-//                                }
+                                dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
 
-                                dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
-
-                                $location.url('/moms/samplepack/intro');
+                                $location.url('/moms/home');
                             })
                             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }else{
-                        dialogs.notify('알림', '이미 샘플팩 신청을 했습니다.', {size: 'md'});
-                        $location.url('/moms/samplepack/intro');
+                        dialogs.notify('알림', '이미 애독자 엽서 신청을 했습니다.', {size: 'md'});
+                        $location.url('/moms/home');
                     }
 
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
-
-        }
-        /********** 화면 초기화 **********/
-        /*        $scope.getSession()
-         .then($scope.sessionCheck)
-         .then($scope.init)
-         .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
-
-        // 신청자격 여부 체크
-        $scope.click_samplepackCheck = function (){
-
-            $scope.search.TARGET_NO = $scope.item.NO;
-            $scope.search.TARGET_GB = $scope.item.TARGET_GB;
-
-            $scope.getList('ange/comp', 'samplepackCheck', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-                .then(function(data){
-
-                    var checkCnt = data[0].COUNT;
-
-                    if(checkCnt ==0){
-                        dialogs.notify('알림', '신청이 가능합니다.', {size: 'md'});
-                        $scope.checked = 'Y';
-                        $scope.showSamplepackDetails = true;
-                    }else{
-                        dialogs.notify('알림', '임신중이 아니시거나 이전에 당첨되셨기 때문에 신청이 불가능합니다.', {size: 'md'});
-                        $scope.checked = 'N';
-                        return;
-                    }
-
-                })
-                .catch(function(error){});
         }
 
 
-        $scope.init();
-        $scope.click_sampleSeasonList();
+        /********** 화면 초기화 **********/        $scope.init();
+        $scope.click_postCardList();
 
         $scope.getSession()
             .then($scope.sessionCheck)
