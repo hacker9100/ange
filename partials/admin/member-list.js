@@ -426,11 +426,34 @@ define([
 
         // 사용자 게시물 선택 버튼 클릭
         $scope.click_selectWriteList = function (item) {
-            $scope.openPopupWriteListModal(true, {USER_ID : item.USER_ID});
+            $scope.openPopupWriteListModal(true, {NOTICE_FL: 'N', REG_UID : item.USER_ID});
         }
 
         $scope.openPopupWriteListModal = function (modal, search, size) {
             var dlg = dialogs.create('/partials/admin/popup/member-write-list.html',
+                ['$modalInstance', function ($modalInstance) {
+                    $scope.isModal = true;
+                    $scope._search = search;
+
+                    $scope.click_ok = function () {
+                        $modalInstance.close();
+                    };
+
+                }], search, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        }
+
+        // 사용자 응모 선택 버튼 클릭
+        $scope.click_selectCompList = function (item, type) {
+            $scope.openPopupCompListModal(true, {USER_ID : item.USER_ID, TARGET_GB : angular.uppercase(type)});
+        }
+
+        $scope.openPopupCompListModal = function (modal, search, size) {
+            var dlg = dialogs.create('/partials/admin/popup/member-comp-list.html',
                 ['$modalInstance', function ($modalInstance) {
                     $scope.isModal = true;
                     $scope._search = search;

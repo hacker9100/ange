@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('myangepostcard', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('myangepostcard', ['$rootScope', '$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $stateParams, $location, dialogs, UPLOAD) {
 
         $scope.search = {};
 
@@ -33,6 +33,7 @@ define([
         $scope.getCompList = function () {
 
             $scope.search.SYSTEM_GB = 'ANGE';
+            $scope.search.USER_ID = $rootScope.uid;
             $scope.getList('ange/comp', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;

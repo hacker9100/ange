@@ -977,6 +977,7 @@ a.footer_blogto:hover, a.footer_blogto:focus {	background-position: left -16px; 
 
 .h-cell-dynamic{
     clear: both;
+    min-height:300px;
 }
 
 .h-cell-half {

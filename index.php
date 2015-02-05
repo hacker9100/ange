@@ -121,6 +121,7 @@
 
 <link rel="stylesheet" type="text/css" href="lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
 <link rel="stylesheet" type="text/css" href="lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
+<link rel="stylesheet" type="text/css" href="/lib/ngActivityIndicator/css/ngActivityIndicator.css" />
 
 <link rel="stylesheet" type="text/css" href="lib/slick-carousel/slick.css" />
 
@@ -196,7 +197,6 @@ http://plnkr.co/edit/KzjIMN
     requireJS는 data-main에 설정한 main.js 파일을 최초로 로드한다.
  -->
 
-공유
 <!--<div facebook class="facebookShare" data-url='http://ange.marveltree.com' data-shares='shares'>{{ shares }}</div>-->
 <!--<div facebook class="facebookShare" data-url='http://ange.marveltree.com' data-shares='shares'>{{ shares }}</div>-->
 <!--<br /><br />-->

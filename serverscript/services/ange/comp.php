@@ -88,8 +88,12 @@ switch ($_method) {
                 $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
             }*/
 
-            if (isset($_search[SEASON_NM]) && $_search[SEASON_NM] != "") {
-                $search_where .= "AND AC.USER_ID  = '".$_search[SEASON_NM]."' ";
+            if (isset($_search[USER_ID]) && $_search[USER_ID] != "") {
+                $search_where .= "AND AC.USER_ID  = '".$_search[USER_ID]."' ";
+            }
+
+            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
+                $search_where .= "AND AC.TARGET_GB  = '".$_search[TARGET_GB]."' ";
             }
 
             if (isset($_page)) {
@@ -101,7 +105,8 @@ switch ($_method) {
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM, NO, TARGET_NO, USER_ID, NICK_NM, USER_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PREG_FL, BABY_MONTH,
                             BABY_AGE, BLOG_URL, ANSWER,
                             ADD1, ADD2, ADD3, HOPE_REASON, SIZE1, SIZE2, SIZE3, ANGE_MEET, PLACE, PREGNANT_WEEKS, CHILD_AGE, CHILD_FL,
-                            (SELECT SUBJECT FROM ANGE_EVENT WHERE NO = TARGET_NO) AS SUBJECT, COMP_CNT, TARGET_GB
+                            (SELECT SUBJECT FROM ANGE_EVENT WHERE NO = DATA.TARGET_NO) AS SUBJECT, COMP_CNT, TARGET_GB,
+                            (SELECT COUNT(1) FROM ANGE_COMP_WINNER WHERE JOIN_NO = DATA.NO) AS ANGE_COMP_FL
                         FROM
                         (
                              SELECT  AC.NO, AC.TARGET_NO, AC.USER_ID, AC.NICK_NM, AC.USER_NM, AC.REG_DT, AC.PREG_FL, AC.BABY_MONTH,
@@ -110,7 +115,7 @@ switch ($_method) {
                                       (SELECT COUNT(*) FROM ANGE_COMP_WINNER WHERE TARGET_NO = AC.TARGET_NO AND JOIN_NO = AC.NO AND TARGET_GB = AC.TARGET_GB) AS COMP_CNT, AC.TARGET_GB
                              FROM ANGE_COMP AC
                              WHERE 1=1
-                               AND AC.USER_ID  = '".$_SESSION['uid']."'
+                               ".$search_where."
                              ORDER BY REG_DT DESC
                              ".$limit."
                         ) AS DATA,
@@ -119,7 +124,7 @@ switch ($_method) {
                              SELECT COUNT(*) AS TOTAL_COUNT
                              FROM ANGE_COMP AC
                              WHERE 1=1
-                               AND AC.USER_ID  = '".$_SESSION['uid']."'
+                               ".$search_where."
                         ) CNT
                         ";
 

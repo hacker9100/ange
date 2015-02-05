@@ -17,6 +17,7 @@ define([
         ,'dialogs.main'
         ,'pascalprecht.translate'
         ,'dialogs.default-translations'
+        ,'ngActivityIndicator'
 //        ,'wu.masonry'
     ], function () {
 
