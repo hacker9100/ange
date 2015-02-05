@@ -1,0 +1,137 @@
+<div ng-controller="myangepostcard" class="ng_wrap">
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+            <div class="row">
+
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
+
+                        <div class="sub_contents_wrap">
+
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
+                            </div>
+
+                        </div><!-- /.sub_contents_wrap -->
+
+                        <div class="sub_contents_body">
+
+                            <!-- peoplepoll_list -->
+                            <table id="comp_board_table" class="table table-hover">
+
+                                <thead>
+                                <tr class="board_thead" height="48">
+                                    <td width="80" align="center"><span class="board_th">작성일</span></td>
+                                    <td align="center"><span class="board_th">제목</span></td>
+                                    <td width="100" align="center"><span class="board_th">응모/당첨</span></td>
+                                </tr>
+                                </thead>
+
+                                <tbody class="on" ng-repeat="item in list">
+
+                                <tr > <!--style="cursor:pointer;"-->
+                                    <td class="table_date">{{item.REG_DT}}</td>
+                                    <td>{{item.SUBJECT}}</td>
+                                    <td  class="table_author">{{item.COMP_CNT == 0 ? '응모' : '당첨'}}</td>
+                                </tr>
+
+                                </tbody>
+
+                                <tbody class="on" data-ng-show="list == '' || list == null">
+
+                                <tr>
+                                    <td colspan="3" style="text-align: center">조회 데이터가 없습니다.</td>
+                                </tr>
+
+                                </tbody>
+                            </table><!-- /.List-->
+
+                            <nav class="text-center">
+                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                            </nav><!-- /.Paging-->
+                            <!-- /peoplepoll_list -->
+
+                        </div><!-- /.sub_contents_body -->
+
+                    </div>
+                </div>
+
+            </div> <!-- rows -->
+
+
+        </div><!-- container-fluid -->
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
+
+    </div>
+
+    <div class="subar sub-slide1">
+        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+    </div>
+
+    <!-- /Main Page Layout Set -->
+</div>
+
+<script type="text/ng-template" id="myangepostcard_view.html">
+    <div class="modal-header">
+        <h3 class="modal-title">쪽지 내용</h3>
+    </div>
+    <div class="modal-body">
+        <div class="body_wrap">
+            <div class="panel panel-master contentpannel" style="border:none; display:block;">
+                <div class="contentpannel-body" >
+                    <div class="people_view_wrap">
+
+                        <div class="container-fluid peopleboard_view_topwrap">
+
+
+                            <div class="row peopleboard_view_basicinfo">
+                                <div class="col-xs-2  board_basicinfo_label">
+                                    보낸사람
+                                </div><!-- /.col-xs-2-->
+                                <div class="col-xs-4 board_basicinfo_subject">
+                                    {{item.FROM_NM}}
+                                </div><!-- /.col-xs-4-->
+                                <div class="col-xs-1  board_basicinfo_label">
+                                    작성일
+                                </div><!-- /.col-xs-2-->
+                                <div class="col-xs-5 board_basicinfo_subject date">
+                                    {{item.REG_DT}}
+                                </div><!-- /.col-xs-4-->
+                            </div><!-- /.row -->
+                        </div><!-- /.container -->
+
+
+                        <div class="container-fluid peopleboard_view_contentwrap">
+                            <div class="row">
+                                <div class="col-xs-12 peopleboard_view_contentbody">
+                                    <div class="row peopleboard_view_basicinfo">
+                                        <div class="col-xs-2 board_basicinfo_label">
+                                            내용
+                                        </div><!-- /.col-xs-2-->
+
+                                        <!-- Editor CSS 적용 -->
+                                        <textarea id="editor1" ng-model="item.BODY" class="form-control input-sm" readonly rows="20" style="width:100%; min-width:100%; max-width:100%;"></textarea>
+                                    </div><!-- /.row -->
+                                </div><!-- /.col-12-->
+                            </div><!-- /.row -->
+                        </div><!-- /.container -->
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_ok()">확인</button>
+    </div>
+</script>
+

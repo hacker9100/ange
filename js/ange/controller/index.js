@@ -57,6 +57,7 @@ define([
     '../../../partials/ange/moms/momssamplepack-intro',
     '../../../partials/ange/moms/momssamplepack-edit',
     '../../../partials/ange/moms/supporter-intro',
+    '../../../partials/ange/moms/momspostcard-edit',
 
     // 마이앙쥬
     '../../../partials/ange/myange/myangehome',
@@ -73,6 +74,7 @@ define([
     '../../../partials/ange/myange/myangecoupon',
     '../../../partials/ange/myange/myangeorderlist',
     '../../../partials/ange/myange/myangeorderstatus',
+    '../../../partials/ange/myange/myangepostcard',
 
     // 앙쥬스토어
     '../../../partials/ange/store/storehome',

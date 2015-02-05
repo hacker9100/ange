@@ -85,25 +85,25 @@ define([
                 return;
             }
 
-            if(season == 'season1'){ // 신규회원 --> 현재 이달에 회원가입한 신규회원 체크(조건 : 가입일이 현재달 1일 ~ 현재달 말일)
-
-                var reg_dt = $rootScope.user_info.REG_DT;
-                reg_dt = reg_dt.replace('-','');
-                reg_dt = reg_dt.substring(0,6);
-
-                console.log($scope.check);
-
-                if($scope.check != reg_dt){
-                    dialogs.notify('알림', $scope.month+'월에 가입한 신규회원만 신청이 가능합니다.', {size: 'md'});
-                    return;
-                }
-
-            }else if(season == 'season2'){
-                if($scope.todayDay < 25){ // 기존회원 --> 매달 25일 ~ 매달 말일
-                    dialogs.notify('알림', '기존회원 샘플팩 신청기간이 아닙니다.', {size: 'md'});
-                    return;
-                }
-            }
+//            if(season == 'season1'){ // 신규회원 --> 현재 이달에 회원가입한 신규회원 체크(조건 : 가입일이 현재달 1일 ~ 현재달 말일)
+//
+//                var reg_dt = $rootScope.user_info.REG_DT;
+//                reg_dt = reg_dt.replace('-','');
+//                reg_dt = reg_dt.substring(0,6);
+//
+//                console.log($scope.check);
+//
+//                if($scope.check != reg_dt){
+//                    dialogs.notify('알림', $scope.month+'월에 가입한 신규회원만 신청이 가능합니다.', {size: 'md'});
+//                    return;
+//                }
+//
+//            }else if(season == 'season2'){
+//                if($scope.todayDay < 25){ // 기존회원 --> 매달 25일 ~ 매달 말일
+//                    dialogs.notify('알림', '기존회원 샘플팩 신청기간이 아닙니다.', {size: 'md'});
+//                    return;
+//                }
+//            }
 
 
             $location.url('/moms/samplepack/edit/'+season);

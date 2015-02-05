@@ -56,7 +56,7 @@ switch ($_method) {
             $sql = "SELECT
                                 NO, TARGET_NO, USER_ID, NICK_NM, USER_NM, REG_DT, PREG_FL, BABY_MONTH,
                                 BABY_AGE, BLOG_URL, ANSWER,
-                                ADD1, ADD2, ADD3
+                                ADD1, ADD2, ADD3,HOPE_REASON, SIZE1, SIZE2, SIZE3, ANGE_MEET, PLACE, PREGNANT_WEEKS, CHILD_AGE, CHILD_FL
                             FROM
                                 ANGE_COMP
                             WHERE
@@ -74,7 +74,7 @@ switch ($_method) {
         } else if ($_type == 'list') {
             $search_where = "";
             $sort_order = "";
-
+            $limit = "";
 
 /*            if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                 $search_where .= "AND S.SECTION_NM LIKE '%".$_search[KEYWORD]."%' ";
@@ -84,37 +84,45 @@ switch ($_method) {
                 $search_where .= "AND S.SEASON_NM  = '".$_search[SEARCH_SEASON_NM][SEASON_NM]."' ";
             }
 
-            if (isset($_search[SEASON_NM]) && $_search[SEASON_NM] != "") {
-                $search_where .= "AND S.SEASON_NM  = '".$_search[SEASON_NM]."' ";
-            }
-
             if (isset($_search[SORT]) && $_search[SORT] != "") {
                 $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
             }*/
 
+            if (isset($_search[SEASON_NM]) && $_search[SEASON_NM] != "") {
+                $search_where .= "AND AC.USER_ID  = '".$_search[SEASON_NM]."' ";
+            }
+
+            if (isset($_page)) {
+                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+            }
+
 
             $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM, NO, BOARD_NO, USER_ID, NICK_NM, USER_NM, REG_DT, PREG_FL, BABY_MONTH,
+                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM, NO, TARGET_NO, USER_ID, NICK_NM, USER_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PREG_FL, BABY_MONTH,
                             BABY_AGE, BLOG_URL, ANSWER,
-                            ADD1, ADD2, ADD3
+                            ADD1, ADD2, ADD3, HOPE_REASON, SIZE1, SIZE2, SIZE3, ANGE_MEET, PLACE, PREGNANT_WEEKS, CHILD_AGE, CHILD_FL,
+                            (SELECT SUBJECT FROM ANGE_EVENT WHERE NO = TARGET_NO) AS SUBJECT, COMP_CNT, TARGET_GB
                         FROM
                         (
-                             SELECT  AC.NO, AC.BOARD_NO, AC.USER_ID, AC.NICK_NM, AC.USER_NM, AC.REG_DT, AC.PREG_FL, AC.BABY_MONTH,
-                                    AC.BABY_AGE, AC.BLOG_URL, AC.ANSWER,
-                                    AC.ADD1, AC.ADD2, AC.ADD3
+                             SELECT  AC.NO, AC.TARGET_NO, AC.USER_ID, AC.NICK_NM, AC.USER_NM, AC.REG_DT, AC.PREG_FL, AC.BABY_MONTH,
+                                      AC.BABY_AGE, AC.BLOG_URL, AC.ANSWER,
+                                      AC.ADD1, AC.ADD2, AC.ADD3, AC.HOPE_REASON, AC.SIZE1, AC.SIZE2, AC.SIZE3, AC.ANGE_MEET, AC.PLACE, AC.PREGNANT_WEEKS, AC.CHILD_AGE, AC.CHILD_FL,
+                                      (SELECT COUNT(*) FROM ANGE_COMP_WINNER WHERE TARGET_NO = AC.TARGET_NO AND JOIN_NO = AC.NO AND TARGET_GB = AC.TARGET_GB) AS COMP_CNT, AC.TARGET_GB
                              FROM ANGE_COMP AC
                              WHERE 1=1
-                             ".$search_where."
-                             ".$sort_order."
+                               AND AC.USER_ID  = '".$_SESSION['uid']."'
+                             ORDER BY REG_DT DESC
+                             ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
                              SELECT COUNT(*) AS TOTAL_COUNT
-                             FROM ANGE_COMP
+                             FROM ANGE_COMP AC
                              WHERE 1=1
-                             ".$search_where."
+                               AND AC.USER_ID  = '".$_SESSION['uid']."'
                         ) CNT
                         ";
+
             $data = $_d->sql_query($sql);
             if ($_d->mysql_errno > 0) {
                 $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -192,7 +200,16 @@ switch ($_method) {
                             PRODUCT,
                             CREDIT_FL,
                             REASON,
-                            TARGET_GB
+                            TARGET_GB,
+                            HOPE_REASON,
+                            SIZE1,
+                            SIZE2,
+                            SIZE3,
+                            ANGE_MEET,
+                            PLACE,
+                            PREGNANT_WEEKS,
+                            CHILD_AGE,
+                            CHILD_FL
                         ) VALUES (
                              '".$_model[NO]."'
                             , '".$_SESSION['uid']."'
@@ -214,6 +231,15 @@ switch ($_method) {
                             ,'".$_model[CREDIT_FL]."'
                             ,'".$_model[REASON]."'
                             ,'".$_model[TARGET_GB]."'
+                            ,'".$_model[HOPE_REASON]."'
+                            ,'".$_model[SIZE1]."'
+                            ,'".$_model[SIZE2]."'
+                            ,'".$_model[SIZE3]."'
+                            ,'".$_model[ANGE_MEET]."'
+                            ,'".$_model[PLACE]."'
+                            ,".$_model[PREGNANT_WEEKS]."
+                            ,'".$_model[CHILD_AGE]."'
+                            ,'".$_model[CHILD_FL]."'
                         )";
 
         $_d->sql_query($sql);
