@@ -448,16 +448,6 @@ switch ($_method) {
                     $sql = "DELETE FROM ANGE_CART WHERE PRODUCT_NO = ".$e[PRODUCT_NO]."";
                     $_d->sql_query($sql);
 
-                    // 상품 재고 수정 SUM_IN_CNT(재고량) SUM_OUT_CNT(주문량)
-                    $sql = "UPDATE ANGE_PRODUCT
-                        SET
-                            SUM_IN_CNT = SUM_IN_CNT - ".$e[PRODUCT_CNT].",
-                            SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
-                        WHERE
-                            NO = $e[PRODUCT_NO]
-                        ";
-                    $_d->sql_query($sql);
-
                     // 상품구분 존재하면서 구분값이 마일리지몰 일때
                     if(isset($e[PRODUCT_GB]) && $e[PRODUCT_GB] == 'MILEAGE'){
 
@@ -487,26 +477,6 @@ switch ($_method) {
                                 NO = $e[PRODUCT_NO]
                             ";
                         $_d->sql_query($sql);
-                    }
-
-                    if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
-
-                        $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
-                               SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
-                           FROM ANGE_PRODUCT
-                           WHERE PARENT_NO = ".$e[PARENT_NO]."
-                    ";
-
-                        $result = $_d->sql_query($sql,true);
-                        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-                            $sql = "UPDATE ANGE_PRODUCT
-                            SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
-                                SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
-                            WHERE NO = ".$e[PARENT_NO]."
-                        ";
-                            $_d->sql_query($sql);
-                        }
                     }
 
                     /*if(isset($no) && $no != 0){

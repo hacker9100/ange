@@ -207,9 +207,13 @@ define([
                     //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
                     //$scope.openViewScrapModal($scope.item.CART, 'lg');
 
-                    alert('장바구니에 등록되었습니다');
+                    //$location.url('store/cart/list/'+$stateParams.menu);
 
-                    $location.url('store/cart/list/'+$stateParams.menu);
+                    if (confirm("찜목록에 등록되었습니다. 찜목록으로 이동하시겠습니까?") == true){    //확인
+                        $location.url('store/order/list');
+                    }else{   //취소
+                        return;
+                    }
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }

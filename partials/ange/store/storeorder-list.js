@@ -2,7 +2,7 @@
  * Author : Sunghwan Kim
  * Email  : hacker9100@gmail.com
  * Date   : 2015-01-06
- * Description : storeorder-list.html 화면 콘트롤러
+ * Description : storecart-list.html 화면 콘트롤러
  */
 
 define([
@@ -13,93 +13,166 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('storeorder-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
 
+        $scope.search = {};
         $scope.item = {};
+
+        /* $('.mileagelist').removeClass('hide');
+         $('.cummercelist').addClass('hide');*/
+
+        $scope.mileage = true;
+        $scope.cummerce = false;
+
+        $(function(){
+            $scope.click_cartlist = function(){
+
+                $('input[name="cartlist"]').change(function(){
+                    if($(this).val() == "mileage"){
+                        $scope.mileage = true;
+                        $scope.cummerce = false;
+                    } else if ($(this).val() == "cummerce"){
+                        $scope.mileage = false;
+                        $scope.cummerce = true;
+                    }
+                });
+            }
+        });
+
         // 초기화
+        $scope.init = function() {
 
-        console.log('id = '+$stateParams.id);
+            $scope.community = "찜목록";
+            $rootScope.info = {};
+        };
 
+        $scope.click_cartlist = function(){
 
-        console.log($scope.list = $rootScope.orderlist);
-
-        $scope.init = function(session) {
-
-            $scope.community = "주문하기";
-
-            console.log($rootScope.user_info);
-            console.log($rootScope.uid);
-
-            $scope.list = $rootScope.orderlist;
-
-            if($rootScope.uid != '' && $rootScope.uid != null){
-                $scope.item.USER_ID = $rootScope.user_info.USER_ID;
-                $scope.item.RECEIPTOR_NM = $rootScope.user_info.USER_NM;
-                $scope.item.RECEIPT_PHONE = $rootScope.user_info.PHONE_2;
-                $scope.item.RECEIPT_ADDR = $rootScope.user_info.ADDR;
-                $scope.item.RECEIPT_ADDR_DETAIL = $rootScope.user_info.ADDR_DETAIL;
-            }
-
-
-            $scope.TOTAL_SUM_PRICE = 0;
-            $scope.TOTAL_DELEIVERY_PRICE = 0;
-            $scope.TOTAL_PRICE = 0;
-            for(var i=0; i<$scope.list.length; i++){
-
-                $scope.TOTAL_SUM_PRICE += parseInt($scope.list[i].TOTAL_PRICE);
-                $scope.TOTAL_DELEIVERY_PRICE = parseInt($scope.list[i].DELEIVERY_PRICE);
-                $scope.DELEIVERY_ST = $scope.list[i].DELEIVERY_ST;
-            }
-
-            if($scope.DELEIVERY_ST == 1){
-                $scope.TOTAL_PRICE = parseInt($scope.TOTAL_SUM_PRICE);
-            }else if($scope.DELEIVERY_ST == 2){
-                $scope.TOTAL_PRICE = parseInt($scope.TOTAL_SUM_PRICE) + parseInt($scope.TOTAL_DELEIVERY_PRICE);
-            }
+            $('input[name="cartlist"]').change(function(){
+                if($(this).val() == "mileage"){
+                    /*$('.mileagelist').removeClass('hide');
+                     $('.cummercelist').addClass('hide');*/
+                    $scope.mileage = true;
+                    $scope.cummerce = false;
+                } else if ($(this).val() == "cummerce"){
+                    /*$('.cummercelist').removeClass('hide');
+                     $('.mileagelist').addClass('hide');*/
+                    $scope.mileage = false;
+                    $scope.cummerce = true;
+                }
+            });
         }
 
-        // 기본주소 / 새주소
-        $scope.click_basic = function(val){
-            if(val == 'Y'){
-                $scope.item.USER_ID = $rootScope.user_info.USER_ID;
-                $scope.item.RECEIPTOR_NM = $rootScope.user_info.USER_NM;
-                $scope.item.RECEIPT_PHONE = $rootScope.user_info.PHONE_2;
-                $scope.item.RECEIPT_ADDR = $rootScope.user_info.ADDR;
-                $scope.item.RECEIPT_ADDR_DETAIL = $rootScope.user_info.ADDR_DETAIL;
-            }else if('N'){
-                $scope.item = {};
-            }
+        // 마일리지 장바구니 리스트
+        $scope.cartList = function (){
+            $scope.search.FILE = true;
+
+            $scope.search.PRODUCT_GB = "mileage";
+            $scope.getList('ange/cart', 'list', {}, $scope.search, true)
+                .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
+
+                    $scope.sum_price = 0;
+                    for(var i in data) {
+                        if (data[i].FILE != null) {
+                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                            data[i].MAIN_FILE = img;
+
+                        }
+                        $scope.sum_price += parseInt(data[i].TOTAL_PRICE);
+                    }
+                    $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
+
+
+                    console.log(data);
+                    $scope.mileagelist = data;
+                })
+                .catch(function(error){$scope.mileagelist = ""; $scope.TOTAL_COUNT = 0;});
         }
 
-        // 주문하기
-        $scope.click_order = function (){
+        // 커머스 장바구니 리스트
+        $scope.cartCummerceList = function (){
 
-            $scope.item.ORDER = $scope.list;
+            $scope.search.FILE = true;
+            $scope.search.PRODUCT_GB = "cummerce";
 
-            if($stateParams.id = 'mileagemall' ){
-                $scope.item.ORDER_GB = 'MILEAGE';
-            } else if($stateParams.id == 'auction'){
-                $scope.item.ORDER_GB = 'AUCTION';
-            }else if($stateParams.id == 'cummerce'){
-                $scope.item.ORDER_GB = 'CUMMERCE';
-            }
-            $scope.insertItem('ange/order', 'item', $scope.item, false)
+            $scope.getList('ange/cart', 'list', {}, $scope.search, true)
+                .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
+
+                    $scope.sum_price = 0;
+                    for(var i in data) {
+                        if (data[i].FILE != null) {
+                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                            data[i].MAIN_FILE = img;
+
+                        }
+                        $scope.sum_price += parseInt(data[i].TOTAL_PRICE);
+                    }
+                    $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
+
+
+                    $scope.cummercelist = data;
+                })
+                .catch(function(error){$scope.cummercelist = ""; $scope.TOTAL_COUNT = 0;});
+        }
+
+        // 선택 상품 삭제
+        $scope.click_removeCartProduct = function (product_gb, list, idx){
+
+            var no = list[idx].NO;
+            $scope.CART_NO = no;
+
+            $scope.deleteItem('ange/cart', 'item', $scope.CART_NO, true)
                 .then(function(){
-                    dialogs.notify('알림', '주문이 완료되었습니다. 나의 주문 내역에서 확인하실 수 있습니다', {size: 'md'});
-
-                    // 스토어 홈으로 이동
-                    $location.url('/store/home');
-
+                    if(product_gb == 'mileage'){
+                        $scope.mileagelist.splice(idx, 1);
+                    }else if(product_gb == 'cummerce'){
+                        $scope.cummercelist.splice(idx, 1);
+                    }
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
-        // 주문취소
-        $scope.click_cancel = function (){
-            // 스토어 홈으로 이동
-            $location.url('/store/home');
+        // 커머스 상품 장바구니 이동
+        $scope.click_cummerce_reg = function (list , idx){
+
+            $rootScope.cummercecartlist = [];
+            $rootScope.cummercecartlist.push(list[idx]);
+
+            //console.log($rootScope.cummercecartlist);
+
+            $location.url('/store/cart/list?'+$rootScope.cummercecartlist);
+
         }
+
+        // 마일리지 상품 장바구니 이동
+        $scope.click_mileage_reg = function (list , idx){
+
+            $rootScope.mileagecartlist = [];
+            $rootScope.mileagecartlist.push(list[idx]);
+
+            //console.log($rootScope.mileagecartlist);
+
+            $location.url('/store/cart/list?'+$rootScope.mileagecartlist);
+
+        }
+
+        // 마일리지 몰 리스트 이동
+        $scope.click_mileagehome = function(){
+            $location.url('/store/mileagemall/list');
+        }
+
+        // 커머스 리스트 이동
+        $scope.click_cummercehome = function (){
+            $location.url('/store/cummerce/list');
+        }
+
         /********** 이벤트 **********/
 
         $scope.init();
 
+        $scope.cartList();
+        $scope.cartCummerceList();
     }]);
 });
