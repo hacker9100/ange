@@ -269,11 +269,11 @@ switch ($_method) {
             if (isset($_model[CART]) && $_model[CART] != "") {
                 foreach ($_model[CART] as $e) {
 
-                if( trim($e[PRODUCT_CNT]) == "" ){
-                    $_d->failEnd("수량을 선택 하세요");
-                }
+                    if( trim($e[PRODUCT_CNT]) == "" || $e[PRODUCT_CNT] == 0){
+                        $_d->failEnd("수량을 선택 하세요");
+                    }
 
-                $sql = "INSERT INTO ANGE_CART
+                    $sql = "INSERT INTO ANGE_CART
                             (
                                 USER_ID,
                                 PRODUCT_NO,
@@ -288,13 +288,42 @@ switch ($_method) {
 
                     $_d->sql_query($sql);
 
+                    // 상품 재고 수정 SUM_IN_CNT(재고량) SUM_OUT_CNT(주문량)
+                    $sql = "UPDATE ANGE_PRODUCT
+                        SET
+                            SUM_IN_CNT = SUM_IN_CNT - ".$e[PRODUCT_CNT].",
+                            SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
+                        WHERE
+                            NO = $e[PRODUCT_NO]
+                        ";
+                    $_d->sql_query($sql);
+
+                    if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
+
+                        $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
+                               SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
+                           FROM ANGE_PRODUCT
+                           WHERE PARENT_NO = ".$e[PARENT_NO]."
+                    ";
+
+                        $result = $_d->sql_query($sql,true);
+                        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                            $sql = "UPDATE ANGE_PRODUCT
+                            SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
+                                SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
+                            WHERE NO = ".$e[PARENT_NO]."
+                        ";
+                            $_d->sql_query($sql);
+                        }
+                    }
+
                     if($_d->mysql_errno > 0) {
                         $err++;
                         $msg = $_d->mysql_error;
                     }
                 }
             }
-
 
             if($_d->mysql_errno > 0) {
                 $err++;
