@@ -116,33 +116,33 @@
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'list') {
-                $search_common = "";
-                $search_where = "";
-                $sort_order = "";
-                $limit = "";
+                    $search_common = "";
+                    $search_where = "";
+                    $sort_order = "";
+                    $limit = "";
 
-                if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-                    $search_where .= "AND TARGET_GB = '".$_search[TARGET_GB]."' ";
-                }
+                    if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
+                        $search_where .= "AND TARGET_GB = '".$_search[TARGET_GB]."' ";
+                    }
 
-                if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                    $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
-                }
+                    if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
+                        $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
+                    }
 
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
-                }
+                    if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+                        $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                    }
 
-                /*AND BODY LIKE '%".$_search[KEYWORD]."%'";*/
-//                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-//                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
-//                }
+                    /*AND BODY LIKE '%".$_search[KEYWORD]."%'";*/
+    //                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+    //                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+    //                }
 
-//                if (isset($_page)) {
-//                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
-//                }
+                    if (isset($_page)) {
+                        $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    }
 
-                $sql = "SELECT
+                    $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             NO, SUBJECT, BODY, REG_UID, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, REPLY_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB,
                             (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
@@ -158,6 +158,7 @@
                                 1 = 1
                                 ".$search_where."
                              ORDER BY REVIEW_NO DESC
+                             ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
@@ -171,29 +172,29 @@
                         ) CNT
                         ";
 
-                $data = null;
+                 $data = null;
 
-                if (isset($_search[FILE])) {
-                    $__trn = '';
-                    $result = $_d->sql_query($sql,true);
-                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                 if (isset($_search[FILE])) {
+                        $__trn = '';
+                        $result = $_d->sql_query($sql,true);
+                        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-                        $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    FILE F, CONTENT_SOURCE S
-                                WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'REVIEW'
-                                    AND F.FILE_GB = 'MAIN'
-                                    AND S.TARGET_NO = ".$row['NO']."
-                                ";
+                            $sql = "SELECT
+                                        F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                    FROM
+                                        FILE F, CONTENT_SOURCE S
+                                    WHERE
+                                        F.NO = S.SOURCE_NO
+                                        AND S.CONTENT_GB = 'FILE'
+                                        AND S.TARGET_GB = 'REVIEW'
+                                        AND F.FILE_GB = 'MAIN'
+                                        AND S.TARGET_NO = ".$row['NO']."
+                                    ";
 
-                        $category_data = $_d->getData($sql);
-                        $row['FILE'] = $category_data;
+                            $category_data = $_d->getData($sql);
+                            $row['FILE'] = $category_data;
 
-                        $__trn->rows[$i] = $row;
+                            $__trn->rows[$i] = $row;
                     }
                     $_d->sql_free_result($result);
                     $data = $__trn->{'rows'};
@@ -391,7 +392,7 @@
                     MtUtil::_c("------------>>>>> file : ".$file['name']);
                     MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
-                    if(isset($file[kind])){
+                    if(!isset($file[kind])){
                         $_d->failEnd("대표이미지를 선택하세요.");
                     }
 
@@ -653,7 +654,7 @@
 //                        $_d->failEnd("대표이미지를 선택하세요.");
 //                    }
 
-                    if(!in_array("MAIN", $file[kind])){
+                    if(!isset($file[kind])){
                         $_d->failEnd("대표이미지를 선택하세요.");
                     }
 
