@@ -767,6 +767,7 @@ img.userlog_login_pic {
     height:85px;
     border:1px solid transparent;
     border-radius: 50%;
+    background-size: cover;
 }
 
 .userlog_login_info {
