@@ -12,6 +12,11 @@
 
                 <div class="col-xs-12 v-cell-4">
                     <div class="comp_basic h-cell-dynamic">
+                    <div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>
+
+                    <!--<div ng-show="isLoading" class="jumbotron_cover jumbotron_cover_imgs" style="background-color: #ffffff; opacity : .3;  filter: alpha(opacity:'30')">-->
+                        <!--<img src="/imgs/temp/1.jpg">-->
+                    <!--</div>-->
 
                     <ange-portlet-slide-banner ng-model="option_r1_c1"></ange-portlet-slide-banner>
                     </div>
@@ -21,6 +26,8 @@
             <div class="row">
                 <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
                     <div ng-class="slide != 'cover' ? 'comp_basic h-cell-2' : 'comp_basic comp_splite_left h-cell-2'">
+
+                        <div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>
 
                         <!-- mini_story -->
                         <ange-mini-story-list ng-model="option_r2_c1"></ange-mini-story-list>

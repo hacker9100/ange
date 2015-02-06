@@ -667,12 +667,12 @@ define([
         return {
             restrict: 'EA',
             scope: true,
-//            scope: { data: '=', ngModel: '=', dots: '=', autoplay: '=', centerMode: '=' },
+//            scope: { option: '=ngModel' },
 //            replace: true,
             templateUrl: function(element, attrs) {
                 return '/partials/ange/main/portlet-slide-banner.html';
             },
-            controller: ['$scope', '$attrs', '$location', '$window', 'UPLOAD', function($scope, $attrs, $location, $window, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'UPLOAD', function($scope, $attrs, $location, $window, $timeout, UPLOAD) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -718,7 +718,8 @@ define([
 
                 // 롤링 이미지 조회
                 $scope.getPortletList = function () {
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.isLoading = true;
+                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, false)
                         .then(function(data){
                             $scope.list = data;
 
@@ -734,7 +735,7 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><a href="'+data[i].URL+'" target="_blank"><img src="'+img+'"/></a></div></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><a href="'+data[i].URL+'" target="_blank"><img data-lazy="'+img+'"/></a></div></div>');
 //                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
                             }
 
@@ -748,6 +749,10 @@ define([
                             }, function(newVal, oldVal) {
                                 $scope.coverTitle = data[newVal].SUBJECT;
                             });
+
+                            $timeout(function(){
+                                $scope.isLoading = false;
+                            }, 1000);
                         })
                         .catch(function(error){$scope.list = [];});
                 };

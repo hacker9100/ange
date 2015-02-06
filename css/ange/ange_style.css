@@ -311,7 +311,6 @@ body {
     .copyright_foot {
         display: block;
     }
-
 }
 
 /* Main Responsive Style Set */
@@ -328,9 +327,13 @@ body {
 
 .ng_wrap {
     float:left;
-    height:100%;
     width:100%;
-    /*border:1px solid blue;*/
+}
+
+@media (min-width: 1200px) {
+    .ng_wrap {
+        height:100%;
+    }
 }
 
 .sub_content_wrap {
@@ -345,7 +348,6 @@ body {
     overflow: auto;
     overflow-x: hidden;
     /*overflow-y: auto;*/
-    /*border: 1px solid red;*/
 }
 
 .main_subar_wrap {
@@ -373,10 +375,10 @@ body {
     /*overflow-y: auto;*/
 }
 
-.mainbar:hover, .subar:hover  {
-    overflow-x: hidden;
-    overflow-y: auto;
-}
+/*.mainbar:hover, .subar:hover  {*/
+    /*overflow-x: hidden;*/
+    /*overflow-y: auto;*/
+/*}*/
 
 .slide0 {
     width:58%;
@@ -470,6 +472,23 @@ body {
 .sub-slide1 {
     width:25%;
     min-width:100px;
+}
+
+
+@media (max-width: 1200px) {
+    /* 모바일 사이즈일 경우 사이드 배너를 하단으로 이동 */
+    .mainbar {
+        overflow: visible;
+    }
+
+    .sub-slide0 {
+        width:100%;
+        min-width:560px;
+    }
+
+    .sub-slide1 {
+        width:100%;
+    }
 }
 
 
@@ -958,6 +977,7 @@ a.footer_blogto:hover, a.footer_blogto:focus {	background-position: left -16px; 
 
 .h-cell-dynamic{
     clear: both;
+    min-height:300px;
 }
 
 .h-cell-half {
@@ -1748,21 +1768,38 @@ ul.contentguide {
 /* Sub side banner */
 
 .subside_wrap {
-    margin:10px 0 5px 10px;
     width:165px;
 }
 
-.subside_wrap img {
+.subside_banner_wrap {
+    margin:10px 0 5px 10px;
+    width:100%;
+}
+
+.subside_banner_wrap img {
+    float:left;
     width: 100%;
 }
 .subside_inven_rolling {
+    float:left;
     position:relative;
     border:1px solid #ddd;
     width:100%;
     margin-bottom:5px;
 }
 
+.subside_linebanner_wrap {
+    float:left;
+    width: 100%;
+}
+
+.subside_movie_wrap {
+    float:left;
+    width: 100%;
+}
+
 .subside_inven_basic {
+    float:left;
     border:1px solid #ddd;
     width: 100%;
 }
@@ -1784,7 +1821,7 @@ ul.contentguide {
 /* Sub side rank */
 .subside_rank {
     margin:20px 0 20px 10px;
-    width:165px;
+    width:100%;
 }
 
 .subside_rank_wrap {
@@ -1867,6 +1904,41 @@ ul.contentguide {
     background-position: left -52px;
 }
 
+
+@media (max-width: 1200px) {
+    /* 모바일 사이즈일 경우 사이드 배너를 하단으로 이동 */
+    .subside_wrap {
+        margin-top:15px;
+        padding-top:5px;
+        width:100%;
+        border-top: 1px solid #ddd;
+    }
+
+    .subside_banner_wrap {
+        float: left;
+        width:72%;
+        margin-top:20px;
+    }
+
+    .subside_inven_rolling {
+        width:32%;
+    }
+
+    .subside_linebanner_wrap {
+        width:29%;
+        margin-left: 2%;
+    }
+
+    .subside_movie_wrap {
+        width:35%;
+        margin-left: 2%;
+    }
+
+    .subside_rank {
+        float: left;
+        width:24%;
+    }
+}
 
 
 /*** 레이아웃 작업 시 아래 하애 주석 해제 필요함 ***/

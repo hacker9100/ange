@@ -149,7 +149,8 @@ define([
                 $scope.checkPW = true;
 
 //                var check = /[^a-zA-Z0-9~!@\#$%<>^&*\()\-=+_\']/gi;
-                var check = /^(?=.+[0-9])(?=.+[a-zA-Z])(?=.+[!@#$%^*+=-]).{6,12}$/;
+//                var check = /^(?=.+[0-9])(?=.+[a-zA-Z])(?=.+[!@#$%^*+=-]).{6,12}$/;
+                var check = /^(?=.+[0-9])(?=.+[a-zA-Z]).{6,12}$/;
 
                 console.log($scope.user.PASSWORD)
                 console.log(check.test($scope.user.PASSWORD))
@@ -429,30 +430,30 @@ define([
                         $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE"};
                     }
 
-                    if ($scope.user.BIRTH.length == 8) {
+                    if ($scope.user.BIRTH != undefined && $scope.user.BIRTH.length == 8) {
                         $scope.user.YEAR = $scope.user.BIRTH.substr(0, 4);
                         $scope.user.MONTH = $scope.user.BIRTH.substr(4, 2).replace('0', '');
                         $scope.user.DAY = $scope.user.BIRTH.substr(6, 2).replace('0', '');
                     }
 
-                    if ($scope.user.ZIP_CODE.length == 6) {
+                    if ($scope.user.ZIP_CODE != undefined && $scope.user.ZIP_CODE.length == 6) {
                         $scope.user.POST_1 = $scope.user.ZIP_CODE.substr(0, 3);
                         $scope.user.POST_2 = $scope.user.ZIP_CODE.substr(3, 3);
                     }
 
-                    if ($scope.user.PHONE_1.length > 10) {
+                    if ($scope.user.PHONE_1 != undefined && $scope.user.PHONE_1.length > 10) {
                         $scope.user.PHONE_1_1 = $scope.user.PHONE_1.substr(0, 3);
                         $scope.user.PHONE_1_2 = $scope.user.PHONE_1.substr(3, 4);
                         $scope.user.PHONE_1_3 = $scope.user.PHONE_1.substr(7, 4);
                     }
 
-                    if ($scope.user.PHONE_2.length > 10) {
+                    if ($scope.user.PHONE_2 != undefined && $scope.user.PHONE_2.length > 10) {
                         $scope.user.PHONE_2_1 = $scope.user.PHONE_2.substr(0, 3);
                         $scope.user.PHONE_2_2 = $scope.user.PHONE_2.substr(3, 4);
                         $scope.user.PHONE_2_3 = $scope.user.PHONE_2.substr(7, 4);
                     }
 
-                    if ($scope.user.EMAIL.length > 4) {
+                    if ($scope.user.EMAIL != undefined && $scope.user.EMAIL.length > 4) {
                         var spEmail = $scope.user.EMAIL.split('@')
                         $scope.user.EMAIL_ID = spEmail[0];
                         $scope.user.EMAIL_TYPE = spEmail[1];
@@ -471,7 +472,7 @@ define([
                             $scope.checkAllAgree = true;
                     }
 
-                    if ($scope.user.BABY != null) {
+                    if ($scope.user.BABY != null && $scope.user.BABY != '') {
                         for (var i=0; i < $scope.user.BABY.length; i++) {
                             if (i > 2) {
                                 $scope.babies.push({});
@@ -488,7 +489,7 @@ define([
                         }
                     }
 
-                    if ($scope.user.BLOG != null) {
+                    if ($scope.user.BLOG != null && $scope.user.BLOG != '') {
                         $scope.blog = $scope.user.BLOG;
 
                         $scope.blog.BLOG_DETAIL = $scope.user.BLOG.BLOG_URL;

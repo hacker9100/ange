@@ -169,17 +169,22 @@
                     {{ item.EMAIL }} <br> ( {{ item.SNS }} )
                 </td>
                 <td ng-show="search.ACT == 'C'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'현황(글수)'">
-                    게시(
                     <a style="cursor:pointer;" ng-click="click_selectWriteList(item)" title="{{ item.USER_NM + ' 게시물 보기' }}">
-                        {{ item.BOARD_CNT }}
+                        게시( {{ item.BOARD_CNT }} )
                     </a>
-                    ) 댓글 ( {{ item.REPLY_CNT }} )
+                    댓글 ( {{ item.REPLY_CNT }} )
                 </td>
                 <td ng-show="search.ACT == 'C'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'공감/랭킹'">
                     {{ item.LIKE_CNT }} / {{ item.LANK}}
                 </td>
                 <td ng-show="search.ACT == 'P'" style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'현황(당첨/참여)'">
-                    이벤트 ( {{ item.EXPERIENCE_WINNER_CNT }} / {{ item.EXPERIENCE_COMP_CNT }} ) <br> 체험단 ( {{ item.EVENT_WINNER_CNT }} / {{ item.EVENT_COMP_CNT }} )
+                    <a style="cursor:pointer;" ng-click="click_selectCompList(item, 'event')" title="{{ item.USER_NM + ' 게시물 보기' }}">
+                        이벤트 ( {{ item.EXPERIENCE_WINNER_CNT }} / {{ item.EXPERIENCE_COMP_CNT }} )
+                    </a>
+                    <br>
+                    <a style="cursor:pointer;" ng-click="click_selectCompList(item, 'experience')" title="{{ item.USER_NM + ' 게시물 보기' }}">
+                        체험단 ( {{ item.EVENT_WINNER_CNT }} / {{ item.EVENT_COMP_CNT }} )
+                    </a>
                 </td>
                 <td ng-show="search.ACT == 'P'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'리뷰'">
                     작성( {{ item.REVIEW_CNT }} ) <br>  미작성( {{ item.REVIEW_CNT }} )
@@ -195,9 +200,9 @@
                 </td>
                 <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'Point(Score)'">
                     <a style="cursor:pointer;" ng-click="click_selectMileageList(item)" title="{{ item.USER_NM + ' 마일리지 보기' }}">
-                        {{ item.REMAIN_POINT }}
+                        {{ item.REMAIN_POINT == null ? 0 : item.REMAIN_POINT }}
                     </a>
-                    ( {{ item.SCORE }} )
+                    ( {{ item.SCORE == null ? 0 : item.SCORE }} )
                 </td>
                 <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'가입(최종접속)'">
                     {{ item.REG_DT }} <br> ( {{ item.FINAL_LOGIN_DT }} )

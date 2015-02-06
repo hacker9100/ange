@@ -28,6 +28,7 @@ define([
     '../../../partials/admin/popup/member-write-list',
     '../../../partials/admin/popup/member-mileage-list',
     '../../../partials/admin/popup/member-response-list',
+    '../../../partials/admin/popup/member-comp-list',
 
     // ADMIN 참여 관리
     '../../../partials/admin/event-list',

@@ -61,6 +61,8 @@ require.config({
         'ckeditor-jquery': '../../lib/ckeditor/adapters/jquery', // angularjs에서 ckeditor를 사용할 수 있게 해주는 어덥터다.
         'ckfinder': '../../lib/ckfinder/ckfinder', // ckeditor에서 업로드를 할 수 있게 해준다.
 
+        'ngActivityIndicator': '../../lib/ngActivityIndicator/ngActivityIndicator', // 로딩시 화면에 잠깐 보여주는 역할을 한다.
+
         // fileupload 모듈
         'ui-widget': '../../lib/file-upload/vendor/jquery.ui.widget',
         'load-image': '../../lib/file-upload/load-image/load-image',

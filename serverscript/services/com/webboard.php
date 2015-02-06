@@ -158,7 +158,7 @@
                 }
 
                 if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_common .= "AND B.REG_UID = '".$_SESSION['uid']."' ";
+                    $search_common .= "AND B.REG_UID = '".$_search[REG_UID]."' ";
                 }
 
                 if (isset($_search[PHOTO_TYPE]) && $_search[PHOTO_TYPE] != "" && $_search[PHOTO_TYPE] != "ALL") {
