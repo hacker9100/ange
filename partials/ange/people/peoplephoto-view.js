@@ -55,6 +55,16 @@ define([
 //            }
         };
 
+        // 등록 버튼 클릭
+        $scope.click_showCreatePeopleBoard = function () {
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/0');
+        };
+
         $scope.likeFl = function (){
             if($rootScope.uid != '' && $rootScope.uid != null){
 
@@ -124,27 +134,11 @@ define([
             // 수정 버튼 클릭
         $scope.click_showPeoplePhotoEdit = function (item) {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/'+item.NO);
-
-//            if ($stateParams.menu == 'peopletaste') {
-//                $location.url('/people/peopletaste/edit/'+item.NO);
-//            } else if($stateParams.menu == 'angemodel') {
-//                $location.url('/people/angemodel/edit/'+item.NO);
-//            } else if($stateParams.menu == 'recipearcade') {
-//                $location.url('/people/recipearcade/edit/'+item.NO);
-//            }
         };
 
         // 목록 버튼 클릭
         $scope.click_showPeoplePhotoList = function () {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
-
-//            if ($stateParams.menu == 'peopletaste') {
-//                $location.url('/people/peopletaste/list');
-//            } else if($stateParams.menu == 'angemodel') {
-//                $location.url('/people/angemodel/list');
-//            } else if($stateParams.menu == 'recipearcade') {
-//                $location.url('/people/recipearcade/list');
-//            }
         };
 
         $scope.addHitCnt = function () {
@@ -188,14 +182,6 @@ define([
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
 
-//            if ($stateParams.menu == 'angemodel') {
-//                $scope.search['COMM_NO'] = '6';
-//            } else if($stateParams.menu == 'recipearcade') {
-//                $scope.search['COMM_NO'] = '7';
-//            } else if($stateParams.menu == 'peopletaste') {
-//                $scope.search['COMM_NO'] = '8';
-//            }
-
             $scope.search.KEY = $stateParams.id;
             $scope.search.BOARD_PRE = true;
 
@@ -212,14 +198,6 @@ define([
         $scope.getNextBoard = function (){
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
-
-//            if ($stateParams.menu == 'angemodel') {
-//                $scope.search['COMM_NO'] = '6';
-//            } else if($stateParams.menu == 'recipearcade') {
-//                $scope.search['COMM_NO'] = '7';
-//            } else if($stateParams.menu == 'peopletaste') {
-//                $scope.search['COMM_NO'] = '8';
-//            }
 
             $scope.search.KEY = $stateParams.id;
             $scope.search.BOARD_NEXT = true;
@@ -238,14 +216,6 @@ define([
 
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
 
-//            if ($stateParams.menu == 'angemodel') {
-//                $location.url('/people/angemodel/view/'+key);
-//            } else if($stateParams.menu == 'recipearcade') {
-//                $location.url('/people/recipearcade/view/'+key);
-//            } else if($stateParams.menu == 'peopletaste') {
-//                $location.url('/people/peopletaste/view/'+key);
-//            }
-
         };
 
         $scope.click_showPeoplePhotoDelete = function(item) {
@@ -255,14 +225,6 @@ define([
                 $scope.deleteItem('com/webboard', 'item', item.NO, true)
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
-
-//                        if ($stateParams.menu == 'peopletaste') {
-//                            $location.url('/people/peopletaste/list');
-//                        } else if($stateParams.menu == 'angemodel') {
-//                            $location.url('/people/angemodel/list');
-//                        } else if($stateParams.menu == 'recipearcade') {
-//                            $location.url('/people/recipearcade/list');
-//                        }
                      ;})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
@@ -270,22 +232,6 @@ define([
             });
         }
 
-/*        // 공감
-        $scope.click_likeCntAdd = function(item){
-
-            if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 공감이 가능합니다.', {size: 'md'});
-                return;
-            }
-
-            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
-                .then(function(){
-
-                    dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
-                    $scope.getPeopleBoard();
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        };*/
 
         // 스크랩
         $scope.click_scrapAdd = function(item){
@@ -312,11 +258,6 @@ define([
 
                         $scope.scrap.TARGET_NO = item.NO;
                         $scope.scrap.TARGET_GB = item.BOARD_GB;
-
-                        // [테스트] 등록자아이디, 등록자명, 닉네임 은 세션처리 되면 삭제할예정
-                        $scope.scrap.REG_UID = 'hong';
-                        $scope.scrap.NICK_NM = '므에에롱';
-                        $scope.scrap.REG_NM = '홍길동';
 
                         $scope.insertItem('com/scrap', 'item', $scope.scrap, false)
                             .then(function(){

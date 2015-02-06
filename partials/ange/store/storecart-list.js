@@ -411,37 +411,37 @@ define([
             }
             // /easypay70_plugin_php_window/web/normal/order.php
             // /easypay70_plugin_php_window/web/easypay_request.php
-//            var popUrl = "http://localhost/easypay70_plugin_php_window/web/normal/order.php?EP_user_id="+$scope.item.USER_ID+"&EP_user_nm="+$scope.item.RECEIPTOR_NM+"&EP_order_no="+$scope.item.ORDER[0].PRODUCT_NO+"&EP_product_nm="+$scope.item.ORDER[0].PRODUCT_NM+
-//                           "&EP_product_amt="+total_price+"&EP_user_mail="+$rootScope.user_info.EMAIL+"&EP_user_phone1="+$rootScope.user_info.PHONE_1+"&EP_user_phone2="+$scope.item.RECEIPT_PHONE+"&EP_user_addr="+$scope.item.RECEIPT_ADDR+"&EP_pay_type="+pay_gb;
-//                	//팝업창에 출력될 페이지 URL
+            var popUrl = "http://localhost/easypay70_plugin_php_window/web/normal/order.php?EP_user_id="+$scope.item.USER_ID+"&EP_user_nm="+$scope.item.RECEIPTOR_NM+"&EP_order_no="+$scope.item.ORDER[0].PRODUCT_NO+"&EP_product_nm="+$scope.item.ORDER[0].PRODUCT_NM+
+                           "&EP_product_amt="+total_price+"&EP_user_mail="+$rootScope.user_info.EMAIL+"&EP_user_phone1="+$rootScope.user_info.PHONE_1+"&EP_user_phone2="+$scope.item.RECEIPT_PHONE+"&EP_user_addr="+$scope.item.RECEIPT_ADDR+"&EP_pay_type="+pay_gb;
+                	//팝업창에 출력될 페이지 URL
 //
 ////            var popUrl = "http://localhost/easypay70_plugin_php_window/web/easypay_request.php?EP_user_id="+$scope.item.USER_ID+"&EP_user_nm="+$scope.item.RECEIPTOR_NM+"&EP_order_no="+$scope.item.ORDER[0].PRODUCT_NO+"&EP_product_nm="+$scope.item.ORDER[0].PRODUCT_NM+
 ////                "&EP_product_amt="+total_price+"&EP_user_mail="+$rootScope.user_info.EMAIL+"&EP_user_phone1="+$rootScope.user_info.PHONE_1+"&EP_user_phone2="+$scope.item.RECEIPT_PHONE+"&EP_user_addr="+$scope.item.RECEIPT_ADDR+"&EP_pay_type="+pay_gb;
 //
-//            var popOption = "width=950, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-//            window.open(popUrl+"","",popOption);
+            var popOption = "width=950, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+            window.open(popUrl+"","",popOption);
 
             // 상품 주문 등록
-            $scope.insertItem('ange/order', 'item', $scope.item, false)
-                .then(function(){
-                    $scope.step = 3;
-                    $rootScope.REQUEST_NOTE = $scope.item.REQUEST_NOTE;
-
-                    /*$('input:radio[name=pay_info_gb]:input[value="NOBANKBOOK"]').prop("checked", true);*/
-
-                    if($scope.item.PAY_GB == 'CREDIT'){
-                        $("#pay_info_gb1").attr("checked",true);
-                        $("#pay_info_gb2").attr("checked",false);
-                    } else if($scope.item.pay_gb == 'NOBANKBOOK'){
-                        $("#pay_info_gb1").attr("checked",false);
-                        $("#pay_info_gb2").attr("checked",true);
-                    }
-
-                    $scope.PAY_INFO = $scope.item.PAY_GB;
-
-                    $scope.orderlist();
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//            $scope.insertItem('ange/order', 'item', $scope.item, false)
+//                .then(function(){
+//                    $scope.step = 3;
+//                    $rootScope.REQUEST_NOTE = $scope.item.REQUEST_NOTE;
+//
+//                    /*$('input:radio[name=pay_info_gb]:input[value="NOBANKBOOK"]').prop("checked", true);*/
+//
+//                    if($scope.item.PAY_GB == 'CREDIT'){
+//                        $("#pay_info_gb1").attr("checked",true);
+//                        $("#pay_info_gb2").attr("checked",false);
+//                    } else if($scope.item.pay_gb == 'NOBANKBOOK'){
+//                        $("#pay_info_gb1").attr("checked",false);
+//                        $("#pay_info_gb2").attr("checked",true);
+//                    }
+//
+//                    $scope.PAY_INFO = $scope.item.PAY_GB;
+//
+//                    $scope.orderlist();
+//                })
+//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.click_update_user_info = function () {

@@ -20,8 +20,6 @@ define([
 
         $scope.answer = {}
         //$scope.showDetails = false;
-        $scope.showPollView = false;
-        $scope.showPoll = true;
 
         $scope.page = 1;
         $scope.lastPage = 0;
@@ -34,10 +32,6 @@ define([
 
 // 차트
         $scope.chart = {};
-
-
-
-
 
         //console.log($scope.chart[j+1]);
 
@@ -85,6 +79,14 @@ define([
                     .then(function(data){
 
                         $scope.item = data;
+
+                        if(data.POLL_ST == 0){
+                            $scope.showPollView = false;
+                        }else{
+                            $scope.showPollView = true;
+                        }
+
+
                         $scope.lastPage = Math.round(data.QUERY_CNT/2);
 
                         var query = data.QUERY;

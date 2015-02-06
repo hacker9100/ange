@@ -73,7 +73,7 @@
                                                     <!--<input ng-model="select.SELECT" type= "radio" ng-value="select.SELECT_SORT" /> {{select.NOTE}}-->
                                                     <!--</div>-->
 
-                                                <dl data-ng-repeat="query in queue" ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page "><!--ng-show="$index < page || $index+2 ==page"-->
+                                                <dl data-ng-repeat="query in queue"><!-- ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page " -->
                                                     <!--{{firstIndex}}-->
                                                     <dt>{{query.QUERY}}</dt>
                                                     <dd ng-if="query.QUERY_GB == 'S'">
@@ -104,12 +104,12 @@
                                                 <!--</div>-->
                                             </div>
 
-                                            <div class="peoplepoll_view_paging">
-                                                <button type="button" class="btn btn-default btn-xs" ng-disabled="nextclick" style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  <!--ng-click="pre_click();"-->
-                                                <!--<center><span class="table_red">{{page}}</span>/3</center>-->
-                                                <center><span class="table_red">{{currentPage+1}}</span>/{{lastPage}}</center>
-                                                <button type="button" class="btn btn-default btn-xs" ng-disabled="preclick"  style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> <!--ng-disabled="!last"-->
-                                            </div>
+                                            <!--<div class="peoplepoll_view_paging">-->
+                                                <!--<button type="button" class="btn btn-default btn-xs" ng-disabled="nextclick" style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  &lt;!&ndash;ng-click="pre_click();"&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<center><span class="table_red">{{page}}</span>/3</center>&ndash;&gt;-->
+                                                <!--<center><span class="table_red">{{currentPage+1}}</span>/{{lastPage}}</center>-->
+                                                <!--<button type="button" class="btn btn-default btn-xs" ng-disabled="preclick"  style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> &lt;!&ndash;ng-disabled="!last"&ndash;&gt;-->
+                                            <!--</div>-->
                                         </div><!-- /.col-02-->
 
 
@@ -120,7 +120,7 @@
                                                 <!--<input ng-model="select.SELECT" type= "radio" ng-value="select.SELECT_SORT" /> {{select.NOTE}}-->
                                                 <!--</div>-->
 
-                                                <dl data-ng-repeat="query in queue" ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page"><!--  ng-show="firstIndex == page || firstIndex+1 == page" -->
+                                                <dl data-ng-repeat="query in queue" ><!--  ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page" -->
                                                     <!--{{firstIndex}}-->
                                                     <dt>{{query.QUERY}}</dt>
                                                     <dd  ng-show="query.QUERY_GB == 'M'" data-ng-repeat="select in query.SELECT">
@@ -169,12 +169,12 @@
 
 
 
-                                            <div class="peoplepoll_view_paging">
-                                                <button type="button" class="btn btn-default btn-xs"   ng-disabled="nextclick" style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  <!--ng-click="pre_click();"-->
-                                                <!--<center><span class="table_red">{{page}}</span>/3</center>-->
-                                                <center><span class="table_red">{{currentPage+1}}</span>/{{lastPage}}</center>
-                                                <button type="button"  class="btn btn-default btn-xs"  ng-disabled="preclick" style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> <!--ng-disabled="!last"-->
-                                            </div>
+                                            <!--<div class="peoplepoll_view_paging">-->
+                                                <!--<button type="button" class="btn btn-default btn-xs"   ng-disabled="nextclick" style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  &lt;!&ndash;ng-click="pre_click();"&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<center><span class="table_red">{{page}}</span>/3</center>&ndash;&gt;-->
+                                                <!--<center><span class="table_red">{{currentPage+1}}</span>/{{lastPage}}</center>-->
+                                                <!--<button type="button"  class="btn btn-default btn-xs"  ng-disabled="preclick" style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> &lt;!&ndash;ng-disabled="!last"&ndash;&gt;-->
+                                            <!--</div>-->
 
 
                                         </div><!-- /.col-02-->
@@ -195,10 +195,6 @@
 
                                         <div class="col-xs-8">
                                             <a class="btn people_btn vote" title="투표하기" style="display:block;" ng-class="{ 'hidden':  showPollView }" ng-click="click_saveAngePoll(item.NO, item.POLL_ST);">투표</a>
-                                                <!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
-                                            <a href="#" class="btn people_btn submit" title="등록하기" style="display:none;">등록</a>
-                                            <a href="#" class="btn people_btn cancel" title="작성취소" style="display:none;">취소</a>
-                                            <a href="#" class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>
                                         </div>
                                     </div><!-- /.row -->
                                 </div><!-- /.container -->

@@ -174,6 +174,24 @@ define([
             }
         };
 
+        // 조회 화면 이동
+        $scope.click_showViewPeopleBoard = function (key) {
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+
+//            if ($stateParams.menu == 'angeroom') {
+//                $location.url('/people/angeroom/view/'+key);
+//            } else if($stateParams.menu == 'momstalk') {
+//                $location.url('/people/momstalk/view/'+key);
+//            } else if($stateParams.menu == 'babycare') {
+//                $location.url('/people/babycare/view/'+key);
+//            } else if($stateParams.menu == 'firstbirthtalk') {
+//                $location.url('/people/firstbirthtalk/view/'+key);
+//            } else if($stateParams.menu == 'booktalk') {
+//                $location.url('/people/booktalk/view/'+key);
+//            }
+
+        };
+
         // 댓글 리스트
         $scope.getPeopleReplyList = function () {
 
@@ -475,6 +493,31 @@ define([
 
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+        };
+
+        // 등록 버튼 클릭
+        $scope.click_showCreateReview = function () {
+
+            if ($scope.uid == '' || $scope.uid == null) {
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
+
+            if ($stateParams.menu == 'experiencereview') {
+                $location.url('/moms/experiencereview/edit/0');
+            } else if ($stateParams.menu == 'productreview') {
+                $location.url('/moms/productreview/edit/0');
+            } else if ($stateParams.menu == 'angereview') {
+                $location.url('/moms/angereview/edit/0');
+            } else if ($stateParams.menu == 'samplereview') {
+                $location.url('/moms/samplereview/edit/0');
+            } else if ($stateParams.menu == 'samplepackreview') {
+                $location.url('/moms/samplepackreview/edit/0');
+            }else if ($stateParams.menu == 'eventreview') {
+                $location.url('/moms/eventreview/edit/0');
+            }
 
         };
 

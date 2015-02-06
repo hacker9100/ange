@@ -20,6 +20,7 @@ define([
                     $("input[name=check]").attr("checked",true);
                     $scope.item.SCRAP_FL = "true";
                     $scope.item.REPLY_FL = "true";
+                    $scope.item.NOTICE_FL = "true";
                     //클릭이 안되있으면
                 }else{
                     $("input[name=check]").prop("checked",false);
@@ -56,6 +57,14 @@ define([
                     $scope.item.REPLY_FL = "true";
                 }else{
                     $scope.item.REPLY_FL = "false";
+                }
+            });
+
+            $("#notice_fl").click(function(){
+                if($("#notice_fl").is(":checked")){
+                    $scope.item.NOTICE_FL = "true";
+                }else{
+                    $scope.item.NOTICE_FL = "false";
                 }
             });
         });
@@ -204,6 +213,12 @@ define([
                             $("#check_reply").attr("checked", false);
                         }
 
+                        if($scope.item.NOTICE_FL == "Y"){
+                            $("#check_reply").attr("checked", true);
+                        }else{
+                            $("#check_reply").attr("checked", false);
+                        }
+
                         if($scope.item.SCRAP_FL== "Y"){
                             $("#check_scrap").attr("checked", true);
                         }else{
@@ -253,6 +268,12 @@ define([
                     $scope.item.SCRAP_FL = "false"
                 }
 
+                if($("#notice_fl").is(":checked")){
+                    $scope.item.NOTICE_FL = "true";
+                }else{
+                    $scope.item.NOTICE_FL = "false";
+                }
+
                $scope.item.REMAIN_POINT = 10;
                $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
@@ -280,6 +301,12 @@ define([
                     $scope.item.SCRAP_FL = "true"
                 }else{
                     $scope.item.SCRAP_FL = "false"
+                }
+
+                if($("#notice_fl").is(":checked")){
+                    $scope.item.NOTICE_FL = "true";
+                }else{
+                    $scope.item.NOTICE_FL = "false";
                 }
 
                 $scope.item.REMAIN_POINT = 10;
