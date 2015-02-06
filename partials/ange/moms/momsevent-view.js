@@ -267,6 +267,8 @@ define([
 
                         $scope.item.NO = data[0].NO;
 
+                        $scope.item.PREGNANT_WEEKS = 0;
+
                         $scope.updateItem('ange/comp', 'item', $scope.item.NO, $scope.item, false)
                             .then(function(){
 
@@ -280,6 +282,8 @@ define([
                             })
                             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     } else {
+
+                        $scope.item.PREGNANT_WEEKS = 0;
 
                         $scope.insertItem('ange/comp', 'item', $scope.item, false)
                             .then(function(){

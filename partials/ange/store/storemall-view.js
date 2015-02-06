@@ -25,7 +25,7 @@ define([
 
         // 페이징
         $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = 5;
         $scope.TOTAL_COUNT = 0;
 
         $scope.search = {};
@@ -52,7 +52,7 @@ define([
 
             //$("#tabs-"+idx).focus();
 
-            //$("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
+            $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
         };
 
         // 초기화
@@ -70,12 +70,14 @@ define([
             }
 
             // 리뷰 리스트
-            $scope.search.JOIN_GB = 'PRODUCT';
+            $scope.search.TARGET_GB = 'PRODUCT';
+            $scope.search.TARGET_NO = $stateParams.id;
 
         };
 
+        // 리뷰 리스트
         $scope.getReviewList = function (){
-            $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+            $scope.getList('ange/review', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, false)
                 .then(function(data){
                     $scope.reviewList = data;
                     var total_cnt = data[0].TOTAL_COUNT;

@@ -1,6 +1,12 @@
+<!-- <?php
+print_r($_POST["EP_user_id"]);
+?> -->
+
 <?php
     include($_SERVER["DOCUMENT_ROOT"]."/easypay70_plugin_php_window/web/inc/easypay_config.php");
+    //include("../inc/easypay_config.php");
     include($_SERVER["DOCUMENT_ROOT"]."/easypay70_plugin_php_window/web/easypay_client.php");
+    //include("./easypay_client.php");
 /* -------------------------------------------------------------------------- */
 /* ::: 처리구분 설정                                                          */
 /* -------------------------------------------------------------------------- */
@@ -24,7 +30,7 @@ $card_code        = $_POST["EP_card_code"];        // 카드코드
 /* -------------------------------------------------------------------------- */
 $order_no         = $_POST["EP_order_no"];         // [필수]주문번호
 $user_type        = $_POST["EP_user_type"];        // [선택]사용자구분구분[1:일반,2:회원]
-$memb_user_no     = $_POST["EP_memb_user_no"];     // [선택]가맹점 고객일련번호
+//$memb_user_no     = $_POST["EP_memb_user_no"];     // [선택]가맹점 고객일련번호
 $user_id          = $_POST["EP_user_id"];          // [선택]고객 ID
 $user_nm          = $_POST["EP_user_nm"];          // [필수]고객명
 $user_mail        = $_POST["EP_user_mail"];        // [필수]고객 E-mail
@@ -231,57 +237,57 @@ if ( $res_cd == "0000" )
     }
 </script>
 
-<body onload="f_submit();">
+<body onload="f_submit();"> 
 <form name="frm" method="post" action="./result.php">
-    <input type="hidden" name="res_cd"          value="<?=$res_cd?>">            <!-- 결과코드 //-->
-    <input type="hidden" name="res_msg"         value="<?=$res_msg?>">           <!-- 결과메시지 //-->
-    <input type="hidden" name="order_no"        value="<?=$order_no?>">          <!-- 주문번호 //-->
-    <input type="hidden" name="cno"             value="<?=$r_cno?>">             <!-- PG거래번호 //-->
+    <input type="hidden" name="res_cd"          value="<?=$res_cd?>">            결과코드 //
+    <input type="hidden" name="res_msg"         value="<?=$res_msg?>">           결과메시지 //
+    <input type="hidden" name="order_no"        value="<?=$order_no?>">          주문번호 //
+    <input type="hidden" name="cno"             value="<?=$r_cno?>">             PG거래번호 //
     
-    <input type="hidden" name="amount"          value="<?=$r_amount?>">          <!-- 총 결제금액 //-->
-    <input type="hidden" name="auth_no"         value="<?=$r_auth_no?>">         <!-- 승인번호 //-->
-    <input type="hidden" name="tran_date"       value="<?=$r_tran_date?>">       <!-- 거래일시 //-->
-    <input type="hidden" name="pnt_auth_no"     value="<?=$r_pnt_auth_no?>">     <!-- 포인트 승인 번호 //-->
-    <input type="hidden" name="pnt_tran_date"   value="<?=$r_pnt_tran_date?>">   <!-- 포인트 승인 일시 //-->
-    <input type="hidden" name="cpon_auth_no"    value="<?=$r_cpon_auth_no?>">    <!-- 쿠폰 승인 번호 //-->
-    <input type="hidden" name="cpon_tran_date"  value="<?=$r_cpon_tran_date?>">  <!-- 쿠폰 승인 일시 //-->
-    <input type="hidden" name="card_no"         value="<?=$r_card_no?>">         <!-- 카드번호 //-->
-    <input type="hidden" name="issuer_cd"       value="<?=$r_issuer_cd?>">       <!-- 발급사코드 //-->
-    <input type="hidden" name="issuer_nm"       value="<?=$r_issuer_nm?>">       <!-- 발급사명 //-->
-    <input type="hidden" name="acquirer_cd"     value="<?=$r_acquirer_cd?>">     <!-- 매입사코드 //-->
-    <input type="hidden" name="acquirer_nm"     value="<?=$r_acquirer_nm?>">     <!-- 매입사명 //-->
-    <input type="hidden" name="install_period"  value="<?=$r_install_period?>">  <!-- 할부개월 //-->
-    <input type="hidden" name="noint"           value="<?=$r_noint?>">           <!-- 무이자여부 //-->
-    <input type="hidden" name="bank_cd"         value="<?=$r_bank_cd?>">         <!-- 은행코드 //-->
-    <input type="hidden" name="bank_nm"         value="<?=$r_bank_nm?>">         <!-- 은행명 //-->
-    <input type="hidden" name="account_no"      value="<?=$r_account_no?>">      <!-- 계좌번호 //-->
-    <input type="hidden" name="deposit_nm"      value="<?=$r_deposit_nm?>">      <!-- 입금자명 //-->
-    <input type="hidden" name="expire_date"     value="<?=$r_expire_date?>">     <!-- 계좌사용만료일시 //-->
-    <input type="hidden" name="cash_res_cd"     value="<?=$r_cash_res_cd?>">     <!-- 현금영수증 결과코드 //-->
-    <input type="hidden" name="cash_res_msg"    value="<?=$r_cash_res_msg?>">    <!-- 현금영수증 결과메세지 //-->
-    <input type="hidden" name="cash_auth_no"    value="<?=$r_cash_auth_no?>">    <!-- 현금영수증 승인번호 //-->
-    <input type="hidden" name="cash_tran_date"  value="<?=$r_cash_tran_date?>">  <!-- 현금영수증 승인일시 //-->
-    <input type="hidden" name="auth_id"         value="<?=$r_auth_id?>">         <!-- PhoneID //-->
-    <input type="hidden" name="billid"          value="<?=$r_billid?>">          <!-- 인증번호 //-->
-    <input type="hidden" name="mobile_no"       value="<?=$r_mobile_no?>">       <!-- 휴대폰번호 //-->
-    <input type="hidden" name="ars_no"          value="<?=$r_ars_no?>">          <!-- ARS 전화번호 //-->
-    <input type="hidden" name="cp_cd"           value="<?=$r_cp_cd?>">           <!-- 포인트사 //-->
-    <input type="hidden" name="used_pnt"        value="<?=$r_used_pnt?>">        <!-- 사용포인트 //-->
-    <input type="hidden" name="remain_pnt"      value="<?=$r_remain_pnt?>">      <!-- 잔여한도 //-->
-    <input type="hidden" name="pay_pnt"         value="<?=$r_pay_pnt?>">         <!-- 할인/발생포인트 //-->
-    <input type="hidden" name="accrue_pnt"      value="<?=$r_accrue_pnt?>">      <!-- 누적포인트 //-->
-    <input type="hidden" name="remain_cpon"     value="<?=$r_remain_cpon?>">     <!-- 쿠폰잔액 //-->
-    <input type="hidden" name="used_cpon"       value="<?=$r_used_cpon?>">       <!-- 쿠폰 사용금액 //-->
-    <input type="hidden" name="mall_nm"         value="<?=$r_mall_nm?>">         <!-- 제휴사명칭 //-->
-    <input type="hidden" name="escrow_yn"       value="<?=$r_escrow_yn?>">       <!-- 에스크로 사용유무 //-->
-    <input type="hidden" name="complex_yn"      value="<?=$r_complex_yn?>">      <!-- 복합결제 유무 //-->
-    <input type="hidden" name="canc_acq_date"   value="<?=$r_canc_acq_date?>">   <!-- 매입취소일시 //-->
-    <input type="hidden" name="canc_date"       value="<?=$r_canc_date?>">       <!-- 취소일시 //-->
-    <input type="hidden" name="refund_date"     value="<?=$r_refund_date?>">     <!-- 환불예정일시 //-->
-    <input type="hidden" name="pay_type"        value="<?=$pay_type?>">          <!-- 결제수단 //-->
+    <input type="hidden" name="amount"          value="<?=$r_amount?>">          총 결제금액 //
+    <input type="hidden" name="auth_no"         value="<?=$r_auth_no?>">         승인번호 //
+    <input type="hidden" name="tran_date"       value="<?=$r_tran_date?>">       거래일시 //
+    <input type="hidden" name="pnt_auth_no"     value="<?=$r_pnt_auth_no?>">     포인트 승인 번호 //
+    <input type="hidden" name="pnt_tran_date"   value="<?=$r_pnt_tran_date?>">   포인트 승인 일시 //
+    <input type="hidden" name="cpon_auth_no"    value="<?=$r_cpon_auth_no?>">    쿠폰 승인 번호 //
+    <input type="hidden" name="cpon_tran_date"  value="<?=$r_cpon_tran_date?>">  쿠폰 승인 일시 //
+    <input type="hidden" name="card_no"         value="<?=$r_card_no?>">         카드번호 //
+    <input type="hidden" name="issuer_cd"       value="<?=$r_issuer_cd?>">       발급사코드 //
+    <input type="hidden" name="issuer_nm"       value="<?=$r_issuer_nm?>">       발급사명 //
+    <input type="hidden" name="acquirer_cd"     value="<?=$r_acquirer_cd?>">     매입사코드 //
+    <input type="hidden" name="acquirer_nm"     value="<?=$r_acquirer_nm?>">     매입사명 //
+    <input type="hidden" name="install_period"  value="<?=$r_install_period?>">  할부개월 //
+    <input type="hidden" name="noint"           value="<?=$r_noint?>">           무이자여부 //
+    <input type="hidden" name="bank_cd"         value="<?=$r_bank_cd?>">         은행코드 //
+    <input type="hidden" name="bank_nm"         value="<?=$r_bank_nm?>">         은행명 //
+    <input type="hidden" name="account_no"      value="<?=$r_account_no?>">      계좌번호 //
+    <input type="hidden" name="deposit_nm"      value="<?=$r_deposit_nm?>">      입금자명 //
+    <input type="hidden" name="expire_date"     value="<?=$r_expire_date?>">     계좌사용만료일시 //
+    <input type="hidden" name="cash_res_cd"     value="<?=$r_cash_res_cd?>">     현금영수증 결과코드 //
+    <input type="hidden" name="cash_res_msg"    value="<?=$r_cash_res_msg?>">    현금영수증 결과메세지 //
+    <input type="hidden" name="cash_auth_no"    value="<?=$r_cash_auth_no?>">    현금영수증 승인번호 //
+    <input type="hidden" name="cash_tran_date"  value="<?=$r_cash_tran_date?>">  현금영수증 승인일시 //
+    <input type="hidden" name="auth_id"         value="<?=$r_auth_id?>">         PhoneID //
+    <input type="hidden" name="billid"          value="<?=$r_billid?>">          인증번호 //
+    <input type="hidden" name="mobile_no"       value="<?=$r_mobile_no?>">       휴대폰번호 //
+    <input type="hidden" name="ars_no"          value="<?=$r_ars_no?>">          ARS 전화번호 //
+    <input type="hidden" name="cp_cd"           value="<?=$r_cp_cd?>">           포인트사 //
+    <input type="hidden" name="used_pnt"        value="<?=$r_used_pnt?>">        사용포인트 //
+    <input type="hidden" name="remain_pnt"      value="<?=$r_remain_pnt?>">      잔여한도 //
+    <input type="hidden" name="pay_pnt"         value="<?=$r_pay_pnt?>">         할인/발생포인트 //
+    <input type="hidden" name="accrue_pnt"      value="<?=$r_accrue_pnt?>">      누적포인트 //
+    <input type="hidden" name="remain_cpon"     value="<?=$r_remain_cpon?>">     쿠폰잔액 //
+    <input type="hidden" name="used_cpon"       value="<?=$r_used_cpon?>">       쿠폰 사용금액 //
+    <input type="hidden" name="mall_nm"         value="<?=$r_mall_nm?>">         제휴사명칭 //
+    <input type="hidden" name="escrow_yn"       value="<?=$r_escrow_yn?>">       에스크로 사용유무 //
+    <input type="hidden" name="complex_yn"      value="<?=$r_complex_yn?>">      복합결제 유무 //
+    <input type="hidden" name="canc_acq_date"   value="<?=$r_canc_acq_date?>">   매입취소일시 //
+    <input type="hidden" name="canc_date"       value="<?=$r_canc_date?>">       취소일시 //
+    <input type="hidden" name="refund_date"     value="<?=$r_refund_date?>">     환불예정일시 //
+    <input type="hidden" name="pay_type"        value="<?=$pay_type?>">          결제수단 //
     
-    <input type="hidden" name="gw_url"          value="<?=$g_gw_url?>">          <!--  //-->
-    <input type="hidden" name="gw_port"         value="<?=$g_gw_port?>">         <!--  //-->
+    <input type="hidden" name="gw_url"          value="<?=$g_gw_url?>">          //
+    <input type="hidden" name="gw_port"         value="<?=$g_gw_port?>">         //
 </form>
 </body>
 </html>

@@ -15,7 +15,7 @@
 <!-- 테스트 스크립트 입니다. -->
 <script language="javascript" src="http://testpg.easypay.co.kr/plugin/EasyPayPlugin.js"></script>
 <!-- HTTPS -->
-<!--script language="javascript" src="https://pg.easypay.co.kr/plugin/EasyPayPlugin.js"></script-->
+<!--<script language="javascript" src="https://pg.easypay.co.kr/plugin/EasyPayPlugin.js"></script>-->
 <!--script language="javascript" src="https://pg.easypay.co.kr/plugin/EasyPayPlugin_utf8.js"></script-->
 <!-- HTTP -->
 <!--script language="javascript" src="http://pg.easypay.co.kr/plugin/EasyPayPlugin.js"></script-->

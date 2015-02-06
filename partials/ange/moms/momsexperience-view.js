@@ -252,30 +252,26 @@ define([
 
                         $scope.item.NO = data[0].NO;
 
+                        $scope.item.PREGNANT_WEEKS = 0;
+
                         $scope.updateItem('ange/comp', 'item', $scope.item.NO, $scope.item, false)
                             .then(function(){
 
                                 dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
-                                if ($stateParams.menu == 'eventprocess') {
-                                    $location.url('/moms/eventprocess/list');
-                                } else if($stateParams.menu == 'eventperformance') {
-                                    $location.url('/moms/eventperformance/list');
-                                }
+                                $location.url('/moms/experienceprocess/list');
                             })
                             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     } else {
+
+                        $scope.item.PREGNANT_WEEKS = 0;
 
                         $scope.insertItem('ange/comp', 'item', $scope.item, false)
                             .then(function(){
 
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
-                                if ($stateParams.menu == 'eventprocess') {
-                                    $location.url('/moms/eventprocess/list');
-                                } else if($stateParams.menu == 'eventperformance') {
-                                    $location.url('/moms/eventperformance/list');
-                                }
+                                $location.url('/moms/experienceprocess/list');
                             })
                             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }

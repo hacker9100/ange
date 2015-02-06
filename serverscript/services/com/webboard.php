@@ -833,6 +833,10 @@
                         $file = $files[$i];
                         MtUtil::_c("------------>>>>> file : ".$file['name']);
 
+                        if(!isset($file[kind])){
+                            $_d->failEnd("대표이미지를 선택하세요.");
+                        }
+
                         if ($insert_path[$i][uid] != "") {
                             $sql = "INSERT INTO FILE
                             (
