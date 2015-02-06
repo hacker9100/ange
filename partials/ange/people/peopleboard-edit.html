@@ -202,17 +202,17 @@
                                         </div>
 
                                         <div class="peopleboard_options">
-                                            <input type="checkbox" name="check" id="check_reply" ng-model="item.REPLY_FL" style="vertical-align: top;" checked/>
+                                            <input type="checkbox" name="check" id="check_reply" ng-model="item.REPLY_FL" style="vertical-align: top;" ng-checked="checked"/>
                                             <span class="filename">댓글 허용</span>
                                         </div>
 
                                         <div class="peopleboard_options">
-                                            <input type="checkbox" name="check" id="check_scrap" ng-model="item.SCRAP_FL" style="vertical-align: top;" checked/>
+                                            <input type="checkbox" name="check" id="check_scrap" ng-model="item.SCRAP_FL" style="vertical-align: top;" ng-checked="checked"/>
                                             <span class="filename">스크랩 허용</span>
                                         </div>
 
                                         <div class="peopleboard_options" ng-show="role == 'MANAGER'">
-                                            <input ng-model="item.NOTICE_FL" type="checkbox" name="check" id="notice_fl" style="vertical-align: top;" />
+                                            <input ng-model="item.NOTICE_FL" type="checkbox" name="check" id="notice_fl" style="vertical-align: top;" ng-checked="checked"/>
                                             <span class="filename">공지글</span>
                                         </div>
 

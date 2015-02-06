@@ -13,17 +13,29 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('peopleboard-edit', ['$scope', '$rootScope', '$stateParams', '$location', '$filter', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, $filter, dialogs, UPLOAD, $http) {
 
+        $scope.checked = true;
+
         $(document).ready(function(){
+
+            $("#check_reply").prop("checked",true);
+            $("input[name='check']").prop("checked",true);
+
             $("#checkall").click(function(){
                 //클릭되었으면
                 if($("#checkall").is(":checked")){
-                    $("input[name=check]").attr("checked",true);
+                    $("input[name='check']").prop("checked",true);
                     $scope.item.SCRAP_FL = "true";
                     $scope.item.REPLY_FL = "true";
-                    $scope.item.NOTICE_FL = "true";
+                    if($scope.role == 'MANAGER'){
+                        $scope.item.NOTICE_FL = "true";
+                    }else{
+                        $scope.item.NOTICE_FL = "false";
+                    }
                     //클릭이 안되있으면
                 }else{
                     $("input[name=check]").prop("checked",false);
+
+                    $scope.checked = false;
                 }
             })
 //            $("#check_scrap").click(function(){
@@ -177,6 +189,7 @@ define([
 
                 })
                 .catch(function(error){});
+
 
         };
 
