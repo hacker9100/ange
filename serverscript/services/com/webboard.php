@@ -195,7 +195,7 @@
                           (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT, BOARD_REPLY_COUNT,
 	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, PHOTO_TYPE, PHOTO_GB, CATEGORY_NO,
 	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/',PHOTO_GB,'/list') AND TYPE = PHOTO_TYPE) AS TITLE, FAQ_TYPE, FAQ_GB, BOARD_NO,
-	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'infodesk' AND MENU_URL = CONCAT('/infodesk/',FAQ_GB,'/list') AND TYPE = FAQ_TYPE) AS FAQ_TITLE
+	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'infodesk' AND MENU_URL = CONCAT('/infodesk/',FAQ_GB,'/list') AND TYPE = FAQ_TYPE) AS FAQ_TITLE, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT
                         FROM
                         (";
 
@@ -281,7 +281,37 @@
                     }else{
                         $_d->dataEnd2($data);
                     }
-                } else if (isset($_search['CATEGORY'])) {
+                } if (isset($_search['FILE_EXIST'])) {
+                    $__trn = '';
+                    $result = $_d->sql_query($sql,true);
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                        $sql =  "SELECT
+                            COUNT(F.NO) AS FILE_CNT
+                        FROM
+                            FILE F, CONTENT_SOURCE S
+                        WHERE
+                            F.NO = S.SOURCE_NO
+                            AND S.CONTENT_GB = 'FILE'
+                            AND S.TARGET_GB = 'BOARD'
+                            AND S.TARGET_NO = ".$row['NO']."
+                            AND F.THUMB_FL = '0'
+                                ";
+
+                        $category_data = $_d->getData($sql);
+                        $row['FILE'] = $category_data;
+
+                        $__trn->rows[$i] = $row;
+                    }
+                    $_d->sql_free_result($result);
+                    $data = $__trn->{'rows'};
+
+                    if($_d->mysql_errno > 0){
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    }else{
+                        $_d->dataEnd2($data);
+                    }
+                }else if (isset($_search['CATEGORY'])) {
                     $__trn = '';
                     $result = $_d->sql_query($sql,true);
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
