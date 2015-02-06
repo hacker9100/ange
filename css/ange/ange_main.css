@@ -10,6 +10,7 @@
 }
 
 .jumbotron_cover {
+    position:relative;
 	height:100%;
 	width:100%;
 	/* border-radius : 10px; */
@@ -65,7 +66,7 @@ a.jumbotron_cover_pause:hover, a.jumbotron_cover_pause:focus, a.jumbotron_cover_
 }
 
 .jumbotron_indicators_wrap {
-	top:0; 
+	top:0px;
 	padding:5px;
 	left:38px; 
 	width:240px;
@@ -340,22 +341,37 @@ div.mini_board_contents:hover {
 .mini_story_contentboxlist_wrap {
 	clear:both; 
 	display:inline-block; 
-	width:800px;
+	width:100%;
 }
 
 .mini_story_contentboxlist {
-	float:left;
-	text-align:center; 
-	padding:10px 0;
-	width:74px;
-	margin:5px 16px;
-	font-size:1em;
-	cursor:pointer;
+    float:left;
+    text-align:center;
+    padding:10px 0;
+    width:100%;
+    margin:5px 16px;
+    font-size:1em;
+    cursor:pointer;
+}
+
+.mini_story_contentboxlist a:hover {
+    color:#fff !important;
+    text-decoration: none;
 }
 
 .mini_story_contentbox_img {
+    width:100%;
 	background-color:#333;
 	margin-bottom: 4px;
+}
+
+.mini_story_contentbox_img img {
+    width:100%;
+    background-color: #EDEDED;
+    background-image: url('/imgs/ange/noimage.png');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .mini_story_contentbox_cate {
@@ -366,8 +382,8 @@ div.mini_board_contents:hover {
 
 .mini_story_contentbox_title {
 	color:#333;
-	width:100%; 
-	font-size: 0.76em; 
+	width:100%;
+	font-size: 0.76em;
 }
 
 .mini_story_contentbox_img:hover {
@@ -784,10 +800,16 @@ div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 }
 
 .channel_mark {
-	width:30%; 
+	width:30%;
 	height:12px; 
 	margin:0px auto; 
 	border-radius:5px;
+}
+
+.cover_mark {
+    width:15%;
+    background-color:#e25d4c;
+    border:1px solid #e25d4c;
 }
 
 .story_mark {
