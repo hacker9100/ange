@@ -291,7 +291,9 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist"><a href="/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="'+img+'" width="99" height="119"/></div><span class="mini_story_contentbox_title">'+data[i].SUBJECT+'</span></a></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist"><a href="/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+img+');"/></div><span class="mini_story_contentbox_title">'+data[i].SUBJECT+'</span></a></div>');
+                                //angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width:74px;"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">초기(4-6)</span><img src="imgs/ange/temp/story_food_01.jpg" /></div><span class="mini_story_contentbox_title">단호박 미음</span></div>');
+
                             }
 
                             // 광고의 슬라이드을 실행
@@ -736,7 +738,7 @@ define([
 
                                 // 슬라이드를 추가해 줌
                                 angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><a href="'+data[i].URL+'" target="_blank"><img data-lazy="'+img+'"/></a></div></div>');
-//                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
+                                //angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
                             }
 
                             // 광고의 롤링을 실행
@@ -750,9 +752,9 @@ define([
                                 $scope.coverTitle = data[newVal].SUBJECT;
                             });
 
-                            $timeout(function(){
+                            //$timeout(function(){
                                 $scope.isLoading = false;
-                            }, 1000);
+                            //}, 1000);
                         })
                         .catch(function(error){$scope.list = [];});
                 };
