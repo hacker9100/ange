@@ -16,8 +16,8 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_c("### [START]");
-	MtUtil::_c(print_r($_REQUEST,true));
+    MtUtil::_d("### [START]");
+	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
@@ -26,7 +26,7 @@
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-    $_d = new MtJson();
+    $_d = new MtJson('ad');
 
     if ($_d->connect_db == "") {
         $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -80,20 +80,21 @@
                 $limit = "";
 
                 if (isset($_search[BANNER_GB]) && $_search[BANNER_GB] != "") {
-                    $search_where .= "AND BANNER_GB  = '".$_search[BANNER_GB]."' ";
+                    $search_where .= "AND adp_idx = '".$_search[BANNER_GB]."' ";
                 }
+
+                if (isset($_search[BANNER_ST]) && $_search[BANNER_ST] != "") {
+                    $search_where .= "AND ada_state  = '".$_search[BANNER_ST]."' ";
+                }
+
                 if (isset($_search[LOCATION_GB]) && $_search[LOCATION_GB] != "") {
                     $search_where .= "AND LOCATION_GB  = '".$_search[LOCATION_GB]."' ";
-                }
-                if (isset($_search[YEAR]) && $_search[YEAR] != "") {
-                    $search_where .= "AND YEAR  = '".$_search[YEAR]."' ";
-                }
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' OR NOTE LIKE '%".$_search[KEYWORD]."%'";
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
                     $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                } else {
+                    $sort_order .= "ORDER BY RAND() ";
                 }
 
                 if (isset($_page)) {
@@ -101,60 +102,80 @@
                 }
 
                 $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            NO, FROM_YMD, TO_YMD, URL, SUBJECT, BANNER_GB, LOCATION_GB, COMPANY_NO, BANNER_ST, BIND_NO
+                            ada_idx AS NO, DATE_FORMAT(ada_date_open, '%Y-%m-%d') AS FROM_YMD, DATE_FORMAT(ada_date_close, '%Y-%m-%d') AS TO_YMD, ada_url AS URL, ada_title AS SUBJECT,
+                            adp_idx AS BANNER_GB, ada_state AS BANNER_ST, ada_files AS FILE
                         FROM
-                        (
-                            SELECT
-                                NO, FROM_YMD, TO_YMD, URL, SUBJECT, BANNER_GB, LOCATION_GB, COMPANY_NO, BANNER_ST, BIND_NO
-                            FROM
-                                AD_BANNER
-                            WHERE
-                                1=1
-                                ".$search_where."
-                            ".$sort_order."
-                            ".$limit."
-                        ) AS DATA,
-                        (SELECT @RNUM := 0) R,
-                        (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
-                            FROM
-                                AD_BANNER
-                            WHERE
-                                1=1
-                                ".$search_where."
-                        ) CNT
+                            adm_ad
+                        WHERE
+                            1=1
+                            ".$search_where."
+                        ".$sort_order."
+                        ".$limit."
                         ";
 
-                $__trn = '';
-                $result = $_d->sql_query($sql,true);
-                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $data = $_d->sql_query($sql);
 
-                    $sql = "SELECT
-                                NO, FILE_NM, FILE_SIZE, FILE_ID, PATH, THUMB_FL, ORIGINAL_NO, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
-                            FROM
-                                COM_FILE
-                            WHERE
-                                TARGET_GB = 'BANNER'
-                                AND TARGET_NO = ".$row['NO']."
-                                AND THUMB_FL = '0'
-                            ";
-
-                    $file_result = $_d->sql_query($sql);
-                    $file_data = $_d->sql_fetch_array($file_result);
-                    $row['FILE'] = $file_data;
-
-                    $__trn->rows[$i] = $row;
-                }
-                $_d->sql_free_result($result);
-                $data = $__trn->{'rows'};
-
-                if ($_d->mysql_errno > 0) {
+                if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd2($data);
+                }else{
+                    $_d->dataEnd($sql);
                 }
+
+//                $sql = "SELECT
+//                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+//                            NO, FROM_YMD, TO_YMD, URL, SUBJECT, BANNER_GB, LOCATION_GB, COMPANY_NO, BANNER_ST, BIND_NO
+//                        FROM
+//                        (
+//                            SELECT
+//                                NO, FROM_YMD, TO_YMD, URL, SUBJECT, BANNER_GB, LOCATION_GB, COMPANY_NO, BANNER_ST, BIND_NO
+//                            FROM
+//                                AD_BANNER
+//                            WHERE
+//                                1=1
+//                                ".$search_where."
+//                            ".$sort_order."
+//                            ".$limit."
+//                        ) AS DATA,
+//                        (SELECT @RNUM := 0) R,
+//                        (
+//                            SELECT
+//                                COUNT(*) AS TOTAL_COUNT
+//                            FROM
+//                                AD_BANNER
+//                            WHERE
+//                                1=1
+//                                ".$search_where."
+//                        ) CNT
+//                        ";
+//
+//                $__trn = '';
+//                $result = $_d->sql_query($sql,true);
+//                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+//
+//                    $sql = "SELECT
+//                                NO, FILE_NM, FILE_SIZE, FILE_ID, PATH, THUMB_FL, ORIGINAL_NO, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
+//                            FROM
+//                                COM_FILE
+//                            WHERE
+//                                TARGET_GB = 'BANNER'
+//                                AND TARGET_NO = ".$row['NO']."
+//                                AND THUMB_FL = '0'
+//                            ";
+//
+//                    $file_result = $_d->sql_query($sql);
+//                    $file_data = $_d->sql_fetch_array($file_result);
+//                    $row['FILE'] = $file_data;
+//
+//                    $__trn->rows[$i] = $row;
+//                }
+//                $_d->sql_free_result($result);
+//                $data = $__trn->{'rows'};
+//
+//                if ($_d->mysql_errno > 0) {
+//                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+//                } else {
+//                    $_d->dataEnd2($data);
+//                }
             }
 
             break;
@@ -179,7 +200,7 @@
                 }
             }
 */
-//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if ( trim($_model[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
@@ -257,7 +278,7 @@
             if (isset($_model[FILE]) && $_model[FILE] != "") {
                 $file = $_model[FILE];
 
-                MtUtil::_c("------------>>>>> file : ".$file['name']);
+                MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                 $sql = "INSERT INTO FILE
                         (
@@ -327,7 +348,7 @@
             }
 
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             $upload_path = '../../../upload/files/';
             $file_path = '/storage/cms/';
@@ -350,9 +371,9 @@
                         rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
                         $insert_path = array(path => $file_path, uid => $uid);
 
-                        MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                        MtUtil::_c("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
-                        MtUtil::_c("------------>>>>> body_str : ".$body_str);
+                        MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                        MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
+                        MtUtil::_d("------------>>>>> body_str : ".$body_str);
                     } else {
                         $insert_path = array(path => '', uid => '');
                     }
@@ -415,7 +436,7 @@
                 }
 
                 if ($is_delete) {
-                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
                     $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
 
                     $_d->sql_query($sql);
@@ -424,7 +445,7 @@
 
                     $_d->sql_query($sql);
 
-                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                     if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                         unlink('../../..'.$row[PATH].$row[FILE_ID]);
@@ -437,7 +458,7 @@
             if (count($_model[FILE]) > 0) {
                 $file = $_model[FILE];
 
-                MtUtil::_c("------------>>>>> file : ".$file['name']);
+                MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                 if ($insert_path[uid] != "") {
                     $sql = "INSERT INTO FILE

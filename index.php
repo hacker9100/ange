@@ -8,44 +8,23 @@
     @extract($_SERVER);
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
-    MtUtil::_c("### [START]");
+    MtUtil::_d("### [START]");
 
-    $_d = new MtJson();
+    $_d = new MtJson(null);
+
+    $system = "ANGE";
 
     $sql = "SELECT
                 CHANNEL_NO, CHANNEL_ID, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION, COLUMN_CNT
             FROM
                 COM_CHANNEL
             WHERE
-                SYSTEM_GB = 'ANGE'
+                SYSTEM_GB = '".$system."'
                 AND CHANNEL_ST = 'Y'
             ORDER BY CHANNEL_NO ASC
             ";
 
-    $__trn = '';
-    $result = $_d->sql_query($sql,true);
-    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-        $sql = "SELECT
-                    MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, DEPTH, LINK_FL, CLASS_GB, MENU_DESC, TAIL_DESC, ETC, F.FILE_ID
-                FROM
-                    COM_MENU M
-                    LEFT OUTER JOIN CONTENT_SOURCE S ON M.NO = S.TARGET_NO AND S.CONTENT_GB = 'FILE' AND S.TARGET_GB = 'MENU'
-                    LEFT OUTER JOIN FILE F ON F.NO = S.SOURCE_NO
-                WHERE
-                    SYSTEM_GB = 'ANGE'
-                    AND MENU_ST  = 'Y'
-                    AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
-                ORDER BY MENU_ORD ASC
-                ";
-
-        $menu_data = $_d->getData($sql);
-        $row['MENU_INFO'] = $menu_data;
-
-        $__trn->rows[$i] = $row;
-    }
-    $_d->sql_free_result($result);
-    $channel_data = $__trn->{'rows'};
+    $channel_data = $_d->getData($sql);
 
     $sql = "SELECT
                 CM.MENU_ID, CM.MENU_URL, CM.CHANNEL_NO, CM.MENU_NM, CM.SYSTEM_GB, CM.DIVIDER_FL, DEPTH, CM.LINK_FL, CM.CLASS_GB, CM.MENU_DESC, CM.TAIL_DESC, CM.ETC, AC.NO AS COMM_NO, AC.COMM_GB
@@ -53,36 +32,17 @@
                 COM_MENU CM
                 LEFT OUTER JOIN ANGE_COMM AC ON CM.MENU_ID = AC.MENU_ID
             WHERE
-                CM.SYSTEM_GB  = 'ANGE'
+                CM.SYSTEM_GB  = '".$system."'
                 AND CM.MENU_ST  = 'Y'
             ORDER BY CM.MENU_ORD ASC
             ";
 
-    $__trn = '';
-    $result = $_d->sql_query($sql,true);
-    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-        $sql = "SELECT
-                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, COLUMN_ORD, ROW_ORD
-                FROM
-                    COM_SUB_MENU
-                WHERE
-                    MENU_URL = '".$row[MENU_URL]."'
-                ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
-                ";
-
-        $sub_menu_data = $_d->getData($sql);
-        $row['SUB_MENU_INFO'] = $sub_menu_data;
-
-        $__trn->rows[$i] = $row;
-    }
-    $_d->sql_free_result($result);
-    $menu_data = $__trn->{'rows'};
+    $menu_data = $_d->getData($sql);
 
     ob_end_clean();
     $channel_info = json_encode($channel_data);
     $menu_info = json_encode($menu_data);
-    MtUtil::_c("### [END]");
+    MtUtil::_d("### [END]");
 ?>
 
 <!doctype html>
@@ -120,7 +80,6 @@
 <link rel="stylesheet" type="text/css" href="css/ange/ange_style.css" />
 
 <link rel="stylesheet" type="text/css" href="lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
-<link rel="stylesheet" type="text/css" href="lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
 <link rel="stylesheet" type="text/css" href="/lib/ngActivityIndicator/css/ngActivityIndicator.css" />
 
 <link rel="stylesheet" type="text/css" href="lib/slick-carousel/slick.css" />
@@ -176,7 +135,7 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <script>
-    function ange_init($rootScope) {
+    function ange_init($rootScope, $scope, $location, $filter) {
         $rootScope.ange_channel = <?=$channel_info?>;
         $rootScope.ange_menu = <?=$menu_info?>;
     }

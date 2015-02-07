@@ -9,19 +9,33 @@ class MtData extends Mt {
 	var $mysql_num_rows = 0;
 	var $mysql_insert_id = 0;
 
-	function connect()	{
+	function connect($db)	{
 		if (is_resource($this->connect_db)) {
 			return true;
 		}
-		
-		$this->connect_db = @mysql_connect($this->mysql_host, $this->mysql_user, $this->mysql_password);
+
+        $host = $this->mysql_host;
+        $user = $this->mysql_user;
+        $password = $this->mysql_password;
+        $dbf = $this->mysql_db;
+
+        if ($db == "ad") {
+            $host = $this->ad_mysql_host;
+            $user = $this->ad_mysql_user;
+            $password = $this->ad_mysql_password;
+            $dbf = $this->ad_mysql_db;
+        }
+
+        MtUtil::_d("db::::::".$db);
+        MtUtil::_d("host::::::".$db.$this->mysql_host);
+		$this->connect_db = @mysql_connect($host, $user, $password);
 		
 		if (!is_resource($this->connect_db)) {
-            MtUtil::_c("디비연결 실패");
+            MtUtil::_d("디비연결 실패");
 			return false;
 		}
 		//AngeUtil::_c("디비연결");
-        return @mysql_select_db($this->mysql_db, $this->connect_db);
+        return @mysql_select_db($dbf, $this->connect_db);
 	}
 
 	// DB 연결
@@ -60,7 +74,7 @@ class MtData extends Mt {
     // mysql_query 와 mysql_error 를 한꺼번에 처리
 	function sql_query($sql, $error=TRUE) {
 
-        MtUtil::_c("EXCUTE QUERY[".$sql."]");
+        MtUtil::_d("EXCUTE QUERY[".$sql."]");
 	    
         $this->mysql_affected_rows = 0;
         $this->mysql_errno         = 0;
@@ -74,7 +88,7 @@ class MtData extends Mt {
         $this->mysql_num_rows      = @mysql_num_rows($result);
         $this->mysql_insert_id     = @mysql_insert_id();
 		//$returnMsg = $returnMsg."{ \"err\": true , \"msg\": \"" . mysql_error() . " :: " . $sql. "\" }"; echo $returnMsg; exit;
-	    if(mysql_errno() > 0) MtUtil::_c("########################MYSQL ERROR########################\n"
+	    if(mysql_errno() > 0) MtUtil::_d("########################MYSQL ERROR########################\n"
 	                                ."SQL:::[".$sql."]\n"
 	                                ."MSG:::[".mysql_errno() . ":" . mysql_error()
 	                                ."\n###########################################################");

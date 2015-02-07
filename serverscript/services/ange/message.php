@@ -16,8 +16,8 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_c("### [START]");
-MtUtil::_c(print_r($_REQUEST,true));
+MtUtil::_d("### [START]");
+MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
@@ -26,7 +26,7 @@ MtUtil::_c(print_r($_REQUEST,true));
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-$_d = new MtJson();
+$_d = new MtJson(null);
 
 if ($_d->connect_db == "") {
     $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -302,7 +302,7 @@ switch ($_method) {
 
     case "PUT":
 
-        MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+        MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
         if($_type == 'check'){
 

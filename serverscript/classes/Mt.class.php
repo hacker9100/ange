@@ -12,17 +12,23 @@
 //define("__SMTP_USR__" , "hacker9100@gmail.com");
 //define("__SMTP_PWD__" , "rlatjdghks9100");
 
-// 개발 DB 서버
+// 앙쥬 DB 서버(개발)
 define("__ANGE_ADD__" , "14.63.219.171");
 define("__ANGE_USR__" , "admin_default");
 define("__ANGE_PWD__" , "XT1GuAa3qz");
 define("__ANGE_DBF__" , "admin_default");
 
+// 광고센터 DB 서버(개발)
+define("__AD_ANGE_ADD__" , "14.63.219.171");
+define("__AD_ANGE_USR__" , "admin_ad");
+define("__AD_ANGE_PWD__" , "zaq12wsx");
+define("__AD_ANGE_DBF__" , "admin_ad");
+
 // MAIL 서버(SMTP)
-define("__SMTP_HOST__" , "210.116.103.13");
+define("__SMTP_HOST__" , "210.116.103.14");
 define("__SMTP_PORT__" , 250);
-define("__SMTP_USR__" , "ange@ange.co.kr");
-define("__SMTP_PWD__" , "mailange02333");
+define("__SMTP_USR__" , "angeweb@ange.co.kr");
+define("__SMTP_PWD__" , "mailange33302#@!");
 
 define("DEBUG", true);
 define("SESSION_TIMEOUT", 1800);
@@ -32,12 +38,14 @@ define("BASE_URL", "http://localhost");
 class Mt {
 
     var $mysql_host     = __ANGE_ADD__;
-
     var $mysql_user     = __ANGE_USR__;
-
     var $mysql_password = __ANGE_PWD__;
-
     var $mysql_db       = __ANGE_DBF__;
+
+    var $ad_mysql_host     = __AD_ANGE_ADD__;
+    var $ad_mysql_user     = __AD_ANGE_USR__;
+    var $ad_mysql_password = __AD_ANGE_PWD__;
+    var $ad_mysql_db       = __AD_ANGE_DBF__;
 
     public function __get($propName) {
 

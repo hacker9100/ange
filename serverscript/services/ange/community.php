@@ -16,12 +16,12 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_c("### [START]");
-    MtUtil::_c(print_r($_REQUEST,true));
+    MtUtil::_d("### [START]");
+    MtUtil::_d(print_r($_REQUEST,true));
 
-    MtUtil::_c(json_encode(file_get_contents("php://input"),true));
+    MtUtil::_d(json_encode(file_get_contents("php://input"),true));
 
-//	MtUtil::_c(print_r($_REQUEST,true));
+//	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
@@ -30,7 +30,7 @@
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-    $_d = new MtJson();
+    $_d = new MtJson(null);
 
     if ($_d->connect_db == "") {
         $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -279,8 +279,8 @@
                             rename($upload_path.$file[name], $source_path.$uid);
                             $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
-                            MtUtil::_c("------------>>>>> imgUrl : ".$file[name]);
-                            MtUtil::_c("------------>>>>> imgUrl : ".'http://localhost'.$source_path.$uid);
+                            MtUtil::_d("------------>>>>> imgUrl : ".$file[name]);
+                            MtUtil::_d("------------>>>>> imgUrl : ".'http://localhost'.$source_path.$uid);
                         } else {
                             $insert_path[$i] = array(path => '', uid => '', kind => '');
                         }
@@ -341,7 +341,7 @@
                 }
 
                 if ($is_delete) {
-                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
                     $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
 
                     $_d->sql_query($sql);
@@ -350,7 +350,7 @@
 
                     $_d->sql_query($sql);
 
-                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                     if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                         unlink('../../..'.$row[PATH].$row[FILE_ID]);
@@ -363,7 +363,7 @@
 
                 for ($i = 0 ; $i < count($files); $i++) {
                     $file = $files[$i];
-                    MtUtil::_c("------------>>>>> file : ".$file['name']);
+                    MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                     if ($insert_path[$i][uid] != "") {
                         $sql = "INSERT INTO FILE

@@ -68,31 +68,14 @@
                 } else {
                     $_d->dataEnd2($data);
                 }
-            } else if ($_type == 'cert') {
-                $sql = "SELECT
-                            CERT_GB, CERT_DT, CERT_HASH
+            } else if ($_type == 'nick') {
+            $sql = "SELECT
+                            COUNT(*) AS COUNT
                         FROM
                             COM_USER
                         WHERE
-                            USER_ID = '".$_key."'
+                            NICK_NM = '".$_key."'
                         ";
-
-                $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
-
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd2($data);
-                }
-            } else if ($_type == 'nick') {
-            $sql = "SELECT
-                        COUNT(*) AS COUNT
-                    FROM
-                        COM_USER
-                    WHERE
-                        NICK_NM = '".$_key."'
-                    ";
 
             $result = $_d->sql_query($sql);
             $data  = $_d->sql_fetch_array($result);
@@ -112,7 +95,7 @@
                 $sql = "SELECT
                             U.NO, U.USER_ID, U.USER_NM, U.NICK_NM, U.LUNAR_FL, U.BIRTH, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_GB, U.USER_ST,
                             U.REG_DT, U.FINAL_LOGIN_DT, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_YMD, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_YMD,
-                            U.INTRO, U.NOTE, U.MARRIED_FL, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT,
+                            U.INTRO, U.NOTE, U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT,
                             U.EN_ANGE_EMAIL_FL, U.EN_ANGE_SMS_FL, U.EN_ALARM_EMAIL_FL, U.EN_ALARM_SMS_FL, U.EN_STORE_EMAIL_FL, U.EN_STORE_SMS_FL,
                             UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM
                         FROM
@@ -302,343 +285,36 @@
                 } else {
                     $_d->dataEnd($sql);
                 }
-            } else if ($_type == 'admin') {
-                $search_from = "";
-                $search_where = "";
-                $sort_order = "";
-                $limit = "";
-
-                if (isset($_page)) {
-                    $limit = "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
-                }
-
-                if (isset($_search['SYSTEM_GB']) && $_search['SYSTEM_GB'] != "") {
-                    $search_where .= "AND R.SYSTEM_GB  = '".$_search['SYSTEM_GB']."' ";
-                }
-
-                if ((isset($_search['CONDITION']) && $_search['CONDITION']['index'] < 6) && (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "")) {
-                    if ($_search['CONDITION']['value'] == "USER_NM" || $_search['CONDITION']['value'] == "USER_ID" || $_search['CONDITION']['value'] == "NICK_NM") {
-                        $arr_keywords = explode(",", $_search['KEYWORD']);
-                        $in_condition = "";
-                        for ($i=0; $i< sizeof($arr_keywords); $i++) {
-                            $in_condition .= "'".trim($arr_keywords[$i])."'";
-                            if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
-                        }
-
-                        $search_where .= "AND U.".$_search['CONDITION']['value']." IN (".$in_condition.") ";
-                    } else if ($_search['CONDITION']['value'] == "PHONE") {
-                        $search_where .= "AND ( U.PHONE_1 LIKE '%".$_search['KEYWORD']."%' OR U.PHONE_2 LIKE '%".$_search['KEYWORD']."%' ) ";
-                    } else {
-                        $search_where .= "AND U.".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
-                    }
-                } else if ((isset($_search['CONDITION']) && $_search['CONDITION']['index'] >= 6) && (isset($_search['START_YMD']) && isset($_search['END_YMD']))) {
-                    $search_where .= "AND DATE_FORMAT(U.".$_search['CONDITION']['value'].", '%Y-%m-%d') BETWEEN '".$_search['START_YMD']."' AND '".$_search['END_YMD']."'";
-                }
-
-                if (isset($_search['TYPE']) && $_search['TYPE'] != "") {
-
-                    $in_type = "";
-                    for ($i=0; $i< count($_search['TYPE']); $i++) {
-                        $in_type .= "'".$_search['TYPE'][$i]."'";
-                        if (count($_search['TYPE']) - 1 != $i) $in_type .= ",";
-                    }
-
-                    $search_where .= "AND U.USER_GB IN (".$in_type.") ";
-                }
-                if (isset($_search['STATUS']) && $_search['STATUS'] != "" && $_search['STATUS']['value'] != "A") {
-                    $search_where .= "AND U.USER_ST  = '".$_search['STATUS']['value']."' ";
-                }
-
-                if (isset($_search['JOIN_PATH']) && $_search['JOIN_PATH'] != "") {
-                    $search_where .= "AND U.JOIN_PATH  = '".$_search['JOIN_PATH']."' ";
-                }
-                if (isset($_search['ROLE']) && $_search['ROLE'] != "") {
-                    $search_where .= "AND R.ROLE_ID  = '".$_search['ROLE']['ROLE_ID']."' ";
-                }
-                if (isset($_search['ROLE_ID']) && $_search['ROLE_ID'] != "") {
-                    $arr_roles = explode(",", $_search['ROLE_ID']);
-                    $in_role = "";
-                    for ($i=0; $i< sizeof($arr_roles); $i++) {
-                        $in_role .= "'".trim($arr_roles[$i])."'";
-                        if (sizeof($arr_roles) - 1 != $i) $in_role .= ",";
-                    }
-
-                    $search_where .= "AND R.ROLE_ID  IN (".$in_role.") ";
-                }
-
-                if (isset($_search['SORT']) && $_search['SORT'] != "") {
-                    $sort_order .= "ORDER BY ".$_search['SORT']['value']." ".$_search['ORDER']['value']." ";
-                }
-
-                if (isset($_search['ADMIN_SAVE_LIST']) && $_search['ADMIN_SAVE_LIST'] != "") {
-                    $search_from = "INNER JOIN ADMIN_SAVE_USER SU ON U.USER_ID = SU.USER_ID AND SU.LIST_NO = ".$_search['ADMIN_SAVE_LIST']['NO'];
-                }
-
-                $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, INTRO, NOTE,
-                            MARRIED_FL, PREGNENT_FL, BLOG_FL, JOIN_PATH, CONTACT_ID, CARE_CENTER, CENTER_VISIT_DT, CENTER_OUT_DT, EN_FL, EN_EMAIL_FL, EN_POST_FL, EN_SMS_FL, EN_PHONE_FL,
-                            ROLE_ID, ROLE_NM, SUM_POINT, USE_POINT, REMAIN_POINT, BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS,
-                            (SELECT COUNT(1) FROM ANGE_USER_BABY UB WHERE UB.USER_ID = DATA.USER_ID) AS BABY_CNT,
-                            (SELECT COUNT(1) FROM COM_BOARD CB WHERE CB.REG_UID = DATA.USER_ID) AS BOARD_CNT,
-                            (SELECT COUNT(1) FROM COM_REPLY CR WHERE CR.REG_UID = DATA.USER_ID) AS REPLY_CNT,
-                            (SELECT COUNT(1) FROM ANGE_COMP AC WHERE AC.USER_ID = DATA.USER_ID AND TARGET_GB = 'EXPERIENCE') AS EXPERIENCE_COMP_CNT,
-                            (SELECT COUNT(1) FROM ANGE_COMP AC WHERE AC.USER_ID = DATA.USER_ID AND TARGET_GB = 'EVENT') AS EVENT_COMP_CNT,
-                            (SELECT COUNT(1) FROM ANGE_COMP_WINNER AW WHERE AW.USER_ID = DATA.USER_ID AND TARGET_GB = 'EXPERIENCE') AS EXPERIENCE_WINNER_CNT,
-                            (SELECT COUNT(1) FROM ANGE_COMP_WINNER AW WHERE AW.USER_ID = DATA.USER_ID AND TARGET_GB = 'EVENT') AS EVENT_WINNER_CNT,
-                            (SELECT COUNT(1) FROM ANGE_REVIEW AR WHERE AR.REG_UID = DATA.USER_ID) AS REVIEW_CNT,
-                            (SELECT COUNT(1) FROM ANGE_LIKE AL WHERE AL.REG_UID = DATA.USER_ID) AS LIKE_CNT
-                        FROM
-                        (
-                            SELECT
-                                U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
-                                U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_DT, U.CENTER_OUT_DT, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SMS_FL, U.EN_PHONE_FL,
-                                UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM,
-                                M.SUM_POINT, M.USE_POINT, M.REMAIN_POINT,
-                                B.BLOG_GB, B.BLOG_URL, B.PHASE, B.THEME, B.NEIGHBOR_CNT, B.POST_CNT, B.VISIT_CNT, B.SNS
-                            FROM
-                                COM_USER U
-                                INNER JOIN USER_ROLE UR ON U.USER_ID = UR.USER_ID
-                                INNER JOIN COM_ROLE R ON UR.ROLE_ID = R.ROLE_ID
-                                LEFT OUTER JOIN ANGE_MILEAGE_STATUS M ON U.USER_ID = M.USER_ID
-                                LEFT OUTER JOIN ANGE_USER_BLOG B ON U.USER_ID = B.USER_ID
-                                ".$search_from."
-                            WHERE
-                                1 = 1
-                                ".$search_where."
-                            ".$sort_order."
-                            ".$limit."
-                        ) AS DATA,
-                        (SELECT @RNUM := 0) R,
-                        (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
-                            FROM
-                                COM_USER U
-                                INNER JOIN USER_ROLE UR ON U.USER_ID = UR.USER_ID
-                                INNER JOIN COM_ROLE R ON UR.ROLE_ID = R.ROLE_ID
-                                ".$search_from."
-                            WHERE
-                                1 = 1
-                                ".$search_where."
-                        ) CNT
-                        ";
-                $data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd($sql);
-                }
-            } else if ($_type == 'statistics') {
-                $search_where = "";
-                $sort_order = "";
-
-                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_where .= "AND R.SYSTEM_GB  = '".$_search[SYSTEM_GB]."' ";
-                }
-
-                if (isset($_search[START_DT]) && $_search[START_DT] != "") {
-                    $search_where .= "AND CU.REG_DT BETWEEN '".$_search[START_DT]."-01' AND DATE_ADD('".$_search[START_DT]."-01', interval ".$_search[PERIOD]." month)  ";
-                }
-
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
-                }
-
-                $sql = "# N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING
-                        SELECT
-                            REG_YM,
-                            SUM(1) AS TOTAL_CNT,
-                            SUM(IF(USER_ST = 'N', 1, 0)) AS NORMAL_CNT,
-                            SUM(IF(USER_ST = 'P', 1, 0)) AS POOR_CNT,
-                            SUM(IF(USER_ST = 'D', 1, 0)) AS DORMANCY_CNT,
-                            SUM(IF(USER_ST = 'S', 1, 0)) AS SECESSION_CNT,
-                            SUM(IF(USER_ST = 'S' AND ROLE_ID = 'CLUB', 1, 0)) AS CLUB_CNT,
-                            SUM(IF(USER_ST = 'W', 1, 0)) AS WAITING_CNT
-                        FROM
-                        (
-                            SELECT
-                                CU.USER_ID, CU.USER_ST, DATE_FORMAT(CU.REG_DT, '%Y-%m') AS REG_YM, DATE_FORMAT(CU.FINAL_LOGIN_DT, '%Y-%m') AS FINAL_LOGIN_YM,
-                                CR.ROLE_ID
-                            FROM
-                                COM_USER CU, USER_ROLE UR, COM_ROLE CR
-                            WHERE
-                                CU.USER_ID = UR.USER_ID
-                                AND UR.ROLE_ID = CR.ROLE_ID
-                                AND CR.SYSTEM_GB = 'ANGE'
-                                ".$search_where."
-                        ) AS DATA
-                        GROUP BY REG_YM
-                        ORDER BY REG_YM ASC
-                        $sort_order
-                        ";
-
-                $__trn = '';
-                $result = $_d->sql_query($sql,true);
-                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    $sql = "# N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING
-                            SELECT
-                                SUM(1) AS TOTAL_CNT
-                            FROM
-                            (
-                                SELECT
-                                    CU.USER_ID, CU.USER_ST, DATE_FORMAT(CU.REG_DT, '%Y-%m') AS REG_YM, DATE_FORMAT(CU.FINAL_LOGIN_DT, '%Y-%m') AS FINAL_LOGIN_YM,
-                                    CR.ROLE_ID
-                                FROM
-                                    COM_USER CU, USER_ROLE UR, COM_ROLE CR
-                                WHERE
-                                    CU.USER_ID = UR.USER_ID
-                                  AND UR.ROLE_ID = CR.ROLE_ID
-                                  AND CR.SYSTEM_GB = 'ANGE'
-                                    AND CU.REG_DT <= DATE_ADD('".$row[REG_YM]."-01', interval 1 month)
-                            ) AS DATA
-                            ";
-
-                    $menu_data = $_d->getData($sql);
-                    $row['DETAIL'] = $menu_data;
-                    $__trn->rows[$i] = $row;
-                }
-                $_d->sql_free_result($result);
-                $data = $__trn->{'rows'};
-
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->dataEnd2($data);
-                }
             }
 
             break;
 
         case "POST":
-//            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
-
             if ($_type == 'item') {
-                $upload_path = '../../../upload/files/';
-                $file_path = '/storage/user/'.$_model[USER_ID].'/';
-                $source_path = '../../..'.$file_path;
-                $insert_path = null;
-
-                try {
-                    if (count($_model[FILE]) > 0) {
-                        $file = $_model[FILE];
-                        if (!file_exists($source_path) && !is_dir($source_path)) {
-                            @mkdir($source_path);
-                        }
-
-                        if (file_exists($upload_path.$file[name])) {
-                            $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
-                        }
-                    }
-                } catch(Exception $e) {
-                    $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-                    break;
-                }
-
                 $err = 0;
                 $msg = "";
 
                 $_d->sql_beginTransaction();
 
-                $password = "";
-
-                if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
-                    $password = $_model[PASSWORD];
-                } else {
-                    $password = $_model[USER_ID];
-                }
-    //            $iterations = 1000;
-    //
-    //            // Generate a random IV using mcrypt_create_iv(),
-    //            // openssl_random_pseudo_bytes() or another suitable source of randomness
-    //            $salt = mcrypt_create_iv(16, MCRYPT_DEV_URANDOM);
-    //
-    //            $hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
-
-                $hash = create_hash($password);
-
-                $sql = "INSERT INTO COM_USER
+                $sql = "insert into em_smt_tran
                         (
-                            USER_ID,
-                            USER_NM,
-                            NICK_NM,
-                            PASSWORD,
-                            LUNAR_FL,
-                            BIRTH,
-                            ZIP_CODE,
-                            ADDR,
-                            ADDR_DETAIL,
-                            PHONE_1,
-                            PHONE_2,
-                            USER_GB,
-                            USER_ST,
-                            EMAIL,
-                            SEX_GB,
-                            INTRO,
-                            NOTE,
-                            MARRIED_FL,
-                            PREGNENT_FL,
-                            BLOG_FL,
-                            JOIN_PATH,
-                            CONTACT_ID,
-                            CARE_CENTER,
-                            CENTER_VISIT_DT,
-                            CENTER_OUT_DT,
-                            EN_FL,
-    #                        EN_EMAIL_FL,
-    #                        EN_POST_FL,
-    #                        EN_SMS_FL,
-    #                        EN_PHONE_FL,
-                            EN_ANGE_EMAIL_FL,
-                            EN_ANGE_SMS_FL,
-                            EN_ALARM_EMAIL_FL,
-                            EN_ALARM_SMS_FL,
-                            EN_STORE_EMAIL_FL,
-                            EN_STORE_SMS_FL,
-                            REG_DT,
-                            CERT_HASH
-                        ) VALUES (
-                            '".$_model[USER_ID]."',
-                            '".$_model[USER_NM]."',
-                            '".$_model[NICK_NM]."',
-                            '".$hash."',
-                            '".$_model[LUNAR_FL]."',
-                            '".$_model[BIRTH]."',
-                            '".$_model[ZIP_CODE]."',
-                            '".$_model[ADDR]."',
-                            '".$_model[ADDR_DETAIL]."',
-                            '".$_model[PHONE_1]."',
-                            '".$_model[PHONE_2]."',
-                            '".$_model[USER_GB][value]."',
-                            '".(!isset($_model[ROLE]) ? 'W' : 'N')."',
-                            '".$_model[EMAIL]."',
-                            '".$_model[SEX_GB]."',
-                            '".$_model[INTRO]."',
-                            '".$_model[NOTE]."',
-                            '".$_model[MARRIED_FL]."',
-                            '".$_model[PREGNENT_FL]."',
-                            '".$_model[BLOG_FL]."',
-                            '".$_model[JOIN_PATH]."',
-                            '".$_model[CONTACT_ID]."',
-                            '".$_model[CARE_CENTER]."',
-                            '".$_model[CENTER_VISIT_DT]."',
-                            '".$_model[CENTER_OUT_DT]."',
-                            '".$_model[EN_FL]."',
-    #                        '".$_model[EN_EMAIL_FL]."',
-    #                        '".$_model[EN_POST_FL]."',
-    #                        '".$_model[EN_SMS_FL]."',
-    #                        '".$_model[EN_PHONE_FL]."',
-                            '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."',
-                            SYSDATE(),
-                            'test'
+                            date_client_req,
+                            content,
+                            callback,
+                            service_type,
+                            broadcast_yn,
+                            msg_status,
+                            recipient_num
+                        )
+                        values
+                        (
+                            sysdate(),
+                            '[앙쥬] 본인인증을 위해 [".$_model['CERT_NO']."]를 입력해 주세요',
+                            '023334650',
+                            '0',
+                            'N',
+                            '1',
+                            '".$_model['PHONE_1']."'
                         )";
 
                 $_d->sql_query($sql);
@@ -649,91 +325,64 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if (isset($_model[ROLE]) && $_model[ROLE] != "") {
-                    $sql = "INSERT INTO USER_ROLE
-                        (
-                            ROLE_ID
-                            ,USER_ID
-                            ,REG_DT
-                        ) VALUES (
-                            '".$_model[ROLE][ROLE_ID]."'
-                            ,'".$_model[USER_ID]."'
-                            ,SYSDATE()
-                        )";
-
-                    $_d->sql_query($sql);
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("전송실패입니다:".$msg);
                 } else {
-                    $sql = "INSERT INTO USER_ROLE
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == 'brodcast') {
+                $sql = "insert into em_smt_tran
                         (
-                            ROLE_ID
-                            ,USER_ID
-                            ,REG_DT
-                        ) VALUES (
-                            'MEMBER'
-                            ,'".$_model[USER_ID]."'
-                            ,SYSDATE()
+                            date_client_req,
+                            content,
+                            callback,
+                            service_type,
+                            broadcast_yn,
+                            msg_status
+                        )
+                        values
+                        (
+                            sysdate(),
+                            '".$_model['MESSAGE']."',
+                            '023334650',
+                            '0',
+                            'Y',
+                            '9'
                         )";
 
-                    $_d->sql_query($sql);
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
                 }
 
-                if (isset($_model[FILE]) && $_model[FILE] != "") {
-                    $file = $_model[FILE];
+//                $sql = "select max(mt_pr) from em_smt_tran";
+//                $smt_pr = $_d->sql_fetch($sql);
 
-                    $sql = "INSERT INTO FILE
+                for ($i=0; $i< sizeof($_model['SMS']); $i++) {
+                    $sql = "insert into em_smt_client
                             (
-                                FILE_NM
-                                ,FILE_ID
-                                ,PATH
-                                ,FILE_EXT
-                                ,FILE_SIZE
-                                ,THUMB_FL
-                                ,REG_DT
-                                ,FILE_ST
-                                ,FILE_GB
-                            ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[uid]."'
-                                , '".$insert_path[path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
-                                , '0'
-                                , SYSDATE()
-                                , 'C'
-                                , '".strtoupper($file[kind])."'
-                            )";
-
-                    $_d->sql_query($sql);
-                    $file_no = $_d->mysql_insert_id;
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO CONTENT_SOURCE
+                                mt_pr,
+                                mt_seq,
+                                msg_status,
+                                recipient_num,
+                                change_word1,
+                                change_word2,
+                                change_word3
+                            )
+                            values
                             (
-                                TARGET_NO
-                                ,SOURCE_NO
-                                ,CONTENT_GB
-                                ,TARGET_GB
-                                ,SORT_IDX
-                            ) VALUES (
-                                '".$no."'
-                                , '".$file_no."'
-                                , 'FILE'
-                                , 'USER'
-                                , '0'
+                                '".$no."',
+                                '".$i."',
+                                1,
+                                '".$_model["SMS"][$i]['PHONE']."',
+                                '".$_model["SMS"][$i]['WORD1']."',
+                                '".$_model["SMS"][$i]['WORD2']."',
+                                '".$_model["SMS"][$i]['WORD3']."'
                             )";
 
                     $_d->sql_query($sql);
@@ -744,120 +393,25 @@
                     }
                 }
 
-                if (isset($_model[BABY]) && $_model[BABY] != "") {
-                    foreach ($_model[BABY] as $e) {
-                        if (isset($e[BABY_NM]) && $e[BABY_NM] != "") {
-                            $sql = "INSERT INTO ANGE_USER_BABY
-                            (
-                                USER_ID
-                                ,BABY_NM
-                                ,BABY_BIRTH
-                                ,BABY_SEX_GB
-                            ) VALUES (
-                                '".$_model[USER_ID]."'
-                                ,'".$e[BABY_NM]."'
-                                ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? "0".$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? "0".$e[BABY_DAY] : $e[BABY_DAY])."'
-                                ,'".$e[BABY_SEX_GB]."'
-                            )";
+                $sql = "update em_smt_tran
+                        set msg_status = '1'
+                        where mt_pr = ".$no;
 
-                            $_d->sql_query($sql);
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-                            if($_d->mysql_errno > 0) {
-                                $err++;
-                                $msg = $_d->mysql_error;
-                            }
-                        }
-                    }
-                }
-
-                if (isset($_model[BLOG]) && $_model[BLOG] != "") {
-                    if (isset($_model[BLOG][BLOG_URL]) && $_model[BLOG][BLOG_URL] != "") {
-                        $sql = "INSERT INTO ANGE_USER_BLOG
-                                (
-                                    USER_ID
-                                    ,BLOG_GB
-                                    ,BLOG_URL
-                                    ,PHASE
-                                    ,THEME
-                                    ,NEIGHBOR_CNT
-                                    ,POST_CNT
-                                    ,VISIT_CNT
-                                    ,SNS
-                                ) VALUES (
-                                    '".$_model[USER_ID]."'
-                                    ,'".$_model[BLOG][BLOG_GB]."'
-                                    ,'".$_model[BLOG][BLOG_URL]."'
-                                    ,'".$_model[BLOG][PHASE]."'
-                                    ,'".$_model[BLOG][THEME]."'
-                                    ,'".$_model[BLOG][NEIGHBOR_CNT]."'
-                                    ,'".$_model[BLOG][POST_CNT]."'
-                                    ,'".$_model[BLOG][VISIT_CNT]."'
-                                    ,'".$_model[BLOG][SNS]."'
-                                )";
-
-                        $_d->sql_query($sql);
-
-                        if($_d->mysql_errno > 0) {
-                            $err++;
-                            $msg = $_d->mysql_error;
-                        }
-                    }
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
                 }
 
                 if ($err > 0) {
                     $_d->sql_rollback();
-                    $_d->failEnd("등록실패입니다:".$msg);
+                    $_d->failEnd("전송실패입니다:".$msg);
                 } else {
-                    if(!isset($_model[ROLE])) {
-//                        $to = __SMTP_USR__;
-                        $to = $_model[EMAIL];
-                        $from_email = $_model[EMAIL];
-                        $from_user = $_model[USER_NM];
-                        $headers = "From: hacker9100@gmail.com \r\n".'X-Mailer: PHP/' . phpversion();
-                        $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-                        $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/mail.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
-
-//                        MtUtil::sendMail($to, $subject, $message, $headers);
-                        MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $from_user);
-                    }
-
                     $_d->sql_commit();
                     $_d->succEnd($no);
                 }
-            } else if ($_type == 'response') {
-                $sql = "INSERT INTO ANGE_USER_RESPONSE
-                                (
-                                    USER_ID
-                                    ,NOTE
-                                    ,REG_DT
-                                ) VALUES (
-                                    '".$_model[USER_ID]."'
-                                    ,'".$_model[NOTE]."'
-                                    ,SYSDATE()
-                                )";
-
-                $_d->sql_query($sql);
-
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->succEnd($no);
-                }
-            } else if ($_type == 'mail') {
-//                $to = __SMTP_USR__;
-                $to = $_model[EMAIL];
-                $from_email = $_model[EMAIL];
-                $from_user = $_model[USER_NM];
-                $headers = "From: hacker9100@gmail.com \r\n".'X-Mailer: PHP/' . phpversion();
-                $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
-
-                MtUtil::_d("------------>>>>> mail : ");
-
-//                $return = MtUtil::sendMail($to, $subject, $message, $headers);
-                MtUtil::_d("------------>>>>> mail : ".$return);
-                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $from_user);
-                $_d->succEnd('');
             }
 
             break;
@@ -1241,6 +795,17 @@
                     $_d->sql_commit();
                     $_d->succEnd($no);
                 }
+            } else if ($_type == 'mail') {
+                $to = __SMTP_USR__;
+                $from_email = "From: hacker9100@gmail.com";
+                $subject = "[테스트 메일]앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
+                $message = "안녕하세요. test 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=hong&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
+
+                MtUtil::_d("------------>>>>> mail : ");
+
+                $return = MtUtil::sendMail($to, $subject, $message, $from_email);
+//                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                $_d->succEnd('');
             } else if ($_type == 'cert') {
                 $err = 0;
                 $msg = "";

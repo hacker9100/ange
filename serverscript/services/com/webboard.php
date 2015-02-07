@@ -16,12 +16,12 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_c("### [START]");
-    MtUtil::_c(print_r($_REQUEST,true));
+    MtUtil::_d("### [START]");
+    MtUtil::_d(print_r($_REQUEST,true));
 
-    MtUtil::_c(json_encode(file_get_contents("php://input"),true));
+    MtUtil::_d(json_encode(file_get_contents("php://input"),true));
 
-//	MtUtil::_c(print_r($_REQUEST,true));
+//	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
@@ -30,7 +30,7 @@
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-    $_d = new MtJson();
+    $_d = new MtJson(null);
 
     if ($_d->connect_db == "") {
         $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -53,7 +53,7 @@
     switch ($_method) {
         case "GET":
             if ($_type == 'item') {
-//                MtUtil::_c("FUNC[processApi] 1 : "+$id);
+//                MtUtil::_d("FUNC[processApi] 1 : "+$id);
 
                 $err = 0;
                 $msg = "";
@@ -513,7 +513,7 @@
 
                             $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
-                            MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
 
                         }
@@ -525,7 +525,7 @@
                 $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                 break;
             }
-//            MtUtil::_c("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
             if($_model[PARENT_NO] == ''){
                 $board_no = "(SELECT COUNT(*)+1 FROM COM_BOARD A WHERE A.COMM_NO = '".$_model[COMM_NO]."' AND A.PARENT_NO = 0)";
@@ -607,8 +607,8 @@
 
                 for ($i = 0 ; $i < count($_model[FILES]); $i++) {
                     $file = $files[$i];
-                    MtUtil::_c("------------>>>>> file : ".$file['name']);
-                    MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                    MtUtil::_d("------------>>>>> file : ".$file['name']);
+                    MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
                     if($_model[BOARD_GB] == 'PHOTO'){
                         if(!isset($file[kind])){
@@ -674,7 +674,7 @@
                 }
             }
 
-            MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
+            MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
 
             if($err > 0){
                 $_d->sql_rollback();
@@ -742,12 +742,12 @@
                                 rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
                                 $insert_path[$i] = array(path => $file_path, uid => $uid);
 
-                                MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                                MtUtil::_c("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
 
                                 $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
 
-                                MtUtil::_c("------------>>>>> body_str : ".$body_str);
+                                MtUtil::_d("------------>>>>> body_str : ".$body_str);
                             } else {
                                 $insert_path[$i] = array(path => '', uid => '');
                             }
@@ -760,7 +760,7 @@
                     break;
                 }
 
-                MtUtil::_c("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
+                MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
                  $err = 0;
                 $msg = "";
@@ -837,7 +837,7 @@
                     }
 
                     if ($is_delete) {
-                        MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
                         $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
 
                         $_d->sql_query($sql);
@@ -846,7 +846,7 @@
 
                         $_d->sql_query($sql);
 
-                        MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                         if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                             unlink('../../..'.$row[PATH].$row[FILE_ID]);
@@ -861,7 +861,7 @@
 
                     for ($i = 0 ; $i < count($files); $i++) {
                         $file = $files[$i];
-                        MtUtil::_c("------------>>>>> file : ".$file['name']);
+                        MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                         if(!isset($file[kind])){
                             $_d->failEnd("대표이미지를 선택하세요.");
@@ -1023,7 +1023,7 @@
 
             $result = $_d->sql_query($sql,true);
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
                 $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
 
                 $_d->sql_query($sql);
@@ -1032,7 +1032,7 @@
 
                 $_d->sql_query($sql);
 
-                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                 if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                     unlink('../../..'.$row[PATH].$row[FILE_ID]);

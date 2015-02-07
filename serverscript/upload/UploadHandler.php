@@ -11,7 +11,7 @@
  */
 //include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 //
-//MtUtil::_c("### [FILEUPLOAD]");
+//MtUtil::_d("### [FILEUPLOAD]");
 
 class UploadHandler
 {

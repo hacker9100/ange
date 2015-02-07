@@ -16,12 +16,12 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_c("### [START]");
-MtUtil::_c(print_r($_REQUEST,true));
+MtUtil::_d("### [START]");
+MtUtil::_d(print_r($_REQUEST,true));
 
-MtUtil::_c(json_encode(file_get_contents("php://input"),true));
+MtUtil::_d(json_encode(file_get_contents("php://input"),true));
 
-//	MtUtil::_c(print_r($_REQUEST,true));
+//	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
@@ -30,7 +30,7 @@ MtUtil::_c(json_encode(file_get_contents("php://input"),true));
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-$_d = new MtJson();
+$_d = new MtJson(null);
 
 if ($_d->connect_db == "") {
     $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -373,7 +373,7 @@ switch ($_method) {
 
                             $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
-                            MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
 
                         }
@@ -478,8 +478,8 @@ switch ($_method) {
 
                 for ($i = 0 ; $i < count($_model[FILES]); $i++) {
                     $file = $files[$i];
-                    MtUtil::_c("------------>>>>> file : ".$file['name']);
-                    MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                    MtUtil::_d("------------>>>>> file : ".$file['name']);
+                    MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
                     $sql = "INSERT INTO FILE
                             (
@@ -536,7 +536,7 @@ switch ($_method) {
                 }
             }
 
-            MtUtil::_c("------------>>>>> mysql_errno : ".$_d->mysql_errno);
+            MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
 
             if($err > 0){
                 $_d->sql_rollback();
@@ -694,8 +694,8 @@ switch ($_method) {
 
                             $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
-                            MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                            MtUtil::_c("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
 
                         } else {
                             $insert_path[$i] = array(path => '', uid => '', kind => '');
@@ -709,7 +709,7 @@ switch ($_method) {
                 break;
             }
 
-            MtUtil::_c("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
+            MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
             $err = 0;
             $msg = "";
@@ -809,7 +809,7 @@ switch ($_method) {
                 }
 
                 if ($is_delete) {
-                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
                     $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
 
                     $_d->sql_query($sql);
@@ -818,7 +818,7 @@ switch ($_method) {
 
                     $_d->sql_query($sql);
 
-                    MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                     if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                         unlink('../../..'.$row[PATH].$row[FILE_ID]);
@@ -833,7 +833,7 @@ switch ($_method) {
 
                 for ($i = 0 ; $i < count($files); $i++) {
                     $file = $files[$i];
-                    MtUtil::_c("------------>>>>> file : ".$file['name']);
+                    MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                     if ($insert_path[$i][uid] != "") {
                         $sql = "INSERT INTO FILE
@@ -1038,7 +1038,7 @@ switch ($_method) {
 
             $result = $_d->sql_query($sql,true);
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
                 $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
 
                 $_d->sql_query($sql);
@@ -1047,7 +1047,7 @@ switch ($_method) {
 
                 $_d->sql_query($sql);
 
-                MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                 if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                     unlink('../../..'.$row[PATH].$row[FILE_ID]);
