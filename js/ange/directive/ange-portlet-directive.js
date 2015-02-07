@@ -291,7 +291,7 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist"><a href="/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+img+');"/></div><span class="mini_story_contentbox_title">'+data[i].SUBJECT+'</span></a></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width: 100px"><a href="/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+img+');"/></div><span class="mini_story_contentbox_title">'+data[i].SUBJECT+'</span></a></div>');
                                 //angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width:74px;"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">초기(4-6)</span><img src="imgs/ange/temp/story_food_01.jpg" /></div><span class="mini_story_contentbox_title">단호박 미음</span></div>');
 
                             }
@@ -674,7 +674,7 @@ define([
             templateUrl: function(element, attrs) {
                 return '/partials/ange/main/portlet-slide-banner.html';
             },
-            controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'UPLOAD', function($scope, $attrs, $location, $window, $timeout, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $window, $timeout, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -691,7 +691,8 @@ define([
 
                 // 검색 조건 추가
                 if ($scope.option.type == 'banner') {
-                    $scope.search.LOCATION_GB = $scope.option.gb;
+                    $scope.search.BANNER_GB = $scope.option.gb;
+                    $scope.search.BANNER_ST = 1;
                 } else if ($scope.option.type == 'experience') {
                     $scope.search.EVENT_GB = "EXPERIENCE";
                     $scope.search.PROCESS = "process";
@@ -726,10 +727,12 @@ define([
                             $scope.list = data;
 
                             for (var i in data) {
-                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+                                var img = CONSTANT.AD_FILE_URL + data[i].FILE;
+
                                 var url = '';
+
                                 if ($scope.option.type == 'banner') {
-                                    url = '<a href="'+data[i].URL+'" target="_blank">';
+                                    url = '<a id="'+data[i].NO+'" name="'+data[i].NO+'" href="'+data[i].URL+'" target="_blank">';
                                 } else if ($scope.option.type == 'experience') {
                                     url = '<a href="/moms/experienceprocess/view/'+data[i].NO+'">';
                                 } else if ($scope.option.type == 'event') {
@@ -737,8 +740,8 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><a href="'+data[i].URL+'" target="_blank"><img data-lazy="'+img+'"/></a></div></div>');
-                                //angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img data-lazy="'+img+'"/></a></div></div>');
+//                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
                             }
 
                             // 광고의 롤링을 실행
@@ -752,9 +755,9 @@ define([
                                 $scope.coverTitle = data[newVal].SUBJECT;
                             });
 
-                            //$timeout(function(){
+                            $timeout(function(){
                                 $scope.isLoading = false;
-                            //}, 1000);
+                            }, 1000);
                         })
                         .catch(function(error){$scope.list = [];});
                 };
@@ -922,7 +925,7 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             template: '<div class="inven_Highlight"><img class="ADbanner_normal" ng-src="{{img}}" ng-click="click_linkImage()"/></div>',
-            controller: ['$scope', '$attrs', '$location', '$window', 'UPLOAD', function($scope, $attrs, $location, $window, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', 'UPLOAD', function($scope, $attrs, $location, $window, CONSTANT, UPLOAD) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -936,15 +939,13 @@ define([
 
                 // 검색 조건 추가
                 if ($scope.option.api == 'ad/banner') {
-                    $scope.search.LOCATION_GB = $scope.option.gb;
+                    $scope.search.BANNER_GB = $scope.option.gb;
+                    $scope.search.BANNER_ST = 1;
                 }
 
                 /********** 이벤트 **********/
                 // 이미지 클릭
                 $scope.click_linkImage = function () {
-                    alert($scope.item.URL);
-                    return;
-
                     if ($scope.option.new) {
                         $window.open($scope.item.URL, '', 'width=400,height=500');
                     } else {
@@ -957,7 +958,13 @@ define([
                     $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             $scope.item = data[0];
-                            $scope.img = UPLOAD.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
+
+                            if ($scope.option.api == 'ad/banner') {
+                                $scope.item.img = CONSTANT.AD_FILE_URL + data[0].FILE;
+                            } else {
+                                $scope.item.img = UPLOAD.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
+                            }
+
                         })
                         .catch(function(error){$scope.list = [];  alert(error)});
                 };

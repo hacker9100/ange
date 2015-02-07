@@ -23,16 +23,10 @@ define([
                     $scope.isLoading = true;
                 });
 
-                console.log("scrollTop : "+Math.round($(window).scrollTop()));
-                console.log("scrollTop : "+Math.round($(window).height()));
-                console.log("scrollTop : "+Math.round($(document).height()));
-                console.log("scrollTop : "+Math.round(angular.element('#common').scrollTop()));
-                console.log("common : "+ (angular.element('#common').height()));
-                console.log("common : "+ (angular.element('#common').innerHeight()));
-                console.log("window : "+ (angular.element(window).height()));
-                console.log("document-window : "+ (angular.element('#common').height() - angular.element(window).height() - ($scope.PAGE_NO + 1)));
+                console.log("common : "+ (angular.element('#common').prop('scrollHeight') - angular.element('#common').height()));
+                console.log("scrollTop : "+(angular.element('#common').scrollTop() ));
 
-                if (Math.round(angular.element(window).scrollTop()) >= angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)) {
+                if (angular.element('#common').scrollTop() + 100 >= angular.element('#common').prop('scrollHeight') - angular.element('#common').height()) {
                     if (!$scope.busy) {
                         $scope.PAGE_NO++;
                         $scope.getContentList();

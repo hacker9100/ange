@@ -1,238 +1,238 @@
 <div ng-controller="storeorder-list" class="ng_wrap">
-<!-- mainbar -->
-<div class="mainbar sub-slide0">
-<div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
-<div class="row">
-<div class="col-xs-12 v-cell-3">
-<div class="comp_basic h-cell-dynamic">
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+            <div class="row">
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
 
-<div class="sub_contents_wrap">
+                        <div class="sub_contents_wrap">
 
-<div class="sub_contents_title">
-    <span class="sub_contents_bullet"></span>
-    <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
-</div>
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
+                            </div>
 
-<!-- Step 1. 찜목록 -->
-<div style="display:block;" >
-    <!-- 가이드/지시부 -->
-    <div class="container-fluid common_container" style="width:100%; margin:0px auto; padding:0px;">
-        <div class="row" style="margin:0px auto; display: block;">
-            <div class="col-xs-12 v-cell-4" style="margin:0px;">
+                            <!-- Step 1. 찜목록 -->
+                            <div style="display:block;" >
+                                <!-- 가이드/지시부 -->
+                                <div class="container-fluid common_container" style="width:100%; margin:0px auto; padding:0px;">
+                                    <div class="row" style="margin:0px auto; display: block;">
+                                        <div class="col-xs-12 v-cell-4" style="margin:0px;">
 
-                <div class="comp_basic h-cell-dynamic" style="margin:0px; line-height:100px;">
-                    <ul class="table_gray" style="font-size:0.86em; line-height:20px; padding:15px 18px;">
-                        <li>장바구니 버튼을 누르면 장바구니에 담아 구매할 수 있습니다.</li>
-                        <li>찜한 상품은 재고수량이나 업체사정에 의해 변경 또는 삭제될 수 있으니 주의하세요.</li>
-                    </ul>
-                </div>  <!-- /.comp_basic -->
+                                            <div class="comp_basic h-cell-dynamic" style="margin:0px; line-height:100px;">
+                                                <ul class="table_gray" style="font-size:0.86em; line-height:20px; padding:15px 18px;">
+                                                    <li>마일리지몰은 1인 최대 2개까지 구매가 가능합니다.</li>
+                                                    <li>앙쥬커머스/네이밍 상품은 개별구매만 가능합니다.</li>
+                                                    <li>구매 전 주의사항을 꼭 확인하세요.</li>
+                                                </ul>
+                                            </div>  <!-- /.comp_basic -->
 
-            </div>  <!-- /.col-xs-12 -->
-        </div>  <!-- /.row -->
-    </div>  <!-- /.common_container -->
+                                        </div>  <!-- /.col-xs-12 -->
+                                    </div>  <!-- /.row -->
+                                </div>  <!-- /.common_container -->
 
-    <!-- 상품목록 -->
-    <div class="container-fluid common_container" style="width:100%; margin:0px auto; padding:0px;">
-        <div class="row" style="margin:0px auto; display: block;">
-            <div class="col-xs-12 v-cell-4" style="padding:0px; margin:0px;">
-                <div class="row" style="width:100%; padding:0px; margin:0px;">
+                                <!-- 상품목록 -->
+                                <div class="container-fluid common_container" style="width:100%; margin:0px auto; padding:0px;">
+                                    <div class="row" style="margin:0px auto; display: block;">
+                                        <div class="col-xs-12 v-cell-4" style="padding:0px; margin:0px;">
+                                            <div class="row" style="width:100%; padding:0px; margin:0px;">
 
-                    <div style="border-bottom:1px solid #333;">
-                                                                                <span class="table_gray" style="line-height: 40px; font-size:1.12em;">
-                                                                                    <strong>내가찜한</strong>상품
-                                                                                </span>
-                        <div style="float:right; padding:12px 5px 0 0; font-size:0.86em; width:50%; line-height:20px; color:#646464; text-align:right;">
-                            <label>
-                                <input type="radio" name="cartlist" id="cartmileage" value="mileage" ng-click="click_cartlist()" style="margin-left:18px; vertical-align: top;" checked>
-                                마일리지몰<!--(2)-->
-                            </label>
-                            <label>
-                                <input type="radio" name="cartlist" id="cartcummerce" value="cummerce" ng-click="click_cartlist()" style="margin-left:18px; vertical-align: top;">
-                                커머스/네이밍<!--(3)-->
-                            </label>
-                        </div>
-                    </div>
-
-                    <table id="comp_cart_table" class="table" data-ng-class="{ 'hidden': ! mileage }" style="border-bottom:2px solid #ddd;">
-
-                        <thead>
-                        <tr class="board_thead" height="48" align="center">
-                            <!--<td width="15">-->
-                            <!--<span class="board_th"><input type="checkbox" style="float:none;"></span>-->
-                            <!--</td>-->
-                            <td colspan="2"><span class="board_th">상품정보</span></td>
-                            <td width="88"><span class="board_th">금액</span></td>
-                            <td width="55"><span class="board_th">수량</span></td>
-                            <td width="95"><span class="board_th">결제액</span></td>
-                            <td width="46"><span class="board_th">삭제</span></td>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr style="border-bottom:1px solid #ddd;" ng-repeat="item in mileagelist">
-                            <!--<td class="table_no">-->
-                            <!--&lt;!&ndash; 품절 또는 기간만료등으로 구매불가 상태일 경우에는 disabled &ndash;&gt;-->
-                            <!--<input type="checkbox" name="name"  model="item.selected" data-ng-disabled="item.SUM_IN_OUT == 0" id="name{{$index}}" ng-value="item" style="float:none;" ng-click="click_sumprice(item.PRODUCT_GB,$index);">-->
-                            <!--</td>-->
-                            <td class="table_title" style="width:70px; font-size: 0.92em;">
-                                <div class="cart_thumb" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg');">
-                                    <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
-                                </div>
-                            </td>
-                            <td class="table_title" style="font-size: 0.92em;">
-                                <a href="#"><strong>{{ item.PRODUCT_NM}}</strong> </a>
-
-                                <!-- 마일리지몰 목록에서 표시됩니다. -->
-                                <div ng-if="item.PRODUCT_GB == 'MILEAGE'" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all; display:block;">
-                                    <!-- div class="table_blue">구매가능</div -->
-                                    <div class="table_red">품절</div>
-                                </div>
-                                <!-- 마일리지몰 목록에서 표시됩니다. -->
-                            </td>
-                            <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
-                            <td class="table_date" align="center"><!--<input type="text" class="form-control input-sm" value="99" placeholder="" />-->{{item.PRODUCT_CNT}}</td>
-                            <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.PRODUCT_GB == 'MILEAGE' ? item.TOTAL_PRICE : item.DIRECT_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
-                            <td class="table_date" align="center" style="padding-top:14px;">
-                                <a ng-click="click_removeCartProduct('mileage',mileagelist ,$index);" title="목록에서 삭제"><span class="glyphicon glyphicon-remove-sign" style="font-size:1.28em;"></span></a>
-                                <button class="btn btn-default btn-xs" ng-click="click_mileage_reg(mileagelist, $index)" style="font-size:0.92em; padding-top:4px; margin-top:8px;"><span class="glyphicon glyphicon-shopping-cart"></span>장바구니</button>
-                            </td>
-                        </tr>
-
-                        </tbody>
-
-                        <tbody ng-show="mileagelist == null || mileagelist == '' ">
-                        <tr style="border-bottom:1px solid #ddd;">
-                            <td colspan="7" height="120" align="center" style="line-height:32px; font-size:0.92em; color:#666; padding-top:25px;">
-                                목록이 없습니다.
-                                <br />
-                                <button ng-click="click_mileagehome()"  class="btn btn-default btn-xs"><span class="glyphicon glyphicon-gift"></span> 마일리지몰 구경가기</button>
-                                <button ng-click="click_cummercehome()" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-barcode"></span> 앙쥬커머스 구경가기</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table><!-- /.List-->
-
-                    <table id="comp_cart_table" class="table" data-ng-class="{ 'hidden': ! cummerce }" style="border-bottom:2px solid #ddd;">
-
-                        <thead>
-                        <tr class="board_thead" height="48" align="center">
-                            <td colspan="2"><span class="board_th">상품정보</span></td>
-                            <td width="88"><span class="board_th">금액</span></td>
-                            <td width="55"><span class="board_th">수량</span></td>
-                            <td width="95"><span class="board_th">결제액</span></td>
-                            <td width="60"><span class="board_th">삭제</span></td>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr style="border-bottom:1px solid #ddd;" ng-repeat="item in cummercelist">
-                            <!--<td class="table_no">
-                                &lt;!&ndash; 품절 또는 기간만료등으로 구매불가 상태일 경우에는 disabled &ndash;&gt;
-                                                                                            <input type="checkbox" name="name"  model="item.selected" ng-value="item" style="float:none;" ng-click='click_sumprice($index);'>
-                                                                                        </td>-->
-                            <td class="table_title" style="width:70px; font-size: 0.92em;">
-                                <div class="cart_thumb" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg');">
-                                    <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
-                                </div>
-                            </td>
-                            <td class="table_title" style="font-size: 0.92em;">
-                                <a href="#"><strong>{{ item.PRODUCT_NM}}</strong></a>
-
-                                <!-- 커머스/네이밍 목록에서 표시됩니다. -->
-                                <div class="table_gray" ng-show="item.SUM_IN_OUT > 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_blue">구매가능</span></div>
-                                <div class="table_gray" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_red">품절</span></div>
-                                <div class="table_gray" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_red">기간만료</span></div>
-                                <!-- /커머스/네이밍 목록에서 표시됩니다. -->
-
-                            </td>
-                            <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
-                            <td class="table_date" align="center"><!--<input type="text" class="form-control input-sm" value="99" placeholder="" />-->{{item.PRODUCT_CNT}}</td>
-                            <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.TOTAL_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
-                            <td class="table_date" align="center">
-                                <a ng-click="click_removeCartProduct('cummerce',cummercelist, $index);"  title="목록에서 삭제"><span class="glyphicon glyphicon-remove-sign" style="font-size:1.28em;"></span></a>
-                                <button class="btn btn-default btn-xs" ng-click="click_cummerce_reg(cummercelist, $index)" style="font-size:0.92em; padding-top:4px; margin-top:8px;"><span class="glyphicon glyphicon-shopping-cart"></span>장바구니</button>
-                            </td>
-                        </tr>
-                        </tbody>
-
-                        <tbody ng-show="cummercelist == '' || cummercelist == null">
-                        <tr style="border-bottom:1px solid #ddd;">
-                            <td colspan="7" height="120" align="center" style="line-height:32px; font-size:0.92em; color:#666; padding-top:25px;">
-                                목록이 없습니다.
-                                <br />
-                                <button  ng-click="click_mileagehome()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-gift"></span> 마일리지몰 구경가기</button>
-                                <button ng-click="click_cummercehome()" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-barcode"></span> 앙쥬커머스 구경가기</button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table><!-- /.List-->
-
-                </div>  <!-- /.row -->
-            </div><!-- /.col-12-->
-        </div><!-- /.row -->
-    </div><!-- /.container -->
-
-    <!-- 계산기 : 마일리지몰에서만 출력 -->
-    <!--<div class="container-fluid common_container" ng-if="mileage_gb == 'MILEAGE' && mileage_open == 'Y'" data-ng-class="{ 'hidden': ! mileage }" style="width:100%; margin:0px auto; padding:0px; margin-bottom:20px; display:block;">
-        <div class="row" style="margin:0px auto; display: block;">
-            <div class="col-xs-12 v-cell-4" style="padding:0px; margin:0px;">
-                <div class="row" style="width:100%; padding:0px; margin:0px;">
-
-                    <div class="cart_cacultop">
-                        <div class="cart_cacultop_cell bordered">현재 내 마일리지</div>
-                        <div class="cart_cacultop_cell bordered">결제 마일리지</div>
-                        <div class="cart_cacultop_cell">잔여 마일리지</div>
-                    </div>
-                    <div class="cart_caculbody">
-                        <div class="cart_caculbody_cell bordered">
-                            {{user_info.MILEAGE.REMAIN_POINT}}P
-                            <span class="glyphicon glyphicon-minus" style="position:absolute; color:#d8d8d8; font-size: 1.86em; right:-10px; top:24px;"></span>
-                        </div>
-                        <div class="cart_caculbody_cell bordered">
-                            {{sum_price}}P
-                            <span class="glyphicon glyphicon-minus" style="position:absolute; color:#d8d8d8; font-size: 1.78em; right:-10px; top:20px;"></span>
-                            <span class="glyphicon glyphicon-minus" style="position:absolute; color:#d8d8d8; font-size: 1.78em; right:-10px; top:28px;"></span>
-                        </div>
-                        <div class="cart_caculbody_cell">
-                            <div class="notenoughmileage" ng-show="total_mileage < 0"></div> &lt;!&ndash; 마일리지가 부족할 경우 display:none 시킴 data-ng-style="total_mileage < 0 ? display:block; : display:none;" &ndash;&gt;
-                                                        <span style="color:#fe0000">{{total_mileage}}P</span>
+                                                <div style="border-bottom:1px solid #333;">
+                                                    <span class="table_gray" style="line-height: 40px; font-size:1.12em;">
+                                                        <strong>내가찜한</strong>상품
+                                                    </span>
+                                                    <div style="float:right; padding:12px 5px 0 0; font-size:0.86em; width:50%; line-height:20px; color:#646464; text-align:right;">
+                                                        <label>
+                                                            <input type="radio" name="cartlist" id="cartmileage" value="mileage" ng-click="click_cartlist()" style="margin-left:18px; vertical-align: top;" checked>
+                                                            마일리지몰<!--(2)-->
+                                                        </label>
+                                                        <label>
+                                                            <input type="radio" name="cartlist" id="cartcummerce" value="cummerce" ng-click="click_cartlist()" style="margin-left:18px; vertical-align: top;">
+                                                            커머스/네이밍<!--(3)-->
+                                                        </label>
                                                     </div>
                                                 </div>
 
-                                            </div>  &lt;!&ndash; /.row &ndash;&gt;
-                                        </div>&lt;!&ndash; /.col-12&ndash;&gt;
-                                    </div>&lt;!&ndash; /.row &ndash;&gt;
-                                </div>--><!-- /.container -->
-    <!-- /계산기 : 마일리지몰에서만 출력 -->
+                                                <table id="comp_cart_table" class="table" data-ng-class="{ 'hidden': ! mileage }" style="border-bottom:2px solid #ddd;">
 
-    <!--<div style="text-align: right;">-->
-    <!--<button class="cart_btn line-black" style="display: inline-block;">계속쇼핑</button>-->
-    <!--<button class="cart_btn line-red"  data-ng-class="{ 'hidden': ! mileage }" ng-click="click_select_reg(mileagelist);"  style="display: inline-block;">선택구매</button>     &lt;!&ndash; 마일리지몰 모드에서만 표시 : inline-block &ndash;&gt;-->
-    <!--<button class="cart_btn solid-red" data-ng-class="{ 'hidden': ! mileage }"  ng-click="click_reg(mileagelist);" style="display: inline-block;">장바구니</button>    &lt;!&ndash; 마일리지몰 모드에서만 표시 : inline-block &ndash;&gt;-->
-    <!--</div>-->
+                                                    <thead>
+                                                    <tr class="board_thead" height="48" align="center">
+                                                        <!--<td width="15">-->
+                                                        <!--<span class="board_th"><input type="checkbox" style="float:none;"></span>-->
+                                                        <!--</td>-->
+                                                        <td colspan="2"><span class="board_th">상품정보</span></td>
+                                                        <td width="88"><span class="board_th">금액</span></td>
+                                                        <td width="55"><span class="board_th">수량</span></td>
+                                                        <td width="95"><span class="board_th">결제액</span></td>
+                                                        <td width="46"><span class="board_th">삭제</span></td>
+                                                    </tr>
+                                                    </thead>
 
-</div>
+                                                    <tbody>
+                                                    <tr style="border-bottom:1px solid #ddd;" ng-repeat="item in mileagelist">
+                                                        <!--<td class="table_no">-->
+                                                        <!--&lt;!&ndash; 품절 또는 기간만료등으로 구매불가 상태일 경우에는 disabled &ndash;&gt;-->
+                                                        <!--<input type="checkbox" name="name"  model="item.selected" data-ng-disabled="item.SUM_IN_OUT == 0" id="name{{$index}}" ng-value="item" style="float:none;" ng-click="click_sumprice(item.PRODUCT_GB,$index);">-->
+                                                        <!--</td>-->
+                                                        <td class="table_title" style="width:70px; font-size: 0.92em;">
+                                                            <div class="cart_thumb" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg');">
+                                                                <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="table_title" style="font-size: 0.92em;">
+                                                            <a href="#"><strong>{{ item.PRODUCT_NM}}</strong> </a>
 
-</div>
+                                                            <!-- 마일리지몰 목록에서 표시됩니다. -->
+                                                            <div ng-if="item.PRODUCT_GB == 'MILEAGE'" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all; display:block;">
+                                                                <!-- div class="table_blue">구매가능</div -->
+                                                                <div class="table_red">품절</div>
+                                                            </div>
+                                                            <!-- 마일리지몰 목록에서 표시됩니다. -->
+                                                        </td>
+                                                        <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                                        <td class="table_date" align="center"><!--<input type="text" class="form-control input-sm" value="99" placeholder="" />-->{{item.PRODUCT_CNT}}</td>
+                                                        <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.PRODUCT_GB == 'MILEAGE' ? item.TOTAL_PRICE : item.DIRECT_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                                        <td class="table_date" align="center" style="padding-top:14px;">
+                                                            <a ng-click="click_removeCartProduct('mileage',mileagelist ,$index);" title="목록에서 삭제"><span class="glyphicon glyphicon-remove-sign" style="font-size:1.28em;"></span></a>
+                                                            <button class="btn btn-default btn-xs" ng-click="click_mileage_reg(mileagelist, $index)" style="font-size:0.92em; padding-top:4px; margin-top:8px;"><span class="glyphicon glyphicon-shopping-cart"></span>장바구니</button>
+                                                        </td>
+                                                    </tr>
 
-</div>
+                                                    </tbody>
 
-</div><!-- /.sub_contents_wrap -->
+                                                    <tbody ng-show="mileagelist == null || mileagelist == '' ">
+                                                    <tr style="border-bottom:1px solid #ddd;">
+                                                        <td colspan="7" height="120" align="center" style="line-height:32px; font-size:0.92em; color:#666; padding-top:25px;">
+                                                            목록이 없습니다.
+                                                            <br />
+                                                            <button ng-click="click_mileagehome()"  class="btn btn-default btn-xs"><span class="glyphicon glyphicon-gift"></span> 마일리지몰 구경가기</button>
+                                                            <button ng-click="click_cummercehome()" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-barcode"></span> 앙쥬커머스 구경가기</button>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table><!-- /.List-->
+
+                                                <table id="comp_cart_table" class="table" data-ng-class="{ 'hidden': ! cummerce }" style="border-bottom:2px solid #ddd;">
+
+                                                    <thead>
+                                                    <tr class="board_thead" height="48" align="center">
+                                                        <td colspan="2"><span class="board_th">상품정보</span></td>
+                                                        <td width="88"><span class="board_th">금액</span></td>
+                                                        <td width="55"><span class="board_th">수량</span></td>
+                                                        <td width="95"><span class="board_th">결제액</span></td>
+                                                        <td width="60"><span class="board_th">삭제</span></td>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                    <tr style="border-bottom:1px solid #ddd;" ng-repeat="item in cummercelist">
+                                                        <!--<td class="table_no">
+                                                            &lt;!&ndash; 품절 또는 기간만료등으로 구매불가 상태일 경우에는 disabled &ndash;&gt;
+                                                                                                                        <input type="checkbox" name="name"  model="item.selected" ng-value="item" style="float:none;" ng-click='click_sumprice($index);'>
+                                                                                                                    </td>-->
+                                                        <td class="table_title" style="width:70px; font-size: 0.92em;">
+                                                            <div class="cart_thumb" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg');">
+                                                                <img class="thumbnails_img" style="width: 90px; height: 90px;" ng-src="{{item.MAIN_FILE}}" />
+                                                            </div>
+                                                        </td>
+                                                        <td class="table_title" style="font-size: 0.92em;">
+                                                            <a href="#"><strong>{{ item.PRODUCT_NM}}</strong></a>
+
+                                                            <!-- 커머스/네이밍 목록에서 표시됩니다. -->
+                                                            <div class="table_gray" ng-show="item.SUM_IN_OUT > 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_blue">구매가능</span></div>
+                                                            <div class="table_gray" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_red">품절</span></div>
+                                                            <div class="table_gray" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_red">기간만료</span></div>
+                                                            <!-- /커머스/네이밍 목록에서 표시됩니다. -->
+
+                                                        </td>
+                                                        <td class="table_date" align="right" style="padding-top:14px;">{{item.PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                                        <td class="table_date" align="center"><!--<input type="text" class="form-control input-sm" value="99" placeholder="" />-->{{item.PRODUCT_CNT}}</td>
+                                                        <td class="table_date table_td_gray" align="right" style="padding-top:14px;">{{item.TOTAL_PRICE}}{{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}</td>
+                                                        <td class="table_date" align="center">
+                                                            <a ng-click="click_removeCartProduct('cummerce',cummercelist, $index);"  title="목록에서 삭제"><span class="glyphicon glyphicon-remove-sign" style="font-size:1.28em;"></span></a>
+                                                            <button class="btn btn-default btn-xs" ng-click="click_cummerce_reg(cummercelist, $index)" style="font-size:0.92em; padding-top:4px; margin-top:8px;"><span class="glyphicon glyphicon-shopping-cart"></span>장바구니</button>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+
+                                                    <tbody ng-show="cummercelist == '' || cummercelist == null">
+                                                    <tr style="border-bottom:1px solid #ddd;">
+                                                        <td colspan="7" height="120" align="center" style="line-height:32px; font-size:0.92em; color:#666; padding-top:25px;">
+                                                            목록이 없습니다.
+                                                            <br />
+                                                            <button  ng-click="click_mileagehome()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-gift"></span> 마일리지몰 구경가기</button>
+                                                            <button ng-click="click_cummercehome()" class="btn btn-info btn-xs"><span class="glyphicon glyphicon-barcode"></span> 앙쥬커머스 구경가기</button>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table><!-- /.List-->
+
+                                            </div>  <!-- /.row -->
+                                        </div><!-- /.col-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+
+                                <!-- 계산기 : 마일리지몰에서만 출력 -->
+                                <!--<div class="container-fluid common_container" ng-if="mileage_gb == 'MILEAGE' && mileage_open == 'Y'" data-ng-class="{ 'hidden': ! mileage }" style="width:100%; margin:0px auto; padding:0px; margin-bottom:20px; display:block;">
+                                    <div class="row" style="margin:0px auto; display: block;">
+                                        <div class="col-xs-12 v-cell-4" style="padding:0px; margin:0px;">
+                                            <div class="row" style="width:100%; padding:0px; margin:0px;">
+
+                                                <div class="cart_cacultop">
+                                                    <div class="cart_cacultop_cell bordered">현재 내 마일리지</div>
+                                                    <div class="cart_cacultop_cell bordered">결제 마일리지</div>
+                                                    <div class="cart_cacultop_cell">잔여 마일리지</div>
+                                                </div>
+                                                <div class="cart_caculbody">
+                                                    <div class="cart_caculbody_cell bordered">
+                                                        {{user_info.MILEAGE.REMAIN_POINT}}P
+                                                        <span class="glyphicon glyphicon-minus" style="position:absolute; color:#d8d8d8; font-size: 1.86em; right:-10px; top:24px;"></span>
+                                                    </div>
+                                                    <div class="cart_caculbody_cell bordered">
+                                                        {{sum_price}}P
+                                                        <span class="glyphicon glyphicon-minus" style="position:absolute; color:#d8d8d8; font-size: 1.78em; right:-10px; top:20px;"></span>
+                                                        <span class="glyphicon glyphicon-minus" style="position:absolute; color:#d8d8d8; font-size: 1.78em; right:-10px; top:28px;"></span>
+                                                    </div>
+                                                    <div class="cart_caculbody_cell">
+                                                        <div class="notenoughmileage" ng-show="total_mileage < 0"></div> &lt;!&ndash; 마일리지가 부족할 경우 display:none 시킴 data-ng-style="total_mileage < 0 ? display:block; : display:none;" &ndash;&gt;
+                                                                                    <span style="color:#fe0000">{{total_mileage}}P</span>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>  &lt;!&ndash; /.row &ndash;&gt;
+                                                                    </div>&lt;!&ndash; /.col-12&ndash;&gt;
+                                                                </div>&lt;!&ndash; /.row &ndash;&gt;
+                                                            </div>--><!-- /.container -->
+                                <!-- /계산기 : 마일리지몰에서만 출력 -->
+
+                                <!--<div style="text-align: right;">-->
+                                <!--<button class="cart_btn line-black" style="display: inline-block;">계속쇼핑</button>-->
+                                <!--<button class="cart_btn line-red"  data-ng-class="{ 'hidden': ! mileage }" ng-click="click_select_reg(mileagelist);"  style="display: inline-block;">선택구매</button>     &lt;!&ndash; 마일리지몰 모드에서만 표시 : inline-block &ndash;&gt;-->
+                                <!--<button class="cart_btn solid-red" data-ng-class="{ 'hidden': ! mileage }"  ng-click="click_reg(mileagelist);" style="display: inline-block;">장바구니</button>    &lt;!&ndash; 마일리지몰 모드에서만 표시 : inline-block &ndash;&gt;-->
+                                <!--</div>-->
+
+                            </div>
+
+                        </div>
 
 
-</div>  <!-- /.comp_basic -->
-</div> <!-- rows -->
-</div><!-- container-fluid -->
+                    </div><!-- /.sub_contents_wrap -->
 
-</div>  <!-- /.mainbar -->
 
-<div class="subar sub-slide1">
-    <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
-</div>
+                </div>  <!-- /.comp_basic -->
+            </div> <!-- rows -->
+        </div><!-- container-fluid -->
 
-<!-- 1200px 이하일 경우 표시되는 footer -->
-<div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
-<!-- /1200px 이하일 경우 표시되는 footer -->
+    </div>  <!-- /.mainbar -->
+
+    <div class="subar sub-slide1">
+        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+    </div>
+
+    <!-- 1200px 이하일 경우 표시되는 footer -->
+    <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
+    <!-- /1200px 이하일 경우 표시되는 footer -->
 
 <!-- /Main Page Layout Set -->
 </div>  <!-- /ng-controller -->

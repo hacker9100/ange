@@ -26,7 +26,7 @@ require.config({
 
         // bootstrpa 모듈
         'js-bootstrap': '../../lib/bootstrap/js/bootstrap.min', // bootstrap을 사용한다.
-        'ui-bootstrap': '../../lib/ui-bootstrap/ui-bootstrap-0.11.2.min', // bootstrap의 ui 컴포넌트를 사용하게한다.
+        'ui-bootstrap': '../../lib/ui-bootstrap/ui-bootstrap-0.11.2', // bootstrap의 ui 컴포넌트를 사용하게한다.(Customizing)
 
         // angularjs 모듈
         'angular': '../../lib/angular/angular', // angularjs를 사용한다.
@@ -36,7 +36,6 @@ require.config({
         'angular-ui-router': '../../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
         'angular-translate': '../../lib/angular/angular-translate.min', //
 
-////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
         'lodash' : '../../lib/dropdown-multiselect/lodash',
 
         // ng-table 모듈

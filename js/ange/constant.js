@@ -9,10 +9,12 @@ define([
 ], function(app, menu) {
     'use strict';
     app.constant(
-        "COMMON", {
+        "CONSTANT", {
             "SYSTEM_GB" : "ANGE",
             "DASHBOARD_PAGE_SIZE" : 5,
-            "PAGE_SIZE" : 20
+            "PAGE_SIZE" : 20,
+            "BASE_URL" : "http://localhost",
+            "AD_FILE_URL" : "http://angead.marveltree.com/adm/upload/"
         }
     );
     app.constant(

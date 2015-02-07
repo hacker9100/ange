@@ -17,47 +17,52 @@ define(['./directives'], function (directives) {
                 var scope = element.scope();
                 var path = scope.location.split('/');
                 var channel = null;
+                var menu_info = [];
 
                 for (var i in scope.ange_channel) {
                     if (scope.ange_channel[i].CHANNEL_ID == path[1]) {
                         channel = scope.ange_channel[i];
+                        break;
                     }
                 }
                 var templet = '';
 
-                if (channel == null) {
-                    alert(UPLOAD.BASE_URL + scope.location)
-                    location.url(UPLOAD.BASE_URL + scope.location);
-                }
-
                 if (channel.CHANNEL_NO <= 6) {
+                    for (var i in scope.ange_menu) {
+//                        console.log(scope.ange_menu[i].CHANNEL_NO)
+                        if (scope.ange_menu[i].CHANNEL_NO == channel.CHANNEL_NO) {
+                            menu_info.push(scope.ange_menu[i]);
+//                            console.log(scope.ange_menu[i])
+                        }
+                    }
+
                     templet += '<div ng-if="'+ (path[1] != 'main') + '" id="lnb" class="lnb"' +
                                 '   <div class="localmenu_wrap">' +
                                 '       <div ng-include=" \'/partials/ange/com/lnb-filter.html\' "></div>';
 
-                    for (var j in channel.MENU_INFO) {
-                        if (channel.MENU_INFO[j].DIVIDER_FL == 'Y' && j != 0) {
+                    for (var j in menu_info) {
+                        if (menu_info[j].DIVIDER_FL == 'Y' && j != 0) {
                             templet += '</div></div>';
                         }
 
-                        if (channel.MENU_INFO[j].DIVIDER_FL == 'Y') {
+                        if (menu_info[j].DIVIDER_FL == 'Y') {
                             templet += '<div class="localmenu_col_'+channel.COLUMN_CNT+'"><div class="localmenu_block">';
                         }
 
-                        if (channel.MENU_INFO[j].DEPTH == '1') {
-                            templet += '<a class="localmenu_link main '+angular.lowercase(channel.MENU_INFO[j].CLASS_GB)+'" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                        if (menu_info[j].DEPTH == '1') {
+                            templet += '<a class="localmenu_link main '+angular.lowercase(menu_info[j].CLASS_GB)+'" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand">'+menu_info[j].MENU_NM+'</a>';
                         } else {
-                            if (channel.MENU_INFO[j].ETC == 'DOWNLOAD') {
-                                templet += '<a target="_self" href="'+UPLOAD.BASE_URL+'/admin/'+channel.MENU_INFO[j].FILE_ID+'" download="'+channel.MENU_INFO[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                            if (menu_info[j].ETC == 'DOWNLOAD') {
+                                templet += '<a target="_self" href="'+UPLOAD.BASE_URL+'/admin/'+menu_info[j].FILE_ID+'" download="'+menu_info[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+menu_info[j].MENU_NM+'</a>';
                             } else {
-                                templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+channel.MENU_INFO[j].MENU_URL+'\', \''+channel.MENU_INFO[j].LINK_FL+'\')" style="cursor:hand">'+channel.MENU_INFO[j].MENU_NM+'</a>';
+                                templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand">'+menu_info[j].MENU_NM+'</a>';
                             }
                         }
 
-                        if (channel.MENU_INFO[j].TAIL_DESC != null)
-                            templet += '<span class="localmenu_comment">'+channel.MENU_INFO[j].TAIL_DESC+'</span>';
+                        if (menu_info[j].TAIL_DESC != null)
+                            templet += '<span class="localmenu_comment">'+menu_info[j].TAIL_DESC+'</span>';
 
-                        if (j == channel.MENU_INFO.length - 1 ) {
+                        if (j == menu_info.length - 1 ) {
                             templet += '</div></div>';
                         }
                     }

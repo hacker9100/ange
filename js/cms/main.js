@@ -21,7 +21,7 @@ require.config({
     paths: {
         'text': '../../lib/require/text', //HTML 데이터를 가져올때 text! 프리픽스를 붙여준다.
         'jquery': '../../lib/jquery/jquery.min', // jquery
-        'jquery-ui': '../../lib/jquery/jquery-ui-1.10.2.min', // bootstrap 사용을 위해 로딩한다.
+        'jquery-ui': '../../lib/jquery/jquery-ui-1.10.2.min', // bootstrap 사용을 위해 로딩한다.(Customizing)
         'domReady': '../../lib/domReady/domReady', // requirejs로 library를 로딩할때 사용된다.
 
         // bootstrpa 모듈
@@ -37,7 +37,6 @@ require.config({
         'angular-translate': '../../lib/angular/angular-translate.min', //
         'angular-i18n': '../../lib/angular/i18n/angular-locale_ko-kr', //
 
-////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
         'lodash' : '../../lib/dropdown-multiselect/lodash',
 
         // ng-table 모듈
