@@ -13,6 +13,13 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('main', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
 
+        $scope.test = function() {
+            $scope.insertItem('com/user', 'mail', {EMAIL: 'hacher9100@gmail.com', USER_NM: '김성환', USER_ID: 'hong'}, false)
+                .then(function(data){
+                    alert(0)
+                });
+        };
+
         /********** 초기화 **********/
         // 메인 화면 모드
         $scope.slide = 'cover';
@@ -59,9 +66,13 @@ define([
             if ($scope.slide != slide && $scope.mode != '') {
                 $scope.slide = slide;
             } else if ($scope.slide != slide && $scope.mode == '') {
+                angular.element('#main').slickPrev();
+
                 $scope.slide = slide;
                 $scope.mode = 'pan';
             } else {
+                angular.element('#main').slickPrev();
+
                 $scope.slide = 'cover';
                 $scope.mode = '';
             }
@@ -86,7 +97,7 @@ define([
 
         // 메뉴 목록 조회
         $scope.getMenuList = function () {
-            $scope.getList('com/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, true)
+            $scope.getList('com/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, false)
                 .then(function(data){
                     for (var i=0; i<data.length; i++) {
                         var file = data[i].FILES;

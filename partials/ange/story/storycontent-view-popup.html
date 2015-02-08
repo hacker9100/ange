@@ -10,7 +10,7 @@
             <div style="padding:15px 15px; font-size:0.78em; color:#e25d4c; font-weight:700;"><span class="glyphicon glyphicon-plus"></span> 같은 카테고리 스토리</div>
 
             <div class="story_plus_thumb" ng-repeat="item in plusList" ng-show="currentPage > ( $index / 2 ) && ( $index / 2 ) >= ( currentPage - 1 )">
-                <img class="story_plus_pic" ng-src="{{item.FILE}}" ng-click="click_showContentDetail(item)">
+                <img class="story_plus_pic" ng-src="{{item.FILE}}" ng-click="click_changeContentDetail(item)">
                 <div class="table_blue story_plus_title">{{ item.SUBJECT | limitTo: 10 }}{{item.SUBJECT > 10 ? '...' : ''}}</div>
                 <div class="table_gray story_plus_series">{{ item.PROJECT_NM }}</div>
             </div>
@@ -125,7 +125,7 @@
 
                             <tbody class="on" ng-repeat="item in editorList">
 
-                            <tr ng-click="click_showContentDetail(item)" style="cursor:pointer;">
+                            <tr ng-click="click_changeContentDetail(item)" style="cursor:pointer;">
                                 <td width="30%" style="min-width:100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" class="table_no">
                                     <span class="table_blue">{{ item.SERIES_NM }} [{{ item.PROJECT_NM }}]</span>
                                 </td>

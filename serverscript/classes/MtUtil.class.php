@@ -208,15 +208,24 @@ class MtUtil extends Mt {
      */
     function sendMail($to, $subject, $message, $headers){
 
-        $ret = mail($to, $subject, $message, $headers);
+        $to      = 'hacker9100@gmail.com';
+        $subject = 'the subject';
+        $message = 'hello';
+        $headers = 'From: hacker9100@gmail.com' . "\r\n" .
+            'Reply-To: hacker9100@gmail.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
 
-        if(!$ret) {
-            MtUtil::_d("------------>>>>> mail error");
-            return false;
-        } else {
-            MtUtil::_d("------------>>>>> mail send");
-            return true;
-        }
+        mail($to, $subject, $message, $headers);
+
+//        $ret = mail($to, $subject, $message, $headers);
+//
+//        if(!$ret) {
+//            MtUtil::_d("------------>>>>> mail error");
+//            return false;
+//        } else {
+//            MtUtil::_d("------------>>>>> mail send");
+//            return true;
+//        }
     }
 
     /*

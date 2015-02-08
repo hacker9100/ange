@@ -94,6 +94,26 @@
                     $approval_data = $_d->getData($sql);
 
                     $data['APPROVAL'] = $approval_data;
+
+                    if ($_search[FILE]) {
+                        $sql = "SELECT
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    CMS_CONTENT C, FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    C.NO = S.TARGET_NO
+                                    AND F.NO = S.SOURCE_NO
+                                    AND C.TASK_NO = ".$_key."
+                                    AND C.CURRENT_FL = 'Y'
+                                    AND S.CONTENT_GB = 'FILE'
+                                    AND S.TARGET_GB = 'CONTENT'
+                                    AND F.FILE_GB = 'MAIN'
+                                ";
+
+                        $file_data = $_d->sql_fetch($sql);
+
+                        $data['FILE'] = $file_data;
+                    }
                 }
 
                 if ($_d->mysql_errno > 0) {

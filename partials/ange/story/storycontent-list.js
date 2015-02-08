@@ -49,7 +49,7 @@ define([
 
         // 페이징
         $scope.PAGE_NO = 0;
-        $scope.PAGE_SIZE = 12;
+        $scope.PAGE_SIZE = 30; // 최초 30, 이후 15
 
         // 초기화
         $scope.init = function () {
@@ -99,6 +99,8 @@ define([
                 }
             }
 
+            var isFirst = true;
+
             $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
 
@@ -119,38 +121,14 @@ define([
                         }
                     }
 
-//                    $scope.list = data;
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//
-//
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//                    $scope.list.push({FILE: '../../../imgs/ange/temp/comp_album_01.jpg', LIKE_FL: 1});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-//                    $scope.list.push({FILE: '../../../imgs/ange/temp/comp_album_01.jpg', LIKE_FL: 0});
-//                    $scope.list.push({FILE: '../../../imgs/ange/temp/comp_album_02.jpg', LIKE_FL: 0});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 0});
-//                    $scope.list.push({FILE: '../../../imgs/ange/temp/comp_album_03.jpg', LIKE_FL: 1});
-//                    $scope.list.push({FILE: '../../../imgs/ange/temp/comp_album_04.jpg', LIKE_FL: 0});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-//                    $scope.list.push({FILE: 'https://www.ange.co.kr/UserFiles/Upload_Living/1203-002.gif', LIKE_FL: 1});
-
-//                    $scope.PAGE_NO++;
                     $scope.$parent.reload = false;
                     $scope.busy = false;
+                    if (isFirst) {
+                        $scope.PAGE_NO = $scope.PAGE_NO + 2;
+                        $scope.PAGE_SIZE = 15;
+                        isFirst = false;
+                    }
+
                 })
                 .catch(function(error){$scope.end = true;});
         };
