@@ -30,6 +30,32 @@ define([
         $scope.search.PAGE_SIZE = 10;
         $scope.search.TOTAL_COUNT = 0;
 
+        $scope.TODAY_TOTAL_COUNT = 0;
+
+
+        // 일일 날짜 셋팅
+        var date = new Date();
+
+        // GET YYYY, MM AND DD FROM THE DATE OBJECT
+        var year = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+
+        if(mm < 10){
+            mm = '0'+mm;
+        }
+
+        if(dd < 10){
+            dd = '0'+dd;
+        }
+
+        var today = year+'-'+mm+'-'+dd;
+
+        console.log('today ='+today);
+
+        $scope.search.TODAY_DATE = today;
+
+
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.search.PAGE_NO);
             $scope.replyList = [];
@@ -66,6 +92,21 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+
+
+            $scope.getItem('com/reply', 'item', {}, $scope.search, true)
+                .then(function(data){
+
+                    console.log(data.COMMENT);
+
+                    if(data.COMMENT == null){
+                        $scope.TODAY_TOTAL_COUNT = 0;
+                    }else{
+                        $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                    }
+
+                })
+                .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
         };
 
 
@@ -79,8 +120,11 @@ define([
             $scope.getItem('com/reply', 'item', {}, $scope.search, true)
                 .then(function(data){
 
-                    console.log(data.COMMENT[0].TOTAL_COUNT);
-                    $scope.search.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                    if(data.COMMENT == null){
+                        $scope.search.TOTAL_COUNT = 0;
+                    }else{
+                        $scope.search.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                    }
 
                     var reply = data.COMMENT;
 
@@ -89,7 +133,7 @@ define([
                     }
 
                 })
-                .catch(function(error){$scope.replyList = "";});
+                .catch(function(error){$scope.replyList = ""; $scope.search.TOTAL_COUNT=0;});
         };
 
         // 의견 등록

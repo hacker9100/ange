@@ -66,6 +66,10 @@
                     $search_common .= "AND REPLY_GB = '".$_search[REPLY_GB]."' ";
                 }
 
+                if (isset($_search[TODAY_DATE]) && $_search[TODAY_DATE] != "") {
+                    $search_common .= "AND DATE_FORMAT(R.REG_DT, '%Y-%m-%d') = '".$_search[TODAY_DATE]."' ";
+                }
+
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
                     $sort_order = "ORDER BY R.".$_search[SORT]." ".$_search[ORDER];
                 }
