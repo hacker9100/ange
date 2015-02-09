@@ -56,7 +56,7 @@ define(['./directives'], function (directives) {
                             path[2] = 'experience';
                         } else if (path[2] == 'eventprocess' || path[2] == 'eventperformance') {
                             path[2] = 'event';
-                        } else if (path[2] == 'experiencewinner' || path[2] == 'eventwinner' || path[2] == 'supporterboard') {
+                        } else if (path[2] == 'experiencewinner' || path[2] == 'eventwinner' || path[2] == 'supporterboard' || path[2] == 'postwinner') {
                             path[2] = 'board';
                         } else if (path[2] == 'experiencereview' || path[2] == 'productreview' || path[2] == 'angereview' || path[2] == 'samplereview' || path[2] == 'samplepackreview'|| path[2] == 'eventreview') {
                             path[2] = 'review';

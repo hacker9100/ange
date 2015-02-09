@@ -46,15 +46,12 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-            if ($stateParams.menu == 'experiencewinner') {
-                $scope.community = "체험단 발표";
-                $scope.search.EVENT_GB = "EXPERIENCE";
-            } else if ($stateParams.menu == 'eventwinner') {
-                $scope.community = "당첨자 발표";
+             if ($stateParams.menu == 'eventwinner') {
+                $scope.community = "이벤트/체험단 발표";
                 $scope.search.EVENT_GB = "EVENT";
-            } else if ($stateParams.menu == 'supporterboard') {
-                $scope.community = "서포터즈 활동방";
-                $scope.search.EVENT_GB = "SUPPORTER";
+            } else if ($stateParams.menu == 'postwinner') {
+                $scope.community = "애독자엽서 발표";
+                $scope.search.EVENT_GB = "POSTCARD";
             }
         };
 

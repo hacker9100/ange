@@ -236,7 +236,7 @@ switch ($_method) {
                             ,'".$_model[PRODUCT]."'
                             ,'".$_model[CREDIT_FL]."'
                             ,'".$_model[REASON]."'
-                            ,'".$_model[TARGET_GB]."'
+                            ,'".$_model[EVENT_GB]."'
                             ,'".$_model[HOPE_REASON]."'
                             ,'".$_model[SIZE1]."'
                             ,'".$_model[SIZE2]."'

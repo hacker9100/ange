@@ -81,7 +81,12 @@ switch ($_method) {
             $limit = "";
 
             if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
-                $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."' ";
+
+                if($_search[EVENT_GB] == 'EVENT'){ // 이벤트 & 체험단
+                    $search_where .= "AND EVENT_GB IN ('".$_search[EVENT_GB]."', 'EXPERIENCE')";
+                }else{ // 애독자 엽서
+                    $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."'";
+                }
             }
 
             if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
@@ -89,6 +94,9 @@ switch ($_method) {
             }
 
 
+            if (isset($_page)) {
+                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+            }
 
             $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM, NO, SUBJECT, WINNER_DT,EVENT_GB,WINNER_DT
@@ -99,6 +107,7 @@ switch ($_method) {
                                 WHERE WINNER_DT < DATE_FORMAT(NOW(), '%Y-%m-%d')
                                 ".$search_where."
                              ORDER BY REG_DT DESC
+                             ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
@@ -147,8 +156,14 @@ switch ($_method) {
             }
         }else if($_type == 'winnerlist'){
 
+            $limit = "";
+
             if (isset($_search[KEY]) && $_search[KEY] != "") {
                 $search_where .= "AND TARGET_NO = '".$_search[KEY]."' ";
+            }
+
+            if (isset($_page)) {
+                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
             }
 
                 $sql = "SELECT
