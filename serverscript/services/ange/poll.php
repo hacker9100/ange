@@ -373,7 +373,25 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                             $note = $s[SELECT_ANSWER][NOTE];
                             $select_short_answer = $s[SELECT_SHORT_ANSWER];
                         }
+                    }else if($s[QUERY_GB] == 'D'){ // 다중객관식일때
 
+                        if(!isset($s[SELECT_ANSWER])){
+                            $query_no = $s[QUERY_NO];
+                            $query_sort = $s[QUERY_SORT];
+                            $poll_no = $s[BOARD_NO];
+                            $select_answer = 0;
+                            $select_short_answer = '';
+                            $note = '';
+                        }else{
+                            foreach ($_model[SELECT_ANSWER] as $e) {
+                                $query_no = $e[QUERY_NO];
+                                $query_sort = $e[QUERY_SORT];
+                                $poll_no = $e[BOARD_NO];
+                                $select_answer = $e[SELECT_SORT];
+                                $note = $e[NOTE];
+                                $select_short_answer = $e[SELECT_SHORT_ANSWER];
+                            }
+                        }
                     }
 
                     $sql = "INSERT INTO ANGE_POLL_ANSWEAR
