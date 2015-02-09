@@ -13,6 +13,52 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsevent-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
+        $scope.queue = [];
+        $scope.search = {};
+
+        $scope.item = {};
+        $scope.item.BLOG = [];
+
+        // 날짜 셀렉트 박스셋팅
+        var year = [];
+        var babyYear = [];
+        var day = [];
+        var now = new Date();
+        var nowYear = now.getFullYear();
+
+        var month = [];
+
+        var hour = [];
+        var minute = [];
+
+
+        for (var i = nowYear + 1; i >= 1995; i--) {
+            babyYear.push(i+'');
+        }
+
+        for (var i = 1; i <= 12; i++) {
+
+            if(i < 10){
+                i = '0'+i;
+            }
+            month.push(i+'');
+        }
+
+        for (var i = 1; i <= 31; i++) {
+
+            if(i < 10){
+                i = '0'+i;
+            }
+            day.push(i+'');
+        }
+
+        $scope.year = year;
+        $scope.babyYear = babyYear;
+        $scope.month = month;
+        $scope.day = day;
+        $scope.hour = hour;
+        $scope.minute = minute;
+
         if($rootScope.focus == 'comp'){
             $('html,body').animate({scrollTop:$('#moms_state').offset().top}, 300);
             $('#preg_fl').focus();
@@ -149,8 +195,6 @@ define([
             });
         };
 
-        $scope.queue = [];
-        $scope.search = {};
 
         // 초기화
         $scope.init = function(session) {
@@ -214,6 +258,8 @@ define([
                 return $scope.getItem('ange/event', 'item', $stateParams.id, {}, false)
                     .then(function(data){
 
+                        $scope.D_DAY = parseInt($scope.item.END_DATE) - parseInt($scope.todayDate);
+
                         var files = data.FILES;
 
                         //console.log(JSON.stringify(data));
@@ -246,6 +292,11 @@ define([
 
         $scope.click_momseventcomp = function () {
 
+            if($scope.uid == '' || $scope.uid == null){
+                dialogs.notify('알림', '세션이 만료되어 로그아웃 되었습니다. 로그인 후 다시 작성하세요', {size: 'md'});
+                $location.url('/moms/eventprocess/view/'+$scope.item.NO);
+            }
+
             if($("#credit_agreement_Y").is(":checked")){
                 $scope.item.CREDIT_FL = 'Y';
             }else{
@@ -257,7 +308,23 @@ define([
             $scope.search.TARGET_NO = $scope.item.NO;
             $scope.search.TARGET_GB = 'EVENT';
 
+            $scope.item.BABY_BIRTH = $scope.item.BABY_YEAR + $scope.item.BABY_MONTH + $scope.item.BABY_DAY;
+
             $scope.item.PREGNANT_WEEKS = 0;
+
+            var cnt = $("input[name='blog[]']").length;
+
+            $scope.item.BLOG_URL = '';
+            $("input[name='blog[]'").each(function(index, element) {
+                //alert($(element).val());
+
+                if(index != (cnt -1)){
+                    $scope.item.BLOG_URL += $(element).val()+', ';
+                }else{
+                    $scope.item.BLOG_URL += $(element).val();
+                }
+
+            })
 
             $scope.insertItem('ange/comp', 'item', $scope.item, false)
                 .then(function(){
@@ -271,51 +338,6 @@ define([
                     }
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-//            $scope.getList('ange/comp', 'check', {}, $scope.search, false)
-//                .then(function(data){
-//                    var comp_cnt = data[0].COMP_CNT;
-//
-//                    $scope.item.TARGET_GB = 'EVENT';
-//
-//                    if (comp_cnt == 1) {
-//
-//                        $scope.item.NO = data[0].NO;
-//
-//                        $scope.item.PREGNANT_WEEKS = 0;
-//
-//                        $scope.updateItem('ange/comp', 'item', $scope.item.NO, $scope.item, false)
-//                            .then(function(){
-//
-//                                dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
-//
-//                                if ($stateParams.menu == 'eventprocess') {
-//                                    $location.url('/moms/eventprocess/list');
-//                                } else if($stateParams.menu == 'eventperformance') {
-//                                    $location.url('/moms/eventperformance/list');
-//                                }
-//                            })
-//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-//                    } else {
-//
-//                        $scope.item.PREGNANT_WEEKS = 0;
-//
-//                        $scope.insertItem('ange/comp', 'item', $scope.item, false)
-//                            .then(function(){
-//
-//                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-//
-//                                if ($stateParams.menu == 'eventprocess') {
-//                                    $location.url('/moms/eventprocess/list');
-//                                } else if($stateParams.menu == 'eventperformance') {
-//                                    $location.url('/moms/eventperformance/list');
-//                                }
-//                            })
-//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-//                    }
-//
-//                })
-//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.click_momseventlist = function (){
@@ -359,6 +381,21 @@ define([
             }
 
         };
+
+        // 블로그 추가
+        $scope.click_add_blog = function (){
+
+            var cnt = $('span.blog:last-child').length;
+            //alert(cnt);
+            //var new_blog =  $('span.blog').clone();
+            var new_blog =  $('span.blog:last').clone(true);
+            $("#blog_url").append(new_blog);
+        }
+
+        // 블로그 삭제
+        $scope.delete_blog_url = function (){
+            $('span.blog:last').remove();
+        }
 
         $scope.getSession()
             .then($scope.sessionCheck)

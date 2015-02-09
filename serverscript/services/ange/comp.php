@@ -214,7 +214,8 @@ switch ($_method) {
                             PLACE,
                             PREGNANT_WEEKS,
                             CHILD_AGE,
-                            CHILD_FL
+                            CHILD_FL,
+                            BABY_BIRTH
                         ) VALUES (
                              '".$_model[NO]."'
                             , '".$_SESSION['uid']."'
@@ -245,6 +246,7 @@ switch ($_method) {
                             ,".$_model[PREGNANT_WEEKS]."
                             ,'".$_model[CHILD_AGE]."'
                             ,'".$_model[CHILD_FL]."'
+                            ,'".$_model[BABY_BIRTH]."'
                         )";
 
         $_d->sql_query($sql);

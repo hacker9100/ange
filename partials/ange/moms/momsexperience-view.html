@@ -44,6 +44,7 @@
             <div class="webzine_list_infowrap">
                 <dl>
                     <dt class="table_red">추가정보</dt>
+                    <dd><strong>마감일</strong><span class="table_gray" style="margin-left:8px;">{{D_DAY > 0 ? 'D-'+D_DAY : '마감'}}</span></dd>
                     <dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>
                     <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.DELIV_COST}}원</span></dd>
                     <dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM == '' ? '없음' : item.GIFT_NM}}</span></dd>
@@ -79,7 +80,6 @@
 
 <div id="moms_state"  class="moms_state" style="padding-top:20px;">
     <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
-    {{item.END_YMD}} {{todayDate}}
     <div class="moms_form" ng-model="item" style="margin:0px; display:block;" ng-show="uid != '' && uid != null && menu == 'experienceprocess'">
     <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
         <h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>
@@ -233,24 +233,30 @@
         </tr>
         <tr>
             <td align="center" class="table_td_gray">
-                아기 개월
+                아기 생년월일
             </td>
             <td>
-                <div class="form-inline" style="margin:0 5px">
-                    <input type="text" id="test" ng-model="item.BABY_MONTH" placeholder="아기 개월수" style="width:92%;" class="form-control input-sm"/>
-                </div>
+                <select id="birth" ng-model="item.BABY_YEAR" ng-options="v for v in babyYear" class= "form-control" style="width:110px;float: left;">
+                    <option value="" selected>년</option>
+                </select>
+                <select ng-model="item.BABY_MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;float: left;">
+                    <option value="" selected>월</option>
+                </select>
+                <select ng-model="item.BABY_DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                    <option value="" selected>일</option>
+                </select>
             </td>
         </tr>
-        <tr>
-            <td align="center" class="table_td_gray">
-                아기 나이
-            </td>
-            <td>
-                <div class="form-inline" style="margin:0 5px">
-                    <input type="text" ng-model="item.BABY_AGE" placeholder="아기 나이" style="width:92%;" class="form-control input-sm"/>
-                </div>
-            </td>
-        </tr>
+        <!--<tr>-->
+            <!--<td align="center" class="table_td_gray">-->
+                <!--아기 나이-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<div class="form-inline" style="margin:0 5px">-->
+                    <!--<input type="text" ng-model="item.BABY_AGE" placeholder="아기 나이" style="width:92%;" class="form-control input-sm"/>-->
+                <!--</div>-->
+            <!--</td>-->
+        <!--</tr>-->
         <tr>
             <td align="center" class="table_td_gray">
                 상품설명<br/>스크랩한<br/>
@@ -261,42 +267,42 @@
 
                     <div class="row form_rows bottom" style="margin:0px;  border:none;">
 
-                        <div class="form_basicinfo" style="margin:0px;">
-                                <span class="col-xs-12 basicinfo input" id="blog_url">
+                        <div class="form_basicinfo" style="margin:0px;" id="add_blog">
+                                <span class="col-xs-12 basicinfo input blog" id="blog_url">
                                     <div class="form-inline">
-                                        <input type="text" ng-model="item.BLOG_URL" style="width:92%;" class="form-control input-sm">
+                                        <input type="text" ng-model="item.BLOG" name="blog[]" style="width: 629px" class="form-control input-sm"> <!-- width:629px width:92%; -->
                                         <div style="float:right; width:5%;">
-                                            <button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>
+                                            <button type="button" class="btn btn-xs btn-warning" ng-click="delete_blog_url();"><span class="glyphicon glyphicon-minus" ></span></button>
                                         </div>
                                     </div>
                                 </span>
 
-<!--                                                            <span class="col-xs-12 basicinfo input">
-                                                                <div class="form-inline">
-                                                                    <input type="text" ng-model="item.BLOG_URL" style="width:92%;" class="form-control input-sm">
-                                                                    <div style="float:right; width:5%;">
-                                                                        <button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                            </span>-->
+                                <!--<span class="col-xs-12 basicinfo input">-->
+                                    <!--<div class="form-inline">-->
+                                        <!--<input type="text" ng-model="item.BLOG_URL" style="width:629px" class="form-control input-sm"> &lt;!&ndash; 92%; &ndash;&gt;-->
+                                        <!--<div style="float:right; width:5%;">-->
+                                            <!--<button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</span>-->
 
-<!--                                                            <span class="col-xs-12 basicinfo input">
-                                                                <div class="form-inline">
-                                                                    <input type="text" ng-model="item.BLOG_URL" style="width:92%;" class="form-control input-sm">
-                                                                    <div style="float:right; width:5%;">
-                                                                        <button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>
-                                                                    </div>
-                                                                </div>
-                                                            </span>
+                                <!--<span class="col-xs-12 basicinfo input">-->
+                                    <!--<div class="form-inline">-->
+                                        <!--<input type="text" ng-model="item.BLOG_URL" style="width:92%;" class="form-control input-sm">-->
+                                        <!--<div style="float:right; width:5%;">-->
+                                            <!--<button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</span>-->
 
-                                                            <span class="col-xs-12 basicinfo divide" style="margin:0px; width:100%;"></span>-->
+                                <span class="col-xs-12 basicinfo divide" style="margin:0px; width:684px"></span> <!-- width:100%; -->
 
                                 <span class="col-xs-12 basicinfo input">
                                     <div style="text-align:right; padding:0 10px;">
 
                                         <span class="table_blue"><small>미션에 따라 블로그 갯수만큼 추가해주세요</small></span>
 
-                                        <button type="button" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-plus"></span> 추가</button>
+                                        <button type="button" id="blog_add" ng-click="click_add_blog();" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-plus"></span> 추가</button>
 
                                     </div>
                                 </span>
@@ -367,7 +373,7 @@
     </table><!-- /.List-->
 
     <div class="moms_form_foot" style="border-bottom:2px solid #111;">
-        <div class="table_blue moms_form_footguide">모집기간 동안에는 신청내용을 수정할 수 있습니다. 기간을 확인해주세요.</div>
+        <!--<div class="table_blue moms_form_footguide">모집기간 동안에는 신청내용을 수정할 수 있습니다. 기간을 확인해주세요.</div>-->
 
         <div class="moms_form_footbtn">
             <button ng-click="click_momsexperiencelist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>

@@ -14,59 +14,59 @@ define([
     controllers.controller('momsreview-edit', ['$scope','$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD, $http) {
 
 
-        $(document).ready(function(){
-            $("#general").click(function(){
-                //클릭되었으면
-                if($("#general").is(":checked")){
-                    $('#menu_select').removeAttr('disabled');
-
-/*                    for(var i=0; i < $scope.event.length; i++){
-                        $('#value_select'+i).attr('disabled', 'disabled');
-                    }*/
-                    //클릭이 안되있으면
-                }else{
-                    $('#menu_select').attr('disabled', 'disabled');
-                }
-            })
-
-            $("#value_select").click(function(){
-
-                if(!$("#value_select").is(":checked")){
-                    $('#menu_select').attr('disabled', 'disabled');
-                }else{
-                    $('#menu_select').removeAttr('disabled');
-                }
-            });
-
-        });
-
-         $(function(){
-             $("#general").click(function(){
-                 //클릭되었으면
-                 if($("#general").is(":checked")){
-                     $('#menu_select').removeAttr('disabled');
-                     //클릭이 안되있으면
-                 }else{
-                     $('#menu_select').attr('disabled', 'true');
-                 }
-             })
-
-             $("#value_select").click(function(){
-                 if(!$("#value_select").is(":checked")){
-                     $('#menu_select').attr('disabled', 'disabled');
-                 }else{
-                     $('#menu_select').removeAttr('disabled');
-                 }
-             });
-         });
-
-        $scope.menu_select = function (idx){
-            if($("#value_select"+idx).is(":checked")){
-                $('#menu_select').attr('disabled', 'disabled');
-            }else{
-                $('#menu_select').removeAttr('disabled');
-            }
-        }
+//        $(document).ready(function(){
+//            $("#general").click(function(){
+//                //클릭되었으면
+//                if($("#general").is(":checked")){
+//                    $('#menu_select').removeAttr('disabled');
+//
+///*                    for(var i=0; i < $scope.event.length; i++){
+//                        $('#value_select'+i).attr('disabled', 'disabled');
+//                    }*/
+//                    //클릭이 안되있으면
+//                }else{
+//                    $('#menu_select').attr('disabled', 'disabled');
+//                }
+//            })
+//
+//            $("#value_select").click(function(){
+//
+//                if(!$("#value_select").is(":checked")){
+//                    $('#menu_select').attr('disabled', 'disabled');
+//                }else{
+//                    $('#menu_select').removeAttr('disabled');
+//                }
+//            });
+//
+//        });
+//
+//         $(function(){
+//             $("#general").click(function(){
+//                 //클릭되었으면
+//                 if($("#general").is(":checked")){
+//                     $('#menu_select').removeAttr('disabled');
+//                     //클릭이 안되있으면
+//                 }else{
+//                     $('#menu_select').attr('disabled', 'true');
+//                 }
+//             })
+//
+//             $("#value_select").click(function(){
+//                 if(!$("#value_select").is(":checked")){
+//                     $('#menu_select').attr('disabled', 'disabled');
+//                 }else{
+//                     $('#menu_select').removeAttr('disabled');
+//                 }
+//             });
+//         });
+//
+//        $scope.menu_select = function (idx){
+//            if($("#value_select"+idx).is(":checked")){
+//                $('#menu_select').attr('disabled', 'disabled');
+//            }else{
+//                $('#menu_select').removeAttr('disabled');
+//            }
+//        }
 
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
