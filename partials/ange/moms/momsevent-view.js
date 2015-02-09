@@ -257,50 +257,65 @@ define([
             $scope.search.TARGET_NO = $scope.item.NO;
             $scope.search.TARGET_GB = 'EVENT';
 
-            $scope.getList('ange/comp', 'check', {}, $scope.search, false)
-                .then(function(data){
-                    var comp_cnt = data[0].COMP_CNT;
+            $scope.item.PREGNANT_WEEKS = 0;
 
-                    $scope.item.TARGET_GB = 'EVENT';
+            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                .then(function(){
 
-                    if (comp_cnt == 1) {
+                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
-                        $scope.item.NO = data[0].NO;
-
-                        $scope.item.PREGNANT_WEEKS = 0;
-
-                        $scope.updateItem('ange/comp', 'item', $scope.item.NO, $scope.item, false)
-                            .then(function(){
-
-                                dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
-
-                                if ($stateParams.menu == 'eventprocess') {
-                                    $location.url('/moms/eventprocess/list');
-                                } else if($stateParams.menu == 'eventperformance') {
-                                    $location.url('/moms/eventperformance/list');
-                                }
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-                    } else {
-
-                        $scope.item.PREGNANT_WEEKS = 0;
-
-                        $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                            .then(function(){
-
-                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-
-                                if ($stateParams.menu == 'eventprocess') {
-                                    $location.url('/moms/eventprocess/list');
-                                } else if($stateParams.menu == 'eventperformance') {
-                                    $location.url('/moms/eventperformance/list');
-                                }
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    if ($stateParams.menu == 'eventprocess') {
+                        $location.url('/moms/eventprocess/list');
+                    } else if($stateParams.menu == 'eventperformance') {
+                        $location.url('/moms/eventperformance/list');
                     }
-
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+//            $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+//                .then(function(data){
+//                    var comp_cnt = data[0].COMP_CNT;
+//
+//                    $scope.item.TARGET_GB = 'EVENT';
+//
+//                    if (comp_cnt == 1) {
+//
+//                        $scope.item.NO = data[0].NO;
+//
+//                        $scope.item.PREGNANT_WEEKS = 0;
+//
+//                        $scope.updateItem('ange/comp', 'item', $scope.item.NO, $scope.item, false)
+//                            .then(function(){
+//
+//                                dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+//
+//                                if ($stateParams.menu == 'eventprocess') {
+//                                    $location.url('/moms/eventprocess/list');
+//                                } else if($stateParams.menu == 'eventperformance') {
+//                                    $location.url('/moms/eventperformance/list');
+//                                }
+//                            })
+//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                    } else {
+//
+//                        $scope.item.PREGNANT_WEEKS = 0;
+//
+//                        $scope.insertItem('ange/comp', 'item', $scope.item, false)
+//                            .then(function(){
+//
+//                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+//
+//                                if ($stateParams.menu == 'eventprocess') {
+//                                    $location.url('/moms/eventprocess/list');
+//                                } else if($stateParams.menu == 'eventperformance') {
+//                                    $location.url('/moms/eventperformance/list');
+//                                }
+//                            })
+//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                    }
+//
+//                })
+//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.click_momseventlist = function (){

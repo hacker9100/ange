@@ -370,11 +370,9 @@
         <div class="table_blue moms_form_footguide">모집기간 동안에는 신청내용을 수정할 수 있습니다. 기간을 확인해주세요.</div>
 
         <div class="moms_form_footbtn">
-
             <button ng-click="click_momsexperiencelist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>
             <button ng-click="click_momseventcomp();" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
-            <button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>
-
+            <!--<button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>-->
         </div>
     </div>
 
@@ -417,7 +415,7 @@
 
                 </td>
                 <td>
-                    <span style="font-size:1.08em; font-weight:600;">{{ review.SUBJECT | limitTo: 60 }}{{review.SUBJECT > 60 ? '...' : ''}}</span>
+                    <span style="font-size:1.08em; font-weight:600;">{{ review.SUBJECT | string_limit: 60 }}{{review.SUBJECT > 60 ? '...' : ''}}</span>
                     <span class="table_icon_new">N</span>
                     <span class="glyphicon glyphicon-picture table_icon_pic"></span>
 
