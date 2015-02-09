@@ -383,7 +383,8 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                             $select_short_answer = '';
                             $note = '';
                         }else{
-                            foreach ($_model[SELECT_ANSWER] as $e) {
+                            foreach ($s[SELECT_ANSWER] as $e) {
+
                                 $query_no = $e[QUERY_NO];
                                 $query_sort = $e[QUERY_SORT];
                                 $poll_no = $e[BOARD_NO];

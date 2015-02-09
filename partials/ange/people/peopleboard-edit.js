@@ -38,7 +38,7 @@ define([
                     $scope.item.SCRAP_FL = "true";
                     $scope.item.REPLY_FL = "true";
                 }else{ //클릭이 안되있으면
-                    $("input[name=check]").prop("checked",false);
+                    $("input[name='check']").prop("checked",false);
                     $scope.checked = false;
                 }
             })
