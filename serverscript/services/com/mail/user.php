@@ -848,16 +848,15 @@
                 $to = $_model[EMAIL];
                 $from_email = $_model[EMAIL];
                 $from_user = $_model[USER_NM];
-                $headers = "From: hacker9100@gmail.com";
-                $subject = "test";
-//                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
-                $message = "test.";
+                $headers = "From: hacker9100@gmail.com \r\n".'X-Mailer: PHP/' . phpversion();
+                $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
+                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
 
                 MtUtil::_d("------------>>>>> mail : ");
 
-                $return = MtUtil::sendMail($to, $subject, $message, $headers);
+//                $return = MtUtil::sendMail($to, $subject, $message, $headers);
                 MtUtil::_d("------------>>>>> mail : ".$return);
-//                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $from_user);
                 $_d->succEnd('');
             }
 

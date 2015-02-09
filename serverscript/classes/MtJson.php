@@ -1,9 +1,9 @@
 <?php
 class MtJson extends MtData {
 
-    function MtJson() {
+    function MtJson($db) {
         ob_start();
-        parent::connect();
+        parent::connect($db);
     }
 
     function sql2json($sql) {
@@ -14,7 +14,7 @@ class MtJson extends MtData {
 
     function failEnd($msg) {
         ob_end_clean();
-        MtUtil::_c("### [END] [ERROR]");
+        MtUtil::_d("### [END] [ERROR]");
         header('HTTP/1.1 200 OK');
         echo '{"msg":"'.$msg.'","err":true}';
         exit;
@@ -22,7 +22,7 @@ class MtJson extends MtData {
 
     function succEnd($msg) {
         ob_end_clean();
-        MtUtil::_c("### [END] [SUCCESS]".$msg);
+        MtUtil::_d("### [END] [SUCCESS]".$msg);
         header('HTTP/1.1 200 OK');
         echo '{"msg":"'.$msg.'","err":false}';
         exit;
@@ -31,7 +31,7 @@ class MtJson extends MtData {
     function cmdEnd($sql) {
 
         $result = $this->sql_query($sql,false);
-        MtUtil::_c('===============================>'.$result);
+        MtUtil::_d('===============================>'.$result);
         if ($result!=1) {
             $this->failEnd('오류가 발생했습니다.데이터를 확인하세요');
         } else {
@@ -55,7 +55,7 @@ class MtJson extends MtData {
 
         $result = $this->getData($sql);
         $data = null;
-        MtUtil::_c("### [END] [DATA]".json_encode($result));
+        MtUtil::_d("### [END] [DATA]".json_encode($result));
 
         if ($result != null) {
             $data = json_encode($result);
@@ -70,7 +70,7 @@ class MtJson extends MtData {
     function dataEnd2($result) {
         ob_end_clean();
 
-        MtUtil::_c("### [END] [DATA]".json_encode($result));
+        MtUtil::_d("### [END] [DATA]".json_encode($result));
 //        header('HTTP/1.1 200 OK');
 //        header('Content-Type:application/json');
 

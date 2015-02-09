@@ -8,11 +8,11 @@ class MtUtil extends Mt {
     //REQUEST 값을 찍어 볼때
     function _r() {
         $a = $_REQUEST;
-        MtUtil::_c("########################################################################################\n################################ REQUEST LOG BEGIN #####################################");
+        MtUtil::_d("########################################################################################\n################################ REQUEST LOG BEGIN #####################################");
         foreach ($a as $k => $v) {
-            MtUtil::_c("[$k] => $v");
+            MtUtil::_d("[$k] => $v");
         }
-        MtUtil::_c("################################ REQUEST LOG END #######################################\n########################################################################################");
+        MtUtil::_d("################################ REQUEST LOG END #######################################\n########################################################################################");
     }
     
     function randomString() {
@@ -30,7 +30,7 @@ class MtUtil extends Mt {
     }
 
     //consoleLog 길어서 만듬
-    function _c($msg,$line=true) {
+    function _d($msg,$line=true) {
         if (DEBUG) {
             $access = date("Y.m.d");
             $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/debug".$access.".log", "a");
@@ -70,10 +70,10 @@ class MtUtil extends Mt {
     }
 
     //consoleLog 길어서 만듬(batch)
-    function _b($msg,$line=true) {
+    function _a($msg,$line=true) {
         if (DEBUG) {
             $access = date("Y.m.d");
-            $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/batch".$access.".log", "a");
+            $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/admin".$access.".log", "a");
             $text = "";
             if ($line) {
                 $text = chr(10).date("Y/m/d H:i:s").":::::::::>"."\n";
@@ -90,41 +90,24 @@ class MtUtil extends Mt {
     }
 
     //consoleLog 길어서 만듬
-    function _m($msg,$line=false) {
-        $access = date("Y.m.d");
-        $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/marking".$access.".log", "a");
+    function _c($msg,$line=false) {
+        if (DEBUG) {
+            $access = date("Y.m.d");
+            $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/cms".$access.".log", "a");
 
-        $text = "";
-        if ($line) {
-            $text = chr(10).date("Y/m/d H:i:s").":::::::::>"."\n";
-            foreach (debug_backtrace() as $k => $v) {
-                $text = $text.$v['file'].":line(".$v['line'].")\n";
+            $text = "";
+            if ($line) {
+                $text = chr(10).date("Y/m/d H:i:s").":::::::::>"."\n";
+                foreach (debug_backtrace() as $k => $v) {
+                    $text = $text.$v['file'].":line(".$v['line'].")\n";
+                }
+            } else {
+                $text = $text."\n";
             }
-        } else {
-            $text = $text."\n";
+            $text = $text.$msg;
+            fwrite($file_pointer, $text);
+            fclose($file_pointer);
         }
-        $text = $text.$msg;
-        fwrite($file_pointer, $text);
-        fclose($file_pointer);
-    }
-
-    //consoleLog 길어서 만듬
-    function _d($msg,$line=false) {
-        $access = date("Y.m.d");
-        $file_pointer = fopen($_SERVER['DOCUMENT_ROOT']."/logs/DATA.".$access.".log", "a");
-
-        $text = "";
-        if ($line) {
-            $text = chr(10).date("Y/m/d H:i:s").":::::::::>"."\n";
-            foreach (debug_backtrace() as $k => $v) {
-                $text = $text.$v['file'].":line(".$v['line'].")\n";
-            }
-        } else {
-            $text = $text."\n";
-        }
-        $text = $text.$msg;
-        fwrite($file_pointer, $text);
-        fclose($file_pointer);
     }
 
     //consoleLog 길어서 만듬
@@ -225,15 +208,24 @@ class MtUtil extends Mt {
      */
     function sendMail($to, $subject, $message, $headers){
 
-        $ret = mail($to, $subject, $message, $headers);
+        $to      = 'hacker9100@gmail.com';
+        $subject = 'the subject';
+        $message = 'hello';
+        $headers = 'From: hacker9100@gmail.com' . "\r\n" .
+            'Reply-To: hacker9100@gmail.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
 
-        if(!$ret) {
-            MtUtil::_c("------------>>>>> mail error");
-            return false;
-        } else {
-            MtUtil::_c("------------>>>>> mail send");
-            return true;
-        }
+        mail($to, $subject, $message, $headers);
+
+//        $ret = mail($to, $subject, $message, $headers);
+//
+//        if(!$ret) {
+//            MtUtil::_d("------------>>>>> mail error");
+//            return false;
+//        } else {
+//            MtUtil::_d("------------>>>>> mail send");
+//            return true;
+//        }
     }
 
     /*
@@ -256,10 +248,15 @@ class MtUtil extends Mt {
         $mail->CharSet    = "utf-8";
         $mail->SMTPAuth   = true;                  // enable SMTP authentication
         $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
-        $mail->Host       = __SMTP_HOST__;      // sets GMAIL as the SMTP server
-        $mail->Port       = __SMTP_PORT__;                   // set the SMTP port for the GMAIL server
-        $mail->Username   = __SMTP_USR__;             // GMAIL username
-        $mail->Password   = __SMTP_PWD__;              // GMAIL password
+//        $mail->Host       = __SMTP_HOST__;      // sets GMAIL as the SMTP server
+//        $mail->Port       = __SMTP_PORT__;                   // set the SMTP port for the GMAIL server
+//        $mail->Username   = __SMTP_USR__;             // GMAIL username
+//        $mail->Password   = __SMTP_PWD__;              // GMAIL password
+
+        $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
+        $mail->Port       = 465;                   // set the SMTP port for the GMAIL server
+        $mail->Username   = "hacker9100@gmail.com";             // GMAIL username
+        $mail->Password   = "rlatjdghks9100";              // GMAIL password
 
         $mail->SetFrom($EMAIL, $NAME);
 
@@ -273,11 +270,11 @@ class MtUtil extends Mt {
         $mail->AddAddress($address, $MAILTONAME);
 
         if(!$mail->Send()) {
-            MtUtil::_c("------------>>>>> mail error : ".$mail->ErrorInfo);
+            MtUtil::_d("------------>>>>> mail error : ".$mail->ErrorInfo);
             return false;
 //            echo "Mailer Error: " . $mail->ErrorInfo;
         } else {
-            MtUtil::_c("------------>>>>> mail send");
+            MtUtil::_d("------------>>>>> mail send");
             return true;
 //            echo "Message sent!";
         }

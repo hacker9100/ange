@@ -11,7 +11,7 @@ include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php"
 require_once('../libs/PHPMailer/class.phpmailer.php');
 require_once('../libs/PHPMailer/class.smtp.php');
 
-MtUtil::_c("### [MAIL START]");
+MtUtil::_d("### [MAIL START]");
 
 function mail_utf8($to, $from_user, $from_email,
                    $subject = '(No subject)', $message = '')

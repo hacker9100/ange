@@ -8,9 +8,9 @@
     @extract($_SERVER);
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
-    MtUtil::_c("### [START]");
+    MtUtil::_d("### [START]");
 
-    $_d = new MtJson();
+    $_d = new MtJson(null);
 
     $sql = "SELECT
                 CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION
@@ -76,7 +76,7 @@
     ob_end_clean();
     $channel_info = json_encode($channel_data);
     $menu_info = json_encode($menu_data);
-    MtUtil::_c("### [END]");
+    MtUtil::_d("### [END]");
 ?>
 
 <!doctype html>

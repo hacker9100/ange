@@ -16,10 +16,10 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_c("### [START]");
-	MtUtil::_c(print_r($_REQUEST,true));
+    MtUtil::_d("### [START]");
+	MtUtil::_d(print_r($_REQUEST,true));
 
-    $_d = new MtJson();
+    $_d = new MtJson(null);
 
     $_search = json_decode($_search, true);
 
@@ -27,9 +27,9 @@
     $sort_order = "";
 
     if ($_search[CHECKED] == "C") {
-        MtUtil::_c($_search.CHECKED);
+        MtUtil::_d($_search.CHECKED);
         if (isset($_search[USER_ID_LIST])) {
-            MtUtil::_c($_search.CHECKED);
+            MtUtil::_d($_search.CHECKED);
             $in_str = "";
             $in_size = sizeof($_search[USER_ID_LIST]);
             for ($i=0; $i< $in_size; $i++) {

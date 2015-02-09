@@ -155,7 +155,7 @@ define([
                 console.log($scope.user.USER_ID)
                 console.log(check.test($scope.user.USER_ID))
 
-                if (!check.test($scope.user.USER_ID)) {
+                if ($scope.user.USER_ID.length < 13 && !check.test($scope.user.USER_ID)) {
                     $scope.click_checkUserId();
                 } else {
                     $scope.availableID = false;
@@ -412,9 +412,29 @@ define([
         // 사용자 인증
         $scope.click_certUser = function (cert) {
             if (cert == 'mail') {
-                $scope.checkCert = true;
+                $scope.user.USER_NM = '김성환';
+                $scope.user.EMAIL = 'hacker9100@gmail.com';
+
+                $scope.insertItem('com/user', 'mail', $scope.user, false)
+                    .then(function(){ dialogs.notify('알림', '인증메일이 재전송되었습니다.', {size: 'md'});})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
+//                $scope.user.PHONE_1 = '01027137400';
+                $scope.user.CERT_NO = Math.floor(Math.random() * (999999 - 100000) + 100000);
+                $scope.insertItem('com/sms', 'item', $scope.user, false)
+                    .then(function(){ $scope.isSMS = true; dialogs.notify('알림', '인증번호가 전송되었습니다.', {size: 'md'});})
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }
+        };
+
+        // 인증번호 확인
+        $scope.click_checkCertNo = function () {
+            if ($scope.user.CERT_NO == $scope.user.CERT_NO_CP) {
+                dialogs.notify('알림', '인증 되었습니다.', {size: 'md'});
                 $scope.checkCert = true;
+                $scope.isSMS = false;
+            } else {
+                dialogs.error('오류', '인증번호가 일치하지 않습니다.', {size: 'md'});
             }
         };
 
@@ -465,7 +485,19 @@ define([
 //
 //                $scope.step = '03';
             } else if ($scope.step == '03') {
-                $scope.step = '04';
+                if (!$scope.checkCert) {
+                    $scope.getItem('com/user', 'cert', $scope.user.USER_ID, {}, false)
+                        .then(function(data) {
+                            if (data.CERT_GB != null && data.CERT_GB != '') {
+                                $scope.step = '04';
+                            } else {
+                                dialogs.notify('알림', '회원 인증이 되지않았습니다.', {size: 'md'});
+                            }
+                        })
+                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                } else {
+                    $scope.step = '04';
+                }
             } else if ($scope.step == '04') {
                 $scope.finishUser();
             }

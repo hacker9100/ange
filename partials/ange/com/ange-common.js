@@ -252,74 +252,71 @@ define([
                 } else {
                     dialogs.error('오류', '로그인 후 사용가능합니다.', {size: 'md'});
                 }
-                $location.path("/signin");
+                $location.path("/main");
                 return false;
             }
 
-            if (url) path = url;
-
-            var spMenu =  path.split('/');
-            var menuId = spMenu[1];
-            var menuGb = '';
-
-            if (spMenu.length > 1) menuGb = spMenu[2];
-
-            if (menuId == "content") {
-                menuId = spMenu[2];
-                menuGb = spMenu[3];
-            }
-
-            for (var idx in $rootScope.session.MENU_ROLE) {
-                var permission = false;
-                var role = $rootScope.session.MENU_ROLE[idx];
-
-                if (menuId == 'signup' || menuId == 'signin') {
-                    permission = true;
-                }
-
-                if (role.MENU_ID == menuId) {
-                    if (spMenu.length < 3 && role.MENU_FL == '0') {
-                        permission = true;
-                    } else {
-                        switch (menuGb) {
-                            case 'main' :
-                                if (role.MENU_FL == '0') {
-                                    permission = true;
-                                }
-                                break;
-                            case 'list' :
-                                if (role.LIST_FL == '0') {
-                                    permission = true;
-                                }
-                                break;
-                            case 'view' :
-                                if (role.VIEW_FL == '0') {
-                                    permission = true;
-                                }
-                                break;
-                            case 'edit' :
-                                if (role.EDIT_FL == '0') {
-                                    permission = true;
-                                }
-                                break;
-//                                    default :
-//                                        permission = false;
-                        }
-                    }
-
-                    if (!permission) {
-                        if (back) {
-    //                        alert('접근할 수 없는 메뉴 입니다.');
-                            history.back();
-                            throw( new String('접근할 수 없는 메뉴 입니다.') );
-                            return;
-                        } else {
-                            dialogs.error('오류', '접근할 수 없는 메뉴 입니다.', {size: 'md'});
-                            return false;
-                        }
-                    }
-                }
-            }
+//            if (url) path = url;
+//
+//            var spMenu =  path.split('/');
+//            var menuId = spMenu[1];
+//            var menuGb = '';
+//
+//            if (spMenu.length > 1) menuGb = spMenu[2];
+//
+//            if (menuId == "content") {
+//                menuId = spMenu[2];
+//                menuGb = spMenu[3];
+//            }
+//
+//            for (var idx in $rootScope.session.MENU_ROLE) {
+//                var permission = false;
+//                var role = $rootScope.session.MENU_ROLE[idx];
+//
+//                if (menuId == 'signup' || menuId == 'signin') {
+//                    permission = true;
+//                }
+//
+//                if (role.MENU_ID == menuId) {
+//                    if (spMenu.length < 3 && role.MENU_FL == '0') {
+//                        permission = true;
+//                    } else {
+//                        switch (menuGb) {
+//                            case 'main' :
+//                                if (role.MENU_FL == '0') {
+//                                    permission = true;
+//                                }
+//                                break;
+//                            case 'list' :
+//                                if (role.LIST_FL == '0') {
+//                                    permission = true;
+//                                }
+//                                break;
+//                            case 'view' :
+//                                if (role.VIEW_FL == '0') {
+//                                    permission = true;
+//                                }
+//                                break;
+//                            case 'edit' :
+//                                if (role.EDIT_FL == '0') {
+//                                    permission = true;
+//                                }
+//                                break;
+//                        }
+//                    }
+//
+//                    if (!permission) {
+//                        if (back) {
+//                            history.back();
+//                            throw( new String('접근할 수 없는 메뉴 입니다.') );
+//                            return;
+//                        } else {
+//                            dialogs.error('오류', '접근할 수 없는 메뉴 입니다.', {size: 'md'});
+//                            return false;
+//                        }
+//                    }
+//                }
+//            }
 
             return true;
         };

@@ -10,14 +10,16 @@
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
     MtUtil::_c("### [START]");
 
-    $_d = new MtJson();
+    $_d = new MtJson(null);
+
+    $system = "CMS";
 
     $sql = "SELECT
                 CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION
             FROM
                 COM_CHANNEL
             WHERE
-                SYSTEM_GB = 'CMS'
+                SYSTEM_GB = '".$system."'
                 AND CHANNEL_ST = 'Y'
             ORDER BY CHANNEL_NO ASC
             ";
@@ -31,7 +33,7 @@
                 FROM
                     COM_MENU
                 WHERE
-                    SYSTEM_GB = 'CMS'
+                    SYSTEM_GB = '".$system."'
                     AND MENU_ST = 'Y'
                     AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
                 ORDER BY MENU_ORD ASC
@@ -50,7 +52,7 @@
             FROM
                 COM_MENU
             WHERE
-                SYSTEM_GB  = 'CMS'
+                SYSTEM_GB  = '".$system."'
                 AND MENU_ST  = 'Y'
             ORDER BY MENU_ORD ASC
             ";
@@ -94,14 +96,12 @@
 <meta name="author" content="">
 
 <link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
-<link rel="stylesheet" type="text/css" href="/lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
 <link rel="stylesheet" type="text/css" href="/lib/ngActivityIndicator/css/ngActivityIndicator.css" />
 <link rel="stylesheet" type="text/css" href="/lib/fullcalendar/fullcalendar.css" />
 
 <link rel="stylesheet" type="text/css" href="/css/calendarDemo.css" />
 <link rel="stylesheet" type="text/css" href="/css/ng-table/ng-table.min.css" />
 <link rel="stylesheet" type="text/css" href="/css/dialog/dialogs.min.css" />
-<link rel="stylesheet" type="text/css" href="/css/app_d.css">
 
 <link rel="stylesheet" type="text/css" href="/css/normalize.css" >
 <link rel="stylesheet" type="text/css" href="/css/angeCMS_bootstrap.css" />
@@ -116,65 +116,6 @@
 <!-- CSS adjustments for browsers with JavaScript disabled -->
 <noscript><link rel="stylesheet" href="/css/file-upload/jquery.fileupload-noscript.css"></noscript>
 <noscript><link rel="stylesheet" href="/css/file-upload/jquery.fileupload-ui-noscript.css"></noscript>
-<style type="text/css">
-    #veil {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height:100%;
-        width:100%;
-        cursor: not-allowed;
-        filter: alpha(opacity=60);
-        opacity: 0.6;
-        background: #000000 url(http://www.wingo.com/angular/AngularShieldLogo.png) no-repeat center;
-    }
-    #feedLoading {
-        position: absolute;
-        top:200px;
-        width:100%;
-        text-align: center;
-        font-size: 4em;
-        color:white;
-        text-shadow: 2px 2px 2px #021124;
-    }
-    .feed-loading {
-        position: absolute;
-        display: block;
-        width: 32px;
-        height: 32px;
-        top:10px;
-        width:50px;
-    }
-</style>
-
-<style>
-    .loading-container {
-        position: relative;
-    }
-    .loading-container .loading:before, .loading-container .loading:after {
-        content: " ";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        min-height: 50px;
-        min-width: 50px;
-    }
-    .loading-container .loading:before {
-        background-color: white;
-        opacity: 0.5;
-    }
-
-    .form-horizontal input.ng-invalid.ng-dirty {
-        border-color: #FA787E;
-    }
-/*
-    .form-horizontal input.ng-valid.ng-dirty {
-        border-color: #78FA89;
-    }
-*/
-</style>
 
 <!-- IE6,7,8에서도 HTML5 element를 인식시켜주기 위한 코드 -->
 <!--[if lt IE 9]>
@@ -186,7 +127,7 @@
     function cms_init($rootScope, $location) {
         $rootScope.cms_channel = <?=$channel_info?>;
         $rootScope.cms_menu = <?=$menu_info?>;
-        $rootScope.location = $location.path();
+//        $rootScope.location = $location.path();
     }
 </script>
 

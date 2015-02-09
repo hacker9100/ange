@@ -98,12 +98,16 @@ console.log(JSON.stringify(data))
                             $scope.checkAllAgree = true;
                         }
 
+                        if ($scope.item.BABY_BIRTH_DT != null) {
+                            $scope.item.BABY_BIRTH_DT = $scope.item.BABY_BIRTH_DT.substr(0, 4) + '-' + $scope.item.BABY_BIRTH_DT.substr(4, 2) + '-' + $scope.item.BABY_BIRTH_DT.substr(6, 2);
+                        }
+
                         if ($scope.item.BABY != null) {
                             $scope.babies = $scope.item.BABY;
 
                             for (var i=0; i < $scope.item.BABY.length; i++) {
                                 if ($scope.item.BABY[i].BABY_BIRTH.length == 8) {
-                                    $scope.babies[i].BABY_BIRTH = $scope.item.BABY[i].BABY_BIRTH.substr(0, 4) + '-' + $scope.item.BABY[i].BABY_BIRTH.substr(4, 2).replace('0', '') + '-' + $scope.item.BABY[i].BABY_BIRTH.substr(6, 2).replace('0', '');
+                                    $scope.babies[i].BABY_BIRTH = $scope.item.BABY[i].BABY_BIRTH.substr(0, 4) + '-' + $scope.item.BABY[i].BABY_BIRTH.substr(4, 2) + '-' + $scope.item.BABY[i].BABY_BIRTH.substr(6, 2);
                                 }
                             }
                         }
@@ -132,7 +136,7 @@ console.log(JSON.stringify(data))
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
-//            .then($scope.permissionCheck)
+            .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getUser)
             .catch($scope.reportProblems);

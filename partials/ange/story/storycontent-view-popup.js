@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller("storycontent-view-popup", ['$scope', '$sce', '$controller', '$rootScope', '$location', '$modalInstance', '$q', 'dialogs', 'UPLOAD', 'data', function($scope, $sce, $controller, $rootScope, $location, $modalInstance, $q, dialogs, UPLOAD, data) {
+    controllers.controller("storycontent-view-popup", ['$rootScope', '$scope', '$sce', '$controller', '$location', '$modalInstance', '$q', 'dialogs', 'UPLOAD', 'data', function($rootScope, $scope, $sce, $controller, $location, $modalInstance, $q, dialogs, UPLOAD, data) {
 
         angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
@@ -42,11 +42,17 @@ define([
             $modalInstance.close();
         };
 
+        $scope.click_changeContentDetail = function (item) {
+            data = item;
+            $scope.TARGET_NO = data.NO;
+            $scope.getContent();
+        };
+
         // 콘텐츠 조회
         $scope.getContent = function () {
             var deferred = $q.defer();
             $q.all([
-                    $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:9}, {CATEGORY: data.CATEGORY, FILE: true, PHASE: '30, 31'}, false).then(function(data){
+                    $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:9}, {CATEGORY: data.CATEGORY, FILE: true, PHASE: '30, 31', SORT: 'RAND()', ORDER: ''}, false).then(function(data){
                         console.log(JSON.stringify(data))
                         $scope.totalPage = Math.round(data[0].TOTAL_COUNT / 2);
 
@@ -58,7 +64,15 @@ define([
                             }
                         }
                     }),
-                    $scope.getItem('cms/task', 'item', data.NO, {}, false).then(function(data){ $scope.task = data; }),
+                    $scope.getItem('cms/task', 'item', data.NO, {FILE: true}, false).then(function(data){
+                        $scope.task = data;
+
+                        $scope.share_url = UPLOAD.BASE_URL + 'story/content/list/' + $scope.task.NO;
+                        $rootScope.share_url = $scope.share_url;
+                        $rootScope.share_title = $scope.task.SUBJECT;
+                        $rootScope.share_img = UPLOAD.BASE_URL + $scope.task.FILE.PATH + 'thumbnail/' + $scope.task.FILE.FILE_ID;
+                        $rootScope.share_desc = $scope.task.SUMMARY;
+                    }),
                     $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){ $scope.content = data; }),
                     $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, PHASE: '30, 31'}, false).then(function(data){
                         $scope.editorList = data;

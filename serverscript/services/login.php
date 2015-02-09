@@ -17,10 +17,10 @@
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/services/passwordHash.php");
 
-    MtUtil::_c("### [START]");
-	MtUtil::_c(print_r($_REQUEST,true));
+    MtUtil::_d("### [START]");
+	MtUtil::_d(print_r($_REQUEST,true));
 
-    $_d = new MtJson();
+    $_d = new MtJson(null);
 
     if ($_d->connect_db == "") {
         $_d->failEnd("DB 연결 실패. 시스템에 비정상적으로 작동합니다.");
@@ -40,7 +40,7 @@
         case "GET":
             if (isset($_key) && $_key != "") {
 //                $form = json_decode(file_get_contents("php://input"),true);
-//                MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//                MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
                 $where_search = "";
 
@@ -52,7 +52,7 @@
                     $where_search .= "AND R.SYSTEM_GB  = '".$_model[SYSTEM_GB]."' ";
                 }
 
-                MtUtil::_c("### [PW] ".create_hash($password));
+                MtUtil::_d("### [PW] ".create_hash($password));
 
                 $err = 0;
                 $msg = "";
@@ -206,10 +206,10 @@
 
                     if (!isset($_SESSION['count'])) {
                         $_SESSION['count'] = 1;
-                        MtUtil::_c("################################### [session1] ");
+                        MtUtil::_d("################################### [session1] ");
                     } else {
                         $_SESSION['count']++;
-                        MtUtil::_c("################################### [session2] ");
+                        MtUtil::_d("################################### [session2] ");
                     }
                     $_SESSION['count'][test] = $data['USER_ID'];
                     $_SESSION['user_info'] = $data;

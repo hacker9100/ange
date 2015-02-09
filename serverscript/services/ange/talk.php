@@ -16,12 +16,12 @@ date_default_timezone_set('Asia/Seoul');
 
 include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-MtUtil::_c("### [START]");
-MtUtil::_c(print_r($_REQUEST,true));
+MtUtil::_d("### [START]");
+MtUtil::_d(print_r($_REQUEST,true));
 
-MtUtil::_c(json_encode(file_get_contents("php://input"),true));
+MtUtil::_d(json_encode(file_get_contents("php://input"),true));
 
-//	MtUtil::_c(print_r($_REQUEST,true));
+//	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
@@ -30,7 +30,7 @@ MtUtil::_c(json_encode(file_get_contents("php://input"),true));
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-$_d = new MtJson();
+$_d = new MtJson(null);
 
 if ($_d->connect_db == "") {
     $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -320,7 +320,7 @@ switch ($_method) {
             }
 
             if ($result_data && $is_delete) {
-                MtUtil::_c("------------>>>>> DELETE NO : ".$result_data[NO]);
+                MtUtil::_d("------------>>>>> DELETE NO : ".$result_data[NO]);
                 $sql = "DELETE FROM FILE WHERE NO = ".$result_data[NO];
 
                 $_d->sql_query($sql);
@@ -329,7 +329,7 @@ switch ($_method) {
 
                 $_d->sql_query($sql);
 
-                MtUtil::_c("------------>>>>> DELETE NO : ".$result_data[NO]);
+                MtUtil::_d("------------>>>>> DELETE NO : ".$result_data[NO]);
 
                 if (file_exists('../../..'.$result_data[PATH].$result_data[FILE_ID])) {
                     unlink('../../..'.$result_data[PATH].$result_data[FILE_ID]);
@@ -434,7 +434,7 @@ switch ($_method) {
 
         $result = $_d->sql_query($sql,true);
         for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-            MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+            MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
             $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
 
             $_d->sql_query($sql);
@@ -443,7 +443,7 @@ switch ($_method) {
 
             $_d->sql_query($sql);
 
-            MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+            MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
             if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                 unlink('../../..'.$row[PATH].$row[FILE_ID]);

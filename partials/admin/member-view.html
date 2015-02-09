@@ -163,18 +163,18 @@
                     <label class= "form_basic_label">임신여부</label>
                     <div class="col-md-12 form_basic_input" style="margin-top:9px;">
                         {{ item.PREGNENT_FL == 'Y' ? '해당됨' : '해당없음'}}
-                        ( 출산예정일 : {{  }})
+                        ( 출산예정일 : {{ item.BABY_BIRTH_DT }})
                     </div>
                 </div>
 
                 <div class= "form-group form_basic_group">
                     <label class= "form_basic_label">아기</label>
-                    <div class="col-md-12" style="margin-left: 77px;">
+                    <div class="col-md-9" style="margin: 10px 85px;">
                         <div class="col-md-12" ng-repeat="baby in babies">
                             <span class="col-md-1"> 아기이름 : </span>
-                            <span>{{ baby.BABY_NM }}</span>
+                            <span class="col-md-1">{{ baby.BABY_NM }}</span>
                             <span class="col-md-1"> 성별 : </span>
-                            <span>{{ baby.BABY_SEX_GB == 'M' ? '남' : '여' }}</span>
+                            <span class="col-md-1">{{ baby.BABY_SEX_GB == 'M' ? '남' : '여' }}</span>
                             <span class="col-md-1"> 생년월일 : </span>
                             <div class="col-md-5">
                                 {{ baby.BABY_BIRTH }}

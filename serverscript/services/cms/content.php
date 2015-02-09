@@ -16,8 +16,8 @@
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_c("### [START]");
-	MtUtil::_c(print_r($_REQUEST,true));
+    MtUtil::_d("### [START]");
+	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
@@ -26,7 +26,7 @@
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-    $_d = new MtJson();
+    $_d = new MtJson(null);
 
     if ($_d->connect_db == "") {
         $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -193,7 +193,7 @@
                 }
             }
 */
-//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if ($_type == "new") {
                 $upload_path = '../../../upload/files/';
@@ -222,7 +222,7 @@
                                 rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
                                 $insert_path[$i] = array(path => $file_path, uid => $uid);
 
-                                MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
                                 $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                             }
@@ -260,7 +260,7 @@
 
                 $_d->sql_beginTransaction();
 
-                MtUtil::_c("### [SUPER_NO] ".( empty($form[SUPER_NO]) ? 0 : $form[SUPER_NO]) );
+                MtUtil::_d("### [SUPER_NO] ".( empty($form[SUPER_NO]) ? 0 : $form[SUPER_NO]) );
 
                 $sql = "INSERT INTO CMS_CONTENT
                         (
@@ -321,8 +321,8 @@
 
                     for ($i = 0 ; $i < count($_model[FILES]); $i++) {
                         $file = $files[$i];
-                        MtUtil::_c("------------>>>>> file : ".$file['name']);
-                        MtUtil::_c("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+                        MtUtil::_d("------------>>>>> file : ".$file['name']);
+                        MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
                         $sql = "INSERT INTO FILE
                                 (
@@ -474,12 +474,12 @@
                                 rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
                                 $insert_path[$i] = array(path => $file_path, uid => $uid);
 
-                                MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                                MtUtil::_c("------------>>>>> mediumUrl : ".BASE_URL.$source_path.'medium/'.$uid);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".BASE_URL.$source_path.'medium/'.$uid);
 
                                 $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
 
-                                MtUtil::_c("------------>>>>> body_str : ".$body_str);
+                                MtUtil::_d("------------>>>>> body_str : ".$body_str);
                             } else {
                                 $uid = uniqid();
 
@@ -574,7 +574,7 @@
 
                     for ($i = 0 ; $i < count($files); $i++) {
                         $file = $files[$i];
-                        MtUtil::_c("------------>>>>> file : ".$file['name']);
+                        MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                         if ($insert_path[$i][uid] != "") {
                             $sql = "INSERT INTO FILE
@@ -683,7 +683,7 @@
             }
 
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if (isset($_phase)) {
                 $_d->sql_beginTransaction();
@@ -757,12 +757,12 @@
                                 rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
                                 $insert_path[$i] = array(path => $file_path, uid => $uid);
 
-                                MtUtil::_c("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                                MtUtil::_c("------------>>>>> mediumUrl : ".BASE_URL.$source_path.'medium/'.$uid);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".BASE_URL.$source_path.'medium/'.$uid);
 
                                 $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
 
-                                MtUtil::_c("------------>>>>> body_str : ".$body_str);
+                                MtUtil::_d("------------>>>>> body_str : ".$body_str);
                             } else {
                                 $insert_path[$i] = array(path => '', uid => '');
                             }
@@ -802,7 +802,7 @@
                     $task_phase = $task[PHASE];
                 }
 
-                MtUtil::_c("------------>>>>> count_task___________ : ".$_model[TASK]);
+                MtUtil::_d("------------>>>>> count_task___________ : ".$_model[TASK]);
 
                 $sql = "UPDATE CMS_CONTENT
                         SET
@@ -871,7 +871,7 @@
                     }
 
                     if ($is_delete) {
-                        MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
                         $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
 
                         $_d->sql_query($sql);
@@ -880,7 +880,7 @@
 
                         $_d->sql_query($sql);
 
-                        MtUtil::_c("------------>>>>> DELETE NO : ".$row[NO]);
+                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                         if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                             unlink('../../..'.$row[PATH].$row[FILE_ID]);
@@ -895,7 +895,7 @@
 
                     for ($i = 0 ; $i < count($files); $i++) {
                         $file = $files[$i];
-                        MtUtil::_c("------------>>>>> file : ".$file['name']);
+                        MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                         if ($insert_path[$i][uid] != "") {
                             $sql = "INSERT INTO FILE

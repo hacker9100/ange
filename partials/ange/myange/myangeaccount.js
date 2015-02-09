@@ -524,6 +524,7 @@ define([
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getUser)
             .catch($scope.reportProblems);

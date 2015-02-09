@@ -16,8 +16,8 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_c("### [START]");
-	MtUtil::_c(print_r($_REQUEST,true));
+    MtUtil::_d("### [START]");
+	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
@@ -26,7 +26,7 @@
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-    $_d = new MtJson();
+    $_d = new MtJson(null);
 
     if ($_d->connect_db == "") {
         $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -94,6 +94,26 @@
                     $approval_data = $_d->getData($sql);
 
                     $data['APPROVAL'] = $approval_data;
+
+                    if ($_search[FILE]) {
+                        $sql = "SELECT
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    CMS_CONTENT C, FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    C.NO = S.TARGET_NO
+                                    AND F.NO = S.SOURCE_NO
+                                    AND C.TASK_NO = ".$_key."
+                                    AND C.CURRENT_FL = 'Y'
+                                    AND S.CONTENT_GB = 'FILE'
+                                    AND S.TARGET_GB = 'CONTENT'
+                                    AND F.FILE_GB = 'MAIN'
+                                ";
+
+                        $file_data = $_d->sql_fetch($sql);
+
+                        $data['FILE'] = $file_data;
+                    }
                 }
 
                 if ($_d->mysql_errno > 0) {
@@ -470,7 +490,7 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if ($_type == 'item') {
                 if ( trim($_model[SUBJECT]) == "" ) {
@@ -700,7 +720,7 @@
             }
 
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_c("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if ($_type == 'item') {
                 $err = 0;

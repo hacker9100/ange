@@ -922,6 +922,14 @@
                                             <div class="col-xs-2">
                                                 <button type="button" class="btn btn-default" style="margin-top:8px; font-size:0.86em;" ng-click="click_certUser('phone');">휴대폰 인증하기</button>
                                             </div>
+                                            <div ng-show="isSMS" class="col-xs-12" style="margin: 30px 200px 0 200px">
+                                                <div class="col-xs-3">
+                                                    <input ng-model="user.CERT_NO_CP" type="text" class="form-control">
+                                                </div>
+                                                <div class="col-xs-3">
+                                                    <button type="button" class="btn btn-sm btn-info" ng-click="click_checkCertNo()"><span class="glyphicon glyphicon-plus"></span> 인증번호확인</button>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </center>

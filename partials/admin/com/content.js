@@ -170,7 +170,6 @@ define([
             } else if ($rootScope.session.SYSTEM_GB != CONSTANT.SYSTEM_GB) {
                 dialogs.error('오류', '다른 시스템에 로그인되어있습니다. 로그아웃 후 다시 로그인 하세요', {size: 'md'});
             }
-/*
             if (url) path = url;
 
             var spMenu =  path.split('/');
@@ -219,7 +218,6 @@ define([
 
                     if (!permission) {
                         if (back) {
-                            //                        alert('접근할 수 없는 메뉴 입니다.');
                             history.back();
                             throw( new String('접근할 수 없는 메뉴 입니다.') );
                             return;
@@ -230,7 +228,6 @@ define([
                     }
                 }
             }
-*/
 
             return true;
         };

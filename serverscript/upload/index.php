@@ -12,7 +12,7 @@
 
 //include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 //
-//MtUtil::_c("### [FILEUPLOAD]");
+//MtUtil::_d("### [FILEUPLOAD]");
 
 error_reporting(E_ALL | E_STRICT);
 require('UploadHandler.php');

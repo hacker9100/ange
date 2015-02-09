@@ -13,6 +13,13 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('main', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
 
+        $scope.test = function() {
+            $scope.insertItem('com/user', 'mail', {EMAIL: 'hacher9100@gmail.com', USER_NM: '김성환', USER_ID: 'hong'}, false)
+                .then(function(data){
+                    alert(0)
+                });
+        };
+
         /********** 초기화 **********/
         // 메인 화면 모드
         $scope.slide = 'cover';
@@ -21,10 +28,10 @@ define([
         // 초기화
         $scope.init = function() {
             // ange-portlet-slide-banner
-            $scope.option_r1_c1 = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 0, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+            $scope.option_r1_c1 = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 5, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
             // ange-portlet-link-image
-            $scope.option_r2_c2 = {title: '이벤트 배너', api:'ad/banner', size: 1, gb: 1, link: true, new: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};
+            $scope.option_r2_c2 = {title: '이벤트 배너', api:'ad/banner', size: 1, gb: 6, link: true, new: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};
 
             // ange-portlet-moms-list
             $scope.option_r2_c1 = {title: '맘스그라운드', api:'cms/task', size: 5, id: 'story', type: 'content', url: '/story/content/list', defIdx: 0, tab: [{no: '0', menu: 'popular', name: '인기'}, {no: '1', menu: 'current', name: '최신'}, {no: '2', menu: 'fit', name: '추천[맞춤서비스]'}], image: true, head: true, date: false, nick: true};
@@ -59,9 +66,13 @@ define([
             if ($scope.slide != slide && $scope.mode != '') {
                 $scope.slide = slide;
             } else if ($scope.slide != slide && $scope.mode == '') {
+                angular.element('#main').slickPrev();
+
                 $scope.slide = slide;
                 $scope.mode = 'pan';
             } else {
+                angular.element('#main').slickPrev();
+
                 $scope.slide = 'cover';
                 $scope.mode = '';
             }
@@ -86,7 +97,7 @@ define([
 
         // 메뉴 목록 조회
         $scope.getMenuList = function () {
-            $scope.getList('com/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, true)
+            $scope.getList('com/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, false)
                 .then(function(data){
                     for (var i=0; i<data.length; i++) {
                         var file = data[i].FILES;
