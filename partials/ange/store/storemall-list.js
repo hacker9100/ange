@@ -106,6 +106,10 @@ define([
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
 
                     for(var i in data) {
+
+                        data[i].PRICE  = data[i].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        console.log(data[i].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+
                         if (data[i].FILE != null) {
                             var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
                             data[i].MAIN_FILE = img;

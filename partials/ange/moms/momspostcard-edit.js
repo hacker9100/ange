@@ -235,7 +235,7 @@ define([
 
                     $scope.season_gb = target_gb;
 
-                    $scope.item.TARGET_GB = target_gb;
+                    $scope.item.EVENT_GB = target_gb;
                     $scope.item.NO = target_no;
 
                     var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;

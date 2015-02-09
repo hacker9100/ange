@@ -68,8 +68,8 @@
                                                 <div style="float:left;">
                                                     <strong>경매현황</strong>
                                                     <span class="table_gray" style="position:absolute; left:120px;">
-                                                        현재 <strong>{{item.AUCTION_AMOUNT > 0 ? item.AUCTION_AMOUNT : '0'}}</strong> 원
-                                                        <a href="#" style="margin-left:18px;"><small>입찰 : {{item.AUCTION_COUNT > 0 ? item.AUCTION_COUNT : '0'}}건</small></a>
+                                                        현재 <strong>{{item.AUCTION_AMOUNT}}</strong> 원
+                                                        <a href="#" style="margin-left:18px;"><small>입찰 : {{item.AUCTION_COUNT != '0' ? item.AUCTION_COUNT : '0'}}건</small></a>
                                                     </span>
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
