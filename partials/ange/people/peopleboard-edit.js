@@ -14,11 +14,22 @@ define([
     controllers.controller('peopleboard-edit', ['$scope', '$rootScope', '$stateParams', '$location', '$filter', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, $filter, dialogs, UPLOAD, $http) {
 
         $scope.checked = true;
+        // 게시판 초기화
+        $scope.item = {};
 
         $(document).ready(function(){
 
             $("#check_reply").prop("checked",true);
             $("input[name='check']").prop("checked",true);
+
+            if($scope.role == 'MANAGER'){
+                console.log('aaa');
+                $("input[name='noti_check']").prop("checked",true);
+                $scope.item.NOTICE_FL = "true";
+            }else{
+                $("input[name='noti_check']").prop("checked",false);
+                $scope.item.NOTICE_FL = "false";
+            }
 
             $("#checkall").click(function(){
                 //클릭되었으면
@@ -26,15 +37,8 @@ define([
                     $("input[name='check']").prop("checked",true);
                     $scope.item.SCRAP_FL = "true";
                     $scope.item.REPLY_FL = "true";
-                    if($scope.role == 'MANAGER'){
-                        $scope.item.NOTICE_FL = "true";
-                    }else{
-                        $scope.item.NOTICE_FL = "false";
-                    }
-                    //클릭이 안되있으면
-                }else{
+                }else{ //클릭이 안되있으면
                     $("input[name=check]").prop("checked",false);
-
                     $scope.checked = false;
                 }
             })
@@ -61,6 +65,8 @@ define([
                     $scope.item.SCRAP_FL = "true";
                 }else{
                     $scope.item.SCRAP_FL = "false";
+                    $("input[name='check']").prop("checked",false);
+                    $("#checkall").attr("checked",false);
                 }
             });
 
@@ -69,6 +75,8 @@ define([
                     $scope.item.REPLY_FL = "true";
                 }else{
                     $scope.item.REPLY_FL = "false";
+                    $("input[name='check']").prop("checked",false);
+                    $("#checkall").attr("checked",false);
                 }
             });
 
@@ -77,10 +85,11 @@ define([
                     $scope.item.NOTICE_FL = "true";
                 }else{
                     $scope.item.NOTICE_FL = "false";
+                    $("input[name='check']").prop("checked",false);
+                    $("#checkall").attr("checked",false);
                 }
             });
         });
-        //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
@@ -152,8 +161,6 @@ define([
         // 첨부파일 초기화
         $scope.queue = [];
 
-        // 게시판 초기화
-        $scope.item = {};
 
         // 첨부파일 체크박스 리스트 초기화
         $scope.item.queue = [];
