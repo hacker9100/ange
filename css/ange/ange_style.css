@@ -1992,6 +1992,72 @@ img.blank_wrap {
 }
 
 
+/* Story 전용 공유 버튼 */
+
+.story_sharebtn {
+    font-size: 0.78em;
+    line-height: 16px;
+    background-color:#fff;
+    border-radius:20px;
+    opacity: 0.75;
+}
+
+.story_sharebtn.redbtn {
+    border:1px solid #e60000;
+    color:#e60000;
+}
+
+.story_sharebtn.blackbtn {
+    border:1px solid #111;
+    color:#111;
+}
+
+.story_sharebtn.kakaobtn {
+    border:1px solid #f6cd00;
+    color:#111;
+}
+.story_sharebtn.twitterbtn {
+    border:1px solid #00c0f3;
+    color:#111;
+}
+.story_sharebtn.facebookbtn  {
+    border:1px solid #587cbd;
+    color:#111;
+}
+
+
+.story_sharebtn_icon {
+    font-size:0.88em;
+    margin-right:4px;
+}
+
+.story_sharebtn:hover {
+    opacity: 1;
+}
+
+.story_btnicon {
+    float:left;
+    height:11px;
+    width:11px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    margin-top: 2px;
+    margin-right: 4px;
+}
+
+
+.story_btnicon.kakao {
+    background-image: url('/imgs/ange/btnicon_kakao.png');
+}
+.story_btnicon.twitter {
+    background-image: url('/imgs/ange/btnicon_twitter.png');
+}
+.story_btnicon.facebook {
+    background-image: url('/imgs/ange/btnicon_facebook.png');
+}
+
+/* /Story 전용 공유 버튼 */
+
 
 /*** 레이아웃 작업 시 아래 하애 주석 해제 필요함 ***/
 
