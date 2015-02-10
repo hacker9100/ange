@@ -17,6 +17,7 @@ define([
         $scope.$parent.reload = false;
         $scope.busy = false;
         $scope.end = false;
+
         // 페이징
         $scope.PAGE_NO = 0;
         $scope.PAGE_SIZE = 6;
@@ -55,13 +56,15 @@ define([
         $scope.init = function(session) {
             if ($stateParams.menu == 'experienceprocess') {
                 $scope.community = "진행중인 체험단";
-                $scope.search.EVENT_GB = "EXPERIENCE";
-                $scope.search.PROCESS = "process";
+                $scope.search.EVENT_GB = "exp";
+                $scope.search.ADA_STATE = 1;
+                //$scope.search.PROCESS = "process";
                 $scope.menu = "experienceprocess"
             } else if ($stateParams.menu == 'experiencepast') {
                 $scope.community = "지난 체험단";
-                $scope.search.EVENT_GB = "EXPERIENCE";
-                $scope.search.PAST = "past";
+                $scope.search.EVENT_GB = "exp";
+                $scope.search.ADA_STATE = 0;
+                //$scope.search.PAST = "past";
                 $scope.menu = "experiencepast"
             }
         };
@@ -102,23 +105,7 @@ define([
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
-        // 상세보기
-        $scope.view_momsexperience = function(key){
-
-            $rootScope.focus = 'view';
-
-            if ($stateParams.menu == 'experienceprocess') {
-               $location.url('/moms/experienceprocess/view/'+key);
-            } else if ($stateParams.menu == 'experiencepast') {
-                $location.url('/moms/experiencepast/view/'+key);
-            }
-
-        }
-
-        //  응모하기
-        $scope.comp_momsexperience = function(key){
-
-            $rootScope.focus = 'comp';
+        $scope.comp_momsevent = function (key){
 
             if ($stateParams.menu == 'experienceprocess') {
                 $location.url('/moms/experienceprocess/view/'+key);
@@ -127,7 +114,6 @@ define([
             }
 
         }
-
         $scope.init();
         $scope.getPeopleBoardList();
     }]);

@@ -23,16 +23,16 @@
 <div class="row webzine_moms_list">
     <div class="col-xs-12 v-cell-4" style="margin:0px;">
         <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
-            <div class="item" style="position:absolute;"><img ng-src="{{item.THUMB_FILE}}"  style="height: 155px;" class="webzine_moms_featureimg"></div>
+            <div class="item" style="position:absolute;"><img ng-src="{{item.ada_image_url}}"  style="height: 155px;" class="webzine_moms_featureimg"></div>
             <div class="webzine_list_wrap">
 
                 <div class="webzine_list_title">
-                    {{item.SUBJECT}}
+                    {{item.ada_title}}
 
                     <div class="webzine_list_bottomwrap">
-                        <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.START_YMD}} ~ {{item.END_YMD}}</span></div>
-                        <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.PEOPLE_CNT}}명</span></div>
-                        <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.WINNER_DT}}</span></div>
+                        <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_open}} ~ {{item.ada_date_close}}</span></div>
+                        <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_object}}명</span></div>
+                        <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_notice}}</span></div>
                     </div>
                 </div>
 
@@ -45,11 +45,11 @@
                 <dl>
                     <dt class="table_red">추가정보</dt>
                     <dd><strong>마감일</strong><span class="table_gray" style="margin-left:8px;">{{D_DAY > 0 ? 'D-'+D_DAY : '마감'}}</span></dd>
-                    <dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>
-                    <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.DELIV_COST}}원</span></dd>
-                    <dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM == '' ? '없음' : item.GIFT_NM}}</span></dd>
-                    <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.COMPANY_URL}}">{{item.COMPANY_NM}}({{item.COMPANY_URL}})</a></span></dd>
-                    <dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.COMP_CNT}}</span>명({{item.HIT_CNT}} 조회)</span></dd>
+                    <!--<dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>-->
+                    <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_delivery}}원</span></dd>
+                    <!--<dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>-->
+                    <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.ada_delivery}}"><!--{{item.COMPANY_NM}}-->네이버</a></span></dd>
+                    <dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.ada_count_join}}</span>명<!--({{item.HIT_CNT}} 조회)--></span></dd>
                 </dl>
             </div>
             <div style="position:absolute; right:10px; bottom:25px;">
@@ -71,7 +71,7 @@
 
             <!-- Editor CSS 적용 img max-width: 720px -->
             <!--<img src="/imgs/temp/temp_productimg.jpg" style="width:100%;"/>-->
-            <img ng-src="{{item.MAIN_FILE}}" style="width:100%;"/>
+            <img ng-src="{{item.ada_image_url}}" style="width:100%;"/>
 
         </div><!-- /.col-12-->
     </div><!-- /.row -->
@@ -194,19 +194,20 @@
                 제목
             </td>
             <td>
-                <strong>{{item.SUBJECT}}</strong>
+                <strong>{{item.ada_title}}</strong>
             </td>
         </tr>
-        <tr ng-show="menu == 'experienceprocess'">
-            <td align="center" class="table_td_gray">
-                제품선택
-            </td>
-            <td>
-                <select ng-model="item.PRODUCT" class="form-control input-sm" >
-                    <option  data-ng-repeat="product in products" value="{{product}}">{{product}}</option>
-                </select>
-            </td>
-        </tr>
+        <!-- 상품선택 없어서 주석처리 함 -->
+        <!--<tr ng-show="menu == 'experienceprocess'">-->
+            <!--<td align="center" class="table_td_gray">-->
+                <!--제품선택-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<select ng-model="item.PRODUCT" class="form-control input-sm" >-->
+                    <!--<option  data-ng-repeat="product in products" value="{{product}}">{{product}}</option>-->
+                <!--</select>-->
+            <!--</td>-->
+        <!--</tr>-->
         <tr>
             <td align="center" class="table_td_gray">
                 체험자정보
@@ -455,6 +456,11 @@
         </table><!-- /.List-->
     </div>  <!-- /.moms_review -->
 
+    <div>
+        <div class="people_view_replys">
+            <module-reply></module-reply>
+        </div>
+    </div>
 
 
 </div>  <!-- /.moms_state -->

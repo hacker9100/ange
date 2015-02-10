@@ -30,7 +30,7 @@
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-    $_d = new MtJson(null);
+    $_d = new MtJson('ad');
 
     if ($_d->connect_db == "") {
         $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -58,13 +58,14 @@
                 $err = 0;
                 $msg = "";
 
-                $sql = "SELECT
-	                        NO, SUBJECT, SLOGAN, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD, PEOPLE_CNT, WINNER_DT
-	                        ,(SELECT COUNT(*) FROM ANGE_COMP WHERE TARGET_NO = AE.NO) AS COMP_CNT, HIT_CNT, PRODUCT, DATE_FORMAT(NOW(), '%Y-%m-%d') AS TODAY_YMD, DATE_FORMAT(END_YMD, '%Y%m%d') AS END_DATE
+                $sql = "SELECT  ada_idx, ada_title, ada_url ,ada_delivery ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_object, ada_image ,ada_imagemap,
+                             ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url, ada_notice,
+                             DATE_FORMAT(ada_date_open,'%Y%m%d') as OPEN_DATE ,DATE_FORMAT(ada_date_close, '%Y%m%d') as END_DATE, ada_delivery,
+                             ada_url, ada_count_join
                         FROM
-                            ANGE_EVENT AE
+                            adm_ad AE
                         WHERE
-                            NO = ".$_key."
+                            ada_idx = ".$_key."
                             ".$search_where."
                         ";
 
@@ -76,24 +77,24 @@
                     $msg = $_d->mysql_error;
                 }
 
-                $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'EVENT'
-                            AND S.TARGET_NO = ".$_key."
-                        ";
-
-                $file_data = $_d->getData($sql);
-                $data['FILES'] = $file_data;
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
+//                $sql = "SELECT
+//                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
+//                        FROM
+//                            FILE F, CONTENT_SOURCE S
+//                        WHERE
+//                            F.NO = S.SOURCE_NO
+//                            AND S.CONTENT_GB = 'FILE'
+//                            AND S.TARGET_GB = 'EVENT'
+//                            AND S.TARGET_NO = ".$_key."
+//                        ";
+//
+//                $file_data = $_d->getData($sql);
+//                $data['FILES'] = $file_data;
+//
+//                if($_d->mysql_errno > 0) {
+//                    $err++;
+//                    $msg = $_d->mysql_error;
+//                }
 /*
                 $sql = "SELECT
                             NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
@@ -107,10 +108,10 @@
                 $data['REPLY'] = $reply_data;
 */
 
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
+//                if($_d->mysql_errno > 0) {
+//                    $err++;
+//                    $msg = $_d->mysql_error;
+//                }
 
                 if($err > 0){
                     $_d->failEnd("조회실패입니다:".$msg);
@@ -129,20 +130,28 @@
 //                    } else {
 //                        $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."' ";
 //                    }
-                    $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."' ";
+                    $search_where .= "AND ada_type = '".$_search[EVENT_GB]."' ";
                 }
 
-                if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
-                    $search_where .= "AND END_YMD >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
+                if(isset($_search[ADA_STATE]) && $_search[ADA_STATE] != ""){
+                    if($_search[ADA_STATE] == 1){
+                        $search_where .= "AND ada_state = '".$_search[ADA_STATE]."' ";
+                    }else{
+                        $search_where .= "AND ada_state = '".$_search[ADA_STATE]."' ";
+                    }
                 }
 
-                if (isset($_search[PAST]) && $_search[PAST] != "") {
-                    $search_where .= "AND END_YMD < DATE_FORMAT(NOW(), '%Y-%m-%d')";
-                }
-
-                if (isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] != "") {
-                    $search_where .= "AND PERFORM_FL = '".$_search[PERFORM_FL]."' ";
-                }
+//                if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
+//                    $search_where .= "AND END_YMD >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
+//                }
+//
+//                if (isset($_search[PAST]) && $_search[PAST] != "") {
+//                    $search_where .= "AND END_YMD < DATE_FORMAT(NOW(), '%Y-%m-%d')";
+//                }
+//
+//                if (isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] != "") {
+//                    $search_where .= "AND PERFORM_FL = '".$_search[PERFORM_FL]."' ";
+//                }
 //                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
 //                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
 //                }
@@ -151,67 +160,62 @@
                     $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
-                $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            NO, SUBJECT, SLOGAN, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD,
-                            PEOPLE_CNT, WINNER_DT
+                $sql = "SELECT TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                             ada_idx, ada_title, ada_url ,ada_delivery ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_object, ada_image ,ada_imagemap
+                             ,ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url, ada_notice
                         FROM
                         (
                             SELECT
-                                NO, SUBJECT, SLOGAN, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD,
-                                PEOPLE_CNT, WINNER_DT
-                            FROM
-                                ANGE_EVENT
-                            WHERE
-                                1 = 1
+                                  ada_idx, ada_title, ada_url ,ada_delivery ,ada_date_open ,ada_date_close ,ada_object ,ada_image ,ada_imagemap
+                                    ,ada_state ,ada_que_info, ada_notice
+                            FROM adm_ad
+                            WHERE 1 = 1
+                                 and ada_state = 1
                                 ".$search_where."
                                 ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
-                            FROM
-                                ANGE_EVENT
-                            WHERE
-                                1 = 1
-                                ".$search_where."
-
+                            SELECT COUNT(*) AS TOTAL_COUNT
+                            FROM adm_ad
+                            WHERE 1 = 1
+                              and ada_state = 1
+                              ".$search_where."
                         ) CNT
                         ";
 
-                if (isset($_search[FILE])) {
-                    $__trn = '';
-                    $result = $_d->sql_query($sql,true);
-                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-                            $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    FILE F, CONTENT_SOURCE S
-                                WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'EVENT'
-                                    AND F.FILE_GB = 'THUMB'
-                                    AND S.TARGET_NO = ".$row['NO']."
-                                ";
-
-                        $file_result = $_d->sql_query($sql);
-                        $file_data = $_d->sql_fetch_array($file_result);
-                        $row['FILE'] = $file_data;
-
-                        $__trn->rows[$i] = $row;
-                    }
-                    $_d->sql_free_result($result);
-                    $data = $__trn->{'rows'};
-
-                    if($_d->mysql_errno > 0){
-                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                    }else{
-                        $_d->dataEnd2($data);
-                    }
-                }
+//                if (isset($_search[FILE])) {
+//                    $__trn = '';
+//                    $result = $_d->sql_query($sql,true);
+//                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+//
+//                            $sql = "SELECT
+//                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+//                                FROM
+//                                    FILE F, CONTENT_SOURCE S
+//                                WHERE
+//                                    F.NO = S.SOURCE_NO
+//                                    AND S.CONTENT_GB = 'FILE'
+//                                    AND S.TARGET_GB = 'EVENT'
+//                                    AND F.FILE_GB = 'THUMB'
+//                                    AND S.TARGET_NO = ".$row['NO']."
+//                                ";
+//
+//                        $file_result = $_d->sql_query($sql);
+//                        $file_data = $_d->sql_fetch_array($file_result);
+//                        $row['FILE'] = $file_data;
+//
+//                        $__trn->rows[$i] = $row;
+//                    }
+//                    $_d->sql_free_result($result);
+//                    $data = $__trn->{'rows'};
+//
+//                    if($_d->mysql_errno > 0){
+//                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+//                    }else{
+//                        $_d->dataEnd2($data);
+//                    }
+//                }
 
                 $data = $_d->sql_query($sql);
 

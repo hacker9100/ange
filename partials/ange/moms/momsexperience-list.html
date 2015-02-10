@@ -60,20 +60,20 @@
                                 <div class="col-xs-12 v-cell-4" style="margin:0px;">
                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
 
-                                        <div class="item" style="position:absolute;" ng-click="comp_momsexperience(item.NO)"><img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="item" style="position:absolute;" ng-click="comp_momsevent(item.ada_idx)"><img src="{{item.ada_image_url}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
 
                                         <div class="webzine_list_wrap">
-                                            <div class="webzine_list_title" ng-click="comp_momsexperience(item.NO)" style="cursor: pointer;">
-                                                {{item.SUBJECT}}
+                                            <div class="webzine_list_title" ng-click="comp_momsevent(item.ada_idx)" style="cursor: pointer;">
+                                                {{item.ada_title}}
                                                 <div class="webzine_list_bottomwrap">
-                                                    <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.START_YMD}} ~ {{item.END_YMD}}</span></div>
-                                                    <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.PEOPLE_CNT}}</span></div>
-                                                    <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.WINNER_DT}}</span></div>
+                                                    <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_open}}~{{item.ada_date_close}}</span></div>
+                                                    <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_object}}</span></div>
+                                                    <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_notice}}</span></div>
                                                 </div>
 
                                                 <!--<div class="webzine_list_btnwrap">-->
-                                                    <!--<button class="webzine_list_btn red" title="응모하기" ng-show="menu == 'experienceprocess'" >응모하기</button><br />-->
-                                                    <!--<button class="webzine_list_btn default" title="상세보기" ng-click="view_momsexperience(item.NO)">상세보기</button>-->
+                                                <!--<button class="webzine_list_btn red" title="응모하기" ng-show="showForm == 'reviewForm'" ng-click="comp_momsevent(item.NO)">응모하기</button><br />-->
+                                                <!--<button class="webzine_list_btn default" title="상세보기" ng-click="view_momsevent(item.NO)">상세보기</button>-->
                                                 <!--</div>-->
                                             </div>
                                         </div>

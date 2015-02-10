@@ -235,18 +235,14 @@ define([
 
                     $scope.season_gb = target_gb;
 
-                    $scope.item.EVENT_GB = target_gb;
-                    $scope.item.NO = target_no;
+                    $scope.item.target_gb = target_gb;
+                    $scope.item.ada_idx = target_no;
 
                     var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
 
                     $scope.item.YEAR = babyBirthDt.substr(0,4);
                     $scope.item.MONTH = babyBirthDt.substr(4,2);
                     $scope.item.DAY = babyBirthDt.substr(6,2);
-
-                    console.log($scope.item.YEAR);
-                    console.log($scope.item.MONTH);
-                    console.log($scope.item.DAY);
 
                 })
                 .catch(function(error){});

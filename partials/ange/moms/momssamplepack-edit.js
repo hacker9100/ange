@@ -230,8 +230,8 @@ define([
 
                     $scope.season_gb = target_gb;
 
-                    $scope.item.TARGET_GB = target_gb;
-                    $scope.item.NO = target_no;
+                    $scope.item.target_gb = target_gb;
+                    $scope.item.ada_idx = target_no;
 
 
                    var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
@@ -239,10 +239,6 @@ define([
                    $scope.item.YEAR = babyBirthDt.substr(0,4);
                    $scope.item.MONTH = babyBirthDt.substr(4,2);
                    $scope.item.DAY = babyBirthDt.substr(6,2);
-
-                   console.log($scope.item.YEAR);
-                   console.log($scope.item.MONTH);
-                   console.log($scope.item.DAY);
 
                 })
                 .catch(function(error){});
@@ -258,8 +254,8 @@ define([
 
 
             $scope.search.REG_UID = $rootScope.uid;
-            $scope.search.TARGET_NO = $scope.item.NO;
-            $scope.search.TARGET_GB = $scope.item.TARGET_GB;
+            $scope.search.TARGET_NO = $scope.item.ada_idx;
+            $scope.search.TARGET_GB = $scope.item.target_gb;
 
             if($scope.season_gb == 'SAMPLE2'){
 
@@ -318,8 +314,8 @@ define([
         // 신청자격 여부 체크
         $scope.click_samplepackCheck = function (){
 
-            $scope.search.TARGET_NO = $scope.item.NO;
-            $scope.search.TARGET_GB = $scope.item.TARGET_GB;
+            $scope.search.TARGET_NO = $scope.item.ada_idx;
+            $scope.search.TARGET_GB = $scope.item.target_gb;
 
             $scope.getList('ange/comp', 'samplepackCheck', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){

@@ -55,12 +55,13 @@ define([
         // 초기화
         $scope.init = function(session) {
 
+            $scope.search.ADA_STATE = 1;
             if ($stateParams.menu == 'eventprocess') {
                 $scope.community = "진행중인 이벤트";
-                $scope.search.EVENT_GB = "EVENT";
+                $scope.search.EVENT_GB = "event";
             } else if ($stateParams.menu == 'eventperformance') {
                 $scope.community = "공연/체험 이벤트";
-                $scope.search.EVENT_GB = "EVENT";
+                $scope.search.EVENT_GB = "event";
                 $scope.search.PERFORM_FL = "Y";
             }
 
@@ -70,6 +71,14 @@ define([
             var year = date.getFullYear().toString();
             var mm = (date.getMonth()+1).toString();
             var dd  = date.getDate().toString();
+
+            if(mm < 10){
+                mm = '0'+mm;
+            }
+
+            if(dd < 10){
+                dd = '0'+dd;
+            }
 
             var today = year+'-'+mm+'-'+dd;
 
@@ -99,9 +108,7 @@ define([
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
-                    var endDate = data[0].END_YMD;
-
-                    console.log('end'+endDate);
+                    var endDate = data[0].ada_date_close;
 
                     if(endDate >= $scope.todayDate){
                         $scope.showForm = "compForm";
@@ -116,7 +123,6 @@ define([
                             data[i].MAIN_FILE = img;
                         }
                     }
-
                     $scope.list = data;
 
                 })

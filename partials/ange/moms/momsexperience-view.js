@@ -59,6 +59,9 @@ define([
         $scope.hour = hour;
         $scope.minute = minute;
 
+        $scope.TARGET_NO = $stateParams.id;
+        $scope.TARGET_GB = 'MOMS';
+
 
         if($rootScope.focus == 'comp'){
             //$('#moms_state').get(0).scrollIntoView(true);
@@ -71,6 +74,7 @@ define([
             $('#experience_view').focus();
         }
 
+        // 사용자 정보수정 버튼 클릭
         $scope.click_update_user_info = function () {
             $scope.openModal(null, 'md');
         };
@@ -100,8 +104,6 @@ define([
                             })
                             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
-
-
 
                     $(document).ready(function(){
                         $('#birth_dt').css('display', 'none');
@@ -184,7 +186,6 @@ define([
         // 초기화
         $scope.init = function(session) {
 
-
             if ($stateParams.menu == 'experienceprocess') {
                 $scope.community = "진행중인 체험단";
                 $scope.menu = "experienceprocess"
@@ -192,26 +193,6 @@ define([
                 $scope.community = "지난 체험단";
                 $scope.menu = "experiencepast"
             }
-
-
-            var date = new Date();
-
-            // GET YYYY, MM AND DD FROM THE DATE OBJECT
-            var year = date.getFullYear().toString();
-            var mm = (date.getMonth()+1).toString();
-            var dd  = date.getDate().toString();
-
-            if(mm < 10){
-                mm = '0'+mm;
-            }
-
-            if(dd < 10){
-                dd = '0'+dd;
-            }
-
-            var today = year+mm+dd;
-
-            $scope.todayDate = today;
 
             $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                 .then(function(data){
@@ -230,6 +211,27 @@ define([
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
+            var date = new Date();
+
+            // GET YYYY, MM AND DD FROM THE DATE OBJECT
+            var year = date.getFullYear().toString();
+            var mm = (date.getMonth()+1).toString();
+            var dd  = date.getDate().toString();
+
+            if(mm < 10){
+                mm = '0'+mm;
+            }
+
+            if(dd < 10){
+                dd = '0'+dd;
+            }
+
+            var today = year+mm+dd;
+            $scope.todayDate = today;
+
+            // 리뷰 리스트 페이징 처리
+            $scope.PAGE_NO = 1;
+            $scope.TOTAL_COUNT = 0;
         };
 
         $scope.click_focus = function(){
@@ -247,12 +249,13 @@ define([
 
         }
 
-        $scope.addHitCnt = function () {
-            $scope.updateItem('ange/event', 'hit', $stateParams.id, {}, false)
-                .then(function(){
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        }
+        // 조회수
+//        $scope.addHitCnt = function () {
+//            $scope.updateItem('ange/event', 'hit', $stateParams.id, {}, false)
+//                .then(function(){
+//                })
+//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//        }
 
         // 게시판 조회
         $scope.getMomsExperience = function () {
@@ -260,21 +263,15 @@ define([
                 return $scope.getItem('ange/event', 'item', $stateParams.id, {}, false)
                     .then(function(data){
 
-                        $scope.item = data;
-                        $scope.products = data.PRODUCT.split(',');
-
                         $scope.D_DAY = parseInt($scope.item.END_DATE) - parseInt($scope.todayDate);
+                        console.log($scope.D_DAY);
 
-                        var files = data.FILES;
+                        $scope.item = data;
+                        $scope.item.BOARD_NO = data.ada_idx;
 
-                        //console.log(JSON.stringify(data));
-                        for(var i in files) {
-//                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                            if (files[i].FILE_GB == 'THUMB' )
-                                data.THUMB_FILE = UPLOAD.BASE_URL + files[i].PATH + files[i].FILE_ID;
-                            else if (files[i].FILE_GB == 'MAIN' )
-                                data.MAIN_FILE = UPLOAD.BASE_URL + files[i].PATH + files[i].FILE_ID;
-                        }
+                        $scope.open_date = data.OPEN_DATE;
+
+                        $scope.search.TARGET_NO = $stateParams.id;
 
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -283,9 +280,16 @@ define([
 
         $scope.click_momseventcomp = function () {
 
+            // 세션만료 되었을 때 리스트로 이동
             if($scope.uid == '' || $scope.uid == null){
                 dialogs.notify('알림', '세션이 만료되어 로그아웃 되었습니다. 로그인 후 다시 작성하세요', {size: 'md'});
-                $location.url('/moms/eventprocess/view/'+$scope.item.NO);
+                $location.url('/moms/eventprocess/list');
+            }
+
+            // 현재날짜가 모집시작일이 아닐때
+            if($scope.open_date > $scope.todayDate){
+                dialogs.notify('알림', '모집 시작기간이 아닙니다', {size: 'md'});
+                return;
             }
 
             if($("#credit_agreement_Y").is(":checked")){
@@ -296,19 +300,17 @@ define([
             }
 
             $scope.search.REG_UID = $scope.uid;
-            $scope.search.TARGET_NO = $scope.item.NO;
+            $scope.search.TARGET_NO = $scope.item.ada_idx;
             $scope.search.TARGET_GB = 'EXPERIENCE';
 
             $scope.item.BABY_BIRTH = $scope.item.BABY_YEAR + $scope.item.BABY_MONTH + $scope.item.BABY_DAY;
 
+            // 임신주차는 0으로 셋팅(int 형이라 null로 넣으면 쿼리에러 발생)
             $scope.item.PREGNANT_WEEKS = 0;
 
-            var cnt = $("input[name='blog[]']").length;
-
+            // 추가한 블로그 갯수 만큼 반복
             $scope.item.BLOG_URL = '';
             $("input[name='blog[]'").each(function(index, element) {
-                //alert($(element).val());
-
                 if(index != (cnt -1)){
                     $scope.item.BLOG_URL += $(element).val()+', ';
                 }else{
@@ -374,9 +376,7 @@ define([
         // 블로그 추가
         $scope.click_add_blog = function (){
 
-           var cnt = $('span.blog:last-child').length;
-           //alert(cnt);
-           //var new_blog =  $('span.blog').clone();
+            // clone 속성을 true 로 지정하면 이벤트도 같이 복사됨
            var new_blog =  $('span.blog:last').clone(true);
            $("#blog_url").append(new_blog);
         }
@@ -388,15 +388,12 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.addHitCnt)
-            .then($scope.getMomsExperience)
-            .then($scope.getExperienceReviewList)
             .catch($scope.reportProblems);
 
-        /*        $scope.init();
-         $scope.addHitCnt();
-         $scope.getMomsEvent();*/
+        $scope.init();
+//         $scope.addHitCnt();
+        $scope.getMomsExperience();
+        $scope.getExperienceReviewList();
 
     }]);
 });
