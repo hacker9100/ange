@@ -94,6 +94,7 @@ define([
         // 초기화
         $scope.init = function(session) {
 
+            $scope.search.REPLY_GB = 'linetalk';
 
             $scope.getItem('com/reply', 'item', {}, $scope.search, true)
                 .then(function(data){
