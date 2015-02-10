@@ -273,6 +273,8 @@ define([
 
                         $scope.search.TARGET_NO = $stateParams.id;
 
+                        $scope.item.ada_delivery = data.ada_delivery.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

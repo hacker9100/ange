@@ -67,7 +67,7 @@
                 }
 
                 if (isset($_search[TODAY_DATE]) && $_search[TODAY_DATE] != "") {
-                    $search_common .= "AND DATE_FORMAT(R.REG_DT, '%Y-%m-%d') = '".$_search[TODAY_DATE]."' ";
+                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = '".$_search[TODAY_DATE]."' ";
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
@@ -81,7 +81,7 @@
                 //TODO: 조회
                 $sql = "SELECT
                             NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
-                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(*) FROM COM_REPLY WHERE REPLY_GB = 'linetalk') AS TOTAL_COUNT
+                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(*) FROM COM_REPLY WHERE REPLY_GB = 'linetalk' ".$search_common.") AS TOTAL_COUNT
                         FROM
                             COM_REPLY R
                         WHERE 1=1

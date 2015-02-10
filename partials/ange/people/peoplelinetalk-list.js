@@ -96,15 +96,11 @@ define([
 
             $scope.getItem('com/reply', 'item', {}, $scope.search, true)
                 .then(function(data){
-
-                    console.log(data.COMMENT);
-
                     if(data.COMMENT == null){
                         $scope.TODAY_TOTAL_COUNT = 0;
                     }else{
                         $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
                     }
-
                 })
                 .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
         };
@@ -164,6 +160,16 @@ define([
                         .then(function(){
                         })
                         .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                    $scope.getItem('com/reply', 'item', {}, $scope.search, true)
+                        .then(function(data){
+                            if(data.COMMENT == null){
+                                $scope.TODAY_TOTAL_COUNT = 0;
+                            }else{
+                                $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                            }
+                        })
+                        .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
 
                     $scope.search.TARGET_NO = $stateParams.id;
                     $scope.replyList = [];

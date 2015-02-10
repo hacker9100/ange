@@ -80,381 +80,381 @@
 
 <div id="moms_state"  class="moms_state" style="padding-top:20px;">
     <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
-    <div class="moms_form" ng-model="item" style="margin:0px; display:block;" ng-show="uid != '' && uid != null && menu == 'experienceprocess'">
-    <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-        <h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>
-    </div>
+    <!--<div class="moms_form" ng-model="item" style="margin:0px; display:block;" ng-show="uid != '' && uid != null && menu == 'experienceprocess'">-->
+    <!--<div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">-->
+        <!--<h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>-->
+    <!--</div>-->
 
-    <div class="col-xs-12 v-cell-4" style="padding:0px;">
-        <div class="comp_basic h-cell-dynamic" style="margin:0px;">
+    <!--<div class="col-xs-12 v-cell-4" style="padding:0px;">-->
+        <!--<div class="comp_basic h-cell-dynamic" style="margin:0px;">-->
 
-            <div class="moms_form_titlebar">
-                | 회원정보
-                <div style="float:right;">
-                    <small>신청을 위해서 정확한 정보가 필요합니다. 정보가 다르신가요?</small>
-                    <button class="webzine_list_btn red" ng-click="click_update_user_info();" style="line-height:18px;" title="정보수정">정보수정</button><br />
-                </div>
-            </div>
-            <div class="moms_form_bodywrap">
+            <!--<div class="moms_form_titlebar">-->
+                <!--| 회원정보-->
+                <!--<div style="float:right;">-->
+                    <!--<small>신청을 위해서 정확한 정보가 필요합니다. 정보가 다르신가요?</small>-->
+                    <!--<button class="webzine_list_btn red" ng-click="click_update_user_info();" style="line-height:18px;" title="정보수정">정보수정</button><br />-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="moms_form_bodywrap">-->
 
-                <table id="moms_form_table" class="table" style="float:left; margin-bottom: 0px;">
-                    <tbody>
-                    <tr>
-                        <td width="100" align="center" class="table_td_gray">
-                            신청자
-                        </td>
-                        <td>
-                            {{USER_NM}}({{USER_ID}})
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="100" align="center" class="table_td_gray">
-                            주소
-                        </td>
-                        <td>
-                            {{ADDR}}&nbsp;{{ADDR_DETAIL}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="100" align="center" class="table_td_gray">
-                            연락처
-                        </td>
-                        <td>
-                            <span>전화번호</span>{{PHONE_1}}
-                            <span>휴대폰</span>{{PHONE_2}}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="100" align="center" class="table_td_gray">
-                            임신여부
-                        </td>
-                        <td>
-                            <div ng-show="preg_fl == 'N'">
-                                <span style="display: block;">해당없음</span>
-                            </div>
-                            <div ng-show="preg_fl == 'Y'">
-                                <span style="display: block;">임신 중 <small class="table_gray">(<strong>{{baby_birth_dt}}</strong> 출산예정)</small></span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="100" align="center" class="table_td_gray">
-                            자녀정보
-                        </td>
-                        <td>
-                            <span style="display:none;">없음</span>
-                            <div style="display:block;">
-                                <span class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="100" align="center" class="table_td_gray">
-                            블로그
-                        </td>
-                        <td>
-                            <span style="display:none;">없음</span>
-                            <a href="#" class="table_blue" style="font-size:0.94em;">http://blog.naver.com/abcdefg</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table><!-- /.List-->
+                <!--<table id="moms_form_table" class="table" style="float:left; margin-bottom: 0px;">-->
+                    <!--<tbody>-->
+                    <!--<tr>-->
+                        <!--<td width="100" align="center" class="table_td_gray">-->
+                            <!--신청자-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--{{USER_NM}}({{USER_ID}})-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td width="100" align="center" class="table_td_gray">-->
+                            <!--주소-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--{{ADDR}}&nbsp;{{ADDR_DETAIL}}-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td width="100" align="center" class="table_td_gray">-->
+                            <!--연락처-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<span>전화번호</span>{{PHONE_1}}-->
+                            <!--<span>휴대폰</span>{{PHONE_2}}-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td width="100" align="center" class="table_td_gray">-->
+                            <!--임신여부-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<div ng-show="preg_fl == 'N'">-->
+                                <!--<span style="display: block;">해당없음</span>-->
+                            <!--</div>-->
+                            <!--<div ng-show="preg_fl == 'Y'">-->
+                                <!--<span style="display: block;">임신 중 <small class="table_gray">(<strong>{{baby_birth_dt}}</strong> 출산예정)</small></span>-->
+                            <!--</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td width="100" align="center" class="table_td_gray">-->
+                            <!--자녀정보-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<span style="display:none;">없음</span>-->
+                            <!--<div style="display:block;">-->
+                                <!--<span class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)-->
+                            <!--</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td width="100" align="center" class="table_td_gray">-->
+                            <!--블로그-->
+                        <!--</td>-->
+                        <!--<td>-->
+                            <!--<span style="display:none;">없음</span>-->
+                            <!--<a href="#" class="table_blue" style="font-size:0.94em;">http://blog.naver.com/abcdefg</a>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>&lt;!&ndash; /.List&ndash;&gt;-->
 
-                <div class="clearfix" style="clear:both; width:100%; padding:20px 18px; background-color:#faf0de;">
-                    <h4 class="table_red" style="width:90px; height:100%; line-height:28px; font-size:1.18em; float:left;">
-                        신청시<br/> 주의사항
-                    </h4>
-                    <div style="margin-left:90px; line-height:18px; font-size:0.86em;">
-                        1. 체험자 정보(아기 개월수 / 임신주차)<br/>
-                        2. 체험단 페이지를 본인 블로그에 전체공개로 스크랩한 URL<br/>
-                        3. 디벨플래닛 아이디<br/>
-                        4. 아이성별<br/>
-                        5. 체험하고 싶은제품 선택(체험단/서평단)<br/>
-                        <br/>
-                        * 제품은 랜덤발송됩니다.
-                    </div>
-                </div>
+                <!--<div class="clearfix" style="clear:both; width:100%; padding:20px 18px; background-color:#faf0de;">-->
+                    <!--<h4 class="table_red" style="width:90px; height:100%; line-height:28px; font-size:1.18em; float:left;">-->
+                        <!--신청시<br/> 주의사항-->
+                    <!--</h4>-->
+                    <!--<div style="margin-left:90px; line-height:18px; font-size:0.86em;">-->
+                        <!--1. 체험자 정보(아기 개월수 / 임신주차)<br/>-->
+                        <!--2. 체험단 페이지를 본인 블로그에 전체공개로 스크랩한 URL<br/>-->
+                        <!--3. 디벨플래닛 아이디<br/>-->
+                        <!--4. 아이성별<br/>-->
+                        <!--5. 체험하고 싶은제품 선택(체험단/서평단)<br/>-->
+                        <!--<br/>-->
+                        <!--* 제품은 랜덤발송됩니다.-->
+                    <!--</div>-->
+                <!--</div>-->
 
-            </div><!-- /.moms_form_bodywrap -->
-        </div>  <!-- /.comp_basic -->
-    </div>  <!-- /.col-xs-12 -->
+            <!--</div>&lt;!&ndash; /.moms_form_bodywrap &ndash;&gt;-->
+        <!--</div>  &lt;!&ndash; /.comp_basic &ndash;&gt;-->
+    <!--</div>  &lt;!&ndash; /.col-xs-12 &ndash;&gt;-->
 
-    <div class="col-xs-12 v-cell-4" style="padding:0px;">
-    <div class="comp_basic h-cell-dynamic" style="width:100%; margin:0px;">
-    <div class="moms_form_bodywrap">
+    <!--<div class="col-xs-12 v-cell-4" style="padding:0px;">-->
+    <!--<div class="comp_basic h-cell-dynamic" style="width:100%; margin:0px;">-->
+    <!--<div class="moms_form_bodywrap">-->
 
-    <div class="moms_form_titlebar" style="float:left; height:45px; line-height:45px; width:100%; padding:0px 10px; color:#4cace8; background-color:#333;">
-        | 신청서 작성
-    </div>
+    <!--<div class="moms_form_titlebar" style="float:left; height:45px; line-height:45px; width:100%; padding:0px 10px; color:#4cace8; background-color:#333;">-->
+        <!--| 신청서 작성-->
+    <!--</div>-->
 
-    <table id="moms_form_table" class="table" style="float:left; border-bottom:1px solid #333; margin-bottom: 0px;">
-        <tbody>
-        <tr>
-            <td width="100" align="center" class="table_td_gray">
-                제목
-            </td>
-            <td>
-                <strong>{{item.ada_title}}</strong>
-            </td>
-        </tr>
-        <!-- 상품선택 없어서 주석처리 함 -->
-        <!--<tr ng-show="menu == 'experienceprocess'">-->
-            <!--<td align="center" class="table_td_gray">-->
-                <!--제품선택-->
+    <!--<table id="moms_form_table" class="table" style="float:left; border-bottom:1px solid #333; margin-bottom: 0px;">-->
+        <!--<tbody>-->
+        <!--<tr>-->
+            <!--<td width="100" align="center" class="table_td_gray">-->
+                <!--제목-->
             <!--</td>-->
             <!--<td>-->
-                <!--<select ng-model="item.PRODUCT" class="form-control input-sm" >-->
-                    <!--<option  data-ng-repeat="product in products" value="{{product}}">{{product}}</option>-->
-                <!--</select>-->
+                <!--<strong>{{item.ada_title}}</strong>-->
             <!--</td>-->
         <!--</tr>-->
-        <tr>
-            <td align="center" class="table_td_gray">
-                체험자정보
-            </td>
-            <td>
-                <div class="form-inline" style="margin:0 5px">
-
-                    <select id="preg_fl" ng-model="item.PREG_FL" class="form-control input-sm" style="width:110px; display:block;">
-                        <option selected value="">임신여부</option>
-                        <option value="Y">임신중</option>
-                        <option value="N">해당없음</option>
-                    </select>
-
-                    <select ng-model="item.CHILD_CNT" class="form-control input-sm" style="width:110px; display:block;">
-                        <option selected value="">자녀수</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5명 이상상</option>
-                    </select>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td align="center" class="table_td_gray">
-                아기 생년월일
-            </td>
-            <td>
-                <select id="birth" ng-model="item.BABY_YEAR" ng-options="v for v in babyYear" class= "form-control" style="width:110px;float: left;">
-                    <option value="" selected>년</option>
-                </select>
-                <select ng-model="item.BABY_MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;float: left;">
-                    <option value="" selected>월</option>
-                </select>
-                <select ng-model="item.BABY_DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">
-                    <option value="" selected>일</option>
-                </select>
-            </td>
-        </tr>
+        <!--&lt;!&ndash; 상품선택 없어서 주석처리 함 &ndash;&gt;-->
+        <!--&lt;!&ndash;<tr ng-show="menu == 'experienceprocess'">&ndash;&gt;-->
+            <!--&lt;!&ndash;<td align="center" class="table_td_gray">&ndash;&gt;-->
+                <!--&lt;!&ndash;제품선택&ndash;&gt;-->
+            <!--&lt;!&ndash;</td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td>&ndash;&gt;-->
+                <!--&lt;!&ndash;<select ng-model="item.PRODUCT" class="form-control input-sm" >&ndash;&gt;-->
+                    <!--&lt;!&ndash;<option  data-ng-repeat="product in products" value="{{product}}">{{product}}</option>&ndash;&gt;-->
+                <!--&lt;!&ndash;</select>&ndash;&gt;-->
+            <!--&lt;!&ndash;</td>&ndash;&gt;-->
+        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
         <!--<tr>-->
             <!--<td align="center" class="table_td_gray">-->
-                <!--아기 나이-->
+                <!--체험자정보-->
             <!--</td>-->
             <!--<td>-->
                 <!--<div class="form-inline" style="margin:0 5px">-->
-                    <!--<input type="text" ng-model="item.BABY_AGE" placeholder="아기 나이" style="width:92%;" class="form-control input-sm"/>-->
+
+                    <!--<select id="preg_fl" ng-model="item.PREG_FL" class="form-control input-sm" style="width:110px; display:block;">-->
+                        <!--<option selected value="">임신여부</option>-->
+                        <!--<option value="Y">임신중</option>-->
+                        <!--<option value="N">해당없음</option>-->
+                    <!--</select>-->
+
+                    <!--<select ng-model="item.CHILD_CNT" class="form-control input-sm" style="width:110px; display:block;">-->
+                        <!--<option selected value="">자녀수</option>-->
+                        <!--<option value="1">1</option>-->
+                        <!--<option value="2">2</option>-->
+                        <!--<option value="3">3</option>-->
+                        <!--<option value="4">4</option>-->
+                        <!--<option value="5">5명 이상상</option>-->
+                    <!--</select>-->
                 <!--</div>-->
             <!--</td>-->
         <!--</tr>-->
-        <tr>
-            <td align="center" class="table_td_gray">
-                상품설명<br/>스크랩한<br/>
-                블로그 주소
-            </td>
-            <td>
-                <div class="form-inline" style="float:left; margin:0px; padding:0px;">
+        <!--<tr>-->
+            <!--<td align="center" class="table_td_gray">-->
+                <!--아기 생년월일-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<select id="birth" ng-model="item.BABY_YEAR" ng-options="v for v in babyYear" class= "form-control" style="width:110px;float: left;">-->
+                    <!--<option value="" selected>년</option>-->
+                <!--</select>-->
+                <!--<select ng-model="item.BABY_MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;float: left;">-->
+                    <!--<option value="" selected>월</option>-->
+                <!--</select>-->
+                <!--<select ng-model="item.BABY_DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">-->
+                    <!--<option value="" selected>일</option>-->
+                <!--</select>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td align="center" class="table_td_gray">&ndash;&gt;-->
+                <!--&lt;!&ndash;아기 나이&ndash;&gt;-->
+            <!--&lt;!&ndash;</td>&ndash;&gt;-->
+            <!--&lt;!&ndash;<td>&ndash;&gt;-->
+                <!--&lt;!&ndash;<div class="form-inline" style="margin:0 5px">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="text" ng-model="item.BABY_AGE" placeholder="아기 나이" style="width:92%;" class="form-control input-sm"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+            <!--&lt;!&ndash;</td>&ndash;&gt;-->
+        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+        <!--<tr>-->
+            <!--<td align="center" class="table_td_gray">-->
+                <!--상품설명<br/>스크랩한<br/>-->
+                <!--블로그 주소-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<div class="form-inline" style="float:left; margin:0px; padding:0px;">-->
 
-                    <div class="row form_rows bottom" style="margin:0px;  border:none;">
+                    <!--<div class="row form_rows bottom" style="margin:0px;  border:none;">-->
 
-                        <div class="form_basicinfo" style="margin:0px;" id="add_blog">
-                                <span class="col-xs-12 basicinfo input blog" id="blog_url">
-                                    <div class="form-inline">
-                                        <input type="text" ng-model="item.BLOG" name="blog[]" style="width: 629px" class="form-control input-sm"> <!-- width:629px width:92%; -->
-                                        <div style="float:right; width:5%;">
-                                            <button type="button" class="btn btn-xs btn-warning" ng-click="delete_blog_url();"><span class="glyphicon glyphicon-minus" ></span></button>
-                                        </div>
-                                    </div>
-                                </span>
-
-                                <!--<span class="col-xs-12 basicinfo input">-->
+                        <!--<div class="form_basicinfo" style="margin:0px;" id="add_blog">-->
+                                <!--<span class="col-xs-12 basicinfo input blog" id="blog_url">-->
                                     <!--<div class="form-inline">-->
-                                        <!--<input type="text" ng-model="item.BLOG_URL" style="width:629px" class="form-control input-sm"> &lt;!&ndash; 92%; &ndash;&gt;-->
+                                        <!--<input type="text" ng-model="item.BLOG" name="blog[]" style="width: 629px" class="form-control input-sm"> &lt;!&ndash; width:629px width:92%; &ndash;&gt;-->
                                         <!--<div style="float:right; width:5%;">-->
-                                            <!--<button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>-->
+                                            <!--<button type="button" class="btn btn-xs btn-warning" ng-click="delete_blog_url();"><span class="glyphicon glyphicon-minus" ></span></button>-->
                                         <!--</div>-->
                                     <!--</div>-->
                                 <!--</span>-->
 
+                                <!--&lt;!&ndash;<span class="col-xs-12 basicinfo input">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div class="form-inline">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<input type="text" ng-model="item.BLOG_URL" style="width:629px" class="form-control input-sm"> &lt;!&ndash; 92%; &ndash;&gt;&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<div style="float:right; width:5%;">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</span>&ndash;&gt;-->
+
+                                <!--&lt;!&ndash;<span class="col-xs-12 basicinfo input">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div class="form-inline">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<input type="text" ng-model="item.BLOG_URL" style="width:92%;" class="form-control input-sm">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<div style="float:right; width:5%;">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</span>&ndash;&gt;-->
+
+                                <!--<span class="col-xs-12 basicinfo divide" style="margin:0px; width:684px"></span> &lt;!&ndash; width:100%; &ndash;&gt;-->
+
                                 <!--<span class="col-xs-12 basicinfo input">-->
-                                    <!--<div class="form-inline">-->
-                                        <!--<input type="text" ng-model="item.BLOG_URL" style="width:92%;" class="form-control input-sm">-->
-                                        <!--<div style="float:right; width:5%;">-->
-                                            <!--<button type="button" class="btn btn-xs btn-warning"><span class="glyphicon glyphicon-minus"></span></button>-->
-                                        <!--</div>-->
+                                    <!--<div style="text-align:right; padding:0 10px;">-->
+
+                                        <!--<span class="table_blue"><small>미션에 따라 블로그 갯수만큼 추가해주세요</small></span>-->
+
+                                        <!--<button type="button" id="blog_add" ng-click="click_add_blog();" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-plus"></span> 추가</button>-->
+
                                     <!--</div>-->
                                 <!--</span>-->
 
-                                <span class="col-xs-12 basicinfo divide" style="margin:0px; width:684px"></span> <!-- width:100%; -->
+                        <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                    <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                <span class="col-xs-12 basicinfo input">
-                                    <div style="text-align:right; padding:0 10px;">
+                <!--</div>  &lt;!&ndash; /.form-inline &ndash;&gt;-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td align="center" class="table_td_gray">-->
+                <!--추가정보1-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input ng-model="item.ADD1"type="text" class="form-control input-sm">-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td align="center" class="table_td_gray">-->
+                <!--추가정보2-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input type="text" ng-model="item.ADD2" class="form-control input-sm">-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td align="center" class="table_td_gray">-->
+                <!--추가정보3-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<input type="text" ng-model="item.ADD3" class="form-control input-sm">-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td align="center" class="table_td_gray">-->
+                <!--신청이유-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<textarea class="form-control input-sm" ng-model="item.REASON" style="min-width:100%; max-width:100%;" rows="8"></textarea>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td align="center" class="table_td_gray">-->
+                <!--개인정보<br />-->
+                <!--제3자<br />-->
+                <!--정보제공 안내<br />-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<div class="table_gray" style="font-size:0.94em;">-->
+                    <!--체험단 선정 후 상품 발송을 위하여 개인정보(이름, 전화번호, 주소)를 체험단 상품 제공업체에-->
+                    <!--제공되며, 해당업체는 상품 발송 완료시까지만 보유 및 이용하게 됩니다.-->
+                <!--</div>-->
+                <!--<div class="table_blue" style="font-size:0.94em; line-height:38px;">-->
+                    <!--제 3자 정보제공에 동의하시나요?-->
+                <!--</div>-->
+                <!--<div class="form-group" style="margin:0 5px; line-height:32px;">-->
+                    <!--<input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="Y" id="credit_agreement_Y" style="float: left; margin:10px 0 0 15px;">-->
+                    <!--<span class="credit_agreement_span">동의함</span>-->
 
-                                        <span class="table_blue"><small>미션에 따라 블로그 갯수만큼 추가해주세요</small></span>
+                    <!--<input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="N" id="credit_agreement_N" style="float: left; margin:10px 0 0 15px;">-->
+                    <!--<span class="credit_agreement_span">동의안함</span>-->
+                <!--</div>-->
+            <!--</td>-->
+        <!--</tr>-->
 
-                                        <button type="button" id="blog_add" ng-click="click_add_blog();" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-plus"></span> 추가</button>
+        <!--</tbody>-->
+    <!--</table>&lt;!&ndash; /.List&ndash;&gt;-->
 
-                                    </div>
-                                </span>
+    <!--<div class="moms_form_foot" style="border-bottom:2px solid #111;">-->
+        <!--&lt;!&ndash;<div class="table_blue moms_form_footguide">모집기간 동안에는 신청내용을 수정할 수 있습니다. 기간을 확인해주세요.</div>&ndash;&gt;-->
 
-                        </div>  <!-- /.form_basicinfo -->
-                    </div>  <!-- /.form_rows -->
+        <!--<div class="moms_form_footbtn">-->
+            <!--<button ng-click="click_momsexperiencelist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>-->
+            <!--<button ng-click="click_momseventcomp();" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>-->
+            <!--&lt;!&ndash;<button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>&ndash;&gt;-->
+        <!--</div>-->
+    <!--</div>-->
 
-                </div>  <!-- /.form-inline -->
-            </td>
-        </tr>
-        <tr>
-            <td align="center" class="table_td_gray">
-                추가정보1
-            </td>
-            <td>
-                <input ng-model="item.ADD1"type="text" class="form-control input-sm">
-            </td>
-        </tr>
-        <tr>
-            <td align="center" class="table_td_gray">
-                추가정보2
-            </td>
-            <td>
-                <input type="text" ng-model="item.ADD2" class="form-control input-sm">
-            </td>
-        </tr>
-        <tr>
-            <td align="center" class="table_td_gray">
-                추가정보3
-            </td>
-            <td>
-                <input type="text" ng-model="item.ADD3" class="form-control input-sm">
-            </td>
-        </tr>
-        <tr>
-            <td align="center" class="table_td_gray">
-                신청이유
-            </td>
-            <td>
-                <textarea class="form-control input-sm" ng-model="item.REASON" style="min-width:100%; max-width:100%;" rows="8"></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td align="center" class="table_td_gray">
-                개인정보<br />
-                제3자<br />
-                정보제공 안내<br />
-            </td>
-            <td>
-                <div class="table_gray" style="font-size:0.94em;">
-                    체험단 선정 후 상품 발송을 위하여 개인정보(이름, 전화번호, 주소)를 체험단 상품 제공업체에
-                    제공되며, 해당업체는 상품 발송 완료시까지만 보유 및 이용하게 됩니다.
-                </div>
-                <div class="table_blue" style="font-size:0.94em; line-height:38px;">
-                    제 3자 정보제공에 동의하시나요?
-                </div>
-                <div class="form-group" style="margin:0 5px; line-height:32px;">
-                    <input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="Y" id="credit_agreement_Y" style="float: left; margin:10px 0 0 15px;">
-                    <span class="credit_agreement_span">동의함</span>
-
-                    <input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="N" id="credit_agreement_N" style="float: left; margin:10px 0 0 15px;">
-                    <span class="credit_agreement_span">동의안함</span>
-                </div>
-            </td>
-        </tr>
-
-        </tbody>
-    </table><!-- /.List-->
-
-    <div class="moms_form_foot" style="border-bottom:2px solid #111;">
-        <!--<div class="table_blue moms_form_footguide">모집기간 동안에는 신청내용을 수정할 수 있습니다. 기간을 확인해주세요.</div>-->
-
-        <div class="moms_form_footbtn">
-            <button ng-click="click_momsexperiencelist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>
-            <button ng-click="click_momseventcomp();" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
-            <!--<button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>-->
-        </div>
-    </div>
-
-    </div><!-- /.moms_form_bodywrap -->
-    </div>  <!-- /.comp_basic -->
-    </div>  <!-- /.col-xs-12 -->
-    </div>
+    <!--</div>&lt;!&ndash; /.moms_form_bodywrap &ndash;&gt;-->
+    <!--</div>  &lt;!&ndash; /.comp_basic &ndash;&gt;-->
+    <!--</div>  &lt;!&ndash; /.col-xs-12 &ndash;&gt;-->
+    <!--</div>-->
 
 
-    <div class="moms_reviews" style="display:block;" ng-show="menu == 'experiencepast'">
-        <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-            <h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>후기</h4>
-        </div>
+    <!--<div class="moms_reviews" style="display:block;" ng-show="menu == 'experiencepast'">-->
+        <!--<div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">-->
+            <!--<h4><span class="glyphicon glyphicon-th-large h4_icon table_gray"></span>후기</h4>-->
+        <!--</div>-->
 
 
-        <!-- review_list -->
-        <table id="comp_board_table" class="table table-hover">
+        <!--&lt;!&ndash; review_list &ndash;&gt;-->
+        <!--<table id="comp_board_table" class="table table-hover">-->
 
-            <thead>
-            <tr class="board_thead" height="48">
-                <td width="9%" align="center"><span class="board_th">번호</span></td>
-                <td colspan="2" width="15%"><span class="board_th">내용</span></td>
-                <td width="60" align="center"><span class="board_th">조회</span></td>
-            </tr>
-            </thead>
+            <!--<thead>-->
+            <!--<tr class="board_thead" height="48">-->
+                <!--<td width="9%" align="center"><span class="board_th">번호</span></td>-->
+                <!--<td colspan="2" width="15%"><span class="board_th">내용</span></td>-->
+                <!--<td width="60" align="center"><span class="board_th">조회</span></td>-->
+            <!--</tr>-->
+            <!--</thead>-->
 
-            <tbody class="on">
+            <!--<tbody class="on">-->
 
-            <tr data-ng-repeat="review in reviewList" ng-click="click_showViewReview(review.NO)" style="cursor:pointer;">
-                <td class="table_no">
-                    <span>{{review.RNUM}}</span>
-                </td>
+            <!--<tr data-ng-repeat="review in reviewList" ng-click="click_showViewReview(review.NO)" style="cursor:pointer;">-->
+                <!--<td class="table_no">-->
+                    <!--<span>{{review.RNUM}}</span>-->
+                <!--</td>-->
 
-                <td width="18%">
-                    <div class="review_thumbnails">
-                        <img class="thumbnails_img" ng-src="{{review.MAIN_FILE}}" />
-                    </div>
-                    <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
-                </td>
+                <!--<td width="18%">-->
+                    <!--<div class="review_thumbnails">-->
+                        <!--<img class="thumbnails_img" ng-src="{{review.MAIN_FILE}}" />-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash; img src="" style="width:100%; border:1px solid #ddd;" &ndash;&gt;-->
+                <!--</td>-->
 
-                </td>
-                <td>
-                    <span style="font-size:1.08em; font-weight:600;">{{ review.SUBJECT | string_limit: 60 }}{{review.SUBJECT > 60 ? '...' : ''}}</span>
-                    <span class="table_icon_new">N</span>
-                    <span class="glyphicon glyphicon-picture table_icon_pic"></span>
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span style="font-size:1.08em; font-weight:600;">{{ review.SUBJECT | string_limit: 60 }}{{review.SUBJECT > 60 ? '...' : ''}}</span>-->
+                    <!--<span class="table_icon_new">N</span>-->
+                    <!--<span class="glyphicon glyphicon-picture table_icon_pic"></span>-->
 
-                    <div class="table_date" style="font-size:0.86em; line-height:36px;">
-                        <span class="table_blue">{{review.NICK_NM}}</span> &nbsp;|&nbsp; <span style=""></span>{{review.REG_DT}}
+                    <!--<div class="table_date" style="font-size:0.86em; line-height:36px;">-->
+                        <!--<span class="table_blue">{{review.NICK_NM}}</span> &nbsp;|&nbsp; <span style=""></span>{{review.REG_DT}}-->
 
-                        <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
-                            <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">{{review.LIKE_CNT}}</span>		<!-- 공감수 -->
-                            <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">{{review.REPLY_CNT}}</span>	<!-- 댓글수 -->
-                        </div>
+                        <!--<div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">-->
+                            <!--<span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">{{review.LIKE_CNT}}</span>		&lt;!&ndash; 공감수 &ndash;&gt;-->
+                            <!--<span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">{{review.REPLY_CNT}}</span>	&lt;!&ndash; 댓글수 &ndash;&gt;-->
+                        <!--</div>-->
 
-                    </div>
-                    <div class="table_gray" ng-bind-html="review.BODY | string_limit : 150" style="text-align: justify; font-size:0.92em; word-break: break-all;">
-                        <!--{{review.BODY}}-->
-                    </div>
-                </td>
-                <td class="table_hit">{{review.HIT_CNT}}</td></tr>
-            </tr>
+                    <!--</div>-->
+                    <!--<div class="table_gray" ng-bind-html="review.BODY | string_limit : 150" style="text-align: justify; font-size:0.92em; word-break: break-all;">-->
+                        <!--&lt;!&ndash;{{review.BODY}}&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</td>-->
+                <!--<td class="table_hit">{{review.HIT_CNT}}</td></tr>-->
+            <!--</tr>-->
 
-            </tbody>
+            <!--</tbody>-->
 
-            <tbody class="on" data-ng-show="reviewList == '' || reviewList == null">
+            <!--<tbody class="on" data-ng-show="reviewList == '' || reviewList == null">-->
 
-                <tr height="120">
-                    <td colspan="4" align="center" valign="middle" style="font-size: 0.92em;">
-                        <span class="table_gray" style="line-height:100px;">조회 데이터가 없습니다.</span>
-                    </td>
-                </tr>
+                <!--<tr height="120">-->
+                    <!--<td colspan="4" align="center" valign="middle" style="font-size: 0.92em;">-->
+                        <!--<span class="table_gray" style="line-height:100px;">조회 데이터가 없습니다.</span>-->
+                    <!--</td>-->
+                <!--</tr>-->
 
-            </tbody>
-        </table><!-- /.List-->
-    </div>  <!-- /.moms_review -->
+            <!--</tbody>-->
+        <!--</table>&lt;!&ndash; /.List&ndash;&gt;-->
+    <!--</div>  &lt;!&ndash; /.moms_review &ndash;&gt;-->
 
     <div>
         <div class="people_view_replys">

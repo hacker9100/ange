@@ -52,6 +52,7 @@ define([
             day.push(i+'');
         }
 
+        // 댓글
         $scope.TARGET_NO = $stateParams.id;
         $scope.TARGET_GB = 'MOMS';
 
@@ -146,7 +147,7 @@ define([
                     $scope.content = data;
 
                     $scope.click_ok = function () {
-                        $scope.item.SYSTEM_GB = 'CMS';
+                        $scope.item.SYSTEM_GB = 'ANGE';
                         $scope.item.USER_NM = $scope.name;
                         $scope.item.NICK_NM = $scope.nick;
 
@@ -213,6 +214,7 @@ define([
                 $scope.search.PERFORM_FL = "Y";
             }
 
+            console.log($scope.uid);
             $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                 .then(function(data){
 
@@ -284,6 +286,8 @@ define([
                         }else{
                             $scope.showForm = "reviewForm";
                         }
+
+                        $scope.item.ada_delivery = data.ada_delivery.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
                         $scope.search.TARGET_NO = $stateParams.id;
                     })

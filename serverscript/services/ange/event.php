@@ -161,16 +161,15 @@
                 }
 
                 $sql = "SELECT TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                             ada_idx, ada_title, ada_url ,ada_delivery ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_object, ada_image ,ada_imagemap
+                             ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_object, ada_image ,ada_imagemap
                              ,ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url, ada_notice
                         FROM
                         (
                             SELECT
-                                  ada_idx, ada_title, ada_url ,ada_delivery ,ada_date_open ,ada_date_close ,ada_object ,ada_image ,ada_imagemap
+                                  ada_idx, ada_title, ada_url ,ada_date_open ,ada_date_close ,ada_object ,ada_image ,ada_imagemap
                                     ,ada_state ,ada_que_info, ada_notice
                             FROM adm_ad
                             WHERE 1 = 1
-                                 and ada_state = 1
                                 ".$search_where."
                                 ".$limit."
                         ) AS DATA,
@@ -179,7 +178,6 @@
                             SELECT COUNT(*) AS TOTAL_COUNT
                             FROM adm_ad
                             WHERE 1 = 1
-                              and ada_state = 1
                               ".$search_where."
                         ) CNT
                         ";
