@@ -23,7 +23,6 @@ define([
             $("input[name='check']").prop("checked",true);
 
             if($scope.role == 'MANAGER'){
-                console.log('aaa');
                 $("input[name='noti_check']").prop("checked",true);
                 $scope.item.NOTICE_FL = "true";
             }else{
@@ -184,6 +183,9 @@ define([
             } else if($stateParams.menu == 'booktalk') {
                 //$scope.community = "책수다";
                 $scope.item.COMM_NO = 5;
+            }else if($stateParams.menu == 'supporter') {
+                //$scope.community = "서포터즈";
+                $scope.item.COMM_NO = 21;
             }
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;

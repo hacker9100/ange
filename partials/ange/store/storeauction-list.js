@@ -123,7 +123,7 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                .catch(function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT=0;});
         }
 
 

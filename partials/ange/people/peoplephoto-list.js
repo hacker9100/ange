@@ -100,8 +100,8 @@ define([
 //            }
 
             // TODO: CATEGORY에서 조회할것
-//            $scope.tabs = $scope.menu.SUB_MENU_INFO;
-            $scope.tabs = null;
+            $scope.tabs = $scope.menu.SUB_MENU_INFO;
+            //$scope.tabs = null;
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'PHOTO';

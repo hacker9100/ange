@@ -9,7 +9,7 @@ $res_cd		= $_POST["res_cd"];
 $res_msg	= $_POST["res_msg"];
 $cno		= $_POST["cno"];
 $amount		= $_POST["amount"];
-$msg_type	= $_POST["msg_type"];
+//$msg_type	= $_POST["msg_type"];
 $order_no	= $_POST["order_no"];
 $auth_no	= $_POST["auth_no"];
 $tran_date	= $_POST["tran_date"];
@@ -29,7 +29,7 @@ $bank_nm	= $_POST["bank_nm"];
 $account_no	= $_POST["account_no"];
 $deposit_nm	= $_POST["deposit_nm"];
 $expire_date	= $_POST["expire_date"];
-$vacct_rt_val	= $_POST["vacct_rt_val"];
+//$vacct_rt_val	= $_POST["vacct_rt_val"];
 $cash_res_cd	= $_POST["cash_res_cd"];
 $cash_res_msg	= $_POST["cash_res_msg"];
 $cash_auth_no	= $_POST["cash_auth_no"];
@@ -56,11 +56,11 @@ $gw_url 	= $_POST["gw_url"];
 $gw_port	= $_POST["gw_port"];
 	
 $gw_name = "";
-if( "testgw.easypay.co.kr" == gw_url )
+if( "testgw.easypay.co.kr" == $gw_url )
 {
     $gw_name = "테스트";
 }
-else if( "gw.easypay.co.kr" == gw_url )
+else if( "gw.easypay.co.kr" == $gw_url )
 {
     $gw_name = "리얼";
 }
