@@ -217,7 +217,7 @@ switch ($_method) {
                             CHILD_FL,
                             BABY_BIRTH
                         ) VALUES (
-                             '".$_model[NO]."'
+                             '".$_model[ada_idx]."'
                             , '".$_SESSION['uid']."'
                             , '".$_SESSION['nick']."'
                             , '".$_SESSION['name']."'
@@ -236,7 +236,7 @@ switch ($_method) {
                             ,'".$_model[PRODUCT]."'
                             ,'".$_model[CREDIT_FL]."'
                             ,'".$_model[REASON]."'
-                            ,'".$_model[EVENT_GB]."'
+                            ,'".$_model[target_gb]."'
                             ,'".$_model[HOPE_REASON]."'
                             ,'".$_model[SIZE1]."'
                             ,'".$_model[SIZE2]."'
