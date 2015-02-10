@@ -40,6 +40,8 @@ define(['./directives'], function (directives) {
                         } if (path[1] == 'people') {
                             if (menu.COMM_GB != null) {
                                 path[2] = angular.lowercase(menu.COMM_GB);
+
+                                console.log(path[2]);
                             }
 
 //                            if (path[2] == 'angeroom' || path[2] == 'momstalk' || path[2] == 'babycare' || path[2] == 'firstbirthtalk' || path[2] == 'booktalk'){

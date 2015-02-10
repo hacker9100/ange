@@ -13,33 +13,87 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('peoplephoto-edit', ['$scope','$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD, $http) {
 
+        $scope.checked = true;
+
+        /********** 초기화 **********/
+            // 첨부파일 초기화
+        $scope.queue = [];
+        // 게시판 초기화
+        $scope.item = {};
+        // 에디터 안 첨부파일
+        $scope.item.queue = [];
+
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
         $(document).ready(function(){
+
+            $("#check_reply").prop("checked",true);
+            $("input[name='check']").prop("checked",true);
+
+            if($scope.role == 'MANAGER'){
+                $("input[name='noti_check']").prop("checked",true);
+                $scope.item.NOTICE_FL = "true";
+            }else{
+                $("input[name='noti_check']").prop("checked",false);
+                $scope.item.NOTICE_FL = "false";
+            }
+
             $("#checkall").click(function(){
                 //클릭되었으면
                 if($("#checkall").is(":checked")){
-                    $("input[name=check]").attr("checked",true);
+                    $("input[name='check']").prop("checked",true);
                     $scope.item.SCRAP_FL = "true";
                     $scope.item.REPLY_FL = "true";
-                    //클릭이 안되있으면
-                }else{
-                    $("input[name=check]").prop("checked",false);
+                }else{ //클릭이 안되있으면
+                    $("input[name='check']").prop("checked",false);
+                    $scope.checked = false;
                 }
             })
+//            $("#check_scrap").click(function(){
+//                if(!$("#check_scrap").is(":checked")){
+//                    $scope.item.SCRAP_FL = "true";
+//                }else{
+//                    $scope.item.SCRAP_FL = "false";
+//                }
+//            });
+//
+//            $("#check_reply").click(function(){
+//                if(!$("#check_reply").is(":checked")){
+//                    $scope.item.REPLY_FL = "true";
+//                }else{
+//                    $scope.item.REPLY_FL = "false";
+//                }
+//            });
+         });
+
+        $(function(){
             $("#check_scrap").click(function(){
-                if(!$("#check_scrap").is(":checked")){
+                if($("#check_scrap").is(":checked")){
                     $scope.item.SCRAP_FL = "true";
                 }else{
                     $scope.item.SCRAP_FL = "false";
+                    $("input[name='check']").prop("checked",false);
+                    $("#checkall").attr("checked",false);
                 }
             });
 
             $("#check_reply").click(function(){
-                if(!$("#check_reply").is(":checked")){
+                if($("#check_reply").is(":checked")){
                     $scope.item.REPLY_FL = "true";
                 }else{
                     $scope.item.REPLY_FL = "false";
+                    $("input[name='check']").prop("checked",false);
+                    $("#checkall").attr("checked",false);
+                }
+            });
+
+            $("#notice_fl").click(function(){
+                if($("#notice_fl").is(":checked")){
+                    $scope.item.NOTICE_FL = "true";
+                }else{
+                    $scope.item.NOTICE_FL = "false";
+                    $("input[name='check']").prop("checked",false);
+                    $("#checkall").attr("checked",false);
                 }
             });
         });
@@ -111,14 +165,6 @@ define([
             });
         };
 
-        /********** 초기화 **********/
-        // 첨부파일 초기화
-        $scope.queue = [];
-        // 게시판 초기화
-        $scope.item = {};
-        // 에디터 안 첨부파일
-        $scope.item.queue = [];
-
         // 초기화
         $scope.init = function(session) {
 
@@ -183,6 +229,12 @@ define([
                             $("#check_scrap").attr("checked", false);
                         }
 
+                        if($scope.item.NOTICE_FL == "Y"){
+                            $("#check_reply").attr("checked", true);
+                        }else{
+                            $("#check_reply").attr("checked", false);
+                        }
+
                         if($scope.item.REPLY_FL == "Y" && $scope.item.SCRAP_FL== "Y"){
                             $("#checkall").attr("checked", true);
                         }else{
@@ -229,6 +281,25 @@ define([
             }
 
             if ($stateParams.id == 0) {
+
+                if($("#check_reply").is(":checked")){
+                    $scope.item.REPLY_FL = "true"
+                }else{
+                    $scope.item.REPLY_FL = "false"
+                }
+
+                if($("#check_scrap").is(":checked")){
+                    $scope.item.SCRAP_FL = "true"
+                }else{
+                    $scope.item.SCRAP_FL = "false"
+                }
+
+                if($("#notice_fl").is(":checked")){
+                    $scope.item.NOTICE_FL = "true";
+                }else{
+                    $scope.item.NOTICE_FL = "false";
+                }
+
                 $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
 
@@ -238,6 +309,25 @@ define([
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
+
+                if($("#check_reply").is(":checked")){
+                    $scope.item.REPLY_FL = "true"
+                }else{
+                    $scope.item.REPLY_FL = "false"
+                }
+
+                if($("#check_scrap").is(":checked")){
+                    $scope.item.SCRAP_FL = "true"
+                }else{
+                    $scope.item.SCRAP_FL = "false"
+                }
+
+                if($("#notice_fl").is(":checked")){
+                    $scope.item.NOTICE_FL = "true";
+                }else{
+                    $scope.item.NOTICE_FL = "false";
+                }
+
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
 

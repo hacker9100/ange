@@ -2,11 +2,16 @@
 print_r($_POST["EP_user_id"]);
 ?> -->
 
-<?php
-    include($_SERVER["DOCUMENT_ROOT"]."/easypay70_plugin_php_window/web/inc/easypay_config.php");
+<?
+    include $_SERVER["DOCUMENT_ROOT"]."/easypay70_plugin_php_window/web/inc/easypay_config.php";
+//    include "http://localhost//easypay70_plugin_php_window/web/inc/easypay_config.php";
     //include("../inc/easypay_config.php");
-    include($_SERVER["DOCUMENT_ROOT"]."/easypay70_plugin_php_window/web/easypay_client.php");
+    include $_SERVER["DOCUMENT_ROOT"]."/easypay70_plugin_php_window/web/easypay_client.php";
+
+//include " http://localhost/easypay70_plugin_php_window/web/easypay_client.php";
+
     //include("./easypay_client.php");
+
 /* -------------------------------------------------------------------------- */
 /* ::: 처리구분 설정                                                          */
 /* -------------------------------------------------------------------------- */
@@ -44,28 +49,28 @@ $product_amt      = $_POST["EP_product_amt"];      // [필수]상품금액
 /* -------------------------------------------------------------------------- */
 /* ::: 변경관리 정보 설정                                                     */
 /* -------------------------------------------------------------------------- */
-$mgr_txtype       = $_POST["mgr_txtype"];          // [필수]거래구분
-$mgr_subtype      = $_POST["mgr_subtype"];         // [선택]변경세부구분
-$org_cno          = $_POST["org_cno"];             // [필수]원거래고유번호
-$mgr_amt          = $_POST["mgr_amt"];             // [선택]부분취소/환불요청 금액
-$mgr_rem_amt      = $_POST["mgr_rem_amt"];         // [선택]부분취소 잔액
-$mgr_tax_flg      = $_POST["mgr_tax_flg"];         // [필수]과세구분 플래그(TG01:복합과세 변경거래)
-$mgr_tax_amt      = $_POST["mgr_tax_amt"];         // [필수]과세부분취소 금액(복합과세 변경 시 필수)
-$mgr_free_amt     = $_POST["mgr_free_amt"];        // [필수]비과세부분취소 금액(복합과세 변경 시 필수)
-$mgr_vat_amt      = $_POST["mgr_vat_amt"];         // [필수]부가세 부분취소금액(복합과세 변경 시 필수)
-$mgr_bank_cd      = $_POST["mgr_bank_cd"];         // [선택]환불계좌 은행코드
-$mgr_account      = $_POST["mgr_account"];         // [선택]환불계좌 번호
-$mgr_depositor    = $_POST["mgr_depositor"];       // [선택]환불계좌 예금주명
-$mgr_socno        = $_POST["mgr_socno"];           // [선택]환불계좌 주민번호
-$mgr_telno        = $_POST["mgr_telno"];           // [선택]환불고객 연락처
-$deli_cd          = $_POST["deli_cd"];             // [선택]배송구분[자가:DE01,택배:DE02]
-$deli_corp_cd     = $_POST["deli_corp_cd"];        // [선택]택배사코드
-$deli_invoice     = $_POST["deli_invoice"];        // [선택]운송장 번호
-$deli_rcv_nm      = $_POST["deli_rcv_nm"];         // [선택]수령인 이름
-$deli_rcv_tel     = $_POST["deli_rcv_tel"];        // [선택]수령인 연락처
-$req_ip           = $_POST["req_ip"];              // [필수]요청자 IP
-$req_id           = $_POST["req_id"];              // [선택]가맹점 관리자 로그인 아이디
-$mgr_msg          = $_POST["mgr_msg"];             // [선택]변경 사유
+//$mgr_txtype       = $_POST["mgr_txtype"];          // [필수]거래구분
+//$mgr_subtype      = $_POST["mgr_subtype"];         // [선택]변경세부구분
+//$org_cno          = $_POST["org_cno"];             // [필수]원거래고유번호
+//$mgr_amt          = $_POST["mgr_amt"];             // [선택]부분취소/환불요청 금액
+//$mgr_rem_amt      = $_POST["mgr_rem_amt"];         // [선택]부분취소 잔액
+//$mgr_tax_flg      = $_POST["mgr_tax_flg"];         // [필수]과세구분 플래그(TG01:복합과세 변경거래)
+//$mgr_tax_amt      = $_POST["mgr_tax_amt"];         // [필수]과세부분취소 금액(복합과세 변경 시 필수)
+//$mgr_free_amt     = $_POST["mgr_free_amt"];        // [필수]비과세부분취소 금액(복합과세 변경 시 필수)
+//$mgr_vat_amt      = $_POST["mgr_vat_amt"];         // [필수]부가세 부분취소금액(복합과세 변경 시 필수)
+//$mgr_bank_cd      = $_POST["mgr_bank_cd"];         // [선택]환불계좌 은행코드
+//$mgr_account      = $_POST["mgr_account"];         // [선택]환불계좌 번호
+//$mgr_depositor    = $_POST["mgr_depositor"];       // [선택]환불계좌 예금주명
+//$mgr_socno        = $_POST["mgr_socno"];           // [선택]환불계좌 주민번호
+//$mgr_telno        = $_POST["mgr_telno"];           // [선택]환불고객 연락처
+//$deli_cd          = $_POST["deli_cd"];             // [선택]배송구분[자가:DE01,택배:DE02]
+//$deli_corp_cd     = $_POST["deli_corp_cd"];        // [선택]택배사코드
+//$deli_invoice     = $_POST["deli_invoice"];        // [선택]운송장 번호
+//$deli_rcv_nm      = $_POST["deli_rcv_nm"];         // [선택]수령인 이름
+//$deli_rcv_tel     = $_POST["deli_rcv_tel"];        // [선택]수령인 연락처
+//$req_ip           = $_POST["req_ip"];              // [필수]요청자 IP
+//$req_id           = $_POST["req_id"];              // [선택]가맹점 관리자 로그인 아이디
+//$mgr_msg          = $_POST["mgr_msg"];             // [선택]변경 사유
 
 /* -------------------------------------------------------------------------- */
 /* ::: 결제 결과                                                              */
@@ -76,15 +81,17 @@ $res_msg    = "";
 /* -------------------------------------------------------------------------- */
 /* ::: EasyPayClient 인스턴스 생성 [변경불가 !!].                             */
 /* -------------------------------------------------------------------------- */
+
 $easyPay = new EasyPay_Client;         // 전문처리용 Class (library에서 정의됨)
 $easyPay->clearup_msg();
 
-$easyPay->set_home_dir($g_home_dir);
-$easyPay->set_gw_url($g_gw_url);
-$easyPay->set_gw_port($g_gw_port);
-$easyPay->set_log_dir($g_log_dir);
-$easyPay->set_log_level($g_log_level);
-$easyPay->set_cert_file($g_cert_file);
+
+$easyPay->set_home_dir("F:/xampp/htdocs/ange/easypay70_plugin_php_window"); // F:/xampp/htdocs/ange/easypay70_plugin_php_window $g_home_dir
+$easyPay->set_gw_url("testgw.easypay.co.kr"); // "testgw.easypay.co.kr" $g_gw_url
+$easyPay->set_gw_port("80"); // 80 $g_gw_port 
+$easyPay->set_log_dir("F:/xampp/htdocs/ange/easypay70_plugin_php_window/log"); // "F:/xampp/htdocs/ange/easypay70_plugin_php_window/log" $g_log_dir
+$easyPay->set_log_level("1"); // 1 $g_log_level
+$easyPay->set_cert_file("F:/xampp/htdocs/ange/easypay70_plugin_php_window/cert/pg_cert.pem"); //   $g_cert_file
 
 /* -------------------------------------------------------------------------- */
 /* ::: IP 정보 설정                                                           */
@@ -227,6 +234,7 @@ if ( $res_cd == "0000" )
         }
     }
 }
+
 ?>
 
 <html>
@@ -234,6 +242,7 @@ if ( $res_cd == "0000" )
 <script type="text/javascript">
     function f_submit(){
         document.frm.submit();
+
     }
 </script>
 

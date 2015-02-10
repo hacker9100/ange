@@ -1,6 +1,7 @@
 <?
 //    include("../inc/easypay_config.php");  
-	include($_SERVER["DOCUMENT_ROOT"]."/inc/easypay_config.php") //환경설정 파일 includ
+	//include $_SERVER["DOCUMENT_ROOT"]."/inc/easypay_config.php" //환경설정 파일 includ
+	include $_SERVER["DOCUMENT_ROOT"]."/easypay70_plugin_php_window/web/inc/easypay_config.php";
 ?>
 <html>
 <head>
