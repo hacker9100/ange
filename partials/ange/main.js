@@ -14,7 +14,7 @@ define([
     controllers.controller('main', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
 
         $scope.test = function() {
-            $scope.insertItem('com/user', 'mail', {EMAIL: 'hacher9100@gmail.com', USER_NM: '김성환', USER_ID: 'hong'}, false)
+            $scope.insertItem('com/user', 'mail', {EMAIL: 'hacker9100@gmail.com', USER_NM: '김성환', USER_ID: 'hong'}, false)
                 .then(function(data){
                     alert(0)
                 });

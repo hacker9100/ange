@@ -21,6 +21,8 @@
     <!--</div>-->
 <!--</div>-->
 
+<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>
+
 <div ng-class="option.type == 'review' ? 'mini_story' : option.type == 'clinic' ? 'comp_clinic' : 'mini_community'">
     <div ng-class="option.type == 'review' ? '' : option.type == 'clinic' ? 'comp_clinic_top' : 'peopleboard_top'">
         <div ng-class="option.type == 'review' ? 'miniboard_titlebar' : 'mini_community_titlebar'">

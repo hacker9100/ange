@@ -191,7 +191,7 @@
 
                                         <span class="col-xs-4 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
-                                                <input id="user_id" ng-model="user.USER_ID" type="text" class="form-control" style="margin:0px;" placeholder="ID">
+                                                <input id="user_id" name="user_id" ng-model="user.USER_ID" type="text" class="form-control" style="margin:0px;" placeholder="ID">
                                             </div>
                                         </span>
 
@@ -382,9 +382,9 @@
                                                     <option value="033">033</option>
                                                 </select>
                                                 <span style="margin:0 4px;"> &dash; </span>
-                                                <input ng-model="user.PHONE_1_2" class="form-control" style="width:110px;">
+                                                <input ng-model="user.PHONE_1_2" class="form-control" style="width:110px;" valid-number>
                                                 <span style="margin:0 4px;"> &dash; </span>
-                                                <input ng-model="user.PHONE_1_3" class="form-control" style="width:110px;">
+                                                <input ng-model="user.PHONE_1_3" class="form-control" style="width:110px; " valid-number>
                                             </div>
                                         </span>
                                 </div>  <!-- /.form_basicinfo -->
@@ -407,11 +407,11 @@
                                                     <option value="4">알뜰폰</option>
                                                 </select>
                                                 <span style="margin:0 4px;"> &nbsp; </span>
-                                                <input id="phone_2" ng-model="user.PHONE_2_1" class="form-control" style="width:110px;">
+                                                <input id="phone_2" ng-model="user.PHONE_2_1" class="form-control" style="width:110px;" valid-number>
                                                 <span style="margin:0 4px;"> &dash; </span>
-                                                <input ng-model="user.PHONE_2_2" class="form-control" style="width:110px;">
+                                                <input ng-model="user.PHONE_2_2" class="form-control" style="width:110px;" valid-number>
                                                 <span style="margin:0 4px;"> &dash; </span>
-                                                <input ng-model="user.PHONE_2_3" class="form-control" style="width:110px;">
+                                                <input ng-model="user.PHONE_2_3" class="form-control" style="width:110px;" valid-number>
                                             </div>
                                         </span>
                                 </div>  <!-- /.form_basicinfo -->
@@ -695,7 +695,7 @@
 
                                         <span class="col-xs-10 basicinfo input">
                                             <div class="form-group" style="margin:0 5px; line-height:32px;">
-                                                <input ng-model="blog.BLOG_GB" type="radio" name="user_portalblog" value="NAVER" style="float: left; margin:10px 0 0 15px;" ng-checked>
+                                                <input ng-model="blog.BLOG_GB" type="radio" name="user_portalblog" value="NAVER" style="float: left; margin:10px 0 0 15px;" ng-checked="true">
                                                 <span style="float:left; margin-left:5px;">네이버</span>
 
                                                 <input ng-model="blog.BLOG_GB" type="radio" value="DAUM" style="float: left; margin:10px 0 0 15px;">
@@ -805,7 +805,7 @@
                                     </span>
                                     <span class="col-xs-3 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input ng-model="blog.NEIGHBOR_CNT" type="text" class="form-control" style="margin:0px;" placeholder="">
+                                            <input ng-model="blog.NEIGHBOR_CNT" type="text" class="form-control" style="margin:0px;" placeholder="" valid-number>
                                         </div>
                                     </span>
                                     <span class="col-xs-4 basicinfo desc">
@@ -828,7 +828,7 @@
                                         </span>
                                         <span class="col-xs-3 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
-                                                <input ng-model="blog.POST_CNT" type="text" class="form-control" style="margin:0px;" placeholder="">
+                                                <input ng-model="blog.POST_CNT" type="text" class="form-control" style="margin:0px;" placeholder="" valid-number>
                                             </div>
                                         </span>
                                         <span class="col-xs-4 basicinfo desc">
@@ -851,7 +851,7 @@
                                         </span>
                                         <span class="col-xs-3 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
-                                                <input ng-model="blog.VISIT_CNT" type="text" class="form-control" style="margin:0px;" placeholder="">
+                                                <input ng-model="blog.VISIT_CNT" type="text" class="form-control" style="margin:0px;" placeholder="" valid-number>
                                             </div>
                                         </span>
                                         <span class="col-xs-4 basicinfo desc">
@@ -876,6 +876,39 @@
                                         </span>
                                 </div>  <!-- /.form_basicinfo -->
                             </div>  <!-- /.form_rows -->
+
+                            <div class="join_agree_totalcheck">
+                                <div class="join_agree_check">
+                                    <input ng-model="user.CERT_GB" type="radio" value="EMAIL" style="float: left; margin:15px 0 0 15px;" ng-checked="true">
+                                    <span style="float:left; margin:10px 5px;">이메일 인증</span>
+
+                                    <input ng-model="user.CERT_GB" type="radio" value="PHONE" style="float: left; margin:15px 0 0 15px;">
+                                    <span style="float:left; margin:10px 5px;">휴대폰 인증</span>
+                                </div>
+
+                                <div ng-show="user.CERT_GB == 'PHONE'" class="ange_colorbox_gray">
+                                    <div class="col-xs-1">
+                                        <img src="/imgs/ange/icon_certification_phone.png" />
+                                    </div>
+                                    <div class="col-xs-9">
+                                        <span style="font-weight:600; font-size:1.14em;">휴대폰 인증이 편하신가요?</span>
+                                        <br />
+                                        <small class="table_gray">[휴대폰 인증하기기]을 클릭하시면 본인 휴대폰으로 실명인증이 가능합니다.</small>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button type="button" class="btn btn-default" style="margin-top:8px; font-size:0.86em;" ng-click="click_certUser('phone');">휴대폰 인증하기</button>
+                                    </div>
+                                    <div ng-show="isSMS" class="col-xs-12" style="margin: 30px 200px 0 200px">
+                                        <div class="col-xs-3">
+                                            <input ng-model="user.CERT_NO_CP" type="text" class="form-control">
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <button type="button" class="btn btn-sm btn-info" ng-click="click_checkCertNo()"><span class="glyphicon glyphicon-plus"></span> 인증번호확인</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div><!-- /.sub_contents_body -->
 
                         <div ng-show="step == '03'" class="sub_contents_body">
@@ -887,7 +920,7 @@
                                 <div class="form_col_lg">
                                     <center>
                                         <p class="txt_title">
-                                            회원님의 이메일 <a href="#"><span class="table_red">abcdefg@naver.com</span></a> 으로 <br />
+                                            회원님의 이메일 <a href="#"><span class="table_red">{{user.EMAIL}}</span></a> 으로 <br />
                                             <strong style="font-size:1.12em;">회원가입 인증메일이 발송되었습니다.</strong>
                                         </p>
 
@@ -910,27 +943,27 @@
                                             </div>
                                         </div>
 
-                                        <div class="ange_colorbox_gray">
-                                            <div class="col-xs-1">
-                                                <img src="/imgs/ange/icon_certification_phone.png" />
-                                            </div>
-                                            <div class="col-xs-9">
-                                                <span style="font-weight:600; font-size:1.14em;">휴대폰 인증이 편하신가요?</span>
-                                                <br />
-                                                <small class="table_gray">[휴대폰 인증하기기]을 클릭하시면 본인 휴대폰으로 실명인증이 가능합니다.</small>
-                                            </div>
-                                            <div class="col-xs-2">
-                                                <button type="button" class="btn btn-default" style="margin-top:8px; font-size:0.86em;" ng-click="click_certUser('phone');">휴대폰 인증하기</button>
-                                            </div>
-                                            <div ng-show="isSMS" class="col-xs-12" style="margin: 30px 200px 0 200px">
-                                                <div class="col-xs-3">
-                                                    <input ng-model="user.CERT_NO_CP" type="text" class="form-control">
-                                                </div>
-                                                <div class="col-xs-3">
-                                                    <button type="button" class="btn btn-sm btn-info" ng-click="click_checkCertNo()"><span class="glyphicon glyphicon-plus"></span> 인증번호확인</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!--<div class="ange_colorbox_gray">-->
+                                            <!--<div class="col-xs-1">-->
+                                                <!--<img src="/imgs/ange/icon_certification_phone.png" />-->
+                                            <!--</div>-->
+                                            <!--<div class="col-xs-9">-->
+                                                <!--<span style="font-weight:600; font-size:1.14em;">휴대폰 인증이 편하신가요?</span>-->
+                                                <!--<br />-->
+                                                <!--<small class="table_gray">[휴대폰 인증하기기]을 클릭하시면 본인 휴대폰으로 실명인증이 가능합니다.</small>-->
+                                            <!--</div>-->
+                                            <!--<div class="col-xs-2">-->
+                                                <!--<button type="button" class="btn btn-default" style="margin-top:8px; font-size:0.86em;" ng-click="click_certUser('phone');">휴대폰 인증하기</button>-->
+                                            <!--</div>-->
+                                            <!--<div ng-show="isSMS" class="col-xs-12" style="margin: 30px 200px 0 200px">-->
+                                                <!--<div class="col-xs-3">-->
+                                                    <!--<input ng-model="user.CERT_NO_CP" type="text" class="form-control">-->
+                                                <!--</div>-->
+                                                <!--<div class="col-xs-3">-->
+                                                    <!--<button type="button" class="btn btn-sm btn-info" ng-click="click_checkCertNo()"><span class="glyphicon glyphicon-plus"></span> 인증번호확인</button>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</div>-->
 
                                     </center>
                                 </div>  <!-- /.form_col_lg -->

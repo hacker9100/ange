@@ -247,16 +247,16 @@ class MtUtil extends Mt {
         // 2 = messages only
         $mail->CharSet    = "utf-8";
         $mail->SMTPAuth   = true;                  // enable SMTP authentication
-        $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
-//        $mail->Host       = __SMTP_HOST__;      // sets GMAIL as the SMTP server
-//        $mail->Port       = __SMTP_PORT__;                   // set the SMTP port for the GMAIL server
-//        $mail->Username   = __SMTP_USR__;             // GMAIL username
-//        $mail->Password   = __SMTP_PWD__;              // GMAIL password
+        $mail->Host       = __SMTP_HOST__;      // sets GMAIL as the SMTP server
+        $mail->Port       = __SMTP_PORT__;                   // set the SMTP port for the GMAIL server
+        $mail->Username   = __SMTP_USR__;             // GMAIL username
+        $mail->Password   = __SMTP_PWD__;              // GMAIL password
 
-        $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
-        $mail->Port       = 465;                   // set the SMTP port for the GMAIL server
-        $mail->Username   = "hacker9100@gmail.com";             // GMAIL username
-        $mail->Password   = "rlatjdghks9100";              // GMAIL password
+//        $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
+//        $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
+//        $mail->Port       = 465;                   // set the SMTP port for the GMAIL server
+//        $mail->Username   = "hacker9100@gmail.com";             // GMAIL username
+//        $mail->Password   = "rlatjdghks9100";              // GMAIL password
 
         $mail->SetFrom($EMAIL, $NAME);
 

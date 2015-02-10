@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller("storycontent-view-popup", ['$rootScope', '$scope', '$sce', '$controller', '$location', '$modalInstance', '$q', 'dialogs', 'UPLOAD', 'data', function($rootScope, $scope, $sce, $controller, $location, $modalInstance, $q, dialogs, UPLOAD, data) {
+    controllers.controller("storycontent-view-popup", ['$rootScope', '$scope', '$window', '$sce', '$controller', '$location', '$modalInstance', '$q', 'dialogs', 'UPLOAD', 'data', function($rootScope, $scope, $window, $sce, $controller, $location, $modalInstance, $q, dialogs, UPLOAD, data) {
 
         angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
@@ -66,12 +66,7 @@ define([
                     }),
                     $scope.getItem('cms/task', 'item', data.NO, {FILE: true}, false).then(function(data){
                         $scope.task = data;
-
-                        $scope.share_url = UPLOAD.BASE_URL + 'story/content/list/' + $scope.task.NO;
-                        $rootScope.share_url = $scope.share_url;
-                        $rootScope.share_title = $scope.task.SUBJECT;
-                        $rootScope.share_img = UPLOAD.BASE_URL + $scope.task.FILE.PATH + 'thumbnail/' + $scope.task.FILE.FILE_ID;
-                        $rootScope.share_desc = $scope.task.SUMMARY;
+                        $scope.share_url = UPLOAD.BASE_URL + '/story/content/list/' + $scope.task.NO;
                     }),
                     $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){ $scope.content = data; }),
                     $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, PHASE: '30, 31'}, false).then(function(data){
@@ -124,6 +119,50 @@ define([
                                     '</head><body onload="window.print()"><div class="modal-body"><div class="story-row previewwrap"><div class="story-col-xs-12 article_previewwrap">' + printContents + '</div></div></div></html>');
             popupWin.document.close();
         };
+
+        // 사용할 앱의 Javascript 키를 설정해 주세요.
+        $scope.click_loginWithKakao = function () {
+            Kakao.Auth.login({
+                success: function(authObj) {
+                    $scope.share_open();
+                },
+                fail: function(err) {
+                    alert(JSON.stringify(err))
+                }
+            });
+
+//            Kakao.Auth.createLoginButton({
+//                container: '#kakao-login-btn',
+//                success: function() {
+//                    alert(0)
+//                    share_open();
+//                },
+//                fail: function(err) {
+//                    alert(JSON.stringify(err))
+//                }
+//            });
+        }
+
+        $scope.share_open = function () {
+            $window.open('https://story.kakao.com/share?url=' + UPLOAD.BASE_URL + $location.path() + '/' + $scope.task.NO, '_blank', 'width=500,height=400')
+        }
+
+        $scope.click_loginWithTwitter = function () {
+            var urlString = '//www.twitter.com/intent/tweet?';
+
+            urlString += 'text=' + encodeURI($scope.task.SUBJECT);
+            urlString += '&hashtags=' + encodeURI('앙쥬, 유아포털');
+            urlString += '&url=' + encodeURI($scope.share_url || $location.absUrl());
+
+            $window.open(urlString, 'sharer', 'toolbar=0,status=0,width=500,height=500'
+            );
+        }
+
+        $scope.click_loginWithFacebook = function () {
+            $window.open(
+                '//www.facebook.com/sharer/sharer.php?u=' + encodeURI($scope.share_url)
+                ,'sharer', 'toolbar=0,status=0,width=500,height=500');
+        }
 
         // 공유 버튼 클릭
         $scope.click_shareContent = function () {

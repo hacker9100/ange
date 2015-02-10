@@ -20,8 +20,6 @@
                     <div class="comp_basic h-cell-dynamic">
                         <img class="blank_wrap" src="/imgs/ange/_blank_80by31.gif" />
 
-                        <div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>
-
                         <!--<div ng-show="isLoading" class="jumbotron_cover jumbotron_cover_imgs" style="background-color: #ffffff; opacity : .3;  filter: alpha(opacity:'30')">-->
                             <!--<img src="/imgs/temp/1.jpg">-->
                         <!--</div>-->
@@ -35,8 +33,6 @@
             <div class="row">
                 <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
                     <div ng-class="slide != 'cover' ? 'comp_basic h-cell-2' : 'comp_basic comp_splite_left h-cell-2'">
-
-                        <div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>
 
                         <!-- mini_story -->
                         <ange-mini-story-list ng-model="option_r2_c1"></ange-mini-story-list>
@@ -207,12 +203,14 @@
                 <!-- 슬라이드가 확장되지 않을 경우 -->
                 <div ng-if="slide == 'cover'" ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
                     <div ng-class="slide != 'cover' ? 'comp_basic comp_splite_left h-cell-1' : 'comp_basic comp_splite_right h-cell-1'">
+
                         <!-- maineventbanner -->
                         <ange-portlet-link-image ng-model="option_r2_c2"></ange-portlet-link-image>
                         <!-- /maineventbanner -->
                     </div>
 
                     <div class="comp_basic comp_splite_right h-cell-1">
+
                         <!-- mini_community -->
                         <ange-portlet-main-list ng-model="option_r3_c2"></ange-portlet-main-list>
                         <!-- /mini_community -->

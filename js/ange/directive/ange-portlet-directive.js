@@ -149,7 +149,7 @@ define([
 
                 // 리스트 조회
                 $scope.getPortletList = function () {
-                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, false)
+                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             $scope.list = data;
                             if ($scope.option.image != undefined && $scope.option.image) {
@@ -169,7 +169,7 @@ define([
     directives.directive('angeMiniStoryList', ['$controller', function($controller) {
         return {
             restrict: 'EA',
-//            scope: true,
+            scope: true,
 //            scope: { code:'=' },
 //            replace: true,
             templateUrl: function(element, attr) {
@@ -390,7 +390,7 @@ define([
 
                 // 리스트 조회
                 $scope.getMiniList = function () {
-                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, false)
+                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             $scope.list = data;
 
@@ -721,8 +721,7 @@ define([
 
                 // 롤링 이미지 조회
                 $scope.getPortletList = function () {
-                    $scope.isLoading = true;
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, false)
+                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             $scope.list = data;
 
@@ -754,10 +753,6 @@ define([
                             }, function(newVal, oldVal) {
                                 $scope.coverTitle = data[newVal].SUBJECT;
                             });
-
-                            $timeout(function(){
-                                $scope.isLoading = false;
-                            }, 1000);
                         })
                         .catch(function(error){$scope.list = [];});
                 };
@@ -924,7 +919,8 @@ define([
             scope: true,
 //            scope: { images:'=' },
 //            replace: true,
-            template: '<div class="inven_Highlight"><img class="ADbanner_normal" ng-src="{{img}}" ng-click="click_linkImage()"/></div>',
+            template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+                      '<div class="inven_Highlight"><img class="ADbanner_normal" ng-src="{{img}}" ng-click="click_linkImage()"/></div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', 'UPLOAD', function($scope, $attrs, $location, $window, CONSTANT, UPLOAD) {
 
                 /********** 초기화 **********/

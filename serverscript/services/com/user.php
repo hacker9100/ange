@@ -599,6 +599,8 @@
                             EN_STORE_EMAIL_FL,
                             EN_STORE_SMS_FL,
                             REG_DT,
+                            CERT_GB,
+                            CERT_DT,
                             CERT_HASH
                         ) VALUES (
                             '".$_model[USER_ID]."',
@@ -613,7 +615,7 @@
                             '".$_model[PHONE_1]."',
                             '".$_model[PHONE_2]."',
                             '".$_model[USER_GB][value]."',
-                            '".(!isset($_model[ROLE]) ? 'W' : 'N')."',
+                            '".((isset($_model[CERT_GB]) && $_model[CERT_GB] == "EMAIL") ? "W" : "N")."',
                             '".$_model[EMAIL]."',
                             '".$_model[SEX_GB]."',
                             '".$_model[INTRO]."',
@@ -631,13 +633,15 @@
     #                        '".$_model[EN_POST_FL]."',
     #                        '".$_model[EN_SMS_FL]."',
     #                        '".$_model[EN_PHONE_FL]."',
-                            '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."',
+                            '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : "N" )."',
+                            '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : "N" )."',
+                            '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : "N" )."',
+                            '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : "N" )."',
+                            '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : "N" )."',
+                            '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : "N" )."',
                             SYSDATE(),
+                            '".$_model[CERT_GB]."',
+                            ".((isset($_model[CERT_GB]) && $_model[CERT_GB] == "EMAIL") ? "null" : "SYSDATE()").",
                             'test'
                         )";
 
@@ -748,17 +752,17 @@
                     foreach ($_model[BABY] as $e) {
                         if (isset($e[BABY_NM]) && $e[BABY_NM] != "") {
                             $sql = "INSERT INTO ANGE_USER_BABY
-                            (
-                                USER_ID
-                                ,BABY_NM
-                                ,BABY_BIRTH
-                                ,BABY_SEX_GB
-                            ) VALUES (
-                                '".$_model[USER_ID]."'
-                                ,'".$e[BABY_NM]."'
-                                ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? "0".$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? "0".$e[BABY_DAY] : $e[BABY_DAY])."'
-                                ,'".$e[BABY_SEX_GB]."'
-                            )";
+                                    (
+                                        USER_ID
+                                        ,BABY_NM
+                                        ,BABY_BIRTH
+                                        ,BABY_SEX_GB
+                                    ) VALUES (
+                                        '".$_model[USER_ID]."'
+                                        ,'".$e[BABY_NM]."'
+                                        ,'".$e[BABY_YEAR].(strlen($e[BABY_MONTH]) == 1 ? "0".$e[BABY_MONTH] : $e[BABY_MONTH]).(strlen($e[BABY_DAY]) == 1 ? "0".$e[BABY_DAY] : $e[BABY_DAY])."'
+                                        ,'".$e[BABY_SEX_GB]."'
+                                    )";
 
                             $_d->sql_query($sql);
 
@@ -808,17 +812,18 @@
                     $_d->sql_rollback();
                     $_d->failEnd("등록실패입니다:".$msg);
                 } else {
-                    if(!isset($_model[ROLE])) {
+                    if(isset($_model[CERT_GB]) && $_model[CERT_GB] == 'EMAIL') {
 //                        $to = __SMTP_USR__;
+                        $from_email = "angeweb@ange.co.kr";
+                        $from_user = "앙쥬";
                         $to = $_model[EMAIL];
-                        $from_email = $_model[EMAIL];
-                        $from_user = $_model[USER_NM];
-                        $headers = "From: hacker9100@gmail.com \r\n".'X-Mailer: PHP/' . phpversion();
+                        $to_user = $_model[USER_NM];
+                        $headers = "From: hacker9100@gmail.com";
                         $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-                        $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/mail.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
+                        $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
 
 //                        MtUtil::sendMail($to, $subject, $message, $headers);
-                        MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                        MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
                     }
 
                     $_d->sql_commit();
@@ -845,19 +850,19 @@
                 }
             } else if ($_type == 'mail') {
 //                $to = __SMTP_USR__;
+                $from_email = "angeweb@ange.co.kr";
+                $from_user = "앙쥬";
                 $to = $_model[EMAIL];
-                $from_email = $_model[EMAIL];
-                $from_user = $_model[USER_NM];
+                $to_user = $_model[USER_NM];
                 $headers = "From: hacker9100@gmail.com";
-                $subject = "test";
-//                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
-                $message = "test.";
+                $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
+                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
 
                 MtUtil::_d("------------>>>>> mail : ");
 
-                $return = MtUtil::sendMail($to, $subject, $message, $headers);
+//                $return = MtUtil::sendMail($to, $subject, $message, $headers);
                 MtUtil::_d("------------>>>>> mail : ".$return);
-//                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $from_user);
+                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
                 $_d->succEnd('');
             }
 
@@ -1284,8 +1289,8 @@
                     ob_end_clean();
                     header('Content-type: text/html; charset=utf-8');
 
-                    echo '<script language="javascript">';
-                    echo 'alert("인증에 실패했습니다. 다시 인증 후 로그인 하세요.")';
+                    echo "<script language='javascript'>";
+                    echo "alert('인증에 실패했습니다. 다시 인증 후 로그인 하세요.')";
                     echo "window.location.href='".BASE_URL."';";
                     echo "</script>";
 

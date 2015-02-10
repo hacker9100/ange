@@ -220,7 +220,7 @@ define([
                 $rootScope.nick = session.NICK_NM;
 
                 if (session.USER_INFO.FILE) {
-                    $rootScope.img = UPLOAD.BASE_URL + session.USER_INFO.FILE.PATH + session.USER_INFO.FILE.FILE_ID;
+                    $rootScope.profileImg = UPLOAD.BASE_URL + session.USER_INFO.FILE.PATH + session.USER_INFO.FILE.FILE_ID;
                 }
 
                 $rootScope.addr = session.ADDR;

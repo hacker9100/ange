@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('infodesksignon', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $window, $location, dialogs, UPLOAD) {
+    controllers.controller('infodesksignon', ['$rootScope', '$scope', '$window', '$location', '$timeout', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $window, $location, $timeout, dialogs, UPLOAD) {
 
         /********** 초기화 **********/
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
@@ -88,7 +88,7 @@ define([
             $scope.babies = [{}, {}, {}];
 
             $scope.user = {USER_ID: '', USER_NM: '', NICK_NM: '', PASSWORD: '', LUNAR_FL: '0', BIRTH: '', ZIP_CODE: '', ADDR: '', ADDR_DETAIL: '', PHONE_1: '', PHONE_2: '', USER_GB: '', USER_ST: '', EMAIL: '', SEX_GB: '',
-                INTRO: '', NOTE: '', MARRIED_FL: 'Y', PREGNENT_FL: 'N', EN_ANGE_EMAIL_FL: true, EN_ANGE_SMS_FL: true, EN_ALARM_EMAIL_FL: true, EN_ALARM_SMS_FL: true, EN_STORE_EMAIL_FL: true, EN_STORE_SMS_FL: true}
+                INTRO: '', NOTE: '', MARRIED_FL: 'Y', PREGNENT_FL: 'N', EN_ANGE_EMAIL_FL: true, EN_ANGE_SMS_FL: true, EN_ALARM_EMAIL_FL: true, EN_ALARM_SMS_FL: true, EN_STORE_EMAIL_FL: true, EN_STORE_SMS_FL: true, CERT_GB: 'EMAIL'}
             $scope.user.YEAR = '';
             $scope.user.MONTH = '';
             $scope.user.DAY = '';
@@ -108,24 +108,26 @@ define([
         /********** 이벤트 **********/
         // 우편번호 검색
         $scope.click_openDaumPostcode = function () {
-            $window.open(
-                new daum.Postcode({
-                    oncomplete: function(data) {
-                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-                        // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
-                        $scope.user.POST_1 = document.getElementById('post_1').value = data.postcode1;
-                        $scope.user.POST_2 = document.getElementById('post_2').value = data.postcode2;
-                        $scope.user.ADDR = document.getElementById('addr').value = data.address;
 
-                        //전체 주소에서 연결 번지 및 ()로 묶여 있는 부가정보를 제거하고자 할 경우,
-                        //아래와 같은 정규식을 사용해도 된다. 정규식은 개발자의 목적에 맞게 수정해서 사용 가능하다.
-                        //var addr = data.address.replace(/(\s|^)\(.+\)$|\S+~\S+/g, '');
-                        //document.getElementById('addr').value = addr;
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    var addr = data.address.replace(/(\s|^)\(.+\)$|\S+~\S+/g, '');
 
-                        document.getElementById('addr_detail').focus();
-                    }
-                }).open()
-            );
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                    // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
+                    $scope.user.POST_1 = document.getElementById('post_1').value = data.postcode1;
+                    $scope.user.POST_2 = document.getElementById('post_2').value = data.postcode2;
+                    $scope.user.ADDR = document.getElementById('addr').value = addr;
+//                        $scope.user.ADDR = document.getElementById('addr').value = data.address;
+
+                    //전체 주소에서 연결 번지 및 ()로 묶여 있는 부가정보를 제거하고자 할 경우,
+                    //아래와 같은 정규식을 사용해도 된다. 정규식은 개발자의 목적에 맞게 수정해서 사용 가능하다.
+                    //var addr = data.address.replace(/(\s|^)\(.+\)$|\S+~\S+/g, '');
+                    //document.getElementById('addr').value = addr;
+
+                    document.getElementById('addr_detail').focus();
+                }
+            }).open();
         };
 
         // 이용약관 체크
@@ -162,12 +164,15 @@ define([
                 }
             } else {
                 $scope.checkID = false;
+                $scope.availableID = false;
             }
         });
 
         $scope.$watch('user.PASSWORD', function() {
             if ($scope.user.PASSWORD != undefined && $scope.user.PASSWORD.length > 5) {
                 $scope.checkPW = true;
+
+                $scope.user.PASSWORD = $scope.user.PASSWORD.replace( /(\s*)/g, '');
 
 //                var check = /[^a-zA-Z0-9~!@\#$%<>^&*\()\-=+_\']/gi;
 //                var check = /^(?=.+[0-9])(?=.+[a-zA-Z])(?=.+[!@#$%^*+=-]).{6,12}$/;
@@ -196,6 +201,8 @@ define([
         });
 
         $scope.$watch('user.NICK_NM', function() {
+            $scope.user.NICK_NM = $scope.user.NICK_NM.replace( /(\s*)/g, '');
+
             if ($scope.user.NICK_NM != undefined && $scope.user.NICK_NM.length > 1) {
                 var addLen = (escape($scope.user.NICK_NM)+"%u").match(/%u/g).length-1;
                 var totalLen = $scope.user.NICK_NM.length + addLen;
@@ -309,10 +316,7 @@ define([
         };
 
         // 사용자 정보 저장
-        $scope.saveUser = function () {
-            $scope.user.SYSTEM_GB = 'ANGE';
-            $scope.user.BABY = $scope.babies;
-            $scope.user.BLOG = $scope.blog;
+        $scope.checkValidation = function () {
 
             if (!$scope.availableID) {
                 $('#user_id').focus();
@@ -323,25 +327,25 @@ define([
             if (!$scope.availablePW) {
                 $('#password').focus();
                 dialogs.notify('알림', '패스워드를 확인해주세요.', {size: 'md'});
-                return;
+                return false;
             }
 
             if ($scope.user.USER_NM == '') {
                 $('#user_nm').focus();
                 dialogs.notify('알림', '이름을 확인해주세요.', {size: 'md'});
-                return;
+                return false;
             }
 
             if (!$scope.availableNick) {
                 $('#nick_nm').focus();
                 dialogs.notify('알림', '닉네임을 확인해주세요.', {size: 'md'});
-                return;
+                return false;
             }
 
             if ($scope.user.YEAR == '' || $scope.user.MONTH == '' || $scope.user.DAY == '') {
                 $('#birth').focus();
                 dialogs.notify('알림', '생년월일을 확인해주세요.', {size: 'md'});
-                return;
+                return false;
             } else {
                 $scope.user.BIRTH = $scope.user.YEAR + ($scope.user.MONTH.length == 1 ? '0' + $scope.user.MONTH : $scope.user.MONTH) + ($scope.user.DAY.length == 1 ? '0' + $scope.user.DAY : $scope.user.DAY);
             }
@@ -353,7 +357,7 @@ define([
             if ($scope.user.POST_1 == '' || $scope.user.POST_2 == '') {
                 $('#post_1').focus();
                 dialogs.notify('알림', '주소를 확인해주세요.', {size: 'md'});
-                return;
+                return false;
             } else {
                 $scope.user.ZIP_CODE = $scope.user.POST_1 + $scope.user.POST_2;
             }
@@ -361,7 +365,7 @@ define([
             if ($scope.user.PHONE_2_1 == '' || $scope.user.PHONE_2_2 == '' || $scope.user.PHONE_2_3 == '') {
                 $('#phone_2').focus();
                 dialogs.notify('알림', '휴대폰을 확인해주세요.', {size: 'md'});
-                return;
+                return false;
             } else {
                 $scope.user.PHONE_2 = $scope.user.PHONE_2_1 + $scope.user.PHONE_2_2 + $scope.user.PHONE_2_3;
             }
@@ -369,7 +373,7 @@ define([
             if ($scope.user.EMAIL_ID == '' || $scope.user.EMAIL_TYPE == '') {
                 $('#email').focus();
                 dialogs.notify('알림', '이메일을 확인해주세요.', {size: 'md'});
-                return;
+                return false;
             } else {
                 $scope.user.EMAIL = $scope.user.EMAIL_ID + '@' + $scope.user.EMAIL_TYPE;
             }
@@ -390,6 +394,22 @@ define([
                     $scope.blog.THEME = strTheme;
             }
 
+            return true;
+        };
+
+
+        // 사용자 정보 저장
+        $scope.saveUser = function () {
+            if (!$scope.checkValidation()) {
+                return;
+            }
+
+            if ($scope.user.CERT_GB == 'PHONE' && !$scope.checkCert) {
+                dialogs.notify('알림', '인증을 해주세요.', {size: 'md'});
+                return;
+            }
+
+            $scope.user.SYSTEM_GB = 'ANGE';
             $scope.user.BABY = $scope.babies;
             $scope.user.BLOG = $scope.blog;
 
@@ -400,11 +420,24 @@ define([
 
             if (!$scope.checkSave) {
                 $scope.insertItem('com/user', 'item', $scope.user, false)
-                    .then(function(){ $scope.checkSave = true; $scope.step = '03';/*dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});*/})
+                    .then(function(){
+                        $scope.checkSave = true;
+                        if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
+                            $scope.step = '04';
+                        } else {
+                            $scope.step = '03';
+                        }
+                    })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
-                    .then(function(){ $scope.step = '03';/*dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});*/})
+                    .then(function(){
+                        if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
+                            $scope.step = '04';
+                        } else {
+                            $scope.step = '03';
+                        }
+                    })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
@@ -419,8 +452,13 @@ define([
                     .then(function(){ dialogs.notify('알림', '인증메일이 재전송되었습니다.', {size: 'md'});})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
+                if (!$scope.checkValidation()) {
+                    return;
+                }
+
 //                $scope.user.PHONE_1 = '01027137400';
                 $scope.user.CERT_NO = Math.floor(Math.random() * (999999 - 100000) + 100000);
+                alert($scope.user.CERT_NO);
                 $scope.insertItem('com/sms', 'item', $scope.user, false)
                     .then(function(){ $scope.isSMS = true; dialogs.notify('알림', '인증번호가 전송되었습니다.', {size: 'md'});})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -455,8 +493,7 @@ define([
                 $scope.step = '01'
             } else if ($scope.step == '03') {
                 $scope.step = '02'
-
-                $scope.click_focus('user_id');
+                $timeout(function() { $scope.click_focus('user_id')}, 100);
             }
         };
 
@@ -474,7 +511,7 @@ define([
                 }
 
                 $scope.step = '02';
-                $scope.click_focus('user_id');
+                $timeout(function() { $scope.click_focus('user_id')}, 100);
             } else if ($scope.step == '02') {
                 $scope.saveUser();
 
