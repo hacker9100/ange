@@ -46,7 +46,7 @@
                     <dt class="table_red">추가정보</dt>
                     <dd><strong>마감일</strong><span class="table_gray" style="margin-left:8px;">{{D_DAY > 0 ? 'D-'+D_DAY : '마감'}}</span></dd>
                     <!--<dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>-->
-                    <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_delivery}}원</span></dd>
+                    <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_delivery}}원</span></dd>
                     <!--<dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>-->
                     <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.ada_delivery}}"><!--{{item.COMPANY_NM}}-->네이버</a></span></dd>
                     <dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.ada_count_join}}</span>명<!--({{item.HIT_CNT}} 조회)--></span></dd>
@@ -456,10 +456,75 @@
         <!--</table>&lt;!&ndash; /.List&ndash;&gt;-->
     <!--</div>  &lt;!&ndash; /.moms_review &ndash;&gt;-->
 
-    <div>
-        <div class="people_view_replys">
-            <module-reply></module-reply>
-        </div>
+    <div ng-model="item" class="sub_contents_body">
+
+        <div class="container-fluid peopleboard_view_commentwrap">
+            <div class="row peopleboard_view_commenttop">
+                <div class="col-xs-12 peopleboard_view_commenttitle">
+                    <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">출석체크</span>
+                    <small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>
+                </div><!-- /.col-xs-12-->
+            </div><!-- /.row -->
+
+            <div class="row peopleboard_view_commentbox">
+                <div class="col-xs-10 peopleboard_view_text">
+                    <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
+                </div><!-- /.col-xs-10-->
+                <div class="col-xs-2 peopleboard_view_btns">
+
+                    <span>(100자 이내)</span>
+                    <a class="reply_submit" ng-click="click_savePeopleBoardComment();">댓글등록</a>
+
+                </div><!-- /.col-xs-2-->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+
+
+        <div class="container-fluid people_view_replywrap" >
+            <div class="row">
+
+                <!--<div class="col-xs-12 people_view_replytop">-->
+                <!--<a class="reply_sort idx" id="reply_sort_idx" title="등록순으로 정렬"></a>-->
+                <!--<a class="reply_sort date"  id="reply_sort_date" title="최신글 순으로 정렬"></a> &lt;!&ndash; 선택되어 있을 경우 class에 selected 추가 &ndash;&gt;-->
+                <!--</div>&lt;!&ndash; /.col-xs-12&ndash;&gt;-->
+
+                <div class="col-xs-12 people_view_replys" ng-repeat="item in replyList">
+                    <dl class="dl-horizontal" >
+                        <dt>{{item.NICK_NM}}</dt>
+                        <dd><div class="people_view_replys_date">{{item.REG_DT}}</div></dd>
+                        <dd style="margin:0px;">
+                            {{item.COMMENT}}
+                        </dd>
+                        <dd style="margin:0px;">
+                            <a ng-show="uid == item.REG_UID" ng-click="showCommentDetails = ! showCommentDetails">수정</a>
+                            <a ng-show="uid == item.REG_UID" ng-click="click_deleteReply(item.NO);">삭제</a>
+                            <a ng-click="click_blind(item.NO);" ng-show="item.BLIND_FL == 'N'" class="table_red">블라인드</a>
+                            <a ng-click="click_blind_clear(item.NO);" ng-show="item.BLIND_FL == 'Y'" class="table_red">블라인드해제</a>
+                        </dd>
+
+                        <p style="font-size:0.86em; margin:4px 0 0 0; "  ng-class="{ 'hidden': ! showCommentDetails }">
+                            &nbsp;&nbsp;&nbsp;<input type="text" ng-model="item.UPDATE_COMMENT" style="width:60%;"/>&nbsp;<a ng-click="click_updateReply(item.NO, item.UPDATE_COMMENT);">수정</a>
+                        </p>
+                    </dl>
+                </div><!-- /.people_view_replys-->
+
+                <div class="col-xs-12 people_view_replys" data-ng-show="replyList == ''">
+                    <dl class="dl-horizontal" >
+                        <dt></dt>
+                        <dd><div class="people_view_replys_date"></div></dd>
+                        <dd style="margin:0px;">
+                            댓글이 없습니다.
+                        </dd>
+                    </dl>
+                </div>
+
+                <nav class="text-center">
+                    <pagination boundary-links="true" total-items="search.TOTAL_COUNT" ng-model="search.PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                </nav><!-- /.Paging-->
+
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+
     </div>
 
 

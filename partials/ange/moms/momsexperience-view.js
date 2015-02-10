@@ -273,7 +273,7 @@ define([
 
                         $scope.search.TARGET_NO = $stateParams.id;
 
-                        $scope.item.ada_delivery = data.ada_delivery.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        $scope.item.ada_option_delivery = data.ada_option_delivery.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -388,6 +388,155 @@ define([
             $('span.blog:last').remove();
         }
 
+        /* 댓글 (삭제예정) */
+
+        $scope.comment = {};
+        $scope.reply = {};
+
+        $scope.search = {SYSTEM_GB: 'ANGE'};
+
+        $scope.showDetails = false;
+        $scope.showCommentDetails = false;
+        $scope.showReCommentDetails = false;
+
+        $scope.replyList = [];
+
+        $scope.search.PAGE_NO = 1;
+        $scope.search.PAGE_SIZE = 10;
+        $scope.search.TOTAL_COUNT = 0;
+
+
+        // 페이지 변경
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.search.PAGE_NO);
+            $scope.replyList = [];
+            $scope.getPeopleReplyList();
+        };
+
+        // 댓글 리스트
+        $scope.getPeopleReplyList = function () {
+
+            $scope.search.TARGET_NO = $stateParams.id;
+            $scope.search.TARGET_GB = 'exp';
+
+            $scope.getItem('com/reply_event', 'item', {}, $scope.search, true)
+                .then(function(data){
+
+                    if(data.COMMENT == null){
+                        $scope.search.TOTAL_COUNT = 0;
+                    }else{
+                        $scope.search.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                    }
+
+                    var reply = data.COMMENT;
+
+                    for(var i in reply) {
+                        $scope.replyList.push({"NO":reply[i].NO,"PARENT_NO":reply[i].PARENT_NO,"COMMENT":reply[i].COMMENT,"RE_COUNT":reply[i].RE_COUNT,"REPLY_COMMENT":reply[i].REPLY_COMMENT,"LEVEL":reply[i].LEVEL,"REPLY_NO":reply[i].REPLY_NO,"NICK_NM":reply[i].NICK_NM,"REG_DT":reply[i].REG_DT, "REG_UID":reply[i].REG_UID});
+                    }
+
+                })
+                .catch(function(error){$scope.replyList = ""; $scope.search.TOTAL_COUNT=0;});
+        };
+
+        // 의견 등록
+        $scope.click_savePeopleBoardComment = function () {
+
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
+            $scope.item.PARENT_NO = 0;
+            $scope.item.LEVEL = 1;
+            $scope.item.REPLY_NO = 1;
+            $scope.item.TARGET_NO = $stateParams.id;
+            $scope.item.TARGET_GB = 'exp';
+
+            $scope.item.REMAIN_POINT = 10;
+
+            if($scope.item.COMMENT.length > 100){
+                dialogs.notify('알림', '100자 이내로 입력하세요.', {size: 'md'});
+                return;
+            }
+
+            $scope.insertItem('com/reply_event', 'item', $scope.item, false)
+                .then(function(){
+
+//                    $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
+//                        .then(function(){
+//                        })
+//                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                    $scope.getItem('com/reply', 'item', {}, $scope.search, true)
+                        .then(function(data){
+                            if(data.COMMENT == null){
+                                $scope.TODAY_TOTAL_COUNT = 0;
+                            }else{
+                                $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                            }
+                        })
+                        .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
+
+                    $scope.search.TARGET_NO = $stateParams.id;
+                    $scope.replyList = [];
+                    $scope.getPeopleReplyList();
+
+                    $scope.item.COMMENT = "";
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 댓글 수정
+        $scope.click_updateReply = function (key, comment) {
+
+            console.log(key);
+
+            $scope.replyItem = {};
+            $scope.replyItem.COMMENT = comment;
+
+            $scope.updateItem('com/reply_event', 'item', key, $scope.replyItem, false)
+                .then(function(){
+
+                    $scope.replyItem.COMMENT = "";
+
+                    dialogs.notify('알림', '댓글이 수정 되었습니다.', {size: 'md'});
+
+                    $scope.replyList = [];
+                    $scope.getPeopleReplyList();
+
+                    $scope.item.COMMENT = "";
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+        // 댓글 삭제
+        $scope.click_deleteReply = function (item) {
+
+            var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
+
+            console.log(item);
+            dialog.result.then(function(btn){
+                $scope.deleteItem('com/reply_event', 'item', item, true)
+
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+
+//                        $scope.item.REMAIN_POINT = 10;
+//                        $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
+//                            .then(function(){
+//                            })
+//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                        $scope.replyList = [];
+                        $scope.getPeopleReplyList();
+
+                        $scope.item.COMMENT = "";
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
+        }
+
         $scope.getSession()
             .then($scope.sessionCheck)
             .catch($scope.reportProblems);
@@ -396,6 +545,7 @@ define([
 //         $scope.addHitCnt();
         $scope.getMomsExperience();
         $scope.getExperienceReviewList();
+        $scope.getPeopleReplyList();
 
     }]);
 });

@@ -18,9 +18,10 @@ define([
         $scope.item = {};
         $scope.comment = {};
         $scope.reply = {};
-        $scope.showDetails = false;
+
         $scope.search = {SYSTEM_GB: 'ANGE'};
 
+        $scope.showDetails = false;
         $scope.showCommentDetails = false;
         $scope.showReCommentDetails = false;
 

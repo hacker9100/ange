@@ -80,10 +80,10 @@
 
                 //TODO: 조회
                 $sql = "SELECT
-                            NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
-                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(*) FROM COM_REPLY WHERE 1=1 ".$search_common.") AS TOTAL_COUNT
+                            NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY_EVENT WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
+                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(*) FROM COM_REPLY_EVENT WHERE 1=1 ".$search_common.") AS TOTAL_COUNT
                         FROM
-                            COM_REPLY R
+                            COM_REPLY_EVENT R
                         WHERE 1=1
                             AND PARENT_NO = 0
                             ".$search_common."
@@ -99,7 +99,7 @@
                     $sql = "SELECT
                                 REPLY_CTE.LEVEL, R.NO, PARENT_NO, PARENT_NO, REPLY_NO, REPLY_GB, COMMENT, REG_UID, NICK_NM, REG_NM, R.TARGET_NO, TARGET_GB,
                                 DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i') AS REG_DT,
-                                (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, BLIND_FL, REG_UID
+                                (SELECT COUNT(*) FROM COM_REPLY_EVENT WHERE PARENT_NO = R.NO) AS RE_COUNT, BLIND_FL, REG_UID
                             FROM (
                                 SELECT
                                     REPLY_CONNET_BY_PRIOR_ID(NO) AS NO, @level AS LEVEL, TARGET_NO
@@ -107,9 +107,9 @@
                                     SELECT  @start_with := 0,
                                     @NO := @start_with,
                                     @level := 0
-                                ) TMP, COM_REPLY
+                                ) TMP, COM_REPLY_EVENT
                                 WHERE   @NO IS NOT NULL
-                            ) REPLY_CTE, COM_REPLY R
+                            ) REPLY_CTE, COM_REPLY_EVENT R
                             WHERE REPLY_CTE.NO = R.NO
                             AND R.PARENT_NO = ".$row[NO]."
                             ".$sort_order."";
@@ -161,7 +161,7 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "INSERT INTO COM_REPLY
+            $sql = "INSERT INTO COM_REPLY_EVENT
                     (
                         PARENT_NO,
                         REPLY_NO,
@@ -216,7 +216,7 @@
 
                 $_d->sql_beginTransaction();
 
-                $sql = "UPDATE COM_REPLY
+                $sql = "UPDATE COM_REPLY_EVENT
                         SET
                             BLIND_FL = 'Y'
                         WHERE
@@ -243,7 +243,7 @@
 
                 $_d->sql_beginTransaction();
 
-                $sql = "UPDATE COM_REPLY
+                $sql = "UPDATE COM_REPLY_EVENT
                             SET
                                 BLIND_FL = 'N'
                             WHERE
@@ -276,7 +276,7 @@
 
                 $_d->sql_beginTransaction();
 
-                $sql = "UPDATE COM_REPLY
+                $sql = "UPDATE COM_REPLY_EVENT
                         SET
                             COMMENT = '".$_model[COMMENT]."',
                             REG_UID = '".$_SESSION['uid']."',
@@ -314,10 +314,10 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM COM_REPLY WHERE PARENT_NO = ".$_key;
+            $sql = "DELETE FROM COM_REPLY_EVENT WHERE PARENT_NO = ".$_key;
             $_d->sql_query($sql);
 
-            $sql = "DELETE FROM COM_REPLY WHERE NO = ".$_key;
+            $sql = "DELETE FROM COM_REPLY_EVENT WHERE NO = ".$_key;
             $_d->sql_query($sql);
 
             /*$no = $_d->mysql_insert_id;*/

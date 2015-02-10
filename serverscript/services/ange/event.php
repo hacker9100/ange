@@ -58,9 +58,10 @@
                 $err = 0;
                 $msg = "";
 
-                $sql = "SELECT  ada_idx, ada_title, ada_url ,ada_delivery ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_object, ada_image ,ada_imagemap,
-                             ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url, ada_notice,
-                             DATE_FORMAT(ada_date_open,'%Y%m%d') as OPEN_DATE ,DATE_FORMAT(ada_date_close, '%Y%m%d') as END_DATE, ada_delivery,
+                // ada_notice,
+                $sql = "SELECT  ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_option_quantity, ada_image ,ada_imagemap,
+                             ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url,
+                             DATE_FORMAT(ada_date_open,'%Y%m%d') as OPEN_DATE ,DATE_FORMAT(ada_date_close, '%Y%m%d') as END_DATE, ada_option_delivery,
                              ada_url, ada_count_join
                         FROM
                             adm_ad AE
@@ -160,14 +161,15 @@
                     $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
+                // , ada_notice
                 $sql = "SELECT TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                             ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_object, ada_image ,ada_imagemap
-                             ,ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url, ada_notice
+                             ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_option_quantity, ada_image ,ada_imagemap
+                             ,ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url
                         FROM
                         (
                             SELECT
-                                  ada_idx, ada_title, ada_url ,ada_date_open ,ada_date_close ,ada_object ,ada_image ,ada_imagemap
-                                    ,ada_state ,ada_que_info, ada_notice
+                                  ada_idx, ada_title, ada_url ,ada_date_open ,ada_date_close ,ada_option_quantity ,ada_image ,ada_imagemap
+                                    ,ada_state ,ada_que_info
                             FROM adm_ad
                             WHERE 1 = 1
                                 ".$search_where."

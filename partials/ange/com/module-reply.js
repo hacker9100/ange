@@ -21,6 +21,7 @@ define([
         $scope.showCommentDetails = false;
         $scope.showReCommentDetails = false;
 
+
         /********** 이벤트 **********/
         // 댓글 리스트
         $scope.getReplyList = function () {
