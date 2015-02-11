@@ -170,6 +170,7 @@ switch ($_method) {
                                 AND AC.USER_ID = '".$_SESSION['uid']."'
                                 ".$search_where."
                               ORDER BY NO DESC
+                              ".$limit."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
                     (

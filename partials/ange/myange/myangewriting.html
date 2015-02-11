@@ -81,7 +81,8 @@
                                                 <div class="col-xs-4 people_photo_contentcol" ng-show="selectPhoto = item.PHOTO_TYPE">
                                                     <div ng-click="click_showViewPeoplePhoto(item.COMM_NO, item.NO)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
-                                                            <img class="people_photo_img" ng-src="{{item.MAIN_FILE}}"/>
+                                                            <!--<img class="people_photo_img" ng-src="{{item.MAIN_FILE}}"/>-->
+                                                            <img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url({{item.MAIN_FILE}})" />
                                                             <div class="people_photo_cate">
                                                                 <span>{{item.TITLE}}</span>
                                                                 <div style="position:absolute; display:inline; bottom:8px; right:0;">

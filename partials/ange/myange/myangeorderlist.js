@@ -11,29 +11,26 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('myangeorderlist', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('myangeorderlist', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
         $scope.selectIdx = 0;
 
         $scope.search = {};
 
-        // 페이징
-        $scope.BOARD_PAGE_NO = 1;
-        $scope.BOARD_PAGE_SIZE = 5;
-        $scope.BOARD_TOTAL_COUNT = 0;
+        // 페이징(마일리지 & 경매소)
+        $scope.MILEAGE_PAGE_NO = 1;
+        $scope.MILEAGE_PAGE_SIZE = 5;
+        $scope.MILEAGE_TOTAL_COUNT = 0;
 
-        $scope.PHOTO_PAGE_NO = 1;
-        $scope.PHOTO_PAGE_SIZE = 5;
-        $scope.PHOTO_TOTAL_COUNT = 0;
+        // 페이징(커머스)
+        $scope.CUMMERCE_PAGE_NO = 1;
+        $scope.CUMMERCE_PAGE_SIZE = 5;
+        $scope.CUMMERCE_TOTAL_COUNT = 0;
 
-        $scope.CLINIC_PAGE_NO = 1;
-        $scope.CLINIC_PAGE_SIZE = 5;
-        $scope.CLINIC_TOTAL_COUNT = 0;
-
-        $scope.pageChanged = function() {
-            console.log('Page changed to: ' + $scope.PAGE_NO);
-            $scope.getPeopleBoardList();
-        };
+        // 네이밍
+        $scope.NAMING_PAGE_NO = 1;
+        $scope.NAMING_PAGE_SIZE = 5;
+        $scope.NAMING_TOTAL_COUNT = 0;
 
         $scope.search = {};
 
@@ -70,13 +67,6 @@ define([
 
         };
 
-
-        // 우측 메뉴 클릭
-        $scope.click_showViewBoard = function(item) {
-            $location.url('people/board/view/1');
-//            $location.url('people/poll/edit/'+item.NO);
-        };
-
         /********** 화면 초기화 **********/
             //$scope.init();
 
@@ -90,10 +80,12 @@ define([
 
             $scope.search.ORDER_GB = 'MILEAGE';
 
-            $scope.getList('ange/order', 'list', {NO: $scope.BOARD_PAGE_NO-1, SIZE: $scope.BOARD_PAGE_SIZE}, $scope.search, true)
+            $scope.getList('ange/order', 'list', {NO: $scope.MILEAGE_PAGE_NO-1, SIZE: $scope.MILEAGE_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var search_total_cnt = data[0].TOTAL_COUNT;
-                    $scope.BOARD_TOTAL_COUNT = search_total_cnt;
+                    $scope.MILEAGE_TOTAL_COUNT = search_total_cnt;
+
+                    //alert('$scope.MILEAGE_TOTAL_COUNT = '+$scope.MILEAGE_TOTAL_COUNT);
 
                     for(var i in data) {
                         if (data[i].FILE != null) {
@@ -105,7 +97,7 @@ define([
 
                     $scope.mileagelist = data;
                 })
-                .catch(function(error){$scope.mileagelist = ""; $scope.BOARD_TOTAL_COUNT = 0});
+                .catch(function(error){$scope.mileagelist = ""; $scope.MILEAGE_TOTAL_COUNT = 0});
         };
 
         // 게시판 목록 조회
@@ -118,10 +110,12 @@ define([
 
             $scope.search.ORDER_GB = 'CUMMERCE';
 
-            $scope.getList('ange/order', 'list', {NO: $scope.PHOTO_PAGE_NO-1, SIZE: $scope.PHOTO_PAGE_SIZE}, $scope.search, true)
+            $scope.getList('ange/order', 'list', {NO: $scope.CUMMERCE_PAGE_NO-1, SIZE: $scope.CUMMERCE_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var search_total_cnt = data[0].TOTAL_COUNT;
-                    $scope.PHOTO_TOTAL_COUNT = search_total_cnt;
+                    $scope.CUMMERCE_TOTAL_COUNT = search_total_cnt;
+
+                    //alert('$scope.CUMMERCE_TOTAL_COUNT = '+$scope.CUMMERCE_TOTAL_COUNT);
 
                     for(var i in data) {
                         if (data[i].FILE != null) {
@@ -133,7 +127,7 @@ define([
 
                     $scope.cummercelist = data;
                 })
-                .catch(function(error){$scope.cummercelist = ""; $scope.PHOTO_TOTAL_COUNT = 0});
+                .catch(function(error){$scope.cummercelist = ""; $scope.CUMMERCE_TOTAL_COUNT = 0});
         };
 
         // 게시판 목록 조회
@@ -146,10 +140,12 @@ define([
 
             $scope.search.ORDER_GB = 'NAMING';
 
-            $scope.getList('ange/order', 'list', {NO: $scope.CLINIC_PAGE_NO-1, SIZE: $scope.CLINIC_PAGE_SIZE}, $scope.search, true)
+            $scope.getList('ange/order', 'list', {NO: $scope.NAMING_PAGE_NO-1, SIZE: $scope.NAMING_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var search_total_cnt = data[0].TOTAL_COUNT;
-                    $scope.CLINIC_PAGE_COUNT = search_total_cnt;
+                    $scope.NAMING_TOTAL_COUNT = search_total_cnt;
+
+                    //alert('$scope.NAMING_TOTAL_COUNT = '+$scope.NAMING_TOTAL_COUNT);
 
                     for(var i in data) {
                         if (data[i].FILE != null) {
@@ -161,7 +157,7 @@ define([
 
                     $scope.naminglist = data;
                 })
-                .catch(function(error){$scope.naminglist = ""; $scope.CLINIC_PAGE_COUNT = 0});
+                .catch(function(error){$scope.naminglist = ""; $scope.NAMING_TOTAL_COUNT = 0});
         };
 
         // 조회 화면 이동(마일리지 & 경매소)
@@ -428,6 +424,21 @@ define([
                 return;
             });
         }
+
+        $scope.pageMileageChanged = function() {
+            console.log('Page changed to: ' + $scope.MILEAGE_PAGE_NO);
+            $scope.getMileageList();
+        };
+
+        $scope.pageCummerceChanged = function() {
+            console.log('Page changed to: ' + $scope.PHOTO_PAGE_NO);
+            $scope.getCummerceList();
+        };
+
+        $scope.pageNamingChanged = function() {
+            console.log('Page changed to: ' + $scope.CLINIC_PAGE_NO);
+            $scope.getNamingList();
+        };
 
         $scope.init();
         $scope.getMileageList();
