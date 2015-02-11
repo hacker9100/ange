@@ -125,6 +125,10 @@
                 $sort_order = "";
                 $limit = "";
 
+                if (isset($_search[ADA_TYPE_IN]) && $_search[ADA_TYPE_IN] != "") {
+                    $search_where .= "AND ada_type IN (".$_search[ADA_TYPE_IN].") ";
+                }
+
                 if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
 //                    if (isset($_search[EVENT_GB][value])) {
 //                        $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB][value]."' ";

@@ -21,7 +21,9 @@ define([
         };
 
         $scope.click_joinMember = function () {
-            $location.url('infodesk/signon');
+            $location.search({id : 'test'});
+            $location.url('myange/account');
+//            $location.url('infodesk/signon');
         };
 
         $scope.click_settingAccount = function () {

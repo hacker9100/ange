@@ -5,11 +5,7 @@
     Description : app의 최상위 파일로서 최초 로딩되는 index 파일
 -->
 <?php
-    @extract($_POST);
     @extract($_SERVER);
-
-    $user_id = 'ange';
-    $user_nick = '앙쥬';
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
     MtUtil::_d("### [START]");
@@ -55,8 +51,9 @@
                        T.SUBJECT, T.SUMMARY, F.PATH, F.FILE_ID
                     FROM
                        CMS_TASK T
-                       LEFT OUTER JOIN CONTENT_SOURCE S ON T.NO = S.TARGET_NO AND S.TARGET_GB = 'CONTENT'
-                       INNER JOIN FILE F ON F.NO = S.SOURCE_NO AND F.FILE_GB = 'MAIN'
+                            LEFT OUTER JOIN CMS_CONTENT C ON T.NO = C.TASK_NO AND C.CURRENT_FL = 'Y'
+                            INNER JOIN CONTENT_SOURCE S ON C.NO = S.TARGET_NO AND S.TARGET_GB = 'CONTENT'
+                            INNER JOIN FILE F ON F.NO = S.SOURCE_NO AND F.FILE_GB = 'MAIN'
                     WHERE
                         T.NO = ".$path[4]."
                     ";
@@ -168,9 +165,6 @@
 
 <script>
     function ange_init($rootScope, $scope, $location, $filter) {
-        $rootScope.user_id = '<?=$user_id?>';
-        $rootScope.user_nick = '<?=$user_nick?>';
-
         $rootScope.ange_channel = <?=$channel_info?>;
         $rootScope.ange_menu = <?=$menu_info?>;
 

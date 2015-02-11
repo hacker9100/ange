@@ -13,13 +13,6 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('main', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
 
-        $scope.test = function() {
-            $scope.insertItem('com/user', 'mail', {EMAIL: 'hacker9100@gmail.com', USER_NM: '김성환', USER_ID: 'hong'}, false)
-                .then(function(data){
-                    alert(0)
-                });
-        };
-
         /********** 초기화 **********/
         // 메인 화면 모드
         $scope.slide = 'cover';

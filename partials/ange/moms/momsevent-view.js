@@ -477,8 +477,13 @@ define([
                 return;
             }
 
-            $scope.item.REG_UID = $rootScope.user_id;
-            $scope.item.NICK_NM = $rootScope.user_nick;
+            if($scope.user_id == undefined || $scope.user_id == '') {
+                dialogs.notify('알림', '입력할수 없는 상태입니다..', {size: 'md'});
+                return;
+            }
+
+            $scope.item.REG_UID = $scope.user_id;
+            $scope.item.NICK_NM = $scope.user_nick;
 
             $scope.insertItem('com/reply_event', 'item', $scope.item, false)
                 .then(function(){
@@ -515,8 +520,13 @@ define([
             $scope.replyItem = {};
             $scope.replyItem.COMMENT = comment;
 
-            $scope.replyItem.REG_UID = $rootScope.user_id;
-            $scope.replyItem.NICK_NM = $rootScope.user_nick;
+            if($scope.user_id == undefined || $scope.user_id == '') {
+                dialogs.notify('알림', '입력할수 없는 상태입니다..', {size: 'md'});
+                return;
+            }
+
+            $scope.item.REG_UID = $scope.user_id;
+            $scope.item.NICK_NM = $scope.user_nick;
 
             $scope.updateItem('com/reply_event', 'item', key, $scope.replyItem, false)
                 .then(function(){
@@ -566,7 +576,13 @@ define([
         //  .then($scope.sessionCheck)
         //  .catch($scope.reportProblems);
 
-         $scope.init();
+        if ($location.search()) {
+            var param = $location.search();
+            $scope.user_id = param.user_id;
+            $scope.user_nick = decodeURIComponent(param.user_nick);
+        }
+
+        $scope.init();
 //         $scope.addHitCnt();
          $scope.getMomsEvent();
          $scope.getExperienceReviewList();

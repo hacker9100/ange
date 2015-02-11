@@ -55,7 +55,7 @@ define(['./directives'], function (directives) {
                             if (menu_info[j].ETC == 'DOWNLOAD') {
                                 templet += '<a target="_self" href="'+UPLOAD.BASE_URL+'/admin/'+menu_info[j].FILE_ID+'" download="'+menu_info[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+menu_info[j].MENU_NM+'</a>';
                             } else {
-                                templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand">'+menu_info[j].MENU_NM+'</a>';
+                                templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand">'+menu_info[j].MENU_NM+(menu_info[j].LINK_FL == 'C' ? '(준비중)' : '')+'</a>';
                             }
                         }
 
@@ -73,7 +73,7 @@ define(['./directives'], function (directives) {
                 }
                 return templet;
             },
-            controller: ['$scope', '$location', function($scope, $location) {
+            controller: ['$scope', '$location', 'dialogs', function($scope, $location, dialogs) {
 
                 /********** 초기화 **********/
                 // 카테고리 데이터
@@ -106,7 +106,9 @@ define(['./directives'], function (directives) {
 
                 /********** 이벤트 **********/
                 $scope.click_selectMenu = function(url, link) {
-                    if (link != 'N') {
+                    if (link == 'C') {
+                        dialogs.notify('알림', '준비중입니다.', {size: 'md'});
+                    } else if (link != 'N') {
                         $location.url(url);
                     }
                 };
