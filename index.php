@@ -5,7 +5,11 @@
     Description : app의 최상위 파일로서 최초 로딩되는 index 파일
 -->
 <?php
+    @extract($_POST);
     @extract($_SERVER);
+
+//    $_user_id = $user_id;
+//    $_user_id = $user_nick;
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
     MtUtil::_d("### [START]");
@@ -164,6 +168,9 @@
 
 <script>
     function ange_init($rootScope, $scope, $location, $filter) {
+        $rootScope.user_id = '<?=$user_id?>';
+        $rootScope.user_nick = '<?=$user_nick?>';
+
         $rootScope.ange_channel = <?=$channel_info?>;
         $rootScope.ange_menu = <?=$menu_info?>;
 
