@@ -51,7 +51,7 @@ switch ($_method) {
     case "GET":
         if($_type == 'item'){
 
-            $sql = "SELECT  NO, TO_ID, TO_NM, FROM_ID, FROM_NM, BODY, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, CHECK_FL
+            $sql = "SELECT  NO, TO_ID, TO_NM, FROM_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = FROM_ID) AS FROM_NM, BODY, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, CHECK_FL
                      FROM (
                                 SELECT NO, TO_ID, TO_NM, FROM_ID, FROM_NM, BODY, REG_DT, CHECK_FL
                                 FROM ANGE_MESSAGE
@@ -79,7 +79,7 @@ switch ($_method) {
                 $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
             }
 
-            $sql = " SELECT STATUS, TO_CNT, FROM_CNT, NO, TO_ID, TO_NM, FROM_ID, FROM_NM, BODY, CHECK_FL,
+            $sql = " SELECT STATUS, TO_CNT, FROM_CNT, NO, TO_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = TO_ID) AS TO_NM, FROM_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = FROM_ID) AS FROM_NM, BODY, CHECK_FL,
                               DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                                  TO_CNT+FROM_CNT AS TOTAL_CNT
                         FROM
@@ -128,11 +128,14 @@ switch ($_method) {
 
             $search_where = "";
 
-            // 검색조건 추가
-            if (isset($_search[TO_ID]) && $_search[TO_ID] != "") {
-                $search_where .= "AND CU.USER_ID LIKE '%".$_search[TO_ID]."%'";
-            } else if (isset($_search[TO_NM]) && $_search[TO_NM] != "") {
-                $search_where .= "AND CU.NICK_NM LIKE '%".$_search[TO_NM]."%'";
+            // 검색조건 추가(닉네임)
+            if (isset($_search[NICK_NM]) && $_search[NICK_NM] != "") {
+                $search_where .= "AND CU.NICK_NM LIKE '%".$_search[NICK_NM]."%'";
+            }
+
+            // 팝업에서 닉네임 검색
+            if (isset($_search[TO_NICK_NM]) && $_search[TO_NICK_NM] != "") {
+                $search_where .= "AND CU.NICK_NM LIKE '%".$_search[TO_NICK_NM]."%'";
             }
 
             $limit = "";
@@ -148,6 +151,7 @@ switch ($_method) {
                            FROM COM_USER CU
                            WHERE 1=1
                               ".$search_where."
+                           ".$limit."
                         ) AS DATA,
                         (
                             SELECT
@@ -156,7 +160,7 @@ switch ($_method) {
                             WHERE 1=1
                               ".$search_where."
                         ) FROM_CNT
-                        ".$limit."
+
                 ";
 
             $data = $_d->sql_query($sql);

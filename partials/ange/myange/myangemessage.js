@@ -139,32 +139,33 @@ define([
                         $scope.insertItem('ange/message', 'item', $scope.item, true)
                             .then(function(data){
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-
+                                $modalInstance.close();
                             })
                             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-                        $modalInstance.close();
-                        //console.log($scope.item);
                     };
 
+                    // 닫기
                     $scope.click_close = function(){
                         $modalInstance.close();
                     }
 
                     // 사용자 조회 검색 클릭
-                    $scope.click_searchUser = function (item) {
+                    $scope.click_searchUser = function (item) { //item
+                        var search = '';
 
                         if(item == null || item == ''){
-                            alert('수신자 아이디 혹은 수신자명을 입력하세요');
-                            return;
+                            search = null;
                         }else{
-                            $scope.openViewMessageSearchModal({TO_ID : item.TO_ID, TO_NM : item.TO_NM}, 'lg');
+                            search = item;
                         }
+
+                        $modalInstance.close();
+                        $scope.openViewMessageSearchModal(search, 'lg'); //{TO_ID : item.TO_ID, TO_NM : item.TO_NM}
                     };
 
                     $scope.openViewMessageSearchModal = function (item, size) {
                         var dlg = dialogs.create('myangemessage_search.html',
-                            ['$scope','$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+                            ['$scope','$rootScope','$modalInstance', '$controller', 'data', function($scope, $rootScope, $modalInstance, $controller, data) {
 
                                 /********** 공통 controller 호출 **********/
                                 angular.extend(this, $controller('ange-common', {$scope: $scope}));
@@ -177,11 +178,15 @@ define([
 
                                 $scope.search = {};
 
-                                $scope.search.NICK_NM = item.TO_NM;
-                                $scope.search.USER_ID = item.TO_ID;
+//                                $scope.search.NICK_NM = item.TO_NM;
+//                                $scope.search.USER_ID = item.TO_ID;
+                                console.log(item);
+
+                                if(item != null){
+                                    $scope.search.NICK_NM = item.TO_NICK_NM;
+                                }
 
                                 $scope.searchUserList = function () {
-
                                     $scope.getList('ange/message', 'searchuserlist', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                                         .then(function(data){
                                             var total_cnt = data[0].TOTAL_COUNT;
@@ -194,15 +199,20 @@ define([
                                         .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
                                 };
 
+                                // 팝업에서 검색
+                                $scope.popupsearchList = function (){
+                                    $scope.searchUserList();
+                                }
+
                                 $scope.pageChanged = function() {
                                     console.log('Page changed to: ' + $scope.PAGE_NO);
                                     $scope.searchUserList();
                                 };
 
+                                // 사용자 선택
                                 $scope.select_user = function (to_id, to_nm){
-                                    $scope.openViewMessageRegModal(null, {TO_ID : to_id, TO_NM: to_nm} ,'lg');
                                     $modalInstance.close();
-
+                                    $scope.openViewMessageRegModal(null, {TO_ID : to_id, TO_NICK_NM: to_nm} ,'lg');
                                 }
 
                                 $scope.openViewMessageRegModal = function (content, item,  size) {
@@ -214,9 +224,11 @@ define([
                                             $scope.content = data;
 
                                             $scope.item = {};
+
                                             if(item != null){
+                                                console.log(item.TO_ID);
                                                 $scope.item.TO_ID = item.TO_ID;
-                                                $scope.item.TO_NM = item.TO_NM;
+                                                $scope.item.TO_NICK_NM = item.TO_NICK_NM;
                                             }
 
                                             $scope.click_reg = function () {
@@ -231,24 +243,28 @@ define([
                                                 //console.log($scope.item);
                                             };
 
+                                            // 닫기
                                             $scope.click_close = function(){
                                                 $modalInstance.close();
                                             }
 
                                             // 사용자 조회 검색 클릭
-                                            $scope.click_searchUser = function (item) {
+                                            $scope.click_searchUser = function (item) { //item
+                                                var search = '';
 
                                                 if(item == null || item == ''){
-                                                    alert('수신자 아이디 혹은 수신자명을 입력하세요');
-                                                    return;
+                                                    search = null;
+                                                }else{
+                                                    search = item;
                                                 }
 
-                                                $scope.openViewMessageSearchModal({TO_ID : item.TO_ID, TO_NM : item.TO_NM}, 'lg');
+                                                $modalInstance.close();
+                                                $scope.openViewMessageSearchModal(search, 'lg'); //{TO_ID : item.TO_ID, TO_NM : item.TO_NM}
                                             };
 
                                             $scope.openViewMessageSearchModal = function (item, size) {
                                                 var dlg = dialogs.create('myangemessage_search.html',
-                                                    ['$scope','$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+                                                    ['$scope','$rootScope','$modalInstance', '$controller', 'data', function($scope, $rootScope, $modalInstance, $controller, data) {
 
                                                         /********** 공통 controller 호출 **********/
                                                         angular.extend(this, $controller('ange-common', {$scope: $scope}));
@@ -261,8 +277,14 @@ define([
 
                                                         $scope.search = {};
 
-                                                        $scope.search.NICK_NM = item.TO_NM;
-                                                        $scope.search.USER_ID = item.TO_ID;
+//                                $scope.search.NICK_NM = item.TO_NM;
+//                                $scope.search.USER_ID = item.TO_ID;
+                                                        console.log(item);
+
+                                                        if(item != null || item != ''){
+                                                            $scope.search.NiCK_NM = item.TO_NICK_NAME;
+                                                            $scope.search.TO_ID = item.TO_ID;
+                                                        }
 
                                                         $scope.searchUserList = function () {
 
@@ -283,10 +305,14 @@ define([
                                                             $scope.searchUserList();
                                                         };
 
-                                                        $scope.select_user = function (to_id, to_nm){
-                                                            $scope.openViewMessageRegModal(null, {TO_ID : to_id, TO_NM: to_nm} ,'lg');
-                                                            $modalInstance.close();
+                                                        // 팝업에서 검색
+                                                        $scope.popupsearchList = function (){
+                                                            $scope.searchUserList();
+                                                        }
 
+                                                        $scope.select_user = function (to_id, to_nm){
+                                                            $modalInstance.close();
+                                                            $scope.openViewMessageRegModal(null, {TO_ID : to_id, TO_NM: to_nm} ,'lg');
                                                         }
 
                                                         $scope.searchUserList();
@@ -297,15 +323,16 @@ define([
 
                                                     }], item, {size:size,keyboard: true}, $scope);
                                                 dlg.result.then(function(){
-                                                    $modalInstance.close();
+
                                                 },function(){
 
                                                 });
                                             };
 
+
                                         }], content, item, {size:size,keyboard: true}, $scope);
                                     dlg.result.then(function(){
-                                        $modalInstance.close();
+
                                     },function(){
 
                                     });
@@ -324,6 +351,7 @@ define([
 
                         });
                     };
+
 
                 }], content, item, {size:size,keyboard: true}, $scope);
             dlg.result.then(function(){
