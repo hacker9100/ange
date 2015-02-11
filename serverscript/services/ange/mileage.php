@@ -77,11 +77,6 @@
                     $search_where .= "AND AUM.USER_ID = '".$_SESSION['uid']."'";
                 }
 
-                // 검색조건 추가
-                if (isset($_search['USER_ID']) && $_search['USER_ID'] != "") {
-                    $search_where .= "AND AUM.USER_ID = '".$_search['USER_ID']."'";
-                }
-
                 $limit = "";
 
                 if (isset($_page)) {
@@ -111,34 +106,34 @@
 
                 ";
 
-                if (isset($_search[STATUS])) {
-                    $__trn = '';
-                    $result = $_d->sql_query($sql,true);
-                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-                        $sql = "SELECT
-                                    SUM_POINT,USE_POINT,REMAIN_POINT
-                                FROM
-                                    ANGE_MILEAGE_STATUS
-                                WHERE
-                                    1=1
-                                    AND USER_ID = '".$row['USER_ID']."'
-                                ";
-
-                        $category_data = $_d->getData($sql);
-                        $row['STATUS'] = $category_data;
-
-                        $__trn->rows[$i] = $row;
-                    }
-                    $_d->sql_free_result($result);
-                    $data = $__trn->{'rows'};
-
-                    if($_d->mysql_errno > 0){
-                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                    }else{
-                        $_d->dataEnd2($data);
-                    }
-                }
+//                if (isset($_search[STATUS])) {
+//                    $__trn = '';
+//                    $result = $_d->sql_query($sql,true);
+//                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+//
+//                        $sql = "SELECT
+//                                    SUM_POINT,USE_POINT,REMAIN_POINT
+//                                FROM
+//                                    ANGE_MILEAGE_STATUS
+//                                WHERE
+//                                    1=1
+//                                    AND USER_ID = '".$row['USER_ID']."'
+//                                ";
+//
+//                        $category_data = $_d->getData($sql);
+//                        $row['STATUS'] = $category_data;
+//
+//                        $__trn->rows[$i] = $row;
+//                    }
+//                    $_d->sql_free_result($result);
+//                    $data = $__trn->{'rows'};
+//
+//                    if($_d->mysql_errno > 0){
+//                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+//                    }else{
+//                        $_d->dataEnd2($data);
+//                    }
+//                }
 
                 $data = $_d->sql_query($sql);
                 if($_d->mysql_errno > 0){
@@ -146,6 +141,28 @@
                 }else{
                     $_d->dataEnd($sql);
                 }
+            } else if($_type == "mymileagepoint"){
+
+                if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
+                    $search_where .= "AND USER_ID = '".$_SESSION['uid']."'";
+                }
+
+                $sql = "SELECT
+                        SUM_POINT,USE_POINT,REMAIN_POINT
+                    FROM
+                        ANGE_MILEAGE_STATUS
+                    WHERE
+                        1=1
+                        AND USER_ID = '".$_SESSION['uid']."'
+                    ";
+
+                $data = $_d->sql_query($sql);
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
+
             }
 
             break;
