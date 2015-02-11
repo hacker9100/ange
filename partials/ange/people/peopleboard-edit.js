@@ -236,9 +236,9 @@ define([
                         }
 
                         if($scope.item.NOTICE_FL == "Y"){
-                            $("#check_reply").attr("checked", true);
+                            $("#noti_check").attr("checked", true);
                         }else{
-                            $("#check_reply").attr("checked", false);
+                            $("#noti_check").attr("checked", false);
                         }
 
                         if($scope.item.SCRAP_FL== "Y"){

@@ -140,8 +140,9 @@ define([
 
                         $scope.item = data;
 
-                        $scope.item.PRICE = data.PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-                        $scope.item.DELEIVERY_PRICE = data.DELEIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        $scope.PRICE = data.PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        $scope.DELEIVERY_PRICE = data.DELEIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        $scope.DIRECT_PRICE = data.DIRECT_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
