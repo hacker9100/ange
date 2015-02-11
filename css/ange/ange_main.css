@@ -535,6 +535,9 @@ div.mini_community_contents:hover {
 .mini_event_txt_img{
 	float:left;
 	width:100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 
 .mini_event_txt_title{
