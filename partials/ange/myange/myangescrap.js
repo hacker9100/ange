@@ -176,6 +176,23 @@ define([
 
             });
         };*/
+
+        // 일반게시글 삭제
+        $scope.delete_board = function (item){
+
+            var dialog = dialogs.confirm('알림', '선택한 스크랩 게시물을 삭제 하시겠습니까.', {size: 'md'});
+
+            dialog.result.then(function(btn){
+                $scope.deleteItem('com/scrap', 'item', item, true)
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                        $scope.getScarpList();
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
+
+        }
         /********** 화면 초기화 **********/
 /*        $scope.getSession()
             .then($scope.sessionCheck)

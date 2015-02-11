@@ -78,11 +78,11 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $search_where .= "AND CB.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
                 }
 
-                $sql = " SELECT TOTAL_COUNT, @RNUM := @RNUM+1 AS RNUM, CONTENT_NO, CONTENT_SUBJECT,
+                $sql = " SELECT TOTAL_COUNT, @RNUM := @RNUM+1 AS RNUM, CONTENT_NO, CONTENT_SUBJECT, NO,
                             TARGET_NO, BOARD_NO, BOARD_SUBJECT, TARGET_GB, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, (SELECT SHORT_NM FROM ANGE_COMM WHERE NO = COMM_NO) AS SHORT_NM, COMM_NO
                     FROM
                     (
-                        SELECT CS.TARGET_NO, CS.TARGET_GB,
+                        SELECT CS.TARGET_NO, CS.TARGET_GB, NO,
                                (SELECT SUBJECT FROM COM_BOARD WHERE NO = CS.TARGET_NO) AS BOARD_SUBJECT,
                                (SELECT NO FROM COM_BOARD WHERE NO = CS.TARGET_NO) AS BOARD_NO,
                                (SELECT COMM_NO FROM COM_BOARD WHERE NO = CS.TARGET_NO) AS COMM_NO,

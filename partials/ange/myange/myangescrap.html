@@ -57,18 +57,19 @@
                                     <td align="center"><span class="board_th">제목</span></td>
                                     <!--<td width="92" align="center"><span class="board_th">작성자</span></td>-->
                                     <td align="center" width="80"><span class="board_th">작성일</span></td>
+                                    <td align="center" width="75"><span class="board_th">삭제</span></td>
                                 </tr>
                                 </thead>
 
                                 <tbody class="on" ng-repeat="item in list">
 
-                                <tr ng-click="item.TARGET_GB == 'BOARD' ? click_showViewScrap(item.COMM_NO, item.BOARD_NO) : click_showViewContent(item.CONTENT_NO)" style="cursor:pointer;">
+                                <tr style="cursor:pointer;">
                                     <td class="table_no">
                                         <span>{{item.RNUM}}</span>
                                     </td>
                                     <td ng-if="item.TARGET_GB == 'BOARD'">
                                         <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
-                                        [{{item.SHORT_NM}}]{{ item.BOARD_SUBJECT | string_limit: 50 }}{{item.BOARD_SUBJECT > 50 ? '...' : ''}}
+                                        <a ng-click="click_showViewScrap(item.COMM_NO, item.BOARD_NO);">[{{item.SHORT_NM}}]{{ item.BOARD_SUBJECT | string_limit: 50 }}{{item.BOARD_SUBJECT > 50 ? '...' : ''}}</a>
                                         <!--<span class="reply_num">[2]</span>-->
                                         <!--<span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                         &lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;
@@ -76,7 +77,7 @@
                                     </td>
                                     <td ng-if="item.TARGET_GB == 'CONTENT'">
                                         <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
-                                        [스토리]{{ item.CONTENT_SUBJECT | string_limit: 50 }}{{item.CONTENT_SUBJECT > 50 ? '...' : ''}}
+                                        <a ng-click="click_showViewContent(item.CONTENT_NO);">[스토리]{{ item.CONTENT_SUBJECT | string_limit: 50 }}{{item.CONTENT_SUBJECT > 50 ? '...' : ''}}</a>
                                         <!--<span class="reply_num">[2]</span>-->
                                         <!--<span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                         &lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;
@@ -84,6 +85,7 @@
                                     </td>
                                     <!--<td  class="table_author">{{item.NICK_NM}}</td>-->
                                     <td class="table_date">{{item.REG_DT}}</td>
+                                    <td><a ng-click="delete_board(item.NO);">삭제</a></td>
                                 </tr>
 
                                 </tbody>
