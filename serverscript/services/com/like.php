@@ -101,7 +101,7 @@
                         $sql = "SELECT
                                     COUNT(*)
                                 FROM
-                                    ANGE_SCRAP
+                                    COM_SCRAP
                                 WHERE
                                     REG_UID = '".$_SESSION['uid']."'
                                     AND TARGET_NO = '".$_model[TARGET_NO]."'

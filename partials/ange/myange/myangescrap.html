@@ -62,13 +62,21 @@
 
                                 <tbody class="on" ng-repeat="item in list">
 
-                                <tr ng-click="click_showViewScrap(item.COMM_NO, item.NO)" style="cursor:pointer;">
+                                <tr ng-click="item.TARGET_GB == 'BOARD' ? click_showViewScrap(item.COMM_NO, item.BOARD_NO) : click_showViewContent(item.CONTENT_NO)" style="cursor:pointer;">
                                     <td class="table_no">
                                         <span>{{item.RNUM}}</span>
                                     </td>
-                                    <td>
+                                    <td ng-if="item.TARGET_GB == 'BOARD'">
                                         <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
-                                        [{{item.SHORT_NM}}]{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                        [{{item.SHORT_NM}}]{{ item.BOARD_SUBJECT | string_limit: 50 }}{{item.BOARD_SUBJECT > 50 ? '...' : ''}}
+                                        <!--<span class="reply_num">[2]</span>-->
+                                        <!--<span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                                        &lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;
+                                        <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                    </td>
+                                    <td ng-if="item.TARGET_GB == 'CONTENT'">
+                                        <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
+                                        [스토리]{{ item.CONTENT_SUBJECT | string_limit: 50 }}{{item.CONTENT_SUBJECT > 50 ? '...' : ''}}
                                         <!--<span class="reply_num">[2]</span>-->
                                         <!--<span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                         &lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;

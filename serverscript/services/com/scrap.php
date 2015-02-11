@@ -78,26 +78,27 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $search_where .= "AND CB.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
                 }
 
-                $sql = " SELECT TOTAL_COUNT, @RNUM := @RNUM+1 AS RNUM,
-                             TARGET_NO, NO, SUBJECT, BOARD_GB, REG_UID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, NICK_NM,(SELECT SHORT_NM FROM ANGE_COMM WHERE NO = COMM_NO) AS SHORT_NM, COMM_NO
+                $sql = " SELECT TOTAL_COUNT, @RNUM := @RNUM+1 AS RNUM, CONTENT_NO, CONTENT_SUBJECT,
+                            TARGET_NO, BOARD_NO, BOARD_SUBJECT, TARGET_GB, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, (SELECT SHORT_NM FROM ANGE_COMM WHERE NO = COMM_NO) AS SHORT_NM, COMM_NO
                     FROM
                     (
-                        SELECT CS.TARGET_NO, CB.NO, CB.SUBJECT, CB.BOARD_GB, CS.REG_UID, CB.REG_DT, CB.NICK_NM, CB.COMM_NO
+                        SELECT CS.TARGET_NO, CS.TARGET_GB,
+                               (SELECT SUBJECT FROM COM_BOARD WHERE NO = CS.TARGET_NO) AS BOARD_SUBJECT,
+                               (SELECT NO FROM COM_BOARD WHERE NO = CS.TARGET_NO) AS BOARD_NO,
+                               (SELECT COMM_NO FROM COM_BOARD WHERE NO = CS.TARGET_NO) AS COMM_NO,
+                               (SELECT SUBJECT FROM CMS_TASK WHERE NO = CS.TARGET_NO) AS CONTENT_SUBJECT,
+                               (SELECT NO FROM CMS_TASK WHERE NO = CS.TARGET_NO) AS CONTENT_NO,
+                               CS.REG_DT
                         FROM COM_SCRAP CS
-                        INNER JOIN COM_BOARD CB
-                        ON CS.TARGET_NO = CB.NO
                         WHERE 1=1
                          AND CS.REG_UID = '".$_SESSION['uid']."'
                          ".$search_where."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
                     (
-                        SELECT
-                            COUNT(*) AS TOTAL_COUNT
-                         FROM COM_SCRAP CS
-                         INNER JOIN COM_BOARD CB
-                         ON CS.TARGET_NO = CB.NO
-                         WHERE 1=1
+                        SELECT COUNT(*) AS TOTAL_COUNT
+                        FROM COM_SCRAP CS
+                        WHERE 1=1
                          AND CS.REG_UID = '".$_SESSION['uid']."'
                          ".$search_where."
                     ) CNT

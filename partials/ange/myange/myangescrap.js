@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('myangescrap', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('myangescrap', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD','$modal', function ($scope, $stateParams, $location, dialogs, UPLOAD,$modal) {
 
         $scope.search = {};
         // 초기화
@@ -106,6 +106,31 @@ define([
             }
         };
 
+        // 콘텐츠 클릭 조회
+        $scope.click_showViewContent = function (key) {
+            $scope.openModal(key, 'lg');
+        };
+
+        // 콘텐츠보기 모달창
+        $scope.openModal = function (content, size) {
+            var modalInstance = $modal.open({
+                templateUrl: 'partials/ange/story/storycontent-view-popup.html',
+                controller: 'storycontent-view-popup',
+                size: size,
+                scope: $scope,
+                resolve: {
+                    data: function () {
+                        return content;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function () {
+//                alert(JSON.stringify(approval))
+            }, function () {
+                console.log("결재 오류");
+            });
+        }
 
         /*$scope.openViewScrapModal = function (item, size) {
             var dlg = dialogs.create('myangescrap_view.html',
