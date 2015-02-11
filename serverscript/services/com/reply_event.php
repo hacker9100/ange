@@ -182,9 +182,9 @@
                         '".$_model[REPLY_GB]."',
                         '".$_model[LEVEL]."',
                         '".str_replace("'", "\\'",$_model[COMMENT])."',
-                        '".$_SESSION['uid']."',
-                        '".$_SESSION['nick']."',
-                        '".$_SESSION['name']."',
+                        '".$_model[REG_UID]."',
+                        '".$_model[NICK_NM]."',
+                        '".$_model[USER_NM]."',
                         SYSDATE(),
                         '0',
                         '".$_model[TARGET_NO]."',
@@ -279,9 +279,9 @@
                 $sql = "UPDATE COM_REPLY_EVENT
                         SET
                             COMMENT = '".$_model[COMMENT]."',
-                            REG_UID = '".$_SESSION['uid']."',
-                            NICK_NM = '".$_SESSION['nick']."',
-                            REG_NM = '".$_SESSION['name']."'
+                            REG_UID = '".$_model[REG_UID]."',
+                            NICK_NM = '".$_model[NICK_NM]."',
+                            REG_NM = '".$_model[USER_NM]."'
                         WHERE
                             NO = ".$_key."
                         ";
@@ -320,79 +320,8 @@
             $sql = "DELETE FROM COM_REPLY_EVENT WHERE NO = ".$_key;
             $_d->sql_query($sql);
 
-            /*$no = $_d->mysql_insert_id;*/
-
-            /*$sql = "SELECT
-                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                    FROM
-                        FILE F, CONTENT_SOURCE S
-                    WHERE
-                        F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'REVIEW'
-                        AND S.TARGET_NO = ".$_key."
-                        AND F.THUMB_FL = '0'
-                    ";
-
-            $result = $_d->sql_query($sql,true);
-            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                $_d->sql_query($sql);
-
-                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'REVIEW' AND TARGET_NO = ".$row[NO];
-
-                $_d->sql_query($sql);
-
-                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-
-                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
-                }
-            }
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("삭제실패입니다:".$msg);
-            }else{
-                $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'DELETE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$_key.'
-                        ,'BOARD'
-                        ,'DELETE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";*/
-
-                $_d->sql_query($sql);
-
-                $_d->sql_commit();
-                $_d->succEnd($no);
+            $_d->sql_commit();
+            $_d->succEnd($no);
 
             break;
     }

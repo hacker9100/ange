@@ -441,10 +441,10 @@ define([
         // 의견 등록
         $scope.click_savePeopleBoardComment = function () {
 
-            if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 등록 할 수 있습니다.', {size: 'md'});
-                return;
-            }
+//            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 등록 할 수 있습니다.', {size: 'md'});
+//                return;
+//            }
 
             $scope.item.PARENT_NO = 0;
             $scope.item.LEVEL = 1;
@@ -458,6 +458,9 @@ define([
                 dialogs.notify('알림', '100자 이내로 입력하세요.', {size: 'md'});
                 return;
             }
+
+            $scope.item.REG_UID = $rootScope.user_id;
+            $scope.item.NICK_NM = $rootScope.user_nick;
 
             $scope.insertItem('com/reply_event', 'item', $scope.item, false)
                 .then(function(){
@@ -493,6 +496,9 @@ define([
 
             $scope.replyItem = {};
             $scope.replyItem.COMMENT = comment;
+
+            $scope.replyItem.REG_UID = $rootScope.user_id;
+            $scope.replyItem.NICK_NM = $rootScope.user_nick;
 
             $scope.updateItem('com/reply_event', 'item', key, $scope.replyItem, false)
                 .then(function(){

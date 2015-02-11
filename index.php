@@ -8,8 +8,8 @@
     @extract($_POST);
     @extract($_SERVER);
 
-//    $_user_id = $user_id;
-//    $_user_id = $user_nick;
+    $user_id = 'childdevelop';
+    $user_nick = '다비도프쿨워터';
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
     MtUtil::_d("### [START]");
