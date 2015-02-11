@@ -230,9 +230,9 @@ define([
                         }
 
                         if($scope.item.NOTICE_FL == "Y"){
-                            $("#check_reply").attr("checked", true);
+                            $("#notice_fl").attr("checked", true);
                         }else{
-                            $("#check_reply").attr("checked", false);
+                            $("#notice_fl").attr("checked", false);
                         }
 
                         if($scope.item.REPLY_FL == "Y" && $scope.item.SCRAP_FL== "Y"){
