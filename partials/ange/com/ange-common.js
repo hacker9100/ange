@@ -13,6 +13,10 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$location', '$q', 'dataService', '$filter', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $stateParams, $location, $q, dataService, $filter, dialogs, UPLOAD) {
 
+        $scope.comming_soon = function() {
+            dialogs.notify('알림', '준비 중 입니다.', {size: 'md'});
+        }
+
         // 주소 경로
         $scope.path = $scope.location.split('/');
 

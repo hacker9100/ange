@@ -62,7 +62,7 @@
 
             $title = $task_data['SUBJECT'];
             $description = $task_data['SUMMARY'];
-            $image = BASE_URL.$task_data['PATH'].$task_data['FILE_ID'];;
+            $image = BASE_URL."/thumbnail".$task_data['PATH'].$task_data['FILE_ID'];;
         }
     }
 
@@ -186,25 +186,6 @@ http://plnkr.co/edit/KzjIMN
     requireJS를 사용하기 위한 부분으로,
     requireJS는 data-main에 설정한 main.js 파일을 최초로 로드한다.
  -->
-
-<script>
-    function kakao_share($rootScope, $scope, $location, $window, UPLOAD) {
-        // 사용할 앱의 Javascript 키를 설정해 주세요.
-        Kakao.Auth.createLoginButton({
-            container: '#kakao-login-btn',
-            success: function() {
-                share_open();
-            },
-            fail: function(err) {
-                alert(JSON.stringify(err))
-            }
-        });
-
-        function share_open() {
-            $window.open('https://story.kakao.com/share?url=' + UPLOAD.BASE_URL + $location.path() + '/' + $scope.task.NO, '_blank', 'width=500,height=400')
-        }
-    }
-</script>
 
 <script src="lib/require/require.js" data-main="js/ange/main.js"></script>
 </body>

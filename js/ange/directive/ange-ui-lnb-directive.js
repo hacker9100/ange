@@ -107,7 +107,7 @@ define(['./directives'], function (directives) {
                 /********** 이벤트 **********/
                 $scope.click_selectMenu = function(url, link) {
                     if (link == 'C') {
-                        dialogs.notify('알림', '준비중입니다.', {size: 'md'});
+                        dialogs.notify('알림', '준비 중 입니다.', {size: 'md'});
                     } else if (link != 'N') {
                         $location.url(url);
                     }

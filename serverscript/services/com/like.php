@@ -99,7 +99,7 @@
 
                     if ($_model[TARGET_GB] == "CONTENT") {
                         $sql = "SELECT
-                                    COUNT(*)
+                                    COUNT(*) AS SCRAP_CNT
                                 FROM
                                     COM_SCRAP
                                 WHERE
@@ -111,7 +111,7 @@
                         $result = $_d->sql_query($sql);
                         $data  = $_d->sql_fetch_array($result);
 
-                        if (!$data) {
+                        if ($data['SCRAP_CNT'] == 0) {
                             $sql = "INSERT INTO COM_SCRAP
                                     (
                                         TARGET_NO,

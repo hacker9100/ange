@@ -11,22 +11,31 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('ui-utility', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $location, dialogs) {
+    controllers.controller('ui-utility', ['$scope', '$rootScope', '$stateParams', '$location', '$window', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, $window, dialogs, CONSTANT) {
 
         var spMenu = $location.path().split('/');
 
         /********** 이벤트 **********/
         $scope.click_login = function () {
+            $scope.comming_soon();
+            return;
+
             $scope.openModal(null, 'md');
         };
 
         $scope.click_joinMember = function () {
+            $scope.comming_soon();
+            return;
+
             $location.search({id : 'test'});
             $location.url('myange/account');
 //            $location.url('infodesk/signon');
         };
 
         $scope.click_settingAccount = function () {
+            $scope.comming_soon();
+            return;
+
             $location.url('myange/account');
         };
 
@@ -139,6 +148,42 @@ define([
                 });
             }
         };
+
+        // 배너 이미지 클릭
+        $scope.click_linkBanner = function (item, isOpen) {
+            if (isOpen) {
+                $window.open(item.ada_url);
+            } else {
+                $location.url(item.ada_url);
+            }
+        };
+
+        // 상단 배너 이미지 조회
+        $scope.getTopBanner = function () {
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: 1,ADA_STATE: 1}, false)
+                .then(function(data){
+                    $scope.topBanner = data[0];
+                    $scope.topBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+                })
+                .catch(function(error){alert(error)});
+        };
+
+        $scope.getTopBanner();
+
+        // 상단 배너 이미지 조회
+        $scope.getTopBanner = function () {
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:2}, {ADP_IDX: 3,ADA_STATE: 1}, false)
+                .then(function(data){
+                    $scope.bottomBanner1 = data[0];
+                    $scope.bottomBanner1.img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+
+                    $scope.bottomBanner2 = data[1];
+                    $scope.bottomBanner2.img = CONSTANT.AD_FILE_URL + data[1].ada_image;
+                })
+                .catch(function(error){alert(error)});
+        };
+
+        $scope.getTopBanner();
 
 /*        // 세션 체크
         $scope.sessionCheck = function(session) {

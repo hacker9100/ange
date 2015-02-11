@@ -439,6 +439,8 @@ define([
 //                $scope.search.FILE = true;
 //                $scope.search.PROCESS = "process";
                 $scope.search.ADA_TYPE_IN = "'event', 'exp'";
+                $scope.search.SORT = 'ada_date_open';
+                $scope.search.ORDER = 'DESC';
 
                 /********** 이벤트 **********/
                 // 일시 정지 버튼
@@ -518,7 +520,7 @@ define([
                                             '<div class="mini_event_content">' +
 //                                                '<div class="mini_event_closed"></div>' +
                                                 ( data[i].ada_state == 0 ? '<div class="mini_event_closed"></div>' : '' ) +
-                                                '<img class="mini_event_txt_img" src="/imgs/ange/_blank_4by3.gif" style="background-image:url("'+img+'");"/>' +
+                                                '<img class="mini_event_txt_img" src="/imgs/ange/_blank_4by3.gif" style="background-image:url(\''+img+'\');"/>' +
                                                 '<div class="mini_event_txt_title">' +
                                                     ( data[i].ada_type == "event" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].ada_type == "exp" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') +
                                                     data[i].ada_title +'' +
@@ -698,11 +700,11 @@ define([
 //                    $scope.search.BANNER_ST = 1;
                 } else if ($scope.option.type == 'experience') {
                     $scope.search.EVENT_GB = "exp";
-                    $scope.search.PROCESS = "process";
-                    $scope.search.FILE = true;
+//                    $scope.search.PROCESS = "process";
+//                    $scope.search.FILE = true;
                 } else if ($scope.option.type == 'event') {
                     $scope.search.EVENT_GB = "event";
-                    $scope.search.FILE = true;
+//                    $scope.search.FILE = true;
                 }
 
                 /********** 이벤트 **********/

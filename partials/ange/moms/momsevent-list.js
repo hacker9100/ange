@@ -55,6 +55,8 @@ define([
         // 초기화
         $scope.init = function(session) {
 
+            $scope.option = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 5, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
             $scope.search.ADA_STATE = 1;
             if ($stateParams.menu == 'eventprocess') {
                 $scope.community = "진행중인 이벤트";
