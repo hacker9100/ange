@@ -103,7 +103,7 @@
 
                 $sql = "SELECT
                             ada_idx, DATE_FORMAT(ada_date_open, '%Y-%m-%d') AS FROM_YMD, DATE_FORMAT(ada_date_close, '%Y-%m-%d') AS TO_YMD, ada_url, ada_title,
-                            adp_idx, ada_state, ada_files, ada_image
+                            adp_idx, ada_state, ada_files, ada_image, ada_preview
                         FROM
                             adm_ad
                         WHERE

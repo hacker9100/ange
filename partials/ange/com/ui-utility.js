@@ -27,9 +27,14 @@ define([
             $scope.comming_soon();
             return;
 
-            $location.search({id : 'test'});
             $location.url('myange/account');
-//            $location.url('infodesk/signon');
+        };
+
+        $scope.click_forgotInfo = function () {
+            $scope.comming_soon();
+            return;
+
+//            $location.url('myange/account');
         };
 
         $scope.click_settingAccount = function () {

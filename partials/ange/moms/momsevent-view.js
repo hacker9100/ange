@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsevent-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('momsevent-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
 
         $scope.queue = [];
         $scope.search = {};
@@ -88,7 +88,7 @@ define([
 
         /********** 이벤트 **********/
 
-        // 사용자 정보수정 버튼 클릭
+            // 사용자 정보수정 버튼 클릭
         $scope.click_update_user_info = function () {
             $scope.openModal(null, 'md');
         };
@@ -273,6 +273,9 @@ define([
 
                         $scope.item = data;
                         $scope.item.BOARD_NO = data.ada_idx;
+
+                        var img = CONSTANT.AD_FILE_URL + data.ada_preview;
+                        data.ada_preview_img = img;
 
                         $scope.open_date = data.OPEN_DATE;
 
@@ -479,31 +482,41 @@ define([
             $scope.item.REG_UID = $rootScope.user_id;
             $scope.item.NICK_NM = $rootScope.user_nick;
 
-            $scope.insertItem('com/reply_event', 'item', $scope.item, false)
-                .then(function(){
+            $scope.search.REG_UID = $rootScope.user_id;
 
-//                    $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
-//                        .then(function(){
-//                        })
-//                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            $scope.getList('com/reply_event', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var cnt = data[0].COUNT;
 
-                    $scope.getItem('com/reply', 'item', {}, $scope.search, true)
-                        .then(function(data){
-                            if(data.COMMENT == null){
-                                $scope.TODAY_TOTAL_COUNT = 0;
-                            }else{
-                                $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
-                            }
-                        })
-                        .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
+                    if(cnt == 0){
+                        $scope.insertItem('com/reply_event', 'item', $scope.item, false)
+                            .then(function(){
+                                $scope.getItem('com/reply', 'item', {}, $scope.search, true)
+                                    .then(function(data){
+                                        if(data.COMMENT == null){
+                                            $scope.TODAY_TOTAL_COUNT = 0;
+                                        }else{
+                                            $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                                        }
+                                    })
+                                    .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
 
-                    $scope.search.TARGET_NO = $stateParams.id;
-                    $scope.replyList = [];
-                    $scope.getPeopleReplyList();
+                                $scope.search.TARGET_NO = $stateParams.id;
+                                $scope.replyList = [];
+                                $scope.getPeopleReplyList();
 
-                    $scope.item.COMMENT = "";
+                                $scope.item.COMMENT = "";
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }else{
+                        dialogs.notify('알림', '이벤트는 한번만 참여가 가능합니다.', {size: 'md'});
+                        return;
+                    }
+
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+
         }
 
         // 댓글 수정
@@ -565,10 +578,10 @@ define([
         //  .then($scope.sessionCheck)
         //  .catch($scope.reportProblems);
 
-         $scope.init();
+        //$scope.init();
 //         $scope.addHitCnt();
-         $scope.getMomsEvent();
-         $scope.getExperienceReviewList();
+        $scope.getMomsEvent();
+        //$scope.getExperienceReviewList();
 
         // 댓글리스트
         $scope.getPeopleReplyList();
