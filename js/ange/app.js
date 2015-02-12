@@ -85,6 +85,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         $rootScope.$on("$stateChangeStart", function (event, next, current) {
             // com_commom에서 layout을 동적으로 생성하는데 url이 변경되는 경우 정보 이동을 위해
             $rootScope.location = $location.path();
+            ga('send', 'pageview', $location.path());
         });
     });
 
