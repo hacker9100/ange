@@ -39,7 +39,7 @@
                                 <a ng-show="replyItem.BLIND_FL == 'N' && uid == item.REG_UID" ng-click="showReCommentDetails = ! showReCommentDetails">수정</a>
                                 <a ng-show="replyItem.BLIND_FL == 'N' && uid == item.REG_UID" ng-click="click_deleteReply(reItem);">삭제</a>
                                 <a ng-click="click_blind(reItem.NO);" ng-show="reItem.BLIND_FL == 'N' && role == 'ANGE_ADMIN'" class="table_red">블라인드</a>
-                                <a ng-click="click_blind_clear(reItem.NO);" ng-show="reItem.BLIND_FL == 'Y' && role == 'ANGE_ADMIN'" class="table_red">블라인드해제</a>
+                                <a ng-click="click_blind_clear(reItem.NO);" ng-show="reItem.BLIND_FL == 'Y' && role == 'ANGE_ADMIN'" class="table_red">블라인드해제</a> <!--ANGE_ADMIN-->
                             </div>
                         </small>
                         <p style="font-size:0.86em; margin:4px 0 0 0; "  ng-class="{ 'hidden': ! showReCommentDetails }">
