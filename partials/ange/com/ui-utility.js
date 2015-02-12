@@ -170,12 +170,12 @@ define([
                     $scope.topBanner = data[0];
                     $scope.topBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_image;
                 })
-                .catch(function(error){alert(error)});
+                .catch(function(error){});
         };
 
         $scope.getTopBanner();
 
-        // 상단 배너 이미지 조회
+        // 하단 배너 이미지 조회
         $scope.getTopBanner = function () {
             $scope.getList('ad/banner', 'list', {NO:0, SIZE:2}, {ADP_IDX: 3,ADA_STATE: 1}, false)
                 .then(function(data){
@@ -185,7 +185,7 @@ define([
                     $scope.bottomBanner2 = data[1];
                     $scope.bottomBanner2.img = CONSTANT.AD_FILE_URL + data[1].ada_image;
                 })
-                .catch(function(error){alert(error)});
+                .catch(function(error){});
         };
 
         $scope.getTopBanner();

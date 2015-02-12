@@ -578,6 +578,14 @@ define([
         //  .then($scope.sessionCheck)
         //  .catch($scope.reportProblems);
 
+        if ($location.search()) {
+            var param = $location.search();
+            if(param.user_id != undefined) {
+                $rootScope.user_id = param.user_id;
+                $rootScope.user_nick = decodeURIComponent(param.user_nick);
+            }
+        }
+
         //$scope.init();
 //         $scope.addHitCnt();
         $scope.getMomsEvent();
