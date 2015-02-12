@@ -40,7 +40,7 @@ define([
         $scope.init = function(session) {
             if ($stateParams.menu == 'experiencewinner') {
                 $scope.community = "체험단 발표";
-                $scope.item.EVENT_GB = "EXPERIENCE";
+                $scope.item.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'eventwinner') {
                 $scope.community = "당첨자 발표";
                 $scope.item.EVENT_GB = "EVENT";
@@ -97,7 +97,7 @@ define([
         $scope.getPreBoard = function (){
 
             if ($stateParams.menu == 'experiencewinner') {
-                $scope.search.EVENT_GB = "EXPERIENCE";
+                $scope.search.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'eventwinner') {
                 $scope.search.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'supporterboard') {
@@ -120,7 +120,7 @@ define([
         $scope.getNextBoard = function (){
 
             if ($stateParams.menu == 'experiencewinner') {
-                $scope.search.EVENT_GB = "EXPERIENCE";
+                $scope.search.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'eventwinner') {
                 $scope.search.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'supporterboard') {

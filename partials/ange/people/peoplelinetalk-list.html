@@ -14,6 +14,27 @@
                                 <span class="sub_contents_bullet"></span>
                                 <h3 style="font-weight:bold;">한줄 톡</h3>
                             </div>
+
+                            <select id="year" ng-model="search.YEAR" ng-options="v for v in year" ng-change="change_year(search.YEAR);" class= "form-control" style="width:110px;float: left;">
+                                <option value="" selected>년</option>
+                            </select>
+                            <select id="month" ng-model="search.MONTH" ng-options="v for v in month" ng-change="change_month(search.MONTH);" class= "form-control" style="width:110px;">
+                                <option value="" selected>월</option>
+                            </select>
+                            <br/>
+
+                            <div  ng-repeat="day in day" style="float:left;">
+                                <span ng-show="$last == false"><a ng-click="search_day(day);">{{day}}|&nbsp;</a></span>
+                                <span ng-show="$last == true"><a ng-click="search_day(day);">{{day}}</a></span>
+                            </div>
+
+                            <br/><br/><br/>
+                            <div>
+                                <h4>{{talkitem.SUBJECT != '' ? talkitem.SUBJECT : '주제가 없습니다'}}</h4>
+                            </div>
+
+                            <img ng-show="talkitem.MAIN_FILE != ''" src="{{talkitem.MAIN_FILE}}" style="width: 300px; height: 200px;"/>
+                            <!--</div>-->
                         </div><!-- /.sub_contents_wrap -->
 
                         <div ng-model="item" class="sub_contents_body">
@@ -21,7 +42,7 @@
                             <div class="container-fluid peopleboard_view_commentwrap">
                                 <div class="row peopleboard_view_commenttop">
                                     <div class="col-xs-12 peopleboard_view_commenttitle">
-                                        <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">출석체크</span>
+                                        <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">톡</span> <!-- 출석체크 -->
                                         <small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>
                                     </div><!-- /.col-xs-12-->
                                 </div><!-- /.row -->
@@ -44,7 +65,7 @@
                                 <div class="row">
 
                                     <div class="col-xs-12 people_view_replytop">
-                                        <span style="text-align: left;">{{TODAY_TOTAL_COUNT}} 건</span>
+                                        <span style="text-align: left;">{{search.TOTAL_COUNT}} 건</span>
                                     </div>
 
                                     <!--<div class="col-xs-12 people_view_replytop">-->

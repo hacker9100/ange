@@ -38,9 +38,12 @@ define([
         var date = new Date();
 
         // GET YYYY, MM AND DD FROM THE DATE OBJECT
-        var year = date.getFullYear().toString();
+        var thisyear = date.getFullYear().toString();
         var mm = (date.getMonth()+1).toString();
         var dd  = date.getDate().toString();
+
+        var lastdd = new Date(thisyear, mm ,0);
+        var lastday = lastdd.getDate();
 
         if(mm < 10){
             mm = '0'+mm;
@@ -50,12 +53,42 @@ define([
             dd = '0'+dd;
         }
 
-        var today = year+'-'+mm+'-'+dd;
 
-        console.log('today ='+today);
 
-        $scope.search.TODAY_DATE = today;
+        var today = thisyear+'-'+mm+'-'+dd;
 
+        //$scope.search.TODAY_DATE = today;
+
+        var year = [];
+        var month = [];
+        var day = [];
+
+        for (var i = thisyear; i >= 2000; i--) {
+            year.push(i+'');
+        }
+
+        for (var i = 1; i <= 12; i++) {
+
+            if(i < 10){
+                i = '0'+i;
+            }
+            month.push(i+'');
+        }
+
+        for (var i = 1; i <= lastday; i++) {
+
+            if(i < 10){
+                i = '0'+i;
+            }
+            day.push(i+'');
+        }
+
+        $scope.month = month;
+        $scope.today_month= mm;
+        $scope.day = day;
+        $scope.today_day = dd;
+        $scope.year = year;
+        $scope.today_year = thisyear;
 
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.search.PAGE_NO);
@@ -105,6 +138,26 @@ define([
                     }
                 })
                 .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
+
+            var idx = 0;
+            for(var i=0; i < $scope.month.length; i ++){
+                if(JSON.stringify($scope.today_month) == JSON.stringify($scope.month[i])){
+                    idx = i;
+                }
+            }
+            $scope.search.MONTH = $scope.month[idx];
+
+
+            var idx2 = 0;
+            for(var i=0; i < $scope.year.length; i ++){
+                if(JSON.stringify($scope.today_year) == JSON.stringify($scope.year[i])){
+                    idx = i;
+                }
+            }
+            $scope.search.YEAR = $scope.year[idx];
+
+            $scope.search.DAY = $scope.today_day;
+
         };
 
 
@@ -114,6 +167,8 @@ define([
             $scope.search.REPLY_GB = 'linetalk';
 /*            $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC'; */
+
+            $scope.search.TODAY_DATE = true;
 
             $scope.getItem('com/reply', 'item', {}, $scope.search, true)
                 .then(function(data){
@@ -233,6 +288,72 @@ define([
             });
         }
 
+        // 연도 선택
+        $scope.change_year = function(year){
+
+           $scope.search.YEAR = year;
+
+           $scope.getTalkSubject();
+           $scope.replyList = [];
+           $scope.getPeopleReplyList();
+        }
+
+        // 월 선택
+        $scope.change_month = function(month){
+
+           $scope.search.MONTH = month;
+
+            var change_lastdd = new Date(thisyear, month ,0);
+            var change_lastday = change_lastdd.getDate();
+
+            var change_day = [];
+            for (var i = 1; i <= change_lastday; i++) {
+
+                if(i < 10){
+                    i = '0'+i;
+                }
+                change_day.push(i+'');
+            }
+            $scope.day = change_day;
+
+            $scope.getTalkSubject();
+            $scope.replyList = [];
+            $scope.getPeopleReplyList();
+        }
+
+        // 일 선택
+        $scope.search_day = function(day){
+
+            $scope.search.DAY = day;
+
+            $scope.getTalkSubject();
+            $scope.replyList = [];
+            $scope.getPeopleReplyList();
+        }
+
+        $scope.getTalkSubject = function (){
+
+            $scope.search.TODAY_DATE = true;
+
+            $scope.getItem('com/reply', 'subjectitem', {}, $scope.search, true)
+                .then(function(data){
+                    //console.log(data);
+
+                    var files = data[0].TALK_FILE;
+                    //console.log(JSON.stringify(data));
+                    for(var i in files) {
+                        var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
+                        data[0].MAIN_FILE = img;
+                    }
+
+                    $scope.talkitem = data[0];
+
+                    console.log($scope.talkitem);
+                })
+                .catch(function(error){ $scope.talkitem=""; console.log('aa = '+$scope.talkitem);});
+
+        }
+
         /********** 화면 초기화 **********/
         /*        $scope.getSession()
          .then($scope.sessionCheck)
@@ -240,7 +361,9 @@ define([
          .then($scope.getCmsBoard)
          .catch($scope.reportProblems);*/
         $scope.init();
+        $scope.getTalkSubject();
         $scope.getPeopleReplyList();
+
 
     }]);
 });

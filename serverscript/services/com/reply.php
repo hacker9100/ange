@@ -67,7 +67,7 @@
                 }
 
                 if (isset($_search[TODAY_DATE]) && $_search[TODAY_DATE] != "") {
-                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = '".$_search[TODAY_DATE]."' ";
+                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = CONCAT('".$_search[YEAR]."','-' ,'".$_search[MONTH]."', '-', '".$_search[DAY]."')";
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
@@ -141,9 +141,51 @@
                 }else{
                     $_d->dataEnd2($data);
                 }
-            } else if ($_type == 'list') {
+            } else if ($_type == 'subjectitem') {
+
+                $search_common = "";
+
+                if (isset($_search[TODAY_DATE]) && $_search[TODAY_DATE] != "") {
+                    $search_common .= "AND CONCAT(YEAR,'-',MONTH,'-',DAY) = CONCAT('".$_search[YEAR]."','-' ,'".$_search[MONTH]."', '-', '".$_search[DAY]."')";
+                }
+
+                $sql = "SELECT NO, SUBJECT
+                     FROM ANGE_TALK
+                     WHERE 1=1
+                     ".$search_common."
+                ";
+
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                    $sql = "SELECT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
+                        FROM
+                            FILE F, CONTENT_SOURCE S
+                        WHERE
+                            F.NO = S.SOURCE_NO
+                            AND S.CONTENT_GB = 'FILE'
+                            AND S.TARGET_GB = 'TALK'
+                            AND S.TARGET_NO = ".$row['NO']."
+                            AND F.THUMB_FL = '0'
+                        ";
+                    $category_data = $_d->getData($sql);
+                    $row['TALK_FILE'] = $category_data;
+
+                    $__trn->rows[$i] = $row;
+                }
 
 
+                $_d->sql_free_result($result);
+                $data = $__trn->{'rows'};
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd2($data);
+                }
             }
 
             break;
