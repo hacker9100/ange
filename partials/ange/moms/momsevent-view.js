@@ -477,13 +477,13 @@ define([
                 return;
             }
 
-            if($scope.user_id == undefined || $scope.user_id == '') {
+            if($rootScope.user_id == undefined || $rootScope.user_id == '') {
                 dialogs.notify('알림', '입력할수 없는 상태입니다..', {size: 'md'});
                 return;
             }
 
-            $scope.item.REG_UID = $scope.user_id;
-            $scope.item.NICK_NM = $scope.user_nick;
+            $scope.item.REG_UID = $rootScope.user_id;
+            $scope.item.NICK_NM = $rootScope.user_nick;
 
             $scope.insertItem('com/reply_event', 'item', $scope.item, false)
                 .then(function(){
@@ -520,13 +520,13 @@ define([
             $scope.replyItem = {};
             $scope.replyItem.COMMENT = comment;
 
-            if($scope.user_id == undefined || $scope.user_id == '') {
+            if($rootScope.user_id == undefined || $rootScope.user_id == '') {
                 dialogs.notify('알림', '입력할수 없는 상태입니다..', {size: 'md'});
                 return;
             }
 
-            $scope.item.REG_UID = $scope.user_id;
-            $scope.item.NICK_NM = $scope.user_nick;
+            $scope.item.REG_UID = $rootScope.user_id;
+            $scope.item.NICK_NM = $rootScope.user_nick;
 
             $scope.updateItem('com/reply_event', 'item', key, $scope.replyItem, false)
                 .then(function(){
@@ -578,8 +578,8 @@ define([
 
         if ($location.search()) {
             var param = $location.search();
-            $scope.user_id = param.user_id;
-            $scope.user_nick = decodeURIComponent(param.user_nick);
+            $rootScope.user_id = param.user_id;
+            $rootScope.user_nick = decodeURIComponent(param.user_nick);
         }
 
         $scope.init();

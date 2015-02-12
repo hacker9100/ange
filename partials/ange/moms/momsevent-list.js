@@ -145,14 +145,19 @@ define([
         }
 
         //  응모하기
-        $scope.comp_momsevent = function(key){
+        $scope.comp_momsevent = function(item){
+
+            if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
+                dialogs.notify('알림', "이벤트 기간이 아닙니다.", {size: 'md'});
+                return;
+            }
 
             $rootScope.focus = 'comp';
 
             if ($stateParams.menu == 'eventprocess') {
-                $location.url('/moms/eventprocess/view/'+key);
+                $location.url('/moms/eventprocess/view/'+item.ada_idx);
             } else if ($stateParams.menu == 'eventperformance') {
-                $location.url('/moms/eventperformance/view/'+key);
+                $location.url('/moms/eventperformance/view/'+item.ada_idx);
             }
 
         }

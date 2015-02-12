@@ -50,12 +50,12 @@ define(['./directives'], function (directives) {
                         }
 
                         if (menu_info[j].DEPTH == '1') {
-                            templet += '<a class="localmenu_link main '+angular.lowercase(menu_info[j].CLASS_GB)+'" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand">'+menu_info[j].MENU_NM+'</a>';
+                            templet += '<a class="localmenu_link main '+angular.lowercase(menu_info[j].CLASS_GB)+'" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand;'+(menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '')+'">'+menu_info[j].MENU_NM+'</a>';
                         } else {
                             if (menu_info[j].ETC == 'DOWNLOAD') {
                                 templet += '<a target="_self" href="'+UPLOAD.BASE_URL+'/admin/'+menu_info[j].FILE_ID+'" download="'+menu_info[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+menu_info[j].MENU_NM+'</a>';
                             } else {
-                                templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand">'+menu_info[j].MENU_NM+(menu_info[j].LINK_FL == 'C' ? '(준비중)' : '')+'</a>';
+                                templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand;'+(menu_info[j].LINK_FL == 'C' ? 'color:#bcbcbc;' : '')+'">'+menu_info[j].MENU_NM+'</a>';
                             }
                         }
 
@@ -107,7 +107,7 @@ define(['./directives'], function (directives) {
                 /********** 이벤트 **********/
                 $scope.click_selectMenu = function(url, link) {
                     if (link == 'C') {
-                        dialogs.notify('알림', '준비 중 입니다.', {size: 'md'});
+                        dialogs.notify('알림', '1차 체험기간에는 제공되지 않습니다.', {size: 'md'});
                     } else if (link != 'N') {
                         $location.url(url);
                     }
