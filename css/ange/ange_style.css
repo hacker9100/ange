@@ -1251,6 +1251,8 @@ a.lnb_handle_close:hover {
     border:1px solid #d7d7d7;
     border-radius: 12px;
     background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 
 .ADbanner_image {

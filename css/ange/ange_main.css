@@ -537,7 +537,7 @@ div.mini_community_contents:hover {
 	width:100%;
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: cover;
+    background-size: contain;
 }
 
 .mini_event_txt_title{

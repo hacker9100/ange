@@ -1,26 +1,26 @@
 <div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>
 
-<div ng-class="option.type == 'review' ? 'mini_story' : 'mini_peopleboard'" style="border:1px solid #e4e2e5; background-color:#f8f6f9; border-radius:12px;">
-    <div ng-class="option.type == 'review' ? '' : 'peopleboard_top'">
-        <div class="miniboard_titlebar">
-            <span ng-class="option.type == 'review' ? 'miniboard_title' : 'people_miniboard_title'">{{ portletTitle }}</span>
-            <a ng-class="option.type == 'review' ? 'miniboard_tab_more' : 'people_miniboard_tab_more'" ng-click="click_showList();">더보기</a>
+<div ng-class="option.type == 'review' ? 'mini_peopleboard' : 'mini_peopleboard'" style="border:1px solid #e4e2e5; background-color:#f8f6f9; border-radius:12px;">
+    <div ng-class="option.type == 'review' ? 'peopleboard_top' : 'peopleboard_top'">
+        <div class="miniboard_titlebar" style="padding-top:0px;">
+            <span ng-class="option.type == 'review' ? 'people_miniboard_title' : 'people_miniboard_title'">{{ portletTitle }}</span>
+            <a ng-class="option.type == 'review' ? 'people_miniboard_tab_more' : 'people_miniboard_tab_more'" ng-click="click_showList();">더보기</a>
 
-            <div ng-if="option.tab" ng-repeat="tab in option.tab" ng-class="tabIdx == $index ? 'miniboard_tab_on' : 'miniboard_tab'" ng-click="click_tabIndex($index)">{{tab.name}}</div>
+            <div ng-if="option.tab" ng-repeat="tab in option.tab" ng-class="tabIdx == $index ? 'miniboard_tab_on' : 'miniboard_tab'" ng-click="click_tabIndex($index)" style="line-height: 16px;">{{tab.name}}</div>
         </div>
     </div>
 
-    <div ng-class="option.type == 'review' ? 'miniboard_review_contents' : option.type == 'photo' ? 'taste_miniboard_contents' : 'miniboard_contents'">
+    <div ng-class="option.type == 'review' ? 'miniboard_contents' : option.type == 'photo' ? 'taste_miniboard_contents' : 'miniboard_contents'">
 
-        <div ng-if="option.image" class="taste_miniboard_img" ng-click="click_firstImage(img)"><img ng-src="{{img.URL}}"></div>
+        <div ng-if="option.image" class="taste_miniboard_img" ng-click="click_firstImage(img)" style=" background-size: cover;"><img ng-src="{{img.URL}}"></div>
 
-        <div ng-class="option.type == 'review' ? 'mini_review_contents-noimg' : option.type == 'photo' ? 'taste_mini_board_contents' : 'mini_board_contents'" ng-repeat="item in list">
+        <div ng-class="option.type == 'review' ? 'mini_review_contents-noimg' : option.type == 'photo' ? 'taste_mini_board_contents' : 'mini_board_contents'" ng-repeat="item in list" style="padding:8px 0px;">
             <!--<img src="" class="mini_board_contents_img" />-->
-            <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;" ng-click="click_showView(item.NO);">
+            <div class="mini_board_contents_txt" style="overflow:auto; text-align:left; line-height:16px;" ng-click="click_showView(item.NO);">
 
                 <span ng-show="option.head" class="mini_community_txt_head">[{{ item.COMM_NM }}]&nbsp;</span>
                 <span class="mini_story_txt_title">
-                    <span ng-show="item.SECRET_FL == '1'" class="glyphicon glyphicon-lock" style="color:#e25d4c; font-size:0.78em; margin-right:4px;"></span>
+                    <span ng-show="item.SECRET_FL == '1'" class="glyphicon glyphicon-lock" style="color:#e25d4c; font-size:0.78em; margin:0px; margin-right:4px;"></span>
                     {{ item.SUBJECT | string_limit:30 }}<kbd ng-show="item.NEW_FL == '1'" class="kbd_new">N</kbd>
                 </span>
 
@@ -28,9 +28,9 @@
                     <li class="mini_author">{{ item.REG_DT }}</li>
                 </ul>
 
-                <ul ng-show="option.nick" class="mini_board_feeds">
-                    <li class="mini_author">{{ item.NICK_NM }}</li>
-                </ul>
+                <!--<ul ng-show="option.nick" class="mini_board_feeds">-->
+                    <!--<li class="mini_author">{{ item.NICK_NM }}</li>-->
+                <!--</ul>-->
             </div>
         </div>
     </div>

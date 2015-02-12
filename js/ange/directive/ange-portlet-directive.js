@@ -520,7 +520,7 @@ define([
                                             '<div class="mini_event_content">' +
 //                                                '<div class="mini_event_closed"></div>' +
                                                 ( data[i].ada_state == 0 ? '<div class="mini_event_closed"></div>' : '' ) +
-                                                '<img class="mini_event_txt_img" src="/imgs/ange/_blank_4by3.gif" style="background-image:url(\''+img+'\');"/>' +
+                                                '<img class="mini_event_txt_img" src="/imgs/ange/_blank_330by220.gif" style="background-image:url(\''+img+'\');"/>' +
                                                 '<div class="mini_event_txt_title">' +
                                                     ( data[i].ada_type == "event" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].ada_type == "exp" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') +
                                                     data[i].ada_title +'' +
@@ -631,7 +631,7 @@ define([
                                 if (data[i].FILE != null) {
                                     var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
                                     var url = "people/angemodel/view/"+data[i].NO;
-                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt=""/></a></div>');
+                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt="" style="background-size:cover;"/></a></div>');
                                 }
                             }
 
@@ -744,9 +744,9 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+link+'<img data-lazy="'+img+'" style="width:100%;"/></a></div></div>');
-//                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active" style="border:1px solid red;">'+link+'<img class="moms_nowing" src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+ img + '); border:1px solid blue;"/></a></div></div>');
-//                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+link+'<img data-lazy="'+img+'" style="width:100%; border:1px solid #ddd;"/></a></div></div>');
+                                //angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active" style="border:1px solid red;">'+link+'<img class="moms_nowing" src="/imgs/ange/_blank_4by3.gif" style="width:100%; background-image: url('+ img + ');"/></a></div></div>');
+                                //angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
                             }
 
                             // 광고의 롤링을 실행
@@ -923,7 +923,7 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                      '<div class="inven_Highlight"><img class="ADbanner_normal" ng-src="{{img}}" ng-click="click_linkImage()"/></div>',
+                      '<div class="inven_Highlight"><img class="ADbanner_normal" ng-click="click_linkImage()" style="background-image: url({{img}});"/></div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', 'UPLOAD', function($scope, $attrs, $location, $window, CONSTANT, UPLOAD) {
 
                 /********** 초기화 **********/
