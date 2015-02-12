@@ -151,6 +151,7 @@ define([
                 dialogs.notify('알림', "이벤트 기간이 아닙니다.", {size: 'md'});
                 return;
             }
+            console.log(item);
 
             $rootScope.focus = 'comp';
 
