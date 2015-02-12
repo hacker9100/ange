@@ -210,7 +210,6 @@ define([
                 $scope.search.PERFORM_FL = "Y";
             }
 
-            console.log($scope.uid);
             $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                 .then(function(data){
 
@@ -480,31 +479,41 @@ define([
             $scope.item.REG_UID = $rootScope.user_id;
             $scope.item.NICK_NM = $rootScope.user_nick;
 
-            $scope.insertItem('com/reply_event', 'item', $scope.item, false)
-                .then(function(){
+            $scope.search.REG_UID = $rootScope.user_id;
 
-//                    $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
-//                        .then(function(){
-//                        })
-//                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            $scope.getList('com/reply_event', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var cnt = data[0].COUNT;
 
-                    $scope.getItem('com/reply', 'item', {}, $scope.search, true)
-                        .then(function(data){
-                            if(data.COMMENT == null){
-                                $scope.TODAY_TOTAL_COUNT = 0;
-                            }else{
-                                $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
-                            }
-                        })
-                        .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
+                    if(cnt == 0){
+                        $scope.insertItem('com/reply_event', 'item', $scope.item, false)
+                            .then(function(){
+                                $scope.getItem('com/reply', 'item', {}, $scope.search, true)
+                                    .then(function(data){
+                                        if(data.COMMENT == null){
+                                            $scope.TODAY_TOTAL_COUNT = 0;
+                                        }else{
+                                            $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                                        }
+                                    })
+                                    .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
 
-                    $scope.search.TARGET_NO = $stateParams.id;
-                    $scope.replyList = [];
-                    $scope.getPeopleReplyList();
+                                $scope.search.TARGET_NO = $stateParams.id;
+                                $scope.replyList = [];
+                                $scope.getPeopleReplyList();
 
-                    $scope.item.COMMENT = "";
+                                $scope.item.COMMENT = "";
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }else{
+                        dialogs.notify('알림', '이벤트는 한번만 참여가 가능합니다.', {size: 'md'});
+                        return;
+                    }
+
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+
         }
 
         // 댓글 수정
@@ -566,10 +575,10 @@ define([
         //  .then($scope.sessionCheck)
         //  .catch($scope.reportProblems);
 
-         $scope.init();
+         //$scope.init();
 //         $scope.addHitCnt();
          $scope.getMomsEvent();
-         $scope.getExperienceReviewList();
+         //$scope.getExperienceReviewList();
 
         // 댓글리스트
         $scope.getPeopleReplyList();

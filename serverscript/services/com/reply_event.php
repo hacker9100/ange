@@ -144,6 +144,19 @@
             } else if ($_type == 'list') {
 
 
+            } else if ($_type == 'check'){
+
+                $sql = "SELECT COUNT(*) AS COUNT
+                        FROM COM_REPLY_EVENT
+                        WHERE REG_UID = '".$_search[REG_UID]."'";
+
+                $data = $_d->sql_query($sql);
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
+
             }
 
             break;
