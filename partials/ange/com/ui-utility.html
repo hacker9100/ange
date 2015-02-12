@@ -2,8 +2,9 @@
 <!-- Utility Panel -->
 <div ng-controller="ui-utility">
 	<div class="inven_1stClass">
-		<a class="ADbanner_normal shadowed" title="배너타이틀" style="background-image:url('imgs/ange/temp/allbanner.png'); background-position:center;">1st Class Banner</a>
-	</div>	
+		<!--<a class="ADbanner_normal shadowed" title="배너타이틀" style="background-image:url('imgs/ange/temp/allbanner.png'); background-position:center;">1st Class Banner</a>-->
+        <a ng-model="topBanner" class="ADbanner_normal shadowed" title="{{topBanner.ada_title}}" ng-click="click_linkBanner(topBanner, true)" ng-style="{'background-image': 'url('+topBanner.img+')', 'background-position': 'center'}">1st Class Banner</a>
+	</div>
 
 	<div class="comp_userlog">
 
@@ -68,10 +69,12 @@
 
 	<div class="comp_subbanner">
 		<div class="inven_catchup">
-			<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('imgs/ange/temp/util_banner_01.jpg'); background-position:center;">Premium [Catch-Up] #1</a>
+            <a ng-model="bottomBanner1" class="ADbanner_normal" title="{{bottomBanner1.ada_title}}" ng-click="click_linkBanner(bottomBanner1, true)" ng-style="{'background-image': 'url('+bottomBanner1.img+')', 'background-position': 'center'}">Premium [Catch-Up] #1</a>
+			<!--<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('imgs/ange/temp/util_banner_01.jpg'); background-position:center;">Premium [Catch-Up] #1</a>-->
 		</div>
 		<div class="inven_catchup">
-			<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('imgs/ange/temp/util_banner_02.jpg'); background-position:center;">Premium [Catch-Up] #2</a>
+            <a ng-model="bottomBanner2" class="ADbanner_normal" title="{{bottomBanner2.ada_title}}" ng-click="click_linkBanner(bottomBanner2, true)" ng-style="{'background-image': 'url('+bottomBanner2.img+')', 'background-position': 'center'}">Premium [Catch-Up] #2</a>
+			<!--<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('imgs/ange/temp/util_banner_02.jpg'); background-position:center;">Premium [Catch-Up] #2</a>-->
 		</div>
 	</div>
 

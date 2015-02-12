@@ -20,9 +20,9 @@ define("__ANGE_DBF__" , "admin_default");
 
 // 광고센터 DB 서버(개발)
 define("__AD_ANGE_ADD__" , "14.63.219.171");
-define("__AD_ANGE_USR__" , "admin_ad");
-define("__AD_ANGE_PWD__" , "zaq12wsx");
-define("__AD_ANGE_DBF__" , "admin_ad");
+define("__AD_ANGE_USR__" , "ange");
+define("__AD_ANGE_PWD__" , "ange#123");
+define("__AD_ANGE_DBF__" , "ange");
 
 // MAIL 서버(SMTP)
 define("__SMTP_HOST__" , "mail.ange.co.kr");

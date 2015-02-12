@@ -110,8 +110,5 @@ define([
 
     // 회사소개
     '../../../partials/ange/company/companyintro',
-    '../../../partials/ange/company/companyaffiliates',
-
-    '../../../partials/ange/test/home-main',
-    '../../../partials/ange/test/user-list'
+    '../../../partials/ange/company/companyaffiliates'
 ], function () {});

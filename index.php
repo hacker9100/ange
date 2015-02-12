@@ -5,11 +5,7 @@
     Description : app의 최상위 파일로서 최초 로딩되는 index 파일
 -->
 <?php
-    @extract($_POST);
     @extract($_SERVER);
-
-    $user_id = 'ange';
-    $user_nick = '앙쥬';
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
     MtUtil::_d("### [START]");
@@ -55,8 +51,9 @@
                        T.SUBJECT, T.SUMMARY, F.PATH, F.FILE_ID
                     FROM
                        CMS_TASK T
-                       LEFT OUTER JOIN CONTENT_SOURCE S ON T.NO = S.TARGET_NO AND S.TARGET_GB = 'CONTENT'
-                       INNER JOIN FILE F ON F.NO = S.SOURCE_NO AND F.FILE_GB = 'MAIN'
+                            LEFT OUTER JOIN CMS_CONTENT C ON T.NO = C.TASK_NO AND C.CURRENT_FL = 'Y'
+                            INNER JOIN CONTENT_SOURCE S ON C.NO = S.TARGET_NO AND S.TARGET_GB = 'CONTENT'
+                            INNER JOIN FILE F ON F.NO = S.SOURCE_NO AND F.FILE_GB = 'MAIN'
                     WHERE
                         T.NO = ".$path[4]."
                     ";
@@ -65,7 +62,7 @@
 
             $title = $task_data['SUBJECT'];
             $description = $task_data['SUMMARY'];
-            $image = BASE_URL.$task_data['PATH'].$task_data['FILE_ID'];;
+            $image = BASE_URL."/thumbnail".$task_data['PATH'].$task_data['FILE_ID'];;
         }
     }
 
@@ -84,6 +81,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="pragma" content="no-cache">
 
     <meta name="author" content="앙쥬" />
     <meta name="copyright" content="앙쥬" />
@@ -168,9 +167,6 @@
 
 <script>
     function ange_init($rootScope, $scope, $location, $filter) {
-        $rootScope.user_id = '<?=$user_id?>';
-        $rootScope.user_nick = '<?=$user_nick?>';
-
         $rootScope.ange_channel = <?=$channel_info?>;
         $rootScope.ange_menu = <?=$menu_info?>;
 
@@ -192,25 +188,6 @@ http://plnkr.co/edit/KzjIMN
     requireJS를 사용하기 위한 부분으로,
     requireJS는 data-main에 설정한 main.js 파일을 최초로 로드한다.
  -->
-
-<script>
-    function kakao_share($rootScope, $scope, $location, $window, UPLOAD) {
-        // 사용할 앱의 Javascript 키를 설정해 주세요.
-        Kakao.Auth.createLoginButton({
-            container: '#kakao-login-btn',
-            success: function() {
-                share_open();
-            },
-            fail: function(err) {
-                alert(JSON.stringify(err))
-            }
-        });
-
-        function share_open() {
-            $window.open('https://story.kakao.com/share?url=' + UPLOAD.BASE_URL + $location.path() + '/' + $scope.task.NO, '_blank', 'width=500,height=400')
-        }
-    }
-</script>
 
 <script src="lib/require/require.js" data-main="js/ange/main.js"></script>
 </body>

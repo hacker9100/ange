@@ -11,11 +11,13 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller("storycontent-view-popup", ['$rootScope', '$scope', '$window', '$sce', '$controller', '$location', '$modalInstance', '$q', 'dialogs', 'UPLOAD', 'data', function($rootScope, $scope, $window, $sce, $controller, $location, $modalInstance, $q, dialogs, UPLOAD, data) {
+    controllers.controller("storycontent-view-popup", ['$rootScope', '$scope', '$window', '$sce', '$controller', '$location', '$modalInstance', '$q', 'dialogs', 'CONSTANT', 'UPLOAD', 'data', function($rootScope, $scope, $window, $sce, $controller, $location, $modalInstance, $q, dialogs, CONSTANT, UPLOAD, data) {
 
         angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
         /********** 초기화 **********/
+
+        $scope.S_PAGE_NO = 0;
 
         $scope.TARGET_NO = data.NO;
         $scope.TARGET_GB = 'CONTENT';
@@ -52,7 +54,7 @@ define([
         $scope.getContent = function () {
             var deferred = $q.defer();
             $q.all([
-                    $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:9}, {CATEGORY: data.CATEGORY, FILE: true, PHASE: '30, 31', SORT: 'RAND()', ORDER: ''}, false).then(function(data){
+                    $scope.getList('cms/task', 'list', {NO:$scope.S_PAGE_NO, SIZE:9}, {CATEGORY: data.CATEGORY, FILE: true, PHASE: '30, 31', SORT: 'RAND()', ORDER: ''}, false).then(function(data){
                         console.log(JSON.stringify(data))
                         $scope.totalPage = Math.round(data[0].TOTAL_COUNT / 2);
 
@@ -69,17 +71,13 @@ define([
                         $scope.share_url = UPLOAD.BASE_URL + '/story/content/list/' + $scope.task.NO;
                     }),
                     $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){ $scope.content = data; }),
-                    $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, PHASE: '30, 31'}, false).then(function(data){
+                    $scope.getList('cms/task', 'list', {NO:0, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, PHASE: '30, 31'}, false).then(function(data){
                         $scope.editorList = data;
                     }),
-                    $scope.getList('ad/banner', 'list', {NO:$scope.PAGE_NO, SIZE:1}, $scope.search, false).then(function(data){
-                        for (var i in data) {
-                            if (data[i].FILE.PATH != undefined) {
-                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
-                                data[i].FILE = img;
-                                $scope.ad = data[i];
-                            }
-                        }
+                    $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX : 8, ADA_STATE: 1}, false).then(function(data){
+                        var img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+                        data[0].img = img;
+                        $scope.ad = data[0];
                     })
                 ])
                 .then( function(results) {
@@ -90,6 +88,11 @@ define([
                 });
 
             return deferred.promise;
+        };
+
+        // 배너 이미지 클릭
+        $scope.click_linkBanner = function (item) {
+            $window.open(item.ada_url);
         };
 
         // 기사 프린트 버튼 클릭
@@ -122,14 +125,19 @@ define([
 
         // 사용할 앱의 Javascript 키를 설정해 주세요.
         $scope.click_loginWithKakao = function () {
-            Kakao.Auth.login({
-                success: function(authObj) {
-                    $scope.share_open();
-                },
-                fail: function(err) {
-                    alert(JSON.stringify(err))
-                }
-            });
+//            Kakao.Auth.logout();
+            if(Kakao.Auth.getAccessToken()) {
+                $scope.share_open();
+            } else {
+                Kakao.Auth.login({
+                    success: function() {
+                        $scope.share_open();
+                    },
+                    fail: function(err) {
+                        alert(JSON.stringify(err))
+                    }
+                });
+            }
 
 //            Kakao.Auth.createLoginButton({
 //                container: '#kakao-login-btn',
@@ -144,7 +152,13 @@ define([
         }
 
         $scope.share_open = function () {
-            $window.open('https://story.kakao.com/share?url=' + UPLOAD.BASE_URL + $location.path() + '/' + $scope.task.NO, '_blank', 'width=500,height=400')
+            var popup = $window.open('http://story.kakao.com/share?url=' + UPLOAD.BASE_URL + $location.path() + '/' + $scope.task.NO, '_blank', 'width=500,height=400');
+
+            if ( popup ){
+                popup.focus();
+            } else {
+                dialogs.notify('알림', "팝업차단을 해제해주세요.", {size: 'md'});
+            }
         }
 
         $scope.click_loginWithTwitter = function () {
@@ -193,7 +207,6 @@ define([
                             .then(function(){
 
                                 dialogs.notify('알림', '스크랩 되었습니다.', {size: 'md'});
-                                $scope.getPeopleBoard();
                             })
                             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }

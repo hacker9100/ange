@@ -23,34 +23,7 @@
                                         <img class="blank_wrap" src="/imgs/ange/_blank_80by31.gif" />
 
                                         <!-- jumbotron_cover -->
-                                        <div class="jumbotron_cover">
-
-                                            <!--<div class="jumbotron_cover_imgs">-->
-                                                <!--<div id="jumbotron_cover" class="carousel slide" data-ride="carousel">-->
-                                                    <!--<div class="carousel-inner" role="listbox">-->
-                                                        <!--<div class="item active"><img src="imgs/ange/temp/events_bg_001_pic.jpg" alt="First Label"></div>-->
-                                                    <!--</div>-->
-                                                <!--</div>-->
-                                            <!--</div>-->
-
-                                            <div class="jumbotron_cover_controlbar">
-                                                <div class="black_shade_nomargin"></div>
-
-                                                <div class="jumbotron_cover_controlset">
-                                                    <a class="jumbotron_cover_pause">일시정지</a>
-                                                    <!-- a class="jumbotron_cover_play">재생</a --> <!-- 일시정지 시에 표시 -->
-
-                                                    <ol class="carousel-indicators jumbotron_indicators_wrap">
-                                                        <li data-target="#jumbotron_cover" data-slide-to="0" class="jumbotron_indicators_actived"></li>
-                                                        <li data-target="#jumbotron_cover" data-slide-to="1" class="jumbotron_indicators"></li>
-                                                        <li data-target="#jumbotron_cover" data-slide-to="2" class="jumbotron_indicators"></li>
-                                                    </ol>
-                                                </div>
-
-                                                <div class="jumbotron_cover_controlbar_title">코웨이에서 물쉼표 KIT를 드립니다.</div>
-
-                                            </div>
-                                        </div>
+                                        <ange-portlet-slide-banner ng-model="option"></ange-portlet-slide-banner>
                                         <!-- /jumbotron_cover -->
                                     </div>  <!-- comp_basic -->
                                 </div>  <!-- col-xs-12 -->
@@ -62,10 +35,10 @@
                                 <div class="col-xs-12 v-cell-4" style="margin:0px;">
                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
 
-                                        <div class="item" style="position:absolute;" ng-click="comp_momsevent(item.ada_idx)"><img src="{{item.ada_image_url}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="item" style="position:absolute;" ng-click="comp_momsevent(item)"><img src="{{item.ada_image_url}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
 
                                         <div class="webzine_list_wrap">
-                                            <div class="webzine_list_title" ng-click="comp_momsevent(item.ada_idx)" style="cursor: pointer;">
+                                            <div class="webzine_list_title" ng-click="comp_momsevent(item)" style="cursor: pointer;">
                                                 {{item.ada_title}}
                                                 <div class="webzine_list_bottomwrap">
                                                     <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_open}}~{{item.ada_date_close}}</span></div>

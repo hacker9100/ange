@@ -54,6 +54,8 @@ define([
         $scope.search = {};
         // 초기화
         $scope.init = function(session) {
+            $scope.option = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 5, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
             if ($stateParams.menu == 'experienceprocess') {
                 $scope.community = "진행중인 체험단";
                 $scope.search.EVENT_GB = "exp";

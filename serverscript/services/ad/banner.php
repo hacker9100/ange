@@ -79,12 +79,12 @@
                 $sort_order = "";
                 $limit = "";
 
-                if (isset($_search[BANNER_GB]) && $_search[BANNER_GB] != "") {
-                    $search_where .= "AND adp_idx = '".$_search[BANNER_GB]."' ";
+                if (isset($_search[ADP_IDX]) && $_search[ADP_IDX] != "") {
+                    $search_where .= "AND adp_idx = '".$_search[ADP_IDX]."' ";
                 }
 
-                if (isset($_search[BANNER_ST]) && $_search[BANNER_ST] != "") {
-                    $search_where .= "AND ada_state  = '".$_search[BANNER_ST]."' ";
+                if (isset($_search[ADA_STATE]) && $_search[ADA_STATE] != "") {
+                    $search_where .= "AND ada_state  = '".$_search[ADA_STATE]."' ";
                 }
 
                 if (isset($_search[LOCATION_GB]) && $_search[LOCATION_GB] != "") {
@@ -102,8 +102,8 @@
                 }
 
                 $sql = "SELECT
-                            ada_idx AS NO, DATE_FORMAT(ada_date_open, '%Y-%m-%d') AS FROM_YMD, DATE_FORMAT(ada_date_close, '%Y-%m-%d') AS TO_YMD, ada_url AS URL, ada_title AS SUBJECT,
-                            adp_idx AS BANNER_GB, ada_state AS BANNER_ST, ada_files AS FILE
+                            ada_idx, DATE_FORMAT(ada_date_open, '%Y-%m-%d') AS FROM_YMD, DATE_FORMAT(ada_date_close, '%Y-%m-%d') AS TO_YMD, ada_url, ada_title,
+                            adp_idx, ada_state, ada_files, ada_image
                         FROM
                             adm_ad
                         WHERE

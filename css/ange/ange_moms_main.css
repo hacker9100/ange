@@ -1,5 +1,12 @@
 /* ++comp_momsnow  */
 
+.moms_nowing {
+    width:100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
 .comp_momsnow {
 	width:100%; 
 	height:100%; 

@@ -138,7 +138,7 @@
                     $data['FILE'] = $file_data;
 
                     $sql = "SELECT
-                                BABY_NM, BABY_BIRTH, BABY_SEX_GB, CARE_CENTER, CENTER_VISIT_DT, CENTER_OUT_DT
+                                BABY_NM, BABY_BIRTH, BABY_SEX_GB, CARE_CENTER, CENTER_VISIT_YMD, CENTER_OUT_YMD
                             FROM
                                 ANGE_USER_BABY
                             WHERE

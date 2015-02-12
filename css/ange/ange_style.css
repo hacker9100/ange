@@ -181,6 +181,7 @@ body {
         max-width:215px;
         overflow: auto;
         overflow-y: auto;
+        z-index:998;
     }
 
     .sub_content_wrap {
@@ -340,6 +341,7 @@ body {
 
 .mainbar {
     float: left;
+    position:relative;
     padding-right: 5px;
     overflow: auto;
     overflow-x: hidden;
@@ -377,14 +379,103 @@ body {
     position:relative;
     border-left: 1px solid #eee;
     /*width: 33.3%;*/
-    /*height:100%;*/
-    /*overflow-y: auto;*/
+    height:100%;
+    overflow: hidden;
+}
+
+.subar:hover  {
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 /*.mainbar:hover, .subar:hover  {*/
     /*overflow-x: hidden;*/
     /*overflow-y: auto;*/
 /*}*/
+
+
+/*** 스크롤바 디자인 **/
+.mainbar::-webkit-scrollbar {visibility:hidden;}
+.mainbar::-webkit-scrollbar {visibility:visible;}
+.subar::-webkit-scrollbar {visibility:hidden;}
+.subar::-webkit-scrollbar {visibility:visible;}
+.main_subar_wrap::-webkit-scrollbar {visibility:hidden;}
+.main_subar_wrap::-webkit-scrollbar {visibility:visible;}
+.ng_mainwrap::-webkit-scrollbar {visibility:hidden;}
+.ng_mainwrap::-webkit-scrollbar {visibility:visible;}
+.main_subar_wrap_lg::-webkit-scrollbar {visibility:hidden;}
+.main_subar_wrap_lg::-webkit-scrollbar {visibility:visible;}
+
+
+.mainbar::-webkit-scrollbar-track {
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    background-color: #EFEFEF;
+}
+.mainbar::-webkit-scrollbar {
+    position:absoulte;
+    width: 8px;
+    background-color: #000;
+}
+.mainbar::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    outline: 1px solid #DEDEDE;
+}
+
+.subar::-webkit-scrollbar-track {
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    background-color: #EFEFEF;
+}
+.subar::-webkit-scrollbar {
+    width: 8px;
+    background-color: #000;
+}
+.subar::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    outline: 1px solid #DEDEDE;
+}
+
+.main_subar_wrap::-webkit-scrollbar-track {
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    background-color: #EFEFEF;
+}
+.main_subar_wrap::-webkit-scrollbar {
+    position:absoulte;
+    width: 8px;
+    background-color: #000;
+}
+.main_subar_wrap::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    outline: 1px solid #DEDEDE;
+}
+
+.ng_mainwrap::-webkit-scrollbar-track {
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    background-color: #EFEFEF;
+}
+.ng_mainwrap::-webkit-scrollbar {
+    position:absoulte;
+    width: 8px;
+    background-color: #000;
+}
+.ng_mainwrap::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    outline: 1px solid #DEDEDE;
+}
+
+.main_subar_wrap_lg::-webkit-scrollbar-track {
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
+    background-color: #EFEFEF;
+}
+.main_subar_wrap_lg::-webkit-scrollbar {
+    position:absoulte;
+    width: 8px;
+    background-color: #000;
+}
+.main_subar_wrap_lg::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    outline: 1px solid #DEDEDE;
+}
+
 
 .slide0 {
     width:58%;
@@ -1799,6 +1890,7 @@ ul.contentguide {
 
 .subside_wrap {
     width:165px;
+    height:100%;
 }
 
 .subside_banner_wrap {
@@ -2069,3 +2161,20 @@ img.blank_wrap {
 */
 
 
+/* 체험기간 임시 블라인드 */
+.temp_blind {
+    display:block;
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height: 100%;
+    z-index: 900;
+    opacity:.0;
+}
+
+@media (min-width: 1680px) {
+    .temp_blind {
+        margin-left:225px;
+    }
+}
