@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsexperience-list', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD' ,'$timeout', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD, $timeout) {
+    controllers.controller('momsexperience-list', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD' ,'$timeout', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT, UPLOAD, $timeout) {
 
 
         $scope.$parent.reload = false;
@@ -94,11 +94,16 @@ define([
                     $scope.list = data;
 
                     for(var i in data) {
-                        if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
-                            data[i].MAIN_FILE = img;
-                        }
+                        var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
+                        data[i].ada_preview_img = img;
                     }
+
+//                    for(var i in data) {
+//                        if (data[i].FILE != null) {
+//                            var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+//                            data[i].MAIN_FILE = img;
+//                        }
+//                    }
 
                     $scope.$parent.reload = false;
                     $scope.busy = false;

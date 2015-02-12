@@ -499,7 +499,7 @@ define([
 
 //                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
 //                                    data[i].MAIN_FILE = img;
-                                var img = CONSTANT.AD_FILE_URL + data[i].ada_image;
+                                var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
                                 data[i].file = img;
 
                                 var menu = 'experienceprocess';
@@ -731,11 +731,12 @@ define([
                             $scope.list = data;
 
                             for (var i in data) {
-                                var img = CONSTANT.AD_FILE_URL + data[i].ada_image;
+                                var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
 
                                 var link = '';
 
                                 if ($scope.option.type == 'banner') {
+                                    img = CONSTANT.AD_FILE_URL + data[i].ada_image;
                                     link = '<a id="'+data[i].ada_idx+'" name="'+data[i].ada_idx+'" href="'+data[i].ada_url+'" target="_blank">';
                                 } else if ($scope.option.type == 'experience') {
                                     link = '<a href="/moms/experienceprocess/view/'+data[i].ada_idx+'">';
