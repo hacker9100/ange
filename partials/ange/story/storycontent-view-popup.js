@@ -75,7 +75,7 @@ define([
                         $scope.editorList = data;
                     }),
                     $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX : 8, ADA_STATE: 1}, false).then(function(data){
-                        var img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+                        var img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                         data[0].img = img;
                         $scope.ad = data[0];
                     })
