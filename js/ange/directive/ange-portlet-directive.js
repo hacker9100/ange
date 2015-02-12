@@ -960,7 +960,7 @@ define([
                             $scope.item = data[0];
 
                             if ($scope.option.api == 'ad/banner') {
-                                $scope.img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+                                $scope.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                             } else {
                                 $scope.img = UPLOAD.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
                             }

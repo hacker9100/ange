@@ -37,6 +37,13 @@ define([
 //            $location.url('myange/account');
         };
 
+        $scope.click_goClub = function () {
+            $scope.comming_soon();
+            return;
+
+            $location.url('/club/home');
+        };
+
         $scope.click_settingAccount = function () {
             $scope.comming_soon();
             return;
@@ -168,7 +175,7 @@ define([
             $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: 1,ADA_STATE: 1}, false)
                 .then(function(data){
                     $scope.topBanner = data[0];
-                    $scope.topBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+                    $scope.topBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                 })
                 .catch(function(error){});
         };
@@ -180,10 +187,10 @@ define([
             $scope.getList('ad/banner', 'list', {NO:0, SIZE:2}, {ADP_IDX: 3,ADA_STATE: 1}, false)
                 .then(function(data){
                     $scope.bottomBanner1 = data[0];
-                    $scope.bottomBanner1.img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+                    $scope.bottomBanner1.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
 
                     $scope.bottomBanner2 = data[1];
-                    $scope.bottomBanner2.img = CONSTANT.AD_FILE_URL + data[1].ada_image;
+                    $scope.bottomBanner2.img = CONSTANT.AD_FILE_URL + data[1].ada_preview;
                 })
                 .catch(function(error){});
         };
