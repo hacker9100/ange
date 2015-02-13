@@ -91,8 +91,8 @@
                             <!-- peoplephoto_list -->
                             <div class="peoplep_list_tab">
                                 <ul class="nav nav-tabs">
-                                    <li role="presentation" ng-repeat="tab in tabs" ng-class="selectIdx == $index ? 'active' : ''">
-                                        <a ng-click="click_selectTab($index)">{{tab.TITLE}}</a>
+                                    <li role="presentation" ng-repeat="tab in category_list" ng-class="selectIdx == $index ? 'active' : ''">
+                                        <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}</a>
                                     </li>
                                 </ul>
 
@@ -114,13 +114,13 @@
 
                                             <div ng-repeat='item in list'>
                                             <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
-                                                <div class="col-xs-4 people_photo_contentcol" ng-show="selectPhoto = item.PHOTO_TYPE">
+                                                <div class="col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
                                                     <div ng-click="click_showViewPeoplePhoto(item.NO)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
                                                             <img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url({{item.MAIN_FILE}})" />
                                                             <!--<img src="{{item.MAIN_FILE}}" class="people_photo_img" style="width: 240px; height: 240px;"/>-->
                                                             <div class="people_photo_cate">
-                                                                <span>{{item.TITLE}}</span>
+                                                                <span>{{item.CATEGORY_NM}}</span>
                                                                 <div style="position:absolute; display:inline; bottom:8px; right:0;">
                                                                     <span class="feed_count countlike table_white">{{item.LIKE_CNT}}</span><!-- 공감수 -->
                                                                     <span class="feed_count countreply table_white">{{item.REPLY_COUNT}}</span>	<!-- 댓글수 -->

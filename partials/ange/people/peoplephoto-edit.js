@@ -171,15 +171,17 @@ define([
             $scope.search = {};
             $scope.search.CATEGORY_GB = $scope.community_show = $stateParams.menu;
 
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+            $scope.search.COMM_GB = 'PHOTO';
+
             $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
                     $scope.categorylist = data;
-                    $scope.item.PHOTO_TYPE = data[0].TYPE;
+                    $scope.item.CATEGORY_NO = data[0].NO;
                 })
                 .catch(function(error){$scope.categorylist = ""});
 
-            $scope.search.COMM_NO = $scope.menu.COMM_NO;
-            $scope.search.COMM_GB = 'PHOTO';
+
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
                 .then(function(data){
@@ -242,20 +244,20 @@ define([
                         }
 
                        var idx = 0;
-                        for(var i=0; i < $scope.categorylist.length; i ++){
+                       for(var i=0; i < $scope.categorylist.length; i ++){
 
-                            console.log(data.PHOTO_TYPE);
-                            if(JSON.stringify(data.PHOTO_TYPE) == JSON.stringify($scope.categorylist[i].TYPE)){
+                            console.log(data.CATEGORY_NO);
+                            if(JSON.stringify(data.CATEGORY_NO) == JSON.stringify($scope.categorylist[i].NO)){
                                 idx = i;
                             }
-                        }
-                        $scope.item.PHOTO_TYPE = $scope.categorylist[idx].TYPE;
+                       }
 
+                       $scope.item.CATEGORY_NO = $scope.categorylist[idx].NO;
 
-                        var files = data.FILES;
-                        for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                        }
+                       var files = data.FILES;
+                       for(var i in files) {
+                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE", "type" : files[i].FILE_EXT});
+                       }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -263,10 +265,10 @@ define([
 
         // 게사판 저장 버튼 클릭
         $scope.click_savePeoplePhoto = function () {
+
             $scope.item.SYSTEM_GB = 'ANGE';
             $scope.item.BOARD_GB = 'PHOTO';
             $scope.item.FILES = $scope.queue;
-            $scope.item.PHOTO_GB = $stateParams.menu;
             $scope.item.COMM_NO = $scope.menu.COMM_NO;
 
             for(var i in $scope.item.FILES) {
@@ -275,10 +277,8 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-            if($scope.item.PHOTO_TYPE == 'ALL'){
-                dialogs.notify('알림', '사진게시판 유형을 선택해주세요.', {size: 'md'});
-                return;
-            }
+            console.log($scope.item.CATEGORY_NO);
+
 
             if ($stateParams.id == 0) {
 
