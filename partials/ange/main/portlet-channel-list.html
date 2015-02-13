@@ -12,7 +12,7 @@
 
     <div ng-class="option.type == 'review' ? 'miniboard_contents' : option.type == 'photo' ? 'taste_miniboard_contents' : 'miniboard_contents'">
 
-        <div ng-if="option.image" class="taste_miniboard_img" ng-click="click_firstImage(img)" style=" background-size: cover;"><img ng-src="{{img.URL}}"></div>
+        <div ng-if="option.image" class="taste_miniboard_img" ng-click="click_firstImage(img)" style=" background-size: cover;"><img ng-src="{{img.URL}}" stlye="background-size:cover;"></div>
 
         <div ng-class="option.type == 'review' ? 'mini_review_contents-noimg' : option.type == 'photo' ? 'taste_mini_board_contents' : 'mini_board_contents'" ng-repeat="item in list" style="padding:8px 0px;">
             <!--<img src="" class="mini_board_contents_img" />-->
