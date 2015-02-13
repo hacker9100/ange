@@ -37,6 +37,13 @@ define([
 //            $location.url('myange/account');
         };
 
+        $scope.click_goClub = function () {
+            $scope.comming_soon();
+            return;
+
+            $location.url('/club/home');
+        };
+
         $scope.click_settingAccount = function () {
             $scope.comming_soon();
             return;
@@ -49,6 +56,9 @@ define([
         };
 
         $scope.click_myangeWriting = function () {
+            $scope.comming_soon();
+            return;
+
             if ($rootScope.uid == '' || $rootScope.uid == null) {
                 dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
                 return;
@@ -58,6 +68,9 @@ define([
         };
 
         $scope.click_myangeMessage = function () {
+            $scope.comming_soon();
+            return;
+
             if ($rootScope.uid == '' || $rootScope.uid == null) {
                 dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
                 return;
@@ -67,6 +80,7 @@ define([
         };
 
         $scope.click_infodesk = function () {
+            return;
             $location.url('infodesk/home');
         };
 
@@ -156,6 +170,8 @@ define([
 
         // 배너 이미지 클릭
         $scope.click_linkBanner = function (item, isOpen) {
+            return;
+
             if (isOpen) {
                 $window.open(item.ada_url);
             } else {
@@ -168,24 +184,24 @@ define([
             $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: 1,ADA_STATE: 1}, false)
                 .then(function(data){
                     $scope.topBanner = data[0];
-                    $scope.topBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+                    $scope.topBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                 })
-                .catch(function(error){alert(error)});
+                .catch(function(error){});
         };
 
         $scope.getTopBanner();
 
-        // 상단 배너 이미지 조회
+        // 하단 배너 이미지 조회
         $scope.getTopBanner = function () {
             $scope.getList('ad/banner', 'list', {NO:0, SIZE:2}, {ADP_IDX: 3,ADA_STATE: 1}, false)
                 .then(function(data){
                     $scope.bottomBanner1 = data[0];
-                    $scope.bottomBanner1.img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+                    $scope.bottomBanner1.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
 
                     $scope.bottomBanner2 = data[1];
-                    $scope.bottomBanner2.img = CONSTANT.AD_FILE_URL + data[1].ada_image;
+                    $scope.bottomBanner2.img = CONSTANT.AD_FILE_URL + data[1].ada_preview;
                 })
-                .catch(function(error){alert(error)});
+                .catch(function(error){});
         };
 
         $scope.getTopBanner();

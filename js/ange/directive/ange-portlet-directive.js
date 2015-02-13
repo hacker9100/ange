@@ -73,7 +73,7 @@ define([
 //                }
 
                 /********** 이벤트 **********/
-                // 탭 클릭
+                    // 탭 클릭
                 $scope.click_tabIndex = function (idx) {
                     $scope.tabIdx = idx;
 
@@ -210,7 +210,7 @@ define([
                 }
 
                 /********** 이벤트 **********/
-                // 탭 클릭
+                    // 탭 클릭
                 $scope.click_tabIndex = function (idx) {
                     $scope.tabIdx = idx;
 
@@ -277,21 +277,21 @@ define([
 
                                 switch(data[i].CATEGORY_NO) {
                                     case '18' :
-                                        time = '초기(4-6)';
+                                        time = '0~11주';
                                         break;
                                     case '19' :
-                                        time = '중기(7-8)';
+                                        time = '12~27주';
                                         break;
                                     case '20' :
-                                        time = '후기(9-11)';
+                                        time = '28~40주';
                                         break;
                                     case '21' :
-                                        time = '완료기(12-15)';
+                                        time = '출산';
                                         break;
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width: 100px"><a href="/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+img+');"/></div><span class="mini_story_contentbox_title">'+data[i].SUBJECT+'</span></a></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width: 100px"><a href="/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+img+');"/></div><div class="mini_story_contentbox_title">'+data[i].SUBJECT+'</div></a></div>');
                                 //angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width:74px;"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">초기(4-6)</span><img src="imgs/ange/temp/story_food_01.jpg" /></div><span class="mini_story_contentbox_title">단호박 미음</span></div>');
 
                             }
@@ -355,7 +355,7 @@ define([
                 }
 
                 /********** 이벤트 **********/
-                // 탭 클릭
+                    // 탭 클릭
                 $scope.click_tabIndex = function (idx) {
                     $scope.tabIdx = idx;
 
@@ -443,7 +443,7 @@ define([
                 $scope.search.ORDER = 'DESC';
 
                 /********** 이벤트 **********/
-                // 일시 정지 버튼
+                    // 일시 정지 버튼
                 $scope.click_slickPause = function() {
                     // 슬라이드를 일시 정지
                     angular.element('#'+$scope.option.id).slickPause();
@@ -517,18 +517,18 @@ define([
                                 angular.element('#'+$scope.option.id).slickAdd(
                                     '<div class="col-xs-4 mini_event_contentcol">' +
                                         '<a href="/moms/'+menu+'/view/'+data[i].ada_idx+'">' +
-                                            '<div class="mini_event_content">' +
+                                        '<div class="mini_event_content">' +
 //                                                '<div class="mini_event_closed"></div>' +
-                                                ( data[i].ada_state == 0 ? '<div class="mini_event_closed"></div>' : '' ) +
-                                                '<img class="mini_event_txt_img" src="/imgs/ange/_blank_4by3.gif" style="background-image:url(\''+img+'\');"/>' +
-                                                '<div class="mini_event_txt_title">' +
-                                                    ( data[i].ada_type == "event" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].ada_type == "exp" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') +
-                                                    data[i].ada_title +'' +
-                                                '</div>' +
-                                                '<div class="mini_event_txt_duration">'+data[i].ada_date_open+'~'+data[i].ada_date_close+'</div>' +
-                                            '</div>' +
+                                        ( data[i].ada_state == 0 ? '<div class="mini_event_closed"></div>' : '' ) +
+                                        '<img class="mini_event_txt_img" src="/imgs/ange/_blank_4by3.gif" style="background-image:url(\''+img+'\');"/>' +
+                                        '<div class="mini_event_txt_title">' +
+                                        ( data[i].ada_type == "event" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].ada_type == "exp" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') +
+                                        data[i].ada_title +'' +
+                                        '</div>' +
+                                        '<div class="mini_event_txt_duration">'+data[i].ada_date_open+'~'+data[i].ada_date_close+'</div>' +
+                                        '</div>' +
                                         '</a>' +
-                                    '</div>');
+                                        '</div>');
                             }
 //                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단1</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
 //                            angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="imgs/ange/temp/eventscol_003_pic.jpg"  /><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_brown">서평단2</span>교감여행 서평단</div><div class="mini_event_txt_duration">2014.10.11~2014.11.10</div></div></div>');
@@ -631,7 +631,8 @@ define([
                                 if (data[i].FILE != null) {
                                     var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
                                     var url = "people/angemodel/view/"+data[i].NO;
-                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt=""/></a></div>');
+                                    //angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt="" style="background-size: cover;"/></a></div>');
+                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="/imgs/ange/_blank.gif" width="99" height="119" alt="" style="border:1px solid #ddd; background-position:center center; background-image:url(' + img + '); background-size: cover;" /></a></div>');
                                 }
                             }
 
@@ -708,7 +709,7 @@ define([
                 }
 
                 /********** 이벤트 **********/
-                // 일시 정지 버튼
+                    // 일시 정지 버튼
                 $scope.click_slickPause = function() {
                     // 슬라이드를 일시 정지
                     angular.element('#'+$scope.option.id).slickPause();
@@ -736,7 +737,6 @@ define([
                                 var link = '';
 
                                 if ($scope.option.type == 'banner') {
-                                    img = CONSTANT.AD_FILE_URL + data[i].ada_image;
                                     link = '<a id="'+data[i].ada_idx+'" name="'+data[i].ada_idx+'" href="'+data[i].ada_url+'" target="_blank">';
                                 } else if ($scope.option.type == 'experience') {
                                     link = '<a href="/moms/experienceprocess/view/'+data[i].ada_idx+'">';
@@ -782,7 +782,7 @@ define([
 //                            '<div ng-repeat="item in items">' +
 //                                '<img ng-src="{{item.src}}" ng-click="click_image(item.NO)">' +
 //                            '</div>' +
-                        '</slick>'
+                    '</slick>'
             },
             controller: ['$scope', '$attrs', '$location', '$window', 'UPLOAD', function($scope, $attrs, $location, $window, UPLOAD) {
 
@@ -924,7 +924,7 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                      '<div class="inven_Highlight"><img class="ADbanner_normal" ng-src="{{img}}" ng-click="click_linkImage()"/></div>',
+                '<div class="inven_Highlight"><img class="ADbanner_normal" ng-src="{{img}}" ng-click="click_linkImage()"/></div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', 'UPLOAD', function($scope, $attrs, $location, $window, CONSTANT, UPLOAD) {
 
                 /********** 초기화 **********/
@@ -944,7 +944,7 @@ define([
                 }
 
                 /********** 이벤트 **********/
-                // 이미지 클릭
+                    // 이미지 클릭
                 $scope.click_linkImage = function () {
                     if ($scope.option.new) {
                         $window.open($scope.item.ada_url);
@@ -960,12 +960,12 @@ define([
                             $scope.item = data[0];
 
                             if ($scope.option.api == 'ad/banner') {
-                                $scope.img = CONSTANT.AD_FILE_URL + data[0].ada_image;
+                                $scope.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                             } else {
                                 $scope.img = UPLOAD.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
                             }
                         })
-                        .catch(function(error){$scope.list = [];  alert(error)});
+                        .catch(function(error){});
                 };
 
                 $scope.getImage();
@@ -1008,7 +1008,7 @@ define([
                 }
 
                 /********** 이벤트 **********/
-                // 이미지 클릭
+                    // 이미지 클릭
                 $scope.click_showImage = function (item) {
                     $location.url($scope.option.url+'/view/'+item.NO);
                 };
@@ -1028,7 +1028,7 @@ define([
 
                             $scope.list = data;
                         })
-                        .catch(function(error){$scope.list = [];  alert(error)});
+                        .catch(function(error){});
                 };
 
                 $scope.getImage();
@@ -1053,7 +1053,7 @@ define([
                 $scope.PAGE_SIZE = 1;
 
                 /********** 이벤트 **********/
-                // 투표 클릭
+                    // 투표 클릭
                 $scope.click_showPoll = function (key) {
                     $location.url($scope.option.url + '/edit/' + key)
                 };
@@ -1084,7 +1084,7 @@ define([
 //                $scope.PAGE_SIZE = 1;
 //
                 /********** 이벤트 **********/
-                // 메뉴 이동
+                    // 메뉴 이동
                 $scope.click_moveMenu = function () {
                     $location.url($scope.option.url);
                 };

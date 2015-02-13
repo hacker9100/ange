@@ -76,7 +76,7 @@
                             <a href="http://new.ange.co.kr/story/content/list" title="앙쥬스토리 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event02.jpg" alt="앙쥬스토리 체험페이지 방문" style="width:100%;"></a>
                             <a href="http://new.ange.co.kr/people/home" title="앙쥬피플 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event03.jpg" alt="앙쥬피플 체험페이지 방문" style="width:100%;"></a>
                             <a href="http://new.ange.co.kr/moms/home" title="앙쥬맘스 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event04.jpg" alt="앙쥬맘스 둘러보러 가기" style="width:100%;"></a>
-                            <a href="http://new.ange.co.kr/myange/home" title="마이앙쥬 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event05.jpg" alt="마이앙쥬 둘러보러 가기" style="width:100%;"></a>
+                            <img src="http://ad.ange.co.kr/adm/upload/newange_event05.jpg" alt="마이앙쥬 둘러보러 가기" style="width:100%;">
                             <a href="http://new.ange.co.kr/store/home" title="앙쥬스토어 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event06.jpg" alt="앙쥬스토어 둘러보러 가기" style="width:100%;"></a>
                             <img src="http://ad.ange.co.kr/adm/upload/newange_event07.jpg" alt="아래 댓글을 작성하면 자동응모됩니다" title="아래 댓글을 작성하면 자동응모됩니다" style="width:100%;">
 
@@ -476,7 +476,7 @@
 
                             <div class="row peopleboard_view_commentbox">
                                 <div class="col-xs-10 peopleboard_view_text">
-                                    <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
+                                    <textarea ng-model="item.COMMENT" ng-disabled="uid == null || uid == '' ? true : false" class="form-control" rows="4" style="resize: none;"></textarea>
                                 </div><!-- /.col-xs-10-->
                                 <div class="col-xs-2 peopleboard_view_btns">
 

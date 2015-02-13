@@ -24,7 +24,7 @@ define([
             $scope.option_r1_c1 = {title: '앙쥬 설문 링크', api:'ange/poll', size: 1, url: '/people/poll'};
 
             // ange-portlet-channel-list
-            $scope.option_r1_c2 = {title: 'Talk&Talk', api:'com/webboard', size: 5, channel: "people", type: 'board', url: '/people/board', defIdx: 3, tab: [{no: '4', menu: '/people/firstbirthtalk', name: '돌잔치톡'}, {no: '3', menu: '/people/badycare', name: '육아방'}, {no: '2', menu: '/people/momstalk', name: '예비맘&출산맘'}, {no: '1', menu: '/people/angeroom', name: '수다방'}], image: false, head: false, date: true, nick: false};
+            $scope.option_r1_c2 = {title: 'Talk&Talk', api:'com/webboard', size: 5, channel: "people", type: 'board', url: '/people/board', defIdx: 2, tab: [{no: '3', menu: '/people/badycare', name: '육아방'}, {no: '2', menu: '/people/momstalk', name: '예비맘&출산맘'}, {no: '1', menu: '/people/angeroom', name: '수다방'}], image: false, head: false, date: true, nick: false};
 
             // ange-portlet-link-menu
             $scope.option_r1_c3 = {title: '한줄 톡', api:'ad/banner', gb: 'talk', url: '/people/linetalk/list'};
@@ -36,7 +36,7 @@ define([
             $scope.option_r3_c1 = {title: '책수다방', api:'ad/banner', gb: 'book', url: '/people/booktalk/list'};
 
             // ange-portlet-channel-list
-            $scope.option_r3_c2 = {title: '맛!맛!맛!', api:'com/webboard', size: 6, channel: "people", type: 'photo', url: '/people/board', defIdx: 1, tab: [{no: '7', menu: '/people/recipearcade', name: '레시피 아케이드'}, {no: '8', menu: '/people/peopletaste', name: '앙쥬피플 맛집'}], image: true, head: true, date: false, nick: true};
+            $scope.option_r3_c2 = {title: '맛!맛!맛!', api:'com/webboard', size: 6, channel: "people", type: 'photo', url: '/people/board', defIdx: 0, tab: [{no: '7', menu: '/people/recipearcade', name: '레시피 아케이드'}, {no: '8', menu: '/people/peopletaste', name: '앙쥬피플 맛집'}], image: true, head: true, date: false, nick: true};
 
             // ange-portlet-link-menu
             $scope.option_r3_c3 = {title: '앙쥬그룹', api:'ad/banner', gb: 'group', url: '/people/group/list'};

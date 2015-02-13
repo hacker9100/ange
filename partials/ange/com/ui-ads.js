@@ -17,14 +17,17 @@ define([
 
         /********** 이벤트 **********/
         $scope.click_mainLogo = function() {
+            return;
             $location.url("/main");
         };
 
         $scope.click_intro = function() {
+            return;
             $location.url("/company/intro")
         };
 
         $scope.click_affiliates = function() {
+            return;
             $location.url("/company/affiliates")
         };
 
