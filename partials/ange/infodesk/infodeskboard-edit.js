@@ -83,10 +83,10 @@ define([
                 })
                 .catch(function(error){});
 
-            $scope.getList('com/webboard', 'faqcategory', {}, $scope.search, true)
+            $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
                     $scope.categoryfaqlist = data;
-                    $scope.item.FAQ_TYPE = data[0].TITLE;
+                    $scope.item.CATEGORY_NO = data[0].NO;
                 })
                 .catch(function(error){$scope.categoryfaqlist = ""});
             //$scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
@@ -137,15 +137,15 @@ define([
                         for(var i=0; i < $scope.categoryfaqlist.length; i ++){
 
                             //console.log(data.FAQ_TYPE);
-                            if(JSON.stringify(data.FAQ_TYPE) == JSON.stringify($scope.categoryfaqlist[i].TYPE)){
+                            if(JSON.stringify(data.CATEGORY_NO) == JSON.stringify($scope.categoryfaqlist[i].NO)){
                                 idx = i;
                                 //console.log($scope.categoryfaqlist[i].TYPE);
                             }
                         }
 
-                        console.log($scope.categoryfaqlist[idx].TYPE);
+                        console.log($scope.categoryfaqlist[idx].NO);
 
-                        $scope.item.FAQ_TYPE = $scope.categoryfaqlist[idx].TYPE;
+                        $scope.item.CATEGORY_NO = $scope.categoryfaqlist[idx].NO;
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
