@@ -28,7 +28,7 @@ define([
         };
 
         $scope.search = {};
-        $scope.search.FILE = true;
+
 
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "작성자", value: "NICK_NM"}];
@@ -133,6 +133,7 @@ define([
             $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC';
             //$scope.search.FILE = true;
+            $scope.search.FILE = "Y";
 
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
