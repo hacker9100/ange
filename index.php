@@ -5,6 +5,9 @@
     Description : app의 최상위 파일로서 최초 로딩되는 index 파일
 -->
 <?php
+    header("Pragma: no-cache");
+    header("Cache-Control: no-cache,must-revalidate");
+
     @extract($_SERVER);
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");

@@ -277,16 +277,16 @@ define([
 
                                 switch(data[i].CATEGORY_NO) {
                                     case '18' :
-                                        time = '초기(4-6)';
+                                        time = '0~11주';
                                         break;
                                     case '19' :
-                                        time = '중기(7-8)';
+                                        time = '12~27주';
                                         break;
                                     case '20' :
-                                        time = '후기(9-11)';
+                                        time = '28~40주';
                                         break;
                                     case '21' :
-                                        time = '완료기(12-15)';
+                                        time = '출산';
                                         break;
                                 }
 
