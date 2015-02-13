@@ -959,7 +959,8 @@ a.util1:hover, a.util2:hover, a.util3:hover {
     margin-top:10px;
     background-image: url('/imgs/ange/angeclub_banner.png');
     background-repeat: no-repeat;
-    background-position: left top;
+    background-position: left -76px;
+    border:none;
 }
 
 .btn_angeclub:hover {

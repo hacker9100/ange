@@ -46,15 +46,13 @@
 		<a class="util2" ng-click="click_myangeMessage()">메시지</a>
 		<a class="util3" ng-click="click_infodesk()">고객센터</a>
 		</div>
+        <img src="/imgs/ange/opennotice.png" />
 
-        <a ng-click="click_goClub()">
-            <img class="btn_angeclub" src="" style="margin-top:2px;"/>
-        </a>
     </div>
 
-	<div class="comp_calm">
-		<img src="/imgs/ange/temp/keepcalm.png" />
-	</div>
+	<!--<div class="comp_calm">-->
+		<!--<img src="/imgs/ange/temp/keepcalm.png" />        -->
+	<!--</div>-->
 
 	<!--div class="comp_calm">
 		<div class="comp_minialbum">
@@ -68,6 +66,9 @@
 
 
 	<div class="comp_subbanner">
+        <a ng-click="click_goClub()">
+            <img class="btn_angeclub" src="/imgs/ange/_blank.gif" style="width: 100%; margin-top:2px;"/>
+        </a>
 		<div class="inven_catchup">
             <a ng-model="bottomBanner1" class="ADbanner_normal" title="{{bottomBanner1.ada_title}}" ng-click="click_linkBanner(bottomBanner1, true)" ng-style="{'background-image': 'url('+bottomBanner1.img+')', 'background-position': 'center'}">Premium [Catch-Up] #1</a>
 			<!--<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('imgs/ange/temp/util_banner_01.jpg'); background-position:center;">Premium [Catch-Up] #1</a>-->
@@ -76,6 +77,7 @@
             <a ng-model="bottomBanner2" class="ADbanner_normal" title="{{bottomBanner2.ada_title}}" ng-click="click_linkBanner(bottomBanner2, true)" ng-style="{'background-image': 'url('+bottomBanner2.img+')', 'background-position': 'center'}">Premium [Catch-Up] #2</a>
 			<!--<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('imgs/ange/temp/util_banner_02.jpg'); background-position:center;">Premium [Catch-Up] #2</a>-->
 		</div>
+
 	</div>
 
 </div>

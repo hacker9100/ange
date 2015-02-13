@@ -291,7 +291,7 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width: 100px"><a href="/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+img+');"/></div><span class="mini_story_contentbox_title">'+data[i].SUBJECT+'</span></a></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width: 100px"><a href="/story/content/list/'+data[i].NO+'"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">'+time+'</span><img src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+img+');"/></div><div class="mini_story_contentbox_title">'+data[i].SUBJECT+'</div></a></div>');
                                 //angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width:74px;"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">초기(4-6)</span><img src="imgs/ange/temp/story_food_01.jpg" /></div><span class="mini_story_contentbox_title">단호박 미음</span></div>');
 
                             }
@@ -631,7 +631,8 @@ define([
                                 if (data[i].FILE != null) {
                                     var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
                                     var url = "people/angemodel/view/"+data[i].NO;
-                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt="" style="background-size: cover;"/></a></div>');
+                                    //angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt="" style="background-size: cover;"/></a></div>');
+                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="/imgs/ange/_blank.gif" width="99" height="119" alt="" style="border:1px solid #ddd; background-position:center center; background-image:url(' + img + '); background-size: cover;" /></a></div>');
                                 }
                             }
 

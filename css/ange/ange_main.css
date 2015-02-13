@@ -289,6 +289,7 @@ div.mini_board_contents:hover {
 	font-weight:bold; 
 	color:#6cb4c0; 
 	margin-left:10px;
+    /*padding:4px;*/
 }
 
 .mini_story_txt_title {
@@ -298,7 +299,7 @@ div.mini_board_contents:hover {
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
-    width: 55%;
+    width: 50%;
 }
 
 .mini_story_contentbox{
@@ -384,6 +385,10 @@ div.mini_board_contents:hover {
 	color:#333;
 	width:100%;
 	font-size: 0.76em;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    height: 22px;
 }
 
 .mini_story_contentbox_img:hover {
@@ -461,9 +466,8 @@ div.mini_community_contents:hover {
 	font-weight:bold; 
 	color:#6cb4c0; 
 	/* margin-left:10px; */
-	line-height: 1.08em;
+	line-height: 1em;
 }
-
 
 .mini_community_txt_title {
 	float:left;
