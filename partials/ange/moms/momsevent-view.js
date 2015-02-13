@@ -466,6 +466,11 @@ define([
 //                return;
 //            }
 
+            if ($rootScope.uid == null || $rootScope.uid == '') {
+                dialogs.notify('알림', '등록할 수 없는 상태입니다.', {size: 'md'});
+                return;
+            }
+
             $scope.item.PARENT_NO = 0;
             $scope.item.LEVEL = 1;
             $scope.item.REPLY_NO = 1;
@@ -479,10 +484,10 @@ define([
                 return;
             }
 
-            $scope.item.REG_UID = $rootScope.user_id;
-            $scope.item.NICK_NM = $rootScope.user_nick;
+            $scope.item.REG_UID = $rootScope.uid;
+            $scope.item.NICK_NM = $rootScope.nick;
 
-            $scope.search.REG_UID = $rootScope.user_id;
+            $scope.search.REG_UID = $rootScope.uid;
 
             $scope.getList('com/reply_event', 'check', {}, $scope.search, false)
                 .then(function(data){
@@ -527,8 +532,8 @@ define([
             $scope.replyItem = {};
             $scope.replyItem.COMMENT = comment;
 
-            $scope.replyItem.REG_UID = $rootScope.user_id;
-            $scope.replyItem.NICK_NM = $rootScope.user_nick;
+            $scope.replyItem.REG_UID = $rootScope.uid;
+            $scope.replyItem.NICK_NM = $rootScope.nick;
 
             $scope.updateItem('com/reply_event', 'item', key, $scope.replyItem, false)
                 .then(function(){
@@ -574,17 +579,27 @@ define([
         }
 
         // 해제 할 예정
-        //$scope.getSession()
-        //  .then($scope.sessionCheck)
-        //  .catch($scope.reportProblems);
+//        $scope.getSession()
+//          .then($scope.sessionCheck)
+//          .catch($scope.reportProblems);
 
         if ($location.search()) {
             var param = $location.search();
-            if(param.user_id != undefined) {
-                $rootScope.user_id = param.user_id;
-                $rootScope.user_nick = decodeURIComponent(param.user_nick);
+            if(param.user_id != undefined && param.user_id != '') {
+                $scope.item.user_id = param.user_id;
+                $scope.item.user_nick = decodeURIComponent(param.user_nick);
+
+                $scope.insertItem('login', 'temp', $scope.item, false)
+                    .then(function(data) {
+                        console.log(JSON.stringify(data));
+
+                        $rootScope.uid = $scope.item.user_id;
+                        $rootScope.nick = $scope.item.user_nick;
+
+                        console.log("임시 세션 생성 성공");
+                    }).catch(function(error){});
             }
-        }
+        };
 
         //$scope.init();
 //         $scope.addHitCnt();
