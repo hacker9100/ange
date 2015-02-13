@@ -318,6 +318,44 @@
 
             break;
 
+        case "POST":
+            if ($_type == "temp") {
+                if (!isset($_SESSION)) {
+                    session_start();
+                }
+
+                MtUtil::_d("### [TEMP SESSION]");
+
+                $sess = array();
+
+                if(isset($_SESSION['uid']))
+                {
+                    unset($_SESSION['user_info']);
+                    unset($_SESSION['uid']);
+                    unset($_SESSION['nick']);
+                    unset($_SESSION['name']);
+                    unset($_SESSION['role']);
+                    unset($_SESSION['system']);
+                    unset($_SESSION['menu_role']);
+                    unset($_SESSION['timeout']);
+
+                    session_destroy();
+                }
+
+                $_SESSION['user_info'] = null;
+                $_SESSION['uid'] = $_model['user_id'];
+                $_SESSION['nick'] = $_model['user_nick'];
+                $_SESSION['name'] = null;
+                $_SESSION['role'] = null;
+                $_SESSION['system'] = null;
+                $_SESSION['menu_role'] = null;
+                $_SESSION['timeout'] = time();
+
+                $_d->dataEnd2($sess);
+            }
+
+            break;
+
         case "DELETE":
 
             if (!isset($_SESSION)) {

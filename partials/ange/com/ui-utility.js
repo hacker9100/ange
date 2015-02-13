@@ -56,6 +56,9 @@ define([
         };
 
         $scope.click_myangeWriting = function () {
+            $scope.comming_soon();
+            return;
+
             if ($rootScope.uid == '' || $rootScope.uid == null) {
                 dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
                 return;
@@ -65,6 +68,9 @@ define([
         };
 
         $scope.click_myangeMessage = function () {
+            $scope.comming_soon();
+            return;
+
             if ($rootScope.uid == '' || $rootScope.uid == null) {
                 dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
                 return;
@@ -74,6 +80,7 @@ define([
         };
 
         $scope.click_infodesk = function () {
+            return;
             $location.url('infodesk/home');
         };
 
@@ -163,6 +170,8 @@ define([
 
         // 배너 이미지 클릭
         $scope.click_linkBanner = function (item, isOpen) {
+            return;
+
             if (isOpen) {
                 $window.open(item.ada_url);
             } else {

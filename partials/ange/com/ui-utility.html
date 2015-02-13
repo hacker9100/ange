@@ -9,7 +9,7 @@
 	<div class="comp_userlog">
 
 		<!-- 로그인 전 -->
-		<div ng-if="!uid" class="userlog_login">
+		<div ng-if="true" class="userlog_login">
 				<img src="/imgs/ange/login.png" class="userlog_login_btn" ng-click="click_login()">
 
 				<div class="userlog_login_func">
@@ -20,7 +20,7 @@
 		<!-- /로그인 전 -->
 
 		<!-- 로그인 후 -->
-		<div ng-if="uid" class="userlog_login_now">
+		<div ng-if="false" class="userlog_login_now">
 				<a class="userconfig" title="개인정보설정" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
 				<img ng-src="{{profileImg}}" class="userlog_login_pic">
 

@@ -736,7 +736,6 @@ define([
                                 var link = '';
 
                                 if ($scope.option.type == 'banner') {
-                                    img = CONSTANT.AD_FILE_URL + data[i].ada_image;
                                     link = '<a id="'+data[i].ada_idx+'" name="'+data[i].ada_idx+'" href="'+data[i].ada_url+'" target="_blank">';
                                 } else if ($scope.option.type == 'experience') {
                                     link = '<a href="/moms/experienceprocess/view/'+data[i].ada_idx+'">';

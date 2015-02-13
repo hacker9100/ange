@@ -195,7 +195,7 @@ define([
                 $rootScope.role = null;
                 $rootScope.menu_role = null;
                 $rootScope.email = null;
-
+                $rootScope.nick = null;
 
                 $rootScope.addr = null;
                 $rootScope.addr_detail = null;
@@ -223,7 +223,7 @@ define([
                 $rootScope.email = session.EMAIL;
                 $rootScope.nick = session.NICK_NM;
 
-                if (session.USER_INFO.FILE) {
+                if (session.USER_INFO != undefined && session.USER_INFO.FILE) {
                     $rootScope.profileImg = UPLOAD.BASE_URL + session.USER_INFO.FILE.PATH + session.USER_INFO.FILE.FILE_ID;
                 }
 
@@ -237,10 +237,9 @@ define([
                 $rootScope.baby_cnt =session.BABY_CNT;
                 $rootScope.baby_male_cnt =session.BABY_MALE_CNT;
                 $rootScope.baby_female_cnt =session.BABY_FEMALE_CNT;
-
             }
 
-            return;
+            return true;
         };
 
         $scope.test = function() {
