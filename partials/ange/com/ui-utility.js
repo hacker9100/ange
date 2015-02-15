@@ -168,6 +168,8 @@ define([
             if ($rootScope.uid != undefined) {
                 $scope.logout($rootScope.uid).then( function(data) {
                     dialogs.notify('알림', "로그아웃 되었습니다.", {size: 'md'});
+
+                    $location.url('main');
                 });
             }
         };
