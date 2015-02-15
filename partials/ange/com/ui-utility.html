@@ -8,38 +8,39 @@
 
 	<div class="comp_userlog">
 
-		<!-- 로그인 전 -->
-		<div ng-if="!uid" class="userlog_login">
-				<img src="/imgs/ange/login.png" class="userlog_login_btn" ng-click="click_login()">
+        <!-- 로그인 전 -->
+        <div ng-if="true" class="userlog_login">
+            <img src="/imgs/ange/login.png" class="userlog_login_btn" ng-click="click_login()">
 
-				<div class="userlog_login_func">
-					<a class="forgotidpw" ng-click="click_forgotInfo()">아이디/비번찾기</a>
-					<a class="joinus" ng-click="click_joinMember()">회원가입</a>
-				</div>
-		</div>
-		<!-- /로그인 전 -->
+            <div class="userlog_login_func">
+                <a class="forgotidpw" ng-click="click_forgotInfo()">아이디/비번찾기</a>
+                <a class="joinus" ng-click="click_joinMember()">회원가입</a>
+            </div>
+        </div>
+        <!-- /로그인 전 -->
 
-		<!-- 로그인 후 -->
-		<div ng-if="uid" class="userlog_login_now">
-				<a class="userconfig" title="개인정보설정" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
-				<img ng-src="{{profileImg}}" class="userlog_login_pic">
+        <!-- 로그인 후 -->
+        <div ng-if="false" class="userlog_login_now">
+            <a class="userconfig" title="프로필사진 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
+            <!--<img class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}">-->
+            <img class="userlog_login_pic" ng-style="{'background-image' : 'url({{profileImg}})'}">
 
-				<div class="userlog_login_info">
-					<span class="usernickname">{{user_info.NICK_NM}}</span> 님, 안녕하세요.
-				</div>
+            <div class="userlog_login_info">
+                <span class="usernickname">{{user_info.NICK_NM}}</span> 님, 안녕하세요.
+            </div>
 
-				<div class="userlog_user_func">
-					<a class="babyinfo" ng-click="click_settingBaby()"><span class="glyphicon glyphicon-heart" style="color:#fb6362; margin-right:4px;"></span>아기정보보기</a>
-					<a class="logout" ng-click="logoutMe()">로그아웃</a>
-				</div>
+            <div class="userlog_user_func">
+                <a class="babyinfo" ng-click="click_settingBaby()"><span class="glyphicon glyphicon-heart" style="color:#fb6362; margin-right:4px;"></span>내정보관리</a>
+                <a class="logout" ng-click="logoutMe()">로그아웃</a>
+            </div>
 
-				<div class="userlog_user_subinfo">
-					<span class="user_grade"><span class="glyphicon glyphicon-star-empty"></span> 별초보맘</span>
-					<span class="user_mileage"><small>Mileage</small> <span style="color:#fb6362; font-weight:bold">{{user_info.MILEAGE.REMAIN_POINT}}</span></span>
-				</div>
+            <div class="userlog_user_subinfo">
+                <span class="user_cart"><span class="glyphicon glyphicon-shopping-cart"></span> 장바구니</span>
+                <span class="user_mileage"><small>Mileage</small> <span style="color:#fb6362; font-weight:bold">{{user_info.MILEAGE.REMAIN_POINT}}</span></span>
+            </div>
 
-		</div>
-		<!-- /로그인 후 -->
+        </div>
+        <!-- /로그인 후 -->
 
 		<div class="userlog_utility">
 		<a class="util1" ng-click="click_myangeWriting()">내 게시물</a>

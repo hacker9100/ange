@@ -268,7 +268,7 @@ body {
     opacity:0.75;
 
     -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 1px 1px 1px rgba(3, 3, 3, .6);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 1px 1px 1px rgba(3, 3, 3, .6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 1px 1px 1px rgba(3, 3, 3, .6);
 }
 
 .footer_btn:hover {
@@ -389,8 +389,8 @@ body {
 }
 
 /*.mainbar:hover, .subar:hover  {*/
-    /*overflow-x: hidden;*/
-    /*overflow-y: auto;*/
+/*overflow-x: hidden;*/
+/*overflow-y: auto;*/
 /*}*/
 
 
@@ -491,7 +491,7 @@ body {
 }
 
 /*.subar.slide1, .subar.slide2, .subar.slide3 {*/
-    /*width:33%;*/
+/*width:33%;*/
 /*}*/
 
 /** 서브페이지를 열었을 경우 **/
@@ -837,10 +837,12 @@ a.forgotidpw:hover, a.joinus:hover {
     top:10px;
     right:10px;
     color:#888;
+    cursor: pointer;
 }
 
 .userconfig:hover {
     color:#111;
+    text-decoration: none;
 }
 
 .userlog_user_func {
@@ -854,10 +856,11 @@ a.forgotidpw:hover, a.joinus:hover {
 }
 
 img.userlog_login_pic {
-    width:85px;
-    height:85px;
-    border:1px solid transparent;
+    width:84px;
+    height:84px;
     border-radius: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
     background-size: cover;
 }
 
@@ -888,8 +891,10 @@ img.userlog_login_pic {
     font-weight: bold;
 }
 
-.user_grade {
+.user_cart {
     float: left;
+    cursor: pointer;
+    color:#666;
 }
 
 .user_mileage {
@@ -898,6 +903,13 @@ img.userlog_login_pic {
 
 .babyinfo {
     float: left;
+    cursor: pointer;
+    color:#666;
+}
+
+.babyinfo:hover, .user_cart:hover {
+    color:#111;
+    text-decoration: none;
 }
 
 a.logout {
@@ -909,6 +921,7 @@ a.logout {
     background-repeat: no-repeat;
     background-position: left top;
     text-indent: -9999px;
+    cursor: pointer;
 }
 
 a.logout:hover {
