@@ -41,14 +41,6 @@ require.config({
 
         'slick-carousel': '../../lib/slick-carousel/slick', //
 
-//        'jquery-masonry': '../../lib/masonry/jquery.masonry.min', //
-//        'masonry': '../../lib/masonry/masonry.pkgd', //
-//        'imagesloaded': '../../lib/masonry/imagesloaded.pkgd.min', //
-//        'angular-masonry': '../../lib/masonry/angular-masonry', //
-
-        'angular-masonry': '../../lib/angular-masonry/angular-masonry', //
-        'ng-infinite-scroll': '../../lib/angular-masonry/ng-infinite-scroll.min', //
-
         // ng-table 모듈
         'ng-table': '../../lib/ng-table/ange-ng-table',
 
@@ -89,10 +81,6 @@ require.config({
         'ko': '../../lib/fullcalendar/lang/ko',
         'uiCalendar': '../../lib/fullcalendar/calendar',
         'moment': '../../lib/fullcalendar/lib/moment.min',
-
-        // chartjs 모듈
-//        'chartjs': '../../lib/chartjs/Chart',
-//        'angular-chart': '../../lib/chartjs/angular-chart',
 
         // google-chart 모듈
         'ng-google-chart': '../../lib/ng-google-chart/ng-google-chart',
@@ -153,21 +141,6 @@ require.config({
         'slick-carousel':{
             deps: ['jquery']
         },
-//        'jquery-masonry':{
-//            deps: ['jquery']
-//        },
-//        'masonry':{
-//            deps: ['jquery']
-//        },
-//        'angular-masonry':{
-//            deps: ['angular', 'masonry']
-//        },
-        'angular-masonry':{
-            deps: ['angular']
-        },
-        'ng-infinite-scroll':{
-            deps: ['angular']
-        },
         'ckeditor-jquery':{
             deps:['jquery','ckeditor-core']
         },
@@ -204,9 +177,6 @@ require.config({
         'ngFileupload':{
             deps:['jquery','angular','jquery-blueimp-gallery','fileupload','fileupload-process','fileupload-image','fileupload-audio','fileupload-video','fileupload-validate']
         },
-//        'angular-chart':{
-//            deps:['angular', 'chartjs']
-//        },
         'ng-google-chart':{
             deps:['jquery', 'angular']
         },
