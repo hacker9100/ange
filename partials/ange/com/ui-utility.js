@@ -17,9 +17,6 @@ define([
 
         /********** 이벤트 **********/
         $scope.click_login = function () {
-            $scope.comming_soon();
-            return;
-
             $scope.openModal(null, 'md');
         };
 
@@ -45,9 +42,6 @@ define([
         };
 
         $scope.click_settingAccount = function () {
-            $scope.comming_soon();
-            return;
-
             $location.url('myange/account');
         };
 
@@ -129,6 +123,11 @@ define([
                                 if (data.FILE) {
                                     $rootScope.profileImg = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
                                 }
+
+                                if (data.USER_ST == 'W' && data.CERT_GB == 'MIG') {
+                                    $location.path('myange/account');
+                                }
+
                                 $modalInstance.close();
                             }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
@@ -139,6 +138,9 @@ define([
                     };
 
                     $scope.click_joinMember = function () {
+                        $scope.comming_soon();
+                        return;
+
                         $location.url('infodesk/signon');
                         $modalInstance.close();
                     };

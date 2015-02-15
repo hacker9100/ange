@@ -58,7 +58,7 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-//            $scope.community = "회원정보";
+            $scope.community = "회원정보 수정";
             for (var i = 2000; i >= 1950; i--) {
                 year.push(i+'');
             }
@@ -83,7 +83,7 @@ define([
             $scope.babies = [{}, {}, {}];
 
             $scope.user = {USER_ID: '', USER_NM: '', NICK_NM: '', PASSWORD: '', LUNAR_FL: '0', BIRTH: '', ZIP_CODE: '', ADDR: '', ADDR_DETAIL: '', PHONE_1: '', PHONE_2: '', USER_GB: '', USER_ST: '', EMAIL: '', SEX_GB: '',
-                            INTRO: '', NOTE: '', MARRIED_FL: 'Y', PREGNENT_FL: 'N', EN_ANGE_EMAIL_FL: true, EN_ANGE_SMS_FL: true, EN_ALARM_EMAIL_FL: true, EN_ALARM_SMS_FL: true, EN_STORE_EMAIL_FL: true, EN_STORE_SMS_FL: true}
+                            INTRO: '', NOTE: '', MARRIED_FL: 'Y', PREGNENT_FL: 'N', BABY_BIRTH_DT: '', EN_ANGE_EMAIL_FL: true, EN_ANGE_SMS_FL: true, EN_ALARM_EMAIL_FL: true, EN_ALARM_SMS_FL: true, EN_STORE_EMAIL_FL: true, EN_STORE_SMS_FL: true}
             $scope.user.YEAR = '';
             $scope.user.MONTH = '';
             $scope.user.DAY = '';
@@ -216,6 +216,7 @@ define([
             }
         });
 
+/*
         $scope.$watch('blog.BLOG_GB', function() {
             console.log($scope.blog.BLOG_GB);
             if ($scope.blog.BLOG_GB != undefined) {
@@ -230,6 +231,7 @@ define([
                 }
             }
         });
+*/
 
         // 정보수신동의 전체체크
         $scope.click_checkAllAgree = function () {
@@ -351,9 +353,14 @@ define([
                 $scope.user.EMAIL = $scope.user.EMAIL_ID + '@' + $scope.user.EMAIL_TYPE;
             }
 
-            if ($scope.blog.BLOG_URL != '' && $scope.blog.BLOG_DETAIL != '') {
-                $scope.blog.BLOG_URL = $scope.blog.BLOG_DETAIL;
+            if ( ($scope.user.YEAR1 == undefined || $scope.user.YEAR1 == '') || ($scope.user.MONTH1 == undefined || $scope.user.MONTH1 == '') || ($scope.user.DAY1 == undefined || $scope.user.DAY1 == '') ) {
+            } else {
+                $scope.user.BABY_BIRTH_DT = $scope.user.YEAR1 + ($scope.user.MONTH1.length == 1 ? '0' + $scope.user.MONTH1 : $scope.user.MONTH1) + ($scope.user.DAY1.length == 1 ? '0' + $scope.user.DAY1 : $scope.user.DAY1);
             }
+
+//            if ($scope.blog.BLOG_URL != '' && $scope.blog.BLOG_DETAIL != '') {
+//                $scope.blog.BLOG_URL = $scope.blog.BLOG_DETAIL;
+//            }
 
             if ($scope.blog.THEME_CK != undefined && $scope.blog.THEME_CK.length != 0) {
                 var strTheme = '';
@@ -375,8 +382,50 @@ define([
                 $scope.user.FILE.$destroy = '';
             }
 
+            var isWate = false;;
+
+            if ($scope.user.USER_ST == 'W' ) {
+                isWate = true;
+            }
+
+            $scope.user.USER_ST = 'N';
+
             $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
-                .then(function(){ dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});})
+                .then(function(){
+                    dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+
+                    if (isWate && $scope.user.CERT_GB == 'MIG') {
+                        $scope.mileage = {};
+                        $scope.mileage.USER_ID = $scope.user.USER_ID;
+                        $scope.mileage.EARN_GB = $scope.user.USER_ID;
+                        $scope.mileage.PLACE_GB = '이벤트';
+                        $scope.mileage.POINT = '2000';
+                        $scope.mileage.REASON = '회원 정보 수정 이벤트';
+
+                        $scope.insertItem('ange/mileage', 'item', $scope.mileage, false)
+                            .then(function(){ /*dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});*/})
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                    $scope.item = {};
+                    $scope.item.SYSTEM_GB = 'ANGE';
+
+                    $scope.updateSession($scope.user.USER_ID, $scope.item)
+                        .then(function(data){
+                            $rootScope.authenticated = true;
+                            $rootScope.user_info = data;
+                            $rootScope.uid = data.USER_ID;
+                            $rootScope.name = data.USER_NM;
+                            $rootScope.role = data.ROLE_ID;
+                            $rootScope.system = data.SYSTEM_GB;
+                            $rootScope.menu_role = data.MENU_ROLE;
+                            $rootScope.email = data.EMAIL;
+
+                            if (data.FILE) {
+                                $rootScope.profileImg = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                            }
+                        }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 //            if ($scope.checkSave) {
@@ -404,6 +453,11 @@ define([
         $scope.click_saveUser = function () {
             $scope.saveUser();
 //            $location.url('/main');
+        };
+
+        // 저장 버튼 클릭
+        $scope.click_historyBack = function () {
+            history.back();
         };
 
         $scope.getUser = function () {
@@ -441,16 +495,37 @@ define([
                         $scope.user.POST_2 = $scope.user.ZIP_CODE.substr(3, 3);
                     }
 
-                    if ($scope.user.PHONE_1 != undefined && $scope.user.PHONE_1.length > 10) {
-                        $scope.user.PHONE_1_1 = $scope.user.PHONE_1.substr(0, 3);
-                        $scope.user.PHONE_1_2 = $scope.user.PHONE_1.substr(3, 4);
-                        $scope.user.PHONE_1_3 = $scope.user.PHONE_1.substr(7, 4);
+                    if ($scope.user.PHONE_1 != undefined && $scope.user.PHONE_1.length >= 8) {
+                        if ($scope.user.PHONE_1.substr(0, 2) == '02') {
+                            $scope.user.PHONE_1_1 = $scope.user.PHONE_1.substr(0, 2);
+                            if ($scope.user.PHONE_1.length == 9) {
+                                $scope.user.PHONE_1_2 = $scope.user.PHONE_1.substr(2, 3);
+                                $scope.user.PHONE_1_3 = $scope.user.PHONE_1.substr(5, 4);
+                            } else {
+                                $scope.user.PHONE_1_2 = $scope.user.PHONE_1.substr(2, 4);
+                                $scope.user.PHONE_1_3 = $scope.user.PHONE_1.substr(5, 4);
+                            }
+                        } else {
+                            $scope.user.PHONE_1_1 = $scope.user.PHONE_1.substr(0, 3);
+                            if ($scope.user.PHONE_1.length == 10) {
+                                $scope.user.PHONE_1_2 = $scope.user.PHONE_1.substr(3, 3);
+                                $scope.user.PHONE_1_3 = $scope.user.PHONE_1.substr(6, 4);
+                            } else {
+                                $scope.user.PHONE_1_2 = $scope.user.PHONE_1.substr(3, 4);
+                                $scope.user.PHONE_1_3 = $scope.user.PHONE_1.substr(7, 4);
+                            }
+                        }
                     }
 
-                    if ($scope.user.PHONE_2 != undefined && $scope.user.PHONE_2.length > 10) {
+                    if ($scope.user.PHONE_2 != undefined && $scope.user.PHONE_2.length > 9) {
                         $scope.user.PHONE_2_1 = $scope.user.PHONE_2.substr(0, 3);
-                        $scope.user.PHONE_2_2 = $scope.user.PHONE_2.substr(3, 4);
-                        $scope.user.PHONE_2_3 = $scope.user.PHONE_2.substr(7, 4);
+                        if ($scope.user.PHONE_2.length == 10) {
+                            $scope.user.PHONE_2_2 = $scope.user.PHONE_2.substr(3, 3);
+                            $scope.user.PHONE_2_3 = $scope.user.PHONE_2.substr(6, 4);
+                        } else {
+                            $scope.user.PHONE_2_2 = $scope.user.PHONE_2.substr(3, 4);
+                            $scope.user.PHONE_2_3 = $scope.user.PHONE_2.substr(7, 4);
+                        }
                     }
 
                     if ($scope.user.EMAIL != undefined && $scope.user.EMAIL.length > 4) {
@@ -470,6 +545,12 @@ define([
                         $scope.user.EN_ALARM_EMAIL_FL == 'Y' && $scope.user.EN_ALARM_SMS_FL == 'Y' &&
                         $scope.user.EN_STORE_EMAIL_FL == 'Y' && $scope.user.EN_STORE_SMS_FL == 'Y' ) {
                             $scope.checkAllAgree = true;
+                    }
+
+                    if ($scope.user.BABY_BIRTH_DT != undefined && $scope.user.BABY_BIRTH_DT.length == 8) {
+                        $scope.user.YEAR1 = $scope.user.BABY_BIRTH_DT.substr(0, 4);
+                        $scope.user.MONTH1 = $scope.user.BABY_BIRTH_DT.substr(4, 2).replace('0', '');
+                        $scope.user.DAY1 = $scope.user.BABY_BIRTH_DT.substr(6, 2).replace('0', '');
                     }
 
                     if ($scope.user.BABY != null && $scope.user.BABY != '') {

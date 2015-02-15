@@ -170,33 +170,70 @@
         case "POST":
 
             if ($_type == "item") {
-                $sql = "INSERT INTO ANGE_MILEAGE
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
+
+                $sql = "INSERT INTO ANGE_USER_MILEAGE_TEMP
                         (
-                            MILEAGE_GB,
+                            USER_ID,
+                            EARN_DT,
+                            MILEAGE_NO,
+                            EARN_GB,
+                            PLACE_GB,
                             POINT,
-                            REASON,
-                            COMM_GB,
-                            LIMIT_CNT,
-                            LIMIT_DAY,
-                            POINT_ST
+                            REASON
                         ) VALUES (
-                             ".$_model[MILEAGE_GB]."
-                            , ".$_model[POINT]."
-                            , '".$_model[REASON]."'
-                            , '".$_model[COMM_GB]."'
-                            , ".$_model[LIMIT_CNT]."
-                            , '".$_model[LIMIT_DAY]."'
-                            , '".$_model[POINT_ST]."'
+                            '".$_model['USER_ID']."'
+                            , SYSDATE()
+                            , '900'
+                            , '".$_model['EARN_GB']."'
+                            , '".$_model['PLACE_GB']."'
+                            , '".$_model['POINT']."'
+                            , '".$_model['REASON']."'
                         )";
 
-                /*".$_model[SORT_IDX]."*/
-
                 $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
 
                 if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                $sql = "SELECT
+                            SUM_POINT, REMAIN_POINT
+                        FROM
+                            COM_USER
+                        WHERE
+                            USER_ID = '".$_model['USER_ID']."'";
+
+                $mileage_result = $_d->sql_query($sql);
+                $mileage_data = $_d->sql_fetch_array($mileage_result);
+
+                $sum_point = $mileage_data['SUM_POINT'] + $_model['POINT'];
+                $remain_point = $mileage_data['REMAIN_POINT'] + $_model['POINT'];
+
+                $sql = "UPDATE
+                            ANGE_MILEAGE_STATUS
+                        SET
+                            SUM_POINT = ".$sum_point."
+                            ,REMAIN_POINT = ".$remain_point."
+                        WHERE
+                            USER_ID = '".$_model['USER_ID']."'";
+
+                $_d->sql_query($sql);
+
+                if ($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("등록실패입니다:".$msg);
                 } else {
+                    $_d->sql_commit();
                     $_d->succEnd($no);
                 }
             } else if ($_type == "admin") {
@@ -272,7 +309,7 @@
                         ) VALUES (
                             '".$row[USER_ID]."'
                             , SYSDATE()
-                            , '99'
+                            , '999'
                             , '".$_model[EARN_GB]."'
                             , '".$_model[PLACE_GB]."'
                             , '".$_model[POINT]."'

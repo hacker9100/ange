@@ -152,7 +152,7 @@ define([
         //  응모하기
         $scope.comp_momsevent = function(item){
 
-            if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
+            if (item.ada_idx == '55' || $scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
                 dialogs.notify('알림', "이벤트 기간이 아닙니다.", {size: 'md'});
                 return;
             }

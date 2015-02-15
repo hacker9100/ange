@@ -59,7 +59,7 @@
 
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.NICK_NM,  U.PASSWORD, U.PHONE_1, U.PHONE_2, U.EMAIL, U.ADDR, U.ADDR_DETAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
-                            UR.ROLE_ID, R.ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT,
+                            UR.ROLE_ID, R.ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT
@@ -352,6 +352,167 @@
                 $_SESSION['timeout'] = time();
 
                 $_d->dataEnd2($sess);
+            }
+
+            break;
+
+        case "PUT":
+
+            if (isset($_key) && $_key != "") {
+                $where_search = "";
+
+                if (isset($_model[SYSTEM_GB]) && $_model[SYSTEM_GB] != "") {
+                    $where_search .= "AND R.SYSTEM_GB  = '".$_model[SYSTEM_GB]."' ";
+                }
+
+                $err = 0;
+                $msg = "";
+
+                $sql = "SELECT
+                            U.USER_ID, U.USER_NM, U.NICK_NM,  U.PASSWORD, U.PHONE_1, U.PHONE_2, U.EMAIL, U.ADDR, U.ADDR_DETAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
+                            UR.ROLE_ID, R.ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB,
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT
+                        FROM
+                            COM_USER U, USER_ROLE UR, COM_ROLE R
+                        WHERE
+                            U.USER_ID = '".$_key."'
+                            AND U.USER_ID = UR.USER_ID
+                            AND UR.ROLE_ID = R.ROLE_ID
+                            ".$where_search."
+                        ";
+
+                $result = $_d->sql_query($sql);
+                $data = $_d->sql_fetch_array($result);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($data) {
+                    $sql = "SELECT
+                                M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
+                            FROM
+                                USER_ROLE UR, COM_ROLE R, MENU_ROLE M
+                            WHERE
+                                UR.USER_ID = '".$_key."'
+                                AND R.ROLE_ID = M.ROLE_ID
+                                AND UR.ROLE_ID = R.ROLE_ID
+                                ".$where_search."
+                            ";
+
+                    $role_data = $_d->getData($sql);
+                    $data['MENU_ROLE'] = $role_data;
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
+                    $sql = "SELECT
+                                SUM_POINT, USE_POINT, REMAIN_POINT
+                            FROM
+                                ANGE_MILEAGE_STATUS
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $mileage_result = $_d->sql_query($sql);
+                    $mileage_data  = $_d->sql_fetch_array($mileage_result);
+                    $data['MILEAGE'] = $mileage_data;
+
+                    $sql = "SELECT
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                COM_USER U, FILE F, CONTENT_SOURCE S
+                            WHERE
+                                U.NO = S.TARGET_NO
+                                AND F.NO = S.SOURCE_NO
+                                AND S.CONTENT_GB = 'FILE'
+                                AND S.TARGET_GB = 'USER'
+                                AND U.USER_ID = '".$_key."'
+                                AND F.FILE_GB = 'THUMB'
+                            ";
+
+                    $file_result = $_d->sql_query($sql);
+                    $file_data = $_d->sql_fetch_array($file_result);
+                    $data['FILE'] = $file_data;
+
+                    $sql = "SELECT
+                                BABY_NM, BABY_BIRTH, BABY_SEX_GB, CARE_CENTER, CENTER_VISIT_YMD, CENTER_OUT_YMD
+                            FROM
+                                ANGE_USER_BABY
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $baby_data = $_d->getData($sql);
+                    $data['BABY'] = $baby_data;
+
+                    $sql = "SELECT
+                                BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS
+                            FROM
+                                ANGE_USER_BLOG
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $blog_result = $_d->sql_query($sql);
+                    $blog_data  = $_d->sql_fetch_array($blog_result);
+                    $data['BLOG'] = $blog_data;
+                }
+
+                if ($err > 0) {
+                    $_d->failEnd("조회실패입니다:".$msg);
+                } else {
+                    unset($_SESSION['user_info']);
+                    unset($_SESSION['uid']);
+                    unset($_SESSION['nick']);
+                    unset($_SESSION['name']);
+                    unset($_SESSION['role']);
+                    unset($_SESSION['system']);
+                    unset($_SESSION['menu_role']);
+
+                    unset($_SESSION['addr']);
+                    unset($_SESSION['addr_detail']);
+                    unset($_SESSION['phone1']);
+                    unset($_SESSION['phone2']);
+                    unset($_SESSION['pregnent_fl']);
+                    unset($_SESSION['baby_birth_dt']);
+                    unset($_SESSION['baby_cnt']);
+                    unset($_SESSION['baby_male_cnt']);
+                    unset($_SESSION['baby_female_cnt']);
+                    unset($_SESSION['timeout']);
+
+                    session_destroy();
+
+                    if (!isset($_SESSION)) {
+                        session_start();
+                    }
+
+                    $_SESSION['user_info'] = $data;
+                    $_SESSION['uid'] = $data['USER_ID'];
+                    $_SESSION['nick'] = $data['NICK_NM'];
+                    $_SESSION['name'] = $data['USER_NM'];
+                    $_SESSION['role'] = $data['ROLE_ID'];
+                    $_SESSION['system'] = $_model[SYSTEM_GB];
+                    $_SESSION['menu_role'] = $data['MENU_ROLE'];
+
+                    $_SESSION['addr'] = $data['ADDR'];
+                    $_SESSION['addr_detail'] = $data['ADDR_DETAIL'];
+                    $_SESSION['phone1'] = $data['PHONE_1'];
+                    $_SESSION['phone2'] = $data['PHONE_2'];
+                    $_SESSION['pregnent_fl'] = $data['PREGNENT_FL'];
+                    $_SESSION['baby_birth_dt'] = $data['BABY_BIRTH_DT'];
+                    $_SESSION['baby_cnt'] = $data['BABY_CNT'];
+                    $_SESSION['baby_male_cnt'] = $data['BABY_MALE_CNT'];
+                    $_SESSION['baby_female_cnt'] = $data['BABY_FEMALE_CNT'];
+                    $_SESSION['timeout'] = time();
+
+                    $_d->dataEnd2($data);
+                }
             }
 
             break;

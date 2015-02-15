@@ -182,6 +182,36 @@ define([
             return deferred.promise;
         }
 
+        // 세션 갱신
+        $scope.updateSession = function(key, item) {
+            var deferred = $q.defer();
+
+            dataService.updateSession(key, item, function(data, status) {
+                if (status != 200) {
+//                    $location.path("/signin");
+                    console.log('세션 갱신에 실패 했습니다.');
+                    deferred.reject('세션 갱신에 실패 했습니다.');
+                } else {
+                    if (data.err == true) {
+//                        $location.path("/signin");
+                        console.log(data.msg);
+                        deferred.reject(data.msg);
+                    } else {
+                        if (angular.isObject(data)) {
+                            deferred.resolve(data);
+                        } else {
+//                            $location.path("/signin");
+                            // TODO: 데이터가 없을 경우 처리
+                            console.log('세션 데이터가 없습니다.');
+                            deferred.reject('세션 데이터가 없습니다.');
+                        }
+                    }
+                }
+            });
+
+            return deferred.promise;
+        }
+
         // 세션 체크
         $scope.sessionCheck = function(session) {
             if (session.USER_ID == undefined || session.USER_ID == '') {

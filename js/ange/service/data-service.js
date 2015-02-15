@@ -66,6 +66,18 @@ define(['./services'], function (services) {
                     ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
                 }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
                 }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
+            }, updateSession : function(key, model, callback){
+                param._method = 'PUT';
+                param._type = '';
+                param._key = key;
+                param._model = model;
+                $http({
+                    url : helpers.uri+'login.php'
+                    ,method : 'POST'
+                    ,data : $.param(param)
+                    ,headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).success(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }
+                }).error(function(data, status, headers, config) { if(!!callback){ callback(data, status, headers, config); }});
             }, updateStatus : function(uri,type,key,phase,callback){
                 param._method = 'PUT';
                 param._type = type;

@@ -24,14 +24,6 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'fileupload-process', // fileUpload ui 관련 라이브러리
     'fileupload-angular', // fileUpload angularjs 관련 라이브러리
 
-//    'jquery-masonry',
-//    'masonry',
-    'angular-masonry',
-    'ng-infinite-scroll',
-
-//    'chartjs',
-//    'angular-chart',
-
     'angular-socialshare',
     'ng-google-chart',
     'ng-map',
@@ -56,16 +48,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'ui.router',
         'blueimp.fileupload',
 
-//        'wu.masonry',
-
-        'ange.portlet.tpls',
-
-        'masonryLayout',
-        'infinite-scroll',
-//        'chart.js',
-
         'googlechart',
-//        'djds4rce.angular-socialshare',
         '720kb.socialshare',
         'ngMap'
         ], function () {

@@ -11,7 +11,7 @@
 
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
-                                <h3 style="font-weight:bold;"> <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
+                                <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
                         </div><!-- /.sub_contents_wrap -->
@@ -225,12 +225,23 @@
                                                 <option value="02">02</option>
                                                 <option value="031">031</option>
                                                 <option value="032">032</option>
-                                                <option value="033">033</option>
+                                                <option value="041">041</option>
+                                                <option value="042">042</option>
+                                                <option value="043">043</option>
+                                                <option value="051">051</option>
+                                                <option value="052">052</option>
+                                                <option value="053">053</option>
+                                                <option value="054">054</option>
+                                                <option value="055">055</option>
+                                                <option value="061">061</option>
+                                                <option value="062">062</option>
+                                                <option value="063">063</option>
+                                                <option value="064">064</option>
                                             </select>
                                             <span style="margin:0 4px;"> &dash; </span>
-                                            <input ng-model="user.PHONE_1_2" class="form-control" style="width:110px;">
+                                            <input ng-model="user.PHONE_1_2" class="form-control" maxlength="4" style="width:110px;">
                                             <span style="margin:0 4px;"> &dash; </span>
-                                            <input ng-model="user.PHONE_1_3" class="form-control" style="width:110px;">
+                                            <input ng-model="user.PHONE_1_3" class="form-control" maxlength="4" style="width:110px;">
                                         </div>
                                     </span>
                                 </div>  <!-- /.form_basicinfo -->
@@ -245,19 +256,18 @@
 
                                     <span class="col-xs-10 basicinfo input">
                                         <div class="form-inline" style="margin:0 5px">
-                                            <select ng-model="user.TELECOM" class="form-control" style="width:110px;">
+                                            <!--<select ng-model="user.TELECOM" class="form-control" style="width:110px;">
                                                 <option value="">통신사</option>
                                                 <option value="1">SK</option>
                                                 <option value="2">KT</option>
                                                 <option value="3">LG</option>
                                                 <option value="4">알뜰폰</option>
-                                            </select>
-                                            <span style="margin:0 4px;"> &nbsp; </span>
-                                            <input id="phone_2" ng-model="user.PHONE_2_1" class="form-control" style="width:110px;">
+                                            </select>-->
+                                            <input id="phone_2" ng-model="user.PHONE_2_1" class="form-control" maxlength="3" style="width:110px;">
                                             <span style="margin:0 4px;"> &dash; </span>
-                                            <input ng-model="user.PHONE_2_2" class="form-control" style="width:110px;">
+                                            <input ng-model="user.PHONE_2_2" class="form-control" maxlength="4" style="width:110px;">
                                             <span style="margin:0 4px;"> &dash; </span>
-                                            <input ng-model="user.PHONE_2_3" class="form-control" style="width:110px;">
+                                            <input ng-model="user.PHONE_2_3" class="form-control" maxlength="4" style="width:110px;">
                                         </div>
                                     </span>
                                 </div>  <!-- /.form_basicinfo -->
@@ -295,7 +305,6 @@
                                     <div class="form_basicinfo">
                                         <span class="col-xs-2 basicinfo title">
                                             <strong>이미지</strong>
-                                            <span class="table_blue">*</span>
                                         </span>
 
                                         <span class="col-xs-10 basicinfo input">
@@ -400,7 +409,7 @@
                                     </span>
 
                                     <span class="col-xs-10 basicinfo subtitle">
-                                        <div class="form-group" style="text-align:left; margin:0 5px">{{ user.REG_DT | date:'yyyy년 MM월 dd일 HH:mm:ss Z'}}</div>
+                                        <div class="form-group" style="text-align:left; margin:0 5px">{{ user.REG_DT | date:'yyyy년 MM월 dd일 HH:mm:ss '}}</div>
                                     </span>
                                 </div>  <!-- /.form_basicinfo -->
                             </div>  <!-- /.form_rows -->
@@ -558,8 +567,7 @@
                                     <span class="col-xs-2 basicinfo title"></span>
                                         <span class="col-xs-10 basicinfo input">
                                             <div class="form-group" style="margin:0 5px; line-height:32px;">
-                                                <span style="float:left; margin-left:15px;">{{blog.BLOG_URL}}</span>
-                                                <input ng-model="blog.BLOG_DETAIL" type="text" class="form-control" style="float:left; width:250px; margin:0px 8px;" placeholder="">
+                                                <input ng-model="blog.BLOG_URL" type="text" class="form-control" style="float:left; width:250px; margin:0px 8px;" placeholder="">
                                             </div>
                                         </span>
                                 </div>  <!-- /.form_basicinfo -->
@@ -733,6 +741,7 @@
 
                         <div ng-if="step == '02'" class="join_step_btn">
 
+                            <button class="join_stepbtn prev" ng-click="click_historyBack()"><span class="glyphicon glyphicon-chevron-left"></span> 돌아가기</button>
                             <button class="join_stepbtn cancel" ng-click="click_saveUser()"><span class="glyphicon glyphicon-home"></span> 저장</button>
                             <button class="join_stepbtn cancel" ng-click="click_cancel()"><span class="glyphicon glyphicon-remove-circle"></span> 취소</button>
 

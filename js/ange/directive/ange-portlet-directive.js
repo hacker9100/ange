@@ -1102,12 +1102,12 @@ define([
         }
     }]);
 
-    angular.module('ange.portlet.tpls', ['test.html']);
-
-    angular.module('test.html', []).run(['$templateCache', function($templateCache) {
-        $templateCache.put('test.html',
-            '<div>test입니다.</div>'
-        );
-    }]);
+//    angular.module('ange.portlet.tpls', ['test.html']);
+//
+//    angular.module('test.html', []).run(['$templateCache', function($templateCache) {
+//        $templateCache.put('test.html',
+//            '<div>test입니다.</div>'
+//        );
+//    }]);
 
 });

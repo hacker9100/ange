@@ -114,7 +114,7 @@
                             U.REG_DT, U.FINAL_LOGIN_DT, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_YMD, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_YMD,
                             U.INTRO, U.NOTE, U.MARRIED_FL, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_YMD, U.CENTER_OUT_YMD,
                             U.EN_ANGE_EMAIL_FL, U.EN_ANGE_SMS_FL, U.EN_ALARM_EMAIL_FL, U.EN_ALARM_SMS_FL, U.EN_STORE_EMAIL_FL, U.EN_STORE_SMS_FL,
-                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM
+                            UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM, U.CERT_GB
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -581,6 +581,7 @@
                             NOTE,
                             MARRIED_FL,
                             PREGNENT_FL,
+                            BABY_BIRTH_DT,
                             BLOG_FL,
                             JOIN_PATH,
                             CONTACT_ID,
@@ -622,6 +623,7 @@
                             '".$_model[NOTE]."',
                             '".$_model[MARRIED_FL]."',
                             '".$_model[PREGNENT_FL]."',
+                            '".$_model[BABY_BIRTH_DT]."',
                             '".$_model[BLOG_FL]."',
                             '".$_model[JOIN_PATH]."',
                             '".$_model[CONTACT_ID]."',
@@ -914,6 +916,16 @@
                     $update_password = "PASSWORD = '".$hash."',";
                 }
 
+                $update_gb = "";
+
+                if (isset($_model[USER_GB]) && $_model[USER_GB] != "") {
+                    if (is_array($_model[USER_GB])) {
+                        $update_gb = "USER_GB = '".$_model[USER_GB][value]."',";
+                    } else {
+                        $update_gb = "USER_GB = '".$_model[USER_GB]."',";
+                    }
+                }
+
                 $_d->sql_beginTransaction();
 
                 $sql = "UPDATE COM_USER
@@ -928,7 +940,7 @@
                             ADDR_DETAIL = '".$_model[ADDR_DETAIL]."',
                             PHONE_1 = '".$_model[PHONE_1]."',
                             PHONE_2 = '".$_model[PHONE_2]."',
-                            USER_GB = '".$_model[USER_GB][value]."',
+                            ".$update_gb."
                             USER_ST = '".$_model[USER_ST]."',
                             EMAIL = '".$_model[EMAIL]."',
                             SEX_GB = '".$_model[SEX_GB]."',
@@ -936,6 +948,7 @@
                             NOTE = '".$_model[NOTE]."',
                             MARRIED_FL = '".$_model[MARRIED_FL]."',
                             PREGNENT_FL = '".$_model[PREGNENT_FL]."',
+                            BABY_BIRTH_DT = '".$_model[BABY_BIRTH_DT]."',
                             BLOG_FL = '".$_model[BLOG_FL]."',
                             JOIN_PATH = '".$_model[JOIN_PATH]."',
                             CONTACT_ID = '".$_model[CONTACT_ID]."',
@@ -948,7 +961,8 @@
                             EN_ALARM_EMAIL_FL = '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : 'N' )."',
                             EN_ALARM_SMS_FL = '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
                             EN_STORE_EMAIL_FL = '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
-                            EN_STORE_SMS_FL = '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."'
+                            EN_STORE_SMS_FL = '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."',
+                            UPDATE_DT = SYSDATE()
                         WHERE
                             USER_ID = '".$_key."'
                         ";
