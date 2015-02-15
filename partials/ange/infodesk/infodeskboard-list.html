@@ -67,7 +67,7 @@
                             <div class="peoplep_list_tab" ng-show="infomenu == 'faq'">
                                 <ul class="nav nav-tabs">
                                     <li role="presentation" ng-repeat="tab in tabs" ng-class="selectIdx == $index ? 'active' : ''">
-                                        <a ng-click="click_selectTab($index)">{{tab.TITLE}}</a>
+                                        <a ng-click="click_selectTab($index)">{{tab.CATEGORY_NM}}</a>
                                     </li>
                                 </ul>
 
@@ -104,7 +104,7 @@
                                     </td>
                                     <td>
                                         <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
-                                        <span ng-show="infomenu == 'faq'">{{item.FAQ_TYPE == 'ALL' ? '' : '['+item.FAQ_TITLE+']'}}</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                        <span ng-show="infomenu == 'faq'">[{{item.CATEGORY_NM}}]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
                                         <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? [item.REPLY_COUNT] : ''}}</span>
                                         <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                         <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->

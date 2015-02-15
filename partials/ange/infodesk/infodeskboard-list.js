@@ -102,12 +102,14 @@ define([
                 })
                 .catch(function(error){});
 
-            $scope.getList('com/webboard', 'faqcategory', {}, {}, true)
-                .then(function(data){
-                    $scope.tabs = data;
+            if($stateParams.menu == 'faq'){
+                $scope.getList('com/webboard', 'category', {}, $scope.search, true)
+                    .then(function(data){
+                        $scope.tabs = data;
 
-                })
-                .catch(function(error){ $scope.tabs = "";});
+                    })
+                    .catch(function(error){ $scope.tabs = "";});
+            }
         };
 
         /********** 이벤트 **********/

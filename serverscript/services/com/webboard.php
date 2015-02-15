@@ -60,14 +60,13 @@
 
                 $sql = "SELECT
                             NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT , SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM,
-                            REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, PHOTO_TYPE, PHOTO_GB,NICK_NM, FAQ_TYPE, FAQ_GB, BOARD_NO,
-                            CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD,
-                            (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/recipearcade/list') AND TYPE = PHOTO_TYPE) AS PHOTO_CATEGORY, REG_NEW_DT
+                            REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, NICK_NM, BOARD_NO,
+                            CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD, REG_NEW_DT, CATEGORY_NO
                         FROM (
                             SELECT
                                 B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
                                 (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT, B.BOARD_GB, B.COMM_NO, C.COMM_NM,
-                                B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.PHOTO_TYPE, B.PHOTO_GB, B.NICK_NM, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO, B.PASSWORD, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT
+                                B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.NICK_NM, B.BOARD_NO, B.PASSWORD, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT, B.CATEGORY_NO
                             FROM
                               COM_BOARD B
                               LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -83,7 +82,7 @@
                 }
 
                 $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB, F.FILE_EXT
                         FROM
                             FILE F, CONTENT_SOURCE S
                         WHERE
@@ -173,6 +172,10 @@
                                 ";
                 }
 
+                if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
+                    $search_common .= "AND CATEGORY_NO = '".$_search[CATEGORY_NO]."' ";
+                }
+
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_common .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
                 }
@@ -193,16 +196,16 @@
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                           SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM, SHORT_NM,
                           (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT, BOARD_REPLY_COUNT,
-	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, PHOTO_TYPE, PHOTO_GB, CATEGORY_NO,
-	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'people' AND MENU_URL = CONCAT('/people/',PHOTO_GB,'/list') AND TYPE = PHOTO_TYPE) AS TITLE, FAQ_TYPE, FAQ_GB, BOARD_NO,
-	                      (SELECT TITLE FROM COM_SUB_MENU WHERE SYSTEM_GB = 'ANGE' AND MENU_ID = 'infodesk' AND MENU_URL = CONCAT('/infodesk/',FAQ_GB,'/list') AND TYPE = FAQ_TYPE) AS FAQ_TITLE, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT
+	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, CATEGORY_NO,
+	                      BOARD_NO, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT,
+	                      (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM
                         FROM
                         (";
 
                 $select1 = "SELECT
                                 '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, '' AS COMM_NM, '' AS SHORT_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO, B.CATEGORY_NO
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD,B.BOARD_NO, B.CATEGORY_NO
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -215,7 +218,7 @@
                 $select2 = "SELECT
                                 '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
                                         (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.PHOTO_TYPE, B.PHOTO_GB, B.FAQ_TYPE, B.FAQ_GB, B.BOARD_NO, B.CATEGORY_NO
+                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO
                             FROM
                                 COM_BOARD B
                                 LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -265,6 +268,7 @@
                                     AND S.CONTENT_GB = 'FILE'
                                     AND S.TARGET_GB = 'BOARD'
                                     AND F.FILE_GB = 'MAIN'
+                                    AND F.THUMB_FL = 0
                                     AND S.TARGET_NO = ".$row['NO']."
                                 ";
 
@@ -372,11 +376,13 @@
                 }
             }else if ($_type == 'category') {
 
-                $sql = "SELECT TITLE, MENU_URL, TYPE
-                        FROM COM_SUB_MENU
-                        WHERE SYSTEM_GB = 'ANGE'
-                          AND MENU_ID = 'people'
-                          AND MENU_URL = CONCAT('/people/','".$_search[CATEGORY_GB]."','/list')";
+                $sql = "SELECT NO, CATEGORY_NM, NOTE
+                    FROM CMS_CATEGORY
+                    WHERE 1=1
+                    AND SYSTEM_GB = 'ANGE'
+                    AND CATEGORY_GB = ".$_search[COMM_NO]."
+                    ORDER BY SORT_IDX ASC
+                ";
 
                 $data = $_d->sql_query($sql);
 
@@ -721,140 +727,146 @@
             $source_path = '../../..'.$file_path;
             $insert_path = array();
 
-                $body_str = $_model[BODY];
+            $body_str = $_model[BODY];
 
-                try {
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
-                        if (!file_exists($source_path) && !is_dir($source_path)) {
-                            @mkdir($source_path);
-                            @mkdir($source_path.'thumbnail/');
-                            @mkdir($source_path.'medium/');
-                        }
 
-                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                            $file = $files[$i];
+            try {
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
 
-                            if (file_exists($upload_path.$file[name])) {
-                                $uid = uniqid();
-                                rename($upload_path.$file[name], $source_path.$uid);
-                                rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $insert_path[$i] = array(path => $file_path, uid => $uid);
+                    @mkdir($source_path);
+                    @mkdir($source_path.'thumbnail/');
+                    @mkdir($source_path.'medium/');
 
-                                MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                                MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
+                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                        $file = $files[$i];
 
-                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                        if (file_exists($upload_path.$file[name])) {
+                            $uid = uniqid();
+                            rename($upload_path.$file[name], $source_path.$uid);
+                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                            $insert_path[$i] = array(path => $file_path, uid => $uid);
 
-                                MtUtil::_d("------------>>>>> body_str : ".$body_str);
-                            } else {
-                                $insert_path[$i] = array(path => '', uid => '');
-                            }
+                            MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                            MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
+
+                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+
+                            MtUtil::_d("------------>>>>> body_str : ".$body_str);
+                        } else {
+                            $uid = uniqid();
+                            $insert_path[$i] = array(path => '', uid => '');
+                            //$insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
                         }
                     }
-
-                    $_model[BODY] = $body_str;
-                } catch(Exception $e) {
-                    $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-                    break;
                 }
 
-                MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
+                $_model[BODY] = $body_str;
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
 
-                 $err = 0;
-                $msg = "";
+            MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
-                $_d->sql_beginTransaction();
+            $err = 0;
+            $msg = "";
 
+            $_d->sql_beginTransaction();
 
+            if( trim($_model[SUBJECT]) == '' ){
+                $_d->failEnd("제목을 작성 하세요");
+            }
+            if( trim($_model[BODY]) == '' ){
+                $_d->failEnd("내용이 비어있습니다");
+            }
 
-                if( trim($_model[SUBJECT]) == '' ){
-                    $_d->failEnd("제목을 작성 하세요");
-                }
-                if( trim($_model[BODY]) == '' ){
-                    $_d->failEnd("내용이 비어있습니다");
-                }
+            $sql = "UPDATE COM_BOARD
+                SET
+                    HEAD = '".$_model[HEAD]."'
+                    ,SUBJECT = '".$_model[SUBJECT]."'
+                    ,BODY = '".$_model[BODY]."'
+                    ,REG_UID = '".$_SESSION['uid']."'
+                    ,REG_NM = '".$_model[REG_NM]."'
+                    ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
+                    ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
+                    ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
+                    ,TAG = '".$_model[TAG]."'
+                    ,ETC1 = '".$_model[ETC1]."'
+                    ,ETC2 = '".$_model[ETC2]."'
+                    ,ETC3 = '".$_model[ETC3]."'
+                    ,ETC4 = '".$_model[ETC4]."'
+                    ,ETC5 = '".$_model[ETC5]."'
+                    ,PASSWORD = '".$_model[PASSWORD]."'
+                    ,PHOTO_TYPE = '".$_model[PHOTO_TYPE]."'
+                    ,PHOTO_GB = '".$_model[PHOTO_GB]."'
+                    ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
+                    ,FAQ_GB = '".$_model[FAQ_GB]."'
+                    ,COMM_NO = '".$_model[COMM_NO]."'
+                    ,CATEGORY_NO = '".$_model[CATEGORY_NO]."'
+                WHERE
+                    NO = ".$_key."
+                ";
 
-                $sql = "UPDATE COM_BOARD
-                    SET
-                        HEAD = '".$_model[HEAD]."'
-                        ,SUBJECT = '".$_model[SUBJECT]."'
-                        ,BODY = '".$_model[BODY]."'
-                        ,REG_UID = '".$_SESSION['uid']."'
-                        ,REG_NM = '".$_model[REG_NM]."'
-                        ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
-                        ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
-                        ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
-                        ,TAG = '".$_model[TAG]."'
-                        ,ETC1 = '".$_model[ETC1]."'
-                        ,ETC2 = '".$_model[ETC2]."'
-                        ,ETC3 = '".$_model[ETC3]."'
-                        ,ETC4 = '".$_model[ETC4]."'
-                        ,ETC5 = '".$_model[ETC5]."'
-                        ,PASSWORD = '".$_model[PASSWORD]."'
-                        ,PHOTO_TYPE = '".$_model[PHOTO_TYPE]."'
-                        ,PHOTO_GB = '".$_model[PHOTO_GB]."'
-                        ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
-                        ,FAQ_GB = '".$_model[FAQ_GB]."'
-                        ,COMM_NO = '".$_model[COMM_NO]."'
-                        ,CATEGORY_NO = '".$_model[CATEGORY_NO]."'
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $sql = "SELECT
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        FILE F, CONTENT_SOURCE S
                     WHERE
-                        NO = ".$_key."
+                        F.NO = S.SOURCE_NO
+                        AND S.TARGET_GB = 'BOARD'
+                        AND S.CONTENT_GB = 'FILE'
+                        AND S.TARGET_NO = ".$_key."
+                        AND F.THUMB_FL = '0'
                     ";
 
-                $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $is_delete = "Y";
 
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
 
-                $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'BOARD'
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
+                    MtUtil::_d("------------>>>>> FILES >>>>>>>>>>>>>>>: ".count($files));
 
-                $result = $_d->sql_query($sql,true);
-                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    $is_delete = true;
-
-                    if (count($_model[FILES]) > 0) {
-                        $files = $_model[FILES];
-                        for ($i = 0 ; $i < count($files); $i++) {
-                            if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
-                                $is_delete = false;
-                            }
-                        }
-                    }
-
-                    if ($is_delete) {
-                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                        $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                        $_d->sql_query($sql);
-
-                        $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
-
-                        $_d->sql_query($sql);
-
-                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-
-                        if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                            unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                            unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                            unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    for ($i = 0 ; $i < count($files); $i++) {
+                        if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                            $is_delete = "N";
                         }
                     }
                 }
+
+                MtUtil::_d("------------>>>>> is_delete >>>>>>>>>>>>>>>: ".$is_delete);
+
+                if ($is_delete == "Y") {
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND CONTENT_GB = 'FILE' AND SOURCE_NO = ".$row[NO]." AND TARGET_NO = ".$_key."";
+                    // TARGET_NO
+
+                    $_d->sql_query($sql);
+
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+
+                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    }
+                }
+            }
 
                 if (count($_model[FILES]) > 0) {
                     $files = $_model[FILES];
