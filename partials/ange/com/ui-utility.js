@@ -122,6 +122,8 @@ define([
 
                                 if (data.FILE) {
                                     $rootScope.profileImg = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                                } else {
+                                    $rootScope.profileImg = null;
                                 }
 
                                 if (data.USER_ST == 'W' && data.CERT_GB == 'MIG') {
