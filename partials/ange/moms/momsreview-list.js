@@ -21,6 +21,7 @@ define([
         $scope.PAGE_SIZE = 10;
         $scope.TOTAL_COUNT = 0;
 
+        $scope.list = [];
 
         var date = new Date();
 
@@ -80,13 +81,14 @@ define([
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
 
-
                     for(var i in data) {
-                        if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
-                            data[i].MAIN_FILE = img;
 
-                        }
+                        console.log(data[i].FILE.PATH);
+
+                        var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        data[i].TYPE = 'REVIEW';
+                        data[i].FILE = img;
+
                         var source = data[i].BODY;
                         var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
 
@@ -95,8 +97,9 @@ define([
                         source = source.trim();
 
                         data[i].BODY = source;
+
+                        $scope.list.push(data[i]);
                     }
-                    $scope.list = data;
                 })
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
