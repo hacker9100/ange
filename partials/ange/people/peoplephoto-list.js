@@ -20,16 +20,15 @@ define([
         // 페이징
         $scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = 10;
-        $scope.TOTAL_COUNT = 0;
+        $scope.SEARCH_TOTAL_COUNT = 0;
+
+        $scope.list = [];
 
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.list = [];
             $scope.getPeopleBoardList();
         };
-
-        $scope.search = {};
-
-        $scope.list = [];
 
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "작성자", value: "NICK_NM"}];
