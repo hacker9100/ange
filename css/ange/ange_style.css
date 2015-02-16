@@ -637,7 +637,8 @@ body {
     border-bottom: 1px solid #EFEFEF;
 }
 
-.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story.png'); }
+/*.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story.png'); }*/
+.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story_open.png'); }
 .chnnel2 { 	background:url('/imgs/ange/ui_gnbbtn_02_people.png'); }
 .chnnel3 { 	background:url('/imgs/ange/ui_gnbbtn_03_moms.png'); }
 .chnnel4 { 	background:url('/imgs/ange/ui_gnbbtn_04_my.png'); }
@@ -649,7 +650,7 @@ body {
     margin:0 0 0 10px;
     text-indent: -9999px;
     cursor:pointer;
-    background-repeat: none;
+    background-repeat: no-repeat;
 }
 
 .gnb_right{
