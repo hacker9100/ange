@@ -79,7 +79,7 @@
                                     </div><!-- /.col-xs-12-->
 
                                     <div class="col-xs-12 people_searchresult" style="display:block;">	<!-- 검색 시에만 표시됩니다. -->
-                                        {{TOTAL_COUNT}}개의 게시물 중 <span class="table_red">{{SEARCH_TOTAL_COUNT == null ? 0 : SEARCH_TOTAL_COUNT}}</span> 개가 검색되었습니다.
+                                        {{PHOTO_TOTAL_COUNT}}개의 게시물 중 <span class="table_red">{{SEARCH_TOTAL_COUNT == null ? 0 : SEARCH_TOTAL_COUNT}}</span> 개가 검색되었습니다.
                                     </div><!-- /.col-xs-12-->
                                 </div><!-- /.row -->
                             </div><!-- /.container -->
@@ -117,7 +117,7 @@
                                                 <div class="col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
                                                     <div ng-click="click_showViewPeoplePhoto(item.NO)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
-                                                            <img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url({{item.MAIN_FILE}})" />
+                                                            <img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
                                                             <!--<img src="{{item.MAIN_FILE}}" class="people_photo_img" style="width: 240px; height: 240px;"/>-->
                                                             <div class="people_photo_cate">
                                                                 <span>{{item.CATEGORY_NM}}</span>

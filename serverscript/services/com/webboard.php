@@ -254,10 +254,29 @@
 
                 $data = null;
 
-                if (isset($_search['FILE'])) {
-                    $__trn = '';
-                    $result = $_d->sql_query($sql,true);
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+
+                if($_search['FILE']) {
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+//                        $sql = "SELECT
+//                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+//                                FROM
+//                                    FILE F, CONTENT_SOURCE S
+//                                WHERE
+//                                    F.NO = S.SOURCE_NO
+//                                    AND S.CONTENT_GB = 'FILE'
+//                                    AND S.TARGET_GB = 'BOARD'
+//                                    AND F.FILE_GB = 'MAIN'
+//                                    AND F.THUMB_FL = 0
+//                                    AND S.TARGET_NO = ".$row['NO']."
+//                                ";
+//
+//                        $category_data = $_d->getData($sql);
+//                        $row['FILE'] = $category_data;
+//
+//                        $__trn->rows[$i] = $row;
 
                         $sql = "SELECT
                                     F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
@@ -269,20 +288,21 @@
                                     AND S.TARGET_GB = 'BOARD'
                                     AND F.FILE_GB = 'MAIN'
                                     AND F.THUMB_FL = 0
-                                    AND S.TARGET_NO = ".$row['NO']."
-                                ";
+                                    AND S.TARGET_NO = ".$row['NO']."";
 
-                        $category_data = $_d->getData($sql);
-                        $row['FILE'] = $category_data;
+                        $file_result = $_d->sql_query($sql);
+                        $file_data = $_d->sql_fetch_array($file_result);
+                        $row['FILE'] = $file_data;
 
                         $__trn->rows[$i] = $row;
                     }
+
                     $_d->sql_free_result($result);
                     $data = $__trn->{'rows'};
 
-                    if($_d->mysql_errno > 0){
+                    if ($_d->mysql_errno > 0) {
                         $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                    }else{
+                    } else {
                         $_d->dataEnd2($data);
                     }
                 } if (isset($_search['FILE_EXIST'])) {

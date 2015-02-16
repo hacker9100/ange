@@ -29,6 +29,7 @@ define([
 
         $scope.search = {};
 
+        $scope.list = [];
 
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "작성자", value: "NICK_NM"}];
@@ -68,7 +69,7 @@ define([
         $scope.init = function() {
 
             // TODO: CATEGORY에서 조회할것
-            $scope.tabs = $scope.menu.SUB_MENU_INFO;
+            //$scope.tabs = $scope.menu.SUB_MENU_INFO;
             //$scope.tabs = null;
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
@@ -87,12 +88,9 @@ define([
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
 
-                    $scope.TOTAL_COUNT = total_cnt;
-
-                    /*$scope.total(total_cnt);*/
-                    $scope.list = data;
+                    $scope.PHOTO_TOTAL_COUNT = total_cnt;
                 })
-                .catch(function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
+                .catch(function(error){$scope.PHOTO_TOTAL_COUNT = 0;});
 
             // 카테고리 탭 셋팅
             $scope.getList('com/webboard', 'category', {}, $scope.search, true)
@@ -109,11 +107,25 @@ define([
             $scope.selectIdx = idx;
             if(idx == 0){
                 $scope.search.CATEGORY_NO = '';
-            }else{
-               $scope.search.CATEGORY_NO = category_no;
-            }
 
-            $scope.getPeopleBoardList();
+                // 페이징
+                $scope.PAGE_NO = 1;
+                $scope.PAGE_SIZE = 10;
+                $scope.TOTAL_COUNT = 0;
+
+                $scope.list = [];
+                $scope.getPeopleBoardList();
+            }else{
+                $scope.search.CATEGORY_NO = category_no;
+
+                // 페이징
+                $scope.PAGE_NO = 1;
+                $scope.PAGE_SIZE = 10;
+                $scope.TOTAL_COUNT = 0;
+
+                $scope.list = [];
+                $scope.getPeopleBoardList();
+            }
         };
 
         // 우측 메뉴 클릭
@@ -137,19 +149,25 @@ define([
 
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
-                    var search_total_cnt = data[0].TOTAL_COUNT;
-                    $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
 
                     for(var i in data) {
-                        if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
-                            data[i].MAIN_FILE = img;
 
-                        }
+//                        if (data[i].FILE != null) {
+//                            var img =  UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID; //UPLOAD.BASE_URL
+//                            data[i].MAIN_FILE = img;
+//                        }
+
+                        console.log(data[i].FILE.PATH);
+                        //UPLOAD.BASE_URL
+                        var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        data[i].TYPE = 'BOARD';
+                        data[i].FILE = img;
+
+                        $scope.list.push(data[i]);
                     }
 
-                    /*$scope.total(total_cnt);*/
-                    $scope.list = data;
+                    var search_total_cnt = data[0].TOTAL_COUNT;
+                    $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
                 })
                 .catch(function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0});
         };
@@ -174,6 +192,7 @@ define([
 
         // 검색
         $scope.click_searchPeopleBoard = function(){
+            $scope.list = [];
             $scope.getPeopleBoardList();
         }
 
