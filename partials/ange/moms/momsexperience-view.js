@@ -338,7 +338,7 @@ define([
             }
         };
 
-        $scope.click_momseventcomp = function () {
+        $scope.click_momsexperiencecomp = function () {
 
             // 세션만료 되었을 때 리스트로 이동
             if($scope.uid == '' || $scope.uid == null){
