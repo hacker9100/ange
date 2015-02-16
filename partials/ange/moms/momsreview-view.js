@@ -114,7 +114,7 @@ define([
             } else if ($stateParams.menu == 'angereview') {
                 $location.url('/moms/angereview/edit/'+item.NO);
             } else if ($stateParams.menu == 'samplereview') {
-                $$location.url('/moms/samplereview/edit/'+item.NO);
+                $location.url('/moms/samplereview/edit/'+item.NO);
             } else if ($stateParams.menu == 'samplepackreview') {
                 $location.url('/moms/samplepackreview/edit/'+item.NO);
             }else if ($stateParams.menu == 'eventreview') {
