@@ -204,6 +204,14 @@ switch ($_method) {
                             )";
 
         $_d->sql_query($sql);
+
+        // 신청자명 증가
+        $sql = "UPDATE adm_ad
+              SET  ada_count_request = ada_count_request + 1
+              WHERE ada_idx = '".$_model[ANSWER]."'";
+
+        $_d->sql_query($sql);
+
         $no = $_d->mysql_insert_id;
 
         if ($_d->mysql_errno > 0) {

@@ -287,7 +287,7 @@ define([
                         data.ada_preview_img = img;
 
 
-                        if($scope.end_date <= $scope.todayDate){
+                        if($scope.todayDate <= $scope.end_date){
                             $scope.showForm = "compForm";
                         }else{
                             $scope.showForm = "reviewForm";
