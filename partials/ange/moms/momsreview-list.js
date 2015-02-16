@@ -36,6 +36,7 @@ define([
 
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.list = [];
             $scope.getPeopleBoardList();
         };
 
@@ -149,6 +150,7 @@ define([
         };
 
         $scope.click_searchPeopleBoard = function(){
+            $scope.list = [];
             $scope.getMomsReviewList();
         }
 
