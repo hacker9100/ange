@@ -83,8 +83,8 @@
                                             <dd style="margin:0px;">
                                                 <a ng-show="uid == item.REG_UID" ng-click="showCommentDetails = ! showCommentDetails">수정</a>
                                                 <a ng-show="uid == item.REG_UID" ng-click="click_deleteReply(item.NO);">삭제</a>
-                                                <a ng-click="click_blind(item.NO);" ng-show="item.BLIND_FL == 'N'" class="table_red">블라인드</a>
-                                                <a ng-click="click_blind_clear(item.NO);" ng-show="item.BLIND_FL == 'Y'" class="table_red">블라인드해제</a>
+                                                <a ng-click="click_blind(item.NO);" ng-show="item.BLIND_FL == 'N' && role == 'ANGE_ADMIN'" class="table_red">블라인드</a>
+                                                <a ng-click="click_blind_clear(item.NO);" ng-show="item.BLIND_FL == 'Y' && role == 'ANGE_ADMIN'" class="table_red">블라인드해제</a>
                                             </dd>
 
                                             <p style="font-size:0.86em; margin:4px 0 0 0; "  ng-class="{ 'hidden': ! showCommentDetails }">

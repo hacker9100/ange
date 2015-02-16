@@ -15,10 +15,10 @@
                     <p style="font-size:0.86em; margin:4px 0 0 0; ">
                         <a ng-click="showDetails = ! showDetails">댓글<span style="color: #df5348">({{replyItem.RE_COUNT}})</span></a>
                         &nbsp; | &nbsp;<a href="#">신고</a>
-                        <span ng-show="uid == item.REG_UID && replyItem.BLIND_FL == 'N' ">&nbsp; | &nbsp;<a ng-click="showCommentDetails = ! showCommentDetails">수정</a></span>
-                        <span ng-show="uid == item.REG_UID && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="click_deleteReply(replyItem);">삭제</a></span>
-                        &nbsp; | &nbsp;<a ng-click="click_blind(replyItem.NO);" ng-show="replyItem.BLIND_FL == 'N' && role == 'ANGE_ADMIN'" class="table_red">블라인드</a>
-                                        <a ng-click="click_blind_clear(replyItem.NO);" ng-show="replyItem.BLIND_FL == 'Y' && role == 'ANGE_ADMIN'" class="table_red">블라인드해제</a>
+                        <span ng-if="uid == replyItem.REG_UID  && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="showCommentDetails = ! showCommentDetails">수정</a></span> <!-- && replyItem.BLIND_FL == 'N'  -->
+                        <span ng-if="uid == replyItem.REG_UID && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="click_deleteReply(replyItem);">삭제</a></span>
+                        &nbsp; | &nbsp;<a ng-click="click_blind(replyItem.NO);" ng-if="replyItem.BLIND_FL == 'N' && role == 'ANGE_ADMIN'" class="table_red">블라인드</a> <!--replyItem.BLIND_FL == 'N' &&-->
+                        <a ng-click="click_blind_clear(replyItem.NO);" ng-if="replyItem.BLIND_FL == 'Y' && role == 'ANGE_ADMIN'" class="table_red">블라인드해제</a> <!-- replyItem.BLIND_FL == 'Y' -->
 
                         <p style="font-size:0.86em; margin:4px 0 0 0; "  ng-class="{ 'hidden': ! showCommentDetails }">
                             &nbsp;&nbsp;&nbsp;<input type="text" ng-model="replyItem.UPDATE_COMMENT"  style="width:60%;"/>&nbsp;<a ng-click="click_updateReply(replyItem.NO, replyItem.UPDATE_COMMENT);">수정</a>
