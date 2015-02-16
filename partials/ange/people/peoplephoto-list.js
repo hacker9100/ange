@@ -19,7 +19,7 @@ define([
 
         // 페이징
         $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = 9;
         $scope.SEARCH_TOTAL_COUNT = 0;
 
         $scope.list = [];

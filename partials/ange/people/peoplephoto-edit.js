@@ -16,7 +16,8 @@ define([
         $scope.checked = true;
 
         /********** 초기화 **********/
-            // 첨부파일 초기화
+
+        // 첨부파일 초기화
         $scope.queue = [];
         // 게시판 초기화
         $scope.item = {};
@@ -49,21 +50,6 @@ define([
                     $scope.checked = false;
                 }
             })
-//            $("#check_scrap").click(function(){
-//                if(!$("#check_scrap").is(":checked")){
-//                    $scope.item.SCRAP_FL = "true";
-//                }else{
-//                    $scope.item.SCRAP_FL = "false";
-//                }
-//            });
-//
-//            $("#check_reply").click(function(){
-//                if(!$("#check_reply").is(":checked")){
-//                    $scope.item.REPLY_FL = "true";
-//                }else{
-//                    $scope.item.REPLY_FL = "false";
-//                }
-//            });
          });
 
         $(function(){
@@ -166,7 +152,7 @@ define([
         };
 
         // 초기화
-        $scope.init = function(session) {
+        $scope.init = function() {
 
             $scope.search = {};
             $scope.search.CATEGORY_GB = $scope.community_show = $stateParams.menu;
