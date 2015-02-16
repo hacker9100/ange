@@ -37,7 +37,7 @@
 
                                     <span class="col-xs-4 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input id="user_id" ng-model="user.USER_ID" type="text" class="form-control" style="cursor: default; background-color: #fff; margin:0px;" placeholder="ID" disabled>
+                                            <input id="user_id" ng-model="user.USER_ID" type="text" class="form-control" style="cursor: default; background-color: #fff; margin:0px;" placeholder="ID" readonly>
                                         </div>
                                     </span>
 
@@ -102,7 +102,7 @@
 
                                     <span class="col-xs-4 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input id="user_nm" ng-model="user.USER_NM" type="text" class="form-control" style="margin:0px;" placeholder="Name">
+                                            <input id="user_nm" ng-model="user.USER_NM" type="text" class="form-control" style="cursor: default; background-color: #fff; margin:0px;" placeholder="Name" readonly>
                                         </div>
                                     </span>
 
@@ -123,7 +123,7 @@
 
                                     <span class="col-xs-4 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input id="nick_nm" ng-model="user.NICK_NM" type="text" class="form-control" style="cursor: default; background-color: #fff; margin:0px;" placeholder="Nick name" disabled>
+                                            <input id="nick_nm" ng-model="user.NICK_NM" type="text" class="form-control" style="cursor: default; background-color: #fff; margin:0px;" placeholder="Nick name" readonly>
                                         </div>
                                     </span>
 
@@ -427,7 +427,7 @@
 
                                     <span class="col-xs-10 basicinfo input">
                                         <div class="form-group" style="margin:0 5px; line-height:32px;">
-                                            <input ng-model="user.MARRIED_FL" type="radio" value="Y" style="float: left; margin:10px 0 0 15px;">
+                                            <input id="married" ng-model="user.MARRIED_FL" type="radio" value="Y" style="float: left; margin:10px 0 0 15px;">
                                             <span style="float:left; margin-left:5px;">기혼</span>
 
                                             <input ng-model="user.MARRIED_FL" type="radio" value="N" style="float: left; margin:10px 0 0 15px;">
@@ -446,7 +446,7 @@
 
                                     <span class="col-xs-3 basicinfo input">
                                         <div class="form-group" style="margin:0 5px; line-height:32px;">
-                                            <input ng-model="user.PREGNENT_FL" type="radio" value="N" style="float: left; margin:10px 0 0 15px;" checked>
+                                            <input id="pregment" ng-model="user.PREGNENT_FL" type="radio" value="N" style="float: left; margin:10px 0 0 15px;" checked>
                                             <span style="float:left; margin-left:5px;">해당없음</span>
 
                                             <input ng-model="user.PREGNENT_FL" type="radio" value="Y" style="float: left; margin:10px 0 0 15px;">

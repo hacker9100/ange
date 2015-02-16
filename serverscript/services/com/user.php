@@ -378,7 +378,8 @@
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                             USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, INTRO, NOTE,
                             MARRIED_FL, PREGNENT_FL, BLOG_FL, JOIN_PATH, CONTACT_ID, CARE_CENTER, CENTER_VISIT_YMD, CENTER_OUT_YMD, EN_FL, EN_EMAIL_FL, EN_POST_FL, EN_SMS_FL, EN_PHONE_FL,
-                            ROLE_ID, ROLE_NM, SUM_POINT, USE_POINT, REMAIN_POINT, BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS,
+                            ROLE_ID, SUM_POINT, USE_POINT, REMAIN_POINT, BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS,
+                            (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = DATA.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM,
                             (SELECT COUNT(1) FROM ANGE_USER_BABY UB WHERE UB.USER_ID = DATA.USER_ID) AS BABY_CNT,
                             (SELECT COUNT(1) FROM COM_BOARD CB WHERE CB.REG_UID = DATA.USER_ID) AS BOARD_CNT,
                             (SELECT COUNT(1) FROM COM_REPLY CR WHERE CR.REG_UID = DATA.USER_ID) AS REPLY_CNT,
@@ -393,14 +394,12 @@
                             SELECT
                                 U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
                                 U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_YMD, U.CENTER_OUT_YMD, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SMS_FL, U.EN_PHONE_FL,
-                                UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM,
-                                M.SUM_POINT, M.USE_POINT, M.REMAIN_POINT,
+                                U.SUM_POINT, U.USE_POINT, U.REMAIN_POINT, UR.ROLE_ID,
                                 B.BLOG_GB, B.BLOG_URL, B.PHASE, B.THEME, B.NEIGHBOR_CNT, B.POST_CNT, B.VISIT_CNT, B.SNS
                             FROM
                                 COM_USER U
                                 INNER JOIN USER_ROLE UR ON U.USER_ID = UR.USER_ID
                                 INNER JOIN COM_ROLE R ON UR.ROLE_ID = R.ROLE_ID
-                                LEFT OUTER JOIN ANGE_MILEAGE_STATUS M ON U.USER_ID = M.USER_ID
                                 LEFT OUTER JOIN ANGE_USER_BLOG B ON U.USER_ID = B.USER_ID
                                 ".$search_from."
                             WHERE
@@ -833,15 +832,15 @@
                 }
             } else if ($_type == 'response') {
                 $sql = "INSERT INTO ANGE_USER_RESPONSE
-                                (
-                                    USER_ID
-                                    ,NOTE
-                                    ,REG_DT
-                                ) VALUES (
-                                    '".$_model[USER_ID]."'
-                                    ,'".$_model[NOTE]."'
-                                    ,SYSDATE()
-                                )";
+                        (
+                            USER_ID
+                            ,NOTE
+                            ,REG_DT
+                        ) VALUES (
+                            '".$_model[USER_ID]."'
+                            ,'".$_model[NOTE]."'
+                            ,SYSDATE()
+                        )";
 
                 $_d->sql_query($sql);
 
@@ -1108,7 +1107,44 @@
                     }
                 }
 
-                $sql = "UPDATE ANGE_USER_BLOG
+                $sql = "SELECT COUNT(*) AS COUNT FROM ANGE_USER_BLOG WHERE USER_ID = '".$_key."'";
+
+                $data = $_d->sql_fetch($sql);
+
+                if ($data['COUNT'] == 0 && isset($_model[BLOG]) && $_model[BLOG] != "") {
+                    if (isset($_model[BLOG][BLOG_URL]) && $_model[BLOG][BLOG_URL] != "") {
+                        $sql = "INSERT INTO ANGE_USER_BLOG
+                            (
+                                USER_ID
+                                ,BLOG_GB
+                                ,BLOG_URL
+                                ,PHASE
+                                ,THEME
+                                ,NEIGHBOR_CNT
+                                ,POST_CNT
+                                ,VISIT_CNT
+                                ,SNS
+                            ) VALUES (
+                                '".$_key."'
+                                ,'".$_model[BLOG][BLOG_GB]."'
+                                ,'".$_model[BLOG][BLOG_URL]."'
+                                ,'".$_model[BLOG][PHASE]."'
+                                ,'".$_model[BLOG][THEME]."'
+                                ,'".$_model[BLOG][NEIGHBOR_CNT]."'
+                                ,'".$_model[BLOG][POST_CNT]."'
+                                ,'".$_model[BLOG][VISIT_CNT]."'
+                                ,'".$_model[BLOG][SNS]."'
+                            )";
+
+                        $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                } else {
+                    $sql = "UPDATE ANGE_USER_BLOG
                         SET
                             BLOG_URL = '".$_model[BLOG][BLOG_URL]."'
                             ,PHASE = '".$_model[BLOG][PHASE]."'
@@ -1121,12 +1157,12 @@
                             USER_ID = '".$_key."'
                         ";
 
+                    $_d->sql_query($sql);
 
-                $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
                 }
 
                 if (isset($_model[ROLE]) && $_model[ROLE] != "") {

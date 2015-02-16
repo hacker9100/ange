@@ -23,7 +23,7 @@
         <div ng-if="uid" class="userlog_login_now">
             <a class="userconfig" title="프로필사진 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
             <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}">
-            <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url({{profileImg}})'}">
+            <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}">
 
             <div class="userlog_login_info">
                 <span class="usernickname">{{user_info.NICK_NM}}</span> 님, 안녕하세요.

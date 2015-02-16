@@ -61,7 +61,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
 //    yourApp.controller('YourAppCtrl', function($scope) {
 //    });
 
-    app.run(function ($rootScope, $location) {
+    app.run(function ($rootScope, $location, $templateCache) {
         // 페이스북 연동 설정
 //        $FB.init('640241789454829');
 
@@ -70,6 +70,10 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             $rootScope.location = $location.path();
             ga('send', 'pageview', $location.path());
         });
+
+//        $rootScope.$on('$viewContentLoaded', function() {
+//            $templateCache.removeAll();
+//        });
     });
 
     return app;

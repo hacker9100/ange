@@ -111,6 +111,7 @@ define([
 
                         $scope.login($scope.item.id, $scope.item)
                             .then(function(data){
+                                $rootScope.login = true;
                                 $rootScope.authenticated = true;
                                 $rootScope.user_info = data;
                                 $rootScope.uid = data.USER_ID;
@@ -119,6 +120,7 @@ define([
                                 $rootScope.system = data.SYSTEM_GB;
                                 $rootScope.menu_role = data.MENU_ROLE;
                                 $rootScope.email = data.EMAIL;
+                                $rootScope.nick = data.NICK_NM;
 
                                 if (data.FILE) {
                                     $rootScope.profileImg = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;

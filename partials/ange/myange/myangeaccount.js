@@ -210,6 +210,10 @@ define([
             if ($scope.user.PREGNENT_FL != undefined) {
                 if ($scope.user.PREGNENT_FL == 'N') {
                     $scope.disabledPregnent = true;
+
+                    $scope.user.YEAR1 = '';
+                    $scope.user.MONTH1 = '';
+                    $scope.user.DAY1 = '';
                 } else {
                     $scope.disabledPregnent = false;
                 }
@@ -353,6 +357,18 @@ define([
                 $scope.user.EMAIL = $scope.user.EMAIL_ID + '@' + $scope.user.EMAIL_TYPE;
             }
 
+            if ($scope.user.PREGNENT_FL == '') {
+                $('#pregment').focus();
+                dialogs.notify('알림', '임신여부를 선택해주세요.', {size: 'md'});
+                return;
+            }
+
+            if ($scope.user.MARRIED_FL == '') {
+                $('#married').focus();
+                dialogs.notify('알림', '결혼여부를 선택해주세요.', {size: 'md'});
+                return;
+            }
+
             if ( ($scope.user.YEAR1 == undefined || $scope.user.YEAR1 == '') || ($scope.user.MONTH1 == undefined || $scope.user.MONTH1 == '') || ($scope.user.DAY1 == undefined || $scope.user.DAY1 == '') ) {
             } else {
                 $scope.user.BABY_BIRTH_DT = $scope.user.YEAR1 + ($scope.user.MONTH1.length == 1 ? '0' + $scope.user.MONTH1 : $scope.user.MONTH1) + ($scope.user.DAY1.length == 1 ? '0' + $scope.user.DAY1 : $scope.user.DAY1);
@@ -412,6 +428,7 @@ define([
 
                     $scope.updateSession($scope.user.USER_ID, $scope.item)
                         .then(function(data){
+                            $rootScope.login = true;
                             $rootScope.authenticated = true;
                             $rootScope.user_info = data;
                             $rootScope.uid = data.USER_ID;
@@ -420,9 +437,12 @@ define([
                             $rootScope.system = data.SYSTEM_GB;
                             $rootScope.menu_role = data.MENU_ROLE;
                             $rootScope.email = data.EMAIL;
+                            $rootScope.nick = data.NICK_NM;
 
                             if (data.FILE) {
                                 $rootScope.profileImg = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                            } else {
+                                $rootScope.profileImg = null;
                             }
                         }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                 })
@@ -486,8 +506,8 @@ define([
 
                     if ($scope.user.BIRTH != undefined && $scope.user.BIRTH.length == 8) {
                         $scope.user.YEAR = $scope.user.BIRTH.substr(0, 4);
-                        $scope.user.MONTH = $scope.user.BIRTH.substr(4, 2).replace('0', '');
-                        $scope.user.DAY = $scope.user.BIRTH.substr(6, 2).replace('0', '');
+                        $scope.user.MONTH = parseInt($scope.user.BIRTH.substr(4, 2))+'';
+                        $scope.user.DAY = parseInt($scope.user.BIRTH.substr(6, 2))+'';
                     }
 
                     if ($scope.user.ZIP_CODE != undefined && $scope.user.ZIP_CODE.length == 6) {
@@ -503,7 +523,7 @@ define([
                                 $scope.user.PHONE_1_3 = $scope.user.PHONE_1.substr(5, 4);
                             } else {
                                 $scope.user.PHONE_1_2 = $scope.user.PHONE_1.substr(2, 4);
-                                $scope.user.PHONE_1_3 = $scope.user.PHONE_1.substr(5, 4);
+                                $scope.user.PHONE_1_3 = $scope.user.PHONE_1.substr(6, 4);
                             }
                         } else {
                             $scope.user.PHONE_1_1 = $scope.user.PHONE_1.substr(0, 3);
@@ -549,8 +569,8 @@ define([
 
                     if ($scope.user.BABY_BIRTH_DT != undefined && $scope.user.BABY_BIRTH_DT.length == 8) {
                         $scope.user.YEAR1 = $scope.user.BABY_BIRTH_DT.substr(0, 4);
-                        $scope.user.MONTH1 = $scope.user.BABY_BIRTH_DT.substr(4, 2).replace('0', '');
-                        $scope.user.DAY1 = $scope.user.BABY_BIRTH_DT.substr(6, 2).replace('0', '');
+                        $scope.user.MONTH1 = parseInt($scope.user.BABY_BIRTH_DT.substr(4, 2))+'';
+                        $scope.user.DAY1 = parseInt($scope.user.BABY_BIRTH_DT.substr(6, 2))+'';
                     }
 
                     if ($scope.user.BABY != null && $scope.user.BABY != '') {
@@ -564,8 +584,8 @@ define([
 
                             if ($scope.user.BABY[i].BABY_BIRTH.length == 8) {
                                 $scope.babies[i].BABY_YEAR = $scope.user.BABY[i].BABY_BIRTH.substr(0, 4);
-                                $scope.babies[i].BABY_MONTH = $scope.user.BABY[i].BABY_BIRTH.substr(4, 2).replace('0', '');
-                                $scope.babies[i].BABY_DAY = $scope.user.BABY[i].BABY_BIRTH.substr(6, 2).replace('0', '');
+                                $scope.babies[i].BABY_MONTH = parseInt($scope.user.BABY[i].BABY_BIRTH.substr(4, 2))+'';
+                                $scope.babies[i].BABY_DAY = parseInt($scope.user.BABY[i].BABY_BIRTH.substr(6, 2))+'';
                             }
                         }
                     }
@@ -573,16 +593,16 @@ define([
                     if ($scope.user.BLOG != null && $scope.user.BLOG != '') {
                         $scope.blog = $scope.user.BLOG;
 
-                        $scope.blog.BLOG_DETAIL = $scope.user.BLOG.BLOG_URL;
-                        if ($scope.blog.BLOG_GB == 'NAVER') {
-                            $scope.blog.BLOG_URL = 'http://blog.naver.com/';
-                        } else if ($scope.blog.BLOG_GB == 'DAUM') {
-                            $scope.blog.BLOG_URL = 'http://blog.daum.net/';
-                        } else if ($scope.blog.BLOG_GB == 'TSTORY') {
-                            $scope.blog.BLOG_URL = 'http://blog.tstory.com/';
-                        } else {
-                            $scope.blog.BLOG_URL = '';
-                        }
+//                        $scope.blog.BLOG_DETAIL = $scope.user.BLOG.BLOG_URL;
+//                        if ($scope.blog.BLOG_GB == 'NAVER') {
+//                            $scope.blog.BLOG_URL = 'http://blog.naver.com/';
+//                        } else if ($scope.blog.BLOG_GB == 'DAUM') {
+//                            $scope.blog.BLOG_URL = 'http://blog.daum.net/';
+//                        } else if ($scope.blog.BLOG_GB == 'TSTORY') {
+//                            $scope.blog.BLOG_URL = 'http://blog.tstory.com/';
+//                        } else {
+//                            $scope.blog.BLOG_URL = '';
+//                        }
 
                         if ($scope.blog.THEME != '') {
                             var spTheme = $scope.blog.THEME.split(',');

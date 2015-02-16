@@ -131,6 +131,8 @@ define([
                             $rootScope.role = null;
                             $rootScope.menu_role = null;
                             $rootScope.email = null;
+                            $rootScope.nick = null;
+                            $rootScope.profileImg = null;
 
                             $rootScope.addr = null;
                             $rootScope.addr_detail = null;
@@ -540,6 +542,15 @@ define([
             $scope.category_b = category_b;
         })
         .catch(function(error){});
+
+        $scope.moveAccount = function() {
+            if ($rootScope.uid != undefined) {
+                if ($rootScope.user_info.USER_ST == 'W' && $rootScope.user_info.CERT_GB == 'MIG') {
+                    $location.path('myange/account');
+                }
+            }
+        };
+
 /*
         $scope.getMenu = function() {
             var deferred = $q.defer();

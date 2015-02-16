@@ -5,8 +5,9 @@
     Description : app의 최상위 파일로서 최초 로딩되는 index 파일
 -->
 <?php
-    header("Pragma: no-cache");
-    header("Cache-Control: no-cache,must-revalidate");
+//    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+//    header("Cache-Control: post-check=0, pre-check=0", false);
+//    header("Pragma: no-cache");
 
     @extract($_SERVER);
 
@@ -84,9 +85,13 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--
+    <meta http-equiv="cache-control" content="max-age=0" />
     <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="-1" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache">
-
+-->
     <meta name="author" content="앙쥬" />
     <meta name="copyright" content="앙쥬" />
     <meta name="subject" content="출산,육아" />

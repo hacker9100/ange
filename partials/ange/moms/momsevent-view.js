@@ -576,7 +576,7 @@ define([
                     if(data.COMMENT == null){
                         $scope.search.TOTAL_COUNT = 0;
                     }else{
-                        $scope.search.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                        $scope.search.TOTAL_COUNT = parseInt(data.COMMENT[0].TOTAL_COUNT);
                     }
 
                     var reply = data.COMMENT;
@@ -703,23 +703,52 @@ define([
 //          .then($scope.sessionCheck)
 //          .catch($scope.reportProblems);
 
-        if ($location.search()) {
-            var param = $location.search();
-            if(param.user_id != undefined && param.user_id != '') {
-                $scope.item.user_id = param.user_id;
-                $scope.item.user_nick = decodeURIComponent(param.user_nick);
+        $scope.tempReply = false;
 
-                $scope.insertItem('login', 'temp', $scope.item, false)
-                    .then(function(data) {
-                        console.log(JSON.stringify(data));
+        if ($stateParams.id == 39) {
+            $scope.tempReply = true;
 
-                        $rootScope.uid = $scope.item.user_id;
-                        $rootScope.nick = $scope.item.user_nick;
+            if ($location.search()) {
+                var param = $location.search();
+                if(param.user_id != undefined && param.user_id != '') {
+                    $scope.item.SYSTEM_GB = 'ANGE';
+                    $scope.item.password = 'pass';
 
-                        console.log("임시 세션 생성 성공");
-                    }).catch(function(error){});
+                    $scope.login(param.user_id, $scope.item)
+                        .then(function(data){
+                            $rootScope.login = true;
+                            $rootScope.authenticated = true;
+                            $rootScope.user_info = data;
+                            $rootScope.uid = data.USER_ID;
+                            $rootScope.name = data.USER_NM;
+                            $rootScope.role = data.ROLE_ID;
+                            $rootScope.system = data.SYSTEM_GB;
+                            $rootScope.menu_role = data.MENU_ROLE;
+                            $rootScope.email = data.EMAIL;
+                            $rootScope.nick = data.NICK_NM;
+
+                            if (data.FILE) {
+                                $rootScope.profileImg = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                            } else {
+                                $rootScope.profileImg = null;
+                            }
+
+                        }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                }
             }
-        };
+        } else if ($stateParams.id == 55) {
+            $scope.getSession()
+//                .then($scope.logout())
+                .then($scope.sessionCheck)
+                .then($scope.moveAccount)
+                .catch($scope.reportProblems);
+        }
+
+        $scope.logout = function () {
+            if ($rootScope.uid != undefined) {
+                $scope.logout($rootScope.uid).then( function(data) {});
+            }
+        }
 
         $scope.init();
 //         $scope.addHitCnt();
@@ -728,8 +757,6 @@ define([
 
         // 댓글리스트(삭제예정)
         $scope.getPeopleReplyList();
-
-
 
     }]);
 });
