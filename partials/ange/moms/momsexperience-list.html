@@ -35,15 +35,15 @@
                                 <div class="col-xs-12 v-cell-4" style="margin:0px;">
                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
 
-                                        <div class="item" style="position:absolute;" ng-click="comp_momsevent(item.ada_idx)"><img src="{{item.ada_preview_img}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="item" style="position:absolute;" ng-click="comp_momsexperience(item)"><img src="{{item.ada_preview_img}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
 
                                         <div class="webzine_list_wrap">
-                                            <div class="webzine_list_title" ng-click="comp_momsevent(item.ada_idx)" style="cursor: pointer;">
+                                            <div class="webzine_list_title" ng-click="comp_momsexperience(item)" style="cursor: pointer;">
                                                 {{item.ada_title}}
                                                 <div class="webzine_list_bottomwrap">
                                                     <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_open}}~{{item.ada_date_close}}</span></div>
-                                                    <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_object}}</span></div>
-                                                    <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_notice}}</span></div>
+                                                    <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_quantity}}</span></div>
+                                                    <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_notice}}</span></div>
                                                 </div>
 
                                                 <!--<div class="webzine_list_btnwrap">-->

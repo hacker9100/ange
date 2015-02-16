@@ -53,7 +53,7 @@ define([
         });
 
         // 초기화
-        $scope.init = function(session) {
+        $scope.init = function() {
 
             $scope.option = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 5, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
@@ -91,16 +91,10 @@ define([
         // 게시판 목록 조회
         $scope.$parent.getPeopleBoardList = function () {
 
-            if ($stateParams.menu == 'angeroom') {
-                $scope.search['COMM_NO'] = '1';
-            } else if($stateParams.menu == 'momstalk') {
-                $scope.search['COMM_NO'] = '2';
-            } else if($stateParams.menu == 'babycare') {
-                $scope.search['COMM_NO'] = '3';
-            } else if($stateParams.menu == 'firstbirthtalk') {
-                $scope.search['COMM_NO'] = '4';
-            } else if($stateParams.menu == 'booktalk') {
-                $scope.search['COMM_NO'] = '5';
+            $scope.busy = true;
+            if ($scope.$parent.reload) {
+                $scope.end = false;
+                $scope.PAGE_NO = 0;
             }
 
             $scope.search.SYSTEM_GB = 'ANGE';
@@ -123,14 +117,10 @@ define([
                         data[i].ada_preview_img = img;
                     }
 
-//                    // 메인이미지
-//                    for(var i in data) {
-//                        if (data[i].FILE != null) {
-//                            var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
-//                            data[i].MAIN_FILE = img;
-//                        }
-//                    }
                     $scope.list = data;
+
+                    $scope.$parent.reload = false;
+                    $scope.busy = false;
 
                 })
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
@@ -153,10 +143,9 @@ define([
         $scope.comp_momsevent = function(item){
 
             if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
-                dialogs.notify('알림', "이벤트 기간이 아닙니다.", {size: 'md'});
+                dialogs.notify('알림', "이벤트 참여 기간이 아닙니다.", {size: 'md'});
                 return;
             }
-            console.log(item);
 
             $rootScope.focus = 'comp';
 

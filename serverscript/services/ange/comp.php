@@ -208,7 +208,7 @@ switch ($_method) {
         // 신청자명 증가
         $sql = "UPDATE adm_ad
               SET  ada_count_request = ada_count_request + 1
-              WHERE ada_idx = '".$_model[ANSWER]."'";
+              WHERE ada_idx = '".$_model[ada_idx]."'";
 
         $_d->sql_query($sql);
 

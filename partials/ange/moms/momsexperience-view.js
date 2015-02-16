@@ -11,13 +11,16 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsexperience-view', ['$scope','$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT',  'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
+    controllers.controller('momsexperience-view', ['$scope', '$rootScope', '$sce', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope,$rootScope, $sce, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
 
         $scope.queue = [];
         $scope.search = {};
 
         $scope.item = {};
         $scope.item.BLOG = [];
+
+        // 리뷰리스트
+        $scope.reviewList = [];
 
         // 날짜 셀렉트 박스셋팅
         var year = [];
@@ -52,16 +55,30 @@ define([
             day.push(i+'');
         }
 
-        $scope.year = year;
         $scope.babyYear = babyYear;
         $scope.month = month;
         $scope.day = day;
-        $scope.hour = hour;
-        $scope.minute = minute;
 
         $scope.TARGET_NO = $stateParams.id;
         $scope.TARGET_GB = 'MOMS';
 
+        var date = new Date();
+
+        // GET YYYY, MM AND DD FROM THE DATE OBJECT
+        var year = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+
+        if(mm < 10) {
+            mm = '0'+mm;
+        }
+
+        if(dd < 10) {
+            dd = '0'+dd;
+        }
+
+        var today = year+mm+dd;
+        $scope.todayDate = today;
 
         if($rootScope.focus == 'comp'){
             //$('#moms_state').get(0).scrollIntoView(true);
@@ -77,6 +94,12 @@ define([
         // 사용자 정보수정 버튼 클릭
         $scope.click_update_user_info = function () {
             $scope.openModal(null, 'md');
+        };
+
+        /********** 콘텐츠 랜더링 **********/
+        $scope.renderHtml = function(html_code) {
+            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
+//            return html_code;
         };
 
         // 정보수정 모달창
@@ -184,7 +207,7 @@ define([
         };
 
         // 초기화
-        $scope.init = function(session) {
+        $scope.init = function() {
 
             if ($stateParams.menu == 'experienceprocess') {
                 $scope.community = "진행중인 체험단";
@@ -211,23 +234,7 @@ define([
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
-            var date = new Date();
 
-            // GET YYYY, MM AND DD FROM THE DATE OBJECT
-            var year = date.getFullYear().toString();
-            var mm = (date.getMonth()+1).toString();
-            var dd  = date.getDate().toString();
-
-            if(mm < 10){
-                mm = '0'+mm;
-            }
-
-            if(dd < 10){
-                dd = '0'+dd;
-            }
-
-            var today = year+mm+dd;
-            $scope.todayDate = today;
 
             // 리뷰 리스트 페이징 처리
             $scope.PAGE_NO = 1;
@@ -259,11 +266,15 @@ define([
 
         // 게시판 조회
         $scope.getMomsExperience = function () {
+
             if ($stateParams.id != 0) {
                 return $scope.getItem('ange/event', 'item', $stateParams.id, {}, false)
                     .then(function(data){
 
-                        $scope.D_DAY = parseInt($scope.item.END_DATE) - parseInt($scope.todayDate);
+                        $scope.open_date = data.ada_date_open.replace(/-/gi, "");
+                        $scope.end_date = data.ada_date_close.replace(/-/gi, "");
+
+                        $scope.D_DAY = parseInt($scope.end_date) - parseInt($scope.todayDate);
                         console.log($scope.D_DAY);
 
                         $scope.item = data;
@@ -272,12 +283,56 @@ define([
                         var img = CONSTANT.AD_FILE_URL + data.ada_preview;
                         data.ada_preview_img = img;
 
-                        $scope.open_date = data.OPEN_DATE;
 
-                        $scope.search.TARGET_NO = $stateParams.id;
+                        if($scope.todayDate <= $scope.end_date){
+                            $scope.showForm = "compForm";
+                        }else{
+                            $scope.showForm = "reviewForm";
+                        }
 
                         $scope.item.ada_option_delivery = data.ada_option_delivery.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
+                        // 질문일 때
+                        if($scope.item.ada_que_type == 'question'){
+                            var que_data = data.ada_que_info;
+
+                            //$scope.item.QUE = [];
+                            $scope.item.QUE = new Array();
+                            que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
+                            var parse_que_data = JSON.parse(que_data);
+
+                            for(var x in parse_que_data){
+
+                                var choice = [];
+                                if(parse_que_data[x].type == 0){ // 객관식일때
+                                    var select_answer = parse_que_data[x].choice.split(','); // ,를 기준으로 문자열을 잘라 배열로 변환
+
+                                    for(var i=0; i < select_answer.length; i++){
+                                        choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
+                                    }
+                                }else{ // 주관식일때
+                                    choice = "";
+                                }
+
+                                var index = parseInt(x)+parseInt(1);
+                                $scope.item.QUE.push({"index" : index,"title" : parse_que_data[x].title, "type" : parse_que_data[x].type, "choice" :choice});
+                                console.log($scope.item.QUE);
+                            }
+                        }
+
+                        // 댓글일 때
+                        if($scope.item.ada_que_type == 'reply'){
+
+                            var que_data = data.ada_que_info;
+                            que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
+                            var parse_que_data = JSON.parse(que_data);
+
+                            for(var x in parse_que_data){
+                                $scope.item.REPLY_SUBJECT = parse_que_data[x].title;
+                            }
+                        }
+
+                        $scope.search.TARGET_NO = $stateParams.id;
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -288,7 +343,8 @@ define([
             // 세션만료 되었을 때 리스트로 이동
             if($scope.uid == '' || $scope.uid == null){
                 dialogs.notify('알림', '세션이 만료되어 로그아웃 되었습니다. 로그인 후 다시 작성하세요', {size: 'md'});
-                $location.url('/moms/eventprocess/list');
+
+                $location.url('/moms/experienceprocess/list');
             }
 
             // 현재날짜가 모집시작일이 아닐때
@@ -297,41 +353,100 @@ define([
                 return;
             }
 
-            if($("#credit_agreement_Y").is(":checked")){
-                $scope.item.CREDIT_FL = 'Y';
-            }else{
-                alert('제 3자 정보제공에 동의 하셔야 상품 발송이 가능합니다.');
-                return;
-            }
+            if($scope.item.ada_que_type == 'question'){ // 문답일때
+                var answer = [];
+                $scope.item.QUE_SHORT_ANSWER = ''
+                $("input[name='answer[]'").each(function(index, element) {
+                    $scope.item.QUE_SHORT_ANSWER = $(element).val();
+                    answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+                })
 
-            $scope.search.REG_UID = $scope.uid;
-            $scope.search.TARGET_NO = $scope.item.ada_idx;
-            $scope.search.TARGET_GB = 'EXPERIENCE';
-
-            $scope.item.BABY_BIRTH = $scope.item.BABY_YEAR + $scope.item.BABY_MONTH + $scope.item.BABY_DAY;
-
-            // 임신주차는 0으로 셋팅(int 형이라 null로 넣으면 쿼리에러 발생)
-            $scope.item.PREGNANT_WEEKS = 0;
-
-            // 추가한 블로그 갯수 만큼 반복
-            $scope.item.BLOG_URL = '';
-            $("input[name='blog[]'").each(function(index, element) {
-                if(index != (cnt -1)){
-                    $scope.item.BLOG_URL += $(element).val()+', ';
-                }else{
-                    $scope.item.BLOG_URL += $(element).val();
+                answer.push($scope.item.QUE_SELECT_ANSWER); // 객관식
+                $rootScope.jsontext2 = new Array();
+                //
+                for(var i=0; i<answer.length; i++){
+                    var index = parseInt(i+1);
+                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
                 }
 
-            })
+                $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                console.log($scope.item.ANSWER);
 
-            $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                .then(function(){
+                $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                    .then(function(){
+                        dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
-                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                        $location.url('/moms/experienceprocess/list');
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
-                    $location.url('/moms/experienceprocess/list');
-                })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
+
+                console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
+                $scope.item.ANSWER = '{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}';
+
+                $scope.search.ada_idx = $scope.item.ada_idx;
+
+                $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+                    .then(function(data){
+                        var comp_cnt = data[0].COMP_CNT;
+
+                        if(comp_cnt == 0){
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+
+                                    $location.url('/moms/experienceprocess/list');
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        }else{
+                            dialogs.notify('알림', '이미 이 체험단에 참여 했으므로 중복 참여는 불가능합니다.', {size: 'md'});
+                            return;
+                        }
+
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+            } else if($scope.item.ada_que_type == 'join'){ // 신청이나 응모일때
+
+                // 정보제공 동의체크 확인
+                if($("#credit_agreement_Y").is(":checked")){
+                    $scope.item.CREDIT_FL = 'Y';
+                }else{
+                    alert('제 3자 정보제공에 동의 하셔야 상품 발송이 가능합니다.');
+                    return;
+                }
+
+                $scope.search.REG_UID = $scope.uid;
+                $scope.search.TARGET_NO = $scope.item.ada_idx;
+                $scope.search.TARGET_GB = 'EVENT';
+
+                $scope.item.BABY_BIRTH = $scope.item.BABY_YEAR + $scope.item.BABY_MONTH + $scope.item.BABY_DAY;
+
+                // 임신주차는 0으로 셋팅(int 형이라 null로 넣으면 쿼리에러 발생)
+                $scope.item.PREGNANT_WEEKS = 0;
+
+
+                // 추가한 블로그 갯수 만큼 반복
+                var cnt = $scope.item.BLOG.length;
+                $scope.item.BLOG_URL = '';
+                $("input[name='blog[]'").each(function(index, element) {
+                    if(index != (cnt -1)){
+                        $scope.item.BLOG_URL += $(element).val()+', ';
+                    }else{
+                        $scope.item.BLOG_URL += $(element).val();
+                    }
+
+                });
+
+                $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                    .then(function(){
+                        dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+
+                        $location.url('/moms/experienceprocess/list');
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }
         }
 
         $scope.click_momsexperiencelist = function (){
@@ -346,24 +461,35 @@ define([
         $scope.getExperienceReviewList = function() {
 
             $scope.search.SYSTEM_GB = 'ANGE';
-            /*            $scope.search.SORT = 'NOTICE_FL';
-             $scope.search.ORDER = 'DESC'*/
             $scope.search.FILE = true;
             $scope.search.TARGET_NO = $stateParams.id;
 
             $scope.getList('ange/review', 'list', {NO: $scope.PAGE_NO, SIZE: 5}, $scope.search, true)
                 .then(function(data){
-                    var total_cnt = data[0].TOTAL_COUNT;
-                    $scope.TOTAL_COUNT = total_cnt;
 
                     for(var i in data) {
-                        if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
-                            data[i].MAIN_FILE = img;
 
-                        }
+                        // thumnail
+                        var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        data[i].TYPE = 'REVIEW';
+                        data[i].FILE = img;
+
+                        // 본문 html 태그 제거
+                        var source = data[i].BODY;
+                        var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
+
+                        source = source.replace(pattern, '');
+                        source = source.replace(/&nbsp;/ig, '');
+                        source = source.trim();
+
+                        data[i].BODY = source;
+
+                        // data push
+                        $scope.reviewList.push(data[i]);
                     }
-                    $scope.reviewList = data;
+
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
 
                 })
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.reviewList = "";});
@@ -444,10 +570,10 @@ define([
         // 의견 등록
         $scope.click_savePeopleBoardComment = function () {
 
-//            if ($rootScope.uid == '' || $rootScope.uid == null) {
-//                dialogs.notify('알림', '로그인 후 등록 할 수 있습니다.', {size: 'md'});
-//                return;
-//            }
+            if ($rootScope.uid == null || $rootScope.uid == '') {
+                dialogs.notify('알림', '등록할 수 없는 상태입니다.', {size: 'md'});
+                return;
+            }
 
             $scope.item.PARENT_NO = 0;
             $scope.item.LEVEL = 1;
@@ -462,32 +588,41 @@ define([
                 return;
             }
 
-            $scope.item.REG_UID = $rootScope.user_id;
-            $scope.item.NICK_NM = $rootScope.user_nick;
+            $scope.item.REG_UID = $rootScope.uid;
+            $scope.item.NICK_NM = $rootScope.nick;
 
-            $scope.insertItem('com/reply_event', 'item', $scope.item, false)
-                .then(function(){
+            $scope.search.REG_UID = $rootScope.uid;
+            $scope.search.TARGET_NO = $stateParams.id;
 
-//                    $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
-//                        .then(function(){
-//                        })
-//                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            $scope.getList('com/reply_event', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var cnt = data[0].COUNT;
 
-                    $scope.getItem('com/reply', 'item', {}, $scope.search, true)
-                        .then(function(data){
-                            if(data.COMMENT == null){
-                                $scope.TODAY_TOTAL_COUNT = 0;
-                            }else{
-                                $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
-                            }
-                        })
-                        .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
+                    if(cnt == 0){
+                        $scope.insertItem('com/reply_event', 'item', $scope.item, false)
+                            .then(function(){
+                                $scope.getItem('com/reply', 'item', {}, $scope.search, true)
+                                    .then(function(data){
+                                        if(data.COMMENT == null){
+                                            $scope.TODAY_TOTAL_COUNT = 0;
+                                        }else{
+                                            $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                                        }
+                                    })
+                                    .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
 
-                    $scope.search.TARGET_NO = $stateParams.id;
-                    $scope.replyList = [];
-                    $scope.getPeopleReplyList();
+                                $scope.search.TARGET_NO = $stateParams.id;
+                                $scope.replyList = [];
+                                $scope.getPeopleReplyList();
 
-                    $scope.item.COMMENT = "";
+                                $scope.item.COMMENT = "";
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }else{
+                        dialogs.notify('알림', '이벤트는 한번만 참여가 가능합니다.', {size: 'md'});
+                        return;
+                    }
+
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
@@ -546,14 +681,35 @@ define([
             });
         }
 
-        $scope.getSession()
-            .then($scope.sessionCheck)
-            .catch($scope.reportProblems);
+        // 주석해제 할 예정
+//        $scope.getSession()
+//            .then($scope.sessionCheck)
+//            .catch($scope.reportProblems);
+
+        if ($location.search()) {
+            var param = $location.search();
+            if(param.user_id != undefined && param.user_id != '') {
+                $scope.item.user_id = param.user_id;
+                $scope.item.user_nick = decodeURIComponent(param.user_nick);
+
+                $scope.insertItem('login', 'temp', $scope.item, false)
+                    .then(function(data) {
+                        console.log(JSON.stringify(data));
+
+                        $rootScope.uid = $scope.item.user_id;
+                        $rootScope.nick = $scope.item.user_nick;
+
+                        console.log("임시 세션 생성 성공");
+                    }).catch(function(error){});
+            }
+        };
 
         $scope.init();
 //         $scope.addHitCnt();
         $scope.getMomsExperience();
         $scope.getExperienceReviewList();
+
+        // 댓글리스트(삭제예정)
         $scope.getPeopleReplyList();
 
     }]);

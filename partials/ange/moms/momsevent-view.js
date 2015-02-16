@@ -228,6 +228,7 @@ define([
             if ($stateParams.menu == 'eventprocess') {
                 $scope.community = "진행중인 이벤트";
                 $scope.search.EVENT_GB = "EVENT";
+                $scope.menu = "eventprocess"
             } else if ($stateParams.menu == 'eventperformance') {
                 $scope.community = "공연/체험 이벤트";
                 $scope.search.EVENT_GB = "EVENT";
@@ -697,7 +698,7 @@ define([
             });
         }
 
-        // 해제 할 예정
+        // 주석해제 할 예정
 //        $scope.getSession()
 //          .then($scope.sessionCheck)
 //          .catch($scope.reportProblems);
@@ -720,12 +721,12 @@ define([
             }
         };
 
-        //$scope.init();
+        $scope.init();
 //         $scope.addHitCnt();
         $scope.getMomsEvent();
         $scope.getExperienceReviewList();
 
-        // 댓글리스트
+        // 댓글리스트(삭제예정)
         $scope.getPeopleReplyList();
 
 

@@ -53,7 +53,7 @@ define([
 
         $scope.search = {};
         // 초기화
-        $scope.init = function(session) {
+        $scope.init = function() {
             $scope.option = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 5, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
             if ($stateParams.menu == 'experienceprocess') {
@@ -98,13 +98,6 @@ define([
                         data[i].ada_preview_img = img;
                     }
 
-//                    for(var i in data) {
-//                        if (data[i].FILE != null) {
-//                            var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
-//                            data[i].MAIN_FILE = img;
-//                        }
-//                    }
-
                     $scope.$parent.reload = false;
                     $scope.busy = false;
 
@@ -112,12 +105,17 @@ define([
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
-        $scope.comp_momsevent = function (key){
+        $scope.comp_momsexperience = function (item){
+
+            if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
+                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
+                return;
+            }
 
             if ($stateParams.menu == 'experienceprocess') {
-                $location.url('/moms/experienceprocess/view/'+key);
+                $location.url('/moms/experienceprocess/view/'+item.ada_idx);
             } else if ($stateParams.menu == 'experiencepast') {
-                $location.url('/moms/experiencepast/view/'+key);
+                $location.url('/moms/experiencepast/view/'+item.ada_idx);
             }
 
         }
