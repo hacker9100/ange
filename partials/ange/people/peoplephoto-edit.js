@@ -216,7 +216,15 @@ define([
             if ($stateParams.id != 0) {
                 $scope.getItem('com/webboard', 'item', $stateParams.id, {}, false)
                     .then(function(data){
+
                         $scope.item = data;
+
+                        var files = data.FILES;
+                        for(var i in files) {
+                            $scope.queue.push({"no":files[i].NO,"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                        }
+
+
                         $scope.item.NOTICE_FL == 'Y' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
 
                         if($scope.item.REPLY_FL == "Y"){
@@ -244,7 +252,9 @@ define([
                         }
 
                        var idx = 0;
-                       for(var i=0; i < $scope.categorylist.length; i ++){
+                       var category_cnt = $scope.categorylist.length;
+
+                       for(var i=0; i < category_cnt; i ++){
 
                             console.log(data.CATEGORY_NO);
                             if(JSON.stringify(data.CATEGORY_NO) == JSON.stringify($scope.categorylist[i].NO)){
@@ -254,10 +264,7 @@ define([
 
                        $scope.item.CATEGORY_NO = $scope.categorylist[idx].NO;
 
-                       var files = data.FILES;
-                       for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE", "type" : files[i].FILE_EXT});
-                       }
+
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -340,9 +347,10 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        $scope.getSession()
-         .then($scope.sessionCheck)
-         .catch($scope.reportProblems);
+//        $scope.getSession()
+//         .then($scope.sessionCheck)
+//         .catch($scope.reportProblems);
+
         $scope.init();
         $scope.getPeopleBoard();
 

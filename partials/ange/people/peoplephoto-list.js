@@ -159,7 +159,7 @@ define([
 
                         console.log(data[i].FILE.PATH);
                         //UPLOAD.BASE_URL
-                        var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        var img = 'http://localhost' + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                         data[i].TYPE = 'BOARD';
                         data[i].FILE = img;
 
