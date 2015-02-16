@@ -109,9 +109,10 @@ define([
 
                 // 페이징
                 $scope.PAGE_NO = 1;
-                $scope.PAGE_SIZE = 10;
+                $scope.PAGE_SIZE = 9;
                 $scope.TOTAL_COUNT = 0;
 
+                // 초기화 후 조회
                 $scope.list = [];
                 $scope.getPeopleBoardList();
             }else{
@@ -119,9 +120,10 @@ define([
 
                 // 페이징
                 $scope.PAGE_NO = 1;
-                $scope.PAGE_SIZE = 10;
+                $scope.PAGE_SIZE = 9;
                 $scope.TOTAL_COUNT = 0;
 
+                // 초기화 후 조회
                 $scope.list = [];
                 $scope.getPeopleBoardList();
             }
