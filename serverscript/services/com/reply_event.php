@@ -148,7 +148,9 @@
 
                 $sql = "SELECT COUNT(*) AS COUNT
                         FROM COM_REPLY_EVENT
-                        WHERE REG_UID = '".$_search[REG_UID]."'";
+                        WHERE REG_UID = '".$_search[REG_UID]."'
+                          AND TARGET_NO = '".$_search[TARGET_NO]."'";
+
 
                 $data = $_d->sql_query($sql);
                 if($_d->mysql_errno > 0){
