@@ -49,7 +49,7 @@
                                     <!--<dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>-->
                                     <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_delivery}}원</span></dd>
                                     <!--<dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>-->
-                                    <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.ada_option_delivery}}"><!--{{item.COMPANY_NM}}-->네이버</a></span></dd>
+                                    <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.ada_url}}"><!--{{item.COMPANY_NM}}-->{{item.ada_url}}</a></span></dd>
                                     <dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.ada_count_join}}</span>명<!--({{item.HIT_CNT}} 조회)--></span></dd>
                                 </dl>
                             </div>
@@ -75,14 +75,12 @@
 
 
                             <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event01.jpg" alt="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." title="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." style="width:100%;"><a href="http://new.ange.co.kr/story/content/list" title="앙쥬스토리 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event02.jpg" alt="앙쥬스토리 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/people/home" title="앙쥬피플 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event03.jpg" alt="앙쥬피플 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/moms/home" title="앙쥬맘스 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event04.jpg" alt="앙쥬맘스 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event05.jpg" alt="마이앙쥬 둘러보러 가기" style="width:100%;"><a href="http://new.ange.co.kr/store/home" title="앙쥬스토어 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event06.jpg" alt="앙쥬스토어 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event07.jpg" alt="아래 댓글을 작성하면 자동응모됩니다" title="아래 댓글을 작성하면 자동응모됩니다" style="width:100%;">-->
-                            <img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_01.jpg" alt="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." title="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." style="width:100%;"><a href="/myange/account" title="앙쥬맘스 둘러보러 가기" target="_parent"><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_02.jpg" alt="이벤트 참여 바로가기" title="이벤트 참여 바로가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_03.jpg" alt="다음 이벤트 기대해주세요." title="다음 이벤트 기대해주세요." style="width:100%;">
-                            <div>
-                                참가자격 :
-                            </div>
+                            <div id="content" ng-bind-html="renderHtml(item.ada_detail)"></div>
 
-
-
-
+                            <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_01.jpg" alt="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." title="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." style="width:100%;"><a href="/myange/account" title="앙쥬맘스 둘러보러 가기" target="_parent"><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_02.jpg" alt="이벤트 참여 바로가기" title="이벤트 참여 바로가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_03.jpg" alt="다음 이벤트 기대해주세요." title="다음 이벤트 기대해주세요." style="width:100%;">-->
+                            <!--<div>-->
+                                <!--참가자격 :-->
+                            <!--</div>-->
 
                         </div><!-- /.col-12-->
                     </div><!-- /.row -->
@@ -562,47 +560,3 @@
 
 <!-- /Main Page Layout Set -->
 </div>
-
-<script type="text/ng-template" id="user_info_modal.html">
-    <div class="modal-header">
-        <h3 class="modal-title">정보수정</h3>
-    </div>
-    <div class="modal-body">
-        <div ng-model="approval" lass="row" class="form-horizontal">
-            <div class= "form-group">
-                아이디 <input type="text" class="form-control" ng-model="item.USER_ID" disabled class= "form-control" placeholder="주소"/>
-            </div>
-            <div class= "form-group">
-                이름 <input type="text" class="form-control" ng-model="item.USER_NM" disabled class= "form-control" placeholder="이름"/>
-            </div>
-            <div class= "form-group">
-                닉네임 <input type="text" class="form-control" ng-model="item.NICK_NM" disabled class= "form-control" placeholder="닉네임"/>
-            </div>
-            <div class= "form-group">
-                주소 <input type="text" class="form-control" ng-model="item.ADDR" class= "form-control" placeholder="주소"/>
-            </div>
-            <div class= "form-group">
-                세부주소 <input type="text" class="form-control" ng-model="item.ADDR_DETAIL" class= "form-control" placeholder="세부주소"/>
-            </div>
-            <div class= "form-group">
-                전화번호 <input type="text" class="form-control" ng-model="item.PHONE_1" class= "form-control" placeholder="전화번호"/>
-            </div>
-            <div class= "form-group">
-                휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
-            </div>
-            <!--<div class= "form-group">-->
-            <!--블로그 <input type="text" class="form-control" ng-model="item.BLOG_URL" class= "form-control" placeholder="블로그"/>-->
-            <!--</div>-->
-            <!--<div class= "form-group">-->
-            <!--임신여부 <input type="radio" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y-->
-            <!--&nbsp;-->
-            <!--<input type="radio" id="preg_N" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N-->
-            <!--<div id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 2015-01-12"/></div>-->
-            <!--</div>-->
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="click_ok()">수정</button>
-        <button class="btn btn-warning" ng-click="click_cancel()">취소</button>
-    </div>
-</script>
