@@ -227,7 +227,7 @@
                         '".$_SESSION['uid']."',
                         '".$_SESSION['nick']."',
                         '".$_SESSION['name']."',
-                        SYSDATE(),
+                        NOW(),
                         '0',
                         '".$_model[TARGET_NO]."',
                         '".$_model[TARGET_GB]."',
