@@ -255,6 +255,8 @@ define([
 
                 if (session.USER_INFO != undefined && session.USER_INFO.FILE) {
                     $rootScope.profileImg = UPLOAD.BASE_URL + session.USER_INFO.FILE.PATH + session.USER_INFO.FILE.FILE_ID;
+                } else {
+                    $rootScope.profileImg = null;
                 }
 
                 $rootScope.addr = session.ADDR;

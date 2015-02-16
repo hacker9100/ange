@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsevent-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
+    controllers.controller('momsevent-view', ['$scope', '$rootScope', '$sce', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope,$rootScope, $sce, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
 
         $scope.queue = [];
         $scope.search = {};
@@ -86,9 +86,15 @@ define([
             });
         });
 
+        /********** 콘텐츠 랜더링 **********/
+        $scope.renderHtml = function(html_code) {
+            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
+//            return html_code;
+        };
+
         /********** 이벤트 **********/
 
-            // 사용자 정보수정 버튼 클릭
+        // 사용자 정보수정 버튼 클릭
         $scope.click_update_user_info = function () {
             $scope.openModal(null, 'md');
         };

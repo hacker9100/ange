@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<script type="text/javascript">
+    function test() {
+        document.getElementById("user_id").value = "test";
+        document.getElementById("user_nick").value = encodeURIComponent("엠제이튼튼맘");
+        alert(encodeURIComponent("%EF%BF%BD%EC%A2%8E%EC%A0%A3%EF%BF%BD%EB%8C%84%EB%93%89%EF%BF%BD%EC%87%B0%EC%AD%A3"));
+    }
+
+</script>
+</head>
+<body onload="test()">
+
+<form id="form" name="form" action="http://newange.marveltree.com/moms/eventprocess/view/39" method="get">
+    <input type="text" id="user_id" name="user_id" value="">
+    <input type="text" id="user_nick" name="user_nick" value="">
+
+    <input type="submit">
+</form>
+
+</body>
+</html>

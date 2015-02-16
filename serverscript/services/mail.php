@@ -72,12 +72,17 @@ function sendMail2($EMAIL, $NAME, $SUBJECT, $CONTENT, $MAILTO, $MAILTONAME){
     // 1 = errors and messages
     // 2 = messages only
     $mail->CharSet    = "utf-8";
-    $mail->SMTPAuth   = true;                  // enable SMTP authentication
+    $mail->SMTPAuth   = false;                  // enable SMTP authentication
     $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
-    $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
-    $mail->Port       = 465;                   // set the SMTP port for the GMAIL server
-    $mail->Username   = "hacker9100@gmail.com";             // GMAIL username
-    $mail->Password   = "rlatjdghks9100";              // GMAIL password
+//    $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
+//    $mail->Port       = 465;                   // set the SMTP port for the GMAIL server
+//    $mail->Username   = "hacker9100@gmail.com";             // GMAIL username
+//    $mail->Password   = "rlatjdghks9100";              // GMAIL password
+
+    $mail->Host       = "210.116.103.14";      // sets GMAIL as the SMTP server
+    $mail->Port       = 25;                   // set the SMTP port for the GMAIL server
+    $mail->Username   = "angeweb@ange.co.kr";             // GMAIL username
+    $mail->Password   = "mailange33302#@!";              // GMAIL password
 
     $mail->SetFrom($EMAIL, $NAME);
 
@@ -101,9 +106,9 @@ $to = "hacker9100@gmail.com";
 $from_user = "김성환";
 $from_email = "hacker9100@gmail.com";
 $subject = "[테스트 메일]앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-$message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/mail.php?_method=PUT&_type=cert&_key=hong&hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
+$message = "안녕하세요. ".$_model[USER_NM]." 회원님.\n아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/mail.php?_method=PUT&_type=cert&_key=hong&hash=test'>이메일 인증</a>\n테스트로 보냅니다.";
 
-sendMail2($from_email, $from_user, $subject, $message, $to, $from_user);
-//echo sendMail($from_email, $from_user, $to, $subject, $message);
+//sendMail2($from_email, $from_user, $subject, $message, $to, $from_user);
+echo sendMail($from_email, $from_user, $to, $subject, $message);
 
 ?>
