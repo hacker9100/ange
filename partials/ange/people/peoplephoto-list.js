@@ -146,7 +146,7 @@ define([
             $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC';
             //$scope.search.FILE = true;
-            $scope.search.FILE = "Y";
+            $scope.search.FILE = true;
 
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
@@ -157,14 +157,21 @@ define([
 //                            var img =  UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID; //UPLOAD.BASE_URL
 //                            data[i].MAIN_FILE = img;
 //                        }
+//                        if (data[i].FILE.PATH != undefined) {
+//                            var img = UPLOAD.BASE_URL + '/storage/board/' + 'thumbnail/' + data[i].FILE.FILE_ID;
+//                            data[i].TYPE = 'BOARD';
+//                            data[i].FILE = img;
+//                            $scope.list.push(data[i]);
+//                        }
+//
+//                        console.log($scope.list);
 
-                        console.log(data[i].FILE.PATH);
-                        //UPLOAD.BASE_URL
-                        var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        var img = UPLOAD.BASE_URL + '/storage/board/' + 'thumbnail/' + data[i].FILE.FILE_ID;
                         data[i].TYPE = 'BOARD';
                         data[i].FILE = img;
-
                         $scope.list.push(data[i]);
+
+                        console.log($scope.list);
                     }
 
                     var search_total_cnt = data[0].TOTAL_COUNT;
