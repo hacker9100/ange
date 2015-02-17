@@ -79,6 +79,7 @@ define([
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
+
                     /*$scope.total(total_cnt);*/
 
                     for(var i in data) {
@@ -139,16 +140,16 @@ define([
 
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
-            $scope.comming_soon();
-            return;
+//            $scope.comming_soon();
+//            return;
 
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
         };
 
         // 등록 버튼 클릭
         $scope.click_showCreatePeopleBoard = function () {
-            $scope.comming_soon();
-            return;
+//            $scope.comming_soon();
+//            return;
 
             if ($rootScope.uid == '' || $rootScope.uid == null) {
                 dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
