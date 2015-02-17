@@ -133,6 +133,7 @@ define([
                 $scope.getPeopleBoardList();
             }else{
                 $scope.search.CATEGORY_NO = category_no;
+                $scope.getPeopleBoardList();
             }
 
         };
