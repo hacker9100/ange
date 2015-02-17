@@ -383,10 +383,15 @@ define([
 
                 $rootScope.jsontext2 = new Array();
                 //
-                for(var i=0; i<answer.length; i++){
-                    var index = parseInt(i+1);
-                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-                }
+//                for(var i=0; i<answer.length; i++){
+//                    var index = parseInt(i+1);
+//                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+//                }
+
+                $("input[name='index[]'").each(function(index, element) {
+                    //$scope.item.QUE_SHORT_ANSWER = $(element).val();
+                    $rootScope.jsontext2[$(element).val()] = '"'+$(element).val()+'":"'+ answer[index]+'"';
+                })
 
                 $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                 console.log($scope.item.ANSWER);

@@ -313,20 +313,24 @@ define([
 
                         $rootScope.jsontext2 = new Array();
                         //
-                        for(var i=0; i<answer.length; i++){
-                            var index = parseInt(i+1);
-                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-                        }
+//                        for(var i=0; i<answer.length; i++){
+//                            var index = parseInt(i+1);
+//                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+//                        }
+                        $("input[name='index[]'").each(function(index, element) {
+                            //$scope.item.QUE_SHORT_ANSWER = $(element).val();
+                            $rootScope.jsontext2[$(element).val()] = '"'+$(element).val()+'":"'+ answer[index]+'"';
+                        })
 
                         $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                         console.log($scope.item.ANSWER);
 
-                        $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue
-                            .then(function(){
-                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                                $location.url('/people/poll/list');
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                        $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue
+//                            .then(function(){
+//                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+//                                $location.url('/people/poll/list');
+//                            })
+//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                 })
