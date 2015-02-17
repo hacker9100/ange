@@ -74,7 +74,7 @@ define([
         };
 
         $scope.click_infodesk = function () {
-            return;
+            //return;
             $location.url('infodesk/home');
         };
 
