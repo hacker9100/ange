@@ -129,8 +129,12 @@ define([
 
             $scope.selectIdx = idx;
 
-            $scope.search.CATEGORY_NO = category_no;
-            $scope.getPeopleBoardList();
+            if(idx == 0){
+                $scope.getPeopleBoardList();
+            }else{
+                $scope.search.CATEGORY_NO = category_no;
+            }
+
         };
 
         // 게시판 목록 조회
