@@ -40,6 +40,7 @@ define([
 
         $scope.todayDate = today;
 
+        $scope.selectIdx = 0;
         $(function () {
 
             $(".tab_content").hide();
@@ -130,6 +131,7 @@ define([
             $scope.selectIdx = idx;
 
             if(idx == 0){
+                $scope.search.CATEGORY_NO = '';
                 $scope.getPeopleBoardList();
             }else{
                 $scope.search.CATEGORY_NO = category_no;
