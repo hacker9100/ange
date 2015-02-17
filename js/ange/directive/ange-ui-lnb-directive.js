@@ -107,11 +107,23 @@ define(['./directives'], function (directives) {
 
                 /********** 이벤트 **********/
                 $scope.click_selectMenu = function(url, link) {
+
+                    if(url == '/infodesk/myqna/list'){ // 고객센터 내 질문과 답변
+                        if($scope.uid == null || $scope.uid == ''){
+                            dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
+                            return;
+                        }else{
+                            $location.url(url);
+                        }
+                    }
+
                     if (link == 'C') {
                         dialogs.notify('알림', '1차 체험기간에는 제공되지 않습니다.', {size: 'md'});
                     } else if (link != 'N') {
                         $location.url(url);
                     }
+
+
                 };
 
                 $scope.click_selectCategory = function(idx, category) {
