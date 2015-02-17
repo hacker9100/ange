@@ -150,7 +150,21 @@ switch ($_method) {
                 $_d->dataEnd($sql);
             }
 
-        } else if ($_type == 'samplepackCheck') {
+        } else if ($_type == "check_1") {
+
+            $sql = "SELECT COUNT(*) AS COMP_CNT
+                 FROM ANGE_COMP
+                 WHERE TARGET_NO = ".$_search[TARGET_NO]."
+                   AND USER_ID = '".$_SESSION['uid']."'";
+
+            $data = $_d->sql_query($sql);
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
+
+        }else if ($_type == 'samplepackCheck') {
 
             $search_where = "";
             if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
@@ -185,35 +199,107 @@ switch ($_method) {
         $FORM = json_decode(file_get_contents("php://input"),true);
         $_d->sql_beginTransaction();
 
-        // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
-        $sql = "INSERT INTO adm_history_join
+        if($_type == "eventitem"){
+
+            $sql = "INSERT INTO ANGE_COMP
                             (
-                                adhj_idx,
-                                ada_idx,
-                                adu_id,
-                                adu_name,
-                                adhj_date_request,
-                                adhj_answers
+                                TARGET_NO,
+                                USER_ID,
+                                NICK_NM,
+                                USER_NM,
+                                REG_DT,
+                                PREG_FL,
+                                BABY_MONTH,
+                                BABY_AGE,
+                                BLOG_URL,
+                                ANSWER,
+                                ADD1,
+                                ADD2,
+                                ADD3,
+                                CHILD_CNT,
+                                PHONE1,
+                                PHONE2,
+                                PRODUCT,
+                                CREDIT_FL,
+                                REASON,
+                                TARGET_GB,
+                                HOPE_REASON,
+                                SIZE1,
+                                SIZE2,
+                                SIZE3,
+                                ANGE_MEET,
+                                PLACE,
+                                PREGNANT_WEEKS,
+                                CHILD_AGE,
+                                CHILD_FL,
+                                BABY_BIRTH
                             ) VALUES (
-                                (SELECT COUNT(*)+1 FROM adm_history_join a)
-                                , '".$_model[ada_idx]."'
+                                 '".$_model[NO]."'
                                 , '".$_SESSION['uid']."'
+                                , '".$_SESSION['nick']."'
                                 , '".$_SESSION['name']."'
-                                , NOW()
-                                , '".$_model[ANSWER]."'
+                                , SYSDATE()
+                                , '".$_model[PREG_FL]."'
+                                ,'".$_model[BABY_MONTH]."'
+                                ,'".$_model[BABY_AGE]."'
+                                ,'".$_model[BLOG_URL]."'
+                                ,'".$_model[ANSWER]."'
+                                ,'".$_model[ADD1]."'
+                                ,'".$_model[ADD2]."'
+                                ,'".$_model[ADD3]."'
+                                ,'".$_model[CHILD_CNT]."'
+                                , '".$_SESSION['phone1']."'
+                                , '".$_SESSION['phone2']."'
+                                ,'".$_model[PRODUCT]."'
+                                ,'".$_model[CREDIT_FL]."'
+                                ,'".$_model[REASON]."'
+                                ,'".$_model[TARGET_GB]."'
+                                ,'".$_model[HOPE_REASON]."'
+                                ,'".$_model[SIZE1]."'
+                                ,'".$_model[SIZE2]."'
+                                ,'".$_model[SIZE3]."'
+                                ,'".$_model[ANGE_MEET]."'
+                                ,'".$_model[PLACE]."'
+                                ,".$_model[PREGNANT_WEEKS]."
+                                ,'".$_model[CHILD_AGE]."'
+                                ,'".$_model[CHILD_FL]."'
+                                ,'".$_model[BABY_BIRTH]."'
                             )";
 
-        $_d->sql_query($sql);
+            $_d->sql_query($sql);
 
-        // 신청자명 증가
-        $sql = "UPDATE adm_ad
-              SET  ada_count_request = ada_count_request + 1
-              WHERE ada_idx = '".$_model[ada_idx]."'";
+            $no = $_d->mysql_insert_id;
 
-        $_d->sql_query($sql);
+        }else if($_type == "item") {
+            // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
+            $sql = "INSERT INTO adm_history_join
+                                (
+                                    adhj_idx,
+                                    ada_idx,
+                                    adu_id,
+                                    adu_name,
+                                    adhj_date_request,
+                                    adhj_answers
+                                ) VALUES (
+                                    (SELECT COUNT(*)+1 FROM adm_history_join a)
+                                    , '".$_model[ada_idx]."'
+                                    , '".$_SESSION['uid']."'
+                                    , '".$_SESSION['name']."'
+                                    , NOW()
+                                    , '".$_model[ANSWER]."'
+                                )";
 
-        $no = $_d->mysql_insert_id;
+            $_d->sql_query($sql);
 
+            // 신청자명 증가
+            $sql = "UPDATE adm_ad
+                  SET  ada_count_request = ada_count_request + 1
+                  WHERE ada_idx = '".$_model[ada_idx]."'";
+
+            $_d->sql_query($sql);
+
+
+        }
         if ($_d->mysql_errno > 0) {
             $_d->failEnd("등록실패입니다:".$_d->mysql_error);
         } else {
