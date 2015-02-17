@@ -148,6 +148,10 @@
                     $search_common .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
                 }
 
+                if(isset($_search[MY_QNA]) && $_search[MY_QNA] == "Y"){
+                    $search_common .= "AND B.REG_UID = '".$_SESSION['uid']."'";
+                }
+
                 if (isset($_search[BOARD_GB]) && $_search[BOARD_GB] != "") {
                     $search_common .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
                 }

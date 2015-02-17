@@ -133,19 +133,21 @@ define([
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
 
-                        var idx = 0;
-                        for(var i=0; i < $scope.categoryfaqlist.length; i ++){
+                        if($stateParams.menu == 'faq'){
+                            var idx = 0;
+                            for(var i=0; i < $scope.categoryfaqlist.length; i ++){
 
-                            //console.log(data.FAQ_TYPE);
-                            if(JSON.stringify(data.CATEGORY_NO) == JSON.stringify($scope.categoryfaqlist[i].NO)){
-                                idx = i;
-                                //console.log($scope.categoryfaqlist[i].TYPE);
+                                //console.log(data.FAQ_TYPE);
+                                if(JSON.stringify(data.CATEGORY_NO) == JSON.stringify($scope.categoryfaqlist[i].NO)){
+                                    idx = i;
+                                    //console.log($scope.categoryfaqlist[i].TYPE);
+                                }
                             }
+
+                            console.log($scope.categoryfaqlist[idx].NO);
+
+                            $scope.item.CATEGORY_NO = $scope.categoryfaqlist[idx].NO;
                         }
-
-                        console.log($scope.categoryfaqlist[idx].NO);
-
-                        $scope.item.CATEGORY_NO = $scope.categoryfaqlist[idx].NO;
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
