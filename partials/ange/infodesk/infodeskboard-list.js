@@ -21,7 +21,7 @@ define([
         // 페이징
         $scope.PAGE_NO = 0;
         $scope.PAGE_SIZE = 20;
-
+        $scope.TOTAL_COUNT = 0;
 
         // 검색어 조건
         var condition = [{name: "제목", value: "SUBJECT"} , {name: "내용", value: "BODY"}];
@@ -125,22 +125,11 @@ define([
 
         /********** 화면 초기화 **********/
         // 탭 클릭 이동
-        $scope.click_selectTab = function (idx) {
+        $scope.click_selectTab = function (idx, category_no) {
+
             $scope.selectIdx = idx;
 
-            //$scope.search.PHOTO_NO = idx;
-
-            if ($stateParams.menu == 'faq') {
-                $scope.search.FAQ_GB= 'faq';
-            }
-            if(idx == 0){
-                $scope.search.FAQ_TYPE = 'ALL';
-                $scope.selectPhoto = 'ALL';
-            }else{
-                $scope.selectPhoto = '0'+(idx).toString();
-                $scope.search.FAQ_TYPE = $scope.selectPhoto;
-            }
-
+            $scope.search.CATEGORY_NO = category_no;
             $scope.getPeopleBoardList();
         };
 
