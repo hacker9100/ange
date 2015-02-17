@@ -10,7 +10,7 @@ class MtMysqlData extends Mt {
 	var $mysql_insert_id = 0;
 
     function MtMysqlData() {
-        MtUtil::_c("### [MYSQL CONNECT]");
+        MtUtil::_s("### [MYSQL CONNECT]");
         ob_start();
         $this->connect();
     }
@@ -23,7 +23,7 @@ class MtMysqlData extends Mt {
 		$this->connect_db = @mysql_connect($this->mysql_host, $this->mysql_user, $this->mysql_password);
 		
 		if (!is_resource($this->connect_db)) {
-            MtUtil::_c("MYSQL 디비연결 실패");
+            MtUtil::_s("MYSQL 디비연결 실패");
 			return false;
 		}
 		//AngeUtil::_c("디비연결");
@@ -65,8 +65,7 @@ class MtMysqlData extends Mt {
 
     // mysql_query 와 mysql_error 를 한꺼번에 처리
 	function sql_query($sql, $error=TRUE) {
-
-        MtUtil::_c("EXCUTE MSYSQL QUERY[".$sql."]");
+//        MtUtil::_s("EXCUTE MSYSQL QUERY[".$sql."]");
 	    
         $this->mysql_affected_rows = 0;
         $this->mysql_errno         = 0;
@@ -80,7 +79,7 @@ class MtMysqlData extends Mt {
         $this->mysql_num_rows      = @mysql_num_rows($result);
         $this->mysql_insert_id     = @mysql_insert_id();
 		//$returnMsg = $returnMsg."{ \"err\": true , \"msg\": \"" . mysql_error() . " :: " . $sql. "\" }"; echo $returnMsg; exit;
-	    if(mysql_errno() > 0) MtUtil::_c("########################MYSQL ERROR########################\n"
+	    if(mysql_errno() > 0) MtUtil::_s("########################MYSQL ERROR########################\n"
 	                                ."SQL:::[".$sql."]\n"
 	                                ."MSG:::[".mysql_errno() . ":" . mysql_error()
 	                                ."\n###########################################################");
