@@ -699,9 +699,31 @@ body {
     margin:0px auto;
     /* padding:25px; */
     width:100%;
+    min-width: 600px;
     background-color:#FAFAFA;
     background-image: url('../imgs/ange/article/bg_01_previews.jpg');
 }
+
+.storyplus_wrap {
+    position:fixed;
+    width:150px;
+    background-color:#fff;
+    left:101%;
+    top:2px;
+    padding-bottom:40px;
+}
+
+
+@media (max-width: 768px) {
+    .storyplus_wrap {
+        position:relative;
+        display: block;
+        width:100%;
+        left:0px;
+        top:0px;
+    }
+}
+
 
 .article_windowtitle {
     padding:10px;

@@ -2,37 +2,6 @@
 
     <div id="articlewrap" class="articlewrap">
 
-        <div style="position:absolute; width:150px; background-color:#fff; left:101%; padding-bottom:40px;">
-            <div class="modal-header article_windowtitle">
-                스토리플러스
-            </div>
-
-            <div style="padding:15px 15px; font-size:0.78em; color:#e25d4c; font-weight:700;"><span class="glyphicon glyphicon-plus"></span> 같은 카테고리 스토리</div>
-
-            <div class="story_plus_thumb" ng-repeat="item in plusList" ng-show="currentPage > ( $index / 2 ) && ( $index / 2 ) >= ( currentPage - 1 )">
-                <img class="story_plus_pic" ng-src="{{item.FILE}}" ng-click="click_changeContentDetail(item)">
-                <div class="table_blue story_plus_title">{{ item.SUBJECT | limitTo: 10 }}{{item.SUBJECT > 10 ? '...' : ''}}</div>
-                <div class="table_gray story_plus_series">{{ item.PROJECT_NM }}</div>
-            </div>
-
-            <!--<div class="story_plus_thumb">-->
-                <!--<img class="story_plus_pic" src="/imgs/ange/temp/story_food_01.jpg">-->
-                <!--<div class="table_blue story_plus_title">수영이 임신부에게 좋은 이유</div>-->
-                <!--<div class="table_gray story_plus_series">2014. 07월호</div>-->
-            <!--</div>-->
-            <!--<div class="story_plus_thumb">-->
-                <!--<img class="story_plus_pic" src="/imgs/ange/temp/story_food_01.jpg">-->
-                <!--<div class="table_blue story_plus_title">수영이 임신부에게 좋은 이유</div>-->
-                <!--<div class="table_gray story_plus_series">2014. 07월호</div>-->
-            <!--</div>-->
-
-            <div style="width:75%; text-align:center;font-size: 0.78em; margin:0px auto;">
-                <a class="miniboard_tab_slideprev" title="이전" ng-click="click_prevPlus()">이전슬라이드</a>
-                <span><span class="table_blue">{{ currentPage }}</span> / {{ totalPage }}</span>
-                <a class="miniboard_tab_slidenext" title="다음" style="float:right;" ng-click="click_nextPlus()">다음슬라이드</a>
-            </div>
-        </div>
-
         <div class="modal-header article_windowtitle">
             앙쥬스토리
             <a ng-click="click_ok()" style="float:right; font-size:1.24em; cursor:pointer;"><span class="glyphicon glyphicon-remove-circle"></span></a>
@@ -90,6 +59,43 @@
 
 
                     <div>
+
+                        <div class="storyplus_wrap">
+                            <div class="modal-header article_windowtitle">
+                                스토리플러스
+                            </div>
+
+                            <div style="padding:15px 15px; font-size:0.78em; color:#e25d4c; font-weight:700;"><span class="glyphicon glyphicon-plus"></span> 같은 카테고리 스토리</div>
+
+                            <div class="story_plus_thumb" ng-repeat="item in plusList" ng-show="currentPage > ( $index / 2 ) && ( $index / 2 ) >= ( currentPage - 1 )">
+                                <!--<img class="story_plus_pic" ng-src="{{item.FILE}}" ng-click="click_changeContentDetail(item)">-->
+                                <img class="story_plus_pic" src="/imgs/ange/_blank.gif" ng-click="click_changeContentDetail(item)" style="background-image:url({{item.FILE}});">
+                                <div class="table_blue story_plus_title">{{ item.SUBJECT | limitTo: 10 }}{{item.SUBJECT > 10 ? '...' : ''}}</div>
+                                <div class="table_gray story_plus_series">{{ item.PROJECT_NM }}</div>
+                            </div>
+
+                            <div data-ng-show="plusList == '' || plusList == null" style="width:65%; padding: 40px 0; margin:0px auto; color:#646464; font-size:0.86em; text-align:center; line-height:18px;">
+                                같은 카테고리 내의 기사가 없습니다.
+                            </div>
+
+                            <!--<div class="story_plus_thumb">-->
+                            <!--<img class="story_plus_pic" src="/imgs/ange/temp/story_food_01.jpg">-->
+                            <!--<div class="table_blue story_plus_title">수영이 임신부에게 좋은 이유</div>-->
+                            <!--<div class="table_gray story_plus_series">2014. 07월호</div>-->
+                            <!--</div>-->
+                            <!--<div class="story_plus_thumb">-->
+                            <!--<img class="story_plus_pic" src="/imgs/ange/temp/story_food_01.jpg">-->
+                            <!--<div class="table_blue story_plus_title">수영이 임신부에게 좋은 이유</div>-->
+                            <!--<div class="table_gray story_plus_series">2014. 07월호</div>-->
+                            <!--</div>-->
+
+                            <div style="width:75%; text-align:center;font-size: 0.78em; margin:0px auto;">
+                                <a class="miniboard_tab_slideprev" title="이전" ng-click="click_prevPlus()">이전슬라이드</a>
+                                <span><span class="table_blue">{{ currentPage }}</span> / {{ totalPage }}</span>
+                                <a class="miniboard_tab_slidenext" title="다음" style="float:right;" ng-click="click_nextPlus()">다음슬라이드</a>
+                            </div>
+                        </div>
+
                         <!-- peoplepoll_list -->
                         <table id="comp_board_table" class="table table-hover" style="width:100%;">
 
@@ -119,7 +125,7 @@
                                     <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                     <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
                                 </td>
-                                <td width="15%" style="min-width:78px;" class="table_date">{{item.REG_DT}}</td>
+                                <td width="15%" style="min-width:82px;" class="table_date">{{item.REG_DT}}</td>
                                 <td width="5%" class="table_hit">{{item.HIT_CNT}}</td></tr>
                             </tr>
 
@@ -204,7 +210,7 @@
                         <div style="text-align:center">
                             <div ng-model="task">
 
-                                <a ng-click="click_addLike()">
+                                <a ng-click="click_addLike()" style="cursor:pointer;">
                                     <img src="/imgs/ange/btn_story_likebig.png" style="clear:both; float:none; width:293px; height:87px;"/>
                                 </a>
 
