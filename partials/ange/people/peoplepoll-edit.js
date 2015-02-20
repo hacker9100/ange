@@ -80,147 +80,181 @@ define([
 
                         $scope.item = data;
 
-                        if(data.POLL_ST == 0){
+                        var que_data = $scope.item.ada_que_info;
+
+                        $scope.item.QUE = [];
+                        //$scope.item.QUE = new Array();
+                        que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
+                        var parse_que_data = JSON.parse(que_data);
+
+                        for(var x in parse_que_data){
+
+                            var choice = [];
+                            if(parse_que_data[x].type == 0){ // 객관식일때
+                                var select_answer = parse_que_data[x].choice.split(','); // ,를 기준으로 문자열을 잘라 배열로 변환
+
+                                for(var i=0; i < select_answer.length; i++){
+                                    choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
+                                    //console.log(select_answer[i]);
+                                }
+                            }else{ // 주관식일때
+                                choice = "";
+                            }
+
+                            var index = parseInt(x)+parseInt(1);
+                            $scope.item.QUE.push({"index" : index,"title" : parse_que_data[x].title, "type" : parse_que_data[x].type, "choice" :choice});
+                        }
+
+                        console.log($scope.item.QUE);
+
+                        if(data.ada_state == 0){
                             $scope.showPollView = false;
                         }else{
                             $scope.showPollView = true;
                         }
 
+                        var query = data.QUERY;
+
+//                        var select_sort = [];
+//                        for(var i in query) {
+//
+//                            $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
 
                         $scope.lastPage = Math.round(data.QUERY_CNT/2);
 
-                        var query = data.QUERY;
+                        // 차트
+//                      var query = data.QUERY;
 
-                        var select_sort = [];
-                        for(var i in query) {
-
-                            $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
-
-                            var j = parseInt(i)+1;
-
-                            $scope.search.BOARD_NO = $stateParams.id ;
-
-//                            $scope.getList('ange/poll', 'chartlist', {}, $scope.search, true)
-//                                .then(function(data){
-//                                    $scope.chartlist = data;
+//                        var select_sort = [];
+//                        for(var i in query) {
 //
-//                                    var note = [];
-//                                    var poll_cnt = [];
-//                                    var myJSON = "";
+//                            $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
 //
-//                                    for(var k=0; k<$scope.chartlist.length; k++) {
-//                                        var item = {
-//                                            v: $scope.chartlist[k].NOTE
-//                                        };
+//                            var j = parseInt(i)+1;
 //
-//                                        var item2 = {
-//                                            v: $scope.chartlist[k].POLL_CNT
-//                                        };
+//                            $scope.search.BOARD_NO = $stateParams.id ;
 //
-//                                        note.push(item);
-//                                        poll_cnt.push(item2);
+////                            $scope.getList('ange/poll', 'chartlist', {}, $scope.search, true)
+////                                .then(function(data){
+////                                    $scope.chartlist = data;
+////
+////                                    var note = [];
+////                                    var poll_cnt = [];
+////                                    var myJSON = "";
+////
+////                                    for(var k=0; k<$scope.chartlist.length; k++) {
+////                                        var item = {
+////                                            v: $scope.chartlist[k].NOTE
+////                                        };
+////
+////                                        var item2 = {
+////                                            v: $scope.chartlist[k].POLL_CNT
+////                                        };
+////
+////                                        note.push(item);
+////                                        poll_cnt.push(item2);
+////
+////                                        $rootScope.jsontext = '{"v":"'+ $scope.chartlist[k].NOTE+'"}';
+////                                        $rootScope.jsontext2 = '{"v":"'+ $scope.chartlist[k].POLL_CNT+'"}';
+////
+////                                        $rootScope.contact = JSON.parse($rootScope.jsontext);
+////                                        $rootScope.contact2 = JSON.parse($rootScope.jsontext2);
+////
+////                                    }
+////
+////                                })
+////                                .catch(function(error){});
 //
-//                                        $rootScope.jsontext = '{"v":"'+ $scope.chartlist[k].NOTE+'"}';
-//                                        $rootScope.jsontext2 = '{"v":"'+ $scope.chartlist[k].POLL_CNT+'"}';
+//                            var myarray = [{}];
+//                            var json = [];
 //
-//                                        $rootScope.contact = JSON.parse($rootScope.jsontext);
-//                                        $rootScope.contact2 = JSON.parse($rootScope.jsontext2);
+//                            var j = parseInt(i)+1;
+//                            $scope.chart[i] = {};
 //
-//                                    }
+////                            $rootScope.jsontext1 = '{"cols": [ {id: "t", label: "Topping", type: "string"}, {id: "s", label: "Slices", type: "number"} ], "rows": {c:[]};';
+////
+////                            var obj = JSON.parse($rootScope.jsontext1);
+////                            obj["c"].push({"v":"title"},{"v": 500});
+////                            $rootScope.jsontext1 = JSON.stringify(obj);
 //
-//                                })
-//                                .catch(function(error){});
-
-                            var myarray = [{}];
-                            var json = [];
-
-                            var j = parseInt(i)+1;
-                            $scope.chart[i] = {};
-
-//                            $rootScope.jsontext1 = '{"cols": [ {id: "t", label: "Topping", type: "string"}, {id: "s", label: "Slices", type: "number"} ], "rows": {c:[]};';
+//                            $rootScope.jsontext = new Array();
+//                            $rootScope.jsontext2 = new Array();
 //
-//                            var obj = JSON.parse($rootScope.jsontext1);
-//                            obj["c"].push({"v":"title"},{"v": 500});
-//                            $rootScope.jsontext1 = JSON.stringify(obj);
-
-                            $rootScope.jsontext = new Array();
-                            $rootScope.jsontext2 = new Array();
-
-                            $rootScope.contact = new Array();
-                            $rootScope.contact2 = new Array();
-
-                            $rootScope.contact3 = new Array();
-
-                            $rootScope.test = '';
-                            for(var k in query[i].SELECT) {
-
-                                $rootScope.jsontext[k] = '{"v":"'+ query[i].SELECT[k].NOTE+'"}';
-                                $rootScope.jsontext2[k] = '{"v":'+ query[i].SELECT[k].POLL_CNT+'}';
-
-                                $rootScope.contact[k] = JSON.parse($rootScope.jsontext[k]);
-                                $rootScope.contact2[k] = JSON.parse($rootScope.jsontext2[k]);
-
-                                $rootScope.contact3[k] = $rootScope.contact[k] + $rootScope.contact2[k];
-                            }
-
-                            for(var q=0; q < $rootScope.contact3.length; q++){
-                                console.log($rootScope.contact[q]);
-                                console.log($rootScope.contact2[q]);
-                            }
-
-//                            for(var q=0; q < $rootScope.contact2.length; q++){
+//                            $rootScope.contact = new Array();
+//                            $rootScope.contact2 = new Array();
+//
+//                            $rootScope.contact3 = new Array();
+//
+//                            $rootScope.test = '';
+//                            for(var k in query[i].SELECT) {
+//
+//                                $rootScope.jsontext[k] = '{"v":"'+ query[i].SELECT[k].NOTE+'"}';
+//                                $rootScope.jsontext2[k] = '{"v":'+ query[i].SELECT[k].POLL_CNT+'}';
+//
+//                                $rootScope.contact[k] = JSON.parse($rootScope.jsontext[k]);
+//                                $rootScope.contact2[k] = JSON.parse($rootScope.jsontext2[k]);
+//
+//                                $rootScope.contact3[k] = $rootScope.contact[k] + $rootScope.contact2[k];
+//                            }
+//
+//                            for(var q=0; q < $rootScope.contact3.length; q++){
+//                                console.log($rootScope.contact[q]);
 //                                console.log($rootScope.contact2[q]);
 //                            }
-
-                            var test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "Slices", "type": "number"} ], "rows": []}';
-                            var obj = JSON.parse(test);
-
-                            for(var q=0; q < $rootScope.contact3.length; q++){
-                                console.log($rootScope.contact[q]);
-                                console.log($rootScope.contact2[q]);
-                                obj['rows'].push({c:[$rootScope.contact[q], $rootScope.contact2[q]]});
-                            }
-
-                            //obj['rows'].push({c:[]});
-                            test = JSON.stringify(obj);
-                            var result = JSON.parse(test);
-                            console.log(result);
-
-//                            var jsonStr = '{"theTeam":[{"teamId":"1","status":"pending"},{"teamId":"2","status":"member"},{"teamId":"3","status":"member"}]}';
 //
-//                            var obj = JSON.parse(jsonStr);
-//                            obj['theTeam'].push({"teamId":"4","status":"pending"});
-//                            jsonStr = JSON.stringify(obj);
+////                            for(var q=0; q < $rootScope.contact2.length; q++){
+////                                console.log($rootScope.contact2[q]);
+////                            }
 //
+//                            var test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "Slices", "type": "number"} ], "rows": []}';
+//                            var obj = JSON.parse(test);
 //
-//                            console.log(jsonStr);
-                            //{c:[]}
-//                            $scope.chart[i].data = {"cols": [
-//                                {id: "t", label: "Topping", type: "string"},
-//                                {id: "s", label: "Slices", type: "number"}
-//                            ], "rows": [
-//                                {c: [
-//                                    $rootScope.contact[0],
-//                                    $rootScope.contact2[0]
-//                                ]},
-//                                {c:[
-//                                    {v:"예(Q3번으로)"}
-//                                    ,{v:1}
-//                                ]},
-//                                {c:[
-//                                    {v:"아니오(Q4번으로)"}
-//                                    ,{v:1}
-//                                ]}
-//                            ]};
-                            $scope.chart[i].data = result;
-
-                            // $routeParams.chartType == BarChart or PieChart or ColumnChart...
-                            $scope.chart[i].type = 'PieChart';
-//                            $scope.chart[i].options = {
-//                                'title': 'How Much Pizza I Ate Last Night'
+//                            for(var q=0; q < $rootScope.contact3.length; q++){
+//                                console.log($rootScope.contact[q]);
+//                                console.log($rootScope.contact2[q]);
+//                                obj['rows'].push({c:[$rootScope.contact[q], $rootScope.contact2[q]]});
 //                            }
-
-                        }
+//
+//                            //obj['rows'].push({c:[]});
+//                            test = JSON.stringify(obj);
+//                            var result = JSON.parse(test);
+//                            console.log(result);
+//
+////                            var jsonStr = '{"theTeam":[{"teamId":"1","status":"pending"},{"teamId":"2","status":"member"},{"teamId":"3","status":"member"}]}';
+////
+////                            var obj = JSON.parse(jsonStr);
+////                            obj['theTeam'].push({"teamId":"4","status":"pending"});
+////                            jsonStr = JSON.stringify(obj);
+////
+////
+////                            console.log(jsonStr);
+//                            //{c:[]}
+////                            $scope.chart[i].data = {"cols": [
+////                                {id: "t", label: "Topping", type: "string"},
+////                                {id: "s", label: "Slices", type: "number"}
+////                            ], "rows": [
+////                                {c: [
+////                                    $rootScope.contact[0],
+////                                    $rootScope.contact2[0]
+////                                ]},
+////                                {c:[
+////                                    {v:"예(Q3번으로)"}
+////                                    ,{v:1}
+////                                ]},
+////                                {c:[
+////                                    {v:"아니오(Q4번으로)"}
+////                                    ,{v:1}
+////                                ]}
+////                            ]};
+//                            $scope.chart[i].data = result;
+//
+//                            // $routeParams.chartType == BarChart or PieChart or ColumnChart...
+//                            $scope.chart[i].type = 'PieChart';
+////                            $scope.chart[i].options = {
+////                                'title': 'How Much Pizza I Ate Last Night'
+////                            }
+//
+//                        }
 
 
                 })
@@ -236,12 +270,12 @@ define([
                 return;
             }
 
-            if(poll_st == 1){
+            if(poll_st == 0){
                 dialogs.notify('알림', '종료된 설문조사 입니다.', {size: 'md'});
                 return;
             }
 
-            $scope.search['BOARD_NO'] = no;
+            $scope.search['ada_idx'] = no;
 
             // $scope.search['USER_UID'] = 'test'; 세션 uid를 저장해야함
             $scope.search['USER_UID'] = $rootScope.uid; // 테스트
@@ -257,68 +291,50 @@ define([
                         dialogs.notify('알림', '이미 이 설문조사에 참여하셨습니다.', {size: 'md'});
                         $location.url('/people/poll/list');
                     } else {
-                        $scope.insertItem('ange/poll', 'answear', $scope.queue, false)
-                            .then(function(){
-                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                                $location.url('/people/poll/list');
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                        var answer = [];
+                        $scope.item.QUE_SHORT_ANSWER = ''
+                        $("input[name='answer[]'").each(function(index, element) {
+                            $scope.item.QUE_SHORT_ANSWER = $(element).val();
+                            answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+                        })
+
+
+                        var values = {};
+                        $('.poll_select_radio:checked').each(function() {
+
+                            if(this.value == undefined){
+                                values[this.name] = "";
+                            }
+                            values[this.name] = this.value;
+                            answer.push(values[this.name]);
+                            console.log(this.value);
+                        });
+
+                        $rootScope.jsontext2 = new Array();
+                        //
+//                        for(var i=0; i<answer.length; i++){
+//                            var index = parseInt(i+1);
+//                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+//                        }
+                        $("input[name='index[]'").each(function(index, element) {
+                            //$scope.item.QUE_SHORT_ANSWER = $(element).val();
+                            $rootScope.jsontext2[$(element).val()] = '"'+$(element).val()+'":"'+ answer[index]+'"';
+                        })
+
+                        $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                        console.log($scope.item.ANSWER);
+
+//                        $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue
+//                            .then(function(){
+//                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+//                                $location.url('/people/poll/list');
+//                            })
+//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-             /*$("input[id=select_sort]:checked").each(function(index,element){
-
-                 var check = $("input[id=select_sort]:checked").val();
-
-                 $scope.answer.SELECT_ANSWER = $(element).val();
-
-*//*                $scope.answer.QUERY_NO = 3;
-                $scope.answer.QUERY_SORT = 3;
-                $scope.answer.NOTE = '설문조사 3';*//*
-
-                 console.log(queue);
-
-                 for(var i=0; i< check.length; i++){
-                     console.log(queue[i].SELECT[i].QUERY_NO);
-                     console.log(queue[i].SELECT);
-                     console.log(queue[i].SELECT);
-                 }
-*//*
-
-                 $("input[name=query_no]").each(function(index,element){
-                     $scope.answer.QUERY_NO = $(element).val();
-                     console.log($scope.answer.QUERY_NO);
-                 });
-
-                 $("input[name=query_sort]").each(function(index,element){
-                     $scope.answer.QUERY_SORT = $(element).val();
-                     console.log($scope.answer.QUERY_SORT);
-                 });
-
-                 $("input[name=note]").each(function(index,element){
-                     $scope.answer.NOTE = $(element).val();
-                     console.log($scope.answer.NOTE);
-                 });
-*//*
-
-                 $scope.insertItem('ange/poll', 'answear', $scope.answer, false)
-                      .then(function(){
-                          dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                         $location.url('/people/poll/list');
-                      })
-                      .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-             });*/
-
-/*            for(var i = 0 ; i < $scope.queue.length ; i++) {
-*//*                if(! $scope.queue[i].SELECT[i]) {
-                    return false;
-                }*//*
-                console.log($scope.queue[i].SELECT);
-            }
-            console.log('end');*/
         }
 
         $scope.click_showAngePollList = function() {

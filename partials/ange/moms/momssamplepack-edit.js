@@ -223,15 +223,15 @@ define([
                $scope.search.EVENT_GB = 'SAMPLE2';
            }
 
-           $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+           $scope.getList('ange/event', 'eventlist', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var target_gb = data[0].EVENT_GB;
                     var target_no = data[0].NO;
 
                     $scope.season_gb = target_gb;
 
-                    $scope.item.target_gb = target_gb;
-                    $scope.item.ada_idx = target_no;
+                    $scope.item.TARGET_GB = target_gb;
+                    $scope.item.TARGET_NO = target_no;
 
 
                    var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
@@ -272,23 +272,13 @@ define([
                 }
             }
 
-            $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+            $scope.getList('ange/comp', 'check_1', {}, $scope.search, false)
                 .then(function(data){
                     var comp_cnt = data[0].COMP_CNT;
 
                     if(comp_cnt == 0){
-                        $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                        $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
                             .then(function(){
-
-//                                if($scope.season_gb == 'SAMPLE2'){ // 기존회원일때 마일리지 2000 차감
-//
-//                                    $scope.item.REMAIN_POINT = 2000;
-//                                    $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
-//                                        .then(function(){
-//                                        })
-//                                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-//                                }
-
                                 dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
 
                                 $location.url('/moms/samplepack/intro');

@@ -41,7 +41,7 @@ define([
         $scope.search = {};
 
         // 검색어 조건
-        var condition = [{name: "제목+본문", value: "SUBJECT"}];
+        var condition = [{name: "제목", value: "ada_title"}];
 //        ,{name : "작성자", value : "REG_NM"}
 
         $scope.conditions = condition;
@@ -87,7 +87,7 @@ define([
 
         // 게시판 목록 조회
         $scope.getAngePollList = function () {
-            $scope.search['SORT'] = 'REG_DT';
+            $scope.search['SORT'] = 'ada_date_regi';
             $scope.search['ORDER'] = 'DESC';
 
             $scope.getList('ange/poll', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)

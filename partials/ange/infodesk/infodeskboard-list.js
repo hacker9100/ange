@@ -19,9 +19,9 @@ define([
         $scope.search = {};
 
         // 페이징
-        $scope.PAGE_NO = 0;
-        $scope.PAGE_SIZE = 20;
-
+        $scope.PAGE_NO = 1;
+        $scope.PAGE_SIZE = 10;
+        $scope.TOTAL_COUNT = 0;
 
         // 검색어 조건
         var condition = [{name: "제목", value: "SUBJECT"} , {name: "내용", value: "BODY"}];
@@ -40,6 +40,7 @@ define([
 
         $scope.todayDate = today;
 
+        $scope.selectIdx = 0;
         $(function () {
 
             $(".tab_content").hide();
@@ -125,23 +126,18 @@ define([
 
         /********** 화면 초기화 **********/
         // 탭 클릭 이동
-        $scope.click_selectTab = function (idx) {
+        $scope.click_selectTab = function (idx, category_no) {
+
             $scope.selectIdx = idx;
 
-            //$scope.search.PHOTO_NO = idx;
-
-            if ($stateParams.menu == 'faq') {
-                $scope.search.FAQ_GB= 'faq';
-            }
             if(idx == 0){
-                $scope.search.FAQ_TYPE = 'ALL';
-                $scope.selectPhoto = 'ALL';
+                $scope.search.CATEGORY_NO = '';
+                $scope.getPeopleBoardList();
             }else{
-                $scope.selectPhoto = '0'+(idx).toString();
-                $scope.search.FAQ_TYPE = $scope.selectPhoto;
+                $scope.search.CATEGORY_NO = category_no;
+                $scope.getPeopleBoardList();
             }
 
-            $scope.getPeopleBoardList();
         };
 
         // 게시판 목록 조회
@@ -151,7 +147,7 @@ define([
             /*            $scope.search.SORT = 'NOTICE_FL';
              $scope.search.ORDER = 'DESC'*/
 
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
@@ -232,6 +228,12 @@ define([
         $scope.click_searchPeopleBoard = function(){
             $scope.getPeopleBoardList();
         }
+
+        // 페이징
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getPeopleBoardList();
+        };
 
         /********** 화면 초기화 **********/
 

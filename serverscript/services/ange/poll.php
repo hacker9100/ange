@@ -26,7 +26,7 @@ MtUtil::_d(print_r($_REQUEST,true));
         Util::_c("FUNC[processApi] category.cnt : ".count($category));
     }
 */
-$_d = new MtJson(null);
+$_d = new MtJson('ad');
 
 if ($_d->connect_db == "") {
     $_d->failEnd("DB 연결 실패. 관리자에게 문의하세요.");
@@ -51,61 +51,76 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             if ($_type == "item") {
                 $search_where = "";
 
-//                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-//                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
-//                }
-
-                $err = 0;
-                $msg = "";
-
-                $sql = "SELECT
-                            NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, REG_DT
-                            , (SELECT COUNT(DISTINCT USER_UID) AS POLL_ANSWER_CNT FROM ANGE_POLL_ANSWEAR WHERE POLL_NO = ".$_key.") AS POLL_ANSWER_CNT
+                // ada_notice,
+                $sql = "SELECT  ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close, DATE_FORMAT(ada_date_notice, '%Y-%m-%d') as ada_date_notice, ada_option_quantity, ada_image, ada_preview, ada_imagemap,
+                             ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url,
+                             DATE_FORMAT(ada_date_open,'%Y%m%d') as OPEN_DATE ,DATE_FORMAT(ada_date_close, '%Y%m%d') as END_DATE, ada_option_delivery,
+                             ada_url, ada_count_request, ada_detail,ada_que_type, ada_count_join
                         FROM
-                            ANGE_POLL
+                            adm_ad AE
                         WHERE
-                            NO = ".$_key."
+                            ada_idx = ".$_key."
                             ".$search_where."
                         ";
 
                 $result = $_d->sql_query($sql);
                 $data = $_d->sql_fetch_array($result);
 
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
+//                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
+//                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
+//                }
 
-                $sql = "SELECT QUERY_NO, QUERY_SORT, BOARD_NO, QUERY_GB, QUERY
-                    FROM
-                      ANGE_POLL_QUERY
-                        WHERE
-                          BOARD_NO = ".$data[NO]."
-                        ORDER BY QUERY_SORT
-                        ";
-
-                $__trn = '';
-                $result = $_d->sql_query($sql,true);
-
-                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-                    $sql = "SELECT AP.QUERY_NO, AP.QUERY_SORT, AP.SELECT_SORT, AP.BOARD_NO, AP.NOTE,
-                               (SELECT COUNT(*) FROM ANGE_POLL_ANSWEAR WHERE QUERY_NO = AP.QUERY_NO and QUERY_SORT = AP.QUERY_SORT) as POLL_CNT
-                        FROM ANGE_POLL_SELECT AP
-                            WHERE
-                                AP.BOARD_NO = ".$row[BOARD_NO]."
-                                AND AP.QUERY_NO = ".$row[QUERY_NO]."
-                            ORDER BY AP.SELECT_SORT
-                            ";
-
-                    $file_data = $_d->getData($sql);
-                    $row['SELECT'] = $file_data;
-
-                    $__trn->rows[$i] = $row;
-                }
-
-                $_d->sql_free_result($result);
-                $data['QUERY'] = $__trn->{'rows'};
+//                $err = 0;
+//                $msg = "";
+//
+//                $sql = "SELECT
+//                            NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, REG_DT
+//                            , (SELECT COUNT(DISTINCT USER_UID) AS POLL_ANSWER_CNT FROM ANGE_POLL_ANSWEAR WHERE POLL_NO = ".$_key.") AS POLL_ANSWER_CNT
+//                        FROM
+//                            ANGE_POLL
+//                        WHERE
+//                            NO = ".$_key."
+//                            ".$search_where."
+//                        ";
+//
+//                $result = $_d->sql_query($sql);
+//                $data = $_d->sql_fetch_array($result);
+//
+//                if($_d->mysql_errno > 0) {
+//                    $err++;
+//                    $msg = $_d->mysql_error;
+//                }
+//
+//                $sql = "SELECT QUERY_NO, QUERY_SORT, BOARD_NO, QUERY_GB, QUERY
+//                    FROM
+//                      ANGE_POLL_QUERY
+//                        WHERE
+//                          BOARD_NO = ".$data[NO]."
+//                        ORDER BY QUERY_SORT
+//                        ";
+//
+//                $__trn = '';
+//                $result = $_d->sql_query($sql,true);
+//
+//                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+//
+//                    $sql = "SELECT AP.QUERY_NO, AP.QUERY_SORT, AP.SELECT_SORT, AP.BOARD_NO, AP.NOTE,
+//                               (SELECT COUNT(*) FROM ANGE_POLL_ANSWEAR WHERE QUERY_NO = AP.QUERY_NO and QUERY_SORT = AP.QUERY_SORT) as POLL_CNT
+//                        FROM ANGE_POLL_SELECT AP
+//                            WHERE
+//                                AP.BOARD_NO = ".$row[BOARD_NO]."
+//                                AND AP.QUERY_NO = ".$row[QUERY_NO]."
+//                            ORDER BY AP.SELECT_SORT
+//                            ";
+//
+//                    $file_data = $_d->getData($sql);
+//                    $row['SELECT'] = $file_data;
+//
+//                    $__trn->rows[$i] = $row;
+//                }
+//
+//                $_d->sql_free_result($result);
+//                $data['QUERY'] = $__trn->{'rows'};
 /*
                 $sql = "SELECT
                             NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
@@ -134,9 +149,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $sort_order = "";
                 $limit = "";
 
-                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
-                    $search_where .= "AND POLL_ST = '".$_search[POLL_ST]."' ";
-                }
+//                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
+//                    $search_where .= "AND POLL_ST = '".$_search[POLL_ST]."' ";
+//                }
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
@@ -150,30 +165,57 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
-                $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
+//                $sql = "SELECT
+//                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+//                            NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
+//                        FROM
+//                        (
+//                            SELECT
+//                                NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, REG_DT
+//                            FROM
+//                                ANGE_POLL
+//                            WHERE
+//                                1 = 1
+//                                ".$search_where."
+//                            ".$sort_order."
+//                            ".$limit."
+//                        ) AS DATA,
+//                        (SELECT @RNUM := 0) R,
+//                        (
+//                            SELECT
+//                                COUNT(*) AS TOTAL_COUNT
+//                            FROM
+//                                ANGE_POLL
+//                            WHERE
+//                                1 = 1
+//                                ".$search_where."
+//                        ) CNT
+//                        ";
+
+                // , ada_notice
+                $sql = "SELECT TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                             ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_option_quantity, ada_image, ada_preview, ada_imagemap
+                             ,ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url, ada_type, ada_title, ada_que_type
+                             ,DATE_FORMAT(ada_date_notice, '%Y-%m-%d') as ada_date_notice
                         FROM
                         (
                             SELECT
-                                NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, REG_DT
-                            FROM
-                                ANGE_POLL
-                            WHERE
-                                1 = 1
+                                  ada_idx, ada_type, ada_title, ada_url, ada_date_open, ada_date_close, ada_option_quantity, ada_image, ada_preview, ada_imagemap,
+                                  ada_state, ada_que_info, ada_que_type, ada_date_notice
+                            FROM adm_ad
+                            WHERE 1 = 1
+                              AND ada_type = 'survey'
                                 ".$search_where."
-                            ".$sort_order."
-                            ".$limit."
+                                ".$sort_order."
+                                ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
-                            FROM
-                                ANGE_POLL
-                            WHERE
-                                1 = 1
-                                ".$search_where."
+                            SELECT COUNT(*) AS TOTAL_COUNT
+                            FROM adm_ad
+                            WHERE 1 = 1
+                              AND ada_type = 'survey'
+                              ".$search_where."
                         ) CNT
                         ";
 
@@ -185,10 +227,15 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }
             } else if ($_type == "check") {
 
-                $sql = "SELECT COUNT(DISTINCT USER_UID) AS POLL_ANSWER_CNT
-                        FROM ANGE_POLL_ANSWEAR
-                        WHERE POLL_NO = ".$_search[BOARD_NO]."
-                          AND USER_UID = '".$_search[USER_UID]."'";
+//                $sql = "SELECT COUNT(DISTINCT USER_UID) AS POLL_ANSWER_CNT
+//                        FROM ANGE_POLL_ANSWEAR
+//                        WHERE POLL_NO = ".$_search[BOARD_NO]."
+//                          AND USER_UID = '".$_search[USER_UID]."'";
+
+                $sql = "SELECT COUNT(DISTINCT adu_id) AS POLL_ANSWER_CNT
+                        FROM adm_history_join
+                        WHERE ada_idx = ".$_search[ada_idx]."
+                          AND adu_id = '".$_SESSION['uid']."'";
 
                 $data = $_d->sql_query($sql);
                 if($_d->mysql_errno > 0){
@@ -338,95 +385,121 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             } else if ($_type == "answear") {
 
                /* ".$_SESSION['uid']."*/
-                $j = 0;
-                foreach ($_model as $s) {
-
-                   $query_no = "";
-                   $query_sort = "";
-                   $poll_no = "";
-                   $select_answer = "";
-                   $select_short_answer = "";
-                   $note = "";
-
-                    // 질문 유형이 주관식일때
-                    if ($s[QUERY_GB] == 'S') {
-                        $query_no = $s[QUERY_NO];
-                        $query_sort = $s[QUERY_SORT];
-                        $poll_no = $s[BOARD_NO];
-                        $select_answer = 0;
-                        $select_short_answer = $s[SELECT_SHORT_ANSWER];
-                        $note = '';
-                    } else if($s[QUERY_GB] == 'M'){ // 객관식일때
-
-                        if(!isset($s[SELECT_ANSWER])){
-                            $query_no = $s[QUERY_NO];
-                            $query_sort = $s[QUERY_SORT];
-                            $poll_no = $s[BOARD_NO];
-                            $select_answer = 0;
-                            $select_short_answer = '';
-                            $note = '';
-                        }else{
-                            $query_no = $s[SELECT_ANSWER][QUERY_NO];
-                            $query_sort = $s[SELECT_ANSWER][QUERY_SORT];
-                            $poll_no = $s[SELECT_ANSWER][BOARD_NO];
-                            $select_answer = $s[SELECT_ANSWER][SELECT_SORT];
-                            $note = $s[SELECT_ANSWER][NOTE];
-                            $select_short_answer = $s[SELECT_SHORT_ANSWER];
-                        }
-                    }else if($s[QUERY_GB] == 'D'){ // 다중객관식일때
-
-                        if(!isset($s[SELECT_ANSWER])){
-                            $query_no = $s[QUERY_NO];
-                            $query_sort = $s[QUERY_SORT];
-                            $poll_no = $s[BOARD_NO];
-                            $select_answer = 0;
-                            $select_short_answer = '';
-                            $note = '';
-                        }else{
-                            foreach ($s[SELECT_ANSWER] as $e) {
-
-                                $query_no = $e[QUERY_NO];
-                                $query_sort = $e[QUERY_SORT];
-                                $poll_no = $e[BOARD_NO];
-                                $select_answer = $e[SELECT_SORT];
-                                $note = $e[NOTE];
-                                $select_short_answer = $e[SELECT_SHORT_ANSWER];
-                            }
-                        }
-                    }
-
-                    $sql = "INSERT INTO ANGE_POLL_ANSWEAR
+//                $j = 0;
+//                foreach ($_model as $s) {
+//
+//                   $query_no = "";
+//                   $query_sort = "";
+//                   $poll_no = "";
+//                   $select_answer = "";
+//                   $select_short_answer = "";
+//                   $note = "";
+//
+//                    // 질문 유형이 주관식일때
+//                    if ($s[QUERY_GB] == 'S') {
+//                        $query_no = $s[QUERY_NO];
+//                        $query_sort = $s[QUERY_SORT];
+//                        $poll_no = $s[BOARD_NO];
+//                        $select_answer = 0;
+//                        $select_short_answer = $s[SELECT_SHORT_ANSWER];
+//                        $note = '';
+//                    } else if($s[QUERY_GB] == 'M'){ // 객관식일때
+//
+//                        if(!isset($s[SELECT_ANSWER])){
+//                            $query_no = $s[QUERY_NO];
+//                            $query_sort = $s[QUERY_SORT];
+//                            $poll_no = $s[BOARD_NO];
+//                            $select_answer = 0;
+//                            $select_short_answer = '';
+//                            $note = '';
+//                        }else{
+//                            $query_no = $s[SELECT_ANSWER][QUERY_NO];
+//                            $query_sort = $s[SELECT_ANSWER][QUERY_SORT];
+//                            $poll_no = $s[SELECT_ANSWER][BOARD_NO];
+//                            $select_answer = $s[SELECT_ANSWER][SELECT_SORT];
+//                            $note = $s[SELECT_ANSWER][NOTE];
+//                            $select_short_answer = $s[SELECT_SHORT_ANSWER];
+//                        }
+//                    }else if($s[QUERY_GB] == 'D'){ // 다중객관식일때
+//
+//                        if(!isset($s[SELECT_ANSWER])){
+//                            $query_no = $s[QUERY_NO];
+//                            $query_sort = $s[QUERY_SORT];
+//                            $poll_no = $s[BOARD_NO];
+//                            $select_answer = 0;
+//                            $select_short_answer = '';
+//                            $note = '';
+//                        }else{
+//                            foreach ($s[SELECT_ANSWER] as $e) {
+//
+//                                $query_no = $e[QUERY_NO];
+//                                $query_sort = $e[QUERY_SORT];
+//                                $poll_no = $e[BOARD_NO];
+//                                $select_answer = $e[SELECT_SORT];
+//                                $note = $e[NOTE];
+//                                $select_short_answer = $e[SELECT_SHORT_ANSWER];
+//                            }
+//                        }
+//                    }
+//
+//                    $sql = "INSERT INTO ANGE_POLL_ANSWEAR
+//                                (
+//                                    QUERY_NO
+//                                    ,QUERY_SORT
+//                                    ,USER_UID
+//                                    ,POLL_NO
+//                                    ,NICK_NM
+//                                    ,SELECT_ANSWEAR
+//                                    ,SELECT_SHORT_ANSWER
+//                                    ,NOTE
+//                                    ,REG_DT
+//                                ) VALUES (
+//                                    '".$query_no."'
+//                                    ,'".$query_sort."'
+//                                    ,'".$_SESSION['uid']."'
+//                                    ,'".$poll_no."'
+//                                    ,'".$_SESSION['name']."'
+//                                    ,'".$select_answer."'
+//                                    ,'".$select_short_answer."'
+//                                    ,'".$note."'
+//                                    ,SYSDATE()
+//                                )";
+//
+//                    $_d->sql_query($sql);
+//                    $no = $_d->mysql_insert_id;
+//
+//                    if($_d->mysql_errno > 0) {
+//                        $err++;
+//                        $msg = $_d->mysql_error;
+//                    }
+//
+//                }
+                // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
+                $sql = "INSERT INTO adm_history_join
                                 (
-                                    QUERY_NO
-                                    ,QUERY_SORT
-                                    ,USER_UID
-                                    ,POLL_NO
-                                    ,NICK_NM
-                                    ,SELECT_ANSWEAR
-                                    ,SELECT_SHORT_ANSWER
-                                    ,NOTE
-                                    ,REG_DT
+                                    adhj_idx,
+                                    ada_idx,
+                                    adu_id,
+                                    adu_name,
+                                    adhj_date_request,
+                                    adhj_answers
                                 ) VALUES (
-                                    '".$query_no."'
-                                    ,'".$query_sort."'
-                                    ,'".$_SESSION['uid']."'
-                                    ,'".$poll_no."'
-                                    ,'".$_SESSION['name']."'
-                                    ,'".$select_answer."'
-                                    ,'".$select_short_answer."'
-                                    ,'".$note."'
-                                    ,SYSDATE()
+                                    (SELECT COUNT(*)+1 FROM adm_history_join a)
+                                    , '".$_model[ada_idx]."'
+                                    , '".$_SESSION['uid']."'
+                                    , '".$_SESSION['name']."'
+                                    , NOW()
+                                    , '".$_model[ANSWER]."'
                                 )";
 
-                    $_d->sql_query($sql);
-                    $no = $_d->mysql_insert_id;
+                $_d->sql_query($sql);
 
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
+                // 신청자명 증가
+                $sql = "UPDATE adm_ad
+                  SET  ada_count_request = ada_count_request + 1
+                  WHERE ada_idx = '".$_model[ada_idx]."'";
 
-                }
+                $_d->sql_query($sql);
 
                 if($err > 0){
                     $_d->sql_rollback();

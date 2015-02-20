@@ -146,21 +146,6 @@
                     }
                 }
 
-//                if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
-//                    $search_where .= "AND END_YMD >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
-//                }
-//
-//                if (isset($_search[PAST]) && $_search[PAST] != "") {
-//                    $search_where .= "AND END_YMD < DATE_FORMAT(NOW(), '%Y-%m-%d')";
-//                }
-//
-//                if (isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] != "") {
-//                    $search_where .= "AND PERFORM_FL = '".$_search[PERFORM_FL]."' ";
-//                }
-//                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-//                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
-//                }
-
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
                     $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
                 }
@@ -194,38 +179,67 @@
                         ) CNT
                         ";
 
-//                if (isset($_search[FILE])) {
-//                    $__trn = '';
-//                    $result = $_d->sql_query($sql,true);
-//                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-//
-//                            $sql = "SELECT
-//                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-//                                FROM
-//                                    FILE F, CONTENT_SOURCE S
-//                                WHERE
-//                                    F.NO = S.SOURCE_NO
-//                                    AND S.CONTENT_GB = 'FILE'
-//                                    AND S.TARGET_GB = 'EVENT'
-//                                    AND F.FILE_GB = 'THUMB'
-//                                    AND S.TARGET_NO = ".$row['NO']."
-//                                ";
-//
-//                        $file_result = $_d->sql_query($sql);
-//                        $file_data = $_d->sql_fetch_array($file_result);
-//                        $row['FILE'] = $file_data;
-//
-//                        $__trn->rows[$i] = $row;
-//                    }
-//                    $_d->sql_free_result($result);
-//                    $data = $__trn->{'rows'};
-//
-//                    if($_d->mysql_errno > 0){
-//                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                    }else{
-//                        $_d->dataEnd2($data);
-//                    }
-//                }
+                $data = $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
+            }else if ($_type == 'eventlist') {
+                $search_common = "";
+                $search_where = "";
+                $sort_order = "";
+                $limit = "";
+
+                if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
+                    $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."' ";
+                }
+
+                if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
+                    $search_where .= "AND END_YMD >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
+                }
+
+                if (isset($_search[PAST]) && $_search[PAST] != "") {
+                    $search_where .= "AND END_YMD < DATE_FORMAT(NOW(), '%Y-%m-%d')";
+                }
+
+                if (isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] != "") {
+                    $search_where .= "AND PERFORM_FL = '".$_search[PERFORM_FL]."' ";
+                }
+
+                if (isset($_page)) {
+                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                }
+
+                $sql = "SELECT
+                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                            NO, SUBJECT, SLOGAN, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD,
+                            PEOPLE_CNT, WINNER_DT
+                        FROM
+                        (
+                            SELECT
+                                NO, SUBJECT, SLOGAN, DELIV_COST, REVIEW_YMD, REVIEW_BEST, PERIOD, COMPANY_NM, COMPANY_URL, COMPANY_GB, EVENT_GB, QUIZ_FL, CHOIS1, CHOIS2, CHOIS3, CHOIS4, CHOIS5, GIFT_NM, CLUB_FL, MUSICAL_WATCH_YMD, NOTE, START_YMD, END_YMD,
+                                PEOPLE_CNT, WINNER_DT
+                            FROM
+                                ANGE_EVENT
+                            WHERE
+                                1 = 1
+                                ".$search_where."
+                                ".$limit."
+                        ) AS DATA,
+                        (SELECT @RNUM := 0) R,
+                        (
+                            SELECT
+                                COUNT(*) AS TOTAL_COUNT
+                            FROM
+                                ANGE_EVENT
+                            WHERE
+                                1 = 1
+                                ".$search_where."
+
+                        ) CNT
+                        ";
 
                 $data = $_d->sql_query($sql);
 

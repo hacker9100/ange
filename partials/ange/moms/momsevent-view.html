@@ -103,9 +103,10 @@
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                            <!--{{select}}-->
                                             <div class="radio-inline">
                                                 <label>
-                                                    <input ng-model="item.QUE_SELECT_ANSWER" type="radio" name="selectanswer[]" id="select_sort" ng-value="select"/>{{select}}
+                                                    <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                 </label>
                                             </div>
                                         </dd>

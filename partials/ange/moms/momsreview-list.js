@@ -36,6 +36,12 @@ define([
 
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
+
+            // 페이징
+            $scope.PAGE_NO = 1;
+            $scope.PAGE_SIZE = 10;
+            $scope.TOTAL_COUNT = 0;
+
             $scope.list = [];
             $scope.getPeopleBoardList();
         };

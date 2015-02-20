@@ -51,7 +51,7 @@ switch ($_method) {
     case "GET":
         if($_type == 'item'){
 
-            $sql = "SELECT  NO, TO_ID, TO_NM, FROM_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = FROM_ID) AS FROM_NM, BODY, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, CHECK_FL
+            $sql = "SELECT  NO, TO_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = TO_ID) AS TO_NM, FROM_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = FROM_ID) AS FROM_NM, BODY, REG_DT, CHECK_FL
                      FROM (
                                 SELECT NO, TO_ID, TO_NM, FROM_ID, FROM_NM, BODY, REG_DT, CHECK_FL
                                 FROM ANGE_MESSAGE
@@ -80,8 +80,7 @@ switch ($_method) {
             }
 
             $sql = " SELECT STATUS, TO_CNT, FROM_CNT, NO, TO_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = TO_ID) AS TO_NM, FROM_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = FROM_ID) AS FROM_NM, BODY, CHECK_FL,
-                              DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
-                                 TO_CNT+FROM_CNT AS TOTAL_CNT
+                         REG_DT, TO_CNT+FROM_CNT AS TOTAL_CNT
                         FROM
                         (
                            SELECT NO, TO_ID, TO_NM, FROM_ID, FROM_NM, BODY, REG_DT, CHECK_FL,'RECIEVE' AS STATUS
