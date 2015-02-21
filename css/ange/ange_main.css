@@ -458,7 +458,8 @@ div.mini_board_contents:hover {
 
 div.mini_community_contents:hover {
 	outline:1px dotted #DEDEDE;
-	background-color:#FCFCFC;
+	/* background-color:#FCFCFC; */
+    background-color: rgba(222, 222, 222, 0.5);
 }
 
 .mini_community_txt_head {
@@ -780,7 +781,8 @@ a.miniboard_tab_slidenext:focus {
 
 div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 	outline:1px dotted #DEDEDE;
-	background-color:#FCFCFC;
+	/* background-color:#FCFCFC; */
+    background-color: rgba(222, 222, 222, 0.5);
 }
 
 .mini_review_kingimg {

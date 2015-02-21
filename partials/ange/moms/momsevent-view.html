@@ -34,31 +34,32 @@
                                                 <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_open}} ~ {{item.ada_date_close}}</span></div>
                                                 <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_quantity == '' ? '00' : item.ada_option_quantity}}명</span></div>
                                                 <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_notice}}</span></div>
+                                                <div class="webzine_list_item"><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_url}}</span></div>
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>  <!-- comp_basic -->
                             </div>  <!-- col-xs-12 -->
-                            <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
-                                    <div class="webzine_list_infowrap">
-                                        <dl>
-                                            <dt class="table_red">추가정보</dt>
-                                            <dd><strong>마감일</strong><span class="table_gray" style="margin-left:8px;">{{D_DAY > 0 ? 'D-'+D_DAY : '마감'}}</span></dd>
-                                            <!--<dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>-->
-                                            <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_delivery}}원</span></dd>
-                                            <!--<dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>-->
-                                            <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.ada_url}}"><!--{{item.COMPANY_NM}}-->{{item.ada_url}}</a></span></dd>
-                                            <dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.ada_count_request}}</span>명<!--({{item.HIT_CNT}} 조회)--></span></dd>
-                                        </dl>
-                                    </div>
-                                    <div style="position:absolute; right:10px; bottom:25px;">
-                                        <button ng-hide="true" class="common_btn redbtn" title="공감" data-ng-click="click_focus();"><span class="glyphicon glyphicon-edit sharebtn_icon"></span>응모하기</button>
-                                        <button ng-hide="true" class="common_btn blackbtn" title="공감"><span class="glyphicon glyphicon-share sharebtn_icon"></span>공유하기</button>
-                                    </div>
-                                </div>  <!-- comp_basic -->
-                            </div>  <!-- col-xs-12 -->
+                            <!--<div class="col-xs-12 v-cell-4" style="margin:0px;">-->
+                                <!--<div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">-->
+                                    <!--<div class="webzine_list_infowrap">-->
+                                        <!--<dl>-->
+                                            <!--<dt class="table_red">추가정보</dt>-->
+                                            <!--<dd><strong>마감일</strong><span class="table_gray" style="margin-left:8px;">{{D_DAY > 0 ? 'D-'+D_DAY : '마감'}}</span></dd>-->
+                                            <!--&lt;!&ndash;<dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>&ndash;&gt;-->
+                                            <!--<dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_delivery}}원</span></dd>-->
+                                            <!--&lt;!&ndash;<dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>&ndash;&gt;-->
+                                            <!--<dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.ada_url}}">&lt;!&ndash;{{item.COMPANY_NM}}&ndash;&gt;{{item.ada_url}}</a></span></dd>-->
+                                            <!--<dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.ada_count_request}}</span>명&lt;!&ndash;({{item.HIT_CNT}} 조회)&ndash;&gt;</span></dd>-->
+                                        <!--</dl>-->
+                                    <!--</div>-->
+                                    <!--<div style="position:absolute; right:10px; bottom:25px;">-->
+                                        <!--<button ng-hide="true" class="common_btn redbtn" title="공감" data-ng-click="click_focus();"><span class="glyphicon glyphicon-edit sharebtn_icon"></span>응모하기</button>-->
+                                        <!--<button ng-hide="true" class="common_btn blackbtn" title="공감"><span class="glyphicon glyphicon-share sharebtn_icon"></span>공유하기</button>-->
+                                    <!--</div>-->
+                                <!--</div>  &lt;!&ndash; comp_basic &ndash;&gt;-->
+                            <!--</div>  &lt;!&ndash; col-xs-12 &ndash;&gt;-->
                         </div>  <!-- /.row -->
 
 

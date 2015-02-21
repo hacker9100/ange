@@ -14,40 +14,45 @@
                                 <span class="sub_contents_bullet"></span>
                                 <h3 style="font-weight:bold;">한줄 톡</h3>
                             </div>
+                            <center>
+                            <div style="display:inline-block; margin-bottom:15px;">
 
-                            <select id="year" ng-model="search.YEAR" ng-options="v for v in year" ng-change="change_year(search.YEAR);" class= "form-control" style="width:110px;float: left;">
-                                <option value="" selected>년</option>
-                            </select>
-                            <select id="month" ng-model="search.MONTH" ng-options="v for v in month" ng-change="change_month(search.MONTH);" class= "form-control" style="width:110px;">
-                                <option value="" selected>월</option>
-                            </select>
-                            <br/>
+                                <select id="year" ng-model="search.YEAR" ng-options="v for v in year" ng-change="change_year(search.YEAR);" class="form-control input-sm" style="float:left; width:90px; margin-right:5px;">
+                                    <option value="" selected>년</option>
+                                </select>
+                                <select id="month" ng-model="search.MONTH" ng-options="v for v in month" ng-change="change_month(search.MONTH);" class="form-control input-sm" style="width:70px;">
+                                    <option value="" selected>월</option>
+                                </select>
 
-                            <div  ng-repeat="day in day" style="float:left;">
-                                <span ng-show="$last == false"><a ng-click="search_day(day);">{{day}}|&nbsp;</a></span>
-                                <span ng-show="$last == true"><a ng-click="search_day(day);">{{day}}</a></span>
+                            </div>
+                            </center>
+
+                            <div style="width:100%; text-align:center; margin:0px auto;">
+                                <div ng-repeat="day in day" style="display:inline; cursor:pointer; font-family: arial, sans-serif; font-size:0.76em; margin:0px auto;">
+                                    <span ng-show="$last == false" style="clear:both; margin-right:4px;"><a ng-click="search_day(day);">{{day}}</a></span>
+                                    <span ng-show="$last == true" style="clear: both;"><a ng-click="search_day(day);">{{day}}</a></span>
+                                </div>
                             </div>
 
-                            <br/><br/><br/>
-                            <div>
-                                <h4>{{talkitem.SUBJECT != '' ? talkitem.SUBJECT : '주제가 없습니다'}}</h4>
+                            <div style="line-height:40px; color:#333; font-size:0.92em; text-align: center; margin-top:15px ;">
+                                {{talkitem.SUBJECT != '' ? talkitem.SUBJECT : '주제가 없습니다'}}
                             </div>
 
-                            <img ng-show="talkitem.MAIN_FILE != ''" src="{{talkitem.MAIN_FILE}}" style="width: 300px; height: 200px;"/>
+                            <img ng-show="talkitem.MAIN_FILE != ''" src="{{talkitem.MAIN_FILE}}" style="border:1px solid #ddd; width: 100%;"/>
                             <!--</div>-->
                         </div><!-- /.sub_contents_wrap -->
 
-                        <div ng-model="item" class="sub_contents_body">
+                        <div ng-model="item" class="sub_contents_body" style="width:100%;">
 
-                            <div class="container-fluid peopleboard_view_commentwrap">
-                                <div class="row peopleboard_view_commenttop">
+                            <div class="container-fluid peopleboard_view_commentwrap" style="width:100%; padding:0px;">
+                                <div class="row peopleboard_view_commenttop" style="margin:0px;">
                                     <div class="col-xs-12 peopleboard_view_commenttitle">
-                                        <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">톡</span> <!-- 출석체크 -->
+                                        <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">톡&톡</span> <!-- 출석체크 -->
                                         <small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>
                                     </div><!-- /.col-xs-12-->
                                 </div><!-- /.row -->
 
-                                <div class="row peopleboard_view_commentbox">
+                                <div class="row peopleboard_view_commentbox" style="width:100%; margin:0px auto;">
                                     <div class="col-xs-10 peopleboard_view_text">
                                         <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
                                     </div><!-- /.col-xs-10-->

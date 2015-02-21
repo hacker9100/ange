@@ -36,7 +36,7 @@ define(['./directives'], function (directives) {
                         }
                     }
 
-                    templet += '<div ng-if="'+ (path[1] != 'main') + '" id="lnb" class="lnb"' +
+                    templet += '<div ng-if="'+ (path[1] != 'main') + '" id="lnb" class="lnb">' +
                                 '   <div class="localmenu_wrap">' +
                                 '       <div ng-include=" \'/partials/ange/com/lnb-filter.html\' "></div>';
 
