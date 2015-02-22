@@ -13,19 +13,45 @@
 
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
-                                <!--<h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3>-->
+                                <h3 style="font-weight:bold;">구매정보 <!--a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a--></h3>
+                            </div>  <!-- /.sub_contents_title -->
+
+                            <div class="maintitlebox">
+                                <span class="table_blue">주문/구매</span> 현황
                             </div>
+
+                            <!-- 가이드/지시부 -->
+                            <div class="container-fluid common_container" style="width:100%; margin:0px auto; padding:0px;">
+                                <div class="row" style="margin:0px auto; display: block;">
+                                    <div class="col-xs-12 v-cell-4" style="margin:0px;">
+
+                                        <div class="comp_basic h-cell-dynamic" style="margin:0px; line-height:100px;">
+                                            <ul class="table_gray contentguide">
+                                                <li><span style="color:black; font-weight:bold;">[주문구매]</span>를 클릭하면 해당 배송업체에서 배송상황을 조회할 수 있습니다.</li>
+                                                <li><span style="color:black; font-weight:bold;">[주문상품]</span>을 클릭하면 상품별 상세내역을 조회할 수 있습니다.</li>
+                                            </ul>
+                                        </div>  <!-- /.comp_basic -->
+
+                                    </div>  <!-- /.col-xs-12 -->
+                                </div>  <!-- /.row -->
+                            </div>  <!-- /.common_container -->
+
+                            <div class="store_view_tab">
+                                <ul class="nav nav-tabs" id="tab">
+                                    <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">상품안내</a></li>
+                                    <div class="btn-group" style="float:left;">
+                                        기간검색
+                                        <input  type="text" ng-model="search.START_DT" placeholder="2015-01-17" />&nbsp;&nbsp;~ <!--my-datepicker-->
+                                        <input  type="text" ng-model="search.END_DT" id="end_dt" placeholder="2015-01-17"  /><!--my-datepicker-->
+                                    </div><!-- /btn-group -->
+                                </ul>
+                            </div>  <!-- /.store_view_tab -->
+
 
                             <div class="container-fluid sub_contents_search">
                                 <div class="row">
                                     <div class="col-xs-12" style="padding:0">
-                                        <div class="btn-group" style="float:left;">
-                                            <!--<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>-->
-                                            기간검색
-                                            <input  type="text" ng-model="search.START_DT" placeholder="2015-01-17" />&nbsp;&nbsp;~ <!--my-datepicker-->
-                                            <input  type="text" ng-model="search.END_DT" id="end_dt" placeholder="2015-01-17"  /><!--my-datepicker-->
 
-                                        </div><!-- /btn-group -->
                                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
                                             <input type="text" ng-model="search.PRODUCT_NM" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
