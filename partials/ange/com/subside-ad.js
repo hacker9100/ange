@@ -19,11 +19,11 @@ define([
         $scope.init = function() {
             var banner_code = 0;
 
-            if ($scope.channel.CHANNEL_NO = 2) {
+            if ($scope.channel.CHANNEL_NO == 2) {
                 banner_code = 1;
-            } else if ($scope.channel.CHANNEL_NO = 3) {
+            } else if ($scope.channel.CHANNEL_NO == 3) {
                 banner_code = 2;
-            } else if ($scope.channel.CHANNEL_NO = 4) {
+            } else if ($scope.channel.CHANNEL_NO == 4) {
                 banner_code = 3;
             }
 

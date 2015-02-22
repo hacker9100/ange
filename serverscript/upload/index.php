@@ -43,22 +43,22 @@ if (isset($_REQUEST['version'])) {
             $options['image_versions'] = array('' => array('auto_orient' => true));
             break;
         case 2:
-            $options['image_versions'] = array('' => array('max_width' => 800, 'max_height' => 600));
+            $options['image_versions'] = array('' => array('max_width' => 750, 'max_height' => 600));
             break;
         case 3:
             $options['image_versions'] = array('' => array('max_width' => 100, 'max_height' => 100));
             break;
         case 4:
-            $options['image_versions'] = array('' => array('auto_orient' => true), 'medium' => array('max_width' => 800, 'max_height' => 600));
+            $options['image_versions'] = array('' => array('auto_orient' => true), 'medium' => array('max_width' => 750, 'max_height' => 600));
             break;
         case 5:
             $options['image_versions'] = array('' => array('auto_orient' => true), 'thumbnail' => array('max_width' => 100, 'max_height' => 100));
             break;
         case 6:
-            $options['image_versions'] = array('' => array('max_width' => 800, 'max_height' => 600), 'thumbnail' => array('max_width' => 400, 'max_height' => 400));
+            $options['image_versions'] = array('' => array('max_width' => 750, 'max_height' => 600), 'thumbnail' => array('max_width' => 400, 'max_height' => 400));
             break;
         case 7:
-            $options['image_versions'] = array('' => array('auto_orient' => true), 'medium' => array('max_width' => 800, 'max_height' => 600), 'thumbnail' => array('max_width' => 400, 'max_height' => 400));
+            $options['image_versions'] = array('' => array('auto_orient' => true), 'medium' => array('max_width' => 750, 'max_height' => 600), 'thumbnail' => array('max_width' => 400, 'max_height' => 400));
             break;
     }
 }

@@ -15,6 +15,12 @@ define([
 
         var spMenu = $location.path().split('/');
 
+        $scope.option_r1 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads1', type: 'banner', gb: 1, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
+        $scope.option_r2 = {title: '롤링', api:'ad/banner', size: 5, id: 'ads2', type: 'banner', gb: 2, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
+        $scope.option_r3 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads3', type: 'banner', gb: 3, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+
         /********** 이벤트 **********/
         $scope.click_mainLogo = function() {
             $location.url("/main");

@@ -479,9 +479,8 @@ define([
                     return;
                 }
 
-//                $scope.user.PHONE_1 = '01027137400';
                 $scope.user.CERT_NO = Math.floor(Math.random() * (999999 - 100000) + 100000);
-                alert($scope.user.CERT_NO);
+
                 $scope.insertItem('com/sms', 'item', $scope.user, false)
                     .then(function(){ $scope.isSMS = true; dialogs.notify('알림', '인증번호가 전송되었습니다.', {size: 'md'});})
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});

@@ -13,7 +13,7 @@ define([
             "SYSTEM_GB" : "ANGE",
             "DASHBOARD_PAGE_SIZE" : 5,
             "PAGE_SIZE" : 20,
-            "BASE_URL" : "http://ange.marveltree.com",
+            "BASE_URL" : "http://localhost",
             "AD_FILE_URL" : "http://angead.marveltree.com/adm/upload/",
 
             "AD_CODE_" : ""
