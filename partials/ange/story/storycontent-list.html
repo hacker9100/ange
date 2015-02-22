@@ -1,6 +1,6 @@
 <div ng-controller="storycontent-list" class="ng_wrap">
     <!-- mainbar -->
-    <div id="common" name="common" class="mainbar sub-slide">
+    <div class="mainbar sub-slide">
         <div class="container-fluid story_wrap">
 
                 <div class="row" id="listr">
@@ -160,7 +160,7 @@
                                 </div>
 
                                 <span class="glyphicon glyphicon-comment" style="font-size:0.86em; color:#111; padding-top:2px;"></span>
-                                <span class="story_icontxt" style="vertical-align:top;">{{item.LIKE_CNT}}&nbsp;</span>
+                                <span class="story_icontxt" style="vertical-align:top;">{{item.REPLY_COUNT}}&nbsp;</span>
 
                                 <a ng-class="item.LIKE_FL == 'Y' ? 'icon_like_on' : 'icon_like'" style="margin-right:0;" title="공감한 스토리는 자동으로 스크랩됩니다." ng-click="click_addLike($index, item)">좋아요?</a>
                                 <span class="story_icontxt" style="float:right;">{{item.LIKE_CNT}}&nbsp;</span>

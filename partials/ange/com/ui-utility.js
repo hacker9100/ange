@@ -21,7 +21,7 @@ define([
         };
 
         $scope.click_joinMember = function () {
-            $location.url('myange/account');
+            $location.url('infodesk/signon');
         };
 
         $scope.click_forgotInfo = function () {
@@ -132,9 +132,6 @@ define([
                     };
 
                     $scope.click_joinMember = function () {
-                        $scope.comming_soon();
-                        return;
-
                         $location.url('infodesk/signon');
                         $modalInstance.close();
                     };

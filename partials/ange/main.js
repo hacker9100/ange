@@ -42,10 +42,10 @@ define([
             $scope.option_r5_c2 = {title: '전문가상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/home', image: false, head: false, date: false, nick: false};
 
             // ange-portlet-basic-list
-            $scope.option_r6_c1 = {title: '앙쥬후기', api:'ange/review', size: 5, type: 'review', url: '/moms/review', defIdx: 3, tab: [{no: 'sample', menu: 'sample', name: '샘플팩'}, {no: 'event', menu: 'event', name: '이벤트/체험단'}, {no: 'shop', menu: 'shop', name: '상품'}, {no: 'ange', menu: 'ange', name: '앙쥬'}], image: true, head: true, date: false, nick: true};
+            $scope.option_r6_c1 = {title: '앙쥬후기', api:'ange/review', size: 5, type: 'review', url: '/moms/review', defIdx: 3, tab: [{no: 'sample', menu: 'samplereview', name: '샘플팩'}, {no: 'event', menu: 'eventreview', name: '이벤트/체험단'}, {no: 'product', menu: 'productreview', name: '상품'}, {no: 'ange', menu: 'angereview', name: '앙쥬'}], image: true, head: true, date: false, nick: true};
 
             // ange-portlet-basic-list
-            $scope.option_r6_c2 = {title: '공지사항&당첨자발표', api:'com/webboard', size: 5, type: 'notice', url: '/people/board', image: false, head: true, date: false, nick: false};
+            $scope.option_r6_c2 = {title: '공지사항&당첨자발표', api:'com/webboard', size: 5, type: 'notice', url: '/infodesk/notice/list', image: false, head: false, date: false, nick: false};
         };
 
         /********** 이벤트 **********/

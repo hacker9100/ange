@@ -54,7 +54,7 @@ define([
         $scope.getContent = function () {
             var deferred = $q.defer();
             $q.all([
-                    $scope.getList('cms/task', 'list', {NO:$scope.S_PAGE_NO, SIZE:9}, {CATEGORY: data.CATEGORY, FILE: true, PHASE: '30, 31', SORT: 'RAND()', ORDER: ''}, false).then(function(data){
+                    $scope.getList('cms/task', 'list', {NO:$scope.S_PAGE_NO, SIZE:6}, {CATEGORY: data.CATEGORY, FILE: true, PHASE: '30, 31', SORT: 'RAND()', ORDER: ''}, false).then(function(data){
                         console.log(JSON.stringify(data))
                         $scope.totalPage = Math.round(data[0].TOTAL_COUNT / 2);
 

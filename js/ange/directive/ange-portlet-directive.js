@@ -91,7 +91,12 @@ define([
                 // 더보기 버튼 클릭
                 $scope.click_showList = function () {
                     if ($scope.option.tab != undefined) {
-                        $location.url('/people'+'/'+$scope.option.tab[$scope.tabIdx].menu+'/list');
+                        var channel = 'people';
+                        if ($scope.option.type == 'review') {
+                            channel = 'moms';
+                        }
+
+                        $location.url('/'+channel+'/'+$scope.option.tab[$scope.tabIdx].menu+'/list');
                     } else {
                         $location.url($scope.option.url);
                     }
@@ -136,6 +141,12 @@ define([
                             case '13' :
                                 menu = 'financial';
                                 break;
+                            case '14' :
+                                menu = 'notice';
+                                break;
+                            case '15' :
+                                menu = 'system';
+                                break;
                         }
                     }
 
@@ -154,7 +165,7 @@ define([
                             $scope.list = data;
                             if ($scope.option.image != undefined && $scope.option.image) {
                                 $scope.imgItem = data[0];
-                                $scope.img = UPLOAD.BASE_URL + data[0].FILE[0].PATH + 'thumbnail/' + data[0].FILE[0].FILE_ID;
+                                $scope.img = UPLOAD.BASE_URL + data[0].FILE.PATH + 'thumbnail/' + data[0].FILE.FILE_ID;
                             }
                         })
                         .catch(function(error){$scope.list = [];});
@@ -397,7 +408,7 @@ define([
                             if ($scope.option.image != undefined && $scope.option.image) {
                                 $scope.img = {};
                                 $scope.img.NO = data[0].NO;
-                                $scope.img.URL = UPLOAD.BASE_URL + data[0].FILE[0].PATH + 'thumbnail/' + data[0].FILE[0].FILE_ID;
+                                $scope.img.URL = UPLOAD.BASE_URL + data[0].FILE.PATH + 'thumbnail/' + data[0].FILE.FILE_ID;
                             }
                         })
                         .catch(function(error){$scope.list = [];});
@@ -629,7 +640,7 @@ define([
                         .then(function(data){
                             for(var i in data) {
                                 if (data[i].FILE != null) {
-                                    var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                                     var url = "people/angemodel/view/"+data[i].NO;
                                     //angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt="" style="background-size: cover;"/></a></div>');
                                     angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="/imgs/ange/_blank.gif" width="99" height="119" alt="" style="border:1px solid #ddd; background-position:center center; background-image:url(' + img + '); background-size: cover;" /></a></div>');
@@ -665,6 +676,140 @@ define([
 //                scope.portletCss = attr.css;
 //                scope.getPortletList(attr.api);
             }
+        }
+    }]);
+
+    // 좌측 배너를 동적으로 생성
+    directives.directive('angePortletSlideAds', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+            scope: true,
+//            scope: { option: '=ngModel' },
+//            replace: true,
+            template: '<slick id="{{ option.id }}" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false"></slick>'+
+                        '<div class="ads_indicators_wrap">' +
+                        '   <div ng-repeat="item in list" ng-class=" $index == curIdx ? \'ads_indicators now\' : \'ads_indicators\'"></div>' +
+                        '</div>',
+            controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $window, $timeout, CONSTANT) {
+
+                /********** 초기화 **********/
+                $scope.option = $scope.$eval($attrs.ngModel);
+
+                // 검색 조건
+                $scope.search = {};
+
+                // 일시정지, 동작 상태
+                $scope.toggle = true;
+
+                // 페이징
+                $scope.PAGE_NO = 0;
+                $scope.PAGE_SIZE = $scope.option.size;
+
+                $scope.search.ADA_STATE = 1;
+
+                // 검색 조건 추가
+                if ($scope.option.type == 'banner') {
+//                    $scope.search.ADP_IDX = $scope.option.gb;
+//                    $scope.search.BANNER_ST = 1;
+                } else if ($scope.option.type == 'experience') {
+                    $scope.search.EVENT_GB = "exp";
+                } else if ($scope.option.type == 'event') {
+                    $scope.search.EVENT_GB = "event";
+                }
+
+                /********** 이벤트 **********/
+
+                // 롤링 이미지 조회
+                $scope.getPortletList = function () {
+
+                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                        .then(function(data){
+                            var data = [];
+
+                            if ($scope.option.gb == 1) {
+                                data.push({img: '/imgs/temp/ads_i1_001.png'});
+                                data.push({img: '/imgs/temp/ads_i1_002.png'});
+
+                                $scope.list = data;
+
+                                for (var i in data) {
+                                    // 슬라이드를 추가해 줌
+                                    angular.element('#'+$scope.option.id).slickAdd('<div><img src="'+data[i].img+'"/></div>');
+                                }
+                            } else if ($scope.option.gb == 2) {
+                                data.push({img: '/imgs/temp/ads_i2_001.png'});
+                                data.push({img: '/imgs/temp/ads_i2_002.png'});
+                                data.push({img: '/imgs/temp/ads_i2_003.png'});
+                                data.push({img: '/imgs/temp/ads_i2_004.png'});
+                                data.push({img: '/imgs/temp/ads_i2_005.png'});
+
+                                $scope.list = data;
+
+                                for (var i in data) {
+                                    // 슬라이드를 추가해 줌
+                                    angular.element('#'+$scope.option.id).slickAdd('<div><img src="'+data[i].img+'"/></div>');
+                                }
+                            } else if ($scope.option.gb == 3) {
+                                data.push({img: '/imgs/temp/ads_i3_001.png'});
+                                data.push({img: '/imgs/temp/ads_i3_002.png'});
+
+                                $scope.list = data;
+
+                                for (var i in data) {
+                                    // 슬라이드를 추가해 줌
+                                    angular.element('#'+$scope.option.id).slickAdd('<div><img src="'+data[i].img+'"/></div>');
+                                }
+                            }
+
+                            // 롤링을 실행
+                            angular.element('#'+$scope.option.id).slickPlay();
+
+                            // 이미지가 변경될 때 하단에 변경해 줌
+                            $scope.$watch(function() {
+                                // 현재 슬라이드를 반환
+                                return angular.element('#'+$scope.option.id).slickCurrentSlide();
+                            }, function(newVal, oldVal) {
+                                $scope.curIdx = newVal;
+                            });
+
+//                            $scope.list = data;
+//
+//                            for (var i in data) {
+//                                var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
+//
+//                                // 슬라이드를 추가해 줌
+//                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><img data-lazy="'+img+'" style="width:100%;"/></div></div>');
+//                            }
+//
+//                            //
+//                            angular.element('#'+$scope.option.id).click(function() {
+////                                var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
+////
+////                                if ($scope.option.type == 'banner') {
+////                                    $window.open(data[idx].ada_url);
+////                                } else if ($scope.option.type == 'experience') {
+////                                    $location.url('/moms/experienceprocess/view/'+data[idx].ada_idx);
+////                                } else if ($scope.option.type == 'event') {
+////                                    $location.url('/moms/eventprocess/view/'+data[idx].ada_idx)
+////                                }
+//                            });
+//
+//                            // 광고의 롤링을 실행
+//                            angular.element('#'+$scope.option.id).slickPlay();
+//
+//                            // 이미지가 변경될 때 우측 하단에 현재 광고 설명을 변경해 줌
+//                            $scope.$watch(function() {
+//                                // 현재 슬라이드를 반환
+//                                return angular.element('#'+$scope.option.id).slickCurrentSlide();
+//                            }, function(newVal, oldVal) {
+//                                $scope.coverTitle = data[newVal].ada_title;
+//                            });
+                        })
+                        .catch(function(error){$scope.list = [];});
+                };
+
+                $scope.getPortletList();
+            }]
         }
     }]);
 
@@ -709,7 +854,7 @@ define([
                 }
 
                 /********** 이벤트 **********/
-                    // 일시 정지 버튼
+                // 일시 정지 버튼
                 $scope.click_slickPause = function() {
                     // 슬라이드를 일시 정지
                     angular.element('#'+$scope.option.id).slickPause();
@@ -1031,9 +1176,9 @@ define([
                         .then(function(data){
                             for(var i in data) {
                                 if ($scope.option.api == 'ad/banner') {
-                                    var img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                                    var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
                                 } else {
-                                    var img = UPLOAD.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
+                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
                                 }
 
                                 data[i].img = img;
@@ -1096,9 +1241,7 @@ define([
 
                             for(var i in data) {
                                 if (data[i].FILE != null) {
-                                    var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
-                                    data[i].FILE = img;
-                                    console.log(i+ " file : " + JSON.stringify(data[i].FILE));
+                                    data[i].FILE = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                                 }
                             }
 
@@ -1135,7 +1278,7 @@ define([
                 };
 
                 // 설문 조회
-                $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, {SORT:'REG_DT', ORDER: 'DESC', POLL_ST: '0'}, false)
+                $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, {POLL_ST: '0'}, false)
                     .then(function(data){$scope.item = data[0]})
                     .catch(function(error){$scope.item = [];});
             }]
