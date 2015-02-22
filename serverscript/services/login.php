@@ -209,7 +209,7 @@
                         $_SESSION['count']++;
                         MtUtil::_d("################################### [session2] ");
                     }
-                    $_SESSION['count'][test] = $data['USER_ID'];
+
                     $_SESSION['user_info'] = $data;
                     $_SESSION['uid'] = $data['USER_ID'];
                     $_SESSION['nick'] = $data['NICK_NM'];

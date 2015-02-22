@@ -734,21 +734,34 @@ define([
                             for (var i in data) {
                                 var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
 
-                                var link = '';
-
-                                if ($scope.option.type == 'banner') {
-                                    link = '<a id="'+data[i].ada_idx+'" name="'+data[i].ada_idx+'" href="'+data[i].ada_url+'" target="_blank">';
-                                } else if ($scope.option.type == 'experience') {
-                                    link = '<a href="/moms/experienceprocess/view/'+data[i].ada_idx+'">';
-                                } else if ($scope.option.type == 'event') {
-                                    link = '<a href="/moms/eventprocess/view/'+data[i].ada_idx+'">';
-                                }
+//                                var link = '';
+//
+//                                if ($scope.option.type == 'banner') {
+//                                    link = '<a id="'+data[i].ada_idx+'" name="'+data[i].ada_idx+'" href="'+data[i].ada_url+'" target="_blank">';
+//                                } else if ($scope.option.type == 'experience') {
+//                                    link = '<a href="/moms/experienceprocess/view/'+data[i].ada_idx+'">';
+//                                } else if ($scope.option.type == 'event') {
+//                                    link = '<a href="/moms/eventprocess/view/'+data[i].ada_idx+'">';
+//                                }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+link+'<img data-lazy="'+img+'" style="width:100%;"/></a></div></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><img data-lazy="'+img+'" style="width:100%;"/></div></div>');
 //                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active" style="border:1px solid red;">'+link+'<img class="moms_nowing" src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+ img + '); border:1px solid blue;"/></a></div></div>');
 //                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
                             }
+
+                            //
+                            angular.element('#'+$scope.option.id).click(function() {
+                                var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
+
+                                if ($scope.option.type == 'banner') {
+                                    $window.open(data[idx].ada_url);
+                                } else if ($scope.option.type == 'experience') {
+                                    $location.url('/moms/experienceprocess/view/'+data[idx].ada_idx);
+                                } else if ($scope.option.type == 'event') {
+                                    $location.url('/moms/eventprocess/view/'+data[idx].ada_idx)
+                                }
+                            });
 
                             // 광고의 롤링을 실행
                             angular.element('#'+$scope.option.id).slickPlay();
@@ -944,9 +957,9 @@ define([
                 }
 
                 /********** 이벤트 **********/
-                    // 이미지 클릭
+                // 이미지 클릭
                 $scope.click_linkImage = function () {
-                    if ($scope.option.new) {
+                    if ($scope.option.open) {
                         $window.open($scope.item.ada_url);
                     } else {
                         $location.url($scope.item.URL);
@@ -964,6 +977,69 @@ define([
                             } else {
                                 $scope.img = UPLOAD.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
                             }
+                        })
+                        .catch(function(error){});
+                };
+
+                $scope.getImage();
+            }]
+        }
+    }]);
+
+    // 링크 이미지를 동적으로 생성
+    directives.directive('angePortletLinkImage2', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+            scope: true,
+//            scope: { images:'=' },
+//            replace: true,
+            template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+                '<div ng-class="$index == 0 ? \'subside_inven_basic top\' : $index == 1 ? \'subside_inven_basic mid\' : \'subside_inven_basic btm\'" ng-repeat="item in list">' +
+                '   <img ng-src="{{item.img}}" ng-click="click_linkImage(item)"/>' +
+                '</div>',
+            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', 'UPLOAD', function($scope, $attrs, $location, $window, CONSTANT, UPLOAD) {
+
+                /********** 초기화 **********/
+                $scope.option = $scope.$eval($attrs.ngModel);
+
+                // 검색 조건
+                $scope.search = {};
+
+                // 페이징
+                $scope.PAGE_NO = 0;
+                $scope.PAGE_SIZE = $scope.option.size;
+
+                // 검색 조건 추가
+                if ($scope.option.api == 'ad/banner') {
+                    $scope.search.ADP_IDX = $scope.option.gb;
+                    $scope.search.ADA_STATE = 1;
+                }
+
+                /********** 이벤트 **********/
+                    // 이미지 클릭
+                $scope.click_linkImage = function (item) {
+                    if ($scope.option.open) {
+                        $window.open(item.ada_url);
+                    } else {
+                        $location.url(item.URL);
+                    }
+                };
+
+                // 이미지 조회
+                $scope.getImage = function () {
+                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                        .then(function(data){
+                            for(var i in data) {
+                                if ($scope.option.api == 'ad/banner') {
+                                    var img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                                } else {
+                                    var img = UPLOAD.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
+                                }
+
+                                data[i].img = img;
+                            }
+
+                            $scope.list = data;
                         })
                         .catch(function(error){});
                 };

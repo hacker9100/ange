@@ -238,12 +238,17 @@ define([
             if ($scope.user.PREGNENT_FL != undefined) {
                 if ($scope.user.PREGNENT_FL == 'N') {
                     $scope.disabledPregnent = true;
+
+                    $scope.user.YEAR1 = '';
+                    $scope.user.MONTH1 = '';
+                    $scope.user.DAY1 = '';
                 } else {
                     $scope.disabledPregnent = false;
                 }
             }
         });
 
+/*
         $scope.$watch('blog.BLOG_GB', function() {
             console.log($scope.blog.BLOG_GB);
             if ($scope.blog.BLOG_GB != undefined) {
@@ -258,6 +263,7 @@ define([
                 }
             }
         });
+*/
 
         // 정보수신동의 전체체크
         $scope.click_checkAllAgree = function () {
@@ -378,20 +384,37 @@ define([
                 $scope.user.EMAIL = $scope.user.EMAIL_ID + '@' + $scope.user.EMAIL_TYPE;
             }
 
-            if ($scope.blog.BLOG_URL != '' && $scope.blog.BLOG_DETAIL != '') {
-                $scope.blog.BLOG_URL = $scope.blog.BLOG_DETAIL;
+            if ($scope.user.PREGNENT_FL == '') {
+                $('#pregment').focus();
+                dialogs.notify('알림', '임신여부를 선택해주세요.', {size: 'md'});
+                return;
             }
 
+            if ($scope.user.MARRIED_FL == '') {
+                $('#married').focus();
+                dialogs.notify('알림', '결혼여부를 선택해주세요.', {size: 'md'});
+                return;
+            }
+
+            if ( ($scope.user.YEAR1 == undefined || $scope.user.YEAR1 == '') || ($scope.user.MONTH1 == undefined || $scope.user.MONTH1 == '') || ($scope.user.DAY1 == undefined || $scope.user.DAY1 == '') ) {
+            } else {
+                $scope.user.BABY_BIRTH_DT = $scope.user.YEAR1 + ($scope.user.MONTH1.length == 1 ? '0' + $scope.user.MONTH1 : $scope.user.MONTH1) + ($scope.user.DAY1.length == 1 ? '0' + $scope.user.DAY1 : $scope.user.DAY1);
+            }
+
+//            if ($scope.blog.BLOG_URL != '' && $scope.blog.BLOG_DETAIL != '') {
+//                $scope.blog.BLOG_URL = $scope.blog.BLOG_DETAIL;
+//            }
+
             if ($scope.blog.THEME_CK != undefined && $scope.blog.THEME_CK.length != 0) {
-                    var strTheme = '';
-                    for(var i = 0; i < $scope.blog.THEME_CK.length; i++) {
-                        strTheme += $scope.blog.THEME_CK[i];
+                var strTheme = '';
+                for(var i = 0; i < $scope.blog.THEME_CK.length; i++) {
+                    strTheme += $scope.blog.THEME_CK[i];
 
-                        if (i != $scope.blog.THEME_CK.length - 1) strTheme += ',';
-                        if ($scope.blog.THEME_CK[i] == 10) strTheme += ',' + $scope.blog.THEME_ETC;
-                    }
+                    if (i != $scope.blog.THEME_CK.length - 1) strTheme += ',';
+                    if ($scope.blog.THEME_CK[i] == 10) strTheme += ',' + $scope.blog.THEME_ETC;
+                }
 
-                    $scope.blog.THEME = strTheme;
+                $scope.blog.THEME = strTheme;
             }
 
             return true;

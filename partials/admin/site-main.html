@@ -112,7 +112,7 @@
         <strong>Menu Detail</strong>
     </div>
 
-    <div ng-if="tab == 0" class="col-md-12">
+    <div ng-show="tab == 0" class="col-md-12">
         <div id="subItem" ng-model="subItem" class="row form_basic_wrap">
             <form role="form" name="edit_form1" class="form-horizontal form_basic_100">
                 <div class="form-group form_basic_group" ng-class="{error: edit_form1.subItem_id.$invalid}">
@@ -234,7 +234,7 @@
                         <input id="item_nm" name="item_id" ng-model="item.MENU_NM" type= "text" class= "form-control" placeholder="메뉴명" required/>
                     </div>
                 </div>
-                <div class= "form-group form_basic_group">
+                <div ng-show="tab == 1" class= "form-group form_basic_group">
                     <label class= "form_basic_label">카테고리 <span style="color:#b94a48">*</span></label>
                     <div class= "form_basic_input">
                         <div ng-dropdown-multiselect="" options="category_a" selected-model="CATEGORY" translation-texts="{buttonDefaultText: '- 주기선택'}" extra-settings="select_settings" checkboxes="true"></div>
@@ -262,10 +262,10 @@
                         <input ng-model="item.MENU_ORD" type= "text" class= "form-control" placeholder="순번" required/>
                     </div>
                 </div>
-                <div class= "form-group form_basic_group">
+                <div ng-show="tab == 2" class= "form-group form_basic_group">
                     <label class= "form_basic_label">커뮤니티 구분 <span style="color:#b94a48">*</span></label>
                     <div class="form_basic_input">
-                        <input ng-model="item.COMM_GB" type= "text" class= "form-control" placeholder="커뮤니티 구분" required/>
+                        <input ng-model="item.COMM_GB" type= "text" class= "form-control" placeholder="커뮤니티 구분"/>
                     </div>
                 </div>
                 <div class= "form-group form_basic_group">

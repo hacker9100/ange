@@ -1,16 +1,19 @@
-<div class="subside_wrap">
+<div class="subside_wrap" ng-controller="subside-ad">
     <!-- sub-side-ad -->
     <div class="subside_banner_wrap">
 
         <!-- Line Banner-rolling -->
         <div class="subside_inven_rolling">
-            <img src="/imgs/ange/subside_01.jpg" />
+            <ange-portlet-link-image ng-model="option_r1"></ange-portlet-link-image>
+            <!--<img src="/imgs/ange/subside_01.jpg" />-->
         </div>
         <!-- /.side rolling banner -->
 
 
         <!-- Line Banner-basic-->
         <div class="subside_linebanner_wrap">
+            <ange-portlet-link-image2 ng-model="option_r2"></ange-portlet-link-image2>
+<!--
             <div class="subside_inven_basic top">
                 <img src="/imgs/ange/subside_02.jpg" />
             </div>
@@ -20,6 +23,7 @@
             <div class="subside_inven_basic btm">
                 <img src="/imgs/ange/subside_04.jpg" />
             </div>
+-->
         </div>
         <!-- /Line Banner-basic-->
 
