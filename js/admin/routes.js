@@ -13,7 +13,7 @@ define([
 ], function(app, menu_admin) {
     'use strict';
 
-    app.config(function($stateProvider, $urlRouterProvider) {
+    app.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 
         // use the HTML5 History API
 //        $locationProvider.html5Mode(true);
@@ -41,6 +41,10 @@ define([
 //                $stateProvider.state("otherwise", { url : '/signin' });
             }
         }
+
+        $httpProvider.defaults.headers.common["Cache-Control"] = "no-cache";
+        $httpProvider.defaults.headers.common.Pragma = "no-cache";
+        $httpProvider.defaults.headers.common["If-Modified-Since"] = "0";
     })
 
     return app;

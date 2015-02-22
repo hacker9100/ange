@@ -67,7 +67,7 @@ define([
         };
 
         /********** 이벤트 **********/
-            // 카테고리 주제 대분류 선택
+        // 카테고리 주제 대분류 선택
         $scope.$watch('CATEGORY_M', function(data) {
             var category_s = [];
 
@@ -181,9 +181,11 @@ define([
             }
             if (item.CATEGORY != undefined) {
                 $scope.CATEGORY = angular.fromJson(item.CATEGORY);
+            } else {
+                $scope.CATEGORY = [];
             }
 
-            $scope.click_focus('menu');
+            $scope.click_focus('item', 'item_id');
         }
 
         // 메뉴 등록
@@ -272,10 +274,10 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
-        // 카테고리 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
-        $scope.click_focus = function (id) {
+        // 편집 버튼 클릭 시 영역으로 focus 이동
+        $scope.click_focus = function (id, name) {
             $('html,body').animate({scrollTop:$('#'+id).offset().top}, 100);
-            $('#item_gb').focus();
+            $('#'+name).focus();
         }
 
         // 취소

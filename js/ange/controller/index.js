@@ -16,6 +16,7 @@ define([
     '../../../partials/ange/com/ui-gnb',
     '../../../partials/ange/com/ui-lnb',
     '../../../partials/ange/com/ui-utility',
+    '../../../partials/ange/com/subside-ad',
 
     '../../../partials/ange/com/module-reply',
 

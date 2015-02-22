@@ -526,7 +526,8 @@
 
                 $_d->sql_beginTransaction();
 
-                $etc_str = $_model[ETC];
+//                $etc_str = $_model[ETC];
+                $etc_str = null;
                 $categories = $_model[CATEGORY];
 
                 for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {

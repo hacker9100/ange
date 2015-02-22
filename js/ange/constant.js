@@ -14,7 +14,9 @@ define([
             "DASHBOARD_PAGE_SIZE" : 5,
             "PAGE_SIZE" : 20,
             "BASE_URL" : "http://ange.marveltree.com",
-            "AD_FILE_URL" : "http://angead.marveltree.com/adm/upload/"
+            "AD_FILE_URL" : "http://angead.marveltree.com/adm/upload/",
+
+            "AD_CODE_" : ""
         }
     );
     app.constant(
