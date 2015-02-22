@@ -686,7 +686,7 @@ define([
             scope: true,
 //            scope: { option: '=ngModel' },
 //            replace: true,
-            template: '<slick id="{{ option.id }}" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false"></slick>'+
+            template: '<slick id="{{ option.id }}" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false" style="padding:0px 6px;"></slick>'+
                         '<div class="ads_indicators_wrap">' +
                         '   <div ng-repeat="item in list" ng-class=" $index == curIdx ? \'ads_indicators now\' : \'ads_indicators\'"></div>' +
                         '</div>',
