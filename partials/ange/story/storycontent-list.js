@@ -66,6 +66,11 @@ define([
         };
 
         /********** 이벤트 **********/
+        // 클릭 시 영역으로 focus 이동
+        $scope.click_top = function () {
+            $('html,body').animate({scrollTop:0}, 100);
+        }
+
 //        $scope.fetchNext = function() {
 //            if(!$scope.busy) {
 //                $scope.busy = true;

@@ -24,13 +24,13 @@
 
                 <!--<a ng-click="click_printDiv('content')" class="btn primary large no-print">Print this quote</a>-->
 
-                <div  ng-model="content" class="story-col-xs-12 article_previewwrap" id="inBodyForm">
+                <div id="content" name="content" ng-model="content" class="story-col-xs-12 article_previewwrap">
 
                     <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
 
 
 
-                    <div id="content" ng-bind-html="renderHtml(content.BODY)"></div>
+                    <div ng-bind-html="renderHtml(content.BODY)"></div>
 
                     <!--<p><plantitle><strong>섹션명</strong> | 제목</plantitle></p>-->
                     <!--<subtitle>5분 습관 </subtitle><maintitle>하루 5분,우리 아이 독서 습관기르기</maintitle>-->

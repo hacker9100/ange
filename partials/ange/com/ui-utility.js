@@ -21,6 +21,9 @@ define([
         };
 
         $scope.click_joinMember = function () {
+            $scope.comming_soon();
+            return;
+
             $location.url('infodesk/signon');
         };
 
@@ -132,6 +135,9 @@ define([
                     };
 
                     $scope.click_joinMember = function () {
+                        $scope.comming_soon();
+                        return;
+
                         $location.url('infodesk/signon');
                         $modalInstance.close();
                     };

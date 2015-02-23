@@ -284,9 +284,8 @@ define([
                         $scope.item = data;
                         $scope.item.BOARD_NO = data.ada_idx;
 
-                        var img = CONSTANT.AD_FILE_URL + data.ada_preview;
-                        data.ada_preview_img = img;
-
+                        data.ada_preview_img = CONSTANT.AD_FILE_URL + data.ada_preview;
+                        data.ada_content_img = CONSTANT.AD_FILE_URL + data.ada_image;
 
                         if($scope.todayDate <= $scope.end_date){
                             $scope.showForm = "compForm";
@@ -295,6 +294,8 @@ define([
                         }
 
                         $scope.item.ada_option_delivery = data.ada_option_delivery.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+
+                        if ($scope.tempEvent) return;
 
                         // 질문일 때
                         if($scope.item.ada_que_type == 'question'){
@@ -719,9 +720,11 @@ define([
 //          .catch($scope.reportProblems);
 
         $scope.tempReply = false;
+        $scope.tempEvent = false;
 
         if ($stateParams.id == 39) {
             $scope.tempReply = true;
+            $scope.tempEvent = true;
 
             if ($location.search()) {
                 var param = $location.search();
@@ -752,6 +755,8 @@ define([
                 }
             }
         } else if ($stateParams.id == 55) {
+            $scope.tempEvent = true;
+
             $scope.getSession()
 //                .then($scope.logout())
                 .then($scope.sessionCheck)

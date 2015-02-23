@@ -242,7 +242,7 @@ define([
                         }
 
                         if($scope.item.SCRAP_FL== "Y"){
-                            $("#check_scrap").attr("checked", true);tg
+                            $("#check_scrap").attr("checked", true);
                         }else{
                             $("#check_scrap").attr("checked", false);
                         }

@@ -13,6 +13,7 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('peoplephoto-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
 
+        $scope.tmpMenu = $stateParams.menu;
         $scope.selectIdx = 0;
 
         $scope.search = {};

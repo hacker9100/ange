@@ -325,12 +325,12 @@ define([
                         $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                         console.log($scope.item.ANSWER);
 
-//                        $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue
-//                            .then(function(){
-//                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-//                                $location.url('/people/poll/list');
-//                            })
-//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue
+                            .then(function(){
+                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                                $location.url('/people/poll/list');
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                 })

@@ -48,6 +48,8 @@ define([
             data = item;
             $scope.TARGET_NO = data.NO;
             $scope.getContent();
+
+            $scope.click_top();
         };
 
         // 콘텐츠 조회
@@ -55,8 +57,7 @@ define([
             var deferred = $q.defer();
             $q.all([
                     $scope.getList('cms/task', 'list', {NO:$scope.S_PAGE_NO, SIZE:6}, {CATEGORY: data.CATEGORY, FILE: true, PHASE: '30, 31', SORT: 'RAND()', ORDER: ''}, false).then(function(data){
-                        console.log(JSON.stringify(data))
-                        $scope.totalPage = Math.round(data[0].TOTAL_COUNT / 2);
+                        $scope.totalPage = Math.round(data.length / 2);
 
                         for (var i in data) {
                             if (data[i].FILE.PATH != undefined) {
