@@ -90,7 +90,7 @@
                                         <td class="table_no">{{item.RNUM}}</td>
                                         <td>
                                             <span ng-show="item.ada_state == 1" class="table_red">진행중</span> <!-- 'table_gray' -->
-                                            <span ng-show="item.ada_state == 0 && item.ada_date_open < todayDate && item.ada_date_close < todayDate" class="table_gray">완료</span> <!-- 'table_gray' -->
+                                            <span ng-show="item.ada_state == 0 && item.ada_date_open < todayDate || item.ada_date_close < todayDate" class="table_gray">완료</span> <!-- 'table_gray' -->
                                             <span ng-show="item.ada_state == 0 && item.ada_date_open > todayDate" class="table_gray">준비</span> <!-- 'table_gray'  && item.ada_date_close > todayDate -->
                                         </td>
                                         <!--<td><span ng-class="item.END_YMD <= todayDate ? 'table_red' : 'table_gray'">{{item.END_YMD <= todayDate ? '진행중' : '완료'}}</span></td>-->
