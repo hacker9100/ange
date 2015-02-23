@@ -54,6 +54,14 @@ define([
         var mm = (date.getMonth()+1).toString();
         var dd  = date.getDate().toString();
 
+        if(mm < 10){
+            mm = '0'+mm;
+        }
+
+        if(dd < 10){
+            dd = '0'+dd;
+        }
+
         var today = year+'-'+mm+'-'+dd;
 
         $scope.todayDate = today;
