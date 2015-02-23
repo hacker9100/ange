@@ -78,7 +78,7 @@
 
                                             <div ng-repeat='item in photoList'>
                                                 <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
-                                                <div class="col-xs-4 people_photo_contentcol" ng-show="selectPhoto = item.PHOTO_TYPE">
+                                                <div class="col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.PHOTO_TYPE" -->
                                                     <div ng-click="click_showViewPeoplePhoto(item.COMM_NO, item.NO)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
                                                             <!--<img class="people_photo_img" ng-src="{{item.MAIN_FILE}}"/>-->

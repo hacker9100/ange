@@ -14,8 +14,10 @@ define([
     controllers.controller('myangewriting', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
         // 초기화
-        $scope.init = function(session) {
+        $scope.init = function() {
             $scope.community = "내 활동 조회";
+
+            $scope.photoList = [];
         };
 
         $scope.search = {};
@@ -41,6 +43,13 @@ define([
 
         $scope.pagePhotoChanged = function() {
             console.log('Page changed to: ' + $scope.PHOTO_PAGE_NO);
+
+            $scope.PHOTO_PAGE_NO = 1;
+            $scope.PHOTO_PAGE_SIZE = 6;
+            $scope.PHOTO_TOTAL_COUNT = 0;
+
+            $scope.photoList = [];
+
             $scope.getPeoplePhotoList();
         };
 
@@ -115,21 +124,44 @@ define([
             $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'
 
+
             $scope.getList('com/webboard', 'list', {NO: $scope.PHOTO_PAGE_NO- 1, SIZE: $scope.PHOTO_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.PHOTO_TOTAL_COUNT = search_total_cnt;
 
+//                    for(var i in data) {
+//                        if (data[i].FILE != null) {
+//                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+//                            data[i].MAIN_FILE = img;
+//
+//                        }
+//                    }
                     for(var i in data) {
-                        if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
-                            data[i].MAIN_FILE = img;
 
-                        }
+//                        if (data[i].FILE != null) {
+//                            var img =  UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID; //UPLOAD.BASE_URL
+//                            data[i].MAIN_FILE = img;
+//                        }
+//                        if (data[i].FILE.PATH != undefined) {
+//                            var img = UPLOAD.BASE_URL + '/storage/board/' + 'thumbnail/' + data[i].FILE.FILE_ID;
+//                            data[i].TYPE = 'BOARD';
+//                            data[i].FILE = img;
+//                            $scope.list.push(data[i]);
+//                        }
+//
+//                        console.log($scope.list);
+
+                        var img = UPLOAD.BASE_URL + '/storage/board/' + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        data[i].TYPE = 'BOARD';
+                        data[i].FILE = img;
+                        $scope.photoList.push(data[i]);
+
+                        console.log($scope.photoList);
                     }
 
                     /*$scope.total(total_cnt);*/
-                    $scope.photoList = data;
+                    //$scope.photoList = data;
                 })
                 .catch(function(error){$scope.photoList = ""; $scope.PHOTO_TOTAL_COUNT = 0});
         };
@@ -183,6 +215,7 @@ define([
             }
         };
 
+        $scope.init();
 
         $scope.getPeopleBoardList();
         $scope.getPeoplePhotoList();
