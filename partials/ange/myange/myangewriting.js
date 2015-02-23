@@ -44,13 +44,15 @@ define([
         $scope.pagePhotoChanged = function() {
             console.log('Page changed to: ' + $scope.PHOTO_PAGE_NO);
 
-            $scope.PHOTO_PAGE_NO = 1;
-            $scope.PHOTO_PAGE_SIZE = 6;
-            $scope.PHOTO_TOTAL_COUNT = 0;
-
             $scope.photoList = [];
 
             $scope.getPeoplePhotoList();
+
+//            $scope.PHOTO_PAGE_NO = 1;
+//            $scope.PHOTO_PAGE_SIZE = 6;
+//            $scope.PHOTO_TOTAL_COUNT = 0;
+
+
         };
 
         $scope.pageClinicChanged = function() {
