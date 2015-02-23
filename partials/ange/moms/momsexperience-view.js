@@ -517,11 +517,21 @@ define([
             // clone 속성을 true 로 지정하면 이벤트도 같이 복사됨
            var new_blog =  $('span.blog:last').clone(true);
            $("#blog_url").append(new_blog);
+
+            $(".button").removeAttr('disabled');
+
         }
 
         // 블로그 삭제
         $scope.delete_blog_url = function (){
+
+
             $('span.blog:last').remove();
+
+            if($("input[name='blog[]'").length == 1){
+                $(".button").attr('disabled','disabled');
+            }
+
         }
 
         /* 댓글 (삭제예정) */
