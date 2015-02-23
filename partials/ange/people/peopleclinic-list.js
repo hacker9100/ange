@@ -13,6 +13,7 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('peopleclinic-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
 
+        $scope.tmpMenu = $stateParams.menu;
         $scope.search = {};
 
         // 페이징

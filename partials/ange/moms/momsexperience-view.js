@@ -280,9 +280,8 @@ define([
                         $scope.item = data;
                         $scope.item.BOARD_NO = data.ada_idx;
 
-                        var img = CONSTANT.AD_FILE_URL + data.ada_preview;
-                        data.ada_preview_img = img;
-
+                        data.ada_preview_img = CONSTANT.AD_FILE_URL + data.ada_preview;
+                        data.ada_content_img = CONSTANT.AD_FILE_URL + data.ada_image;
 
                         if($scope.todayDate <= $scope.end_date){
                             $scope.showForm = "compForm";
