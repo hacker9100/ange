@@ -328,13 +328,7 @@ define([
                         // 댓글일 때
                         if($scope.item.ada_que_type == 'reply'){
 
-                            var que_data = data.ada_que_info;
-                            que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
-                            var parse_que_data = JSON.parse(que_data);
-
-                            for(var x in parse_que_data){
-                                $scope.item.REPLY_SUBJECT = parse_que_data[x].title;
-                            }
+                            $scope.item.REPLY_SUBJECT = $scope.item.ada_title;
                         }
 
                         $scope.search.TARGET_NO = $stateParams.id;
@@ -391,7 +385,8 @@ define([
 
                 $("input[name='index[]'").each(function(index, element) {
                     //$scope.item.QUE_SHORT_ANSWER = $(element).val();
-                    $rootScope.jsontext2[$(element).val()] = '"'+$(element).val()+'":"'+ answer[index]+'"';
+                    //$rootScope.jsontext2[$(element).val()] = '"'+$(element).val()+'":"'+ answer[index]+'"';
+                    $rootScope.jsontext2[index] = '"'+$(element).val()+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
                 })
 
                 $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
