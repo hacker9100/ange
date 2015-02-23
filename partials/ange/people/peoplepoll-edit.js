@@ -87,22 +87,101 @@ define([
                         que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
                         var parse_que_data = JSON.parse(que_data);
 
+                        $scope.search.ada_idx = $stateParams.id;
+
+                        $scope.getList('ange/poll', 'chartlist', {}, $scope.search, true)
+                                .then(function(data){
+                                    $rootScope.answers = data;
+
+                                    var note = [];
+                                    var poll_cnt = [];
+                                    var myJSON = "";
+
+                                    for(var k=0; k<$rootScope.answers.length; k++) {
+
+                                        var answer = JSON.parse($rootScope.answers[k].adhj_answers);
+                                        console.log(answer);
+
+                                        $scope.search.ada_idx = $stateParams.id;
+
+                                        $rootScope.answers[k].adhj_answers = $rootScope.answers[k].adhj_answers.split(',');
+
+                                        console.log($rootScope.answers[k].adhj_answers);
+
+//                                        for(var i=0; i<answer.length; i++){
+//                                            console.log(answer[i]);
+//                                        }
+
+                                    }
+
+                                })
+                                .catch(function(error){});
+
                         for(var x in parse_que_data){
+
+                            var j = parseInt(x)+1;
+                            $scope.chart[x] = {};
 
                             var choice = [];
                             if(parse_que_data[x].type == 0){ // 객관식일때
                                 var select_answer = parse_que_data[x].choice.split(','); // ,를 기준으로 문자열을 잘라 배열로 변환
 
+                                $rootScope.jsontext = new Array();
+                                $rootScope.jsontext2 = new Array();
+
+                                $rootScope.contact = new Array();
+                                $rootScope.contact2 = new Array();
+
+                                $rootScope.contact3 = new Array();
+
+                                $rootScope.test = '';
+
                                 for(var i=0; i < select_answer.length; i++){
                                     choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
                                     //console.log(select_answer[i]);
+
+                                    // 차트 질문
+                                    $rootScope.jsontext[i] = '{"v":"'+ select_answer[i]+'"}';
+                                    //$rootScope.jsontext2[i] = '{"v":'+ 10+'}';
+                                    $rootScope.jsontext2[i] = '{"v":'+ 10+'}';
+
+                                    $rootScope.contact[i] = JSON.parse($rootScope.jsontext[i]);
+                                    $rootScope.contact2[i] = JSON.parse($rootScope.jsontext2[i]);
+
+                                    $rootScope.contact3[i] = $rootScope.contact[i] + $rootScope.contact2[i];
                                 }
+
+//                                for(var q=0; q < $rootScope.contact3.length; q++){
+//                                    console.log($rootScope.contact[q]);
+//                                    console.log($rootScope.contact2[q]);
+//                                }
+
+                                var test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "Slices", "type": "number"} ], "rows": []}';
+                                var obj = JSON.parse(test);
+
+                                for(var q=0; q < $rootScope.contact3.length; q++){
+                                    //console.log($rootScope.contact[q]);
+                                    //console.log($rootScope.contact2[q]);
+                                    obj['rows'].push({c:[$rootScope.contact[q], $rootScope.contact2[q]]});
+                                }
+
+                                test = JSON.stringify(obj);
+                                var result = JSON.parse(test);
+                                //console.log(result);
+
+                                $scope.chart[x].data = result;
+
+                                $scope.chart[x].type = 'PieChart';
+
                             }else{ // 주관식일때
                                 choice = "";
                             }
 
                             var index = parseInt(x)+parseInt(1);
                             $scope.item.QUE.push({"index" : index,"title" : parse_que_data[x].title, "type" : parse_que_data[x].type, "choice" :choice});
+
+
+
                         }
 
                         console.log($scope.item.QUE);
@@ -121,6 +200,8 @@ define([
 //                            $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
 
                         $scope.lastPage = Math.round(data.QUERY_CNT/2);
+
+
 
                         // 차트
 //                      var query = data.QUERY;
@@ -283,6 +364,7 @@ define([
             // 설문조사 참여여부 체크
             // 사용자아이디와 설문조사 번호를 가지고 조회하여
             // cnt가 1일때 목록으로 이동 아니면 저장
+
             $scope.getList('ange/poll', 'check', {}, $scope.search, false)
                 .then(function(data){
                     var answer_cnt = data[0].POLL_ANSWER_CNT;
@@ -317,9 +399,10 @@ define([
 //                            var index = parseInt(i+1);
 //                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
 //                        }
+
                         $("input[name='index[]'").each(function(index, element) {
                             //$scope.item.QUE_SHORT_ANSWER = $(element).val();
-                            $rootScope.jsontext2[$(element).val()] = '"'+$(element).val()+'":"'+ answer[index]+'"';
+                            $rootScope.jsontext2[index] = '"'+$(element).val()+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
                         })
 
                         $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';

@@ -110,7 +110,7 @@
                                                 <!--</dl>-->
 
                                                 <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                                                    <input type="hidden" name="index[]"  value="{{query.index}}"/>
+                                                    <input type="hidden" name="index[]"  value="{{query.index}}"/> <!-- query. -->
                                                     <dt>{{query.title}}</dt>
                                                     <dd ng-if="query.type == '1'">
                                                         <div class="radio-inline">
@@ -119,6 +119,7 @@
                                                                 &nbsp;&nbsp;&nbsp;
                                                                 <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
                                                             </label>
+
                                                         </div>
                                                     </dd>
                                                     <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
@@ -127,8 +128,18 @@
                                                                 <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                             </label>
                                                         </div>
+
                                                     </dd>
+
+                                                    <!--<div ng-if="query.type == '0'">-->
+                                                        <!--<div  style="width: 100%; height: 200px;">-->
+                                                            <!--<div google-chart chart="chart[$index]" style="height:200px; width:100%;"></div>-->
+                                                            <!--&lt;!&ndash;<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
                                                 </dl>
+
+
 
 
                                                 <!--<div>-->
