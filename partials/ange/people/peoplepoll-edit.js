@@ -104,7 +104,7 @@ define([
 
                                         $scope.search.ada_idx = $stateParams.id;
 
-                                        $rootScope.answers[k].adhj_answers = $rootScope.answers[k].adhj_answers.split(',');
+                                        $rootScope.answers[k].adhj_answers = $rootScope.answers[k].adhj_answers.split(';');
 
                                         console.log($rootScope.answers[k].adhj_answers);
 
@@ -124,7 +124,7 @@ define([
 
                             var choice = [];
                             if(parse_que_data[x].type == 0){ // 객관식일때
-                                var select_answer = parse_que_data[x].choice.split(','); // ,를 기준으로 문자열을 잘라 배열로 변환
+                                var select_answer = parse_que_data[x].choice.split(';'); // ,를 기준으로 문자열을 잘라 배열로 변환
 
                                 $rootScope.jsontext = new Array();
                                 $rootScope.jsontext2 = new Array();

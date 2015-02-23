@@ -310,7 +310,7 @@ define([
 
                                 var choice = [];
                                 if(parse_que_data[x].type == 0){ // 객관식일때
-                                    var select_answer = parse_que_data[x].choice.split(','); // ,를 기준으로 문자열을 잘라 배열로 변환
+                                    var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
 
                                     for(var i=0; i < select_answer.length; i++){
                                         choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
