@@ -90,32 +90,24 @@ define([
                         $scope.search.ada_idx = $stateParams.id;
 
                         $scope.getList('ange/poll', 'chartlist', {}, $scope.search, true)
-                                .then(function(data){
-                                    $rootScope.answers = data;
+                        .then(function(data){
+                            $rootScope.answers = data;
 
-                                    var note = [];
-                                    var poll_cnt = [];
-                                    var myJSON = "";
+                            var note = [];
+                            var poll_cnt = [];
+                            var myJSON = "";
 
-                                    for(var k=0; k<$rootScope.answers.length; k++) {
+                            for(var k=0; k<$rootScope.answers.length; k++) {
+                                var a = $rootScope.answers[k].adhj_answers.split(';');
+                                a = JSON.parse(a);
 
-                                        var answer = JSON.parse($rootScope.answers[k].adhj_answers);
-                                        console.log(answer);
+                                for(var x in a){
+                                    console.log(a[x]);
+                                }
+                            }
 
-                                        $scope.search.ada_idx = $stateParams.id;
-
-                                        $rootScope.answers[k].adhj_answers = $rootScope.answers[k].adhj_answers.split(';');
-
-                                        console.log($rootScope.answers[k].adhj_answers);
-
-//                                        for(var i=0; i<answer.length; i++){
-//                                            console.log(answer[i]);
-//                                        }
-
-                                    }
-
-                                })
-                                .catch(function(error){});
+                        })
+                        .catch(function(error){});
 
                         for(var x in parse_que_data){
 
