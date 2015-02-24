@@ -96,6 +96,77 @@
                             <!--<img src="/imgs/ange/_blank_4by3.gif" style="width: 100%; padding: 0px; margin: 0px; margin-bottom: 130px;"/>-->
                         <!--</div>-->
                     <!--</div>-->
+                    <div ng-class="item.TYPE == 'COVER' ? 'pin pin_pannel bob_editornote' : 'pin'" ng-repeat="item in list">
+                        <div ng-switch="item.TYPE">
+                            <!-- 앙쥬 스페셜 -->
+                            <div ng-switch-when="COVER">
+                                <div class="bob_title">
+                                    <p>앙쥬스페셜</p>
+                                    <div class="bob_title_han">{{ item.DEPLOY_YMD | date:'yyyy' }}년 {{ item.DEPLOY_YMD | date:'MM' }}월</div>
+                                    <div class="bob_title_eng">
+                                        {{
+                                        item.MONTH == '01' ? 'January' :
+                                        item.MONTH == '02' ? 'February' :
+                                        item.MONTH == '03' ? 'March' :
+                                        item.MONTH == '04' ? 'April' :
+                                        item.MONTH == '05' ? 'May' :
+                                        item.MONTH == '06' ? 'June' :
+                                        item.MONTH == '07' ? 'July' :
+                                        item.MONTH == '08' ? 'August' :
+                                        item.MONTH == '09' ? 'September' :
+                                        item.MONTH == '10' ? 'October' :
+                                        item.MONTH == '11' ? 'November' :
+                                        'December'
+                                        }}
+                                    </div>
+                                </div>
+                                <div class="bob_arrow">
+                                    >
+                                </div>
+                                <div class="story_pannel">
+                                    <img src="/imgs/ange/_blank_4by3.gif"/>
+                                </div>
+                            </div>
+                            <!-- /앙쥬 스페셜 -->
+
+                            <!-- 광고유형 -->
+                            <div ng-switch-when="ADVERT" ng-click="click_showContentDetail(item)">
+                                <div class="story_thumbnails" style="background-image: url('{{item.FILE}}');">
+                                    <img src="/imgs/ange/_blank_4by3.gif" />
+                                </div>
+
+                                <!-- img src="{{item.FILE}}" /-->
+                                <div class="storybodytxt">
+                                    <span class="table_red story_bubbletitle">AD 임신부, 여름 음식 안전...</span>
+                                    {{item.SUMMARY}}
+                                </div>
+
+                                <a ng-class="item.LIKE_FL == 'Y' ? 'icon_like_on' : 'icon_like'" style="float:right; margin-right:0;" title="공감한 스토리는 자동으로 스크랩됩니다." ng-click="click_addLike($index, item)">좋아요?</a>
+                                <span style="float:right; margin-right:0;">{{item.LIKE_CNT}}&nbsp;</span>
+                                <!--<a class="miniboard_tab_more" tytle="더보기" style="margin-right:0;">더보기</a>-->
+                            </div>
+                            <!-- 광고유형 -->
+
+                            <div ng-switch-when="CONTENT">
+                                <div class="story_thumbnails" style="background-image: url('{{item.FILE}}');" ng-click="click_showContentDetail(item)">
+                                    <img src="/imgs/ange/_blank_4by3.gif" />
+                                </div>
+
+                                <!-- img src="{{item.FILE}}" /-->
+                                <div class="storybodytxt">
+                                    <span class="table_blue story_bubbletitle">{{item.SUBJECT}}</span>
+                                    {{item.SUMMARY}}
+                                </div>
+
+                                <span class="glyphicon glyphicon-comment" style="font-size:0.86em; color:#111; padding-top:2px;"></span>
+                                <span class="story_icontxt" style="vertical-align:top;">{{item.REPLY_COUNT}}&nbsp;</span>
+
+                                <a ng-class="item.LIKE_FL == 'Y' ? 'icon_like_on' : 'icon_like'" style="margin-right:0;" title="공감한 스토리는 자동으로 스크랩됩니다." ng-click="click_addLike($index, item)">좋아요?</a>
+                                <span class="story_icontxt" style="float:right;">{{item.LIKE_CNT}}&nbsp;</span>
+                                <!--<a class="miniboard_tab_more" tytle="더보기" style="margin-right:0;">더보기</a>-->
+                            </div>
+                        </div>
+                    </div>
 
                     <div ng-class="item.TYPE == 'COVER' ? 'pin pin_pannel bob_editornote' : 'pin'" ng-repeat="item in list">
                         <div ng-switch="item.TYPE">
