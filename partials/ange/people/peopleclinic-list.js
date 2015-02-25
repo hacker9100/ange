@@ -89,8 +89,8 @@ define([
 //                $scope.search['COMM_NO'] = '13';
 //            }
 
-//            $scope.search.SORT = 'NOTICE_FL';
-//            $scope.search.ORDER = 'DESC'
+            $scope.search.SORT = 'BOARD_NO';
+            $scope.search.ORDER = 'DESC'
 
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){

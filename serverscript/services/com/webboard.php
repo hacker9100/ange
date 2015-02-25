@@ -219,7 +219,7 @@
                                 1=1
                                 AND PARENT_NO = 0
                                 ".$search_where."
-                            ORDER BY NOTICE_FL DESC, REG_DT DESC, BOARD_NO DESC".$sort_order."
+                            ORDER BY NOTICE_FL DESC, REG_DT DESC".$sort_order."
                             ".$limit."
                         ) AS DATA
                         LEFT OUTER JOIN ANGE_COMM C ON DATA.COMM_NO = C.NO,
