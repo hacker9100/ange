@@ -13,14 +13,14 @@
 //define("__SMTP_PWD__" , "rlatjdghks9100");
 
 // 앙쥬 DB 서버(개발)
-//define("__ANGE_ADD__" , "14.63.219.171");
-//define("__ANGE_USR__" , "admin_default");
-//define("__ANGE_PWD__" , "XT1GuAa3qz");
-//define("__ANGE_DBF__" , "admin_default");
 define("__ANGE_ADD__" , "14.63.219.171");
-define("__ANGE_USR__" , "ange");
-define("__ANGE_PWD__" , "ange#123");
-define("__ANGE_DBF__" , "ange");
+define("__ANGE_USR__" , "admin_default");
+define("__ANGE_PWD__" , "XT1GuAa3qz");
+define("__ANGE_DBF__" , "admin_default");
+//define("__ANGE_ADD__" , "14.63.219.171");
+//define("__ANGE_USR__" , "ange");
+//define("__ANGE_PWD__" , "ange#123");
+//define("__ANGE_DBF__" , "ange");
 
 // 광고센터 DB 서버(개발)
 define("__AD_ANGE_ADD__" , "14.63.219.171");

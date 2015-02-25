@@ -37,20 +37,20 @@
                                         </div><!-- /btn-group -->
 
                                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                            <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+                                            <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0"  class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
                                             <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
-                                                <button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                                <button class="btn btn-default"  type="button" ><span class="glyphicon glyphicon-search"></span></button>
                                             </span>
 
                                         </div>
 
-                                        <div  ng-if="SEARCH_YN == 'Y'" class="input-group input-group-sm" style="width:100px; margin-left: 250px; float:left;">
-                                            전체검색
-                                            <span class="input-group-btn" ng-click="click_searchAllPeopleBoard();">
-                                                <button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
-                                            </span>
-                                        </div>
+                                        <!--<div  ng-if="SEARCH_YN == 'Y'" class="input-group input-group-sm" style="width:100px; margin-left: 250px; float:left;">-->
+                                            <!--전체검색-->
+                                            <!--<span class="input-group-btn" ng-click="click_searchAllPeopleBoard();">-->
+                                                <!--<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>-->
+                                            <!--</span>-->
+                                        <!--</div>-->
 
                                         <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
                                             <div class="input-group input-group-sm">
@@ -121,9 +121,11 @@
                                             <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
                                             {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
                                             <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>
+
                                             <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>
                                             <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                             <span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                                            <span class="reply_num feed_count countlike_color table_gray" style="line-height:12px; height:14px;">{{item.LIKE_CNT}}</span>
                                         </td>
                                         <td ng-if="menu.COMM_NO != 8" class="table_author"><div ng-bind-html="item.NICK_NM"></div></td> <!-- {{}} -->
                                         <td class="table_date">{{item.REG_DT}}</td>

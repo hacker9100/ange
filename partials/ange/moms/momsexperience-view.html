@@ -45,7 +45,8 @@
                                         <div class="webzine_list_infowrap">
                                             <dl>
                                                 <dt class="table_red">추가정보</dt>
-                                                <dd><strong>마감일</strong><span class="table_gray" style="margin-left:8px;">{{D_DAY > 0 ? 'D-'+D_DAY : '마감'}}</span></dd>
+                                                <!--<dd><strong>마감일</strong><span class="table_gray" style="margin-left:8px;">{{D_DAY > 0 ? 'D-'+D_DAY : '마감'}}</span></dd>-->
+                                                <dd><strong>후기마감일</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_close}}({{D_DAY > 0 ? 'D-'+D_DAY : '마감'}})</span></dd>
                                                 <!--<dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>-->
                                                 <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_delivery}}원</span></dd>
                                                 <!--<dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>-->
@@ -263,30 +264,30 @@
                                                         <!--</select>-->
                                                         <!--</td>-->
                                                         <!--</tr>-->
-                                                        <tr>
-                                                            <td align="center" class="table_td_gray">
-                                                                체험자정보
-                                                            </td>
-                                                            <td>
-                                                                <div class="form-inline" style="margin:0 5px">
+                                                        <!--<tr>-->
+                                                            <!--<td align="center" class="table_td_gray">-->
+                                                                <!--체험자정보-->
+                                                            <!--</td>-->
+                                                            <!--<td>-->
+                                                                <!--<div class="form-inline" style="margin:0 5px">-->
 
-                                                                    <select id="preg_fl" ng-model="item.PREG_FL" class="form-control input-sm" style="width:110px; display:block;">
-                                                                        <option selected value="">임신여부</option>
-                                                                        <option value="Y">임신중</option>
-                                                                        <option value="N">해당없음</option>
-                                                                    </select>
+                                                                    <!--<select id="preg_fl" ng-model="item.PREG_FL" class="form-control input-sm" style="width:110px; display:block;">-->
+                                                                        <!--<option selected value="">임신여부</option>-->
+                                                                        <!--<option value="Y">임신중</option>-->
+                                                                        <!--<option value="N">해당없음</option>-->
+                                                                    <!--</select>-->
 
-                                                                    <select ng-model="item.CHILD_CNT" class="form-control input-sm" style="width:110px; display:block;">
-                                                                        <option selected value="">자녀수</option>
-                                                                        <option value="1">1</option>
-                                                                        <option value="2">2</option>
-                                                                        <option value="3">3</option>
-                                                                        <option value="4">4</option>
-                                                                        <option value="5">5명 이상상</option>
-                                                                    </select>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
+                                                                    <!--<select ng-model="item.CHILD_CNT" class="form-control input-sm" style="width:110px; display:block;">-->
+                                                                        <!--<option selected value="">자녀수</option>-->
+                                                                        <!--<option value="1">1</option>-->
+                                                                        <!--<option value="2">2</option>-->
+                                                                        <!--<option value="3">3</option>-->
+                                                                        <!--<option value="4">4</option>-->
+                                                                        <!--<option value="5">5명 이상상</option>-->
+                                                                    <!--</select>-->
+                                                                <!--</div>-->
+                                                            <!--</td>-->
+                                                        <!--</tr>-->
                                                         <tr>
                                                             <td align="center" class="table_td_gray">
                                                                 아기 생년월일
@@ -309,22 +310,30 @@
                                                                 블로그 주소
                                                             </td>
                                                             <td>
-                                                                <div class="form-inline" style="float:left; margin:0px; padding:0px;">
+                                                                <div class="form-inline" style="float:left; width:100%; margin:0px; padding:0px;">
 
                                                                     <div class="row form_rows bottom" style="margin:0px;  border:none;" id="add_blog">
 
                                                                         <div class="form_basicinfo" style="margin:0px;">
 
+                                                                            <!--<div class="basicinfo input blog" id="blog_url">-->
+                                                                                <!--<input type="text" ng-model="item.BLOG" name="blog[]" class="form-control input-sm" style="width:94%; float:left;">-->
+
+                                                                                <!--<div style="width:5%;">-->
+                                                                                    <!--<button type="button" class="btn btn-xs btn-warning button" disabled="disabled" ng-click="delete_blog_url();"><span class="glyphicon glyphicon-minus"></span></button>-->
+                                                                                <!--</div>-->
+                                                                            <!--</div>-->
+
                                                                             <span class="col-xs-12 basicinfo input blog" id="blog_url">
                                                                                 <div class="form-inline">
-                                                                                    <input type="text" ng-model="item.BLOG" name="blog[]" style="width: 629px"  class="form-control input-sm">
+                                                                                    <input type="text" ng-model="item.BLOG" name="blog[]" style="width: 93%"  class="form-control input-sm">
                                                                                     <div style="float:right; width:5%;">
                                                                                         <button type="button" class="btn btn-xs btn-warning button" disabled="disabled" ng-click="delete_blog_url();"><span class="glyphicon glyphicon-minus"></span></button>
                                                                                     </div>
                                                                                 </div>
                                                                             </span>
 
-                                                                            <span class="col-xs-12 basicinfo divide" style="margin:0px; width:684px"></span> <!-- width:100%; -->
+                                                                            <span class="col-xs-12 basicinfo divide" style="margin:0px; width:100%"></span> <!-- width:100%; -->
 
                                                                             <span class="col-xs-12 basicinfo input">
                                                                                 <div style="text-align:right; padding:0 10px;">

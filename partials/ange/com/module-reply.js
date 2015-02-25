@@ -21,6 +21,27 @@ define([
         $scope.showCommentDetails = false;
         $scope.showReCommentDetails = false;
 
+        console.log($rootScope.uid);
+
+        if($rootScope.uid == undefined){
+            $scope.nouserid = true;
+        }else if($rootScope.uid == null || $rootScope.uid == ''){
+            $scope.nouserid = true;
+        }else{
+            $scope.nouserid = false;
+        }
+
+        // 페이징
+        $scope.replySearch.PAGE_NO = 1;
+        $scope.replySearch.PAGE_SIZE = 10;
+        $scope.replySearch.TOTAL_COUNT = 0;
+
+        $scope.pageChanged = function(){
+
+            console.log('Page changed to: ' + $scope.search.PAGE_NO);
+            $scope.replyList = [];
+            $scope.getReplyList();
+        }
 
         /********** 이벤트 **********/
         // 댓글 리스트
@@ -31,9 +52,20 @@ define([
 
             $scope.getItem('com/reply', 'item', {}, $scope.replySearch, true)
                 .then(function(data){
+
+                    if(data.COMMENT == null){
+                        $scope.replySearch.TOTAL_COUNT = 0;
+                    }else{
+                        $scope.replySearch.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                    }
+
                     var reply = data.COMMENT;
+
+
                     for(var i in reply) {
 
+                        //reply[i].COMMENT = reply[i].COMMENT.replaceAll("\r\n", "<br>");
+                        console.log(reply[i].COMMENT);
                         $scope.replyList.push(reply[i]);
                     }
                 })
@@ -52,6 +84,9 @@ define([
             $scope.replyItem.REPLY_NO = 1;
             $scope.replyItem.TARGET_NO = $scope.TARGET_NO;
             $scope.replyItem.TARGET_GB = $scope.TARGET_GB;
+            console.log($scope.replyItem.COMMENT);
+
+            //$scope.replyItem.COMMENT = $scope.replyItem.COMMENT.replace("\r\n","");
 
             $scope.insertItem('com/reply', 'item', $scope.replyItem, false)
                 .then(function(){
@@ -67,8 +102,12 @@ define([
 
         // 답글 등록
         $scope.click_saveReComment = function (item) {
-            if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 사용할 수 있습니다.', {size: 'md'});
+
+            if($rootScope.uid == null || $rootScope.uid == ''){
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }else if($rootScope.uid == undefined){
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
                 return;
             }
 
@@ -129,6 +168,14 @@ define([
 
         // 댓글 수정
         $scope.click_updateReply = function (key, comment) {
+
+            if($rootScope.uid == null || $rootScope.uid == ''){
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }else if($rootScope.uid == undefined){
+                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
 
             console.log(key);
 

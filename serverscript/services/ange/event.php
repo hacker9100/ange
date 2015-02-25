@@ -62,7 +62,7 @@
                 $sql = "SELECT  ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close, DATE_FORMAT(ada_date_notice, '%Y-%m-%d') as ada_date_notice, ada_option_quantity, ada_image, ada_preview, ada_imagemap,
                              ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url,
                              DATE_FORMAT(ada_date_open,'%Y%m%d') as OPEN_DATE ,DATE_FORMAT(ada_date_close, '%Y%m%d') as END_DATE, ada_option_delivery,
-                             ada_url, ada_count_request, ada_detail,ada_que_type, ada_count_join
+                             ada_url, ada_count_request, ada_detail,ada_que_type, ada_count_join, DATE_FORMAT(ada_date_review_open,'%Y-%m-%d') as ada_date_review_open, DATE_FORMAT(ada_date_review_close,'%Y-%m-%d') as ada_date_review_close
                         FROM
                             adm_ad AE
                         WHERE
