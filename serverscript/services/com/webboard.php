@@ -181,7 +181,12 @@
                 }
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_common .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+
+                    if($_search[CONDITION][value] == "SUBJECT+BODY"){
+                        $search_common .= "AND SUBJECT LIKE '%".$_search[KEYWORD]."%' AND BODY LIKE '%".$_search[KEYWORD]."%'";
+                    }else{
+                        $search_common .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                    }
                 }
 
                 $search_where = $search_common;

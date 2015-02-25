@@ -69,6 +69,25 @@ define([
                 //$scope.search.PAST = "past";
                 $scope.menu = "experiencepast"
             }
+
+            var date = new Date();
+
+            // GET YYYY, MM AND DD FROM THE DATE OBJECT
+            var year = date.getFullYear().toString();
+            var mm = (date.getMonth()+1).toString();
+            var dd  = date.getDate().toString();
+
+            if(mm < 10){
+                mm = '0'+mm;
+            }
+
+            if(dd < 10){
+                dd = '0'+dd;
+            }
+
+            var today = year+'-'+mm+'-'+dd;
+
+            $scope.todayDate = today;
         };
 
         /********** 이벤트 **********/
@@ -106,6 +125,11 @@ define([
         };
 
         $scope.comp_momsexperience = function (item){
+
+            if (item.ada_state == 0) {
+                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
+                return;
+            }
 
             if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
                 dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});

@@ -27,17 +27,92 @@ define([
 
         });
 
+
+//        // 파일 업로드 설정
+//        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+//
+//        // 파일 업로드 완료 후 에디터에 중간 사이즈 이미지 추가
+//        $scope.addEditor = true;
+//
+//        /********** 초기화 **********/
+//            // 첨부파일 초기화
+//        $scope.queue = [];
+        // 게시판 초기화
+        $scope.item = {};
+
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
         // 파일 업로드 완료 후 에디터에 중간 사이즈 이미지 추가
         $scope.addEditor = true;
+        $scope.checkAll = false;
+
+        $scope.checkFile = [];
+        $scope.click_selectMainImage = function (file) {
+
+            angular.forEach($scope.queue, function(file) {
+                file.kind = '';
+            });
+
+            if (file.kind == 'MAIN') {
+                file.kind = '';
+            } else {
+                file.kind = 'MAIN';
+            }
+        };
+
+        $scope.click_checkAllToggle = function () {
+            $scope.checkAll = !$scope.checkAll;
+
+            if ($scope.checkAll) {
+                $scope.item.queue = angular.copy($scope.queue);
+            } else {
+//                angular.forEach($scope.select, function(file) {
+//                    $scope.select.pop();
+//                });
+                $scope.item.queue = [];
+//                $scope.checkFile.splice(0, $scope.checkFile.length);
+            }
+//            console.log($scope.checkFile)
+        };
+
+        var state;
+        $scope.click_checkFileDestroy = function () {
+            angular.forEach($scope.item.queue, function(file) {
+                state = 'pending';
+                return $http({
+                    url: file.deleteUrl,
+                    method: file.deleteType
+                }).then(
+                    function () {
+                        $scope.item.queue.splice($scope.checkFile.indexOf(file), 1);
+
+                        state = 'resolved';
+                        $scope.clear(file);
+                    },
+                    function () {
+                        state = 'rejected';
+                    }
+                );
+            });
+        };
+
+        $scope.click_checkFileEditor = function () {
+            angular.forEach($scope.item.queue, function(file) {
+                if (!angular.isUndefined(CKEDITOR)) {
+                    var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.url+'" />' );
+                    CKEDITOR.instances.editor1.insertElement( element );
+                }
+            });
+        };
 
         /********** 초기화 **********/
             // 첨부파일 초기화
         $scope.queue = [];
-        // 게시판 초기화
-        $scope.item = {};
+
+
+        // 첨부파일 체크박스 리스트 초기화
+        $scope.item.queue = [];
 
         $scope.search = {};
         // 초기화

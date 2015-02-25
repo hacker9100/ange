@@ -32,7 +32,7 @@ define([
         };
 
         // 검색어 조건
-        var condition = [{name: "제목+내용", value: "SUBJECT"} , {name: "작성자", value: "NICK_NM"}];
+        var condition = [{name: "제목+내용", value: "SUBJECT+BODY"} , {name: "작성자", value: "NICK_NM"}];
 
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];

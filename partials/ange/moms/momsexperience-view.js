@@ -77,6 +77,11 @@ define([
             dd = '0'+dd;
         }
 
+        // 기준 날짜 (오늘 날짜)
+        $scope.nowTime = new Date();
+
+
+
         var today = year+mm+dd;
         $scope.todayDate = today;
 
@@ -271,11 +276,18 @@ define([
                 return $scope.getItem('ange/event', 'item', $stateParams.id, {}, false)
                     .then(function(data){
 
-                        $scope.open_date = data.ada_date_open.replace(/-/gi, "");
-                        $scope.end_date = data.ada_date_close.replace(/-/gi, "");
+//                        $scope.open_date = data.ada_date_open.replace(/-/gi, "");
+//                        $scope.end_date = data.ada_date_close.replace(/-/gi, "");
+                        $scope.open_date = data.ada_date_review_open.replace(/-/gi, "");
+                        $scope.end_date = data.ada_date_review_close.replace(/-/gi, "");
+
+
+                        var day = 1000*60*60*24;
 
                         $scope.D_DAY = parseInt($scope.end_date) - parseInt($scope.todayDate);
-                        console.log($scope.D_DAY);
+                        console.log(parseInt($scope.D_DAY/day));
+
+                        $scope.D_DAY = parseInt($scope.D_DAY/day);
 
                         $scope.item = data;
                         $scope.item.BOARD_NO = data.ada_idx;

@@ -133,9 +133,9 @@ switch ($_method) {
             }
 
             // 팝업에서 닉네임 검색
-            if (isset($_search[TO_NICK_NM]) && $_search[TO_NICK_NM] != "") {
-                $search_where .= "AND CU.NICK_NM LIKE '%".$_search[TO_NICK_NM]."%'";
-            }
+//            if (isset($_search[TO_NICK_NM]) && $_search[TO_NICK_NM] != "") {
+//                $search_where .= "AND CU.NICK_NM LIKE '%".$_search[TO_NICK_NM]."%'";
+//            }
 
             $limit = "";
 
@@ -189,7 +189,7 @@ switch ($_method) {
                             , '".$_SESSION['uid']."'
                             , '".$_SESSION['name']."'
                             , '".$_model[BODY]."'
-                            , SYSDATE()
+                            , NOW()
                             , 'N'
                         )";
 

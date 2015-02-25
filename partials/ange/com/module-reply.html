@@ -11,17 +11,20 @@
                 <dt>{{replyItem.NICK_NM}}</dt>
                 <dd><div class="people_view_replys_date">{{replyItem.REG_DT}}</div></dd>
                 <dd style="margin:0px;">
-                    {{replyItem.BLIND_FL == 'N' ? replyItem.COMMENT : '관리자에 의해 블라인드 된 의견입니다'}}<!--{{replyItem.COMMENT}}-->
+                    <!--{{replyItem.BLIND_FL == 'N' ? replyItem.COMMENT : '관리자에 의해 블라인드 된 의견입니다'}}&lt;!&ndash;{{replyItem.COMMENT}}&ndash;&gt;-->
+                    <p style="white-space: pre" ng-show="replyItem.BLIND_FL == 'N'">{{replyItem.COMMENT}}</p>
+                    <p ng-show="replyItem.BLIND_FL == 'Y'">관리자에 의해 블라인드 된 의견입니다</p>
                     <p style="font-size:0.86em; margin:4px 0 0 0; ">
                         <a ng-click="showDetails = ! showDetails">댓글<span style="color: #df5348">({{replyItem.RE_COUNT}})</span></a>
                         &nbsp; | &nbsp;<a href="#">신고</a>
-                        <span ng-if="uid == replyItem.REG_UID  && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="showCommentDetails = ! showCommentDetails">수정</a></span> <!-- && replyItem.BLIND_FL == 'N'  -->
-                        <span ng-if="uid == replyItem.REG_UID && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="click_deleteReply(replyItem);">삭제</a></span>
+                        <span ng-show="uid == replyItem.REG_UID  && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="showCommentDetails = ! showCommentDetails">수정</a></span> <!-- && replyItem.BLIND_FL == 'N'  -->
+                        <span ng-show="uid == replyItem.REG_UID && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="click_deleteReply(replyItem);">삭제</a></span>
                         &nbsp; | &nbsp;<a ng-click="click_blind(replyItem.NO);" ng-if="replyItem.BLIND_FL == 'N' && role == 'ANGE_ADMIN'" class="table_red">블라인드</a> <!--replyItem.BLIND_FL == 'N' &&-->
                         <a ng-click="click_blind_clear(replyItem.NO);" ng-if="replyItem.BLIND_FL == 'Y' && role == 'ANGE_ADMIN'" class="table_red">블라인드해제</a> <!-- replyItem.BLIND_FL == 'Y' -->
 
-                        <p style="font-size:0.86em; margin:4px 0 0 0; "  ng-class="{ 'hidden': ! showCommentDetails }">
-                            &nbsp;&nbsp;&nbsp;<input type="text" ng-model="replyItem.UPDATE_COMMENT"  style="width:60%;"/>&nbsp;<a ng-click="click_updateReply(replyItem.NO, replyItem.UPDATE_COMMENT);">수정</a>
+                        <p style="font-size:0.86em; margin:4px 0 0 0; " ng-class="{ 'hidden': ! showCommentDetails }">
+                            &nbsp;&nbsp;&nbsp;<!--<input type="text" ng-model="replyItem.UPDATE_COMMENT"  style="width:60%;"/>-->
+                            <textarea id="editor1" ng-model="replyItem.UPDATE_COMMENT" id="comment2" name="comment" class="form-control input-md" rows="2" style="resize: none;" ng-keyup="fnByteCal();"></textarea>&nbsp;<a ng-click="click_updateReply(replyItem.NO, replyItem.UPDATE_COMMENT);">수정</a>
                         </p>
                         <!-- 관리자 또는 방장에게만 보여집니다. -->
                     </p>
@@ -44,7 +47,7 @@
                         </small>
                         <p style="font-size:0.86em; margin:4px 0 0 0; "  ng-class="{ 'hidden': ! showReCommentDetails }">
                             <br/>
-                            &nbsp;&nbsp;&nbsp;<input type="text" ng-model="reItem.UPDATE_COMMENT" style="width:60%;"/>&nbsp;<a ng-click="click_updateReply(reItem.NO, reItem.UPDATE_COMMENT);">수정</a>
+                            &nbsp;&nbsp;&nbsp;<input type="text" data-ng-disabled="nouserid" ng-model="reItem.UPDATE_COMMENT" style="width:60%;"/>&nbsp;<a ng-click="click_updateReply(reItem.NO, reItem.UPDATE_COMMENT);">수정</a>
                         </p><!--ng-show="uid == reItem.REG_UID && replyItem.BLIND_FL == 'N'">-->
                     </dt>
                     <dd>{{reItem.BLIND_FL == 'N' ? reItem.COMMENT : '관리자에 의해 블라인드된 댓글입니다'}}</dd>
@@ -77,6 +80,10 @@
             </dl>
         </div>
 
+        <nav class="text-center">
+            <pagination boundary-links="true" total-items="replySearch.TOTAL_COUNT" ng-model="replySearch.PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+        </nav><!-- /.Paging-->
+
     </div><!-- /.row -->
 </div><!-- /.container -->
 
@@ -89,7 +96,7 @@
     </div><!-- /.row -->
     <div class="row peopleboard_view_commentbox">
         <div class="col-xs-10 peopleboard_view_text">
-            <textarea ng-model="replyItem.COMMENT" id="comment" name="comment" class="form-control" rows="4" style="resize: none;" ng-keyup="fnByteCal();"></textarea>
+            <textarea id="editor1" ng-model="replyItem.COMMENT" id="comment" name="comment" class="form-control input-md" rows="4" data-ng-disabled="nouserid" style="resize: none;" ng-keyup="fnByteCal();"></textarea>
         </div><!-- /.col-xs-10-->
         <div ng-show="commentForm.comment.$error.maxlength">의견등록 10자</div>
         <div class="col-xs-2 peopleboard_view_btns">
