@@ -105,7 +105,7 @@
                                 <tr class="board_thead" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td align="center"><span class="board_th">제목</span></td>
-                                    <td width="120" align="center"><span class="board_th">작성자</span></td>
+                                    <td ng-if="menu.COMM_NO != 8" width="120" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80" align="center"><span class="board_th">작성일</span></td>
                                     <td width="60" align="center"><span class="board_th">조회</span></td>
                                 </tr>
@@ -125,7 +125,7 @@
                                             <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                             <span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>
                                         </td>
-                                        <td  class="table_author"><div ng-bind-html="item.NICK_NM"></div></td> <!-- {{}} -->
+                                        <td ng-if="menu.COMM_NO != 8" class="table_author"><div ng-bind-html="item.NICK_NM"></div></td> <!-- {{}} -->
                                         <td class="table_date">{{item.REG_DT}}</td>
                                         <td class="table_hit">{{item.HIT_CNT}}</td></tr>
                                     </tr>

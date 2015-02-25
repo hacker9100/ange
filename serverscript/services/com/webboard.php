@@ -139,54 +139,53 @@
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'list') {
-                $search_common = "";
                 $search_where = "";
                 $sort_order = "";
                 $limit = "";
 
                 if (isset($_search[COMM_NO]) && $_search[COMM_NO] != "") {
-                    $search_common .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
+                    $search_where .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
                 }
 
                 if(isset($_search[MY_QNA]) && $_search[MY_QNA] == "Y"){
-                    $search_common .= "AND B.REG_UID = '".$_SESSION['uid']."'";
+                    $search_where .= "AND B.REG_UID = '".$_SESSION['uid']."'";
                 }
 
                 if (isset($_search[BOARD_GB]) && $_search[BOARD_GB] != "") {
-                    $search_common .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
+                    $search_where .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
                 }
 
                 if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
-                    $search_common .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
+                    $search_where .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
                 }
 
                 if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_common .= "AND B.REG_UID = '".$_search[REG_UID]."' ";
+                    $search_where .= "AND B.REG_UID = '".$_search[REG_UID]."' ";
                 }
 
                 if (isset($_search[PHOTO_TYPE]) && $_search[PHOTO_TYPE] != "" && $_search[PHOTO_TYPE] != "ALL") {
-                    $search_common .= "AND PHOTO_TYPE = '".$_search[PHOTO_TYPE]."'
+                    $search_where .= "AND PHOTO_TYPE = '".$_search[PHOTO_TYPE]."'
                                     AND PHOTO_GB = '".$_search[PHOTO_GB]."'
                                 ";
                 }
 
                 if (isset($_search[FAQ_TYPE]) && $_search[FAQ_TYPE] != "" && $_search[FAQ_TYPE] != "ALL") {
-                    $search_common .= "AND FAQ_TYPE = '".$_search[FAQ_TYPE]."'
+                    $search_where .= "AND FAQ_TYPE = '".$_search[FAQ_TYPE]."'
                                     AND FAQ_GB = '".$_search[FAQ_GB]."'
                                 ";
                 }
 
                 if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
-                    $search_common .= "AND CATEGORY_NO = '".$_search[CATEGORY_NO]."' ";
+                    $search_where .= "AND CATEGORY_NO = '".$_search[CATEGORY_NO]."' ";
                 }
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_common .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
                 }
 
-                $search_where = $search_common;
-
-
+                if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] == "") {
+                    $search_where .= "AND NOTICE_FL = '".$_search[NOTICE_FL]."' ";
+                }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
                     $sort_order .= ", ".$_search[SORT]." ".$_search[ORDER]." ";
@@ -198,51 +197,28 @@
 
                 $sql = "SELECT
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                          SORT_GB, NO, PARENT_NO, HEAD, SUBJECT, REG_UID, REG_NM, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM, SHORT_NM,
-                          (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL, REPLY_COUNT, BOARD_REPLY_COUNT,
-	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, CATEGORY_NO,
+                          DATA.NO, PARENT_NO, HEAD, SUBJECT, DATA.REG_UID, DATA.REG_NM, DATA.NICK_NM, DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
+                          (DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
+	                      CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, CATEGORY_NO,
 	                      BOARD_NO, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT,
+	                      (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'BOARD') AS REPLY_COUNT,
+                          (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = DATA.NO) AS BOARD_REPLY_COUNT,
 	                      (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM
                         FROM
-                        (";
-
-                $select1 = "SELECT
-                                '0' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, B.NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, '' AS COMM_NM, '' AS SHORT_NM,
-                                        (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD,B.BOARD_NO, B.CATEGORY_NO
+                        (
+                            SELECT
+                                B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO,
+                                B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO
                             FROM
                                 COM_BOARD B
-                                LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
-                            WHERE
-
-                                NOTICE_FL = 'Y'
-                                AND PARENT_NO = 0
-                                ".$search_common."";
-
-                $select2 = "SELECT
-                                '1' AS SORT_GB, B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
-                                        (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT,
-                                        (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT,B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO
-                            FROM
-                                COM_BOARD B
-                                LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
                             WHERE
                                 1=1
-                                AND NOTICE_FL = 'N'
                                 AND PARENT_NO = 0
-                                ".$search_common;"";
-
-                if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] == "Y") {
-                    $sql .= $select1;
-                } else if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] == "N") {
-                    $sql .= $select2;
-                } else {
-                    $sql .= $select1." UNION ".$select2;
-                }
-
-                $sql .= "   ORDER BY NOTICE_FL DESC, SORT_GB, REG_DT DESC".$sort_order."
-                             ".$limit."
-                        ) AS DATA,
+                                ".$search_where."
+                            ORDER BY NOTICE_FL DESC, REG_DT DESC, BOARD_NO DESC".$sort_order."
+                            ".$limit."
+                        ) AS DATA
+                        LEFT OUTER JOIN ANGE_COMM C ON DATA.COMM_NO = C.NO,
                         (SELECT @RNUM := 0) R,
                         (
                             SELECT
@@ -251,7 +227,7 @@
                                 COM_BOARD B
                             WHERE
                                 1=1
-                              AND PARENT_NO = 0
+                                AND PARENT_NO = 0
                                 ".$search_where."
                         ) CNT
                         ";
@@ -347,31 +323,7 @@
                     }else{
                         $_d->dataEnd2($data);
                     }
-                } else if(isset($_search[BOARD_NEXT]) && $_search[BOARD_NEXT] != "") {
-
-                    $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND PARENT_NO = 0  AND COMM_NO=".$_search[COMM_NO]." ORDER BY NO LIMIT 1";
-
-                    if($_d->mysql_errno > 0){
-                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                    }else{
-                        $result = $_d->sql_query($sql);
-                        $data = $_d->sql_fetch_array($result);
-                        $_d->dataEnd2($data);
-                    }
-
-                }else if(isset($_search[BOARD_PRE]) && $_search[BOARD_PRE] != "") {
-
-                    $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND PARENT_NO = 0 AND COMM_NO=".$_search[COMM_NO]." ORDER BY  NO DESC LIMIT 1";
-
-                    if($_d->mysql_errno > 0){
-                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                    }else{
-                        $result = $_d->sql_query($sql);
-                        $data = $_d->sql_fetch_array($result);
-                        $_d->dataEnd2($data);
-                    }
-                }
-                else {
+                } else {
                     $data = $_d->sql_query($sql);
 
                     if($_d->mysql_errno > 0){
@@ -380,7 +332,27 @@
                         $_d->dataEnd($sql);
                     }
                 }
-            }else if ($_type == 'category') {
+            } else if ($_type == 'pre') {
+                $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND PARENT_NO = 0 AND COMM_NO=".$_search[COMM_NO]." ORDER BY  NO DESC LIMIT 1";
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $result = $_d->sql_query($sql);
+                    $data = $_d->sql_fetch_array($result);
+                    $_d->dataEnd2($data);
+                }
+            } else if ($_type == 'next') {
+                $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND PARENT_NO = 0  AND COMM_NO=".$_search[COMM_NO]." ORDER BY NO LIMIT 1";
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $result = $_d->sql_query($sql);
+                    $data = $_d->sql_fetch_array($result);
+                    $_d->dataEnd2($data);
+                }
+            } else if ($_type == 'category') {
 
                 $sql = "SELECT NO, CATEGORY_NM, NOTE
                     FROM CMS_CATEGORY

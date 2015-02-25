@@ -63,9 +63,15 @@ define([
             } else if ($stateParams.menu == 'samplepackreview') {
                 $scope.community = "앙쥬 샘플팩 후기";
                 $scope.search['TARGET_GB'] = 'SAMPLEPACK';
-            }else if ($stateParams.menu == 'eventreview') {
+            } else if ($stateParams.menu == 'eventreview') {
                 $scope.community = "이벤트 후기";
                 $scope.search['TARGET_GB'] = 'EVENT';
+            } else if ($stateParams.menu == 'bookreview') {
+                $scope.community = "북카페 후기";
+                $scope.search['TARGET_GB'] = 'BOOK';
+            } else if ($stateParams.menu == 'dolreview') {
+                $scope.community = "앙쥬돌 후기";
+                $scope.search['TARGET_GB'] = 'DOL';
             }
         };
 
@@ -113,20 +119,21 @@ define([
 
         // 조회 화면 이동
         $scope.click_showViewReview = function (key) {
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
 
-            if ($stateParams.menu == 'experiencereview') {
-                $location.url('/moms/experiencereview/view/'+key);
-            } else if ($stateParams.menu == 'productreview') {
-                $location.url('/moms/productreview/view/'+key);
-            } else if ($stateParams.menu == 'angereview') {
-                $location.url('/moms/angereview/view/'+key);
-            } else if ($stateParams.menu == 'samplereview') {
-                $location.url('/moms/samplereview/view/'+key);
-            } else if ($stateParams.menu == 'samplepackreview') {
-                $location.url('/moms/samplepackreview/view/'+key);
-            }else if ($stateParams.menu == 'eventreview') {
-                $location.url('/moms/eventreview/view/'+key);
-            }
+//            if ($stateParams.menu == 'experiencereview') {
+//                $location.url('/moms/experiencereview/view/'+key);
+//            } else if ($stateParams.menu == 'productreview') {
+//                $location.url('/moms/productreview/view/'+key);
+//            } else if ($stateParams.menu == 'angereview') {
+//                $location.url('/moms/angereview/view/'+key);
+//            } else if ($stateParams.menu == 'samplereview') {
+//                $location.url('/moms/samplereview/view/'+key);
+//            } else if ($stateParams.menu == 'samplepackreview') {
+//                $location.url('/moms/samplepackreview/view/'+key);
+//            }else if ($stateParams.menu == 'eventreview') {
+//                $location.url('/moms/eventreview/view/'+key);
+//            }
 
         };
 
@@ -138,20 +145,21 @@ define([
                 return;
             }
 
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/0');
 
-            if ($stateParams.menu == 'experiencereview') {
-                $location.url('/moms/experiencereview/edit/0');
-            } else if ($stateParams.menu == 'productreview') {
-                $location.url('/moms/productreview/edit/0');
-            } else if ($stateParams.menu == 'angereview') {
-                $location.url('/moms/angereview/edit/0');
-            } else if ($stateParams.menu == 'samplereview') {
-                $location.url('/moms/samplereview/edit/0');
-            } else if ($stateParams.menu == 'samplepackreview') {
-                $location.url('/moms/samplepackreview/edit/0');
-            }else if ($stateParams.menu == 'eventreview') {
-                $location.url('/moms/eventreview/edit/0');
-            }
+//            if ($stateParams.menu == 'experiencereview') {
+//                $location.url('/moms/experiencereview/edit/0');
+//            } else if ($stateParams.menu == 'productreview') {
+//                $location.url('/moms/productreview/edit/0');
+//            } else if ($stateParams.menu == 'angereview') {
+//                $location.url('/moms/angereview/edit/0');
+//            } else if ($stateParams.menu == 'samplereview') {
+//                $location.url('/moms/samplereview/edit/0');
+//            } else if ($stateParams.menu == 'samplepackreview') {
+//                $location.url('/moms/samplepackreview/edit/0');
+//            }else if ($stateParams.menu == 'eventreview') {
+//                $location.url('/moms/eventreview/edit/0');
+//            }
 
         };
 

@@ -178,8 +178,6 @@ define([
         // 이전글
         $scope.getPreBoard = function (){
 
-            $scope.search.COMM_NO = $scope.menu.COMM_NO;
-
 //            if ($stateParams.menu == 'angeroom') {
 //                $scope.search['COMM_NO'] = '1';
 //            } else if($stateParams.menu == 'momstalk') {
@@ -192,11 +190,11 @@ define([
 //                $scope.search['COMM_NO'] = '5';
 //            }
 
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.KEY = $stateParams.id;
-            $scope.search.BOARD_PRE = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getList('com/webboard', 'list',{} , $scope.search, false)
+                return $scope.getList('com/webboard', 'pre',{} , $scope.search, false)
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
@@ -207,8 +205,6 @@ define([
         // 다음글
         $scope.getNextBoard = function (){
 
-            $scope.search.COMM_NO = $scope.menu.COMM_NO;
-
 //            if ($stateParams.menu == 'angeroom') {
 //                $scope.search['COMM_NO'] = '1';
 //            } else if($stateParams.menu == 'momstalk') {
@@ -221,11 +217,11 @@ define([
 //                $scope.search['COMM_NO'] = '5';
 //            }
 
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.KEY = $stateParams.id;
-            $scope.search.BOARD_NEXT = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getList('com/webboard', 'list',{} , $scope.search, false)
+                return $scope.getList('com/webboard', 'next',{} , $scope.search, false)
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })

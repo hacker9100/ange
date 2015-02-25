@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsreview-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('momsreview-view', ['$scope', '$rootScope', '$sce', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $sce, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
 
         $scope.queue = [];
         // 게시판 초기화
@@ -25,6 +25,12 @@ define([
         $scope.TARGET_GB = 'REVIEW';
 
         $scope.replyList = [];
+
+        /********** 콘텐츠 랜더링 **********/
+        $scope.renderHtml = function(html_code) {
+            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
+//            return html_code;
+        };
 
         $(document).ready(function(){
 
