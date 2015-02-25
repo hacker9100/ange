@@ -2228,6 +2228,15 @@ img.blank_wrap {
 
 /* /Story 전용 공유 버튼 */
 
+.profile_pic {
+    width:40px;
+    height:40px;
+    border:2px solid #fff;
+    border-radius: 50%;
+    background-position: center center;
+    background-size: cover;
+}
+
 
 /*** 레이아웃 작업 시 아래 하애 주석 해제 필요함 ***/
 

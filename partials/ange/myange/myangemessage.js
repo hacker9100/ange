@@ -75,13 +75,22 @@ define([
 
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
+                    console.log(item);
 
                     $scope.getItem('ange/message', 'item', item.NO, {}, false)
                         .then(function(data){
                             $scope.item = data;
+                            console.log($scope.item);
 
                             var source = data.BODY;
                             var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
+
+//                            var state = "";
+//                            if ($scope.item.FROM_ID == $_SESSION['uid']) {
+//                                state = "SEND";
+//                            } else {
+//                                state = "RECIEVE";
+//                            }
 
                             source = source.replace(pattern, '');
                             source = source.replace(/&nbsp;/ig, '');

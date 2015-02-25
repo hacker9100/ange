@@ -33,7 +33,7 @@
                                                                                         <li><a href="#">작성자</a></li>
                                                                                     </ul>-->
                                         <div class="btn-group" style="float:left;">
-                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
+                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control input-sm" placeholder="검색선택"></select>
                                         </div><!-- /btn-group -->
 
                                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
@@ -105,7 +105,7 @@
                                         </div>
                                         <div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: break-all;">{{item.BODY | string_limit : 50}}{{item.BODY > 50 ? '...' : ''}}</div>
                                     </td>
-                                    <td class="table_hit">{{item.HIT_CNT}}</td></tr>
+                                    <td class="table_hit" style="line-height:80px;">{{item.HIT_CNT}}</td></tr>
                                 </tr>
                                 </tbody>
 

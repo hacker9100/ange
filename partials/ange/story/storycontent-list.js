@@ -56,6 +56,8 @@ define([
 
             if ($scope.menu && $scope.menu.ETC != null) {
                 $scope.search.CATEGORY_NO = $scope.menu.ETC;
+            } else {
+                $scope.search.CATEGORY_NO = '999';
             }
 
             console.log('$stateParams.id : '+$stateParams.id)

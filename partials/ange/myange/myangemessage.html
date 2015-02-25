@@ -27,10 +27,9 @@
                                     <tr class="board_thead" >
                                         <td width="9%" align="center"><span class="board_th">상태</span></td>
                                         <td align="center"><span class="board_th">내용</span></td>
-                                        <td width="120" align="center"><span class="board_th">받는사람</span></td>
-                                        <td width="120" align="center"><span class="board_th">보낸사람</span></td>
-                                        <td width="160" align="center"><span class="board_th">작성일</span></td>
-                                        <td width="75" align="center"><span class="board_th">확인여부</span></td>
+                                        <td width="120" align="center"><span class="board_th">대화상대</span></td>
+                                        <td width="160" align="center"><span class="board_th">발송시간</span></td>
+                                        <td width="60" align="center"><span class="board_th">확인</span></td>
                                     </tr>
                                 </thead>
 
@@ -38,16 +37,16 @@
 
                                     <tr ng-click="click_showViewMessage(item.NO)" style="cursor:pointer;">
                                         <td class="table_no">
-                                            <span ng-class="item.STATUS == 'RECIEVE' ? 'table_blue' : 'table_green'">{{item.STATUS == 'RECIEVE' ? '받→' : '보←'}} </span>
+                                            <span ng-class="item.item.STATUS == 'RECIEVE' ? 'table_blue' : 'table_green'">{{item.STATUS == 'RECIEVE' ? '받→' : '보←'}} </span>
                                         </td>
                                         <td>
                                             <!--<div class="table_gray" ng-bind-html="item.BODY | string_limit : 50"></div>-->
                                             {{item.BODY | string_limit : 20}}{{item.BODY > 20 ? '...' : ''}}
                                         </td>
-                                        <td  class="table_author">{{item.TO_NM}}</td>
-                                        <td  class="table_author">{{item.FROM_NM}}</td>
-                                        <td class="table_date">{{item.REG_DT}}</td>
-                                        <td class="table_hit">{{item.CHECK_FL}}</td></tr>
+                                        <td class="table_author">{{item.STATUS == 'RECIEVE' ? item.FROM_NM : item.TO_NM }}</td>
+                                        <!--<td class="table_author">{{item.FROM_NM}}</td>-->
+                                        <td class="table_date" align="center">{{item.REG_DT}}</td>
+                                        <td class="table_hit">{{item.CHECK_FL}}</td>
                                     </tr>
 
                                 </tbody>
@@ -55,21 +54,23 @@
                                 <tbody class="on" data-ng-show="list == '' || list == null">
 
                                 <tr>
-                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                    <td colspan="6" style="text-align: center">조회 데이터가 없습니다.</td>
                                 </tr>
 
                                 </tbody>
                             </table><!-- /.List-->
-
-                            <nav class="text-center">
-                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-                            </nav><!-- /.Paging-->
                             <!-- /peoplepoll_list -->
 
                         </div><!-- /.sub_contents_body -->
-
                         <!-- 등록 -->
-                        <a class="btn people_btn submit" title="등록하기" ng-show="uid != '' && uid != null" ng-click="click_regMessage();">등록</a>
+                        <div style="text-align:right;">
+                        <!--<a class="btn people_btn submit" title="등록하기" ng-show="uid != '' && uid != null" ng-click="click_regMessage();">등록</a>-->
+                            <button class="btn btn-info btn-sm" ng-click="click_regMessage();">새 메시지</button>
+                        </div>
+
+                        <nav class="text-center">
+                            <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                        </nav><!-- /.Paging-->
 
 
                     </div>
@@ -94,76 +95,96 @@
 </div>
 
 <script type="text/ng-template" id="myangemessage_view.html">
-    <div class="modal-header">
-        <h3 class="modal-title">쪽지 내용</h3>
+    <div class="modal-header" style="background-color:#FAFAFA;">
+        <span style="font-size:0.86em; margin-left:5px; color:#888;">ange Messenger</span>
+        <h2 class="modal-title" style="color:#b26b41; font-weight:bold;">메시지 보기</h2>
     </div>
     <div class="modal-body">
-        <div class="body_wrap">
+        <div class="body_wrap" style="padding:20px;">
             <div class="panel panel-master contentpannel" style="border:none; display:block;">
                 <div class="contentpannel-body" >
                     <div class="people_view_wrap">
 
-                        <div class="container-fluid peopleboard_view_topwrap">
-
-
+                        <div class="container-fluid">
                             <div class="row peopleboard_view_basicinfo">
                                 <div class="col-xs-2  board_basicinfo_label">
-                                    보낸사람
+                                    <!--보낸사람-->
+                                    대화상대
                                 </div><!-- /.col-xs-2-->
                                 <div class="col-xs-4 board_basicinfo_subject">
-                                    {{item.FROM_NM}}
+                                    <!--{{item.FROM_NM}}-->
+                                    {{item.TO_ID == uid ? item.FROM_NM : item.TO_NM }}
                                 </div><!-- /.col-xs-4-->
                                 <div class="col-xs-2  board_basicinfo_label">
-                                    받는사람
+                                    발송시간
                                 </div><!-- /.col-xs-2-->
                                 <div class="col-xs-4 board_basicinfo_subject">
-                                    {{item.TO_NM}}
+                                    <span style="font-family: arial, sans-serif; font-size:0.86em;">{{item.REG_DT}}</span>
                                 </div>
                             </div><!-- /.row -->
 
-                            <div class="row peopleboard_view_basicinfo">
-                                <div class="col-xs-2  board_basicinfo_label">
-                                    작성일
-                                </div><!-- /.col-xs-2-->
-                                <div class="col-xs-4 board_basicinfo_subject date">
-                                    {{item.REG_DT}}
-                                </div><!-- /.col-xs-4-->
-                            </div>
-                        </div><!-- /.container -->
-
-
-                        <div class="container-fluid peopleboard_view_contentwrap">
                             <div class="row">
-                                <div class="col-xs-12 peopleboard_view_contentbody">
+                                <div class="col-xs-12">
                                     <div class="row peopleboard_view_basicinfo">
                                         <div class="col-xs-2 board_basicinfo_label">
                                             내용
                                         </div><!-- /.col-xs-2-->
 
-                                        <div class="col-xs-11">
+                                        <div class="col-xs-10 board_basicinfo_subject">
                                             <!-- Editor CSS 적용 -->
-                                            <textarea id="editor1" ng-model="item.BODY" class="form-control input-sm" readonly rows="15" cols="30" style="width:100%; min-width:100%; max-width:100%;"></textarea>
+                                            <div style="color:#333; line-height:22px; padding:10px;">{{item.BODY}}</div>
+                                            <!--<textarea id="editor1" ng-model="item.BODY" class="form-control input-sm" readonly rows="15" cols="30" style="width:100%; min-width:100%; max-width:100%;"></textarea>-->
                                         </div>
                                     </div><!-- /.row -->
                                 </div><!-- /.col-12-->
                             </div><!-- /.row -->
                         </div><!-- /.container -->
+
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-2 board_basicinfo_label">
+                                            메시지
+                                        </div><!-- /.col-xs-2-->
+
+                                        <div class="col-xs-10 board_basicinfo_subject" style="padding:10px;">
+                                            <!-- Editor CSS 적용 -->
+                                            <textarea id="editor1" class="form-control input-md" rows="10" cols="30" style="width:100%; min-width:100%; max-width:100%;" placeholder="대화상대에세 바로 메시지를 보낼 수 있어요."></textarea>
+                                        </div>
+                                    </div><!-- /.row -->
+                                </div><!-- /.col-12-->
+                            </div><!-- /.row -->
+                        </div><!-- /.container -->
+
+
+                        <div class="container-fluid people_view_btnwrap">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                </div>
+
+                                <div class="col-xs-8" style="text-align: right;">
+                                    <button class="btn btn-default btn-sm" ng-click="click_ok()">닫기</button>
+                                    <button class="btn btn-info btn-sm" ng-click="click_ok()">발송</button>
+                                </div>
+                            </div><!-- /.row -->
+                        </div><!-- /.container -->
+
                     </div><!-- /.row -->
                 </div><!-- /.container -->
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="click_ok()">확인</button>
-    </div>
+
+    <!--<div class="modal-footer">-->
+        <!--<button class="btn btn-primary" ng-click="click_ok()">확인</button>-->
+    <!--</div>-->
 </script>
 
 <script type="text/ng-template" id="myangemessage_edit.html">
-    <div class="modal-header">
-        <h3 class="modal-title">쪽지 내용</h3>
+    <div class="modal-header" style="background-color:#FAFAFA;">
+        <span style="font-size:0.86em; margin-left:5px; color:#888;">ange Messenger</span>
+        <h2 class="modal-title" style="color:#b26b41; font-weight:bold;">새 메시지</h2>
     </div>
     <div class="modal-body">
         <div class="body_wrap">
@@ -171,53 +192,93 @@
                 <div class="contentpannel-body" >
                     <div class="people_view_wrap">
 
-                        <div class="container-fluid peopleboard_view_topwrap">
+                        <div class="container-fluid">
 
-
-                            <div class="row peopleboard_view_basicinfo">
-                                <!--<div class="col-xs-3" style="padding:0;">-->
-                                    <!--받는사람 ID-->
-                                <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
-                                <!--<div class="col-xs-8" style="padding-left:5px;">-->
-                                    <!--<input type="text" ng-model="item.TO_ID" placeholder="받는사람 ID"/>-->
-                                    <!--<button type="button" ng-click="click_searchUser(item);">검색</button>&lt;!&ndash;{{item.FROM_ID}}&ndash;&gt; &lt;!&ndash; item &ndash;&gt;-->
-                                <!--</div>&lt;!&ndash; /.col-xs-4&ndash;&gt;-->
-                                <div class="col-xs-3" style="padding:0;">
-                                    받는사람 닉네임
+                            <div class="row peopleboard_view_basicinfo" style="padding-bottom:15px;">
+                                <div class="col-xs-2  board_basicinfo_label">
+                                    닉네임검색
                                 </div><!-- /.col-xs-2-->
-                                <div class="col-xs-8" style="padding-left:5px;">
-                                    <input type="text" ng-model="item.TO_NICK_NM" placeholder="닉네임 검색"/>
-                                    <button type="button" ng-click="click_searchUser(item);">검색</button><!--{{item.FROM_NM}}-->
-                                </div><!-- /.col-xs-4-->
-                            </div><!-- /.row -->
-                        </div><!-- /.container -->
-
-
-                        <div class="col-xs-12 people_editor">
-                            <!--에디터 넣을자리 <br/>-->
-                            <!--- (글꼴, 글색, 글크기(12,14,16,18pt)/  <br/>-->
-                            <!--- 본문 정렬   <br/>-->
-                            <!--- 굵게,기울기,취소,밑줄  <br/>-->
-                            <!--- HTML-->
-                            내용
-                            <div style="border:1px solid #DEDEDE; width:100%; float:left;">
-                                <div>
-                                    <textarea id="editor1" ng-model="item.BODY" class="form-control input-sm" rows="20" style="width:100%; min-width:100%; max-width:100%;"></textarea>
-                                </div>
+                                <div class="col-xs-10 board_basicinfo_subject" style="padding-top:8px;">
+                                    <!--{{item.FROM_NM}}-->
+                                    <input class="form-control input-sm" type="text" ng-model="search.TO_NICK_NM" placeholder="한글 2자, 영문 4자 이상" style="width:40%; float:left;"/>
+                                    <!--<button type="button" class="btn btn-default btn-sm" ng-click="click_searchUser(item);" style="float:left; margin-left:5px;">검색</button>-->
+                                    <button type="button" class="btn btn-default btn-sm" ng-click="popupsearchList();" style="float:left; margin-left:5px;">검색</button>
+                                </div><!-- /.col-xs-10-->
                             </div>
-                        </div><!-- /.people_editor -->
+
+                            <div class="people_view_wrap" style="display:block;">
+                                <dl style="width:90%; margin:18px auto;">
+                                    <dt style="float:left; width:100%; line-height:40px; text-align:center; font-size:0.92em; display:none;">검색 결과가 없습니다.</dt>
+
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                    <dd style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> 므에에롱</dd>
+                                </dl>
+
+                                <nav class="text-center">
+                                    <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                </nav><!-- /.Paging--><!-- /.people_editor -->
+                            </div><!-- /.row -->
+
+
+                            <div class="row">
+                                <div class="col-xs-2 board_basicinfo_label">
+                                    <!--보낸사람-->
+                                    받는사람
+                                </div><!-- /.col-xs-2-->
+                                <div class="col-xs-10 board_basicinfo_subject" style="padding-bottom:16px">
+                                    <div class="table_gray" style="font-size:0.86em; display:block;">닉네임 검색을 통해 대화상대를 지정하세요.</div>   <!-- 대화상대를 찾으면 감춰주세요 -->
+
+                                    <div style="font-size:0.92em; margin-top:16px; display:none;">
+                                        <img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> {{item.TO_NICK_NM}} 므에에롱
+                                    </div>
+
+                                    <!--{{item.FROM_NM}}-->
+                                    <!--<input class="input-sm" type="text" ng-model="item.TO_NICK_NM" placeholder="닉네임" />-->
+                                    <!--<button type="button" ng-click="click_searchUser(item);">검색</button>&lt;!&ndash;{{item.FROM_NM}}&ndash;&gt;-->
+
+                                </div><!-- /.col-xs-10-->
+                            </div><!-- /.row -->
+
+                            <div class="col-xs-12" style="padding-bottom:20px;">
+                                <textarea id="editor1" ng-model="item.BODY" class="form-control input-md" rows="10" style="width:100%; min-width:100%; max-width:100%;" placeholder="메시지 내용을 입력하세요."></textarea>
+                            </div><!-- /.people_editor -->
+
+                            <div class="container-fluid people_view_btnwrap">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                    </div>
+
+                                    <div class="col-xs-8" style="text-align: right;">
+                                        <button class="btn btn-default btn-sm" ng-click="click_close()">취소</button>
+                                        <button class="btn btn-info btn-sm" ng-click="click_reg()">발송</button>
+                                    </div>
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
                     </div><!-- /.row -->
                 </div><!-- /.container -->
+
             </div>
+
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="click_reg();">등록</button>
-        <button class="btn btn-primary" ng-click="click_close();">닫기</button>
-    </div>
+
+    <!--<div class="modal-footer">-->
+        <!--<button class="btn btn-primary" ng-click="click_reg();">등록</button>-->
+        <!--<button class="btn btn-primary" ng-click="click_close();">닫기</button>-->
+    <!--</div>-->
 </script>
 
 <script type="text/ng-template" id="myangemessage_search.html">
