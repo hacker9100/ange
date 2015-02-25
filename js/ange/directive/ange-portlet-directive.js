@@ -1082,7 +1082,7 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                '<div class="inven_Highlight"><img class="ADbanner_normal" ng-src="{{img}}" ng-click="click_linkImage()"/></div>',
+                '<div class="inven_Highlight"><img ng-src="{{img}}" ng-click="click_linkImage()" title="{{title}}"/></div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', 'UPLOAD', function($scope, $attrs, $location, $window, CONSTANT, UPLOAD) {
 
                 /********** 초기화 **********/
@@ -1122,6 +1122,8 @@ define([
                             } else {
                                 $scope.img = UPLOAD.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
                             }
+
+                            $scope.title = data[0].ada_title;
                         })
                         .catch(function(error){});
                 };
@@ -1140,7 +1142,7 @@ define([
 //            replace: true,
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
                 '<div ng-class="$index == 0 ? \'subside_inven_basic top\' : $index == 1 ? \'subside_inven_basic mid\' : \'subside_inven_basic btm\'" ng-repeat="item in list">' +
-                '   <img ng-src="{{item.img}}" ng-click="click_linkImage(item)"/>' +
+                '   <img ng-src="{{item.img}}" ng-click="click_linkImage(item)" title="{{item.title}}"/>' +
                 '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', 'UPLOAD', function($scope, $attrs, $location, $window, CONSTANT, UPLOAD) {
 
@@ -1180,11 +1182,14 @@ define([
                                 } else {
                                     var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
                                 }
+                                var title = data[i].ada_title;
 
                                 data[i].img = img;
+                                data[i].title = title;
                             }
 
                             $scope.list = data;
+
                         })
                         .catch(function(error){});
                 };
