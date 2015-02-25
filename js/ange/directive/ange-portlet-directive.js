@@ -20,7 +20,7 @@ define([
             templateUrl: function(element, attr) {
                 return '/partials/ange/main/mini-main-list.html';
             },
-            controller: ['$scope', '$attrs', '$location', 'dialogs', 'UPLOAD', function($scope, $attrs, $location, dialogs, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', 'dialogs', 'CONSTANT', function($scope, $attrs, $location, dialogs, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -165,7 +165,7 @@ define([
                             $scope.list = data;
                             if ($scope.option.image != undefined && $scope.option.image) {
                                 $scope.imgItem = data[0];
-                                $scope.img = UPLOAD.BASE_URL + data[0].FILE.PATH + 'thumbnail/' + data[0].FILE.FILE_ID;
+                                $scope.img = CONSTANT.BASE_URL + data[0].FILE.PATH + 'thumbnail/' + data[0].FILE.FILE_ID;
                             }
                         })
                         .catch(function(error){$scope.list = [];});
@@ -186,7 +186,7 @@ define([
             templateUrl: function(element, attr) {
                 return '/partials/ange/main/mini-story-list.html';
             },
-            controller: ['$scope', '$attrs', '$location', 'UPLOAD', function($scope, $attrs, $location, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', 'CONSTANT', function($scope, $attrs, $location, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -262,7 +262,7 @@ define([
                         .then(function(data){
                             for(var i in data) {
                                 if (data[i].FILE != null) {
-                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                    var img = CONSTANT.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                                     data[i].MAIN_FILE = img;
                                 }
                             }
@@ -280,7 +280,7 @@ define([
                                 var img = '';
 
                                 if (data[i].FILE != null) {
-                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                    var img = CONSTANT.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                                     data[i].MAIN_FILE = img;
                                 }
 
@@ -329,7 +329,7 @@ define([
             templateUrl: function(element, attr) {
                 return '/partials/ange/main/portlet-channel-list.html';
             },
-            controller: ['$scope', '$attrs', '$location', 'UPLOAD', function($scope, $attrs, $location, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', 'CONSTANT', function($scope, $attrs, $location, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -408,7 +408,7 @@ define([
                             if ($scope.option.image != undefined && $scope.option.image) {
                                 $scope.img = {};
                                 $scope.img.NO = data[0].NO;
-                                $scope.img.URL = UPLOAD.BASE_URL + data[0].FILE.PATH + 'thumbnail/' + data[0].FILE.FILE_ID;
+                                $scope.img.URL = CONSTANT.BASE_URL + data[0].FILE.PATH + 'thumbnail/' + data[0].FILE.FILE_ID;
                             }
                         })
                         .catch(function(error){$scope.list = [];});
@@ -508,7 +508,7 @@ define([
                             for (var i in data) {
                                 var img = '';
 
-//                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+//                                    var img = CONSTANT.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
 //                                    data[i].MAIN_FILE = img;
                                 var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
                                 data[i].file = img;
@@ -575,7 +575,7 @@ define([
             templateUrl: function(element, attr) {
                 return '/partials/ange/main/portlet-slide-baby.html';
             },
-            controller: ['$scope', '$attrs', '$location', 'UPLOAD', function($scope, $attrs, $location, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', 'CONSTANT', function($scope, $attrs, $location, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -640,7 +640,7 @@ define([
                         .then(function(data){
                             for(var i in data) {
                                 if (data[i].FILE != null) {
-                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                    var img = CONSTANT.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                                     var url = "people/angemodel/view/"+data[i].NO;
                                     //angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt="" style="background-size: cover;"/></a></div>');
                                     angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="/imgs/ange/_blank.gif" width="99" height="119" alt="" style="border:1px solid #ddd; background-position:center center; background-image:url(' + img + '); background-size: cover;" /></a></div>');
@@ -648,7 +648,7 @@ define([
                             }
 
 //                            for (var i in data) {
-//                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+//                                var img = CONSTANT.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
 //                                // 슬라이드를 추가해 줌
 ////                                angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="'+img+'"/><div class="mini_event_txt_title"><span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' + data[i].SUBJECT +'</div><div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div></div></div>');
 //                                angular.element('#'+$scope.option.id).slickAdd('<div class="col-xs-4 mini_event_contentcol"><div class="mini_event_content"><div class="mini_event_closed"></div><img class="mini_event_txt_img" src="'+img+'"/><div class="mini_event_txt_title">'+( data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].EVENT_GB == "EVENT" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') + data[i].SUBJECT +'</div><div class="mini_event_txt_duration">'+data[i].START_YMD+'~'+data[i].END_YMD+'</div></div></div>');
@@ -711,6 +711,8 @@ define([
                 if ($scope.option.type == 'banner') {
 //                    $scope.search.ADP_IDX = $scope.option.gb;
 //                    $scope.search.BANNER_ST = 1;
+                    $scope.search.MENU = $scope.path[1];
+                    $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
                 } else if ($scope.option.type == 'experience') {
                     $scope.search.EVENT_GB = "exp";
                 } else if ($scope.option.type == 'event') {
@@ -843,7 +845,9 @@ define([
                 // 검색 조건 추가
                 if ($scope.option.type == 'banner') {
                     $scope.search.ADP_IDX = $scope.option.gb;
-//                    $scope.search.BANNER_ST = 1;
+                    $scope.search.BANNER_ST = 1;
+                    $scope.search.MENU = $scope.path[1];
+                    $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
                 } else if ($scope.option.type == 'experience') {
                     $scope.search.EVENT_GB = "exp";
 //                    $scope.search.PROCESS = "process";
@@ -900,7 +904,10 @@ define([
                                 var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
 
                                 if ($scope.option.type == 'banner') {
-                                    $window.open(data[idx].ada_url);
+                                    var ad_url = $scope.adBannerUrl(data[idx].ada_idx, 1);
+                                    $window.open(ad_url);
+
+//                                    $window.open(data[idx].ada_url);
                                 } else if ($scope.option.type == 'experience') {
                                     $location.url('/moms/experienceprocess/view/'+data[idx].ada_idx);
                                 } else if ($scope.option.type == 'event') {
@@ -942,7 +949,7 @@ define([
 //                            '</div>' +
                     '</slick>'
             },
-            controller: ['$scope', '$attrs', '$location', '$window', 'UPLOAD', function($scope, $attrs, $location, $window, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 공통 콘트롤러 호출 **********/
 //                angular.extend(this, $controller('ange-common', {$scope: $scope}));
@@ -989,7 +996,7 @@ define([
 //                            $scope.list = data;
                             angular.element('#'+sid).slickAdd('<div><a href="http://www.google.co.kr" target="_blank"><img src="imgs/ange/temp/events_bg_001_pic.jpg"/></a></div>');
                             for(var i in data) {
-                                var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                var img = CONSTANT.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                                 data[i].FILE = img;
 
 //                                var element = angular.element('<div><a href="'+data[i].URL+'" target="_blank"><img src="'+img+'"/></a></div>').on('click', function(e) {
@@ -1083,7 +1090,7 @@ define([
 //            replace: true,
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
                 '<div class="inven_Highlight"><img class="ADbanner_normal" ng-src="{{img}}" ng-click="click_linkImage()"/></div>',
-            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', 'UPLOAD', function($scope, $attrs, $location, $window, CONSTANT, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -1099,13 +1106,18 @@ define([
                 if ($scope.option.api == 'ad/banner') {
                     $scope.search.ADP_IDX = $scope.option.gb;
                     $scope.search.ADA_STATE = 1;
+                    $scope.search.MENU = $scope.path[1];
+                    $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
                 }
 
                 /********** 이벤트 **********/
                 // 이미지 클릭
                 $scope.click_linkImage = function () {
                     if ($scope.option.open) {
-                        $window.open($scope.item.ada_url);
+                        var ad_url = $scope.adBannerUrl($scope.item.ada_idx, 1);
+                        $window.open(ad_url);
+
+//                        $window.open($scope.item.ada_url);
                     } else {
                         $location.url($scope.item.URL);
                     }
@@ -1120,7 +1132,7 @@ define([
                             if ($scope.option.api == 'ad/banner') {
                                 $scope.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                             } else {
-                                $scope.img = UPLOAD.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
+                                $scope.img = CONSTANT.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
                             }
                         })
                         .catch(function(error){});
@@ -1142,7 +1154,7 @@ define([
                 '<div ng-class="$index == 0 ? \'subside_inven_basic top\' : $index == 1 ? \'subside_inven_basic mid\' : \'subside_inven_basic btm\'" ng-repeat="item in list">' +
                 '   <img ng-src="{{item.img}}" ng-click="click_linkImage(item)"/>' +
                 '</div>',
-            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', 'UPLOAD', function($scope, $attrs, $location, $window, CONSTANT, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -1158,13 +1170,18 @@ define([
                 if ($scope.option.api == 'ad/banner') {
                     $scope.search.ADP_IDX = $scope.option.gb;
                     $scope.search.ADA_STATE = 1;
+                    $scope.search.MENU = $scope.path[1];
+                    $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
                 }
 
                 /********** 이벤트 **********/
                     // 이미지 클릭
                 $scope.click_linkImage = function (item) {
                     if ($scope.option.open) {
-                        $window.open(item.ada_url);
+                        var ad_url = $scope.adBannerUrl(item.ada_idx, 1);
+                        $window.open(ad_url);
+
+//                        $window.open(item.ada_url);
                     } else {
                         $location.url(item.URL);
                     }
@@ -1178,7 +1195,7 @@ define([
                                 if ($scope.option.api == 'ad/banner') {
                                     var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
                                 } else {
-                                    var img = UPLOAD.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+                                    var img = CONSTANT.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
                                 }
 
                                 data[i].img = img;
@@ -1204,7 +1221,7 @@ define([
             templateUrl: function(element, attr) {
                 return '/partials/ange/main/portlet-piece-image.html';
             },
-            controller: ['$scope', '$attrs', '$location', '$window', 'UPLOAD', function($scope, $attrs, $location, $window, UPLOAD) {
+            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -1241,7 +1258,7 @@ define([
 
                             for(var i in data) {
                                 if (data[i].FILE != null) {
-                                    data[i].FILE = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                    data[i].FILE = CONSTANT.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                                 }
                             }
 
@@ -1278,7 +1295,7 @@ define([
                 };
 
                 // 설문 조회
-                $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, {POLL_ST: '0'}, false)
+                $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, {POLL_ST: '1', SORT: 'RAND()', ORDER: ''}, false)
                     .then(function(data){$scope.item = data[0]})
                     .catch(function(error){$scope.item = [];});
             }]

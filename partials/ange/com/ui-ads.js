@@ -11,9 +11,9 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('ui-ads', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', '$filter', 'dialogs', function ($scope, $rootScope, $stateParams, $controller, $location, $filter, dialogs) {
+    controllers.controller('ui-ads', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', 'dialogs', function ($scope, $rootScope, $stateParams, $controller, $location, dialogs) {
 
-        var spMenu = $location.path().split('/');
+        angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
         $scope.option_r1 = {title: '롤링', api:'ad/banner', size: 2, id: 'ads1', type: 'banner', gb: 1, dots: false, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 

@@ -27,7 +27,8 @@ define([
             $scope.option_r2_c2 = {title: '이벤트 배너', api:'ad/banner', size: 1, gb: 6, link: true, open: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};
 
             // ange-portlet-moms-list
-            $scope.option_r2_c1 = {title: '맘스그라운드', api:'cms/task', size: 5, id: 'story', type: 'content', url: '/story/content/list', defIdx: 0, tab: [{no: '0', menu: 'popular', name: '인기'}, {no: '1', menu: 'current', name: '최신'}, {no: '2', menu: 'fit', name: '추천[맞춤서비스]'}], image: true, head: true, date: false, nick: true};
+//            $scope.option_r2_c1 = {title: '앙쥬스토리', api:'cms/task', size: 5, id: 'story', type: 'content', url: '/story/content/list', defIdx: 0, tab: [{no: '0', menu: 'popular', name: '인기'}, {no: '1', menu: 'current', name: '최신'}, {no: '2', menu: 'fit', name: '추천[맞춤서비스]'}], image: true, head: true, date: false, nick: true};
+            $scope.option_r2_c1 = {title: '앙쥬스토리', api:'cms/task', size: 5, id: 'story', type: 'content', url: '/story/content/list', defIdx: 0, tab: [{no: '0', menu: 'popular', name: '인기'}, {no: '1', menu: 'current', name: '최신'}], image: true, head: true, date: false, nick: true};
 
             // ange-portlet-basic-list
             $scope.option_r3_c2 = {title: '커뮤니티', api:'com/webboard', size: 5, type: 'board', url: '/people/home', image: false, head: true, date: false, nick: false};

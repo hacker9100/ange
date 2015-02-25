@@ -124,7 +124,7 @@
             } else if ($_type == 'list') {
                 $search_where = "";
                 $from_category = "";
-                $sort_order = "T.REG_DT DESC";
+                $sort_order = "P.SUBJECT DESC";
                 $limit = "";
 
                 if (isset($_page)) {
@@ -169,6 +169,9 @@
                         if ($_search[MY_TASK] == 'true') {
                             $search_where .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
                         }
+                    }
+                    if (isset($_search[NOT_TASK_NO]) && $_search[NOT_TASK_NO] != "") {
+                        $search_where .= "AND T.NO  != '".$_search[NOT_TASK_NO]."' ";
                     }
                     if (isset($_search[YEAR]) && $_search[YEAR] != "") {
                         $search_where .= "AND P.YEAR  = '".$_search[YEAR]."' ";
@@ -231,24 +234,42 @@
                                     $result = $_d->sql_query($sql,true);
 
                                     for ($j=0; $row=$_d->sql_fetch_array($result); $j++) {
-                                        $where_category .= $row[NO].($j != $_d->mysql_num_rows - 1 ? "," : "");
+                                        $where_category .= $row[NO].",";
                                     }
                                 } else {
-                                    $where_category .= $category[NO].($i != count($_search[CATEGORY]) - 1 ? "," : "");
+//                                    $where_category .= $category[NO].",";
+                                    $from_category .= ",(
+                                                  SELECT
+                                                      TARGET_NO
+                                                  FROM
+                                                      CONTENT_CATEGORY
+                                                  WHERE TARGET_GB = 'TASK'
+                                                    AND CATEGORY_NO = ".$category[NO]."
+                                                  GROUP BY TARGET_NO
+                                              ) AS TEMP3 ";
+
+                                    $search_where .= "AND TEMP3.TARGET_NO = T.NO ";
+//                                    $where_category2 = "AND CATEGORY_NO = ".$category[NO]." ";
                                 }
 //                            }
+                            }
+
+                        $where_category = substr( $where_category , 0, strlen( $where_category ) -1 );
+
+                        if ($where_category != "") {
+
+                            $from_category .= ",(
+                                                  SELECT
+                                                      TARGET_NO
+                                                  FROM
+                                                      CONTENT_CATEGORY
+                                                  WHERE TARGET_GB = 'TASK'
+                                                      AND CATEGORY_NO IN (".$where_category.")
+                                                  GROUP BY TARGET_NO
+                                              ) AS TEMP2 ";
+
+                            $search_where .= "AND TEMP2.TARGET_NO = T.NO ";
                         }
-
-                        $from_category .= ",(
-                                              SELECT
-                                                  TARGET_NO
-                                              FROM
-                                                  CONTENT_CATEGORY
-                                              WHERE TARGET_GB = 'TASK' AND CATEGORY_NO IN (".$where_category.")
-                                              GROUP BY TARGET_NO
-                                          ) AS TEMP2 ";
-
-                        $search_where .= "AND TEMP2.TARGET_NO = T.NO ";
                     }
                 }
 
@@ -907,6 +928,22 @@
                 $sql = "UPDATE CMS_TASK SET
                             LIKE_CNT = LIKE_CNT + 1
                      WHERE NO = ".$_key."
+                        ";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == 'hit') {
+
+                $sql = "UPDATE CMS_TASK
+                         SET HIT_CNT = HIT_CNT + 1
+                        WHERE
+                            NO = ".$_key."
                         ";
 
                 $_d->sql_query($sql);

@@ -79,16 +79,15 @@
                 $sort_order = "";
                 $limit = "";
 
+                $err = 0;
+                $msg = "";
+
                 if (isset($_search[ADP_IDX]) && $_search[ADP_IDX] != "") {
                     $search_where .= "AND adp_idx = '".$_search[ADP_IDX]."' ";
                 }
 
                 if (isset($_search[ADA_STATE]) && $_search[ADA_STATE] != "") {
                     $search_where .= "AND ada_state  = '".$_search[ADA_STATE]."' ";
-                }
-
-                if (isset($_search[LOCATION_GB]) && $_search[LOCATION_GB] != "") {
-                    $search_where .= "AND LOCATION_GB  = '".$_search[LOCATION_GB]."' ";
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
@@ -115,7 +114,37 @@
 
                 $data = $_d->sql_query($sql);
 
-                if($_d->mysql_errno > 0){
+                if ($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                for ($i=0; $row=$_d->sql_fetch_array($data); $i++) {
+                    $sql2 = "INSERT INTO adm_history_banner
+                        (
+                            ada_idx,
+                            adu_guid,
+                            adu_id,
+                            adu_ip,
+                            adhb_type,
+                            adhb_menu,
+                            adhb_category,
+                            adhb_date_regi
+                        ) VALUES (
+                            '".$row['ada_idx']."'
+                            ,'aaa'
+                            ,'admin'
+                            ,'".MtUtil::getClientIp()."'
+                            ,'0'
+                            ,'".$_search['MENU']."'
+                            ,'".$_search['CATEGORY']."'
+                            ,SYSDATE()
+                        )";
+
+                    $_d->sql_query($sql2);
+                }
+
+                if($err > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 }else{
                     $_d->dataEnd($sql);

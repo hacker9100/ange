@@ -48,6 +48,7 @@ define([
             data = item;
             $scope.TARGET_NO = data.NO;
             $scope.getContent();
+            $scope.addHitCnt();
 
             $scope.click_top();
         };
@@ -72,7 +73,7 @@ define([
                         $scope.share_url = UPLOAD.BASE_URL + '/story/content/list/' + $scope.task.NO;
                     }),
                     $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){ $scope.content = data; }),
-                    $scope.getList('cms/task', 'list', {NO:0, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, PHASE: '30, 31'}, false).then(function(data){
+                    $scope.getList('cms/task', 'list', {NO:0, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, NOT_TASK_NO: data.NO, PHASE: '30, 31'}, false).then(function(data){
                         $scope.editorList = data;
                     }),
                     $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX : 8, ADA_STATE: 1}, false).then(function(data){
@@ -257,7 +258,15 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
+        $scope.addHitCnt = function () {
+            $scope.updateItem('cms/task', 'hit', data.NO, {}, false)
+                .then(function(){
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
         $scope.init();
+        $scope.addHitCnt();
         $scope.getContent();
     }]);
 });

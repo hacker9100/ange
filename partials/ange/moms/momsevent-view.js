@@ -763,6 +763,8 @@ define([
                 .then($scope.sessionCheck)
                 .then($scope.moveAccount)
                 .catch($scope.reportProblems);
+        } else if ($stateParams.id == 56) {
+            $scope.tempEvent = true;
         }
 
         $scope.logout = function () {

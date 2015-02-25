@@ -43,9 +43,14 @@ define([
             }
         }
 
-        $httpProvider.defaults.headers.common["Cache-Control"] = "no-cache";
-        $httpProvider.defaults.headers.common.Pragma = "no-cache";
-        $httpProvider.defaults.headers.common["If-Modified-Since"] = "0";
+//        $httpProvider.defaults.headers.common["Cache-Control"] = "no-cache";
+//        $httpProvider.defaults.headers.common.Pragma = "no-cache";
+//        $httpProvider.defaults.headers.common["If-Modified-Since"] = "0";
+
+        $httpProvider.defaults.cache = false;
+        $httpProvider.defaults.headers.common['Cache-Control'] = 'no-cache, no-store, must-revalidate';
+        $httpProvider.defaults.headers.common['Pragma'] = 'no-cache';
+        $httpProvider.defaults.headers.common['Expires'] = '0';
     })
 
     return app;

@@ -83,9 +83,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $sort_order = "";
                 $limit = "";
 
-//                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
-//                    $search_where .= "AND POLL_ST = '".$_search[POLL_ST]."' ";
-//                }
+                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
+                    $search_where .= "AND ada_state = '".$_search[POLL_ST]."' ";
+                }
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";

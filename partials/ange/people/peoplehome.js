@@ -24,7 +24,7 @@ define([
             $scope.option_r1_c1 = {title: '앙쥬 설문 링크', api:'ange/poll', size: 1, url: '/people/poll'};
 
             // ange-portlet-channel-list
-            $scope.option_r1_c2 = {title: 'Talk&Talk', api:'com/webboard', size: 5, channel: "people", type: 'board', url: '/people/board', defIdx: 0, tab: [{no: '3', menu: '/people/badycare', name: '육아방'}, {no: '2', menu: '/people/momstalk', name: '예비맘&출산맘'}, {no: '1', menu: '/people/angeroom', name: '수다방'}], image: false, head: false, date: true, nick: false};
+            $scope.option_r1_c2 = {title: 'Talk&Talk', api:'com/webboard', size: 5, channel: "people", type: 'board', url: '/people/board', defIdx: 0, tab: [{no: '3', menu: '/people/babycare', name: '육아방'}, {no: '2', menu: '/people/momstalk', name: '예비맘&출산맘'}, {no: '1', menu: '/people/angeroom', name: '수다방'}], image: false, head: false, date: true, nick: false};
 
             // ange-portlet-link-menu
             $scope.option_r1_c3 = {title: '한줄 톡', api:'ad/banner', gb: 'talk', url: '/people/linetalk/list'};

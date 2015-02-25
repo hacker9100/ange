@@ -56,8 +56,8 @@ define([
 
             if ($scope.menu && $scope.menu.ETC != null) {
                 $scope.search.CATEGORY_NO = $scope.menu.ETC;
-            } else {
-                $scope.search.CATEGORY_NO = '999';
+            } else if ($scope.menu && $scope.menu.ETC == null) {
+                $scope.search.CATEGORY_NO = 999;
             }
 
             console.log('$stateParams.id : '+$stateParams.id)
@@ -80,6 +80,8 @@ define([
 //                $scope.getContentList();
 //            }
 //        };
+
+        var isFirst = true;
 
         // 이미지 조회
         $scope.$parent.getContentList = function () {
@@ -105,8 +107,6 @@ define([
                     if ($scope.category[i] != null) $scope.search.CATEGORY.push($scope.category[i]);
                 }
             }
-
-            var isFirst = true;
 
             $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){

@@ -243,10 +243,10 @@ define(['./directives'], function (directives) {
 
 //                        CKFinder.setupCKEditor( instance, '../lib/ckfinder/' );
                     }
-                    //instance.on('pasteState',   setModelData);
+//                    instance.on('pasteState',   setModelData);
                     instance.on('change',       setModelData);
-                    instance.on('blur',         setModelData);
-                    //instance.on('key',          setModelData); // for source view
+//                    instance.on('blur',         setModelData);
+//                    instance.on('key',          setModelData); // for source view
 
                     /*
                      * Sung-hwan Kim (2014-11-14)

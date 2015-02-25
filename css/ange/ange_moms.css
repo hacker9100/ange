@@ -431,3 +431,17 @@ a.samplepack_gotoreview:hover {
 .samplepack_submit.submitbtn {
     background-image: url('/imgs/ange/samplepack_btn_submit.png');
 }
+
+/* 이벤트 임시 클래스 모음 */
+
+.me_width100 {
+    width: 100%;
+}
+
+.me_width50 {
+    width: 50%;
+}
+
+.me_left {
+    float: left;
+}

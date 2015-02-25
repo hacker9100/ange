@@ -210,6 +210,9 @@
                         MtUtil::_d("################################### [session2] ");
                     }
 
+                    $_SESSION['ip'] = MtUtil::getClientIp();
+                    $_SESSION['guid'] = uniqid('',true);
+
                     $_SESSION['user_info'] = $data;
                     $_SESSION['uid'] = $data['USER_ID'];
                     $_SESSION['nick'] = $data['NICK_NM'];
@@ -241,6 +244,9 @@
                 if(isset($_SESSION['timeout']) && time() - $_SESSION['timeout'] > SESSION_TIMEOUT) {
                     if(isset($_SESSION['uid']))
                     {
+                        unset($_SESSION['ip']);
+                        unset($_SESSION['guid']);
+
                         unset($_SESSION['user_info']);
                         unset($_SESSION['uid']);
                         unset($_SESSION['nick']);
@@ -261,10 +267,16 @@
                         unset($_SESSION['timeout']);
 
                         session_destroy();
+
+                        $_SESSION['ip'] = MtUtil::getClientIp();
+                        $_SESSION['goud'] = uniqid('',true);
                     }
                 } else {
                     if(isset($_SESSION['uid']))
                     {
+                        $sess['IP'] = $_SESSION['ip'];
+                        $sess['GUID'] = $_SESSION['guid'];
+
                         $sess['USER_INFO'] = $_SESSION['user_info'];
                         $sess['USER_ID'] = $_SESSION['uid'];
                         $sess['NICK_NM'] = $_SESSION['nick'];
@@ -289,6 +301,9 @@
                     }
                     else
                     {
+                        $sess['IP'] = MtUtil::getClientIp();
+                        $sess['GUID'] = (!isset($_SESSION['guid']) || $_SESSION['guid']=='') ? $_SESSION['guid'] : uniqid('',true);
+
                         $sess['USER_INFO'] = '';
                         $sess['USER_ID'] = '';
                         $sess['NICK_NM'] = 'Guest';

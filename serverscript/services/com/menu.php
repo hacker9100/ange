@@ -871,19 +871,9 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM USER_ROLE WHERE USER_ID = '".$_key."'";
+            $sql = "DELETE FROM COM_MENU WHERE MENU_URL = '".$_key."'";
 
             $_d->sql_query($sql);
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            $sql = "DELETE FROM CMS_USER WHERE USER_ID = '".$_key."'";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
                 $err++;
