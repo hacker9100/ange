@@ -734,10 +734,18 @@ define([
             }
         };
 
-        $scope.init();
-//         $scope.addHitCnt();
-        $scope.getMomsExperience();
-        $scope.getExperienceReviewList();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getMomsExperience)
+            .then($scope.getExperienceReviewList)
+            .catch($scope.reportProblems);
+
+
+//        $scope.init();
+////         $scope.addHitCnt();
+//        $scope.getMomsExperience();
+//        $scope.getExperienceReviewList();
 
         // 댓글리스트(삭제예정)
         $scope.getPeopleReplyList();

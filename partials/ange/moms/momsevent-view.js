@@ -777,10 +777,19 @@ define([
             }
         }
 
-        $scope.init();
-//         $scope.addHitCnt();
-        $scope.getMomsEvent();
-        $scope.getExperienceReviewList();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getMomsEvent)
+            .then($scope.getExperienceReviewList)
+            .catch($scope.reportProblems);
+
+        console.log($rootScope.uid);
+
+//        $scope.init();
+////         $scope.addHitCnt();
+//        $scope.getMomsEvent();
+//        $scope.getExperienceReviewList();
 
         // 댓글리스트(삭제예정)
         $scope.getPeopleReplyList();
