@@ -322,13 +322,14 @@ define([
                         // 댓글일 때
                         if($scope.item.ada_que_type == 'reply'){
 
-                            var que_data = data.ada_que_info;
-                            que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
-                            var parse_que_data = JSON.parse(que_data);
-
-                            for(var x in parse_que_data){
-                                $scope.item.REPLY_SUBJECT = parse_que_data[x].title;
-                            }
+//                            var que_data = data.ada_que_info;
+//                            que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
+//                            var parse_que_data = JSON.parse(que_data);
+//
+//                            for(var x in parse_que_data){
+//                                $scope.item.REPLY_SUBJECT = parse_que_data[x].title;
+//                            }
+                            $scope.item.REPLY_SUBJECT = $scope.item.ada_title;
                         }
 
                         $scope.search.TARGET_NO = $stateParams.id;
@@ -390,7 +391,7 @@ define([
             }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
                 console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
-                $scope.item.ANSWER = '{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}';
+                $scope.item.ANSWER = '{"1":"'+ $scope.item.COMMENT+'"}';
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
 
