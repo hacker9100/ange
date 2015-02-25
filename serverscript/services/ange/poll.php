@@ -66,73 +66,6 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $result = $_d->sql_query($sql);
                 $data = $_d->sql_fetch_array($result);
 
-//                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-//                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
-//                }
-
-//                $err = 0;
-//                $msg = "";
-//
-//                $sql = "SELECT
-//                            NO, SUBJECT, START_YMD, END_YMD, PRESENT, QUERY_CNT, POLL_ST, REG_DT
-//                            , (SELECT COUNT(DISTINCT USER_UID) AS POLL_ANSWER_CNT FROM ANGE_POLL_ANSWEAR WHERE POLL_NO = ".$_key.") AS POLL_ANSWER_CNT
-//                        FROM
-//                            ANGE_POLL
-//                        WHERE
-//                            NO = ".$_key."
-//                            ".$search_where."
-//                        ";
-//
-//                $result = $_d->sql_query($sql);
-//                $data = $_d->sql_fetch_array($result);
-//
-//                if($_d->mysql_errno > 0) {
-//                    $err++;
-//                    $msg = $_d->mysql_error;
-//                }
-//
-//                $sql = "SELECT QUERY_NO, QUERY_SORT, BOARD_NO, QUERY_GB, QUERY
-//                    FROM
-//                      ANGE_POLL_QUERY
-//                        WHERE
-//                          BOARD_NO = ".$data[NO]."
-//                        ORDER BY QUERY_SORT
-//                        ";
-//
-//                $__trn = '';
-//                $result = $_d->sql_query($sql,true);
-//
-//                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-//
-//                    $sql = "SELECT AP.QUERY_NO, AP.QUERY_SORT, AP.SELECT_SORT, AP.BOARD_NO, AP.NOTE,
-//                               (SELECT COUNT(*) FROM ANGE_POLL_ANSWEAR WHERE QUERY_NO = AP.QUERY_NO and QUERY_SORT = AP.QUERY_SORT) as POLL_CNT
-//                        FROM ANGE_POLL_SELECT AP
-//                            WHERE
-//                                AP.BOARD_NO = ".$row[BOARD_NO]."
-//                                AND AP.QUERY_NO = ".$row[QUERY_NO]."
-//                            ORDER BY AP.SELECT_SORT
-//                            ";
-//
-//                    $file_data = $_d->getData($sql);
-//                    $row['SELECT'] = $file_data;
-//
-//                    $__trn->rows[$i] = $row;
-//                }
-//
-//                $_d->sql_free_result($result);
-//                $data['QUERY'] = $__trn->{'rows'};
-/*
-                $sql = "SELECT
-                            NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
-                        FROM
-                            COM_REPLY
-                        WHERE
-                            TARGET_NO = ".$_key."
-                        ";
-
-                $reply_data = $_d->getData($sql);
-                $data['REPLY'] = $reply_data;
-*/
 
                 if($_d->mysql_errno > 0) {
                     $err++;
@@ -144,14 +77,15 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }else{
                     $_d->dataEnd2($data);
                 }
+
             } else if ($_type == "list") {
                 $search_where = "";
                 $sort_order = "";
                 $limit = "";
 
-//                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
-//                    $search_where .= "AND POLL_ST = '".$_search[POLL_ST]."' ";
-//                }
+                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
+                    $search_where .= "AND ada_state = '".$_search[POLL_ST]."' ";
+                }
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
@@ -245,36 +179,68 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }
 
             }else if ($_type == "chartlist") {
-//                $search_where = "";
-//                $sort_order = "";
-//                $limit = "";
-//
-//                if (isset($_search[POLL_ST]) && $_search[POLL_ST] != "") {
-//                    $search_where .= "AND POLL_ST = '".$_search[POLL_ST]."' ";
-//                }
-//
-//                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-//                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
-//                }
-//
-//                if (isset($_search[SORT]) && $_search[SORT] != "") {
-//                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
-//                }
-//
-//                if (isset($_page)) {
-//                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
-//                }
+
 
                 $sql = "SELECT adhj_answers
                         FROM adm_history_join
                         WHERE ada_idx = ".$_search[ada_idx]."
                         ";
 
-                $data = $_d->sql_query($sql);
+
+                $result = $_d->sql_query($sql,true);
+                //$data = $_d->sql_fetch_array($result);
+
+                $qcnt=0;
+
+                $data = null;
+
+                for ($i=0; $lval=$_d->sql_fetch_array($result); $i++) {
+
+                    MtUtil::_d("### [END] [DATA] lval['adhj_answers'] = ".json_encode($lval['adhj_answers']));
+
+                    $t_answer = json_decode($lval['adhj_answers'],true); // $lval['adhj_answers']
+
+                    if ($t_answer){
+                        $qcnt++;
+
+                        foreach($t_answer as $lkey2=>$lval2){ // $lkey2=>$lval2
+                            if (isset($a_answer[$lkey2][$lval2])){ // [$lkey2][$lval2]
+                                $a_answer[$lkey2][$lval2]++; // [$lkey2][$lval2]
+                            }else{
+
+                                $a_answer[$lkey2][$lval2]=1;
+                            }
+                        }
+
+                    }
+                    $data['answer'] = $a_answer;
+//                    $data['answer'][1]['삽겹살']=1
+//                    $a_answer[1]['소고기']=2
+//                    $a_answer[1]['치킨']=10
+
+                    //$__trn->rows[$i] = $data['answer'];
+                }
+
+                //$data = $__trn->{'rows'};
+
+                foreach($data['answer'] as $lkey=>$lval){
+                    echo("<br/>".$lkey.'문항<br/>');
+                    foreach($lval as $lkey2=>$lval2){
+
+                        MtUtil::_d("### [END] [DATA] lval['testtesttest'] = ".$lkey2.":".$lval2);
+
+                        echo(" {$lkey2} : {$lval2} / {$qcnt} , ");
+                    }
+                }
+
+
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 }else{
-                    $_d->dataEnd($sql);
+                    ob_end_clean();
+
+                    echo json_encode($data['answer'], true);
+                    exit;
                 }
             }
 
@@ -381,6 +347,9 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }
             } else if ($_type == "answear") {
 
+                $err = 0;
+                $msg = "";
+
                /* ".$_SESSION['uid']."*/
 //                $j = 0;
 //                foreach ($_model as $s) {
@@ -472,17 +441,22 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 //
 //                }
                 // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
+//                MtUtil::_d("########################MYSQL ERROR########################\n"
+//                    ."SQL:::[".$sql."]\n"
+//                    ."MSG:::[".mysql_errno() . ":" . mysql_error()
+//                    ."\n###########################################################");
+
+                $_d->sql_beginTransaction();
+
                 $sql = "INSERT INTO adm_history_join
                                 (
-                                    adhj_idx,
                                     ada_idx,
                                     adu_id,
                                     adu_name,
                                     adhj_date_request,
                                     adhj_answers
                                 ) VALUES (
-                                    (SELECT COUNT(*)+1 FROM adm_history_join a)
-                                    , '".$_model[ada_idx]."'
+                                    '".$_model[ada_idx]."'
                                     , '".$_SESSION['uid']."'
                                     , '".$_SESSION['name']."'
                                     , NOW()
@@ -491,12 +465,23 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 $_d->sql_query($sql);
 
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
                 // 신청자명 증가
                 $sql = "UPDATE adm_ad
                   SET  ada_count_request = ada_count_request + 1
                   WHERE ada_idx = '".$_model[ada_idx]."'";
 
                 $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
 
                 if($err > 0){
                     $_d->sql_rollback();

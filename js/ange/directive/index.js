@@ -6,28 +6,20 @@
  */
 define([
     './slick-directive',
-    './checklist-directive',
-//    './module-masonry-directive',
-
     './ckeditor-directive',
-    './animate-directive',
-    './display-directive',
+
+    './checklist-directive',
+    './dropdown-select-directive',
 
     './ange-layout-directive',
     './ange-body-directive',
     './ange-ui-lnb-directive',
-
-    './ange-main-directive',
-    './ange-banner-directive',
     './ange-portlet-directive',
     './ange-module-reply-directive',
 
-    './validation-directive',
-    './dropdown-select-directive',
     './focus-directive',
+    './validation-directive',
     './numbersonly-directive'//,
-//    './chartjs-directive'
-//    './plUploadDirective'
 ], function (){
 
 });

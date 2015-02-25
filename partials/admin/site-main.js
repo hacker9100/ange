@@ -274,6 +274,18 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
+        // 메뉴 삭제
+        $scope.click_deleteMenu = function (item) {
+            $scope.item.CATEGORY = $scope.CATEGORY;
+
+            $scope.deleteItem('com/menu', 'menu', item.MENU_URL, false)
+                .then(function(data){
+                    dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                    $scope.getMenuList1();
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
         // 편집 버튼 클릭 시 영역으로 focus 이동
         $scope.click_focus = function (id, name) {
             $('html,body').animate({scrollTop:$('#'+id).offset().top}, 100);

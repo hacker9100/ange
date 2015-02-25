@@ -26,8 +26,6 @@ class MtData extends Mt {
             $dbf = $this->ad_mysql_db;
         }
 
-        MtUtil::_d("db::::::".$db);
-        MtUtil::_d("host::::::".$db.$this->mysql_host);
 		$this->connect_db = @mysql_connect($host, $user, $password);
 		
 		if (!is_resource($this->connect_db)) {

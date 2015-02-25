@@ -131,13 +131,13 @@
                             <!-- /앙쥬 스페셜 -->
 
                             <!-- 광고유형 -->
-                            <div ng-switch-when="ADVERT" ng-click="click_showContentDetail(item)">
-                                <div class="story_thumbnails" style="background-image: url('{{item.FILE}}');">
+                            <div ng-switch-when="ADVERT">
+                                <div class="story_thumbnails" style="background-image: url('{{item.FILE}}');" ng-click="click_showContentDetail(item)">
                                     <img src="/imgs/ange/_blank_4by3.gif" />
                                 </div>
 
                                 <!-- img src="{{item.FILE}}" /-->
-                                <div class="storybodytxt">
+                                <div class="storybodytxt" ng-click="click_showContentDetail(item)">
                                     <span class="table_red story_bubbletitle">AD 임신부, 여름 음식 안전...</span>
                                     {{item.SUMMARY}}
                                 </div>
@@ -154,7 +154,7 @@
                                 </div>
 
                                 <!-- img src="{{item.FILE}}" /-->
-                                <div class="storybodytxt">
+                                <div class="storybodytxt" ng-click="click_showContentDetail(item)">
                                     <span class="table_blue story_bubbletitle">{{item.SUBJECT}}</span>
                                     {{item.SUMMARY}}
                                 </div>

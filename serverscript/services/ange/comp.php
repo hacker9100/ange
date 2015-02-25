@@ -274,15 +274,13 @@ switch ($_method) {
             // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
             $sql = "INSERT INTO adm_history_join
                                 (
-                                    adhj_idx,
                                     ada_idx,
                                     adu_id,
                                     adu_name,
                                     adhj_date_request,
                                     adhj_answers
                                 ) VALUES (
-                                    (SELECT COUNT(*)+1 FROM adm_history_join a)
-                                    , '".$_model[ada_idx]."'
+                                     '".$_model[ada_idx]."'
                                     , '".$_SESSION['uid']."'
                                     , '".$_SESSION['name']."'
                                     , NOW()

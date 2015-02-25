@@ -13,8 +13,10 @@ define([
             "SYSTEM_GB" : "ANGE",
             "DASHBOARD_PAGE_SIZE" : 5,
             "PAGE_SIZE" : 20,
-            "BASE_URL" : "http://localhost",
-            "AD_FILE_URL" : "http://angead.marveltree.com/adm/upload/",
+            "BASE_URL" : "http://ange.marveltree.com",
+
+            "AD_LOG_URL" : "http://ad.ange.co.kr/adm/io/log.php",
+            "AD_FILE_URL" : "http://ad.ange.co.kr/adm/upload/",
 
             "AD_CODE_" : ""
         }
@@ -27,7 +29,7 @@ define([
     app.constant(
         "UPLOAD", {
             "UPLOAD_INDEX" : "/serverscript/upload/",
-            "BASE_URL" : "http://ange.marveltree.com"
+            "BASE_URL" : "http://localhost"
         }
     );
 

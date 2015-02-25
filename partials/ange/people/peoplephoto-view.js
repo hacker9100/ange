@@ -173,7 +173,7 @@ define([
                     $scope.item.RE_COMMENT = "";
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-        }
+            }
         };
 
 

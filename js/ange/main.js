@@ -29,7 +29,7 @@ require.config({
         'ui-bootstrap': '../../lib/ui-bootstrap/ui-bootstrap-0.11.2.min', // bootstrap의 ui 컴포넌트를 사용하게한다.
 
         // angularjs 모듈
-        'angular': '../../lib/angular/angular', // angularjs를 사용한다.
+        'angular': '../../lib/angular/angular.min', // angularjs를 사용한다.
 //        'ngCookies': '../../lib/angular/angular-cookies.min', //
         'angular-resource': '../../lib/angular/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.
         'angular-sanitize': '../../lib/angular/angular-sanitize.min', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
@@ -37,7 +37,7 @@ require.config({
         'angular-translate': '../../lib/angular/angular-translate.min', //
 
 ////        'dropdownMultiSelect' : '../lib/dropdown_multiselect/angularjs-dropdown_multiselect.min',
-        'lodash' : '../../lib/dropdown-multiselect/lodash',
+        'lodash' : '../../lib/dropdown-multiselect/lodash.min',
 
         'slick-carousel': '../../lib/slick-carousel/slick', //
 
@@ -51,7 +51,7 @@ require.config({
         // ckeditor 모듈
         'ckeditor-core': '../../lib/ckeditor/ckeditor', // ckeditor
         'ckeditor-jquery': '../../lib/ckeditor/adapters/jquery', // angularjs에서 ckeditor를 사용할 수 있게 해주는 어덥터다.
-        'ckfinder': '../../lib/ckfinder/ckfinder', // ckeditor에서 업로드를 할 수 있게 해준다.
+//        'ckfinder': '../../lib/ckfinder/ckfinder', // ckeditor에서 업로드를 할 수 있게 해준다.
 
         'ngActivityIndicator': '../../lib/ngActivityIndicator/ngActivityIndicator', // 로딩시 화면에 잠깐 보여주는 역할을 한다.
 
@@ -59,15 +59,15 @@ require.config({
         'ui-widget': '../../lib/file-upload/vendor/jquery.ui.widget',
         'load-image': '../../lib/file-upload/load-image/load-image',
         'load-image-ios': '../../lib/file-upload/load-image/load-image-ios',
-        'load-image-orientation': '../../lib/file-upload/load-image/load-image-orientation',
         'load-image-meta': '../../lib/file-upload/load-image/load-image-meta',
         'load-image-exif': '../../lib/file-upload/load-image/load-image-exif',
-        'load-image-exif-map': '../../lib/file-upload/load-image/load-image-exif-map',
+//        'load-image-orientation': '../../lib/file-upload/load-image/load-image-orientation',
+//        'load-image-exif-map': '../../lib/file-upload/load-image/load-image-exif-map',
         'canvas-to-blob': '../../lib/file-upload/gallery/canvas-to-blob.min',
-        'blueimp-helper': '../../lib/file-upload/gallery/blueimp-helper',
-        'blueimp-gallery': '../../lib/file-upload/gallery/blueimp-gallery',
-        'jquery-blueimp-gallery': '../../lib/file-upload/gallery/jquery.blueimp-gallery',
-        'iframe-transport': '../../lib/file-upload/jquery.iframe-transport',
+//        'blueimp-helper': '../../lib/file-upload/gallery/blueimp-helper',
+//        'blueimp-gallery': '../../lib/file-upload/gallery/blueimp-gallery',
+//        'jquery-blueimp-gallery': '../../lib/file-upload/gallery/jquery.blueimp-gallery',
+//        'iframe-transport': '../../lib/file-upload/jquery.iframe-transport',
         'fileupload': '../../lib/file-upload/jquery.fileupload',
         'fileupload-process': '../../lib/file-upload/jquery.fileupload-process',
         'fileupload-image': '../../lib/file-upload/jquery.fileupload-image',
@@ -77,16 +77,16 @@ require.config({
         'fileupload-angular': '../../lib/file-upload/jquery.fileupload-angular',
 
         // fullcalendar 모듈
-        'fullcalendar': '../../lib/fullcalendar/fullcalendar',
-        'ko': '../../lib/fullcalendar/lang/ko',
-        'uiCalendar': '../../lib/fullcalendar/calendar',
-        'moment': '../../lib/fullcalendar/lib/moment.min',
+//        'fullcalendar': '../../lib/fullcalendar/fullcalendar',
+//        'ko': '../../lib/fullcalendar/lang/ko',
+//        'uiCalendar': '../../lib/fullcalendar/calendar',
+//        'moment': '../../lib/fullcalendar/lib/moment.min',
 
         // google-chart 모듈
         'ng-google-chart': '../../lib/ng-google-chart/ng-google-chart',
 
         // socialshare 모듈
-        'angular-socialshare': '../../lib/angular-socialshare/angular-socialshare',
+//        'angular-socialshare': '../../lib/angular-socialshare/angular-socialshare',
 
         // map 모듈
 //        'google-map': '//maps.google.com/maps/api/js',
@@ -147,42 +147,42 @@ require.config({
         'ngActivityIndicator':{
             deps:['angular']
         },
-        'fullcalendar':{
-            deps:['jquery','moment']
-        },
-        'ko':{
-            deps:['jquery','moment']
-        },
-        'uiCalendar':{
-            deps:['angular','fullcalendar']
-        },
-        'jquery-blueimp-gallery':{
-            deps:['jquery','blueimp-gallery']
-        },
-        'jqImage':{
-            deps:['jquery','load-image','load-image-meta','load-image-exif','load-image-ios','canvas-to-blob','fileupload-process']
-        },
-        'jqAudio':{
-            deps:['jquery','load-image','fileupload-process']
-        },
-        'jqVideo':{
-            deps:['jquery','load-image','fileupload-process']
-        },
-        'jqIframeTransport':{
-            deps:['jquery']
-        },
-        'jqValidate':{
-            deps:['jquery','fileupload-process']
-        },
-        'ngFileupload':{
-            deps:['jquery','angular','jquery-blueimp-gallery','fileupload','fileupload-process','fileupload-image','fileupload-audio','fileupload-video','fileupload-validate']
-        },
+//        'fullcalendar':{
+//            deps:['jquery','moment']
+//        },
+//        'ko':{
+//            deps:['jquery','moment']
+//        },
+//        'uiCalendar':{
+//            deps:['angular','fullcalendar']
+//        },
+//        'jquery-blueimp-gallery':{
+//            deps:['jquery','blueimp-gallery']
+//        },
+//        'jqImage':{
+//            deps:['jquery','load-image','load-image-meta','load-image-exif','load-image-ios','canvas-to-blob','fileupload-process']
+//        },
+//        'jqAudio':{
+//            deps:['jquery','load-image','fileupload-process']
+//        },
+//        'jqVideo':{
+//            deps:['jquery','load-image','fileupload-process']
+//        },
+//        'jqIframeTransport':{
+//            deps:['jquery']
+//        },
+//        'jqValidate':{
+//            deps:['jquery','fileupload-process']
+//        },
+//        'ngFileupload':{
+//            deps:['jquery','angular','jquery-blueimp-gallery','fileupload','fileupload-process','fileupload-image','fileupload-audio','fileupload-video','fileupload-validate']
+//        },
         'ng-google-chart':{
             deps:['jquery', 'angular']
         },
-        'angular-socialshare':{
-            deps:['angular']
-        },
+//        'angular-socialshare':{
+//            deps:['angular']
+//        },
         'ng-map':{
             deps:['angular']
         }

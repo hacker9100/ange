@@ -24,7 +24,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'fileupload-process', // fileUpload ui 관련 라이브러리
     'fileupload-angular', // fileUpload angularjs 관련 라이브러리
 
-    'angular-socialshare',
+//    'angular-socialshare',
     'ng-google-chart',
     'ng-map',
 
@@ -49,7 +49,7 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'blueimp.fileupload',
 
         'googlechart',
-        '720kb.socialshare',
+//        '720kb.socialshare',
         'ngMap'
         ], function () {
             // 여기서는 필요한 설정들을 진행.
@@ -71,9 +71,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             ga('send', 'pageview', $location.path());
         });
 
-//        $rootScope.$on('$viewContentLoaded', function() {
-//            $templateCache.removeAll();
-//        });
+        $rootScope.$on('$routeChangeStart', function(event, next, current) {
+            $templateCache.remove(current.templateUrl);
+        });
     });
 
     return app;

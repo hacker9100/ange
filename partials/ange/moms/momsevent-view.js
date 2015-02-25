@@ -328,7 +328,7 @@ define([
                         // 댓글일 때
                         if($scope.item.ada_que_type == 'reply'){
 
-                            $scope.item.REPLY_SUBJECT = $scope.item.ada_title;
+                            //$scope.item.REPLY_SUBJECT = $scope.item.ada_title;
                         }
 
                         $scope.search.TARGET_NO = $stateParams.id;
@@ -407,7 +407,7 @@ define([
             }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
                 console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
-                $scope.item.ANSWER = '{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}';
+                $scope.item.ANSWER = '{"1":"'+ $scope.item.COMMENT+'"}';
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
 
@@ -763,6 +763,8 @@ define([
                 .then($scope.sessionCheck)
                 .then($scope.moveAccount)
                 .catch($scope.reportProblems);
+        } else if ($stateParams.id == 56) {
+            $scope.tempEvent = true;
         }
 
         $scope.logout = function () {

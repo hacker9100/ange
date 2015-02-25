@@ -11,9 +11,9 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('ui-utility', ['$scope', '$rootScope', '$stateParams', '$location', '$window', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, $window, dialogs, CONSTANT) {
+    controllers.controller('ui-utility', ['$scope', '$rootScope', '$stateParams', '$controller', '$location', '$window', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $controller, $location, $window, dialogs, CONSTANT) {
 
-        var spMenu = $location.path().split('/');
+        angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
         /********** 이벤트 **********/
         $scope.click_login = function () {

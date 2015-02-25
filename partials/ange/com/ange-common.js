@@ -11,10 +11,10 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$location', '$q', 'dataService', '$filter', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $stateParams, $location, $q, dataService, $filter, dialogs, UPLOAD) {
+    controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$location', '$q', 'dataService', '$filter', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $stateParams, $location, $q, dataService, $filter, dialogs, CONSTANT) {
 
         $scope.comming_soon = function() {
-            dialogs.notify('알림', '1차 체험기간에는 제공되지 않습니다.', {size: 'md'});
+            dialogs.notify('알림', '체험기간에는 제공되지 않습니다.', {size: 'md'});
         }
 
         // 주소 경로
@@ -123,6 +123,9 @@ define([
                         if (angular.isObject(data)) {
                             $rootScope.session = null;
 
+                            $rootScope.ip = null;
+                            $rootScope.guid = null;
+
                             $rootScope.login = false;
                             $rootScope.authenticated = false;
                             $rootScope.user_info = null;
@@ -219,6 +222,9 @@ define([
             if (session.USER_ID == undefined || session.USER_ID == '') {
                 $rootScope.session = null;
 
+                $rootScope.ip = null;
+                $rootScope.guid = null;
+
                 $rootScope.login = false;
                 $rootScope.authenticated = false;
                 $rootScope.user_info = null;
@@ -245,6 +251,9 @@ define([
             } else {
                 $rootScope.session = session;
 
+                $rootScope.ip = session.USER_INFO;
+                $rootScope.guid = null;
+
                 $rootScope.login = true;
                 $rootScope.authenticated = true;
                 $rootScope.user_info = session.USER_INFO;
@@ -256,7 +265,7 @@ define([
                 $rootScope.nick = session.NICK_NM;
 
                 if (session.USER_INFO != undefined && session.USER_INFO.FILE) {
-                    $rootScope.profileImg = UPLOAD.BASE_URL + session.USER_INFO.FILE.PATH + session.USER_INFO.FILE.FILE_ID;
+                    $rootScope.profileImg = CONSTANT.BASE_URL + session.USER_INFO.FILE.PATH + session.USER_INFO.FILE.FILE_ID;
                 } else {
                     $rootScope.profileImg = null;
                 }
@@ -550,6 +559,16 @@ define([
                 }
             }
         };
+
+        $scope.adBannerUrl = function(idx, type) {
+            var guid = 'aaa';
+            var id = 'test';
+            var ip = '1.1.1.1';
+            var ad_type = (type == undefined ? 1 : type);
+            var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + ad_type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
+
+            return ad_url;
+        }
 
 /*
         $scope.getMenu = function() {

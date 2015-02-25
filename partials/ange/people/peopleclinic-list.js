@@ -49,23 +49,7 @@ define([
             // 초기화
         $scope.init = function() {
 
-            if ($stateParams.menu == 'childdevelop') {
-                $scope.community = "아동발달 전문가";
-                $scope.VIEW_ROLE = 'CLINIC';
-            } else if($stateParams.menu == 'chlidoriental') {
-                $scope.community = "한방소아과 전문가";
-                $scope.VIEW_ROLE = 'CLINIC';
-            } else if($stateParams.menu == 'obstetrics') {
-                $scope.community = "산부인과 전문가";
-                $scope.VIEW_ROLE = 'CLINIC';
-            } else if($stateParams.menu == 'momshealth') {
-                $scope.community = "엄마건강 전문가";
-                $scope.VIEW_ROLE = 'CLINIC';
-            } else if($stateParams.menu == 'financial') {
-                $scope.community = "재테크 상담";
-                $scope.VIEW_ROLE = 'CLINIC';
-            }
-
+            $scope.VIEW_ROLE = 'CLINIC';
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'CLINIC';
 

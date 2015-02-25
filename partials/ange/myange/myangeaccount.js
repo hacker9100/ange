@@ -303,7 +303,7 @@ define([
 //                return;
 //            }
 
-            if (!$scope.availablePW) {
+            if (($scope.user.PASSWORD != undefined && $scope.user.PASSWORD != '') && !$scope.availablePW) {
                 $('#password').focus();
                 dialogs.notify('알림', '패스워드를 확인해주세요.', {size: 'md'});
                 return;

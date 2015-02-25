@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-controller="CommonController">
+<head>
+    <meta charset="utf-8">
+    <title>앙쥬 : 시즌2</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css" >
+    <link rel="stylesheet" type="text/css" href="/css/article_preview.css" />
+
+    <link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/plupload/jquery.ui.plupload/css/jquery.ui.plupload.css" />
+
+
+    <!--[if lt IE 9]>
+    <script src="lib/html5shiv/html5shiv.js"></script>
+    <script src="lib/respond/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div id="articlewrap" class="articlewrap">
+
+    <div class="modal-header article_windowtitle">
+        Preview | Web Browser for PC
+        <a ng-click="click_ok()" style="float:right; cursor:pointer;">Close</a>
+    </div>
+
+    <div class="modal-body">
+
+        <!--<div ng-bind-html="content"></div>-->
+        <div ng-bind-html="renderHtml(item.BODY)"></div>
+
+    </div>
+
+    <div class="modal-footer" style="background-color:#FAFAFA; float:none; text-align:center;">
+        <button class="btn btn-default btn-sm" style="margin:0px auto;" ng-click="click_ok()">확인</button>
+    </div>
+
+</div>
+
+</body>
+</html>
