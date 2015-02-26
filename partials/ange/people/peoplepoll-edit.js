@@ -360,66 +360,66 @@ define([
 
 
 
-//            $scope.getList('ange/poll', 'check', {}, $scope.search, false)
-//                .then(function(data){
-//                    var answer_cnt = data[0].POLL_ANSWER_CNT;
+            $scope.getList('ange/poll', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var answer_cnt = data[0].POLL_ANSWER_CNT;
+
+                    if (answer_cnt == 1) {
+                        dialogs.notify('알림', '이미 이 설문조사에 참여하셨습니다.', {size: 'md'});
+                        $location.url('/people/poll/list');
+                    } else {
+
+                        var answer = [];
+                        $scope.item.QUE_SHORT_ANSWER = ''
+                        $("input[name='answer[]'").each(function(index, element) {
+                            $scope.item.QUE_SHORT_ANSWER = $(element).val();
+                            answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+                        })
+
+
+                        var values = {};
+
+                        console.log()
+
+                        $rootScope.jsontext2 = new Array();
+                        $('.poll_select_radio:checked').each(function(index) {
+
+                            if(this.value == undefined){
+                                values[this.name] = "";
+                            }
+                            values[this.name] = this.value;
+                            answer.push(values[this.name]);
+                            console.log(this.value);
+
+                            var no = index+1
+                            console.log(no);
+                            $rootScope.jsontext2[index] = '"'+no+'":"'+ this.value+'"';
+                        });
+
+
+                        //
+//                        for(var i=0; i<answer.length; i++){
+//                            var index = parseInt(i+1);
+//                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+//                        }
+
+//                        $("input[name='index[]'").each(function(index, element) {
 //
-//                    if (answer_cnt == 1) {
-//                        dialogs.notify('알림', '이미 이 설문조사에 참여하셨습니다.', {size: 'md'});
-//                        $location.url('/people/poll/list');
-//                    } else {
-//
-//                        var answer = [];
-//                        $scope.item.QUE_SHORT_ANSWER = ''
-//                        $("input[name='answer[]'").each(function(index, element) {
-//                            $scope.item.QUE_SHORT_ANSWER = $(element).val();
-//                            answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
 //                        })
-//
-//
-//                        var values = {};
-//
-//                        console.log()
-//
-//                        $rootScope.jsontext2 = new Array();
-//                        $('.poll_select_radio:checked').each(function(index) {
-//
-//                            if(this.value == undefined){
-//                                values[this.name] = "";
-//                            }
-//                            values[this.name] = this.value;
-//                            answer.push(values[this.name]);
-//                            console.log(this.value);
-//
-//                            var no = index+1
-//                            console.log(no);
-//                            $rootScope.jsontext2[index] = '"'+no+'":"'+ this.value+'"';
-//                        });
-//
-//
-//                        //
-////                        for(var i=0; i<answer.length; i++){
-////                            var index = parseInt(i+1);
-////                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-////                        }
-//
-////                        $("input[name='index[]'").each(function(index, element) {
-////
-////                        })
-//
-//                        $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
-//                        console.log($scope.item.ANSWER);
-//
-//                        $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue
-//                            .then(function(){
-//                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-//                                $location.url('/people/poll/list');
-//                            })
-//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-//                    }
-//
-//                })
-//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                        $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                        console.log($scope.item.ANSWER);
+
+                        $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue
+                            .then(function(){
+                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                                $location.url('/people/poll/list');
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.click_showAngePollList = function() {
