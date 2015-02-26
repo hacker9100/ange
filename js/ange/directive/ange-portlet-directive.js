@@ -43,7 +43,7 @@ define([
 
                 // 검색 조건 추가
                 $scope.search.SYSTEM_GB = 'ANGE';
-                $scope.search.NOTICE_FL = 'N';
+                $scope.search.NOTICE_FL = '0';
 
                 // 검색 조건에 커뮤니티 번호 추가
                 if ($scope.option.tab != undefined) {
@@ -349,7 +349,7 @@ define([
 
                 // 검색 조건 추가
                 $scope.search.SYSTEM_GB = 'ANGE';
-                $scope.search.NOTICE_FL = 'N';
+                $scope.search.NOTICE_FL = '0';
 
                 // 검색 조건에 커뮤니티 번호 추가
                 if ($scope.option.tab != undefined) {
@@ -1240,7 +1240,7 @@ define([
 
                 // 검색 조건 추가
                 $scope.search.SYSTEM_GB = 'ANGE';
-                $scope.search.NOTICE_FL = 'N';
+                $scope.search.NOTICE_FL = '0';
 
                 // 검색 조건에 커뮤니티 번호 추가
                 if ($scope.option.type != undefined) {
