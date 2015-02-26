@@ -278,7 +278,7 @@
                             PROJECT_NM, NO, PHASE, SUBJECT, SUMMARY, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                             CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM, (SELECT SECTION_NM FROM CMS_SECTION S WHERE S.NO = SECTION_NO) AS SECTION_NM,
                             HIT_CNT, SCRAP_CNT, LIKE_CNT, REPLY_CNT, LIKE_FL,
-                            (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO) AS REPLY_COUNT
+                            (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'CONTENT') AS REPLY_COUNT
                         FROM
                         (
                             SELECT
