@@ -151,33 +151,41 @@ define([
             $scope.item.MENU = '';
             if ($stateParams.menu == 'experiencereview') {
                 $scope.community = "체험단/서평단 후기";
-                $scope.search.JOIN_GB = 'EXPERIENCE';
+                $scope.search.TARGET_GB = 'EXPERIENCE';
                 $scope.menu = 'experiencereview';
                 //$scope.item.MENU = 'EXPERIENCE';
             } else if ($stateParams.menu == 'productreview') {
                 $scope.community = "상품 후기";
-                $scope.search.JOIN_GB = 'PRODUCT';
+                $scope.search.TARGET_GB = 'PRODUCT';
                 $scope.menu = 'productreview';
                 //$scope.item.MENU = 'PRODUCT';
             } else if ($stateParams.menu == 'angereview') {
                 $scope.community = "앙쥬 후기";
-                $scope.search.JOIN_GB = 'ANGE';
+                $scope.search.TARGET_GB = 'ANGE';
                 $scope.menu = 'experiencereview';
                 //$scope.item.MENU = 'PRODUCT';
             } else if ($stateParams.menu == 'samplereview') {
                 $scope.community = "샘플팩 후기";
-                $scope.item.JOIN_GB = 'SAMPLE';
+                $scope.item.TARGET_GB = 'SAMPLE';
                 $scope.menu = 'experiencereview';
                 //$scope.item.MENU = 'SAMPLE';
             } else if ($stateParams.menu == 'samplepackreview') {
                 $scope.community = "앙쥬 샘플팩 후기";
-                $scope.search['JOIN_GB'] = 'SAMPLEPACK';
+                $scope.search['TARGET_GB'] = 'SAMPLEPACK';
                 $scope.menu = 'experiencereview';
                 //$scope.item.MENU = 'SAMPLE';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.community = "이벤트 후기";
-                $scope.search.JOIN_GB = 'EVENT';
+                $scope.search.TARGET_GB = 'EVENT';
                 $scope.menu = 'experiencereview';
+            } else if ($stateParams.menu == 'bookreview') {
+                $scope.community = "북카페 후기";
+                $scope.search['TARGET_GB'] = 'BOOK';
+                $scope.menu = 'bookreview';
+            } else if ($stateParams.menu == 'dolreview') {
+                $scope.community = "앙쥬돌 후기";
+                $scope.search['TARGET_GB'] = 'DOL';
+                $scope.menu = 'dolreview';
             }
 
             $scope.search.USER_ID = true;
@@ -279,8 +287,10 @@ define([
                     $scope.item.TARGET_GB = 'SAMPLE';
                 } else if ($stateParams.menu == 'samplepackreview') {
                     $scope.item.TARGET_GB = 'SAMPLEPACK';
-                }else if ($stateParams.menu == 'eventreview') {
-                    $scope.item.TARGET_GB = 'EVENT';
+                }else if ($stateParams.menu == 'bookreview') {
+                    $scope.item.TARGET_GB = 'BOOK';
+                }else if ($stateParams.menu == 'dolreview') {
+                    $scope.item.TARGET_GB = 'DOL';
                 }
             }else{
                 $scope.item.TARGET_GB = $scope.item.MENU;
