@@ -94,12 +94,26 @@ define([
             $scope.search.SORT = 'BOARD_NO';
             $scope.search.ORDER = 'DESC'
 
+            $scope.search.FILE_EXIST = true;
+
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
 
                     /*$scope.total(total_cnt);*/
+                    for(var i in data) {
+
+                        console.log(data[i].FILE);
+
+                        if (data[i].FILE != null) {
+                            var file_cnt = data[i].FILE[0].FILE_CNT;
+                            data[i].FILE_CNT = file_cnt;
+
+                        }
+                        console.log(data[i].FILE_CNT);
+                    }
+
                     $scope.list = data;
 
                 })

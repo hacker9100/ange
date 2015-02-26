@@ -85,6 +85,7 @@ define([
                     /*$scope.total(total_cnt);*/
 
                     for(var i in data) {
+
                         if (data[i].FILE != null) {
                             var file_cnt = data[i].FILE[0].FILE_CNT;
                             data[i].FILE_CNT = file_cnt;
