@@ -84,7 +84,7 @@
                                 <tr class="board_thead" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td align="center"><span class="board_th">제목</span></td>
-                                    <td width="92" align="center"><span class="board_th">작성자</span></td>
+                                    <td width="120" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80" align="center"><span class="board_th">작성일</span></td>
                                     <td width="60" align="center"><span class="board_th">답변</span></td>
                                 </tr>
@@ -104,9 +104,9 @@
                                         <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                         <!--<span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                     </td>
-                                    <td  class="table_author">{{item.NICK_NM}}</td>
+                                    <td class="table_author">{{item.NICK_NM}}</td>
                                     <td class="table_date">{{item.REG_DT}}</td>
-                                    <td class="table_hit">{{item.BOARD_REPLY_FL}}</td></tr>
+                                    <td class="table_hit">{{item.BOARD_REPLY_COUNT > 0 ? '완료' : '대기중'}}</td></tr>
                                 </tr>
 
                                 </tbody>

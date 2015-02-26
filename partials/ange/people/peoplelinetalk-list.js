@@ -127,17 +127,18 @@ define([
         // 초기화
         $scope.init = function(session) {
 
-            $scope.search.REPLY_GB = 'linetalk';
+//            $scope.search.REPLY_GB = 'linetalk';
+//            $scope.search.TARGET_GB = 'TALK';
 
-            $scope.getItem('com/reply', 'item', {}, $scope.search, true)
-                .then(function(data){
-                    if(data.COMMENT == null){
-                        $scope.TODAY_TOTAL_COUNT = 0;
-                    }else{
-                        $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
-                    }
-                })
-                .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
+//            $scope.getItem('com/reply', 'item', {}, $scope.search, true)
+//                .then(function(data){
+//                    if(data.COMMENT == null){
+//                        $scope.TODAY_TOTAL_COUNT = 0;
+//                    }else{
+//                        $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+//                    }
+//                })
+//                .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
 
             var idx = 0;
             for(var i=0; i < $scope.month.length; i ++){
@@ -164,7 +165,13 @@ define([
         // 댓글 리스트
         $scope.getPeopleReplyList = function () {
 
+            if ($scope.talkitem == undefined) {
+                return;
+            }
+
             $scope.search.REPLY_GB = 'linetalk';
+            $scope.search.TARGET_GB = 'TALK';
+            $scope.search.TARGET_NO = $scope.talkitem.NO;
 /*            $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC'; */
 
@@ -293,9 +300,9 @@ define([
 
            $scope.search.YEAR = year;
 
+            $scope.replyList = [];
            $scope.getTalkSubject();
-           $scope.replyList = [];
-           $scope.getPeopleReplyList();
+//           $scope.getPeopleReplyList();
         }
 
         // 월 선택
@@ -316,9 +323,9 @@ define([
             }
             $scope.day = change_day;
 
-            $scope.getTalkSubject();
             $scope.replyList = [];
-            $scope.getPeopleReplyList();
+            $scope.getTalkSubject();
+//            $scope.getPeopleReplyList();
         }
 
         // 일 선택
@@ -326,9 +333,9 @@ define([
 
             $scope.search.DAY = day;
 
-            $scope.getTalkSubject();
             $scope.replyList = [];
-            $scope.getPeopleReplyList();
+            $scope.getTalkSubject();
+//            $scope.getPeopleReplyList();
         }
 
         $scope.getTalkSubject = function (){
@@ -349,21 +356,25 @@ define([
                     $scope.talkitem = data[0];
 
                     console.log($scope.talkitem);
+                    $scope.getPeopleReplyList();
                 })
                 .catch(function(error){ $scope.talkitem=""; console.log('aa = '+$scope.talkitem);});
 
         }
 
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
-         .then($scope.sessionCheck)
-         .then($scope.init)
-         .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
-        $scope.init();
-        $scope.getTalkSubject();
-        $scope.getPeopleReplyList();
+/*
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getTalkSubject)
+            .then($scope.getPeopleReplyList)
+            .catch($scope.reportProblems);
+*/
 
+        $scope.init();
+        $scope.getTalkSubject()
+//        $scope.getPeopleReplyList();
 
     }]);
 });

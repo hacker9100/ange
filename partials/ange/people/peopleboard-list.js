@@ -49,7 +49,7 @@ define([
         $scope.init = function() {
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
-            $scope.search.COMM_GB = 'BOARD';
+            $scope.search.BOARD_GB = 'BOARD';
             $scope.search.SYSTEM_GB = 'ANGE';
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)

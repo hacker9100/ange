@@ -52,7 +52,7 @@
 
                 $search_common = "";
                 $limit = "";
-                $sort_order = "ORDER BY R.REG_DT DESC";
+                $sort_order = "ORDER BY REG_DT DESC";
 
                 if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
                     $search_common .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
@@ -71,7 +71,7 @@
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order = "ORDER BY R.".$_search[SORT]." ".$_search[ORDER];
+                    $sort_order = "ORDER BY ".$_search[SORT]." ".$_search[ORDER];
                 }
 
                 if (isset($_search[PAGE_NO]) && $_search[PAGE_NO] != "") {
@@ -80,8 +80,8 @@
 
                 //TODO: 조회
                 $sql = "SELECT
-                            NO, PARENT_NO, COMMENT, (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
-                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(*) FROM COM_REPLY WHERE 1=1 ".$search_common.") AS TOTAL_COUNT
+                            NO, PARENT_NO, COMMENT, (SELECT COUNT(NO) FROM COM_REPLY WHERE PARENT_NO = R.NO ".$search_common.") AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
+                            ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(NO) FROM COM_REPLY WHERE 1=1 ".$search_common.") AS TOTAL_COUNT
                         FROM
                             COM_REPLY R
                         WHERE 1=1
@@ -97,21 +97,12 @@
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                                REPLY_CTE.LEVEL, R.NO, PARENT_NO, PARENT_NO, REPLY_NO, REPLY_GB, COMMENT, REG_UID, NICK_NM, REG_NM, R.TARGET_NO, TARGET_GB,
+                                NO, PARENT_NO, PARENT_NO, REPLY_NO, REPLY_GB, COMMENT, REG_UID, NICK_NM, REG_NM, TARGET_NO, TARGET_GB,
                                 DATE_FORMAT(REG_DT, '%Y-%m-%d %H:%i') AS REG_DT,
-                                (SELECT COUNT(*) FROM COM_REPLY WHERE PARENT_NO = R.NO) AS RE_COUNT, BLIND_FL, REG_UID
-                            FROM (
-                                SELECT
-                                    REPLY_CONNET_BY_PRIOR_ID(NO) AS NO, @level AS LEVEL, TARGET_NO
-                                FROM    (
-                                    SELECT  @start_with := 0,
-                                    @NO := @start_with,
-                                    @level := 0
-                                ) TMP, COM_REPLY
-                                WHERE   @NO IS NOT NULL
-                            ) REPLY_CTE, COM_REPLY R
-                            WHERE REPLY_CTE.NO = R.NO
-                            AND R.PARENT_NO = ".$row[NO]."
+                                BLIND_FL, REG_UID
+                            FROM COM_REPLY
+                            WHERE PARENT_NO = ".$row[NO]."
+                            ".$search_common."
                             ".$sort_order."";
 
                     $file_data = $_d->getData($sql);
