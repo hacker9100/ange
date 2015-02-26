@@ -60,29 +60,29 @@ define([
             if ($stateParams.menu == 'notice') {
                 $scope.community = "공지사항";
                 $scope.menu = "notice";
-                $scope.search.COMM_NO = 14;
+                $scope.search.COMM_NO = 51;
                 $scope.search.COMM_GB = 'NOTICE';
             } else if($stateParams.menu == 'system') {
                 $scope.community = "시스템공지";
                 $scope.menu = "system";
-                $scope.search.COMM_NO = 15;
+                $scope.search.COMM_NO = 52;
                 $scope.search.COMM_GB = 'NOTICE';
             } else if($stateParams.menu == 'faq') {
                 $scope.community = "자주묻는질문";
                 $scope.menu = "faq";
-                $scope.search.COMM_NO = 16;
+                $scope.search.COMM_NO = 53;
                 $scope.search.COMM_GB = 'FAQ';
             } else if($stateParams.menu == 'qna') {
                 $scope.community = "문의/게시판";
                 $scope.menu = "qna";
                 $scope.VIEW_ROLE = 'CMS_ADMIN';
-                $scope.search.COMM_NO = 17;
+                $scope.search.COMM_NO = 54;
                 $scope.search.COMM_GB = 'QNA';
             } else if($stateParams.menu == 'myqna') {
                 $scope.community = "내 질문과 답변";
                 $scope.menu = "myqna";
                 $scope.VIEW_ROLE = 'CMS_ADMIN';
-                $scope.search.COMM_NO = 18;
+                $scope.search.COMM_NO = 55;
                 $scope.search.COMM_GB = 'QNA';
             }
 
@@ -159,7 +159,7 @@ define([
                         if(data.REPLY_YN == 'N'){
                             $scope.item.BODY;
                         } else {
-                            $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                            $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>관리자 답변<br>"+data.REPLY_BODY+"</p>";
                         }
 
                         $scope.search.TARGET_NO = $stateParams.id;
@@ -262,17 +262,17 @@ define([
         $scope.getPreBoard = function (){
 
             if ($stateParams.menu == 'notice') {
-                $scope.search['COMM_NO'] = '14';
+                $scope.search['COMM_NO'] = '51';
                 //$scope.search['NOTICE_FL'] = 'Y';
             } else if($stateParams.menu == 'system') {
-                $scope.search['COMM_NO'] = '15';
+                $scope.search['COMM_NO'] = '52';
                 //$scope.search['NOTICE_FL'] = 'Y';
             } else if($stateParams.menu == 'faq') {
-                $scope.search['COMM_NO'] = '16';
+                $scope.search['COMM_NO'] = '53';
             }else if($stateParams.menu == 'qna') {
-                $scope.search['COMM_NO'] = '17';
+                $scope.search['COMM_NO'] = '54';
             } else if($stateParams.menu == 'myqna') {
-                $scope.search['COMM_NO'] = '17';
+                $scope.search['COMM_NO'] = '54';
                 $scope.search['REG_UID'] = $scope.uid;
             }
 
@@ -280,7 +280,7 @@ define([
             $scope.search.BOARD_PRE = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getList('com/webboard', 'list',{} , $scope.search, false)
+                return $scope.getList('com/webboard', 'pre',{} , $scope.search, false)
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
@@ -292,24 +292,24 @@ define([
         $scope.getNextBoard = function (){
 
             if ($stateParams.menu == 'notice') {
-                $scope.search['COMM_NO'] = '14';
+                $scope.search['COMM_NO'] = '51';
                 //$scope.search['NOTICE_FL'] = 'Y';
             } else if($stateParams.menu == 'system') {
-                $scope.search['COMM_NO'] = '15';
+                $scope.search['COMM_NO'] = '52';
                 //$scope.search['NOTICE_FL'] = 'Y';
             } else if($stateParams.menu == 'faq') {
-                $scope.search['COMM_NO'] = '16';
+                $scope.search['COMM_NO'] = '53';
             }else if($stateParams.menu == 'qna') {
-                $scope.search['COMM_NO'] = '17';
+                $scope.search['COMM_NO'] = '54';
             } else if($stateParams.menu == 'myqna') {
-                $scope.search['COMM_NO'] = '17';
+                $scope.search['COMM_NO'] = '54';
                 $scope.search['REG_UID'] = $scope.uid;
             }
             $scope.search.KEY = $stateParams.id;
             $scope.search.BOARD_NEXT = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getList('com/webboard', 'list',{} , $scope.search, false)
+                return $scope.getList('com/webboard', 'next',{} , $scope.search, false)
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
@@ -449,14 +449,22 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.addHitCnt)
+            .then($scope.getPeopleBoard)
+            .then($scope.getPreBoard)
+            .then($scope.getNextBoard)
+            .then($scope.getPeopleReplyList)
             .catch($scope.reportProblems);
 
-        $scope.init();
-        $scope.addHitCnt();
-        $scope.getPeopleBoard();
-        $scope.getPreBoard();
-        $scope.getNextBoard();
-        $scope.getPeopleReplyList();
+        console.log($scope.uid);
+
+//        $scope.init();
+//        $scope.addHitCnt();
+//        $scope.getPeopleBoard();
+//        $scope.getPreBoard();
+//        $scope.getNextBoard();
+//        $scope.getPeopleReplyList();
 
     }]);
 });
