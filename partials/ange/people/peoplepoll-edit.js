@@ -368,7 +368,9 @@ define([
 
 
                         var values = {};
-                        $('.poll_select_radio:checked').each(function() {
+
+                        $rootScope.jsontext2 = new Array();
+                        $('.poll_select_radio:checked').each(function(index) {
 
                             if(this.value == undefined){
                                 values[this.name] = "";
@@ -376,19 +378,23 @@ define([
                             values[this.name] = this.value;
                             answer.push(values[this.name]);
                             console.log(this.value);
+
+                            var no = index+1
+                            console.log(no);
+                            $rootScope.jsontext2[index] = '"'+no+'":"'+ this.value+'"';
                         });
 
-                        $rootScope.jsontext2 = new Array();
+
                         //
 //                        for(var i=0; i<answer.length; i++){
 //                            var index = parseInt(i+1);
 //                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
 //                        }
 
-                        $("input[name='index[]'").each(function(index, element) {
-                            //$scope.item.QUE_SHORT_ANSWER = $(element).val();
-                            $rootScope.jsontext2[index] = '"'+$(element).val()+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-                        })
+//                        $("input[name='index[]'").each(function(index, element) {
+//                            //$scope.item.QUE_SHORT_ANSWER = $(element).val();
+//                            $rootScope.jsontext2[index] = '"'+$(element).val()+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+//                        })
 
                         $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                         console.log($scope.item.ANSWER);
@@ -409,11 +415,19 @@ define([
             $location.url('/people/poll/list');
         }
 
+//        $scope.init();
+//        $scope.getAngePoll();
+//        $scope.getChart();
 
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getAngePoll)
+            .then($scope.getChart)
+            .catch($scope.reportProblems);
 
-        $scope.init();
-        $scope.getAngePoll();
-        $scope.getChart();
+        console.log($rootScope.uid);
+
 
     }]);
 
