@@ -110,7 +110,7 @@
                                                     <div ng-click="click_showViewPeoplePhoto(item.NO)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
                                                             <img ng-show="item.BOARD_ST != 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
-                                                            <img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('')" /> <!-- 삭제처리했을때 블라인드 이미지 -->
+                                                            <img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('')" /> <!-- 삭제처리했을때 블라인드 이미지 추가해야함-->
                                                             <!--<img src="{{item.MAIN_FILE}}" class="people_photo_img" style="width: 240px; height: 240px;"/>-->
                                                             <div class="people_photo_cate">
                                                                 <span>{{item.CATEGORY_NM}}</span>
@@ -120,9 +120,8 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D'">{{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}</div>
-                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D'">작성자가 삭제한 글 입니다.</div>
+                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</div>
                                                         <div class="people_photo_info"><span class="table_blue">{{item.NICK_NM}}</span> | {{item.REG_DT}}</div>
                                                     </div><!-- /.people_photo_content -->
                                                 </div><!-- /.people_photo_contentcol -->

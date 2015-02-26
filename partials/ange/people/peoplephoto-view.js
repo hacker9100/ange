@@ -186,7 +186,7 @@ define([
             $scope.search.BOARD_PRE = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getItem('com/webboard', 'list',{} , $scope.search, false)
+                return $scope.getItem('com/webboard', 'pre',{} , $scope.search, false)
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
@@ -203,7 +203,7 @@ define([
             $scope.search.BOARD_NEXT = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getItem('com/webboard', 'list',{} , $scope.search, false)
+                return $scope.getItem('com/webboard', 'next',{} , $scope.search, false)
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
