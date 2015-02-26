@@ -308,7 +308,10 @@ define([
                             //$scope.item.QUE = [];
                             $scope.item.QUE = new Array();
                             que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
+                            console.log(que_data);
                             var parse_que_data = JSON.parse(que_data);
+
+                            console.log(parse_que_data);
 
                             for(var x in parse_que_data){
 
@@ -319,8 +322,20 @@ define([
                                     for(var i=0; i < select_answer.length; i++){
                                         choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
                                     }
-                                }else{ // 주관식일때
+                                }else if(parse_que_data[x].type == 1){ // 주관식일때
                                     choice = "";
+                                }if(parse_que_data[x].type == 2){ // 통합형
+                                    var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
+
+                                    for(var i=0; i < select_answer.length; i++){
+                                        choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
+                                    }
+                                }if(parse_que_data[x].type == 3){ // 복수
+                                    var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
+
+                                    for(var i=0; i < select_answer.length; i++){
+                                        choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
+                                    }
                                 }
 
                                 var index = parseInt(x)+parseInt(1);
@@ -365,12 +380,24 @@ define([
                 var answer = [];
                 $scope.item.QUE_SHORT_ANSWER = ''
                 $("input[name='answer[]'").each(function(index, element) {
+
+                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                        return false;
+                    }
+
                     $scope.item.QUE_SHORT_ANSWER = $(element).val();
                     answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                 })
 
                 var values = {};
+
                 $('.poll_select_radio:checked').each(function() {
+
+//                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+//                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+//                        return false;
+//                    }
 
                     if(this.value == undefined){
                         values[this.name] = "";
@@ -390,7 +417,7 @@ define([
                 $("input[name='index[]'").each(function(index, element) {
                     //$scope.item.QUE_SHORT_ANSWER = $(element).val();
                     //$rootScope.jsontext2[$(element).val()] = '"'+$(element).val()+'":"'+ answer[index]+'"';
-                    $rootScope.jsontext2[index] = '"'+$(element).val()+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+                    $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
                 })
 
                 $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
