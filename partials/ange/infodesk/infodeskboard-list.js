@@ -61,39 +61,39 @@ define([
             // 초기화
         $scope.init = function() {
 
-            // $scope.menu.COMM_NO
-            console.log($scope.menu);
+
+            //console.log($scope.menu.COMM_NO);
 
             if ($stateParams.menu == 'notice') {
                 $scope.community = "공지사항";
                 $scope.infomenu = "notice";
                 $scope.VIEW_ROLE = 'ANGE_ADMIN';
-                $scope.search.COMM_NO = 14;
+                $scope.search.COMM_NO = 51;
                 $scope.search.COMM_GB = 'NOTICE';
             } else if($stateParams.menu == 'system') {
                 $scope.community = "시스템공지";
                 $scope.infomenu = "system";
                 $scope.VIEW_ROLE = 'ANGE_ADMIN';
-                $scope.search.COMM_NO = 15;
+                $scope.search.COMM_NO = 52;
                 $scope.search.COMM_GB = 'NOTICE';
             } else if($stateParams.menu == 'faq') {
                 $scope.community = "자주묻는질문";
                 $scope.infomenu = "faq";
-                $scope.search.COMM_NO = 16;
+                $scope.search.COMM_NO = 53;
                 $scope.VIEW_ROLE = 'ANGE_ADMIN';
                 $scope.search.COMM_GB = 'FAQ';
             } else if($stateParams.menu == 'qna') {
                 $scope.community = "문의/게시판";
                 $scope.infomenu = "qna";
                 $scope.VIEW_ROLE = 'ANGE_ADMIN';
-                $scope.search.COMM_NO = 17;
+                $scope.search.COMM_NO = 54;
                 $scope.search.COMM_GB = 'QNA';
             } else if($stateParams.menu == 'myqna') {
                 $scope.community = "내 질문과 답변";
                 $scope.infomenu = "myqna";
                 $scope.search.MY_QNA = "Y";
                 $scope.VIEW_ROLE = 'ANGE_ADMIN';
-                $scope.search.COMM_NO = 17;
+                $scope.search.COMM_NO = 54;
                 $scope.search.COMM_GB = 'QNA';
             }
 
