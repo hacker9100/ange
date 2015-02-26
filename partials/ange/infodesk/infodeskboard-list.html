@@ -37,7 +37,7 @@
                                         </div><!-- /btn-group -->
 
                                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                            <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+                                            <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
 												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
 												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
@@ -153,6 +153,7 @@
                         </div><!-- /.sub_contents_body -->
 
                         <!-- 등록 -->
+                        <!--<a class="btn people_btn submit" title="등록하기" ng-show="infomenu == 'qna' || infomenu == 'myqna'" ng-click="click_showCreatePeopleBoard();">등록</a>-->
                         <a class="btn people_btn submit" title="등록하기" ng-show="infomenu == 'qna' || infomenu == 'myqna'" ng-click="click_showCreatePeopleBoard();">등록</a>
 
                         <!--<div ng-show="uid != '' && uid != null" ng-click="test()">세션이 있을때만 보입니다.</div>

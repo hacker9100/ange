@@ -341,6 +341,12 @@ define([
                 return;
             }
 
+            //var querylength = $('.poll_query_no').length;
+            if($('.poll_query_no').length != $('.poll_select_radio:checked').length){
+                dialogs.notify('알림', '문항을 체크해주세요.', {size: 'md'});
+                return;
+            }
+
             $scope.search['ada_idx'] = no;
 
             // $scope.search['USER_UID'] = 'test'; 세션 uid를 저장해야함
@@ -349,6 +355,10 @@ define([
             // 설문조사 참여여부 체크
             // 사용자아이디와 설문조사 번호를 가지고 조회하여
             // cnt가 1일때 목록으로 이동 아니면 저장
+
+            //console.log($("input[name='index[]'").length);
+
+
 
             $scope.getList('ange/poll', 'check', {}, $scope.search, false)
                 .then(function(data){
@@ -368,6 +378,8 @@ define([
 
 
                         var values = {};
+
+                        console.log()
 
                         $rootScope.jsontext2 = new Array();
                         $('.poll_select_radio:checked').each(function(index) {
@@ -392,8 +404,7 @@ define([
 //                        }
 
 //                        $("input[name='index[]'").each(function(index, element) {
-//                            //$scope.item.QUE_SHORT_ANSWER = $(element).val();
-//                            $rootScope.jsontext2[index] = '"'+$(element).val()+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+//
 //                        })
 
                         $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';

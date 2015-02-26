@@ -366,9 +366,16 @@ define([
             }
 
             if($scope.item.ada_que_type == 'question'){ // 문답일때
+
                 var answer = [];
                 $scope.item.QUE_SHORT_ANSWER = ''
                 $("input[name='answer[]'").each(function(index, element) {
+
+                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+                        return;
+                    }
+
                     $scope.item.QUE_SHORT_ANSWER = $(element).val();
                     answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                 })
@@ -385,9 +392,6 @@ define([
                     //$rootScope.jsontext2[$(element).val()] = '"'+$(element).val()+'":"'+ answer[index]+'"';
                     $rootScope.jsontext2[index] = '"'+$(element).val()+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
                 })
-
-                $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
-                console.log($scope.item.ANSWER);
 
                 $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                 console.log($scope.item.ANSWER);

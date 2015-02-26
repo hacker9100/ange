@@ -193,7 +193,7 @@
                                                 <!--</dl>-->
 
                                                 <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                                                    <input type="hidden" name="index[]"  value="{{query.index}}"/> <!-- query. -->
+                                                    <input type="hidden" name="index[]" class="poll_query_no"/> <!-- query. -->
                                                     <dt>{{query.title}}</dt>
                                                     <dd ng-if="query.type == '1'">
                                                         <div class="radio-inline">

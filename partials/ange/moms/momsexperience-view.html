@@ -93,9 +93,9 @@
                                 <!-- 참여유형이 질문일때 -->
                                 <div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
                                     <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                                        <input type="hidden" name="index[]"  value="{{query.index}}"/>
                                         <dt>{{query.title}}</dt>
                                         <dd ng-if="query.type == '1'">
+                                            <input type="hidden" name="muiti_index[]"/>
                                             <div class="radio-inline">
                                                 <label>
                                                     <input  type="text" name="answer[]" style="width: 250px;"/>
@@ -105,6 +105,7 @@
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                            <input type="hidden" name="single_index[]"/>
                                             <div class="radio-inline">
                                                 <label>
                                                     <input ng-model="item.QUE_SELECT_ANSWER" type="radio" name="selectanswer[]" id="select_sort" ng-value="select"/>{{select}}
