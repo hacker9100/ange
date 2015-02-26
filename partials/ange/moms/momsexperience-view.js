@@ -312,6 +312,8 @@ define([
                             que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
                             var parse_que_data = JSON.parse(que_data);
 
+                            console.log(parse_que_data);
+
                             for(var x in parse_que_data){
 
                                 var choice = [];
@@ -327,7 +329,7 @@ define([
 
                                 var index = parseInt(x)+parseInt(1);
                                 $scope.item.QUE.push({"index" : index,"title" : parse_que_data[x].title, "type" : parse_que_data[x].type, "choice" :choice});
-                                console.log($scope.item.QUE);
+                                //console.log($scope.item.QUE);
                             }
                         }
 
