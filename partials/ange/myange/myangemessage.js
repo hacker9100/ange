@@ -98,15 +98,22 @@ define([
 
                             $scope.item.BODY = source;
 
-                            $scope.reitem.TO_ID = $scope.item.TO_ID;
-                            $scope.reitem.TO_NM = $scope.item.TO_NM;
-                            $scope.reitem.FROM_ID = $scope.item.FROM_ID;
-                            $scope.reitem.FROM_NM = $scope.item.FROM_NM;
+                            if($scope.item.FROM_ID == $scope.uid){
+                                $scope.reitem.FROM_ID = $scope.item.TO_ID;
+                                $scope.reitem.FROM_NM = $scope.item.TO_NM;
+                                $scope.reitem.TO_ID = $scope.item.FROM_ID;
+                                $scope.reitem.TO_NM = $scope.item.FROM_NM;
+                            }else{
+                                $scope.reitem.TO_ID = $scope.item.TO_ID;
+                                $scope.reitem.TO_NM = $scope.item.TO_NM;
+                                $scope.reitem.FROM_ID = $scope.item.FROM_ID;
+                                $scope.reitem.FROM_NM = $scope.item.FROM_NM;
+                            }
 
-                            console.log($scope.reitem.TO_ID);
-                            console.log($scope.reitem.TO_NM);
-                            console.log($scope.reitem.FROM_ID);
-                            console.log($scope.reitem.FROM_NM);
+                            console.log("보내는"+$scope.reitem.TO_ID);
+                            console.log("보내는"+$scope.reitem.TO_NM);
+                            console.log("받는"+$scope.reitem.FROM_ID);
+                            console.log("받는"+$scope.reitem.FROM_NM);
 
                         })
                         .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
