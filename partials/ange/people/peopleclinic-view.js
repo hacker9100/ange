@@ -212,10 +212,19 @@ define([
                         for(var i in files) {
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
-                        if(data.REPLY_YN == 'N'){
-                            $scope.item.BODY;
-                        } else {
-                            $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+
+                        if(data.BOARD_ST == 'D'){
+                            if(data.REPLY_YN == 'N'){
+                                $scope.item.BODY = "작성자가 삭제한 글 입니다";
+                            } else {
+                                $scope.item.BODY = "작성자가 삭제한 글 입니다"+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                            }
+                        }else{
+                            if(data.REPLY_YN == 'N'){
+                                $scope.item.BODY;
+                            } else {
+                                $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                            }
                         }
 
                         $scope.reply.SUBJECT = "[답변]"+$scope.item.SUBJECT;

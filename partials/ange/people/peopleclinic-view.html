@@ -28,8 +28,9 @@
                                             제목
                                         </div><!-- /.col-xs-2-->
                                         <div class="col-xs-10  board_basicinfo_subject">
-                                            <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
-                                            {{item.SUBJECT}}
+                                            <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
+                                            <span ng-show="item.BOARD_ST != 'D'">{{item.SUBJECT}}</span>
+                                            <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
                                             <span  ng-show="item.REG_DT1 == todayDate" class="table_icon_new">N</span>
                                             <!--<span class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                             <!--<span class="glyphicon glyphicon-paperclip table_icon_clip"></span>-->
@@ -99,7 +100,7 @@
                                             <a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleClinicList();">리스트</a>
                                         </div>
 
-                                        <div class="col-xs-8" ng-show="uid == item.REG_UID && uid != '' && uid != null">
+                                        <div class="col-xs-8" ng-show="uid == item.REG_UID && uid != '' && uid != null && item.BOARD_ST != 'D'">
                                             <a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
                                             <a class="btn people_btn confirm" title="확인" style="display:block;" ng-click="click_showPeopleBoardList();">확인</a>
                                             <a class="btn people_btn submit" title="등록하기" style="display:none;">등록</a>
