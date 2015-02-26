@@ -117,7 +117,9 @@
                                                     <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                 </label>
                                             </div>
-                                            <input  type="text" name="answer[]" style="width: 250px;"/>
+                                            <label>
+                                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+                                            </label>
                                         </dd>
                                         <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
                                             <div class="radio-inline">
@@ -126,6 +128,7 @@
                                                 </label>
                                             </div>
                                         </dd>
+
                                     </dl>
                                 </div>
 

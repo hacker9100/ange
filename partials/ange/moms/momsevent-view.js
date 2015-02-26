@@ -324,13 +324,13 @@ define([
                                     }
                                 }else if(parse_que_data[x].type == 1){ // 주관식일때
                                     choice = "";
-                                }if(parse_que_data[x].type == 2){ // 통합형
+                                }else if(parse_que_data[x].type == 2){ // 통합형
                                     var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
 
                                     for(var i=0; i < select_answer.length; i++){
                                         choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
                                     }
-                                }if(parse_que_data[x].type == 3){ // 복수
+                                }else if(parse_que_data[x].type == 3){ // 복수
                                     var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
 
                                     for(var i=0; i < select_answer.length; i++){
@@ -402,38 +402,58 @@ define([
                     if(this.value == undefined){
                         values[this.name] = "";
                     }
+
+                    if(this.value == "기타"){
+                        console.log($("#etc_answer").val());
+                        values[this.name] = $("input[name='etc_answer']").val();
+                    }
+
                     values[this.name] = this.value;
                     answer.push(values[this.name]); // 객관식
                     console.log(this.value);
                 });
 
+                var check_answer = ''
+                $('.poll_select_checkbox:checked').each(function() {
+
+//                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+//                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+//                        return false;
+//                    }
+                    values[this.name] = ','
+                    if(this.value == undefined){
+                        values[this.name] = "";
+                    }
+                    values[this.name] += this.value;
+
+
+
+                    check_answer += this.value
+                    answer.push(check_answer); // 객관식
+
+                    console.log(check_answer);
+                });
+
                 $rootScope.jsontext2 = new Array();
-                //
-//                for(var i=0; i<answer.length; i++){
-//                    var index = parseInt(i+1);
-//                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-//                }
 
                 $("input[name='index[]'").each(function(index, element) {
-                    //$scope.item.QUE_SHORT_ANSWER = $(element).val();
-                    //$rootScope.jsontext2[$(element).val()] = '"'+$(element).val()+'":"'+ answer[index]+'"';
                     $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
                 })
 
                 $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                 console.log($scope.item.ANSWER);
 
-                $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                    .then(function(){
-                        dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
-
-                        if ($stateParams.menu == 'eventprocess') {
-                            $location.url('/moms/eventprocess/list');
-                        } else if($stateParams.menu == 'eventperformance') {
-                            $location.url('/moms/eventperformance/list');
-                        }
-                    })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                $scope.insertItem('ange/comp', 'item', $scope.item, false)
+//                    .then(function(){
+//                        dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+//
+//                        if ($stateParams.menu == 'eventprocess') {
+//                            $location.url('/moms/eventprocess/list');
+//                        } else if($stateParams.menu == 'eventperformance') {
+//                            $location.url('/moms/eventperformance/list');
+//                        }
+//                    })
+//                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
