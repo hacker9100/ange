@@ -37,7 +37,9 @@
 
                                     <tr ng-click="click_showViewMessage(item)" style="cursor:pointer;">
                                         <td class="table_no">
-                                            <span ng-class="item.item.STATUS == 'RECIEVE' ? 'table_blue' : 'table_green'">{{item.STATUS == 'RECIEVE' ? '받→' : '보←'}} </span>
+                                            <!--<span ng-class="item.item.STATUS == 'RECIEVE' ? 'table_blue' : 'table_green'">{{item.STATUS == 'RECIEVE' ? '받→' : '보←'}} </span>-->
+                                            <img data-ng-show="item.STATUS == 'RECIEVE'" src="/imgs/ange/icon_message_out.png" />
+                                            <img data-ng-show="item.STATUS != 'RECIEVE'" src="/imgs/ange/icon_message_in.png" />
                                         </td>
                                         <td>
                                             <!--<div class="table_gray" ng-bind-html="item.BODY | string_limit : 50"></div>-->
@@ -46,7 +48,10 @@
                                         <td class="table_author">{{item.STATUS == 'RECIEVE' ? item.FROM_NM : item.TO_NM }}</td>
                                         <!--<td class="table_author">{{item.FROM_NM}}</td>-->
                                         <td class="table_date" align="center">{{item.REG_DT}}</td>
-                                        <td class="table_hit">{{item.CHECK_FL}}</td>
+                                        <td class="table_hit">
+                                            <img data-ng-show="item.CHECK_FL == 'Y'" src="/imgs/ange/icon_messagecheck.png" />
+                                            <img data-ng-show="item.CHECK_FL != 'Y'" src="/imgs/ange/icon_messagecheck_ok.png" />
+                                        </td>
                                     </tr>
 
                                 </tbody>
@@ -137,7 +142,7 @@
                                             <!-- <div style="color:#333; line-height:22px; padding:10px;">{{item.BODY}}</div> -->
                                             <!--<textarea id="editor1" ng-model="item.BODY" class="form-control input-sm" readonly rows="15" cols="30" style="width:100%; min-width:100%; max-width:100%;"></textarea>-->
                                             <!--<textarea id="editor1" class="form-control input-md"  ng-model="item.BODY" rows="10" cols="30" style="width:100%; min-width:100%; max-width:100%;resize: none;" disabled placeholder="대화상대에게 바로 메시지를 보낼 수 있어요."></textarea>-->
-                                            <p style="white-space: pre">{{item.BODY}}</p>
+                                            <p style="width:100%; word-break:keep-all; word-wrap:break-word; white-space: pre; line-height: 22px;">{{item.BODY}}</p>
                                         </div>
                                     </div><!-- /.row -->
                                 </div><!-- /.col-12-->
