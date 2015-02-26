@@ -72,7 +72,27 @@
                                     <div class="col-xs-12 peopleboard_view_contentbody">
 
                                         <!-- Editor CSS 적용 img max-width: 720px -->
-                                        <img ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}" ng-style="{width:100%}">
+                                        <!-- 속성에 usemap="a" 를 지정 광고센터 %name% 를 replace해서 name이 usemap 속성에 넣게끔-->
+                                        <img ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}"  ng-style="{width:100%}">
+
+                                        <!--<img src="http://ad.ange.co.kr/adm/upload/temp_productimg.jpg" style="width:100%;"/>-->
+
+
+                                        <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event01.jpg" alt="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." title="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." style="width:100%;"><a href="http://new.ange.co.kr/story/content/list" title="앙쥬스토리 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event02.jpg" alt="앙쥬스토리 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/people/home" title="앙쥬피플 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event03.jpg" alt="앙쥬피플 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/moms/home" title="앙쥬맘스 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event04.jpg" alt="앙쥬맘스 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event05.jpg" alt="마이앙쥬 둘러보러 가기" style="width:100%;"><a href="http://new.ange.co.kr/store/home" title="앙쥬스토어 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event06.jpg" alt="앙쥬스토어 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event07.jpg" alt="아래 댓글을 작성하면 자동응모됩니다" title="아래 댓글을 작성하면 자동응모됩니다" style="width:100%;">-->
+                                        <!--<div id="content" ng-bind-html="renderHtml(item.ada_detail)"></div>-->
+
+                                        <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_01.jpg" alt="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." title="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." style="width:100%;"><a href="/myange/account" title="앙쥬맘스 둘러보러 가기" target="_parent"><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_02.jpg" alt="이벤트 참여 바로가기" title="이벤트 참여 바로가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_03.jpg" alt="다음 이벤트 기대해주세요." title="다음 이벤트 기대해주세요." style="width:100%;">-->
+                                        <!--<div>-->
+                                        <!--참가자격 :-->
+                                        <!--</div>-->
+
+                                    </div><!-- /.col-12-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 peopleboard_view_contentbody">
+
+                                        <!-- Editor CSS 적용 img max-width: 720px -->
+                                        {{ada_text}}
                                         <!--<img src="http://ad.ange.co.kr/adm/upload/temp_productimg.jpg" style="width:100%;"/>-->
 
 
@@ -236,18 +256,20 @@
                                                 </table><!-- /.List-->
 
                                                 <div class="clearfix" style="clear:both; width:100%; padding:20px 18px; background-color:#faf0de;">
-                                                    <h4 class="table_red" style="width:90px; height:100%; line-height:28px; font-size:1.18em; float:left;">
-                                                        신청시<br/> 주의사항
-                                                    </h4>
-                                                    <div style="margin-left:90px; line-height:18px; font-size:0.86em;">
-                                                        1. 체험자 정보(아기 개월수 / 임신주차)<br/>
-                                                        2. 체험단 페이지를 본인 블로그에 전체공개로 스크랩한 URL<br/>
-                                                        3. 디벨플래닛 아이디<br/>
-                                                        4. 아이성별<br/>
-                                                        5. 체험하고 싶은제품 선택(체험단/서평단)<br/>
-                                                        <br/>
-                                                        * 제품은 랜덤발송됩니다.
-                                                    </div>
+                                                    <!--<h4 class="table_red" style="width:90px; height:100%; line-height:28px; font-size:1.18em; float:left;">-->
+                                                        <!--신청시<br/> 주의사항-->
+                                                    <!--</h4>-->
+                                                    <!--<div style="margin-left:90px; line-height:18px; font-size:0.86em;">-->
+                                                        <!--1. 체험자 정보(아기 개월수 / 임신주차)<br/>-->
+                                                        <!--2. 체험단 페이지를 본인 블로그에 전체공개로 스크랩한 URL<br/>-->
+                                                        <!--3. 디벨플래닛 아이디<br/>-->
+                                                        <!--4. 아이성별<br/>-->
+                                                        <!--5. 체험하고 싶은제품 선택(체험단/서평단)<br/>-->
+                                                        <!--<br/>-->
+                                                        <!--* 제품은 랜덤발송됩니다.-->
+                                                    <!--</div>-->
+                                                    <!--<p style="white-space: pre;"></p>-->
+                                                    <p style="white-space: pre;">{{item.ada_guide}}</p>
                                                 </div>
 
                                             </div><!-- /.moms_form_bodywrap -->
