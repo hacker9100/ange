@@ -363,10 +363,12 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getMessageList)
             .catch($scope.reportProblems);
 
-        $scope.init();
-        $scope.getMessageList();
+//        $scope.init();
+//        $scope.getMessageList();
         /*$scope.viewCheckFl();*/
 
     }]);
