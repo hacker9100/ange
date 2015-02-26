@@ -272,6 +272,7 @@ define([
                             $scope.item.TO_ID = to_id;
                             $scope.item.TO_NM = to_nm;
 
+                            $scope.searchUsetList = "N";
                             console.log($scope.item.TO_ID);
                             console.log($scope.item.TO_NM);
                         }

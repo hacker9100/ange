@@ -136,7 +136,8 @@
                                             <!-- Editor CSS 적용 -->
                                             <!-- <div style="color:#333; line-height:22px; padding:10px;">{{item.BODY}}</div> -->
                                             <!--<textarea id="editor1" ng-model="item.BODY" class="form-control input-sm" readonly rows="15" cols="30" style="width:100%; min-width:100%; max-width:100%;"></textarea>-->
-                                            <textarea id="editor1" class="form-control input-md"  ng-model="item.BODY" rows="10" cols="30" style="width:100%; min-width:100%; max-width:100%;resize: none;" disabled placeholder="대화상대에게 바로 메시지를 보낼 수 있어요."></textarea>
+                                            <!--<textarea id="editor1" class="form-control input-md"  ng-model="item.BODY" rows="10" cols="30" style="width:100%; min-width:100%; max-width:100%;resize: none;" disabled placeholder="대화상대에게 바로 메시지를 보낼 수 있어요."></textarea>-->
+                                            <p style="white-space: pre">{{item.BODY}}</p>
                                         </div>
                                     </div><!-- /.row -->
                                 </div><!-- /.col-12-->
@@ -203,7 +204,7 @@
                                 </div><!-- /.col-xs-2-->
                                 <div class="col-xs-10 board_basicinfo_subject" style="padding-top:8px;">
                                     <!--{{item.FROM_NM}}-->
-                                    <input class="form-control input-sm" type="text" ng-model="search.TO_NICK_NM" placeholder="한글 2자, 영문 4자 이상" style="width:40%; float:left;"/>
+                                    <input class="form-control input-sm" type="text" ng-model="search.TO_NICK_NM" ng-keyup="($event.which === 13) ? click_searchUser(search.TO_NICK_NM) : 0"  placeholder="한글 2자, 영문 4자 이상" style="width:40%; float:left;"/>
                                     <!--<button type="button" class="btn btn-default btn-sm" ng-click="click_searchUser(item);" style="float:left; margin-left:5px;">검색</button>-->
                                     <button type="button" class="btn btn-default btn-sm" ng-click="click_searchUser(search.TO_NICK_NM);" style="float:left; margin-left:5px;">검색</button>
                                 </div><!-- /.col-xs-10-->
@@ -218,9 +219,11 @@
                                     <dt style="float:left; width:100%; line-height:40px; text-align:center; font-size:0.92em; display:block;">검색 결과가 없습니다.</dt>
                                 </dl>
 
-                                <nav class="text-center" style="align:center;">
-                                    <pagination boundary-links="true" total-items="USER_TOTAL_COUNT" ng-model="USER_PAGE_NO" class="pagination-sm" ng-change="user_pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-                                </nav><!-- /.Paging--><!-- /.people_editor -->
+                                <div style="float:left; width:100%;">
+                                    <nav class="text-center" style="align:center;">
+                                        <pagination boundary-links="true" total-items="USER_TOTAL_COUNT" ng-model="USER_PAGE_NO" class="pagination-sm" ng-change="user_pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                    </nav><!-- /.Paging--><!-- /.people_editor -->
+                                </div>
                             </div><!-- /.row -->
 
 
