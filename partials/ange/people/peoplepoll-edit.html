@@ -37,10 +37,10 @@
 
                                         <div class="col-xs-3 peoplepoll_view_btn" style="padding:0;">
 
-                                            <!--<div style="float:right; width:120px; height:45px; margin:0px; padding:0px; text-align:right;">-->
-                                                <!--<button type="button" class="btn btn-xs btn-info" style="margin:18px 5px 0 0;" ng-click="showPollView = ! showPollView"><span class="glyphicon glyphicon glyphicon-check"></span> 설문결과</button>-->
-                                                <!--&lt;!&ndash;<button type="button" class="btn btn-xs btn-info" style="margin:18px 5px 0 0;" ng-click="showPoll = ! showPoll"><span class="glyphicon glyphicon glyphicon-check"></span> 설문조사</button>&ndash;&gt;-->
-                                            <!--</div>-->
+                                            <div style="float:right; width:120px; height:45px; margin:0px; padding:0px; text-align:right;">
+                                                <button type="button" class="btn btn-xs btn-info" style="margin:18px 5px 0 0;" ng-click="showPollView = ! showPollView"><span class="glyphicon glyphicon glyphicon-check"></span> 설문결과</button>
+                                                <!--<button type="button" class="btn btn-xs btn-info" style="margin:18px 5px 0 0;" ng-click="showPoll = ! showPoll"><span class="glyphicon glyphicon glyphicon-check"></span> 설문조사</button>-->
+                                            </div>
 
                                         </div><!-- /.col-xs-3-->
                                     </div><!-- /.row -->
@@ -67,7 +67,7 @@
                                             </div>
                                         </div><!-- /.col-01-->
 
-                                        <div class="col-xs-12 peoplepoll_view_contentbody" > <!-- ng-class="{ 'hidden':   showPollView }" -->
+                                        <div class="col-xs-12 peoplepoll_view_contentbody" ng-class="{ 'hidden':  ! showPollView }"> <!--  -->
                                             <div class="peoplepoll_view_content"  >
                                                 <!--ng-if="queue.length=2"--> <!--data-ng-repeat="query in queue" ng-show="true"-->
                                                     <!--<div class="radio-inline" ng-repeat="select in query.SELECT" >-->
@@ -131,12 +131,12 @@
 
                                                     </dd>
 
-                                                    <div ng-if="query.type == '0'">
-                                                        <div  style="width: 100%; height: 200px;">
-                                                            <div google-chart chart="chart[$index]" style="height:200px; width:100%;"></div>
-                                                            <!--<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>-->
-                                                        </div>
-                                                    </div>
+                                                    <!--<div ng-if="query.type == '0'">-->
+                                                        <!--<div  style="width: 100%; height: 200px;">-->
+                                                            <!--<div google-chart chart="chart[$index]" style="height:200px; width:100%;"></div>-->
+                                                            <!--&lt;!&ndash;<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
+                                                        <!--</div>-->
+                                                    <!--</div>-->
                                                 </dl>
 
                                                 <!--<div  style="width: 100%; height: 200px;"> &lt;!&ndash; ng-repeat="chart in chart" &ndash;&gt;-->
@@ -162,12 +162,14 @@
                                         </div><!-- /.col-02-->
 
 
-                                        <!--<div class="col-xs-12 peoplepoll_view_contentbody" ng-class="{ 'hidden': !showPollView }">-->
+                                        <div class="col-xs-12 peoplepoll_view_contentbody" ng-class="{ 'hidden': showPollView }">
 
-                                            <!--<div class="peoplepoll_view_content"> &lt;!&ndash;ng-if="queue.length=2"&ndash;&gt; &lt;!&ndash;data-ng-repeat="query in queue" ng-show="true"&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<div class="radio-inline" ng-repeat="select in query.SELECT" >&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<input ng-model="select.SELECT" type= "radio" ng-value="select.SELECT_SORT" /> {{select.NOTE}}&ndash;&gt;-->
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                            <div class="peoplepoll_view_content">
+
+                                                <!--ng-if="queue.length=2"--> <!--data-ng-repeat="query in queue" ng-show="true"-->
+                                                <!--<div class="radio-inline" ng-repeat="select in query.SELECT" >-->
+                                                <!--<input ng-model="select.SELECT" type= "radio" ng-value="select.SELECT_SORT" /> {{select.NOTE}}-->
+                                                <!--</div>-->
 
                                                 <!--<dl data-ng-repeat="query in queue" >&lt;!&ndash;  ng-init="firstIndex=$index" ng-show="firstIndex == page || firstIndex+1 == page" &ndash;&gt;-->
                                                     <!--&lt;!&ndash;{{firstIndex}}&ndash;&gt;-->
@@ -190,43 +192,42 @@
                                                     <!--</dd>-->
                                                 <!--</dl>-->
 
+                                                <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                                    <input type="hidden" name="index[]"  value="{{query.index}}"/> <!-- query. -->
+                                                    <dt>{{query.title}}</dt>
+                                                    <dd ng-if="query.type == '1'">
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                <input  type="text" name="answer[]" style="width: 250px;"/>
+                                                                &nbsp;&nbsp;&nbsp;
+                                                                <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                                            </label>
 
-                                                <!--&lt;!&ndash;<div ng-if="query.QUERY_GB == 'M'"  data-ng-repeat="query in queue" style="width: 140px; height: 140px;">&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;<canvas id="pie1" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<div data-ng-repeat="query in queue"  style="width: 100px; height: 100px;">&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<div style="width: 100px; height: 100px;">&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<div style="width: 100px; height: 100px;">&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<div style="width: 100px; height: 100px;">&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<div style="width: 100px; height: 100px;">&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<div style="width: 100px; height: 100px;">&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;<canvas id="pie" class="chart chart-pie chart-xs" data="data" labels="labels" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                        </div>
+                                                    </dd>
+                                                    <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                            </label>
+                                                        </div>
 
+                                                    </dd>
 
-                                            <!--</div>-->
+                                                    <div ng-if="query.type == '0'">
+                                                        <div  style="width: 100%; height: 200px;">
+                                                            <div google-chart chart="chart[$index]" style="height:200px; width:100%;"></div>
+                                                            <!--<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>-->
+                                                        </div>
+                                                    </div>
+                                                </dl>
 
-
-
-                                            <!--&lt;!&ndash;<div class="peoplepoll_view_paging">&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<button type="button" class="btn btn-default btn-xs"   ng-disabled="nextclick" style="position:absolute; bottom:4px; left:35%;" ng-click="pre_click();"><span class="glyphicon glyphicon-step-backward"></span></button>  &lt;!&ndash;ng-click="pre_click();"&ndash;&gt;&ndash;&gt;-->
-                                                <!--&lt;!&ndash;&lt;!&ndash;<center><span class="table_red">{{page}}</span>/3</center>&ndash;&gt;&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<center><span class="table_red">{{currentPage+1}}</span>/{{lastPage}}</center>&ndash;&gt;-->
-                                                <!--&lt;!&ndash;<button type="button"  class="btn btn-default btn-xs"  ng-disabled="preclick" style="position:absolute; bottom:4px; right:35%;" ng-click="next_click();"><span class="glyphicon glyphicon-step-forward"></span></button> &lt;!&ndash;ng-disabled="!last"&ndash;&gt;&ndash;&gt;-->
-                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                            </div>
 
 
-                                        <!--</div>&lt;!&ndash; /.col-02&ndash;&gt;-->
+
+
+                                        </div><!-- /.col-02-->
 
                                         <div class="col-xs-12 peoplepoll_view_bottom">
                                             <div class="poll_count">현재설문자 <span>{{item.ada_count_request > 0 ? item.ada_count_request : 0}}</span> 명</div>

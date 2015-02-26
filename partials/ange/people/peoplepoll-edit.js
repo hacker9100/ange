@@ -40,7 +40,7 @@ define([
         $rootScope.contact2 = new Array();
 
         $rootScope.contact3 = new Array();
-        //console.log($scope.chart[j+1]);
+        $rootScope.contact4 = new Array();
 
         $rootScope.select_cnt = [];
 
@@ -86,186 +86,78 @@ define([
             $rootScope.select_answer = [];
             $rootScope.select_cnt = [];
 
+            $rootScope.arr2 = new Array();
+
             $scope.getList('ange/poll', 'chartlist', {}, $scope.search, true)
                 .then(function(data){
 
                     var object = JSON.stringify(data);
                     var parsed = JSON.parse(object);
 
-
+                    //console.log(parsed);
 
                     for(var x in parsed){
-                        $rootScope.arr.push(parsed[x]);
+                        //data[x] = data[x].split("|");
+                        $rootScope.arr.push(data[x]);
                     }
 
+                    for (var i = 0; i < $rootScope.arr.length; i++) {
+                        //console.log($rootScope.arr[i]);
 
-                    for(var i=0; i<$rootScope.arr.length; i++){
-
-                        var j = parseInt(i)+1;
+                        //console.log($rootScope.arr[i]);
                         $scope.chart[i] = {};
+                        //$scope.chart[i].data = '';
+
+                        $rootScope.test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "Slices", "type": "number"} ], "rows": []}';
+                        $rootScope.obj = JSON.parse($rootScope.test);
 
                         console.log($rootScope.arr[i]);
 
+                        $rootScope.arr[i] = $rootScope.arr[i].split("^");
 
-                        Object.keys($rootScope.arr[i]).forEach(function(key){
-                            //console.log(key);
-                            $rootScope.select_answer.push(key);
+                        console.log($rootScope.arr[i].length);
+                        //$rootScope.arr[i] = $rootScope.arr[i].slice(0,-1);
 
-                            console.log(key);
-                            $rootScope.jsontext[i] = '{"v":"'+ key+'"}';
+                        console.log('index = '+i);
+                        $rootScope.arr2.push($rootScope.arr[i]);
 
-                            console.log($rootScope.jsontext[i]);
+                        for(var j = 0; j < $rootScope.arr2[i].length; j++){
 
-                            $rootScope.select_cnt.push($rootScope.arr[i][key]);
+                            console.log($rootScope.arr2[i][j]);
 
-                            if ($rootScope.arr[i].hasOwnProperty(key)) {
+                            if($rootScope.arr2[i][j] != "[['선택','응답율']"){
 
-                                $rootScope.select_cnt.push($rootScope.arr[i][key]);
+                                $rootScope.arr2[i][j] = $rootScope.arr2[i][j].replace(/\[/g,''); //특정문자 제거
+                                $rootScope.arr2[i][j] = $rootScope.arr2[i][j].replace(/\]/g,''); //특정문자 제거
 
-                                //console.log($rootScope.select_cnt)
-                                //$rootScope.jsontext2[i] = '{"v":'+ $rootScope.arr[i][key]+'}';
-                                //$rootScope.select_cnt.push($rootScope.arr[i][key]);
-                                //$rootScope.jsontext2[i] = '{"v":'+ 10+'}';
-                                //$rootScope.jsontext2[i] = $rootScope.arr[i][key]
-                                $rootScope.jsontext2[i] = '{"v":'+ $rootScope.arr[i][key]+'}';
+                                $rootScope.arr2[i][j] = $rootScope.arr2[i][j].split('|');
 
-                                //$rootScope.select_cnt.push($rootScope.arr[i][key]);
 
-                                //console.log($rootScope.jsontext2[i]);
+                                $rootScope.jsontext[i] = '{"v":"'+ $rootScope.arr2[i][j][0]+'"}';
+                                $rootScope.jsontext2[i] = '{"v":'+ $rootScope.arr2[i][j][1]+'}';
+
+                                $rootScope.contact[i] = JSON.parse($rootScope.jsontext[i]);
+                                $rootScope.contact2[i] = JSON.parse($rootScope.jsontext2[i]);
+
+
+                                var test = $rootScope.contact[i] + $rootScope.contact2[i];
+
+
+                                $rootScope.obj['rows'].push({c:[$rootScope.contact[i], $rootScope.contact2[i]]});
 
                             }
 
-//                            // 차트 질문
-//                           $rootScope.jsontext[i] = '{"v":"'+ key+'"}';
-////                            //$rootScope.jsontext[i] = '{"v": "aaaaa"}';
-////
-////
-                            $rootScope.contact[i] = JSON.parse($rootScope.jsontext[i]);
-                            $rootScope.contact2[i] = JSON.parse($rootScope.jsontext2[i]);
+                        }
 
-                            $rootScope.contact3[i] = $rootScope.contact[i] + $rootScope.contact2[i];
+                        var a = JSON.stringify($rootScope.obj);
+                        $rootScope.result = JSON.parse(a);
 
-//
-//
-                            //console.log($rootScope.select_cnt[i]);
-                            var test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "Slices", "type": "number"} ], "rows": []}';
-                            var obj = JSON.parse(test);
+                        console.log($rootScope.result);
 
-                            for(var q=0; q < $rootScope.contact3.length; q++){
-                                obj['rows'].push({c:[$rootScope.contact[q], $rootScope.contact2[q]]});
-                            }
-////
-                            test = JSON.stringify(obj);
-                            var result = JSON.parse(test);
-                            //console.log(result);
+                        $scope.chart[i].data = $rootScope.result;
 
-                            $scope.chart[i].data = result;
-
-                            $scope.chart[i].type = 'PieChart';
-
-                        });
-
+                        $scope.chart[i].type = 'PieChart';
                     }
-
-//                    for ( var i = 0 ; i < $rootScope.aa.length ; i++) {
-//                        //console.log($rootScope.aa[i]);
-//                        $scope.chart[i] = {};
-//                        var result = '';
-//
-//                        for ( var j = 0 ; j < $rootScope.select_answer.length ; j++) {
-//
-//
-//
-//                            if( $rootScope.aa[i] == $rootScope.select_answer[j]) {
-//
-//                                console.log($rootScope.select_answer[j]);
-//                                console.log($rootScope.select_cnt[j]);
-//
-//                                $rootScope.jsontext[j] = '{"v":"'+ $rootScope.select_answer[j]+'"}';
-//                                $rootScope.jsontext2[j] = '{"v":'+ $rootScope.select_cnt[j]+'}';
-//
-//                                $rootScope.contact[j] = JSON.parse($rootScope.jsontext[j]);
-//                                $rootScope.contact2[j] = JSON.parse($rootScope.jsontext2[j]);
-//
-//                                $rootScope.contact3[j] = $rootScope.contact[j] + $rootScope.contact2[j];
-//
-//                                //console.log($rootScope.select_cnt[i]);
-//                                var test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "Slices", "type": "number"} ], "rows": []}';
-//                                var obj = JSON.parse(test);
-//
-//                                for(var q=0; q < $rootScope.contact3.length; q++){
-//                                    obj['rows'].push({c:[$rootScope.contact[q], $rootScope.contact2[q]]});
-//                                }
-////
-//                                test = JSON.stringify(obj);
-//                                result = JSON.parse(test);
-//                                //console.log(result);
-//
-//
-//                            }
-//
-//                        }
-//
-//                        $scope.chart[i].data = result;
-//
-//                        $scope.chart[i].type = 'PieChart';
-//
-//                    }
-
-//                    for ( var i = 0 ; i < $rootScope.select_answer.length ; i++) {
-//                        //console.log($rootScope.aa[i]);
-//
-//                        for ( var j = 0 ; j < $rootScope.aa.length ; j++) {
-//                            //console.log($rootScope.select_answer[j]);
-//                            if( $rootScope.select_answer[i] == $rootScope.aa[j]) {
-//                                console.log($rootScope.select_answer[j]);
-//                            }
-//                        }
-//
-//                    }
-
-//                    for(var i in $rootScope.aa){
-//
-//                        for(var j in $rootScope.select_answer){
-//
-//                            $scope.chart[j] = {};
-//                            var result = '';
-//
-//                            console.log($rootScope.select_answer[j]);
-//                            if( $rootScope.select_answer[j] == $rootScope.aa[i]) {
-//                                console.log($rootScope.select_answer[j]);
-//                                console.log($rootScope.select_cnt[j]);
-//
-//                                $rootScope.jsontext[j] = '{"v":"'+ $rootScope.select_answer[j]+'"}';
-//                                $rootScope.jsontext2[j] = '{"v":'+ $rootScope.select_cnt[j]+'}';
-//
-//                                $rootScope.contact[j] = JSON.parse($rootScope.jsontext[j]);
-//                                $rootScope.contact2[j] = JSON.parse($rootScope.jsontext2[j]);
-//
-//                                $rootScope.contact3[j] = $rootScope.contact[j] + $rootScope.contact2[j];
-//
-////
-////
-//                                //console.log($rootScope.select_cnt[i]);
-//                                var test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "Slices", "type": "number"} ], "rows": []}';
-//                                var obj = JSON.parse(test);
-//
-//                                for(var q=0; q < $rootScope.contact3.length; q++){
-//                                    obj['rows'].push({c:[$rootScope.contact[q], $rootScope.contact2[q]]});
-//                                }
-////
-//                                test = JSON.stringify(obj);
-//                                result = JSON.parse(test);
-//                                //console.log(result);
-//                            }
-//
-//                            $scope.chart[j].data = result;
-//
-//                            $scope.chart[j].type = 'PieChart';
-//                        }
-//
-//                    }
-
 
                 })
                 .catch(function(error){});
@@ -276,7 +168,7 @@ define([
 
             $("#select_sort").attr("checked", 'checked');
 
-            $rootScope.arr = [];
+            $rootScope.arr = new Array();
 
             $rootScope.a = [];
             $rootScope.aa = [];
@@ -296,11 +188,6 @@ define([
 
                         for(var x in parse_que_data){
 
-                            //console.log($rootScope.select_cnt[x]);
-
-//                            var j = parseInt(x)+1;
-//                            $scope.chart[x] = {};
-
                             var choice = [];
                             if(parse_que_data[x].type == 0){ // 객관식일때
                                 var select_answer = parse_que_data[x].choice.split(';'); // ,를 기준으로 문자열을 잘라 배열로 변환
@@ -313,36 +200,8 @@ define([
                                     //console.log(select_answer[i]);
 
                                     $rootScope.aa.push(select_answer[i]);
-
-
-                                    // 차트 질문
-//                                  $rootScope.jsontext[i] = '{"v":"'+ select_answer[i]+'"}';
-////                                    //$rootScope.jsontext[i] = '{"v":"'+ $rootScope.select_answer[i]+'"}';
-//                                    $rootScope.jsontext2[i] = '{"v":'+ $rootScope.select_cnt[i]+'}';
-////                                    //$rootScope.jsontext2[i] = '{"v":'+ $rootScope.select_cnt[i]+'}';
-////
-//                                    $rootScope.contact[i] = JSON.parse($rootScope.jsontext[i]);
-//                                    $rootScope.contact2[i] = JSON.parse($rootScope.jsontext2[i]);
-//
-//                                    $rootScope.contact3[i] = $rootScope.contact[i] + $rootScope.contact2[i];
                                 }
 
-//                                var test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "Slices", "type": "number"} ], "rows": []}';
-//                                var obj = JSON.parse(test);
-//
-//                                for(var q=0; q < $rootScope.contact3.length; q++){
-//                                    //console.log($rootScope.contact[q]);
-//                                    //console.log($rootScope.contact2[q]);
-//                                    obj['rows'].push({c:[$rootScope.contact[q], $rootScope.contact2[q]]});
-//                                }
-//
-//                                test = JSON.stringify(obj);
-//                                var result = JSON.parse(test);
-//                                //console.log(result);
-//
-//                                $scope.chart[x].data = result;
-//
-//                                $scope.chart[x].type = 'PieChart';
 
 
                             }else{ // 주관식일때
@@ -354,23 +213,11 @@ define([
 
                         }
 
-
                         if(data.ada_state == 0){
                             $scope.showPollView = false;
                         }else{
                             $scope.showPollView = true;
                         }
-
-                        var query = data.QUERY;
-
-//                        var select_sort = [];
-//                        for(var i in query) {
-//
-//                            $scope.queue.push({"BOARD_NO":query[i].BOARD_NO,"QUERY":query[i].QUERY,"QUERY_GB":query[i].QUERY_GB,"QUERY_NO":query[i].QUERY_NO,"QUERY_SORT":query[i].QUERY_SORT,"SELECT":query[i].SELECT});
-
-                        $scope.lastPage = Math.round(data.QUERY_CNT/2);
-
-
 
                         // 차트
 //                      var query = data.QUERY;

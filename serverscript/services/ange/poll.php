@@ -223,14 +223,33 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
                 //$data = $__trn->{'rows'};
 
+//                foreach($data['answer'] as $lkey=>$lval){
+//                    echo("<br/>".$lkey.'문항<br/>');
+//                    foreach($lval as $lkey2=>$lval2){
+//
+//                        MtUtil::_d("### [END] [DATA] lval['testtesttest'] = ".$lkey2.":".$lval2);
+//
+//                        echo(" {$lkey2} : {$lval2} / {$qcnt} , ");
+//                    }
+//                }
+
+                $lcnt=0;
                 foreach($data['answer'] as $lkey=>$lval){
-                    echo("<br/>".$lkey.'문항<br/>');
+                    $lcnt++;
+                    $t_stream = "[";
+                    $t_stream .= "['선택','응답율']";
                     foreach($lval as $lkey2=>$lval2){
 
-                        MtUtil::_d("### [END] [DATA] lval['testtesttest'] = ".$lkey2.":".$lval2);
+                        //MtUtil::_d("### [END] [DATA] lval['testtesttest'] = ".$lkey2.":".$lval2);
 
-                        echo(" {$lkey2} : {$lval2} / {$qcnt} , ");
+                        $t_rate = (round((int)$lval2/(int)$qcnt*1000)/10);
+                        $t_stream .= "^['{$lkey2}'|{$t_rate}]";
                     }
+                    $t_stream .= "]";
+
+                    $graphdata_answer[$lcnt]=$t_stream;
+
+                    json_encode($graphdata_answer[$lcnt], true);
                 }
 
 
@@ -239,7 +258,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }else{
                     ob_end_clean();
 
-                    echo json_encode($data['answer'], true);
+                    echo json_encode($graphdata_answer, true); // $data['answer']
                     exit;
                 }
             }
