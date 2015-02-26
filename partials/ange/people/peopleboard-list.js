@@ -48,6 +48,8 @@ define([
             // 초기화
         $scope.init = function() {
 
+            console.log($scope.menu.COMM_NO);
+
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.BOARD_GB = 'BOARD';
             $scope.search.SYSTEM_GB = 'ANGE';

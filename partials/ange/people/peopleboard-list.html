@@ -119,7 +119,8 @@
                                         </td>
                                         <td>
                                             <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                            {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                            <span ng-show="item.BOARD_ST != 'D'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                                            <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
                                             <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>
 
                                             <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>

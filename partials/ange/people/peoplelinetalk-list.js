@@ -207,8 +207,9 @@ define([
             $scope.item.PARENT_NO = 0;
             $scope.item.LEVEL = 1;
             $scope.item.REPLY_NO = 1;
-            $scope.item.TARGET_NO = $scope.item.NO;
+            $scope.item.TARGET_NO = $scope.talkitem.NO;
             $scope.item.REPLY_GB = 'linetalk';
+            $scope.item.TARGET_GB = 'TALK';
 
             $scope.item.REMAIN_POINT = 10;
 
@@ -363,17 +364,16 @@ define([
         }
 
         /********** 화면 초기화 **********/
-/*
+
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getTalkSubject)
-            .then($scope.getPeopleReplyList)
             .catch($scope.reportProblems);
-*/
 
-        $scope.init();
-        $scope.getTalkSubject()
+        console.log($rootScope.uid);
+//        $scope.init();
+//        $scope.getTalkSubject()
 //        $scope.getPeopleReplyList();
 
     }]);

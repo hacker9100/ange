@@ -154,19 +154,6 @@ define([
 
                     for(var i in data) {
 
-//                        if (data[i].FILE != null) {
-//                            var img =  UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID; //UPLOAD.BASE_URL
-//                            data[i].MAIN_FILE = img;
-//                        }
-//                        if (data[i].FILE.PATH != undefined) {
-//                            var img = UPLOAD.BASE_URL + '/storage/board/' + 'thumbnail/' + data[i].FILE.FILE_ID;
-//                            data[i].TYPE = 'BOARD';
-//                            data[i].FILE = img;
-//                            $scope.list.push(data[i]);
-//                        }
-//
-//                        console.log($scope.list);
-
                         var img = UPLOAD.BASE_URL + '/storage/board/' + 'thumbnail/' + data[i].FILE.FILE_ID;
                         data[i].TYPE = 'BOARD';
                         data[i].FILE = img;

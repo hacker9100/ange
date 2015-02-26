@@ -130,6 +130,7 @@ define([
                 $scope.item.BODY = "";
             }
 
+
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'CLINIC';
 
@@ -202,17 +203,7 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-            if ($stateParams.menu == 'childdevelop') {
-                $scope.item.COMM_NO = '09';
-            } else if($stateParams.menu == 'chlidoriental') {
-                $scope.item.COMM_NO = '10';
-            } else if($stateParams.menu == 'obstetrics') {
-                $scope.item.COMM_NO = '11';
-            } else if($stateParams.menu == 'momshealth') {
-                $scope.item.COMM_NO = '12';
-            } else if($stateParams.menu == 'financial') {
-                $scope.item.COMM_NO = '13';
-            }
+            $scope.item.COMM_NO = $scope.menu.COMM_NO;
 
             if ($stateParams.id == 0) {
 

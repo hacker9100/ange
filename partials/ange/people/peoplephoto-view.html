@@ -30,7 +30,8 @@
                                         <!--<img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url({{item.MAIN_FILE}})" />-->
                                     <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
                                     <div class="col-xs-6  board_basicinfo_photosubject">
-                                        {{item.SUBJECT}}
+                                        <span ng-show="item.BOARD_ST != 'D'">[{{item.CATEGORY_NM}}] {{item.SUBJECT}}</span>
+                                        <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글입니다</span>
                                         <!--<span class="table_icon_new">N</span>-->
 
                                         <div class="people_photo_info">
@@ -61,17 +62,17 @@
 
                             <div class="container-fluid peopleboard_view_contentwrap">
                                 <div class="row">
-                                    <div class="col-xs-12 peopleboard_view_contentbody">
+                                    <div ng-show="item.BOARD_ST != 'D'" class="col-xs-12 peopleboard_view_contentbody">
 
                                         <!-- Editor CSS 적용 -->
                                         <!-- template -->
                                         <div class="template_recipe" ng-show="community_show == 'recipearcade'">
-                                            <div class="infobox_row">
-                                                <div class="template_col_title">카테고리</div>
-                                                <div class="template_col_body">
-                                                    <span>{{item.PHOTO_CATEGORY}}</span>
-                                                </div>
-                                            </div>
+                                            <!--<div class="infobox_row">-->
+                                                <!--<div class="template_col_title">카테고리</div>-->
+                                                <!--<div class="template_col_body">-->
+                                                    <!--<span>{{item.CATEGORY_NM}}</span>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
                                             <div class="infobox_row">
                                                 <div class="template_col_title short">재료</div>
                                                 <div class="template_col_body">
@@ -116,6 +117,18 @@
                                         <!-- Editor CSS 적용 -->
 
                                     </div><!-- /.col-12-->
+                                    <div ng-show="item.BOARD_ST == 'D'" class="col-xs-12 peopleboard_view_contentbody">
+
+                                        <center>
+
+                                            <!-- Editor CSS 적용 -->
+                                            <div style="margin:0px auto; padding:50px;">작성자가 삭제한 글입니다.</div>
+
+                                        </center>
+
+                                        <!-- Editor CSS 적용 -->
+
+                                    </div>
                                 </div><!-- /.row -->
                             </div><!-- /.container -->
 
@@ -127,7 +140,7 @@
                                         <a class="btn people_btn submit" title="등록하기" ng-click="click_showCreatePeopleBoard();" style="display:block;">등록</a>
                                     </div>
 
-                                    <div class="col-xs-8" ng-show="uid == item.REG_UID && uid != '' && uid != null">
+                                    <div class="col-xs-8" ng-show="uid == item.REG_UID && uid != '' && uid != null && item.BOARD_ST != 'D'">
                                         <a class="btn people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeoplePhotoEdit(item);">수정</a>
                                         <a ng-show="uid == item.REG_UID && uid != '' && uid != null" ng-click="click_showPeoplePhotoDelete(item);">삭제</a>
                                     </div>
@@ -147,7 +160,7 @@
                                         <span class="glyphicon glyphicon-chevron-up"></span> 이전글
                                     </div><!-- /.col-xs-2-->
                                     <div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">
-                                        <a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>
+                                        <a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}&nbsp;({{preBoardView.NICK_NM}})</a>
                                     </div><!-- /.col-xs-10-->
                                     <div data-ng-show="preBoardView == false || preBoardView == '' || preBoardView == null" class="col-xs-10  board_basicinfo_subject">
                                         이전 글이 없습니다
@@ -159,7 +172,7 @@
                                         <span class="glyphicon glyphicon-chevron-down"></span> 다음글
                                     </div><!-- /.col-xs-2-->
                                     <div data-ng-show="nextBoardView != ''" class="col-xs-10 board_basicinfo_subject">
-                                        <a data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>
+                                        <a data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}&nbsp;({{nextBoardView.NICK_NM}})</a>
                                     </div><!-- /.col-xs-10-->
                                     <div data-ng-show="nextBoardView == false || nextBoardView == '' || nextBoardView == null" class="col-xs-10 board_basicinfo_subject">
                                         다음 글이 없습니다

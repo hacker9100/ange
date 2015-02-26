@@ -168,25 +168,27 @@ define([
         // 초기화
         $scope.init = function() {
 
-            if ($stateParams.menu == 'angeroom') {
-                //$scope.community = "앙쥬맘 수다방";
-                $scope.item.COMM_NO = 1;
-            } else if($stateParams.menu == 'momstalk') {
-                //$scope.community = "예비맘 출산맘";
-                $scope.item.COMM_NO = 2;
-            } else if($stateParams.menu == 'babycare') {
-                //$scope.community = "육아방";
-                $scope.item.COMM_NO = 3;
-            } else if($stateParams.menu == 'firstbirthtalk') {
-                //$scope.community = "돌잔치 톡톡톡";
-                $scope.item.COMM_NO = 4;
-            } else if($stateParams.menu == 'booktalk') {
-                //$scope.community = "책수다";
-                $scope.item.COMM_NO = 5;
-            }else if($stateParams.menu == 'supporter') {
-                //$scope.community = "서포터즈";
-                $scope.item.COMM_NO = 21;
-            }
+//            if ($stateParams.menu == 'angeroom') {
+//                //$scope.community = "앙쥬맘 수다방";
+//                $scope.item.COMM_NO = 1;
+//            } else if($stateParams.menu == 'momstalk') {
+//                //$scope.community = "예비맘 출산맘";
+//                $scope.item.COMM_NO = 2;
+//            } else if($stateParams.menu == 'babycare') {
+//                //$scope.community = "육아방";
+//                $scope.item.COMM_NO = 3;
+//            } else if($stateParams.menu == 'firstbirthtalk') {
+//                //$scope.community = "돌잔치 톡톡톡";
+//                $scope.item.COMM_NO = 4;
+//            } else if($stateParams.menu == 'booktalk') {
+//                //$scope.community = "책수다";
+//                $scope.item.COMM_NO = 5;
+//            }else if($stateParams.menu == 'supporter') {
+//                //$scope.community = "서포터즈";
+//                $scope.item.COMM_NO = 21;
+//            }
+
+            $scope.item.COMM_NO = $scope.menu.COMM_NO;
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'BOARD';
@@ -227,7 +229,7 @@ define([
                 $scope.getItem('com/webboard', 'item', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
-                        $scope.item.NOTICE_FL == 'Y' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
+                        $scope.item.NOTICE_FL == '1' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
 
                         if($scope.item.REPLY_FL == "Y"){
                             $("#check_reply").attr("checked", true);
@@ -235,7 +237,7 @@ define([
                             $("#check_reply").attr("checked", false);
                         }
 
-                        if($scope.item.NOTICE_FL == "Y"){
+                        if($scope.item.NOTICE_FL == "1"){
                             $("#noti_check").attr("checked", true);
                         }else{
                             $("#noti_check").attr("checked", false);
@@ -359,10 +361,12 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoard)
             .catch($scope.reportProblems);
 
-        $scope.init();
-        $scope.getPeopleBoard();
+//        $scope.init();
+//        $scope.getPeopleBoard();
 
 
     }]);

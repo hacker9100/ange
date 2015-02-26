@@ -238,6 +238,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $lcnt++;
                     $t_stream = "[";
                     $t_stream .= "['선택','응답율']";
+                    arsort($lval); // 가장큰것부터 정렬
                     foreach($lval as $lkey2=>$lval2){
 
                         //MtUtil::_d("### [END] [DATA] lval['testtesttest'] = ".$lkey2.":".$lval2);

@@ -61,12 +61,13 @@
                 $sql = "SELECT
                             NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT , SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM,
                             REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, NICK_NM, BOARD_NO,
-                            CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD, REG_NEW_DT, CATEGORY_NO
+                            CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD, REG_NEW_DT, CATEGORY_NO, BOARD_ST,
+                            (SELECT NOTE FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM
                         FROM (
                             SELECT
                                 B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
                                 (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT, B.BOARD_GB, B.COMM_NO, C.COMM_NM,
-                                B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.NICK_NM, B.BOARD_NO, B.PASSWORD, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT, B.CATEGORY_NO
+                                B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.NICK_NM, B.BOARD_NO, B.PASSWORD, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT, B.CATEGORY_NO, B.BOARD_ST
                             FROM
                               COM_BOARD B
                               LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -181,9 +182,9 @@
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     if($_search[CONDITION][value] == "SUBJECT+BODY"){
-                        $search_common .= "AND SUBJECT LIKE '%".$_search[KEYWORD]."%' AND BODY LIKE '%".$_search[KEYWORD]."%'";
+                        $search_where .= "AND SUBJECT LIKE '%".$_search[KEYWORD]."%' AND BODY LIKE '%".$_search[KEYWORD]."%'";
                     }else{
-                        $search_common .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                        $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
                     }
                 }
 
@@ -207,12 +208,12 @@
 	                      BOARD_NO, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT,
 	                      (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'BOARD') AS REPLY_COUNT,
                           (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = DATA.NO) AS BOARD_REPLY_COUNT,
-	                      (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM
+	                      (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM, BOARD_ST
                         FROM
                         (
                             SELECT
                                 B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO,
-                                B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO
+                                B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO, B.BOARD_ST
                             FROM
                                 COM_BOARD B
                             WHERE
@@ -337,7 +338,7 @@
                     }
                 }
             } else if ($_type == 'pre') {
-                $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND PARENT_NO = 0 AND COMM_NO=".$_search[COMM_NO]." ORDER BY  NO DESC LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM  FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND PARENT_NO = 0 AND COMM_NO=".$_search[COMM_NO]." ORDER BY  NO DESC LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -347,7 +348,7 @@
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'next') {
-                $sql = "SELECT NO, SUBJECT FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND PARENT_NO = 0  AND COMM_NO=".$_search[COMM_NO]." ORDER BY NO LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND PARENT_NO = 0  AND COMM_NO=".$_search[COMM_NO]." ORDER BY NO LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -358,11 +359,20 @@
                 }
             } else if ($_type == 'category') {
 
+//                if (isset($_search[COMM_NO]) && $_search[COMM_NO] == "") {
+//                    $search_where .= "AND CATEGORY_GB = '".$_search[COMM_NO]."' ";
+//                }
+
+                if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
+                    $search_where .= "AND NO = '".$_search[CATEGORY_NO]."' ";
+                }
+
                 $sql = "SELECT NO, CATEGORY_NM, NOTE
                     FROM CMS_CATEGORY
                     WHERE 1=1
                     AND SYSTEM_GB = 'ANGE'
-                    AND CATEGORY_GB = ".$_search[COMM_NO]."
+                    AND CATEGORY_GB = '".$_search[COMM_NO]."'
+                    ".$search_where."
                     ORDER BY SORT_IDX ASC
                 ";
 
@@ -564,7 +574,7 @@
                         , '".$_SESSION['name']."'
                         , '".$_SESSION['nick']."'
                         , SYSDATE()
-                        , '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
+                        , '".($_model[NOTICE_FL] == "true" ? "1" : "0")."'
                         , '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
                         , '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
                         , '".$_model[TAG]."'
@@ -771,7 +781,7 @@
                     ,BODY = '".$_model[BODY]."'
                     ,REG_UID = '".$_SESSION['uid']."'
                     ,REG_NM = '".$_model[REG_NM]."'
-                    ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "Y" : "N")."'
+                    ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "1" : "0")."'
                     ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
                     ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
                     ,TAG = '".$_model[TAG]."'
@@ -996,51 +1006,55 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM COM_BOARD WHERE NO = ".$_key;
+            //$sql = "DELETE FROM COM_BOARD WHERE NO = ".$_key;
+
+            $sql = "UPDATE COM_BOARD SET
+                 BOARD_ST = 'D'
+                 WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
             /*$no = $_d->mysql_insert_id;*/
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            $sql = "SELECT
-                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                    FROM
-                        FILE F, CONTENT_SOURCE S
-                    WHERE
-                        F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'CMS_BOARD'
-                        AND S.TARGET_NO = ".$_key."
-                        AND F.THUMB_FL = '0'
-                    ";
-
-            $result = $_d->sql_query($sql,true);
-            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                $_d->sql_query($sql);
-
-                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'CMS_BOARD' AND TARGET_NO = ".$row[NO];
-
-                $_d->sql_query($sql);
-
-                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-
-                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
-                }
-            }
-
-            $sql = "DELETE FROM COM_BOARD WHERE PARENT_NO = ".$_key;
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+//            if($_d->mysql_errno > 0) {
+//                $err++;
+//                $msg = $_d->mysql_error;
+//            }
+//
+//            $sql = "SELECT
+//                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+//                    FROM
+//                        FILE F, CONTENT_SOURCE S
+//                    WHERE
+//                        F.NO = S.SOURCE_NO
+//                        AND S.TARGET_GB = 'CMS_BOARD'
+//                        AND S.TARGET_NO = ".$_key."
+//                        AND F.THUMB_FL = '0'
+//                    ";
+//
+//            $result = $_d->sql_query($sql,true);
+//            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+//                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+//                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+//
+//                $_d->sql_query($sql);
+//
+//                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'CMS_BOARD' AND TARGET_NO = ".$row[NO];
+//
+//                $_d->sql_query($sql);
+//
+//                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+//
+//                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+//                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
+//                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+//                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+//                }
+//            }
+//
+//            $sql = "DELETE FROM COM_BOARD WHERE PARENT_NO = ".$_key;
+//
+//            $_d->sql_query($sql);
+//            $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
                 $err++;

@@ -51,6 +51,8 @@ define([
 
             $scope.VIEW_ROLE = 'CLINIC';
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
+
+            console.log($scope.search.COMM_NO);
             $scope.search.COMM_GB = 'CLINIC';
             $scope.search.SYSTEM_GB = 'ANGE';
 

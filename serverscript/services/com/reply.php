@@ -196,6 +196,7 @@
 
             $sql = "INSERT INTO COM_REPLY
                     (
+                        NO,
                         PARENT_NO,
                         REPLY_NO,
                         REPLY_GB,
@@ -210,6 +211,7 @@
                         TARGET_GB,
                         BLIND_FL
                     ) VALUES (
+                        (SELECT MAX(NO)+1 FROM COM_REPLY a),
                         ".$_model[PARENT_NO].",
                         '".$_model[REPLY_NO]."',
                         '".$_model[REPLY_GB]."',

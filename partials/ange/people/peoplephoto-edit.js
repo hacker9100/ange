@@ -211,7 +211,7 @@ define([
                         }
 
 
-                        $scope.item.NOTICE_FL == 'Y' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
+                        $scope.item.NOTICE_FL == '1' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
 
                         if($scope.item.REPLY_FL == "Y"){
                             $("#check_reply").attr("checked", true);
@@ -270,9 +270,6 @@ define([
 //                $scope.item.FILES[i].$submit();
             }
 
-            console.log($scope.item.CATEGORY_NO);
-
-
             if ($stateParams.id == 0) {
 
                 if($("#check_reply").is(":checked")){
@@ -330,6 +327,7 @@ define([
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
+
         };
 
         /********** 화면 초기화 **********/
@@ -337,8 +335,14 @@ define([
 //         .then($scope.sessionCheck)
 //         .catch($scope.reportProblems);
 
-        $scope.init();
-        $scope.getPeopleBoard();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoard)
+            .catch($scope.reportProblems);
+
+//        $scope.init();
+//        $scope.getPeopleBoard();
 
 
     }]);
