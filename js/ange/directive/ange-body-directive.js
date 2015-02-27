@@ -41,8 +41,15 @@ define(['./directives'], function (directives) {
                         // 앙쥬피플
                         } if (path[1] == 'people') {
                             if (menu.COMM_GB != null) {
-                                path[2] = angular.lowercase(menu.COMM_GB);
 
+                                //path[2] = angular.lowercase(menu.COMM_GB);
+                                if(path[2] == 'discusstitle'){ // 온라인토론 타이틀 리스트
+                                    path[2] == 'discusstitle';
+                                }else if(path[2] == 'discuss'){
+                                    path[2] == 'discuss';
+                                }else{
+                                    path[2] = angular.lowercase(menu.COMM_GB);
+                                }
                                 console.log(path[2]);
                             }
 
