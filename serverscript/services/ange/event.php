@@ -129,6 +129,18 @@
                     $search_where .= "AND ada_type IN (".$_search[ADA_TYPE_IN].") ";
                 }
 
+                if(isset($_search[NOT_SAMPLE]) && $_search[NOT_SAMPLE] == "Y"){
+                    $search_where .= "AND adp_idx NOT IN (45, 46) ";
+                }
+
+                if(isset($_search[NOT_POST]) && $_search[NOT_POST] == "Y"){
+                    $search_where .= "AND adp_idx != 49 ";
+                }
+
+                if(isset($_search[PRODUCT_CODE]) && $_search[PRODUCT_CODE] != ""){
+                    $search_where .= "AND adp_idx = ".$_search[PRODUCT_CODE]." ";
+                }
+
                 if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
 //                    if (isset($_search[EVENT_GB][value])) {
 //                        $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB][value]."' ";
