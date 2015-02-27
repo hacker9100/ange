@@ -1,0 +1,139 @@
+<div ng-controller="peoplediscusstitle-list" class="ng_wrap">
+<!-- mainbar -->
+<div class="mainbar sub-slide0">
+<div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+<div class="row">
+
+    <div class="col-xs-12 v-cell-3">
+        <div class="comp_basic h-cell-dynamic">
+
+            <div class="sub_contents_wrap">
+
+                <div class="sub_contents_title">
+                    <span class="sub_contents_bullet"></span>
+                    <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3>
+                </div>
+
+                <div class="container-fluid sub_contents_search">
+                    <div class="row">
+                        <div class="col-xs-12" style="padding:0">
+
+                            <div class="btn-group" style="float:left;">
+                                <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
+                            </div><!-- /btn-group -->
+
+                            <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
+                                <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0"  class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+
+                                <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+                                    <button class="btn btn-default"  type="button" ><span class="glyphicon glyphicon-search"></span></button>
+                                </span>
+
+                            </div>
+
+                        </div><!-- /.col-xs-12-->
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+
+            </div><!-- /.sub_contents_wrap -->
+
+
+            <div class="sub_contents_body">
+
+                <table id="comp_board_table" class="table table-hover">
+
+                    <thead>
+                    <tr class="board_thead" height="48">
+                        <td width="9%" align="center"><span class="board_th">번호</span></td>
+                        <td width="60" align="center"><span class="board_th">상태</span></td>
+                        <td align="center"><span class="board_th">제목</span></td>
+                        <td width="200" align="center"><span class="board_th">기간</span></td>
+                    </tr>
+                    </thead>
+
+                    <tbody class="on" ng-repeat="item in list">
+
+                    <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                        <td class="table_no">
+                            <span>{{item.BOARD_NO}}</span>
+                        </td>
+                        <td>
+                            <span ng-show="item.ETC1 <= todayDate && todayDate <= item.ETC2" class="table_red">진행중</span> <!-- 'table_gray' -->
+                            <span ng-show="item.ETC2 < todayDate" class="table_gray">완료</span> <!-- 'table_gray' -->
+                            <span ng-show="todayDate < item.ETC1 && todayDate < item.ETC2" class="table_gray">준비</span> <!-- 'table_gray'  && item.ada_date_close > todayDate -->
+                        </td>
+                        <td>
+                            <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                            <span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                            <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>
+                        </td>
+                        <td class="table_date">{{item.ETC1}} ~ {{item.ETC2}}</td>
+                    </tr>
+
+                    </tbody>
+
+                    <tbody class="on" data-ng-show="list == '' || list == null">
+
+                    <tr>
+                        <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                    </tr>
+
+                    </tbody>
+                </table><!-- /.List-->
+
+                <div class="container-fluid people_view_btnwrap">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <a class="btn people_btn list" title="목록으로" style="display:none;">리스트</a>
+                            <a class="btn people_btn submit" title="등록하기" ng-show="role == 'ANGE_ADMIN'" ng-click="click_showCreatePeopleBoard();">등록</a>
+                        </div>
+
+                        <div class="col-xs-8">
+                            <a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
+                            <a class="btn people_btn confirm" title="확인" style="display:none;">확인</a>
+                            <a class="btn people_btn cancel" title="작성취소" style="display:none;">취소</a>
+                            <a class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>
+                        </div>
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+
+                <nav class="text-center">
+                    <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm"  ng-change="pageChanged()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                </nav><!-- /.Paging-->
+                <!-- /peoplepoll_list -->
+
+            </div><!-- /.sub_contents_body -->
+
+            <!-- 등록 -->
+
+
+            <!--<div ng-show="uid != '' && uid != null" ng-click="test()">세션이 있을때만 보입니다.</div>
+            <div ng-show="uid == '' || uid == null" ng-click="test()">세션이 없을때 보입니다.</div>   -->
+
+            <div class="sub_contents_ads" style="display:none;">
+                <div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div> <!-- rows -->
+
+
+</div><!-- container-fluid -->
+
+</div>
+
+<div class="subar sub-slide1">
+    <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+
+    <!-- 1200px 이하일 경우 표시되는 footer -->
+    <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
+    <!-- /1200px 이하일 경우 표시되는 footer -->
+</div>
+
+<!-- /Main Page Layout Set -->
+</div>

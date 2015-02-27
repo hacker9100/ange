@@ -52,6 +52,7 @@
                                             <button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'Y'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공감취소</button>
                                             <button ng-show="item.SCRAP_FL == 'Y'" class="people_sharebtn redbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>스크랩</button>
                                             <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>프린트</button>
+                                            <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭" ng-click="click_boardReport(item)"><span class="glyphicon glyphicon-print sharebtn_icon"></span>신고</button>
                                         </div>
                                     </div>
 
@@ -62,7 +63,7 @@
 
                             <div class="container-fluid peopleboard_view_contentwrap">
                                 <div class="row">
-                                    <div ng-show="item.BOARD_ST != 'D'" class="col-xs-12 peopleboard_view_contentbody">
+                                    <div ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" class="col-xs-12 peopleboard_view_contentbody">
 
                                         <!-- Editor CSS 적용 -->
                                         <!-- template -->
@@ -123,6 +124,18 @@
 
                                             <!-- Editor CSS 적용 -->
                                             <div style="margin:0px auto; padding:50px;">작성자가 삭제한 글입니다.</div>
+
+                                        </center>
+
+                                        <!-- Editor CSS 적용 -->
+
+                                    </div>
+                                    <div ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'" class="col-xs-12 peopleboard_view_contentbody">
+
+                                        <center>
+
+                                            <!-- Editor CSS 적용 -->
+                                            <div style="margin:0px auto; padding:50px;">관리자에 의해 블라인드 된 글입니다.</div>
 
                                         </center>
 
@@ -211,176 +224,32 @@
 
 </div>
 
+<script type="text/ng-template" id="peopleboard_report.html">
+    <div class="modal-header">
+        <h3 class="modal-title">게시글 신고</h3>
+        <br/>
+    </div>
 
-<!-- Contents Include -->
-<!--<div  ng-controller="photo-view">-->
-    <!--<br/>-->
-    <!--<br/>-->
-    <!--<br/>-->
-    <!--<br/>-->
-    <!--&lt;!&ndash; mainbar &ndash;&gt;-->
-    <!--<div class="mainbar sub-slide0">-->
-        <!--<div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">-->
+    <div class="modal-body">
+        <div class="body_wrap">
+            <!--<div class="panel panel-master contentpannel" style="border:#000000; display:block;">-->
 
-    <!--<div ng-model="item" class="row form_basic_wrap">-->
-        <!--<form role="form" name="view_form" class="form-horizontal form_basic_100">-->
-            <!--<div class= "form-group form_basic_group">-->
-                <!--<label class= "col-md-2">제목</label>-->
-                <!--<div class="form_basic_input">-->
-                    <!--<span ng-bind="item.SUBJECT" />-->
-                <!--</div>-->
+            <table id="comp_board_table" class="table table-hover">
+                <tr class="product_note">
+                    <td style="vertical-align: middle">신고사유</td>
+                    <td colspan="3">
+                        <textarea id="editor1" ng-model="item.NOTE" id="comment" name="comment" class="form-control input-md" rows="4" data-ng-disabled="nouserid" style="resize: none;"></textarea>
+                    </td>
+                </tr>
+            </table>
+
             <!--</div>-->
-            <!--<div class="form-group form_basic_group" style="margin:0px auto;">-->
-                <!--<H5 style="line-height:18px; margin:0;">-->
-                    <!--<span class="glyphicon glyphicon-pencil" style="color:#2486ED;"></span> <span class="label label-default">편집기</span>를 이용하여 작성된 글입니다.-->
-                <!--</H5>-->
-            <!--</div>-->
-            <!--<div style="border:1px solid #DEDEDE; width:100%; float:left;">-->
-                <!--<div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>-->
-                <!--&lt;!&ndash;<div ng-bind-html="renderHtml(item.BODY)"></div>&ndash;&gt;-->
-            <!--</div>-->
-            <!--<div class= "form-group form_basic_group" style="float:left;">-->
-                <!--<H5 style="line-height:8px; margin:0;">-->
-                    <!--<span class="glyphicon glyphicon-floppy-disk" style="color:#2486ED;"></span> 파일첨부-->
-                <!--</H5>-->
-                <!--<div style="margin-top:20px; width:100%; float:left;">-->
-                    <!--<table class="table table-striped files ng-cloak">-->
-                        <!--<tr data-ng-repeat="file in queue">-->
-                            <!--<td data-ng-switch data-on="!!file.thumbnailUrl">-->
-                                <!--<div class="preview" data-ng-switch-when="true">-->
-                                    <!--<img src="{{file.thumbnailUrl}}" alt="">-->
-                                <!--</div>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<p class="name" data-ng-switch data-on="!!file.url">-->
-                                    <!--<a data-ng-switch-default data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}">{{file.name}}</a>-->
-                                <!--</p>-->
-                            <!--</td>-->
-                            <!--<td>-->
-                                <!--<p class="size">{{ formatFileSize(file.size) }}</p>-->
-                                <!--<p class="size">{{file.size | formatFileSize}}</p>-->
-                            <!--</td>-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</div>-->
-            <!--</div>-->
+        </div>
+    </div>
 
-    <!--</form>-->
-
-        <!--<br/>-->
-        <!--<br/>-->
-        <!--<br/>-->
-
-        <!--<div class="form-horizontal">-->
-            <!--<table summary="이전글 다음글 목록">-->
-                <!--<colgroup>-->
-                    <!--<col width="10%" />-->
-                    <!--<col width="90%" />-->
-                <!--</colgroup>-->
-                <!--<tbody>-->
-                <!--<tr>-->
-                    <!--<th scope="row">다음글</th>-->
-                    <!--<td>-->
-                        <!--<div data-ng-show="nextBoardView != ''">-->
-                            <!--<a data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>-->
-                        <!--</div>-->
-                        <!--<div data-ng-show="nextBoardView == false">-->
-                            <!--다음 글이 없습니다-->
-                        <!--</div>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                    <!--<th scope="row">이전글</th>-->
-                    <!--<td>-->
-                        <!--<div data-ng-show="preBoardView != ''">-->
-                            <!--<a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>-->
-                        <!--</div>-->
-                        <!--<div data-ng-show="preBoardView == false">-->
-                            <!--이전 글이 없습니다-->
-                        <!--</div>-->
-                    <!--</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-            <!--</table>-->
-        <!--</div>-->
-
-        <!--<br/><br/><br/><br/>-->
-        <!--<div class="form-horizontal form_basic_100">-->
-            <!--<p><strong>의견쓰기</strong></p>-->
-            <!--<table>-->
-                <!--<tr>-->
-                    <!--<td>-->
-                        <!--<textarea ng-model="item.COMMENT" cols="70" rows="3"></textarea>-->
-                    <!--</td>-->
-                    <!--<td>-->
-                        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                        <!--<button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePeopleBoardComment(comment);" ng-disabled="comment_form.$invalid">-->
-                            <!--<i class="glyphicon glyphicon-plus"></i>-->
-                            <!--<span>(500자이내)<br>등록</span>-->
-                        <!--</button>-->
-                    <!--</td>-->
-                <!--</tr>-->
-            <!--</table>-->
-        <!--</div>-->
-    <!--</div>&lt;!&ndash; /.container &ndash;&gt;-->
-
-            <!--<div class="form-horizontal form_basic_100" ng-model="reply">-->
-                <!--<p><strong>댓글 리스트</strong></p>-->
-
-                <!--&lt;!&ndash; Reply List &ndash;&gt;-->
-                <!--<table class="table" style="border-bottom: 1px solid #868686;">-->
-                    <!--<tr ng-repeat="item in replyList">-->
-                        <!--<td style="width:100px; font-size:0.94em; line-height:38px;">-->
-                            <!--<input type="hidden" ng-model="item.PARENT_NO"/>-->
-                            <!--<strong>{{item.REG_NM}}</strong>&nbsp;({{item.REG_UID}})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                            <!--{{item.COMMENT}}-->
-                            <!--<button type="button" class="btn btn-primary btn-xs start"  ng-click="showDetails = ! showDetails">-->
-                                <!--└ 댓글-->
-                            <!--</button>-->
-                            <!--<div ng-class="{ 'hidden': ! showDetails }">-->
-                                <!--<input type="hidden" ng-model="reply.PARENT_NO" id="parent_no" value="{{item.NO}}"/>-->
-                                <!--<input type="hidden" ng-model="reply.LEVEL" id="level" value="{{item.LEVEL}}"/>-->
-                                <!--<input type="hidden" ng-model="reply.REPLY_NO" id="reply_no"   value="{{item.REPLY_NO}}"/>-->
-                                <!--<textarea ng-model="reply.COMMENT" cols="100" rows="1" id="reply_comment" ></textarea>-->
-                                <!--<button type="button" class="btn btn-primary btn-xs start" ng-click="click_savePeopleBoardReComment();" ng-disabled="comment_form.$invalid">-->
-                                    <!--<i class="glyphicon glyphicon-plus"></i>-->
-                                    <!--<span>등록</span>-->
-                                <!--</button>-->
-                            <!--</div>-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr ng-show="replyList == ''">-->
-                        <!--<td colspan="2" style="text-align: center; font-size:0.86em; line-height:38px;">댓글이 없습니다.</td>-->
-                    <!--</tr>-->
-                <!--</table>-->
-                <!--&lt;!&ndash; ////Reply List &ndash;&gt;-->
-            <!--</div>-->
-        <!--</div>-->
-        <!--&lt;!&ndash; 하단 버튼 &ndash;&gt;-->
-        <!--<div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">-->
-            <!--<div class= "col-xs-6 form-group form_basic" style="text-align:left;">-->
-                <!--<button class="btn btn-success btn-xs fileinput-button" ng-click="click_showPeoplePhotoList();" >-->
-                    <!--<i class="glyphicon glyphicon-list"></i>-->
-                    <!--<span>목록</span>-->
-                <!--</button>-->
-            <!--</div>-->
-            <!--<div class= "col-xs-6 form-group form_basic" style="text-align:right;">-->
-                <!--<button type="button" class="btn btn-primary btn-xs start" ng-click="click_showPeoplePhotoEdit(item);" ng-disabled="edit_form.$invalid">-->
-                    <!--<i class="glyphicon glyphicon-plus"></i>-->
-                    <!--<span>수정</span>-->
-                <!--</button>-->
-            <!--</div>-->
-            <!--<div class= "col-xs-6 form-group form_basic" style="text-align:right;">-->
-                <!--<button type="button" class="btn btn-primary btn-xs start" ng-click="click_showPeoplePhotoDelete(item);" ng-disabled="edit_form.$invalid">-->
-                    <!--<i class="glyphicon glyphicon-plus"></i>-->
-                    <!--<span>삭제</span>-->
-                <!--</button>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-
-<!--</div>-->
-<!-- ////Contents Include -->
-
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_saveReport();">신고</button>
+        <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+    </div>
+</script>
