@@ -1,0 +1,119 @@
+<div ng-controller="peoplediscuss-edit" class="ng_wrap">
+<!-- mainbar -->
+<div class="mainbar sub-slide0">
+<div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+<div class="row">
+
+<div class="col-xs-12 v-cell-3">
+<div class="comp_basic h-cell-dynamic">
+
+<div class="sub_contents_wrap">
+
+    <div class="sub_contents_title">
+        <span class="sub_contents_bullet"></span>
+        <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3>
+    </div>
+</div><!-- /.sub_contents_wrap -->
+
+<div ng-model="item" class="sub_contents_body">
+
+<!-- peopleboard_edit -->
+<div class="people_edit_wrap">
+
+<div class="container-fluid peopleboard_edit_topwrap">
+
+    <div class="row" style="margin:0px auto; margin-bottom:10px;">
+
+        <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">제목</label>
+
+        <div class="col-xs-8" style="padding-left:5px;">
+            <input ng-model="item.SUBJECT" type="text" class="input-sm form-control" placeholder="제목을 입력하세요">
+        </div><!-- /.col-xs-7 -->
+    </div><!-- /.row -->
+
+</div> <!-- /.peopleboard_edit_topwrap -->
+
+<!-- Ediotr Box -->
+<div class="row people_editor_wrap">
+    <div class="col-xs-12 people_editor">
+        <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+            <div>
+                <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>
+            </div>
+        </div>
+    </div><!-- /.people_editor -->
+</div><!-- /.row -->
+<!-- /Ediotr  Box -->
+
+<!--&lt;!&ndash; Option&ndash;&gt;-->
+<!--<div class="row">-->
+    <!--<div class="col-xs-12">-->
+
+        <!--<div class="peopleboard_options">-->
+            <!--<input type="checkbox" style="vertical-align: top;" id="checkall" name="checkall" checked/> &lt;!&ndash;checked&ndash;&gt;-->
+            <!--<span class="filename">전체 선택</span>-->
+        <!--</div>-->
+
+        <!--<div class="peopleboard_options">-->
+            <!--<input type="checkbox" name="check" id="check_reply" ng-model="item.REPLY_FL" style="vertical-align: top;" ng-checked="checked"/>-->
+            <!--<span class="filename">댓글 허용</span>-->
+        <!--</div>-->
+
+        <!--<div class="peopleboard_options">-->
+            <!--<input type="checkbox" name="check" id="check_scrap" ng-model="item.SCRAP_FL" style="vertical-align: top;" ng-checked="checked"/>-->
+            <!--<span class="filename">스크랩 허용</span>-->
+        <!--</div>-->
+
+        <!--<div class="peopleboard_options" ng-show="role == 'MANAGER'">-->
+            <!--<input ng-model="item.NOTICE_FL" type="checkbox" name="noti_check" id="notice_fl" style="vertical-align: top;"/>-->
+            <!--<span class="filename">공지글</span>-->
+        <!--</div>-->
+
+    <!--</div>&lt;!&ndash; /.people_editor &ndash;&gt;-->
+<!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
+<!--&lt;!&ndash; /Option &ndash;&gt;-->
+
+<div class="container-fluid people_view_btnwrap">
+    <div class="row">
+        <div class="col-xs-4">
+            <a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>
+            <a class="btn people_btn submit" title="등록하기" style="display:block;" ng-click="click_savePeopleBoard();">등록</a>
+        </div>
+
+        <div class="col-xs-8">
+            <a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
+            <a class="btn people_btn confirm" title="확인" style="display:none;">확인</a>
+            <a class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeopleBoardCancel();">취소</a>
+            <a class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>
+        </div>
+    </div><!-- /.row -->
+</div><!-- /.people_view_btnwrap -->
+
+</div>
+<!-- /peopleboard_edit -->
+</div><!-- /.sub_contents_body -->
+
+<div class="sub_contents_ads" style="display:none;">
+    <div>
+    </div>
+</div>
+
+</div>
+</div>
+
+</div> <!-- rows -->
+
+</div><!-- container-fluid -->
+
+</div>
+
+<div class="subar sub-slide1">
+    <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+
+    <!-- 1200px 이하일 경우 표시되는 footer -->
+    <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
+    <!-- /1200px 이하일 경우 표시되는 footer -->
+</div>
+</div>
