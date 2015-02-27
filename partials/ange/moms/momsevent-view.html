@@ -150,6 +150,71 @@
                                     </dl>
                                 </div>
 
+                                <form ng-show="item.ada_que_type == 'upload'" id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
+                                    <input type="hidden" id="version" name="version" value="1">
+                                    <div class= "form-group form_basic_group">
+                                        <label class= "form_basic_label">이미지</label>
+                                        <div class="row" style="margin-left:110px;">
+                                            <div class="col-sm-4">
+                                                <div ng-model="file">
+                                                    <input ng-model="file.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2 files">
+                                                <!-- The fileinput-button span is used to style the file input field as button -->
+                                                    <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                        <span>탐색기</span>
+                                                        <input type="file" name="files[]" ng-disabled="disabled">
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!-- 참여유형이 업로드 중 질문이 있을때 -->
+                                <div ng-if="item.ada_que_type == 'upload'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
+
+                                    <dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                        <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                        <dt>{{query.title}}</dt>
+                                        <dd ng-if="query.type == '1'">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input  type="text" name="answer[]" style="width: 250px;"/>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                            <label>
+                                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+                                            </label>
+                                        </dd>
+                                        <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+
                                 <!-- 참여유형이 댓글일때 -->
                                 <div ng-if="item.ada_que_type == 'reply' && !tempEvent"  ng-model="item" class="sub_contents_body">
 

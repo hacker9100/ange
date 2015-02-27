@@ -55,10 +55,14 @@ define([
 
         $scope.todayDate = today;
 
-        $scope.search.PARENT_NO = $stateParams.id;
+        $scope.search.PARENT_NO = $rootScope.PARENT_NO;
 
         // 초기화
         $scope.init = function(session) {
+
+            console.log($rootScope.PARENT_NO);
+            $scope.item.PARENT_NO = $rootScope.PARENT_NO;
+
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'BOARD';
@@ -84,7 +88,7 @@ define([
 
             console.log('$stateParams.menu = '+$stateParams.menu);
 
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list/'+$rootScope.PARENT_NO);
         };
 
         $scope.addHitCnt = function () {
@@ -162,7 +166,7 @@ define([
             dialog.result.then(function(btn){
                 $scope.deleteItem('com/webboard', 'item', item.NO, true)
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
-                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list/'+$rootScope.PARENT_NO);
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {

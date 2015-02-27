@@ -87,7 +87,25 @@
 
                                 </div><!-- /.container -->
 
+                                <div class="container-fluid people_view_btnwrap">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>
+                                            <a class="btn people_btn submit" title="등록하기" ng-click="click_showCreatePeopleBoard();" style="display:block;">등록</a>
+                                        </div>
 
+
+
+                                        <div class="col-xs-4" ng-show="uid == item.REG_UID && uid != '' && uid != null && item.BOARD_ST != 'D'">
+                                            <!--<a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		&lt;!&ndash;  모든 항목을 선택하고 작성이 완료되면 disable 제거 &ndash;&gt;-->
+                                            <!--<a class="btn people_btn confirm" title="확인" style="display:block;" ng-click="click_showPeopleBoardList();">확인</a>-->
+                                            <!--<a class="btn people_btn cancel" title="작성취소" style="display:none;" ng-click="click_showPeopleBoardList();">취소</a>-->
+                                            <a class="btn people_btn modify" title="수정하기" style="display:block; float: left;" ng-click="click_showPeopleBoardEdit(item);">수정</a>
+                                            <!--<a class="btn people_btn cancel" title="작성취소" style="display:block;" >삭제</a>-->
+                                            <a ng-click="click_showPeopleBoardDelete(item);" style="display:block;">삭제</a>
+                                        </div>
+                                    </div><!-- /.row -->
+                                </div>
                             </div>
                             <!-- /peopleboard_view -->
 
