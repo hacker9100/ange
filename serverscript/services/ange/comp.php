@@ -199,6 +199,10 @@ switch ($_method) {
         $FORM = json_decode(file_get_contents("php://input"),true);
         $_d->sql_beginTransaction();
 
+
+
+
+
         if($_type == "eventitem"){
 
             $sql = "INSERT INTO ANGE_COMP
@@ -271,6 +275,33 @@ switch ($_method) {
             $no = $_d->mysql_insert_id;
 
         }else if($_type == "item") {
+
+            $upload_path = '../../../upload/files/';
+            $file_path = '/storage/ad/';
+            $source_path = '../../..'.$file_path;
+            $insert_path = null;
+
+            $body_str = $_model[BODY];
+
+            try {
+                if (count($_model[FILE]) > 0) {
+                    $file = $_model[FILE];
+                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                        @mkdir($source_path);
+                    }
+
+                    if (file_exists($upload_path.$file[name])) {
+                        $uid = uniqid();
+                        rename($upload_path.$file[name], $source_path.$file[name]);
+                        $insert_path = array(path => $file_path, name => $file[name], kind => $file[kind]);
+                    }
+                }
+
+            } catch(Exception $e) {
+                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                break;
+            }
+
             // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
             $sql = "INSERT INTO adm_history_join
                                 (
