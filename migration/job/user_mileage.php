@@ -49,7 +49,7 @@
             order by idx
             ";
 */
-    $result = $_a->sql_query($sql,true);
+//    $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
         $err = 0;
         $msg = null;

@@ -36,7 +36,7 @@
             FROM point_admin_list;
             ";
 */
-    $result = $_a->sql_query($sql,true);
+//    $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
         MtUtil::_c($i."> [p_idx] ".$row['p_idx'].", [p_category] ".$row['p_category'].", [p_kind] ".$row['p_kind'].", [p_tb] ".$row['p_tb'].", [p_dist] ".$row['p_dist'].", [p_subject] ".$row['p_subject'].", [p_content] ".$row['p_content'].", [p_point] ".$row['p_point'].", [p_numb] ".$row['p_numb'].", [p_times] ".$row['p_times'].", [p_conf] ".$row['p_conf']);
 
