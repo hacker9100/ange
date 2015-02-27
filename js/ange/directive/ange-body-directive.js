@@ -35,7 +35,9 @@ define(['./directives'], function (directives) {
                     default :
                         // 앙쥬스토리
                         if (path[1] == 'story') {
-                            path[2] = 'content';
+                            if (path[2] != 'magazine') {
+                                path[2] = 'content';
+                            }
                         // 앙쥬피플
                         } if (path[1] == 'people') {
                             if (menu.COMM_GB != null) {

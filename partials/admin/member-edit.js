@@ -69,7 +69,9 @@ define([
             $scope.item.EMAIL_ID = '';
             $scope.item.EMAIL_TYPE = '';
             $scope.item.USER_GB = type[0];
-            
+
+            $scope.blog = {BLOG_GB: '', BLOG_URL: ''};
+            $scope.blog.BLOG_GB = 'NAVER';
         };
 
         /********** 이벤트 **********/
@@ -86,7 +88,7 @@ define([
         }
 
         // 사용자 목록 이동
-        $scope.click_showList = function () {
+        $scope.click_showUserList = function () {
             window.history.back();
 //            $location.url('/member/list');
         };

@@ -26,6 +26,7 @@ define([
     // 앙쥬스토리
     '../../../partials/ange/story/storycontent-list',
     '../../../partials/ange/story/storycontent-view-popup',
+    '../../../partials/ange/story/storymagazine-list',
 
     // 앙쥬피플
     '../../../partials/ange/people/peoplehome',

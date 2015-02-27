@@ -38,13 +38,13 @@
                 EQ_PH1 + '-' + EQ_PH2 + '-' + EQ_PH3 AS PHONE_1, EQ_HP1 + '-' + EQ_HP2 + '-' + EQ_HP3 AS PHONE_2, EQ_EMAIL AS EMAIL,
                 CASE WHEN eq_date IS NULL THEN NULL WHEN LEN(eq_date) < 21 THEN eq_date ELSE convert(varchar(19), convert(datetime,  left(eq_date,charindex(' ',eq_date,1)-1)+ ' '+ right(eq_date,charindex(' ',reverse(eq_date),1)-1)+ case when charindex('오전',eq_date,1) > 0 then 'AM' else 'PM' end), 120) END AS REG_DT,
                 CASE WHEN eq_lastdate IS NULL THEN NULL WHEN LEN(eq_lastdate) < 21 THEN eq_lastdate ELSE convert(varchar(19), convert(datetime,  left(eq_lastdate,charindex(' ',eq_lastdate,1)-1)+ ' '+ right(eq_lastdate,charindex(' ',reverse(eq_lastdate),1)-1)+ case when charindex('오전',eq_lastdate,1) > 0 then 'AM' else 'PM' end), 120) END AS FILAL_LOGIN_DT,
-                EQ_COUNT AS CENTER_CNT, CASE EQ_SEX WHEN '1' THEN 'F' ELSE 'M' END AS SEX_GB,
+                EQ_COUNT AS CENTER_CNT, 'M' AS SEX_GB,
                 CASE EQ_EN_FLAG WHEN 'Y' THEN 'Y' ELSE 'N' END AS EN_FL,
                 CASE EQ_EN_EMAIL_FLAG WHEN 'OK' THEN 'Y' ELSE 'N' END AS EN_EMAIL_FL,
                 CASE EQ_EN_SMS_FLAG WHEN 'OK' THEN 'Y' ELSE 'N' END AS EN_SMS_FL,
                 DATAPOINT AS SUM_POINT, EQ_MEMBER_NAME AS CONTACT_NM, e.EQ_IDX AS MIG_NO, REPLACE(EQ_HAPPY_DAY, '.', '') AS BABY_BIRTH_DT,
                 EQ_HAPPY_HOUSE AS CARE_CENTER, REPLACE(EQ_VISI_DAY, '.', '-') AS CENTER_VISIT_YMD, REPLACE(EQ_EN_DAY, '.', '-') AS CENTER_OUT_YMD, EQ_ETC AS NOTE, IP, 'CLUB' AS USER_GB,
-                EQ_CHILD1 AS BABY_BIRTH1, EQ_CHILD1_NAME AS BABY_NM1, EQ_CHILD1_SEX AS BABY_SEX_GB1, EQ_CHILD2 AS BABY_BIRTH2, EQ_CHILD2_NAME AS BABY_NM2, EQ_CHILD2_SEX AS BABY_SEX_GB2, EQ_CHILD3 AS BABY_BIRTH3, EQ_CHILD3_NAME AS BABY_NM3, EQ_CHILD3_SEX AS BABY_SEX_GB3,
+                EQ_CHILD1 AS BABY_BIRTH1, EQ_BABYNAME AS BABY_NM1, EQ_CHILD1_SEX AS BABY_SEX_GB1, EQ_CHILD2 AS BABY_BIRTH2, EQ_CHILD2_NAME AS BABY_NM2, EQ_CHILD2_SEX AS BABY_SEX_GB2, EQ_CHILD3 AS BABY_BIRTH3, EQ_CHILD3_NAME AS BABY_NM3, EQ_CHILD3_SEX AS BABY_SEX_GB3,
                 EQ_BLOG AS BLOG_URL, EQ_BLOGCATE AS THEME, EQ_BLOGCATEETC, EQ_SNS AS SNS, EQ_BLOGSTEP AS PHASE
             from (
                 select max(eq_idx) as eq_idx, eq_id, eq_mom from eqmom group by eq_id, eq_mom having count(*) > 1
@@ -90,7 +90,7 @@
 //            FROM DBO.JKMEMBER
 //            ";
 
-    $result = $_a->sql_query($sql2,true);
+    $result = $_a->sql_query($sql1,true);
 //    MtUtil::_c($i."################################### [COUNT] ".count($result));
 
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
@@ -103,13 +103,40 @@
                      ." [[USER_BABY3]] >> [BABY_NM] ".$row['BABY_NM3'].", [BABY_BIRTH] ".$row['BABY_BIRTH3'].", [BABY_SEX_GB] ".$row['BABY_SEX_GB3']
                      ." [[USER_BLOG]] >> [BLOG_URL] ".$row['BLOG_URL'].", [PHASE] ".$row['PHASE'].", [THEME] ".$row['THEME'].", [SNS] ".$row['SNS'];
 
-        MtUtil::_c($i.$user_info);
+//        MtUtil::_c($i.$user_info);
 
 //        $_t->sql_query("INSERT INTO MIG_USER_INFO (USER_ID, MIG_NO, MIG_DT, MIG_ST) VALUES ('".$row['USER_ID']."', '".$row['MIG_NO']."', SYSDATE(), '0')");
 //        $no = $_t->mysql_insert_id;
 
         $_t->sql_beginTransaction();
 
+        if (!empty($row['BABY_BIRTH1']) && $row['BABY_BIRTH1'] != "") {
+            $baby_birth = null;
+            $baby_birth = str_replace("-", "", $row['BABY_BIRTH1']);
+            $baby_birth = str_replace(".", "", $baby_birth);
+
+            if (strlen($baby_birth) == 4) {
+                $baby_birth = "0000".$baby_birth;
+            } else if (strlen($baby_birth) == 6) {
+                $baby_birth = "20".$baby_birth;
+            }
+
+            $sql = "UPDATE ".$prefix."ANGE_USER_BABY
+                    SET
+                        BABY_NM = '".$row['BABY_NM1']."'
+                    WHERE
+                        USER_ID = '".$row['USER_ID']."'
+                        AND BABY_BIRTH = '".$baby_birth."'
+                    ";
+
+            $_t->sql_query($sql);
+
+            if($_t->mysql_errno > 0) {
+                $err++;
+                $msg .= $_t->mysql_error;
+            }
+        }
+/*
         if (!empty($row['BABY_BIRTH1']) && $row['BABY_BIRTH1'] != "") {
             $baby_birth = null;
             $baby_birth = str_replace("-", "", $row['BABY_BIRTH1']);
@@ -196,7 +223,7 @@
                 $msg .= $_t->mysql_error;
             }
         }
-
+*/
 /*
         $password = $hash = create_hash($row['PASSWORD']);
 
