@@ -314,13 +314,15 @@
                                 ,COMM_NM
                                 ,SHORT_NM
                                 ,COMM_GB
-                                ,COMM_MG
+                                ,COMM_MG_ID
+                                ,COMM_MG_NM
                             ) VALUES (
                                 '".$_model[MENU_ID]."'
                                 , '".$_model[MENU_NM]."'
                                 , '".$_model[MENU_NM]."'
                                 , '".$_model[COMM_GB]."'
-                                , '".$_model[COMM_MG]."'
+                                , '".$_model[COMM_MG_ID]."'
+                                , '".$_model[COMM_MG_NM]."'
                             )";
 
                     $_d->sql_query($sql);

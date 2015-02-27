@@ -275,7 +275,7 @@
                             SELECT
                                 U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
                                 U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_YMD, U.CENTER_OUT_YMD, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SMS_FL, U.EN_PHONE_FL,
-                                UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM
+                                UR.ROLE_ID, R.ROLE_NM
                             FROM
                                 COM_USER U, USER_ROLE UR, COM_ROLE R
                             WHERE
@@ -376,17 +376,12 @@
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, INTRO, NOTE,
+                            DATA.USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, INTRO, NOTE,
                             MARRIED_FL, PREGNENT_FL, BLOG_FL, JOIN_PATH, CONTACT_ID, CARE_CENTER, CENTER_VISIT_YMD, CENTER_OUT_YMD, EN_FL, EN_EMAIL_FL, EN_POST_FL, EN_SMS_FL, EN_PHONE_FL,
-                            ROLE_ID, SUM_POINT, USE_POINT, REMAIN_POINT, BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS,
-                            (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = DATA.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM,
+                            ROLE_ID, ROLE_NM, SUM_POINT, USE_POINT, REMAIN_POINT, BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS,
                             (SELECT COUNT(1) FROM ANGE_USER_BABY UB WHERE UB.USER_ID = DATA.USER_ID) AS BABY_CNT,
                             (SELECT COUNT(1) FROM COM_BOARD CB WHERE CB.REG_UID = DATA.USER_ID) AS BOARD_CNT,
                             (SELECT COUNT(1) FROM COM_REPLY CR WHERE CR.REG_UID = DATA.USER_ID) AS REPLY_CNT,
-                            (SELECT COUNT(1) FROM ANGE_COMP AC WHERE AC.USER_ID = DATA.USER_ID AND TARGET_GB = 'EXPERIENCE') AS EXPERIENCE_COMP_CNT,
-                            (SELECT COUNT(1) FROM ANGE_COMP AC WHERE AC.USER_ID = DATA.USER_ID AND TARGET_GB = 'EVENT') AS EVENT_COMP_CNT,
-                            (SELECT COUNT(1) FROM ANGE_COMP_WINNER AW WHERE AW.USER_ID = DATA.USER_ID AND TARGET_GB = 'EXPERIENCE') AS EXPERIENCE_WINNER_CNT,
-                            (SELECT COUNT(1) FROM ANGE_COMP_WINNER AW WHERE AW.USER_ID = DATA.USER_ID AND TARGET_GB = 'EVENT') AS EVENT_WINNER_CNT,
                             (SELECT COUNT(1) FROM ANGE_REVIEW AR WHERE AR.REG_UID = DATA.USER_ID) AS REVIEW_CNT,
                             (SELECT COUNT(1) FROM ANGE_LIKE AL WHERE AL.REG_UID = DATA.USER_ID) AS LIKE_CNT
                         FROM
@@ -394,20 +389,19 @@
                             SELECT
                                 U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
                                 U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_YMD, U.CENTER_OUT_YMD, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SMS_FL, U.EN_PHONE_FL,
-                                U.SUM_POINT, U.USE_POINT, U.REMAIN_POINT, UR.ROLE_ID,
-                                B.BLOG_GB, B.BLOG_URL, B.PHASE, B.THEME, B.NEIGHBOR_CNT, B.POST_CNT, B.VISIT_CNT, B.SNS
+                                U.SUM_POINT, U.USE_POINT, U.REMAIN_POINT, UR.ROLE_ID, R.ROLE_NM
                             FROM
                                 COM_USER U
                                 INNER JOIN USER_ROLE UR ON U.USER_ID = UR.USER_ID
                                 INNER JOIN COM_ROLE R ON UR.ROLE_ID = R.ROLE_ID
-                                LEFT OUTER JOIN ANGE_USER_BLOG B ON U.USER_ID = B.USER_ID
                                 ".$search_from."
                             WHERE
                                 1 = 1
                                 ".$search_where."
                             ".$sort_order."
                             ".$limit."
-                        ) AS DATA,
+                        ) AS DATA
+                        LEFT OUTER JOIN ANGE_USER_BLOG B ON DATA.USER_ID = B.USER_ID,
                         (SELECT @RNUM := 0) R,
                         (
                             SELECT

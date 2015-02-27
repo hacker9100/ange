@@ -68,125 +68,142 @@
             break;
 
         case "POST":
-            $err = 0;
-            $msg = "";
+            if ($_type == 'list') {
+                $err = 0;
+                $msg = "";
 
-            $_d->sql_beginTransaction();
+                $sql = "SELECT
+                            COUNT(*) AS COUNT
+                        FROM
+                            ADMIN_SAVE_LIST
+                        WHERE
+                            LIST_NM = '".$_model['LIST_NM']."'
+                        ";
 
-            if (isset($_model[TYPE])) {
-                $type_str = "";
-                for($i=0;$i< sizeof($_model[TYPE]);$i++){
-                    $type_str .= trim($_model[TYPE][$i]);
-                    if (sizeof($_model[TYPE]) - 1 != $i) $type_str .= ",";
+                $check_data = $_d->sql_fetch($sql);
+
+                if ($check_data['COUNT'] > 0) {
+                    $_d->failEnd("중복된 리스트명이 존재합니다.".$msg);
+                    break;
                 }
-            }
 
-            $sql = "INSERT INTO ADMIN_SAVE_LIST
-                    (
-                        LIST_NM,
-                        LIST_GB,
-                        REG_DT,
-                        CONDITION_IDX,
-                        KEYWORD,
-                        TYPE,
-                        SORT_IDX,
-                        ORDER_IDX,
-                        STATUS,
-                        ACT,
-                        FILTER,
-                        MODE
-                    ) VALUES (
-                        '".$_model[LIST_NM]."',
-                        '".$_model[CHECKED]."',
-                        SYSDATE(),
-                        '".$_model[CONDITION][index]."',
-                        '".$_model[KEYWORD]."',
-                        '".$type_str."',
-                        '".$_model[SORT][index]."',
-                        '".$_model[ORDER][index]."',
-                        '".$_model[STATUS]."',
-                        '".$_model[ACT]."',
-                        '".$_model[FILTER]."',
-                        '".$_model[MODE]."'
-                    )";
+                $_d->sql_beginTransaction();
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            if ($_model[CHECKED] == "C") {
-                if (isset($_model[USER_ID_LIST])) {
-                    $in_str = "";
-                    $in_size = sizeof($_model[USER_ID_LIST]);
-                    for ($i=0; $i< $in_size; $i++) {
-                        $in_str .= "'".trim($_model[USER_ID_LIST][$i])."'";
-                        if ($in_size - 1 != $i) $in_str .= ",";
+                if (isset($_model[TYPE])) {
+                    $type_str = "";
+                    for($i=0;$i< sizeof($_model[TYPE]);$i++){
+                        $type_str .= trim($_model[TYPE][$i]);
+                        if (sizeof($_model[TYPE]) - 1 != $i) $type_str .= ",";
                     }
-
-                    $search_where = "AND USER_ID IN (".$in_str.") ";
                 }
-            } else {
-                if ((isset($_model[CONDITION]) && $_model[CONDITION] != "") && (isset($_model[KEYWORD]) && $_model[KEYWORD] != "")) {
-                    if ($_model[CONDITION][value] == "USER_NM" || $_model[CONDITION][value] == "USER_ID" || $_model[CONDITION][value] == "NICK_NM") {
-                        $arr_keywords = explode(",", $_model[KEYWORD]);
-                        $in_condition = "";
-                        for ($i=0; $i< sizeof($arr_keywords); $i++) {
-                            $in_condition .= "'".trim($arr_keywords[$i])."'";
-                            if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
+
+                $sql = "INSERT INTO ADMIN_SAVE_LIST
+                        (
+                            LIST_NM,
+                            LIST_GB,
+                            REG_DT,
+                            CONDITION_IDX,
+                            KEYWORD,
+                            TYPE,
+                            SORT_IDX,
+                            ORDER_IDX,
+                            STATUS,
+                            ACT,
+                            FILTER,
+                            MODE
+                        ) VALUES (
+                            '".$_model[LIST_NM]."',
+                            '".$_model[CHECKED]."',
+                            SYSDATE(),
+                            '".$_model[CONDITION][index]."',
+                            '".$_model[KEYWORD]."',
+                            '".$type_str."',
+                            '".$_model[SORT][index]."',
+                            '".$_model[ORDER][index]."',
+                            '".$_model[STATUS]."',
+                            '".$_model[ACT]."',
+                            '".$_model[FILTER]."',
+                            '".$_model[MODE]."'
+                        )";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($_model[CHECKED] == "C") {
+                    if (isset($_model[USER_ID_LIST])) {
+                        $in_str = "";
+                        $in_size = sizeof($_model[USER_ID_LIST]);
+                        for ($i=0; $i< $in_size; $i++) {
+                            $in_str .= "'".trim($_model[USER_ID_LIST][$i])."'";
+                            if ($in_size - 1 != $i) $in_str .= ",";
                         }
 
-                        $search_where .= "AND ".$_model[CONDITION][value]." IN (".$in_condition.") ";
-                    } else if ($_model[CONDITION][value] == "PHONE") {
-                        $search_where .= "AND ( PHONE_1 LIKE '%".$_model[KEYWORD]."%' OR PHONE_2 LIKE '%".$_model[KEYWORD]."%' ) ";
-                    } else {
-                        $search_where .= "AND ".$_model[CONDITION][value]." LIKE '%".$_model[KEYWORD]."%' ";
+                        $search_where = "AND USER_ID IN (".$in_str.") ";
+                    }
+                } else {
+                    if ((isset($_model[CONDITION]) && $_model[CONDITION] != "") && (isset($_model[KEYWORD]) && $_model[KEYWORD] != "")) {
+                        if ($_model[CONDITION][value] == "USER_NM" || $_model[CONDITION][value] == "USER_ID" || $_model[CONDITION][value] == "NICK_NM") {
+                            $arr_keywords = explode(",", $_model[KEYWORD]);
+                            $in_condition = "";
+                            for ($i=0; $i< sizeof($arr_keywords); $i++) {
+                                $in_condition .= "'".trim($arr_keywords[$i])."'";
+                                if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
+                            }
+
+                            $search_where .= "AND ".$_model[CONDITION][value]." IN (".$in_condition.") ";
+                        } else if ($_model[CONDITION][value] == "PHONE") {
+                            $search_where .= "AND ( PHONE_1 LIKE '%".$_model[KEYWORD]."%' OR PHONE_2 LIKE '%".$_model[KEYWORD]."%' ) ";
+                        } else {
+                            $search_where .= "AND ".$_model[CONDITION][value]." LIKE '%".$_model[KEYWORD]."%' ";
+                        }
+                    }
+                    if (isset($_model[TYPE]) && $_model[TYPE] != "") {
+
+                        $in_type = "";
+                        for ($i=0; $i< count($_model[TYPE]); $i++) {
+                            $in_type .= "'".$_model[TYPE][$i]."'";
+                            if (count($_model[TYPE]) - 1 != $i) $in_type .= ",";
+                        }
+
+                        $search_where .= "AND USER_GB IN (".$in_type.") ";
+                    }
+                    if (isset($_model[STATUS]) && $_model[STATUS] != "" && $_model[STATUS][value] != "A") {
+                        $search_where .= "AND USER_ST  = '".$_model[STATUS][value]."' ";
                     }
                 }
-                if (isset($_model[TYPE]) && $_model[TYPE] != "") {
 
-                    $in_type = "";
-                    for ($i=0; $i< count($_model[TYPE]); $i++) {
-                        $in_type .= "'".$_model[TYPE][$i]."'";
-                        if (count($_model[TYPE]) - 1 != $i) $in_type .= ",";
-                    }
+                $sql = "INSERT INTO ADMIN_SAVE_USER
+                        (
+                            LIST_NO,
+                            USER_ID
+                        )
+                        SELECT ".$no." AS LIST_NO, USER_ID
+                        FROM
+                            COM_USER
+                        WHERE
+                            1 = 1
+                            ".$search_where."
+                        ";
 
-                    $search_where .= "AND USER_GB IN (".$in_type.") ";
+                $_d->sql_query($sql);
+
+                if ($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
                 }
-                if (isset($_model[STATUS]) && $_model[STATUS] != "" && $_model[STATUS][value] != "A") {
-                    $search_where .= "AND USER_ST  = '".$_model[STATUS][value]."' ";
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("등록실패입니다:".$msg);
+                } else {
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
                 }
-            }
-
-            $sql = "INSERT INTO ADMIN_SAVE_USER
-                    (
-                        LIST_NO,
-                        USER_ID
-                    )
-                    SELECT ".$no." AS LIST_NO, USER_ID
-                    FROM
-                        COM_USER
-                    WHERE
-                        1 = 1
-                        ".$search_where."
-                    ";
-
-            $_d->sql_query($sql);
-
-            if ($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            if ($err > 0) {
-                $_d->sql_rollback();
-                $_d->failEnd("등록실패입니다:".$msg);
-            } else {
-                $_d->sql_commit();
-                $_d->succEnd($no);
             }
 
             break;
@@ -196,41 +213,43 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $err = 0;
-            $msg = "";
+            if ($_type == 'list') {
+                $err = 0;
+                $msg = "";
 
-            $_d->sql_beginTransaction();
+                $_d->sql_beginTransaction();
 
-            $sql = "UPDATE ADMIN_SAVE_LIST
-                    SET
-                        LIST_NM = '".$_model[LIST_NM]."',
-                        CONDITION = '".$_model[CONDITION]."',
-                        KEYWORD = '".$_model[KEYWORD]."',
-                        TYPE = '".$_model[TYPE]."',
-                        FILTER = '".$_model[FILTER]."',
-                        MODE = '".$_model[MODE]."',
-                        SORT = '".$_model[SORT]."',
-                        ORDER = '".$_model[ORDER]."',
-                        STATUS = '".$_model[STATUS]."',
-                        ACT = '".$_model[ACT]."'
-                    WHERE
-                        NO = ".$_key."
-                    ";
+                $sql = "UPDATE ADMIN_SAVE_LIST
+                        SET
+                            LIST_NM = '".$_model[LIST_NM]."',
+                            CONDITION = '".$_model[CONDITION]."',
+                            KEYWORD = '".$_model[KEYWORD]."',
+                            TYPE = '".$_model[TYPE]."',
+                            FILTER = '".$_model[FILTER]."',
+                            MODE = '".$_model[MODE]."',
+                            SORT = '".$_model[SORT]."',
+                            ORDER = '".$_model[ORDER]."',
+                            STATUS = '".$_model[STATUS]."',
+                            ACT = '".$_model[ACT]."'
+                        WHERE
+                            NO = ".$_key."
+                        ";
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("수정실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
-                $_d->succEnd($no);
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
             }
 
             break;

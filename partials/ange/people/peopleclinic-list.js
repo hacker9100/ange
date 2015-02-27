@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peopleclinic-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
+    controllers.controller('peopleclinic-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
 
         $scope.tmpMenu = $stateParams.menu;
         $scope.search = {};
@@ -56,11 +56,16 @@ define([
             $scope.search.COMM_GB = 'CLINIC';
             $scope.search.SYSTEM_GB = 'ANGE';
 
-            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+            $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
-                    var comm_mg_nm = data[0].COMM_MG_NM;
-                    $scope.COMM_MG_NM = comm_mg_nm;
+                    $scope.COMM_MG_NM = data.COMM_MG_NM;
 
+                    var file = data.FILES;
+                    for(var i in file) {
+                        if (file[i].FILE_GB == 'MAIN')
+//                            $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
+                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
+                    }
                 })
                 .catch(function(error){});
 

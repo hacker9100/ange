@@ -16,13 +16,15 @@ define([
         /********** 초기화 **********/
         $scope.key = '';
         $scope.item = {};
-        $scope.search = {SYSTEM_GB: 'ANGE'};
+        $scope.search = {SYSTEM_GB: 'ANGE', CATEGORY_GB: 'STORE'};
+
+        $scope.showEdit = false;
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'ANGE', CATEGORY_GB: '2', PARENT_NO: '0'}, false)
-                .then(function(data){$scope.parents = data;})
-                .catch(function(error){console.log(error)});
+//            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'ANGE', CATEGORY_GB: '2', PARENT_NO: '0'}, false)
+//                .then(function(data){$scope.parents = data;})
+//                .catch(function(error){console.log(error)});
         };
 
         /********** 이벤트 **********/
@@ -40,9 +42,18 @@ define([
         };
 
         // 검색 버튼 클릭
-        $scope.searchCategory = function () {
+        $scope.click_searchCategory = function () {
             $scope.tableParams.reload();
         }
+
+        // 등록 버튼 클릭
+        $scope.click_createNewCategory = function () {
+            $scope.key = '';
+            $scope.item = {PARENT_NO: 1};
+            $scope.showEdit = true;
+
+            $scope.click_focus('item', 'item_name');
+        };
 
         // 카테고리 목록 조회
         $scope.getCategoryList = function () {
@@ -54,7 +65,7 @@ define([
                 page: 1,            // show first page
                 count: 1000,          // count per page
                 sorting: {
-                    NO: 'asc'     // initial sorting
+                    PARENT_NO: 'asc'     // initial sorting
                 }
             }, {
                 counts: [],         // hide page counts control
@@ -84,6 +95,7 @@ define([
         // 카테고리 저장 버튼 클릭
         $scope.click_saveCategory = function () {
             $scope.item.SYSTEM_GB = 'ANGE';
+            $scope.item.CATEGORY_GB = 'STORE';
 
             if ($scope.key == '') {
                 $scope.insertItem('cms/category', 'item', $scope.item, false)
@@ -101,30 +113,22 @@ define([
         // 카테고리 편집 클릭
         $scope.click_getCategory = function (id) {
             $scope.key = id;
+            $scope.showEdit = true;
 
             if ($scope.key != '') {
                 $scope.getItem('cms/category', 'item', $scope.key, {}, false)
                     .then(function(data) {
-//                        var idx = 0;
-//                        for (var i=0; i < $scope.parents.length; i ++) {
-//                            if (data.PARENT_NO == $scope.parents[i].NO) {
-//                                idx = i;
-//                            }
-//                        }
-
                         $scope.item = data;
-                        $scope.item.PARENT = data.PARENT_NO == '0' ? null : $scope.parents[idx];
-
-                        $scope.click_focus();
+                        $scope.click_focus('item', 'item_name');
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
-        // 카테고리 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
-        $scope.click_focus = function () {
-            $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
-            $('#item_gb').focus();
+        // 편집 버튼 클릭 시 영역으로 focus 이동
+        $scope.click_focus = function (id, name) {
+            $('html,body').animate({scrollTop:$('#'+id).offset().top}, 100);
+            $('#'+name).focus();
         }
 
         // 카테고리 상태변경 버튼 클릭
@@ -139,7 +143,16 @@ define([
         // 취소
         $scope.click_cancel = function () {
             $scope.key = '';
-            $scope.item = {CATEGORY_GB: 1};
+            $scope.item = {PARENT_NO: 1};
+            $scope.showEdit = false;
+
+            $scope.click_focus('search');
+        };
+
+        // 초기화
+        $scope.click_reset = function () {
+            $scope.key = '';
+            $scope.item = {PARENT_NO: 1};
         };
 
         /********** 화면 초기화 **********/

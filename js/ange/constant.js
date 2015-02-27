@@ -15,8 +15,13 @@ define([
             "PAGE_SIZE" : 20,
             "BASE_URL" : "http://ange.marveltree.com",
 
-            "AD_LOG_URL" : "http://ad.ange.co.kr/adm/io/log.php",
-            "AD_FILE_URL" : "http://ad.ange.co.kr/adm/upload/",
+            "UPLOAD_INDEX" : "/serverscript/upload/",
+
+            "COMM_NO_FAQ" : "53",
+            "COMM_NO_QNA" : "",
+
+            "AD_LOG_URL" : "http://angead.marveltree.com/adm/io/log.php",
+            "AD_FILE_URL" : "http://angead.marveltree.com/adm/upload/",
 
             "AD_CODE_" : ""
         }

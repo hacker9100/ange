@@ -9,7 +9,7 @@
                             <div class="col-xs-5" style="max-width:200px;">
                                 <label class= "form_basic_label">검색</label>
                                 <div class= "form_basic_input" style="margin-left:60px; width:135px;">
-                                    <select ng-model="search.CATEGORY_GB" class= "form-control" >
+                                    <select ng-model="search.PARENT_NO" class= "form-control" >
                                         <option name="" value="">- 전체</option>
                                         <option name="" value="1">가격 분류</option>
                                         <option name="" value="2">상품 분류</option>
@@ -24,11 +24,11 @@
                 </div>
                 <div class="col-xs-3" style="border-left:1px solid #DEDEDE; display:block;">
                     <div class= "navbar-header" style="float:left; width:100%; margin:0px auto; line-height:40px; padding:10px; text-align:center;">
-                        <button class="btn btn-lg btn-primary start" ng-click="searchCategory();" ng-disabled="list_from.$invalid">
+                        <button class="btn btn-lg btn-primary start" ng-click="click_searchCategory();" ng-disabled="list_from.$invalid">
                             <i class="glyphicon glyphicon-search"></i>
                             <span>검색</span>
                         </button>
-                        <button class="btn btn-lg btn-success fileinput-button" data-ng-click="click_focus()">
+                        <button class="btn btn-lg btn-success fileinput-button" data-ng-click="click_createNewCategory()">
                             <i class="glyphicon glyphicon-plus"></i>
                             <span>등록</span>
                         </button>
@@ -54,19 +54,16 @@
     <div loading-container="tableParams.settings().$loading">
         <table ng-table="tableParams" class="table" style="border-bottom: 1px solid #868686;">
             <tr ng-repeat="item in $data">
-                <td style="width:100px; font-size:0.94em; line-height:38px;" data-title="'구분'" sortable="'CATEGORY_GB'">
-                    {{ item.CATEGORY_GB == '1' ? '가격' : '상품' }}
+                <td style="width:100px; font-size:0.94em; line-height:38px;" data-title="'구분'" sortable="'PARENT_NO'">
+                    {{ item.PARENT_NO == '1' ? '가격' : '상품' }}
                 </td>
-                <td style="font-size:0.86em; line-height:38px;" class="text-center" data-title="'대분류 키워드'" sortable="'PARENT_NM'">
-                    {{ item.PARENT_NM }}
-                </td>
-                <td style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'소분류 키워드'" sortable="'CHILD_NM'">
+                <td style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'키워드'" sortable="'CHILD_NM'">
                     {{ item.CHILD_NM }}
                 </td>
-                <td style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'등록일'" sortable="'REG_DT'">
+                <td style="width:200px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'등록일'" sortable="'REG_DT'">
                     {{ item.REG_DT }}
                 </td>
-                <td style="width:200px; line-height:38px;" class="text-center" data-title="'기능'">
+                <td style="width:250px; line-height:38px;" class="text-center" data-title="'기능'">
                     <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="내용편집" ng-click="click_getCategory(item.NO)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                     <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="상태변경" ng-click="click_updateStatus(item)">{{item.CATEGORY_ST == '0' ? '이용가능' : '이용정지'}}</button>
                     <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-click="click_deleteCategory(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
@@ -81,18 +78,17 @@
     <!-- ////Contents Include -->
 
     <!-- Contents Include -->
-    <div class="list-group-item-labeling-gray" style="margin-bottom: 20px;">
+    <div ng-show="showEdit" class="list-group-item-labeling-gray" style="margin-bottom: 20px;">
         <strong>Category Detail</strong>
     </div>
 
-    <div class="col-md-12">
-
+    <div ng-show="showEdit" class="col-md-12">
         <form role="form" name="edit_form" class="form-horizontal form_basic_100">
             <div id="item" ng-model="item" class="row form_basic_wrap">
                 <div class= "form-group form_basic_group">
                     <label class= "form_basic_label">구분 <span style="color:#b94a48">*</span></label>
                     <div class= "col-xs-3 form_basic_input">
-                        <select id="item_gb" ng-model="item.CATEGORY_GB" ng-init="item.CATEGORY_GB = 1" class= "form-control" >
+                        <select id="item_gb" ng-model="item.PARENT_NO" ng-init="item.PARENT_NO = 1" class= "form-control" >
                             <option name="" value="1">가격</option>
                             <option name="" value="2">상품</option>
                         </select>
@@ -133,6 +129,10 @@
                         <button type="button" class="btn btn-warning btn-xs cancel" ng-click="click_cancel();">
                             <i class="glyphicon glyphicon-ban-circle"></i>
                             <span>취소</span>
+                        </button>
+                        <button type="button" class="btn btn-warning btn-xs cancel" ng-click="click_reset();">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>초기화</span>
                         </button>
                     </div>
                 </div>

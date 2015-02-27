@@ -54,11 +54,9 @@ define([
             $scope.search.BOARD_GB = 'BOARD';
             $scope.search.SYSTEM_GB = 'ANGE';
 
-            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+            $scope.getList('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
-                    var comm_mg_nm = data[0].COMM_MG_NM;
-                    $scope.COMM_MG_NM = comm_mg_nm;
-
+                    $scope.COMM_MG_NM = data.COMM_MG_NM;
                 })
                 .catch(function(error){});
         };

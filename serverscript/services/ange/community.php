@@ -53,21 +53,33 @@
                 $msg = "";
 
                 $sql = "SELECT
-                            NO, COMM_NM, COMM_GB, COMM_ST, COMM_CLASS, COMM_MG, NOTE,
-                            (SELECT USER_NM FROM COM_USER WHERE COMM_MG = USER_ID) AS COMM_MG_NM
+                            NO, COMM_NM, COMM_GB, COMM_ST, COMM_CLASS, COMM_MG_ID, COMM_MG_NM, NOTE
                         FROM
                             ANGE_COMM
                         WHERE
-                            NO = ".$_key."
+                            NO = '".$_key."'
                             ".$search_where."
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data = $_d->sql_fetch_array($result);
+                $data = $_d->sql_fetch($sql);
 
                 if($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
+                }
+
+                $target_no = null;
+                $target_gb = null;
+
+                if ($data['COMM_GB'] == "CLINIC") {
+                    $sql = "SELECT NO FROM COM_USER WHERE USER_ID = '".$data['COMM_MG_ID']."'";
+                    $user = $_d->sql_fetch($sql,true);
+
+                    $target_gb = "USER";
+                    if (isset($user)) $target_no = $user['NO'];
+                } else {
+                    $target_gb = "COMMUNITY";
+                    $target_no = $_key;
                 }
 
                 $sql = "SELECT
@@ -76,9 +88,10 @@
                             FILE F, CONTENT_SOURCE S
                         WHERE
                             F.NO = S.SOURCE_NO
+                            AND F.FILE_GB IN ('MAIN', 'MANAGER')
                             AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'COMMUNITY'
-                            AND S.TARGET_NO = ".$_key."
+                            AND S.TARGET_GB = '".$target_gb."'
+                            AND S.TARGET_NO = '".$target_no."'
                         ";
 
                 $file_data = $_d->getData($sql);
@@ -168,12 +181,11 @@
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            NO, COMM_NM, COMM_GB, COMM_ST, COMM_CLASS, COMM_MG, NOTE, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_YMD,
-                            (SELECT USER_NM FROM COM_USER WHERE COMM_MG = USER_ID) AS COMM_MG_NM
+                            NO, COMM_NM, COMM_GB, COMM_ST, COMM_CLASS, COMM_MG_ID, COMM_MG_NM, NOTE, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_YMD
                         FROM
                         (
                             SELECT
-                                NO, COMM_NM, COMM_GB, REG_DT, COMM_ST, COMM_CLASS, COMM_MG, NOTE
+                                NO, COMM_NM, COMM_GB, REG_DT, COMM_ST, COMM_CLASS, COMM_MG_ID, COMM_MG_NM, NOTE
                             FROM
                                 ANGE_COMM
                             WHERE
@@ -259,8 +271,25 @@
                 $_d->failEnd("제목을 작성 하세요");
             }
 
+            $target_no = null;
+            $target_gb = null;
+
+            $file_path = null;
+
+            if ($_model['COMM_GB'] == "CLINIC") {
+                $sql = "SELECT NO FROM COM_USER WHERE USER_ID = '".$_model['COMM_MG_ID']."'";
+                $user = $_d->sql_fetch($sql,true);
+
+                $target_gb = "USER";
+                $target_no = $user['NO'];
+                $file_path = '/storage/user/'.$_model['COMM_MG_ID'].'/';
+            } else {
+                $target_gb = "COMMUNITY";
+                $target_no = $_key;
+                $file_path = '/storage/admin/';
+            }
+
             $upload_path = '../../../upload/files/';
-            $file_path = '/storage/admin/';
             $source_path = '../../..'.$file_path;
             $insert_path = null;
 
@@ -302,10 +331,11 @@
                         COMM_GB = '".$_model[COMM_GB]."',
                         COMM_ST = '".$_model[COMM_ST]."',
                         COMM_CLASS = '".$_model[COMM_CLASS]."',
-                        COMM_MG = '".$_model[COMM_MG]."',
+                        COMM_MG_ID = '".$_model[COMM_MG_ID]."',
+                        COMM_MG_NM = '".$_model[COMM_MG_NM]."',
                         NOTE = '".$_model[NOTE]."'
                     WHERE
-                        NO = ".$_key."
+                        NO = '".$_key."'
                     ";
 
             $_d->sql_query($sql);
@@ -322,9 +352,10 @@
                         FILE F, CONTENT_SOURCE S
                     WHERE
                         F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'COMMUNITY'
+                        AND F.FILE_GB IN ('MAIN', 'MANAGER')
                         AND S.CONTENT_GB = 'FILE'
-                        AND S.TARGET_NO = ".$_key."
+                        AND S.TARGET_GB = '".$target_gb."'
+                        AND S.TARGET_NO = '".$target_no."'
                     ";
 
             $result = $_d->sql_query($sql,true);
@@ -346,7 +377,7 @@
 
                     $_d->sql_query($sql);
 
-                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'COMMUNITY' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
+                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = '".$target_gb."' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
 
                     $_d->sql_query($sql);
 
@@ -367,27 +398,27 @@
 
                     if ($insert_path[$i][uid] != "") {
                         $sql = "INSERT INTO FILE
-                                    (
-                                        FILE_NM
-                                        ,FILE_ID
-                                        ,PATH
-                                        ,FILE_EXT
-                                        ,FILE_SIZE
-                                        ,THUMB_FL
-                                        ,REG_DT
-                                        ,FILE_ST
-                                        ,FILE_GB
-                                    ) VALUES (
-                                        '".$file[name]."'
-                                        , '".$insert_path[$i][uid]."'
-                                        , '".$insert_path[$i][path]."'
-                                        , '".$file[type]."'
-                                        , '".$file[size]."'
-                                        , '0'
-                                        , SYSDATE()
-                                        , 'C'
-                                        , '".strtoupper($file[kind])."'
-                                    )";
+                                (
+                                    FILE_NM
+                                    ,FILE_ID
+                                    ,PATH
+                                    ,FILE_EXT
+                                    ,FILE_SIZE
+                                    ,THUMB_FL
+                                    ,REG_DT
+                                    ,FILE_ST
+                                    ,FILE_GB
+                                ) VALUES (
+                                    '".$file[name]."'
+                                    , '".$insert_path[$i][uid]."'
+                                    , '".$insert_path[$i][path]."'
+                                    , '".$file[type]."'
+                                    , '".$file[size]."'
+                                    , '0'
+                                    , SYSDATE()
+                                    , 'C'
+                                    , '".strtoupper($file[kind])."'
+                                )";
 
                         $_d->sql_query($sql);
                         $file_no = $_d->mysql_insert_id;
@@ -398,19 +429,19 @@
                         }
 
                         $sql = "INSERT INTO CONTENT_SOURCE
-                                    (
-                                        TARGET_NO
-                                        ,SOURCE_NO
-                                        ,CONTENT_GB
-                                        ,TARGET_GB
-                                        ,SORT_IDX
-                                    ) VALUES (
-                                        '".$_key."'
-                                        , '".$file_no."'
-                                        , 'FILE'
-                                        , 'COMMUNITY'
-                                        , '".$i."'
-                                    )";
+                                (
+                                    TARGET_NO
+                                    ,SOURCE_NO
+                                    ,CONTENT_GB
+                                    ,TARGET_GB
+                                    ,SORT_IDX
+                                ) VALUES (
+                                    '".$target_no."'
+                                    , '".$file_no."'
+                                    , 'FILE'
+                                    , '".$target_gb."'
+                                    , '".$i."'
+                                )";
 
                         $_d->sql_query($sql);
 

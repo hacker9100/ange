@@ -100,7 +100,7 @@
                             </div>
                             <div class="col-xs-3">
                                 <button class="btn btn-success fileinput-button" data-ng-click="click_function()">
-                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <i class="glyphicon glyphicon-play"></i>
                                     <span>실행</span>
                                 </button>
                             </div>
@@ -115,15 +115,15 @@
     <div>
         <div class="col-md-12" style="padding-bottom:10px;">
             <button class="btn btn-success fileinput-button" data-ng-click="click_refreshList()">
-                <i class="glyphicon glyphicon-plus"></i>
+                <i class="glyphicon glyphicon-refresh"></i>
                 <span>목록갱신</span>
             </button>
             <button ng-if="menu != 'save'" class="btn btn-success fileinput-button" data-ng-click="click_createNewUser()">
-                <i class="glyphicon glyphicon-plus"></i>
+                <i class="glyphicon glyphicon-user"></i>
                 <span>신규회원등록</span>
             </button>
-            <button ng-if="menu != 'save'" class="btn btn-success fileinput-button" data-ng-click="click_saveSearch()">
-                <i class="glyphicon glyphicon-plus"></i>
+            <button ng-if="menu != 'save'" class="btn btn-success fileinput-button" data-ng-click="click_openPopupsaveListReg()">
+                <i class="glyphicon glyphicon-bookmark"></i>
                 <span>자주쓰는 목록</span>
             </button>
             <div class= "col-md-2" style="float: right;" >
@@ -154,20 +154,28 @@
                 <td style="width:20px; font-size:0.94em; line-height:38px;" class="text-center" data-title="''">
                     <input ng-model="item.CHECKED" type= "checkbox" checklist-model="check_user" checklist-value="item.USER_ID"/>
                 </td>
-                <td style="font-size:0.94em; line-height:38px;" class="text-center" data-title="'아이디(이름)/닉네임'">
+                <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'아이디'">
+                    {{ item.USER_ID }}
+                </td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'이름'">
+                    {{ item.USER_NM  }}
+                </td>
+                <td style="font-size:0.94em; line-height:38px;" class="text-center" data-title="'닉네임'">
                     <a style="cursor:pointer;" ng-click="click_showViewUser(item)" title="{{ item.SUBJECT + ' 내용보기' }}">
-                        {{ item.USER_ID + '(' + item.USER_NM + ')' }} <br> {{ item.NICK_NM }}
+                        {{ item.NICK_NM }}
                     </a>
                 </td>
                 <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'연락처'">
-                    {{ item.PHONE_1 }} <br> {{ item.PHONE_2 }}
+                    {{ item.PHONE_2 != '' ? item.PHONE_2 : item.PHONE_1 }}
                 </td>
+<!--
                 <td ng-show="search.ACT == 'A'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'현황'">
                     {{ item.SEX_GB == 'M' ? '남자': '여자'}} ( {{ item.MARRIED_FL == 'Y' ? '기혼' : '미혼' }} ) <br> 자녀 ( {{ item.BABY_CNT }} )
                 </td>
                 <td ng-show="search.ACT == 'A'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'Email/SNS'">
                     {{ item.EMAIL }} <br> ( {{ item.SNS }} )
                 </td>
+-->
                 <td ng-show="search.ACT == 'C'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'현황(글수)'">
                     <a style="cursor:pointer;" ng-click="click_selectWriteList(item)" title="{{ item.USER_NM + ' 게시물 보기' }}">
                         게시( {{ item.BOARD_CNT }} )
@@ -198,14 +206,13 @@
                 <td ng-show="search.ACT == 'B'" style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'단계'">
                     {{ item.PHASE }}
                 </td>
-                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'Point(Score)'">
+                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'마일리지'">
                     <a style="cursor:pointer;" ng-click="click_selectMileageList(item)" title="{{ item.USER_NM + ' 마일리지 보기' }}">
                         {{ item.REMAIN_POINT == null ? 0 : item.REMAIN_POINT }}
                     </a>
-                    ( {{ item.SCORE == null ? 0 : item.SCORE }} )
                 </td>
-                <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'가입(최종접속)'">
-                    {{ item.REG_DT }} <br> ( {{ item.FINAL_LOGIN_DT }} )
+                <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'최종접속'">
+                    {{ item.FINAL_LOGIN_DT }}
                 </td>
                 <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'상태'">
                     <div ng-show="item.USER_ID == selectUser && isStatus">

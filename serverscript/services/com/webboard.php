@@ -449,7 +449,7 @@
                 }
             }else if ($_type == 'manager') {
 
-                $sql = "SELECT AC.COMM_MG, (SELECT USER_NM FROM COM_USER WHERE USER_ID = AC.COMM_MG) COMM_MG_NM
+                $sql = "SELECT AC.COMM_MG_ID, AC.COMM_MG_NM
                         FROM ANGE_COMM AC
                         WHERE 1=1
                           AND NO = '".$_search[COMM_NO]."'

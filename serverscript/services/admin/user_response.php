@@ -59,15 +59,16 @@
 
                 $sql = "SELECT
                             TOTAL_COUNT,
-                            NOTE, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_YMD
+                            NO, NOTE, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_YMD
                         FROM
                         (
                             SELECT
-                                NOTE, REG_DT
+                                NO, NOTE, REG_DT
                             FROM
-                                ANGE_USER_RESPONSE
+                                ADMIN_USER_RESPONSE
                             WHERE
                                 USER_ID = '".$_search['USER_ID']."'
+                            ORDER BY REG_DT DESC
                             ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
@@ -75,7 +76,7 @@
                             SELECT
                                 COUNT(*) AS TOTAL_COUNT
                             FROM
-                                ANGE_USER_RESPONSE
+                                ADMIN_USER_RESPONSE
                             WHERE
                                 USER_ID = '".$_search['USER_ID']."'
                         ) CNT
@@ -105,7 +106,7 @@
                 }
             }
 
-            $sql = "INSERT INTO ANGE_USER_RESPONSE
+            $sql = "INSERT INTO ADMIN_USER_RESPONSE
                     (
                         USER_ID,
                         NOTE,
@@ -139,50 +140,18 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $err = 0;
-            $msg = "";
-
-            $_d->sql_beginTransaction();
-
-            $sql = "UPDATE ADMIN_SAVE_LIST
-                    SET
-                        LIST_NM = '".$_model[LIST_NM]."',
-                        CONDITION = '".$_model[CONDITION]."',
-                        KEYWORD = '".$_model[KEYWORD]."',
-                        TYPE = '".$_model[TYPE]."',
-                        FILTER = '".$_model[FILTER]."',
-                        MODE = '".$_model[MODE]."',
-                        SORT = '".$_model[SORT]."',
-                        ORDER = '".$_model[ORDER]."',
-                        STATUS = '".$_model[STATUS]."',
-                        ACT = '".$_model[ACT]."'
-                    WHERE
-                        NO = ".$_key."
-                    ";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("수정실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
-                $_d->succEnd($no);
-            }
-
-            break;
-
-        case "DELETE":
             if ($_type == "item") {
+                $err = 0;
+                $msg = "";
+
                 $_d->sql_beginTransaction();
 
-                $sql = "DELETE FROM ADMIN_SAVE_USER WHERE USER_ID = '".$_key."'";
+                $sql = "UPDATE ADMIN_USER_RESPONSE
+                        SET
+                            NOTE = '".$_model[NOTE]."'
+                        WHERE
+                            NO = ".$_key."
+                        ";
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;
@@ -192,26 +161,26 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if ($err > 0) {
+                if($err > 0){
                     $_d->sql_rollback();
-                    $_d->failEnd("삭제실패입니다:".$msg);
+                    $_d->failEnd("수정실패입니다:".$msg);
                 } else {
                     $_d->sql_commit();
                     $_d->succEnd($no);
                 }
-            } else if ($_type == "list") {
+            }
+
+            break;
+
+        case "DELETE":
+            if (!isset($_key) || $_key == '') {
+                $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
+            }
+
+            if ($_type == "item") {
                 $_d->sql_beginTransaction();
 
-                $sql = "DELETE FROM ADMIN_SAVE_LIST WHERE NO = '".$_key."'";
-
-                $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "DELETE FROM ADMIN_SAVE_USER WHERE LIST_NO = '".$_key."'";
+                $sql = "DELETE FROM ADMIN_USER_RESPONSE WHERE NO = '".$_key."'";
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;

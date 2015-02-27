@@ -23,21 +23,28 @@
     $_t = new MtMysqlData();
 
     if ($_a->connect_db == "") {
-        MtUtil::_d("AS-IS DB 연결 실패.");
+        MtUtil::_c("AS-IS DB 연결 실패.");
     }
 
     if ($_t->connect_db == "") {
-        MtUtil::_d("TO-BE DB 연결 실패.");
+        MtUtil::_c("TO-BE DB 연결 실패.");
     }
 
-    $sql = "SELECT top 500 idx, cate, id, name, head, subject, content, rep_idx, hit, recom, wdate, notice, supp, img_ok, mode, bbs_TB, bbs_idx
+    $sql = "SELECT top 500 idx, cate, id, name, head, subject, content, rep_idx, hit, recom, notice, supp, img_ok, mode, bbs_TB, bbs_idx,
+                CASE WHEN wdate IS NULL THEN NULL WHEN LEN(wdate) < 21 THEN wdate ELSE convert(varchar(19), convert(wdate,  left(wdate,charindex(' ',wdate,1)-1)+ ' '+ right(wdate,charindex(' ',reverse(wdate),1)-1)+ case when charindex('오전',wdate,1) > 0 then 'AM' else 'PM' end), 120) END AS wdate,
             FROM dbo.ange_com_board
             WHERE cate = '01'
             ";
 
     $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
-        MtUtil::_d($i."> [idx] ".$row['idx'].", [cate] ".$row['cate'].", [id] ".$row['id'].", [name] ".$row['name'].", [head] ".$row['head'].", [subject] ".$row['subject'].", [content] ".$row['content'].", [rep_idx] ".$row['rep_idx'].", [hit] ".$row['hit'].", [recom] ".$row['recom'].", [wdate] ".$row['wdate'].", [notice] ".$row['notice'].", [supp] ".$row['supp'].", [img_ok] ".$row['img_ok']);
+        $err = 0;
+        $msg = null;
+
+        MtUtil::_c($i."> [idx] ".$row['idx'].", [cate] ".$row['cate'].", [id] ".$row['id'].", [name] ".$row['name'].", [head] ".$row['head'].", [subject] ".$row['subject'].", [content] ".$row['content'].", [rep_idx] ".$row['rep_idx'].", [hit] ".$row['hit'].", [recom] ".$row['recom'].", [wdate] ".$row['wdate'].", [notice] ".$row['notice'].", [supp] ".$row['supp'].", [img_ok] ".$row['img_ok']);
+
+        $_t->sql_query("INSERT INTO MIG_BOARD_INFO (USER_ID, MIG_NO, MIG_DT, MIG_ST) VALUES ('".$row['id']."', '".$row['idx']."', SYSDATE(), '0')");
+        $no = $_t->mysql_insert_id;
 
         $_t->sql_beginTransaction();
 
@@ -52,10 +59,10 @@
                     ,BOARD_GB
                     ,SYSTEM_GB
                     ,REG_UID
-                    ,REG_NM
                     ,NICK_NM
                     ,REG_DT
                     ,NOTICE_FL
+                    ,HIT_CNT
 #                    ,ETC1
 #                    ,ETC2
 #                    ,ETC3
@@ -63,7 +70,10 @@
 #                    ,ETC5
 #                    ,PASSWORD
                     ,BOARD_NO
-                    ,CATEGORY_NO
+#                    ,CATEGORY_NO
+                    ,MIG_NO
+                    ,MIG_COMM_NO
+                    ,MIG_TBL
                 ) VALUES (
                     '".$row['idx']."'
                     ,'".$row['supp']."'
@@ -75,9 +85,9 @@
                     , 'ANGE'
                     , '".$row['id']."'
                     , '".$row['name']."'
-                    , '".$row['name']."'
                     , '".$row['wdate']."'
                     , '".$row['notice']."'
+                    , '".$row['hit']."'
 #                    , '".$row['ETC1']."'
 #                    , '".$row['ETC2']."'
 #                    , '".$row['ETC3']."'
@@ -85,6 +95,8 @@
 #                    , '".$row['ETC5']."'
 #                    , '".$row['PASSWORD']."'
                     , $i
+#                    , '".$row['cate']."'
+                    , '".$row['CATEGORY_NO']."'
                     , '".$row['CATEGORY_NO']."'
                 )";
 
@@ -92,11 +104,18 @@
         $no = $_t->mysql_insert_id;
 
         if($_t->mysql_errno > 0) {
-            MtUtil::_d($i."> [ERROR] ".$_d->mysql_error);
+            $err++;
+            $msg .= $_t->mysql_error;
+        }
+
+        if($err > 0) {
+            MtUtil::_c($i."> [ERROR] ".$_t->mysql_error);
             $_t->sql_rollback();
+            $_t->sql_query("UPDATE MIG_BOARD_INFO SET MIG_ST = '1', MIG_MSG = '".$msg."' WHERE NO = ".$no);
         } else {
-            MtUtil::_d($i."> [SUCCESS] ");
+            MtUtil::_c($i."> [SUCCESS] ");
             $_t->sql_commit();
+            $_t->sql_query("UPDATE MIG_BOARD_INFO SET MIG_ST = '2' WHERE NO = ".$no);
         }
     }
 

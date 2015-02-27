@@ -64,7 +64,7 @@
                 if (isset($_search[CATEGORY_ST]) && $_search[CATEGORY_ST] != "") {
                     $search_where .= "AND C.CATEGORY_ST  = '".$_search[CATEGORY_ST]."' ";
                 }
-                if (isset($_search[PARENT_NO])) {
+                if (isset($_search[PARENT_NO]) && $_search[PARENT_NO] != "") {
                     $search_where .= "AND C.PARENT_NO = ".$_search[PARENT_NO]." ";
                 }
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
@@ -127,7 +127,7 @@
                         NOTE,
                         SYSTEM_GB
                     ) VALUES (
-                        ".( isset($_model[PARENT]) && $_model[PARENT] != "" ? $_model[PARENT][NO] : 0 )."
+                        ".( (isset($_model[PARENT]) && $_model[PARENT] != "") ? $_model[PARENT][NO] : (isset($_model[PARENT_NO]) && $_model[PARENT_NO] != "") ? $_model[PARENT_NO] : 0 )."
                         , '".$_model[CATEGORY_NM]."'
                         , '".$_model[CATEGORY_GB]."'
                         , '0'

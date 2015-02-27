@@ -104,8 +104,10 @@
             <div class= "form-group form_basic_group" ng-class="{error: edit_form.item_st.$invalid}">
                 <label class= "form_basic_label">상태 <span style="color:#b94a48">*</span></label>
                 <div class="col-xs-6 form_basic_input">
-                    <input id="item_st" name="item_st" ng-model="item.COMM_ST" type= "text" class= "form-control" placeholder="상태" required/>
-                    <span ng-show="edit_form.item_st.$dirty && edit_form.item_st.$invalid" class="help-inline">카테고리 키워드가 누락되었습니다.</span>
+                    <input ng-model="item.COMM_ST" type="radio" value="1" style="float: left; margin:13px 0 0 15px;" ng-checked>
+                    <span style="float:left; margin:10px 0 0 15px;">활성</span>
+                    <input ng-model="item.COMM_ST" type="radio" value="0" style="float: left; margin:13px 0 0 15px;">
+                    <span style="float:left; margin:10px 0 0 15px;">비활성</span>
                 </div>
             </div>
             <div class= "form-group form_basic_group" ng-class="{error: edit_form.item_st.$invalid}">

@@ -501,7 +501,7 @@ define([
 
                     var file = data.FILE;
                     if (file != undefined) {
-                        $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE"};
+                        $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE"};
                     }
 
                     if ($scope.user.BIRTH != undefined && $scope.user.BIRTH.length == 8) {

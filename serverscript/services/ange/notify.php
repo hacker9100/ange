@@ -162,8 +162,7 @@
                             AND TARGET_GB = '".$_model['TARGET_GB']."'
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
+                $data = $_d->sql_fetch($sql);
 
                 if ($data['WARNING_CNT'] > 2) {
 
