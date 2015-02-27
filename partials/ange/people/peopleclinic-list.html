@@ -98,7 +98,8 @@
                                     </td>
                                     <td>
                                         <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
-                                        <span ng-show="item.BOARD_ST != 'D'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 된 글입니다</span>
                                         <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
                                         <!--<span class="reply_num">[2]</span>-->
                                         <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>

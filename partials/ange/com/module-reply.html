@@ -16,7 +16,7 @@
                     <p ng-show="replyItem.BLIND_FL == 'Y'">관리자에 의해 블라인드 된 의견입니다</p>
                     <p style="font-size:0.86em; margin:4px 0 0 0; ">
                         <a ng-click="showDetails = ! showDetails">댓글<span style="color: #df5348">({{replyItem.RE_COUNT}})</span></a>
-                        &nbsp; | &nbsp;<a href="#">신고</a>
+                        &nbsp; | &nbsp;<a ng-click="click_boardReport(replyItem)">신고</a>
                         <span ng-show="uid == replyItem.REG_UID  && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="showCommentDetails = ! showCommentDetails">수정</a></span> <!-- && replyItem.BLIND_FL == 'N'  -->
                         <span ng-show="uid == replyItem.REG_UID && replyItem.BLIND_FL == 'N'">&nbsp; | &nbsp;<a ng-click="click_deleteReply(replyItem);">삭제</a></span>
                         &nbsp; | &nbsp;<a ng-click="click_blind(replyItem.NO);" ng-if="replyItem.BLIND_FL == 'N' && role == 'ANGE_ADMIN'" class="table_red">블라인드</a> <!--replyItem.BLIND_FL == 'N' &&-->
@@ -38,7 +38,7 @@
                         <small>
                             <div class="smalldate">
                                 {{reItem.REG_DT}}
-                                <a href="#">신고</a>
+                                <a ng-click="click_boardReport(reItem)">신고</a>
                                 <a ng-show="replyItem.BLIND_FL == 'N' && uid == item.REG_UID" ng-click="showReCommentDetails = ! showReCommentDetails">수정</a>
                                 <a ng-show="replyItem.BLIND_FL == 'N' && uid == item.REG_UID" ng-click="click_deleteReply(reItem);">삭제</a>
                                 <a ng-click="click_blind(reItem.NO);" ng-show="reItem.BLIND_FL == 'N' && role == 'ANGE_ADMIN'" class="table_red">블라인드</a>
@@ -107,3 +107,33 @@
         </div><!-- /.col-xs-2-->
     </div><!-- /.row -->
 </div><!-- /.container -->
+
+<script type="text/ng-template" id="reply_report.html">
+    <div class="modal-header">
+        <h3 class="modal-title">게시글 신고</h3>
+        <br/>
+    </div>
+
+    <div class="modal-body">
+        <div class="body_wrap">
+            <!--<div class="panel panel-master contentpannel" style="border:#000000; display:block;">-->
+
+            <table id="comp_board_table" class="table table-hover">
+                <tr class="product_note">
+                    <td style="vertical-align: middle">신고사유</td>
+                    <td colspan="3">
+                        <textarea id="editor1" ng-model="item.NOTE" id="comment" name="comment" class="form-control input-md" rows="4" data-ng-disabled="nouserid" style="resize: none;"></textarea>
+                    </td>
+                </tr>
+            </table>
+
+            <!--</div>-->
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_saveReport();">신고</button>
+        <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+    </div>
+</script>

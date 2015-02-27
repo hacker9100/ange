@@ -62,12 +62,12 @@
                             NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT , SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM,
                             REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, NICK_NM, BOARD_NO,
                             CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD, REG_NEW_DT, CATEGORY_NO, BOARD_ST,
-                            (SELECT NOTE FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM
+                            (SELECT NOTE FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM,BLIND_FL
                         FROM (
                             SELECT
                                 B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
                                 (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO AND TARGET_GB = 'BOARD') AS REPLY_COUNT, B.BOARD_GB, B.COMM_NO, C.COMM_NM,
-                                B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.NICK_NM, B.BOARD_NO, B.PASSWORD, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT, B.CATEGORY_NO, B.BOARD_ST
+                                B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.NICK_NM, B.BOARD_NO, B.PASSWORD, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT, B.CATEGORY_NO, B.BOARD_ST,BLIND_FL
                             FROM
                               COM_BOARD B
                               LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -83,7 +83,7 @@
                 }
 
                 $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB, F.FILE_EXT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB, F.FILE_EXT,BLIND_FL
                         FROM
                             FILE F, CONTENT_SOURCE S
                         WHERE
@@ -254,13 +254,13 @@
 	                      (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'BOARD') AS REPLY_COUNT,
                           (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = DATA.NO) AS BOARD_REPLY_COUNT,
 	                      (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM, BOARD_ST,
-	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, ETC1, ETC2, ETC3, ETC4
+	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, ETC1, ETC2, ETC3, ETC4, BLIND_FL
                         FROM
                         (
                             SELECT
                                 B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO,
                                 B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO, B.BOARD_ST,
-                                (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT, ETC1, ETC2, ETC3, ETC4
+                                (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT, ETC1, ETC2, ETC3, ETC4, BLIND_FL
                             FROM
                                 COM_BOARD B
                             WHERE
