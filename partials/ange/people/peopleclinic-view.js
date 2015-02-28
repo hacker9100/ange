@@ -51,11 +51,26 @@ define([
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'CLINIC';
 
-            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
-                .then(function(data){
-                    var comm_mg_nm = data[0].COMM_MG_NM;
-                    $scope.COMM_MG_NM = comm_mg_nm;
+//            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+//                .then(function(data){
+//                    var comm_mg_nm = data[0].COMM_MG_NM;
+//                    $scope.COMM_MG_NM = comm_mg_nm;
+//
+//                })
+//                .catch(function(error){});
 
+            $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
+                .then(function(data){
+                    $scope.COMM_MG_NM = data.COMM_MG_NM;
+
+                    var file = data.FILES;
+                    for(var i in file) {
+                        if (file[i].FILE_GB == 'MANAGER'){
+//                            $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
+                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
+                        }
+                        console.log($scope.main_img);
+                    }
                 })
                 .catch(function(error){});
         };
@@ -210,8 +225,9 @@ define([
 
                         var files = data.FILES;
                         for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
+
 
                         if(data.BOARD_ST == 'D'){
                             if(data.REPLY_YN == 'N'){
@@ -220,10 +236,18 @@ define([
                                 $scope.item.BODY = "작성자가 삭제한 글 입니다"+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
                             }
                         }else{
-                            if(data.REPLY_YN == 'N'){
-                                $scope.item.BODY;
-                            } else {
-                                $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                            if(data.BLIND_FL == 'N'){
+                                if(data.REPLY_YN == 'N'){
+                                    $scope.item.BODY;
+                                } else {
+                                    $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                                }
+                            }else{
+                                if(data.REPLY_YN == 'N'){
+                                    $scope.item.BODY = "관리자에 의해 블라인드 처리가 된 글입니다";
+                                } else {
+                                    $scope.item.BODY = "관리자에 의해 블라인드 처리가 된 글입니다"+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                                }
                             }
                         }
 
@@ -341,21 +365,59 @@ define([
         }
 
         // 조회 화면 이동
-        $scope.click_showViewPeopleBoard = function (key) {
+// 조회 화면 이동(비밀글)
+        $scope.click_showViewPeopleBoard = function (key, regid, password_fl) {
 
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+            console.log(regid);
+            console.log($scope.role);
 
-//            if ($stateParams.menu == 'childdevelop') {
-//                $location.url('/people/childdevelop/view/'+key);
-//            } else if($stateParams.menu == 'chlidoriental') {
-//                $location.url('/people/chlidoriental/view/'+key);
-//            } else if($stateParams.menu == 'obstetrics') {
-//                $location.url('/people/obstetrics/view/'+key);
-//            } else if($stateParams.menu == 'momshealth') {
-//                $location.url('/people/momshealth/view/'+key);
-//            } else if($stateParams.menu == 'financial') {
-//                $location.url('/people/financial/view/'+key);
-//            }
+            if(password_fl != 0 && $scope.uid == regid){
+                $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+
+//                if ($stateParams.menu == 'childdevelop') {
+//                    $location.url('/people/childdevelop/view/'+key);
+//                } else if($stateParams.menu == 'chlidoriental') {
+//                    $location.url('/people/chlidoriental/view/'+key);
+//                } else if($stateParams.menu == 'obstetrics') {
+//                    $location.url('/people/obstetrics/view/'+key);
+//                } else if($stateParams.menu == 'momshealth') {
+//                    $location.url('/people/momshealth/view/'+key);
+//                } else if($stateParams.menu == 'financial') {
+//                    $location.url('/people/financial/view/'+key);
+//                }
+            }else if($scope.role == $scope.VIEW_ROLE){
+                $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+
+//                if ($stateParams.menu == 'childdevelop') {
+//                    $location.url('/people/childdevelop/view/'+key);
+//                } else if($stateParams.menu == 'chlidoriental') {
+//                    $location.url('/people/chlidoriental/view/'+key);
+//                } else if($stateParams.menu == 'obstetrics') {
+//                    $location.url('/people/obstetrics/view/'+key);
+//                } else if($stateParams.menu == 'momshealth') {
+//                    $location.url('/people/momshealth/view/'+key);
+//                } else if($stateParams.menu == 'financial') {
+//                    $location.url('/people/financial/view/'+key);
+//                }
+            }else if($scope.role == 'ANGE_ADMIN'){
+                $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+
+//                if ($stateParams.menu == 'childdevelop') {
+//                    $location.url('/people/childdevelop/view/'+key);
+//                } else if($stateParams.menu == 'chlidoriental') {
+//                    $location.url('/people/chlidoriental/view/'+key);
+//                } else if($stateParams.menu == 'obstetrics') {
+//                    $location.url('/people/obstetrics/view/'+key);
+//                } else if($stateParams.menu == 'momshealth') {
+//                    $location.url('/people/momshealth/view/'+key);
+//                } else if($stateParams.menu == 'financial') {
+//                    $location.url('/people/financial/view/'+key);
+//                }
+            }
+            else{
+                dialogs.notify('알림', '비밀글입니다. 작성자와 해당게시판 상담가만 볼 수 있습니다.', {size: 'md'});
+            }
+
         };
 
         $scope.click_showPeopleClinicDelete = function(item) {
@@ -464,18 +526,71 @@ define([
 
         };
 
+        // 신고버튼
+        $scope.click_boardReport = function (item) {
+
+            $scope.openCounselModal(item, 'lg');
+
+        };
+
+        // 신고버튼 팝업
+        $scope.openCounselModal = function (item, size){
+
+            var dlg = dialogs.create('peopleboard_report.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.item = {};
+
+                    $scope.item.TARGET_NO = item.NO;
+                    $scope.item.TARGET_GB = 'BOARD';
+                    $scope.item.TARGET_NOTE = item.SUBJECT;
+                    $scope.item.TARGET_UID = item.REG_UID;
+                    $scope.item.TARGET_NICK = item.NICK_NM;
+                    $scope.item.REG_UID = $scope.uid;
+                    $scope.item.REG_NICK = $scope.nick;
+
+                    $scope.click_saveReport = function (){
+
+                        $scope.insertItem('ange/notify', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
+                                $modalInstance.close();
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+                $scope.getPeopleBoard();
+            },function(){
+
+            });
+        };
+
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
+        $scope.getSession()
          .then($scope.sessionCheck)
          .then($scope.init)
-         .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
+         .then($scope.likeFl)
+         .then($scope.getPeopleClinic)
+         .then($scope.getPreBoard)
+         .then($scope.getNextBoard)
+         .catch($scope.reportProblems);
         //$scope.addHitCnt();
-        $scope.init();
-        $scope.likeFl();
-        $scope.getPeopleClinic();
-        $scope.getPreBoard();
-        $scope.getNextBoard();
+
+//        $scope.init();
+//        $scope.likeFl();
+//        $scope.getPeopleClinic();
+//        $scope.getPreBoard();
+//        $scope.getNextBoard();
 
 
     }]);

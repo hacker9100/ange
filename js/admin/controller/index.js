@@ -24,16 +24,19 @@ define([
     '../../../partials/admin/member-edit',
     '../../../partials/admin/member-view',
     '../../../partials/admin/pagehit-main',
+    '../../../partials/admin/notify-list',
 
+    '../../../partials/admin/popup/member-edit',
+    '../../../partials/admin/popup/member-view',
     '../../../partials/admin/popup/member-write-list',
     '../../../partials/admin/popup/member-mileage-list',
     '../../../partials/admin/popup/member-response-list',
     '../../../partials/admin/popup/member-comp-list',
 
     // ADMIN 참여 관리
-    '../../../partials/admin/event-list',
-    '../../../partials/admin/event-edit',
-    '../../../partials/admin/comp-list',
+//    '../../../partials/admin/event-list',
+//    '../../../partials/admin/event-edit',
+//    '../../../partials/admin/comp-list',
 
     // ADMIN 콘텐츠 관리
     '../../../partials/admin/notice-list',

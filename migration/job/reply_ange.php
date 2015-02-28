@@ -15,75 +15,77 @@
 
     date_default_timezone_set('Asia/Seoul');
 
-	include_once($_SERVER['DOCUMENT_ROOT']."/migration/classes/ImportClasses.php");
+	include_once("D:/xampp/htdocs/ange/migration/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_c("### [START]");
 
     $_a = new MtMssqlData();
     $_t = new MtMysqlData();
 
     if ($_a->connect_db == "") {
-        MtUtil::_d("AS-IS DB 연결 실패.");
+        MtUtil::_c("AS-IS DB 연결 실패.");
     }
 
     if ($_t->connect_db == "") {
-        MtUtil::_d("TO-BE DB 연결 실패.");
+        MtUtil::_c("TO-BE DB 연결 실패.");
     }
-
-    $sql = "SELECT top 500 c_idx, c_id, c_name, comment, c_date, comm_idx, comm_tb, comm_cate, c_rep_idx, c_mode, c_step, c_group_idx 
+    // 01, 08, 09, 10, 11, 25, 30
+    $sql = "SELECT c_idx, c_id, c_name, comment, comm_idx, comm_tb, comm_cate, c_rep_idx, c_mode, c_step, c_group_idx,
+                      CASE WHEN c_date IS NULL THEN NULL WHEN LEN(c_date) < 21 THEN c_date ELSE convert(varchar(19), convert(datetime,  left(c_date,charindex(' ',c_date,1)-1)+ ' '+ right(c_date,charindex(' ',reverse(c_date),1)-1)+ case when charindex('오전',c_date,1) > 0 then 'AM' else 'PM' end), 120) END AS c_date
             FROM dbo.comm_comment
+            WHERE comm_cate = '07'
             ";
 
     $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
-        MtUtil::_d($i."> [c_idx] ".$row['c_idx'].", [c_id] ".$row['c_id'].", [c_name] ".$row['c_name'].", [comment] ".$row['comment'].", [c_date] ".$row['c_date'].", [comm_idx] ".$row['comm_idx'].", [comm_tb] ".$row['comm_tb'].", [comm_cate] ".$row['comm_cate'].", [c_rep_idx] ".$row['c_rep_idx'].", [c_step] ".$row['c_step'].", [c_group_idx] ".$row['c_group_idx']);
-
-        $_t->sql_beginTransaction();
+//        MtUtil::_c($i."> [c_idx] ".$row['c_idx'].", [c_id] ".$row['c_id'].", [c_name] ".$row['c_name'].", [comment] ".$row['comment'].", [c_date] ".$row['c_date'].", [comm_idx] ".$row['comm_idx'].", [comm_tb] ".$row['comm_tb'].", [comm_cate] ".$row['comm_cate'].", [c_rep_idx] ".$row['c_rep_idx'].", [c_step] ".$row['c_step'].", [c_group_idx] ".$row['c_group_idx']);
 
         $sql = "INSERT INTO MIG_COM_REPLY
                 (
                     NO,
                     PARENT_NO,
-#                    REPLY_NO,
-#                    REPLY_GB,
                     LEVEL,
                     COMMENT,
                     REG_UID,
                     NICK_NM,
-                    REG_NM,
                     REG_DT,
                     LIKE_CNT,
                     TARGET_NO,
                     TARGET_GB,
-                    BLIND_FL
+                    BLIND_FL,
+                    MODE_GB,
+                    MIG_NO,
+                    MIG_REPLY_NO,
+                    MIG_COMM_NO,
+                    MIG_TBL
                 ) VALUES (
                     ".$row['c_idx'].",
                     ".$row['c_rep_idx'].",
-#                    '".$row['c_idx']."',
-#                    '".$row['c_idx']."',
                     '".$row['c_step']."',
                     '".str_replace("'", "\\'",$row['comment'])."',
                     '".$row['c_id']."',
                     '".$row['c_name']."',
-                    '".$row['c_name']."',
                     '".$row['c_date']."',
                     '0',
                     '".$row['comm_idx']."',
-                    'BOARD',
-                    'N'
+                    'REVIEW',
+                    'N',
+                    '".$row['c_mode']."',
+                    '".$row['c_idx']."',
+                    '".$row['comm_idx']."',
+                    '".$row['comm_cate']."',
+                    'ange_com_board'
                 )";
 
         $_t->sql_query($sql);
         $no = $_t->mysql_insert_id;
 
         if($_t->mysql_errno > 0) {
-            MtUtil::_d($i."> [ERROR] ".$_d->mysql_error);
-            $_t->sql_rollback();
+            MtUtil::_c($i."> [ERROR] ".$_d->mysql_error);
         } else {
-            MtUtil::_d($i."> [SUCCESS] ");
-            $_t->sql_commit();
+//            MtUtil::_c($i."> [SUCCESS] ");
         }
     }
 
-    MtUtil::_d("### [END]");
+    MtUtil::_c("### [END]");
 ?>

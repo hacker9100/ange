@@ -38,7 +38,7 @@ define("__SMTP_PWD__" , "mailange33302");
 define("DEBUG", true);
 define("SESSION_TIMEOUT", 1800);
 // define("BASE_URL", "http://14.63.219.171");
-define("BASE_URL", "http://ange.marveltree.com");
+define("BASE_URL", "http://localhost");
 
 class Mt {
 

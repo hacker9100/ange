@@ -11,11 +11,11 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('clinic-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('clinic-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
 
         /********** 초기화 **********/
         // 파일 업로드 설정
-        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+        $scope.options = { url: CONSTANT.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
         // 파일 업로드 후 파일 정보가 변경되면 화면에 로딩
         $scope.$watch('newFile', function(data){
@@ -86,7 +86,7 @@ define([
                 return;
             }
 
-            $scope.item = {};
+            $scope.item = $scope.file1 = $scope.file2 = {};
             $scope.showEdit = true;
 
             $scope.getItem('ange/community', 'item', item.NO, {}, false)
@@ -97,9 +97,9 @@ define([
                     var file = data.FILES;
                     for(var i in file) {
                         if (file[i].FILE_GB == 'MANAGER')
-                            $scope.file1 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
+                            $scope.file1 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":CONSTANT.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":CONSTANT.BASE_URL+"/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
                         else if (file[i].FILE_GB == 'MAIN')
-                            $scope.file2 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
+                            $scope.file2 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":CONSTANT.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":CONSTANT.BASE_URL+"/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
                     }
 
                     $scope.click_focus('item', 'item_name');

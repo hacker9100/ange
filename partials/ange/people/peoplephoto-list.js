@@ -75,11 +75,20 @@ define([
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'PHOTO';
 
-            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+            $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
-                    var comm_mg_nm = data[0].COMM_MG_NM;
-                    $scope.COMM_MG_NM = comm_mg_nm;
+                    $scope.COMM_MG_NM = data.COMM_MG_NM;
 
+                    var file = data.FILES;
+
+                    console.log(data.FILES);
+                    for(var i in file) {
+
+                        console.log(file[i]);
+                        if (file[i].FILE_GB == 'MAIN')
+                        //$scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
+                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
+                    }
                 })
                 .catch(function(error){});
 

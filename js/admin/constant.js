@@ -13,7 +13,12 @@ define([
             "SYSTEM_GB" : "ADMIN",
             "DASHBOARD_PAGE_SIZE" : 5,
             "PAGE_SIZE" : 20,
-            "BASE_URL" : "http://localhost"
+            "BASE_URL" : "http://localhost",
+
+            "UPLOAD_INDEX" : "/serverscript/upload/",
+
+            "COMM_NO_FAQ" : "53",
+            "COMM_NO_QNA" : ""
         }
     );
     app.constant(

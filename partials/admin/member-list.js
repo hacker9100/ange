@@ -39,7 +39,7 @@ define([
             // N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING
             var status = [{name: "전체", value: "A"}, {name: "정상", value: "N"}, {name: "불량", value: "P"}, {name: "휴면", value: "D"}, {name: "탈퇴", value: "S"}];
             var act = [{name: "일반정보", value: "A"}, {name: "커뮤니티활동", value: "C"}, {name: "참여활동", value: "P"}, {name: "블로거활동", value: "B"}];
-            var sort = [{name: "가입일", value: "REG_DT", index: 0}, {name: "이름", value: "USER_NM", index: 1}, {name: "포인트", value: "POINT", index: 2}, {name: "스코어", value: "SCORE", index: 3}];
+            var sort = [{name: "가입일", value: "REG_DT", index: 0}, {name: "이름", value: "USER_NM", index: 1}, {name: "포인트", value: "REMAIN_POINT", index: 2}];
             var order = [{name: "내림차순", value: "DESC", index: 0}, {name: "오름차순", value: "ASC", index: 1}];
 
             var range = [{name: "선택한 회원", value: "C"}, {name: "리스트 전체", value: "A"}];
@@ -197,19 +197,7 @@ define([
 //                        .catch(function(error){alert(error)});
                     break;
                 case 'save' :
-                    var item = angular.copy($scope.search);
-                    item.CHECKED = $scope.action.CHECKED;
-
-                    if ($scope.action.CHECKED == 'C' ) {
-                        if ($scope.check_user.length == 0) {
-                            dialogs.notify('알림', '선택한 회원이 없습니다..', {size: 'md'});
-                            return;
-                        }
-
-                        item.USER_ID_LIST = angular.copy($scope.check_user);
-                    }
-
-                    $scope.openPopupSaveListRegModal(item);
+                    $scope.click_openPopupsaveListReg();
                     break;
                 case 'blacklist' :
                 case 'mail' :
@@ -287,12 +275,22 @@ define([
 
         // 목록갱신 버튼 클릭
         $scope.click_refreshList = function () {
+            $scope.check_user = [];
+            $scope.check_cnt = 0;
             $scope.tableParams.reload();
         };
-                
+
+        // 검색 버튼 클릭
+        $scope.click_searchUser = function () {
+            $scope.check_user = [];
+            $scope.check_cnt = 0;
+            $scope.tableParams.reload();
+        }
+
         // 등록 버튼 클릭
         $scope.click_createNewUser = function () {
-            $location.url('/member/edit/0');
+//            $location.url('/member/edit/0');
+            $scope.openPopupEditUser(0);
         };
 
         // 자주쓰는 목록 제외 버튼 클릭
@@ -307,6 +305,86 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
+        $scope.click_openPopupsaveListReg = function() {
+            var item = angular.copy($scope.search);
+            item.CHECKED = $scope.action.CHECKED;
+
+            if ($scope.action.CHECKED == 'C' ) {
+                if ($scope.check_user.length == 0) {
+                    dialogs.notify('알림', '선택한 회원이 없습니다..', {size: 'md'});
+                    return;
+                }
+
+                item.USER_ID_LIST = angular.copy($scope.check_user);
+            }
+
+            $scope.openPopupSaveListRegModal(item);
+        }
+
+        $scope.openPopupEditUser = function (id) {
+            var dlg = dialogs.create('/partials/admin/popup/member-edit.html',
+                ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
+//                    /********** 공통 controller 호출 **********/
+//                    angular.extend(this, $controller('content', {$scope: $scope}));
+
+                    $scope.isModal = true;
+                    $scope.id = id;
+
+//                    $scope.click_reg = function () {
+//                        $scope.insertItem('admin/user_list', 'list', $scope.item, false)
+//                            .then(function(data){
+//                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+//                            })
+//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//
+//                        $modalInstance.close();
+//                        //console.log($scope.item);
+//                    };
+
+                    $scope.click_close = function(){
+                        $modalInstance.close();
+                    }
+
+                }], id, {size: 'lg',keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        };
+
+        $scope.openPopupViewUser = function (id) {
+            var dlg = dialogs.create('/partials/admin/popup/member-view.html',
+                ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
+//                    /********** 공통 controller 호출 **********/
+//                    angular.extend(this, $controller('content', {$scope: $scope}));
+
+                    $scope.isModal = true;
+                    $scope.id = id;
+
+//                    $scope.click_reg = function () {
+//                        $scope.insertItem('admin/user_list', 'list', $scope.item, false)
+//                            .then(function(data){
+//                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+//                            })
+//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//
+//                        $modalInstance.close();
+//                        //console.log($scope.item);
+//                    };
+
+                    $scope.click_close = function(){
+                        $modalInstance.close();
+                    }
+
+                }], id, {size: 'lg',keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        };
+
         $scope.openPopupSaveListRegModal = function (user) {
             var dlg = dialogs.create('save_list_popup.html',
                 ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
@@ -317,7 +395,7 @@ define([
                     $scope.item = data;
 
                     $scope.click_reg = function () {
-                        $scope.insertItem('admin/user_list', 'item', $scope.item, false)
+                        $scope.insertItem('admin/user_list', 'list', $scope.item, false)
                             .then(function(data){
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                             })
@@ -472,12 +550,14 @@ define([
 
         // 조회 화면 이동
         $scope.click_showViewUser = function (item) {
-            $location.url('/member/view/'+item.USER_ID);
+//            $location.url('/member/view/'+item.USER_ID);
+            $scope.openPopupViewUser(item.USER_ID);
         };
 
         // 수정 화면 이동
         $scope.click_showEditUser = function (item) {
-            $location.url('/member/edit/'+item.USER_ID);
+//            $location.url('/member/edit/'+item.USER_ID);
+            $scope.openPopupEditUser(item.USER_ID);
         };
 
         $scope.isStatus = false;
@@ -543,11 +623,6 @@ define([
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
-
-        // 검색 버튼 클릭
-        $scope.click_searchUser = function () {
-            $scope.tableParams.reload();
-        }
 
         // 사용자 목록 조회
 //        $scope.getUserList = function () {

@@ -55,10 +55,14 @@ define([
 
         $scope.todayDate = today;
 
-        $scope.search.PARENT_NO = $stateParams.id;
+        $scope.search.PARENT_NO = $rootScope.PARENT_NO;
 
         // 초기화
         $scope.init = function(session) {
+
+            console.log($rootScope.PARENT_NO);
+            $scope.item.PARENT_NO = $rootScope.PARENT_NO;
+
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'BOARD';
@@ -84,7 +88,7 @@ define([
 
             console.log('$stateParams.menu = '+$stateParams.menu);
 
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list/'+$rootScope.PARENT_NO);
         };
 
         $scope.addHitCnt = function () {
@@ -162,7 +166,7 @@ define([
             dialog.result.then(function(btn){
                 $scope.deleteItem('com/webboard', 'item', item.NO, true)
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
-                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list/'+$rootScope.PARENT_NO);
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
@@ -180,6 +184,57 @@ define([
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/'+$stateParams.id);
         };
 
+
+        $scope.click_boardReport2 = function (item) {
+
+            $scope.openCounselModal2(item, 'lg');
+
+        };
+
+        // 신고버튼 팝업
+        $scope.openCounselModal2 = function (item, size){
+
+            var dlg = dialogs.create('peopleboard_report.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.item = {};
+
+                    console.log($scope.nick);
+                    console.log($rootScope.nick);
+
+                    $scope.item.TARGET_NO = item.NO;
+                    $scope.item.TARGET_GB = 'BOARD';
+                    $scope.item.TARGET_NOTE = item.SUBJECT;
+                    $scope.item.TARGET_UID = item.REG_UID;
+                    $scope.item.TARGET_NICK = item.NICK_NM;
+                    $scope.item.REG_UID = $scope.uid;
+                    $scope.item.REG_NICK = $rootScope.nick;
+
+                    $scope.click_saveReport = function (){
+
+                        $scope.insertItem('ange/notify', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
+                                $modalInstance.close();
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+                $scope.getPeopleBoard();
+            },function(){
+
+            });
+        };
 
         /********** 화면 초기화 **********/
         /*        $scope.getSession()

@@ -55,7 +55,7 @@
                 $msg = "";
 
                 $sql = "SELECT
-	                        NO, SUBJECT, BODY, REG_UID, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, REPLY_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB, REPLY_FL
+	                        NO, SUBJECT, BODY, REG_UID, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, REPLY_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB, REPLY_FL, BLIND_FL
                         FROM
                             ANGE_REVIEW
                         WHERE
@@ -147,12 +147,13 @@
                             NO, SUBJECT, BODY, REG_UID, NICK_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB,
                             (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
                             (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'REVIEW') AS REPLY_CNT,
-                            CASE TARGET_GB WHEN 'EXPERIENCE' THEN '체험단' WHEN 'EVENT' THEN '이벤트' WHEN 'SAMPLE' THEN '샘플팩' WHEN 'PRODUCT' THEN '상품' ELSE '앙쥬' END AS SHORT_NM, REVIEW_NO, REPLY_FL
+                            CASE TARGET_GB WHEN 'EXPERIENCE' THEN '체험단' WHEN 'EVENT' THEN '이벤트' WHEN 'SAMPLE' THEN '샘플팩' WHEN 'PRODUCT' THEN '상품' ELSE '앙쥬' END AS SHORT_NM, REVIEW_NO, REPLY_FL,
+                            BLIND_FL
                         FROM
                         (
                             SELECT
                                 NO, SUBJECT, BODY, REG_UID, NICK_NM, REG_DT, HIT_CNT, LIKE_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB,
-                                REVIEW_NO, REPLY_FL
+                                REVIEW_NO, REPLY_FL, BLIND_FL
                             FROM
                                 ANGE_REVIEW AR
                             WHERE
@@ -226,37 +227,6 @@
                     } else {
                         $_d->dataEnd2($data);
                     }
-                }else if(isset($_search[BOARD_NEXT]) && $_search[BOARD_NEXT] != "") {
-
-                    $sql = "SELECT NO, SUBJECT FROM ANGE_REVIEW WHERE NO > ".$_search[KEY]." AND  TARGET_GB='".$_search[TARGET_GB]."' ORDER BY NO LIMIT 1";
-
-                    if($_d->mysql_errno > 0){
-                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                    }else{
-                        $result = $_d->sql_query($sql);
-                        $data = $_d->sql_fetch_array($result);
-                        $_d->dataEnd2($data);
-                    }
-
-                }else if(isset($_search[BOARD_PRE]) && $_search[BOARD_PRE] != "") {
-
-                    $sql = "SELECT NO, SUBJECT FROM ANGE_REVIEW WHERE NO < ".$_search[KEY]." AND TARGET_GB='".$_search[TARGET_GB]."' ORDER BY  NO DESC LIMIT 1";
-
-                    if($_d->mysql_errno > 0){
-                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                    }else{
-                        $result = $_d->sql_query($sql);
-                        $data = $_d->sql_fetch_array($result);
-                        $_d->dataEnd2($data);
-                    }
-                }
-
-                $data = $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0){
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                }else{
-                    $_d->dataEnd($sql);
                 }
             }else if ($_type == 'like'){
 
@@ -290,6 +260,37 @@
                     $data = $_d->sql_fetch_array($result);
                     $_d->dataEnd2($data);
                 }
+            }else if($_type == 'pre') {
+
+                $sql = "SELECT NO, SUBJECT, BLIND_FL, BOARD_ST FROM ANGE_REVIEW WHERE NO < ".$_search[KEY]." AND TARGET_GB='".$_search[TARGET_GB]."' ORDER BY  NO DESC LIMIT 1";
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $result = $_d->sql_query($sql);
+                    $data = $_d->sql_fetch_array($result);
+                    $_d->dataEnd2($data);
+                }
+            }else if($_type == 'next') {
+
+                $sql = "SELECT NO, SUBJECT, BLIND_FL, BOARD_ST FROM ANGE_REVIEW WHERE NO > ".$_search[KEY]." AND  TARGET_GB='".$_search[TARGET_GB]."' ORDER BY NO LIMIT 1";
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $result = $_d->sql_query($sql);
+                    $data = $_d->sql_fetch_array($result);
+                    $_d->dataEnd2($data);
+                }
+
+            }
+
+            $data = $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
             }
 
             break;
@@ -368,7 +369,8 @@
                         TARGET_NO,
                         TARGET_GB,
                         REPLY_FL,
-                        REVIEW_NO
+                        REVIEW_NO,
+                        BLIND_FL
                     ) VALUES (
                         '".$_model[SUBJECT]."',
                         '".$_model[BODY]."',
@@ -384,22 +386,23 @@
                         '".$_model[TARGET_NO]."',
                         '".$_model[TARGET_GB]."',
                         '".($_model[REPLY_FL] == "true" ? "Y" : "N")."',
-                        (SELECT COUNT(*)+1 FROM ANGE_REVIEW A WHERE A.TARGET_GB = '".$_model[TARGET_GB]."')
+                        (SELECT COUNT(*)+1 FROM ANGE_REVIEW A WHERE A.TARGET_GB = '".$_model[TARGET_GB]."'),
+                        'N'
                     )";
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
-            $sql = "UPDATE ANGE_COMP_WINNER
-                        SET
-                            REVIEW_FL = 'Y'
-                        WHERE
-                            USER_ID = '".$_SESSION['uid']."'
-                         AND TARGET_NO = '".$_model[TARGET_NO]."'
-                        ";
-
-
-            $_d->sql_query($sql);
+//            $sql = "UPDATE ANGE_COMP_WINNER
+//                        SET
+//                            REVIEW_FL = 'Y'
+//                        WHERE
+//                            USER_ID = '".$_SESSION['uid']."'
+//                         AND TARGET_NO = '".$_model[TARGET_NO]."'
+//                        ";
+//
+//
+//            $_d->sql_query($sql);
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -603,16 +606,16 @@
 
             $_d->sql_query($sql);
 
-            $sql = "UPDATE ANGE_COMP_WINNER
-                SET
-                    REVIEW_FL = 'Y'
-                WHERE
-                    USER_ID = '".$_SESSION['uid']."'
-                 AND TARGET_NO = '".$_model[TARGET_NO]."'
-                ";
-
-
-            $_d->sql_query($sql);
+//            $sql = "UPDATE ANGE_COMP_WINNER
+//                SET
+//                    REVIEW_FL = 'Y'
+//                WHERE
+//                    USER_ID = '".$_SESSION['uid']."'
+//                 AND TARGET_NO = '".$_model[TARGET_NO]."'
+//                ";
+//
+//
+//            $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
@@ -812,7 +815,10 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM ANGE_REVIEW WHERE NO = ".$_key;
+            //$sql = "DELETE FROM ANGE_REVIEW WHERE NO = ".$_key;
+            $sql = "UPDATE ANGE_REVIEW SET
+                 BOARD_ST = 'D'
+                 WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
 
@@ -825,38 +831,38 @@
 //            $_d->sql_query($sql);
             /*$no = $_d->mysql_insert_id;*/
 
-            $sql = "SELECT
-                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                    FROM
-                        FILE F, CONTENT_SOURCE S
-                    WHERE
-                        F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'REVIEW'
-                        AND S.TARGET_NO = ".$_key."
-                        AND F.THUMB_FL = '0'
-                    ";
+//            $sql = "SELECT
+//                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+//                    FROM
+//                        FILE F, CONTENT_SOURCE S
+//                    WHERE
+//                        F.NO = S.SOURCE_NO
+//                        AND S.TARGET_GB = 'REVIEW'
+//                        AND S.TARGET_NO = ".$_key."
+//                        AND F.THUMB_FL = '0'
+//                    ";
 
-            $result = $_d->sql_query($sql,true);
-            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+//            $result = $_d->sql_query($sql,true);
+//            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+//                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+//                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+//
+//                $_d->sql_query($sql);
+//
+//                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'REVIEW' AND TARGET_NO = ".$row[NO];
+//
+//                $_d->sql_query($sql);
+//
+//                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+//
+//                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+//                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
+//                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+//                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+//                }
+//            }
 
-                $_d->sql_query($sql);
-
-                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'REVIEW' AND TARGET_NO = ".$row[NO];
-
-                $_d->sql_query($sql);
-
-                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-
-                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
-                }
-            }
-
-            $_d->sql_query($sql);
+            //$_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {

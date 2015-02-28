@@ -62,12 +62,12 @@
                             NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT , SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM,
                             REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, NICK_NM, BOARD_NO,
                             CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD, REG_NEW_DT, CATEGORY_NO, BOARD_ST,
-                            (SELECT NOTE FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM
+                            (SELECT NOTE FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM,BLIND_FL
                         FROM (
                             SELECT
                                 B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
                                 (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO AND TARGET_GB = 'BOARD') AS REPLY_COUNT, B.BOARD_GB, B.COMM_NO, C.COMM_NM,
-                                B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.NICK_NM, B.BOARD_NO, B.PASSWORD, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT, B.CATEGORY_NO, B.BOARD_ST
+                                B.ETC1, B.ETC2, B.ETC3, B.ETC4, B.ETC5, B.NICK_NM, B.BOARD_NO, B.PASSWORD, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT, B.CATEGORY_NO, B.BOARD_ST,B.BLIND_FL
                             FROM
                               COM_BOARD B
                               LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -144,10 +144,10 @@
                     $err = 0;
                     $msg = "";
 
-                    $sql = "SELECT  NO, PARENT_NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, REG_DT, HIT_CNT
+                    $sql = "SELECT  NO, PARENT_NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, REG_DT, HIT_CNT, BLIND_FL
                         FROM (
                            SELECT
-                               B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT
+                               B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.BLIND_FL
                            FROM
                              COM_BOARD B
                              LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -244,6 +244,10 @@
                     $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
+                if(isset($_search[SUPPORT_NO]) && $_search[SUPPORT_NO] != ""){
+                    $search_where .= "AND SUPPORT_NO = '".$_search[SUPPORT_NO]."' ";
+                }
+
                 // AND PARENT_NO = 0
                 $sql = "SELECT
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
@@ -254,13 +258,13 @@
 	                      (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'BOARD') AS REPLY_COUNT,
                           (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = DATA.NO) AS BOARD_REPLY_COUNT,
 	                      (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM, BOARD_ST,
-	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, ETC1, ETC2, ETC3, ETC4
+	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, ETC1, ETC2, ETC3, ETC4, BLIND_FL
                         FROM
                         (
                             SELECT
                                 B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO,
                                 B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO, B.BOARD_ST,
-                                (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT, ETC1, ETC2, ETC3, ETC4
+                                (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT, ETC1, ETC2, ETC3, ETC4, BLIND_FL
                             FROM
                                 COM_BOARD B
                             WHERE
@@ -391,7 +395,7 @@
                     $search_where .= "AND PARENT_NO = '0' ";
                 }
 
-                $sql = "SELECT NO, SUBJECT,NICK_NM  FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND PARENT_NO = 0 AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY  NO DESC LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL  FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY  NO DESC LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -409,7 +413,7 @@
                     $search_where .= "AND PARENT_NO = '0' ";
                 }
 
-                $sql = "SELECT NO, SUBJECT,NICK_NM FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY NO LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY NO LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -508,7 +512,7 @@
                 }
             }else if ($_type == 'manager') {
 
-                $sql = "SELECT AC.COMM_MG, (SELECT USER_NM FROM COM_USER WHERE USER_ID = AC.COMM_MG) COMM_MG_NM
+                $sql = "SELECT AC.COMM_MG_ID, AC.COMM_MG_NM
                         FROM ANGE_COMM AC
                         WHERE 1=1
                           AND NO = '".$_search[COMM_NO]."'

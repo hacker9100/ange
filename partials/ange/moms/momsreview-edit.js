@@ -190,9 +190,12 @@ define([
 
             $scope.search.USER_ID = true;
 
+            $scope.search.EVENT_GB = "exp";
+            $scope.search.REVIEW_EVENT_GB = 'Y';
+
             if ($stateParams.id != 0) {
 
-                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+                $scope.getList('ange/event', 'list', {}, $scope.search, false)
                 .then(function(data){
                     $scope.event = data;
                     var total_cnt = data[0].TOTAL_COUNT;
@@ -201,7 +204,7 @@ define([
                 .catch(function(error){$scope.event = ""; $scope.total_cnt=0;});
             }else{
                 $scope.search.REVIEW_FL = true;
-                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+                $scope.getList('ange/event', 'list', {}, $scope.search, false)
                     .then(function(data){
                         $scope.event = data;
                         var total_cnt = data[0].TOTAL_COUNT;
@@ -236,27 +239,30 @@ define([
                     .then(function(data){
                         $scope.item = data;
 
+                        console.log('target_gb = '+data.TARGET_GB);
+                        $scope.item.MENU = data.TARGET_GB;
+
                         if(data.TARGET_NO > 0){
                             var idx = 0;
                             for(var i=0; i < $scope.event.length; i ++){
 
-                                if(JSON.stringify(data.TARGET_NO) == JSON.stringify($scope.event[i].TARGET_NO)){
+                                if(JSON.stringify(data.TARGET_NO) == JSON.stringify($scope.event[i].ada_idx)){
                                     idx = i;
                                 }
                             }
-                            $scope.item.TARGET_NO = $scope.event[idx].TARGET_NO;
-                            $("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].NO+"']").attr("checked",true);
+                            $scope.item.TARGET_NO = $scope.event[idx].ada_idx;
+                            $("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].ada_idx+"']").attr("checked",true);
 
                         } else {
 
                             $("#general").attr("checked",true);
                             $('#menu_select').removeAttr('disabled');
-                            $scope.item.MENU = data.TARGET_GB;
+
                         }
 
                         var files = data.FILES;
                         for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -346,9 +352,11 @@ define([
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoard)
             .catch($scope.reportProblems);
-        $scope.init();
-        $scope.getPeopleBoard();
+//        $scope.init();
+//        $scope.getPeopleBoard();
 
     }]);
 });

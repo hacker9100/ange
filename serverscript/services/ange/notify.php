@@ -162,16 +162,15 @@
                             AND TARGET_GB = '".$_model['TARGET_GB']."'
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
+                $data = $_d->sql_fetch($sql);
 
                 if ($data['WARNING_CNT'] > 2) {
 
                     $table = "";
 
-                    if ($_model['TARGET_GB']== "BOARD") {
+                    if ($_model['TARGET_GB']== "REPLY") {
                         $table = "COM_REPLY";
-                    } else if ($_model['TARGET_GB']== "BOARD") {
+                    } else if ($_model['TARGET_GB']== "REVIEW") {
                         $table = "ANGE_REVIEW";
                     } else {
                         $table = "COM_BOARD";

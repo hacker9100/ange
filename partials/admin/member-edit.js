@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('member-edit', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', function ($scope, $stateParams, $location, $filter, dialogs) {
+    controllers.controller('member-edit2', ['$scope', '$stateParams', '$location', '$filter', 'dialogs', function ($scope, $stateParams, $location, $filter, dialogs) {
 
         /********** 초기화 **********/
         // 사용자 모델

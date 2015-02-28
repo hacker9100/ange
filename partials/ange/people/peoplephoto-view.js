@@ -157,7 +157,7 @@ define([
                     //console.log(JSON.stringify(data));
                     for(var i in files) {
                         if (files[i].FILE_GB == 'MAIN') {
-//                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+//                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                             var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
                             data.MAIN_FILE = img;
                         }
@@ -273,17 +273,71 @@ define([
 
         };
 
+        // 신고버튼
+        $scope.click_boardReport2 = function (item) {
+
+            $scope.openCounselModal2(item, 'lg');
+
+        };
+
+        // 신고버튼 팝업
+        $scope.openCounselModal2 = function (item, size){
+
+            var dlg = dialogs.create('peopleboard_report.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.item = {};
+
+
+                    $scope.item.TARGET_NO = item.NO;
+                    $scope.item.TARGET_GB = 'BOARD';
+                    $scope.item.TARGET_NOTE = item.SUBJECT;
+                    $scope.item.TARGET_UID = item.REG_UID;
+                    $scope.item.TARGET_NICK = item.NICK_NM;
+                    $scope.item.REG_UID = $scope.uid;
+                    $scope.item.REG_NICK = $scope.nick;
+
+                    $scope.click_saveReport = function (){
+
+                        $scope.insertItem('ange/notify', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
+                                $modalInstance.close();
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+                $scope.getPeopleBoard();
+            },function(){
+
+            });
+        };
+
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
+        $scope.getSession()
          .then($scope.sessionCheck)
          .then($scope.init)
-         .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
-        $scope.init();
-        $scope.likeFl();
-//        $scope.addHitCnt();
-        $scope.getPeopleBoard();
-        $scope.getPreBoard();
-        $scope.getNextBoard();
+         .then($scope.likeFl)
+         .then($scope.getPeopleBoard)
+         .then($scope.getPreBoard)
+         .then($scope.getNextBoard)
+         .catch($scope.reportProblems);
+
+//        $scope.init();
+//        $scope.likeFl();
+////        $scope.addHitCnt();
+//        $scope.getPeopleBoard();
+//        $scope.getPreBoard();
+//        $scope.getPreBoard();
     }]);
 });

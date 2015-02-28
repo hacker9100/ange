@@ -42,6 +42,10 @@ define([
     '../../../partials/ange/people/peoplephoto-list',
     '../../../partials/ange/people/peoplephoto-edit',
     '../../../partials/ange/people/peoplephoto-view',
+    '../../../partials/ange/people/peoplediscusstitle-list',
+    '../../../partials/ange/people/peoplediscuss-list',
+    '../../../partials/ange/people/peoplediscuss-view',
+    '../../../partials/ange/people/peoplediscuss-edit',
 
     // 앙쥬맘스
     '../../../partials/ange/moms/momshome',

@@ -11,12 +11,12 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('faq-edit', ['$scope', '$stateParams', '$location', '$q', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, $q, dialogs, UPLOAD) {
+    controllers.controller('faq-edit', ['$scope', '$stateParams', '$location', '$q', 'dialogs', 'CONSTANT', function ($scope, $stateParams, $location, $q, dialogs, CONSTANT) {
 
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 
         // 파일 업로드 설정
-        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+        $scope.options = { url: CONSTANT.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
         // 파일 업로드 완료 후 에디터에 중간 사이즈 이미지 추가
         $scope.addEditor = true;
@@ -31,7 +31,7 @@ define([
         $scope.init = function() {
             var deferred = $q.defer();
 
-            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'ANGE', CATEGORY_GB: '4', CATEGORY_ST: '0'}, false)
+            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'ANGE', CATEGORY_GB: CONSTANT.COMM_NO_FAQ, CATEGORY_ST: '0'}, false)
                 .then(function(data){
                     $scope.category = data;
                     $scope.item.CATEGORY = data[0];
@@ -62,7 +62,7 @@ define([
 
                         var files = data.FILES;
                         for(var i in files) {
-                            $scope.queue.push({"no":files[i].NO, "name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE", "isUpdate": true});
+                            $scope.queue.push({"no":files[i].NO, "name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":CONSTANT.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":CONSTANT.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":CONSTANT.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":CONSTANT.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE", "isUpdate": true});
                         }
 
                         for (var i in $scope.category) {

@@ -75,13 +75,13 @@ define([
                         var file = data.FILES;
                         for(var i in file) {
                             if (file[i].FILE_GB == 'THUMB')
-                                $scope.file1 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
+                                $scope.file1 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
                             else if (file[i].FILE_GB == 'MAIN')
-                                $scope.file2 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
+                                $scope.file2 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
                             else if (file[i].FILE_GB == 'BANNER')
-                                $scope.file3 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
+                                $scope.file3 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
                             else if (file[i].FILE_GB == 'MOBILE')
-                                $scope.file4 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
+                                $scope.file4 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
                         }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});

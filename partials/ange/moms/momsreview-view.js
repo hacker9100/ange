@@ -35,7 +35,7 @@ define([
         $(document).ready(function(){
 
             $("#reply_sort_date").addClass("selected");
-            $scope.search.SORT = 'REG_DT';
+            $scope.search.SORT = 'ada_date_regi';
             $scope.search.ORDER = 'DESC';
 
             $("#reply_sort_idx").click(function(){
@@ -49,7 +49,7 @@ define([
             });
 
             $("#reply_sort_date").click(function(){
-                $scope.search.SORT = 'REG_DT';
+                $scope.search.SORT = 'ada_date_regi';
                 $scope.search.ORDER = 'DESC';
                 $("#reply_sort_date").addClass("selected");
                 $("#reply_sort_idx").removeClass("selected");
@@ -89,9 +89,9 @@ define([
 
             if ($stateParams.menu == 'experiencereview') {
 
-                $scope.search.EVENT_GB = 'EXPERIENCE';
+                $scope.search.EVENT_GB = 'exp';
                 // 이벤트 및 서평단 / 체험단 셀렉트 박스 셋팅
-                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+                $scope.getList('ange/event', 'list', {}, $scope.search, false)
                     .then(function(data){
                         $scope.event = data;
                         $scope.item.TARGET_NO = data[0].SUBJECT;
@@ -99,9 +99,9 @@ define([
                     .catch(function(error){alert(error)});
             } else if ($stateParams.menu == 'eventreview') {
 
-                $scope.search.EVENT_GB = 'EVENT';
+                $scope.search.EVENT_GB = 'event';
                 // 이벤트 및 서평단 / 체험단 셀렉트 박스 셋팅
-                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+                $scope.getList('ange/event', 'list', {}, $scope.search, false)
                     .then(function(data){
                         $scope.event = data;
                         $scope.item.TARGET_NO = data[0].SUBJECT;
@@ -164,7 +164,7 @@ define([
                         //console.log(JSON.stringify(data));
                         for(var i in files) {
                             if (files[i].FILE_GB == 'MAIN') {
-//                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+//                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                                 var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
                                 data.MAIN_FILE = img;
 
@@ -313,10 +313,10 @@ define([
             }
 
             $scope.search.KEY = $stateParams.id;
-            $scope.search.BOARD_PRE = true;
+            //$scope.search.BOARD_PRE = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getList('ange/review', 'list',{} , $scope.search, false)
+                return $scope.getList('ange/review', 'pre',{} , $scope.search, false)
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
@@ -342,10 +342,10 @@ define([
             }
 
             $scope.search.KEY = $stateParams.id;
-            $scope.search.BOARD_NEXT = true;
+            //$scope.search.BOARD_NEXT = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getList('ange/review', 'list',{} , $scope.search, false)
+                return $scope.getList('ange/review', 'next',{} , $scope.search, false)
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
@@ -527,6 +527,56 @@ define([
 
         };
 
+
+        // 신고버튼
+        $scope.click_boardReport = function (item) {
+
+            $scope.openCounselModal(item, 'lg');
+
+        };
+
+        // 신고버튼 팝업
+        $scope.openCounselModal = function (item, size){
+
+            var dlg = dialogs.create('peopleboard_report.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.item = {};
+
+                    $scope.item.TARGET_NO = item.NO;
+                    $scope.item.TARGET_GB = 'REVIEW';
+                    $scope.item.TARGET_NOTE = item.SUBJECT;
+                    $scope.item.TARGET_UID = item.REG_UID;
+                    $scope.item.TARGET_NICK = item.TARGET_NICK;
+                    $scope.item.REG_UID = $scope.uid;
+                    $scope.item.REG_NICK = $scope.nick;
+
+                    $scope.click_saveReport = function (){
+
+                        $scope.insertItem('ange/notify', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
+                                $modalInstance.close();
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+                $scope.getPeopleBoard();
+            },function(){
+
+            });
+        };
+
         /********** 화면 초기화 **********/
         /*        $scope.getSession()
          .then($scope.sessionCheck)
@@ -536,14 +586,19 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.likeFl)
+            .then($scope.getPeopleBoard)
+            .then($scope.getPreBoard)
+            .then($scope.getNextBoard)
             .catch($scope.reportProblems);
 
-        $scope.init();
-        $scope.likeFl();
-        $scope.addHitCnt();
-        $scope.getPeopleBoard();
-        $scope.getPreBoard();
-        $scope.getNextBoard();
+//        $scope.init();
+//        $scope.likeFl();
+//        $scope.addHitCnt();
+//        $scope.getPeopleBoard();
+//        $scope.getPreBoard();
+//        $scope.getNextBoard();
         //$scope.getPeopleReplyList();
 
     }]);

@@ -67,6 +67,12 @@
                     <input ng-model="item.SUBJECT" type= "text" class= "form-control" placeholder="주제"/>
                 </div>
             </div>
+            <div class= "form-group form_basic_group">
+                <label class= "form_basic_label">내용</label>
+                <div class= "col-xs-6 form_basic_input">
+                    <textarea ng-model="item.BODY" type= "text" class= "form-control" placeholder="내용"/>
+                </div>
+            </div>
             </form>
 
             <form id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">

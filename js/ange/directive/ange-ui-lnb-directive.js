@@ -108,6 +108,20 @@ define(['./directives'], function (directives) {
                 /********** 이벤트 **********/
                 $scope.click_selectMenu = function(url, link) {
 
+                    if(url == '/people/supporter/list'){
+
+                        console.log($scope.user_gb );
+                        if($scope.uid == null || $scope.uid == ''){
+                            dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
+                            return;
+                        }else if($scope.user_gb !== 'SUPPORTERS'){
+                            dialogs.notify('알림', '서포터즈 회원만 이용 가능합니다.', {size: 'md'});
+                            return;
+                        }else{
+                            $location.url(url);
+                        }
+                    }
+
                     if(url == '/infodesk/myqna/list'){ // 고객센터 내 질문과 답변
                         if($scope.uid == null || $scope.uid == ''){
                             dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});

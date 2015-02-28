@@ -61,7 +61,7 @@ switch ($_method) {
             $msg = "";
 
             $sql = "SELECT
-                        NO, YEAR, MONTH, DAY, SUBJECT
+                        NO, YEAR, MONTH, DAY, SUBJECT, BODY
                     FROM
                         ANGE_TALK
                     WHERE
@@ -161,12 +161,14 @@ switch ($_method) {
                     YEAR,
                     MONTH,
                     DAY,
-                    SUBJECT
+                    SUBJECT,
+                    BODY
                 ) VALUES (
                     '".$_model[YEAR]."',
                     '".$_model[MONTH]."',
                     '".$_model[DAY]."',
-                    '".$_model[SUBJECT]."'
+                    '".$_model[SUBJECT]."',
+                    '".$_model[BODY]."'
                 )";
 
         $_d->sql_query($sql);
@@ -282,10 +284,11 @@ switch ($_method) {
 
             $sql = "UPDATE ANGE_TALK
                     SET
-                        YEAR = '".$_model[YEAR]."',
-                        MONTH = '".$_model[MONTH]."',
-                        DAY = '".$_model[DAY]."',
-                        SUBJECT = '".$_model[SUBJECT]."'
+                        YEAR = '".$_model['YEAR']."',
+                        MONTH = '".$_model['MONTH']."',
+                        DAY = '".$_model['DAY']."',
+                        SUBJECT = '".$_model['SUBJECT']."',
+                        BODY = '".$_model['BODY']."'
                     WHERE
                         NO = ".$_key."
                     ";

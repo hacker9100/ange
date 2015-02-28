@@ -47,11 +47,11 @@ define([
             }
 
             for (var i = 1; i <= 12; i++) {
-                month.push(i);
+                month.push(i < 10 ? '0' + i : i + '');
             }
 
             for (var i = 1; i <= lastDay; i++) {
-                day.push(i);
+                day.push(i < 10 ? '0' + i : i + '');
             }
 
             $scope.years = year;
@@ -59,7 +59,7 @@ define([
             $scope.days = day;
 
             $scope.search.YEAR = nowYear;
-            $scope.search.MONTH = nowMonth;
+            $scope.search.MONTH = (nowMonth < 10) ? '0' + nowMonth : nowMonth + '';
         };
 
         /********** 이벤트 **********/
@@ -124,7 +124,7 @@ define([
                     console.log(JSON.stringify(data.FILE))
                     var file = data.FILE;
                     if (file) {
-                        $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":"http://localhost/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file.FILE_GB)};
+                        $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file.FILE_GB)};
                     }
 
 //                    $scope.click_focus('item', 'item_name');

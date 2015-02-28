@@ -46,6 +46,7 @@
                                             <button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'Y'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공감취소</button>
                                             <button ng-show="item.SCRAP_FL == 'Y'" class="people_sharebtn redbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>스크랩</button>
                                             <button class="people_sharebtn blackbtn"  title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>프린트</button>
+                                            <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭" ng-click="click_boardReport(item)"><span class="glyphicon glyphicon-print sharebtn_icon"></span>신고</button>
                                             <!--</div>-->
                                         </div>
                                     </div>
@@ -113,7 +114,9 @@
                         <span class="glyphicon glyphicon-chevron-up"></span> 이전글
                     </div><!-- /.col-xs-2-->
                     <div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">
-                        <a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>
+                        <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>
+                        <a ng-show="preBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">작성자가 삭제한 글입니다</a>
+                        <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
                     </div><!-- /.col-xs-10-->
                     <div data-ng-show="preBoardView == false" class="col-xs-10  board_basicinfo_subject">
                         이전 글이 없습니다
@@ -125,7 +128,9 @@
                         <span class="glyphicon glyphicon-chevron-down"></span> 다음글
                     </div><!-- /.col-xs-2-->
                     <div data-ng-show="nextBoardView != ''" class="col-xs-10 board_basicinfo_subject">
-                        <a data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>
+                        <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>
+                        <a ng-show="nextBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">작성자가 삭제한 글입니다</a>
+                        <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
                     </div><!-- /.col-xs-10-->
                     <div data-ng-show="nextBoardView == false || nextBoardView == '' || nextBoardView == null" class="col-xs-10 board_basicinfo_subject">
                         다음 글이 없습니다
@@ -157,3 +162,33 @@
     </div>
 
 </div>
+
+<script type="text/ng-template" id="peopleboard_report.html">
+    <div class="modal-header">
+        <h3 class="modal-title">게시글 신고</h3>
+        <br/>
+    </div>
+
+    <div class="modal-body">
+        <div class="body_wrap">
+            <!--<div class="panel panel-master contentpannel" style="border:#000000; display:block;">-->
+
+            <table id="comp_board_table" class="table table-hover">
+                <tr class="product_note">
+                    <td style="vertical-align: middle">신고사유</td>
+                    <td colspan="3">
+                        <textarea id="editor1" ng-model="item.NOTE" id="comment" name="comment" class="form-control input-md" rows="4" data-ng-disabled="nouserid" style="resize: none;"></textarea>
+                    </td>
+                </tr>
+            </table>
+
+            <!--</div>-->
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="click_saveReport();">신고</button>
+        <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
+        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
+    </div>
+</script>

@@ -54,13 +54,15 @@ define([
             $scope.search.BOARD_GB = 'BOARD';
             $scope.search.SYSTEM_GB = 'ANGE';
 
-            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+            $scope.getList('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
-                    var comm_mg_nm = data[0].COMM_MG_NM;
-                    $scope.COMM_MG_NM = comm_mg_nm;
-
+                    $scope.COMM_MG_NM = data.COMM_MG_NM;
                 })
                 .catch(function(error){});
+
+            //$scope.search.SORT = 'NOTICE_FL'
+
+
         };
 
         /********** 이벤트 **********/
@@ -74,6 +76,10 @@ define([
         $scope.getPeopleBoardList = function () {
 /*            $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'*/
+
+            if($rootScope.user_gb == 'SUPPORTERS'){
+                $scope.search.CATEGORY_NO = $rootScope.support_no;
+            }
 
             $scope.search.FILE_EXIST = true;
 
@@ -178,11 +184,13 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoardList)
             .catch($scope.reportProblems);
 
 
-        $scope.init();
-        $scope.getPeopleBoardList();
+//        $scope.init();
+//        $scope.getPeopleBoardList();
 
 /*        $scope.test = function(session){
             console.log(session);

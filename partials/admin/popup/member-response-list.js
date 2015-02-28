@@ -22,6 +22,8 @@ define([
         $scope.PAGE_SIZE = 10;
         $scope.TOTAL_CNT = 0;
 
+        $scope.isEdit = false;
+
         if (!$scope.isModal) {
             $scope._search = {};
         }
@@ -32,16 +34,51 @@ define([
         };
 
         /********** 이벤트 **********/
+        // 응대정보 초기화
+        $scope.click_reset = function () {
+            $scope.item = {};
+            $scope.isEdit = false;
+        }
+
+        // 응대정보 수정 버튼 클릭
+        $scope.click_editResponse = function (item) {
+            $scope.item = item;
+            $scope.isEdit = true;
+        };
+
+        // 응대정보 삭제 버튼 클릭
+        $scope.click_deleteResponse = function (item) {
+            $scope.deleteItem('admin/user_response', 'item', item.NO, false)
+                .then(function(data){
+                    dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                    $scope.tableParams.reload();
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
         // 응대정보 저장
         $scope.click_save = function() {
             $scope.item.USER_ID = $scope._search.USER_ID;
 
-            $scope.insertItem('admin/user_response', 'item', $scope.item, false)
-                .then(function(){dialogs.notify('알림', '이력정보가 등록되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            if (!$scope.isEdit) {
+                $scope.insertItem('admin/user_response', 'item', $scope.item, false)
+                    .then(function(){
+                        dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                        $scope.tableParams.reload();
+                        $scope.click_reset();
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            } else {
+                $scope.updateItem('admin/user_response', 'item', $scope.item.NO, $scope.item, false)
+                    .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+                        $scope.tableParams.reload();
+                        $scope.click_reset();
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }
         };
 
-        // 마일리지 목록 조회
+        // 응대정보 목록 조회
         $scope.getResponseList = function () {
             $scope.tableParams = new ngTableParams({
                 page: 1,                    // show first page

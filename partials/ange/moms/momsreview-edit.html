@@ -35,9 +35,9 @@
 
                         <!-- /마감일 임박순 -->
                         <div class="form-group" data-ng-repeat="list in event" style="float:left; font-size: 0.86em; margin:0 5px 15px 5px; line-height:18px;">
-                            <input ng-model="item.TARGET_NO" type="radio" id="value_select{{$index}}" ng-click="menu_select($index);" name="reveiw_mission1" ng-value="{{list.TARGET_NO}}" style="float:left; margin:4px 6px 0 4px;">
+                            <input ng-model="item.TARGET_NO" type="radio" id="value_select{{$index}}" ng-click="menu_select($index);" name="reveiw_mission1" ng-value="{{list.ada_idx}}" style="float:left; margin:4px 6px 0 4px;">
                             <div style="margin-left:22px; word-break: keep-all;">
-                            <span class="table_blue">[{{list.REVIEW_YMD}}] </span>{{list.SUBJECT}}
+                            <span class="table_blue">[{{list.ada_date_notice}}] </span>{{list.ada_title}}<br/>
                             </div>
                         </div>
 
