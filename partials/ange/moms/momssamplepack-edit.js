@@ -308,7 +308,9 @@ define([
                            }
                        });
 
-                       if(data.ada_que_info != ''){
+                       console.log(data.ada_que_info);
+                        //|| data.ada_que_info != ''
+                       if(data.ada_que_info != undefined ){
                            var que_data = data.ada_que_info;
 
                            //$scope.item.QUE = [];
@@ -356,19 +358,19 @@ define([
                        //$scope.item.REPLY_SUBJECT = $scope.item.ada_title;
                    }
 
-                   var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
-
-                   $scope.item.YEAR = babyBirthDt.substr(0,4);
-                   $scope.item.MONTH = babyBirthDt.substr(4,2);
-                   $scope.item.DAY = babyBirthDt.substr(6,2);
+//                   var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
+//
+//                   $scope.item.YEAR = babyBirthDt.substr(0,4);
+//                   $scope.item.MONTH = babyBirthDt.substr(4,2);
+//                   $scope.item.DAY = babyBirthDt.substr(6,2);
 
                 })
                 .catch(function(error){});
-            var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
-
-            $scope.item.YEAR = babyBirthDt.substr(0,4);
-            $scope.item.MONTH = babyBirthDt.substr(4,2);
-            $scope.item.DAY = babyBirthDt.substr(6,2);
+//            var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
+//
+//            $scope.item.YEAR = babyBirthDt.substr(0,4);
+//            $scope.item.MONTH = babyBirthDt.substr(4,2);
+//            $scope.item.DAY = babyBirthDt.substr(6,2);
         };
 
         // 회원가입 화면 이동
@@ -622,13 +624,13 @@ define([
         // 신청자격 여부 체크
         $scope.click_samplepackCheck = function (){
 
-            $scope.search.TARGET_NO = $scope.item.ada_idx;
+            $scope.search.ada_idx = $scope.item.ada_idx;
             $scope.search.TARGET_GB = $scope.item.target_gb;
 
             $scope.getList('ange/comp', 'samplepackCheck', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
 
-                    var checkCnt = data[0].COUNT;
+                    var checkCnt = data[0].COMP_CNT;
 
                     if(checkCnt ==0){
                         dialogs.notify('알림', '신청이 가능합니다.', {size: 'md'});

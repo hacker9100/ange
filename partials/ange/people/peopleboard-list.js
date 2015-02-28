@@ -59,6 +59,8 @@ define([
                     $scope.COMM_MG_NM = data.COMM_MG_NM;
                 })
                 .catch(function(error){});
+
+            //$scope.search.SORT = 'NOTICE_FL'
         };
 
         /********** 이벤트 **********/

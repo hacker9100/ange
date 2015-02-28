@@ -115,7 +115,7 @@
 
                                     <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
                                         <td class="table_no">
-                                            <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == 'Y' ? '공지' : item.BOARD_NO}}</span>
+                                            <span ng-class="item.NOTICE_FL == 'Y' ? 'table_blue' : ''">{{item.NOTICE_FL == '1' ? '공지' : item.BOARD_NO}}</span>
                                         </td>
                                         <td>
                                             <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->

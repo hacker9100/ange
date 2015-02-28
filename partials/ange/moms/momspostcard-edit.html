@@ -190,71 +190,196 @@
                                     </div>  <!-- /.form_basicinfo -->
                                 </div>  <!-- /.form_rows -->
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                        <span class="col-xs-2 basicinfo title">
-                                            <strong>설문작성</strong>
-                                            <span class="table_blue">*</span>
-                                        </span>
+                                <!--<div class="row form_rows">-->
+                                    <!--<div class="form_basicinfo">-->
+                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                            <!--<strong>설문작성</strong>-->
+                                            <!--<span class="table_blue">*</span>-->
+                                        <!--</span>-->
 
-                                        <span class="col-xs-10 basicinfo input">
-                                            <div style="margin-top:15px;">1. 앙쥬를 만난 곳은 어디입니까?</div>
-                                            <div class="form-group" style="margin:0 5px; line-height:18px;">
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" ng-model="item.ANGE_MEET" name="firstMeet" id="01" value="병원" checked>
-                                                        병원
-                                                    </label>
-                                                </div>
-                                                <div class="radio">
-                                                    <label>
-                                                        <input type="radio" ng-model="item.ANGE_MEET" name="firstMeet" id="optionsRadios2" value="산후조리원">
-                                                        산후조리원
-                                                    </label>
-                                                </div>
-                                                <div class="radio disabled">
-                                                    <label>
-                                                        <input type="radio" ng-model="item.ANGE_MEET" name="firstMeet" id="optionsRadios3" value="백화점/마트">
-                                                        백화점/마트
-                                                    </label>
-                                                </div>
-                                                <div class="radio disabled">
-                                                    <label>
-                                                        <input type="radio" ng-model="item.ANGE_MEET" name="firstMeet" id="optionsRadios4" value="기타">
-                                                        기타
-                                                    </label>
-                                                </div>
+                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                            <!--<div style="margin-top:15px;">1. 앙쥬를 만난 곳은 어디입니까?</div>-->
+                                            <!--<div class="form-group" style="margin:0 5px; line-height:18px;">-->
+                                                <!--<div class="radio">-->
+                                                    <!--<label>-->
+                                                        <!--<input type="radio" ng-model="item.ANGE_MEET" name="firstMeet" id="01" value="병원" checked>-->
+                                                        <!--병원-->
+                                                    <!--</label>-->
+                                                <!--</div>-->
+                                                <!--<div class="radio">-->
+                                                    <!--<label>-->
+                                                        <!--<input type="radio" ng-model="item.ANGE_MEET" name="firstMeet" id="optionsRadios2" value="산후조리원">-->
+                                                        <!--산후조리원-->
+                                                    <!--</label>-->
+                                                <!--</div>-->
+                                                <!--<div class="radio disabled">-->
+                                                    <!--<label>-->
+                                                        <!--<input type="radio" ng-model="item.ANGE_MEET" name="firstMeet" id="optionsRadios3" value="백화점/마트">-->
+                                                        <!--백화점/마트-->
+                                                    <!--</label>-->
+                                                <!--</div>-->
+                                                <!--<div class="radio disabled">-->
+                                                    <!--<label>-->
+                                                        <!--<input type="radio" ng-model="item.ANGE_MEET" name="firstMeet" id="optionsRadios4" value="기타">-->
+                                                        <!--기타-->
+                                                    <!--</label>-->
+                                                <!--</div>-->
 
-                                                <div class="form-group" style="margin:5px 0">
-                                                    <input type="text" ng-model="item.PLACE" class="form-control input-sm" style="margin:0px;"  placeholder="구체적인 장소명">
-                                                </div>
+                                                <!--<div class="form-group" style="margin:5px 0">-->
+                                                    <!--<input type="text" ng-model="item.PLACE" class="form-control input-sm" style="margin:0px;"  placeholder="구체적인 장소명">-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+
+                                            <!--<div style="margin-top:15px;">2. 자녀가 있거나 임신중인가요?</div>-->
+                                            <!--<div class="form-group" style="margin:0 5px; line-height:28px;">-->
+                                                <!--<div class="checkbox" style="margin-top:20px;">-->
+                                                    <!--<label>-->
+                                                        <!--<input type="checkbox" id="pregnant_fl" ng-model="item.PREG_FL" style="margin-top:8px;">-->
+                                                        <!--<div style="float:left; margin-right:10px;">현재 임신</div>-->
+                                                        <!--<input type="text" ng-model="item.PREGNANT_WEEKS" class="form-control input-sm" style="float:left; margin:0px; width:60px; vertical-align: top;"  placeholder="숫자">-->
+                                                        <!--<div style="float:left; margin-left:10px;">주차</div>-->
+                                                    <!--</label>-->
+                                                <!--</div>-->
+
+                                                <!--<div class="checkbox" style="margin-top:20px;">-->
+                                                    <!--<label>-->
+                                                        <!--<input type="checkbox" id="child_fl" ng-model="item.CHILD_FL" style="margin-top:8px;">-->
+                                                        <!--<div style="float:left; margin-right:10px;">자녀</div>-->
+                                                        <!--<input type="text" ng-model="item.CHILD_CNT" class="form-control input-sm" style="float:left; margin:0px; width:60px; vertical-align: top;"  placeholder="숫자">-->
+                                                        <!--<div style="float:left; margin-left:10px;">명 /&nbsp;</div>-->
+                                                        <!--<input type="text" ng-model="item.CHILD_AGE" class="form-control input-sm" style="float:left; margin:0px; width:150px; vertical-align: top;"  placeholder="자녀수만큼 ,로 구분">-->
+                                                        <!--<div style="float:left; margin-left:10px;">개월</div>-->
+                                                    <!--</label>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+                                        <!--</span>-->
+                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
+
+                            <div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
+                                <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                    <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                    <dt>{{query.title}}</dt>
+                                    <dd ng-if="query.type == '1'">
+                                        <div class="radio-inline">
+                                            <label>
+                                                <input  type="text" name="answer[]" style="width: 250px;"/>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                            </label>
+                                        </div>
+                                    </dd>
+                                    <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                        <div class="radio-inline">
+                                            <label>
+                                                <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            </label>
+                                        </div>
+                                    </dd>
+                                    <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                        <div class="radio-inline">
+                                            <label>
+                                                <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            </label>
+                                        </div>
+                                        <label>
+                                            <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+                                        </label>
+                                    </dd>
+                                    <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                        <div class="radio-inline">
+                                            <label>
+                                                <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            </label>
+                                        </div>
+                                    </dd>
+
+                                </dl>
+                            </div>
+
+                            <form ng-show="item.ada_que_type == 'upload'" id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
+                                <input type="hidden" id="version" name="version" value="1">
+                                <div class= "form-group form_basic_group">
+                                    <label class= "form_basic_label">이미지</label>
+                                    <div class="row" style="margin-left:110px;">
+                                        <div class="col-sm-4">
+                                            <div ng-model="file">
+                                                <input ng-model="file.name" type= "text" class= "form-control" style="cursor:default;width: 300px;" disabled/>
                                             </div>
+                                        </div>
+                                        <div class="col-sm-2 files" style="margin-left: 160px;">
+                                            <!-- The fileinput-button span is used to style the file input field as button -->
+                                    <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>탐색기</span>
+                                        <input type="file" name="files[]" ng-disabled="disabled">
+                                    </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 
-                                            <div style="margin-top:15px;">2. 자녀가 있거나 임신중인가요?</div>
-                                            <div class="form-group" style="margin:0 5px; line-height:28px;">
-                                                <div class="checkbox" style="margin-top:20px;">
-                                                    <label>
-                                                        <input type="checkbox" id="pregnant_fl" ng-model="item.PREG_FL" style="margin-top:8px;">
-                                                        <div style="float:left; margin-right:10px;">현재 임신</div>
-                                                        <input type="text" ng-model="item.PREGNANT_WEEKS" class="form-control input-sm" style="float:left; margin:0px; width:60px; vertical-align: top;"  placeholder="숫자">
-                                                        <div style="float:left; margin-left:10px;">주차</div>
-                                                    </label>
-                                                </div>
+                            <!-- 참여유형이 업로드 중 질문이 있을때 -->
+                            <div ng-if="item.ada_que_type == 'upload'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
 
-                                                <div class="checkbox" style="margin-top:20px;">
-                                                    <label>
-                                                        <input type="checkbox" id="child_fl" ng-model="item.CHILD_FL" style="margin-top:8px;">
-                                                        <div style="float:left; margin-right:10px;">자녀</div>
-                                                        <input type="text" ng-model="item.CHILD_CNT" class="form-control input-sm" style="float:left; margin:0px; width:60px; vertical-align: top;"  placeholder="숫자">
-                                                        <div style="float:left; margin-left:10px;">명 /&nbsp;</div>
-                                                        <input type="text" ng-model="item.CHILD_AGE" class="form-control input-sm" style="float:left; margin:0px; width:150px; vertical-align: top;"  placeholder="자녀수만큼 ,로 구분">
-                                                        <div style="float:left; margin-left:10px;">개월</div>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
+                                <dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                    <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                    <dt>{{query.title}}</dt>
+                                    <dd ng-if="query.type == '1'">
+                                        <div class="radio-inline">
+                                            <label>
+                                                <input  type="text" name="answer[]" style="width: 250px;"/>
+                                                &nbsp;&nbsp;&nbsp;
+                                                <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                            </label>
+                                        </div>
+                                    </dd>
+                                    <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                        <div class="radio-inline">
+                                            <label>
+                                                <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            </label>
+                                        </div>
+                                    </dd>
+                                    <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                        <div class="radio-inline">
+                                            <label>
+                                                <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            </label>
+                                        </div>
+                                        <label>
+                                            <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+                                        </label>
+                                    </dd>
+                                    <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                        <div class="radio-inline">
+                                            <label>
+                                                <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            </label>
+                                        </div>
+                                    </dd>
+
+                                </dl>
+                            </div>
+
+                            <!-- 참여유형이 댓글일때 -->
+                            <div ng-if="item.ada_que_type == 'reply' && !tempEvent"  ng-model="item" class="sub_contents_body">
+
+                                <div class="container-fluid peopleboard_view_commentwrap">
+                                    <div class="row peopleboard_view_commenttop">
+                                        <div class="col-xs-12 peopleboard_view_commenttitle">
+                                            <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">{{item.REPLY_SUBJECT}}</span>
+                                            <!--<small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>-->
+                                        </div><!-- /.col-xs-12-->
+                                    </div><!-- /.row -->
+
+                                    <div class="row peopleboard_view_commentbox">
+                                        <div class="col-xs-10 peopleboard_view_text">
+                                            <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
+                                        </div><!-- /.col-xs-10-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
+                            </div>
 
                                 <div class="row form_rows">
                                     <div class="form_basicinfo">

@@ -150,7 +150,21 @@ switch ($_method) {
                 $_d->dataEnd($sql);
             }
 
-        } else if ($_type == "check_1") {
+        } else if ($_type == "samplepackCheck") {
+
+            $sql = "SELECT COUNT(*) AS COMP_CNT
+                 FROM adm_history_join
+                 WHERE ada_idx = ".$_search[ada_idx]."
+                   AND adu_id = '".$_SESSION['uid']."'";
+
+            $data = $_d->sql_query($sql);
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
+
+        }else if ($_type == "check_1") {
 
             $sql = "SELECT COUNT(*) AS COMP_CNT
                  FROM ANGE_COMP
@@ -164,34 +178,35 @@ switch ($_method) {
                 $_d->dataEnd($sql);
             }
 
-        }else if ($_type == 'samplepackCheck') {
-
-            $search_where = "";
-            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                $search_where .= "AND ACW.TARGET_NO =".$_search[TARGET_NO]."";
-            }
-
-            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-                $search_where .= "  AND ACW.TARGET_GB ='".$_search[TARGET_GB]."'";
-            }
-
-            $sql = "SELECT COUNT(*) COUNT
-                    FROM COM_USER CU
-                    INNER JOIN ANGE_COMP_WINNER ACW
-                    ON CU.USER_ID = ACW.USER_ID
-                    WHERE 1=1
-                      AND CU.PREGNENT_FL = 'Y'
-                      AND CU.USER_ID = '".$_SESSION['uid']."'
-                      ".$search_where."
-                      ";
-
-            $data = $_d->sql_query($sql);
-            if($_d->mysql_errno > 0){
-                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-            }else{
-                $_d->dataEnd($sql);
-            }
         }
+//        else if ($_type == 'samplepackCheck') {
+//
+//            $search_where = "";
+//            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
+//                $search_where .= "AND ACW.TARGET_NO =".$_search[TARGET_NO]."";
+//            }
+//
+//            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
+//                $search_where .= "  AND ACW.TARGET_GB ='".$_search[TARGET_GB]."'";
+//            }
+//
+//            $sql = "SELECT COUNT(*) COUNT
+//                    FROM COM_USER CU
+//                    INNER JOIN ANGE_COMP_WINNER ACW
+//                    ON CU.USER_ID = ACW.USER_ID
+//                    WHERE 1=1
+//                      AND CU.PREGNENT_FL = 'Y'
+//                      AND CU.USER_ID = '".$_SESSION['uid']."'
+//                      ".$search_where."
+//                      ";
+//
+//            $data = $_d->sql_query($sql);
+//            if($_d->mysql_errno > 0){
+//                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+//            }else{
+//                $_d->dataEnd($sql);
+//            }
+//        }
         break;
 
     case "POST":
