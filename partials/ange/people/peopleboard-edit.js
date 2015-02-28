@@ -188,6 +188,10 @@ define([
 //                $scope.item.COMM_NO = 21;
 //            }
 
+            if($rootScope.user_gb == 'SUPPORTERS'){
+                $scope.item.CATEGORY_NO = $rootScope.support_no;
+            }
+
             $scope.item.COMM_NO = $scope.menu.COMM_NO;
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;

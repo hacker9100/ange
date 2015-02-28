@@ -144,6 +144,8 @@ define([
 
                             $rootScope.preg_fl = null;
 
+
+
                             deferred.resolve(data);
                         } else {
                             // TODO: 데이터가 없을 경우 처리
@@ -242,6 +244,9 @@ define([
 
                 $rootScope.preg_fl = null;
                 $rootScope.baby_birth_dt = null;
+
+                $rootScope.user_gb = null;
+                $rootScope.support_no = null;
 //                $location.path("/signin");
 //                throw( new String('세션이 만료되었습니다.') );
 //            throw( new Error("세션이 만료되었습니다.") );
@@ -280,6 +285,11 @@ define([
                 $rootScope.baby_cnt =session.BABY_CNT;
                 $rootScope.baby_male_cnt =session.BABY_MALE_CNT;
                 $rootScope.baby_female_cnt =session.BABY_FEMALE_CNT;
+
+                $rootScope.user_gb = session.USER_INFO.USER_GB;
+                $rootScope.support_no = session.USER_INFO.SUPPORT_NO;
+
+                console.log($rootScope.user_gb);
             }
 
             return true;

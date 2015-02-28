@@ -110,8 +110,9 @@
                                                 <div class="col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
                                                     <div ng-click="click_showViewPeoplePhoto(item.NO)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
-                                                            <img ng-show="item.BOARD_ST != 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
-                                                            <img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('')" /> <!-- 삭제처리했을때 블라인드 이미지 추가해야함-->
+                                                            <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
+                                                            <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" />
+                                                            <img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" /> <!-- 삭제처리했을때 블라인드 이미지 추가해야함-->
                                                             <!--<img src="{{item.MAIN_FILE}}" class="people_photo_img" style="width: 240px; height: 240px;"/>-->
                                                             <div class="people_photo_cate">
                                                                 <span>{{item.CATEGORY_NM}}</span>

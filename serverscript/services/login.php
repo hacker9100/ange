@@ -60,7 +60,8 @@
                             UR.ROLE_ID, R.ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
-                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT,
+                            U.USER_GB, U.SUPPORT_NO
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -386,7 +387,8 @@
                             UR.ROLE_ID, R.ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
-                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT
+                            (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT,
+                            U.USER_GB, U.SUPPORT_NO
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE

@@ -274,14 +274,14 @@ define([
         };
 
         // 신고버튼
-        $scope.click_boardReport = function (item) {
+        $scope.click_boardReport2 = function (item) {
 
-            $scope.openCounselModal(item, 'lg');
+            $scope.openCounselModal2(item, 'lg');
 
         };
 
         // 신고버튼 팝업
-        $scope.openCounselModal = function (item, size){
+        $scope.openCounselModal2 = function (item, size){
 
             var dlg = dialogs.create('peopleboard_report.html',
                 ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {

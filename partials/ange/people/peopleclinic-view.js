@@ -365,21 +365,59 @@ define([
         }
 
         // 조회 화면 이동
-        $scope.click_showViewPeopleBoard = function (key) {
+// 조회 화면 이동(비밀글)
+        $scope.click_showViewPeopleBoard = function (key, regid, password_fl) {
 
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+            console.log(regid);
+            console.log($scope.role);
 
-//            if ($stateParams.menu == 'childdevelop') {
-//                $location.url('/people/childdevelop/view/'+key);
-//            } else if($stateParams.menu == 'chlidoriental') {
-//                $location.url('/people/chlidoriental/view/'+key);
-//            } else if($stateParams.menu == 'obstetrics') {
-//                $location.url('/people/obstetrics/view/'+key);
-//            } else if($stateParams.menu == 'momshealth') {
-//                $location.url('/people/momshealth/view/'+key);
-//            } else if($stateParams.menu == 'financial') {
-//                $location.url('/people/financial/view/'+key);
-//            }
+            if(password_fl != 0 && $scope.uid == regid){
+                $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+
+//                if ($stateParams.menu == 'childdevelop') {
+//                    $location.url('/people/childdevelop/view/'+key);
+//                } else if($stateParams.menu == 'chlidoriental') {
+//                    $location.url('/people/chlidoriental/view/'+key);
+//                } else if($stateParams.menu == 'obstetrics') {
+//                    $location.url('/people/obstetrics/view/'+key);
+//                } else if($stateParams.menu == 'momshealth') {
+//                    $location.url('/people/momshealth/view/'+key);
+//                } else if($stateParams.menu == 'financial') {
+//                    $location.url('/people/financial/view/'+key);
+//                }
+            }else if($scope.role == $scope.VIEW_ROLE){
+                $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+
+//                if ($stateParams.menu == 'childdevelop') {
+//                    $location.url('/people/childdevelop/view/'+key);
+//                } else if($stateParams.menu == 'chlidoriental') {
+//                    $location.url('/people/chlidoriental/view/'+key);
+//                } else if($stateParams.menu == 'obstetrics') {
+//                    $location.url('/people/obstetrics/view/'+key);
+//                } else if($stateParams.menu == 'momshealth') {
+//                    $location.url('/people/momshealth/view/'+key);
+//                } else if($stateParams.menu == 'financial') {
+//                    $location.url('/people/financial/view/'+key);
+//                }
+            }else if($scope.role == 'ANGE_ADMIN'){
+                $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+
+//                if ($stateParams.menu == 'childdevelop') {
+//                    $location.url('/people/childdevelop/view/'+key);
+//                } else if($stateParams.menu == 'chlidoriental') {
+//                    $location.url('/people/chlidoriental/view/'+key);
+//                } else if($stateParams.menu == 'obstetrics') {
+//                    $location.url('/people/obstetrics/view/'+key);
+//                } else if($stateParams.menu == 'momshealth') {
+//                    $location.url('/people/momshealth/view/'+key);
+//                } else if($stateParams.menu == 'financial') {
+//                    $location.url('/people/financial/view/'+key);
+//                }
+            }
+            else{
+                dialogs.notify('알림', '비밀글입니다. 작성자와 해당게시판 상담가만 볼 수 있습니다.', {size: 'md'});
+            }
+
         };
 
         $scope.click_showPeopleClinicDelete = function(item) {

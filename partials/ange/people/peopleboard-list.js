@@ -61,6 +61,8 @@ define([
                 .catch(function(error){});
 
             //$scope.search.SORT = 'NOTICE_FL'
+
+
         };
 
         /********** 이벤트 **********/
@@ -74,6 +76,10 @@ define([
         $scope.getPeopleBoardList = function () {
 /*            $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'*/
+
+            if($rootScope.user_gb == 'SUPPORTERS'){
+                $scope.search.CATEGORY_NO = $rootScope.support_no;
+            }
 
             $scope.search.FILE_EXIST = true;
 
