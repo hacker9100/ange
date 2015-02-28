@@ -69,15 +69,15 @@
 
                         <div class="container-fluid peopleboard_view_contentwrap">
                             <div class="row">
-                                <div class="col-xs-12 peopleboard_view_contentbody">
+                                <div class="col-xs-12 peopleboard_view_contentbody" style="padding:2%;">
 
                                     <!-- Editor CSS 적용 img max-width: 720px -->
-                                    <img ng-if="!tempEvent" ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}" ng-style="{width:100%}">
+                                    <img ng-if="!tempEvent" ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}" ng-style="{'max-width':'100%'}">
                                     <!--<img src="http://ad.ange.co.kr/adm/upload/temp_productimg.jpg" style="width:100%;"/>-->
-
-
                                     <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event01.jpg" alt="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." title="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." style="width:100%;"><a href="http://new.ange.co.kr/story/content/list" title="앙쥬스토리 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event02.jpg" alt="앙쥬스토리 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/people/home" title="앙쥬피플 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event03.jpg" alt="앙쥬피플 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/moms/home" title="앙쥬맘스 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event04.jpg" alt="앙쥬맘스 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event05.jpg" alt="마이앙쥬 둘러보러 가기" style="width:100%;"><a href="http://new.ange.co.kr/store/home" title="앙쥬스토어 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event06.jpg" alt="앙쥬스토어 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event07.jpg" alt="아래 댓글을 작성하면 자동응모됩니다" title="아래 댓글을 작성하면 자동응모됩니다" style="width:100%;">-->
                                     <div ng-if="tempEvent" id="content" ng-bind-html="item.ada_detail"></div>
+
+                                    <div ng-bind-html="item.ada_text"></div>
 
                                     <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_01.jpg" alt="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." title="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." style="width:100%;"><a href="/myange/account" title="앙쥬맘스 둘러보러 가기" target="_parent"><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_02.jpg" alt="이벤트 참여 바로가기" title="이벤트 참여 바로가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_03.jpg" alt="다음 이벤트 기대해주세요." title="다음 이벤트 기대해주세요." style="width:100%;">-->
                                     <!--<div>-->
@@ -86,27 +86,9 @@
 
                                 </div><!-- /.col-12-->
                             </div>
-                            <div class="row">
-                                <div class="col-xs-12 peopleboard_view_contentbody">
-
-                                    <!-- Editor CSS 적용 img max-width: 720px -->
-                                    {{ada_text}}
-                                    <!--<img src="http://ad.ange.co.kr/adm/upload/temp_productimg.jpg" style="width:100%;"/>-->
-
-
-                                    <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event01.jpg" alt="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." title="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." style="width:100%;"><a href="http://new.ange.co.kr/story/content/list" title="앙쥬스토리 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event02.jpg" alt="앙쥬스토리 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/people/home" title="앙쥬피플 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event03.jpg" alt="앙쥬피플 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/moms/home" title="앙쥬맘스 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event04.jpg" alt="앙쥬맘스 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event05.jpg" alt="마이앙쥬 둘러보러 가기" style="width:100%;"><a href="http://new.ange.co.kr/store/home" title="앙쥬스토어 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event06.jpg" alt="앙쥬스토어 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event07.jpg" alt="아래 댓글을 작성하면 자동응모됩니다" title="아래 댓글을 작성하면 자동응모됩니다" style="width:100%;">-->
-                                    <!--<div id="content" ng-bind-html="renderHtml(item.ada_detail)"></div>-->
-
-                                    <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_01.jpg" alt="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." title="앙쥬시즌2 개인정보수정 이벤트 오신것을 환영합니다." style="width:100%;"><a href="/myange/account" title="앙쥬맘스 둘러보러 가기" target="_parent"><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_02.jpg" alt="이벤트 참여 바로가기" title="이벤트 참여 바로가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event2nd_03.jpg" alt="다음 이벤트 기대해주세요." title="다음 이벤트 기대해주세요." style="width:100%;">-->
-                                    <!--<div>-->
-                                    <!--참가자격 :-->
-                                    <!--</div>-->
-
-                                </div><!-- /.col-12-->
-                            </div><!-- /.row -->
                         </div><!-- /.container -->
 
-                        <div id="moms_state" ng-show="showForm == 'compForm'" class="moms_state" style="padding-top:20px;">
+                        <div id="moms_state" ng-show="uid != null && showForm == 'compForm'" class="moms_state" style="padding-top:20px;">
 
                                 <!-- 참여유형이 질문일때 -->
                                 <div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
@@ -648,11 +630,16 @@
 
                             </div>
 
-                            <div class="moms_form_foot" ng-show="item.ada_que_type != 'none'" style="border-bottom:2px solid #111;"><div class="moms_form_footbtn">
+                            <div class="moms_form_foot" ng-show="uid != null && item.ada_que_type != 'none'" style="border-bottom:2px solid #111;"><div class="moms_form_footbtn">
                                 <button ng-click="click_momseventlist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>
                                 <button ng-click="click_momseventcomp();" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
                                 <!--&lt;!&ndash;<button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>&ndash;&gt;-->
                             </div>
+
+                            <div class="moms_form_foot" ng-show="uid == null" style="background-color:#F8F8F8;">
+                                <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">로그인 후에 응모가 가능합니다.</div>
+                            </div> <!-- /.moms_state -->
+
                         </div> <!-- /.moms_state -->
 
 
