@@ -347,19 +347,30 @@ define([
                 .then(function(data){
                     //console.log(data);
 
-                    var files = data[0].TALK_FILE;
-                    //console.log(JSON.stringify(data));
-                    for(var i in files) {
-                        var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
-                        data[0].MAIN_FILE = img;
-                    }
-
-                    $scope.talkitem = data[0];
+//                    var files = data[0].TALK_FILE;
+//                    //console.log(JSON.stringify(data));
+//                    for(var i in files) {
+//                        var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
+//                        data[0].MAIN_FILE = img;
+//                    }
+//
+//                    $scope.talkitem = data[0];
+                    $scope.talkitem = data;
 
                     console.log($scope.talkitem);
+
+                    console.log(JSON.stringify(data.FILE))
+                    var file = data.FILE;
+                    if (file) {
+                        $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file.FILE_GB)};
+                    }
+
                     $scope.getPeopleReplyList();
                 })
-                .catch(function(error){ $scope.talkitem=""; console.log('aa = '+$scope.talkitem);});
+                .catch(function(error){
+                    $scope.talkitem="";
+                    console.log('aa = '+$scope.talkitem);
+                });
 
         }
 

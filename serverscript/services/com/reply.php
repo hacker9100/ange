@@ -147,30 +147,55 @@
                 ";
 
                 $__trn = '';
-                $result = $_d->sql_query($sql,true);
+                //$result = $_d->sql_query($sql,true);
 
-                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $data = $_d->sql_fetch($sql);
 
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($data) {
                     $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
                             FILE F, CONTENT_SOURCE S
                         WHERE
                             F.NO = S.SOURCE_NO
                             AND S.CONTENT_GB = 'FILE'
                             AND S.TARGET_GB = 'TALK'
-                            AND S.TARGET_NO = ".$row['NO']."
-                            AND F.THUMB_FL = '0'
+                            AND S.TARGET_NO = ".$data['NO']."
+                            AND F.FILE_GB = 'MAIN'
                         ";
-                    $category_data = $_d->getData($sql);
-                    $row['TALK_FILE'] = $category_data;
 
-                    $__trn->rows[$i] = $row;
+                    $file_data = $_d->sql_fetch($sql);
+                    $data['FILE'] = $file_data;
                 }
 
 
-                $_d->sql_free_result($result);
-                $data = $__trn->{'rows'};
+//                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+//
+//                    $sql = "SELECT
+//                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
+//                        FROM
+//                            FILE F, CONTENT_SOURCE S
+//                        WHERE
+//                            F.NO = S.SOURCE_NO
+//                            AND S.CONTENT_GB = 'FILE'
+//                            AND S.TARGET_GB = 'TALK'
+//                            AND S.TARGET_NO = ".$row['NO']."
+//                            AND F.FILE_GB = 'MAIN'
+//                        ";
+//                    $category_data = $_d->getData($sql);
+//                    $row['TALK_FILE'] = $category_data;
+//
+//                    $__trn->rows[$i] = $row;
+//                }
+
+
+//                $_d->sql_free_result($result);
+//                $data = $__trn->{'rows'};
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
