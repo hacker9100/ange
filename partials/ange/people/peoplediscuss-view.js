@@ -185,15 +185,14 @@ define([
         };
 
 
-        // 신고버튼
-        $scope.click_boardReport = function (item) {
+        $scope.click_boardReport2 = function (item) {
 
-            $scope.openCounselModal(item, 'lg');
+            $scope.openCounselModal2(item, 'lg');
 
         };
 
         // 신고버튼 팝업
-        $scope.openCounselModal = function (item, size){
+        $scope.openCounselModal2 = function (item, size){
 
             var dlg = dialogs.create('peopleboard_report.html',
                 ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
@@ -202,13 +201,16 @@ define([
 
                     $scope.item = {};
 
+                    console.log($scope.nick);
+                    console.log($rootScope.nick);
+
                     $scope.item.TARGET_NO = item.NO;
                     $scope.item.TARGET_GB = 'BOARD';
                     $scope.item.TARGET_NOTE = item.SUBJECT;
                     $scope.item.TARGET_UID = item.REG_UID;
-                    $scope.item.TARGET_NICK = item.TARGET_NICK;
+                    $scope.item.TARGET_NICK = item.NICK_NM;
                     $scope.item.REG_UID = $scope.uid;
-                    $scope.item.REG_NICK = $scope.nick;
+                    $scope.item.REG_NICK = $rootScope.nick;
 
                     $scope.click_saveReport = function (){
 
