@@ -143,6 +143,8 @@
                                         </div><!-- /.col-xs-2-->
                                         <div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">
                                             <a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>
+                                            <a ng-show="item.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">작성자가 삭제한 글입니다</a>
+                                            <a ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
                                         </div><!-- /.col-xs-10-->
                                         <div data-ng-show="preBoardView == false" class="col-xs-10  board_basicinfo_subject">
                                             이전 글이 없습니다
@@ -155,6 +157,8 @@
                                         </div><!-- /.col-xs-2-->
                                         <div data-ng-show="nextBoardView != ''" class="col-xs-10 board_basicinfo_subject">
                                             <a data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>
+                                            <a ng-show="item.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">작성자가 삭제한 글입니다</a>
+                                            <a ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
                                         </div><!-- /.col-xs-10-->
                                         <div data-ng-show="nextBoardView == false || nextBoardView == '' || nextBoardView == null" class="col-xs-10 board_basicinfo_subject">
                                             다음 글이 없습니다

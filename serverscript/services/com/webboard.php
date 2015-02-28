@@ -391,7 +391,7 @@
                     $search_where .= "AND PARENT_NO = '0' ";
                 }
 
-                $sql = "SELECT NO, SUBJECT,NICK_NM  FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY  NO DESC LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, BLIND_FL  FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY  NO DESC LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -409,7 +409,7 @@
                     $search_where .= "AND PARENT_NO = '0' ";
                 }
 
-                $sql = "SELECT NO, SUBJECT,NICK_NM FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY NO LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, BLIND_FL FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY NO LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);

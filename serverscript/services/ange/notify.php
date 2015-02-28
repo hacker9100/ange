@@ -168,9 +168,9 @@
 
                     $table = "";
 
-                    if ($_model['TARGET_GB']== "BOARD") {
+                    if ($_model['TARGET_GB']== "REPLY") {
                         $table = "COM_REPLY";
-                    } else if ($_model['TARGET_GB']== "BOARD") {
+                    } else if ($_model['TARGET_GB']== "REVIEW") {
                         $table = "ANGE_REVIEW";
                     } else {
                         $table = "COM_BOARD";

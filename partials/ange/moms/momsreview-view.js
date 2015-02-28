@@ -35,7 +35,7 @@ define([
         $(document).ready(function(){
 
             $("#reply_sort_date").addClass("selected");
-            $scope.search.SORT = 'REG_DT';
+            $scope.search.SORT = 'ada_date_regi';
             $scope.search.ORDER = 'DESC';
 
             $("#reply_sort_idx").click(function(){
@@ -49,7 +49,7 @@ define([
             });
 
             $("#reply_sort_date").click(function(){
-                $scope.search.SORT = 'REG_DT';
+                $scope.search.SORT = 'ada_date_regi';
                 $scope.search.ORDER = 'DESC';
                 $("#reply_sort_date").addClass("selected");
                 $("#reply_sort_idx").removeClass("selected");
@@ -89,9 +89,9 @@ define([
 
             if ($stateParams.menu == 'experiencereview') {
 
-                $scope.search.EVENT_GB = 'EXPERIENCE';
+                $scope.search.EVENT_GB = 'exp';
                 // 이벤트 및 서평단 / 체험단 셀렉트 박스 셋팅
-                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+                $scope.getList('ange/event', 'list', {}, $scope.search, false)
                     .then(function(data){
                         $scope.event = data;
                         $scope.item.TARGET_NO = data[0].SUBJECT;
@@ -99,9 +99,9 @@ define([
                     .catch(function(error){alert(error)});
             } else if ($stateParams.menu == 'eventreview') {
 
-                $scope.search.EVENT_GB = 'EVENT';
+                $scope.search.EVENT_GB = 'event';
                 // 이벤트 및 서평단 / 체험단 셀렉트 박스 셋팅
-                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
+                $scope.getList('ange/event', 'list', {}, $scope.search, false)
                     .then(function(data){
                         $scope.event = data;
                         $scope.item.TARGET_NO = data[0].SUBJECT;
@@ -313,10 +313,10 @@ define([
             }
 
             $scope.search.KEY = $stateParams.id;
-            $scope.search.BOARD_PRE = true;
+            //$scope.search.BOARD_PRE = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getList('ange/review', 'list',{} , $scope.search, false)
+                return $scope.getList('ange/review', 'pre',{} , $scope.search, false)
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
@@ -342,10 +342,10 @@ define([
             }
 
             $scope.search.KEY = $stateParams.id;
-            $scope.search.BOARD_NEXT = true;
+            //$scope.search.BOARD_NEXT = true;
 
             if ($stateParams.id != 0) {
-                return $scope.getList('ange/review', 'list',{} , $scope.search, false)
+                return $scope.getList('ange/review', 'next',{} , $scope.search, false)
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
@@ -546,7 +546,7 @@ define([
                     $scope.item = {};
 
                     $scope.item.TARGET_NO = item.NO;
-                    $scope.item.TARGET_GB = 'BOARD';
+                    $scope.item.TARGET_GB = 'REVIEW';
                     $scope.item.TARGET_NOTE = item.SUBJECT;
                     $scope.item.TARGET_UID = item.REG_UID;
                     $scope.item.TARGET_NICK = item.TARGET_NICK;
@@ -586,14 +586,19 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.likeFl)
+            .then($scope.getPeopleBoard)
+            .then($scope.getPreBoard)
+            .then($scope.getNextBoard)
             .catch($scope.reportProblems);
 
-        $scope.init();
-        $scope.likeFl();
-        $scope.addHitCnt();
-        $scope.getPeopleBoard();
-        $scope.getPreBoard();
-        $scope.getNextBoard();
+//        $scope.init();
+//        $scope.likeFl();
+//        $scope.addHitCnt();
+//        $scope.getPeopleBoard();
+//        $scope.getPreBoard();
+//        $scope.getNextBoard();
         //$scope.getPeopleReplyList();
 
     }]);

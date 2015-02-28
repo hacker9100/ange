@@ -122,7 +122,7 @@
                                                         </div>
                                                         <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}</div>
                                                         <div class="people_photo_txt" ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</div>
-                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">{{ item.SUBJECT | limitTo: 20 }}관리자에 의해 블라인드 처리 된 글입니다.</div>
+                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</div>
                                                         <div class="people_photo_info"><span class="table_blue">{{item.NICK_NM}}</span> | {{item.REG_DT}}</div>
                                                     </div><!-- /.people_photo_content -->
                                                 </div><!-- /.people_photo_contentcol -->

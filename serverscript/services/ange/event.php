@@ -150,6 +150,10 @@
                     $search_where .= "AND ada_type = '".$_search[EVENT_GB]."' ";
                 }
 
+                if (isset($_search[REVIEW_EVENT_GB]) && $_search[REVIEW_EVENT_GB] != "") {
+                    $search_where .= "AND ada_type IN ('exp','event') ";
+                }
+
                 if(isset($_search[ADA_STATE]) && $_search[ADA_STATE] != ""){
                     if($_search[ADA_STATE] == 1){
                         $search_where .= "AND ada_state = '".$_search[ADA_STATE]."' ";

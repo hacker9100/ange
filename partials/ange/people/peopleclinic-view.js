@@ -236,10 +236,18 @@ define([
                                 $scope.item.BODY = "작성자가 삭제한 글 입니다"+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
                             }
                         }else{
-                            if(data.REPLY_YN == 'N'){
-                                $scope.item.BODY;
-                            } else {
-                                $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                            if(data.BLIND_FL == 'N'){
+                                if(data.REPLY_YN == 'N'){
+                                    $scope.item.BODY;
+                                } else {
+                                    $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                                }
+                            }else{
+                                if(data.REPLY_YN == 'N'){
+                                    $scope.item.BODY = "관리자에 의해 블라인드 처리가 된 글입니다";
+                                } else {
+                                    $scope.item.BODY = "관리자에 의해 블라인드 처리가 된 글입니다"+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                                }
                             }
                         }
 
