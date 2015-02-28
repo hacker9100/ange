@@ -286,6 +286,8 @@ define([
 
 //                        $scope.open_date = data.ada_date_review_open.replace(/-/gi, "");
                         $scope.end_date = data.ada_date_close.replace(/-/gi, "");
+                        $scope.ada_detail = data.ada_detail.replace(/&quot;/gi, '\"');
+                        $scope.ada_text = data.ada_text.replace(/&quot;/gi, '\"');
 //
 //                        var day = 1000*60*60*24;
 //
