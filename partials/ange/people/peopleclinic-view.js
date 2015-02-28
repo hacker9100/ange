@@ -51,11 +51,26 @@ define([
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'CLINIC';
 
-            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
-                .then(function(data){
-                    var comm_mg_nm = data[0].COMM_MG_NM;
-                    $scope.COMM_MG_NM = comm_mg_nm;
+//            $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
+//                .then(function(data){
+//                    var comm_mg_nm = data[0].COMM_MG_NM;
+//                    $scope.COMM_MG_NM = comm_mg_nm;
+//
+//                })
+//                .catch(function(error){});
 
+            $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
+                .then(function(data){
+                    $scope.COMM_MG_NM = data.COMM_MG_NM;
+
+                    var file = data.FILES;
+                    for(var i in file) {
+                        if (file[i].FILE_GB == 'MANAGER'){
+//                            $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
+                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
+                        }
+                        console.log($scope.main_img);
+                    }
                 })
                 .catch(function(error){});
         };
@@ -515,17 +530,21 @@ define([
         };
 
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
+        $scope.getSession()
          .then($scope.sessionCheck)
          .then($scope.init)
-         .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
+         .then($scope.likeFl)
+         .then($scope.getPeopleClinic)
+         .then($scope.getPreBoard)
+         .then($scope.getNextBoard)
+         .catch($scope.reportProblems);
         //$scope.addHitCnt();
-        $scope.init();
-        $scope.likeFl();
-        $scope.getPeopleClinic();
-        $scope.getPreBoard();
-        $scope.getNextBoard();
+
+//        $scope.init();
+//        $scope.likeFl();
+//        $scope.getPeopleClinic();
+//        $scope.getPreBoard();
+//        $scope.getNextBoard();
 
 
     }]);

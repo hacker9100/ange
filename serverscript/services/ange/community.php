@@ -76,7 +76,9 @@
                     $user = $_d->sql_fetch($sql,true);
 
                     $target_gb = "USER";
-                    if (isset($user)) $target_no = $user['NO'];
+                    if (isset($user)) {
+                        $target_no = $user['NO'];
+                    }
                 } else {
                     $target_gb = "COMMUNITY";
                     $target_no = $_key;

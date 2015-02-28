@@ -176,11 +176,13 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoardList)
             .catch($scope.reportProblems);
 
 
-        $scope.init();
-        $scope.getPeopleBoardList();
+//        $scope.init();
+//        $scope.getPeopleBoardList();
 
 /*        $scope.test = function(session){
             console.log(session);
