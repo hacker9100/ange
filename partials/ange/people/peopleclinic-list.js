@@ -67,8 +67,8 @@ define([
 
                        console.log(file[i]);
                         if (file[i].FILE_GB == 'MAIN')
-                            $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
-                            //$scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
+                            //$scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
+                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
                     }
                 })
                 .catch(function(error){});
@@ -150,6 +150,20 @@ define([
 //                    $location.url('/people/financial/view/'+key);
 //                }
             }else if($scope.role == $scope.VIEW_ROLE){
+                $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+
+//                if ($stateParams.menu == 'childdevelop') {
+//                    $location.url('/people/childdevelop/view/'+key);
+//                } else if($stateParams.menu == 'chlidoriental') {
+//                    $location.url('/people/chlidoriental/view/'+key);
+//                } else if($stateParams.menu == 'obstetrics') {
+//                    $location.url('/people/obstetrics/view/'+key);
+//                } else if($stateParams.menu == 'momshealth') {
+//                    $location.url('/people/momshealth/view/'+key);
+//                } else if($stateParams.menu == 'financial') {
+//                    $location.url('/people/financial/view/'+key);
+//                }
+            }else if($scope.role == 'ANGE_ADMIN'){
                 $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
 
 //                if ($stateParams.menu == 'childdevelop') {
