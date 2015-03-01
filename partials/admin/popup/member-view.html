@@ -1,0 +1,257 @@
+<div ng-controller="member-view">
+    <div class="modal-header article_windowtitle" ng-show="isModal">
+        회원 정보
+        <a ng-click="click_close()" style="float:right; cursor:pointer;">Close</a>
+    </div>
+
+    <div ng-class="{'modal-body' : isModal}">
+
+        <!-- Contents Include -->
+        <div ng-model="item" class="col-md-12">
+
+            <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+                <div class="form_basic_wrap list-group-item-labeling-gray" style="margin-bottom: 20px;">
+                    <strong>기본 정보</strong>
+                </div>
+
+                <div class="row form_basic_wrap">
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">유형 <span style="color:#b94a48">*</span></label>
+                        <div class= "col-md-4 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.USER_GB == 'CLUB' ? '클럽' : item.USER_GB == 'SUPPORTERS' ? '서포터즈' : '일반' }}</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group" ng-class="{error: edit_form.user_id.$invalid}">
+                        <label class= "form_basic_label">아이디 <span style="color:#b94a48">*</span></label>
+                        <div class="col-md-4 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.USER_ID }}</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group" ng-class="{error: edit_form.user_name.$invalid}">
+                        <label class= "form_basic_label">이름 <span style="color:#b94a48">*</span></label>
+                        <div class="col-md-4 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.USER_NM }}</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group" ng-class="{error: edit_form.nick_name.$invalid}">
+                        <label class= "form_basic_label">대화명 <span style="color:#b94a48">*</span></label>
+                        <div class="col-md-4 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.NICK_NM }}</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">생년월일 <span style="color:#b94a48">*</span></label>
+                        <div class="col-md-5 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.BIRTH }} ( {{ item.LUNAR_FL == '0' ? '양력' : '음력' }} )</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">주소 <span style="color:#b94a48">*</span></label>
+                        <div class="col-md-6" style="margin:9px 77px;">
+                            <div class="col-md-12" style="padding-right:5px;">
+                                <span>( {{ item.ZIP_CODE }} ) {{ item.ADDR }}</span>
+                            </div>
+                            <div class="col-md-12" >
+                                <span>{{ item.ADDR_DETAIL }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">성별 <span style="color:#b94a48">*</span></label>
+                        <div class="col-md-1 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.SEX_GB == 'F' ? '남' : '여' }}</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">유선전화</label>
+                        <div class="col-md-4 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.PHONE_1 }}</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">휴대폰 <span style="color:#b94a48">*</span></label>
+                        <div class="col-md-4 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.PHONE_2 }}</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">E-Mail <span style="color:#b94a48">*</span></label>
+                        <div class="col-md-4 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.EMAIL }}</span>
+                        </div>
+                    </div>
+
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">정보수신동의 <span style="color:#b94a48">*</span></label>
+                        <div class="col-md-9" style="float: left; margin:10px 0 15px 30px;">
+                            <span class="col-xs-2 basicinfo title">
+                                <div class="form-group" style="margin:0 5px"><stong>앙쥬</stong></div>
+                            </span>
+                            <span class="col-xs-5 basicinfo subtitle">
+                                <div class="form-group" style="text-align:left; margin:0 5px">각종소식(Event/체험단/정보/당첨안내 등)</div>
+                            </span>
+                            <span class="col-xs-5 basicinfo input">
+                                <div class="form-group" style="margin:0 5px; line-height:19px;">
+                                    <input ng-model="item.EN_ANGE_EMAIL_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                    <span style="float:left; margin-left:5px;">이메일</span>
+
+                                    <input ng-model="item.EN_ANGE_SMS_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                    <span style="float:left; margin-left:5px;">SMS</span>
+                                </div>
+                            </span>
+
+                            <span class="col-xs-2 basicinfo title">
+                                <div class="form-group" style="margin:0 5px"><stong>알람</stong></div>
+                            </span>
+                            <span class="col-xs-5 basicinfo subtitle">
+                                <div class="form-group" style="text-align:left; margin:0 5px">스케쥴(캘린더알람/일정소식/맞춤정보 등)</div>
+                            </span>
+                            <span class="col-xs-5 basicinfo input">
+                                <div class="form-group" style="margin:0 5px; line-height:19px;">
+                                    <input ng-model="item.EN_ALARM_EMAIL_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                    <span style="float:left; margin-left:5px;">이메일</span>
+
+                                    <input ng-model="item.EN_ALARM_SMS_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                    <span style="float:left; margin-left:5px;">SMS</span>
+                                </div>
+                            </span>
+
+                            <span class="col-xs-2 basicinfo title">
+                                <div class="form-group" style="margin:0 5px"><stong>스토어</stong></div>
+                            </span>
+                            <span class="col-xs-5 basicinfo subtitle">
+                                <div class="form-group" style="text-align:left; margin:0 5px">스토어(스토어 이벤트/빅딜정보/맞춤추천/알림 등)</div>
+                            </span>
+                            <span class="col-xs-5 basicinfo input">
+                                <div class="form-group" style="margin:0 5px; line-height:19px;">
+                                    <input ng-model="item.EN_STORE_EMAIL_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                    <span style="float:left; margin-left:5px;">이메일</span>
+
+                                    <input ng-model="item.EN_STORE_SMS_FL" type="checkbox" style="float: left; margin:2px 0 0 15px;">
+                                    <span style="float:left; margin-left:5px;">SMS</span>
+                                </div>
+                            </span>
+
+                            <span class="col-xs-12 basicinfo divide"></span>
+
+                            <span class="col-xs-12 basicinfo input">
+                                <div style="text-align:right; padding:0 150px;">
+
+                                    <span class="table_blue"><small>앙쥬/알람서비스/스토어 각종소식 수신에 동의합니다.</small></span>
+
+                                    <input ng-model="checkAllAgree" type="checkbox" style="margin:10px 0 0 15px;" ng-click="click_checkAllAgree()">
+                                    <span style="margin-left:5px;"><strong>모두동의</strong></span>
+
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">메모</label>
+                        <div class= "col-md-6" style="margin-left: 87px;">
+                            <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 자기소개.."/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form_basic_wrap list-group-item-labeling-gray" style="margin: 40px 0 10px 0;">
+                    <strong>추가 정보</strong>
+                </div>
+
+                <div class="row form_basic_wrap">
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">결혼여부</label>
+                        <div class="col-md-6 form_basic_input" style="margin-top:9px;">
+                            <span>{{ item.MARRIED_FL == 'Y' ? '기혼' : '미혼'}}</span>
+                        </div>
+                    </div>
+
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">임신여부</label>
+                        <div class="col-md-12 form_basic_input" style="margin-top:9px;">
+                            {{ item.PREGNENT_FL == 'Y' ? '해당됨' : '해당없음'}}
+                            ( 출산예정일 : {{ item.BABY_BIRTH_DT }})
+                        </div>
+                    </div>
+
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">아기</label>
+                        <div class="col-md-9" style="margin: 10px 85px;">
+                            <div class="col-md-12" ng-repeat="baby in babies">
+                                <span class="col-md-1"> 아기이름 : </span>
+                                <span class="col-md-1">{{ baby.BABY_NM }}</span>
+                                <span class="col-md-1"> 성별 : </span>
+                                <span class="col-md-1">{{ baby.BABY_SEX_GB == 'M' ? '남' : '여' }}</span>
+                                <span class="col-md-1"> 생년월일 : </span>
+                                <div class="col-md-5">
+                                    {{ baby.BABY_BIRTH }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form_basic_wrap list-group-item-labeling-gray" style="margin: 40px 0 10px 0;">
+                    <strong>블로그 정보</strong>
+                </div>
+
+                <div ng-model="blog" class="row form_basic_wrap form-horizontal">
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">유형</label>
+                        <div class="col-md-3 form_basic_input" style="margin-top:9px;">
+                            <span>{{ blog.BLOG_URL }}</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">이웃 수(현재)</label>
+                        <div class="col-md-3 form_basic_input" style="margin-top:9px;">
+                            <span>{{ blog.NEIGHBOR_CNT }} 명</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">전체 게시물 수(현재)</label>
+                        <div class="col-md-3 form_basic_input" style="margin-top:9px;">
+                            <span>{{ blog.POST_CNT }} 건</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">방문자 수(어제 일자)</label>
+                        <div class="col-md-3 form_basic_input" style="margin-top:9px;">
+                            <span>{{ blog.VISIT_CNT }} 명</span>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group" ng-class="{error: edit_form.user_id.$invalid}">
+                        <label class= "form_basic_label">SNS</label>
+                        <div class="col-md-4 form_basic_input" style="margin-top:9px;">
+                            <span>{{ blog.SNS }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 하단 버튼 -->
+                <div class="col-xs-12 row" style="float:left; margin:0px auto; margin-bottom:60px; ">
+                    <!-- 하단 버튼 -->
+                    <div class= "col-xs-6 form-group form_basic" style="text-align:left;">
+                        <button class="btn btn-success btn-xs fileinput-button" ng-click="click_showUserList();" >
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>{{ isModal ? '닫기' : '목록' }}</span>
+                        </button>
+                    </div>
+                    <!--<div class= "col-xs-6 form-group form_basic" style="text-align:right;">-->
+                        <!--<button type="button" class="btn btn-primary btn-xs start" ng-click="click_showEditUser(item);" ng-disabled="edit_form.$invalid">-->
+                            <!--<i class="glyphicon glyphicon-plus"></i>-->
+                            <!--<span>수정</span>-->
+                        <!--</button>-->
+                    <!--</div>-->
+                </div>
+            </form>
+
+        </div>
+        <!-- ////Contents Include -->
+
+    </div>
+
+    <div class="modal-footer" style="background-color:#FAFAFA; float:none; text-align:center;" ng-show="isModal">
+        <!--<button class="btn btn-default btn-sm" style="margin:0px auto;" ng-click="click_ok()">확인</button>-->
+    </div>
+</div>
