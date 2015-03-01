@@ -84,7 +84,10 @@
 
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="format-detection" content="telephone=no, address=no, email=no" />
+<meta name="MobileOptimized" content="width" />
+<meta name="MobileOptimized" content="320" />
 <!--
 <meta http-equiv="cache-control" content="max-age=0" />
 <meta http-equiv="cache-control" content="no-cache">
@@ -92,6 +95,7 @@
 <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
 <meta http-equiv="pragma" content="no-cache">
 -->
+<link rel="shortcut icon" href="/imgs/common/ange_favicon.ico">
 <meta name="author" content="앙쥬" />
 <meta name="copyright" content="앙쥬" />
 <meta name="subject" content="출산,육아" />

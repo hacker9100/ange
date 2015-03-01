@@ -31,7 +31,7 @@
             </div>
 
             <div class="row">
-                <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
+                <div ng-class="slide != 'cover' ? 'col-xs-12' : 'col-xs-12 col-md-8 no-margin'">
                     <div ng-class="slide != 'cover' ? 'comp_basic h-cell-2' : 'comp_basic comp_splite_left h-cell-2'">
 
                         <!-- mini_story -->
@@ -201,16 +201,14 @@
                 </div>
 
                 <!-- 슬라이드가 확장되지 않을 경우 -->
-                <div ng-if="slide == 'cover'" ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
-                    <div ng-class="slide != 'cover' ? 'comp_basic comp_splite_left h-cell-1' : 'comp_basic comp_splite_right h-cell-1'">
-
+                <div ng-if="slide == 'cover'" ng-class="'col-xs-12 col-md-4 no-margin'">
+                    <div ng-class="slide != 'cover' ? 'comp_cols comp_splite_left h-cell-dynamic' : 'comp_cols comp_splite_right h-cell-dynamic'">
                         <!-- maineventbanner -->
                         <ange-portlet-link-image ng-model="option_r2_c2"></ange-portlet-link-image>
                         <!-- /maineventbanner -->
                     </div>
 
-                    <div class="comp_basic comp_splite_right h-cell-1">
-
+                    <div class="comp_cols comp_splite_right h-cell-dynamic">
                         <!-- mini_community -->
                         <ange-portlet-main-list ng-model="option_r3_c2"></ange-portlet-main-list>
                         <!-- /mini_community -->
@@ -219,14 +217,14 @@
                 <!-- /슬라이드가 확장되지 않을 경우 -->
 
                 <!-- 슬라이드가 확장될 경우 -->
-                <div ng-if="slide != 'cover'" ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
+                <div ng-if="slide != 'cover'" ng-class="slide != 'cover' ? 'col-xs-6 no-margin' : 'col-xs-6 col-md-4 no-margin'">
                     <div ng-class="slide != 'cover' ? 'comp_basic comp_splite_left h-cell-1' : 'comp_basic comp_splite_right h-cell-1'">
                         <!-- maineventbanner -->
                         <ange-portlet-link-image ng-model="option_r2_c2"></ange-portlet-link-image>
                         <!-- /maineventbanner -->
                     </div>
                 </div>
-                <div ng-if="slide != 'cover'" class="col-xs-6 v-cell-1">
+                <div ng-if="slide != 'cover'" class="col-xs-6 no-margin">
                     <div class="comp_basic comp_splite_right h-cell-1">
                         <!-- mini_community -->
                         <ange-portlet-main-list ng-model="option_r3_c2"></ange-portlet-main-list>
@@ -245,7 +243,7 @@
             </div>
 
             <div class="row">
-                <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
+                <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-12 col-md-8 v-cell-3'">
                     <div ng-class="slide != 'cover' ? 'comp_basic h-cell-1' : 'comp_basic comp_splite_left h-cell-1'">
                         <!-- /mini_peoplebabymodel -->
                         <ange-portlet-piece-image ng-model="option_r5_c1"></ange-portlet-piece-image>
@@ -277,7 +275,7 @@
                 </div>
 
                 <!-- 슬라이드가 확장되지 않을 경우 -->
-                <div ng-if="slide == 'cover'" class="col-xs-4 v-cell-1">
+                <div ng-if="slide == 'cover'" class="col-xs-12 col-md-4 v-cell-1">
                     <div class="comp_basic comp_splite_right h-cell-1">
                         <!-- /mini_clinic -->
                         <ange-portlet-main-list ng-model="option_r5_c2"></ange-portlet-main-list>
@@ -288,7 +286,7 @@
             </div>
 
             <div class="row">
-                <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-8 v-cell-3'">
+                <div ng-class="slide != 'cover' ? 'col-xs-12 v-cell-3' : 'col-xs-12 col-md-8 v-cell-3'">
                     <div ng-class="slide != 'cover' ? 'comp_basic h-cell-1' : 'comp_basic comp_splite_left h-cell-1'">
                     <!-- /mini_review -->
                     <ange-portlet-main-list ng-model="option_r6_c1"></ange-portlet-main-list>
@@ -297,7 +295,7 @@
                 </div>
 
                 <!-- 슬라이드가 확장되지 않을 경우 -->
-                <div ng-if="slide == 'cover'" ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
+                <div ng-if="slide == 'cover'" ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-12 col-md-4 v-cell-1'">
                     <div class="comp_basic comp_splite_right h-cell-1">
                         <!-- /mini_notice -->
                         <ange-portlet-main-list ng-model="option_r6_c2"></ange-portlet-main-list>
@@ -317,7 +315,7 @@
                     </div>
                 </div>
 
-                <div ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-4 v-cell-1'">
+                <div ng-class="slide != 'cover' ? 'col-xs-6 v-cell-1' : 'col-xs-12 col-xs-4 v-cell-1'">
                     <div class="comp_basic comp_splite_right h-cell-1">
                         <!-- /mini_notice -->
                         <ange-portlet-main-list ng-model="option_r6_c2"></ange-portlet-main-list>
@@ -327,6 +325,10 @@
             </div>
             <!-- /슬라이드가 확장될 경우 -->
         </div>
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
 
     </div> <!-- /mainbar -->
 
@@ -454,8 +456,4 @@
         </div>
 
     </div>
-
-    <!-- 1200px 이하일 경우 표시되는 footer -->
-    <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
-    <!-- /1200px 이하일 경우 표시되는 footer -->
 </div>

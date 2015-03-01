@@ -515,9 +515,9 @@ div.mini_community_contents:hover {
 }
 
 .mini_event_contentlist {
-	float:left;
-	width:100%;
-	margin:0px auto;
+	float: left;
+	width: 100%;
+	margin: 0px auto;
 	margin-top: 15px;
 }
 
@@ -551,13 +551,19 @@ div.mini_community_contents:hover {
 	font-weight: bold;
 	margin-top:3%;
 	line-height: 1.2em;
+    overflow: hidden;
+    height:38px;
+    text-overflow:ellipsis;
 }
 
 .mini_event_txt_duration {
 	float:left;
+    line-height: 14px;
 	font-family: Arial, sans-serif; 
 	font-size: 0.78em;
 	margin-top:10px;
+    color:#888;
+    word-break: keep-all;
 }
 
 .mini_event_txt_emblem {
@@ -679,11 +685,19 @@ a.miniboard_tab_slidenext:focus {
 .comp_peoplebabymodel_bigthumb {
 	float:left; 
 	height:100%;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 
 .comp_peoplebabymodel_thumb {
 	float:left; 
 	height:50%;
+
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 
 /* -- mini_peoplebabymodel  */

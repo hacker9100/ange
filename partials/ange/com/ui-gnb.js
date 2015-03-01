@@ -20,6 +20,10 @@ define([
 
         };
 
+        $scope.click_login = function () {
+            $scope.openModal(null, 'md');
+        };
+
         $scope.click_myange = function (){
 
             if ($rootScope.uid == '' || $rootScope.uid == null) {

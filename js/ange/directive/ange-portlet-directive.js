@@ -536,7 +536,7 @@ define([
                                         ( data[i].ada_type == "event" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].ada_type == "exp" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') +
                                         data[i].ada_title +'' +
                                         '</div>' +
-                                        '<div class="mini_event_txt_duration">'+data[i].ada_date_open+'~'+data[i].ada_date_close+'</div>' +
+                                        '<div class="mini_event_txt_duration">'+data[i].ada_date_open+' ~ '+data[i].ada_date_close+'</div>' +
                                         '</div>' +
                                         '</a>' +
                                         '</div>');
@@ -1089,7 +1089,7 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                '<div class="inven_Highlight"><img ng-src="{{img}}" ng-click="click_linkImage()" title="{{title}}"/></div>',
+                '<div class="inven_Highlight"><img ng-src="/imgs/ange/_blank_262by158.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/

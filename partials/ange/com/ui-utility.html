@@ -1,54 +1,72 @@
 
 <!-- Utility Panel -->
 <div ng-controller="ui-utility">
-	<div class="inven_1stClass">
-		<!--<a class="ADbanner_normal shadowed" title="배너타이틀" style="background-image:url('imgs/ange/temp/allbanner.png'); background-position:center;">1st Class Banner</a>-->
-        <a ng-model="topBanner" class="ADbanner_normal shadowed" title="{{topBanner.ada_title}}" ng-click="click_linkBanner(topBanner, true)" ng-style="{'background-image': 'url('+topBanner.img+')', 'background-position': 'center'}">1st Class Banner</a>
-	</div>
+    <div class="comp_userinfo">
+        <div class="inven_1stClass">
+            <!--<a class="ADbanner_normal shadowed" title="배너타이틀" style="background-image:url('imgs/ange/temp/allbanner.png'); background-position:center;">1st Class Banner</a>-->
+            <a ng-model="topBanner" class="ADbanner_normal shadowed" title="{{topBanner.ada_title}}" ng-click="click_linkBanner(topBanner, true)" ng-style="{'background-image': 'url('+topBanner.img+')', 'background-position': 'center'}">1st Class Banner</a>
+        </div>
 
-	<div class="comp_userlog">
+        <div class="comp_userlog">
 
-        <!-- 로그인 전 -->
-        <div ng-if="!uid" class="userlog_login">
-            <img src="/imgs/ange/login.png" class="userlog_login_btn" ng-click="click_login()">
+            <!-- 로그인 전 -->
+            <div ng-if="!uid" class="userlog_login">
+                <img src="/imgs/ange/login.png" class="userlog_login_btn" ng-click="click_login()">
 
-            <div class="userlog_login_func">
-                <a class="forgotidpw" ng-click="click_forgotInfo()">아이디/비번찾기</a>
-                <a class="joinus" ng-click="click_joinMember()">회원가입</a>
+                <div class="userlog_login_func">
+                    <a class="forgotidpw" ng-click="click_forgotInfo()">아이디/비번찾기</a>
+                    <a class="joinus" ng-click="click_joinMember()">회원가입</a>
+                </div>
             </div>
+            <!-- /로그인 전 -->
+
+            <!-- 로그인 후 -->
+            <div ng-if="uid" class="userlog_login_now">
+                <a class="userconfig" title="프로필사진 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
+                <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}">
+                <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}">
+
+                <div class="userlog_login_info">
+                    <span class="usernickname">{{user_info.NICK_NM}}</span> 님, 안녕하세요.
+                </div>
+
+                <div class="userlog_user_func">
+                    <a class="babyinfo" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-heart" style="color:#fb6362; margin-right:4px;"></span>내정보관리</a>
+                    <a class="logout" ng-click="logoutMe()">로그아웃</a>
+                </div>
+
+                <div class="userlog_user_subinfo">
+                    <span class="user_cart"><span class="glyphicon glyphicon-shopping-cart"></span> 장바구니</span>
+                    <span class="user_mileage"><small>Mileage</small> <span style="color:#fb6362; font-weight:bold">{{user_info.MILEAGE.REMAIN_POINT}}</span></span>
+                </div>
+
+            </div>
+            <!-- /로그인 후 -->
+
+            <div class="userlog_utility">
+            <a class="util1" ng-click="click_myangeWriting()">내 게시물</a>
+            <a class="util2" ng-click="click_myangeMessage()">메시지</a>
+            <a class="util3" ng-click="click_infodesk()">고객센터</a>
+            </div>
+            <img src="/imgs/ange/opennotice.png" />
+
+        </div>
+    </div>
+
+    <div class="comp_userinfo_mobile">
+        <!-- 로그인 전 -->
+        <div ng-if="!uid">
+            <img src="/imgs/ange/login.png" class="userlog_login_btn" ng-click="click_login()" style="width:50px;">
         </div>
         <!-- /로그인 전 -->
 
         <!-- 로그인 후 -->
-        <div ng-if="uid" class="userlog_login_now">
-            <a class="userconfig" title="프로필사진 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
-            <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}">
-            <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}">
-
-            <div class="userlog_login_info">
-                <span class="usernickname">{{user_info.NICK_NM}}</span> 님, 안녕하세요.
-            </div>
-
-            <div class="userlog_user_func">
-                <a class="babyinfo" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-heart" style="color:#fb6362; margin-right:4px;"></span>내정보관리</a>
-                <a class="logout" ng-click="logoutMe()">로그아웃</a>
-            </div>
-
-            <div class="userlog_user_subinfo">
-                <span class="user_cart"><span class="glyphicon glyphicon-shopping-cart"></span> 장바구니</span>
-                <span class="user_mileage"><small>Mileage</small> <span style="color:#fb6362; font-weight:bold">{{user_info.MILEAGE.REMAIN_POINT}}</span></span>
-            </div>
-
+        <div ng-if="uid">
+            <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}" style="width:50px; height:50px;">
+            <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}" style="width:50px; height:50px;">
+            <a class="userconfig_mobile" title="{{user_info.NICK_NM}}님의 정보 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
         </div>
         <!-- /로그인 후 -->
-
-		<div class="userlog_utility">
-		<a class="util1" ng-click="click_myangeWriting()">내 게시물</a>
-		<a class="util2" ng-click="click_myangeMessage()">메시지</a>
-		<a class="util3" ng-click="click_infodesk()">고객센터</a>
-		</div>
-        <img src="/imgs/ange/opennotice.png" />
-
     </div>
 
 	<!--<div class="comp_calm">-->
