@@ -175,7 +175,7 @@
             }
             else if ($_type == 'list') {
                 $search_where = "";
-                $sort_order = "";
+                $sort_order = ", REG_DT DESC";
                 $limit = "";
 
                 if (isset($_search[COMM_NO_IN]) && $_search[COMM_NO_IN] != "") {
@@ -241,7 +241,7 @@
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= ", ".$_search[SORT]." ".$_search[ORDER]." ";
+                    $sort_order = ", ".$_search[SORT]." ".$_search[ORDER]." ";
                 }
 
                 if (isset($_page)) {
@@ -274,7 +274,7 @@
                             WHERE
                                 1=1
                                 ".$search_where."
-                            ORDER BY NOTICE_FL DESC, REG_DT DESC".$sort_order."
+                            ORDER BY NOTICE_FL DESC".$sort_order."
                             ".$limit."
                         ) AS DATA
                         LEFT OUTER JOIN ANGE_COMM C ON DATA.COMM_NO = C.NO,

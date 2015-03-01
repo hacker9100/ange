@@ -126,25 +126,34 @@ define([
                             case '5' :
                                 menu = 'booktalk';
                                 break;
-                            case '9' :
+                            case '6' :
+                                menu = 'working';
+                                break;
+                            case '7' :
+                                menu = 'readypreg';
+                                break;
+                            case '8' :
+                                menu = 'anony';
+                                break;
+                            case '21' :
                                 menu = 'childdevelop';
                                 break;
-                            case '10' :
+                            case '22' :
                                 menu = 'chlidoriental';
                                 break;
-                            case '11' :
+                            case '23' :
                                 menu = 'obstetrics';
                                 break;
-                            case '12' :
+                            case '24' :
                                 menu = 'momshealth';
                                 break;
-                            case '13' :
+                            case '25' :
                                 menu = 'financial';
                                 break;
-                            case '14' :
+                            case '51' :
                                 menu = 'notice';
                                 break;
-                            case '15' :
+                            case '52' :
                                 menu = 'system';
                                 break;
                         }

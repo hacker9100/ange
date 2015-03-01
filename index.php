@@ -202,7 +202,11 @@
 //
 //        alert(_isNotMobile);
 
+        // 로컬 서버
         Kakao.init('207aa395bc0cb51730547fd97ee9d369');
+
+        // 개발 서버
+//        Kakao.init('207aa395bc0cb51730547fd97ee9d369');
     }
 </script>
 

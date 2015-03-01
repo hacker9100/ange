@@ -22,7 +22,7 @@ define([
         $scope.search = {SYSTEM_GB: 'ANGE'};
 
         $scope.TARGET_NO = $stateParams.id;
-        $scope.TARGET_GB = 'BOARD';
+        $scope.TARGET_GB = 'TALK';
 
         $scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = 10;
@@ -65,7 +65,7 @@ define([
 
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
-            $scope.search.COMM_GB = 'BOARD';
+            $scope.search.COMM_GB = 'TALK';
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
                 .then(function(data){
@@ -205,7 +205,7 @@ define([
                     console.log($rootScope.nick);
 
                     $scope.item.TARGET_NO = item.NO;
-                    $scope.item.TARGET_GB = 'BOARD';
+                    $scope.item.TARGET_GB = 'TALK';
                     $scope.item.TARGET_NOTE = item.SUBJECT;
                     $scope.item.TARGET_UID = item.REG_UID;
                     $scope.item.TARGET_NICK = item.NICK_NM;
