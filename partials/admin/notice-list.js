@@ -11,10 +11,10 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('notice-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
+    controllers.controller('notice-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
 
         /********** 초기화 **********/
-        $scope.search = {SYSTEM_GB: 'ANGE', BOARD_GB: 'NOTICE'};
+        $scope.search = {SYSTEM_GB: 'ANGE', BOARD_GB: 'NOTICE', COMM_NO_IN: CONSTANT.COMM_NO_NOTICE };
 
         // 초기화
         $scope.init = function() {

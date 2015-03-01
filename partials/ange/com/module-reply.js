@@ -96,6 +96,10 @@ define([
                     $scope.getReplyList();
 
                     $scope.replyItem.COMMENT = "";
+
+                    if ($scope.TARGET_GB == 'BOARD') {
+                        $scope.addMileage('REPLY', $scope.menu.COMM_NO);
+                    }
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
@@ -125,6 +129,10 @@ define([
                     $scope.replyList = [];
                     $scope.getReplyList();
                     $scope.reply.COMMENT = "";
+
+                    if ($scope.TARGET_GB == 'BOARD') {
+                        $scope.addMileage('REPLY', $scope.menu.COMM_NO);
+                    }
                 })
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }

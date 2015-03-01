@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$location', '$q', 'dataService', '$filter', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $stateParams, $location, $q, dataService, $filter, dialogs, CONSTANT) {
+    controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$window', '$location', '$q', 'dataService', '$filter', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $stateParams, $window, $location, $q, dataService, $filter, dialogs, CONSTANT) {
 
         $scope.comming_soon = function() {
             dialogs.notify('알림', '체험기간에는 제공되지 않습니다.', {size: 'md'});
@@ -123,9 +123,6 @@ define([
                         if (angular.isObject(data)) {
                             $rootScope.session = null;
 
-                            $rootScope.ip = null;
-                            $rootScope.guid = null;
-
                             $rootScope.login = false;
                             $rootScope.authenticated = false;
                             $rootScope.user_info = null;
@@ -221,21 +218,21 @@ define([
 
         // 세션 체크
         $scope.sessionCheck = function(session) {
+            $rootScope.ip = session.IP;
+            $rootScope.guid = session.GUID;
+
             if (session.USER_ID == undefined || session.USER_ID == '') {
                 $rootScope.session = null;
-
-                $rootScope.ip = null;
-                $rootScope.guid = null;
 
                 $rootScope.login = false;
                 $rootScope.authenticated = false;
                 $rootScope.user_info = null;
-                $rootScope.uid = null;
-                $rootScope.name = null;
-                $rootScope.role = null;
+                $rootScope.uid = '';
+                $rootScope.name = '';
+                $rootScope.role = '';
                 $rootScope.menu_role = null;
-                $rootScope.email = null;
-                $rootScope.nick = null;
+                $rootScope.email = '';
+                $rootScope.nick = '';
 
                 $rootScope.addr = null;
                 $rootScope.addr_detail = null;
@@ -255,9 +252,6 @@ define([
 //                throw( new String('로그인 후 사용가능합니다.') );
             } else {
                 $rootScope.session = session;
-
-                $rootScope.ip = session.USER_INFO;
-                $rootScope.guid = null;
 
                 $rootScope.login = true;
                 $rootScope.authenticated = true;
@@ -570,36 +564,135 @@ define([
             }
         };
 
+        // 광고센터 URL 셋팅
         $scope.adBannerUrl = function(idx, type) {
-            var guid = 'aaa';
-            var id = 'test';
-            var ip = '1.1.1.1';
+            var guid = $rootScope.guid;
+            var id = $rootScope.uid;
+            var ip = $rootScope.ip;
             var ad_type = (type == undefined ? 1 : type);
             var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + ad_type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
 
             return ad_url;
         }
 
-/*
-        $scope.getMenu = function() {
-            var deferred = $q.defer();
+        // 배너 이미지 클릭
+        $scope.click_linkBanner = function (item) {
+            if (item.ada_url != undefined && item.ada_url != '') {
+                var ad_url = $scope.adBannerUrl(item.ada_idx, 1);
+                if (item.ada_url.indexOf('http://') > -1) {
+                    $window.open(ad_url);
 
-            $q.all([
-                    $scope.getList('menu', {}, {CHANNEL_GB: 'CMS'}, false).then(function(data){$rootScope.cms_channel = data;}),
-                    $scope.getList('menu', {}, {MENU_GB: 'CMS'}, false).then(function(data){$rootScope.cms_menu = data;})
-                ])
-                .then( function() {
-                    deferred.resolve();
-                },function(error) {
-                    deferred.reject(error);
-                });
+                    $scope.addMileage('BANNER', null);
+                } else {
+                    $location.url(ad_url);
+                }
+            }
+        };
 
-            return deferred.promise;
-        }
+        // 마일리지 적립
+        $scope.addMileage = function (type, gb) {
+            var item = {};
 
-        if ($rootScope.cms_channel == undefined) {
-            $scope.getMenu();
-        }
-*/
+            if (type == 'LOGIN') {
+                item.MILEAGE_GB = '6';
+                item.MILEAGE_NO = '4';
+            } else if (type == 'BANNER') {
+                item.MILEAGE_GB = '11';
+                item.MILEAGE_NO = '34';
+            } else if (type == 'BOARD') {
+                item.MILEAGE_GB = '1';
+
+                if (gb == '1') {
+                    item.MILEAGE_NO = '17';
+                } else if (gb == '2') {
+                    item.MILEAGE_NO = '54';
+                } else if (gb == '3') {
+                    item.MILEAGE_NO = '57';
+                } else if (gb == '4') {
+                    item.MILEAGE_NO = '59';
+                } else if (gb == '5') {
+                    item.MILEAGE_NO = '114';
+                } else if (gb == '6') {
+                    item.MILEAGE_NO = '86';
+                } else if (gb == '7') {
+                    item.MILEAGE_NO = '125';
+                } else {
+                    return;
+                }
+            } else if (type == 'PHOTO') {
+                item.MILEAGE_GB = '1';
+
+                if (gb == '11') {
+                    item.MILEAGE_NO = '15';
+                } else if (gb == '12') {
+                    item.MILEAGE_NO = '61';
+                } else {
+                    return;
+                }
+            } else if (type == 'CLINIC') {
+                item.MILEAGE_GB = '1';
+
+                if (gb == '25') {
+                    item.MILEAGE_NO = '68';
+                } else {
+                    return;
+                }
+            } else if (type == 'REPLY') {
+                item.MILEAGE_GB = '2';
+
+                if (gb == 'TALK') {
+                    item.MILEAGE_NO = '74';
+                } else if (gb == '1') {
+                    item.MILEAGE_NO = '18';
+                } else if (gb == '2') {
+                    item.MILEAGE_NO = '55';
+                } else if (gb == '3') {
+                    item.MILEAGE_NO = '58';
+                } else if (gb == '4') {
+                    item.MILEAGE_NO = '60';
+                } else if (gb == '5') {
+                    item.MILEAGE_NO = '115';
+                } else if (gb == '6') {
+                    item.MILEAGE_NO = '87';
+                } else if (gb == '7') {
+                    item.MILEAGE_NO = '126';
+                } else {
+                    return;
+                }
+            } else if (type == 'EVENT') {
+                item.MILEAGE_GB = '1';
+
+                if (gb == 'PRODUCT') {
+                    item.MILEAGE_NO = '110';
+                } else if (gb == 'EXPERIENCE') {
+                    item.MILEAGE_NO = '111';
+                } else if (gb == 'SAMPLE') {
+                    item.MILEAGE_NO = '120'; // 119 하나 더 있음??
+                } else if (gb == 'BOOK') {
+                    item.MILEAGE_NO = '124';
+                } else {
+                    return;
+                }
+            } else if (type == 'REVIEW') {
+                item.MILEAGE_GB = '1';
+
+                if (gb == 'PRODUCT') {
+                    item.MILEAGE_NO = '110';
+                } else if (gb == 'EXPERIENCE') {
+                    item.MILEAGE_NO = '111';
+                } else {
+                    return;
+                }
+            } else {
+                return;
+            }
+
+            $scope.insertItem('ange/mileage', 'item', item, false)
+                .then(function(data){
+//                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                })
+                .catch(function(error){dialogs.error('오류', '[마일리지]'+error, {size: 'md'});});
+        };
+
     }]);
 });

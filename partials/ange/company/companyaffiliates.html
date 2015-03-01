@@ -58,7 +58,7 @@
 
                                         <span class="col-xs-4 basicinfo input">
                                             <div class="form-inline" style="margin:0 5px">
-                                                <select ng-model="item.COMPANY_GB" class="form-control">
+                                                <select ng-model="item.AFFILIATE_GB" class="form-control">
                                                     <option value="MAGAZINE">월간 앙쥬(잡지) 광고 문의</option>
                                                     <option value="ONLINE">온라인 광고 및 제휴 문의</option>
                                                     <option value="EVENT">체험단 및 이벤트/공동구매 문의</option>
@@ -78,7 +78,7 @@
 
                                     <span class="col-xs-4 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input  ng-model="item.COMPANY_NM" type="text" class="form-control" style="margin:0px;" placeholder="회사명">
+                                            <input id="company_nm" ng-model="item.COMPANY_NM" type="text" class="form-control" style="margin:0px;" placeholder="회사명">
                                         </div>
                                     </span>
 
@@ -91,7 +91,7 @@
 
                                     <span class="col-xs-3 basicinfo desc">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input type="text"  ng-model="item.CHARGE_NM" class="form-control" style="margin:0px;" placeholder="이름">
+                                            <input id="charge_nm" type="text"  ng-model="item.CHARGE_NM" class="form-control" style="margin:0px;" placeholder="이름">
                                         </div>
                                     </span>
                                     </div>  <!-- /.form_basicinfo -->
@@ -106,7 +106,7 @@
 
                                     <span class="col-xs-5 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input type="text" ng-model="item.COMPANY_URL" class="form-control" style="margin:0px;" placeholder="http://ange.co.kr">
+                                            <input id="url" name="url" type="text" ng-model="item.URL" class="form-control" style="margin:0px;" placeholder="http://ange.co.kr">
                                         </div>
                                     </span>
 
@@ -124,15 +124,15 @@
 
                                     <span class="col-xs-10 basicinfo input">
                                         <div class="form-inline" style="margin:0 5px">
-                                            <input ng-model="item.EMAIL_ID" class="form-control" style="width:132px;">
+                                            <input id="email" ng-model="item.EMAIL_ID" class="form-control" style="width:132px;">
                                             <span style="margin:0 4px;"> @ </span>
-                                            <input ng-model="item.EMAIL_ADDRESS" class="form-control" style="width:180px; background-color: #fff;" data-ng-disabled="novalue">
+                                            <input ng-model="item.EMAIL_TYPE" class="form-control" style="width:180px; background-color: #fff;" ng-disabled="disabledEmail">
 
                                             <select ng-model="item.EMAIL_SELECT" class="form-control" style="width:110px; display:black;">
+                                                <option value="">직접 입력</option>
                                                 <option value="naver.com">네이버</option>
                                                 <option value="hanmail.net">다음</option>
                                                 <option value="gmail.com">구글</option>
-                                                <option value="">직접 입력</option>
                                             </select>
                                         </div>
                                     </span>
@@ -148,17 +148,28 @@
 
                                     <span class="col-xs-10 basicinfo input">
                                         <div class="form-inline" style="margin:0 5px">
-                                            <select ng-model="item.PHONE1_1" class="form-control" style="width:110px;">
+                                            <select ng-model="item.PHONE_1_1" class="form-control" style="width:110px;">
                                                 <option value="" selected>지역번호</option>
                                                 <option value="02">02</option>
                                                 <option value="031">031</option>
                                                 <option value="032">032</option>
-                                                <option value="033">033</option>
+                                                <option value="041">041</option>
+                                                <option value="042">042</option>
+                                                <option value="043">043</option>
+                                                <option value="051">051</option>
+                                                <option value="052">052</option>
+                                                <option value="053">053</option>
+                                                <option value="054">054</option>
+                                                <option value="055">055</option>
+                                                <option value="061">061</option>
+                                                <option value="062">062</option>
+                                                <option value="063">063</option>
+                                                <option value="064">064</option>
                                             </select>
                                             <span style="margin:0 4px;"> &dash; </span>
-                                            <input ng-model="item.PHONE1_2" class="form-control" style="width:110px;">
+                                            <input ng-model="item.PHONE_1_2" class="form-control" style="width:110px;">
                                             <span style="margin:0 4px;"> &dash; </span>
-                                            <input ng-model="item.PHONE1_3" class="form-control" style="width:110px;">
+                                            <input ng-model="item.PHONE_1_3" class="form-control" style="width:110px;">
                                         </div>
                                     </span>
                                     </div>  <!-- /.form_basicinfo -->
@@ -173,19 +184,11 @@
 
                                     <span class="col-xs-10 basicinfo input">
                                         <div class="form-inline" style="margin:0 5px">
-                                            <select class="form-control" style="width:110px;">
-                                                <option value="">통신사</option>
-                                                <option value="1">SK</option>
-                                                <option value="2">KT</option>
-                                                <option value="3">LG</option>
-                                                <option value="4">알뜰폰</option>
-                                            </select>
+                                            <input id="phone_2" ng-model="item.PHONE_2_1" class="form-control" style="width:110px;">
                                             <span style="margin:0 4px;"> &dash; </span>
-                                            <input ng-model="item.PHONE2_1" class="form-control" style="width:110px;">
+                                            <input ng-model="item.PHONE_2_2" class="form-control" style="width:110px;">
                                             <span style="margin:0 4px;"> &dash; </span>
-                                            <input ng-model="item.PHONE2_2" class="form-control" style="width:110px;">
-                                            <span style="margin:0 4px;"> &dash; </span>
-                                            <input ng-model="item.PHONE2_3" class="form-control" style="width:110px;">
+                                            <input ng-model="item.PHONE_2_3" class="form-control" style="width:110px;">
                                         </div>
                                     </span>
                                     </div>  <!-- /.form_basicinfo -->
@@ -201,13 +204,14 @@
                                         <span class="col-xs-10 basicinfo input">
                                             <div class="form-group" style="margin:0 5px">
                                                 <p>
-                                                    <textarea ng-model="item.NOTE" class="form-control input-sm" rows="10" style="width:100%; min-width:100%; max-width:100%;"></textarea>
+                                                    <textarea id="note" ng-model="item.NOTE" class="form-control input-sm" rows="10" style="width:100%; min-width:100%; max-width:100%;"></textarea>
                                                 </p>
                                             </div>
                                         </span>
                                     </div>  <!-- /.form_basicinfo -->
                                 </div>  <!-- /.form_rows -->
 
+                                <form id="thumb" name="thumb" method="POST" enctype="multipart/form-data" data-file-upload="options">
                                 <div class="row form_rows">
                                     <div class="form_basicinfo">
                                     <span class="col-xs-2 basicinfo title">
@@ -216,16 +220,25 @@
                                     </span>
 
                                     <span class="col-xs-5 basicinfo input">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input type="password" class="form-control" style="margin:0px;" placeholder="파일찾기를 클릭하세요">
+                                        <div ng-model="file" class="form-group" style="margin:0 5px">
+                                            <input ng-model="file.name" type="text" class="form-control" style="margin:0px;" placeholder="파일찾기를 클릭하세요">
                                         </div>
                                     </span>
 
-                                    <span class="col-xs-4 basicinfo desc">
-                                        <button class="btn btn-sm btn-info">파일찾기</button>
-                                    </span>
+                                    <div class="col-xs-2 basicinfo files">
+                                        <!-- The fileinput-button span is used to style the file input field as button -->
+                                        <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                            <span>탐색기</span>
+                                            <input type="file" name="files[]" ng-disabled="disabled">
+                                        </span>
+                                    </div>
+                                    <!--<span class="col-xs-4 basicinfo desc">-->
+                                        <!--<button class="btn btn-sm btn-info">파일찾기</button>-->
+                                    <!--</span>-->
                                     </div>  <!-- /.form_basicinfo -->
                                 </div>  <!-- /.form_rows -->
+                                </form>
 
                                 <div class="samplepack_guidebox" style="float:left; width:100%; padding-top:0px; border-bottom: 1px solid #333;">
 
@@ -243,7 +256,7 @@
 
                                     <div class="join_agree_check" style="float:left; margin-left:28px;">
                                         <div class="checkbox">
-                                            <input ng-model="item.COMPANY_AGREE_YN" ng-checked="join.checkInfo" type="checkbox" value="" checked>
+                                            <input ng-model="item.COMPANY_AGREE_YN" type="checkbox" value="" ng-checked>
                                             개인정보 취급방침에 동의합니다.
                                         </div>
                                     </div>

@@ -70,7 +70,7 @@
                     $data = $_d->sql_fetch_array($result);
                     $_d->dataEnd2($data);
                 }
-            } else if($_type == 'list'){
+            } else if ($_type == 'list'){
 
                 // 검색조건 추가
                 if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
@@ -163,6 +163,20 @@
                     $_d->dataEnd($sql);
                 }
 
+            } else if($_type == "check") {
+
+                $sql = "SELECT
+                            MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
+                        FROM
+                            ANGE_MILEAGE
+                        WHERE NO = ".$_key."
+                        ";
+
+                $data = $_d->sql_fetch($sql);
+
+                if (isset($data)) {
+
+                }
             }
 
             break;
@@ -175,7 +189,57 @@
 
                 $_d->sql_beginTransaction();
 
-                $sql = "INSERT INTO ANGE_USER_MILEAGE_TEMP
+                $where = "";
+
+                if (isset($_model[MILEAGE_GB]) && $_model[MILEAGE_GB] != "") {
+                    $where .= "AND MILEAGE_GB  = '".$_model[MILEAGE_GB]."' ";
+                }
+
+                $sql = "SELECT
+                            NO, MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
+                        FROM
+                            ANGE_MILEAGE
+                        WHERE
+                            POINT_ST = '0'
+                            AND NO = '".$_model['MILEAGE_NO']."'
+                            ".$where."
+                        ";
+
+                $data = $_d->sql_fetch($sql);
+
+                if (isset($data) && $data['LIMIT_DAY'] != '0') {
+                    $where = "";
+
+                    if ($data['LIMIT_GB'] == 'DAY') {
+                        $where = "AND EARN_DT BETWEEN DATE_SUB(DATE_FORMAT(SYSDATE(), '%Y-%m-%d'), INTERVAL ".($data['LIMIT_DAY']-1)." DAY) AND DATE_ADD(DATE_FORMAT(SYSDATE(), '%Y-%m-%d'), INTERVAL + 1 DAY)";
+                    } else if ($data['LIMIT_GB'] == 'WEEK') {
+                        $where = "AND EARN_DT BETWEEN DATE_SUB(DATE_ADD(DATE_FORMAT(SYSDATE(), '%Y-%m-%d'), INTERVAL 7 - WEEKDAY(SYSDATE()) DAY), INTERVAL ".$data['LIMIT_DAY']." WEEK) AND DATE_ADD(DATE_FORMAT(SYSDATE(), '%Y-%m-%d'), INTERVAL 7 - WEEKDAY(SYSDATE()) DAY)";
+                    } else if ($data['LIMIT_GB'] == 'MONTH') {
+                        $where = "AND EARN_DT BETWEEN DATE_SUB(DATE_FORMAT(SYSDATE(), '%Y-%m-01'), INTERVAL ".($data['LIMIT_DAY']-1)." MONTH) AND LAST_DAY(SYSDATE())";
+                    } else if ($data['LIMIT_GB'] == 'YEAR') {
+                        $where = "AND EARN_DT BETWEEN DATE_SUB(DATE_FORMAT(SYSDATE(), '%Y-01-01'), INTERVAL ".($data['LIMIT_DAY']-1)." YEAR) AND DATE_FORMAT(SYSDATE(),'%Y-12-31')";
+                    }
+
+                    $sql = "SELECT
+                                COUNT(*) AS MILEAGE_CNT
+                            FROM
+                                ANGE_USER_MILEAGE
+                            WHERE
+                                USER_ID = '".$_SESSION['uid']."'
+                                AND MILEAGE_NO = '".$_model['MILEAGE_NO']."'
+                                AND EARN_GB = '".$_model['MILEAGE_GB']."'
+                                ".$where."
+                            ";
+
+                    $mileage_cnt = $_d->sql_fetch($sql);
+
+                    if ($mileage_cnt['MILEAGE_CNT'] >= $data['LIMIT_CNT']) {
+                        $_d->succEnd("마일리지 제한 초과입니다");
+                        break;
+                    }
+                }
+
+                $sql = "INSERT INTO ANGE_USER_MILEAGE
                         (
                             USER_ID,
                             EARN_DT,
@@ -185,13 +249,13 @@
                             POINT,
                             REASON
                         ) VALUES (
-                            '".$_model['USER_ID']."'
+                            '".$_SESSION['uid']."'
                             , SYSDATE()
-                            , '900'
-                            , '".$_model['EARN_GB']."'
-                            , '".$_model['PLACE_GB']."'
-                            , '".$_model['POINT']."'
-                            , '".$_model['REASON']."'
+                            , '".$data['NO']."'
+                            , '".$data['MILEAGE_GB']."'
+                            , '".$data['SUBJECT']."'
+                            , '".$data['POINT']."'
+                            , '".$data['REASON']."'
                         )";
 
                 $_d->sql_query($sql);
@@ -201,26 +265,13 @@
                     $msg = $_d->mysql_error;
                 }
 
-                $sql = "SELECT
-                            SUM_POINT, REMAIN_POINT
-                        FROM
-                            COM_USER
-                        WHERE
-                            USER_ID = '".$_model['USER_ID']."'";
-
-                $mileage_result = $_d->sql_query($sql);
-                $mileage_data = $_d->sql_fetch_array($mileage_result);
-
-                $sum_point = $mileage_data['SUM_POINT'] + $_model['POINT'];
-                $remain_point = $mileage_data['REMAIN_POINT'] + $_model['POINT'];
-
                 $sql = "UPDATE
-                            ANGE_MILEAGE_STATUS
+                            COM_USER
                         SET
-                            SUM_POINT = ".$sum_point."
-                            ,REMAIN_POINT = ".$remain_point."
+                            SUM_POINT = SUM_POINT + ".$data['POINT'].",
+                            REMAIN_POINT = REMAIN_POINT + ".$data['POINT']."
                         WHERE
-                            USER_ID = '".$_model['USER_ID']."'";
+                            USER_ID = '".$_SESSION['uid']."'";
 
                 $_d->sql_query($sql);
 

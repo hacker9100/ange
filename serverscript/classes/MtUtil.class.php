@@ -255,8 +255,8 @@ class MtUtil extends Mt {
 //        $mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
 //        $mail->Host       = "smtp.gmail.com";      // sets GMAIL as the SMTP server
 //        $mail->Port       = 465;                   // set the SMTP port for the GMAIL server
-//        $mail->Username   = "hacker9100@gmail.com";             // GMAIL username
-//        $mail->Password   = "rlatjdghks9100";              // GMAIL password
+//        $mail->Username   = "";             // GMAIL username
+//        $mail->Password   = "";              // GMAIL password
 
         $mail->SetFrom($EMAIL, $NAME);
 
@@ -281,7 +281,7 @@ class MtUtil extends Mt {
     }
 
     function getClientIp() {
-        $ip = "";
+        $ip = null;
 
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];

@@ -10,7 +10,7 @@
 
                         <div class="sub_contents_wrap">
 
-                            <div class="sub_contents_title">
+                            <div id="top" class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
                                 <h3 style="font-weight:bold;">
                                     회사소개
@@ -175,11 +175,16 @@
 
                                             <div class="company_sectiontitle_wrap">
                                                 <strong style="font-size:1.08em;">가전/생활전자</strong>
-                                                <a title="맨위로"><small>top </small><span class="glyphicon glyphicon-chevron-up topbtn"></span></a>
+                                                <a title="맨위로" ng-click="click_focus('top')"><small>top </small><span class="glyphicon glyphicon-chevron-up topbtn"></span></a>
                                             </div>  <!-- /.company_sectiontitle_wrap -->
 
-                                            <div class="company_partners_wrap">
+                                            <div class="company_partners_wrap" ng-repeat="item in partner1">
 
+                                                <div ng-click="partnerLink(item);" class="company_partners_box">
+                                                    <img ng-src="{{item.img}}">
+                                                    <span>{{item.COMPANY_NM}}</span>
+                                                </div>
+<!--
                                                 <div ng-click="partnerLink('#');" class="company_partners_box">
                                                     <img src="/imgs/ange/partners/surpportcompany_001.png">
                                                     <span>LG전자</span>
@@ -212,6 +217,7 @@
                                                     <img src="/imgs/ange/partners/surpportcompany_008.png">
                                                     <span>LG전자</span>
                                                 </div>
+-->
 
                                             </div>  <!-- /.company_partners_wrap -->
 
@@ -220,11 +226,16 @@
 
                                             <div class="company_sectiontitle_wrap">
                                                 <strong style="font-size:1.08em;">교육</strong>
-                                                <a title="맨위로"><small>top </small><span class="glyphicon glyphicon-chevron-up topbtn"></span></a>
+                                                <a title="맨위로" ng-click="click_focus('top')"><small>top </small><span class="glyphicon glyphicon-chevron-up topbtn"></span></a>
                                             </div>  <!-- /.company_sectiontitle_wrap -->
 
-                                            <div class="company_partners_wrap">
+                                            <div class="company_partners_wrap" ng-repeat="item in partner2">
 
+                                                <div ng-click="partnerLink(item);" class="company_partners_box">
+                                                    <img ng-src="{{item.img}}">
+                                                    <span>{{item.COMPANY_NM}}</span>
+                                                </div>
+ <!--
                                                 <div ng-click="partnerLink('#');" class="company_partners_box">
                                                     <img src="/imgs/ange/partners/surpportcompany_025.png">
                                                     <span>LG전자</span>
@@ -237,7 +248,7 @@
                                                     <img src="/imgs/ange/partners/surpportcompany_027.png">
                                                     <span>LG전자</span>
                                                 </div>
-
+-->
                                             </div>  <!-- /.company_partners_wrap -->
 
                                         </div><!-- /.col-xs-12-->

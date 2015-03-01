@@ -67,8 +67,8 @@ define([
 
                        console.log(file[i]);
                         if (file[i].FILE_GB == 'MAIN')
-                            //$scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
-                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
+                            $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
+//                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
                     }
                 })
                 .catch(function(error){});

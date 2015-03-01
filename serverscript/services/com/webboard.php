@@ -178,6 +178,10 @@
                 $sort_order = "";
                 $limit = "";
 
+                if (isset($_search[COMM_NO_IN]) && $_search[COMM_NO_IN] != "") {
+                    $search_where .= "AND COMM_NO IN (".$_search[COMM_NO_IN].") ";
+                }
+
                 if (isset($_search[COMM_NO]) && $_search[COMM_NO] != "") {
                     $search_where .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
                 }

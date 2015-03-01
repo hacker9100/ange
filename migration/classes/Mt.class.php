@@ -7,20 +7,20 @@ define("__AS_IS_PWD__" , "dbrdkvhxjf4650");
 define("__AS_IS_DBF__" , "newange");
 
 // TO-BE DB 서버(MY-SQL)
-//define("__TO_BE_ADD__" , "14.63.219.171");
-//define("__TO_BE_USR__" , "ange");
-//define("__TO_BE_PWD__" , "ange#123");
-//define("__TO_BE_DBF__" , "ange");
+define("__TO_BE_ADD__" , "14.63.219.171");
+define("__TO_BE_USR__" , "ange");
+define("__TO_BE_PWD__" , "ange#123");
+define("__TO_BE_DBF__" , "ange");
 
 //define("__TO_BE_ADD__" , "14.63.219.171");
 //define("__TO_BE_USR__" , "admin_default");
 //define("__TO_BE_PWD__" , "XT1GuAa3qz");
 //define("__TO_BE_DBF__" , "admin_default");
 
-define("__TO_BE_ADD__" , "14.49.37.254");
-define("__TO_BE_USR__" , "admin_ange");
-define("__TO_BE_PWD__" , "VQfHMPtExV");
-define("__TO_BE_DBF__" , "admin_ange");
+//define("__TO_BE_ADD__" , "14.49.37.254");
+//define("__TO_BE_USR__" , "admin_ange");
+//define("__TO_BE_PWD__" , "VQfHMPtExV");
+//define("__TO_BE_DBF__" , "admin_ange");
 
 define("DEBUG", true);
 define("SESSION_TIMEOUT", 1800);

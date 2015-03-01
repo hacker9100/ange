@@ -15,14 +15,14 @@
 
     date_default_timezone_set('Asia/Seoul');
 
-	include_once($_SERVER['DOCUMENT_ROOT']."/migration/classes/ImportClasses.php");
+    include_once("D:/xampp/htdocs/ange/migration/classes/ImportClasses.php");
 
     MtUtil::_c("### [START]");
 
     $_a = new MtMssqlData();
     $_t = new MtMysqlData();
 
-    $prefix = "MIG_";
+    $prefix = "";
 
     if ($_a->connect_db == "") {
         MtUtil::_c("AS-IS DB 연결 실패.");
@@ -31,17 +31,23 @@
     if ($_t->connect_db == "") {
         MtUtil::_c("TO-BE DB 연결 실패.");
     }
-/*
+
     $sql = "SELECT p_idx, p_category, p_kind, p_tb, p_dist, p_subject, p_content, p_point, p_numb, p_times, p_conf
             FROM point_admin_list;
             ";
-*/
-//    $result = $_a->sql_query($sql,true);
+
+    $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
         MtUtil::_c($i."> [p_idx] ".$row['p_idx'].", [p_category] ".$row['p_category'].", [p_kind] ".$row['p_kind'].", [p_tb] ".$row['p_tb'].", [p_dist] ".$row['p_dist'].", [p_subject] ".$row['p_subject'].", [p_content] ".$row['p_content'].", [p_point] ".$row['p_point'].", [p_numb] ".$row['p_numb'].", [p_times] ".$row['p_times'].", [p_conf] ".$row['p_conf']);
 
         $_t->sql_beginTransaction();
-
+        $sql = "UPDATE ".$prefix."ANGE_MILEAGE
+                SET
+                    MILEAGE_GB = '".$row['p_kind']."'
+                WHERE
+                    NO = ".$row['p_idx']."
+                ";
+/*
         $sql = "INSERT INTO ".$prefix."ANGE_MILEAGE
                 (
                     NO,
@@ -68,6 +74,7 @@
                     , '".$row['p_category']."'
                     , '".$row['p_dist']."'
                 )";
+*/
 
         $_t->sql_query($sql);
         $no = $_t->mysql_insert_id;

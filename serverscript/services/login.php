@@ -211,8 +211,8 @@
                         MtUtil::_d("################################### [session2] ");
                     }
 
-                    $_SESSION['ip'] = MtUtil::getClientIp();
-                    $_SESSION['guid'] = uniqid('',true);
+                    if (!isset($_SESSION['ip']) || $_SESSION['ip']==''){ $_SESSION['ip'] = MtUtil::getClientIp(); }
+                    if (!isset($_SESSION['guid']) || $_SESSION['guid']==''){ $_SESSION['guid'] = uniqid('',true); }
 
                     $_SESSION['user_info'] = $data;
                     $_SESSION['uid'] = $data['USER_ID'];
@@ -243,11 +243,10 @@
                 $sess = array();
 
                 if(isset($_SESSION['timeout']) && time() - $_SESSION['timeout'] > SESSION_TIMEOUT) {
+                    MtUtil::_d("### [SESSION CHECK1]");
+
                     if(isset($_SESSION['uid']))
                     {
-                        unset($_SESSION['ip']);
-                        unset($_SESSION['guid']);
-
                         unset($_SESSION['user_info']);
                         unset($_SESSION['uid']);
                         unset($_SESSION['nick']);
@@ -275,6 +274,11 @@
                 } else {
                     if(isset($_SESSION['uid']))
                     {
+                        MtUtil::_d("### [SESSION CHECK2]");
+
+                        if (!isset($_SESSION['ip']) || $_SESSION['ip']==''){ $_SESSION['ip'] = MtUtil::getClientIp(); }
+                        if (!isset($_SESSION['guid']) || $_SESSION['guid']==''){ $_SESSION['guid'] = uniqid('',true); }
+
                         $sess['IP'] = $_SESSION['ip'];
                         $sess['GUID'] = $_SESSION['guid'];
 
@@ -302,8 +306,13 @@
                     }
                     else
                     {
-                        $sess['IP'] = MtUtil::getClientIp();
-                        $sess['GUID'] = (!isset($_SESSION['guid']) || $_SESSION['guid']=='') ? $_SESSION['guid'] : uniqid('',true);
+                        MtUtil::_d("### [SESSION CHECK3]");
+
+                        if (!isset($_SESSION['ip']) || $_SESSION['ip']==''){ $_SESSION['ip'] = MtUtil::getClientIp(); }
+                        if (!isset($_SESSION['guid']) || $_SESSION['guid']==''){ $_SESSION['guid'] = uniqid('',true); }
+
+                        $sess['IP'] = $_SESSION['ip'];
+                        $sess['GUID'] = $_SESSION['guid'];
 
                         $sess['USER_INFO'] = '';
                         $sess['USER_ID'] = '';
@@ -326,6 +335,8 @@
 //                    $sess['EMAIL'] = '';
                     }
                 }
+
+                MtUtil::_d("### [SESSION GUID]".$sess['GUID']);
 
                 $_d->dataEnd2($sess);
             }
@@ -509,6 +520,9 @@
                         session_start();
                     }
 
+                    $_SESSION['ip'] = MtUtil::getClientIp();
+                    $_SESSION['guid'] = uniqid('',true);
+
                     $_SESSION['user_info'] = $data;
                     $_SESSION['uid'] = $data['USER_ID'];
                     $_SESSION['nick'] = $data['NICK_NM'];
@@ -541,30 +555,33 @@
             }
             if(isset($_SESSION['uid']))
             {
+/*
                 $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'CMS_LOGOUT'
-                        ,SYSDATE()
-                        ,'".$_SESSION[uid]."'
-                        ,''
-                        ,''
-                        ,''
-                        ,'".$ip."'
-                        ,'/signin'
-                    )";
+                        (
+                            WORK_ID
+                            ,WORK_GB
+                            ,WORK_DT
+                            ,WORKER_ID
+                            ,OBJECT_ID
+                            ,OBJECT_GB
+                            ,ACTION_GB
+                            ,IP
+                            ,ACTION_PLACE
+                        ) VALUES (
+                            '".$_model[WORK_ID]."'
+                            ,'CMS_LOGOUT'
+                            ,SYSDATE()
+                            ,'".$_SESSION[uid]."'
+                            ,''
+                            ,''
+                            ,''
+                            ,'".$ip."'
+                            ,'/signin'
+                        )";
+*/
 
                 $_d->sql_query($sql);
+
                 unset($_SESSION['user_info']);
                 unset($_SESSION['uid']);
                 unset($_SESSION['nick']);

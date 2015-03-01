@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : faq-list.html 화면 콘트롤러
+ * Description : mileage-list.html 화면 콘트롤러
  */
 
 define([
@@ -11,66 +11,77 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('faq-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
+    controllers.controller('mileage-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', '$timeout', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, $timeout) {
 
         /********** 초기화 **********/
-        $scope.search = {SYSTEM_GB: 'ANGE', BOARD_GB: 'FAQ', COMM_NO: CONSTANT.COMM_NO_FAQ, CATEGORY: true};
+        $scope.search = {};
+        $scope.showEdit = false;
 
         // 초기화
         $scope.init = function() {
             // 검색어 조건
-            var condition = [{name: "등록자", value: "REG_NM"}, {name: "제목+내용", value: "SUBJECT"}];
+            var condition = [{name: "마일리지명", value: "SUBJECT"}, {name: "사유", value: "REASON"}];
 
             $scope.conditions = condition;
             $scope.search.CONDITION = condition[0];
         };
 
         /********** 이벤트 **********/
-        // 등록 버튼 클릭
-        $scope.click_showCreateNewFaq = function () {
-            if ($rootScope.role != 'ANGE_ADMIN') {
-                dialogs.notify('알림', "등록 권한이 없습니다.", {size: 'md'});
-                return;
-            }
+        // 마일리지 저장 버튼 클릭
+        $scope.click_saveMileage = function () {
 
-            $location.url('/faq/edit/0');
+            $scope.updateItem('admin/mileage', 'item', $scope.item.NO, $scope.item, false)
+                .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
-        // 조회 화면 이동
-        $scope.click_showViewFaq = function (key) {
-            $location.url('/faq/view/'+key);
+        $scope.click_cancel = function () {
+            $scope.item = {};
+            $scope.showEdit = false;
+
+            $scope.click_focus('search');
         };
 
         // 수정 화면 이동
-        $scope.click_showEditFaq = function (item) {
-            if ($rootScope.role != 'ANGE_ADMIN' && $rootScope.uid != item.REG_UID) {
+        $scope.click_showEditMileage = function (item) {
+            if ($rootScope.role != 'ANGE_ADMIN') {
                 dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
                 return;
             }
+            $scope.item = item;
+            $scope.showEdit = true;
 
-            $location.path('/faq/edit/'+item.NO);
+            $timeout(function() {
+                $scope.click_focus('item', 'item_name');
+            }, 500);
         };
 
+        // 편집 버튼 클릭 시 영역으로 focus 이동
+        $scope.click_focus = function (id, name) {
+            $('html,body').animate({scrollTop:$('#'+id).offset().top}, 100);
+            $('#'+name).focus();
+        }
+
         // 삭제 버튼 클릭
-        $scope.click_deleteFaq = function (item) {
-            if ($rootScope.role != 'ANGE_ADMIN' && $rootScope.uid != item.REG_UID) {
+        $scope.click_deleteMileage = function (item) {
+            if ($rootScope.role != 'ANGE_ADMIN') {
                 dialogs.notify('알림', '삭제 권한이 없습니다.', {size: 'md'});
                 return;
             }
 
             var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
 
-            dialog.result.then(function(btn){
-                $scope.deleteItem('com/webboard', 'item', item.NO, false)
-                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-            }, function(btn) {
-                return;
-            });
+//            dialog.result.then(function(btn){
+//                $scope.deleteItem('ange/community', 'item', item.NO, false)
+//                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
+//                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//            }, function(btn) {
+//                return;
+//            });
         };
 
         // 검색 버튼 클릭
-        $scope.click_searchFaq = function () {
+        $scope.click_searchMileage = function () {
             $scope.tableParams.$params.page = 1;
             $scope.tableParams.reload();
         };
@@ -79,12 +90,12 @@ define([
         $scope.PAGE_SIZE = 10;
 
         // 게시판 목록 조회
-        $scope.getFaqList = function () {
+        $scope.getMileageList = function () {
             $scope.tableParams = new ngTableParams({
                 page: 1,                    // show first page
                 count: $scope.PAGE_SIZE,    // count per page
                 sorting: {                  // initial sorting
-                    REG_DT: 'desc'
+                    NO: 'desc'
                 }
             }, {
                 counts: [],         // hide page counts control
@@ -95,16 +106,13 @@ define([
                     $scope.search['SORT'] = key;
                     $scope.search['ORDER'] = params.sorting()[key];
 
-                    $scope.getList('com/webboard', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList('admin/mileage', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             var total_cnt = data[0].TOTAL_COUNT;
                             $scope.TOTAL_COUNT = total_cnt;
 
                             params.total(total_cnt);
                             $defer.resolve(data);
-
-//                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
-//                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
                         .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
                 }
@@ -114,8 +122,9 @@ define([
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.permissionCheck)
             .then($scope.init)
-            .then($scope.getFaqList)
+            .then($scope.getMileageList)
             .catch($scope.reportProblems);
     }]);
 });

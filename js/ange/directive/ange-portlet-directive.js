@@ -693,6 +693,8 @@ define([
             controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $window, $timeout, CONSTANT) {
 
                 /********** 초기화 **********/
+                var type = 'list';
+
                 $scope.option = $scope.$eval($attrs.ngModel);
 
                 // 검색 조건
@@ -708,15 +710,16 @@ define([
                 $scope.search.ADA_STATE = 1;
 
                 // 검색 조건 추가
-                if ($scope.option.type == 'banner') {
-//                    $scope.search.ADP_IDX = $scope.option.gb;
-//                    $scope.search.BANNER_ST = 1;
-                    $scope.search.MENU = $scope.path[1];
-                    $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
-                } else if ($scope.option.type == 'experience') {
-                    $scope.search.EVENT_GB = "exp";
-                } else if ($scope.option.type == 'event') {
-                    $scope.search.EVENT_GB = "event";
+                if ($scope.option.type == 'ange') {
+                    $scope.search.BANNER_GB = $scope.option.gb;
+                    type = $scope.option.type;
+                } else if ($scope.option.type == 'banner') {
+                    $scope.search.ADP_IDX = $scope.option.gb;
+                    $scope.search.BANNER_ST = 1;
+//                } else if ($scope.option.type == 'experience') {
+//                    $scope.search.EVENT_GB = "exp";
+//                } else if ($scope.option.type == 'event') {
+//                    $scope.search.EVENT_GB = "event";
                 }
 
                 /********** 이벤트 **********/
@@ -724,8 +727,20 @@ define([
                 // 롤링 이미지 조회
                 $scope.getPortletList = function () {
 
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList($scope.option.api, type, {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
+                            $scope.list = data;
+
+                            for (var i in data) {
+                                if ($scope.option.type == 'ange') {
+                                    var img = CONSTANT.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+                                } else if ($scope.option.type == 'banner') {
+                                    var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
+                                }
+
+                                angular.element('#'+$scope.option.id).slickAdd('<div><img src="'+img+'"/></div>');
+                            }
+/*
                             var data = [];
 
                             if ($scope.option.gb == 1) {
@@ -762,6 +777,7 @@ define([
                                     angular.element('#'+$scope.option.id).slickAdd('<div><img src="'+data[i].img+'"/></div>');
                                 }
                             }
+*/
 
                             // 롤링을 실행
                             angular.element('#'+$scope.option.id).slickPlay();
@@ -772,6 +788,16 @@ define([
                                 return angular.element('#'+$scope.option.id).slickCurrentSlide();
                             }, function(newVal, oldVal) {
                                 $scope.curIdx = newVal;
+                            });
+
+                            angular.element('#'+$scope.option.id).click(function() {
+                                var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
+
+                                if ($scope.option.type == 'banner') {
+                                    $scope.click_linkBanner(data[idx]);
+                                } else if ($scope.option.type == 'ange') {
+                                    $location.url(data[idx].URL);
+                                }
                             });
 
 //                            $scope.list = data;
@@ -844,15 +870,17 @@ define([
 
                 // 검색 조건 추가
                 if ($scope.option.type == 'banner') {
-                    $scope.search.ADP_IDX = $scope.option.gb;
+                    $scope.search.ADP_IDX = $scope.option.gb == undefined ? '' : $scope.option.gb;
                     $scope.search.BANNER_ST = 1;
                     $scope.search.MENU = $scope.path[1];
                     $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
                 } else if ($scope.option.type == 'experience') {
+                    $scope.search.ADP_IDX = $scope.option.gb == undefined ? '' : $scope.option.gb;
                     $scope.search.EVENT_GB = "exp";
 //                    $scope.search.PROCESS = "process";
 //                    $scope.search.FILE = true;
                 } else if ($scope.option.type == 'event') {
+                    $scope.search.ADP_IDX = $scope.option.gb == undefined ? '' : $scope.option.gb;
                     $scope.search.EVENT_GB = "event";
 //                    $scope.search.FILE = true;
                 }
@@ -904,10 +932,7 @@ define([
                                 var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
 
                                 if ($scope.option.type == 'banner') {
-                                    var ad_url = $scope.adBannerUrl(data[idx].ada_idx, 1);
-                                    $window.open(ad_url);
-
-//                                    $window.open(data[idx].ada_url);
+                                    $scope.click_linkBanner(data[idx]);
                                 } else if ($scope.option.type == 'experience') {
                                     $location.url('/moms/experienceprocess/view/'+data[idx].ada_idx);
                                 } else if ($scope.option.type == 'event') {
