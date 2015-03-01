@@ -697,7 +697,7 @@ define([
 //            replace: true,
             template: '<slick id="{{ option.id }}" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false" style="padding:0px 6px;"></slick>'+
                         '<div class="ads_indicators_wrap">' +
-                        '   <div ng-repeat="item in list" ng-class=" $index == curIdx ? \'ads_indicators now\' : \'ads_indicators\'"></div>' +
+                        '   <div ng-repeat="item in list" ng-click="click_slickGoTo($index)" ng-class=" $index == curIdx && option.id == curId ? \'ads_indicators now\' : \'ads_indicators\'"></div>' +
                         '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $window, $timeout, CONSTANT) {
 
@@ -799,6 +799,7 @@ define([
                                 $scope.curIdx = newVal;
                             });
 
+                            $scope.curId = $scope.option.id;
                             angular.element('#'+$scope.option.id).click(function() {
                                 var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
 
@@ -808,6 +809,13 @@ define([
                                     $location.url(data[idx].URL);
                                 }
                             });
+
+                            $scope.click_slickGoTo = function(idx) {
+                                $scope.curIdx = idx;
+
+                                // 클릭 슬라이드로 변경
+                                angular.element('#'+$scope.option.id).slickGoTo(idx);
+                            }
 
 //                            $scope.list = data;
 //
