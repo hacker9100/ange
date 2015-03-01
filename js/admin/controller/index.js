@@ -33,8 +33,10 @@ define([
     '../../../partials/admin/popup/member-response-list',
     '../../../partials/admin/popup/member-comp-list',
 
-    // ADMIN 참여 관리
-//    '../../../partials/admin/event-list',
+    // ADMIN 서비스 관리
+    '../../../partials/admin/mileage-list',
+    '../../../partials/admin/banner-list',
+    '../../../partials/admin/partner-list',
 //    '../../../partials/admin/event-edit',
 //    '../../../partials/admin/comp-list',
 

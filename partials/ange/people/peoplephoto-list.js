@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peoplephoto-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('peoplephoto-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
 
         $scope.tmpMenu = $stateParams.menu;
         $scope.selectIdx = 0;
@@ -86,8 +86,8 @@ define([
 
                         console.log(file[i]);
                         if (file[i].FILE_GB == 'MAIN')
-                        //$scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
-                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
+                            $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
+//                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
                     }
                 })
                 .catch(function(error){});
@@ -163,7 +163,7 @@ define([
 
                     for(var i in data) {
 
-                        var img = UPLOAD.BASE_URL + '/storage/board/' + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        var img = CONSTANT.BASE_URL + '/storage/board/' + 'thumbnail/' + data[i].FILE.FILE_ID;
                         data[i].TYPE = 'BOARD';
                         data[i].FILE = img;
                         $scope.list.push(data[i]);

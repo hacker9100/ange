@@ -76,7 +76,7 @@ define([
                     $scope.getList('cms/task', 'list', {NO:0, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, NOT_TASK_NO: data.NO, PHASE: '30, 31'}, false).then(function(data){
                         $scope.editorList = data;
                     }),
-                    $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX : 8, ADA_STATE: 1}, false).then(function(data){
+                    $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: CONSTANT.AD_CODE_BN08, ADA_STATE: 1}, false).then(function(data){
                         var img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                         data[0].img = img;
                         $scope.ad = data[0];
@@ -90,11 +90,6 @@ define([
                 });
 
             return deferred.promise;
-        };
-
-        // 배너 이미지 클릭
-        $scope.click_linkBanner = function (item) {
-            $window.open(item.ada_url);
         };
 
         // 기사 프린트 버튼 클릭

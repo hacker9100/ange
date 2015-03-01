@@ -54,7 +54,7 @@ define([
             $scope.search.BOARD_GB = 'BOARD';
             $scope.search.SYSTEM_GB = 'ANGE';
 
-            $scope.getList('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
+            $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
                     $scope.COMM_MG_NM = data.COMM_MG_NM;
                 })

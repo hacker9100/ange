@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('main', ['$scope', '$stateParams', '$location', '$controller', 'UPLOAD', function ($scope, $stateParams, $location, $controller, UPLOAD) {
+    controllers.controller('main', ['$scope', '$stateParams', '$location', '$controller', 'CONSTANT', function ($scope, $stateParams, $location, $controller, CONSTANT) {
 
         /********** 초기화 **********/
         // 메인 화면 모드
@@ -21,10 +21,10 @@ define([
         // 초기화
         $scope.init = function() {
             // ange-portlet-slide-banner
-            $scope.option_r1_c1 = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 5, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+            $scope.option_r1_c1 = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: CONSTANT.AD_CODE_BN05, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
             // ange-portlet-link-image
-            $scope.option_r2_c2 = {title: '이벤트 배너', api:'ad/banner', size: 1, gb: 6, link: true, open: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};
+            $scope.option_r2_c2 = {title: '이벤트 배너', api:'ad/banner', size: 1, gb: CONSTANT.AD_CODE_BN06, link: true, open: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};
 
             // ange-portlet-moms-list
 //            $scope.option_r2_c1 = {title: '앙쥬스토리', api:'cms/task', size: 5, id: 'story', type: 'content', url: '/story/content/list', defIdx: 0, tab: [{no: '0', menu: 'popular', name: '인기'}, {no: '1', menu: 'current', name: '최신'}, {no: '2', menu: 'fit', name: '추천[맞춤서비스]'}], image: true, head: true, date: false, nick: true};
@@ -97,9 +97,9 @@ define([
                         var file = data[i].FILES;
                         for(var j in file) {
                             if (file[j].FILE_GB == 'ICON')
-                                data[i].ICON_IMAGE = UPLOAD.BASE_URL+file[j].PATH+file[j].FILE_ID;
+                                data[i].ICON_IMAGE = CONSTANT.BASE_URL+file[j].PATH+file[j].FILE_ID;
                             else
-                                data[i].DETAIL_IMAGE = UPLOAD.BASE_URL+file[j].PATH+file[j].FILE_ID;
+                                data[i].DETAIL_IMAGE = CONSTANT.BASE_URL+file[j].PATH+file[j].FILE_ID;
                         }
 
                         if (data[i].COLUMN_ORD == '1') {

@@ -85,89 +85,55 @@
 <!-- /Utility Panel -->
 
 <script type="text/ng-template" id="login_modal.html">
+    <div class="modal-header" style="background-color:#000; height:40px; width:730px; padding:0px;">
+        <div class="login_modal_title" style="color:#fff; line-height:40px; padding-left:12px;">
+            <strong>로그인</strong>
+            <span style="color:#CCC;"> <small>| LOGIN</small> </span>
 
-    <!--<div class="login_modal_wrap" style="position:fixed; left:50%; top:50%; margin-left:-365px; margin-top:-170px; width:730px; height:340px; background-color: #fff;">-->
+            <a class="login_exit" ng-click="click_cancel()" title="닫기"> X </a>
+        </div>
+    </div>
 
+    <div class="modal-body" style="clear:both; position:relative; width:730px; height:304px; border:1px solid transparent; background-color:#fff; border-radius: 0px; padding:0px;">
+        <div style="float:left; width:408px;">
+            <div ng-model="approval" class="row" class="form-horizontal" style="position:relative; padding:38px 42px;">
+                <form>
+                    <div class= "form-group" style="width:248px;">
+                        <input type="text" class="form-control" ng-model="item.id" class="form-control" placeholder="아이디"/>
+                    </div>
+                    <div class= "form-group" style="width:248px;">
+                        <input type="password" class="form-control" ng-model="item.password" class="form-control" placeholder="비밀번호"/>
+                    </div>
 
-    <!--</div>-->
+                    <div class="checkbox">
+                        <label style="font-size:0.92em; font-weight:600;">
+                            <input ng-model="save_id" type="checkbox" ng-click="check_saveId($event)">  아이디 저장
+                        </label>
+                    </div>
 
-        <div class="modal-header" style="background-color:#000; height:40px; width:730px; padding:0px;">
-            <div class="login_modal_title" style="color:#fff; line-height:40px; padding-left:12px;">
-                <strong>로그인</strong>
-                <span style="color:#CCC;"> <small>| LOGIN</small> </span>
+                    <div class="login_side">
 
-                <a class="login_exit" ng-click="click_cancel()" title="닫기"> X </a>
+                        <div style="float:left; width:50%; text-align: center; padding-bottom:8px; border-right:1px solid #ddd;">
+                            <span class="table_gray" style="font-size:0.78em;">아이디/비밀번호 잊으셨나요?</span>
+                            <div class="login_side_link"><a href="#">아이디/비밀번호 찾기</a></div>
+                        </div>
+
+                        <div style="float:left; width:50%; text-align: center; padding-bottom:8px; ">
+                            <span class="table_gray" style="font-size:0.78em;">아직 회원이 아니신가요?</span>
+                            <div class="login_side_link"><a ng-click="click_joinMember()">회원가입</a></div>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit_login" ng-click="click_ok()">로그인</button>
+                </form>
             </div>
         </div>
 
-        <div class="modal-body" style="clear:both; position:relative; width:730px; height:304px; border:1px solid transparent; background-color:#fff; border-radius: 0px; padding:0px;">
-            <div style="float:left; width:408px;">
-                <div ng-model="approval" class="row" class="form-horizontal" style="position:relative; padding:38px 42px;">
-                    <form>
-                        <div class= "form-group" style="width:248px;">
-                            <input type="text" class="form-control" ng-model="item.id" class="form-control" placeholder="아이디"/>
-                        </div>
-                        <div class= "form-group" style="width:248px;">
-                            <input type="password" class="form-control" ng-model="item.password" class="form-control" placeholder="비밀번호"/>
-                        </div>
-
-                        <div class="checkbox">
-                            <label style="font-size:0.92em; font-weight:600;">
-                                <input ng-model="save_id" type="checkbox" ng-click="check_saveId($event)">  아이디 저장
-                            </label>
-                        </div>
-
-                        <div class="login_side">
-
-                            <div style="float:left; width:50%; text-align: center; padding-bottom:8px; border-right:1px solid #ddd;">
-                                <span class="table_gray" style="font-size:0.78em;">아이디/비밀번호 잊으셨나요?</span>
-                                <div class="login_side_link"><a href="#">아이디/비밀번호 찾기</a></div>
-                            </div>
-
-                            <div style="float:left; width:50%; text-align: center; padding-bottom:8px; ">
-                                <span class="table_gray" style="font-size:0.78em;">아직 회원이 아니신가요?</span>
-                                <div class="login_side_link"><a ng-click="click_joinMember()">회원가입</a></div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit_login" ng-click="click_ok()">로그인</button>
-                    </form>
-                </div>
-            </div>
-
-            <div style="float:right; width:320px;">
-                <a href="#"><img src="/imgs/ange/temp/login_ad_01.jpg" title="배너타이틀"/></a>
-            </div>
+        <div style="float:right; width:320px;">
+            <a ng-model="loginBanner" title="{{loginBanner.ada_title}}">
+                <!--<img ng-src="{{ad.FILE}}"/>-->
+                <img img ng-src="{{loginBanner.img}}" ng-click="click_linkBanner(loginBanner)"/>
+            </a>
+            <!--<a href="#"><img src="/imgs/ange/temp/login_ad_01.jpg" title="배너타이틀"/></a>-->
         </div>
-        <!--<div class="modal-footer" style="width:730px; border:1px solid transparent; background-color:#fff; borderradius: 0px;">-->
-            <!--<button class="btn btn-primary" ng-click="click_ok()">로그인</button>-->
-            <!--<button class="btn btn-warning" ng-click="click_cancel()">취소</button>-->
-        <!--</div>-->
-
-    <!--<div>-->
-        <!--<img src="/imgs/ange/temp/login_ad_01.jpg" />-->
-    <!--</div>-->
-
-    <!--<div class="modal-header" style="border:1px solid red;">-->
-        <!--<h3 class="modal-title">로그인</h3>-->
-    <!--</div>-->
-    <!--<div class="modal-body">-->
-        <!--<div ng-model="approval" lass="row" class="form-horizontal">-->
-            <!--<div class= "form-group">-->
-                <!--<input type="text" class="form-control" ng-model="item.id" class= "form-control" placeholder="아이디"/>-->
-            <!--</div>-->
-            <!--<div class= "form-group">-->
-                <!--<input type="password" class="form-control" ng-model="item.password" class= "form-control" placeholder="비밀번호"/>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="modal-footer">-->
-        <!--<button class="btn btn-primary" ng-click="click_ok()">로그인</button>-->
-        <!--<button class="btn btn-warning" ng-click="click_cancel()">취소</button>-->
-    <!--</div>-->
-
-    <!--<div>-->
-        <!--<img src="/imgs/ange/temp/login_ad_01.jpg" />-->
-    <!--</div>-->
-
-
+    </div>
 </script>

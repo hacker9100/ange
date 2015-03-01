@@ -506,7 +506,9 @@ define([
 
         // 가입 완료
         $scope.finishUser = function () {
-
+            $scope.insertItem('com/mail', 'congratulation', item, false)
+                .then(function(data){})
+                .catch(function(error){});
         };
 
         // 이전 단계 클릭

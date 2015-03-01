@@ -309,6 +309,8 @@ define([
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
+                        $scope.addMileage('REVIEW', $scope.item.TARGET_GB);
+
                         if ($stateParams.menu == 'experiencereview') {
                             $location.url('/moms/experiencereview/list');
                         } else if ($stateParams.menu == 'productreview') {

@@ -295,6 +295,8 @@ define([
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
+                        $scope.addMileage($scope.item.BOARD_GB, $scope.menu.COMM_NO);
+
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});

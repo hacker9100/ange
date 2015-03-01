@@ -45,23 +45,17 @@ switch ($_method) {
         if ($_type == 'item') {
             $search_where = "";
 
-//                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-//                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
-//                }
-
-
-
             $err = 0;
             $msg = "";
 
-            $sql = "SELECT NO, COMPANY_GB, COMPANY_NM, CHARGE_NM, COMPANY_URL, COMPANY_EMAIL, COMPANY_PHONE1, COMPANY_PHONE2, NOTE, COMPANY_AGREE_YN
-                        FROM
-                            ANGE_COMPANY_AFFILIATES
-                        WHERE
-                            NO = ".$_key."
-                            ".$search_where."
-
-                        ";
+            $sql = "SELECT
+                        NO, CATEGORY_GB, AFFILIATE_GB, COMPANY_GB, COMPANY_NM, CHARGE_NM, URL, EMAIL, PHONE_1, PHONE_2, NOTE, COMPANY_AGREE_YN
+                    FROM
+                        ANGE_COMPANY
+                    WHERE
+                        NO = ".$_key."
+                        ".$search_where."
+                    ";
 
             $result = $_d->sql_query($sql);
             $data = $_d->sql_fetch_array($result);
@@ -72,24 +66,17 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
+                            NO, FILE_NM, FILE_SIZE, FILE_ID, PATH, THUMB_FL, ORIGINAL_NO, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
-                            FILE F, CONTENT_SOURCE S
+                            COM_FILE
                         WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'COMPANY'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
+                            TARGET_GB = 'COMPANY'
+                            AND TARGET_NO = ".$_key."
+                            AND THUMB_FL = '0'
                         ";
 
-            $file_data = $_d->getData($sql);
-            $data['FILES'] = $file_data;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+            $file_data = $_d->sql_fetch($sql);
+            $data['FILE'] = $file_data;
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -102,75 +89,75 @@ switch ($_method) {
                 $_d->dataEnd2($data);
             }
         } else if ($_type == 'list') {
-            $search_common = "";
             $search_where = "";
             $sort_order = "";
             $limit = "";
 
+            if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+                $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+            }
 
+            if (isset($_search[COMPANY_GB]) && $_search[COMPANY_GB] != "") {
+                $search_where .= "AND COMPANY_GB = '".$_search[COMPANY_GB]."'";
+            }
+
+            if (isset($_search[SORT]) && $_search[SORT] != "") {
+                $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+            }
 
             if (isset($_page)) {
                 $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
             }
 
-            $sql = "SELECT    TOTAL_COUNT, NO, COMPANY_GB, COMPANY_NM, CHARGE_NM, COMPANY_URL, COMPANY_EMAIL, COMPANY_PHONE1, COMPANY_PHONE2, NOTE, COMPANY_AGREE_YN
-                  FROM (
-                             SELECT NO, COMPANY_GB, COMPANY_NM, CHARGE_NM, COMPANY_URL, COMPANY_EMAIL, COMPANY_PHONE1, COMPANY_PHONE2, NOTE, COMPANY_AGREE_YN
-                             FROM
-                                ANGE_COMPANY_AFFILIATES
-                             WHERE 1 =1
-                                ".$search_where."
-                             ORDER BY NO DESC
+            $sql = "SELECT
+                        TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                        NO, CATEGORY_GB, AFFILIATE_GB, COMPANY_GB, COMPANY_NM, CHARGE_NM, URL, EMAIL, PHONE_1, PHONE_2, NOTE, COMPANY_AGREE_YN
+                    FROM (
+                        SELECT
+                            NO, CATEGORY_GB, AFFILIATE_GB, COMPANY_GB, COMPANY_NM, CHARGE_NM, URL, EMAIL, PHONE_1, PHONE_2, NOTE, COMPANY_AGREE_YN
+                        FROM
+                            ANGE_COMPANY
+                        WHERE 1 =1
+                            ".$search_where."
+                            ".$sort_order."
+                        ".$limit."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
                     (
-                          SELECT COUNT(*) AS TOTAL_COUNT
-                             FROM
-                                ANGE_COMPANY_AFFILIATES
-                             WHERE 1 =1
-                           ".$search_where."
+                        SELECT COUNT(*) AS TOTAL_COUNT
+                        FROM
+                            ANGE_COMPANY
+                        WHERE 1 =1
+                            ".$search_where."
                     ) CNT
                         ";
 
-            $data = null;
+            $__trn = '';
+            $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-            if (isset($_search[FILE])) {
-                $__trn = '';
-                $result = $_d->sql_query($sql,true);
-                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $sql = "SELECT
+                            NO, FILE_NM, FILE_SIZE, FILE_ID, PATH, THUMB_FL, ORIGINAL_NO, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
+                        FROM
+                            COM_FILE
+                        WHERE
+                            TARGET_GB = 'COMPANY'
+                            AND TARGET_NO = ".$row['NO']."
+                            AND THUMB_FL = '0'
+                        ";
 
-                    $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    FILE F, CONTENT_SOURCE S
-                                WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'COMPANY'
-                                    AND F.FILE_GB = 'MAIN'
-                                    AND S.TARGET_NO = ".$row['NO']."
-                                ";
+                $file_data = $_d->sql_fetch($sql);
+                $row['FILE'] = $file_data;
 
-                    $category_data = $_d->getData($sql);
-                    $row['FILE'] = $category_data;
-
-                    $__trn->rows[$i] = $row;
-                }
-                $_d->sql_free_result($result);
-                $data = $__trn->{'rows'};
-
-                if($_d->mysql_errno > 0){
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                }else{
-                    $_d->dataEnd2($data);
-                }
+                $__trn->rows[$i] = $row;
             }
-            $data = $_d->sql_query($sql);
+            $_d->sql_free_result($result);
+            $data = $__trn->{'rows'};
 
             if($_d->mysql_errno > 0){
                 $_d->failEnd("조회실패입니다:".$_d->mysql_error);
             }else{
-                $_d->dataEnd($sql);
+                $_d->dataEnd2($data);
             }
         }
 
@@ -179,104 +166,85 @@ switch ($_method) {
     case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
 
-        $err = 0;
-        $msg = "";
-
-        /*        if( trim($_model[PRODUCT_NM]) == "" ){
-                    $_d->failEnd("상품명을 작성 하세요");
-                }*/
-
         $upload_path = '../../../upload/files/';
-        $file_path = '/storage/product/';
+        $file_path = '/storage/company/';
         $source_path = '../../..'.$file_path;
-        $insert_path = array();
-
-        $body_str = $_model[BODY];
+        $insert_path = null;
 
         try {
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
+            if (count($_model[FILE]) > 0) {
+                $file = $_model[FILE];
                 if (!file_exists($source_path) && !is_dir($source_path)) {
                     @mkdir($source_path);
-                    @mkdir($source_path.'thumbnail/');
-                    @mkdir($source_path.'medium/');
                 }
 
-                for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                    $file = $files[$i];
+                if (file_exists($upload_path.$file[name])) {
+                    $uid = uniqid();
+                    rename($upload_path.$file[name], $source_path.$uid);
+                    $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
-                    if (file_exists($upload_path.$file[name])) {
-                        $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-
-                        if ($file[version] == 6 ) {
-                            $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
-                        } else {
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-                        }
-
-                        $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
-
-                        MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
-
-
-                    }
+                    MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[path]);
                 }
             }
-
-            $_model[BODY] = $body_str;
         } catch(Exception $e) {
             $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
             break;
         }
 
+        $err = 0;
+        $msg = "";
+
         $_d->sql_beginTransaction();
 
-        $sql = "INSERT INTO ANGE_COMPANY_AFFILIATES
-                    (
-                        COMPANY_GB,
-                        COMPANY_NM,
-                        CHARGE_NM,
-                        COMPANY_URL,
-                        COMPANY_EMAIL,
-                        COMPANY_PHONE1,
-                        COMPANY_PHONE2,
-                        NOTE,
-                        COMPANY_AGREE_YN
-                    ) VALUES (
-                        '".$_model[COMPANY_GB]."',
-                        '".$_model[COMPANY_NM]."',
-                        '".$_model[CHARGE_NM]."',
-                        '".$_model[COMPANY_URL]."',
-                        '".$_model[COMPANY_EMAIL]."',
-                        '".$_model[COMPANY_PHONE1]."',
-                        '".$_model[COMPANY_PHONE2]."',
-                        '".$_model[NOTE]."',
-                        'Y'
-                    )";
+        $sql = "INSERT INTO ANGE_COMPANY
+                (
+                    CATEGORY_GB,
+                    AFFILIATE_FL,
+                    AFFILIATE_GB,
+                    COMPANY_GB,
+                    COMPANY_NM,
+                    CHARGE_NM,
+                    URL,
+                    EMAIL,
+                    PHONE_1,
+                    PHONE_2,
+                    NOTE,
+                    COMPANY_AGREE_YN,
+                    REG_DT
+                ) VALUES (
+                    '".$_model[CATEGORY_GB]."',
+                    '".$_model[AFFILIATE_FL]."',
+                    '".$_model[AFFILIATE_GB]."',
+                    '".$_model[COMPANY_GB]."',
+                    '".$_model[COMPANY_NM]."',
+                    '".$_model[CHARGE_NM]."',
+                    '".$_model[URL]."',
+                    '".$_model[EMAIL]."',
+                    '".$_model[PHONE_1]."',
+                    '".$_model[PHONE_2]."',
+                    '".$_model[NOTE]."',
+                    'Y',
+                    SYSDATE()
+                )";
 
         $_d->sql_query($sql);
+        $no = $_d->mysql_insert_id;
 
         if($_d->mysql_errno > 0) {
             $err++;
             $msg = $_d->mysql_error;
         }
 
-        if (count($_model[FILES]) > 0) {
-            $files = $_model[FILES];
+        if (isset($_model[FILE]) && $_model[FILE] != "") {
+            $file = $_model[FILE];
 
-            for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                $file = $files[$i];
-                MtUtil::_d("------------>>>>> file : ".$file['name']);
-                MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
+            MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                /*if($file[kind] != 'MAIN'){
-                    $_d->failEnd("대표이미지를 선택하세요.");
-                }*/
+            /*if($file[kind] != 'MAIN'){
+                $_d->failEnd("대표이미지를 선택하세요.");
+            }*/
 
-                $sql = "INSERT INTO FILE
+            $sql = "INSERT INTO COM_FILE
                     (
                         FILE_NM
                         ,FILE_ID
@@ -287,81 +255,61 @@ switch ($_method) {
                         ,REG_DT
                         ,FILE_ST
                         ,FILE_GB
+                        ,FILE_ORD
+                        ,TARGET_NO
+                        ,TARGET_GB
                     ) VALUES (
                         '".$file[name]."'
-                        , '".$insert_path[$i][uid]."'
-                        , '".$insert_path[$i][path]."'
+                        , '".$insert_path[uid]."'
+                        , '".$insert_path[path]."'
                         , '".$file[type]."'
                         , '".$file[size]."'
                         , '0'
                         , SYSDATE()
                         , 'C'
                         , '".$file[kind]."'
-                    )";
-
-                $_d->sql_query($sql);
-                $file_no = $_d->mysql_insert_id;
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "INSERT INTO CONTENT_SOURCE
-                    (
-                        TARGET_NO
-                        ,SOURCE_NO
-                        ,CONTENT_GB
-                        ,TARGET_GB
-                        ,SORT_IDX
-                    ) VALUES (
-                        '".$no."'
-                        , '".$file_no."'
-                        , 'FILE'
+                        , '0'
+                        , '".$no."'
                         , 'COMPANY'
-                        , '".$i."'
                     )";
 
-                $_d->sql_query($sql);
+            $_d->sql_query($sql);
 
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
             }
         }
 
         MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
 
-        if($err > 0){
+        if ($_model[COMPANY_GB] == "AFFILIATE") {
+            $from_email = __SMTP_USR__;
+            $from_user = __SMTP_USR_NM__;
+            $to = $_model[EMAIL];
+            $to_user = $_model[CHARGE_NM];
+            $subject = "$_model[COMPANY_NM]의 제휴&광고문의 입니다.";
+            $message = "안녕하세요. ".$_model[COMPANY_NM]."의 제휴&광고문의 내용입니다.".
+                "<br>기업명 : ".$_model[COMPANY_NM].
+                "<br>담당자 : ".$_model[COMPANY_NM].
+                "<br>담당자 : ".$_model[URL].
+                "<br>유선전화 : ".$_model[PHONE_1].
+                "<br>휴대폰 : ".$_model[PHONE_2].
+                "<br>내용 : ".$_model[NOTE].
+                "<br>테스트로 보냅니다.";
+
+            $result = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
+
+            if(!$result) {
+                $err++;
+                $msg = "메일발송에 실패했습니다.";
+            }
+        }
+
+        if($err > 0) {
             $_d->sql_rollback();
             $_d->failEnd("등록실패입니다:".$msg);
-        }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'CREATE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$no.'
-                        ,'BOARD'
-                        ,'CREATE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-            $_d->sql_query($sql);
-
+        } else {
             $_d->sql_commit();
             $_d->succEnd($no);
         }
@@ -372,73 +320,50 @@ switch ($_method) {
 
         if ($_type == 'item') {
             $upload_path = '../../../upload/files/';
-            $file_path = '/storage/product/';
+            $file_path = '/storage/company/';
             $source_path = '../../..'.$file_path;
-            $insert_path = array();
-
-            $body_str = $_model[BODY];
+            $insert_path = null;
 
             try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if (count($_model[FILE]) > 0) {
+                    $file = $_model[FILE];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
-                        @mkdir($source_path.'thumbnail/');
-                        @mkdir($source_path.'medium/');
                     }
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                        $file = $files[$i];
-
-                        if (file_exists($upload_path.$file[name])) {
-                            $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $insert_path[$i] = array(path => $file_path, uid => $uid);
-
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                            MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
-
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-
-                            MtUtil::_d("------------>>>>> body_str : ".$body_str);
-                        } else {
-                            $insert_path[$i] = array(path => '', uid => '');
-                        }
+                    if (file_exists($upload_path.$file[name])) {
+                        $uid = uniqid();
+                        rename($upload_path.$file[name], $source_path.$uid);
+                        $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                    } else {
+                        $insert_path = array(path => '', uid => '', kind => '');
                     }
                 }
-
-                $_model[BODY] = $body_str;
             } catch(Exception $e) {
                 $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                 break;
             }
-
-            MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
             $err = 0;
             $msg = "";
 
             $_d->sql_beginTransaction();
 
-
-            /*            if( trim($_model[PRODUCT_NM]) == '' ){
-                            $_d->failEnd("제목을 작성 하세요");
-                        }*/
-
-            $sql = "UPDATE ANGE_COMPANY_AFFILIATES
+            $sql = "UPDATE ANGE_COMPANY
                     SET
-                        COMPANY_GB = ".$_model[COMPANY_GB]."
-                        ,COMPANY_NM = ".$_model[COMPANY_NM]."
-                        ,CHARGE_NM= ".$_model[CHARGE_NM]."
-                        ,COMPANY_URL= ".$_model[COMPANY_URL]."
-                        ,COMPANY_EMAIL= ".$_model[COMPANY_EMAIL]."
-                        ,COMPANY_PHONE1= ".$_model[COMPANY_PHONE1]."
-                        ,COMPANY_PHONE2= ".$_model[COMPANY_PHONE2]."
-                        ,NOTE = ".$_model[NOTE]."
+                        CATEGORY_GB = '".$_model[CATEGORY_GB]."'
+                        ,AFFILIATE_FL = '".$_model[AFFILIATE_FL]."'
+                        ,AFFILIATE_GB = '".$_model[AFFILIATE_GB]."'
+                        ,COMPANY_GB = '".$_model[COMPANY_GB]."'
+                        ,COMPANY_NM = '".$_model[COMPANY_NM]."'
+                        ,CHARGE_NM= '".$_model[CHARGE_NM]."'
+                        ,URL= '".$_model[URL]."'
+                        ,EMAIL= '".$_model[EMAIL]."'
+                        ,PHONE_1= '".$_model[PHONE_1]."'
+                        ,PHONE_2= '".$_model[PHONE_2]."'
+                        ,NOTE = '".$_model[NOTE]."'
                     WHERE
-                        NO = ".$_key."
+                        NO = '".$_key."'
                 ";
 
             $_d->sql_query($sql);
@@ -450,53 +375,91 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'COMPANY'
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
+                        NO, FILE_NM, FILE_SIZE, FILE_ID, PATH, THUMB_FL, ORIGINAL_NO, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        COM_FILE
+                    WHERE
+                        TARGET_GB = 'COMPANY'
+                        AND TARGET_NO = ".$_key."
+                        AND THUMB_FL = '0'
+                    ";
 
             $result = $_d->sql_query($sql,true);
+            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                $is_delete = true;
+
+                if (count($_model[FILE]) > 0) {
+                    $file = $_model[FILE];
+                    if ($row[FILE_NM] == $file[name] && $row[FILE_SIZE] == $file[size]) {
+                        $is_delete = false;
+                    }
+                }
+
+                if ($is_delete) {
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+                    $sql = "DELETE COM_FROM FILE WHERE TARGET_GB = 'COMPANY' NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                    }
+                }
+            }
+
+            if (count($_model[FILE]) > 0) {
+                $file = $_model[FILE];
+
+                MtUtil::_d("------------>>>>> file : ".$file['name']);
+
+                if ($insert_path[uid] != "") {
+                    $sql = "INSERT INTO COM_FILE
+                            (
+                                FILE_NM
+                                ,FILE_ID
+                                ,PATH
+                                ,FILE_EXT
+                                ,FILE_SIZE
+                                ,THUMB_FL
+                                ,REG_DT
+                                ,FILE_ST
+                                ,FILE_GB
+                                ,FILE_ORD
+                                ,TARGET_NO
+                                ,TARGET_GB
+                            ) VALUES (
+                                '".$file[name]."'
+                                , '".$insert_path[uid]."'
+                                , '".$insert_path[path]."'
+                                , '".$file[type]."'
+                                , '".$file[size]."'
+                                , '0'
+                                , SYSDATE()
+                                , 'C'
+                                , '".$file[kind]."'
+                                , '0'
+                                , '".$_key."'
+                                , 'COMPANY'
+                            )";
+
+                    $_d->sql_query($sql);
+                    $file_no = $_d->mysql_insert_id;
+
+                    if ($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
+            }
 
             if($err > 0){
                 $_d->sql_rollback();
                 $_d->failEnd("수정실패입니다:".$msg);
-            }else{
-                $sql = "INSERT INTO CMS_HISTORY
-                        (
-                            WORK_ID
-                            ,WORK_GB
-                            ,WORK_DT
-                            ,WORKER_ID
-                            ,OBJECT_ID
-                            ,OBJECT_GB
-                            ,ACTION_GB
-                            ,IP
-                            ,ACTION_PLACE
-                        ) VALUES (
-                            '".$_model[WORK_ID]."'
-                            ,'UPDATE'
-                            ,SYSDATE()
-                            ,'".$_SESSION['uid']."'
-                            ,'.$_key.'
-                            ,'BOARD'
-                            ,'UPDATE'
-                            ,'".$ip."'
-                            ,'/webboard'
-                        )";
-
+            } else {
+                $_d->sql_commit();
+                $_d->succEnd($no);
             }
         }
-        $_d->sql_query($sql);
-
-        $_d->sql_commit();
-        $_d->succEnd($no);
-
 
         break;
 
@@ -510,40 +473,44 @@ switch ($_method) {
 
         $_d->sql_beginTransaction();
 
-        $sql = "DELETE FROM ANGE_COMPANY_AFFILIATES WHERE NO = ".$_key;
-
+        $sql = "DELETE FROM ANGE_COMPANY WHERE NO = ".$_key;
         $_d->sql_query($sql);
-        /*$no = $_d->mysql_insert_id;*/
+
+        if ($_d->mysql_errno > 0) {
+            $err++;
+            $msg = $_d->mysql_error;
+        }
+
+        $sql = "SELECT
+                    NO, FILE_NM, FILE_SIZE, FILE_ID, PATH, THUMB_FL, ORIGINAL_NO, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
+                FROM
+                    COM_FILE
+                WHERE
+                    TARGET_GB = 'COMPANY'
+                    AND TARGET_NO = ".$_key."
+                    AND THUMB_FL = '0'
+                ";
+
+        $result = $_d->sql_query($sql,true);
+        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+            $sql = "DELETE FROM COM_FILE WHERE TARGET_GB = 'COMPANY' AND NO = ".$row[NO];
+
+            $_d->sql_query($sql);
+
+            if ($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                unlink('../../..'.$row[PATH].$row[FILE_ID]);
+            }
+        }
 
         if($err > 0){
             $_d->sql_rollback();
             $_d->failEnd("삭제실패입니다:".$msg);
         }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'DELETE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$_key.'
-                        ,'BOARD'
-                        ,'DELETE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-            $_d->sql_query($sql);
-
             $_d->sql_commit();
             $_d->succEnd($no);
         }

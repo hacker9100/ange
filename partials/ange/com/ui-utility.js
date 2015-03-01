@@ -21,9 +21,6 @@ define([
         };
 
         $scope.click_joinMember = function () {
-            $scope.comming_soon();
-            return;
-
             $location.url('infodesk/signon');
         };
 
@@ -74,7 +71,7 @@ define([
         // 로그인 모달창
         $scope.openModal = function (content, size) {
             var dlg = dialogs.create('login_modal.html',
-                ['$scope', '$modalInstance', '$controller', 'data', 'UPLOAD', function($scope, $modalInstance, $controller, data, UPLOAD) {
+                ['$scope', '$modalInstance', '$controller', 'data', 'CONSTANT', function($scope, $modalInstance, $controller, data, CONSTANT) {
 
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
@@ -87,6 +84,18 @@ define([
                         $scope.save_id = true;
                         $scope.item.id = localStorage.getItem('user_id');
                     }
+
+                    // 상단 배너 이미지 조회
+                    $scope.getLoginBanner = function () {
+                        $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: CONSTANT.AD_CODE_BN31, ADA_STATE: 1}, false)
+                            .then(function(data){
+                                $scope.loginBanner = data[0];
+                                $scope.loginBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                            })
+                            .catch(function(error){});
+                    };
+
+                    $scope.getLoginBanner();
 
                     $scope.click_ok = function () {
                         if ($scope.item.id == null || $scope.item.id == '') {
@@ -116,10 +125,12 @@ define([
                                 $rootScope.nick = data.NICK_NM;
 
                                 if (data.FILE) {
-                                    $rootScope.profileImg = UPLOAD.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                                    $rootScope.profileImg = CONSTANT.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
                                 } else {
                                     $rootScope.profileImg = null;
                                 }
+
+                                $scope.addMileage('LOGIN', null);
 
                                 if (data.USER_ST == 'W' && data.CERT_GB == 'MIG') {
                                     $location.path('myange/account');
@@ -135,9 +146,6 @@ define([
                     };
 
                     $scope.click_joinMember = function () {
-                        $scope.comming_soon();
-                        return;
-
                         $location.url('infodesk/signon');
                         $modalInstance.close();
                     };
@@ -169,18 +177,9 @@ define([
             }
         };
 
-        // 배너 이미지 클릭
-        $scope.click_linkBanner = function (item, isOpen) {
-            if (isOpen) {
-                $window.open(item.ada_url);
-            } else {
-                $location.url(item.ada_url);
-            }
-        };
-
         // 상단 배너 이미지 조회
         $scope.getTopBanner = function () {
-            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: 1,ADA_STATE: 1}, false)
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: CONSTANT.AD_CODE_BN01, ADA_STATE: 1}, false)
                 .then(function(data){
                     $scope.topBanner = data[0];
                     $scope.topBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
@@ -192,7 +191,7 @@ define([
 
         // 하단 배너 이미지 조회
         $scope.getTopBanner = function () {
-            $scope.getList('ad/banner', 'list', {NO:0, SIZE:2}, {ADP_IDX: 3,ADA_STATE: 1}, false)
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:2}, {ADP_IDX: CONSTANT.AD_CODE_BN03, ADA_STATE: 1}, false)
                 .then(function(data){
                     $scope.bottomBanner1 = data[0];
                     $scope.bottomBanner1.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;

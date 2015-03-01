@@ -62,8 +62,8 @@
                     $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
-                $sql = "SELECT DATA.NO, TARGET_NO, TARGET_GB, TARGET_NOTE, TARGET_ST, TARGET_UID, TARGET_NICK, NOTE, REG_UID, REG_NICK,
-                            DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_YMD, WARNING_CNT
+                $sql = "SELECT DATA.NO, CHANNEL_NO, MENU_NO, TARGET_NO, TARGET_GB, DETAIL_GB, TARGET_NOTE, ETC_NO, ETC_GB, ETC_NOTE,
+                            TARGET_ST, TARGET_UID, TARGET_NICK, NOTE, REG_UID, REG_NICK, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_YMD, WARNING_CNT
                         FROM
                         (
                             SELECT
@@ -92,8 +92,8 @@
                     $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
-                $sql = "SELECT COUNT(*) AS TOTAL_COUNT, DATA.NO, TARGET_NO, TARGET_GB, TARGET_NOTE, TARGET_ST, TARGET_UID, TARGET_NICK, NOTE, REG_UID, REG_NICK,
-                            DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_YMD
+                $sql = "SELECT COUNT(*) AS TOTAL_COUNT, CHANNEL_NO, MENU_NO, TARGET_NO, TARGET_GB, CTARGET_NOTE, ETC_NO, ETC_GB, ETC_NOTE,
+                            TARGET_ST, TARGET_UID, TARGET_NICK, NOTE, REG_UID, REG_NICK, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_YMD
                         FROM
                             ANGE_NOTIFY
                         WHERE 1 = 1
@@ -122,9 +122,15 @@
 
                 $sql = "INSERT INTO ANGE_NOTIFY
                         (
+                            CHANNEL_NO,
+                            MENU_NO,
                             TARGET_NO,
                             TARGET_GB,
+                            DETAIL_GB,
                             TARGET_NOTE,
+                            ETC_NO,
+                            ETC_GB,
+                            ETC_NOTE,
                             TARGET_ST,
                             TARGET_UID,
                             TARGET_NICK,
@@ -133,9 +139,15 @@
                             REG_NICK,
                             REG_DT
                         ) VALUES (
+                            '".$_model['CHANNEL_NO']."',
+                            '".$_model['MENU_NO']."',
                             '".$_model['TARGET_NO']."',
                             '".$_model['TARGET_GB']."',
+                            '".$_model['DETAIL_GB']."',
                             '".$_model['TARGET_NOTE']."',
+                            '".$_model['ETC_NO']."',
+                            '".$_model['ETC_GB']."',
+                            '".$_model['ETC_NOTE']."',
                             '".$_model['TARGET_ST']."',
                             '".$_model['TARGET_UID']."',
                             '".$_model['TARGET_NICK']."',
