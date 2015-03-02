@@ -130,6 +130,17 @@
     }
 }
 
+@media (max-width: 768px) {
+    .pin {
+        width:48%;
+        margin: 0 0.6% 15px;
+    }
+    .pin_pannel {
+        width:48%;
+        margin: 0 0.1% 15px 0.2% ;
+    }
+}
+
 .pin_pannel img {
     width: 100%;
     padding: 0px;
