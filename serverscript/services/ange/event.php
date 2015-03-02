@@ -137,16 +137,19 @@
                     $search_where .= "AND adp_idx != 49 ";
                 }
 
-                if(isset($_search[PRODUCT_CODE]) && $_search[PRODUCT_CODE] != ""){
-                    $search_where .= "AND adp_idx = ".$_search[PRODUCT_CODE]." ";
+                if(isset($_search[NOT_POST]) && $_search[NOT_POST] == "Y"){
+                    $search_where .= "AND adp_idx != 49 ";
+                }
+
+                if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "N"){
+                    $search_where .= "AND adp_idx != 53 ";
+                }
+
+                if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "Y"){
+                    $search_where .= "AND adp_idx = 53 ";
                 }
 
                 if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
-//                    if (isset($_search[EVENT_GB][value])) {
-//                        $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB][value]."' ";
-//                    } else {
-//                        $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."' ";
-//                    }
                     $search_where .= "AND ada_type = '".$_search[EVENT_GB]."' ";
                 }
 

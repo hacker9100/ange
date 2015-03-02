@@ -68,6 +68,7 @@ define([
             if ($stateParams.menu == 'eventprocess') {
                 $scope.community = "진행중인 이벤트";
                 $scope.search.EVENT_GB = "event";
+                $scope.search.PERFORM_FL = "N";
             } else if ($stateParams.menu == 'eventperformance') {
                 $scope.community = "공연/체험 이벤트";
                 $scope.search.EVENT_GB = "event";
