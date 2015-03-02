@@ -11,9 +11,11 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('ui-gnb', ['$scope', '$rootScope', '$location', 'dialogs', function ($scope, $rootScope, $location, dialogs) {
+    controllers.controller('ui-gnb', ['$scope', '$rootScope', '$location', 'dialogs', '$stateParams', function ($scope, $rootScope, $location, dialogs, $stateParams) {
 
         var spMenu = $location.path().split('/');
+
+        var channel_nm = $stateParams.channel;
 
         /********** 이벤트 **********/
         $scope.click_channel = function() {

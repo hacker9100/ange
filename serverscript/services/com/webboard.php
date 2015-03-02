@@ -144,10 +144,10 @@
                     $err = 0;
                     $msg = "";
 
-                    $sql = "SELECT  NO, PARENT_NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, REG_DT, HIT_CNT, BLIND_FL
+                    $sql = "SELECT  NO, PARENT_NO, HEAD, SUBJECT, BODY, REG_UID, REG_NM, REG_DT, HIT_CNT, BLIND_FL, ETC1, ETC2
                         FROM (
                            SELECT
-                               B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.BLIND_FL
+                               B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.BLIND_FL, B.ETC1, B.ETC2
                            FROM
                              COM_BOARD B
                              LEFT OUTER JOIN ANGE_COMM C ON B.COMM_NO = C.NO
@@ -175,7 +175,7 @@
             }
             else if ($_type == 'list') {
                 $search_where = "";
-                $sort_order = "";
+                $sort_order = ", REG_DT DESC";
                 $limit = "";
 
                 if (isset($_search[COMM_NO_IN]) && $_search[COMM_NO_IN] != "") {
@@ -241,7 +241,7 @@
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= ", ".$_search[SORT]." ".$_search[ORDER]." ";
+                    $sort_order = ", ".$_search[SORT]." ".$_search[ORDER]." ";
                 }
 
                 if (isset($_page)) {
@@ -249,7 +249,7 @@
                 }
 
                 if(isset($_search[SUPPORT_NO]) && $_search[SUPPORT_NO] != ""){
-                    $search_where .= "AND SUPPORT_NO = '".$_search[SUPPORT_NO]."' ";
+                    $search_where .= "AND CATEGORY_NO = '".$_search[SUPPORT_NO]."' ";
                 }
 
                 // AND PARENT_NO = 0
@@ -274,7 +274,7 @@
                             WHERE
                                 1=1
                                 ".$search_where."
-                            ORDER BY NOTICE_FL DESC, REG_DT DESC".$sort_order."
+                            ORDER BY NOTICE_FL DESC".$sort_order."
                             ".$limit."
                         ) AS DATA
                         LEFT OUTER JOIN ANGE_COMM C ON DATA.COMM_NO = C.NO,

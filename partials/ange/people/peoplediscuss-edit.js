@@ -29,7 +29,7 @@ define([
             $scope.item.COMM_NO = $scope.menu.COMM_NO;
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
-            $scope.search.COMM_GB = 'BOARD';
+            $scope.search.COMM_GB = 'TALK';
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
                 .then(function(data){
@@ -75,7 +75,7 @@ define([
         // 게사판 저장 버튼 클릭
         $scope.click_savePeopleBoard = function () {
             $scope.item.SYSTEM_GB = 'ANGE';
-            $scope.item.BOARD_GB = 'BOARD';
+            $scope.item.BOARD_GB = 'TALK';
 
             if ($stateParams.id == 0) {
                 $scope.item.REMAIN_POINT = 10;

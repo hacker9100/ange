@@ -90,6 +90,56 @@
 
                         <div id="moms_state" ng-show="uid != null && showForm == 'compForm'" class="moms_state" style="padding-top:20px;">
 
+                                <!-- 참여유형이 날짜선택 일때 -->
+                                <div ng-if="item.ada_que_type == 'reserve'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
+                                    <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                        <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                        <dt>{{query.title}}</dt>
+                                        <dd ng-if="query.type == '1'">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input  type="text" name="answer[]" style="width: 250px;"/>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                            <label>
+                                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+                                            </label>
+                                        </dd>
+                                        <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '4'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                    <textarea name="long_answer[]" class="form-control" rows="4" style="resize: none;"></textarea>
+                                                </label>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+
                                 <!-- 참여유형이 질문일때 -->
                                 <div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
                                     <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
@@ -125,6 +175,14 @@
                                             <div class="radio-inline">
                                                 <label>
                                                     <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '4'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                    <textarea name="long_answer[]" class="form-control" rows="4" style="resize: none;"></textarea>
                                                 </label>
                                             </div>
                                         </dd>
@@ -190,6 +248,14 @@
                                             <div class="radio-inline">
                                                 <label>
                                                     <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '4'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                    <textarea name="long_answer[]" class="form-control" rows="4" style="resize: none;"></textarea>
                                                 </label>
                                             </div>
                                         </dd>
@@ -487,6 +553,53 @@
                                             </div><!-- /.moms_form_bodywrap -->
                                         </div>  <!-- /.comp_basic -->
                                     </div>  <!-- /.col-xs-12 -->
+
+                                    <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                        <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                        <dt>{{query.title}}</dt>
+                                        <dd ng-if="query.type == '1'">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input  type="text" name="answer[]" style="width: 250px;"/>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                            <label>
+                                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+                                            </label>
+                                        </dd>
+                                        <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '4'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                    <textarea name="long_answer[]" class="form-control" rows="4" style="resize: none;"></textarea>
+                                                </label>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
                                 </div>  <!-- /.moms_form -->
 
 

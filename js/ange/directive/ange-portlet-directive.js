@@ -126,25 +126,34 @@ define([
                             case '5' :
                                 menu = 'booktalk';
                                 break;
-                            case '9' :
+                            case '6' :
+                                menu = 'working';
+                                break;
+                            case '7' :
+                                menu = 'readypreg';
+                                break;
+                            case '8' :
+                                menu = 'anony';
+                                break;
+                            case '21' :
                                 menu = 'childdevelop';
                                 break;
-                            case '10' :
+                            case '22' :
                                 menu = 'chlidoriental';
                                 break;
-                            case '11' :
+                            case '23' :
                                 menu = 'obstetrics';
                                 break;
-                            case '12' :
+                            case '24' :
                                 menu = 'momshealth';
                                 break;
-                            case '13' :
+                            case '25' :
                                 menu = 'financial';
                                 break;
-                            case '14' :
+                            case '51' :
                                 menu = 'notice';
                                 break;
-                            case '15' :
+                            case '52' :
                                 menu = 'system';
                                 break;
                         }
@@ -688,7 +697,7 @@ define([
 //            replace: true,
             template: '<slick id="{{ option.id }}" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false" style="padding:0px 6px;"></slick>'+
                         '<div class="ads_indicators_wrap">' +
-                        '   <div ng-repeat="item in list" ng-class=" $index == curIdx ? \'ads_indicators now\' : \'ads_indicators\'"></div>' +
+                        '   <div ng-repeat="item in list" ng-click="click_slickGoTo($index)" ng-class=" $index == curIdx && option.id == curId ? \'ads_indicators now\' : \'ads_indicators\'"></div>' +
                         '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $window, $timeout, CONSTANT) {
 
@@ -790,6 +799,7 @@ define([
                                 $scope.curIdx = newVal;
                             });
 
+                            $scope.curId = $scope.option.id;
                             angular.element('#'+$scope.option.id).click(function() {
                                 var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
 
@@ -799,6 +809,13 @@ define([
                                     $location.url(data[idx].URL);
                                 }
                             });
+
+                            $scope.click_slickGoTo = function(idx) {
+                                $scope.curIdx = idx;
+
+                                // 클릭 슬라이드로 변경
+                                angular.element('#'+$scope.option.id).slickGoTo(idx);
+                            }
 
 //                            $scope.list = data;
 //

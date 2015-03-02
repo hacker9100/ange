@@ -60,7 +60,7 @@ define([
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             console.log('온라인토론');
-            $scope.search.BOARD_GB = 'BOARD';
+            $scope.search.BOARD_GB = 'TALK';
             $scope.search.SYSTEM_GB = 'ANGE';
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)

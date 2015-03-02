@@ -13,17 +13,8 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsexperience-list', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD' ,'$timeout', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT, UPLOAD, $timeout) {
 
-
-        $scope.$parent.reload = false;
-        $scope.busy = false;
-        $scope.end = false;
-
-        // 페이징
-        $scope.PAGE_NO = 0;
-        $scope.PAGE_SIZE = 6;
-
         angular.element(document).ready(function () {
-            angular.element(window).scroll(function () {
+            angular.element('#common').scroll(function () {
                 $timeout(function(){
                     //$scope.images;
                     $scope.isLoading = false;
@@ -33,13 +24,14 @@ define([
                     $scope.isLoading = true;
                 });
 
-//                console.log("scrollTop : "+Math.round(angular.element(document).scrollTop()));
-//                console.log("document-window : "+ (angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)));
+//                console.log("common : "+ (angular.element('#common').prop('scrollHeight') - angular.element('#common').height()));
+//                console.log("scrollTop : "+(angular.element('#common').scrollTop() ));
 
-                if (Math.round(angular.element(window).scrollTop()) >= angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)) {
+                if (angular.element('#common').scrollTop() + 100 >= angular.element('#common').prop('scrollHeight') - angular.element('#common').height()) {
                     if (!$scope.busy) {
-                        //$scope.PAGE_NO++;
-                        $scope.PAGE_SIZE++;
+                        $scope.PAGE_NO++;
+                        //$scope.getContentList();
+                        //$scope.getPeopleBoardList();
                         $scope.getPeopleBoardList();
                     }
 //                    var scope = angular.element($("#listr")).scope();
@@ -52,6 +44,19 @@ define([
         });
 
         $scope.search = {};
+//        $scope.$parent.reload = false;
+//        $scope.busy = false;
+//        $scope.end = false;
+        $scope.$parent.reload = false;
+        $scope.busy = false;
+        $scope.end = false;
+        $scope.list = [];
+
+        // 페이징
+        $scope.PAGE_NO = 0;
+        $scope.PAGE_SIZE = 15;
+        //$scope.list = {};
+
         // 초기화
         $scope.init = function() {
             $scope.option = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 5, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
@@ -59,14 +64,14 @@ define([
             if ($stateParams.menu == 'experienceprocess') {
                 $scope.community = "진행중인 체험단";
                 $scope.search.EVENT_GB = "exp";
-                $scope.search.ADA_STATE = 1;
-                //$scope.search.PROCESS = "process";
+                //$scope.search.ADA_STATE = 1;
+                $scope.search.PROCESS = "process";
                 $scope.menu = "experienceprocess"
             } else if ($stateParams.menu == 'experiencepast') {
                 $scope.community = "지난 체험단";
                 $scope.search.EVENT_GB = "exp";
-                $scope.search.ADA_STATE = 0;
-                //$scope.search.PAST = "past";
+                //$scope.search.ADA_STATE = 0;
+                $scope.search.PAST = "past";
                 $scope.menu = "experiencepast"
             }
 
@@ -97,6 +102,7 @@ define([
             $scope.busy = true;
             if ($scope.$parent.reload) {
                 $scope.end = false;
+                $scope.list = [];
                 $scope.PAGE_NO = 0;
             }
 
@@ -112,31 +118,33 @@ define([
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
 
-                    $scope.list = data;
 
                     for(var i in data) {
                         var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
                         data[i].ada_preview_img = img;
+                        $scope.list.push(data[i]);
                     }
+
+                    //$scope.list = data;
 
                     $scope.$parent.reload = false;
                     $scope.busy = false;
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                .catch(function(error){ $scope.end = true; }); // $scope.TOTAL_COUNT = 0; $scope.list = "";
         };
 
         $scope.comp_momsexperience = function (item){
 
-            if (item.ada_state == 0) {
-                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
-                return;
-            }
-
-            if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
-                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
-                return;
-            }
+//            if (item.ada_state == 0) {
+//                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
+//                return;
+//            }
+//
+//            if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
+//                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
+//                return;
+//            }
 
             if ($stateParams.menu == 'experienceprocess') {
                 $location.url('/moms/experienceprocess/view/'+item.ada_idx);

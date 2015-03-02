@@ -23,7 +23,7 @@ define([
         $scope.titlesearch = {};
 
         $scope.TARGET_NO = $stateParams.id;
-        $scope.TARGET_GB = 'BOARD';
+        $scope.TARGET_GB = 'TALK';
 
         $scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = 10;
@@ -66,7 +66,7 @@ define([
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
 
-            $scope.search.COMM_GB = 'BOARD';
+            $scope.search.COMM_GB = 'TALK';
 
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
@@ -106,6 +106,7 @@ define([
                 return $scope.getItem('com/webboard', 'discussitem', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
+                        $scope.END_DATE = data.ETC2;
 
                         $scope.search.TARGET_NO = $stateParams.id;
                     })
@@ -122,7 +123,7 @@ define([
         $scope.getPreBoard = function (){
 
             $scope.titlesearch.COMM_NO = $scope.menu.COMM_NO;
-            $scope.titlesearch.COMM_GB = 'BOARD';
+            $scope.titlesearch.COMM_GB = 'TALK';
             $scope.titlesearch.KEY = $stateParams.id;
 
             if ($stateParams.id != 0) {
@@ -138,7 +139,7 @@ define([
         $scope.getNextBoard = function (){
 
             $scope.titlesearch.COMM_NO = $scope.menu.COMM_NO;
-            $scope.titlesearch.COMM_GB = 'BOARD';
+            $scope.titlesearch.COMM_GB = 'TALK';
             $scope.titlesearch.KEY = $stateParams.id;
 
             if ($stateParams.id != 0) {
@@ -185,6 +186,14 @@ define([
                 dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
                 return;
             }
+
+            if($scope.END_DATE < $scope.todayDate){
+                dialogs.notify('알림', '종료된 토론입니다.', {size: 'md'});
+                return;
+            }
+
+            console.log(item);
+
             //$location.url('/'+$stateParams.channel+'/discuss/edit/'+$stateParams.id);
             $location.url('/'+$stateParams.channel+'/discuss/edit/0');
         };

@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsreview-view', ['$scope', '$rootScope', '$sce', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $sce, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('momsreview-view', ['$scope', '$rootScope', '$sce', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', '$modal', function ($scope, $rootScope, $sce, $stateParams, $location, dialogs, ngTableParams, UPLOAD, $modal) {
 
         $scope.queue = [];
         // 게시판 초기화
@@ -527,55 +527,33 @@ define([
 
         };
 
-
-        // 신고버튼
-        $scope.click_boardReport = function (item) {
-
-            $scope.openCounselModal(item, 'lg');
-
+        // 콘텐츠 클릭 조회
+        $scope.click_boardReport2 = function (item) {
+            item.TARGET_GB = 'REVIEW';
+            item.DETAIL_GB = 'BOARD';
+            $scope.openModal(item, 'lg');
         };
 
-        // 신고버튼 팝업
-        $scope.openCounselModal = function (item, size){
-
-            var dlg = dialogs.create('peopleboard_report.html',
-                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
-                    /********** 공통 controller 호출 **********/
-                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
-
-                    $scope.item = {};
-
-                    $scope.item.TARGET_NO = item.NO;
-                    $scope.item.TARGET_GB = 'REVIEW';
-                    $scope.item.TARGET_NOTE = item.SUBJECT;
-                    $scope.item.TARGET_UID = item.REG_UID;
-                    $scope.item.TARGET_NICK = item.TARGET_NICK;
-                    $scope.item.REG_UID = $scope.uid;
-                    $scope.item.REG_NICK = $scope.nick;
-
-                    $scope.click_saveReport = function (){
-
-                        $scope.insertItem('ange/notify', 'item', $scope.item, false)
-                            .then(function(){
-
-                                dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
-                                $modalInstance.close();
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        // 콘텐츠보기 모달창
+        $scope.openModal = function (content, size) {
+            var modalInstance = $modal.open({
+                templateUrl: 'partials/ange/com/board-report.html',
+                controller: 'board-report',
+                size: size,
+                scope: $scope,
+                resolve: {
+                    data: function () {
+                        return content;
                     }
-
-                    $scope.click_cancel = function () {
-                        $modalInstance.close();
-                    };
-
-
-                }], item, {size:size,keyboard: true}, $scope);
-            dlg.result.then(function(){
-                $scope.getPeopleBoard();
-            },function(){
-
+                }
             });
-        };
+
+            modalInstance.result.then(function () {
+//                alert(JSON.stringify(approval))
+            }, function () {
+                console.log("결재 오류");
+            });
+        }
 
         /********** 화면 초기화 **********/
         /*        $scope.getSession()

@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('myangescrap', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD','$modal', function ($scope, $stateParams, $location, dialogs, UPLOAD,$modal) {
+    controllers.controller('myangescrap', ['$scope', '$stateParams', '$sce', '$rootScope', '$location', '$modal', '$timeout', 'dialogs', 'UPLOAD', function($scope, $stateParams, $sce, $rootScope, $location, $modal, $timeout, dialogs, UPLOAD) {
 
         $scope.search = {};
         // 초기화
@@ -87,28 +87,34 @@ define([
                 $location.url('/people/firstbirthtalk/view/'+key);
             } else if(comm_no == 5) {
                 $location.url('/people/booktalk/view/'+key);
-            }else if(comm_no == 6) {
-                $location.url('/people/angemodel/view/'+key);
-            }else if(comm_no == 7) {
-                $location.url('/people/recipearcade/view/'+key);
-            }else if(comm_no == 8) {
-                $location.url('/people/peopletaste/view/'+key);
-            }else if(comm_no == 9) {
-                $location.url('/people/childdevelop/view'+key);
-            }else if(comm_no == 10) {
-                $location.url('/people/chlidoriental/view'+key);
+            } else if(comm_no == 6) {
+                $location.url('/people/working/view/'+key);
+            } else if(comm_no == 7) {
+                $location.url('/people/readypreg/view/'+key);
+            } else if(comm_no == 8) {
+                $location.url('/people/anony/view/'+key);
             }else if(comm_no == 11) {
-                $location.url('/people/obstetrics/view'+key);
+                $location.url('/people/angemodel/view/'+key);
             }else if(comm_no == 12) {
-                $location.url('/people/momshealth/view'+key);
+                $location.url('/people/recipearcade/view/'+key);
             }else if(comm_no == 13) {
+                $location.url('/people/peopletaste/view/'+key);
+            }else if(comm_no == 21) {
+                $location.url('/people/childdevelop/view'+key);
+            }else if(comm_no == 22) {
+                $location.url('/people/chlidoriental/view'+key);
+            }else if(comm_no == 23) {
+                $location.url('/people/obstetrics/view'+key);
+            }else if(comm_no == 24) {
+                $location.url('/people/momshealth/view'+key);
+            }else if(comm_no == 25) {
                 $location.url('/people/financial/view'+key);
             }
         };
 
         // 콘텐츠 클릭 조회
-        $scope.click_showViewContent = function (key) {
-            $scope.openModal(key, 'lg');
+        $scope.click_showViewContent = function (item) {
+            $scope.openModal(item, 'lg');
         };
 
         // 콘텐츠보기 모달창

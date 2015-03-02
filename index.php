@@ -31,7 +31,7 @@
     $channel_data = $_d->getData($sql);
 
     $sql = "SELECT
-                CM.MENU_ID, CM.MENU_URL, CM.CHANNEL_NO, CM.MENU_NM, CM.SYSTEM_GB, CM.DIVIDER_FL, DEPTH, CM.LINK_FL, CM.CLASS_GB, CM.MENU_DESC, CM.TAIL_DESC, CM.ETC, AC.NO AS COMM_NO, AC.COMM_GB
+                CM.NO, CM.MENU_ID, CM.MENU_URL, CM.CHANNEL_NO, CM.MENU_NM, CM.SYSTEM_GB, CM.DIVIDER_FL, DEPTH, CM.LINK_FL, CM.CLASS_GB, CM.MENU_DESC, CM.TAIL_DESC, CM.ETC, AC.NO AS COMM_NO, AC.COMM_GB
             FROM
                 COM_MENU CM
                 LEFT OUTER JOIN ANGE_COMM AC ON CM.MENU_ID = AC.MENU_ID
@@ -202,7 +202,11 @@
 //
 //        alert(_isNotMobile);
 
+        // 로컬 서버
         Kakao.init('207aa395bc0cb51730547fd97ee9d369');
+
+        // 개발 서버
+//        Kakao.init('207aa395bc0cb51730547fd97ee9d369');
     }
 </script>
 

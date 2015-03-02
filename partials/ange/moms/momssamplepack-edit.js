@@ -381,7 +381,6 @@ define([
         // 샘플팩 신청
         $scope.click_saveSamplepackComp = function (){
 
-
             $scope.search.REG_UID = $rootScope.uid;
             $scope.search.ada_idx = $scope.item.TARGET_NO;
             //$scope.search.TARGET_GB = $scope.item.target_gb;

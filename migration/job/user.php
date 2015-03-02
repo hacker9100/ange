@@ -47,7 +47,7 @@
                 EQ_CHILD1 AS BABY_BIRTH1, EQ_BABYNAME AS BABY_NM1, EQ_CHILD1_SEX AS BABY_SEX_GB1, EQ_CHILD2 AS BABY_BIRTH2, EQ_CHILD2_NAME AS BABY_NM2, EQ_CHILD2_SEX AS BABY_SEX_GB2, EQ_CHILD3 AS BABY_BIRTH3, EQ_CHILD3_NAME AS BABY_NM3, EQ_CHILD3_SEX AS BABY_SEX_GB3,
                 EQ_BLOG AS BLOG_URL, EQ_BLOGCATE AS THEME, EQ_BLOGCATEETC, EQ_SNS AS SNS, EQ_BLOGSTEP AS PHASE
             from (
-                select max(eq_idx) as eq_idx, eq_id, eq_mom from eqmom group by eq_id, eq_mom having count(*) > 1
+                select max(eq_idx) as eq_idx, eq_id, eq_mom from eqmom group by eq_id, eq_mom having count(*) = 1
             ) data, eqmom e
             where data.eq_idx = e.eq_idx
 --                and e.eq_date between '2005-11-22' and '2008-01-01' -- 13103
