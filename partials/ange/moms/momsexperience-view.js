@@ -775,7 +775,12 @@ define([
            new_blog.find('input').val('');
            $("#blog_url").append(new_blog);
 
-            $(".button").removeAttr('disabled');
+           $(".button").each(function(index){
+               $(".button:eq("+index+1+")").removeAttr('disabled');
+           })
+
+//            $(":eq(index)")
+//            $(".button").removeAttr('disabled');
 
         }
 

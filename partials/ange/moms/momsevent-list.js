@@ -11,19 +11,11 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsevent-list', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD','$timeout', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT, UPLOAD, $timeout) {
+    controllers.controller('momsevent-list', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD','$timeout', '$sce', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT, UPLOAD, $timeout, $sce) {
 
-        $scope.search = {};
-
-        $scope.$parent.reload = false;
-        $scope.busy = false;
-        $scope.end = false;
-        // 페이징
-        $scope.PAGE_NO = 0;
-        $scope.PAGE_SIZE = 6;
 
         angular.element(document).ready(function () {
-            angular.element(window).scroll(function () {
+            angular.element('#common').scroll(function () {
                 $timeout(function(){
                     //$scope.images;
                     $scope.isLoading = false;
@@ -33,14 +25,14 @@ define([
                     $scope.isLoading = true;
                 });
 
-//                console.log("scrollTop : "+Math.round(angular.element(document).scrollTop()));
-//                console.log("document-window : "+ (angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)));
+//                console.log("common : "+ (angular.element('#common').prop('scrollHeight') - angular.element('#common').height()));
+//                console.log("scrollTop : "+(angular.element('#common').scrollTop() ));
 
-                if (Math.round(angular.element(window).scrollTop()) >= angular.element(document).height() - angular.element(window).height() - ($scope.PAGE_NO + 1)) {
+                if (angular.element('#common').scrollTop() + 100 >= angular.element('#common').prop('scrollHeight') - angular.element('#common').height()) {
                     if (!$scope.busy) {
-                        //$scope.PAGE_NO++;
-                        $scope.PAGE_SIZE++;
-                        console.log($scope.PAGE_SIZE);
+                        $scope.PAGE_NO++;
+                        //$scope.getContentList();
+                        //$scope.getPeopleBoardList();
                         $scope.getPeopleBoardList();
                     }
 //                    var scope = angular.element($("#listr")).scope();
@@ -52,12 +44,27 @@ define([
             });
         });
 
+        $scope.search = {};
+//        $scope.$parent.reload = false;
+//        $scope.busy = false;
+//        $scope.end = false;
+        $scope.$parent.reload = false;
+        $scope.busy = false;
+        $scope.end = false;
+        $scope.list = [];
+
+        // 페이징
+        $scope.PAGE_NO = 0;
+        $scope.PAGE_SIZE = 15;
+        //$scope.list = {};
+
+
         // 초기화
         $scope.init = function() {
 
             $scope.option = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 5, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
-            $scope.search.ADA_STATE = 1;
+            //$scope.search.ADA_STATE = 1;
             if ($stateParams.menu == 'eventprocess') {
                 $scope.community = "진행중인 이벤트";
                 $scope.search.EVENT_GB = "event";
@@ -66,6 +73,9 @@ define([
                 $scope.search.EVENT_GB = "event";
                 $scope.search.PERFORM_FL = "Y";
             }
+
+            $scope.search.PROCESS = "process"; // 진행중인 이벤트
+
 
             var date = new Date();
 
@@ -87,6 +97,7 @@ define([
             $scope.todayDate = today;
         };
 
+        var isFirst = true;
         /********** 이벤트 **********/
         // 게시판 목록 조회
         $scope.$parent.getPeopleBoardList = function () {
@@ -94,6 +105,7 @@ define([
             $scope.busy = true;
             if ($scope.$parent.reload) {
                 $scope.end = false;
+                $scope.list = [];
                 $scope.PAGE_NO = 0;
             }
 
@@ -117,15 +129,23 @@ define([
                     for(var i in data) {
                         var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
                         data[i].ada_preview_img = img;
+                        $scope.list.push(data[i]);
                     }
 
-                    $scope.list = data;
+                    //$scope.list = data;
 
                     $scope.$parent.reload = false;
                     $scope.busy = false;
+//                    if (isFirst) {
+//                        console.log($scope.PAGE_NO);
+//
+//                        $scope.PAGE_NO = $scope.PAGE_NO + 1;
+//                        $scope.PAGE_SIZE = 1;
+//                        isFirst = false;
+//                    }
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                .catch(function(error){$scope.end = true;}); // $scope.TOTAL_COUNT = 0; $scope.list = "";
         };
 
         // 상세보기

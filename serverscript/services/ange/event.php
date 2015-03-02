@@ -150,6 +150,14 @@
                     $search_where .= "AND ada_type = '".$_search[EVENT_GB]."' ";
                 }
 
+                if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
+                    $search_where .= "AND DATE_FORMAT(ada_date_close, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
+                }
+
+                if (isset($_search[PAST]) && $_search[PAST] != "") {
+                    $search_where .= "AND DATE_FORMAT(ada_date_close, '%Y-%m-%d')  < DATE_FORMAT(NOW(), '%Y-%m-%d')";
+                }
+
                 if (isset($_search[REVIEW_EVENT_GB]) && $_search[REVIEW_EVENT_GB] != "") {
                     $search_where .= "AND ada_type IN ('exp','event') ";
                 }
