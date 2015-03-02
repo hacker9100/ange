@@ -128,15 +128,15 @@
                                                 </label>
                                             </div>
                                         </dd>
-                                        <dd ng-if="query.type == '4'" data-ng-repeat="select in query.choice">
-                                            <div class="radio-inline">
-                                                <label>
-                                                    <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                    <textarea name="long_answer[]" class="form-control" rows="4" style="resize: none;"></textarea>
-                                                </label>
-                                            </div>
+                                        <dd ng-if="query.type == '4'" > <!-- data-ng-repeat="select in query.choice" -->
+                                            <!--<div class="radio-inline">-->
+                                                <!--<label>-->
+                                                    <!--&lt;!&ndash;<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}&ndash;&gt; &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
+                                                    <!---->
+                                                <!--</label>-->
+                                            <!--</div>-->
+                                            <textarea name="long_answer[]" class="form-control" rows="4" style="resize: none;"></textarea>
                                         </dd>
-
                                     </dl>
                                 </div>
 
@@ -178,7 +178,7 @@
                                                 </label>
                                             </div>
                                         </dd>
-                                        <dd ng-if="query.type == '4'" data-ng-repeat="select in query.choice">
+                                        <dd ng-if="query.type == '4'">
                                             <div class="radio-inline">
                                                 <label>
                                                     <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
@@ -251,7 +251,7 @@
                                                 </label>
                                             </div>
                                         </dd>
-                                        <dd ng-if="query.type == '4'" data-ng-repeat="select in query.choice">
+                                        <dd ng-if="query.type == '4'">
                                             <div class="radio-inline">
                                                 <label>
                                                     <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
