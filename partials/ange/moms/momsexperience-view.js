@@ -775,6 +775,8 @@ define([
            new_blog.find('input').val('');
            $("#blog_url").append(new_blog);
 
+            $(".button").removeAttr('disabled');
+
         }
 
         // 블로그 삭제
@@ -783,9 +785,9 @@ define([
 
             $('span.blog:last').remove();
             $(".button:first").attr('disabled','disabled');
-//            if($("input[name='blog[]'").length == 1){
-//                $(".button:first").attr('disabled','disabled');
-//            }
+            if($("input[name='blog[]'").length == 1){
+                $(".button").attr('disabled','disabled');
+            }
 
         }
 
