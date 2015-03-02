@@ -772,9 +772,8 @@ define([
 
             // clone 속성을 true 로 지정하면 이벤트도 같이 복사됨
            var new_blog =  $('span.blog:last').clone(true);
+           new_blog.find('input').val('');
            $("#blog_url").append(new_blog);
-
-            $(".button").removeAttr('disabled');
 
         }
 
@@ -783,10 +782,10 @@ define([
 
 
             $('span.blog:last').remove();
-
-            if($("input[name='blog[]'").length == 1){
-                $(".button").attr('disabled','disabled');
-            }
+            $(".button:first").attr('disabled','disabled');
+//            if($("input[name='blog[]'").length == 1){
+//                $(".button:first").attr('disabled','disabled');
+//            }
 
         }
 

@@ -204,32 +204,3 @@
 <!-- /Main Page Layout Set -->
 </div>
 
-<script type="text/ng-template" id="peopleboard_report.html">
-    <div class="modal-header">
-        <h3 class="modal-title">게시글 신고</h3>
-        <br/>
-    </div>
-
-    <div class="modal-body">
-        <div class="body_wrap">
-            <!--<div class="panel panel-master contentpannel" style="border:#000000; display:block;">-->
-
-            <table id="comp_board_table" class="table table-hover">
-                <tr class="product_note">
-                    <td style="vertical-align: middle">신고사유</td>
-                    <td colspan="3">
-                        <textarea id="editor1" ng-model="item.NOTE" id="comment" name="comment" class="form-control input-md" rows="4" data-ng-disabled="nouserid" style="resize: none;"></textarea>
-                    </td>
-                </tr>
-            </table>
-
-            <!--</div>-->
-        </div>
-    </div>
-
-    <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="click_saveReport();">신고</button>
-        <!--<button class="btn btn-primary" ng-click="click_select_reg(list);">선택상품구매</button>-->
-        <button class="btn btn-primary" ng-click="click_cancel();">닫기</button>
-    </div>
-</script>

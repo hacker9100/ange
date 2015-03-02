@@ -160,35 +160,35 @@
                                     </div>  <!-- /.form_basicinfo -->
                                 </div>  <!-- /.form_rows -->
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                        <span class="col-xs-2 basicinfo title">
-                                            <strong>소감내용</strong>
-                                            <span class="table_blue">*</span>
-                                        </span>
+                                <!--<div class="row form_rows">-->
+                                    <!--<div class="form_basicinfo">-->
+                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                            <!--<strong>소감내용</strong>-->
+                                            <!--<span class="table_blue">*</span>-->
+                                        <!--</span>-->
 
-                                        <span class="col-xs-10 basicinfo input">
-                                            <div class="form-group" style="margin:0 5px">
-                                                <p>
-                                                    <textarea ng-model="item.REASON" class="form-control input-sm" rows="10" placeholder="이달의 앙쥬를 본 소감" style="width:100%; min-width:100%; max-width:100%;"></textarea>
-                                                </p>
-                                            </div>
-                                        </span>
+                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                <!--<p>-->
+                                                    <!--<textarea ng-model="item.REASON" class="form-control input-sm" rows="10" placeholder="이달의 앙쥬를 본 소감" style="width:100%; min-width:100%; max-width:100%;"></textarea>-->
+                                                <!--</p>-->
+                                            <!--</div>-->
+                                        <!--</span>-->
 
-                                        <span class="col-xs-2 basicinfo title">
-                                                <strong>희망내용</strong>
-                                                <span class="table_blue">*</span>
-                                            </span>
+                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                                <!--<strong>희망내용</strong>-->
+                                                <!--<span class="table_blue">*</span>-->
+                                            <!--</span>-->
 
-                                            <span class="col-xs-10 basicinfo input">
-                                                <div class="form-group" style="margin:0 5px">
-                                                    <p>
-                                                        <textarea ng-model="item.HOPE_REASON" class="form-control input-sm" rows="10" placeholder="다음 호에 실었으면 하는 기사 주제" style="width:100%; min-width:100%; max-width:100%;"></textarea>
-                                                    </p>
-                                                </div>
-                                        </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
+                                            <!--<span class="col-xs-10 basicinfo input">-->
+                                                <!--<div class="form-group" style="margin:0 5px">-->
+                                                    <!--<p>-->
+                                                        <!--<textarea ng-model="item.HOPE_REASON" class="form-control input-sm" rows="10" placeholder="다음 호에 실었으면 하는 기사 주제" style="width:100%; min-width:100%; max-width:100%;"></textarea>-->
+                                                    <!--</p>-->
+                                                <!--</div>-->
+                                        <!--</span>-->
+                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
                                 <!--<div class="row form_rows">-->
                                     <!--<div class="form_basicinfo">-->
@@ -257,44 +257,59 @@
                                 <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
                             <div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
-                                <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                <div class="row form_rows" data-ng-repeat="query in item.QUE">    <!-- ng-if="item.ada_que_type == 'question'" -->
                                     <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
-                                    <dt>{{query.title}}</dt>
-                                    <dd ng-if="query.type == '1'">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input  type="text" name="answer[]" style="width: 250px;"/>
-                                                &nbsp;&nbsp;&nbsp;
-                                                <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
-                                            </label>
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong style="width: 100%">{{query.title}}</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+                                    <div ng-if="query.type == '1'">
+                                        <!--<div class="radio-inline">-->
+                                            <!--<label>-->
+                                                <!--<input  type="text" name="answer[]" style="width: 250px;"/>-->
+                                                <!--&nbsp;&nbsp;&nbsp;-->
+                                                <!--&lt;!&ndash;<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>&ndash;&gt;-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+
+                                        <span class="col-xs-10 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <p>
+                                                    <input type="text" name="answer[]" class="form-control input-sm"  style="width:100%; min-width:100%; max-width:100%;"></textarea>
+                                                </p>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                        <!--<div class="radio-inline">-->
+                                            <!--<label>-->
+                                                <!--<input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+                                        <div class="radio" style="float: left;">
+                                            <!--<label>-->
+                                              <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select">{{select}}&nbsp;&nbsp;
+                                            <!--</label>-->
                                         </div>
-                                    </dd>
-                                    <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                            </label>
-                                        </div>
-                                    </dd>
-                                    <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                            </label>
+                                    </div>
+                                    <div ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                        <div class="radio" style="float: left;">
+                                            <!--<label>-->
+                                              <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select">{{select}}&nbsp;&nbsp;
+                                            <!--</label>-->
                                         </div>
                                         <label>
                                             <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
                                         </label>
-                                    </dd>
-                                    <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                            </label>
+                                    </div>
+                                    <div ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                        <div class="radio" style="float: left;">
+                                            <!--<label>-->
+                                            <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}}&nbsp;&nbsp; <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            <!--</label>-->
                                         </div>
-                                    </dd>
-
-                                </dl>
+                                    </div>
+                                </div>
                             </div>
 
                             <form ng-show="item.ada_que_type == 'upload'" id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
@@ -322,44 +337,97 @@
                             <!-- 참여유형이 업로드 중 질문이 있을때 -->
                             <div ng-if="item.ada_que_type == 'upload'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
 
-                                <dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                <!--<dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  &lt;!&ndash; ng-if="item.ada_que_type == 'question'" &ndash;&gt;-->
+                                    <!--<input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>-->
+                                    <!--<dt>{{query.title}}</dt>-->
+                                    <!--<dd ng-if="query.type == '1'">-->
+                                        <!--<div class="radio-inline">-->
+                                            <!--<label>-->
+                                                <!--<input  type="text" name="answer[]" style="width: 250px;"/>-->
+                                                <!--&nbsp;&nbsp;&nbsp;-->
+                                                <!--&lt;!&ndash;<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>&ndash;&gt;-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+                                    <!--</dd>-->
+                                    <!--<dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">-->
+                                        <!--<div class="radio-inline">-->
+                                            <!--<label>-->
+                                                <!--<input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+                                    <!--</dd>-->
+                                    <!--<dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">-->
+                                        <!--<div class="radio-inline">-->
+                                            <!--<label>-->
+                                                <!--<input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+                                        <!--<label>-->
+                                            <!--<input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>-->
+                                        <!--</label>-->
+                                    <!--</dd>-->
+                                    <!--<dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">-->
+                                        <!--<div class="radio-inline">-->
+                                            <!--<label>-->
+                                                <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
+                                            <!--</label>-->
+                                        <!--</div>-->
+                                    <!--</dd>-->
+
+                                <!--</dl>-->
+                                <div class="row form_rows" data-ng-repeat="query in item.QUE">    <!-- ng-if="item.ada_que_type == 'question'" -->
                                     <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
-                                    <dt>{{query.title}}</dt>
-                                    <dd ng-if="query.type == '1'">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input  type="text" name="answer[]" style="width: 250px;"/>
-                                                &nbsp;&nbsp;&nbsp;
-                                                <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
-                                            </label>
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>{{query.title}}</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+                                    <div ng-if="query.type == '1'">
+                                        <!--<div class="radio-inline">-->
+                                        <!--<label>-->
+                                        <!--<input  type="text" name="answer[]" style="width: 250px;"/>-->
+                                        <!--&nbsp;&nbsp;&nbsp;-->
+                                        <!--&lt;!&ndash;<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>&ndash;&gt;-->
+                                        <!--</label>-->
+                                        <!--</div>-->
+
+                                        <span class="col-xs-10 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <p>
+                                                    <input type="text" name="answer[]" class="form-control input-sm"  style="width:100%; min-width:100%; max-width:100%;"></textarea>
+                                                </p>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                        <!--<div class="radio-inline">-->
+                                        <!--<label>-->
+                                        <!--<input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
+                                        <!--</label>-->
+                                        <!--</div>-->
+                                        <div class="radio" style="float: left;">
+                                            <!--<label>-->
+                                            <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select">{{select}}&nbsp;&nbsp;
+                                            <!--</label>-->
                                         </div>
-                                    </dd>
-                                    <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                            </label>
-                                        </div>
-                                    </dd>
-                                    <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                            </label>
+                                    </div>
+                                    <div ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                        <div class="radio" style="float: left;">
+                                            <!--<label>-->
+                                            <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select">{{select}}&nbsp;&nbsp;
+                                            <!--</label>-->
                                         </div>
                                         <label>
                                             <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
                                         </label>
-                                    </dd>
-                                    <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
-                                        <div class="radio-inline">
-                                            <label>
-                                                <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                            </label>
+                                    </div>
+                                    <div ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                        <div class="radio" style="float: left;">
+                                            <!--<label>-->
+                                            <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}&nbsp;&nbsp; <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            <!--</label>-->
                                         </div>
-                                    </dd>
-
-                                </dl>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- 참여유형이 댓글일때 -->
@@ -381,87 +449,87 @@
                                 </div><!-- /.container -->
                             </div>
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
-                                        <span class="col-xs-2 basicinfo title">
-                                            <strong>선물선택</strong>
-                                            <span class="table_blue">*</span>
-                                        </span>
+                                <!--<div class="row form_rows">-->
+                                    <!--<div class="form_basicinfo">-->
+                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                            <!--<strong>선물선택</strong>-->
+                                            <!--<span class="table_blue">*</span>-->
+                                        <!--</span>-->
 
-                                        <span class="col-xs-10 basicinfo input">
-                                            <div class="store_list_item" style="float:left; width:53%; height:30px; line-height:24px;">
-                                                <select ng-model="item.ADD1" class="form-control input-sm">
-                                                    <option value="" selected>1지망 선택</option>
-                                                    <option value="제품 1-1">제품 1-1</option>
-                                                    <option value="제품 1-2">제품 1-2</option>
-                                                    <option value="제품 1-3">제품 1-3</option>
-                                                </select>
-                                            </div>
-                                            <div class="store_list_item" style="float:left; margin-left:2%; width:45%; height:30px; line-height:24px;">
-                                                <select  ng-model="item.SIZE1" class="form-control input-sm" >
-                                                    <option value="" selected>옵션 선택</option>
-                                                    <option value="사이즈 M(블랙)">사이즈 M(블랙)</option>
-                                                    <option value="사이즈 L(블랙)">사이즈 L(블랙)</option>
-                                                    <option value="사이즈 XL(블랙)">사이즈 XL(블랙)</option>
-                                                    <option value="사이즈 M(그레이)">사이즈 M(그레이)</option>
-                                                    <option value="사이즈 L(그레이)">사이즈 L(그레이)</option>
-                                                    <option value="사이즈 XL(그레이)">사이즈 XL(그레이)</option>
-                                                    <option value="사이즈 M(네이비)">사이즈 M(네이비)</option>
-                                                    <option value="사이즈 L(네이비)">사이즈 L(네이비)</option> <!--NAVY_L-->
-                                                    <option value="사이즈 XL(네이비)">사이즈 XL(네이비)</option>
-                                                </select>
-                                            </div>
+                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                            <!--<div class="store_list_item" style="float:left; width:53%; height:30px; line-height:24px;">-->
+                                                <!--<select ng-model="item.ADD1" class="form-control input-sm">-->
+                                                    <!--<option value="" selected>1지망 선택</option>-->
+                                                    <!--<option value="제품 1-1">제품 1-1</option>-->
+                                                    <!--<option value="제품 1-2">제품 1-2</option>-->
+                                                    <!--<option value="제품 1-3">제품 1-3</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                            <!--<div class="store_list_item" style="float:left; margin-left:2%; width:45%; height:30px; line-height:24px;">-->
+                                                <!--<select  ng-model="item.SIZE1" class="form-control input-sm" >-->
+                                                    <!--<option value="" selected>옵션 선택</option>-->
+                                                    <!--<option value="사이즈 M(블랙)">사이즈 M(블랙)</option>-->
+                                                    <!--<option value="사이즈 L(블랙)">사이즈 L(블랙)</option>-->
+                                                    <!--<option value="사이즈 XL(블랙)">사이즈 XL(블랙)</option>-->
+                                                    <!--<option value="사이즈 M(그레이)">사이즈 M(그레이)</option>-->
+                                                    <!--<option value="사이즈 L(그레이)">사이즈 L(그레이)</option>-->
+                                                    <!--<option value="사이즈 XL(그레이)">사이즈 XL(그레이)</option>-->
+                                                    <!--<option value="사이즈 M(네이비)">사이즈 M(네이비)</option>-->
+                                                    <!--<option value="사이즈 L(네이비)">사이즈 L(네이비)</option> &lt;!&ndash;NAVY_L&ndash;&gt;-->
+                                                    <!--<option value="사이즈 XL(네이비)">사이즈 XL(네이비)</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
 
-                                            <div class="store_list_item" style="float:left; width:53%; height:30px; line-height:24px;">
-                                                <select ng-model="item.ADD2" class="form-control input-sm">
-                                                    <option value="" selected>2지망 선택</option>
-                                                    <option value="제품 2-1">제품 2-1</option>
-                                                    <option value="제품 2-2">제품 2-2</option>
-                                                    <option value="제품 2-3">제품 2-3</option>
-                                                </select>
-                                            </div>
-                                            <div class="store_list_item" style="float:left; margin-left:2%; width:45%; height:30px; line-height:24px;">
-                                                <select ng-model="item.SIZE2" class="form-control input-sm" >
-                                                    <option value="" selected>옵션 선택</option>
-                                                    <option value="사이즈 M(블랙)">사이즈 M(블랙)</option>
-                                                    <option value="사이즈 L(블랙)">사이즈 L(블랙)</option>
-                                                    <option value="사이즈 XL(블랙)">사이즈 XL(블랙)</option>
-                                                    <option value="사이즈 M(그레이)">사이즈 M(그레이)</option>
-                                                    <option value="사이즈 L(그레이)">사이즈 L(그레이)</option>
-                                                    <option value="사이즈 XL(그레이)">사이즈 XL(그레이)</option>
-                                                    <option value="사이즈 M(네이비)">사이즈 M(네이비)</option>
-                                                    <option value="사이즈 L(네이비)">사이즈 L(네이비)</option> <!--NAVY_L-->
-                                                    <option value="사이즈 XL(네이비)">사이즈 XL(네이비)</option>
-                                                </select>
-                                            </div>
+                                            <!--<div class="store_list_item" style="float:left; width:53%; height:30px; line-height:24px;">-->
+                                                <!--<select ng-model="item.ADD2" class="form-control input-sm">-->
+                                                    <!--<option value="" selected>2지망 선택</option>-->
+                                                    <!--<option value="제품 2-1">제품 2-1</option>-->
+                                                    <!--<option value="제품 2-2">제품 2-2</option>-->
+                                                    <!--<option value="제품 2-3">제품 2-3</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                            <!--<div class="store_list_item" style="float:left; margin-left:2%; width:45%; height:30px; line-height:24px;">-->
+                                                <!--<select ng-model="item.SIZE2" class="form-control input-sm" >-->
+                                                    <!--<option value="" selected>옵션 선택</option>-->
+                                                    <!--<option value="사이즈 M(블랙)">사이즈 M(블랙)</option>-->
+                                                    <!--<option value="사이즈 L(블랙)">사이즈 L(블랙)</option>-->
+                                                    <!--<option value="사이즈 XL(블랙)">사이즈 XL(블랙)</option>-->
+                                                    <!--<option value="사이즈 M(그레이)">사이즈 M(그레이)</option>-->
+                                                    <!--<option value="사이즈 L(그레이)">사이즈 L(그레이)</option>-->
+                                                    <!--<option value="사이즈 XL(그레이)">사이즈 XL(그레이)</option>-->
+                                                    <!--<option value="사이즈 M(네이비)">사이즈 M(네이비)</option>-->
+                                                    <!--<option value="사이즈 L(네이비)">사이즈 L(네이비)</option> &lt;!&ndash;NAVY_L&ndash;&gt;-->
+                                                    <!--<option value="사이즈 XL(네이비)">사이즈 XL(네이비)</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
 
-                                            <div class="store_list_item" style="float:left; width:53%; height:30px; line-height:24px;">
-                                                <select ng-model="item.ADD3" class="form-control input-sm">
-                                                    <option value="" selected>3지망 선택</option>
-                                                    <option value="제품 3-1">제품 3-1</option>
-                                                    <option value="제품 3-2">제품 3-2</option>
-                                                    <option value="제품 3-3">제품 3-3</option>
-                                                </select>
-                                            </div>
-                                            <div class="store_list_item" style="float:left; margin-left:2%; width:45%; height:30px; line-height:24px;">
-                                                <select ng-model="item.SIZE3" class="form-control input-sm" >
-                                                    <option value="" selected>옵션 선택</option>
-                                                    <option value="사이즈 M(블랙)">사이즈 M(블랙)</option>
-                                                    <option value="사이즈 L(블랙)">사이즈 L(블랙)</option>
-                                                    <option value="사이즈 XL(블랙)">사이즈 XL(블랙)</option>
-                                                    <option value="사이즈 M(그레이)">사이즈 M(그레이)</option>
-                                                    <option value="사이즈 L(그레이)">사이즈 L(그레이)</option>
-                                                    <option value="사이즈 XL(그레이)">사이즈 XL(그레이)</option>
-                                                    <option value="사이즈 M(네이비)">사이즈 M(네이비)</option>
-                                                    <option value="사이즈 L(네이비)">사이즈 L(네이비)</option> <!--NAVY_L-->
-                                                    <option value="사이즈 XL(네이비)">사이즈 XL(네이비)</option>
-                                                </select>
-                                            </div>
+                                            <!--<div class="store_list_item" style="float:left; width:53%; height:30px; line-height:24px;">-->
+                                                <!--<select ng-model="item.ADD3" class="form-control input-sm">-->
+                                                    <!--<option value="" selected>3지망 선택</option>-->
+                                                    <!--<option value="제품 3-1">제품 3-1</option>-->
+                                                    <!--<option value="제품 3-2">제품 3-2</option>-->
+                                                    <!--<option value="제품 3-3">제품 3-3</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
+                                            <!--<div class="store_list_item" style="float:left; margin-left:2%; width:45%; height:30px; line-height:24px;">-->
+                                                <!--<select ng-model="item.SIZE3" class="form-control input-sm" >-->
+                                                    <!--<option value="" selected>옵션 선택</option>-->
+                                                    <!--<option value="사이즈 M(블랙)">사이즈 M(블랙)</option>-->
+                                                    <!--<option value="사이즈 L(블랙)">사이즈 L(블랙)</option>-->
+                                                    <!--<option value="사이즈 XL(블랙)">사이즈 XL(블랙)</option>-->
+                                                    <!--<option value="사이즈 M(그레이)">사이즈 M(그레이)</option>-->
+                                                    <!--<option value="사이즈 L(그레이)">사이즈 L(그레이)</option>-->
+                                                    <!--<option value="사이즈 XL(그레이)">사이즈 XL(그레이)</option>-->
+                                                    <!--<option value="사이즈 M(네이비)">사이즈 M(네이비)</option>-->
+                                                    <!--<option value="사이즈 L(네이비)">사이즈 L(네이비)</option> &lt;!&ndash;NAVY_L&ndash;&gt;-->
+                                                    <!--<option value="사이즈 XL(네이비)">사이즈 XL(네이비)</option>-->
+                                                <!--</select>-->
+                                            <!--</div>-->
 
-                                            <p style="margin-top:10px;"><small class="table_gray">아래 애독자선물 구성목록을 참고하세요.</small></p>
-                                        </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
+                                            <!--<p style="margin-top:10px;"><small class="table_gray">아래 애독자선물 구성목록을 참고하세요.</small></p>-->
+                                        <!--</span>-->
+                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
                                 <div class="row form_rows" style="border-top:2px solid #333;">
                                     <div class="form_basicinfo">

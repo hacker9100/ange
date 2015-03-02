@@ -19,6 +19,7 @@ define([
     '../../../partials/ange/com/subside-ad',
 
     '../../../partials/ange/com/module-reply',
+    '../../../partials/ange/com/board-report',
 
     // 메인
     '../../../partials/ange/main',

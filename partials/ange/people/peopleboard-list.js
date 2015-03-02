@@ -77,7 +77,7 @@ define([
 /*            $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'*/
 
-            if($rootScope.user_gb == 'SUPPORTERS'){
+            if($stateParams.menu == 'supporter'){
                 $scope.search.CATEGORY_NO = $rootScope.support_no;
             }
 

@@ -60,12 +60,11 @@ define([
                     }
 
                     var reply = data.COMMENT;
-
+                    $scope.replyItem = {};
 
                     for(var i in reply) {
 
-                        //reply[i].COMMENT = reply[i].COMMENT.replaceAll("\r\n", "<br>");
-                        console.log(reply[i].COMMENT);
+                        $("textarea#comment").val(reply[i].COMMENT);
                         $scope.replyList.push(reply[i]);
                     }
                 })
@@ -255,7 +254,6 @@ define([
         // 신고버튼
         $scope.click_boardReport = function (item) {
 
-            console.log(item);
             $scope.openCounselModal(item, 'lg');
 
         };
@@ -263,18 +261,21 @@ define([
         // 신고버튼 팝업
         $scope.openCounselModal = function (item, size){
 
-            var dlg = dialogs.create('peopleboard_report.html',
+            var dlg = dialogs.create('reply_report.html',
                 ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
                     $scope.item = {};
 
-                    console.log($scope.nick);
-                    console.log($rootScope.nick);
+                    console.log($scope.menu.CHANNEL_NO);
+                    console.log($scope.menu.NO);
 
+                    $scope.item.CHANNEL_NO = $scope.menu.CHANNEL_NO;
+                    $scope.item.MENU_NO = $scope.menu.NO;
                     $scope.item.TARGET_NO = item.NO;
                     $scope.item.TARGET_GB = 'REPLY';
+                    $scope.item.DETAIL_GB = 'REPLY';
                     $scope.item.TARGET_NOTE = item.COMMENT;
                     $scope.item.TARGET_UID = item.REG_UID;
                     $scope.item.TARGET_NICK = item.NICK_NM;
@@ -299,7 +300,69 @@ define([
 
                 }], item, {size:size,keyboard: true}, $scope);
             dlg.result.then(function(){
-                $scope.getPeopleBoard();
+                $scope.getReplyList();
+            },function(){
+
+            });
+        };
+
+        // 대댓글 신고버튼
+        $scope.click_re_boardReport = function (item, reitem) {
+
+            console.log(item);
+            console.log(reitem);
+
+            $scope.reportitem = {};
+
+            $scope.reportitem.TARGET_GB = 'REPLY';
+            $scope.reportitem.DETAIL_GB = 'REPLY';
+            $scope.reportitem.TARGET_NO = reitem.NO;
+            $scope.reportitem.TARGET_NOTE = reitem.COMMENT;
+            $scope.reportitem.ETC_NO = reitem.PARENT_NO;
+            $scope.reportitem.ETC_GB = 'REPLY';
+            $scope.reportitem.ETC_NOTE = item.COMMENT;
+            $scope.reportitem.TARGET_UID = reitem.REG_UID;
+            $scope.reportitem.TARGET_NICK = reitem.NICK_NM;
+
+            $scope.openReCounselModal($scope.reportitem, 'lg');
+
+        };
+
+        // 대댓글 신고버튼 팝업
+        $scope.openReCounselModal = function (item, size){
+
+            var dlg = dialogs.create('reply_report.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller,data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.item = {};
+
+                    $scope.item = item;
+                    $scope.item.CHANNEL_NO = $scope.menu.CHANNEL_NO;
+                    $scope.item.MENU_NO = $scope.menu.NO;
+                    $scope.item.REG_UID = $scope.uid;
+                    $scope.item.REG_NICK = $rootScope.nick;
+
+                    $scope.click_saveReport = function (){
+
+                        $scope.insertItem('ange/notify', 'item', $scope.item, false)
+                            .then(function(){
+
+                                dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
+                                $modalInstance.close();
+                            })
+                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    }
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+                $scope.getReplyList();
             },function(){
 
             });

@@ -249,7 +249,7 @@
                 }
 
                 if(isset($_search[SUPPORT_NO]) && $_search[SUPPORT_NO] != ""){
-                    $search_where .= "AND SUPPORT_NO = '".$_search[SUPPORT_NO]."' ";
+                    $search_where .= "AND CATEGORY_NO = '".$_search[SUPPORT_NO]."' ";
                 }
 
                 // AND PARENT_NO = 0

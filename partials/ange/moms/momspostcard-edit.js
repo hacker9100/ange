@@ -49,7 +49,7 @@ define([
         $scope.init = function(session) {
 
             $scope.community = "애독자엽서";
-            $scope.search.EVENT_GB = 'POSTCARD';
+            //$scope.search.EVENT_GB = 'POSTCARD';
 
             var date = new Date();
 
@@ -251,7 +251,7 @@ define([
 
                     // 질문일 때
                     if($scope.item.ada_que_type == 'question'){
-                        var que_data = data.ada_que_info;
+                        var que_data = data[0].ada_que_info;
 
                         //$scope.item.QUE = [];
                         $scope.item.QUE = new Array();
@@ -305,10 +305,10 @@ define([
                             }
                         });
 
-                        console.log(data.ada_que_info);
+                        console.log(data[0].ada_que_info);
                         //|| data.ada_que_info != ''
-                        if(data.ada_que_info != undefined ){
-                            var que_data = data.ada_que_info;
+                        if(data[0].ada_que_info != undefined ){
+                            var que_data = data[0].ada_que_info;
 
                             //$scope.item.QUE = [];
                             $scope.item.QUE = new Array();
@@ -368,7 +368,7 @@ define([
         $scope.click_saveSamplepackComp = function (){
 
             $scope.search.REG_UID = $rootScope.uid;
-            $scope.search.ada_idx = $scope.item.TARGET_NO;
+            $scope.search.ada_idx = $scope.item.ada_idx;
             //$scope.search.TARGET_NO = $scope.item.NO;
             //$scope.search.TARGET_GB = $scope.item.TARGET_GB;
 
@@ -448,24 +448,30 @@ define([
                             $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                             console.log($scope.item.ANSWER);
 
-                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
                                 .then(function(){
-                                    dialogs.notify('알림', '샘플팩 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
-                                    if ($stateParams.menu == 'eventprocess') {
-                                        $location.url('/moms/eventprocess/list');
-                                    } else if($stateParams.menu == 'eventperformance') {
-                                        $location.url('/moms/eventperformance/list');
-                                    }
+                                    dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $location.url('/moms/home');
                                 })
                                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
-                            console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
+                            console.log('{"댓글":"'+ $scope.item.COMMENT+'"}');
                             $scope.item.ANSWER = '{"1":"'+ $scope.item.COMMENT+'"}';
 
                             $scope.search.ada_idx = $scope.item.ada_idx;
+
+                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                                .then(function(){
+
+                                    dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $location.url('/moms/home');
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         } else if($scope.item.ada_que_type == 'join'){ // 신청이나 응모일때
 
@@ -499,6 +505,14 @@ define([
 
                             });
 
+                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                                .then(function(){
+
+                                    dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $location.url('/moms/home');
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }else if($scope.item.ada_que_type == 'upload'){
 
                             // 문답일때
@@ -578,16 +592,16 @@ define([
                                 $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
                             }
 
+                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                                .then(function(){
+
+                                    dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $location.url('/moms/home');
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }
 
-                        $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
-                            .then(function(){
-
-                                dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
-
-                                $location.url('/moms/home');
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }else{
                         dialogs.notify('알림', '이미 애독자 엽서 신청을 했습니다.', {size: 'md'});
                         $location.url('/moms/home');

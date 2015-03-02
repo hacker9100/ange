@@ -77,7 +77,7 @@
                                     </td>
                                     <td ng-if="item.TARGET_GB == 'CONTENT'">
                                         <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
-                                        <a ng-click="click_showViewContent(item.CONTENT_NO);">[스토리]{{ item.CONTENT_SUBJECT | string_limit: 50 }}{{item.CONTENT_SUBJECT > 50 ? '...' : ''}}</a>
+                                        <a ng-click="click_showViewContent(item);">[스토리]{{ item.CONTENT_SUBJECT | string_limit: 50 }}{{item.CONTENT_SUBJECT > 50 ? '...' : ''}}</a>
                                         <!--<span class="reply_num">[2]</span>-->
                                         <!--<span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                         &lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;
@@ -85,7 +85,7 @@
                                     </td>
                                     <!--<td  class="table_author">{{item.NICK_NM}}</td>-->
                                     <td class="table_date">{{item.REG_DT}}</td>
-                                    <td><a ng-click="delete_board(item.NO);">삭제</a></td>
+                                    <td align="center"><a ng-click="delete_board(item.NO);">삭제</a></td>
                                 </tr>
 
                                 </tbody>
