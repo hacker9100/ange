@@ -106,6 +106,7 @@ define([
                 return $scope.getItem('com/webboard', 'discussitem', $stateParams.id, {}, false)
                     .then(function(data){
                         $scope.item = data;
+                        $scope.END_DATE = data.ETC2;
 
                         $scope.search.TARGET_NO = $stateParams.id;
                     })
@@ -185,6 +186,14 @@ define([
                 dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
                 return;
             }
+
+            if($scope.END_DATE < $scope.todayDate){
+                dialogs.notify('알림', '종료된 토론입니다.', {size: 'md'});
+                return;
+            }
+
+            console.log(item);
+
             //$location.url('/'+$stateParams.channel+'/discuss/edit/'+$stateParams.id);
             $location.url('/'+$stateParams.channel+'/discuss/edit/0');
         };
