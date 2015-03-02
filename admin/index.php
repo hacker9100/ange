@@ -86,7 +86,7 @@
 <link rel="stylesheet" type="text/css" href="/css/dialog/dialogs.min.css" />
 
 <link rel="stylesheet" type="text/css" href="/css/normalize.css" >
-<link rel="stylesheet" type="text/css" href="/css/angeCMS_bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="/css/angeADMIN_bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="/css/style.css" />
 <link rel="stylesheet" type="text/css" href="/css/article.css" />
 <!-- file-upload -->
