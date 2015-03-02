@@ -50,13 +50,14 @@ define(['./directives'], function (directives) {
                         }
 
                         if (menu_info[j].DEPTH == '1') {
+
                             templet += '<a class="localmenu_link main '+angular.lowercase(menu_info[j].CLASS_GB)+'" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="'+(menu_info[j].LINK_FL == 'N' ? 'cursor:default;' : 'cursor:hand;')+(menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '')+'">'+menu_info[j].MENU_NM+'</a>';
                         } else {
                             if (menu_info[j].ETC == 'DOWNLOAD') {
                                 templet += '<a class="localmenu_link sub" style="cursor:hand">'+menu_info[j].MENU_NM+'</a>';
 //                                templet += '<a target="_self" href="'+UPLOAD.BASE_URL+'/admin/'+menu_info[j].FILE_ID+'" download="'+menu_info[j].FILE_ID+'" class="localmenu_link sub" style="cursor:hand">'+menu_info[j].MENU_NM+'</a>';
                             } else {
-                                templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand;'+(menu_info[j].LINK_FL == 'C' ? 'color:#bcbcbc;' : '')+'">'+menu_info[j].MENU_NM+'</a>';
+                                templet += '<a class="localmenu_link sub" ng-class="location == nowurl ? \'abc\' : \'abc nowmenu\'" ng-click="click_selectMenu(\''+menu_info[j].MENU_URL+'\', \''+menu_info[j].LINK_FL+'\')" style="cursor:hand;'+(menu_info[j].LINK_FL == 'C' ? 'color:#bcbcbc;' : '')+'">'+menu_info[j].MENU_NM+'</a>';
                             }
                         }
 
@@ -107,6 +108,11 @@ define(['./directives'], function (directives) {
 
                 /********** 이벤트 **********/
                 $scope.click_selectMenu = function(url, link) {
+
+                    if($scope.location == url){
+
+                        $scope.nowurl = url;
+                    }
 
                     if(url == '/people/supporter/list'){
 
