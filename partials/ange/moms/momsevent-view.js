@@ -286,6 +286,7 @@ define([
 
 //                        $scope.open_date = data.ada_date_review_open.replace(/-/gi, "");
                         $scope.end_date = data.ada_date_close.replace(/-/gi, "");
+                        $scope.end_date2 = data.ada_date_close.replace(/-/gi, "");
                         $scope.ada_detail = data.ada_detail != null ? data.ada_detail.replace(/&quot;/gi, '\"') : data.ada_detail;
                         $scope.ada_text = data.ada_text != null ? data.ada_text.replace(/&quot;/gi, '\"') : data.ada_text;
 //
@@ -416,6 +417,50 @@ define([
                             //$scope.item.REPLY_SUBJECT = $scope.item.ada_title;
                         }
 
+                        if($scope.item.ada_que_type == 'join'){
+
+                            if(data.ada_que_info != ''){
+                                var que_data = data.ada_que_info;
+
+                                //$scope.item.QUE = [];
+                                $scope.item.QUE = new Array();
+                                que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
+                                var parse_que_data = JSON.parse(que_data);
+
+                                console.log(parse_que_data);
+
+                                for(var x in parse_que_data){
+
+                                    var choice = [];
+                                    if(parse_que_data[x].type == 0){ // 객관식일때
+                                        var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
+
+                                        for(var i=0; i < select_answer.length; i++){
+                                            choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
+                                        }
+                                    }else if(parse_que_data[x].type == 1){ // 주관식일때
+                                        choice = "";
+                                    }else if(parse_que_data[x].type == 2){ // 통합형
+                                        var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
+
+                                        for(var i=0; i < select_answer.length; i++){
+                                            choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
+                                        }
+                                    }else if(parse_que_data[x].type == 3){ // 복수
+                                        var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
+
+                                        for(var i=0; i < select_answer.length; i++){
+                                            choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
+                                        }
+                                    }
+
+                                    var index = parseInt(x)+parseInt(1);
+                                    $scope.item.QUE.push({"index" : index,"title" : parse_que_data[x].title, "type" : parse_que_data[x].type, "choice" :choice});
+                                    //console.log($scope.item.QUE);
+                                }
+                            }
+                        }
+
                         $scope.search.TARGET_NO = $stateParams.id;
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -442,9 +487,16 @@ define([
                 return;
             }
 
+            // 이벤트 종료기간이 지났을때
+            if($scope.end_date2 < $scope.todayDate){
+                dialogs.notify('알림', '종료된 체험단 입니다', {size: 'md'});
+                return;
+            }
+
             if($scope.item.ada_que_type == 'question'){ // 문답일때
                 var answer = [];
                 $scope.item.QUE_SHORT_ANSWER = ''
+
                 $("input[name='answer[]'").each(function(index, element) {
 
                     if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
@@ -452,35 +504,37 @@ define([
                         return false;
                     }
 
+                    console.log($(element).val());
+
                     $scope.item.QUE_SHORT_ANSWER = $(element).val();
                     answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                 })
 
                 var values = {};
 
-                $('.poll_select_radio:checked').each(function() {
+                $('.poll_select_radio:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
 //                        return false;
 //                    }
-
-                    if(this.value == undefined){
-                        values[this.name] = "";
-                    }
-
-                    if(this.value == "기타"){
-                        console.log($("#etc_answer").val());
-                        values[this.name] = $("input[name='etc_answer']").val();
-                    }
+//
+//                        if(this.value == undefined){
+//                            values[this.name] = "";
+//                        }
+//
+//                        if(this.value == "기타"){
+//                            console.log($("#etc_answer").val());
+//                            values[this.name] = $("input[name='etc_answer']").val();
+//                        }
 
                     values[this.name] = this.value;
-                    answer.push(values[this.name]); // 객관식
+                    answer.push(values[this.name]);
                     console.log(this.value);
                 });
 
                 var check_answer = ''
-                $('.poll_select_checkbox:checked').each(function() {
+                $('.poll_select_checkbox:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
@@ -492,8 +546,6 @@ define([
                     }
                     values[this.name] += this.value;
 
-
-
                     check_answer += this.value
                     answer.push(check_answer); // 객관식
 
@@ -502,9 +554,15 @@ define([
 
                 $rootScope.jsontext2 = new Array();
 
-                $("input[name='index[]'").each(function(index, element) {
-                    $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-                })
+                // .poll_query_no input[name='index[]'
+//                    $(".poll_query_no").each(function(index, element) {
+//                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+//                    })
+
+                for(var i=0; i<answer.length; i++){
+                    var index = parseInt(i+1);
+                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+                }
 
                 $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                 console.log($scope.item.ANSWER);
@@ -584,6 +642,82 @@ define([
 
                 });
 
+                if($scope.item.QUE != ''){
+
+                    var answer = [];
+                    $scope.item.QUE_SHORT_ANSWER = ''
+
+                    $("input[name='answer[]'").each(function(index, element) {
+
+                        if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                            dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                            return false;
+                        }
+
+                        console.log($(element).val());
+
+                        $scope.item.QUE_SHORT_ANSWER = $(element).val();
+                        answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+                    })
+
+                    var values = {};
+
+                    $('.poll_select_radio:checked').each(function(index) {
+
+//                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+//                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+//                        return false;
+//                    }
+//
+//                        if(this.value == undefined){
+//                            values[this.name] = "";
+//                        }
+//
+//                        if(this.value == "기타"){
+//                            console.log($("#etc_answer").val());
+//                            values[this.name] = $("input[name='etc_answer']").val();
+//                        }
+
+                        values[this.name] = this.value;
+                        answer.push(values[this.name]);
+                        console.log(this.value);
+                    });
+
+                    var check_answer = ''
+                    $('.poll_select_checkbox:checked').each(function(index) {
+
+//                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+//                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+//                        return false;
+//                    }
+                        values[this.name] = ','
+                        if(this.value == undefined){
+                            values[this.name] = "";
+                        }
+                        values[this.name] += this.value;
+
+                        check_answer += this.value
+                        answer.push(check_answer); // 객관식
+
+                        console.log(check_answer);
+                    });
+
+                    $rootScope.jsontext2 = new Array();
+
+                    // .poll_query_no input[name='index[]'
+//                    $(".poll_query_no").each(function(index, element) {
+//                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+//                    })
+
+                    for(var i=0; i<answer.length; i++){
+                        var index = parseInt(i+1);
+                        $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+                    }
+
+                    $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                    console.log($scope.item.ANSWER);
+                }
+
                 $scope.insertItem('ange/comp', 'item', $scope.item, false)
                     .then(function(){
                         dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
@@ -613,6 +747,7 @@ define([
                 if($scope.item.QUE != ''){
                     var answer = [];
                     $scope.item.QUE_SHORT_ANSWER = ''
+
                     $("input[name='answer[]'").each(function(index, element) {
 
                         if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
@@ -620,35 +755,37 @@ define([
                             return false;
                         }
 
+                        console.log($(element).val());
+
                         $scope.item.QUE_SHORT_ANSWER = $(element).val();
                         answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                     })
 
                     var values = {};
 
-                    $('.poll_select_radio:checked').each(function() {
+                    $('.poll_select_radio:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
 //                        return false;
 //                    }
-
-                        if(this.value == undefined){
-                            values[this.name] = "";
-                        }
-
-                        if(this.value == "기타"){
-                            console.log($("#etc_answer").val());
-                            values[this.name] = $("input[name='etc_answer']").val();
-                        }
+//
+//                        if(this.value == undefined){
+//                            values[this.name] = "";
+//                        }
+//
+//                        if(this.value == "기타"){
+//                            console.log($("#etc_answer").val());
+//                            values[this.name] = $("input[name='etc_answer']").val();
+//                        }
 
                         values[this.name] = this.value;
-                        answer.push(values[this.name]); // 객관식
+                        answer.push(values[this.name]);
                         console.log(this.value);
                     });
 
                     var check_answer = ''
-                    $('.poll_select_checkbox:checked').each(function() {
+                    $('.poll_select_checkbox:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
@@ -660,8 +797,6 @@ define([
                         }
                         values[this.name] += this.value;
 
-
-
                         check_answer += this.value
                         answer.push(check_answer); // 객관식
 
@@ -670,11 +805,17 @@ define([
 
                     $rootScope.jsontext2 = new Array();
 
-                    $("input[name='index[]'").each(function(index, element) {
-                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-                    })
+                    // .poll_query_no input[name='index[]'
+//                    $(".poll_query_no").each(function(index, element) {
+//                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+//                    })
 
-                    $scope.item.ANSWER = '{'+$rootScope.jsontext2+','+$scope.file.name+'}';
+                    for(var i=0; i<answer.length; i++){
+                        var index = parseInt(i+1);
+                        $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+                    }
+
+                    $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                     console.log($scope.item.ANSWER);
 
                 }else{

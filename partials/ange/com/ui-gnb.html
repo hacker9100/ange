@@ -6,10 +6,10 @@
 	<div class="gnb" ng-controller="ui-gnb">
 
 		<div class="gnb_menu">
-			<a href="/story/content/list" class="gnb_chnnel chnnel1">ANGE Story</a>
-			<a href="/people/home" class="gnb_chnnel chnnel2">ANGE People</a>
-			<a href="/moms/home" class="gnb_chnnel chnnel3">ANGE Mom's</a>
-            <a ng-click="click_myange();" class="gnb_chnnel chnnel4">My ANGE</a>
+			<a href="/story/content/list" ng-class="channel_nm == 'story' ? 'abc' : 'abc nowmenu'" class="gnb_chnnel chnnel1">ANGE Story</a>
+			<a href="/people/home" ng-class="channel_nm == 'people' ? 'abc' : 'abc nowmenu'" class="gnb_chnnel chnnel2">ANGE People</a>
+			<a href="/moms/home" ng-class="channel_nm == 'moms' ? 'abc' : 'abc nowmenu'" class="gnb_chnnel chnnel3">ANGE Mom's</a>
+            <a ng-click="click_myange();" ng-class="channel_nm == 'myange' ? 'abc' : 'abc nowmenu'" class="gnb_chnnel chnnel4">My ANGE</a>
 
 			<div class="gnb_right">
 				<a class="gnb_store ch_store">ANGE Store</a>

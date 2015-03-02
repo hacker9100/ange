@@ -46,7 +46,7 @@
                                             <dl>
                                                 <dt class="table_red">추가정보</dt>
                                                 <!--<dd><strong>마감일</strong><span class="table_gray" style="margin-left:8px;">{{D_DAY > 0 ? 'D-'+D_DAY : '마감'}}</span></dd>-->
-                                                <dd><strong>후기마감일</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_close}}({{D_DAY > 0 ? 'D-'+D_DAY : '마감'}})</span></dd>
+                                                <dd><strong>후기마감일</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_review_close}}({{D_DAY > 0 ? 'D-'+D_DAY : '마감'}})</span></dd>
                                                 <!--<dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>-->
                                                 <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_delivery}}원</span></dd>
                                                 <!--<dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>-->
@@ -76,7 +76,8 @@
 
                                             <img ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}"  ng-style="{'max-width':'100%'}" style="float:none; margin:0px auto;">
 
-                                            <div ng-bind-html="item.ada_text"></div>
+                                            <div ng-bind-html="ada_text"></div>
+                                        <!--{{item.ada_text}}-->
 
                                         <!--<img src="http://ad.ange.co.kr/adm/upload/temp_productimg.jpg" style="width:100%;"/>-->
 
@@ -384,6 +385,47 @@
 
                                 <!-- 참여유형이 질문일때 -->
                                 <div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
+                                    <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                        <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                        <dt>{{query.title}}</dt>
+                                        <dd ng-if="query.type == '1'">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input  type="text" name="answer[]" style="width: 250px;"/>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                            <label>
+                                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+                                            </label>
+                                        </dd>
+                                        <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+
+                                    </dl>
+                                </div>
+
+                                <div ng-if="item.ada_que_type == 'join'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
                                     <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
                                         <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
                                         <dt>{{query.title}}</dt>

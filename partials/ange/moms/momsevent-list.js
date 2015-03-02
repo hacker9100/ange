@@ -164,15 +164,15 @@ define([
         //  응모하기
         $scope.comp_momsevent = function(item){
 
-            if (item.ada_state == 0) {
-                dialogs.notify('알림', "이벤트 참여 기간이 아닙니다.", {size: 'md'});
-                return;
-            }
-
-            if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
-                dialogs.notify('알림', "이벤트 참여 기간이 아닙니다.", {size: 'md'});
-                return;
-            }
+//            if (item.ada_state == 0) {
+//                dialogs.notify('알림', "이벤트 참여 기간이 아닙니다.", {size: 'md'});
+//                return;
+//            }
+//
+//            if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
+//                dialogs.notify('알림', "이벤트 참여 기간이 아닙니다.", {size: 'md'});
+//                return;
+//            }
 
             $rootScope.focus = 'comp';
 

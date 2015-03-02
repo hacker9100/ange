@@ -136,15 +136,15 @@ define([
 
         $scope.comp_momsexperience = function (item){
 
-            if (item.ada_state == 0) {
-                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
-                return;
-            }
-
-            if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
-                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
-                return;
-            }
+//            if (item.ada_state == 0) {
+//                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
+//                return;
+//            }
+//
+//            if ($scope.todayDate < item.ada_date_open || $scope.todayDate > item.ada_date_close) {
+//                dialogs.notify('알림', "체험단 참여 기간이 아닙니다.", {size: 'md'});
+//                return;
+//            }
 
             if ($stateParams.menu == 'experienceprocess') {
                 $location.url('/moms/experienceprocess/view/'+item.ada_idx);
