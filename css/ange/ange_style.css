@@ -815,8 +815,8 @@ body {
 .gnb_subtxt.mobile.store { background-image: url('/imgs/ange/gnb_mobile_ch04.png');}
 .gnb_subtxt.mobile.myange { background-image: url('/imgs/ange/gnb_mobile_ch05.png');}
 
-/*.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story.png'); }*/
-.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story_open.png'); }
+.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story.png'); }
+/*.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story_open.png'); }*/
 .chnnel2 { 	background:url('/imgs/ange/ui_gnbbtn_02_people.png'); }
 .chnnel3 { 	background:url('/imgs/ange/ui_gnbbtn_03_moms.png'); }
 .chnnel4 { 	background:url('/imgs/ange/ui_gnbbtn_04_my.png'); }
