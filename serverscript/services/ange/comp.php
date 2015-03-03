@@ -139,7 +139,7 @@ switch ($_method) {
         } else if ($_type == "check") {
 
             $sql = "SELECT COUNT(*) AS COMP_CNT
-                 FROM adm_ad
+                 FROM adm_history_join
                  WHERE ada_idx = ".$_search[ada_idx]."
                    AND adu_id = '".$_SESSION['uid']."'";
 

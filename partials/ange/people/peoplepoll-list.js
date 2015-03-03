@@ -110,7 +110,7 @@ define([
         };
 
         // 조회 화면 이동
-        $scope.click_showViewAngePoll = function (key) {
+        $scope.click_showViewAngePoll = function (item) {
             /*$location.url('/people/poll/edit/'+key);*/
 
             if ($rootScope.uid == '' || $rootScope.uid == null) {
@@ -118,7 +118,13 @@ define([
                 return;
             }
 
-            $location.url('/people/poll/edit/'+key);
+            if (item.ada_state == 0 || $scope.todayDate < item.ada_date_open) {
+                dialogs.notify('알림', '준비중입니다.', {size: 'md'});
+                return;
+            }
+
+
+            $location.url('/people/poll/edit/'+item.ada_idx);
         };
 
         /********** 화면 초기화 **********/
