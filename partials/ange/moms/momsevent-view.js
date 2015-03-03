@@ -428,42 +428,31 @@ define([
                             //$scope.item.REPLY_SUBJECT = $scope.item.ada_title;
 
                             // 댓글 리스트
-                            $scope.getReplyList = function () {
-
-                                $scope.replySearch.TARGET_NO = $scope.TARGET_NO;
-                                $scope.replySearch.TARGET_GB = $scope.TARGET_GB;
-
-                                $scope.getItem('ange/event', 'replyitem', {}, $scope.replySearch, true)
-                                    .then(function(data){
-
-                                        if(data.COMMENT == null){
-                                            $scope.replySearch.TOTAL_COUNT = 0;
-                                        }else{
-                                            $scope.replySearch.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
-                                        }
-
-                                        var reply = data.COMMENT;
-                                        $scope.replyItem = {};
-
-                                        for(var i in reply) {
-
-                                            $("textarea#comment").val(reply[i].COMMENT);
-                                            $scope.replyList.push(reply[i]);
-                                        }
-                                    })
-                                    .catch(function(error){$scope.replyList = "";});
-                            };
-
-
-
-
-
-
-
-
-
-
-
+//                            $scope.getReplyList = function () {
+//
+//                                $scope.replySearch.TARGET_NO = $scope.TARGET_NO;
+//                                $scope.replySearch.TARGET_GB = $scope.TARGET_GB;
+//
+//                                $scope.getItem('ange/event', 'replyitem', {}, $scope.replySearch, true)
+//                                    .then(function(data){
+//
+//                                        if(data.COMMENT == null){
+//                                            $scope.replySearch.TOTAL_COUNT = 0;
+//                                        }else{
+//                                            $scope.replySearch.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+//                                        }
+//
+//                                        var reply = data.COMMENT;
+//                                        $scope.replyItem = {};
+//
+//                                        for(var i in reply) {
+//
+//                                            $("textarea#comment").val(reply[i].COMMENT);
+//                                            $scope.replyList.push(reply[i]);
+//                                        }
+//                                    })
+//                                    .catch(function(error){$scope.replyList = "";});
+//                            };
 
                         }
 
