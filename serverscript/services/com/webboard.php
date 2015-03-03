@@ -260,9 +260,9 @@
                     $search_where .= "AND CATEGORY_NO = '".$_search[SUPPORT_NO]."' ";
                 }
 
-//                if(isset($_search[BOARD_ST]) && $_search[BOARD_ST] != ""){
-//                    $search_where .= "AND BOARD_ST IS NULL";
-//                }
+                if(isset($_search[BOARD_ST]) && $_search[BOARD_ST] != ""){
+                    $search_where .= "AND BOARD_ST IS NULL OR BOARD_ST <> 'D'";
+                }
 
                 // AND PARENT_NO = 0
                 $sql = "SELECT
@@ -411,7 +411,7 @@
                     $search_where .= "AND PARENT_NO = '0' ";
                 }
 
-                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL  FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY  NO DESC LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL  FROM COM_BOARD WHERE NO < ".$_search[KEY]." AND BOARD_ST IS NULL OR BOARD_ST <> 'D' AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY  NO DESC LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -429,7 +429,7 @@
                     $search_where .= "AND PARENT_NO = '0' ";
                 }
 
-                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY NO LIMIT 1";
+                $sql = "SELECT NO, SUBJECT,NICK_NM, BOARD_ST, REG_UID, BLIND_FL,CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL FROM COM_BOARD WHERE NO > ".$_search[KEY]." AND BOARD_ST IS NULL OR BOARD_ST <> 'D' AND COMM_NO=".$_search[COMM_NO]." ".$search_where." ORDER BY NO LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);

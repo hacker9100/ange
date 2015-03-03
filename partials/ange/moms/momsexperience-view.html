@@ -74,9 +74,24 @@
                                         <!-- Editor CSS 적용 img max-width: 720px -->
                                         <!-- 속성에 usemap="a" 를 지정 광고센터 %name% 를 replace해서 name이 usemap 속성에 넣게끔-->
 
-                                            <img ng-show="item.ada_text != ''" ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}" usemap="#adimage" ng-style="{'max-width':'100%'}" style="float:none; margin:0px auto;">
+                                            <!--<img ng-show="item.ada_text != ''" ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}" usemap="#adimage" ng-style="{'max-width':'100%'}" style="float:none; margin:0px auto;">-->
+                                            <!--<br/><br/><br/>-->
+                                            <!--<div ng-show="item.ada_text != ''"ng-bind-html="ada_imagemap"></div>-->
 
-                                            <div ng-show="item.ada_image != ''" ng-bind-html="ada_text"></div>
+                                            <!--<div ng-show="item.ada_image != ''" ng-bind-html="ada_text"></div>-->
+
+                                        <img ng-if="item.ada_text == ''" ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}" usemap="#adimage" ng-style="{'max-width':'100%'}" style="float:none; margin:0px auto;">
+                                        <!--<div ng-show="item.ada_text != ''"  id="content2" ng-bind-html="ada_imagemap"></div> &lt;!&ndash; ng-if="tempEvent" &ndash;&gt;-->
+                                        <br/><br/><br/>
+                                        <!--<div ng-show="item.ada_text != ''" ng-bind-html="ada_imagemap"></div>-->
+                                        <p ng-if="item.ada_text == ''" ng-bind-html="ada_imagemap"></p>
+
+                                        <!--<img src="http://ad.ange.co.kr/adm/upload/temp_productimg.jpg" style="width:100%;"/>-->
+                                        <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event01.jpg" alt="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." title="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." style="width:100%;"><a href="http://new.ange.co.kr/story/content/list" title="앙쥬스토리 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event02.jpg" alt="앙쥬스토리 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/people/home" title="앙쥬피플 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event03.jpg" alt="앙쥬피플 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/moms/home" title="앙쥬맘스 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event04.jpg" alt="앙쥬맘스 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event05.jpg" alt="마이앙쥬 둘러보러 가기" style="width:100%;"><a href="http://new.ange.co.kr/store/home" title="앙쥬스토어 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event06.jpg" alt="앙쥬스토어 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event07.jpg" alt="아래 댓글을 작성하면 자동응모됩니다" title="아래 댓글을 작성하면 자동응모됩니다" style="width:100%;">-->
+                                        <div ng-if="tempEvent" id="content" ng-bind-html="item.ada_detail"></div>
+
+                                        <div ng-if="item.ada_image == '' || item.ada_image == null ||  item.ada_image == undefined" ng-bind-html="ada_text"></div>
+
                                         <!--{{item.ada_text}}-->
 
                                         <!--<img src="http://ad.ange.co.kr/adm/upload/temp_productimg.jpg" style="width:100%;"/>-->
@@ -595,8 +610,45 @@
                                             <div class="col-xs-10 peopleboard_view_text">
                                                 <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
                                             </div><!-- /.col-xs-10-->
+                                            <div class="col-xs-2 peopleboard_view_btns">
+
+                                                <span>(100자 이내)</span>
+                                                <a class="reply_submit" ng-click="click_momseventcomp();">댓글등록</a>
+
+                                            </div>
                                         </div><!-- /.row -->
                                     </div><!-- /.container -->
+
+                                    <br/><br/>
+                                    <div class="container-fluid people_view_replywrap" >
+                                        <div class="row">
+
+                                            <div class="col-xs-12 people_view_replys" ng-repeat="item in eventReplyList">
+                                                <dl class="dl-horizontal" >
+                                                    <dt>{{item.NICK_NM}}</dt>
+                                                    <dd><div class="people_view_replys_date">{{item.REG_DT}}</div></dd>
+                                                    <dd style="margin:0px;">
+                                                        {{item.COMMENT}}
+                                                    </dd>
+                                                </dl>
+                                            </div><!-- /.people_view_replys-->
+
+                                            <div class="col-xs-12 people_view_replys" data-ng-show="eventReplyList == ''">
+                                                <dl class="dl-horizontal" >
+                                                    <dt></dt>
+                                                    <dd><div class="people_view_replys_date"></div></dd>
+                                                    <dd style="margin:0px;">
+                                                        댓글이 없습니다.
+                                                    </dd>
+                                                </dl>
+                                            </div>
+
+                                            <nav class="text-center">
+                                                <pagination boundary-links="true" total-items="search.TOTAL_COUNT" ng-model="search.PAGE_NO" class="pagination-sm" ng-change="replyPageChange()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                            </nav><!-- /.Paging-->
+
+                                        </div><!-- /.row -->
+                                    </div>
                                 </div>
                                 <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
 
@@ -740,7 +792,7 @@
                             <div class="moms_form_foot" ng-show="uid && item.ada_que_type != 'none'" style="border-bottom:2px solid #111;">
                                 <div class="moms_form_footbtn">
                                     <button ng-click="click_momsexperiencelist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>
-                                    <button ng-click="click_momsexperiencecomp();" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
+                                    <button ng-click="click_momsexperiencecomp();" ng-hide="item.ada_que_type == 'none' || item.ada_que_type == 'reply'" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
                                     <!--&lt;!&ndash;<button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>&ndash;&gt;-->
                                 </div>
                             </div> <!-- /.moms_state -->

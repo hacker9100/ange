@@ -358,20 +358,24 @@ define([
 
             dialog.result.then(function(btn){
                 $scope.deleteItem('ange/review', 'item', item.NO, true)
-                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
-                        if ($stateParams.menu == 'experiencereview') {
-                            $location.url('/moms/experiencereview/list');
-                        } else if ($stateParams.menu == 'productreview') {
-                            $location.url('/moms/productreview/list');
-                        } else if ($stateParams.menu == 'angereview') {
-                            $location.url('/moms/angereview/list');
-                        } else if ($stateParams.menu == 'samplereview') {
-                            $location.url('/moms/samplereview/list');
-                        } else if ($stateParams.menu == 'samplepackreview') {
-                            $location.url('/moms/samplepackreview/list');
-                        }else if ($stateParams.menu == 'eventreview') {
-                            $location.url('/moms/eventreview/list');
-                        }
+                    .then(function(){
+
+                        dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+//                        if ($stateParams.menu == 'experiencereview') {
+//                            $location.url('/moms/experiencereview/list');
+//                        } else if ($stateParams.menu == 'productreview') {
+//                            $location.url('/moms/productreview/list');
+//                        } else if ($stateParams.menu == 'angereview') {
+//                            $location.url('/moms/angereview/list');
+//                        } else if ($stateParams.menu == 'samplereview') {
+//                            $location.url('/moms/samplereview/list');
+//                        } else if ($stateParams.menu == 'samplepackreview') {
+//                            $location.url('/moms/samplepackreview/list');
+//                        }else if ($stateParams.menu == 'eventreview') {
+//                            $location.url('/moms/eventreview/list');
+//                        }
+                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
@@ -510,20 +514,21 @@ define([
                 return;
             }
 
+//            if ($stateParams.menu == 'experiencereview') {
+//                $location.url('/moms/experiencereview/edit/0');
+//            } else if ($stateParams.menu == 'productreview') {
+//                $location.url('/moms/productreview/edit/0');
+//            } else if ($stateParams.menu == 'angereview') {
+//                $location.url('/moms/angereview/edit/0');
+//            } else if ($stateParams.menu == 'samplereview') {
+//                $location.url('/moms/samplereview/edit/0');
+//            } else if ($stateParams.menu == 'samplepackreview') {
+//                $location.url('/moms/samplepackreview/edit/0');
+//            }else if ($stateParams.menu == 'eventreview') {
+//                $location.url('/moms/eventreview/edit/0');
+//            }
 
-            if ($stateParams.menu == 'experiencereview') {
-                $location.url('/moms/experiencereview/edit/0');
-            } else if ($stateParams.menu == 'productreview') {
-                $location.url('/moms/productreview/edit/0');
-            } else if ($stateParams.menu == 'angereview') {
-                $location.url('/moms/angereview/edit/0');
-            } else if ($stateParams.menu == 'samplereview') {
-                $location.url('/moms/samplereview/edit/0');
-            } else if ($stateParams.menu == 'samplepackreview') {
-                $location.url('/moms/samplepackreview/edit/0');
-            }else if ($stateParams.menu == 'eventreview') {
-                $location.url('/moms/eventreview/edit/0');
-            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/0');
 
         };
 

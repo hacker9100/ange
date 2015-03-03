@@ -290,7 +290,6 @@ define([
 
                         $scope.open_date2 = data.ada_date_open.replace(/-/gi, "");
                         $scope.end_date2 = data.ada_date_close.replace(/-/gi, "");
-//                        $scope.end_date = data.ada_date_close.replace(/-/gi, "");
                         $scope.open_date = data.ada_date_review_open.replace(/-/gi, "");
                         $scope.end_date = data.ada_date_review_close.replace(/-/gi, "");
 
@@ -298,6 +297,8 @@ define([
                         $scope.ada_text = data.ada_text != null ? data.ada_text.replace(/&quot;/gi, '\"') : data.ada_text;
 
                         data.ada_imagemap = data.ada_imagemap != null ? data.ada_imagemap.replace(/&quot;/gi, '\"') : data.ada_imagemap;
+
+                        $scope.ada_text = $scope.ada_text.replace(/src="/gi, 'src="'+CONSTANT.AD_FILE_URL);
 
                         $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
 
@@ -484,14 +485,41 @@ define([
                         // 댓글일 때
                         if($scope.item.ada_que_type == 'reply'){
 
-//                            var que_data = data.ada_que_info;
-//                            que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
-//                            var parse_que_data = JSON.parse(que_data);
-//
-//                            for(var x in parse_que_data){
-//                                $scope.item.REPLY_SUBJECT = parse_que_data[x].title;
-//                            }
-                            $scope.item.REPLY_SUBJECT = $scope.item.ada_title;
+//                            $scope.search.PAGE_NO = 1;
+                            $scope.search.PAGE_SIZE = 10;
+                            $scope.search.TOTAL_COUNT = 0;
+
+                            $scope.eventReplyList = [];
+
+
+                            $scope.replyPageChange = function(){
+                                console.log('Page changed to: ' + $scope.search.PAGE_NO);
+                                $scope.eventReplyList = [];
+                                $rootScope.getEventReplyList();
+                            }
+
+                            // 댓글 리스트
+                            $rootScope.getEventReplyList = function () {
+
+                                $scope.search.ada_idx = $stateParams.id;
+
+                                $scope.getItem('ange/event', 'replyitem', {}, $scope.search, true)
+                                    .then(function(data){
+
+                                        $scope.search.TOTAL_COUNT = data[0].TOTAL_COUNT;
+                                        for(var i in data) {
+
+                                            data[i].adhj_answers = data[i].adhj_answers.replace(/{"1":"/gi, '');
+                                            data[i].adhj_answers = data[i].adhj_answers.replace(/"}/gi, '');
+
+                                            $scope.eventReplyList.push({'NICK_NM' : data[i].nick_nm, 'COMMENT' : data[i].adhj_answers, 'REG_DT' : data[i].adhj_date_request});
+                                        }
+                                    })
+                                    .catch(function(error){$scope.eventReplyList = "";});
+                            };
+
+                            $rootScope.getEventReplyList();
+
                         }
 
                         // 날짜선택
@@ -877,7 +905,7 @@ define([
 
             }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
-                console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
+                //console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
                 $scope.item.ANSWER = '{"1":"'+ $scope.item.COMMENT+'"}';
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
