@@ -75,6 +75,8 @@
                                         <!-- 속성에 usemap="a" 를 지정 광고센터 %name% 를 replace해서 name이 usemap 속성에 넣게끔-->
 
                                             <img ng-show="item.ada_text != ''" ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}" usemap="#adimage" ng-style="{'max-width':'100%'}" style="float:none; margin:0px auto;">
+                                            <br/><br/><br/>
+                                            <div ng-show="item.ada_text != ''"ng-bind-html="ada_imagemap"></div>
 
                                             <div ng-show="item.ada_image != ''" ng-bind-html="ada_text"></div>
                                         <!--{{item.ada_text}}-->

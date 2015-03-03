@@ -293,6 +293,16 @@ define([
 
 
                         $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
+                        //$scope.ada_imagemap = data.ada_imagemap;
+
+                        console.log($scope.ada_imagemap);
+//                        var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
+//
+//                        $scope.ada_imagemap = $scope.ada_imagemap.replace(pattern, '');
+//                        $scope.ada_imagemap = $scope.ada_imagemap.replace(/&nbsp;/ig, '');
+//                        $scope.ada_imagemap = $scope.ada_imagemap.trim();
+//
+//                        console.log($scope.ada_imagemap);
 //
 
 //                        var day = 1000*60*60*24;

@@ -290,7 +290,6 @@ define([
 
                         $scope.open_date2 = data.ada_date_open.replace(/-/gi, "");
                         $scope.end_date2 = data.ada_date_close.replace(/-/gi, "");
-//                        $scope.end_date = data.ada_date_close.replace(/-/gi, "");
                         $scope.open_date = data.ada_date_review_open.replace(/-/gi, "");
                         $scope.end_date = data.ada_date_review_close.replace(/-/gi, "");
 

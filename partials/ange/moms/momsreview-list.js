@@ -48,6 +48,9 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+
+            $scope.search.BOARD_ST = 'D';
+
             if ($stateParams.menu == 'experiencereview') {
                 $scope.community = "체험단/서평단 후기";
                 $scope.search['TARGET_GB'] = 'EXPERIENCE';
