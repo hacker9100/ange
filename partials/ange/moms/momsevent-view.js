@@ -489,6 +489,7 @@ define([
                                         for(var i=0; i < select_answer.length; i++){
                                             choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
                                         }
+
                                     }else if(parse_que_data[x].type == 1){ // 주관식일때
                                         choice = "";
                                     }else if(parse_que_data[x].type == 2){ // 통합형
@@ -563,7 +564,7 @@ define([
                     answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                 })
 
-                $("input[name='long_answer[]'").each(function(index, element) { // 장문
+                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
                     if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
                         dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
@@ -662,7 +663,7 @@ define([
                     answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                 })
 
-                $("input[name='long_answer[]'").each(function(index, element) { // 장문
+                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
                     if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
                         dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
@@ -825,7 +826,7 @@ define([
                         answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                     })
 
-                    $("input[name='long_answer[]'").each(function(index, element) { // 장문
+                    $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
                         if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
                             dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
@@ -939,7 +940,7 @@ define([
                         answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                     })
 
-                    $("input[name='long_answer[]'").each(function(index, element) { // 장문
+                    $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
                         if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
                             dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});

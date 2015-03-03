@@ -86,12 +86,12 @@
                                 <!--<tr class="primary"><td class="table_no"><span class="table_blue">공지</span></td><td></td><td valign="middle">산부인과/산후조리원 선택 기준은?</td><td class="table_date">2014-10-17~<br />2014-10-27</td></tr>-->
 
                                     <!--<tr ng-class="item.END_YMD <= todayDate ? '' : 'ended'" ng-click="click_showViewAngePoll(item.NO)">-->
-                                    <tr ng-class="item.ada_state == 1 ? '' : 'ended'" ng-click="click_showViewAngePoll(item.ada_idx)">
+                                    <tr  ng-class="item.ada_state == 1 ? '' : 'ended'" ng-click="click_showViewAngePoll(item.ada_idx)"> <!-- ng-class="item.ada_state == 1 ? '' : 'ended'" -->
                                         <td class="table_no">{{item.RNUM}}</td>
                                         <td>
-                                            <span ng-show="item.ada_state == 1" class="table_red">진행중</span> <!-- 'table_gray' -->
-                                            <span ng-show="item.ada_state == 0 && item.ada_date_open < todayDate || item.ada_date_close < todayDate" class="table_gray">완료</span> <!-- 'table_gray' -->
-                                            <span ng-show="item.ada_state == 0 && item.ada_date_open > todayDate" class="table_gray">준비</span> <!-- 'table_gray'  && item.ada_date_close > todayDate -->
+                                            <span ng-if="item.ada_state == 0 || item.ada_date_open > todayDate" class="table_gray">준비</span> <!-- 'table_gray'  && item.ada_date_close > todayDate item.ada_state == 0 &&  -->
+                                            <span ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" class="table_red">진행중</span> <!-- 'table_gray' -->
+                                            <span ng-if="item.ada_date_close < todayDate" class="table_gray">완료</span> <!-- 'table_gray'  item.ada_state == 0 &&  item.ada_date_open < todayDate ||  -->
                                         </td>
                                         <!--<td><span ng-class="item.END_YMD <= todayDate ? 'table_red' : 'table_gray'">{{item.END_YMD <= todayDate ? '진행중' : '완료'}}</span></td>-->
                                         <td valign="middle">{{item.ada_title}}</td>

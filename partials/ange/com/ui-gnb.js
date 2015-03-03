@@ -33,7 +33,8 @@ define([
                 return;
             }
 
-            $location.url('/myange/home');
+            //$location.url('/myange/home');
+            $location.url('/myange/mileage');
         }
 
 	}]);

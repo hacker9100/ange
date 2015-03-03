@@ -24,6 +24,20 @@ define([
         $scope.PAGE_SIZE = 5;
         $scope.TOTAL_COUNT = 0;
 
+
+        var year = [];
+        //var day = [];
+        var now = new Date();
+        var nowYear = now.getFullYear();
+
+        //var month = [];
+
+        for (var i = nowYear; i >= 2010; i--) {
+            year.push(i+'');
+        }
+
+        $scope.search_year = year;
+
         //
         $scope.pageBoardChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
@@ -85,6 +99,13 @@ define([
                 })
                 .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
+
+        // 연도 선택
+        $scope.change_year = function(year){
+
+            $scope.search.YEAR = year;
+            $scope.getPeopleBoardList();
+        }
 
 
         $scope.init();

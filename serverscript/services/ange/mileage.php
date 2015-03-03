@@ -72,9 +72,25 @@
                 }
             } else if ($_type == 'list'){
 
+                $search_where = "";
+                $search_table = "";
+
                 // 검색조건 추가
                 if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
                     $search_where .= "AND AUM.USER_ID = '".$_SESSION['uid']."'";
+                }
+
+                $currentYear = date('Y');
+
+                if (isset($_search['YEAR']) && $_search['YEAR'] != "") {
+
+                    if($currentYear != $_search['YEAR']){
+                        $search_table .= "FROM ANGE_USER_MILEAGE_".$_search['YEAR']." AUM";
+                    }else{
+                        $search_table .= "FROM ANGE_USER_MILEAGE AUM";
+                    }
+                }else{
+                    $search_table .= "FROM ANGE_USER_MILEAGE AUM";
                 }
 
                 $limit = "";
@@ -83,15 +99,17 @@
                     $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
+                // FROM ANGE_USER_MILEAGE AUM
                 $sql = "SELECT TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            USER_ID, REASON, POINT, EARN_GB, PLACE_GB, EARN_DT
+                            USER_ID, REASON, POINT, EARN_GB, PLACE_GB, EARN_DT, SUBJECT
                         FROM
                         (
                             SELECT AUM.USER_ID,
+                                 (SELECT SUBJECT FROM ANGE_MILEAGE WHERE NO = AUM.MILEAGE_NO) AS SUBJECT,
                                  (SELECT REASON FROM ANGE_MILEAGE WHERE NO = AUM.MILEAGE_NO) AS REASON,
                                  (SELECT POINT FROM ANGE_MILEAGE WHERE NO = AUM.MILEAGE_NO) AS POINT,
                                  AUM.EARN_GB, AUM.PLACE_GB, AUM.EARN_DT
-                            FROM ANGE_USER_MILEAGE AUM
+                            ".$search_table."
                             WHERE 1=1
                              ".$search_where."
                              ".$limit."
@@ -99,7 +117,7 @@
                         (SELECT @RNUM := 0) R,
                         (
                             SELECT COUNT(*) AS TOTAL_COUNT
-                            FROM ANGE_USER_MILEAGE AUM
+                            ".$search_table."
                             WHERE 1=1
                              ".$search_where."
                         ) CNT
@@ -150,7 +168,7 @@
                 $sql = "SELECT
                         SUM_POINT,USE_POINT,REMAIN_POINT
                     FROM
-                        ANGE_MILEAGE_STATUS
+                        COM_USER
                     WHERE
                         1=1
                         AND USER_ID = '".$_SESSION['uid']."'
@@ -374,10 +392,11 @@
                         $msg = $_d->mysql_error;
                     }
 
+                    // ANGE_MILEAGE_STATUS
                     $sql = "SELECT
                                 SUM_POINT, REMAIN_POINT
                             FROM
-                                ANGE_MILEAGE_STATUS
+                                COM_USER
                             WHERE
                                 USER_ID = '".$row[USER_ID]."'";
 
@@ -388,7 +407,7 @@
                     $remain_point = $mileage_data[REMAIN_POINT] + $_model[POINT];
 
                     $sql = "UPDATE
-                                ANGE_MILEAGE_STATUS
+                                COM_USER
                             SET
                                 SUM_POINT = ".$sum_point."
                                 ,REMAIN_POINT = ".$remain_point."
@@ -431,7 +450,8 @@
 
                 $_d->sql_query($sql);
 
-                $sql = "UPDATE ANGE_MILEAGE_STATUS SET
+                // ANGE_MILEAGE_STATUS
+                $sql = "UPDATE COM_USER SET
                                 SUM_POINT = ".$_model[SUM_POINT]."
                                 ,USE_POINT = ".$_model[USE_POINT]."
                                 ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
@@ -447,7 +467,7 @@
                 }
             }else if($_type == 'mileageitemplus'){
 
-                $sql = "UPDATE ANGE_MILEAGE_STATUS SET
+                $sql = "UPDATE COM_USER SET
                                 SUM_POINT = USE_POINT + ".$_model[REMAIN_POINT]."
                                 ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
                          WHERE USER_ID = '".$_SESSION['uid']."'";
@@ -462,7 +482,7 @@
                 }
             }else if($_type == 'mileageitemminus'){
 
-                $sql = "UPDATE ANGE_MILEAGE_STATUS SET
+                $sql = "UPDATE COM_USER SET
                                 SUM_POINT = SUM_POINT - ".$_model[REMAIN_POINT]."
                                 ,REMAIN_POINT = REMAIN_POINT - ".$_model[REMAIN_POINT]."
                          WHERE USER_ID = '".$_SESSION['uid']."'";

@@ -217,11 +217,19 @@ define([
             }
         };
 
-        $scope.init();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoardList)
+            .then($scope.getPeoplePhotoList)
+            .then($scope.getPeopleClinicList)
+            .catch($scope.reportProblems);
 
-        $scope.getPeopleBoardList();
-        $scope.getPeoplePhotoList();
-        $scope.getPeopleClinicList();
+//        $scope.init();
+//
+//        $scope.getPeopleBoardList();
+//        $scope.getPeoplePhotoList();
+//        $scope.getPeopleClinicList();
 
     }]);
 });
