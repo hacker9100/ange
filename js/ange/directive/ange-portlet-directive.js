@@ -1132,7 +1132,7 @@ define([
 //            replace: true,
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
                 //'<div class="inven_Highlight"><img ng-src="/imgs/ange/_blank_262by158.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
-                '<div class="inven_Highlight"><img ng-src="/imgs/ange/_blank_163by128.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
+                '<div class="inven_subsideRoll"><img ng-src="/imgs/ange/_blank_163by128.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -1155,6 +1155,71 @@ define([
 
                 /********** 이벤트 **********/
                 // 이미지 클릭
+                $scope.click_linkImage = function () {
+                    if ($scope.option.open) {
+                        var ad_url = $scope.adBannerUrl($scope.item.ada_idx, 1);
+                        $window.open(ad_url);
+
+//                        $window.open($scope.item.ada_url);
+                    } else {
+                        $location.url($scope.item.URL);
+                    }
+                };
+
+                // 이미지 조회
+                $scope.getImage = function () {
+                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                        .then(function(data){
+                            $scope.item = data[0];
+
+                            if ($scope.option.api == 'ad/banner') {
+                                $scope.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                            } else {
+                                $scope.img = CONSTANT.BASE_URL + data[0].FILE.PATH + data[0].FILE.FILE_ID;
+                            }
+
+                            $scope.title = data[0].ada_title;
+                        })
+                        .catch(function(error){});
+                };
+
+                $scope.getImage();
+            }]
+        }
+    }]);
+
+    // 링크 이미지를 동적으로 생성
+    directives.directive('angePortletLinkImageMain', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+            scope: true,
+//            scope: { images:'=' },
+//            replace: true,
+            template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+                '<div class="inven_Highlight"><img ng-src="/imgs/ange/_blank_262by158.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
+//                '<div class="inven_Highlight"><img ng-src="/imgs/ange/_blank_163by128.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
+            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
+
+                /********** 초기화 **********/
+                $scope.option = $scope.$eval($attrs.ngModel);
+
+                // 검색 조건
+                $scope.search = {};
+
+                // 페이징
+                $scope.PAGE_NO = 0;
+                $scope.PAGE_SIZE = $scope.option.size;
+
+                // 검색 조건 추가
+                if ($scope.option.api == 'ad/banner') {
+                    $scope.search.ADP_IDX = $scope.option.gb;
+                    $scope.search.ADA_STATE = 1;
+                    $scope.search.MENU = $scope.path[1];
+                    $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+                }
+
+                /********** 이벤트 **********/
+                    // 이미지 클릭
                 $scope.click_linkImage = function () {
                     if ($scope.option.open) {
                         var ad_url = $scope.adBannerUrl($scope.item.ada_idx, 1);

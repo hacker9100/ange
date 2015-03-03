@@ -1615,6 +1615,22 @@ a.lnb_handle_close:hover {
 }
 
 
+.inven_subsideRoll {
+    width:100%;
+    height:100%;
+    cursor: pointer;
+}
+
+
+.inven_subsideRoll img{
+    width:100%;
+    /*border-radius: 12px;*/
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
 .inven_1stClass {
     width:210px;
     height:85px;
