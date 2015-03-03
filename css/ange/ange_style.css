@@ -39,7 +39,7 @@ html {
 }
 
 body {
-    font-family: "Nanum Gothic", Helvetica, Arial, sans-serif;
+    font-family: "나눔고딕", "Nanum Gothic", Helvetica, Arial, sans-serif;
     background: URL("/imgs/ange/body_bg_01.png");
     height: 100%;
 }
