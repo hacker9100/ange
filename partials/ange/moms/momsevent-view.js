@@ -291,11 +291,12 @@ define([
                         $scope.ada_text = data.ada_text != null ? data.ada_text.replace(/&quot;/gi, '\"') : data.ada_text;
                         data.ada_imagemap = data.ada_imagemap != null ? data.ada_imagemap.replace(/&quot;/gi, '\"') : data.ada_imagemap;
 
+                        $scope.ada_text = $scope.ada_text.replace(/src="/gi, 'src="'+CONSTANT.AD_FILE_URL);
 
                         $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
                         //$scope.ada_imagemap = data.ada_imagemap;
 
-                        console.log($scope.ada_imagemap);
+                        console.log($scope.ada_text);
 //                        var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
 //
 //                        $scope.ada_imagemap = $scope.ada_imagemap.replace(pattern, '');
@@ -304,7 +305,7 @@ define([
 //
 //                        console.log($scope.ada_imagemap);
 //
-
+                        //<img src="http://angead.marveltree.com/adm/upload/_2.jpg" usemap="#adimage" />
 //                        var day = 1000*60*60*24;
 //
 //                        $scope.D_DAY = parseInt($scope.end_date) - parseInt($scope.todayDate);
