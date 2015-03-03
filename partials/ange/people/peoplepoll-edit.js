@@ -29,6 +29,25 @@ define([
 
         $scope.search = {};
 
+        var date = new Date();
+
+        // GET YYYY, MM AND DD FROM THE DATE OBJECT
+        var year = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+
+        if(mm < 10){
+            mm = '0'+mm;
+        }
+
+        if(dd < 10){
+            dd = '0'+dd;
+        }
+
+        var today = year+'-'+mm+'-'+dd;
+
+        $scope.todayDate = today;
+
 
         // 차트
         $scope.chart = {};
@@ -328,7 +347,7 @@ define([
             }
         };
 
-        $scope.click_saveAngePoll = function (no, poll_st) {
+        $scope.click_saveAngePoll = function (no, item) {
 
 
             if ($rootScope.uid == '' || $rootScope.uid == null) {
@@ -336,7 +355,12 @@ define([
                 return;
             }
 
-            if(poll_st == 0){
+            if($scope.todayDate < item.ada_date_open){
+                dialogs.notify('알림', '설문조사 기간이 아닙니다.', {size: 'md'});
+                return;
+            }
+
+            if(item.ada_date_close <  $scope.todayDate){
                 dialogs.notify('알림', '종료된 설문조사 입니다.', {size: 'md'});
                 return;
             }
