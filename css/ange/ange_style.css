@@ -1994,8 +1994,10 @@ a.people_btn.confirm { float:right; background-image: url('/imgs/ange/people_btn
     margin-right:2.6%;
     cursor: pointer;
     overflow:hidden;
-    background-position:50%;
-    background-size: cover;
+    background-color: #eee;
+    background-image: url('/imgs/ange/noimage.png');
+    background-position: center center;
+    background-size: 80%;
     background-repeat: no-repeat;
 }
 
