@@ -297,6 +297,10 @@ define([
                         $scope.ada_detail = data.ada_detail != null ? data.ada_detail.replace(/&quot;/gi, '\"') : data.ada_detail;
                         $scope.ada_text = data.ada_text != null ? data.ada_text.replace(/&quot;/gi, '\"') : data.ada_text;
 
+                        data.ada_imagemap = data.ada_imagemap != null ? data.ada_imagemap.replace(/&quot;/gi, '\"') : data.ada_imagemap;
+
+                        $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
+
                         //$scope.D_DAY = parseInt($scope.end_date) - parseInt($scope.todayDate);
 
                         var arrDate1 = $scope.todayDate2.split("-");
@@ -817,7 +821,7 @@ define([
 
                 });
 
-                if($scope.item.QUE != ''){
+                if($scope.item.QUE != '' || $scope.item.QUE != undefined ){
 
                     var answer = [];
                     $scope.item.QUE_SHORT_ANSWER = ''
@@ -906,13 +910,13 @@ define([
                     console.log($scope.item.ANSWER);
                 }
 
-//                $scope.insertItem('ange/comp', 'item', $scope.item, false)
-//                    .then(function(){
-//                        dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
-//
-//                        $location.url('/moms/experienceprocess/list');
-//                    })
-//                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                    .then(function(){
+                        dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+
+                        $location.url('/moms/experienceprocess/list');
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }else if($scope.item.ada_que_type == 'upload'){
 
                  // 문답일때
@@ -928,7 +932,7 @@ define([
 
                 $scope.item.FILE = $scope.file;
 
-                if($scope.item.QUE != ''){
+                if($scope.item.QUE != '' || $scope.item.QUE != undefined){
                     var answer = [];
                     $scope.item.QUE_SHORT_ANSWER = ''
 
@@ -1012,10 +1016,10 @@ define([
                         $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
                     }
 
-                    $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                    //$scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                    $scope.item.ANSWER = '{'+$rootScope.jsontext2+$scope.file.name+'}';
                     console.log($scope.item.ANSWER);
                 }else{
-
 
                     $rootScope.jsontext3 = '"1":"'+ $scope.file.name+'"';
                     $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';

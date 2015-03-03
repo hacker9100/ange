@@ -289,6 +289,9 @@ define([
                         $scope.end_date2 = data.ada_date_close.replace(/-/gi, "");
                         $scope.ada_detail = data.ada_detail != null ? data.ada_detail.replace(/&quot;/gi, '\"') : data.ada_detail;
                         $scope.ada_text = data.ada_text != null ? data.ada_text.replace(/&quot;/gi, '\"') : data.ada_text;
+                        data.ada_imagemap = data.ada_imagemap != null ? data.ada_imagemap.replace(/&quot;/gi, '\"') : data.ada_imagemap;
+
+                        $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
 //
 //                        var day = 1000*60*60*24;
 //
@@ -808,7 +811,7 @@ define([
 
                 });
 
-                if($scope.item.QUE != ''){
+                if($scope.item.QUE != undefined){ //$scope.item.QUE != '' ||
 
                     var answer = [];
                     $scope.item.QUE_SHORT_ANSWER = ''
@@ -923,7 +926,9 @@ define([
 
                 $scope.item.FILE = $scope.file;
 
-                if($scope.item.QUE != ''){
+                console.log($scope.item.QUE);
+
+                if($scope.item.QUE != undefined){  // $scope.item.QUE != '' ||
                     var answer = [];
                     $scope.item.QUE_SHORT_ANSWER = ''
 
@@ -1007,21 +1012,22 @@ define([
                         $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
                     }
 
-                    $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                    $scope.item.ANSWER = '{'+$rootScope.jsontext2+$scope.file.name+'}';
                     console.log($scope.item.ANSWER);
 
                 }else{
 
-
                     $rootScope.jsontext3 = '"1":"'+ $scope.file.name+'"';
                     $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
+
+                    console.log($scope.item.ANSWER);
                 }
 
                 $scope.insertItem('ange/comp', 'item', $scope.item, false)
                     .then(function(){
-                        dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+                        dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
-                        $location.url('/moms/experienceprocess/list');
+                        $location.url('/moms/eventprocess/list');
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
