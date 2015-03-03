@@ -114,10 +114,10 @@ define([
         };
 
         /********** 콘텐츠 랜더링 **********/
-        $scope.renderHtml = function(html_code) {
-            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
-//            return html_code;
-        };
+//        $scope.renderHtml = function(html_code) {
+//            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
+////            return html_code;
+//        };
 
         // 정보수정 모달창
         $scope.openModal = function (content, size) {

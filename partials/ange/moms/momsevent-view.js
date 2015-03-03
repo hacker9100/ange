@@ -114,10 +114,10 @@ define([
         });
 
         /********** 콘텐츠 랜더링 **********/
-        $scope.renderHtml = function(html_code) {
-            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
-//            return html_code;
-        };
+//        $scope.renderHtml = function(html_code) {
+//            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
+////            return html_code;
+//        };
 
         /********** 이벤트 **********/
 
@@ -456,7 +456,7 @@ define([
 
                                 $scope.getItem('ange/event', 'replyitem', {}, $scope.search, true)
                                     .then(function(data){
-
+console.log("========>>>>>>>>>>>"+JSON.stringify(data))
                                         $scope.search.TOTAL_COUNT = data[0].TOTAL_COUNT;
                                         for(var i in data) {
 

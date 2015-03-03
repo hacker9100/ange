@@ -31,7 +31,7 @@ define([
             $("#check_reply").prop("checked",true);
             $("input[name='check']").prop("checked",true);
 
-            if($scope.role == 'MANAGER'){
+            if($scope.role == 'ANGE_MANAGER'){
                 $("input[name='noti_check']").prop("checked",true);
                 $scope.item.NOTICE_FL = "true";
             }else{

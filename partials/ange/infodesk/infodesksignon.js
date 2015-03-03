@@ -468,9 +468,6 @@ define([
         // 사용자 인증
         $scope.click_certUser = function (cert) {
             if (cert == 'mail') {
-                $scope.user.USER_NM = '김성환';
-                $scope.user.EMAIL = 'hacker9100@gmail.com';
-
                 $scope.insertItem('com/user', 'mail', $scope.user, false)
                     .then(function(){ dialogs.notify('알림', '인증메일이 재전송되었습니다.', {size: 'md'});})
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
