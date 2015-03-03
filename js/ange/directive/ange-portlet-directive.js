@@ -459,6 +459,7 @@ define([
 //                $scope.search.FILE = true;
 //                $scope.search.PROCESS = "process";
                 $scope.search.ADA_TYPE_IN = "'event', 'exp'";
+                $scope.search.ADP_CODE_NOT_IN = "'samplepack1', 'samplepack2', 'postcard'";
                 $scope.search.SORT = 'ada_date_open';
                 $scope.search.ORDER = 'DESC';
 
@@ -560,7 +561,7 @@ define([
                             // 광고의 슬라이드을 실행
                             angular.element('#'+$scope.option.id).slickPlay();
                         })
-                        .catch(function(error){});
+                        ['catch'](function(error){});
                 };
 
                 $scope.getPortletList();
