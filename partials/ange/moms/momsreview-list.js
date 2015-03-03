@@ -97,8 +97,9 @@ define([
                     for(var i in data) {
 
                         console.log(data[i].FILE.PATH);
+                        // /storage/review/
 
-                        var img = UPLOAD.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        var img = UPLOAD.BASE_URL + '/storage/review/' + 'thumbnail/' + data[i].FILE.FILE_ID;
                         data[i].TYPE = 'REVIEW';
                         data[i].FILE = img;
 

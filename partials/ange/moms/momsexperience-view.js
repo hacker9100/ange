@@ -321,6 +321,9 @@ define([
                         data.ada_preview_img = CONSTANT.AD_FILE_URL + data.ada_preview;
                         data.ada_content_img = CONSTANT.AD_FILE_URL + data.ada_image;
 
+                        console.log('a'+data.ada_image);
+                        console.log('a'+data.ada_text);
+
                         if($scope.todayDate <= $scope.end_date){
                             $scope.showForm = "compForm";
                         }else{
@@ -568,134 +571,242 @@ define([
 
             if($scope.item.ada_que_type == 'question'){ // 문답일때
 
-                var answer = [];
-                $scope.item.QUE_SHORT_ANSWER = ''
+                $scope.search.ada_idx = $scope.item.ada_idx;
 
-                $("input[name='answer[]'").each(function(index, element) {
+                $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+                    .then(function(data){
 
-                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                        return false;
-                    }
+                        var comp_cnt = data[0].COMP_CNT;
 
-                    console.log($(element).val());
+                        if(comp_cnt == 0){
 
-                    $scope.item.QUE_SHORT_ANSWER = $(element).val();
-                    answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-                })
-
-                $("input[textarea='long_answer[]'").each(function(index, element) { // 장문
-
-                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                        return false;
-                    }
-
-                    console.log($(element).val());
-
-                    $scope.item.QUE_LONG_ANSWER = $(element).val();
-                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-                })
-
-                var values = {};
-
-                $('.poll_select_radio:checked').each(function(index) {
-
-//                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-//                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+//                var answer = [];
+//                $scope.item.QUE_SHORT_ANSWER = ''
+//
+//                $("input[name='answer[]'").each(function(index, element) {
+//
+//                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+//                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
 //                        return false;
 //                    }
 //
-//                        if(this.value == undefined){
-//                            values[this.name] = "";
-//                        }
+//                    console.log($(element).val());
 //
-//                        if(this.value == "기타"){
-//                            console.log($("#etc_answer").val());
-//                            values[this.name] = $("input[name='etc_answer']").val();
-//                        }
-
-                    values[this.name] = this.value;
-                    answer.push(values[this.name]);
-                    console.log(this.value);
-                });
-
-                var check_answer = ''
-                $('.poll_select_checkbox:checked').each(function(index) {
-
-//                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-//                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+//                    $scope.item.QUE_SHORT_ANSWER = $(element).val();
+//                    answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+//                })
+//
+//                $("input[textarea='long_answer[]'").each(function(index, element) { // 장문
+//
+//                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+//                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
 //                        return false;
 //                    }
-                    values[this.name] = ','
-                    if(this.value == undefined){
-                        values[this.name] = "";
-                    }
-                    values[this.name] += this.value;
+//
+//                    console.log($(element).val());
+//
+//                    $scope.item.QUE_LONG_ANSWER = $(element).val();
+//                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+//                })
+//
+//                var values = {};
+//
+//                $('.poll_select_radio:checked').each(function(index) {
+//
+////                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+////                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+////                        return false;
+////                    }
+////
+////                        if(this.value == undefined){
+////                            values[this.name] = "";
+////                        }
+////
+////                        if(this.value == "기타"){
+////                            console.log($("#etc_answer").val());
+////                            values[this.name] = $("input[name='etc_answer']").val();
+////                        }
+//
+//                    values[this.name] = this.value;
+//                    answer.push(values[this.name]);
+//                    console.log(this.value);
+//                });
+//
+//                var check_answer = ''
+//                $('.poll_select_checkbox:checked').each(function(index) {
+//
+////                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+////                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+////                        return false;
+////                    }
+//                    values[this.name] = ','
+//                    if(this.value == undefined){
+//                        values[this.name] = "";
+//                    }
+//                    values[this.name] += this.value;
+//
+//                    check_answer += this.value
+//                    answer.push(check_answer); // 객관식
+//
+//                    console.log(check_answer);
+//                });
+//
+//                $rootScope.jsontext2 = new Array();
+//
+//                // .poll_query_no input[name='index[]'
+////                    $(".poll_query_no").each(function(index, element) {
+////                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+////                    })
+//
+//                for(var i=0; i<answer.length; i++){
+//                    var index = parseInt(i+1);
+//                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+//                }
+//
+//                $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+//                console.log($scope.item.ANSWER);
 
-                    check_answer += this.value
-                    answer.push(check_answer); // 객관식
+                            var answer = [];
+                            $scope.item.QUE_SHORT_ANSWER = ''
 
-                    console.log(check_answer);
-                });
+                            $("input[name='answer[]'").each(function(index, element) { // 주관식
 
-                $rootScope.jsontext2 = new Array();
+                                if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                    dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                    return false;
+                                }
 
-                // .poll_query_no input[name='index[]'
-//                    $(".poll_query_no").each(function(index, element) {
-//                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-//                    })
+                                console.log($(element).val());
 
-                for(var i=0; i<answer.length; i++){
-                    var index = parseInt(i+1);
-                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-                }
+                                $scope.item.QUE_SHORT_ANSWER = $(element).val();
+                                answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+                            })
 
-                $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
-                console.log($scope.item.ANSWER);
+                            $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
+                                if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                    dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                    return false;
+                                }
 
-                $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                    .then(function(){
-                        dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+                                console.log($(element).val());
 
-                        $location.url('/moms/experienceprocess/list');
+                                $scope.item.QUE_LONG_ANSWER = $(element).val();
+                                answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+                            })
+
+                            var values = {};
+
+                            $('.poll_select_radio:checked').each(function(index) {
+
+                                //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+                                //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+                                //                        return false;
+                                //                    }
+                                //
+                                //                        if(this.value == undefined){
+                                //                            values[this.name] = "";
+                                //                        }
+                                //
+                                //                        if(this.value == "기타"){
+                                //                            console.log($("#etc_answer").val());
+                                //                            values[this.name] = $("input[name='etc_answer']").val();
+                                //                        }
+
+                                values[this.name] = this.value;
+                                answer.push(values[this.name]);
+                                console.log(this.value);
+                            });
+
+                            var check_answer = ''
+                            $('.poll_select_checkbox:checked').each(function(index) {
+
+                                //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+                                //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+                                //                        return false;
+                                //                    }
+                                values[this.name] = ','
+                                if(this.value == undefined){
+                                    values[this.name] = "";
+                                }
+                                values[this.name] += this.value;
+
+                                check_answer += this.value
+                                answer.push(check_answer); // 객관식
+
+                                console.log(check_answer);
+                            });
+
+                            $rootScope.jsontext2 = new Array();
+
+                            // .poll_query_no input[name='index[]'
+                            // $(".poll_query_no").each(function(index, element) {
+                            //    $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+                            // })
+
+                            for(var i=0; i<answer.length; i++){
+                                var index = parseInt(i+1);
+                                $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+                            }
+
+                            $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                            console.log($scope.item.ANSWER);
+
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+
+                                    $location.url('/moms/experienceprocess/list');
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        }else{
+                            dialogs.notify('알림', '이미 이 체험단에 참여 했으므로 중복 참여는 불가능합니다.', {size: 'md'});
+                            return;
+                        }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             }else if($scope.item.ada_que_type == 'reserve'){ // 날짜예약선택
-                var answer = [];
-                $scope.item.QUE_SHORT_ANSWER = ''
 
-                $("input[name='answer[]'").each(function(index, element) {
+                $scope.search.ada_idx = $scope.item.ada_idx;
 
-                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                        return false;
-                    }
+                $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+                    .then(function(data){
+                        var comp_cnt = data[0].COMP_CNT;
 
-                    console.log($(element).val());
+                        if(comp_cnt == 0){
+                            var answer = [];
+                            $scope.item.QUE_SHORT_ANSWER = ''
 
-                    $scope.item.QUE_SHORT_ANSWER = $(element).val();
-                    answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-                })
+                            $("input[name='answer[]'").each(function(index, element) {
 
-                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
+                                if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                    dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                    return false;
+                                }
 
-                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                        return false;
-                    }
+                                console.log($(element).val());
 
-                    console.log($(element).val());
+                                $scope.item.QUE_SHORT_ANSWER = $(element).val();
+                                answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+                            })
 
-                    $scope.item.QUE_LONG_ANSWER = $(element).val();
-                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-                })
+                            $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
-                var values = {};
+                                if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                    dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                    return false;
+                                }
 
-                $('.poll_select_radio:checked').each(function(index) {
+                                console.log($(element).val());
+
+                                $scope.item.QUE_LONG_ANSWER = $(element).val();
+                                answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+                            })
+
+                            var values = {};
+
+                            $('.poll_select_radio:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
@@ -711,53 +822,55 @@ define([
 //                            values[this.name] = $("input[name='etc_answer']").val();
 //                        }
 
-                    values[this.name] = this.value;
-                    answer.push(values[this.name]);
-                    console.log(this.value);
-                });
+                                values[this.name] = this.value;
+                                answer.push(values[this.name]);
+                                console.log(this.value);
+                            });
 
-                var check_answer = ''
-                $('.poll_select_checkbox:checked').each(function(index) {
+                            var check_answer = ''
+                            $('.poll_select_checkbox:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
 //                        return false;
 //                    }
-                    values[this.name] = ','
-                    if(this.value == undefined){
-                        values[this.name] = "";
-                    }
-                    values[this.name] += this.value;
+                                values[this.name] = ','
+                                if(this.value == undefined){
+                                    values[this.name] = "";
+                                }
+                                values[this.name] += this.value;
 
-                    check_answer += this.value
-                    answer.push(check_answer); // 객관식
+                                check_answer += this.value
+                                answer.push(check_answer); // 객관식
 
-                    console.log(check_answer);
-                });
+                                console.log(check_answer);
+                            });
 
-                $rootScope.jsontext2 = new Array();
+                            $rootScope.jsontext2 = new Array();
 
-                // .poll_query_no input[name='index[]'
+                            // .poll_query_no input[name='index[]'
 //                    $(".poll_query_no").each(function(index, element) {
 //                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
 //                    })
 
-                for(var i=0; i<answer.length; i++){
-                    var index = parseInt(i+1);
-                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-                }
+                            for(var i=0; i<answer.length; i++){
+                                var index = parseInt(i+1);
+                                $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+                            }
 
-                $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
-                console.log($scope.item.ANSWER);
+                            $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                            console.log($scope.item.ANSWER);
 
-                $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                    .then(function(){
-                        dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
-                        if ($stateParams.menu == 'eventprocess') {
-                            $location.url('/moms/eventprocess/list');
-                        } else if($stateParams.menu == 'eventperformance') {
-                            $location.url('/moms/eventperformance/list');
+                                    $location.url('/moms/experienceprocess/list');
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        }else{
+                            dialogs.notify('알림', '이미 이 체험단에 참여 했으므로 중복 참여는 불가능합니다.', {size: 'md'});
+                            return;
                         }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -799,62 +912,69 @@ define([
                     return;
                 }
 
-                $scope.search.REG_UID = $scope.uid;
-                $scope.search.TARGET_NO = $scope.item.ada_idx;
-                $scope.search.TARGET_GB = 'EVENT';
+                $scope.search.ada_idx = $scope.item.ada_idx;
 
-                $scope.item.BABY_BIRTH = $scope.item.BABY_YEAR + $scope.item.BABY_MONTH + $scope.item.BABY_DAY;
+                $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+                    .then(function(data){
+                        var comp_cnt = data[0].COMP_CNT;
 
-                // 임신주차는 0으로 셋팅(int 형이라 null로 넣으면 쿼리에러 발생)
-                $scope.item.PREGNANT_WEEKS = 0;
+                        if(comp_cnt == 0){
+                            $scope.search.REG_UID = $scope.uid;
+                            $scope.search.TARGET_NO = $scope.item.ada_idx;
+                            $scope.search.TARGET_GB = 'EVENT';
+
+                            $scope.item.BABY_BIRTH = $scope.item.BABY_YEAR + $scope.item.BABY_MONTH + $scope.item.BABY_DAY;
+
+                            // 임신주차는 0으로 셋팅(int 형이라 null로 넣으면 쿼리에러 발생)
+                            $scope.item.PREGNANT_WEEKS = 0;
 
 
-                // 추가한 블로그 갯수 만큼 반복
-                var cnt = $scope.item.BLOG.length;
-                $scope.item.BLOG_URL = '';
-                $("input[name='blog[]'").each(function(index, element) {
-                    if(index != (cnt -1)){
-                        $scope.item.BLOG_URL += $(element).val()+', ';
-                    }else{
-                        $scope.item.BLOG_URL += $(element).val();
-                    }
+                            // 추가한 블로그 갯수 만큼 반복
+                            var cnt = $scope.item.BLOG.length;
+                            $scope.item.BLOG_URL = '';
+                            $("input[name='blog[]'").each(function(index, element) {
+                                if(index != (cnt -1)){
+                                    $scope.item.BLOG_URL += $(element).val()+', ';
+                                }else{
+                                    $scope.item.BLOG_URL += $(element).val();
+                                }
 
-                });
+                            });
 
-                if($scope.item.QUE != '' || $scope.item.QUE != undefined ){
+                            if($scope.item.QUE != undefined ){
 
-                    var answer = [];
-                    $scope.item.QUE_SHORT_ANSWER = ''
+                                var answer = [];
+                                $scope.item.QUE_SHORT_ANSWER = ''
 
-                    $("input[name='answer[]'").each(function(index, element) {
+                                $("input[name='answer[]'").each(function(index, element) {
 
-                        if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                            dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                            return false;
-                        }
+                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                        return false;
+                                    }
 
-                        console.log($(element).val());
+                                    console.log($(element).val());
 
-                        $scope.item.QUE_SHORT_ANSWER = $(element).val();
-                        answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-                    })
+                                    $scope.item.QUE_SHORT_ANSWER = $(element).val();
+                                    answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+                                })
 
-                    $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
+                                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
-                        if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                            dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                            return false;
-                        }
+                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                        return false;
+                                    }
 
-                        console.log($(element).val());
+                                    console.log($(element).val());
 
-                        $scope.item.QUE_LONG_ANSWER = $(element).val();
-                        answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-                    })
+                                    $scope.item.QUE_LONG_ANSWER = $(element).val();
+                                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+                                })
 
-                    var values = {};
+                                var values = {};
 
-                    $('.poll_select_radio:checked').each(function(index) {
+                                $('.poll_select_radio:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
@@ -870,53 +990,61 @@ define([
 //                            values[this.name] = $("input[name='etc_answer']").val();
 //                        }
 
-                        values[this.name] = this.value;
-                        answer.push(values[this.name]);
-                        console.log(this.value);
-                    });
+                                    values[this.name] = this.value;
+                                    answer.push(values[this.name]);
+                                    console.log(this.value);
+                                });
 
-                    var check_answer = ''
-                    $('.poll_select_checkbox:checked').each(function(index) {
+                                var check_answer = ''
+                                $('.poll_select_checkbox:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
 //                        return false;
 //                    }
-                        values[this.name] = ','
-                        if(this.value == undefined){
-                            values[this.name] = "";
-                        }
-                        values[this.name] += this.value;
+                                    values[this.name] = ','
+                                    if(this.value == undefined){
+                                        values[this.name] = "";
+                                    }
+                                    values[this.name] += this.value;
 
-                        check_answer += this.value
-                        answer.push(check_answer); // 객관식
+                                    check_answer += this.value
+                                    answer.push(check_answer); // 객관식
 
-                        console.log(check_answer);
-                    });
+                                    console.log(check_answer);
+                                });
 
-                    $rootScope.jsontext2 = new Array();
+                                $rootScope.jsontext2 = new Array();
 
-                    // .poll_query_no input[name='index[]'
+                                // .poll_query_no input[name='index[]'
 //                    $(".poll_query_no").each(function(index, element) {
 //                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
 //                    })
 
-                    for(var i=0; i<answer.length; i++){
-                        var index = parseInt(i+1);
-                        $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-                    }
+                                for(var i=0; i<answer.length; i++){
+                                    var index = parseInt(i+1);
+                                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+                                }
 
-                    $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
-                    console.log($scope.item.ANSWER);
-                }
+                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                                console.log($scope.item.ANSWER);
+                            }
 
-                $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                    .then(function(){
-                        dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
-                        $location.url('/moms/experienceprocess/list');
+                                    $location.url('/moms/experienceprocess/list');
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        }else{
+                            dialogs.notify('알림', '이미 이 체험단에 참여 했으므로 중복 참여는 불가능합니다.', {size: 'md'});
+                            return;
+                        }
+
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
             }else if($scope.item.ada_que_type == 'upload'){
 
                  // 문답일때
@@ -930,41 +1058,48 @@ define([
                     return;
                 }
 
-                $scope.item.FILE = $scope.file;
+                $scope.search.ada_idx = $scope.item.ada_idx;
 
-                if($scope.item.QUE != '' || $scope.item.QUE != undefined){
-                    var answer = [];
-                    $scope.item.QUE_SHORT_ANSWER = ''
+                $scope.getList('ange/comp', 'check', {}, $scope.search, false)
+                    .then(function(data){
+                        var comp_cnt = data[0].COMP_CNT;
 
-                    $("input[name='answer[]'").each(function(index, element) {
+                        if(comp_cnt == 0){
+                            $scope.item.FILE = $scope.file;
 
-                        if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                            dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                            return false;
-                        }
+                            if($scope.item.QUE != undefined){
+                                var answer = [];
+                                $scope.item.QUE_SHORT_ANSWER = ''
 
-                        console.log($(element).val());
+                                $("input[name='answer[]'").each(function(index, element) {
 
-                        $scope.item.QUE_SHORT_ANSWER = $(element).val();
-                        answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-                    })
+                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                        return false;
+                                    }
 
-                    $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
+                                    console.log($(element).val());
 
-                        if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                            dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                            return false;
-                        }
+                                    $scope.item.QUE_SHORT_ANSWER = $(element).val();
+                                    answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+                                })
 
-                        console.log($(element).val());
+                                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
-                        $scope.item.QUE_LONG_ANSWER = $(element).val();
-                        answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-                    })
+                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                        return false;
+                                    }
 
-                    var values = {};
+                                    console.log($(element).val());
 
-                    $('.poll_select_radio:checked').each(function(index) {
+                                    $scope.item.QUE_LONG_ANSWER = $(element).val();
+                                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+                                })
+
+                                var values = {};
+
+                                $('.poll_select_radio:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
@@ -980,59 +1115,65 @@ define([
 //                            values[this.name] = $("input[name='etc_answer']").val();
 //                        }
 
-                        values[this.name] = this.value;
-                        answer.push(values[this.name]);
-                        console.log(this.value);
-                    });
+                                    values[this.name] = this.value;
+                                    answer.push(values[this.name]);
+                                    console.log(this.value);
+                                });
 
-                    var check_answer = ''
-                    $('.poll_select_checkbox:checked').each(function(index) {
+                                var check_answer = ''
+                                $('.poll_select_checkbox:checked').each(function(index) {
 
 //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
 //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
 //                        return false;
 //                    }
-                        values[this.name] = ','
-                        if(this.value == undefined){
-                            values[this.name] = "";
-                        }
-                        values[this.name] += this.value;
+                                    values[this.name] = ','
+                                    if(this.value == undefined){
+                                        values[this.name] = "";
+                                    }
+                                    values[this.name] += this.value;
 
-                        check_answer += this.value
-                        answer.push(check_answer); // 객관식
+                                    check_answer += this.value
+                                    answer.push(check_answer); // 객관식
 
-                        console.log(check_answer);
-                    });
+                                    console.log(check_answer);
+                                });
 
-                    $rootScope.jsontext2 = new Array();
+                                $rootScope.jsontext2 = new Array();
 
-                    // .poll_query_no input[name='index[]'
+                                // .poll_query_no input[name='index[]'
 //                    $(".poll_query_no").each(function(index, element) {
 //                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
 //                    })
 
-                    for(var i=0; i<answer.length; i++){
-                        var index = parseInt(i+1);
-                        $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-                    }
+                                for(var i=0; i<answer.length; i++){
+                                    var index = parseInt(i+1);
+                                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+                                }
 
-                    //$scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
-                    $scope.item.ANSWER = '{'+$rootScope.jsontext2+$scope.file.name+'}';
-                    console.log($scope.item.ANSWER);
-                }else{
+                                //$scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+$scope.file.name+'}';
+                                console.log($scope.item.ANSWER);
+                            }else{
 
-                    $rootScope.jsontext3 = '"1":"'+ $scope.file.name+'"';
-                    $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
-                }
+                                $rootScope.jsontext3 = '"1":"'+ $scope.file.name+'"';
+                                $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
+                            }
 
-                $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                    .then(function(){
-                        dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
-                        $location.url('/moms/experienceprocess/list');
+                                    $location.url('/moms/experienceprocess/list');
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                        }else{
+                            dialogs.notify('알림', '이미 이 이벤트에 참여 했으므로 중복 참여는 불가능합니다.', {size: 'md'});
+                            return;
+                        }
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
             }
 
         }

@@ -355,6 +355,11 @@ define([
                 return;
             }
 
+//            if(item.ada_state ==  0){
+//                dialogs.notify('알림', '시행중인 설문조사가 아닙니다.', {size: 'md'});
+//                return;
+//            }
+
             if($scope.todayDate < item.ada_date_open){
                 dialogs.notify('알림', '설문조사 기간이 아닙니다.', {size: 'md'});
                 return;

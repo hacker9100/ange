@@ -148,7 +148,6 @@ define([
                         for(var i in files) {
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
-
                         $scope.search.TARGET_NO = $stateParams.id;
                     })
                     .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -233,25 +232,23 @@ define([
             var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
 
             dialog.result.then(function(btn){
+                $scope.deleteItem('com/webboard', 'item', item.NO, true)
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
 
-                console.log(item.REPLY_COUNT);
-//                $scope.deleteItem('com/webboard', 'item', item.NO, true)
-//                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
-//                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
-//
-////                        if ($stateParams.menu == 'angeroom') {
-////                            $location.url('/people/angeroom/list');
-////                        } else if($stateParams.menu == 'momstalk') {
-////                            $location.url('/people/momstalk/list');
-////                        } else if($stateParams.menu == 'babycare') {
-////                            $location.url('/people/babycare/list');
-////                        } else if($stateParams.menu == 'firstbirthtalk') {
-////                            $location.url('/people/firstbirthtalk/list');
-////                        } else if($stateParams.menu == 'booktalk') {
-////                            $location.url('/people/booktalk/list');
-////                        }
-//                    })
-//                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                        if ($stateParams.menu == 'angeroom') {
+//                            $location.url('/people/angeroom/list');
+//                        } else if($stateParams.menu == 'momstalk') {
+//                            $location.url('/people/momstalk/list');
+//                        } else if($stateParams.menu == 'babycare') {
+//                            $location.url('/people/babycare/list');
+//                        } else if($stateParams.menu == 'firstbirthtalk') {
+//                            $location.url('/people/firstbirthtalk/list');
+//                        } else if($stateParams.menu == 'booktalk') {
+//                            $location.url('/people/booktalk/list');
+//                        }
+                    })
+                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });

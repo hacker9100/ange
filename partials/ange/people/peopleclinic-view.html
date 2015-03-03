@@ -16,27 +16,27 @@
                             </div>
                         </div><!-- /.sub_contents_wrap -->
 
-                        <div class="sub_contents_wrap">
-                            <div class="sub_contents_title">
-                                <span class="sub_contents_bullet"></span>
-                                <!--<h5 style="font-weight:bold;">{{PROFILE}}</h5>-->
-                                <div class="container-fluid sub_contents_customizewrap">
-                                    <div class="row">
-                                        <div class="col-xs-12 sub_contents_customize">
+                        <!--<div class="sub_contents_wrap">-->
+                            <!--<div class="sub_contents_title">-->
+                                <!--<span class="sub_contents_bullet"></span>-->
+                                <!--&lt;!&ndash;<h5 style="font-weight:bold;">{{PROFILE}}</h5>&ndash;&gt;-->
+                                <!--<div class="container-fluid sub_contents_customizewrap">-->
+                                    <!--<div class="row">-->
+                                        <!--<div class="col-xs-12 sub_contents_customize">-->
 
-                                            <center>
-                                                <img class="people_customize_bg" ng-src="{{main_img}}" />
-                                                <!--<img ng-if="tmpMenu == 'chlidoriental'" class="people_customize_bg" src="/imgs/temp/medical_consulting_child_03.png" />-->
-                                                <!--<img ng-if="tmpMenu == 'obstetrics'" class="people_customize_bg" src="/imgs/temp/medical_consulting_babymom_03.png" />-->
-                                                <!--<img ng-if="tmpMenu == 'momshealth'" class="people_customize_bg" src="/imgs/temp/medical_consulting_mom_03.png" />-->
-                                                <!--<img ng-if="tmpMenu == 'financial'" class="people_customize_bg" src="/imgs/temp/medical_consulting_money_03.png" />-->
-                                            </center>
+                                            <!--<center>-->
+                                                <!--<img class="people_customize_bg" ng-src="{{main_img}}" />-->
+                                                <!--&lt;!&ndash;<img ng-if="tmpMenu == 'chlidoriental'" class="people_customize_bg" src="/imgs/temp/medical_consulting_child_03.png" />&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<img ng-if="tmpMenu == 'obstetrics'" class="people_customize_bg" src="/imgs/temp/medical_consulting_babymom_03.png" />&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<img ng-if="tmpMenu == 'momshealth'" class="people_customize_bg" src="/imgs/temp/medical_consulting_mom_03.png" />&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<img ng-if="tmpMenu == 'financial'" class="people_customize_bg" src="/imgs/temp/medical_consulting_money_03.png" />&ndash;&gt;-->
+                                            <!--</center>-->
 
-                                        </div><!-- /.col-xs-12-->
-                                    </div><!-- /.row -->
-                                </div>
-                            </div>
-                        </div>
+                                        <!--</div>&lt;!&ndash; /.col-xs-12&ndash;&gt;-->
+                                    <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
 
                         <div ng-model="item" class="sub_contents_body">
 
@@ -67,9 +67,9 @@
                                         <div class="col-xs-4 board_basicinfo_subject">
                                             {{item.NICK_NM}}
                                         </div><!-- /.col-xs-4-->
-                                        <div class="col-xs-1  board_basicinfo_label">
-                                            작성일
-                                        </div><!-- /.col-xs-2-->
+                                        <!--<div class="col-xs-1  board_basicinfo_label">-->
+                                            <!--작성일-->
+                                        <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
                                         <div class="col-xs-5 board_basicinfo_subject date">
                                             {{item.REG_DT}}
                                         </div><!-- /.col-xs-4-->
@@ -143,9 +143,9 @@
                                         </div><!-- /.col-xs-2-->
                                         <div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">
                                             <span ng-class="preBoardView.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
-                                            <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>
-                                            <a ng-show="preBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">작성자가 삭제한 글입니다</a>
-                                            <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
+                                            <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO,preBoardView.REG_UID,preBoardView.PASSWORD_FL)">{{preBoardView.SUBJECT}}</a>
+                                            <a ng-show="preBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO,preBoardView.REG_UID,preBoardView.PASSWORD_FL)">작성자가 삭제한 글입니다</a>
+                                            <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO,preBoardView.REG_UID,preBoardView.PASSWORD_FL)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
                                         </div><!-- /.col-xs-10-->
                                         <div data-ng-show="preBoardView == false" class="col-xs-10  board_basicinfo_subject">
                                             이전 글이 없습니다
@@ -158,9 +158,9 @@
                                         </div><!-- /.col-xs-2-->
                                         <div data-ng-show="nextBoardView != ''" class="col-xs-10 board_basicinfo_subject">
                                             <span ng-class="nextBoardView.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
-                                            <a ng-show="item.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>
-                                            <a ng-show="nextBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">작성자가 삭제한 글입니다</a>
-                                            <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
+                                            <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO,nextBoardView.REG_UID,nextBoardView.PASSWORD_FL)">{{nextBoardView.SUBJECT}}</a>
+                                            <a ng-show="nextBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO,nextBoardView.REG_UID,nextBoardView.PASSWORD_FL)">작성자가 삭제한 글입니다</a>
+                                            <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO,nextBoardView.REG_UID,nextBoardView.PASSWORD_FL)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
                                         </div><!-- /.col-xs-10-->
                                         <div data-ng-show="nextBoardView == false || nextBoardView == '' || nextBoardView == null" class="col-xs-10 board_basicinfo_subject">
                                             다음 글이 없습니다

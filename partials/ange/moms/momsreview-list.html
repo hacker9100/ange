@@ -92,7 +92,9 @@
 
                                     <td style="padding-right:15px;">
                                         <div style="font-size:1.08em; font-weight:600; height:46px;">
-                                            <span>{{ item.SUBJECT | string_limit: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span>
+                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span>
+                                            <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
                                             <span ng-show="item.NEW_FL == 1" class="table_icon_new" style="vertical-align: middle;">N</span>
                                         </div>
 

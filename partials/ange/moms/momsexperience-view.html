@@ -74,9 +74,9 @@
                                         <!-- Editor CSS 적용 img max-width: 720px -->
                                         <!-- 속성에 usemap="a" 를 지정 광고센터 %name% 를 replace해서 name이 usemap 속성에 넣게끔-->
 
-                                            <img ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}"  ng-style="{'max-width':'100%'}" style="float:none; margin:0px auto;">
+                                            <img ng-show="item.ada_text != ''" ng-src="{{item.ada_content_img}}" title="{{item.ada_title}}" usemap="#adimage" ng-style="{'max-width':'100%'}" style="float:none; margin:0px auto;">
 
-                                            <div ng-bind-html="ada_text"></div>
+                                            <div ng-show="item.ada_image != ''" ng-bind-html="ada_text"></div>
                                         <!--{{item.ada_text}}-->
 
                                         <!--<img src="http://ad.ange.co.kr/adm/upload/temp_productimg.jpg" style="width:100%;"/>-->

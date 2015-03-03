@@ -252,6 +252,10 @@
                     $search_where .= "AND CATEGORY_NO = '".$_search[SUPPORT_NO]."' ";
                 }
 
+//                if(isset($_search[BOARD_ST]) && $_search[BOARD_ST] != ""){
+//                    $search_where .= "AND BOARD_ST IS NULL";
+//                }
+
                 // AND PARENT_NO = 0
                 $sql = "SELECT
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,

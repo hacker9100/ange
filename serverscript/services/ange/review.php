@@ -148,12 +148,12 @@
                             (DATE_FORMAT(REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
                             (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'REVIEW') AS REPLY_CNT,
                             CASE TARGET_GB WHEN 'EXPERIENCE' THEN '체험단' WHEN 'EVENT' THEN '이벤트' WHEN 'SAMPLE' THEN '샘플팩' WHEN 'PRODUCT' THEN '상품' ELSE '앙쥬' END AS SHORT_NM, REVIEW_NO, REPLY_FL,
-                            BLIND_FL
+                            BLIND_FL, BOARD_ST
                         FROM
                         (
                             SELECT
                                 NO, SUBJECT, BODY, REG_UID, NICK_NM, REG_DT, HIT_CNT, LIKE_CNT, WARNING_FL, BEST_FL, BLOG_URL, TARGET_NO, TARGET_GB,
-                                REVIEW_NO, REPLY_FL, BLIND_FL
+                                REVIEW_NO, REPLY_FL, BLIND_FL, BOARD_ST
                             FROM
                                 ANGE_REVIEW AR
                             WHERE
