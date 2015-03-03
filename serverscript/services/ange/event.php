@@ -171,6 +171,10 @@
                     $search_where .= "AND ada_type IN (".$_search[ADA_TYPE_IN].") ";
                 }
 
+                if (isset($_search[ADP_CODE_NOT_IN]) && $_search[ADP_CODE_NOT_IN] != "") {
+                    $search_where .= "AND p.adp_code NOT IN (".$_search[ADP_CODE_NOT_IN].") ";
+                }
+
                 if(isset($_search[NOT_SAMPLE]) && $_search[NOT_SAMPLE] == "Y"){
                     $search_where .= "AND adp_idx NOT IN (45, 46) ";
                 }

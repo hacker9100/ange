@@ -42,7 +42,7 @@ define([
                 $scope.PAGE_SIZE = $scope.option.size;
 
                 // 검색 조건 추가
-                $scope.search.SYSTEM_GB = 'ANGE';
+//                $scope.search.SYSTEM_GB = 'ANGE';
 //                $scope.search.NOTICE_FL = '0';
 
                 // 검색 조건에 커뮤니티 번호 추가
@@ -52,10 +52,20 @@ define([
                     } else if ($scope.option.type == 'review') {
                         $scope.search.TARGET_GB = $scope.option.tab[$scope.tabIdx].no;
                     }
+                } else {
+                    if ($scope.option.type == 'board') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_BOARD;
+                    } else if ($scope.option.type == 'photo') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_PHOTO;
+                    } else if ($scope.option.type == 'clinic') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_CLINIC;
+                    } else if ($scope.option.type == 'notice') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_NOTICE;
+                    }
                 }
 
                 // 검색 조건에 대표 이미지 여부 추가
-                if ($scope.option.image != undefined) {
+                if ($scope.option.image != undefined && $scope.option.image == true) {
                     $scope.search.FILE = true;
                 }
 
@@ -64,12 +74,12 @@ define([
                     if ($scope.option.type == 'review') {
 //                        $scope.search.TARGET_GB = angular.uppercase($scope.option.type);
                     } else {
-                        $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
+//                        $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
                     }
                 }
 
                 if ($scope.option.type == 'board') {
-                    $scope.search.COMM_NO_NOT = '91';
+//                    $scope.search.COMM_NO_NOT = '91';
 //                    $scope.search.NOTICE_FL = '0';
                 }
 
@@ -79,14 +89,13 @@ define([
 //                }
 
                 /********** 이벤트 **********/
-                    // 탭 클릭
+                // 탭 클릭
                 $scope.click_tabIndex = function (idx) {
                     $scope.tabIdx = idx;
 
                     if ($scope.option.type == 'board') {
                         $scope.search.COMM_NO = angular.uppercase($scope.option.tab[$scope.tabIdx].no);
                     } else if ($scope.option.type == 'review') {
-                        $scope.search.FILE = true;
                         $scope.search.TARGET_GB = angular.uppercase($scope.option.tab[$scope.tabIdx].no);
                     }
 
@@ -175,7 +184,7 @@ define([
 
                 // 리스트 조회
                 $scope.getPortletList = function () {
-                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList($scope.option.api, 'main', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             $scope.list = data;
                             console.log(JSON.stringify(data))
@@ -232,7 +241,7 @@ define([
                     } else if ($scope.tabIdx == 1) {
                         $scope.search.SORT = 'P.SUBJECT';
                     } else if ($scope.tabIdx == 2) {
-                        $scope.search.SORT = 'T.REG_DT';
+                        $scope.search.SORT = 'T.SUBJECT';
                     }
                 }
 
@@ -244,9 +253,9 @@ define([
                     if ($scope.tabIdx == 0) {
                         $scope.search.SORT = 'T.LIKE_CNT';
                     } else if ($scope.tabIdx == 1) {
-                        $scope.search.SORT = 'T.REG_DT';
+                        $scope.search.SORT = 'P.SUBJECT';
                     } else if ($scope.tabIdx == 2) {
-                        $scope.search.SORT = 'T.REG_DT';
+                        $scope.search.SORT = 'P.SUBJECT';
                     }
 
                     // 탭 번호로 리스트 조회
@@ -364,8 +373,8 @@ define([
                 $scope.PAGE_SIZE = $scope.option.size;
 
                 // 검색 조건 추가
-                $scope.search.SYSTEM_GB = 'ANGE';
-                $scope.search.NOTICE_FL = '0';
+//                $scope.search.SYSTEM_GB = 'ANGE';
+//                $scope.search.NOTICE_FL = '0';
 
                 // 검색 조건에 커뮤니티 번호 추가
                 if ($scope.option.tab != undefined) {
@@ -373,6 +382,16 @@ define([
                         $scope.search.TARGET_GB = $scope.option.tab[$scope.tabIdx].no;
                     } else {
                         $scope.search.COMM_NO = $scope.option.tab[$scope.tabIdx].no;
+                    }
+                } else {
+                    if ($scope.option.type == 'board') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_BOARD;
+                    } else if ($scope.option.type == 'photo') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_PHOTO;
+                    } else if ($scope.option.type == 'clinic') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_CLINIC;
+                    } else if ($scope.option.type == 'notice') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_NOTICE;
                     }
                 }
 
@@ -417,7 +436,7 @@ define([
 
                 // 리스트 조회
                 $scope.getMiniList = function () {
-                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList($scope.option.api, 'main', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             $scope.list = data;
 
@@ -653,7 +672,7 @@ define([
 
                 // 슬라이드 이미지 조회
                 $scope.getPortletList = function (api) {
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList($scope.option.api, 'main', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             for(var i in data) {
                                 if (data[i].FILE != null) {
@@ -1308,13 +1327,13 @@ define([
                 $scope.PAGE_SIZE = $scope.option.size;
 
                 // 검색 조건 추가
-                $scope.search.SYSTEM_GB = 'ANGE';
+//                $scope.search.SYSTEM_GB = 'ANGE';
 //                $scope.search.NOTICE_FL = '0';
 
                 // 검색 조건에 커뮤니티 번호 추가
                 if ($scope.option.type != undefined) {
 //                    $scope.search.COMM_NO = $scope.option.comm;
-                    $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
+//                    $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
                     $scope.search.FILE = true;
                     $scope.search.COMM_NO = '11';
                 }
@@ -1327,7 +1346,7 @@ define([
 
                 // 이미지 조회
                 $scope.getImage = function () {
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList($scope.option.api, 'main', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
 
                             for(var i in data) {
@@ -1370,7 +1389,7 @@ define([
 
                 // 설문 조회
                 $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, {POLL_ST: '1', SORT: 'RAND()', ORDER: ''}, false)
-                    .then(function(data){scope.item = data[0]})
+                    .then(function(data){$scope.item = data[0]})
                     ['catch'](function(error){$scope.item = [];});
             }]
         }

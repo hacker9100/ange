@@ -51,9 +51,9 @@ define([
             console.log($scope.menu.COMM_NO);
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
-            $scope.search.BOARD_GB = 'BOARD';
-            $scope.search.SYSTEM_GB = 'ANGE';
-            $scope.search.BOARD_ST = 'D';
+//            $scope.search.BOARD_GB = 'BOARD';
+//            $scope.search.SYSTEM_GB = 'ANGE';
+//            $scope.search.BOARD_ST = 'D';
 
             $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){

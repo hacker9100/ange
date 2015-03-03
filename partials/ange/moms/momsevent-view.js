@@ -291,12 +291,11 @@ define([
                         $scope.ada_text = data.ada_text != null ? data.ada_text.replace(/&quot;/gi, '\"') : data.ada_text;
                         data.ada_imagemap = data.ada_imagemap != null ? data.ada_imagemap.replace(/&quot;/gi, '\"') : data.ada_imagemap;
 
-                        $scope.ada_text = $scope.ada_text.replace(/src="/gi, 'src="'+CONSTANT.AD_FILE_URL);
-
+                        $scope.ada_text = data.ada_text != null ? $scope.ada_text.replace(/src="/gi, 'src="'+CONSTANT.AD_SERVER_URL) : data.ada_text;
                         $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
                         //$scope.ada_imagemap = data.ada_imagemap;
 
-                        console.log($scope.ada_text);
+                        $scope.renderHtml = $sce.trustAsHtml($scope.ada_text+data.ada_imagemap);
 //                        var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
 //
 //                        $scope.ada_imagemap = $scope.ada_imagemap.replace(pattern, '');

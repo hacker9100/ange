@@ -298,9 +298,10 @@ define([
 
                         data.ada_imagemap = data.ada_imagemap != null ? data.ada_imagemap.replace(/&quot;/gi, '\"') : data.ada_imagemap;
 
-                        $scope.ada_text = $scope.ada_text.replace(/src="/gi, 'src="'+CONSTANT.AD_FILE_URL);
-
+                        $scope.ada_text = data.ada_text != null ? $scope.ada_text.replace(/src="/gi, 'src="'+CONSTANT.AD_SERVER_URL) : data.ada_text;
                         $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
+
+                        $scope.renderHtml = $sce.trustAsHtml($scope.ada_text+data.ada_imagemap);
 
                         //$scope.D_DAY = parseInt($scope.end_date) - parseInt($scope.todayDate);
 

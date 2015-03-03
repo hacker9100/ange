@@ -402,6 +402,108 @@
                         $_d->dataEnd($sql);
                     }
                 }
+            } else if ($_type == 'main') {
+                $search_where = "";
+                $sort_order = ", REG_DT DESC";
+                $limit = "";
+
+                if (isset($_search[COMM_NO_IN]) && $_search[COMM_NO_IN] != "") {
+                    $search_where .= "AND COMM_NO IN (".$_search[COMM_NO_IN].") ";
+                }
+
+                if (isset($_search[COMM_NO]) && $_search[COMM_NO] != "") {
+                    $search_where .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
+                }
+
+                if (isset($_search[BOARD_GB]) && $_search[BOARD_GB] != "") {
+                    $search_where .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
+                }
+
+                if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
+                    $search_where .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
+                }
+
+                if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] != "") {
+                    $search_where .= "AND NOTICE_FL = '".$_search[NOTICE_FL]."' ";
+                }
+
+                if (isset($_search[COMM_NO_NOT]) && $_search[COMM_NO_NOT] != "") {
+                    $search_where .= "AND COMM_NO != '".$_search[COMM_NO_NOT]."' ";
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order = ", ".$_search[SORT]." ".$_search[ORDER]." ";
+                }
+
+                if (isset($_page)) {
+                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                }
+
+                $sql = "SELECT
+                            DATA.NO, HEAD, SUBJECT, DATA.REG_UID, DATA.REG_NM, DATA.NICK_NM, DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO,
+                            (SELECT SHORT_NM FROM ANGE_COMM WHERE DATA.COMM_NO = NO) AS SHORT_NM,
+                            (DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
+                            CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, CATEGORY_NO,
+                            BOARD_NO, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT, BLIND_FL
+                        FROM
+                        (
+                            SELECT
+                                B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO,
+                                B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO, B.BOARD_ST, BLIND_FL
+                            FROM
+                                COM_BOARD B
+                            WHERE
+                                1=1
+                                ".$search_where."
+                            ORDER BY NOTICE_FL DESC".$sort_order."
+                            ".$limit."
+                        ) AS DATA
+                        ";
+
+                $data = null;
+
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+                MtUtil::_d("### [START]");
+                if($_search['FILE']) {
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                        $sql = "SELECT
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    F.NO = S.SOURCE_NO
+                                    AND S.CONTENT_GB = 'FILE'
+                                    AND S.TARGET_GB = 'BOARD'
+                                    AND F.FILE_GB = 'MAIN'
+                                    AND F.THUMB_FL = 0
+                                    AND S.TARGET_NO = ".$row['NO']."";
+
+                        $file_result = $_d->sql_query($sql);
+                        $file_data = $_d->sql_fetch_array($file_result);
+                        $row['FILE'] = $file_data;
+
+                        $__trn->rows[$i] = $row;
+                    }
+
+                    $_d->sql_free_result($result);
+                    $data = $__trn->{'rows'};
+
+                    if ($_d->mysql_errno > 0) {
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    } else {
+                        $_d->dataEnd2($data);
+                    }
+                } else {
+                    $data = $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0){
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    }else{
+                        $_d->dataEnd($sql);
+                    }
+                }
             } else if ($_type == 'pre') {
 
                 $search_where = "";
