@@ -426,6 +426,45 @@ define([
                         if($scope.item.ada_que_type == 'reply'){
 
                             //$scope.item.REPLY_SUBJECT = $scope.item.ada_title;
+
+                            // 댓글 리스트
+                            $scope.getReplyList = function () {
+
+                                $scope.replySearch.TARGET_NO = $scope.TARGET_NO;
+                                $scope.replySearch.TARGET_GB = $scope.TARGET_GB;
+
+                                $scope.getItem('ange/event', 'replyitem', {}, $scope.replySearch, true)
+                                    .then(function(data){
+
+                                        if(data.COMMENT == null){
+                                            $scope.replySearch.TOTAL_COUNT = 0;
+                                        }else{
+                                            $scope.replySearch.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
+                                        }
+
+                                        var reply = data.COMMENT;
+                                        $scope.replyItem = {};
+
+                                        for(var i in reply) {
+
+                                            $("textarea#comment").val(reply[i].COMMENT);
+                                            $scope.replyList.push(reply[i]);
+                                        }
+                                    })
+                                    .catch(function(error){$scope.replyList = "";});
+                            };
+
+
+
+
+
+
+
+
+
+
+
+
                         }
 
                         if($scope.item.ada_que_type == 'join'){
@@ -1085,6 +1124,17 @@ define([
                                 console.log($scope.item.ANSWER);
                             }
 
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+
+                                    if ($stateParams.menu == 'eventprocess') {
+                                        $location.url('/moms/eventprocess/list');
+                                    } else if($stateParams.menu == 'eventperformance') {
+                                        $location.url('/moms/eventperformance/list');
+                                    }
+                                })
+                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }else{
                             dialogs.notify('알림', '이미 이 이벤트에 참여 했으므로 중복 참여는 불가능합니다.', {size: 'md'});
                             return;
