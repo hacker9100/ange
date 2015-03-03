@@ -119,7 +119,49 @@
                 }else{
                     $_d->dataEnd2($data);
                 }
-            } else if ($_type == 'list') {
+            } if ($_type == 'replyitem') {
+
+                $search_where = "";
+                $search_common = "";
+                $limit = "";
+                $sort_order = "ORDER BY REG_DT DESC";
+
+                if(isset($_search[ada_idx]) && $_search[ada_idx] != ""){
+                    $search_where .= "AND ada_idx = '".$_search[ada_idx]."' ";
+                }
+
+                if (isset($_search[PAGE_NO]) && $_search[PAGE_NO] != "") {
+                    $limit .= "LIMIT ".(($_search[PAGE_NO]-1) * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                }
+
+                //TODO: 조회
+                $sql = "SELECT adhj_answers, nick_nm, DATE_FORMAT(adhj_date_request, '%Y-%m-%d') as adhj_date_request, TOTAL_COUNT
+                        FROM
+                        (
+                            SELECT
+                                  a.adhj_answers, (SELECT U.NICK_NM FROM COM_USER U WHERE U.USER_ID = a.adu_id) nick_nm, a.adhj_date_request
+                            FROM adm_history_join a
+                            WHERE 1 = 1
+                                ".$search_where."
+                                ORDER BY adhj_date_request DESC
+                                ".$limit."
+                        ) AS DATA,
+                        (SELECT @RNUM := 0) R,
+                        (
+                            SELECT COUNT(*) AS TOTAL_COUNT
+                            FROM adm_history_join a
+                            WHERE 1 = 1
+                                ".$search_where."
+                        ) CNT";
+
+                $data = $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
+            }else if ($_type == 'list') {
                 $search_common = "";
                 $search_where = "";
                 $sort_order = "";

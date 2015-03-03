@@ -278,10 +278,48 @@
 
                                         <div class="row peopleboard_view_commentbox">
                                             <div class="col-xs-10 peopleboard_view_text">
-                                                <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
+                                                <textarea ng-model="item.COMMENT" ng-disabled="uid == null || uid == '' ? true : false" class="form-control" rows="4" style="resize: none;"></textarea>
                                             </div><!-- /.col-xs-10-->
+                                            <div class="col-xs-2 peopleboard_view_btns">
+
+                                                <span>(100자 이내)</span>
+                                                <a class="reply_submit" ng-click="click_momseventcomp();">댓글등록</a>
+
+                                            </div>
                                         </div><!-- /.row -->
                                     </div><!-- /.container -->
+
+                                    <br/><br/>
+                                    <div class="container-fluid people_view_replywrap" >
+                                        <div class="row">
+
+                                            <div class="col-xs-12 people_view_replys" ng-repeat="item in eventReplyList">
+                                                <dl class="dl-horizontal" >
+                                                    <dt>{{item.NICK_NM}}</dt>
+                                                    <dd><div class="people_view_replys_date">{{item.REG_DT}}</div></dd>
+                                                    <dd style="margin:0px;">
+                                                        {{item.COMMENT}}
+                                                    </dd>
+                                                </dl>
+                                            </div><!-- /.people_view_replys-->
+
+                                            <div class="col-xs-12 people_view_replys" data-ng-show="eventReplyList == ''">
+                                                <dl class="dl-horizontal" >
+                                                    <dt></dt>
+                                                    <dd><div class="people_view_replys_date"></div></dd>
+                                                    <dd style="margin:0px;">
+                                                        댓글이 없습니다.
+                                                    </dd>
+                                                </dl>
+                                            </div>
+
+                                            <nav class="text-center">
+                                                <pagination boundary-links="true" total-items="search.TOTAL_COUNT" ng-model="search.PAGE_NO" class="pagination-sm" ng-change="replyPageChange()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                            </nav><!-- /.Paging-->
+
+                                        </div><!-- /.row -->
+                                    </div>
+
                                 </div>
                                 <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
 
@@ -737,17 +775,18 @@
 
                             </div>
 
-                            <div class="moms_form_foot" ng-show="uid && item.ada_que_type != 'none'" style="border-bottom:2px solid #111;"><div class="moms_form_footbtn">
-                                <button ng-click="click_momseventlist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>
-                                <button ng-click="click_momseventcomp();" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
-                                <!--&lt;!&ndash;<button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>&ndash;&gt;-->
-                            </div>
+                            <div class="moms_form_foot" ng-show="uid" style="border-bottom:2px solid #111;">
+                                <div  class="moms_form_footbtn">
+                                    <button ng-click="click_momseventlist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>목록</button>
+                                    <button ng-click="click_momseventcomp();" ng-hide="item.ada_que_type == 'none' || item.ada_que_type == 'reply'" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
+                                    <!--&lt;!&ndash;<button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>&ndash;&gt;-->
+                                </div>
 
-                            <div class="moms_form_foot" ng-show="!uid" style="background-color:#F8F8F8;">
-                                <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">로그인 후에 응모가 가능합니다.</div>
+                                <div class="moms_form_foot" ng-show="!uid" style="background-color:#F8F8F8;">
+                                    <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">로그인 후에 응모가 가능합니다.</div>
+                                </div> <!-- /.moms_state -->
+
                             </div> <!-- /.moms_state -->
-
-                        </div> <!-- /.moms_state -->
 
 
                         </div><!-- /.sub_contents_wrap -->

@@ -426,33 +426,40 @@ define([
                         if($scope.item.ada_que_type == 'reply'){
 
                             //$scope.item.REPLY_SUBJECT = $scope.item.ada_title;
+                            $scope.search.PAGE_NO = 1;
+                            $scope.search.PAGE_SIZE = 10;
+                            $scope.search.TOTAL_COUNT = 0;
+
+                            $scope.eventReplyList = [];
+
+
+                            $scope.replyPageChange = function(){
+                                console.log('Page changed to: ' + $scope.search.PAGE_NO);
+                                $scope.eventReplyList = [];
+                                $rootScope.getEventReplyList();
+                            }
 
                             // 댓글 리스트
-//                            $scope.getReplyList = function () {
-//
-//                                $scope.replySearch.TARGET_NO = $scope.TARGET_NO;
-//                                $scope.replySearch.TARGET_GB = $scope.TARGET_GB;
-//
-//                                $scope.getItem('ange/event', 'replyitem', {}, $scope.replySearch, true)
-//                                    .then(function(data){
-//
-//                                        if(data.COMMENT == null){
-//                                            $scope.replySearch.TOTAL_COUNT = 0;
-//                                        }else{
-//                                            $scope.replySearch.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
-//                                        }
-//
-//                                        var reply = data.COMMENT;
-//                                        $scope.replyItem = {};
-//
-//                                        for(var i in reply) {
-//
-//                                            $("textarea#comment").val(reply[i].COMMENT);
-//                                            $scope.replyList.push(reply[i]);
-//                                        }
-//                                    })
-//                                    .catch(function(error){$scope.replyList = "";});
-//                            };
+                            $rootScope.getEventReplyList = function () {
+
+                                $scope.search.ada_idx = $stateParams.id;
+
+                                $scope.getItem('ange/event', 'replyitem', {}, $scope.search, true)
+                                    .then(function(data){
+
+                                        $scope.search.TOTAL_COUNT = data[0].TOTAL_COUNT;
+                                        for(var i in data) {
+
+                                            data[i].adhj_answers = data[i].adhj_answers.replace(/{"1":"/gi, '');
+                                            data[i].adhj_answers = data[i].adhj_answers.replace(/"}/gi, '');
+
+                                            $scope.eventReplyList.push({'NICK_NM' : data[i].nick_nm, 'COMMENT' : data[i].adhj_answers, 'REG_DT' : data[i].adhj_date_request});
+                                        }
+                                    })
+                                    .catch(function(error){$scope.eventReplyList = "";});
+                            };
+
+                            $rootScope.getEventReplyList();
 
                         }
 
@@ -815,7 +822,7 @@ define([
 
             } else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
-                console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
+                //console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
                 $scope.item.ANSWER = '{"1":"'+ $scope.item.COMMENT+'"}';
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
