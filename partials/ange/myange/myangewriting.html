@@ -40,7 +40,9 @@
                                 <tr ng-click="click_showViewPeopleBoard(item.COMM_NO, item.NO)" style="cursor:pointer;">
                                     <td>
                                         <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                        {{item.SHORT_NM != ''? '['+item.SHORT_NM+']' : ''}}&nbsp;{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{item.SHORT_NM != ''? '['+item.SHORT_NM+']' : ''}}&nbsp;{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                                        <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
                                         <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>
                                         <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                         <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
@@ -82,7 +84,9 @@
                                                     <div ng-click="click_showViewPeoplePhoto(item.COMM_NO, item.NO)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
                                                             <!--<img class="people_photo_img" ng-src="{{item.MAIN_FILE}}"/>-->
-                                                            <img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
+                                                            <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
+                                                            <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" />
+                                                            <img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" /> <!-- 삭제처리했을때 블라인드 이미지 추가해야함-->
                                                             <div class="people_photo_cate">
                                                                 <span>{{item.CATEGORY_NM}}</span>
                                                                 <div style="position:absolute; display:inline; bottom:8px; right:0;">
@@ -92,7 +96,9 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="people_photo_txt">{{item.SUBJECT}}</div>
+                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}</div>
+                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</div>
+                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</div>
                                                         <div class="people_photo_info"><span class="table_blue">{{item.NICK_NM}}</span> | {{item.REG_DT}}</div>
                                                     </div><!-- /.people_photo_content -->
                                                 </div><!-- /.people_photo_contentcol -->
@@ -131,7 +137,10 @@
                                     <tr ng-click="click_showViewPeopleClinic(item.COMM_NO, item.NO)" style="cursor:pointer;">
                                         <td>
                                             <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
-                                            [{{item.SHORT_NM}}]&nbsp;{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 된 글입니다</span>
+                                            <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+
                                             <!--<span class="reply_num">[2]</span>-->
                                             <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                                             <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
