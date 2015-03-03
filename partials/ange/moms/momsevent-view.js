@@ -564,7 +564,7 @@ define([
                     answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                 })
 
-                $("input[name='long_answer[]'").each(function(index, element) { // 장문
+                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
                     if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
                         dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
@@ -663,7 +663,7 @@ define([
                     answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                 })
 
-                $("input[name='long_answer[]'").each(function(index, element) { // 장문
+                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
                     if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
                         dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
@@ -826,7 +826,7 @@ define([
                         answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                     })
 
-                    $("input[name='long_answer[]'").each(function(index, element) { // 장문
+                    $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
                         if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
                             dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
@@ -940,7 +940,7 @@ define([
                         answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                     })
 
-                    $("input[name='long_answer[]'").each(function(index, element) { // 장문
+                    $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
                         if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
                             dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
