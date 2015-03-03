@@ -192,8 +192,6 @@ define([
                 return;
             }
 
-            console.log(item);
-
             //$location.url('/'+$stateParams.channel+'/discuss/edit/'+$stateParams.id);
             $location.url('/'+$stateParams.channel+'/discuss/edit/0');
         };

@@ -83,6 +83,7 @@
                 $currentYear = date('Y');
 
                 if (isset($_search['YEAR']) && $_search['YEAR'] != "") {
+
                     if($currentYear != $_search['YEAR']){
                         $search_table .= "FROM ANGE_USER_MILEAGE_".$_search['YEAR']." AUM";
                     }else{
@@ -391,10 +392,11 @@
                         $msg = $_d->mysql_error;
                     }
 
+                    // ANGE_MILEAGE_STATUS
                     $sql = "SELECT
                                 SUM_POINT, REMAIN_POINT
                             FROM
-                                ANGE_MILEAGE_STATUS
+                                COM_USER
                             WHERE
                                 USER_ID = '".$row[USER_ID]."'";
 
@@ -405,7 +407,7 @@
                     $remain_point = $mileage_data[REMAIN_POINT] + $_model[POINT];
 
                     $sql = "UPDATE
-                                ANGE_MILEAGE_STATUS
+                                COM_USER
                             SET
                                 SUM_POINT = ".$sum_point."
                                 ,REMAIN_POINT = ".$remain_point."
@@ -448,7 +450,8 @@
 
                 $_d->sql_query($sql);
 
-                $sql = "UPDATE ANGE_MILEAGE_STATUS SET
+                // ANGE_MILEAGE_STATUS
+                $sql = "UPDATE COM_USER SET
                                 SUM_POINT = ".$_model[SUM_POINT]."
                                 ,USE_POINT = ".$_model[USE_POINT]."
                                 ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
@@ -464,7 +467,7 @@
                 }
             }else if($_type == 'mileageitemplus'){
 
-                $sql = "UPDATE ANGE_MILEAGE_STATUS SET
+                $sql = "UPDATE COM_USER SET
                                 SUM_POINT = USE_POINT + ".$_model[REMAIN_POINT]."
                                 ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
                          WHERE USER_ID = '".$_SESSION['uid']."'";
@@ -479,7 +482,7 @@
                 }
             }else if($_type == 'mileageitemminus'){
 
-                $sql = "UPDATE ANGE_MILEAGE_STATUS SET
+                $sql = "UPDATE COM_USER SET
                                 SUM_POINT = SUM_POINT - ".$_model[REMAIN_POINT]."
                                 ,REMAIN_POINT = REMAIN_POINT - ".$_model[REMAIN_POINT]."
                          WHERE USER_ID = '".$_SESSION['uid']."'";
