@@ -146,7 +146,7 @@ define([
 //                    }
 
                 })
-                .catch(function(error){$scope.end = true;}); // $scope.TOTAL_COUNT = 0; $scope.list = "";
+                ['catch'](function(error){$scope.end = true;}); // $scope.TOTAL_COUNT = 0; $scope.list = "";
         };
 
         // 상세보기

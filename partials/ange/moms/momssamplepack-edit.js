@@ -102,7 +102,7 @@ define([
                     $scope.item.PHONE_2 = data.PHONE_2;
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             $scope.item.PREGNANT_WEEKS = 0;
             $scope.item.CHILD_CNT = 0;
@@ -162,7 +162,7 @@ define([
                             $scope.item.BLOG_URL = data.BLOG_URL;
 
                         })
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     if($scope.item.PREGNENT_FL == 'Y'){
                         $scope.checked = "Y";
@@ -195,7 +195,7 @@ define([
                                 $modalInstance.close();
 
 
-                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     };
 
@@ -212,7 +212,7 @@ define([
                         console.log($scope.item);
 
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';
@@ -365,7 +365,7 @@ define([
 //                   $scope.item.DAY = babyBirthDt.substr(6,2);
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 //            var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
 //
 //            $scope.item.YEAR = babyBirthDt.substr(0,4);
@@ -474,7 +474,7 @@ define([
                                         $location.url('/moms/eventperformance/list');
                                     }
                                 })
-                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
@@ -602,14 +602,14 @@ define([
 
                                 $location.url('/moms/samplepack/intro');
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }else{
                         dialogs.notify('알림', '이미 샘플팩 신청을 했습니다.', {size: 'md'});
                         $location.url('/moms/samplepack/intro');
                     }
 
             })
-            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 
         }
@@ -618,7 +618,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
+            ['catch']($scope.reportProblems);*/
 
         // 신청자격 여부 체크
         $scope.click_samplepackCheck = function (){
@@ -642,7 +642,7 @@ define([
                     }
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         }
 
 
@@ -653,7 +653,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.click_sampleSeasonList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 
     }]);

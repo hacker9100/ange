@@ -138,7 +138,7 @@ define([
 //                        $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
 //                    }
 //                })
-//                .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
+//                ['catch'](function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
 
             var idx = 0;
             for(var i=0; i < $scope.month.length; i ++){
@@ -193,7 +193,7 @@ define([
                     }
 
                 })
-                .catch(function(error){$scope.replyList = ""; $scope.search.TOTAL_COUNT=0;});
+                ['catch'](function(error){$scope.replyList = ""; $scope.search.TOTAL_COUNT=0;});
         };
 
         // 의견 등록
@@ -224,7 +224,7 @@ define([
                     $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
                         .then(function(){
                         })
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     $scope.getItem('com/reply', 'item', {}, $scope.search, true)
                         .then(function(data){
@@ -234,7 +234,7 @@ define([
                                 $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
                             }
                         })
-                        .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
+                        ['catch'](function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
 
                     $scope.search.TARGET_NO = $stateParams.id;
                     $scope.replyList = [];
@@ -242,7 +242,7 @@ define([
 
                     $scope.item.COMMENT = "";
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 댓글 수정
@@ -265,7 +265,7 @@ define([
 
                     $scope.item.COMMENT = "";
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 댓글 삭제
@@ -283,14 +283,14 @@ define([
                         $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
                             .then(function(){
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         $scope.replyList = [];
                         $scope.getPeopleReplyList();
 
                         $scope.item.COMMENT = "";
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -367,7 +367,7 @@ define([
 
                     $scope.getPeopleReplyList();
                 })
-                .catch(function(error){
+                ['catch'](function(error){
                     $scope.talkitem="";
                     console.log('aa = '+$scope.talkitem);
                 });
@@ -380,7 +380,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getTalkSubject)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         console.log($rootScope.uid);
 //        $scope.init();

@@ -91,7 +91,7 @@ define([
 //                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
                     }
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 
             // 게시글 전체 건수
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
@@ -100,14 +100,14 @@ define([
 
                     $scope.PHOTO_TOTAL_COUNT = total_cnt;
                 })
-                .catch(function(error){$scope.PHOTO_TOTAL_COUNT = 0;});
+                ['catch'](function(error){$scope.PHOTO_TOTAL_COUNT = 0;});
 
             // 카테고리 탭 셋팅
             $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
                     $scope.category_list = data;
                 })
-                .catch(function(error){$scope.category_list = ""; });
+                ['catch'](function(error){$scope.category_list = ""; });
         };
 
         /********** 이벤트 **********/
@@ -175,7 +175,7 @@ define([
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
                 })
-                .catch(function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0});
+                ['catch'](function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0});
         };
 
         // 조회 화면 이동

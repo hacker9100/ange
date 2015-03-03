@@ -96,11 +96,11 @@ define([
             if ($scope.item.NO == undefined) {
                 $scope.insertItem('ange/talk', 'item', $scope.item, false)
                     .then(function(data){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'}); $scope.item.NO = data})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('ange/talk', 'item', $scope.item.NO, $scope.item, false)
                     .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -129,7 +129,7 @@ define([
 
 //                    $scope.click_focus('item', 'item_name');
                 })
-                .catch(function(error){
+                ['catch'](function(error){
                     $scope.item = {};
                     $scope.item = $scope.search;
                     $scope.file = '';
@@ -147,6 +147,6 @@ define([
             .then($scope.sessionCheck)
             .then($scope.permissionCheck)
             .then($scope.init)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
     }]);
 });

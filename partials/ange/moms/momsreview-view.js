@@ -96,7 +96,7 @@ define([
                         $scope.event = data;
                         $scope.item.TARGET_NO = data[0].SUBJECT;
                     })
-                    .catch(function(error){alert(error)});
+                    ['catch'](function(error){alert(error)});
             } else if ($stateParams.menu == 'eventreview') {
 
                 $scope.search.EVENT_GB = 'event';
@@ -106,7 +106,7 @@ define([
                         $scope.event = data;
                         $scope.item.TARGET_NO = data[0].SUBJECT;
                     })
-                    .catch(function(error){alert(error)});
+                    ['catch'](function(error){alert(error)});
             }
         };
 
@@ -152,7 +152,7 @@ define([
             $scope.updateItem('ange/review', 'hit', $stateParams.id, {}, false)
                 .then(function(){
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 게시판 조회
@@ -176,7 +176,7 @@ define([
 
                         //$scope.search.TARGET_NO = $stateParams.id;
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -218,7 +218,7 @@ define([
                     console.log('RE = '+data.COMMENT);
                     console.log('end');
                 })
-                .catch(function(error){$scope.replyList = "";});
+                ['catch'](function(error){$scope.replyList = "";});
         };
 
         // 의견 등록
@@ -256,7 +256,7 @@ define([
 
                     $scope.item.COMMENT = "";
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 답글 등록
@@ -291,7 +291,7 @@ define([
 
                     $scope.getPeopleBoard();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
 
@@ -320,7 +320,7 @@ define([
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
-                    .catch(function(error){$scope.preBoardView = "";})
+                    ['catch'](function(error){$scope.preBoardView = "";})
             }
         }
 
@@ -349,7 +349,7 @@ define([
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
-                    .catch(function(error){$scope.nextBoardView = "";})
+                    ['catch'](function(error){$scope.nextBoardView = "";})
             }
         }
 
@@ -373,7 +373,7 @@ define([
                             $location.url('/moms/eventreview/list');
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -411,7 +411,7 @@ define([
                         }
 
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }else{
                 $scope.LIKE_FL = 'N';
             }
@@ -446,7 +446,7 @@ define([
                         $scope.getPeopleBoard();
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             /*            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
              .then(function(){
@@ -454,7 +454,7 @@ define([
              dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
              $scope.getPeopleBoard();
              })
-             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
+             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
         };
 
         // 스크랩
@@ -494,11 +494,11 @@ define([
                                 dialogs.notify('알림', '스크랩 되었습니다.', {size: 'md'});
                                 $scope.getPeopleBoard();
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
         };
 
@@ -560,7 +560,7 @@ define([
          .then($scope.sessionCheck)
          .then($scope.init)
          .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
+         ['catch']($scope.reportProblems);*/
 
         $scope.getSession()
             .then($scope.sessionCheck)
@@ -569,7 +569,7 @@ define([
             .then($scope.getPeopleBoard)
             .then($scope.getPreBoard)
             .then($scope.getNextBoard)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 //        $scope.init();
 //        $scope.likeFl();

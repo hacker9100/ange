@@ -117,7 +117,7 @@ define([
                 .then(function(){
                     dialogs.notify('알림', '정상적으로 접수되었습니다.', {size: 'md'});
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
 

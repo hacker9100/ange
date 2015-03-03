@@ -2,19 +2,19 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-09-23
- * Description : webboard-list.html 화면 콘트롤러
+ * Description : onlinetalk-list.html 화면 콘트롤러
  */
 
 define([
-    'controller/controllers'
+    '../../js/admin/controller/controllers'
 ], function (controllers) {
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('webboard-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
+    controllers.controller('onlinetalk-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
 
         /********** 초기화 **********/
-        $scope.search = {SYSTEM_GB: 'CMS'};
+        $scope.search = {SYSTEM_GB: 'ANGE', BOARD_GB: 'TALK', COMM_NO: CONSTANT.COMM_NO_ONLINETALK, CATEGORY: true};
 
         // 초기화
         $scope.init = function() {
@@ -27,28 +27,33 @@ define([
 
         /********** 이벤트 **********/
         // 등록 버튼 클릭
-        $scope.click_showCreateNewCmsBoard = function () {
-            $location.url('/webboard/edit/0');
+        $scope.click_showCreateNewOnlineTalk = function () {
+            if ($rootScope.role != 'ANGE_ADMIN') {
+                dialogs.notify('알림', "등록 권한이 없습니다.", {size: 'md'});
+                return;
+            }
+
+            $location.url('/onlinetalk/edit/0');
         };
 
         // 조회 화면 이동
-        $scope.click_showViewCmsBoard = function (key) {
-            $location.url('/webboard/view/'+key);
+        $scope.click_showViewOnlineTalk = function (key) {
+            $location.url('/onlinetalk/view/'+key);
         };
 
         // 수정 화면 이동
-        $scope.click_showEditCmsBoard = function (item) {
-            if ($rootScope.role != 'CMS_ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+        $scope.click_showEditOnlineTalk = function (item) {
+            if ($rootScope.role != 'ANGE_ADMIN' && $rootScope.uid != item.REG_UID) {
                 dialogs.notify('알림', "수정 권한이 없습니다.", {size: 'md'});
                 return;
             }
 
-            $location.path('/webboard/edit/'+item.NO);
+            $location.path('/onlinetalk/edit/'+item.NO);
         };
 
         // 삭제 버튼 클릭
-        $scope.click_deleteCmsBoard = function (item) {
-            if ($rootScope.role != 'CMS_ADMIN' && $rootScope.role != 'MANAGER' && $rootScope.uid != item.REG_UID) {
+        $scope.click_deleteOnlineTalk = function (item) {
+            if ($rootScope.role != 'ANGE_ADMIN' && $rootScope.uid != item.REG_UID) {
                 dialogs.notify('알림', '삭제 권한이 없습니다.', {size: 'md'});
                 return;
             }
@@ -56,16 +61,16 @@ define([
             var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
 
             dialog.result.then(function(btn){
-                $scope.deleteItem('com/webboard', 'item', item.NO, false)
+                $scope.deleteItem('com/webboard', 'terminate', item.NO, false)
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
         };
 
         // 검색 버튼 클릭
-        $scope.click_searchCmsBoard = function () {
+        $scope.click_searchOnlineTalk = function () {
             $scope.tableParams.$params.page = 1;
             $scope.tableParams.reload();
         };
@@ -74,12 +79,12 @@ define([
         $scope.PAGE_SIZE = 10;
 
         // 게시판 목록 조회
-        $scope.getCmsBoardList = function () {
+        $scope.getOnlineTalkList = function () {
             $scope.tableParams = new ngTableParams({
                 page: 1,                    // show first page
                 count: $scope.PAGE_SIZE,    // count per page
                 sorting: {                  // initial sorting
-                    REG_DT: 'desc'
+                    NO: 'desc'
                 }
             }, {
                 counts: [],         // hide page counts control
@@ -104,19 +109,13 @@ define([
                         ['catch'](function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
                 }
             });
-
-//            $scope.isLoading = true;
-//            $scope.getList('com/webboard', 'list', {NO:0, SIZE:20}, $scope.search, true)
-//                .then(function(data){$scope.listData = data; $scope.totalItems = data[0].TOTAL_COUNT;})
-//                ['catch'](function(error){$scope.list = []; console.log(error);})
-//                .finally(function(){$scope.isLoading = false;});
         };
 
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
-            .then($scope.getCmsBoardList)
+            .then($scope.getOnlineTalkList)
             ['catch']($scope.reportProblems);
     }]);
 });

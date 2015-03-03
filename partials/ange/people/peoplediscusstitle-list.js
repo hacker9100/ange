@@ -69,7 +69,7 @@ define([
                     $scope.COMM_MG_NM = comm_mg_nm;
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         };
 
         /********** 이벤트 **********/
@@ -85,7 +85,7 @@ define([
                     $scope.list = data;
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
         $scope.pageChanged = function() {
@@ -122,7 +122,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoardList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         console.log($rootScope.uid);
 

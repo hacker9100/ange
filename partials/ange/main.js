@@ -90,6 +90,16 @@ define([
         $scope.main2 = [];
 
         // 메뉴 목록 조회
+        $scope.getStoryList = function () {
+            $scope.getList('com/task', 'main', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, false)
+                .then(function(data){
+
+                })
+                ['catch'](function(error){alert(error)});
+            }
+
+
+        // 메뉴 목록 조회
         $scope.getMenuList = function () {
             $scope.getList('com/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, false)
                 .then(function(data){
@@ -111,12 +121,13 @@ define([
 
 //                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
                 })
-                .catch(function(error){alert(error)});
+                ['catch'](function(error){alert(error)});
         };
 
         /********** 화면 초기화 **********/
         $scope.init();
         $scope.getMenuList();
+//        $scope.getStoryList();
 
     }]);
 });

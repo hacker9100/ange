@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peopleclinic-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', '$modal', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD, $modal) {
+    controllers.controller('peopleclinic-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', '$modal', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT, $modal) {
         /********** 초기화 **********/
             // 첨부파일 초기화
         $scope.queue = [];
@@ -57,7 +57,7 @@ define([
 //                    $scope.COMM_MG_NM = comm_mg_nm;
 //
 //                })
-//                .catch(function(error){});
+//                ['catch'](function(error){});
 
             $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
@@ -66,13 +66,13 @@ define([
                     var file = data.FILES;
                     for(var i in file) {
                         if (file[i].FILE_GB == 'MANAGER'){
-//                            $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
-                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
+                            $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
+//                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
                         }
                         console.log($scope.main_img);
                     }
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         };
 
         $scope.likeFl = function (){
@@ -92,7 +92,7 @@ define([
                         }
 
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }else{
                 $scope.LIKE_FL = 'N';
             }
@@ -174,7 +174,7 @@ define([
                                     return;
                                 }
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'})});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'})});
                     }
 
                     $scope.click_cancel = function () {
@@ -212,7 +212,7 @@ define([
             $scope.updateItem('com/webboard', 'hit', $stateParams.id, {}, false)
                 .then(function(){
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
 
@@ -225,7 +225,7 @@ define([
 
                         var files = data.FILES;
                         for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":CONSTANT.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":CONSTANT.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":CONSTANT.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":CONSTANT.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
 
 
@@ -255,7 +255,7 @@ define([
                         $scope.reply.PARENT_NO = $scope.item.NO;
 
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -308,7 +308,7 @@ define([
 //                        $location.url('/people/financial/list');
 //                    }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 이전글
@@ -333,7 +333,7 @@ define([
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
-                    .catch(function(error){$scope.preBoardView = "";})
+                    ['catch'](function(error){$scope.preBoardView = "";})
             }
         }
 
@@ -360,7 +360,7 @@ define([
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
-                    .catch(function(error){$scope.nextBoardView = "";})
+                    ['catch'](function(error){$scope.nextBoardView = "";})
             }
         }
 
@@ -406,7 +406,7 @@ define([
 //                            $location.url('/people/financial/list');
 //                        }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -440,7 +440,7 @@ define([
                         $scope.getPeopleClinic();
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             /*            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
              .then(function(){
@@ -448,7 +448,7 @@ define([
              dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
              $scope.getPeopleBoard();
              })
-             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
+             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
         };
 
         // 스크랩
@@ -483,11 +483,11 @@ define([
                                 dialogs.notify('알림', '스크랩 되었습니다.', {size: 'md'});
                                 $scope.getPeopleClinic();
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
         };
 
@@ -527,7 +527,7 @@ define([
          .then($scope.getPeopleClinic)
          .then($scope.getPreBoard)
          .then($scope.getNextBoard)
-         .catch($scope.reportProblems);
+         ['catch']($scope.reportProblems);
         //$scope.addHitCnt();
 
 //        $scope.init();

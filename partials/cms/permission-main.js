@@ -21,7 +21,7 @@ define([
                     $scope.roles = data;
                     $scope.ROLE = data[0];
                 })
-                .catch(function(error){console.log(error)});
+                ['catch'](function(error){console.log(error)});
         };
 
         /********** 이벤트 **********/
@@ -35,14 +35,14 @@ define([
         $scope.getPermission = function() {
             $scope.getItem('com/permission', 'item', $scope.ROLE.ROLE_ID, {}, false)
                 .then(function(data) {$scope.list = data;})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 권한 저장 버튼 클릭
         $scope.click_savePermission = function() {
             $scope.updateItem('com/permission', 'item', $scope.ROLE.ROLE_ID, $scope.list, false)
                 .then(function(){dialogs.notify('알림', '권한이 수정 되었습니다.', {size: 'md'});})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         /********** 화면 초기화 **********/
@@ -50,7 +50,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.permissionCheck)
             .then($scope.init)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

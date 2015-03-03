@@ -203,7 +203,7 @@ define([
                     $scope.COMM_MG_NM = comm_mg_nm;
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 
 
         };
@@ -266,7 +266,7 @@ define([
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE", "type" : files[i].FILE_EXT});
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -309,7 +309,7 @@ define([
                        $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
                            .then(function(){
                            })
-                           .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                           ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
@@ -317,7 +317,7 @@ define([
 
                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             } else {
 
@@ -346,13 +346,13 @@ define([
                         $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
                             .then(function(){
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -363,13 +363,13 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
+            ['catch']($scope.reportProblems);*/
 
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoard)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 //        $scope.init();
 //        $scope.getPeopleBoard();

@@ -105,7 +105,7 @@ define([
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","vsersion":6,"kind":files[i].FILE_GB});
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -138,18 +138,18 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('ange/product', 'item', $scope.item, false)
                     .then(function(){$location.url('/product/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('ange/product', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/product/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
         $scope.click_deleteFile = function (file) {
             $scope.updateItem('com/file', 'item', file.NO, false)
                 .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.click_selectMainImage = function (file) {
@@ -170,7 +170,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getProduct)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

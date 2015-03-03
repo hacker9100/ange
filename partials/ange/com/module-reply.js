@@ -68,7 +68,7 @@ define([
                         $scope.replyList.push(reply[i]);
                     }
                 })
-                .catch(function(error){$scope.replyList = "";});
+                ['catch'](function(error){$scope.replyList = "";});
         };
 
         // 의견 등록
@@ -100,7 +100,7 @@ define([
                         $scope.addMileage('REPLY', $scope.menu.COMM_NO);
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 답글 등록
@@ -129,7 +129,7 @@ define([
                     $scope.getReplyList();
                     $scope.reply.COMMENT = "";
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 블라인드 처리
@@ -150,7 +150,7 @@ define([
                     $scope.getReplyList();
                     $scope.reply.COMMENT = "";
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 블라인드 처리 해제
@@ -166,7 +166,7 @@ define([
                 $scope.getReplyList();
                 $scope.reply.COMMENT = "";
             })
-            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 댓글 수정
@@ -196,7 +196,7 @@ define([
                     $scope.getReplyList();
                     $scope.reply.COMMENT = "";
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 댓글 삭제
@@ -211,7 +211,7 @@ define([
                         $scope.getReplyList();
                         $scope.reply.COMMENT = "";
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -290,7 +290,7 @@ define([
                                 dialogs.notify('알림', '신고가 접수되었습니다.', {size: 'md'});
                                 $modalInstance.close();
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                     $scope.click_cancel = function () {
@@ -374,7 +374,7 @@ define([
 
 //        $scope.getSession()
 //            .then($scope.sessionCheck)
-//            .catch($scope.reportProblems);
+//            ['catch']($scope.reportProblems);
 
 
 	}]);

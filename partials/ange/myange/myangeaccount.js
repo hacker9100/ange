@@ -263,7 +263,7 @@ define([
 //                        dialogs.notify('알림', '이미 존재하는 아이디입니다.', {size: 'md'});
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 닉네임 중복확인
@@ -280,7 +280,7 @@ define([
 //                        dialogs.notify('알림', '이미 존재하는 아이디입니다.', {size: 'md'});
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 아기 추가
@@ -420,7 +420,7 @@ define([
 
                         $scope.insertItem('ange/mileage', 'item', $scope.mileage, false)
                             .then(function(){ dialogs.notify('알림', '이벤트에 참여되었습니다.', {size: 'md'});})
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                     $scope.item = {};
@@ -444,18 +444,18 @@ define([
                             } else {
                                 $rootScope.profileImg = null;
                             }
-                        }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 //            if ($scope.checkSave) {
 //                $scope.insertItem('com/user', 'item', $scope.user, false)
 //                    .then(function(){ $scope.checkSave = true; /*dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});*/})
-//                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 //            } else {
 //                $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
 //                    .then(function(){ /*dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});*/})
-//                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 //            }
         };
 
@@ -619,7 +619,7 @@ define([
                     // 스크롤 이동
 //                    $scope.click_focus();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         /********** 화면 초기화 **********/
@@ -628,6 +628,6 @@ define([
             .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getUser)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
     }]);
 });

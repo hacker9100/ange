@@ -51,7 +51,7 @@ define([
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                         $location.url('/moms/experienceprocess/list');
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
         };
         /********** 이벤트 **********/
@@ -67,7 +67,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
+            ['catch']($scope.reportProblems);*/
         $scope.init();
 
     }]);

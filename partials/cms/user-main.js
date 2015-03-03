@@ -27,7 +27,7 @@ define([
                     $scope.user_roles = data;
                     $scope.item.ROLE = data[0];
                 })
-                .catch(function(error){console.log(error);});
+                ['catch'](function(error){console.log(error);});
         };
 
         /********** 이벤트 **********/
@@ -40,7 +40,7 @@ define([
             dialog.result.then(function(btn){
                 $scope.deleteItem('com/user', 'item', user.USER_ID, true)
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.tableParams.data[parentIdx].data.splice(idx, 1);})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -80,7 +80,7 @@ define([
 //                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
 //                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
-                        .catch(function(error){$defer.resolve([]);});
+                        ['catch'](function(error){$defer.resolve([]);});
                 }
             });
         };
@@ -97,11 +97,11 @@ define([
 
                 $scope.insertItem('com/user', 'item', $scope.item, false)
                     .then(function(){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('com/user', 'item', $scope.key, $scope.item, false)
                     .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
 
             $scope.click_cancel();
@@ -128,7 +128,7 @@ define([
                         // 스크롤 하단으로 이동
                         $scope.click_focus();
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         }
 
@@ -138,7 +138,7 @@ define([
 
             $scope.updateItem('com/user', 'item', item.USER_ID, item, false)
                 .then(function(){dialogs.notify('알림', '사용자 상태가 변경되었습니다.', {size: 'md'}); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
         };
 
         // 사용자 등록 버튼 클릭 시 등록하는 영역으로 focus 이동
@@ -165,7 +165,7 @@ define([
                         dialogs.notify('알림', '이미 존재하는 아이디입니다.', {size: 'md'});
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.$watch('item.USER_ID', function(data) {
@@ -178,7 +178,7 @@ define([
             .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getCmsUserList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

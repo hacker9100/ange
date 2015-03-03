@@ -51,6 +51,7 @@
                     <div class="preview" data-ng-switch-when="true">
                         <!--<a data-ng-href="{{file.url}}" title="{{file.name}}" download="{{file.name}}" data-gallery><img data-ng-src="{{file.thumbnailUrl}}" alt=""></a>-->
                         <img src="{{file.thumbnailUrl}}" alt="" style="width:100px; height:100px;">
+                        <img src="/imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" ng-show="file.kind == 'MAIN'"/>
                     </div>
                     <div class="preview" data-ng-switch-default data-file-upload-preview="file"></div>
                 </td>
@@ -88,6 +89,10 @@
                     <button data-ng-controller="file_editor" type="button" class="btn btn-primary btn-xs start" data-ng-click="file.$editor()" data-ng-hide="!file.$destroy">
                         <i class="glyphicon glyphicon-upload"></i>
                         <span>에디터 추가</span>
+                    </button>
+                    <button data-ng-controller="file_destroy" type="button" class="btn btn-success btn-xs start" data-ng-click="click_selectMainImage(file)" data-ng-hide="!file.$destroy">
+                        <i class="glyphicon glyphicon-star"></i>
+                        <span>메인이미지</span>
                     </button>
                 </td>
             </tr>

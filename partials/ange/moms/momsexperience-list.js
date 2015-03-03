@@ -131,7 +131,8 @@ define([
                     $scope.busy = false;
 
                 })
-                .catch(function(error){ $scope.end = true; }); // $scope.TOTAL_COUNT = 0; $scope.list = "";
+                ['catch'](function(error){ $scope.end = true; }); // $scope.TOTAL_COUNT = 0; $scope.list = "";
+//                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
         $scope.comp_momsexperience = function (item){

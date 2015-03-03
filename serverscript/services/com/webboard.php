@@ -204,6 +204,10 @@
                     $search_where .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
                 }
 
+                if (isset($_search[BOARD_ST]) && $_search[BOARD_ST] != "") {
+                    $search_where .= "AND BOARD_ST = '".$_search[BOARD_ST]."' ";
+                }
+
                 if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
                     $search_where .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
                 }
@@ -236,8 +240,12 @@
                     }
                 }
 
-                if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] == "") {
+                if (isset($_search[NOTICE_FL]) && $_search[NOTICE_FL] != "") {
                     $search_where .= "AND NOTICE_FL = '".$_search[NOTICE_FL]."' ";
+                }
+
+                if (isset($_search[COMM_NO_NOT]) && $_search[COMM_NO_NOT] != "") {
+                    $search_where .= "AND COMM_NO != '".$_search[COMM_NO_NOT]."' ";
                 }
 
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
@@ -752,31 +760,6 @@
                 $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$msg);
             }else{
-                $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'CREATE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$no.'
-                        ,'BOARD'
-                        ,'CREATE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-                $_d->sql_query($sql);
-
                 $_d->sql_commit();
                 $_d->succEnd($no);
             }
@@ -812,7 +795,7 @@
                             rename($upload_path.$file[name], $source_path.$uid);
                             rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
                             rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $insert_path[$i] = array(path => $file_path, uid => $uid);
+                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
                             MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
                             MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
@@ -822,7 +805,7 @@
                             MtUtil::_d("------------>>>>> body_str : ".$body_str);
                         } else {
                             $uid = uniqid();
-                            $insert_path[$i] = array(path => '', uid => '');
+                            $insert_path[$i] = array(path => '', uid => '', kind => '');
                             //$insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
                         }
                     }
@@ -1075,98 +1058,92 @@
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
 
-            $err = 0;
-            $msg = "";
+            if ($_type =="item") {
+                $err = 0;
+                $msg = "";
 
-            $_d->sql_beginTransaction();
+                $_d->sql_beginTransaction();
 
-            //$sql = "DELETE FROM COM_BOARD WHERE NO = ".$_key;
+                //$sql = "DELETE FROM COM_BOARD WHERE NO = ".$_key;
 
-            $sql = "UPDATE COM_BOARD SET
+                $sql = "UPDATE COM_BOARD SET
                  BOARD_ST = 'D'
                  WHERE NO = ".$_key;
 
-            $_d->sql_query($sql);
-            /*$no = $_d->mysql_insert_id;*/
+                $_d->sql_query($sql);
+                /*$no = $_d->mysql_insert_id;*/
 
-//            if($_d->mysql_errno > 0) {
-//                $err++;
-//                $msg = $_d->mysql_error;
-//            }
-//
-//            $sql = "SELECT
-//                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-//                    FROM
-//                        FILE F, CONTENT_SOURCE S
-//                    WHERE
-//                        F.NO = S.SOURCE_NO
-//                        AND S.TARGET_GB = 'CMS_BOARD'
-//                        AND S.TARGET_NO = ".$_key."
-//                        AND F.THUMB_FL = '0'
-//                    ";
-//
-//            $result = $_d->sql_query($sql,true);
-//            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-//                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-//                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-//
-//                $_d->sql_query($sql);
-//
-//                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'CMS_BOARD' AND TARGET_NO = ".$row[NO];
-//
-//                $_d->sql_query($sql);
-//
-//                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-//
-//                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-//                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
-//                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-//                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
-//                }
-//            }
-//
-//            $sql = "DELETE FROM COM_BOARD WHERE PARENT_NO = ".$_key;
-//
-//            $_d->sql_query($sql);
-//            $no = $_d->mysql_insert_id;
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("삭제실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
+                
+            } else if ($_type == "terminate") {
+                $err = 0;
+                $msg = "";
 
+                $_d->sql_beginTransaction();
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("삭제실패입니다:".$msg);
-            }else{
-                $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'DELETE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$_key.'
-                        ,'BOARD'
-                        ,'DELETE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
+                $sql = "DELETE FROM COM_BOARD WHERE NO = ".$_key;
 
                 $_d->sql_query($sql);
 
-                $_d->sql_commit();
-                $_d->succEnd($no);
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                $sql = "SELECT
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        FILE F, CONTENT_SOURCE S
+                    WHERE
+                        F.NO = S.SOURCE_NO
+                        AND S.TARGET_GB = 'BOARD'
+                        AND S.TARGET_NO = ".$_key."
+                        AND F.THUMB_FL = '0'
+                    ";
+
+                $result = $_d->sql_query($sql,true);
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND TARGET_NO = ".$row[NO];
+
+                    $_d->sql_query($sql);
+
+                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+
+                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                        unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
+                    }
+                }
+
+//                $sql = "DELETE FROM COM_BOARD WHERE PARENT_NO = ".$_key;
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("삭제실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
             }
 
             break;

@@ -89,7 +89,7 @@ define([
 //                    console.log(data);
 //                    $scope.mileagelist = data;
 //                })
-//                .catch(function(error){$scope.mileagelist = ""; $scope.TOTAL_COUNT = 0;});
+//                ['catch'](function(error){$scope.mileagelist = ""; $scope.TOTAL_COUNT = 0;});
 
             if($rootScope.mileagecartlist != ''){
 
@@ -136,7 +136,7 @@ define([
 //
 //                    $scope.cummercelist = data;
 //                })
-//                .catch(function(error){$scope.cummercelist = ""; $scope.TOTAL_COUNT = 0;});
+//                ['catch'](function(error){$scope.cummercelist = ""; $scope.TOTAL_COUNT = 0;});
 
             if($rootScope.cummercecartlist != ''){
 
@@ -194,7 +194,7 @@ define([
 //                        $scope.cummercelist.splice(idx, 1);
 //                    }
 //                })
-//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 /*            var dialog = dialogs.confirm('알림', '선택 상품을 삭제 하시겠습니까.', {size: 'md'});
 
@@ -204,7 +204,7 @@ define([
                         $scope.list.splice(idx, 1);
                         $scope.cartList();
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });*/
@@ -296,7 +296,7 @@ define([
                     $scope.item.PRODUCT_CODE = data.PRODUCT_CODE;
                     $rootScope.PRODUCT_CODE = data.PRODUCT_CODE;
                 })
-                .catch(function(error){alert(error)});
+                ['catch'](function(error){alert(error)});
         }
 
         // 주문리스트
@@ -324,7 +324,7 @@ define([
                         $scope.item.RECEIPT_ADDR_DETAIL1 = data.ADDR_DETAIL;
 
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 
             }
@@ -441,7 +441,7 @@ define([
 //
 //                    $scope.orderlist();
 //                })
-//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.click_update_user_info = function () {
@@ -471,7 +471,7 @@ define([
                                 $scope.item.BLOG_URL = data.BLOG_URL;
 
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
 
@@ -521,7 +521,7 @@ define([
 
                                 dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
                                 $modalInstance.close();
-                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     };
 
@@ -549,7 +549,7 @@ define([
                         $scope.item.RECEIPT_ADDR1 = data.ADDR;
                         $scope.item.RECEIPT_ADDR_DETAIL1 = data.ADDR_DETAIL;
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';

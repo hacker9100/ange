@@ -17,7 +17,7 @@ define([
         $scope.click_deleteFile = function (idx, file) {
             $scope.deleteItem('com/file', 'item', file.no, false)
                 .then(function(){$scope.queue.splice(idx, 1); dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
 //        $scope.newDir = 'test1/';

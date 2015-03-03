@@ -49,7 +49,7 @@ define([
             var dlg = dialogs.create('/partials/cms/popup/history.html',
                 ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
                     $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
-                        .catch(function(error){console.log(error);});
+                        ['catch'](function(error){console.log(error);});
 
                     $scope.list = data;
 
@@ -69,7 +69,7 @@ define([
             var deferred = $q.defer();
             $scope.getItem('cms/task', 'item', $stateParams.id, {}, false)
                 .then(function(data){$scope.task = data; deferred.resolve();})
-                .catch(function(error){console.log(error); deferred.reject(error);});
+                ['catch'](function(error){console.log(error); deferred.reject(error);});
 
             return deferred.promise;
 //            var deferred = $q.defer();
@@ -115,7 +115,7 @@ define([
                         $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                     }
                 })
-                .catch(function(error){console.log(error)});
+                ['catch'](function(error){console.log(error)});
         };
 
         /********** 화면 초기화 **********/
@@ -124,7 +124,7 @@ define([
             .then($scope.init)
             .then($scope.getTask)
             .then($scope.getContent)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

@@ -95,14 +95,14 @@ define([
 
             $scope.getList('ange/order', 'admin', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){$scope.list = data; $scope.TOTAL_CNT = data[0].TOTAL_COUNT;})
-                .catch(function(error){$scope.list = []; $scope.TOTAL_CNT = 0;});
+                ['catch'](function(error){$scope.list = []; $scope.TOTAL_CNT = 0;});
         };
 
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
 //            .then($scope.permissionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getOrderList();

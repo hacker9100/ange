@@ -201,7 +201,7 @@ define([
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.total_cnt = total_cnt;
                 })
-                .catch(function(error){$scope.event = ""; $scope.total_cnt=0;});
+                ['catch'](function(error){$scope.event = ""; $scope.total_cnt=0;});
             }else{
                 $scope.search.REVIEW_FL = true;
                 $scope.getList('ange/event', 'list', {}, $scope.search, false)
@@ -210,7 +210,7 @@ define([
                         var total_cnt = data[0].TOTAL_COUNT;
                         $scope.total_cnt = total_cnt;
                     })
-                    .catch(function(error){$scope.event = ""; $scope.total_cnt=0;});
+                    ['catch'](function(error){$scope.event = ""; $scope.total_cnt=0;});
             }
         };
 
@@ -265,7 +265,7 @@ define([
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -325,7 +325,7 @@ define([
                             $location.url('/moms/eventreview/list');
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             } else {
                 $scope.updateItem('ange/review', 'item', $stateParams.id, $scope.item, false)
@@ -347,7 +347,7 @@ define([
                             $location.url('/moms/eventreview/list');
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -356,7 +356,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoard)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 //        $scope.init();
 //        $scope.getPeopleBoard();
 

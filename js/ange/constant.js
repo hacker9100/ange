@@ -53,7 +53,8 @@ define([
             "AD_CODE_BN28" : "28",
             "AD_CODE_BN29" : "29",
             "AD_CODE_BN30" : "30",
-            "AD_CODE_BN31" : "31"
+            "AD_CODE_BN31" : "31",
+            "AD_CODE_BN54" : "54"
         }
     );
     app.constant(

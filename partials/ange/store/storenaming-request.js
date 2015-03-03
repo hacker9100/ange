@@ -70,7 +70,7 @@ define([
                     $scope.BLOG_URL = data.BLOG_URL;
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 
             $scope.community = "작명 신청";
@@ -142,7 +142,7 @@ define([
                     }
 
                 })
-                .catch(function(error){$rootScope.namingnolist = "";});
+                ['catch'](function(error){$rootScope.namingnolist = "";});
 
 
             //console.log($scope.month);
@@ -241,7 +241,7 @@ define([
 
                                 dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
                                 $modalInstance.close();
-                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     };
 
@@ -265,7 +265,7 @@ define([
                         $scope.BLOG_URL = data.BLOG_URL;
 
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';
@@ -290,7 +290,7 @@ define([
 
                     $location.url('/store/naming/intro');
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 
         }
@@ -312,7 +312,7 @@ define([
 
         /*        $scope.getSession()
          .then($scope.sessionCheck)
-         .catch($scope.reportProblems);*/
+         ['catch']($scope.reportProblems);*/
 
         $scope.init();
 

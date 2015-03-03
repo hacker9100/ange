@@ -20,7 +20,7 @@ require.config({
     // 라이브러리 경로 선언을 위해서도 사용된다.
     paths: {
         'text': '../../lib/require/text', //HTML 데이터를 가져올때 text! 프리픽스를 붙여준다.
-        'jquery': '../../lib/jquery/jquery.min', // jquery
+        'jquery': '../../lib/jquery/jquery-1.9.1', // jquery
         'jquery-ui': '../../lib/jquery/jquery-ui-1.10.2.min', // bootstrap 사용을 위해 로딩한다.
         'domReady': '../../lib/domReady/domReady', // requirejs로 library를 로딩할때 사용된다.
 
@@ -32,7 +32,7 @@ require.config({
         'angular': '../../lib/angular/angular.min', // angularjs를 사용한다.
 //        'ngCookies': '../../lib/angular/angular-cookies.min', //
         'angular-resource': '../../lib/angular/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.
-        'angular-sanitize': '../../lib/angular/angular-sanitize.min', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
+        'angular-sanitize': '../../lib/angular/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
         'angular-ui-router': '../../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
         'angular-translate': '../../lib/angular/angular-translate.min', //
 

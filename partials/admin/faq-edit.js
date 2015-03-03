@@ -72,12 +72,15 @@ define([
                             }
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
         // 게사판 저장 버튼 클릭
         $scope.click_saveFaq = function () {
+            $scope.item.PARENT_NO = '0';
+            $scope.item.COMM_NO = CONSTANT.COMM_NO_FAQ;
+            $scope.item.BOARD_GB = 'FAQ';
             $scope.item.SYSTEM_GB = 'ANGE';
             $scope.item.CATEGORY_NO = $scope.item.CATEGORY.NO;
             $scope.item.FILES = $scope.queue;
@@ -91,11 +94,11 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){$location.url('/faq/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/faq/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -104,7 +107,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getFaq)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

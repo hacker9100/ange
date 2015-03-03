@@ -179,7 +179,7 @@ define([
                     }
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         }
 
         // 게시판 조회
@@ -343,7 +343,7 @@ define([
 
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -444,11 +444,11 @@ define([
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                                 $location.url('/people/poll/list');
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.click_showAngePollList = function() {
@@ -464,7 +464,7 @@ define([
             .then($scope.init)
             .then($scope.getAngePoll)
             .then($scope.getChart)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         console.log($rootScope.uid);
 

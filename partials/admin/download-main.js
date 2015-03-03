@@ -45,7 +45,7 @@ define([
 
             $scope.updateItem('com/menu', 'menu', $scope.item.MENU_URL, $scope.item, false)
                 .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.click_cancel = function () {
@@ -85,7 +85,7 @@ define([
 //
 //                    $scope.click_focus('item', 'item_name');
 //                })
-//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 편집 버튼 클릭 시 영역으로 focus 이동
@@ -122,7 +122,7 @@ define([
                             params.total(total_cnt);
                             $defer.resolve(data);
                         })
-                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+                        ['catch'](function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
                 }
             });
         };
@@ -132,6 +132,6 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getMenuList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
     }]);
 });

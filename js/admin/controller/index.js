@@ -50,6 +50,9 @@ define([
     '../../../partials/admin/faq-list',
     '../../../partials/admin/faq-edit',
     '../../../partials/admin/faq-view',
+    '../../../partials/admin/onlinetalk-list',
+    '../../../partials/admin/onlinetalk-edit',
+    '../../../partials/admin/onlinetalk-view',
     '../../../partials/admin/talk-main',
 
     // ADMIN 스토어 관리

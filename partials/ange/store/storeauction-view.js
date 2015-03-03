@@ -144,7 +144,7 @@ define([
                         $scope.DELEIVERY_PRICE = data.DELEIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                         $scope.DIRECT_PRICE = data.DIRECT_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -168,7 +168,7 @@ define([
                     dialogs.notify('알림', '정상적으로 참여했습니다.', {size: 'md'});
                     $scope.getPeopleBoard();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         //찜
@@ -181,7 +181,7 @@ define([
                     alert('찜목록으로 이동합니다');
                     $location.url('store/cart/list/'+$stateParams.menu);
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         //즉시 구매
@@ -207,7 +207,7 @@ define([
                     alert('찜목록으로 이동합니다');
                     $location.url('store/cart/list/'+$stateParams.menu);
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
 
@@ -239,7 +239,7 @@ define([
          .then($scope.sessionCheck)
          .then($scope.init)
          .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
+         ['catch']($scope.reportProblems);*/
         $scope.init();
         $scope.getPeopleBoard();
 

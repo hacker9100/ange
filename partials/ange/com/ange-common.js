@@ -14,7 +14,7 @@ define([
     controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$window', '$location', '$q', 'dataService', '$filter', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $stateParams, $window, $location, $q, dataService, $filter, dialogs, CONSTANT) {
 
         $scope.comming_soon = function() {
-            dialogs.notify('알림', '체험기간에는 제공되지 않습니다.', {size: 'md'});
+            dialogs.notify('알림', '점검중입니다.', {size: 'md'});
         }
 
         // 주소 경로
@@ -535,7 +535,7 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS'}, false).then(function(data){
             var category_a = [];
@@ -554,7 +554,7 @@ define([
             $scope.category_a = category_a;
             $scope.category_b = category_b;
         })
-        .catch(function(error){});
+        ['catch'](function(error){});
 
         $scope.moveAccount = function() {
             if ($rootScope.uid != undefined) {
@@ -691,7 +691,7 @@ define([
                 .then(function(data){
 //                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                 })
-                .catch(function(error){dialogs.error('오류', '[마일리지]'+error, {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', '[마일리지]'+error, {size: 'md'});});
         };
 
     }]);

@@ -283,7 +283,7 @@ define([
             var dlg = dialogs.create('/partials/cms/popup/history.html',
                 ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
                     $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
-                        .catch(function(error){console.log(error);});
+                        ['catch'](function(error){console.log(error);});
 
                     $scope.list = data;
 
@@ -308,7 +308,7 @@ define([
 
                         var files = data.FILES;
                         for(var i in files) {
-                            $scope.queue.push({"no":files[i].NO, "name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE", "isUpdate": true});
+                            $scope.queue.push({"no":files[i].NO, "name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","kind":files[i].FILE_GB,"type":files[i].FILE_EXT,"isUpdate":true});
                         }
 
 //                        $scope.isUpdate = true;
@@ -328,6 +328,17 @@ define([
             $scope.item.TASK = $scope.task;
             $scope.item.FILES = $scope.queue;
 
+            var ckMain = false;
+
+            for(var i in $scope.item.FILES) {
+                if ($scope.item.FILES[i].kind == 'MAIN') ckMain = true;
+            }
+
+            if (!ckMain) {
+                dialogs.notify('알림', '메인이미지를 선택하세요.', {size: 'md'});
+                return;
+            }
+
             for(var i in $scope.item.FILES) {
                 $scope.item.FILES[i].$destroy = '';
                 $scope.item.FILES[i].$editor = '';
@@ -338,16 +349,16 @@ define([
 
                 $scope.insertItem('cms/content', 'new', $scope.item, false)
                     .then(function(){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'}); $scope.task.PHASE = '10';})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 if ( $scope.task.PHASE == '20' && $scope.item.PHASE != $scope.task.PHASE ) {
                     $scope.insertItem('cms/content', 'version', $scope.item, false)
                         .then(function(){dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});})
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                 } else {
                     $scope.updateItem('cms/content', 'item', $scope.item.NO, $scope.item, false)
                         .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});})
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                 }
             }
         };
@@ -368,7 +379,7 @@ define([
 
             $scope.updateStatus('cms/task', 'status', $scope.task.NO, phase, false)
                 .then(function(){$location.url('/'+$stateParams.menu+'/list');})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 반려 버튼 클릭
@@ -465,7 +476,7 @@ define([
             .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.initUpdate)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 

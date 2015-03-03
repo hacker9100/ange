@@ -65,7 +65,7 @@ define([
                     $scope.COMM_MG_NM = comm_mg_nm;
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         };
 
 
@@ -92,7 +92,7 @@ define([
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -109,7 +109,7 @@ define([
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
-                    .catch(function(error){$scope.preBoardView = "";})
+                    ['catch'](function(error){$scope.preBoardView = "";})
             }
         }
 
@@ -125,7 +125,7 @@ define([
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
-                    .catch(function(error){$scope.nextBoardView = "";})
+                    ['catch'](function(error){$scope.nextBoardView = "";})
             }
         }
 
@@ -137,7 +137,7 @@ define([
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -154,11 +154,11 @@ define([
          .then($scope.sessionCheck)
          .then($scope.init)
          .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
+         ['catch']($scope.reportProblems);*/
 
         $scope.getSession()
             .then($scope.sessionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getPeopleBoard();

@@ -36,7 +36,7 @@ define([
             $scope.option_r3_c1 = {title: '책수다방', api:'ad/banner', gb: 'book', url: '/people/booktalk/list'};
 
             // ange-portlet-channel-list
-            $scope.option_r3_c2 = {title: '맛!맛!맛!', api:'com/webboard', size: 6, channel: "people", type: 'photo', url: '/people/board', defIdx: 0, tab: [{no: '7', menu: '/people/recipearcade', name: '레시피 아케이드'}, {no: '8', menu: '/people/peopletaste', name: '앙쥬피플 맛집'}], image: true, head: true, date: false, nick: true};
+            $scope.option_r3_c2 = {title: '맛!맛!맛!', api:'com/webboard', size: 6, channel: "people", type: 'photo', url: '/people/board', defIdx: 0, tab: [{no: '12', menu: '/people/recipearcade', name: '레시피 아케이드'}, {no: '13', menu: '/people/peopletaste', name: '앙쥬피플 맛집'}], image: true, head: true, date: false, nick: true};
 
             // ange-portlet-link-menu
             $scope.option_r3_c3 = {title: '앙쥬그룹', api:'ad/banner', gb: 'group', url: '/people/group/list'};

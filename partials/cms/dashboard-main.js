@@ -54,7 +54,7 @@ define([
             var dlg = dialogs.create('/partials/cms/popup/history.html',
                 ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
                     $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
-                        .catch(function(error){console.log(error);});
+                        ['catch'](function(error){console.log(error);});
 
                     $scope.list = data;
 
@@ -79,7 +79,7 @@ define([
             $scope.isLoading = true;
             $scope.getList('cms/task', 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, search, true)
                 .then(function(data){$scope.list = data})
-                .catch(function(error){$scope.list = []; console.log(error);})
+                ['catch'](function(error){$scope.list = []; console.log(error);})
                 .finally(function(){$scope.isLoading = false;});
         };
 
@@ -93,7 +93,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.permissionCheck)
             .then($scope.setTitle)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getTaskList();

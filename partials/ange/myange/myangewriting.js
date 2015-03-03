@@ -98,7 +98,7 @@ define([
                     $scope.boardList = data;
 
                 })
-                .catch(function(error){$scope.BOARD_TOTAL_COUNT = 0; $scope.boardList = "";});
+                ['catch'](function(error){$scope.BOARD_TOTAL_COUNT = 0; $scope.boardList = "";});
         };
 
         // 일반 게시판 조회 화면 이동
@@ -165,7 +165,7 @@ define([
                     /*$scope.total(total_cnt);*/
                     //$scope.photoList = data;
                 })
-                .catch(function(error){$scope.photoList = ""; $scope.PHOTO_TOTAL_COUNT = 0});
+                ['catch'](function(error){$scope.photoList = ""; $scope.PHOTO_TOTAL_COUNT = 0});
         };
 
         // 사진 게시판 조회 화면 이동
@@ -198,7 +198,7 @@ define([
                     $scope.clinicList = data;
 
                 })
-                .catch(function(error){$scope.CLINIC_TOTAL_COUNT = 0; $scope.clinicList = "";});
+                ['catch'](function(error){$scope.CLINIC_TOTAL_COUNT = 0; $scope.clinicList = "";});
         };
 
         // 상담 게시판 조회 화면 이동

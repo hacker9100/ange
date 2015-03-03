@@ -59,7 +59,7 @@ define([
                 .then(function(data){
                     $scope.COMM_MG_NM = data.COMM_MG_NM;
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 
             //$scope.search.SORT = 'NOTICE_FL'
 
@@ -104,7 +104,7 @@ define([
                     $scope.list = data;
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
         $scope.pageChanged = function() {
@@ -143,7 +143,7 @@ define([
 //                            params.total(total_cnt);
 //                            $defer.resolve(data);
 //                        })
-//                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+//                        ['catch'](function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
 //                }
 //            });
 //        };
@@ -187,7 +187,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoardList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 
 //        $scope.init();

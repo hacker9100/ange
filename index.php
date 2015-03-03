@@ -162,9 +162,34 @@
 <link rel="stylesheet" type="text/css" href="css/ange/ange_club.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_company.css" />
 
+<!--[if lte IE 8]>
+<script type="text/javascript">
+    document.createElement('ui-lnb');
+    document.createElement('ange-body');
+    document.createElement('module-reply');
+
+    document.createElement('ange-portlet-main-list');
+    document.createElement('ange-mini-story-list');
+    document.createElement('ange-portlet-channel-list');
+    document.createElement('ange-portlet-slide-page');
+    document.createElement('ange-portlet-slide-baby');
+    document.createElement('ange-portlet-slide-ads');
+    document.createElement('ange-portlet-slide-banner');
+    document.createElement('ange-portlet-slide-image');
+    document.createElement('ange-portlet-link-image');
+    document.createElement('ange-portlet-link-image2');
+    document.createElement('ange-portlet-piece-image');
+
+    document.createElement('slick');
+    document.createElement('ckeditor');
+    document.createElement('ng-dropdown-multiselect');
+    document.createElement('checklist-model');
+</script>
+<![endif]-->
+
 <!-- IE6,7,8에서도 HTML5 element를 인식시켜주기 위한 코드 -->
 <!--[if lt IE 9]>
-<script src="lib/html5shiv/html5shiv.js"></script>
+<script src="lib/html5shiv/html5shiv.min.js"></script>
 <script src="lib/respond/respond.min.js"></script>
 <![endif]-->
 

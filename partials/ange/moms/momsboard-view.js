@@ -39,13 +39,10 @@ define([
         // 초기화
         $scope.init = function(session) {
             if ($stateParams.menu == 'experiencewinner') {
-                $scope.community = "체험단 발표";
                 $scope.item.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'eventwinner') {
-                $scope.community = "당첨자 발표";
                 $scope.item.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'supporterboard') {
-                $scope.community = "서포터즈 활동방";
                 $scope.item.EVENT_GB = "SUPPORTER";
             }
 
@@ -82,7 +79,7 @@ define([
                         $scope.list = data;
 
                     })
-                    .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                    ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
             }
         };
 
@@ -112,7 +109,7 @@ define([
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
-                    .catch(function(error){$scope.preBoardView = "";})
+                    ['catch'](function(error){$scope.preBoardView = "";})
             }
         }
 
@@ -135,7 +132,7 @@ define([
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
-                    .catch(function(error){$scope.nextBoardView = "";})
+                    ['catch'](function(error){$scope.nextBoardView = "";})
             }
         }
 
@@ -147,7 +144,7 @@ define([
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
                         $location.url('/moms/'+$stateParams.menu+'/list/');
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -159,11 +156,11 @@ define([
          .then($scope.sessionCheck)
          .then($scope.init)
          .then($scope.getCmsBoard)
-         .catch($scope.reportProblems);*/
+         ['catch']($scope.reportProblems);*/
 
         $scope.getSession()
             .then($scope.sessionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getPeopleBoard();

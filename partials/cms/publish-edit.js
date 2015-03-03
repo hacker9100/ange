@@ -83,7 +83,7 @@ define([
 //                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
 //                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
-                        .catch(function(error){$defer.resolve([]);});
+                        ['catch'](function(error){$defer.resolve([]);});
                 }
             });
         };
@@ -147,7 +147,7 @@ define([
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.permissionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.getTaskList();
 

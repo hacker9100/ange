@@ -119,11 +119,11 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('com/user', 'item', $scope.item, false)
                     .then(function(){$location.url('/member/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('com/user', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/member/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -219,7 +219,7 @@ console.log(JSON.stringify(data))
 
 //                        $scope.item.ROLE = $scope.user_roles[idx];
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -241,6 +241,6 @@ console.log(JSON.stringify(data))
             .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getUser)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
     }]);
 });

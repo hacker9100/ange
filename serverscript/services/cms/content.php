@@ -73,7 +73,7 @@
 
                 if ($data != null) {
                     $sql = "SELECT
-                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB, F.FILE_EXT
                             FROM
                                 FILE F, CONTENT_SOURCE S
                             WHERE
@@ -220,7 +220,7 @@
                                 rename($upload_path.$file[name], $source_path.$uid);
                                 rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
                                 rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $insert_path[$i] = array(path => $file_path, uid => $uid);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
                                 MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
@@ -334,6 +334,7 @@
                                     ,THUMB_FL
                                     ,REG_DT
                                     ,FILE_ST
+                                    ,FILE_GB
                                 ) VALUES (
                                     '".$file[name]."'
                                     , '".$insert_path[$i][uid]."'
@@ -343,6 +344,7 @@
                                     , '0'
                                     , SYSDATE()
                                     , 'C'
+                                    , '".$file[kind]."'
                                 )";
 
                         $_d->sql_query($sql);
@@ -472,7 +474,7 @@
                                 rename($upload_path.$file[name], $source_path.$uid);
                                 rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
                                 rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $insert_path[$i] = array(path => $file_path, uid => $uid);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
                                 MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
                                 MtUtil::_d("------------>>>>> mediumUrl : ".BASE_URL.$source_path.'medium/'.$uid);
@@ -488,7 +490,7 @@
                                 copy($source_path.$file_name, $source_path.$uid);
                                 copy($source_path.'thumbnail/'.$file_name, $source_path.'thumbnail/'.$uid);
                                 copy($source_path.'medium/'.$file_name, $source_path.'medium/'.$uid);
-                                $insert_path[$i] = array(path => $file_path, uid => $uid);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
                             }
                         }
                     }
@@ -755,7 +757,7 @@
                                 rename($upload_path.$file[name], $source_path.$uid);
                                 rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
                                 rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $insert_path[$i] = array(path => $file_path, uid => $uid);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind], no => '');
 
                                 MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
                                 MtUtil::_d("------------>>>>> mediumUrl : ".BASE_URL.$source_path.'medium/'.$uid);
@@ -764,7 +766,7 @@
 
                                 MtUtil::_d("------------>>>>> body_str : ".$body_str);
                             } else {
-                                $insert_path[$i] = array(path => '', uid => '');
+                                $insert_path[$i] = array(path => '', uid => '', kind => $file[kind], no => $file[no]);
                             }
                         }
                     }
@@ -908,6 +910,7 @@
                                         ,THUMB_FL
                                         ,REG_DT
                                         ,FILE_ST
+                                        ,FILE_GB
                                     ) VALUES (
                                         '".$file[name]."'
                                         , '".$insert_path[$i][uid]."'
@@ -917,6 +920,7 @@
                                         , '0'
                                         , SYSDATE()
                                         , 'C'
+                                        , '".$file[kind]."'
                                     )";
 
                             $_d->sql_query($sql);
@@ -948,6 +952,20 @@
                                 $err++;
                                 $msg = $_d->mysql_error;
                             }
+                        } else {
+                            $sql = "UPDATE FILE
+                                    SET
+                                        FILE_GB = '".$file[kind]."'
+                                    WHERE
+                                        NO = '".$file[no]."'
+                                    ";
+
+                            $_d->sql_query($sql);
+
+                            if($_d->mysql_errno > 0) {
+                                $err++;
+                                $msg = $_d->mysql_error;
+                            }
                         }
                     }
                 }
@@ -967,7 +985,7 @@
                 } else {
                     $sql = "INSERT INTO CMS_HISTORY
                             (
-                    WORK_ID
+                                WORK_ID
                                 ,WORK_GB
                                 ,WORK_DT
                                 ,WORKER_ID

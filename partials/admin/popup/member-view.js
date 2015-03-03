@@ -135,7 +135,7 @@ console.log(JSON.stringify(data))
 
 //                        $scope.item.ROLE = $scope.user_roles[idx];
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -147,6 +147,6 @@ console.log(JSON.stringify(data))
             .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getUser)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
     }]);
 });

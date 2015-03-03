@@ -126,31 +126,35 @@
                 $limit = "";
 
                 if (isset($_search[ADA_TYPE_IN]) && $_search[ADA_TYPE_IN] != "") {
-                    $search_where .= "AND ada_type IN (".$_search[ADA_TYPE_IN].") ";
+                    $search_where .= "AND a.ada_type IN (".$_search[ADA_TYPE_IN].") ";
+                }
+
+                if (isset($_search[ADP_CODE_NOT_IN]) && $_search[ADP_CODE_NOT_IN] != "") {
+                    $search_where .= "AND p.adp_code NOT IN (".$_search[ADP_CODE_NOT_IN].") ";
                 }
 
                 if(isset($_search[NOT_SAMPLE]) && $_search[NOT_SAMPLE] == "Y"){
-                    $search_where .= "AND adp_idx NOT IN (45, 46) ";
+                    $search_where .= "AND a.adp_idx NOT IN (45, 46) ";
                 }
 
                 if(isset($_search[NOT_POST]) && $_search[NOT_POST] == "Y"){
-                    $search_where .= "AND adp_idx != 49 ";
+                    $search_where .= "AND a.adp_idx != 49 ";
                 }
 
                 if(isset($_search[NOT_POST]) && $_search[NOT_POST] == "Y"){
-                    $search_where .= "AND adp_idx != 49 ";
+                    $search_where .= "AND a.adp_idx != 49 ";
                 }
 
                 if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "N"){
-                    $search_where .= "AND adp_idx != 53 ";
+                    $search_where .= "AND a.adp_idx != 53 ";
                 }
 
                 if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "Y"){
-                    $search_where .= "AND adp_idx = 53 ";
+                    $search_where .= "AND a.adp_idx = 53 ";
                 }
 
                 if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
-                    $search_where .= "AND ada_type = '".$_search[EVENT_GB]."' ";
+                    $search_where .= "AND a.ada_type = '".$_search[EVENT_GB]."' ";
                 }
 
                 if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
@@ -162,7 +166,7 @@
                 }
 
                 if (isset($_search[REVIEW_EVENT_GB]) && $_search[REVIEW_EVENT_GB] != "") {
-                    $search_where .= "AND ada_type IN ('exp','event') ";
+                    $search_where .= "AND a.ada_type IN ('exp','event') ";
                 }
 
                 if(isset($_search[ADA_STATE]) && $_search[ADA_STATE] != ""){
@@ -189,10 +193,11 @@
                         FROM
                         (
                             SELECT
-                                  ada_idx, ada_type, ada_title, ada_url, ada_date_open, ada_date_close, ada_option_quantity, ada_image, ada_preview, ada_imagemap,
-                                  ada_state, ada_que_info, ada_que_type, ada_date_notice
-                            FROM adm_ad
+                                  a.ada_idx, a.ada_type, a.ada_title, a.ada_url, a.ada_date_open, a.ada_date_close, a.ada_option_quantity, a.ada_image, a.ada_preview, a.ada_imagemap,
+                                  a.ada_state, a.ada_que_info, a.ada_que_type, a.ada_date_notice
+                            FROM adm_ad a, adm_product p
                             WHERE 1 = 1
+                                AND a.adp_idx = p.adp_idx
                                 ".$search_where."
                                 ".$sort_order."
                                 ".$limit."
@@ -200,8 +205,9 @@
                         (SELECT @RNUM := 0) R,
                         (
                             SELECT COUNT(*) AS TOTAL_COUNT
-                            FROM adm_ad
+                            FROM adm_ad a, adm_product p
                             WHERE 1 = 1
+                                AND a.adp_idx = p.adp_idx
                               ".$search_where."
                         ) CNT
                         ";
