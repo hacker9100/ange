@@ -404,6 +404,19 @@ define([
                                 answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                             })
 
+                            $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
+
+                                if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                    dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                    return false;
+                                }
+
+                                console.log($(element).val());
+
+                                $scope.item.QUE_LONG_ANSWER = $(element).val();
+                                answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+                            })
+
                             var values = {};
 
                             $('.poll_select_radio:checked').each(function() {
@@ -540,6 +553,19 @@ define([
 
                                     $scope.item.QUE_SHORT_ANSWER = $(element).val();
                                     answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+                                })
+
+                                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
+
+                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                        return false;
+                                    }
+
+                                    console.log($(element).val());
+
+                                    $scope.item.QUE_LONG_ANSWER = $(element).val();
+                                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
                                 })
 
                                 var values = {};
