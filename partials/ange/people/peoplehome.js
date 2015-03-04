@@ -40,7 +40,7 @@ define([
 
             // ange-portlet-link-menu
 //            $scope.option_r3_c3 = {title: '앙쥬그룹', api:'ad/banner', gb: 'group', url: '/people/group/list'};
-            $scope.option_r3_c3 = {title: '앙쥬그룹', api:'ad/banner', gb: 'group', url: ''};
+            $scope.option_r3_c3 = {title: '온라인토론', api:'ad/banner', gb: 'online', url: '/people/discusstitle/list'};
         };
 
         /********** 이벤트 **********/

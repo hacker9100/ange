@@ -537,6 +537,20 @@ ul.mini_board_feeds {
 	background-repeat: no-repeat;
 }
 
+/*온라인토론*/
+.mini_angeonlinelink {
+    position:relative;
+    margin:0 auto;
+    width:100%;
+    height:100%;
+    background-color:#a9a9a9;
+    border-radius:12px;
+    background-image:url('/imgs/ange/people_banner_online.png');
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
+
+
 .mini_peoplebooktalk_bg {
 	position:absolute; 
 	margin:0 auto;
