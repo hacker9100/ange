@@ -59,6 +59,10 @@
                             <!-- /애독자 엽서 -->
 
                             <!-- 신청 폼 -->
+                            <div class="moms_form_foot" ng-class="{ 'hidden': ! showSamplepackDetails }" ng-show="!uid" style="background-color:#F8F8F8;">
+                                <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">로그인 후에 응모가 가능합니다.</div>
+                            </div>
+
                             <div ng-show="uid != '' && uid != null" class="samplepack_formwrap" ng-model="item" style="display:block;" ng-class="{ 'hidden': ! showSamplepackDetails }"> <!-- ng-class="{ 'hidden': ! showSamplepackDetails }"-->
                                 <div class="samplepack_form_title" style="background:#333; height:46px; padding:10px;">
                                     <span class="table_blue" style="font-size:1.18em; float:left;">| 애독자엽서 양식</span>
