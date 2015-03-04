@@ -41,5 +41,9 @@ define([
             ['catch']($scope.reportProblems);*/
         $scope.init();
 
+        $scope.clickyet = function() {
+            dialogs.notify('알림', '점검중입니다.', {size: 'md'});
+        }
+
     }]);
 });
