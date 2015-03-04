@@ -35,7 +35,7 @@ define([
         $scope.checkCert = false;
 
         // 진행 단계
-        $scope.step = '04';
+        $scope.step = '01';
 
         // 이용약관 체크
         $scope.checkAll = false;
