@@ -237,8 +237,9 @@
                             SELECT
                                   ada_idx, ada_type, ada_title, ada_url, ada_date_open, ada_date_close, ada_option_quantity, ada_image, ada_preview, ada_imagemap,
                                   ada_state, ada_que_info, ada_que_type, ada_date_notice
-                            FROM adm_ad
+                            FROM adm_ad a, adm_product p
                             WHERE 1 = 1
+                            	  AND a.adp_idx = p.adp_idx
                                 ".$search_where."
                                 ".$sort_order."
                                 ".$limit."
@@ -246,8 +247,9 @@
                         (SELECT @RNUM := 0) R,
                         (
                             SELECT COUNT(*) AS TOTAL_COUNT
-                            FROM adm_ad
+                            FROM adm_ad a, adm_product p
                             WHERE 1 = 1
+                            	AND a.adp_idx = p.adp_idx
                               ".$search_where."
                         ) CNT
                         ";
