@@ -204,10 +204,6 @@
                     $search_where .= "AND BOARD_GB = '".$_search[BOARD_GB]."' ";
                 }
 
-                if (isset($_search[BOARD_ST]) && $_search[BOARD_ST] != "") {
-                    $search_where .= "AND BOARD_ST = '".$_search[BOARD_ST]."' ";
-                }
-
                 if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
                     $search_where .= "AND SYSTEM_GB = '".$_search[SYSTEM_GB]."' ";
                 }
