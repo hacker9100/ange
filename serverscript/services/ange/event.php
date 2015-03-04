@@ -139,7 +139,7 @@
                         FROM
                         (
                             SELECT
-                                  a.adhj_answers, (SELECT U.NICK_NM FROM COM_USER U WHERE U.USER_ID = a.adu_id) nick_nm, a.adhj_date_request
+                                  a.adhj_answers, (SELECT MAX(U.NICK_NM) FROM COM_USER U WHERE U.USER_ID = a.adu_id) nick_nm, a.adhj_date_request
                             FROM adm_history_join a
                             WHERE 1 = 1
                                 ".$search_where."
