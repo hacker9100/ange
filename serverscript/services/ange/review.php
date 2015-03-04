@@ -143,7 +143,7 @@
                     }
 
                     if(isset($_search[BOARD_ST]) && $_search[BOARD_ST] != ""){
-                        $search_where .= "AND BOARD_ST IS NULL OR BOARD_ST <> 'D'";
+                        $search_where .= "AND BOARD_ST IS NULL";
                     }
 
                     $sql = "SELECT
@@ -255,7 +255,7 @@
                     }
 
                     if(isset($_search[BOARD_ST]) && $_search[BOARD_ST] != ""){
-                        $search_where .= "AND BOARD_ST IS NULL OR BOARD_ST <> 'D'";
+                        $search_where .= "AND BOARD_ST IS NULL'";
                     }
 
                     $sql = "SELECT

@@ -200,7 +200,7 @@
                 }
 
                 if (isset($_search[PRODUCT_CODE]) && $_search[PRODUCT_CODE] != "") {
-                    $search_where .= "AND adp_idx = '".$_search[PRODUCT_CODE]."' ";
+                    $search_where .= "AND a.adp_idx = '".$_search[PRODUCT_CODE]."' ";
                 }
 
                 if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
