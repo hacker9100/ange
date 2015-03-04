@@ -448,7 +448,7 @@ define([
                             $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                             console.log($scope.item.ANSWER);
 
-                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
@@ -464,7 +464,7 @@ define([
 
                             $scope.search.ada_idx = $scope.item.ada_idx;
 
-                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
@@ -505,7 +505,7 @@ define([
 
                             });
 
-                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
@@ -592,7 +592,7 @@ define([
                                 $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
                             }
 
-                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});

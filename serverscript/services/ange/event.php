@@ -199,6 +199,10 @@
                     $search_where .= "AND ada_type = '".$_search[EVENT_GB]."' ";
                 }
 
+                if (isset($_search[PRODUCT_CODE]) && $_search[PRODUCT_CODE] != "") {
+                    $search_where .= "AND adp_idx = '".$_search[PRODUCT_CODE]."' ";
+                }
+
                 if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
                     $search_where .= "AND DATE_FORMAT(ada_date_close, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
                 }

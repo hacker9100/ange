@@ -285,18 +285,25 @@ define([
             if($scope.item.MENU == undefined || $scope.item.MENU == '' || $scope.item.MENU == null){
                 if ($stateParams.menu == 'experiencereview') {
                     $scope.item.TARGET_GB = 'EXPERIENCE';
+                    $scope.item.MENU = 'EXPERIENCE';
                 } else if ($stateParams.menu == 'productreview') {
                     $scope.item.TARGET_GB = 'PRODUCT';
+                    $scope.item.MENU = 'PRODUCT';
                 } else if ($stateParams.menu == 'angereview') {
                     $scope.item.TARGET_GB = 'ANGE';
+                    $scope.item.MENU = 'ANGE';
                 } else if ($stateParams.menu == 'samplereview') {
                     $scope.item.TARGET_GB = 'SAMPLE';
+                    $scope.item.MENU = 'SAMPLE';
                 } else if ($stateParams.menu == 'samplepackreview') {
                     $scope.item.TARGET_GB = 'SAMPLEPACK';
+                    $scope.item.MENU = 'SAMPLEPACK';
                 }else if ($stateParams.menu == 'bookreview') {
                     $scope.item.TARGET_GB = 'BOOK';
+                    $scope.item.MENU = 'BOOK';
                 }else if ($stateParams.menu == 'dolreview') {
                     $scope.item.TARGET_GB = 'DOL';
+                    $scope.item.MENU = 'DOL';
                 }
             }else{
                 $scope.item.TARGET_GB = $scope.item.MENU;

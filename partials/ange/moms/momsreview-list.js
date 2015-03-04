@@ -113,8 +113,6 @@ define([
                     $scope.TOTAL_COUNT = total_cnt;
 
                     for(var i in data) {
-
-                        console.log(data[i].FILE.PATH);
                         // /storage/review/
 
                         var img = UPLOAD.BASE_URL + '/storage/review/' + 'thumbnail/' + data[i].FILE.FILE_ID;
