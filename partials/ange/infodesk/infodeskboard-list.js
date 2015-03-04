@@ -105,7 +105,7 @@ define([
                     $scope.COMM_MG_NM = comm_mg_nm;
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 
             if($stateParams.menu == 'faq'){
                 $scope.getList('com/webboard', 'category', {}, $scope.search, true)
@@ -113,7 +113,7 @@ define([
                         $scope.tabs = data;
 
                     })
-                    .catch(function(error){ $scope.tabs = "";});
+                    ['catch'](function(error){ $scope.tabs = "";});
             }
         };
 
@@ -156,7 +156,7 @@ define([
                     $scope.list = data;
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
         // 조회 화면 이동
@@ -239,7 +239,7 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 
         $scope.init();

@@ -17,11 +17,19 @@ define([
 
             "UPLOAD_INDEX" : "/serverscript/upload/",
 
+            "COMM_NO_BOARD" : "1,2,3,4,5,6,7",
+            "COMM_NO_PHOTO" : "11,12,13",
+            "COMM_NO_CLINIC" : "22,23,24,25",
+            "COMM_NO_NOTICE" : "51,52",
             "COMM_NO_FAQ" : "53",
-            "COMM_NO_QNA" : "",
+            "COMM_NO_QNA" : "54",
+            "COMM_NO_ONLINETALK" : "61",
+
+
 
             "AD_LOG_URL" : "http://angead.marveltree.com/adm/io/log.php",
             "AD_FILE_URL" : "http://angead.marveltree.com/adm/upload/",
+            "AD_SERVER_URL" : "http://angead.marveltree.com",
 
             "AD_CODE_BN01" : "1",
             "AD_CODE_BN02" : "2",
@@ -53,7 +61,8 @@ define([
             "AD_CODE_BN28" : "28",
             "AD_CODE_BN29" : "29",
             "AD_CODE_BN30" : "30",
-            "AD_CODE_BN31" : "31"
+            "AD_CODE_BN31" : "31",
+            "AD_CODE_BN54" : "54"
         }
     );
     app.constant(

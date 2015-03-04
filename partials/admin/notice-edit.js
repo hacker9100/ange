@@ -38,7 +38,7 @@ define([
 
                     deferred.resolve();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             return deferred.promise;
         };
@@ -74,12 +74,13 @@ define([
                             }
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
         // 게사판 저장 버튼 클릭
         $scope.click_saveNotice = function () {
+            $scope.item.PARENT_NO = '0';
             $scope.item.BOARD_GB = 'NOTICE';
             $scope.item.SYSTEM_GB = 'ANGE';
             $scope.item.COMM_NO = $scope.item.COMM.NO;
@@ -94,11 +95,11 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){$location.url('/notice/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/notice/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -107,7 +108,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getNotice)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

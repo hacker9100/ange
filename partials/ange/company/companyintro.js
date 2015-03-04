@@ -20,6 +20,23 @@ define([
         $scope.partner2 = [];
         $scope.partner3 = [];
         $scope.partner4 = [];
+        $scope.partner5 = [];
+        $scope.partner6 = [];
+        $scope.partner7 = [];
+        $scope.partner8 = [];
+        $scope.partner9 = [];
+        $scope.partner10 = [];
+        $scope.partner11 = [];
+        $scope.partner12 = [];
+        $scope.partner13 = [];
+        $scope.partner14 = [];
+        $scope.partner15 = [];
+        $scope.partner16 = [];
+        $scope.partner17 = [];
+        $scope.partner18 = [];
+        $scope.partner19 = [];
+        $scope.partner20 = [];
+        $scope.partner21 = [];
 
         $scope.init = function () {
             $scope.selectIdx = 1;
@@ -37,9 +54,8 @@ define([
             $scope.selectIdx = idx;
         }
 
-        $scope.click_focus = function (id, name) {
+        $scope.click_focus = function (id) {
             $('html,body').animate({scrollTop:$('#'+id).offset().top}, 100);
-            $('#'+name).focus();
         }
 
         $scope.getPartnerList = function () {
@@ -53,10 +69,52 @@ define([
                             $scope.partner1.push(data[i]);
                         } else if (data[i].CATEGORY_GB == 2) {
                             $scope.partner2.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 3) {
+                            $scope.partner3.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 4) {
+                            $scope.partner4.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 5) {
+                            $scope.partner5.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 6) {
+                            $scope.partner6.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 7) {
+                            $scope.partner7.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 8) {
+                            $scope.partner8.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 9) {
+                            $scope.partner9.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 10) {
+                            $scope.partner10.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 11) {
+                            $scope.partner11.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 12) {
+                            $scope.partner12.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 13) {
+                            $scope.partner13.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 14) {
+                            $scope.partner14.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 15) {
+                            $scope.partner15.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 16) {
+                            $scope.partner16.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 17) {
+                            $scope.partner17.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 18) {
+                            $scope.partner18.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 19) {
+                            $scope.partner19.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 20) {
+                            $scope.partner20.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 21) {
+                            $scope.partner21.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 22) {
+                            $scope.partner22.push(data[i]);
+                        } else if (data[i].CATEGORY_GB == 23) {
+                            $scope.partner23.push(data[i]);
                         }
                     }
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
         };
 
         $scope.getPartnerList();

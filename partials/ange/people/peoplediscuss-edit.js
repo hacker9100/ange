@@ -37,7 +37,7 @@ define([
                     $scope.COMM_MG_NM = comm_mg_nm;
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 
 
         };
@@ -68,7 +68,7 @@ define([
                     .then(function(data){
                         $scope.item = data;
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -85,14 +85,14 @@ define([
                         $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
                             .then(function(){
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
                         //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                         $location.url('/'+$stateParams.channel+'/discuss/list/'+$rootScope.PARENT_NO);
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             } else {
                 $scope.item.REMAIN_POINT = 10;
@@ -102,14 +102,14 @@ define([
                         $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
                             .then(function(){
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 
                         //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                         $location.url('/'+$stateParams.channel+'/discuss/list/'+$rootScope.PARENT_NO);
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -120,7 +120,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoard)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 //        $scope.init();
 //        $scope.getPeopleBoard();

@@ -61,7 +61,7 @@ define([
                     }
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
         // 상세조회 버튼 클릭
@@ -116,13 +116,13 @@ define([
                             console.log("받는"+$scope.reitem.FROM_NM);
 
                         })
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     $scope.viewCheckFl = function () {
                         $scope.updateItem('ange/message', 'check', item.NO, {ROLE: true}, false)
                             .then(function(){
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                     $scope.click_reg = function () {
@@ -140,7 +140,7 @@ define([
 //                                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 //                                    $modalInstance.close();
 //                                })
-//                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 //                        }
                         console.log($scope.reitem);
                         $scope.insertItem('ange/message', 'item', $scope.reitem, true)
@@ -148,7 +148,7 @@ define([
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                                 $modalInstance.close();
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     };
 
                     $scope.click_ok = function () {
@@ -208,7 +208,7 @@ define([
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                                 $modalInstance.close();
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     };
 
                     // 닫기
@@ -267,7 +267,7 @@ define([
                                 $scope.searchUsetList = "Y";
 
                             })
-                            .catch(function(error){$scope.USER_TOTAL_COUNT = 0; $scope.searchUsetList = "Y";  $scope.list = "";});
+                            ['catch'](function(error){$scope.USER_TOTAL_COUNT = 0; $scope.searchUsetList = "Y";  $scope.list = "";});
                     };
 
                     // 사용자 선택
@@ -329,7 +329,7 @@ define([
                                 $scope.list = data;
 
                             })
-                            .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                            ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
                     };
 
                     // 팝업에서 검색
@@ -372,7 +372,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getMessageList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 //        $scope.init();
 //        $scope.getMessageList();

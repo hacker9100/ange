@@ -107,7 +107,7 @@ define([
                     $scope.item.PHONE_2 = data.PHONE_2;
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             $scope.item.PREGNANT_WEEKS = 0;
             $scope.item.CHILD_CNT = 0;
@@ -168,7 +168,7 @@ define([
                             $scope.item.BLOG_URL = data.BLOG_URL;
 
                         })
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     if($scope.item.PREGNENT_FL == 'Y'){
                         $scope.checked = "Y";
@@ -201,7 +201,7 @@ define([
                                 $modalInstance.close();
 
 
-                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     };
 
@@ -215,7 +215,7 @@ define([
                     .then(function(data){
                         $scope.item = data;
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';
@@ -356,7 +356,7 @@ define([
                     }
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         };
 
         // 회원가입 화면 이동
@@ -448,14 +448,14 @@ define([
                             $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                             console.log($scope.item.ANSWER);
 
-                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
 
                                     $location.url('/moms/home');
                                 })
-                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
@@ -464,7 +464,7 @@ define([
 
                             $scope.search.ada_idx = $scope.item.ada_idx;
 
-                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
@@ -505,7 +505,7 @@ define([
 
                             });
 
-                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
@@ -592,14 +592,14 @@ define([
                                 $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
                             }
 
-                            $scope.insertItem('ange/comp', 'eventitem', $scope.item, false)
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
 
                                     $location.url('/moms/home');
                                 })
-                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }
 
                     }else{
@@ -608,7 +608,7 @@ define([
                     }
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
         }
 
@@ -621,7 +621,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.click_postCardList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 
     }]);

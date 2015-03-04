@@ -86,7 +86,7 @@ define([
                     console.log(data);
                     $scope.mileagelist = data;
                 })
-                .catch(function(error){$scope.mileagelist = ""; $scope.TOTAL_COUNT = 0;});
+                ['catch'](function(error){$scope.mileagelist = ""; $scope.TOTAL_COUNT = 0;});
         }
 
         // 커머스 장바구니 리스트
@@ -114,7 +114,7 @@ define([
 
                     $scope.cummercelist = data;
                 })
-                .catch(function(error){$scope.cummercelist = ""; $scope.TOTAL_COUNT = 0;});
+                ['catch'](function(error){$scope.cummercelist = ""; $scope.TOTAL_COUNT = 0;});
         }
 
         // 선택 상품 삭제
@@ -131,7 +131,7 @@ define([
                         $scope.cummercelist.splice(idx, 1);
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 커머스 상품 장바구니 이동

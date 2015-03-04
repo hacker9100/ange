@@ -39,7 +39,7 @@ define(['./directives'], function (directives) {
 //                $scope.getPortlet = function (api) {
 //                    $scope.getList(api, {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
 //                        .then(function(data){$scope.list = data})
-//                        .catch(function(error){$scope.list = [];  alert(error)});
+//                        ['catch'](function(error){$scope.list = [];  alert(error)});
 //                };
 //            },
             link: function (scope, element, attr) {

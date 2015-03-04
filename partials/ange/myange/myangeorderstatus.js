@@ -102,7 +102,7 @@ define([
 
                     $scope.list = data;
                 })
-                .catch(function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0});
+                ['catch'](function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0});
         };
 
         // 조회 화면 이동
@@ -153,7 +153,7 @@ define([
                             $("input:radio[name='counsel']:radio[value='"+data.COUNSEL_ST+"']").attr("checked",true);
                             $scope.radio_change(data.COUNSEL_ST);
                         })
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     // 상품코드 selectbox
                     $scope.productnoList = function(){
@@ -175,7 +175,7 @@ define([
 
 
                             })
-                            .catch(function(error){$scope.productnolist = "";});
+                            ['catch'](function(error){$scope.productnolist = "";});
                     }
 
                     // 상품명 selectbox
@@ -197,7 +197,7 @@ define([
 
                                 $scope.item.PRODUCT = $scope.productnmlist[idx];
                             })
-                            .catch(function(error){$scope.productnmlist = "";});
+                            ['catch'](function(error){$scope.productnmlist = "";});
                     }
 
                     $scope.namingnoList = function(){
@@ -214,7 +214,7 @@ define([
 
                                 $scope.item.CHANGE_PRODUCT = $scope.namingnolist[idx];
                             })
-                            .catch(function(error){$scope.namingnolist = "";});
+                            ['catch'](function(error){$scope.namingnolist = "";});
                     }
 
                     $scope.click_cancel = function () {

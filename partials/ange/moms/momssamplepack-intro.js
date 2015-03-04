@@ -62,7 +62,7 @@ define([
 //                    $scope.item.SEASON1 = 'season1';
 //
 //                })
-//                .catch(function(error){});
+//                ['catch'](function(error){});
 //        };
 
         // 게시판 목록 이동
@@ -75,7 +75,7 @@ define([
 //                    $scope.item.SEASON2 = 'season2';
 //
 //                })
-//                .catch(function(error){});
+//                ['catch'](function(error){});
 //        };
 
         $scope.click_samplepackedit = function(season){
@@ -114,7 +114,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
+            ['catch']($scope.reportProblems);*/
         $scope.init();
         //$scope.click_sampleSeason1List();
         //$scope.click_sampleSeason2List();

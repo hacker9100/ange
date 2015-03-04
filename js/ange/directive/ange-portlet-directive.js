@@ -42,8 +42,8 @@ define([
                 $scope.PAGE_SIZE = $scope.option.size;
 
                 // 검색 조건 추가
-                $scope.search.SYSTEM_GB = 'ANGE';
-                $scope.search.NOTICE_FL = '0';
+//                $scope.search.SYSTEM_GB = 'ANGE';
+//                $scope.search.NOTICE_FL = '0';
 
                 // 검색 조건에 커뮤니티 번호 추가
                 if ($scope.option.tab != undefined) {
@@ -52,10 +52,20 @@ define([
                     } else if ($scope.option.type == 'review') {
                         $scope.search.TARGET_GB = $scope.option.tab[$scope.tabIdx].no;
                     }
+                } else {
+                    if ($scope.option.type == 'board') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_BOARD;
+                    } else if ($scope.option.type == 'photo') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_PHOTO;
+                    } else if ($scope.option.type == 'clinic') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_CLINIC;
+                    } else if ($scope.option.type == 'notice') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_NOTICE;
+                    }
                 }
 
                 // 검색 조건에 대표 이미지 여부 추가
-                if ($scope.option.image != undefined) {
+                if ($scope.option.image != undefined && $scope.option.image == true) {
                     $scope.search.FILE = true;
                 }
 
@@ -64,23 +74,28 @@ define([
                     if ($scope.option.type == 'review') {
 //                        $scope.search.TARGET_GB = angular.uppercase($scope.option.type);
                     } else {
-                        $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
+//                        $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
                     }
                 }
+
+                if ($scope.option.type == 'board') {
+//                    $scope.search.COMM_NO_NOT = '91';
+//                    $scope.search.NOTICE_FL = '0';
+                }
+
 
 //                if ($scope.option.type != 'board') {
 //                    $scope.search.COMM_NO
 //                }
 
                 /********** 이벤트 **********/
-                    // 탭 클릭
+                // 탭 클릭
                 $scope.click_tabIndex = function (idx) {
                     $scope.tabIdx = idx;
 
                     if ($scope.option.type == 'board') {
                         $scope.search.COMM_NO = angular.uppercase($scope.option.tab[$scope.tabIdx].no);
                     } else if ($scope.option.type == 'review') {
-                        $scope.search.FILE = true;
                         $scope.search.TARGET_GB = angular.uppercase($scope.option.tab[$scope.tabIdx].no);
                     }
 
@@ -169,15 +184,16 @@ define([
 
                 // 리스트 조회
                 $scope.getPortletList = function () {
-                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList($scope.option.api, 'main', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             $scope.list = data;
+                            console.log(JSON.stringify(data))
                             if ($scope.option.image != undefined && $scope.option.image) {
                                 $scope.imgItem = data[0];
                                 $scope.img = CONSTANT.BASE_URL + data[0].FILE.PATH + 'thumbnail/' + data[0].FILE.FILE_ID;
                             }
                         })
-                        .catch(function(error){$scope.list = [];});
+                        ['catch'](function(error){$scope.list = [];});
                 };
 
                 $scope.getPortletList();
@@ -223,9 +239,9 @@ define([
                     if ($scope.tabIdx == 0) {
                         $scope.search.SORT = 'T.LIKE_CNT';
                     } else if ($scope.tabIdx == 1) {
-                        $scope.search.SORT = 'T.REG_DT';
+                        $scope.search.SORT = 'P.SUBJECT';
                     } else if ($scope.tabIdx == 2) {
-                        $scope.search.SORT = 'T.REG_DT';
+                        $scope.search.SORT = 'T.SUBJECT';
                     }
                 }
 
@@ -237,9 +253,9 @@ define([
                     if ($scope.tabIdx == 0) {
                         $scope.search.SORT = 'T.LIKE_CNT';
                     } else if ($scope.tabIdx == 1) {
-                        $scope.search.SORT = 'T.REG_DT';
+                        $scope.search.SORT = 'P.SUBJECT';
                     } else if ($scope.tabIdx == 2) {
-                        $scope.search.SORT = 'T.REG_DT';
+                        $scope.search.SORT = 'P.SUBJECT';
                     }
 
                     // 탭 번호로 리스트 조회
@@ -278,7 +294,7 @@ define([
 
                             $scope.list = data;
                         })
-                        .catch(function(error){$scope.list = [];});
+                     ['catch'](function(error){$scope.list = [];});
                 };
 
                 // 리스트 조회
@@ -319,7 +335,7 @@ define([
                             // 광고의 슬라이드을 실행
                             angular.element('#'+$scope.option.id).slickPlay();
                         })
-                        .catch(function(error){});
+                  ['catch'](function(error){});
                 };
 
                 $scope.getMiniList();
@@ -357,8 +373,8 @@ define([
                 $scope.PAGE_SIZE = $scope.option.size;
 
                 // 검색 조건 추가
-                $scope.search.SYSTEM_GB = 'ANGE';
-                $scope.search.NOTICE_FL = '0';
+//                $scope.search.SYSTEM_GB = 'ANGE';
+//                $scope.search.NOTICE_FL = '0';
 
                 // 검색 조건에 커뮤니티 번호 추가
                 if ($scope.option.tab != undefined) {
@@ -366,6 +382,16 @@ define([
                         $scope.search.TARGET_GB = $scope.option.tab[$scope.tabIdx].no;
                     } else {
                         $scope.search.COMM_NO = $scope.option.tab[$scope.tabIdx].no;
+                    }
+                } else {
+                    if ($scope.option.type == 'board') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_BOARD;
+                    } else if ($scope.option.type == 'photo') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_PHOTO;
+                    } else if ($scope.option.type == 'clinic') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_CLINIC;
+                    } else if ($scope.option.type == 'notice') {
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_NOTICE;
                     }
                 }
 
@@ -410,7 +436,7 @@ define([
 
                 // 리스트 조회
                 $scope.getMiniList = function () {
-                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList($scope.option.api, 'main', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             $scope.list = data;
 
@@ -420,7 +446,7 @@ define([
                                 $scope.img.URL = CONSTANT.BASE_URL + data[0].FILE.PATH + 'thumbnail/' + data[0].FILE.FILE_ID;
                             }
                         })
-                        .catch(function(error){$scope.list = [];});
+                        ['catch'](function(error){$scope.list = [];});
                 };
 
                 $scope.getMiniList();
@@ -605,7 +631,7 @@ define([
 
                 // 검색 조건에 도전 앙쥬 모델 추가
                 $scope.search.FILE = true;
-                $scope.search.COMM_NO = '6';
+                $scope.search.COMM_NO = '11';
 
                 /********** 이벤트 **********/
                     // 일시 정지 버튼
@@ -646,7 +672,7 @@ define([
 
                 // 슬라이드 이미지 조회
                 $scope.getPortletList = function (api) {
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList($scope.option.api, 'main', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             for(var i in data) {
                                 if (data[i].FILE != null) {
@@ -674,7 +700,7 @@ define([
                             // 광고의 슬라이드을 실행
                             angular.element('#'+$scope.option.id).slickPlay();
                         })
-                        .catch(function(error){});
+                        ['catch'](function(error){});
                 };
 
                 $scope.getPortletList();
@@ -851,7 +877,7 @@ define([
 //                                $scope.coverTitle = data[newVal].ada_title;
 //                            });
                         })
-                        .catch(function(error){$scope.list = [];});
+                        ['catch'](function(error){$scope.list = [];});
                 };
 
                 $scope.getPortletList();
@@ -969,7 +995,7 @@ define([
                                 $scope.coverTitle = data[newVal].ada_title;
                             });
                         })
-                        .catch(function(error){$scope.list = [];});
+                        ['catch'](function(error){$scope.list = [];});
                 };
 
                 $scope.getPortletList();
@@ -1062,7 +1088,7 @@ define([
 //                            ];
 
                         })
-                        .catch(function(error){$scope.list = [];});
+                        ['catch'](function(error){$scope.list = [];});
                 };
 
                 $scope.getPortletList();
@@ -1073,53 +1099,6 @@ define([
 //                scope.portletTitle = attr.title;
 //                scope.portletCss = attr.css;
 //                scope.getPortletList(attr.api);
-            }
-        }
-    }]);
-
-    directives.directive('angePortletSlide', ['$controller', function($controller) {
-        return {
-            restrict: 'EA',
-//            scope: { images:'=' },
-//            replace: true,
-            template: '<slider images="images"/>',
-            controller: ['$scope', '$location', '$window', function($scope, $location, $window) {
-
-                /********** 공통 콘트롤러 호출 **********/
-//                angular.extend(this, $controller('ange-common', {$scope: $scope}));
-                /********** 초기화 **********/
-
-                $scope.PAGE_NO = 0;
-                $scope.PAGE_SIZE = 5;
-
-                // 테스트 이미지
-                $scope.images = [
-                    {src: '../../../imgs/ange/img/img00.jpg', description: 'Image 00'},
-                    {src: '../../../imgs/ange/img/img01.jpg', description: 'Image 01'},
-                    {src: '../../../imgs/ange/img/img02.jpg', description: 'Image 02'},
-                    {src: '../../../imgs/ange/img/img03.jpg', description: 'Image 03'},
-                    {src: '../../../imgs/ange/img/img04.jpg', description: 'Image 04'}
-                ];
-
-                /********** 이벤트 **********/
-                    // 배너 클릭
-                $scope.click_linkBanner = function (url) {
-                    $window.open(url, '', 'width=400,height=500');
-                };
-
-                // 이미지 조회
-                $scope.getPortletList = function (api) {
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, {}, true)
-                        .then(function(data){$scope.list = data})
-                        .catch(function(error){$scope.list = [];});
-                };
-            }],
-            link: function (scope, element, attr) {
-                scope.url = attr.url;
-                scope.api = attr.api;
-                scope.portletTitle = attr.title;
-                scope.portletCss = attr.css;
-                scope.getPortletList(attr.api);
             }
         }
     }]);
@@ -1181,7 +1160,7 @@ define([
 
                             $scope.title = data[0].ada_title;
                         })
-                        .catch(function(error){});
+                        ['catch'](function(error){});
                 };
 
                 $scope.getImage();
@@ -1303,6 +1282,7 @@ define([
                     $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             for(var i in data) {
+                                console.log(JSON.stringify(data))
                                 if ($scope.option.api == 'ad/banner') {
                                     var img = CONSTANT.AD_FILE_URL + data[i].ada_preview;
                                 } else {
@@ -1315,9 +1295,8 @@ define([
                             }
 
                             $scope.list = data;
-
                         })
-                        .catch(function(error){});
+                        ['catch'](function(error){});
                 };
 
                 $scope.getImage();
@@ -1348,15 +1327,15 @@ define([
                 $scope.PAGE_SIZE = $scope.option.size;
 
                 // 검색 조건 추가
-                $scope.search.SYSTEM_GB = 'ANGE';
-                $scope.search.NOTICE_FL = '0';
+//                $scope.search.SYSTEM_GB = 'ANGE';
+//                $scope.search.NOTICE_FL = '0';
 
                 // 검색 조건에 커뮤니티 번호 추가
                 if ($scope.option.type != undefined) {
 //                    $scope.search.COMM_NO = $scope.option.comm;
-                    $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
+//                    $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
                     $scope.search.FILE = true;
-                    $scope.search.COMM_NO = '6';
+                    $scope.search.COMM_NO = '11';
                 }
 
                 /********** 이벤트 **********/
@@ -1367,7 +1346,7 @@ define([
 
                 // 이미지 조회
                 $scope.getImage = function () {
-                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                    $scope.getList($scope.option.api, 'main', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
 
                             for(var i in data) {
@@ -1378,7 +1357,7 @@ define([
 
                             $scope.list = data;
                         })
-                        .catch(function(error){});
+                        ['catch'](function(error){});
                 };
 
                 $scope.getImage();
@@ -1411,7 +1390,7 @@ define([
                 // 설문 조회
                 $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, {POLL_ST: '1', SORT: 'RAND()', ORDER: ''}, false)
                     .then(function(data){$scope.item = data[0]})
-                    .catch(function(error){$scope.item = [];});
+                    ['catch'](function(error){$scope.item = [];});
             }]
         }
     }]);
@@ -1446,7 +1425,7 @@ define([
 //
 //                // 설문 조회
 //                $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, {SORT:'REG_DT', ORDER: 'DESC', POLL_ST: '0'}, false)
-//                    .then(function(data){$scope.item = data[0]})
+//                    .then(function(data){$sco['catch']m = data[0]})
 //                    .catch(function(error){$scope.item = [];});
             }]
         }

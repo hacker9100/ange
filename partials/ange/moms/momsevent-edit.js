@@ -35,7 +35,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
+            ['catch']($scope.reportProblems);*/
         $scope.init();
 
     }]);

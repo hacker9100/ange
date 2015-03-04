@@ -54,8 +54,8 @@ define([
 
             console.log($scope.search.COMM_NO);
             $scope.search.COMM_GB = 'CLINIC';
-            $scope.search.SYSTEM_GB = 'ANGE';
-            $scope.search.BOARD_ST = 'D';
+//            $scope.search.SYSTEM_GB = 'ANGE';
+//            $scope.search.BOARD_ST = 'D';
 
             $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
@@ -72,7 +72,7 @@ define([
 //                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
                     }
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 
         };
 
@@ -127,7 +127,7 @@ define([
                     $scope.list = data;
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
         // 조회 화면 이동(비밀글)
@@ -230,7 +230,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoardList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 //        $scope.init();
 //        $scope.getPeopleBoardList();
 

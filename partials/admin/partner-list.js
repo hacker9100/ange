@@ -66,7 +66,7 @@ define([
                         $scope.tableParams.reload();
                         $scope.click_cancel();
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('ange/company', 'item', $scope.item.NO, $scope.item, false)
                     .then(function(){
@@ -74,7 +74,7 @@ define([
                         $scope.tableParams.reload();
                         $scope.click_cancel();
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -131,7 +131,7 @@ define([
             dialog.result.then(function(btn){
                 $scope.deleteItem('ange/company', 'item', item.NO, true)
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.tableParams.reload();})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -171,7 +171,7 @@ define([
                             params.total(total_cnt);
                             $defer.resolve(data);
                         })
-                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+                        ['catch'](function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
                 }
             });
         };
@@ -182,6 +182,6 @@ define([
             .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getPartnerList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
     }]);
 });

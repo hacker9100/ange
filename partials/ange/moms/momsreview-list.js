@@ -38,16 +38,19 @@ define([
             console.log('Page changed to: ' + $scope.PAGE_NO);
 
             // 페이징
-            $scope.PAGE_NO = 1;
-            $scope.PAGE_SIZE = 10;
-            $scope.TOTAL_COUNT = 0;
+//            $scope.PAGE_NO = 1;
+//            $scope.PAGE_SIZE = 10;
+//            $scope.TOTAL_COUNT = 0;
 
             $scope.list = [];
-            $scope.getPeopleBoardList();
+            $scope.getMomsReviewList();
         };
 
         // 초기화
         $scope.init = function(session) {
+
+            $scope.search.BOARD_ST = 'D';
+
             if ($stateParams.menu == 'experiencereview') {
                 $scope.community = "체험단/서평단 후기";
                 $scope.search['TARGET_GB'] = 'EXPERIENCE';
@@ -73,6 +76,21 @@ define([
                 $scope.community = "앙쥬돌 후기";
                 $scope.search['TARGET_GB'] = 'DOL';
             }
+
+            console.log($scope.menu.COMM_NO);
+
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+//            $scope.search.BOARD_GB = 'BOARD';
+//            $scope.search.SYSTEM_GB = 'ANGE';
+//            $scope.search.BOARD_ST = 'D';
+
+            $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
+                .then(function(data){
+                    $scope.COMM_MG_NM = data.COMM_MG_NM;
+                })
+                ['catch'](function(error){});
+
+            //$scope.search.SORT = 'NOTICE_FL'
         };
 
         // 검색어 조건
@@ -95,8 +113,6 @@ define([
                     $scope.TOTAL_COUNT = total_cnt;
 
                     for(var i in data) {
-
-                        console.log(data[i].FILE.PATH);
                         // /storage/review/
 
                         var img = UPLOAD.BASE_URL + '/storage/review/' + 'thumbnail/' + data[i].FILE.FILE_ID;
@@ -115,7 +131,7 @@ define([
                         $scope.list.push(data[i]);
                     }
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
         // 조회 화면 이동
@@ -171,7 +187,7 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 
         $scope.init();

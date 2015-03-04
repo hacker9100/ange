@@ -29,7 +29,7 @@ define([
                     $scope.user_roles = data;
                     $scope.item.ROLE = data[0];
                 })
-                .catch(function(error){console.log(error);});
+                ['catch'](function(error){console.log(error);});
         };
 
         /********** 이벤트 **********/
@@ -68,7 +68,7 @@ define([
 //                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
 //                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
-                        .catch(function(error){$defer.resolve([]);});
+                        ['catch'](function(error){$defer.resolve([]);});
                 }
             });
         };
@@ -84,7 +84,7 @@ define([
                         $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
                         $scope.item = data;
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         }
 
@@ -101,7 +101,7 @@ define([
 //            .then($scope.permissionCheck)
 //            .then($scope.init)
 //            .then($scope.getUserList)
-//            .catch($scope.reportProblems);
+//            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getUserList();

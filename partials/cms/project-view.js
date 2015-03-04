@@ -53,7 +53,7 @@ define([
             var dlg = dialogs.create('/partials/cms/popup/history.html',
                 ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
                     $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
-                        .catch(function(error){console.log(error);});
+                        ['catch'](function(error){console.log(error);});
 
                     $scope.list = data;
 
@@ -80,7 +80,7 @@ define([
                             $scope.file = {"name":file.FILE_NM,"size":file[0].FILE_SIZE,"url":UPLOAD.BASE_URL+file[0].PATH+file[0].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+file[0].PATH+"thumbnail/"+file[0].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+file[0].PATH+"medium/"+file[0].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file[0].FILE_NM,"deleteType":"DELETE"};
                         }
                     })
-                    .catch(function(error){console.log(error);});
+                    ['catch'](function(error){console.log(error);});
 
 //                var deferred = $q.defer();
 //                $q.all([
@@ -108,7 +108,7 @@ define([
         $scope.getTaskList = function () {
             $scope.getList('cms/task', 'list', {}, {PROJECT : {NO: $stateParams.id }}, false)
                 .then(function(data){$scope.TOTAL_COUNT = data[0].TOTAL_COUNT; $scope.list = data; console.log(data)})
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = [];})
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = [];})
         }
 
         /********** 화면 초기화 **********/
@@ -118,7 +118,7 @@ define([
             .then($scope.init)
             .then($scope.getProject)
             .then($scope.getTaskList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

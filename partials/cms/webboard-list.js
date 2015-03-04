@@ -101,14 +101,14 @@ define([
 //                            var orderedData = params.sorting() ? $filter('orderBy')(data, params.orderBy()) : data;
 //                            $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                         })
-                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+                        ['catch'](function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
                 }
             });
 
 //            $scope.isLoading = true;
 //            $scope.getList('com/webboard', 'list', {NO:0, SIZE:20}, $scope.search, true)
 //                .then(function(data){$scope.listData = data; $scope.totalItems = data[0].TOTAL_COUNT;})
-//                .catch(function(error){$scope.list = []; console.log(error);})
+//                ['catch'](function(error){$scope.list = []; console.log(error);})
 //                .finally(function(){$scope.isLoading = false;});
         };
 
@@ -117,6 +117,6 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoardList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
     }]);
 });

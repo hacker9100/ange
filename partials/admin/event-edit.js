@@ -84,7 +84,7 @@ define([
                                 $scope.file4 = {"name":file[i].FILE_NM,"size":file[i].FILE_SIZE,"url":UPLOAD.BASE_URL+file[i].PATH+file[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file[i].FILE_NM,"deleteType":"DELETE","kind":angular.lowercase(file[i].FILE_GB)};
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -116,14 +116,14 @@ define([
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                         $location.url('/event/list');
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('ange/event', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
                         $location.url('/event/list');
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -152,11 +152,11 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('ange/product', 'item', $scope.item, false)
                     .then(function(){$location.url('/product/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('ange/product', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/product/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -165,7 +165,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getEvent)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

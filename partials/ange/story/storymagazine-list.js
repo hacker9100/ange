@@ -138,7 +138,7 @@ define([
 //                    }
 //
 //                })
-//                .catch(function(error){$scope.end = true;});
+//                ['catch'](function(error){$scope.end = true;});
 //        };
 //
 //        // 광고 조회
@@ -156,7 +156,7 @@ define([
 //                        }
 //                    }
 //                })
-//                .catch(function(error){});
+//                ['catch'](function(error){});
 //        };
 //
 //        // 공감 클릭
@@ -182,7 +182,7 @@ define([
 //                        dialogs.notify('알림', '공감 취소되었습니다.', {size: 'md'});
 //                    }
 //                })
-//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 //        };
 //
 //        // 콘텐츠 클릭 조회
@@ -216,7 +216,7 @@ define([
 //                .then(function(data){
 //                    $scope.openModal(data, 'lg');
 //                })
-//                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 //        }
 //
 ////        $scope.openModal = function (content, size) {

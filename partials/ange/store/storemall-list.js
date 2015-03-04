@@ -76,7 +76,7 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
                 })
-                .catch(function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
+                ['catch'](function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
         };
 
         $(function () {
@@ -120,7 +120,7 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
                 })
-                .catch(function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0;});
+                ['catch'](function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0;});
 
         };
 

@@ -53,7 +53,7 @@ define([
                     dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
                     $scope.getEventList();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 체험단/이벤트 목록 조회
@@ -64,14 +64,14 @@ define([
 
 //                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
                 })
-                .catch(function(error){alert(error)});
+                ['catch'](function(error){alert(error)});
         };
 
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
 //            .then($scope.permissionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getEventList();

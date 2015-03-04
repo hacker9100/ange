@@ -83,7 +83,7 @@ define([
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
                 })
-                .catch(function(error){$scope.reviewList = ""; $scope.TOTAL_COUNT=0;});
+                ['catch'](function(error){$scope.reviewList = ""; $scope.TOTAL_COUNT=0;});
         }
 
         $scope.pageChanged = function() {
@@ -198,7 +198,7 @@ define([
                         $scope.PRICE = data.PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                         $scope.DELEIVERY_PRICE = data.DELEIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -220,7 +220,7 @@ define([
                         return;
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 전체 금액 계산
@@ -287,7 +287,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
+            ['catch']($scope.reportProblems);*/
         $scope.init();
         $scope.getPeopleBoard();
         $scope.getReviewList();

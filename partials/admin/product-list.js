@@ -93,7 +93,7 @@ define([
                     dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
                     $scope.getMenuList();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 상품 목록 조회
@@ -115,7 +115,7 @@ define([
 
 //                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
                 })
-                .catch(function(error){alert(error)});
+                ['catch'](function(error){alert(error)});
         };
 
         $scope.pageChanged = function() {
@@ -136,7 +136,7 @@ define([
                     $scope.getProduct = function() {
                         $scope.getItem('ange/product', 'item', $scope.product.NO, {}, true)
                             .then(function(data){$scope.product = data;})
-                            .catch(function(error){});
+                            ['catch'](function(error){});
                     };
 
                     $scope.getStockList = function () {
@@ -144,7 +144,7 @@ define([
                             .then(function(data){
                                 $scope.list = data;
                             })
-                            .catch(function(error){alert(error)});
+                            ['catch'](function(error){alert(error)});
                     };
 
 //                    $scope.click_ok = function () {
@@ -152,7 +152,7 @@ define([
 //
 //                        $scope.insertItem('ange/product', 'stock', $scope.item, false)
 //                            .then(function(){$modalInstance.close();})
-//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 //                    };
 
 //                    console.log(JSON.stringify(data));
@@ -171,7 +171,7 @@ define([
 //                            .then(function(data){
 //                                $scope.list = data;
 //                            })
-//                            .catch(function(error){alert(error)});
+//                            ['catch'](function(error){alert(error)});
 //                    };
 
                                 $scope.isUpdate = false;
@@ -191,14 +191,14 @@ define([
 
                                         $scope.insertItem('ange/product', 'stock', $scope.item, false)
                                             .then(function(){$modalInstance.close();})
-                                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                                     } else {
                                         $scope.item.PRODUCT_NO = data.PRODUCT_NO;
                                         $scope.item.NO = data.NO;
 
                                         $scope.updateItem('ange/product', 'stock', $scope.item.NO, $scope.item, false)
                                             .then(function(){$modalInstance.close();})
-                                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                                     }
                                 };
 
@@ -227,7 +227,7 @@ define([
                                 $scope.getStockList();
                                 $scope.getProduct();
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     };
 
                     $scope.click_ok = function () {
@@ -251,7 +251,7 @@ define([
 //        $scope.getSession()
 //            .then($scope.sessionCheck)
 ////            .then($scope.permissionCheck)
-//            .catch($scope.reportProblems);
+//            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getProductList();

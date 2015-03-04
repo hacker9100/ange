@@ -39,7 +39,7 @@ define([
                     $rootScope.email = data.EMAIL;
 
                     $location.path('/member/list');
-                }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.sessionCheck = function(session) {
@@ -65,7 +65,7 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 	}]);
 });

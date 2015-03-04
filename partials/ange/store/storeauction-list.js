@@ -76,7 +76,7 @@ define([
                 /*$scope.total(total_cnt);*/
                 $scope.list = data;
             })
-            .catch(function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
+            ['catch'](function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
         };
 
         $(function () {
@@ -123,7 +123,7 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
                 })
-                .catch(function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT=0;});
+                ['catch'](function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT=0;});
         }
 
 
@@ -153,7 +153,7 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.prevlist = data;
                 })
-                .catch(function(error){$scope.prevlist = ""; $scope.SEARCH_TOTAL_COUNT = 0;});
+                ['catch'](function(error){$scope.prevlist = ""; $scope.SEARCH_TOTAL_COUNT = 0;});
 
         };
 
@@ -211,7 +211,7 @@ define([
                     $scope.click_showStoreAuctionList();
                     $scope.click_showPeopleBoardList();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         //즉시 구매
@@ -252,11 +252,11 @@ define([
 
                                 $location.url('store/cart/list/'+$stateParams.menu);
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
 
 
         }

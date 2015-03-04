@@ -43,7 +43,7 @@ define([
             $scope.option_r5_c2 = {title: '전문가상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/home', image: false, head: false, date: false, nick: false};
 
             // ange-portlet-basic-list
-            $scope.option_r6_c1 = {title: '앙쥬후기', api:'ange/review', size: 5, type: 'review', url: '/moms/review', defIdx: 3, tab: [{no: 'sample', menu: 'samplereview', name: '샘플팩'}, {no: 'event', menu: 'eventreview', name: '이벤트/체험단'}, {no: 'product', menu: 'productreview', name: '상품'}, {no: 'ange', menu: 'angereview', name: '앙쥬'}], image: true, head: true, date: false, nick: true};
+            $scope.option_r6_c1 = {title: '앙쥬후기', api:'ange/review', size: 5, type: 'review', url: '/moms/review', defIdx: 3, tab: [{no: 'sample', menu: 'samplereview', name: '샘플팩'}, {no: 'event', menu: 'eventreview', name: '이벤트/체험단'}, {no: 'product', menu: 'productreview', name: '상품'}, {no: 'ange', menu: 'angereview', name: '앙쥬'}], image: true, head: false, date: false, nick: true};
 
             // ange-portlet-basic-list
             $scope.option_r6_c2 = {title: '공지사항&당첨자발표', api:'com/webboard', size: 5, type: 'notice', url: '/infodesk/notice/list', image: false, head: false, date: false, nick: false};
@@ -90,6 +90,16 @@ define([
         $scope.main2 = [];
 
         // 메뉴 목록 조회
+        $scope.getStoryList = function () {
+            $scope.getList('com/task', 'main', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, false)
+                .then(function(data){
+
+                })
+                ['catch'](function(error){alert(error)});
+            }
+
+
+        // 메뉴 목록 조회
         $scope.getMenuList = function () {
             $scope.getList('com/menu', 'submenu', {}, {SYSTEM_GB: 'ANGE', MENU_ID: 'home'}, false)
                 .then(function(data){
@@ -111,12 +121,13 @@ define([
 
 //                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
                 })
-                .catch(function(error){alert(error)});
+                ['catch'](function(error){alert(error)});
         };
 
         /********** 화면 초기화 **********/
         $scope.init();
         $scope.getMenuList();
+//        $scope.getStoryList();
 
     }]);
 });

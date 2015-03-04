@@ -46,14 +46,12 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+            $scope.search.BOARD_GB = "WINNER";
             if ($stateParams.menu == 'experiencewinner') {
-                $scope.community = "체험단 발표";
                 $scope.search.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'eventwinner') {
-                $scope.community = "이벤트 발표";
                 $scope.search.EVENT_GB = "EVENT";
             } else if ($stateParams.menu == 'postwinner') {
-                $scope.community = "애독자엽서 발표";
                 $scope.search.EVENT_GB = "POSTCARD";
             }
         };
@@ -69,7 +67,7 @@ define([
                     $scope.list = data;
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
         $scope.click_showViewPeopleBoard = function(key){

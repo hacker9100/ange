@@ -35,7 +35,7 @@ define([
         $scope.checkCert = false;
 
         // 진행 단계
-        $scope.step = '01';
+        $scope.step = '04';
 
         // 이용약관 체크
         $scope.checkAll = false;
@@ -291,7 +291,7 @@ define([
 //                        dialogs.notify('알림', '이미 존재하는 아이디입니다.', {size: 'md'});
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 닉네임 중복확인
@@ -308,7 +308,7 @@ define([
 //                        dialogs.notify('알림', '이미 존재하는 아이디입니다.', {size: 'md'});
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 아기 추가
@@ -451,7 +451,7 @@ define([
                             $scope.step = '03';
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
                     .then(function(){
@@ -461,19 +461,16 @@ define([
                             $scope.step = '03';
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
         // 사용자 인증
         $scope.click_certUser = function (cert) {
             if (cert == 'mail') {
-                $scope.user.USER_NM = '김성환';
-                $scope.user.EMAIL = 'hacker9100@gmail.com';
-
                 $scope.insertItem('com/user', 'mail', $scope.user, false)
                     .then(function(){ dialogs.notify('알림', '인증메일이 재전송되었습니다.', {size: 'md'});})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 if (!$scope.checkValidation()) {
                     return;
@@ -483,7 +480,7 @@ define([
 
                 $scope.insertItem('com/sms', 'item', $scope.user, false)
                     .then(function(){ $scope.isSMS = true; dialogs.notify('알림', '인증번호가 전송되었습니다.', {size: 'md'});})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -508,7 +505,7 @@ define([
         $scope.finishUser = function () {
             $scope.insertItem('com/mail', 'congratulation', item, false)
                 .then(function(data){})
-                .catch(function(error){});
+                ['catch'](function(error){});
         };
 
         // 이전 단계 클릭
@@ -555,7 +552,7 @@ define([
                                 dialogs.notify('알림', '회원 인증이 되지않았습니다.', {size: 'md'});
                             }
                         })
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                 } else {
                     $scope.step = '04';
                 }
@@ -604,7 +601,7 @@ define([
                                 $rootScope.email = data.EMAIL;
 
                                 $modalInstance.close();
-                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     };
 
@@ -623,11 +620,11 @@ define([
 //        $scope.click_test = function () {
 //            $scope.updateItem('com/user', 'mail', null, $scope.user, false)
 //                .then(function(){alert(1)})
-//                .catch(function(error){alert(2)});
+//                ['catch'](function(error){alert(2)});
 //
 ////            $scope.insertItem('mail', 'item', $scope.user, false)
 ////                .then(function(){alert(1)})
-////                .catch(function(error){alert(2)});
+////                ['catch'](function(error){alert(2)});
 //        };
 
         $scope.init();

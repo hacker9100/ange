@@ -53,7 +53,7 @@ define([
                     dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
                     $scope.tableParams.reload();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 응대정보 저장
@@ -67,14 +67,14 @@ define([
                         $scope.tableParams.reload();
                         $scope.click_reset();
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('admin/user_response', 'item', $scope.item.NO, $scope.item, false)
                     .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
                         $scope.tableParams.reload();
                         $scope.click_reset();
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -103,7 +103,7 @@ define([
                             params.total(total_cnt);
                             $defer.resolve(data);
                         })
-                        .catch(function(error){$scope.TOTAL_CNT = 0; $defer.resolve([]);});
+                        ['catch'](function(error){$scope.TOTAL_CNT = 0; $defer.resolve([]);});
                 }
             });
         };
@@ -112,7 +112,7 @@ define([
         $scope.getSession()
             .then($scope.sessionCheck)
 //            .then($scope.permissionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getResponseList();

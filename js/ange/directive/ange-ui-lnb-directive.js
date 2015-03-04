@@ -103,7 +103,7 @@ define(['./directives'], function (directives) {
 //                        $scope.category_a = category_a;
 //                        $scope.category_b = category_b;
 //                    })
-//                        .catch(function(error){});
+//                        ['catch'](function(error){});
                 };
 
                 /********** 이벤트 **********/
@@ -138,7 +138,7 @@ define(['./directives'], function (directives) {
                     }
 
                     if (link == 'C') {
-                        dialogs.notify('알림', '1차 체험기간에는 제공되지 않습니다.', {size: 'md'});
+                        dialogs.notify('알림', '점검중입니다.', {size: 'md'});
                     } else if (link != 'N') {
                         $location.url(url);
                     }

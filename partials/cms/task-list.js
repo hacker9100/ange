@@ -60,7 +60,7 @@ define([
                     $scope.category_a = category_a;
                     $scope.category_b = category_b;
                 })
-                .catch(function(error){console.log(error)});
+                ['catch'](function(error){console.log(error)});
 
             // 검색어
             var condition = [{name: "기자", value: "EDITOR_NM"}, {name: "제목+내용", value: "SUBJECT"}];
@@ -101,7 +101,7 @@ define([
             if (data != null) {
                 $scope.getList('cms/project', 'list', {}, {YEAR: data}, false)
                     .then(function(data){$scope.projects = data;})
-                    .catch(function(error){$scope.projects = []; console.log(error)});
+                    ['catch'](function(error){$scope.projects = []; console.log(error)});
             }
         });
 
@@ -149,7 +149,7 @@ define([
             var dlg = dialogs.create('/partials/cms/popup/history.html',
                 ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
                     $scope.getList('cms/history', 'list', {}, item, true).then(function(data){$scope.list = data;})
-                        .catch(function(error){console.log(error);});
+                        ['catch'](function(error){console.log(error);});
 
                     $scope.list = data;
 
@@ -176,7 +176,7 @@ define([
 
             $scope.deleteItem('cms/task', 'item', task.NO, true)
                 .then(function(){dialogs.notify('알림', '삭제 되었습니다.', {size: 'md'});})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 페이지 사이즈
@@ -203,6 +203,9 @@ define([
 
         // 태스크 목록 조회
         $scope.getTaskList = function () {
+            $scope.search.SORT = 'PHASE';
+            $scope.search.ORDER = 'DESC';
+
             $scope.isLoading = true;
             $scope.getList('cms/task', 'list', {NO:$scope.pageNo, SIZE:$scope.pageSize}, $scope.search, true)
                 .then(function(data){
@@ -217,7 +220,7 @@ define([
                         $scope.list = $scope.listData.slice($scope.perCnt, $scope.perSize);
                     }
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; console.log(error);})
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; console.log(error);})
                 .finally(function(){$scope.isLoading = false;});
         };
 
@@ -274,7 +277,7 @@ define([
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.permissionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getTaskList();

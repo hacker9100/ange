@@ -57,7 +57,7 @@ define([
                             params.total(total_cnt);
                             $defer.resolve(data);
                         })
-                        .catch(function(error){$scope.TOTAL_CNT = 0; $defer.resolve([]);});
+                        ['catch'](function(error){$scope.TOTAL_CNT = 0; $defer.resolve([]);});
                 }
             });
         };
@@ -66,7 +66,7 @@ define([
         $scope.getSession()
             .then($scope.sessionCheck)
 //            .then($scope.permissionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getMileageList();

@@ -164,7 +164,7 @@ define([
                             }
                         }
                 })
-                .catch(function(error){$scope.projects = []; console.log(error)});
+                ['catch'](function(error){$scope.projects = []; console.log(error)});
             } else {
                 $scope.getList('cms/project', 'list', {}, {YEAR: ''}, false).then(function(data){$scope.projects = data;})
             }
@@ -213,7 +213,7 @@ define([
                     }
                     $scope.item.SECTION = $scope.sections[idx];
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
 
@@ -233,7 +233,7 @@ define([
                             }
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }else {
                 $scope.getList('cms/section', 'list', {}, {}, false).then(function(data){$scope.sections = data;})
             }
@@ -249,11 +249,11 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('cms/task', 'item', $scope.item, false)
                     .then(function(){$location.url('/task/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('cms/task', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/task/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -298,7 +298,7 @@ define([
             .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.initUpdate)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         console.log($rootScope.uid);
 

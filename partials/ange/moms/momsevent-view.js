@@ -114,10 +114,10 @@ define([
         });
 
         /********** 콘텐츠 랜더링 **********/
-        $scope.renderHtml = function(html_code) {
-            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
-//            return html_code;
-        };
+//        $scope.renderHtml = function(html_code) {
+//            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
+////            return html_code;
+//        };
 
         /********** 이벤트 **********/
 
@@ -291,10 +291,20 @@ define([
                         $scope.ada_text = data.ada_text != null ? data.ada_text.replace(/&quot;/gi, '\"') : data.ada_text;
                         data.ada_imagemap = data.ada_imagemap != null ? data.ada_imagemap.replace(/&quot;/gi, '\"') : data.ada_imagemap;
 
-
+                        $scope.ada_text = data.ada_text != null ? $scope.ada_text.replace(/src="/gi, 'src="'+CONSTANT.AD_SERVER_URL) : data.ada_text;
                         $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
-//
+                        //$scope.ada_imagemap = data.ada_imagemap;
 
+                        $scope.renderHtml = $sce.trustAsHtml($scope.ada_text+data.ada_imagemap);
+//                        var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
+//
+//                        $scope.ada_imagemap = $scope.ada_imagemap.replace(pattern, '');
+//                        $scope.ada_imagemap = $scope.ada_imagemap.replace(/&nbsp;/ig, '');
+//                        $scope.ada_imagemap = $scope.ada_imagemap.trim();
+//
+//                        console.log($scope.ada_imagemap);
+//
+                        //<img src="http://angead.marveltree.com/adm/upload/_2.jpg" usemap="#adimage" />
 //                        var day = 1000*60*60*24;
 //
 //                        $scope.D_DAY = parseInt($scope.end_date) - parseInt($scope.todayDate);
@@ -426,33 +436,46 @@ define([
                         if($scope.item.ada_que_type == 'reply'){
 
                             //$scope.item.REPLY_SUBJECT = $scope.item.ada_title;
+                            $scope.search.PAGE_NO = 1;
+                            $scope.search.PAGE_SIZE = 10;
+                            $scope.search.TOTAL_COUNT = 0;
+
+                            $scope.eventReplyList = [];
+
+
+                            $scope.replyPageChange = function(){
+                                console.log('Page changed to: ' + $scope.search.PAGE_NO);
+                                $scope.eventReplyList = [];
+                                $rootScope.getEventReplyList();
+                            }
+
+                            $scope.search.ada_idx = $stateParams.id;
+                            $scope.getItem('ange/event', 'replyitem', {}, $scope.search, true)
+                                .then(function(data){
+
+                                    $scope.REPLY_TOTAL_COUNT = data[0].TOTAL_COUNT;
+                                })
+                                .catch(function(error){$scope.eventReplyList = "";});
 
                             // 댓글 리스트
-//                            $scope.getReplyList = function () {
-//
-//                                $scope.replySearch.TARGET_NO = $scope.TARGET_NO;
-//                                $scope.replySearch.TARGET_GB = $scope.TARGET_GB;
-//
-//                                $scope.getItem('ange/event', 'replyitem', {}, $scope.replySearch, true)
-//                                    .then(function(data){
-//
-//                                        if(data.COMMENT == null){
-//                                            $scope.replySearch.TOTAL_COUNT = 0;
-//                                        }else{
-//                                            $scope.replySearch.TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
-//                                        }
-//
-//                                        var reply = data.COMMENT;
-//                                        $scope.replyItem = {};
-//
-//                                        for(var i in reply) {
-//
-//                                            $("textarea#comment").val(reply[i].COMMENT);
-//                                            $scope.replyList.push(reply[i]);
-//                                        }
-//                                    })
-//                                    .catch(function(error){$scope.replyList = "";});
-//                            };
+                            $rootScope.getEventReplyList = function () {
+
+                                $scope.getItem('ange/event', 'replyitem', {}, $scope.search, true)
+                                    .then(function(data){
+
+                                        $scope.search.TOTAL_COUNT = data[0].TOTAL_COUNT;
+                                        for(var i in data) {
+
+                                            data[i].adhj_answers = data[i].adhj_answers.replace(/{"1":"/gi, '');
+                                            data[i].adhj_answers = data[i].adhj_answers.replace(/"}/gi, '');
+
+                                            $scope.eventReplyList.push({'NICK_NM' : data[i].nick_nm, 'COMMENT' : data[i].adhj_answers, 'REG_DT' : data[i].adhj_date_request});
+                                        }
+                                    })
+                                    .catch(function(error){$scope.eventReplyList = "";});
+                            };
+
+                            $rootScope.getEventReplyList();
 
                         }
 
@@ -561,13 +584,14 @@ define([
 
             // 세션만료 되었을 때 리스트로 이동
             if($scope.uid == '' || $scope.uid == null){
-                dialogs.notify('알림', '세션이 만료되어 로그아웃 되었습니다. 로그인 후 다시 작성하세요', {size: 'md'});
+                dialogs.notify('알림', '로그인 후 이용 가능합니다', {size: 'md'});
+                return;
 
-                if ($stateParams.menu == 'eventprocess') {
-                    $location.url('/moms/eventprocess/list');
-                } else if($stateParams.menu == 'eventperformance') {
-                    $location.url('/moms/eventperformance/list');
-                }
+//                if ($stateParams.menu == 'eventprocess') {
+//                    $location.url('/moms/eventprocess/list');
+//                } else if($stateParams.menu == 'eventperformance') {
+//                    $location.url('/moms/eventperformance/list');
+//                }
             }
 
             // 현재날짜가 모집시작일이 아닐때
@@ -815,7 +839,7 @@ define([
 
             } else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
-                console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
+                //console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
                 $scope.item.ANSWER = '{"1":"'+ $scope.item.COMMENT+'"}';
 
                 $scope.search.ada_idx = $scope.item.ada_idx;

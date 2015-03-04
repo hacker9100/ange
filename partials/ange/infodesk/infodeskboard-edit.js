@@ -81,14 +81,14 @@ define([
                     $scope.COMM_MG_NM = comm_mg_nm;
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 
             $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
                     $scope.categoryfaqlist = data;
                     $scope.item.CATEGORY_NO = data[0].NO;
                 })
-                .catch(function(error){$scope.categoryfaqlist = ""});
+                ['catch'](function(error){$scope.categoryfaqlist = ""});
             //$scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
         };
 
@@ -149,7 +149,7 @@ define([
                             $scope.item.CATEGORY_NO = $scope.categoryfaqlist[idx].NO;
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -205,7 +205,7 @@ define([
                             $location.url('/infodesk/myqna/list');
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
 
                 if($("#check_scrap").is(":checked")){
@@ -231,7 +231,7 @@ define([
                             $location.url('/infodesk/myqna/list');
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -240,7 +240,7 @@ define([
          .then($scope.sessionCheck)
          .then($scope.init)
          .then($scope.getPeopleClinic)
-         .catch($scope.reportProblems);
+         ['catch']($scope.reportProblems);
 //        $scope.init();
 //        $scope.getPeopleClinic();
 

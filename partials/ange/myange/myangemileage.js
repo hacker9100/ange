@@ -71,7 +71,7 @@ define([
                     }
 
                 })
-                .catch(function(error){$scope.SUM_POINT = 0; $scope.USE_POINT = 0; $scope.REMAIN_POINT = 0;});
+                ['catch'](function(error){$scope.SUM_POINT = 0; $scope.USE_POINT = 0; $scope.REMAIN_POINT = 0;});
         }
 
         $scope.search.REG_UID = $rootScope.uid;
@@ -97,7 +97,7 @@ define([
                     $scope.list = data;
 
                 })
-                .catch(function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
         };
 
         // 연도 선택

@@ -102,7 +102,7 @@ define([
                     $scope.item.PHONE_2 = data.PHONE_2;
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             $scope.item.PREGNANT_WEEKS = 0;
             $scope.item.CHILD_CNT = 0;
@@ -162,7 +162,7 @@ define([
                             $scope.item.BLOG_URL = data.BLOG_URL;
 
                         })
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     if($scope.item.PREGNENT_FL == 'Y'){
                         $scope.checked = "Y";
@@ -195,7 +195,7 @@ define([
                                 $modalInstance.close();
 
 
-                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     };
 
@@ -212,7 +212,7 @@ define([
                         console.log($scope.item);
 
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';
@@ -251,6 +251,8 @@ define([
                    $scope.item.ada_que_type = data[0].ada_que_type;
 
                    console.log($scope.item.ada_que_type);
+
+                   //console.log(data[0].ada_que_type);
 
                    // 질문일 때
                    if($scope.item.ada_que_type == 'question'){
@@ -365,7 +367,7 @@ define([
 //                   $scope.item.DAY = babyBirthDt.substr(6,2);
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 //            var babyBirthDt = $rootScope.user_info.BABY_BIRTH_DT;
 //
 //            $scope.item.YEAR = babyBirthDt.substr(0,4);
@@ -404,7 +406,11 @@ define([
                 .then(function(data){
                     var comp_cnt = data[0].COMP_CNT;
 
+                    console.log('comp_cnt = '+comp_cnt);
+
                     if(comp_cnt == 0){
+
+                        console.log('$scope.item.ada_que_type == '+$scope.item.ada_que_type);
 
                         if($scope.item.ada_que_type == 'question'){ // 문답일때
                             var answer = [];
@@ -474,7 +480,7 @@ define([
                                         $location.url('/moms/eventperformance/list');
                                     }
                                 })
-                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         }else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
@@ -482,6 +488,14 @@ define([
                             $scope.item.ANSWER = '{"1":"'+ $scope.item.COMMENT+'"}';
 
                             $scope.search.ada_idx = $scope.item.ada_idx;
+
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $location.url('/moms/samplepack/intro');
+                                })
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         } else if($scope.item.ada_que_type == 'join'){ // 신청이나 응모일때
 
@@ -515,6 +529,14 @@ define([
 
                             });
 
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $location.url('/moms/samplepack/intro');
+                                })
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
                         }else if($scope.item.ada_que_type == 'upload'){
 
                             // 문답일때
@@ -530,9 +552,10 @@ define([
 
                             $scope.item.FILE = $scope.file;
 
-                            if($scope.item.QUE != ''){
+                            if($scope.item.QUE != undefined){  // $scope.item.QUE != '' ||
                                 var answer = [];
                                 $scope.item.QUE_SHORT_ANSWER = ''
+
                                 $("input[name='answer[]'").each(function(index, element) {
 
                                     if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
@@ -540,37 +563,60 @@ define([
                                         return false;
                                     }
 
+                                    console.log($(element).val());
+
                                     $scope.item.QUE_SHORT_ANSWER = $(element).val();
                                     answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                                 })
 
+                                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
+
+                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                        return false;
+                                    }
+
+                                    console.log($(element).val());
+
+                                    $scope.item.QUE_LONG_ANSWER = $(element).val();
+                                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+                                })
+
                                 var values = {};
 
-                                $('.poll_select_radio:checked').each(function() {
+                                $('.poll_select_radio:checked').each(function(index) {
 
-                                    if(this.value == undefined){
-                                        values[this.name] = "";
-                                    }
-
-                                    if(this.value == "기타"){
-                                        console.log($("#etc_answer").val());
-                                        values[this.name] = $("input[name='etc_answer']").val();
-                                    }
+//                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+//                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+//                        return false;
+//                    }
+//
+//                        if(this.value == undefined){
+//                            values[this.name] = "";
+//                        }
+//
+//                        if(this.value == "기타"){
+//                            console.log($("#etc_answer").val());
+//                            values[this.name] = $("input[name='etc_answer']").val();
+//                        }
 
                                     values[this.name] = this.value;
-                                    answer.push(values[this.name]); // 객관식
+                                    answer.push(values[this.name]);
                                     console.log(this.value);
                                 });
 
                                 var check_answer = ''
-                                $('.poll_select_checkbox:checked').each(function() {
+                                $('.poll_select_checkbox:checked').each(function(index) {
+
+//                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
+//                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
+//                        return false;
+//                    }
                                     values[this.name] = ','
                                     if(this.value == undefined){
                                         values[this.name] = "";
                                     }
                                     values[this.name] += this.value;
-
-
 
                                     check_answer += this.value
                                     answer.push(check_answer); // 객관식
@@ -580,36 +626,44 @@ define([
 
                                 $rootScope.jsontext2 = new Array();
 
-                                $("input[name='index[]'").each(function(index, element) {
-                                    $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-                                })
+                                // .poll_query_no input[name='index[]'
+//                    $(".poll_query_no").each(function(index, element) {
+//                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+//                    })
 
-                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+','+$scope.file.name+'}';
+                                for(var i=0; i<answer.length; i++){
+                                    var index = parseInt(i+1);
+                                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+                                }
+
+                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+$scope.file.name+'}';
                                 console.log($scope.item.ANSWER);
 
                             }else{
 
-
                                 $rootScope.jsontext3 = '"1":"'+ $scope.file.name+'"';
                                 $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
+
+
                             }
 
+                            console.log($scope.item.ANSWER);
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(){
+                                    dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $location.url('/moms/samplepack/intro');
+                                })
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }
 
-                        $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                            .then(function(){
-                                dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
-
-                                $location.url('/moms/samplepack/intro');
-                            })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }else{
                         dialogs.notify('알림', '이미 샘플팩 신청을 했습니다.', {size: 'md'});
                         $location.url('/moms/samplepack/intro');
                     }
 
             })
-            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
 
         }
@@ -618,7 +672,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getCmsBoard)
-            .catch($scope.reportProblems);*/
+            ['catch']($scope.reportProblems);*/
 
         // 신청자격 여부 체크
         $scope.click_samplepackCheck = function (){
@@ -642,7 +696,7 @@ define([
                     }
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         }
 
 
@@ -653,7 +707,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.click_sampleSeasonList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 
     }]);

@@ -31,7 +31,7 @@ define([
             $("#check_reply").prop("checked",true);
             $("input[name='check']").prop("checked",true);
 
-            if($scope.role == 'MANAGER'){
+            if($scope.role == 'ANGE_MANAGER' || $scope.role == 'ANGE_ADMIN'){
                 $("input[name='noti_check']").prop("checked",true);
                 $scope.item.NOTICE_FL = "true";
             }else{
@@ -165,7 +165,7 @@ define([
                     $scope.categorylist = data;
                     $scope.item.CATEGORY_NO = data[0].NO;
                 })
-                .catch(function(error){$scope.categorylist = ""});
+                ['catch'](function(error){$scope.categorylist = ""});
 
 
 
@@ -175,7 +175,7 @@ define([
                     $scope.COMM_MG_NM = comm_mg_nm;
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         };
 
         // CK Editor
@@ -252,7 +252,7 @@ define([
 
 
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -299,7 +299,7 @@ define([
 
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
 
                 if($("#check_reply").is(":checked")){
@@ -327,7 +327,7 @@ define([
 
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
 
         };
@@ -335,13 +335,13 @@ define([
         /********** 화면 초기화 **********/
 //        $scope.getSession()
 //         .then($scope.sessionCheck)
-//         .catch($scope.reportProblems);
+//         ['catch']($scope.reportProblems);
 
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getPeopleBoard)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
 //        $scope.init();
 //        $scope.getPeopleBoard();

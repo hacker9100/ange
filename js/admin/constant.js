@@ -19,6 +19,7 @@ define([
 
             "COMM_NO_NOTICE" : "51,52",
             "COMM_NO_FAQ" : "53",
+            "COMM_NO_ONLINETALK" : "61",
             "COMM_NO_QNA" : ""
         }
     );

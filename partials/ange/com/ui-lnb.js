@@ -51,7 +51,7 @@ define([
                 $scope.category_a = category_a;
                 $scope.category_b = category_b;
             })
-            .catch(function(error){$scope.projects = []; console.log(error)});
+            ['catch'](function(error){$scope.projects = []; console.log(error)});
         };
 
         /********** 좌측 메뉴 **********/

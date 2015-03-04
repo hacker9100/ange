@@ -51,6 +51,40 @@
                 MtUtil::_d("################################### [count] ".$_SESSION['count']);
                 MtUtil::_d("################################### [count] ".$_SESSION['uid']);
                 $_d->dataEnd2($session_cnt);
+            } else if ($_type == 'forgotid') {
+                $sql = "SELECT
+                            USER_ID
+                        FROM
+                            COM_USER
+                        WHERE
+                            USER_NM = '".$_search[USER_NM]."'
+                            AND PHONE_2 = '".$_search[PHONE_2]."'
+                        ";
+
+                $data  = $_d->sql_fetch($sql);
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
+            } else if ($_type == 'forgotpw') {
+                $sql = "SELECT
+                            USER_ID
+                        FROM
+                            COM_USER
+                        WHERE
+                            USER_ID = '".$_search[USER_ID]."'
+                            AND PHONE_2 = '".$_search[PHONE_2]."'
+                        ";
+
+                $data  = $_d->sql_fetch($sql);
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
             } else if ($_type == 'check') {
                 $sql = "SELECT
                             COUNT(*) AS COUNT
@@ -1351,6 +1385,43 @@
                     echo "window.location.href='".BASE_URL."';";
                     echo "</script>";
                     exit();
+                }
+            } else if ($_type == "password") {
+                $err = 0;
+                $msg = "";
+
+                $update_password = "";
+
+                if (isset($_model[PASSWORD]) && $_model[PASSWORD] != "") {
+                    $password = $_model[PASSWORD];
+                    $hash = create_hash($password);
+                } else {
+                    $_d->failEnd("수정실패입니다:".$msg);
+                    break;
+                }
+
+                $_d->sql_beginTransaction();
+
+                $sql = "UPDATE COM_USER
+                        SET
+                            PASSWORD = '".$hash."'
+                        WHERE
+                            USER_ID = '".$_key."'
+                        ";
+
+                $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                } else {
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
                 }
             }
 

@@ -51,7 +51,7 @@ define([
                         return;
                     });
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         /********** 화면 초기화 **********/
@@ -60,7 +60,7 @@ define([
             .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getTask)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

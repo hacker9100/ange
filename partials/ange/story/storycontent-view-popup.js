@@ -34,10 +34,13 @@ define([
         };
 
         /********** 콘텐츠 랜더링 **********/
+
+/*
         $scope.renderHtml = function(html_code) {
             return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
 //            return html_code;
         };
+*/
 
         /********** 이벤트 **********/
         $scope.click_ok = function () {
@@ -72,11 +75,14 @@ define([
                         $scope.task = data;
                         $scope.share_url = UPLOAD.BASE_URL + '/story/content/list/' + $scope.task.NO;
                     }),
-                    $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){ $scope.content = data; }),
+                    $scope.getItem('cms/content', 'item', data.NO, {}, false).then(function(data){
+                        $scope.content = data;
+                        $scope.renderHtml = $sce.trustAsHtml($scope.content.BODY);
+                    }),
                     $scope.getList('cms/task', 'list', {NO:0, SIZE:5}, {EDITOR_ID: data.EDITOR_ID, NOT_TASK_NO: data.NO, PHASE: '30, 31'}, false).then(function(data){
                         $scope.editorList = data;
                     }),
-                    $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: CONSTANT.AD_CODE_BN08, ADA_STATE: 1}, false).then(function(data){
+                    $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: CONSTANT.AD_CODE_BN54, ADA_STATE: 1}, false).then(function(data){
                         var img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                         data[0].img = img;
                         $scope.ad = data[0];
@@ -205,11 +211,11 @@ define([
 
                                 dialogs.notify('알림', '스크랩 되었습니다.', {size: 'md'});
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 플러스 기사 이전 클릭
@@ -250,14 +256,14 @@ define([
                         dialogs.notify('알림', '공감 취소되었습니다.', {size: 'md'});
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.addHitCnt = function () {
             $scope.updateItem('cms/task', 'hit', data.NO, {}, false)
                 .then(function(){
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.init();

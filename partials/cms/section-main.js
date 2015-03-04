@@ -29,7 +29,7 @@ define([
                 .then(function(data){
                     $scope.season = data;
                 })
-                .catch(function(error){alert(error)});
+                ['catch'](function(error){alert(error)});
         };
 
         $scope.initUpdate = function() {
@@ -61,11 +61,11 @@ define([
                             .then(function(data){
                                 $scope.season = data;
                             })
-                            .catch(function(error){alert(error)});
+                            ['catch'](function(error){alert(error)});
 
                         $scope.click_cancel();
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -108,7 +108,7 @@ define([
                             params.total(total_cnt);
                             $defer.resolve(data);
                         })
-                        .catch(function(error){$defer.resolve([]);});
+                        ['catch'](function(error){$defer.resolve([]);});
                 }
 
             });
@@ -129,13 +129,13 @@ define([
                             .then(function(data){
                                 $scope.season = data;
                             })
-                            .catch(function(error){alert(error)});
+                            ['catch'](function(error){alert(error)});
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('cms/section', 'item', $scope.key, $scope.item, false)
                     .then(function(){dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});$scope.tableParams.reload();})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
 
             $scope.key = '';
@@ -163,7 +163,7 @@ define([
                         $('html,body').animate({scrollTop:$('#item').offset().top}, 100);
                         $('#season_gb').focus();
                     })
-                    .catch(function(error){alert(error)});
+                    ['catch'](function(error){alert(error)});
 
             }
 
@@ -214,9 +214,9 @@ define([
                         .then(function(data){
                             $scope.season = data;
                         })
-                        .catch(function(error){alert(error)});
+                        ['catch'](function(error){alert(error)});
                 })
-                .catch(function(error){alert(error)});
+                ['catch'](function(error){alert(error)});
         }
 
         // 취소 클릭
@@ -236,7 +236,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.getSectionList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 

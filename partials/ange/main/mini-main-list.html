@@ -39,7 +39,12 @@
 
     <div ng-class="option.type == 'review' ? 'miniboard_review_contents' : option.type == 'clinic' ? 'comp_clinic_contents' : 'miniboard_community_contents'" style="background-color: transparent;">
 
-        <div ng-if="option.image" class="mini_review_kingimg" ng-style="{'background-image': 'url('+img+')', 'background-repeat': 'no-repeat', 'background-position': 'center 50%'}" ng-click="click_showView(imgItem);"></div>
+        <!--<div ng-if="option.image" class="mini_review_kingimg" ng-style="{'background-image': 'url('+img+')', 'background-repeat': 'no-repeat', 'background-position': 'center 50%'}" ng-click="click_showView(imgItem);"></div>-->
+        <div ng-if="option.image" class="mini_review_kingimg" >
+            <div class="review_thumbnails" ng-click="click_showView(imgItem);">
+                <img src="/imgs/ange/_blank_4by3.gif" class="people_photo_img" style="background-image:url('{{img}}')" />
+            </div>
+        </div>
 
         <div ng-class="option.type == 'review' ? 'mini_review_contents' : 'mini_community_contents'" ng-repeat="item in list">
             <!--<img src="" class="mini_board_contents_img" />-->

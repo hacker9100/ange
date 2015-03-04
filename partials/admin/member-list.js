@@ -53,7 +53,7 @@ define([
                         $scope.saveList = data;
                         $scope.search.ADMIN_SAVE_LIST = data[0];
                     })
-                    .catch(function(error){alert(error)});
+                    ['catch'](function(error){alert(error)});
 
                 $scope.$watch('search.ADMIN_SAVE_LIST', function(item) {
                     if (item != undefined) {
@@ -194,7 +194,7 @@ define([
 
 //                    $scope.getList('com/excel', {NO:0, SIZE:5}, $scope.search, true)
 //                        .then(function(data){$scope.list = data; $scope.total_cnt = $scope.list.length;})
-//                        .catch(function(error){alert(error)});
+//                        ['catch'](function(error){alert(error)});
                     break;
                 case 'save' :
                     $scope.click_openPopupsaveListReg();
@@ -227,7 +227,7 @@ define([
 
                     $scope.updateItem('com/user', 'admin', null, item, false)
                         .then(function(){dialogs.notify('알림', '사용자 상태가 변경되었습니다.', {size: 'md'}); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
-                        .catch(function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
                     break;
                 case 'message' :
                     var item = {};
@@ -302,7 +302,7 @@ define([
                     dialogs.notify('알림', '정상적으로 제외되었습니다.', {size: 'md'});
                     $scope.saveList.splice($scope.saveList.indexOf($scope.search.ADMIN_SAVE_LIST), 1);
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         $scope.click_openPopupsaveListReg = function() {
@@ -335,7 +335,7 @@ define([
 //                            .then(function(data){
 //                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 //                            })
-//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 //
 //                        $modalInstance.close();
 //                        //console.log($scope.item);
@@ -367,7 +367,7 @@ define([
 //                            .then(function(data){
 //                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 //                            })
-//                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 //
 //                        $modalInstance.close();
 //                        //console.log($scope.item);
@@ -399,7 +399,7 @@ define([
                             .then(function(data){
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         $modalInstance.close();
                         //console.log($scope.item);
@@ -431,7 +431,7 @@ define([
                             .then(function(data){
                                 dialogs.notify('알림', '정상적으로 전송되었습니다.', {size: 'md'});
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         $modalInstance.close();
                         //console.log($scope.item);
@@ -461,7 +461,7 @@ define([
                     $scope.click_reg = function () {
                         $scope.insertItem('ange/mileage', 'admin', $scope.item, false)
                             .then(function(){dialogs.notify('알림', '마일리지가 등록되었습니다.', {size: 'md'}); /*$scope.tableParams.reload(); $scope.getCmsUserList();*/})
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'}); $scope.tableParams.reload();});
 
                         $modalInstance.close();
                         //console.log($scope.item);
@@ -577,7 +577,7 @@ define([
                     $scope.isStatus = false;
                     $scope.selectUser = '';
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 유형 변경 기능 클릭
@@ -588,7 +588,7 @@ define([
                     $scope.isStatus = false;
                     $scope.selectUser = '';
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 고객응대 메모 버튼 클릭
@@ -621,7 +621,7 @@ define([
                     dialogs.notify('알림', '정상적으로 제외되었습니다.', {size: 'md'});
                     $scope.getUserList();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 사용자 목록 조회
@@ -634,7 +634,7 @@ define([
 //                    $scope.list = data;
 //                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
 //                })
-//                .catch(function(error){alert(error)});
+//                ['catch'](function(error){alert(error)});
 //        };
 //
 //        $scope.pageChanged = function() {
@@ -679,7 +679,7 @@ define([
                             params.total(total_cnt);
                             $defer.resolve(data);
                         })
-                        .catch(function(error){$scope.TOTAL_CNT = 0; $defer.resolve([]);});
+                        ['catch'](function(error){$scope.TOTAL_CNT = 0; $defer.resolve([]);});
                 }
             });
         };
@@ -688,7 +688,7 @@ define([
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.permissionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         if ($scope.menu != 'save') {

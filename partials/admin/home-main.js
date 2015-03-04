@@ -26,7 +26,7 @@ define([
         $scope.getSession()
             .then($scope.sessionCheck)
 //            .then($scope.permissionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
     }]);

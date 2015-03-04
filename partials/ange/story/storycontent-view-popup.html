@@ -26,37 +26,8 @@
 
                 <div id="content" name="content" ng-model="content" class="story-col-xs-12 article_previewwrap">
 
-                    <!--<div ng-bind-html="renderHtml(item.BODY)"></div>-->
-
-
-
-                    <div ng-bind-html="renderHtml(content.BODY)"></div>
-
-                    <!--<p><plantitle><strong>섹션명</strong> | 제목</plantitle></p>-->
-                    <!--<subtitle>5분 습관 </subtitle><maintitle>하루 5분,우리 아이 독서 습관기르기</maintitle>-->
-
-                    <!--<div class="imagebox" style="text-align: center;"><img alt="" src="http://ange.marveltree.com/storage/cms/medium/54af73df9819d" /></div>-->
-
-
-                    <!--<p><bodyscript><br />-->
-                        <!--책은 심심할 때 함께 놀아주고, 우울할 때나 조언이 필요할 때 늘 옆에 있어 줄 수 있는 좋은 친구다. 중국에서는 &ldquo;처음 책을읽을 때에는 한 사람의 친구와 알게 되고, 두 번째 읽을 때는 옛 친구를 만난다&rdquo;는 말이 있다. 아이에게 책을 읽히는 것은 과묵하지만 변치 않는 든든한 친구를 갖게 하는 것과 같다는 이야기. 특히 책 읽기는 유아기 때 잠깐 읽고 마는 것이 아니기때문에 책을 접하는 첫 순간이 중요하다. 아이가 처음 책을 만날 때 흥미 유발이 안 됐다면 자라서도 책 읽기를 힘겨워하고지루해할 수 있다. 그렇다면 아이가 책과 가까워질 수 있는 방법으로는 무엇이 있을까? 바로 억지로 가르칠 것이 아니라 아이의 몸에 자연스럽게 스미도록 가정 내 환경을 만들어주는 것이다. 거실에 TV와 컴퓨터를 치우고 집 안 어디에서든 책을읽을 수 있도록 항상 책이 가까이 있도록 해준다. 또한 책을 사주는 것도 좋지만 도서관을 이용해 아이가 직접 책을 고를수 있는 환경을 만들어주는 것도 매우 중요하다. 특히 부모가 책을 읽는 모습을 어렸을 때부터 보던 아이는 자연스럽게 책과 가까워진다. 부모가 먼저 재미있게 책을 읽는 모습을 보여주는 것이 가장 좋은 교육이다.</bodyscript></p>-->
-
-                    <!--<div class="imagebox" style="text-align: center;"><img alt="" src="http://ange.marveltree.com/storage/cms/medium/54af73df983f7" /></div>-->
-
-                    <!--<p><bodyscript><br />-->
-                        <!--<strong>01 아이의 관심사에서 출발하자</strong><br />-->
-                        <!--독서에 대한 흥미를 키워주면 책 읽기 능력이 향상된다. 아이가스스로 흥미를 느끼는 데서 출발해 자연스레 책을 읽도록 지도하는 것이 가장 좋다.<br />-->
-                        <!--<strong>02 도서관을 자주 방문한다 </strong><br />-->
-                        <!--도서관에서는 아이 스스로 책을 찾는 즐거움을 느낄 수 있다. 이때아이 자신이 흥미를 느끼고 관심을 보이는 분야를 자유롭게 탐구하고 접근할 수 있게끔 하는 것이 가장 바람직하다. 가까운 도서관에서 아이 이름으로 회원증을 만들고, 집의 책장 한쪽을 비워 도서관 대출책 코너를 만들어 대여 기간 동안 꾸준히 읽는 시간을 가지면 놀이처럼 책 읽기를 할 수 있다<br />-->
-                        <!--<strong>03 가족 독서 시간을 정해 책을 읽는다 </strong><br />-->
-                        <!--온 가족이 함께 매일 10분씩이라도 독서 시간을 갖는다. 신문이나잡지를 읽거나 아이와 함께 그림책을 읽는 등 시간을 정해 함께독서를 하다 보면 자연스럽게 아이의 독서 습관이 잡힐 수 있다.함께 책 읽는 시간은 아침이든 저녁이든 상관없지만 일관성 있게유지하는 것이 중요하다. </bodyscript></p>-->
-                    <!--<byline>-->
-                        <!--<div class="basic_information" id="basic_information"><strong>월간앙쥬[2014-11]</strong></div>-->
-                        <!--<strong>에디터</strong>심우리<strong> 포토그래퍼</strong>김현철<strong> 참고한 책</strong>&lt;즐겁고 행복한 독서습관 들이기&gt;(주니어김영사), &lt;바쁜 아이 독서 습관 잡아주는 엄마 노력 57가지&gt;(글담출판사) </byline>-->
-
-
-                    <!-- - 에디터 - {{item.EDITOR_ID}} -->
-
+                    <!--<div ng-bind-html="renderHtml(content.BODY)"></div>-->
+                    <div ng-bind-html="renderHtml"></div>
 
                     <div>
 
@@ -77,17 +48,6 @@
                             <div data-ng-show="plusList == '' || plusList == null" style="width:65%; padding: 40px 0; margin:0px auto; color:#646464; font-size:0.86em; text-align:center; line-height:18px;">
                                 같은 카테고리 내의 기사가 없습니다.
                             </div>
-
-                            <!--<div class="story_plus_thumb">-->
-                            <!--<img class="story_plus_pic" src="/imgs/ange/temp/story_food_01.jpg">-->
-                            <!--<div class="table_blue story_plus_title">수영이 임신부에게 좋은 이유</div>-->
-                            <!--<div class="table_gray story_plus_series">2014. 07월호</div>-->
-                            <!--</div>-->
-                            <!--<div class="story_plus_thumb">-->
-                            <!--<img class="story_plus_pic" src="/imgs/ange/temp/story_food_01.jpg">-->
-                            <!--<div class="table_blue story_plus_title">수영이 임신부에게 좋은 이유</div>-->
-                            <!--<div class="table_gray story_plus_series">2014. 07월호</div>-->
-                            <!--</div>-->
 
                             <div style="width:75%; text-align:center;font-size: 0.78em; margin:0px auto;">
                                 <a class="miniboard_tab_slideprev" title="이전" ng-click="click_prevPlus()">이전슬라이드</a>

@@ -38,7 +38,7 @@ define([
                 .then(function(data){
                     alert(JSON.stringify(data))
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         };
 
         // 사용자 목록 조회
@@ -47,7 +47,7 @@ define([
                 .then(function(data){
                     $scope.list = data;
                 })
-                .catch(function(error){alert(error)});
+                ['catch'](function(error){alert(error)});
         };
 
         /********** 화면 초기화 **********/
@@ -57,6 +57,6 @@ define([
             .then($scope.init)
             .then($scope.getSessionCount)
             .then($scope.getUserList)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
     }]);
 });

@@ -42,7 +42,7 @@ define([
                     dialogs.notify('알림', '정상적으로 제외되었습니다.', {size: 'md'});
                     $scope.tableParams.reload();
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 검색 버튼 클릭
@@ -76,7 +76,7 @@ define([
                             params.total(total_cnt);
                             $defer.resolve(data);
                         })
-                        .catch(function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+                        ['catch'](function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
                 }
             });
 
@@ -86,14 +86,14 @@ define([
 //                    $scope.list = data;
 //                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;
 //                })
-//                .catch(function(error){$scope.list = []});
+//                ['catch'](function(error){$scope.list = []});
         };
 
         /********** 화면 초기화 **********/
         $scope.getSession()
             .then($scope.sessionCheck)
 //            .then($scope.permissionCheck)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
         $scope.init();
         $scope.getNotifyList();

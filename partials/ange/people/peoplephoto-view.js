@@ -41,7 +41,7 @@ define([
                     $scope.COMM_MG_NM = comm_mg_nm;
 
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
 
 //            if ($stateParams.menu == 'angemodel') {
 //                $scope.community = "앙쥬모델 선발대회";
@@ -82,7 +82,7 @@ define([
                         }
 
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }else{
                 $scope.LIKE_FL = 'N';
             }
@@ -119,7 +119,7 @@ define([
                         $scope.getPeopleBoard();
                     }
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
             /*            $scope.updateItem('com/webboard', 'likeCntitem', item.NO, {}, false)
              .then(function(){
@@ -127,7 +127,7 @@ define([
              dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
              $scope.getPeopleBoard();
              })
-             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
+             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});*/
         };
 
         /********** 이벤트 **********/
@@ -145,7 +145,7 @@ define([
             $scope.updateItem('com/webboard', 'hit', $stateParams.id, {}, false)
                 .then(function(){
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         // 게시판 조회
@@ -173,7 +173,7 @@ define([
                     $scope.item.TARGET_GB = "BOARD";
                     $scope.item.RE_COMMENT = "";
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -191,7 +191,7 @@ define([
                     .then(function(data){
                         $scope.preBoardView = data;
                     })
-                    .catch(function(error){$scope.preBoardView = "";})
+                    ['catch'](function(error){$scope.preBoardView = "";})
             }
         }
 
@@ -208,7 +208,7 @@ define([
                     .then(function(data){
                         $scope.nextBoardView = data;
                     })
-                    .catch(function(error){$scope.nextBoardView = "";})
+                    ['catch'](function(error){$scope.nextBoardView = "";})
             }
         }
 
@@ -227,7 +227,7 @@ define([
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
                         $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                      ;})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
@@ -266,11 +266,11 @@ define([
                                 dialogs.notify('알림', '스크랩 되었습니다.', {size: 'md'});
                                 $scope.getPeopleBoard();
                             })
-                            .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 
                 })
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
         };
 
@@ -310,7 +310,7 @@ define([
          .then($scope.getPeopleBoard)
          .then($scope.getPreBoard)
          .then($scope.getNextBoard)
-         .catch($scope.reportProblems);
+         ['catch']($scope.reportProblems);
 
 //        $scope.init();
 //        $scope.likeFl();

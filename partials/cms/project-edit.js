@@ -55,7 +55,7 @@ define([
                         $scope.item.SERIES = arr_series[0];
                     }
                 })
-                .catch(function(error){throw('시리즈:'+error);});
+                ['catch'](function(error){throw('시리즈:'+error);});
 
             for (var i = 2010; i < nowYear + 5; i++) {
                 year.push(i+'');
@@ -112,7 +112,7 @@ define([
                             $scope.file = {"name":file[0].FILE_NM,"size":file[0].FILE_SIZE,"url":UPLOAD.BASE_URL+file[0].PATH+file[0].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+file[0].PATH+"thumbnail/"+file[0].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+file[0].PATH+"medium/"+file[0].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file[0].FILE_NM,"deleteType":"DELETE"};
                         }
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.TYPE = 1;
             }
@@ -127,11 +127,11 @@ define([
             if ($stateParams.id == 0) {
                 $scope.insertItem('cms/project', 'item', $scope.item, false)
                     .then(function(){$location.url('/project/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 $scope.updateItem('cms/project', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){$location.url('/project/list');})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
         };
 
@@ -141,7 +141,7 @@ define([
             .then($scope.permissionCheck)
             .then($scope.init)
             .then($scope.getProject)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

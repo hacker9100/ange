@@ -32,7 +32,7 @@ define([
         $scope.click_saveCmsUser = function () {
             $scope.updateItem('com/user', 'item', $scope.item.USER_ID, $scope.item, true)
                 .then(function(){dialogs.notify('알림', "정상적으로 수정 되었습니다.", {size: 'md'});})
-                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
         // 로그인 사용자 조회
@@ -40,7 +40,7 @@ define([
             if ($rootScope.uid != '') {
                 $scope.getItem('com/user', 'item', $rootScope.uid, {}, true)
                     .then(function(data){$scope.item = data;})
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             } else {
                 dialogs.error('오류', '조회 정보가 없습니다.', {size: 'md'});
             }
@@ -53,7 +53,7 @@ define([
             $scope.getSession()
                 .then($scope.sessionCheck)
                 .then($scope.getCmsUser)
-                .catch($scope.reportProblems);
+                ['catch']($scope.reportProblems);
         };
 
         /********** 화면 초기화 **********/
@@ -61,7 +61,7 @@ define([
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.getCmsUser)
-            .catch($scope.reportProblems);
+            ['catch']($scope.reportProblems);
 
     }]);
 });

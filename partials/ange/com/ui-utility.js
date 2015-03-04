@@ -25,10 +25,7 @@ define([
         };
 
         $scope.click_forgotInfo = function () {
-            $scope.comming_soon();
-            return;
-
-//            $location.url('myange/account');
+            $location.url('infodesk/forgot/request');
         };
 
         $scope.click_goClub = function () {
@@ -92,7 +89,7 @@ define([
                                 $scope.loginBanner = data[0];
                                 $scope.loginBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                             })
-                            .catch(function(error){});
+                            ['catch'](function(error){});
                     };
 
                     $scope.getLoginBanner();
@@ -137,7 +134,7 @@ define([
                                 }
 
                                 $modalInstance.close();
-                            }).catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     };
 
@@ -184,7 +181,7 @@ define([
                     $scope.topBanner = data[0];
                     $scope.topBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         };
 
         $scope.getTopBanner();
@@ -199,7 +196,7 @@ define([
                     $scope.bottomBanner2 = data[1];
                     $scope.bottomBanner2.img = CONSTANT.AD_FILE_URL + data[1].ada_preview;
                 })
-                .catch(function(error){});
+                ['catch'](function(error){});
         };
 
         $scope.getTopBanner();
@@ -241,7 +238,7 @@ define([
 
 //        $scope.getSession()
 //            .then($scope.sessionCheck)
-//            .catch($scope.reportProblems);
+//            ['catch']($scope.reportProblems);
 
 
 	}]);

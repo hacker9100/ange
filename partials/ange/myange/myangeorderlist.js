@@ -97,7 +97,7 @@ define([
 
                     $scope.mileagelist = data;
                 })
-                .catch(function(error){$scope.mileagelist = ""; $scope.MILEAGE_TOTAL_COUNT = 0});
+                ['catch'](function(error){$scope.mileagelist = ""; $scope.MILEAGE_TOTAL_COUNT = 0});
         };
 
         // 게시판 목록 조회
@@ -127,7 +127,7 @@ define([
 
                     $scope.cummercelist = data;
                 })
-                .catch(function(error){$scope.cummercelist = ""; $scope.CUMMERCE_TOTAL_COUNT = 0});
+                ['catch'](function(error){$scope.cummercelist = ""; $scope.CUMMERCE_TOTAL_COUNT = 0});
         };
 
         // 게시판 목록 조회
@@ -157,7 +157,7 @@ define([
 
                     $scope.naminglist = data;
                 })
-                .catch(function(error){$scope.naminglist = ""; $scope.NAMING_TOTAL_COUNT = 0});
+                ['catch'](function(error){$scope.naminglist = ""; $scope.NAMING_TOTAL_COUNT = 0});
         };
 
         // 조회 화면 이동(마일리지 & 경매소)
@@ -296,7 +296,7 @@ define([
 
 
                             })
-                            .catch(function(error){$scope.productnolist = "";});
+                            ['catch'](function(error){$scope.productnolist = "";});
                     }
 
 
@@ -320,7 +320,7 @@ define([
                                 $scope.item.PRODUCT = $scope.productnmlist[idx];
 
                             })
-                            .catch(function(error){$scope.productnmlist = "";});
+                            ['catch'](function(error){$scope.productnmlist = "";});
                     }
 
                     $scope.namingnoList = function(){
@@ -328,7 +328,7 @@ define([
                             .then(function(data){
                                 $scope.namingnolist = data;
                             })
-                            .catch(function(error){$scope.namingnolist = "";});
+                            ['catch'](function(error){$scope.namingnolist = "";});
                     }
 
                     $scope.radio_change = function (value){
@@ -370,14 +370,14 @@ define([
                                     $location.url('/store/naming/request/'+$scope.item.CHANGE_PRODUCT.NO);
 
                                 })
-                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }else{
                             $scope.insertItem('ange/counsel', 'item', $scope.item, false)
                                 .then(function(){
                                     dialogs.notify('알림', '신청이 완료되었습니다. 나의 변경신청에서 확인하실 수 있습니다', {size: 'md'});
                                     $modalInstance.close();
                                 })
-                                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }
                     }
 
@@ -419,7 +419,7 @@ define([
                         $scope.getCummerceList();
                         $scope.getNamingList();
                     })
-                    .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
