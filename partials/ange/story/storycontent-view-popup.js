@@ -16,6 +16,7 @@ define([
         angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
         /********** 초기화 **********/
+        $scope.showProduct = false;
 
         $scope.S_PAGE_NO = 0;
 

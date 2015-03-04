@@ -62,7 +62,7 @@
                             <thead>
                             <tr class="board_thead" height="48">
                                 <td colspan="2">
-                                    <span class="board_th">에디터기사</span>
+                                    <span class="board_th">{{ task.EDITOR_NM }}</span>
                                     <small class="table_gray">에디터의 기사를 이어볼 수 있습니다.</small>
                                 </td>
                                 <!--<td align="center" style="min-width:50px;">-->
@@ -99,7 +99,7 @@
                         </table><!-- /.List-->
                     </div>
 
-                    <div class="row" style="width:100%; padding-top:25px; margin:0px auto;">
+                    <div ng-if="showProduct" class="row" style="width:100%; padding-top:25px; margin:0px auto;">
 
                         <span class="board_th">관련상품</span>
                         <small class="table_gray">기사와 관련된 상품을 모았습니다.</small>

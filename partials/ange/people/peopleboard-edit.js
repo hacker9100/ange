@@ -302,14 +302,14 @@ define([
                     $scope.item.NOTICE_FL = "false";
                 }
 
-               $scope.item.REMAIN_POINT = 10;
                $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
 
-                       $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
-                           .then(function(){
-                           })
-                           ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                       $scope.item.REMAIN_POINT = 10;
+//                       $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
+//                           .then(function(){
+//                           })
+//                           ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
@@ -339,14 +339,14 @@ define([
                     $scope.item.NOTICE_FL = "false";
                 }
 
-                $scope.item.REMAIN_POINT = 10;
                 $scope.updateItem('com/webboard', 'item', $stateParams.id, $scope.item, false)
                     .then(function(){
 
-                        $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
-                            .then(function(){
-                            })
-                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                        $scope.item.REMAIN_POINT = 10;
+//                        $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
+//                            .then(function(){
+//                            })
+//                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
 

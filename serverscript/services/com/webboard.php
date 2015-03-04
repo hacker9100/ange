@@ -186,14 +186,14 @@
                     $search_where .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
                 }
 
-                if(isset($_search[COMM_NO]) && $_search[COMM_NO] == "61"){
+                if(isset($_search[COMM_NO]) && ( $_search[COMM_GB] == "CLINIC" || $_search[COMM_GB] == "TALK" )){
                     if (isset($_search[PARENT_NO]) && $_search[PARENT_NO] != "") {
                         $search_where .= "AND PARENT_NO = '".$_search[PARENT_NO]."' ";
                     }else{
-                        $search_where .= "AND PARENT_NO = '0' ";
+//                        $search_where .= "AND PARENT_NO = '0' ";
                     }
                 }else{
-                    $search_where .= "AND PARENT_NO = '0' ";
+//                    $search_where .= "AND PARENT_NO = '0' ";
                 }
 
                 if(isset($_search[MY_QNA]) && $_search[MY_QNA] == "Y"){
@@ -259,7 +259,7 @@
                 if(isset($_search[BOARD_ST]) && $_search[BOARD_ST] != ""){
                     $search_where .= "AND BOARD_ST IS NULL";
                 }
-
+/*
                 // AND PARENT_NO = 0
                 $sql = "SELECT
                           TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
@@ -297,6 +297,40 @@
                                 ".$search_where."
                         ) CNT
                         ";
+*/
+
+                $sql = "SELECT COUNT(*) AS TOTAL_COUNT FROM COM_BOARD B WHERE 1=1 ".$search_where;
+                $result = $_d->sql_query($sql,true);
+                $row=$_d->sql_fetch_array($result);
+                $t_total_count = $row['TOTAL_COUNT'];
+
+                $sql = "SELECT
+                          0 as TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                          DATA.NO, PARENT_NO, HEAD, SUBJECT, DATA.REG_UID, DATA.REG_NM, DATA.NICK_NM, DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
+                          (DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
+	                      CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, CATEGORY_NO,
+	                      BOARD_NO, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT,
+	                      (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'BOARD') AS REPLY_COUNT,
+                          (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = DATA.NO) AS BOARD_REPLY_COUNT,
+	                      (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM, BOARD_ST,
+	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, ETC1, ETC2, ETC3, ETC4, BLIND_FL
+                        FROM
+                        (
+                            SELECT
+                                B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO,
+                                B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO, B.BOARD_ST,
+                                (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT, ETC1, ETC2, ETC3, ETC4, BLIND_FL
+                            FROM
+                                COM_BOARD B
+                            WHERE
+                                1=1
+                                ".$search_where."
+                            ORDER BY NOTICE_FL DESC".$sort_order."
+                            ".$limit."
+                        ) AS DATA
+                        LEFT OUTER JOIN ANGE_COMM C ON DATA.COMM_NO = C.NO,
+                        (SELECT @RNUM := 0) R
+                        ";
 
                 $data = null;
 
@@ -323,6 +357,7 @@
                         $row['FILE'] = $file_data;
 
                         $__trn->rows[$i] = $row;
+                        $__trn->rows[$i]['TOTAL_COUNT'] = $t_total_count;
                     }
 
                     $_d->sql_free_result($result);
@@ -354,6 +389,7 @@
                         $row['FILE'] = $category_data;
 
                         $__trn->rows[$i] = $row;
+                        $__trn->rows[$i]['TOTAL_COUNT'] = $t_total_count;
                     }
                     $_d->sql_free_result($result);
                     $data = $__trn->{'rows'};
@@ -380,6 +416,7 @@
                         $row['CATEGORY'] = $category_data;
 
                         $__trn->rows[$i] = $row;
+                        $__trn->rows[$i]['TOTAL_COUNT'] = $t_total_count;
                     }
                     $_d->sql_free_result($result);
                     $data = $__trn->{'rows'};

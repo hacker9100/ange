@@ -59,9 +59,13 @@ define([
             console.log($scope.menu.COMM_NO);
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
+            $scope.search.COMM_GB = 'TALK';
             console.log('온라인토론');
-            $scope.search.BOARD_GB = 'TALK';
-            $scope.search.SYSTEM_GB = 'ANGE';
+//            $scope.search.BOARD_GB = 'TALK';
+            $scope.search.PARENT_NO = '0';
+//            $scope.search.SYSTEM_GB = 'ANGE';
+            $scope.search.SORT = 'NO';
+            $scope.search.ORDER = 'DESC';
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
                 .then(function(data){

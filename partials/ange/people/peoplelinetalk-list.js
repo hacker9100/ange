@@ -211,8 +211,6 @@ define([
             $scope.item.REPLY_GB = 'linetalk';
             $scope.item.TARGET_GB = 'TALK';
 
-            $scope.item.REMAIN_POINT = 10;
-
             if($scope.item.COMMENT.length > 100){
                 dialogs.notify('알림', '100자 이내로 입력하세요.', {size: 'md'});
                 return;
@@ -221,10 +219,11 @@ define([
             $scope.insertItem('com/reply', 'item', $scope.item, false)
                 .then(function(){
 
-                    $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
-                        .then(function(){
-                        })
-                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                    $scope.item.REMAIN_POINT = 10;
+//                    $scope.updateItem('ange/mileage', 'mileageitemplus', {}, $scope.item, false)
+//                        .then(function(){
+//                        })
+//                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     $scope.getItem('com/reply', 'item', {}, $scope.search, true)
                         .then(function(data){
@@ -279,11 +278,11 @@ define([
 
                     .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
 
-                        $scope.item.REMAIN_POINT = 10;
-                        $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
-                            .then(function(){
-                            })
-                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//                        $scope.item.REMAIN_POINT = 10;
+//                        $scope.updateItem('ange/mileage', 'mileageitemminus', {}, $scope.item, false)
+//                            .then(function(){
+//                            })
+//                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                         $scope.replyList = [];
                         $scope.getPeopleReplyList();

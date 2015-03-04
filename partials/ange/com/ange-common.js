@@ -27,6 +27,8 @@ define([
 
         // 현재 메뉴 정보
         $scope.menu = $filter('filter')($rootScope.ange_menu, function (data) {
+            if ($scope.path[2] == 'content') $scope.path[2] = 'happy';
+
             return (data.MENU_ID.indexOf($scope.path[2]) > -1)
         })[0];
 
