@@ -20,7 +20,7 @@ require.config({
     // 라이브러리 경로 선언을 위해서도 사용된다.
     paths: {
         'text': '../../lib/require/text', //HTML 데이터를 가져올때 text! 프리픽스를 붙여준다.
-        'jquery': '../../lib/jquery/jquery-1.9.1', // jquery
+        'jquery': '../../lib/jquery/jquery', // jquery
         'jquery-ui': '../../lib/jquery/jquery-ui-1.10.2.min', // bootstrap 사용을 위해 로딩한다.
         'domReady': '../../lib/domReady/domReady', // requirejs로 library를 로딩할때 사용된다.
 

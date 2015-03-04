@@ -486,7 +486,7 @@ define([
                         // 댓글일 때
                         if($scope.item.ada_que_type == 'reply'){
 
-//                            $scope.search.PAGE_NO = 1;
+                            $scope.search.PAGE_NO = 1;
                             $scope.search.PAGE_SIZE = 10;
                             $scope.search.TOTAL_COUNT = 0;
 
@@ -499,10 +499,17 @@ define([
                                 $rootScope.getEventReplyList();
                             }
 
+                            $scope.search.ada_idx = $stateParams.id;
+                            $scope.getItem('ange/event', 'replyitem', {}, $scope.search, true)
+                                .then(function(data){
+
+                                    $scope.REPLY_TOTAL_COUNT = data[0].TOTAL_COUNT;
+                                    console.log('aaaaaaaaa'+$scope.REPLY_TOTAL_COUNT);
+                                })
+                                .catch(function(error){$scope.eventReplyList = "";});
+
                             // 댓글 리스트
                             $rootScope.getEventReplyList = function () {
-
-                                $scope.search.ada_idx = $stateParams.id;
 
                                 $scope.getItem('ange/event', 'replyitem', {}, $scope.search, true)
                                     .then(function(data){
@@ -580,9 +587,14 @@ define([
 
             // 세션만료 되었을 때 리스트로 이동
             if($scope.uid == '' || $scope.uid == null){
-                dialogs.notify('알림', '세션이 만료되어 로그아웃 되었습니다. 로그인 후 다시 작성하세요', {size: 'md'});
+                dialogs.notify('알림', '로그인 후 이용 가능합니다', {size: 'md'});
+                return;
 
-                $location.url('/moms/experienceprocess/list');
+//                if ($stateParams.menu == 'eventprocess') {
+//                    $location.url('/moms/eventprocess/list');
+//                } else if($stateParams.menu == 'eventperformance') {
+//                    $location.url('/moms/eventperformance/list');
+//                }
             }
 
             // 오늘날짜가 모집시작일이 아닐때
