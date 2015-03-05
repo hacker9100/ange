@@ -304,9 +304,9 @@
                     $_d->sql_rollback();
                     $_d->failEnd("등록실패입니다:".$msg);
                 } else {
-MtUtil::_d("### [MILEAGE ???????] ".$_SESSION['mileage']);
+
                     $_SESSION['mileage'] = $_SESSION['mileage'] + $data['POINT'];
-MtUtil::_d("### [MILEAGE ???????] ".$_SESSION['mileage']);
+
                     $_d->sql_commit();
                     $_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
                 }

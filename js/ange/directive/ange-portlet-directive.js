@@ -1143,9 +1143,7 @@ define([
                 // 이미지 클릭
                 $scope.click_linkImage = function () {
                     if ($scope.option.open) {
-                        var ad_url = $scope.adBannerUrl($scope.item.ada_idx, 1);
-                        $window.open(ad_url);
-
+                        $scope.click_linkBanner($scope.item);
 //                        $window.open($scope.item.ada_url);
                     } else {
                         $location.url($scope.item.URL);
@@ -1208,9 +1206,7 @@ define([
                     // 이미지 클릭
                 $scope.click_linkImage = function () {
                     if ($scope.option.open) {
-                        var ad_url = $scope.adBannerUrl($scope.item.ada_idx, 1);
-                        $window.open(ad_url);
-
+                        $scope.click_linkBanner($scope.item);
 //                        $window.open($scope.item.ada_url);
                     } else {
                         $location.url($scope.item.URL);
@@ -1274,9 +1270,7 @@ define([
                     // 이미지 클릭
                 $scope.click_linkImage = function (item) {
                     if ($scope.option.open) {
-                        var ad_url = $scope.adBannerUrl(item.ada_idx, 1);
-                        $window.open(ad_url);
-
+                        $scope.click_linkBanner(item);
 //                        $window.open(item.ada_url);
                     } else {
                         $location.url(item.URL);

@@ -264,10 +264,20 @@ define([
             $scope.item.FILES = $scope.queue;
             $scope.item.COMM_NO = $scope.menu.COMM_NO;
 
+            var ckMain = false;
+
+            for(var i in $scope.item.FILES) {
+                if ($scope.item.FILES[i].kind == 'MAIN') ckMain = true;
+            }
+
+            if (!ckMain) {
+                dialogs.notify('알림', '메인이미지를 선택하세요.', {size: 'md'});
+                return;
+            }
+
             for(var i in $scope.item.FILES) {
                 $scope.item.FILES[i].$destroy = '';
                 $scope.item.FILES[i].$editor = '';
-//                $scope.item.FILES[i].$submit();
             }
 
             if ($stateParams.id == 0) {

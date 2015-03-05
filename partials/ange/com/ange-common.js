@@ -602,16 +602,16 @@ define([
             if (item.ada_url != undefined && item.ada_url != '') {
                 $scope.adBannerUrl(item.ada_idx, 1)
                     .then(function(data){
+                        if ($rootScope.uid != '' && $rootScope.uid != null) {
+                            $scope.addMileage('BANNER', null);
+                        }
+
                         if (item.ada_url.indexOf('://')>0) {
                             $window.open(data, 'width=1200,height=800');
                         } else {
                             $window.open(data, '_self');
                         }
-
-                        if ($rootScope.uid != '' && $rootScope.uid != null) {
-                            $scope.addMileage('BANNER', null);
-                        }
-                })
+                    });
             }
         };
 
