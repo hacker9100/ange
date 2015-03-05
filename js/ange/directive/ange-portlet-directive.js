@@ -55,10 +55,12 @@ define([
                 } else {
                     if ($scope.option.type == 'board') {
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_BOARD;
+                        $scope.search.NOTICE_FL = '1';
                     } else if ($scope.option.type == 'photo') {
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_PHOTO;
                     } else if ($scope.option.type == 'clinic') {
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_CLINIC;
+                        $scope.search.PARENT_NO = '0';
                     } else if ($scope.option.type == 'notice') {
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_NOTICE;
                     }
