@@ -30,6 +30,10 @@
                                         제목
                                     </div><!-- /.col-xs-2-->
                                     <div class="col-xs-10  board_basicinfo_subject">
+                                        <span ng-show="item.ETC1 <= todayDate && todayDate <= item.ETC2" class="table_red">[진행중]</span> <!-- 'table_gray' -->
+                                        <span ng-show="item.ETC2 < todayDate" class="table_gray">[완료]</span> <!-- 'table_gray' -->
+                                        <span ng-show="todayDate < item.ETC1 && todayDate < item.ETC2" class="table_gray">[준비]</span>
+                                        &nbsp;&nbsp;
                                         {{item.SUBJECT}}<!--<span ng-show="item.BOARD_ST != 'D'">{{item.SUBJECT}}</span>-->
                                     </div><!-- /.col-xs-10-->
                                 </div><!-- /.row -->
@@ -45,33 +49,33 @@
                             </div><!-- /.container -->
 
 
-                            <div class="container-fluid peopleboard_view_otherswrap">
+                            <!--<div class="container-fluid peopleboard_view_otherswrap">-->
 
-                                <div class="row peopleboard_view_others">
-                                    <div class="col-xs-2 board_basicinfo_label">
-                                        <span class="glyphicon glyphicon-chevron-up"></span> 이전글
-                                    </div><!-- /.col-xs-2-->
-                                    <div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">
-                                        <a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>
-                                    </div><!-- /.col-xs-10-->
-                                    <div data-ng-show="preBoardView == false" class="col-xs-10  board_basicinfo_subject">
-                                        이전 글이 없습니다
-                                    </div><!-- /.col-xs-10-->
-                                </div><!-- /.row -->
+                                <!--<div class="row peopleboard_view_others">-->
+                                    <!--<div class="col-xs-2 board_basicinfo_label">-->
+                                        <!--<span class="glyphicon glyphicon-chevron-up"></span> 이전글-->
+                                    <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
+                                    <!--<div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">-->
+                                        <!--<a data-ng-click="click_showViewPeopleBoard2(preBoardView.NO)">{{preBoardView.SUBJECT}}</a>-->
+                                    <!--</div>&lt;!&ndash; /.col-xs-10&ndash;&gt;-->
+                                    <!--<div data-ng-show="preBoardView == false" class="col-xs-10  board_basicinfo_subject">-->
+                                        <!--이전 글이 없습니다-->
+                                    <!--</div>&lt;!&ndash; /.col-xs-10&ndash;&gt;-->
+                                <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
 
-                                <div class="row peopleboard_view_others">
-                                    <div class="col-xs-2  board_basicinfo_label">
-                                        <span class="glyphicon glyphicon-chevron-down"></span> 다음글
-                                    </div><!-- /.col-xs-2-->
-                                    <div data-ng-show="nextBoardView != ''" class="col-xs-10 board_basicinfo_subject">
-                                        <a data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>
-                                    </div><!-- /.col-xs-10-->
-                                    <div data-ng-show="nextBoardView == false || nextBoardView == '' || nextBoardView == null" class="col-xs-10 board_basicinfo_subject">
-                                        다음 글이 없습니다
-                                    </div><!-- /.col-xs-10-->
-                                </div><!-- /.row -->
+                                <!--<div class="row peopleboard_view_others">-->
+                                    <!--<div class="col-xs-2  board_basicinfo_label">-->
+                                        <!--<span class="glyphicon glyphicon-chevron-down"></span> 다음글-->
+                                    <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
+                                    <!--<div data-ng-show="nextBoardView != ''" class="col-xs-10 board_basicinfo_subject">-->
+                                        <!--<a data-ng-click="click_showViewPeopleBoard2(nextBoardView.NO)">{{nextBoardView.SUBJECT}}</a>-->
+                                    <!--</div>&lt;!&ndash; /.col-xs-10&ndash;&gt;-->
+                                    <!--<div data-ng-show="nextBoardView == false || nextBoardView == '' || nextBoardView == null" class="col-xs-10 board_basicinfo_subject">-->
+                                        <!--다음 글이 없습니다-->
+                                    <!--</div>&lt;!&ndash; /.col-xs-10&ndash;&gt;-->
+                                <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
 
-                            </div><!-- /.container -->
+                            <!--</div>&lt;!&ndash; /.container &ndash;&gt;-->
 
 
                         </div>
@@ -122,7 +126,9 @@
                                 </td>
                                 <td>
                                     <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                    <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                                    <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
+                                        {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                    </span>
                                     <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 된 글입니다</span>
                                     <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
 

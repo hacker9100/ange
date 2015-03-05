@@ -55,13 +55,14 @@ define([
 
         $scope.todayDate = today;
 
-        $scope.search.PARENT_NO = $rootScope.PARENT_NO;
+
 
         // 초기화
         $scope.init = function(session) {
 
             console.log($rootScope.PARENT_NO);
             $scope.item.PARENT_NO = $rootScope.PARENT_NO;
+            $scope.search.PARENT_NO = $rootScope.PARENT_NO;
 
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
             $scope.search.COMM_NO = $scope.menu.COMM_NO;

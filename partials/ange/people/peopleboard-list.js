@@ -19,7 +19,16 @@ define([
         $scope.search = {};
 
         // 페이징
-        $scope.PAGE_NO = 1;
+
+        console.log('$rootScope.NOW_PAGE_NO = '+$rootScope.NOW_PAGE_NO);
+        if($rootScope.NOW_PAGE_NO != undefined){
+            $scope.PAGE_NO = $rootScope.NOW_PAGE_NO;
+        }else{
+            $scope.PAGE_NO = 1;
+        }
+
+        console.log('now = '+$scope.PAGE_NO);
+
         $scope.PAGE_SIZE = 10;
         $scope.TOTAL_COUNT = 0;
 
@@ -53,6 +62,7 @@ define([
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
 //            $scope.search.BOARD_GB = 'BOARD';
 //            $scope.search.SYSTEM_GB = 'ANGE';
+//            $scope.search.BOARD_ST = 'D';
 
             $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
