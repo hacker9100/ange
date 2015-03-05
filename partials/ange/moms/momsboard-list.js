@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsboard-list', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('momsboard-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
         $scope.search = {};
 
@@ -46,19 +46,22 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-            $scope.search.BOARD_GB = "WINNER";
-            if ($stateParams.menu == 'experiencewinner') {
-                $scope.search.EVENT_GB = "EVENT";
-            } else if ($stateParams.menu == 'eventwinner') {
-                $scope.search.EVENT_GB = "EVENT";
-            } else if ($stateParams.menu == 'postwinner') {
-                $scope.search.EVENT_GB = "POSTCARD";
-            }
+            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+
+//            $scope.search.BOARD_GB = "WINNER";
+//            if ($stateParams.menu == 'experiencewinner') {
+//                $scope.search.EVENT_GB = "EVENT";
+//            } else if ($stateParams.menu == 'eventwinner') {
+//                $scope.search.EVENT_GB = "EVENT";
+//            } else if ($stateParams.menu == 'postwinner') {
+//                $scope.search.EVENT_GB = "POSTCARD";
+//            }
         };
 
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
 
+            $scope.isLoding = true;
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
@@ -66,20 +69,38 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
 
+                    $scope.isLoding = false;
                 })
-                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){
+                    $scope.TOTAL_COUNT = 0; $scope.list = "";
+                    $scope.isLoding = false;
+                });
         };
 
         $scope.click_showViewPeopleBoard = function(key){
             $location.url('/moms/'+$stateParams.menu+'/view/'+key);
         }
 
+        // 등록 버튼 클릭
+        $scope.click_showCreatePeopleBoard = function () {
+//            $scope.comming_soon();
+//            return;
+
+            if ($rootScope.role != 'ANGE_ADMIN') {
+                dialogs.notify('알림', '관리자만 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/edit/0');
+        };
+
         $scope.click_searchPeopleBoard = function (){
             $scope.getPeopleBoardList();
         }
 
-        $scope.init();
-        $scope.getPeopleBoardList();
-
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoardList)
+            ['catch']($scope.reportProblems);
     }]);
 });
