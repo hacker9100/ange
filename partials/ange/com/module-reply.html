@@ -10,9 +10,9 @@
             <dl class="dl-horizontal" >
                 <dt>{{replyItem.NICK_NM}}</dt>
                 <dd><div class="people_view_replys_date">{{replyItem.REG_DT}}</div></dd>
-                <dd style="margin:0px;">
+                <dd style="margin:0px; margin-top:8px;">
                     <!--{{replyItem.BLIND_FL == 'N' ? replyItem.COMMENT : '관리자에 의해 블라인드 된 의견입니다'}}&lt;!&ndash;{{replyItem.COMMENT}}&ndash;&gt;-->
-                    <p style="white-space: pre" ng-show="replyItem.BLIND_FL == 'N'">{{replyItem.COMMENT}}</p>
+                    <p style="white-space: pre-wrap" ng-show="replyItem.BLIND_FL == 'N'">{{replyItem.COMMENT}}</p>
                     <p ng-show="replyItem.BLIND_FL == 'Y'">관리자에 의해 블라인드 된 의견입니다</p>
                     <p style="font-size:0.86em; margin:4px 0 0 0; ">
                         <a ng-click="showDetails = ! showDetails">댓글<span style="color: #df5348">({{replyItem.RE_COUNT}})</span></a>
