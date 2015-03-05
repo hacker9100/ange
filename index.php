@@ -187,6 +187,13 @@
 </script>
 <![endif]-->
 
+<!--[if lt IE 10]>
+<script type="text/javascript">
+    alert("IE 10 이하의 버전에서는 원활히 동작하지 않을수 있습니다.");
+//    location.href = "/event_call.html";
+</script>
+<![endif]-->
+
 <!-- IE6,7,8에서도 HTML5 element를 인식시켜주기 위한 코드 -->
 <!--[if lt IE 9]>
 <script src="lib/html5shiv/html5shiv.min.js"></script>

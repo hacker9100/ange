@@ -173,6 +173,10 @@ define([
                             case '52' :
                                 menu = 'system';
                                 break;
+                            case '32' :
+                                channel = 'moms';
+                                menu = 'eventwinner';
+                                break;
                         }
                     }
 
