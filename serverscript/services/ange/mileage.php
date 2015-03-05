@@ -112,6 +112,7 @@
                             ".$search_table."
                             WHERE 1=1
                              ".$search_where."
+                             ORDER BY AUM.EARN_DT DESC
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
