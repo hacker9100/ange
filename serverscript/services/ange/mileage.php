@@ -112,7 +112,6 @@
                             ".$search_table."
                             WHERE 1=1
                              ".$search_where."
-                             ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
@@ -121,6 +120,9 @@
                             WHERE 1=1
                              ".$search_where."
                         ) CNT
+                        WHERE 1 =1
+                          AND POINT <> 0
+                        ".$limit."
 
                 ";
 

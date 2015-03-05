@@ -112,6 +112,13 @@
                                                 <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
                                                     <input type="hidden" name="index[]"  value="{{query.index}}"/> <!-- query. -->
                                                     <dt>{{query.title}}</dt>
+                                                    <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                                        <div class="radio-inline">
+                                                            <label>
+                                                                <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                            </label>
+                                                        </div>
+                                                    </dd>
                                                     <dd ng-if="query.type == '1'">
                                                         <div class="radio-inline">
                                                             <label>
@@ -122,21 +129,25 @@
 
                                                         </div>
                                                     </dd>
-                                                    <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
-                                                        <div class="radio-inline">
-                                                            <label>
-                                                                <input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                            </label>
+                                                    <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                                        <div class="form-group" style="padding-left:15px;">
+                                                            <input type="radio" id="selectanswer2{{query.index}}_{{$index}}" class="poll poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                         </div>
 
-                                                    </dd>
+                                                        <input class="form-control" type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="margin-left:15px; width: 250px;"/>
 
-                                                    <!--<div ng-if="query.type == '0'">-->
-                                                        <!--<div  style="width: 100%; height: 200px;">-->
-                                                            <!--<div google-chart chart="chart[$index]" style="height:200px; width:100%;"></div>-->
-                                                            <!--&lt;!&ndash;<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>&ndash;&gt;-->
-                                                        <!--</div>-->
-                                                    <!--</div>-->
+                                                    </dd>
+                                                    <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                                        <div class="form-group">
+                                                            <input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll poll_select_checkbox" name="selectanswer[{{query.index}}]" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                        </div>
+                                                    </dd>
+                                                    <dd ng-if="query.type == '4'">
+                                                        <div class="form-group" style="padding:0 15px;">
+                                                            <!--<input ="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                            <textarea name="long_answer[]" class="form-control" rows="6" style="resize: none;"></textarea>
+                                                        </div>
+                                                    </dd>
                                                 </dl>
 
                                                 <!--<div  style="width: 100%; height: 200px;"> &lt;!&ndash; ng-repeat="chart in chart" &ndash;&gt;-->

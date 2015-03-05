@@ -46,6 +46,9 @@ define([
 
         $scope.init = function(){
 
+            $scope.search.REG_UID = $rootScope.uid;
+            $scope.search.STATUS = true;
+
             $scope.getList('ange/mileage', 'mymileagepoint', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
 
@@ -74,8 +77,7 @@ define([
                 ['catch'](function(error){$scope.SUM_POINT = 0; $scope.USE_POINT = 0; $scope.REMAIN_POINT = 0;});
         }
 
-        $scope.search.REG_UID = $rootScope.uid;
-        $scope.search.STATUS = true;
+
 
         // 일반 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
@@ -107,8 +109,13 @@ define([
             $scope.getPeopleBoardList();
         }
 
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoardList)
+            ['catch']($scope.reportProblems);
 
-        $scope.init();
-        $scope.getPeopleBoardList();
+//        $scope.init();
+//        $scope.getPeopleBoardList();
     }]);
 });

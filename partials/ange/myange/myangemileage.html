@@ -46,7 +46,7 @@
                                 <tr class="board_thead" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td><span class="board_th">적립내용</span></td>
-                                    <td width="92" align="center"><span class="board_th">적립일</span></td>
+                                    <td width="150" align="center"><span class="board_th">적립일</span></td>
                                     <td width="92" align="center"><span class="board_th">마일리지</span></td>
                                     <!--<td width="80"><span class="board_th">작성일</span></td>
                                     <td width="60" align="center"><span class="board_th">조회</span></td>-->
@@ -62,7 +62,7 @@
                                     <td>
                                         {{ item.REASON | string_limit: 100 }}{{item.REASON > 100 ? '...' : ''}}
                                     </td>
-                                    <td  class="table_author">{{item.EARN_DT}}P</td>
+                                    <td  class="table_author">{{item.EARN_DT}}</td>
                                     <td  class="table_author">{{item.POINT}}P</td>
                                     <!--<td class="table_date">{{item.REG_DT}}</td>
                                     <td class="table_hit">{{item.HIT_CNT}}</td></tr>-->
@@ -80,7 +80,7 @@
                             </table><!-- /.List-->
 
                             <nav class="text-center">
-                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
                             <!-- /peoplepoll_list -->
 

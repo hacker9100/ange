@@ -119,6 +119,10 @@ define([
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
         };
 
+        $scope.click_showViewPeopleBoard2 = function (key) {
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list/'+key);
+        };
+
         // 이전글
         $scope.getPreBoard = function (){
 

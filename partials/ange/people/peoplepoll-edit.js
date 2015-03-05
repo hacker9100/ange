@@ -221,9 +221,21 @@ define([
                                     $rootScope.aa.push(select_answer[i]);
                                 }
 
+                            }else if(parse_que_data[x].type == 1){ // 주관식일때
+                                choice = "";
+                            }else if(parse_que_data[x].type == 2){ // 통합형
+                                var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
 
+                                for(var i=0; i < select_answer.length; i++){
+                                    choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
+                                }
+                            }else if(parse_que_data[x].type == 3){ // 복수
+                                var select_answer = parse_que_data[x].choice.split(';'); // ;를 기준으로 문자열을 잘라 배열로 변환
 
-                            }else{ // 주관식일때
+                                for(var i=0; i < select_answer.length; i++){
+                                    choice.push(select_answer[i]); // 선택문항 값 push 하여 배열에 저장
+                                }
+                            }else if(parse_que_data[x].type == 4){ // 장문입력
                                 choice = "";
                             }
 
@@ -371,7 +383,7 @@ define([
             }
 
             //var querylength = $('.poll_query_no').length;
-            if($('.poll_query_no').length != $('.poll_select_radio:checked').length){
+            if($('.poll_query_no').length != $('.poll:checked').length){
                 dialogs.notify('알림', '문항을 체크해주세요.', {size: 'md'});
                 return;
             }
@@ -405,6 +417,17 @@ define([
                             answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
                         })
 
+                        $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
+
+                            if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
+                                dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
+                                return false;
+                            }
+
+                            console.log($(element).val());
+                            $scope.item.QUE_LONG_ANSWER = $(element).val();
+                            answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+                        })
 
                         var values = {};
 
@@ -422,19 +445,33 @@ define([
 
                             var no = index+1
                             console.log(no);
-                            $rootScope.jsontext2[index] = '"'+no+'":"'+ this.value+'"';
+                           //$rootScope.jsontext2[index] = '"'+no+'":"'+ this.value+'"';
                         });
 
 
-                        //
-//                        for(var i=0; i<answer.length; i++){
-//                            var index = parseInt(i+1);
-//                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-//                        }
+                        var check_answer = ''
+                        $('.poll_select_checkbox:checked').each(function(index) {
 
-//                        $("input[name='index[]'").each(function(index, element) {
-//
-//                        })
+                            //alues[this.name] = ','
+                            if(this.value == undefined){
+                                values[this.name] = "";
+                            }
+                            values[this.name] += "," + this.value;
+                            check_answer += "," + this.value;
+                            //answer.push(values[this.name]); // 객관식
+
+                            //$rootScope.jsontext2[index] = '"'+no+'":"'+ values[this.name]+'"';
+
+                        });
+                        if(check_answer != ''){
+                            answer.push(check_answer);
+                        }
+
+                        for(var i=0; i<answer.length; i++){
+                            var index = parseInt(i+1);
+                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+                        }
+
 
                         $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                         console.log($scope.item.ANSWER);
