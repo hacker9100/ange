@@ -56,7 +56,7 @@ define([
             $scope.search.COMM_GB = 'CLINIC';
             $scope.search.PARENT_NO = '0';
 //            $scope.search.SYSTEM_GB = 'ANGE';
-//            $scope.search.BOARD_ST = 'D';
+            $scope.search.BOARD_ST = 'D';
 
             $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){

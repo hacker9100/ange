@@ -74,7 +74,7 @@ define([
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
 //            $scope.search.COMM_GB = 'PHOTO';
-//            $scope.search.BOARD_ST = 'D';
+            $scope.search.BOARD_ST = 'D';
 
             $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
@@ -154,7 +154,7 @@ define([
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
 
             $scope.search.SYSTEM_GB = 'ANGE';
-            $scope.search.SORT = 'NOTICE_FL';
+            $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC';
             //$scope.search.FILE = true;
             $scope.search.FILE = true;

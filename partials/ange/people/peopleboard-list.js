@@ -53,7 +53,7 @@ define([
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
 //            $scope.search.BOARD_GB = 'BOARD';
 //            $scope.search.SYSTEM_GB = 'ANGE';
-//            $scope.search.BOARD_ST = 'D';
+            $scope.search.BOARD_ST = 'D';
 
             $scope.getItem('ange/community', 'item', $scope.menu.COMM_NO, $scope.search, true)
                 .then(function(data){
@@ -92,7 +92,7 @@ define([
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
 
-                    /*$scope.total(total_cnt);*/
+                    console.log($scope.TOTAL_COUNT);
 
                     for(var i in data) {
 
@@ -101,7 +101,6 @@ define([
                             data[i].FILE_CNT = file_cnt;
 
                         }
-                        console.log(data[i].FILE_CNT);
                     }
 
                     $scope.list = data;
