@@ -262,10 +262,10 @@ define([
         };
 
         // CK Editor
-        $scope.$on("ckeditor.ready", function( event ) {
-            $scope.isReady = true;
-        });
-        $scope.ckeditor = '<p>\n<p>';
+//        $scope.$on("ckeditor.ready", function( event ) {
+//            $scope.isReady = true;
+//        });
+//        $scope.ckeditor = '<p>\n<p>';
 //        $scope.content = { "BODY": '<p>Hello</p>\n' };
 
         /********** 이벤트 **********/
@@ -312,6 +312,7 @@ define([
                         }
 
 //                        $scope.isUpdate = true;
+                        $scope.item.BODY = data.BODY;
                     })
                 ])
                 .then( function(results) {

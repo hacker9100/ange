@@ -228,7 +228,7 @@ define(['./directives'], function (directives) {
                         $timeout(function () { // for key up event
                             (setPristine !== true || data != ngModel.$viewValue) && ngModel.$setViewValue(data);
                             (setPristine === true && form) && form.$setPristine();
-                        }, 0);
+                        }, 500);
                     }, onUpdateModelData = function(setPristine) {
                         if (!data.length) { return; }
 
@@ -245,7 +245,7 @@ define(['./directives'], function (directives) {
                     }
                     //instance.on('pasteState',   setModelData);
                     instance.on('change',       setModelData);
-                    instance.on('blur',         setModelData);
+                    //instance.on('blur',         setModelData);
                     //instance.on('key',          setModelData); // for source view
 
                     /*
