@@ -132,7 +132,11 @@
                                             </div>
                                         </div>
 
+
+
                                         <div class="moms_form_bodywrap">
+
+
 
                                             <table id="moms_form_table" class="table" style="float:left; margin-bottom: 0px;">
                                                 <tbody>
@@ -141,7 +145,7 @@
                                                         신청자
                                                     </td>
                                                     <td>
-                                                        {{USER_NM}}({{USER_ID}})
+                                                        {{user_info.USER_NM}}({{user_info.USER_ID}})
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -149,7 +153,7 @@
                                                         주소
                                                     </td>
                                                     <td>
-                                                        {{ADDR}}&nbsp;{{ADDR_DETAIL}}
+                                                        {{user_info.ADDR}}&nbsp;{{user_info.ADDR_DETAIL}}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -157,8 +161,8 @@
                                                         연락처
                                                     </td>
                                                     <td>
-                                                        <span>전화번호</span>{{PHONE_1}}
-                                                        <span>휴대폰</span>{{PHONE_2}}
+                                                        <span>전화번호</span>({{user_info.PHONE_1}})
+                                                        <span>휴대폰</span>({{user_info.PHONE_2}})
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -170,7 +174,7 @@
                                                             <span style="display: block;">해당없음</span>
                                                         </div>
                                                         <div ng-show="preg_fl == 'Y'">
-                                                            <span style="display: block;">임신 중 <small class="table_gray">(<strong>{{baby_birth_dt}}</strong> 출산예정)</small></span>
+                                                            <span style="display: block;">임신 중 <small class="table_gray">(<strong>{{user_info.baby_birth_dt}}</strong> 출산예정)</small></span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -181,7 +185,7 @@
                                                     <td>
                                                         <span style="display:none;">없음</span>
                                                         <div style="display:block;">
-                                                            <span class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)
+                                                            <span class="table_blue">{{user_info.BABY_CNT}}</span> 명 (남 <strong>{{user_info.BABY_MALE_CNT == '' ? 0 : user_info.BABY_MALE_CNT}}</strong> 명, 여 <strong>{{user_info.BABY_FEMALE_CNT  == '' ? 0 : user_info.BABY_FEMALE_CNT}}</strong> 명)
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -191,7 +195,7 @@
                                                     </td>
                                                     <td>
                                                         <span style="display:none;">없음</span>
-                                                        <a href="#" class="table_blue" style="font-size:0.94em;">http://blog.naver.com/abcdefg</a>
+                                                        <a href="#" class="table_blue" style="font-size:0.94em;">{{user_info.BLOG.BLOG_URL}}</a>
                                                     </td>
                                                 </tr>
                                                 </tbody>
@@ -874,9 +878,9 @@
             <div class= "form-group">
                 휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
             </div>
-            <!--<div class= "form-group">-->
-            <!--블로그 <input type="text" class="form-control" ng-model="item.BLOG_URL" class= "form-control" placeholder="블로그"/>-->
-            <!--</div>-->
+            <div class= "form-group">
+            블로그 <input type="text" class="form-control" ng-model="item.BLOG_URL" class= "form-control" placeholder="블로그"/>
+            </div>
             <!--<div class= "form-group">-->
             <!--임신여부 <input type="radio" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y-->
             <!--&nbsp;-->
