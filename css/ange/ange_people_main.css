@@ -347,6 +347,20 @@ ul.mini_board_feeds {
 	font-weight:bold;
 }
 
+.mini_peoplebabymodel_imgwrap {
+    background-repeat: no-repeat;
+
+}
+
+.mini_peoplebabymodel_img {
+    border:1px solid #ddd;
+    background-image: url('/imgs/ange/noimage.png');
+    background-position: center center;
+    background-size: cover;
+    margin:0px auto;
+}
+
+
 .mini_peoplebabymodel span.point {
 	font-weight:bold; 
 	color:#e05b4a;

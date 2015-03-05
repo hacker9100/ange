@@ -685,7 +685,7 @@ define([
                                     var img = CONSTANT.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
                                     var url = "people/angemodel/view/"+data[i].NO;
                                     //angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="'+img+'" width="99" height="119" alt="" style="background-size: cover;"/></a></div>');
-                                    angular.element('#'+$scope.option.id).slickAdd('<div><a href="/'+url+'" ><img src="/imgs/ange/_blank.gif" width="99" height="119" alt="" style="border:1px solid #ddd; background-position:center center; background-image:url(' + img + '); background-size: cover;" /></a></div>');
+                                    angular.element('#'+$scope.option.id).slickAdd('<div class="mini_peoplebabymodel_imgwrap"><a href="/'+url+'"><img src="/imgs/ange/_blank.gif" width="99" height="119" alt="" class="mini_peoplebabymodel_img" style="background-image:url(' + img + ');" /></a></div>');
                                 }
                             }
 

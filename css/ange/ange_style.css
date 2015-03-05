@@ -2482,6 +2482,33 @@ img.blank_wrap {
 
 /* Story 전용 공유 버튼 */
 
+.people_share {
+    display:block;
+    float:right;
+    line-height:20px;
+    vertical-align:top;
+}
+
+.peopke_share_mobile {
+    display:none;
+    float:right;
+    line-height:20px;
+    vertical-align:top;
+}
+
+
+@media screen and (max-width: 768px) {
+    .peopke_share_mobile {
+        display: block;
+    }
+
+    .people_share {
+        display: none;
+    }
+}
+
+
+
 .story_sharebtn {
     font-size: 0.78em;
     line-height: 16px;
@@ -2543,6 +2570,7 @@ img.blank_wrap {
 .story_btnicon.facebook {
     background-image: url('/imgs/ange/btnicon_facebook.png');
 }
+
 
 /* /Story 전용 공유 버튼 */
 

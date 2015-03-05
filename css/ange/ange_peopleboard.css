@@ -108,8 +108,28 @@
 .peopleboard_view_topwrap {
 	border-top:2px solid #111;
 }
+
 .peopleboard_view_basicinfo {
 	border-bottom: 1px solid #ddd;
+}
+
+.peopleboard_discuss_topwrap {
+    position:relative;
+    border:1px solid #ddd;
+    background-image: url(/imgs/ange/online_img1.png);
+    background-repeat: no-repeat;
+    background-size: 20%;
+    padding-bottom: 28px;
+}
+
+.peopleboard_discuss_title {
+    /*position:absolute;*/
+    /*right:0;*/
+    /*top:0;*/
+    width:50%;
+    max-width: 323px;
+    min-width: 180px;
+
 }
 
 .board_basicinfo_label {
