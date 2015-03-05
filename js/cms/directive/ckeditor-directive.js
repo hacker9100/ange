@@ -124,7 +124,7 @@ define(['./directives'], function (directives) {
             link: function (scope, element, attrs, ctrls) {
                 var ngModel = ctrls[0];
                 var form    = ctrls[1] || null;
-                var EMPTY_HTML = '</br></br>',
+                var EMPTY_HTML = '<br/>',
 //                                '<img id="dropzone" src="http://localhost/serverscript/upload/../../upload/files/medium/Koala%20%285%29.jpg" />',
                     isTextarea = element[0].tagName.toLowerCase() == 'textarea',
                     data = [],
@@ -136,6 +136,7 @@ define(['./directives'], function (directives) {
 
                 var onLoad = function () {
                     var options = {
+                        forcePasteAsPlainText : true,
                         allowedContent: true,
 //                        allowedContent: {div: {style: true, id: true, class:true}},
                         extraAllowedContent: 'img{!width,!height}',
@@ -225,6 +226,7 @@ define(['./directives'], function (directives) {
                         if (data == '') {
                             data = null;
                         }
+//console.log('editor content: '+data);
                         $timeout(function () { // for key up event
                             (setPristine !== true || data != ngModel.$viewValue) && ngModel.$setViewValue(data);
                             (setPristine === true && form) && form.$setPristine();
@@ -247,6 +249,10 @@ define(['./directives'], function (directives) {
                     instance.on('change',       setModelData);
                     //instance.on('blur',         setModelData);
                     //instance.on('key',          setModelData); // for source view
+
+                    instance.on('paste', function(evt) {
+                        evt.data.dataValue = evt.data.dataValue.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig,'');
+                    }, null, null, 9);
 
                     /*
                      * Sung-hwan Kim (2014-11-14)

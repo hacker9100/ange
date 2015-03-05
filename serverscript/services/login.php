@@ -61,7 +61,7 @@
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT,
-                            U.USER_GB, U.SUPPORT_NO
+                            U.USER_GB, U.SUPPORT_NO, U.REMAIN_POINT
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -82,6 +82,10 @@
                 if ($data) {
                     if ( $data['USER_ST'] == "F") {
                         $_d->failEnd("이용이 정지된 사용자입니다. 관리자에게 문의하세요.");
+                    }
+
+                    if ( $data['USER_ST'] == "W") {
+                        $_d->failEnd("인증전 사용자입니다. 인증을 해주세요.");
                     }
 
                     if ( $_model[password] != "pass" && !validate_password($_model[password], $data['PASSWORD'])) {
@@ -219,6 +223,7 @@
                     $_SESSION['nick'] = $data['NICK_NM'];
                     $_SESSION['name'] = $data['USER_NM'];
                     $_SESSION['role'] = $data['ROLE_ID'];
+                    $_SESSION['mileage'] = $data['REMAIN_POINT'];
                     $_SESSION['system'] = $_model['SYSTEM_GB'];
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
 
@@ -252,6 +257,7 @@
                         unset($_SESSION['nick']);
                         unset($_SESSION['name']);
                         unset($_SESSION['role']);
+                        unset($_SESSION['mileage']);
                         unset($_SESSION['system']);
                         unset($_SESSION['menu_role']);
 
@@ -287,6 +293,7 @@
                         $sess['NICK_NM'] = $_SESSION['nick'];
                         $sess['USER_NM'] = $_SESSION['name'];
                         $sess['ROLE_ID'] = $_SESSION['role'];
+                        $sess['REMAIN_POINT'] = $_SESSION['mileage'];
                         $sess['SYSTEM_GB'] = $_SESSION['system'];
                         $sess['MENU_ROLE'] = $_SESSION['menu_role'];
 
@@ -319,6 +326,7 @@
                         $sess['NICK_NM'] = 'Guest';
                         $sess['USER_NM'] = 'Guest';
                         $sess['ROLE_ID'] = '';
+                        $sess['MILEAGE'] = '';
                         $sess['SYSTEM_GB'] = '';
                         $sess['MENU_ROLE'] = '';
 
@@ -399,7 +407,7 @@
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT,
-                            U.USER_GB, U.SUPPORT_NO
+                            U.USER_GB, U.SUPPORT_NO, U.REMAIN_POINT
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -528,7 +536,8 @@
                     $_SESSION['nick'] = $data['NICK_NM'];
                     $_SESSION['name'] = $data['USER_NM'];
                     $_SESSION['role'] = $data['ROLE_ID'];
-                    $_SESSION['system'] = $_model[SYSTEM_GB];
+                    $_SESSION['mileage'] = $data['REMAIN_POINT'];
+                    $_SESSION['system'] = $_model['SYSTEM_GB'];
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
 
                     $_SESSION['addr'] = $data['ADDR'];
@@ -587,6 +596,7 @@
                 unset($_SESSION['nick']);
                 unset($_SESSION['name']);
                 unset($_SESSION['role']);
+                unset($_SESSION['mileage']);
                 unset($_SESSION['system']);
                 unset($_SESSION['menu_role']);
 //                unset($_SESSION['email']);

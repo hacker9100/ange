@@ -497,6 +497,10 @@ switch ($_method) {
             $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
         }
 
+        if (!isset($_SESSION['uid'])) {
+            $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+        }
+
         $err = 0;
         $msg = "";
 

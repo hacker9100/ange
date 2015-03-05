@@ -124,7 +124,7 @@ define(['./directives'], function (directives) {
             link: function (scope, element, attrs, ctrls) {
                 var ngModel = ctrls[0];
                 var form    = ctrls[1] || null;
-                var EMPTY_HTML = '</br></br>',
+                var EMPTY_HTML = '<br/></br/>',
 //                                '<img id="dropzone" src="http://localhost/serverscript/upload/../../upload/files/medium/Koala%20%285%29.jpg" />',
                     isTextarea = element[0].tagName.toLowerCase() == 'textarea',
                     data = [],
@@ -136,6 +136,7 @@ define(['./directives'], function (directives) {
 
                 var onLoad = function () {
                     var options = {
+//                        forcePasteAsPlainText : true,
                         allowedContent: true,
 //                        allowedContent: {div: {style: true, id: true, class:true}},
                         extraAllowedContent: 'img{!width,!height}',

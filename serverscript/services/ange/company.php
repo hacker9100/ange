@@ -284,10 +284,10 @@ switch ($_method) {
         MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
 
         if ($_model[COMPANY_GB] == "AFFILIATE") {
-            $from_email = __SMTP_USR__;
-            $from_user = __SMTP_USR_NM__;
-            $to = $_model[EMAIL];
-            $to_user = $_model[CHARGE_NM];
+            $from_email = $_model[EMAIL];
+            $from_user = $_model[CHARGE_NM];
+            $to = __SMTP_USR__;
+            $to_user = __SMTP_USR_NM__;
             $subject = "$_model[COMPANY_NM]의 제휴&광고문의 입니다.";
             $message = "안녕하세요. ".$_model[COMPANY_NM]."의 제휴&광고문의 내용입니다.".
                 "<br>기업명 : ".$_model[COMPANY_NM].
@@ -296,7 +296,6 @@ switch ($_method) {
                 "<br>유선전화 : ".$_model[PHONE_1].
                 "<br>휴대폰 : ".$_model[PHONE_2].
                 "<br>내용 : ".$_model[NOTE].
-                "<br>테스트로 보냅니다.";
 
             $result = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
 

@@ -189,8 +189,7 @@
 
 <!--[if lt IE 10]>
 <script type="text/javascript">
-    alert("IE 10 이하의 버전에서는 원활히 동작하지 않을수 있습니다.");
-//    location.href = "/event_call.html";
+    location.href = "/ange/browserinstall.html";
 </script>
 <![endif]-->
 

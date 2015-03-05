@@ -120,6 +120,9 @@ switch ($_method) {
 
     case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
+        if (!isset($_SESSION['uid'])) {
+            $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+        }
 
         $err = 0;
         $msg = "";
@@ -249,6 +252,10 @@ switch ($_method) {
     case "PUT":
 
         if ($_type == 'item') {
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $upload_path = '../../../upload/files/';
             $file_path = '/storage/board/';
             $source_path = '../../..'.$file_path;
@@ -306,7 +313,7 @@ switch ($_method) {
                         FILE F, CONTENT_SOURCE S
                     WHERE
                         F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'BOARD'
+                        AND S.TARGET_GB = 'TALK'
                         AND S.CONTENT_GB = 'FILE'
                         AND S.TARGET_NO = ".$_key."
                         AND F.THUMB_FL = '0'

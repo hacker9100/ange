@@ -281,7 +281,8 @@ define([
                 $scope.item.FILES[i].$editor = '';
 //                $scope.item.FILES[i].$submit();
             }
-
+console.log(JSON.stringify($scope.item.FILES));
+return;
             if ($stateParams.id == 0) {
 
                 if($("#check_reply").is(":checked")){

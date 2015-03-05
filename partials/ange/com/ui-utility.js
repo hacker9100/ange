@@ -114,6 +114,7 @@ define([
                                 $rootScope.authenticated = true;
                                 $rootScope.user_info = data;
                                 $rootScope.uid = data.USER_ID;
+                                $rootScope.mileage = data.REMAIN_POINT;
                                 $rootScope.name = data.USER_NM;
                                 $rootScope.role = data.ROLE_ID;
                                 $rootScope.system = data.SYSTEM_GB;
@@ -169,7 +170,7 @@ define([
                 $scope.logout($rootScope.uid).then( function(data) {
                     dialogs.notify('알림', "로그아웃 되었습니다.", {size: 'md'});
 
-                    $location.url('main');
+//                    $location.url('main');
                 });
             }
         };

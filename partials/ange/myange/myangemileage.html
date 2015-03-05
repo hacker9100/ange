@@ -45,6 +45,7 @@
                                 <thead>
                                 <tr class="board_thead" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
+                                    <td width="150" align="center"><span class="board_th">구분</span></td>
                                     <td><span class="board_th">적립내용</span></td>
                                     <td width="150" align="center"><span class="board_th">적립일</span></td>
                                     <td width="92" align="center"><span class="board_th">마일리지</span></td>
@@ -59,6 +60,9 @@
                                     <td class="table_no">
                                         <span>{{item.RNUM}}</span>
                                     </td>
+                                    <td class="table_author">
+                                        <span>{{item.PLACE_GB}}</span>
+                                    </td>
                                     <td>
                                         {{ item.REASON | string_limit: 100 }}{{item.REASON > 100 ? '...' : ''}}
                                     </td>
@@ -72,8 +76,12 @@
 
                                 <tbody class="on" data-ng-show="list == '' || list == null">
 
-                                <tr>
-                                    <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                                <tr ng-show="!isLoding">
+                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                </tr>
+
+                                <tr ng-show="isLoding">
+                                    <td colspan="5" style="text-align: center">로딩 중 입니다.</td>
                                 </tr>
 
                                 </tbody>

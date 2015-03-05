@@ -255,8 +255,7 @@
                     $mileage_cnt = $_d->sql_fetch($sql);
 
                     if ($mileage_cnt['MILEAGE_CNT'] >= $data['LIMIT_CNT']) {
-                        $_d->succEnd("마일리지 제한 초과입니다");
-                        break;
+                        $_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
                     }
                 }
 
@@ -305,8 +304,11 @@
                     $_d->sql_rollback();
                     $_d->failEnd("등록실패입니다:".$msg);
                 } else {
+MtUtil::_d("### [MILEAGE ???????] ".$_SESSION['mileage']);
+                    $_SESSION['mileage'] = $_SESSION['mileage'] + $data['POINT'];
+MtUtil::_d("### [MILEAGE ???????] ".$_SESSION['mileage']);
                     $_d->sql_commit();
-                    $_d->succEnd($no);
+                    $_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
                 }
             } else if ($_type == "admin") {
                 $search_where = "";
@@ -452,7 +454,7 @@
                             ";
 
                 $_d->sql_query($sql);
-
+/*
                 // ANGE_MILEAGE_STATUS
                 $sql = "UPDATE COM_USER SET
                                 SUM_POINT = ".$_model[SUM_POINT]."
@@ -462,7 +464,7 @@
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;
-
+*/
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("수정실패입니다:".$_d->mysql_error);
                 } else {

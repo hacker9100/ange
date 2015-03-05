@@ -174,6 +174,10 @@ switch ($_method) {
 
     case "POST":
         if ($_type == "item") {
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $sql = "INSERT INTO ANGE_MESSAGE
                         (
                             TO_ID,

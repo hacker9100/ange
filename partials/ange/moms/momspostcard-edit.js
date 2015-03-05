@@ -466,6 +466,8 @@ define([
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
 
+                                    $scope.addMileage('POST', 'POST');
+
                                     $location.url('/moms/home');
                                 })
                                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -481,6 +483,8 @@ define([
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $scope.addMileage('POST', 'POST');
 
                                     $location.url('/moms/home');
                                 })
@@ -522,6 +526,8 @@ define([
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $scope.addMileage('POST', 'POST');
 
                                     $location.url('/moms/home');
                                 })
@@ -622,6 +628,8 @@ define([
                                 .then(function(){
 
                                     dialogs.notify('알림', '애독자 엽서 신청이 완료되었습니다.', {size: 'md'});
+
+                                    $scope.addMileage('POST', 'POST');
 
                                     $location.url('/moms/home');
                                 })

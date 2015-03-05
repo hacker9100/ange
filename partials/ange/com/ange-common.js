@@ -130,6 +130,7 @@ define([
                             $rootScope.user_info = null;
                             $rootScope.uid = null;
                             $rootScope.name = null;
+                            $rootScope.mileage = 0;
                             $rootScope.role = null;
                             $rootScope.menu_role = null;
                             $rootScope.email = null;
@@ -231,6 +232,7 @@ define([
                 $rootScope.user_info = null;
                 $rootScope.uid = '';
                 $rootScope.name = '';
+                $rootScope.mileage = 0;
                 $rootScope.role = '';
                 $rootScope.menu_role = null;
                 $rootScope.email = '';
@@ -260,6 +262,7 @@ define([
                 $rootScope.user_info = session.USER_INFO;
                 $rootScope.uid = session.USER_ID;
                 $rootScope.name = session.USER_NM;
+                $rootScope.mileage = session.REMAIN_POINT;
                 $rootScope.role = session.ROLE_ID;
                 $rootScope.menu_role = session.MENU_ROLE;
                 $rootScope.email = session.EMAIL;
@@ -453,7 +456,7 @@ define([
                         console.log(data.msg);
                         deferred.reject(data.msg);
                     } else {
-                        deferred.resolve();
+                        deferred.resolve(data);
                     }
                 }
 
@@ -568,26 +571,47 @@ define([
 
         // 광고센터 URL 셋팅
         $scope.adBannerUrl = function(idx, type) {
+            var deferred = $q.defer();
+
             var guid = $rootScope.guid;
             var id = $rootScope.uid;
             var ip = $rootScope.ip;
             var ad_type = (type == undefined ? 1 : type);
             var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + ad_type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
+            if (guid == '' || guid == null) {
+                $scope.getSession()
+                    .then($scope.sessionCheck)
+                    .then(function(){
+                        guid = $rootScope.guid;
+                        id = $rootScope.uid;
+                        ip = $rootScope.ip;
 
-            return ad_url;
+                        var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + ad_type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
+                        deferred.resolve(ad_url);
+                    })
+            } else {
+                var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + ad_type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
+                deferred.resolve(ad_url);
+            }
+
+            return deferred.promise;
         }
 
         // 배너 이미지 클릭
         $scope.click_linkBanner = function (item) {
             if (item.ada_url != undefined && item.ada_url != '') {
-                var ad_url = $scope.adBannerUrl(item.ada_idx, 1);
-                if (item.ada_url.indexOf('http://') > -1) {
-                    $window.open(ad_url);
+                $scope.adBannerUrl(item.ada_idx, 1)
+                    .then(function(data){
+                        if (item.ada_url.indexOf('://')>0) {
+                            $window.open(data, 'width=1200,height=800');
+                        } else {
+                            $window.open(data, '_self');
+                        }
 
-                    $scope.addMileage('BANNER', null);
-                } else {
-                    $location.url(ad_url);
-                }
+                        if ($rootScope.uid != '' && $rootScope.uid != null) {
+                            $scope.addMileage('BANNER', null);
+                        }
+                })
             }
         };
 
@@ -595,7 +619,15 @@ define([
         $scope.addMileage = function (type, gb) {
             var item = {};
 
-            if (type == 'LOGIN') {
+            if (type == 'CONGRATULATION') {
+                if (gb == '1') {
+                    item.MILEAGE_GB = '3';
+                    item.MILEAGE_NO = '1';
+                } else if (gb == '2') {
+                    item.MILEAGE_GB = '4';
+                    item.MILEAGE_NO = '2';
+                }
+            } else if (type == 'LOGIN') {
                 item.MILEAGE_GB = '6';
                 item.MILEAGE_NO = '4';
             } else if (type == 'BANNER') {
@@ -604,29 +636,31 @@ define([
             } else if (type == 'BOARD') {
                 item.MILEAGE_GB = '1';
 
-                if (gb == '1') {
+                if (gb == '1') {            // 시시콜콜수다방
                     item.MILEAGE_NO = '17';
-                } else if (gb == '2') {
+                } else if (gb == '2') {     // 예비맘이야기
                     item.MILEAGE_NO = '54';
-                } else if (gb == '3') {
+                } else if (gb == '3') {     // 좌충우돌 육아방
                     item.MILEAGE_NO = '57';
-                } else if (gb == '4') {
+                } else if (gb == '4') {     // 힘내라워킹방
                     item.MILEAGE_NO = '59';
-                } else if (gb == '5') {
+                } else if (gb == '5') {     // 임신준비방
                     item.MILEAGE_NO = '114';
-                } else if (gb == '6') {
+                } else if (gb == '6') {     // 톡톡톡
                     item.MILEAGE_NO = '86';
-                } else if (gb == '7') {
+                } else if (gb == '7') {     // 책수다
                     item.MILEAGE_NO = '125';
+                } else if (gb == '61') {    // 온라인 토론
+                    item.MILEAGE_NO = '12';
                 } else {
                     return;
                 }
             } else if (type == 'PHOTO') {
                 item.MILEAGE_GB = '1';
 
-                if (gb == '11') {
+                if (gb == '11') {           // 도전앙쥬 모델
                     item.MILEAGE_NO = '15';
-                } else if (gb == '12') {
+                } else if (gb == '12') {    // 나의 맛잇는 레시피
                     item.MILEAGE_NO = '61';
                 } else {
                     return;
@@ -634,7 +668,7 @@ define([
             } else if (type == 'CLINIC') {
                 item.MILEAGE_GB = '1';
 
-                if (gb == '25') {
+                if (gb == '25') {           // 재테크상담
                     item.MILEAGE_NO = '68';
                 } else {
                     return;
@@ -642,46 +676,84 @@ define([
             } else if (type == 'REPLY') {
                 item.MILEAGE_GB = '2';
 
-                if (gb == 'TALK') {
+                if (gb == 'CONTENT') {      // 임신출산컨텐츠
+                    item.MILEAGE_NO = '8';
+                } else if (gb == 'TALK') {  // 투데이 톡
                     item.MILEAGE_NO = '74';
-                } else if (gb == '1') {
+                } else if (gb == '1') {     // 시시콜콜수다방
                     item.MILEAGE_NO = '18';
-                } else if (gb == '2') {
+                } else if (gb == '2') {     // 예비맘 이야기
                     item.MILEAGE_NO = '55';
-                } else if (gb == '3') {
+                } else if (gb == '3') {     // 좌충우돌 육아방
                     item.MILEAGE_NO = '58';
-                } else if (gb == '4') {
+                } else if (gb == '4') {     // 힘내라워킹방
                     item.MILEAGE_NO = '60';
-                } else if (gb == '5') {
+                } else if (gb == '5') {     // 임신준비방
                     item.MILEAGE_NO = '115';
-                } else if (gb == '6') {
+                } else if (gb == '6') {     // 톡톡톡
                     item.MILEAGE_NO = '87';
-                } else if (gb == '7') {
+                } else if (gb == '7') {     // 책수다
                     item.MILEAGE_NO = '126';
+                } else if (gb == '11') {    // 도전앙쥬 모델
+                    item.MILEAGE_NO = '16';
+                } else if (gb == '12') {    // 나의 맛잇는 레시피
+                    item.MILEAGE_NO = '62';
+                } else if (gb == 'EXPERIENCE') {    // 나의 맛잇는 레시피
+                    item.MILEAGE_NO = '62';
+                } else if (gb == 'EVENT') {         // 이벤트 후기
+                    item.MILEAGE_NO = '85';
+                } else if (gb == 'SAMPLE') {        // 샘플팩 후기
+                    item.MILEAGE_NO = '121';
+                } else if (gb == 'BOOK') {        // 샘플팩 후기
+                    item.MILEAGE_NO = '143';
                 } else {
                     return;
                 }
             } else if (type == 'EVENT') {
+                item.MILEAGE_GB = '10';
+
+                if (gb == 'EVENT') {        // 이벤트응모시
+                    item.MILEAGE_NO = '33';
+                } else {
+                    return;
+                }
+            } else if (type == 'EXPERIENCE') {
                 item.MILEAGE_GB = '1';
 
-                if (gb == 'PRODUCT') {
-                    item.MILEAGE_NO = '110';
-                } else if (gb == 'EXPERIENCE') {
-                    item.MILEAGE_NO = '111';
-                } else if (gb == 'SAMPLE') {
-                    item.MILEAGE_NO = '120'; // 119 하나 더 있음??
-                } else if (gb == 'BOOK') {
-                    item.MILEAGE_NO = '124';
+                if (gb == 'EXPERIENCE') {        // 체험단 응모
+                    item.MILEAGE_NO = '69';
                 } else {
                     return;
                 }
             } else if (type == 'REVIEW') {
                 item.MILEAGE_GB = '1';
 
-                if (gb == 'PRODUCT') {
+                if (gb == 'PRODUCT') {              // 체험단 후기
                     item.MILEAGE_NO = '110';
-                } else if (gb == 'EXPERIENCE') {
-                    item.MILEAGE_NO = '111';
+                } else if (gb == 'EXPERIENCE') {    // 체험단 후기
+                    item.MILEAGE_NO = '70';
+                } else if (gb == 'EVENT') {         // 이벤트 후기
+                    item.MILEAGE_NO = '150';
+                } else if (gb == 'SAMPLE') {
+                    item.MILEAGE_NO = '120';        // 119 하나 더 있음??
+                } else if (gb == 'BOOK') {
+                    item.MILEAGE_NO = '124';
+                } else {
+                    return;
+                }
+            } else if (type == 'POST') {
+                item.MILEAGE_GB = '4';
+
+                if (gb == 'POST') {      // 체험단 후기
+                    item.MILEAGE_NO = '118';
+                } else {
+                    return;
+                }
+            } else if (type == 'SAMPLE') {
+                item.MILEAGE_GB = '';
+
+                if (gb == 'SAMPLE') {      // 샘플팩 후기
+                    item.MILEAGE_NO = '';
                 } else {
                     return;
                 }
@@ -691,6 +763,7 @@ define([
 
             $scope.insertItem('ange/mileage', 'item', item, false)
                 .then(function(data){
+                    $rootScope.mileage = data.mileage;
 //                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
                 })
                 ['catch'](function(error){dialogs.error('오류', '[마일리지]'+error, {size: 'md'});});

@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('myangemileage', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('myangemileage', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT) {
 
         // 초기화
         $scope.init = function(session) {
@@ -21,7 +21,7 @@ define([
         $scope.search = {};
 
         $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 5;
+        $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
         $scope.TOTAL_COUNT = 0;
 
 
@@ -77,7 +77,7 @@ define([
                 ['catch'](function(error){$scope.SUM_POINT = 0; $scope.USE_POINT = 0; $scope.REMAIN_POINT = 0;});
         }
 
-
+        $scope.isLoding = false;
 
         // 일반 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
@@ -87,6 +87,7 @@ define([
             $scope.search.SORT = 'NOTICE_FL';
             $scope.search.ORDER = 'DESC'
 
+            $scope.isLoding = true;
             $scope.getList('ange/mileage', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
@@ -98,8 +99,12 @@ define([
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
 
+                    $scope.isLoding = false;
                 })
-                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0;
+                    $scope.list = "";
+                    $scope.isLoding = false;
+                });
         };
 
         // 연도 선택

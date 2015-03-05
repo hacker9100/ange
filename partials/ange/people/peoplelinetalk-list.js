@@ -225,6 +225,8 @@ define([
 //                        })
 //                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
+                    $scope.addMileage('REPLY', 'TALK');
+
                     $scope.getItem('com/reply', 'item', {}, $scope.search, true)
                         .then(function(data){
                             if(data.COMMENT == null){

@@ -750,6 +750,8 @@ define([
                                 .then(function(){
                                     dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
+                                    $scope.addMileage('EVENT', 'EVENT');
+
                                     if ($stateParams.menu == 'eventprocess') {
                                         $location.url('/moms/eventprocess/list');
                                     } else if($stateParams.menu == 'eventperformance') {
@@ -854,6 +856,8 @@ define([
                                 .then(function(){
                                     dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
+                                    $scope.addMileage('EVENT', 'EVENT');
+
                                     if ($stateParams.menu == 'eventprocess') {
                                         $location.url('/moms/eventprocess/list');
                                     } else if($stateParams.menu == 'eventperformance') {
@@ -884,6 +888,8 @@ define([
                             $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
                                     dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+
+                                    $scope.addMileage('EVENT', 'EVENT');
 
                                     if ($stateParams.menu == 'eventprocess') {
                                         $location.url('/moms/eventprocess/list');
@@ -1031,6 +1037,8 @@ define([
                                 .then(function(){
                                     dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
+                                    $scope.addMileage('EVENT', 'EVENT');
+
                                     if ($stateParams.menu == 'eventprocess') {
                                         $location.url('/moms/eventprocess/list');
                                     } else if($stateParams.menu == 'eventperformance') {
@@ -1160,6 +1168,8 @@ define([
                             $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
                                     dialogs.notify('알림', '이벤트 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+
+                                    $scope.addMileage('EVENT', 'EVENT');
 
                                     if ($stateParams.menu == 'eventprocess') {
                                         $location.url('/moms/eventprocess/list');
@@ -1344,6 +1354,8 @@ define([
                                         }else{
                                             $scope.TODAY_TOTAL_COUNT = data.COMMENT[0].TOTAL_COUNT;
                                         }
+
+                                        $scope.addMileage('EVENT', 'EVENT');
                                     })
                                     .catch(function(error){$scope.replyList = ""; $scope.TODAY_TOTAL_COUNT = 0;});
 
