@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('content-edit', ['$scope', '$sce', '$stateParams', '$location', '$modal', '$q', 'dialogs', 'UPLOAD', function ($scope, $sce, $stateParams, $location, $modal, $q, dialogs, UPLOAD) {
+    controllers.controller('content-edit', ['$scope', '$sce', '$stateParams', '$location', '$modal', '$q', '$timeout', 'dialogs', 'UPLOAD', function ($scope, $sce, $stateParams, $location, $modal, $q, $timeout, dialogs, UPLOAD) {
 
         // 텔플릿 선택 클릭
         $scope.click_selectTemplet = function (item) {
@@ -304,15 +304,18 @@ define([
             $q.all([
                     $scope.getItem('cms/task', 'item', $stateParams.id, {}, false).then(function(data){$scope.task = data;}),
                     $scope.getItem('cms/content', 'item', $stateParams.id, {}, false).then(function(data){
-                        $scope.item = data;
 
-                        var files = data.FILES;
-                        for(var i in files) {
-                            $scope.queue.push({"no":files[i].NO, "name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","kind":files[i].FILE_GB,"type":files[i].FILE_EXT,"isUpdate":true});
-                        }
+                        $timeout(function() {
+                            $scope.item = data;
 
-//                        $scope.isUpdate = true;
-                        $scope.item.BODY = data.BODY;
+                            var files = data.FILES;
+                            for(var i in files) {
+                                $scope.queue.push({"no":files[i].NO, "name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","kind":files[i].FILE_GB,"type":files[i].FILE_EXT,"isUpdate":true});
+                            }
+
+//                            $scope.isUpdate = true;
+//                            $scope.item.BODY = data.BODY;
+                        }, 500);
                     })
                 ])
                 .then( function(results) {
