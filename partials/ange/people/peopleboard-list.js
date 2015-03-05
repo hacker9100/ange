@@ -167,8 +167,6 @@ define([
         $scope.click_showViewPeopleBoard = function (key) {
 //            $scope.comming_soon();
 //            return;
-//            console.log($scope.PAGE_NO);
-            $rootScope.NOW_PAGE_NO = $scope.PAGE_NO;
 
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
         };
