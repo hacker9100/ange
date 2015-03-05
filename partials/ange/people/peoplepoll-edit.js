@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller("peoplepoll-edit", ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams) {
+    controllers.controller("peoplepoll-edit", ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', '$sce', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams,$sce) {
 
         // 게시판 초기화
         $scope.item = {};
@@ -199,6 +199,8 @@ define([
 
                         var que_data = $scope.item.ada_que_info;
 
+                        $scope.renderHtml = $sce.trustAsHtml(data.ada_text);
+
                         $scope.item.QUE = [];
                         //$scope.item.QUE = new Array();
                         que_data = que_data.replace(/&quot;/gi, '"'); // replace all 효과
@@ -359,6 +361,122 @@ define([
             }
         };
 
+//        $scope.CheckForm = function(p_obj){
+//
+//            var t_pattern = { 'id':/^[a-zA-Z0-9_]+$/,'email':/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$/,'number':/^[0-9]+$/ };
+//            console.log(document.testform);
+//
+//            for(var t_cnt=0; t_cnt< document.testform.length; t_cnt++){
+//
+//                var t_obj = p_obj.elements[t_cnt];
+//
+//                // 유효한 항목인지 확인
+//                if (typeof t_obj!='undefined' && t_obj.name!=''){
+//
+//                    // 검사 대상인지 확인
+//                    if (t_obj.title!='' &&  t_obj.type!='button' && t_obj.type!='submit' ){
+//                        var t_item = t_obj.title.split(':');
+//
+//                        if (t_obj.type=='radio' || t_obj.type=='checkbox'){
+//
+//                            var t_value = $('input[name='+t_obj.name+']:checked').val();
+//
+//                            if ( !t_value ){
+//                                alert(t_item[0]+'란은 꼭 선택하셔야만 합니다.');
+//                                t_obj.focus();
+//                                return false;
+//                            }
+//                        }
+//
+//                        if (t_obj.type=='text' || t_obj.type=='password' || t_obj.type=='file' ){
+//
+//                            if (!t_obj.value){
+//                                alert(t_item[0]+'란은 꼭 입력하셔야만 합니다.');
+//                                t_obj.focus();
+//                                return false;
+//                            }
+//
+//                            if (t_obj.alt!='' && Number(t_obj.alt)>t_obj.value.length ){
+//                                alert(t_item[0]+'란에는 최소 '+t_obj.alt+'자 이상 입력하셔야만 합니다.');
+//                                t_obj.focus();
+//                                return false;
+//                            }
+//
+//                            if (t_item.length>1) {
+//                                alert(t_pattern[t_item[1]].test(t_obj.value));
+//                                if (t_pattern[t_item[1]].test(t_obj.value)==false) {
+//                                    alert(t_item[0]+'란에 적절하지 않은 값이 입력되었습니다.');
+//                                    t_obj.focus();
+//                                    return false;
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            return true;
+//        }
+
+        function CheckForm(p_obj){
+
+            //alert(p_obj.name);
+            //$("#validation")
+
+            var t_pattern = { 'id':/^[a-zA-Z0-9_]+$/,'email':/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$/,'number':/^[0-9]+$/ };
+
+            for(var t_cnt=0; t_cnt< p_obj.length; t_cnt++){
+
+                var t_obj = p_obj.elements[t_cnt];
+
+                //alert(t_obj.name);
+
+                // 유효한 항목인지 확인
+                if (typeof t_obj!='undefined' && t_obj.name!=''){
+
+                    // 검사 대상인지 확인
+                    if (t_obj.title!='' &&  t_obj.type!='button' && t_obj.type!='submit' ){
+                        var t_item = t_obj.title.split(':');
+
+                        if (t_obj.type=='radio' || t_obj.type=='checkbox'){
+
+                            var t_value = $('input[name="'+t_obj.name+'"]:checked').val();
+
+                            if ( !t_value ){
+                                alert(t_item[0]+'란은 꼭 선택하셔야만 합니다.');
+                                t_obj.focus();
+                                return false;
+                            }
+                        }
+
+                        if (t_obj.type=='text' || t_obj.type=='password' || t_obj.type=='file' || t_obj.type == 'textarea'){
+
+                            if (!t_obj.value){
+                                alert(t_item[0]+'란은 꼭 입력하셔야만 합니다.');
+                                t_obj.focus();
+                                return false;
+                            }
+
+                            if (t_obj.alt!='' && Number(t_obj.alt)>t_obj.value.length ){
+                                alert(t_item[0]+'란에는 최소 '+t_obj.alt+'자 이상 입력하셔야만 합니다.');
+                                t_obj.focus();
+                                return false;
+                            }
+
+                            if (t_item.length>1) {
+                                alert(t_pattern[t_item[1]].test(t_obj.value));
+                                if (t_pattern[t_item[1]].test(t_obj.value)==false) {
+                                    alert(t_item[0]+'란에 적절하지 않은 값이 입력되었습니다.');
+                                    t_obj.focus();
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         $scope.click_saveAngePoll = function (no, item) {
 
 
@@ -382,11 +500,11 @@ define([
                 return;
             }
 
-            //var querylength = $('.poll_query_no').length;
-            if($('.poll_query_no').length != $('.poll:checked').length){
-                dialogs.notify('알림', '문항을 체크해주세요.', {size: 'md'});
+
+            if(CheckForm(document.getElementById("validation")) == false){
                 return;
             }
+
 
             $scope.search['ada_idx'] = no;
 
@@ -410,68 +528,85 @@ define([
                         $location.url('/people/poll/list');
                     } else {
 
-                        var answer = [];
-                        $scope.item.QUE_SHORT_ANSWER = ''
-                        $("input[name='answer[]'").each(function(index, element) {
-                            $scope.item.QUE_SHORT_ANSWER = $(element).val();
-                            answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-                        })
-
-                        $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
-
-                            if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                                dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                                return false;
-                            }
-
-                            console.log($(element).val());
-                            $scope.item.QUE_LONG_ANSWER = $(element).val();
-                            answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-                        })
-
-                        var values = {};
-
-                        console.log()
+//                        var answer = [];
+//                        $scope.item.QUE_SHORT_ANSWER = ''
+//                        $("input[name='answer[]'").each(function(index, element) {
+//                            $scope.item.QUE_SHORT_ANSWER = $(element).val();
+//                            answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+//                        })
+//
+//                        $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
+//                            console.log($(element).val());
+//                            $scope.item.QUE_LONG_ANSWER = $(element).val();
+//                            answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+//                        })
+//
+//                        var values = {};
+//
+//                        console.log()
+//
+//                        $rootScope.jsontext2 = new Array();
+//                        $('.poll_select_radio:checked').each(function(index) {
+//
+//                            if(this.value == undefined){
+//                                values[this.name] = "";
+//                            }
+//                            values[this.name] = this.value;
+//                            answer.push(values[this.name]);
+//                            console.log(this.value);
+//
+//                            var no = index+1
+//                            console.log(no);
+//                           //$rootScope.jsontext2[index] = '"'+no+'":"'+ this.value+'"';
+//                        });
+//
+//
+//                        var check_answer = ''
+//                        $('.poll_select_checkbox:checked').each(function(index) {
+//
+//                            //alues[this.name] = ','
+//                            if(this.value == undefined){
+//                                values[this.name] = "";
+//                            }
+//                            //values[this.name] += ";" + this.value;
+//                            check_answer += ";" + this.value;
+//                            //answer.push(values[this.name]); // 객관식
+//
+//                            //$rootScope.jsontext2[index] = '"'+no+'":"'+ values[this.name]+'"';
+//
+//                        });
+//                        if(check_answer != ''){
+//                            answer.push(check_answer);
+//                        }
+//
+//                        for(var i=0; i<answer.length; i++){
+//                            var index = parseInt(i+1);
+//                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
+//                        }
 
                         $rootScope.jsontext2 = new Array();
-                        $('.poll_select_radio:checked').each(function(index) {
 
-                            if(this.value == undefined){
-                                values[this.name] = "";
+                        var poll_length = $('.poll_no').length;
+                        console.log(poll_length);
+
+
+                        for(var i=1; i<=poll_length; i++){
+
+                            if(document.getElementById("answer"+i).type == 'radio'){
+                                $rootScope.jsontext2[i] = '"'+i+'":"'+$("input[name=answer"+i+"]:checked").val() +'"';
+                            }else if(document.getElementById("answer"+i).type == 'checkbox'){
+                                var checkvalue = '';
+                                $("input[name=answer"+i+"]:checked").each(function() {
+                                    checkvalue += $(this).val() + ';';
+                                    console.log(checkvalue);
+                                });
+                               $rootScope.jsontext2[i] = '"'+i+'":"'+ checkvalue+'"';
+                            }else if(document.getElementById("answer"+i).type == 'text'){
+                                $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                            }else if(document.getElementById("answer"+i).type == 'textarea'){
+                                $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
                             }
-                            values[this.name] = this.value;
-                            answer.push(values[this.name]);
-                            console.log(this.value);
-
-                            var no = index+1
-                            console.log(no);
-                           //$rootScope.jsontext2[index] = '"'+no+'":"'+ this.value+'"';
-                        });
-
-
-                        var check_answer = ''
-                        $('.poll_select_checkbox:checked').each(function(index) {
-
-                            //alues[this.name] = ','
-                            if(this.value == undefined){
-                                values[this.name] = "";
-                            }
-                            values[this.name] += "," + this.value;
-                            check_answer += "," + this.value;
-                            //answer.push(values[this.name]); // 객관식
-
-                            //$rootScope.jsontext2[index] = '"'+no+'":"'+ values[this.name]+'"';
-
-                        });
-                        if(check_answer != ''){
-                            answer.push(check_answer);
                         }
-
-                        for(var i=0; i<answer.length; i++){
-                            var index = parseInt(i+1);
-                            $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-                        }
-
 
                         $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
                         console.log($scope.item.ANSWER);
