@@ -20,7 +20,7 @@ define([
             "COMM_NO_BOARD" : "1,2,3,4,5,6,7",
             "COMM_NO_PHOTO" : "11,12,13",
             "COMM_NO_CLINIC" : "22,23,24,25",
-            "COMM_NO_NOTICE" : "51,52",
+            "COMM_NO_NOTICE" : "51,52,32",
             "COMM_NO_FAQ" : "53",
             "COMM_NO_QNA" : "54",
             "COMM_NO_ONLINETALK" : "61",

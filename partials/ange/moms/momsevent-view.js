@@ -579,6 +579,67 @@ define([
             }
         };
 
+        function CheckForm(p_obj){
+
+            //alert(p_obj.name);
+            //$("#validation")
+
+            var t_pattern = { 'id':/^[a-zA-Z0-9_]+$/,'email':/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$/,'number':/^[0-9]+$/ };
+
+            for(var t_cnt=0; t_cnt< p_obj.length; t_cnt++){
+
+                var t_obj = p_obj.elements[t_cnt];
+
+                //alert(t_obj.name);
+
+                // 유효한 항목인지 확인
+                if (typeof t_obj!='undefined' && t_obj.name!=''){
+
+                    // 검사 대상인지 확인
+                    if (t_obj.title!='' &&  t_obj.type!='button' && t_obj.type!='submit' ){
+                        var t_item = t_obj.title.split(':');
+
+                        if (t_obj.type=='radio' || t_obj.type=='checkbox'){
+
+                            var t_value = $('input[name="'+t_obj.name+'"]:checked').val();
+
+                            if ( !t_value ){
+                                alert(t_item[0]+'란은 꼭 선택하셔야만 합니다.');
+                                t_obj.focus();
+                                return false;
+                            }
+                        }
+
+                        if (t_obj.type=='text' || t_obj.type=='password' || t_obj.type=='file' || t_obj.type == 'textarea'){
+
+                            if (!t_obj.value){
+                                alert(t_item[0]+'란은 꼭 입력하셔야만 합니다.');
+                                t_obj.focus();
+                                return false;
+                            }
+
+                            if (t_obj.alt!='' && Number(t_obj.alt)>t_obj.value.length ){
+                                alert(t_item[0]+'란에는 최소 '+t_obj.alt+'자 이상 입력하셔야만 합니다.');
+                                t_obj.focus();
+                                return false;
+                            }
+
+                            if (t_item.length>1) {
+                                alert(t_pattern[t_item[1]].test(t_obj.value));
+                                if (t_pattern[t_item[1]].test(t_obj.value)==false) {
+                                    alert(t_item[0]+'란에 적절하지 않은 값이 입력되었습니다.');
+                                    t_obj.focus();
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
+
         // 이벤트 신청
         $scope.click_momseventcomp = function () {
 
@@ -606,6 +667,10 @@ define([
                 return;
             }
 
+            if(CheckForm(document.getElementById("eventvalidation")) == false){
+                return;
+            }
+
             if($scope.item.ada_que_type == 'question'){ // 문답일때
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
@@ -622,11 +687,6 @@ define([
 
                             $("input[name='answer[]'").each(function(index, element) { // 주관식
 
-                                if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                                    dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                                    return false;
-                                }
-
                                 console.log($(element).val());
 
                                 $scope.item.QUE_SHORT_ANSWER = $(element).val();
@@ -634,11 +694,6 @@ define([
                             })
 
                             $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
-
-                                if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                                    dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                                    return false;
-                                }
 
                                 console.log($(element).val());
 
@@ -650,19 +705,6 @@ define([
 
                             $('.poll_select_radio:checked').each(function(index) {
 
-                //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-                //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
-                //                        return false;
-                //                    }
-                //
-                //                        if(this.value == undefined){
-                //                            values[this.name] = "";
-                //                        }
-                //
-                //                        if(this.value == "기타"){
-                //                            console.log($("#etc_answer").val());
-                //                            values[this.name] = $("input[name='etc_answer']").val();
-                //                        }
 
                                 values[this.name] = this.value;
                                 answer.push(values[this.name]);
@@ -737,12 +779,6 @@ define([
 
                             $("input[name='answer[]'").each(function(index, element) {
 
-                                if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                                    dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                                    return false;
-                                }
-
-                                console.log($(element).val());
 
                                 $scope.item.QUE_SHORT_ANSWER = $(element).val();
                                 answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
@@ -750,12 +786,7 @@ define([
 
                             $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
-                                if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                                    dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                                    return false;
-                                }
 
-                                console.log($(element).val());
 
                                 $scope.item.QUE_LONG_ANSWER = $(element).val();
                                 answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
@@ -895,6 +926,12 @@ define([
                             // 임신주차는 0으로 셋팅(int 형이라 null로 넣으면 쿼리에러 발생)
                             $scope.item.PREGNANT_WEEKS = 0;
 
+                            // 추가한 블로그 갯수 만큼 반복
+                            //console.log($scope.item.BLOG);
+                            if($scope.item.BLOG == undefined){
+                                alert('블로그 주소를 입력하세요');
+                                return;
+                            }
 
                             // 추가한 블로그 갯수 만큼 반복
                             var cnt = $scope.item.BLOG.length;
@@ -915,10 +952,6 @@ define([
 
                                 $("input[name='answer[]'").each(function(index, element) {
 
-                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                                        return false;
-                                    }
 
                                     console.log($(element).val());
 
@@ -928,10 +961,6 @@ define([
 
                                 $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
 
-                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                                        return false;
-                                    }
 
                                     console.log($(element).val());
 
@@ -1048,11 +1077,6 @@ define([
 
                                 $("input[name='answer[]'").each(function(index, element) {
 
-                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                                        return false;
-                                    }
-
                                     console.log($(element).val());
 
                                     $scope.item.QUE_SHORT_ANSWER = $(element).val();
@@ -1060,11 +1084,6 @@ define([
                                 })
 
                                 $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
-
-                                    if($(element).val() == "" || $(element).val() == null || $(element).val() == undefined){
-                                        dialogs.notify('알림', '문항을 입력하세요', {size: 'md'});
-                                        return false;
-                                    }
 
                                     console.log($(element).val());
 

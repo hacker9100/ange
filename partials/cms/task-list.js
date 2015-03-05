@@ -204,7 +204,7 @@ define([
         // 태스크 목록 조회
         $scope.getTaskList = function () {
             $scope.search.SORT = 'PHASE';
-            $scope.search.ORDER = 'DESC';
+            $scope.search.ORDER = 'ASC';
 
             $scope.isLoading = true;
             $scope.getList('cms/task', 'list', {NO:$scope.pageNo, SIZE:$scope.pageSize}, $scope.search, true)
