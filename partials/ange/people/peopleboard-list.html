@@ -144,8 +144,12 @@
 
                                 <tbody class="on" data-ng-show="list == '' || list == null">
 
-                                    <tr>
+                                    <tr ng-show="!isLoding">
                                         <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                    </tr>
+
+                                    <tr ng-show="isLoding">
+                                        <td colspan="5" style="text-align: center">로딩 중 입니다.</td>
                                     </tr>
 
                                 </tbody>

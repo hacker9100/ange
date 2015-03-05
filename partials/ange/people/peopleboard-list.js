@@ -73,6 +73,8 @@ define([
 //            $location.url('people/poll/edit/'+item.NO);
         };
 
+        $scope.isLoding = false;
+
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
 /*            $scope.search.SORT = 'NOTICE_FL';
@@ -84,6 +86,7 @@ define([
 
             $scope.search.FILE_EXIST = true;
 
+            $scope.isLoding = true;
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
@@ -103,8 +106,12 @@ define([
 
                     $scope.list = data;
 
+                    $scope.isLoding = false;
                 })
-                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){
+                    $scope.TOTAL_COUNT = 0; $scope.list = "";
+                    $scope.isLoding = false;
+                });
         };
 
         $scope.pageChanged = function() {
