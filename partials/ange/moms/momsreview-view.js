@@ -147,7 +147,7 @@ define([
                 $location.url('/moms/eventreview/list');
             }else if ($stateParams.menu == 'bookreview') {
                 $location.url('/moms/bookreview/list');
-            }else if ($stateParams.menu == 'bookreview') {
+            }else if ($stateParams.menu == 'dolreview') {
                 $location.url('/moms/dolreview/list');
             }
         };
