@@ -42,7 +42,8 @@ define([
         $scope.init();
 
         $scope.clickyet = function() {
-            dialogs.notify('알림', '점검중입니다.', {size: 'md'});
+            //dialogs.notify('알림', '점검중입니다.', {size: 'md'});
+            $location.url('/moms/eventwinner/list');
         }
 
     }]);

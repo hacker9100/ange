@@ -73,9 +73,16 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 }
             } else if($_type == 'list'){
 
+                $limit = "";
+                $search_where = "";
+
                 // 검색조건 추가
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_where .= "AND CB.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                }
+
+                if (isset($_page)) {
+                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
                 $sql = " SELECT TOTAL_COUNT, @RNUM := @RNUM+1 AS RNUM, CONTENT_NO, CONTENT_SUBJECT, NO,
@@ -93,6 +100,8 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                         WHERE 1=1
                          AND CS.REG_UID = '".$_SESSION['uid']."'
                          ".$search_where."
+                         ORDER BY REG_DT DESC
+                         ".$limit."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
                     (
