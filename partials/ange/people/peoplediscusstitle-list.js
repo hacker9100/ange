@@ -64,7 +64,7 @@ define([
 //            $scope.search.BOARD_GB = 'TALK';
             $scope.search.PARENT_NO = '0';
 //            $scope.search.SYSTEM_GB = 'ANGE';
-            $scope.search.SORT = 'NO';
+            $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC';
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)

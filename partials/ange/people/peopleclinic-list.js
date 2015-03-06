@@ -102,8 +102,8 @@ define([
 //                $scope.search['COMM_NO'] = '13';
 //            }
 
-            $scope.search.SORT = 'BOARD_NO';
-            $scope.search.ORDER = 'DESC'
+            $scope.search.SORT = 'REG_DT';
+            $scope.search.ORDER = 'DESC';
 
             $scope.search.FILE_EXIST = true;
 

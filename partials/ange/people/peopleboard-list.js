@@ -20,17 +20,16 @@ define([
 
         // 페이징
 
+        $scope.PAGE_SIZE = 10;
+        $scope.TOTAL_COUNT = 0;
         console.log('$rootScope.NOW_PAGE_NO = '+$rootScope.NOW_PAGE_NO);
+
         if($rootScope.NOW_PAGE_NO != undefined){
             $scope.PAGE_NO = $rootScope.NOW_PAGE_NO;
         }else{
             $scope.PAGE_NO = 1;
         }
 
-        console.log('now = '+$scope.PAGE_NO);
-
-        $scope.PAGE_SIZE = 10;
-        $scope.TOTAL_COUNT = 0;
 
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT+BODY"} , {name: "작성자", value: "NICK_NM"}];
@@ -168,6 +167,7 @@ define([
 //            $scope.comming_soon();
 //            return;
 
+            $rootScope.NOW_PAGE_NO = $scope.PAGE_NO;
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
         };
 
