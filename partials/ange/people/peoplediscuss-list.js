@@ -155,10 +155,15 @@ define([
             }
         }
 
+        $scope.pageChanged = function() {
+            console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.getPeopleBoardList();
+        };
+
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
 
-
+            $scope.search.FILE_EXIST = true;
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;

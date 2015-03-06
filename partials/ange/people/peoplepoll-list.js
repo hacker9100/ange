@@ -28,7 +28,7 @@ define([
 
         // 페이징
         $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 20;
+        $scope.PAGE_SIZE = 10;
         $scope.TOTAL_COUNT = 0;
 
         $scope.SEARCH_YN = 'N';
