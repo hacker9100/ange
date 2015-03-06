@@ -164,7 +164,7 @@ define([
         $scope.getPeopleBoardList = function () {
 
             $scope.search.FILE_EXIST = true;
-            $scope.getList('com/webboard', 'discusslist', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
