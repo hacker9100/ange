@@ -145,6 +145,10 @@ define([
                 $location.url('/moms/samplepackreview/list');
             }else if ($stateParams.menu == 'eventreview') {
                 $location.url('/moms/eventreview/list');
+            }else if ($stateParams.menu == 'bookreview') {
+                $location.url('/moms/bookreview/list');
+            }else if ($stateParams.menu == 'dolreview') {
+                $location.url('/moms/dolreview/list');
             }
         };
 
