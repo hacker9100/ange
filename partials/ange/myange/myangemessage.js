@@ -98,7 +98,7 @@ define([
 
                             $scope.item.BODY = source;
 
-                            if($scope.item.FROM_ID == $scope.uid){
+                            if($scope.item.FROM_ID != $scope.uid){
                                 $scope.reitem.FROM_ID = $scope.item.TO_ID;
                                 $scope.reitem.FROM_NM = $scope.item.TO_NM;
                                 $scope.reitem.TO_ID = $scope.item.FROM_ID;
@@ -126,6 +126,16 @@ define([
                     }
 
                     $scope.click_reg = function () {
+
+                        if($scope.reitem.BODY == undefined){
+                            alert('내용을 입력하세요');
+                            return;
+                        }
+
+                        if($scope.reitem.TO_ID == undefined){
+                            alert('수신자를 검색해서 선택하세요');
+                            return;
+                        }
 
 //                        if($scope.uid == $scope.item.FROM_ID){
 //
@@ -202,7 +212,22 @@ define([
 //                        $scope.item.TO_NICK_NM = "";
 //                    }
 
+
                     $scope.click_reg = function () {
+
+                        console.log($scope.item.BODY);
+                        console.log($scope.item.TO_ID);
+
+                        if($scope.item.BODY == undefined){
+                            alert('내용을 입력하세요');
+                            return;
+                        }
+
+                        if($scope.item.TO_ID == undefined){
+                            alert('수신자를 검색해서 선택하세요');
+                            return;
+                        }
+
                         $scope.insertItem('ange/message', 'item', $scope.item, true)
                             .then(function(data){
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
