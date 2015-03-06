@@ -163,10 +163,8 @@ define([
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
 
-            $scope.search.SORT = 'REG_DT';
-            $scope.search.ORDER = 'DESC';
             $scope.search.FILE_EXIST = true;
-            $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/webboard', 'discusslist', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
