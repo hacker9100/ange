@@ -128,6 +128,10 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             break;
 
         case "POST":
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $sql = "INSERT INTO COM_SCRAP
                         (
                             TARGET_NO,
@@ -159,6 +163,10 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             break;
 
         case "PUT":
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 

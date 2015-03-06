@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsboard-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('momsboard-view', ['$scope', '$rootScope', '$sce',  '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $sce, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
 
         $scope.queue = [];
         // 게시판 초기화
@@ -81,6 +81,8 @@ define([
                         for(var i in files) {
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
+
+                        $scope.renderHtml = $sce.trustAsHtml(data.BODY);
                         $scope.search.TARGET_NO = $stateParams.id;
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});

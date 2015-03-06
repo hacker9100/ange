@@ -96,8 +96,12 @@ define([
 
                     $scope.replyItem.COMMENT = "";
 
-                    if ($scope.TARGET_GB == 'BOARD') {
+                    if ($scope.TARGET_GB == 'CONTENT') {
+                        $scope.addMileage('REPLY', 'CONTENT');
+                    } else if ($scope.TARGET_GB == 'BOARD') {
                         $scope.addMileage('REPLY', $scope.menu.COMM_NO);
+                    } else if ($scope.TARGET_GB == 'REVIEW') {
+                        $scope.addMileage('REPLY', $scope.TARGET_GB);
                     }
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});

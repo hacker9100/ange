@@ -89,6 +89,8 @@ define([
         // 페이지 사이즈
         $scope.PAGE_SIZE = 10;
 
+        $scope.isLoding = false;
+
         // 게시판 목록 조회
         $scope.getMileageList = function () {
             $scope.tableParams = new ngTableParams({
@@ -106,6 +108,7 @@ define([
                     $scope.search['SORT'] = key;
                     $scope.search['ORDER'] = params.sorting()[key];
 
+                    $scope.isLoding = true;
                     $scope.getList('admin/mileage', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             var total_cnt = data[0].TOTAL_COUNT;
@@ -113,8 +116,14 @@ define([
 
                             params.total(total_cnt);
                             $defer.resolve(data);
+
+                            $scope.isLoding = false;
                         })
-                        ['catch'](function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
+                        ['catch'](function(error){
+                            $scope.TOTAL_COUNT = 0;
+                            $defer.resolve([]);
+                            $scope.isLoding = false;
+                        });
                 }
             });
         };

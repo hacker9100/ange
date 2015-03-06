@@ -376,6 +376,10 @@
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
 
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $err = 0;
             $msg = "";
 
@@ -603,6 +607,10 @@
         case "PUT":
 
             if ($_type == 'item') {
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
+
             $upload_path = '../../../upload/files/';
             $file_path = '/storage/review/';
             $source_path = '../../..'.$file_path;
@@ -886,6 +894,10 @@
         case "DELETE":
             if (!isset($_key) || $_key == '') {
                 $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
+            }
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
             }
 
             $err = 0;

@@ -396,6 +396,10 @@ switch ($_method) {
         $_d->sql_beginTransaction();
 
         if($_type == 'item'){
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             // 주문코드 생성
             /*$sql = "SELECT if (IFNULL(MAX(NO), 0)+1, CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)),CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B))) AS PRODUCT_CODE
                     FROM ANGE_ORDER";
@@ -509,6 +513,9 @@ switch ($_method) {
                 }
             }
         }else if($_type == "namingitem"){
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             $sql = "SELECT CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)) AS PRODUCT_CODE FROM ANGE_ORDER";
 
@@ -655,6 +662,10 @@ switch ($_method) {
     case "PUT":
 
         if ($_type == 'item') {
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $upload_path = '../../../upload/files/';
             $file_path = '/storage/product/';
             $source_path = '../../..'.$file_path;
@@ -802,6 +813,10 @@ switch ($_method) {
     case "DELETE":
         if (!isset($_key) || $_key == '') {
             $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
+        }
+
+        if (!isset($_SESSION['uid'])) {
+            $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
         }
 
         $err = 0;

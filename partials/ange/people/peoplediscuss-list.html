@@ -22,31 +22,50 @@
                         <!-- peopleboard_view -->
                         <div class="people_view_wrap">
 
-                            <div class="container-fluid peopleboard_view_topwrap">
+                            <!--<div class="container-fluid peopleboard_view_topwrap">-->
 
+                            <div class="container-fluid peopleboard_discuss_topwrap">
+                                <div style="width:100%; text-align:right;">
+                                <img class="peopleboard_discuss_title" src="/imgs/ange/online_img2.png" />
+                                </div>
 
-                                <div class="row peopleboard_view_basicinfo">
-                                    <div class="col-xs-2 board_basicinfo_label">
-                                        제목
-                                    </div><!-- /.col-xs-2-->
-                                    <div class="col-xs-10  board_basicinfo_subject">
-                                        <span ng-show="item.ETC1 <= todayDate && todayDate <= item.ETC2" class="table_red">[진행중]</span> <!-- 'table_gray' -->
-                                        <span ng-show="item.ETC2 < todayDate" class="table_gray">[완료]</span> <!-- 'table_gray' -->
-                                        <span ng-show="todayDate < item.ETC1 && todayDate < item.ETC2" class="table_gray">[준비]</span>
-                                        &nbsp;&nbsp;
-                                        {{item.SUBJECT}}<!--<span ng-show="item.BOARD_ST != 'D'">{{item.SUBJECT}}</span>-->
-                                    </div><!-- /.col-xs-10-->
-                                </div><!-- /.row -->
+                                <div class="peopleboard_discuss_subject" style="font-size: 1.28em; font-weight: 600; line-height: 24px;">
+                                    <span ng-show="item.ETC1 <= todayDate && todayDate <= item.ETC2" class="table_red">[진행중]</span> <!-- 'table_gray' -->
+                                    <span ng-show="item.ETC2 < todayDate" class="table_gray">[완료]</span> <!-- 'table_gray' -->
+                                    <span ng-show="todayDate < item.ETC1 && todayDate < item.ETC2" class="table_gray">[준비]</span>
+
+                                    {{item.SUBJECT}}<!--<span ng-show="item.BOARD_ST != 'D'">{{item.SUBJECT}}</span>-->
+                                </div>
+
+                                <!--<div class="row peopleboard_view_basicinfo">-->
+                                    <!--<div class="col-xs-2 board_basicinfo_label">-->
+                                        <!--제목-->
+                                    <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
+                                    <!--<div class="col-xs-10  board_basicinfo_subject">-->
+                                        <!--<span ng-show="item.ETC1 <= todayDate && todayDate <= item.ETC2" class="table_red">[진행중]</span> &lt;!&ndash; 'table_gray' &ndash;&gt;-->
+                                        <!--<span ng-show="item.ETC2 < todayDate" class="table_gray">[완료]</span> &lt;!&ndash; 'table_gray' &ndash;&gt;-->
+                                        <!--<span ng-show="todayDate < item.ETC1 && todayDate < item.ETC2" class="table_gray">[준비]</span>-->
+                                        <!--&nbsp;&nbsp;-->
+                                        <!--{{item.SUBJECT}}&lt;!&ndash;<span ng-show="item.BOARD_ST != 'D'">{{item.SUBJECT}}</span>&ndash;&gt;-->
+                                    <!--</div>&lt;!&ndash; /.col-xs-10&ndash;&gt;-->
+                                <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
+
+                                <div class="container-fluid peopleboard_view_contentwrap">
+                                    <div class="row">
+                                        <div ng-bind-html="item.BODY" style="font-size:1.08em; line-height:22px; color:#565656; margin-top:12px; padding:5px;"></div>
+                                        <!-- /.col-12-->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container -->
 
                             </div><!-- /.container -->
 
 
-                            <div class="container-fluid peopleboard_view_contentwrap">
-                                <div class="row">
-                                    <div ng-bind-html="item.BODY" style="margin:0px auto; padding:25px 10px;"></div>
-                                    <!-- /.col-12-->
-                                </div><!-- /.row -->
-                            </div><!-- /.container -->
+                            <!--<div class="container-fluid peopleboard_view_contentwrap">-->
+                                <!--<div class="row">-->
+                                    <!--<div ng-bind-html="item.BODY" style="margin:0px auto; padding:25px 10px;"></div>-->
+                                    <!--&lt;!&ndash; /.col-12&ndash;&gt;-->
+                                <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
+                            <!--</div>&lt;!&ndash; /.container &ndash;&gt;-->
 
 
                             <!--<div class="container-fluid peopleboard_view_otherswrap">-->
@@ -88,7 +107,7 @@
                                     <div class="col-xs-12" style="padding:0">
 
                                         <div class="btn-group" style="float:left;">
-                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
+                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control input-sm" placeholder="검색선택"></select>
                                         </div><!-- /btn-group -->
 
                                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">

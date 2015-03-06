@@ -687,6 +687,10 @@
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
 
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $err = 0;
             $msg = "";
 
@@ -908,153 +912,156 @@
         case "PUT":
             if ($_type == 'item') {
 
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
 //            $FORM = json_decode(file_get_contents("php://input"),true);
 
-            $upload_path = '../../../upload/files/';
-            $file_path = '/storage/board/';
-            $source_path = '../../..'.$file_path;
-            $insert_path = array();
+                $upload_path = '../../../upload/files/';
+                $file_path = '/storage/board/';
+                $source_path = '../../..'.$file_path;
+                $insert_path = array();
 
-            $body_str = $_model[BODY];
+                $body_str = $_model[BODY];
 
 
-            try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                try {
+                    if (count($_model[FILES]) > 0) {
+                        $files = $_model[FILES];
 
-                    @mkdir($source_path);
-                    @mkdir($source_path.'thumbnail/');
-                    @mkdir($source_path.'medium/');
+                        @mkdir($source_path);
+                        @mkdir($source_path.'thumbnail/');
+                        @mkdir($source_path.'medium/');
 
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                        $file = $files[$i];
+                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                            $file = $files[$i];
 
-                        if (file_exists($upload_path.$file[name])) {
-                            $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                            if (file_exists($upload_path.$file[name])) {
+                                $uid = uniqid();
+                                rename($upload_path.$file[name], $source_path.$uid);
+                                rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                            MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
+                                MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
 
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
 
-                            MtUtil::_d("------------>>>>> body_str : ".$body_str);
-                        } else {
-                            $uid = uniqid();
-                            $insert_path[$i] = array(path => '', uid => '', kind => '');
-                            //$insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                                MtUtil::_d("------------>>>>> body_str : ".$body_str);
+                            } else {
+                                $uid = uniqid();
+                                $insert_path[$i] = array(path => '', uid => '', kind => '');
+                                //$insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                            }
                         }
                     }
+
+                    $_model[BODY] = $body_str;
+                } catch(Exception $e) {
+                    $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                    break;
                 }
 
-                $_model[BODY] = $body_str;
-            } catch(Exception $e) {
-                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-                break;
-            }
+                MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
-            MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
+                $err = 0;
+                $msg = "";
 
-            $err = 0;
-            $msg = "";
+                $_d->sql_beginTransaction();
 
-            $_d->sql_beginTransaction();
+                if( trim($_model[SUBJECT]) == '' ){
+                    $_d->failEnd("제목을 작성 하세요");
+                }
+                if( trim($_model[BODY]) == '' ){
+                    $_d->failEnd("내용이 비어있습니다");
+                }
 
-            if( trim($_model[SUBJECT]) == '' ){
-                $_d->failEnd("제목을 작성 하세요");
-            }
-            if( trim($_model[BODY]) == '' ){
-                $_d->failEnd("내용이 비어있습니다");
-            }
-
-            $sql = "UPDATE COM_BOARD
-                SET
-                    HEAD = '".$_model[HEAD]."'
-                    ,SUBJECT = '".$_model[SUBJECT]."'
-                    ,BODY = '".$_model[BODY]."'
-                    ,REG_UID = '".$_SESSION['uid']."'
-                    ,REG_NM = '".$_model[REG_NM]."'
-                    ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "1" : "0")."'
-                    ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
-                    ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
-                    ,TAG = '".$_model[TAG]."'
-                    ,ETC1 = '".$_model[ETC1]."'
-                    ,ETC2 = '".$_model[ETC2]."'
-                    ,ETC3 = '".$_model[ETC3]."'
-                    ,ETC4 = '".$_model[ETC4]."'
-                    ,ETC5 = '".$_model[ETC5]."'
-                    ,PASSWORD = '".$_model[PASSWORD]."'
-                    ,PHOTO_TYPE = '".$_model[PHOTO_TYPE]."'
-                    ,PHOTO_GB = '".$_model[PHOTO_GB]."'
-                    ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
-                    ,FAQ_GB = '".$_model[FAQ_GB]."'
-                    ,COMM_NO = '".$_model[COMM_NO]."'
-                    ,CATEGORY_NO = '".$_model[CATEGORY_NO]."'
-                WHERE
-                    NO = ".$_key."
-                ";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            $sql = "SELECT
-                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                    FROM
-                        FILE F, CONTENT_SOURCE S
+                $sql = "UPDATE COM_BOARD
+                    SET
+                        HEAD = '".$_model[HEAD]."'
+                        ,SUBJECT = '".$_model[SUBJECT]."'
+                        ,BODY = '".$_model[BODY]."'
+                        ,REG_UID = '".$_SESSION['uid']."'
+                        ,REG_NM = '".$_model[REG_NM]."'
+                        ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "1" : "0")."'
+                        ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
+                        ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
+                        ,TAG = '".$_model[TAG]."'
+                        ,ETC1 = '".$_model[ETC1]."'
+                        ,ETC2 = '".$_model[ETC2]."'
+                        ,ETC3 = '".$_model[ETC3]."'
+                        ,ETC4 = '".$_model[ETC4]."'
+                        ,ETC5 = '".$_model[ETC5]."'
+                        ,PASSWORD = '".$_model[PASSWORD]."'
+                        ,PHOTO_TYPE = '".$_model[PHOTO_TYPE]."'
+                        ,PHOTO_GB = '".$_model[PHOTO_GB]."'
+                        ,FAQ_TYPE = '".$_model[FAQ_TYPE]."'
+                        ,FAQ_GB = '".$_model[FAQ_GB]."'
+                        ,COMM_NO = '".$_model[COMM_NO]."'
+                        ,CATEGORY_NO = '".$_model[CATEGORY_NO]."'
                     WHERE
-                        F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'BOARD'
-                        AND S.CONTENT_GB = 'FILE'
-                        AND S.TARGET_NO = ".$_key."
-                        AND F.THUMB_FL = '0'
+                        NO = ".$_key."
                     ";
 
-            $result = $_d->sql_query($sql,true);
-            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                $is_delete = "Y";
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
-                    MtUtil::_d("------------>>>>> FILES >>>>>>>>>>>>>>>: ".count($files));
+                $sql = "SELECT
+                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                        FROM
+                            FILE F, CONTENT_SOURCE S
+                        WHERE
+                            F.NO = S.SOURCE_NO
+                            AND S.TARGET_GB = 'BOARD'
+                            AND S.CONTENT_GB = 'FILE'
+                            AND S.TARGET_NO = ".$_key."
+                            AND F.THUMB_FL = '0'
+                        ";
 
-                    for ($i = 0 ; $i < count($files); $i++) {
-                        if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
-                            $is_delete = "N";
+                $result = $_d->sql_query($sql,true);
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                    $is_delete = "Y";
+
+                    if (count($_model[FILES]) > 0) {
+                        $files = $_model[FILES];
+
+                        MtUtil::_d("------------>>>>> FILES >>>>>>>>>>>>>>>: ".count($files));
+
+                        for ($i = 0 ; $i < count($files); $i++) {
+                            if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
+                                $is_delete = "N";
+                            }
+                        }
+                    }
+
+                    MtUtil::_d("------------>>>>> is_delete >>>>>>>>>>>>>>>: ".$is_delete);
+
+                    if ($is_delete == "Y") {
+                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+                        $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                        $_d->sql_query($sql);
+
+                        $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND CONTENT_GB = 'FILE' AND SOURCE_NO = ".$row[NO]." AND TARGET_NO = ".$_key."";
+                        // TARGET_NO
+
+                        $_d->sql_query($sql);
+
+                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
+
+                        if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                            unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                            unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
+                            unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
                         }
                     }
                 }
-
-                MtUtil::_d("------------>>>>> is_delete >>>>>>>>>>>>>>>: ".$is_delete);
-
-                if ($is_delete == "Y") {
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                    $_d->sql_query($sql);
-
-                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND CONTENT_GB = 'FILE' AND SOURCE_NO = ".$row[NO]." AND TARGET_NO = ".$_key."";
-                    // TARGET_NO
-
-                    $_d->sql_query($sql);
-
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-
-                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                        unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                        unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
-                    }
-                }
-            }
 
                 if (count($_model[FILES]) > 0) {
                     $files = $_model[FILES];
@@ -1198,6 +1205,10 @@
             }
 
             if ($_type =="item") {
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
+
                 $err = 0;
                 $msg = "";
 
@@ -1231,6 +1242,10 @@
                 }
                 
             } else if ($_type == "terminate") {
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
+
                 $err = 0;
                 $msg = "";
 

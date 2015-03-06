@@ -841,6 +841,8 @@ define([
                                 .then(function(){
                                     dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
+                                    $scope.addMileage('EXPERIENCE', 'EXPERIENCE');
+
                                     $location.url('/moms/experienceprocess/list');
                                 })
                                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -941,6 +943,8 @@ define([
                                 .then(function(){
                                     dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
+                                    $scope.addMileage('EXPERIENCE', 'EXPERIENCE');
+
                                     $location.url('/moms/experienceprocess/list');
                                 })
                                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -966,6 +970,8 @@ define([
                             $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
                                     dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+
+                                    $scope.addMileage('EXPERIENCE', 'EXPERIENCE');
 
                                     $location.url('/moms/experienceprocess/list');
                                 })
@@ -1108,6 +1114,8 @@ define([
                                 .then(function(){
                                     dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
 
+                                    $scope.addMileage('EXPERIENCE', 'EXPERIENCE');
+
                                     $location.url('/moms/experienceprocess/list');
                                 })
                                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -1228,6 +1236,8 @@ define([
                             $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
                                     dialogs.notify('알림', '체험단 참여가 정상적으로 완료되었습니다.', {size: 'md'});
+
+                                    $scope.addMileage('EXPERIENCE', 'EXPERIENCE');
 
                                     $location.url('/moms/experienceprocess/list');
                                 })
@@ -1426,6 +1436,8 @@ define([
                                 $scope.getPeopleReplyList();
 
                                 $scope.item.COMMENT = "";
+
+                                $scope.addMileage('EXPERIENCE', 'EXPERIENCE');
                             })
                             .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }else{

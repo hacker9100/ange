@@ -324,13 +324,13 @@ define([
         // 사용자 정보 저장
         $scope.checkValidation = function () {
 
-            if (!$scope.availableID) {
+            if ($scope.user.USER_ID == '' || !$scope.availableID) {
                 $('#user_id').focus();
                 dialogs.notify('알림', '아이디를 확인해주세요.', {size: 'md'});
                 return;
             }
 
-            if (!$scope.availablePW) {
+            if ($scope.user.PASSWORD == '' || !$scope.availablePW) {
                 $('#password').focus();
                 dialogs.notify('알림', '패스워드를 확인해주세요.', {size: 'md'});
                 return false;
@@ -342,7 +342,7 @@ define([
                 return false;
             }
 
-            if (!$scope.availableNick) {
+            if ($scope.user.NICK_NM == '' || !$scope.availableNick) {
                 $('#nick_nm').focus();
                 dialogs.notify('알림', '닉네임을 확인해주세요.', {size: 'md'});
                 return false;
@@ -445,6 +445,9 @@ define([
                 $scope.insertItem('com/user', 'item', $scope.user, false)
                     .then(function(){
                         $scope.checkSave = true;
+                        $scope.addMileage('CONGRATULATION', '1');
+                        $scope.addMileage('CONGRATULATION', '2');
+
                         if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
                             $scope.step = '04';
                         } else {

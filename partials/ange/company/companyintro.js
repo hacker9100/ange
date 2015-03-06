@@ -37,6 +37,8 @@ define([
         $scope.partner19 = [];
         $scope.partner20 = [];
         $scope.partner21 = [];
+        $scope.partner22 = [];
+        $scope.partner23 = [];
 
         $scope.init = function () {
             $scope.selectIdx = 1;

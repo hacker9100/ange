@@ -89,6 +89,8 @@ define([
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
 
+                        $scope.addMileage('BOARD', $scope.menu.COMM_NO);
+
                         //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
                         $location.url('/'+$stateParams.channel+'/discuss/list/'+$rootScope.PARENT_NO);
                     })

@@ -274,10 +274,20 @@ define([
             $scope.item.SYSTEM_GB = 'ANGE';
             $scope.item.FILES = $scope.queue;
 
+            var ckMain = false;
+
+            for(var i in $scope.item.FILES) {
+                if ($scope.item.FILES[i].kind == 'MAIN') ckMain = true;
+            }
+
+            if (!ckMain) {
+                dialogs.notify('알림', '메인이미지를 선택하세요.', {size: 'md'});
+                return;
+            }
+
             for(var i in $scope.item.FILES) {
                 $scope.item.FILES[i].$destroy = '';
                 $scope.item.FILES[i].$editor = '';
-//                $scope.item.FILES[i].$submit();
             }
 
             console.log($scope.item.MENU);

@@ -699,7 +699,7 @@ body {
     margin:0px auto;
     /* padding:25px; */
     width:100%;
-    min-width: 600px;
+    min-width: 320px;
     background-color:#FAFAFA;
     background-image: url('../imgs/ange/article/bg_01_previews.jpg');
 }

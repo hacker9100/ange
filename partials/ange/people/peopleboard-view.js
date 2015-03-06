@@ -154,8 +154,6 @@ define([
             }
         };
 
-
-
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);

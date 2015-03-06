@@ -409,7 +409,7 @@ define([
             $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
                 .then(function(){
                     dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
-
+/*
                     if (isWate && $scope.user.CERT_GB == 'MIG') {
                         $scope.mileage = {};
                         $scope.mileage.USER_ID = $scope.user.USER_ID;
@@ -422,7 +422,7 @@ define([
                             .then(function(){ dialogs.notify('알림', '이벤트에 참여되었습니다.', {size: 'md'});})
                             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
-
+*/
                     $scope.item = {};
                     $scope.item.SYSTEM_GB = 'ANGE';
 
@@ -434,6 +434,7 @@ define([
                             $rootScope.uid = data.USER_ID;
                             $rootScope.name = data.USER_NM;
                             $rootScope.role = data.ROLE_ID;
+                            $rootScope.mileage = data.REMAIN_POINT;
                             $rootScope.system = data.SYSTEM_GB;
                             $rootScope.menu_role = data.MENU_ROLE;
                             $rootScope.email = data.EMAIL;
