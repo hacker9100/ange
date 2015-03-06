@@ -71,10 +71,6 @@ define(['./directives'], function (directives) {
 
             // watch original model change
             scope.$parent.$watch(attrs.checklistModel, function(newArr, oldArr) {
-//                console.log(JSON.stringify('-->>>>>'+newArr))
-//                for(var i = 0; i < newArr.length; i++) {
-//                    console.log(typeof(newArr[i]))
-//                }
                 scope.checked = contains(newArr, value);
             }, true);
         }

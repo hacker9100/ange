@@ -248,6 +248,11 @@ define([
 
                 $rootScope.user_gb = null;
                 $rootScope.support_no = null;
+
+                if ($scope.channel.NO == 4 ) {
+                    $location.path("/main");
+                    throw( new String('세션이 만료되었습니다. 다시 로그인 해 주세요.'));
+                }
 //                $location.path("/signin");
 //                throw( new String('세션이 만료되었습니다.') );
 //            throw( new Error("세션이 만료되었습니다.") );

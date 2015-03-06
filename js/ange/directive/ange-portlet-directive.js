@@ -193,7 +193,6 @@ define([
                     $scope.getList($scope.option.api, 'main', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             $scope.list = data;
-                            console.log(JSON.stringify(data))
                             if ($scope.option.image != undefined && $scope.option.image) {
                                 $scope.imgItem = data[0];
                                 $scope.img = CONSTANT.BASE_URL + data[0].FILE.PATH + 'thumbnail/' + data[0].FILE.FILE_ID;

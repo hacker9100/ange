@@ -9,7 +9,6 @@ define(['./directives'], function (directives) {
 
     directives.directive('focus', function() {
         return function(scope, element){
-            console.log(element);
             element[0].focus();
         };
     });

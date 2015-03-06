@@ -43,8 +43,8 @@
             if ($_type == 'congratulation') {
                 $from_email = __SMTP_USR__;
                 $from_user = __SMTP_USR_NM__;
-                $to = $_model[EMAIL];
-                $to_user = $_model[USER_NM];
+                $to = $_model['EMAIL'];
+                $to_user = $_model['USER_NM'];
                 $subject = "앙쥬에 오신걸 환영합니다.";
                 $message = "<html>
                             <head>
@@ -72,13 +72,13 @@
                                       </tr>
                                       <tr>
                                          <th width='22%' align='left' valign='middle' style='padding: 10px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC; background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>이름</th>
-                                                                        <td width='78%' align='left' valign='middle' style='padding: 13px 10px 10px; border:1px solid #CCC;  font-size:12px; font:'돋움'''>".$_model[USER_NM]."</td></tr>
+                                                                        <td width='78%' align='left' valign='middle' style='padding: 13px 10px 10px; border:1px solid #CCC;  font-size:12px; font:'돋움'''>".$_model['USER_NM']."</td></tr>
 
                                      <tr> <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal;border:1px solid #CCC;  background-color:#f2f2f2;  font-size:12px; font:'돋움'' scope='row'>아이디</th>
-                                        <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움' border-bottom-style: solid;'>".$_model[USER_ID]."</td></tr>
+                                        <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움' border-bottom-style: solid;'>".$_model['USER_ID']."</td></tr>
 
                                        <tr> <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC;  background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>닉네임</th>
-                                        <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움'border-bottom-style: solid;'>".$_model[USER_NICK]."</td></tr>
+                                        <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움'border-bottom-style: solid;'>".$_model['NICK_NM']."</td></tr>
 
 
                                     </table></td>

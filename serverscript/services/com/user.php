@@ -671,7 +671,7 @@
                             SYSDATE(),
                             '".$_model[CERT_GB]."',
                             ".((isset($_model[CERT_GB]) && $_model[CERT_GB] == "EMAIL") ? "null" : "SYSDATE()").",
-                            'test'
+                            'ange'
                         )";
 
                 $_d->sql_query($sql);
@@ -843,13 +843,13 @@
                 } else {
                     if(isset($_model[CERT_GB]) && $_model[CERT_GB] == 'EMAIL') {
 //                        $to = __SMTP_USR__;
-                        $from_email = "angeweb@ange.co.kr";
-                        $from_user = "앙쥬";
+                        $from_email = __SMTP_USR__;
+                        $from_user = __SMTP_USR_NM__;
                         $to = $_model[EMAIL];
                         $to_user = $_model[USER_NM];
                         $headers = "From: hacker9100@gmail.com";
                         $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-                        $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
+                        $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>이메일 인증</a>";
 
 //                        MtUtil::sendMail($to, $subject, $message, $headers);
                         MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
@@ -879,13 +879,13 @@
                 }
             } else if ($_type == 'mail') {
 //                $to = __SMTP_USR__;
-                $from_email = "angeweb@ange.co.kr";
-                $from_user = "앙쥬";
+                $from_email = __SMTP_USR__;
+                $from_user = __SMTP_USR_NM__;
                 $to = $_model[EMAIL];
                 $to_user = $_model[USER_NM];
                 $headers = "From: hacker9100@gmail.com";
                 $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=test'>이메일 인증</a><br>테스트로 보냅니다.";
+                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>이메일 인증</a>";
 
                 MtUtil::_d("------------>>>>> mail : ");
 
@@ -1332,16 +1332,16 @@
                 $_d->sql_beginTransaction();
 
                 $sql = "SELECT
-                            CERT_HASH
+                            USER_ID, USER_NM, NICK_NM, EMAIL, CERT_HASH
                         FROM
                             COM_USER
                         WHERE
-                            USER_ID = '".$_key."'
+                            USER_ID = '".$_key."' AND CERT_DT IS NULL
                         ";
 
                 $data  = $_d->sql_fetch($sql);
 
-                if ($data[CERT_HASH] != $_hash) {
+                if ($data['CERT_HASH'] != $_hash) {
                     $_d->failEnd("인증실패입니다:".$msg);
                 }
 
@@ -1361,6 +1361,97 @@
                     $msg = $_d->mysql_error;
                 }
 
+                $sql = "SELECT
+                            NO, MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
+                        FROM
+                            ANGE_MILEAGE
+                        WHERE
+                            POINT_ST = '0'
+                            AND NO = '1'
+                            AND MILEAGE_GB = '3'
+                        ";
+
+                $mileage_data1 = $_d->sql_fetch($sql);
+
+                $sql = "INSERT INTO ANGE_USER_MILEAGE
+                        (
+                            USER_ID,
+                            EARN_DT,
+                            MILEAGE_NO,
+                            EARN_GB,
+                            PLACE_GB,
+                            POINT,
+                            REASON
+                        ) VALUES (
+                            '".$_key."'
+                            , SYSDATE()
+                            , '".$mileage_data1['NO']."'
+                            , '".$mileage_data1['MILEAGE_GB']."'
+                            , '".$mileage_data1['SUBJECT']."'
+                            , '".$mileage_data1['POINT']."'
+                            , '".$mileage_data1['REASON']."'
+                        )";
+
+                $_d->sql_query($sql);
+
+                if ($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                $sql = "SELECT
+                            NO, MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
+                        FROM
+                            ANGE_MILEAGE
+                        WHERE
+                            POINT_ST = '0'
+                            AND NO = '2'
+                            AND MILEAGE_GB = '4'
+                        ";
+
+                $mileage_data2 = $_d->sql_fetch($sql);
+
+                $sql = "INSERT INTO ANGE_USER_MILEAGE
+                        (
+                            USER_ID,
+                            EARN_DT,
+                            MILEAGE_NO,
+                            EARN_GB,
+                            PLACE_GB,
+                            POINT,
+                            REASON
+                        ) VALUES (
+                            '".$_key."'
+                            , SYSDATE()
+                            , '".$mileage_data2['NO']."'
+                            , '".$mileage_data2['MILEAGE_GB']."'
+                            , '".$mileage_data2['SUBJECT']."'
+                            , '".$mileage_data2['POINT']."'
+                            , '".$mileage_data2['REASON']."'
+                        )";
+
+                $_d->sql_query($sql);
+
+                if ($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                $sql = "UPDATE
+                            COM_USER
+                        SET
+                            SUM_POINT = ".($mileage_data1['POINT'] + $mileage_data2['POINT']).",
+                            REMAIN_POINT = ".($mileage_data1['POINT'] + $mileage_data2['POINT'])."
+                        WHERE
+                            USER_ID = '".$_key."'";
+
+                $_d->sql_query($sql);
+
+                if ($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
                 if ($err > 0) {
                     $_d->sql_rollback();
 
@@ -1375,6 +1466,60 @@
                     exit();
                 } else {
                     $_d->sql_commit();
+
+                    $from_email = __SMTP_USR__;
+                    $from_user = __SMTP_USR_NM__;
+                    $to = $data['EMAIL'];
+                    $to_user = $data['USER_NM'];
+                    $subject = "앙쥬에 오신걸 환영합니다.";
+                    $message = "<html>
+                            <head>
+                            <title>@ange_member</title>
+                            <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+                            </head>
+                            <body bgcolor='#FFFFFF' leftmargin='0' topmargin='0' marginwidth='0' marginheight='0'>
+                            <!-- Save for Web Slices (@ange_member.psd) -->
+                            <table id='Table_01' width='676' border='0' cellpadding='0' cellspacing='0'>
+                                <tr>
+                                    <td width='50'>
+                                        <img src='".BASE_URL."/imgs/ange/mail/@ange_member_01.jpg' width='676' height='108' alt=''></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src='".BASE_URL."/imgs/ange/mail/@ange_member_02.jpg' width='676' height='146' alt=''></td>
+                                </tr>
+
+                                <tr style='1px solid red'>
+                                    <td align='center' style='background-image:url(".BASE_URL."/imgs/ange/mail/bg.jpg)'>    <table width='423' border='0' >
+                                      <tr>
+
+                                        <td><img src='".BASE_URL."/imgs/ange/mail/01.jpg' width='64' height='17'></td>
+                                        <td>&nbsp;</td>
+                                      </tr>
+                                      <tr>
+                                         <th width='22%' align='left' valign='middle' style='padding: 10px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC; background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>이름</th>
+                                                                        <td width='78%' align='left' valign='middle' style='padding: 13px 10px 10px; border:1px solid #CCC;  font-size:12px; font:'돋움'''>".$data['USER_NM']."</td></tr>
+
+                                     <tr> <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal;border:1px solid #CCC;  background-color:#f2f2f2;  font-size:12px; font:'돋움'' scope='row'>아이디</th>
+                                        <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움' border-bottom-style: solid;'>".$data['USER_ID']."</td></tr>
+
+                                       <tr> <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC;  background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>닉네임</th>
+                                        <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움'border-bottom-style: solid;'>".$data['NICK_NM']."</td></tr>
+
+
+                                    </table></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src='".BASE_URL."/imgs/ange/mail/@ange_member_04.jpg' width='676' height='177' alt=''></td>
+                                </tr>
+                            </table>
+                            <!-- End Save for Web Slices -->
+                            </body>
+                            </html>";
+
+                    MtUtil::_d("------------>>>>> mail : ");
+                    MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
 
                     ob_end_clean();
 //                    header("Location: http://localhost"); /* Redirect browser */
