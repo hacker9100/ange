@@ -257,7 +257,6 @@ define(['./directives'], function (directives) {
                     instance.on('doubleclick',        dbClick);
 
                     instance.on('instanceReady', function() {
-//                        console.log( instance.filter.allowedContent );
                         scope.$broadcast("ckeditor.ready");
                         scope.$apply(function() {
                             onUpdateModelData(true);

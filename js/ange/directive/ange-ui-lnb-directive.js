@@ -29,10 +29,8 @@ define(['./directives'], function (directives) {
 
                 if (channel.CHANNEL_NO <= 6) {
                     for (var i in scope.ange_menu) {
-//                        console.log(scope.ange_menu[i].CHANNEL_NO)
                         if (scope.ange_menu[i].CHANNEL_NO == channel.CHANNEL_NO) {
                             menu_info.push(scope.ange_menu[i]);
-//                            console.log(scope.ange_menu[i])
                         }
                     }
 

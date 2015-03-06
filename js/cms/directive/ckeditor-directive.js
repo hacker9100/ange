@@ -226,7 +226,7 @@ define(['./directives'], function (directives) {
                         if (data == '') {
                             data = null;
                         }
-//console.log('editor content: '+data);
+
                         $timeout(function () { // for key up event
                             (setPristine !== true || data != ngModel.$viewValue) && ngModel.$setViewValue(data);
                             (setPristine === true && form) && form.$setPristine();

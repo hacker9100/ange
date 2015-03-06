@@ -322,6 +322,25 @@
 
                             <div class="row form_rows">
                                 <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>성별</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
+
+                                        <span class="col-xs-10 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                                <input id="sex_gb" ng-model="user.SEX_GB" type="radio" value="M" style="float: left; margin:10px 0 0 15px;">
+                                                <span style="float:left; margin-left:5px;">남</span>
+
+                                                <input ng-model="user.SEX_GB" type="radio" value="F" style="float: left; margin:10px 0 0 15px;" ng-checked="true">
+                                                <span style="float:left; margin-left:5px;">여</span>
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
                                     <span class="col-xs-2 basicinfo title">
                                         <strong>주소</strong>
                                         <span class="table_blue">*</span>
@@ -452,6 +471,25 @@
 
                                 </div>  <!-- /.form_basicinfo -->
                             </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
+                                    <span class="col-xs-2 basicinfo title">
+                                        <strong>사용자 인증</strong>
+                                        <span class="table_blue">*</span>
+                                    </span>
+
+                                    <span class="col-xs-10 basicinfo input">
+                                        <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                            <input ng-model="user.CERT_GB" type="radio" value="PHONE" style="float: left; margin:10px 0 0 15px;" ng-checked="true">
+                                            <span style="float:left; margin-left:5px;">휴대폰 인증</span>
+
+                                            <input ng-model="user.CERT_GB" type="radio" value="EMAIL" style="float: left; margin:10px 0 0 15px;">
+                                            <span style="float:left; margin-left:5px;">이메일 인증</span>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
 
                             <form id="thumb" name="thumb" method="POST" enctype="multipart/form-data" data-file-upload="options">
                                 <input type="hidden" id="version" name="version" value="3">
@@ -675,204 +713,204 @@
                                 </span>
                             </div>  <!-- /.form_rows -->
 
+                            <!--<div class="sub_pagetitle_hr">-->
+                                <!--블로그정보-->
+                                <!--<br />-->
+                                <!--<span style="font-weight:400; color:#646464; font-size: 0.76em;"><small>정보를 입력하시면 당첨확률이 높아집니다. 이벤트 당첨 후에도 허위정보 적발시 마일리지 발급 등 취소처리 될 수 있습니다.</small></span>-->
+                            <!--</div>-->
 
-                            <div class="sub_pagetitle_hr">
-                                블로그정보
-                                <br />
-                                <span style="font-weight:400; color:#646464; font-size: 0.76em;"><small>정보를 입력하시면 당첨확률이 높아집니다. 이벤트 당첨 후에도 허위정보 적발시 마일리지 발급 등 취소처리 될 수 있습니다.</small></span>
-                            </div>
+                            <!--<div class="row form_rows">-->
+                                <!--<div class="form_basicinfo">-->
+                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                            <!--<strong>내 Blog 주소</strong>-->
+                                        <!--</span>-->
 
-                            <div class="row form_rows">
-                                <div class="form_basicinfo">
-                                        <span class="col-xs-2 basicinfo title">
-                                            <strong>내 Blog 주소</strong>
-                                        </span>
+                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                            <!--<div class="form-group" style="margin:0 5px; line-height:32px;">-->
+                                                <!--<input ng-model="blog.BLOG_GB" type="radio" name="user_portalblog" value="NAVER" style="float: left; margin:10px 0 0 15px;" ng-checked="true">-->
+                                                <!--<span style="float:left; margin-left:5px;">네이버</span>-->
 
-                                        <span class="col-xs-10 basicinfo input">
-                                            <div class="form-group" style="margin:0 5px; line-height:32px;">
-                                                <input ng-model="blog.BLOG_GB" type="radio" name="user_portalblog" value="NAVER" style="float: left; margin:10px 0 0 15px;" ng-checked="true">
-                                                <span style="float:left; margin-left:5px;">네이버</span>
+                                                <!--<input ng-model="blog.BLOG_GB" type="radio" value="DAUM" style="float: left; margin:10px 0 0 15px;">-->
+                                                <!--<span style="float:left; margin-left:5px;">다음</span>-->
 
-                                                <input ng-model="blog.BLOG_GB" type="radio" value="DAUM" style="float: left; margin:10px 0 0 15px;">
-                                                <span style="float:left; margin-left:5px;">다음</span>
+                                                <!--<input ng-model="blog.BLOG_GB" type="radio" value="TSTORY" style="float: left; margin:10px 0 0 15px;">-->
+                                                <!--<span style="float:left; margin-left:5px;">티스토리</span>-->
 
-                                                <input ng-model="blog.BLOG_GB" type="radio" value="TSTORY" style="float: left; margin:10px 0 0 15px;">
-                                                <span style="float:left; margin-left:5px;">티스토리</span>
+                                                <!--<input ng-model="blog.BLOG_GB" type="radio" value="ETC" style="float: left; margin:10px 0 0 15px;">-->
+                                                <!--<span style="float:left; margin-left:5px;">직접입력</span>-->
+                                            <!--</div>-->
+                                        <!--</span>-->
 
-                                                <input ng-model="blog.BLOG_GB" type="radio" value="ETC" style="float: left; margin:10px 0 0 15px;">
-                                                <span style="float:left; margin-left:5px;">직접입력</span>
-                                            </div>
-                                        </span>
+                                    <!--<span class="col-xs-2 basicinfo title"></span>-->
+                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                            <!--<div class="form-group" style="margin:0 5px; line-height:32px;">-->
+                                                <!--<span style="float:left; margin-left:15px;">{{blog.BLOG_URL}}</span>-->
+                                                <!--<input ng-model="blog.BLOG_DETAIL" type="text" class="form-control" style="float:left; width:250px; margin:0px 8px;" placeholder="">-->
+                                            <!--</div>-->
+                                        <!--</span>-->
+                                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                            <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                    <span class="col-xs-2 basicinfo title"></span>
-                                        <span class="col-xs-10 basicinfo input">
-                                            <div class="form-group" style="margin:0 5px; line-height:32px;">
-                                                <span style="float:left; margin-left:15px;">{{blog.BLOG_URL}}</span>
-                                                <input ng-model="blog.BLOG_DETAIL" type="text" class="form-control" style="float:left; width:250px; margin:0px 8px;" placeholder="">
-                                            </div>
-                                        </span>
-                                </div>  <!-- /.form_basicinfo -->
-                            </div>  <!-- /.form_rows -->
+                            <!--<div class="row form_rows">-->
+                                <!--<div class="form_basicinfo">-->
+                                    <!--<span class="col-xs-2 basicinfo title">-->
+                                        <!--<strong>Blog 주제</strong>-->
+                                    <!--</span>-->
 
-                            <div class="row form_rows">
-                                <div class="form_basicinfo">
-                                    <span class="col-xs-2 basicinfo title">
-                                        <strong>Blog 주제</strong>
-                                    </span>
+                                    <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="1" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">일상/생각</span>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
+                                    <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="2" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">육아</span>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
+                                    <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="3" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">요리/레시피</span>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
+                                    <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="4" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">상품리뷰</span>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
+                                    <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="5" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">맛집</span>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
 
-                                    <span class="col-xs-2 basicinfo subtitle">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="1" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">일상/생각</span>
-                                        </div>
-                                    </span>
-                                    <span class="col-xs-2 basicinfo subtitle">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="2" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">육아</span>
-                                        </div>
-                                    </span>
-                                    <span class="col-xs-2 basicinfo subtitle">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="3" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">요리/레시피</span>
-                                        </div>
-                                    </span>
-                                    <span class="col-xs-2 basicinfo subtitle">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="4" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">상품리뷰</span>
-                                        </div>
-                                    </span>
-                                    <span class="col-xs-2 basicinfo subtitle">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="5" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">맛집</span>
-                                        </div>
-                                    </span>
+                                    <!--<span class="col-xs-2 basicinfo title"></span>-->
+                                    <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="6" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">문학/책</span>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
+                                    <!--<span class="col-xs-4 basicinfo subtitle">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="7" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">홈스쿨링(교육/교구/교재)</span>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
+                                    <!--<span class="col-xs-4 basicinfo subtitle">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="8" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">문화생활(영화/공연/전시)</span>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
 
-                                    <span class="col-xs-2 basicinfo title"></span>
-                                    <span class="col-xs-2 basicinfo subtitle">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="6" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">문학/책</span>
-                                        </div>
-                                    </span>
-                                    <span class="col-xs-4 basicinfo subtitle">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="7" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">홈스쿨링(교육/교구/교재)</span>
-                                        </div>
-                                    </span>
-                                    <span class="col-xs-4 basicinfo subtitle">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="8" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">문화생활(영화/공연/전시)</span>
-                                        </div>
-                                    </span>
+                                    <!--<span class="col-xs-2 basicinfo title"></span>-->
+                                    <!--<span class="col-xs-3 basicinfo subtitle">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="9" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">인테리어/DIY</span>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
 
-                                    <span class="col-xs-2 basicinfo title"></span>
-                                    <span class="col-xs-3 basicinfo subtitle">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="9" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">인테리어/DIY</span>
-                                        </div>
-                                    </span>
+                                    <!--<span class="col-xs-7 basicinfo desc">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="10" style="float: left; margin:10px 0 0 15px;" checked>-->
+                                            <!--<span style="float:left; margin-left:5px;">기타</span>-->
+                                            <!--<input ng-model="blog.THEME_ETC" type="text" class="form-control" style="cursor: default; float:left; width:300px; margin:0px 8px;" placeholder="ex) 취미, 사진...">-->
+                                        <!--</div>-->
+                                    <!--</span>-->
+                                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                            <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                    <span class="col-xs-7 basicinfo desc">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input checklist-model="blog.THEME_CK" type="checkbox" checklist-value="10" style="float: left; margin:10px 0 0 15px;" checked>
-                                            <span style="float:left; margin-left:5px;">기타</span>
-                                            <input ng-model="blog.THEME_ETC" type="text" class="form-control" style="cursor: default; float:left; width:300px; margin:0px 8px;" placeholder="ex) 취미, 사진...">
-                                        </div>
-                                    </span>
-                                </div>  <!-- /.form_basicinfo -->
-                            </div>  <!-- /.form_rows -->
+                            <!--<div class="row form_rows">-->
+                                <!--<div class="form_basicinfo">-->
+                                    <!--<span class="col-xs-2 basicinfo title">-->
+                                        <!--<strong>나를 추가한 이웃수</strong>-->
+                                    <!--</span>-->
 
-                            <div class="row form_rows">
-                                <div class="form_basicinfo">
-                                    <span class="col-xs-2 basicinfo title">
-                                        <strong>나를 추가한 이웃수</strong>
-                                    </span>
+                                    <!--<span class="col-xs-1 basicinfo subtitle">-->
+                                        <!--<span class="table_gray" style="display:block;">현재</span>-->
+                                    <!--</span>-->
+                                    <!--<span class="col-xs-3 basicinfo input">-->
+                                        <!--<div class="form-group" style="margin:0 5px">-->
+                                            <!--<input ng-model="blog.NEIGHBOR_CNT" type="text" class="form-control" style="margin:0px;" placeholder="" valid-number>-->
+                                        <!--</div>-->
+                                    <!--</span>-->
+                                    <!--<span class="col-xs-4 basicinfo desc">-->
+                                        <!--<span class="table_gray" style="display:block;">명</span>-->
+                                    <!--</span>-->
+                                    <!--<span class="col-xs-2 basicinfo desc">-->
+                                        <!--<button type="button" style="float:right; margin-top:2px;" class="btn btn-sm btn-info" ng-show="false"><span class="glyphicon glyphicon-refresh"></span> 새로고침</button>-->
+                                    <!--</span>-->
+                                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                            <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                    <span class="col-xs-1 basicinfo subtitle">
-                                        <span class="table_gray" style="display:block;">현재</span>
-                                    </span>
-                                    <span class="col-xs-3 basicinfo input">
-                                        <div class="form-group" style="margin:0 5px">
-                                            <input ng-model="blog.NEIGHBOR_CNT" type="text" class="form-control" style="margin:0px;" placeholder="" valid-number>
-                                        </div>
-                                    </span>
-                                    <span class="col-xs-4 basicinfo desc">
-                                        <span class="table_gray" style="display:block;">명</span>
-                                    </span>
-                                    <span class="col-xs-2 basicinfo desc">
-                                        <button type="button" style="float:right; margin-top:2px;" class="btn btn-sm btn-info" ng-show="false"><span class="glyphicon glyphicon-refresh"></span> 새로고침</button>
-                                    </span>
-                                </div>  <!-- /.form_basicinfo -->
-                            </div>  <!-- /.form_rows -->
+                            <!--<div class="row form_rows">-->
+                                <!--<div class="form_basicinfo">-->
+                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                            <!--<strong>전체 게시물 수</strong>-->
+                                        <!--</span>-->
 
-                            <div class="row form_rows">
-                                <div class="form_basicinfo">
-                                        <span class="col-xs-2 basicinfo title">
-                                            <strong>전체 게시물 수</strong>
-                                        </span>
+                                        <!--<span class="col-xs-1 basicinfo subtitle">-->
+                                            <!--<span class="table_gray" style="display:block;">현재</span>-->
+                                        <!--</span>-->
+                                        <!--<span class="col-xs-3 basicinfo input">-->
+                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                <!--<input ng-model="blog.POST_CNT" type="text" class="form-control" style="margin:0px;" placeholder="" valid-number>-->
+                                            <!--</div>-->
+                                        <!--</span>-->
+                                        <!--<span class="col-xs-4 basicinfo desc">-->
+                                            <!--<span class="table_gray" style="display:block;">건</span>-->
+                                        <!--</span>-->
+                                        <!--<span class="col-xs-2 basicinfo desc">-->
+                                            <!--<button type="button" style="float:right; margin-top:2px;" class="btn btn-sm btn-info" ng-show="false"><span class="glyphicon glyphicon-refresh"></span> 새로고침</button>-->
+                                        <!--</span>-->
+                                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                            <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                        <span class="col-xs-1 basicinfo subtitle">
-                                            <span class="table_gray" style="display:block;">현재</span>
-                                        </span>
-                                        <span class="col-xs-3 basicinfo input">
-                                            <div class="form-group" style="margin:0 5px">
-                                                <input ng-model="blog.POST_CNT" type="text" class="form-control" style="margin:0px;" placeholder="" valid-number>
-                                            </div>
-                                        </span>
-                                        <span class="col-xs-4 basicinfo desc">
-                                            <span class="table_gray" style="display:block;">건</span>
-                                        </span>
-                                        <span class="col-xs-2 basicinfo desc">
-                                            <button type="button" style="float:right; margin-top:2px;" class="btn btn-sm btn-info" ng-show="false"><span class="glyphicon glyphicon-refresh"></span> 새로고침</button>
-                                        </span>
-                                </div>  <!-- /.form_basicinfo -->
-                            </div>  <!-- /.form_rows -->
+                            <!--<div class="row form_rows">-->
+                                <!--<div class="form_basicinfo">-->
+                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                            <!--<strong>방문자 수</strong>-->
+                                        <!--</span>-->
 
-                            <div class="row form_rows">
-                                <div class="form_basicinfo">
-                                        <span class="col-xs-2 basicinfo title">
-                                            <strong>방문자 수</strong>
-                                        </span>
+                                        <!--<span class="col-xs-1 basicinfo subtitle">-->
+                                            <!--<span class="table_gray" style="display:block;">어제기준</span>-->
+                                        <!--</span>-->
+                                        <!--<span class="col-xs-3 basicinfo input">-->
+                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                <!--<input ng-model="blog.VISIT_CNT" type="text" class="form-control" style="margin:0px;" placeholder="" valid-number>-->
+                                            <!--</div>-->
+                                        <!--</span>-->
+                                        <!--<span class="col-xs-4 basicinfo desc">-->
+                                            <!--<span class="table_gray" style="display:block;">명</span>-->
+                                        <!--</span>-->
+                                        <!--<span class="col-xs-2 basicinfo desc">-->
+                                            <!--<button type="button" style="float:right; margin-top:2px;" class="btn btn-sm btn-info" ng-show="false"><span class="glyphicon glyphicon-refresh"></span> 새로고침</button>-->
+                                        <!--</span>-->
+                                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                            <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                        <span class="col-xs-1 basicinfo subtitle">
-                                            <span class="table_gray" style="display:block;">어제기준</span>
-                                        </span>
-                                        <span class="col-xs-3 basicinfo input">
-                                            <div class="form-group" style="margin:0 5px">
-                                                <input ng-model="blog.VISIT_CNT" type="text" class="form-control" style="margin:0px;" placeholder="" valid-number>
-                                            </div>
-                                        </span>
-                                        <span class="col-xs-4 basicinfo desc">
-                                            <span class="table_gray" style="display:block;">명</span>
-                                        </span>
-                                        <span class="col-xs-2 basicinfo desc">
-                                            <button type="button" style="float:right; margin-top:2px;" class="btn btn-sm btn-info" ng-show="false"><span class="glyphicon glyphicon-refresh"></span> 새로고침</button>
-                                        </span>
-                                </div>  <!-- /.form_basicinfo -->
-                            </div>  <!-- /.form_rows -->
+                            <!--<div class="row form_rows">-->
+                                <!--<div class="form_basicinfo">-->
+                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                            <!--<strong>SNS 주소</strong>-->
+                                        <!--</span>-->
 
-                            <div class="row form_rows">
-                                <div class="form_basicinfo">
-                                        <span class="col-xs-2 basicinfo title">
-                                            <strong>SNS 주소</strong>
-                                        </span>
-
-                                        <span class="col-xs-10 basicinfo input">
-                                            <div class="form-group" style="margin:0 5px">
-                                                <input ng-model="blog.SNS" type="text" class="form-control" style="margin:0px;" placeholder="SNS URL">
-                                            </div>
-                                        </span>
-                                </div>  <!-- /.form_basicinfo -->
-                            </div>  <!-- /.form_rows -->
+                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                <!--<input ng-model="blog.SNS" type="text" class="form-control" style="margin:0px;" placeholder="SNS URL">-->
+                                            <!--</div>-->
+                                        <!--</span>-->
+                                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                            <!--</div>   /.form_rows &ndash;&gt;-->
 
                             <div class="join_agree_totalcheck">
+<!--
                                 <div class="join_agree_check">
                                     <input ng-model="user.CERT_GB" type="radio" value="EMAIL" style="float: left; margin:15px 0 0 15px;" ng-checked="true">
                                     <span style="float:left; margin:10px 5px;">이메일 인증</span>
@@ -880,6 +918,7 @@
                                     <input ng-model="user.CERT_GB" type="radio" value="PHONE" style="float: left; margin:15px 0 0 15px;">
                                     <span style="float:left; margin:10px 5px;">휴대폰 인증</span>
                                 </div>
+-->
 
                                 <div ng-show="user.CERT_GB == 'PHONE'" class="ange_colorbox_gray">
                                     <div class="col-xs-1">

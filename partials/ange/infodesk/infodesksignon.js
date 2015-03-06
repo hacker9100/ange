@@ -87,8 +87,8 @@ define([
 
             $scope.babies = [{}, {}, {}];
 
-            $scope.user = {USER_ID: '', USER_NM: '', NICK_NM: '', PASSWORD: '', LUNAR_FL: '0', BIRTH: '', ZIP_CODE: '', ADDR: '', ADDR_DETAIL: '', PHONE_1: '', PHONE_2: '', USER_GB: '', USER_ST: '', EMAIL: '', SEX_GB: '',
-                INTRO: '', NOTE: '', MARRIED_FL: 'Y', PREGNENT_FL: 'N', EN_ANGE_EMAIL_FL: true, EN_ANGE_SMS_FL: true, EN_ALARM_EMAIL_FL: true, EN_ALARM_SMS_FL: true, EN_STORE_EMAIL_FL: true, EN_STORE_SMS_FL: true, CERT_GB: 'EMAIL'}
+            $scope.user = {USER_ID: '', USER_NM: '', NICK_NM: '', PASSWORD: '', LUNAR_FL: '0', BIRTH: '', ZIP_CODE: '', ADDR: '', ADDR_DETAIL: '', PHONE_1: '', PHONE_2: '', USER_GB: '', USER_ST: '', EMAIL: '', SEX_GB: 'F',
+                INTRO: '', NOTE: '', MARRIED_FL: 'Y', PREGNENT_FL: 'N', EN_ANGE_EMAIL_FL: true, EN_ANGE_SMS_FL: true, EN_ALARM_EMAIL_FL: true, EN_ALARM_SMS_FL: true, EN_STORE_EMAIL_FL: true, EN_STORE_SMS_FL: true, CERT_GB: 'PHONE'}
             $scope.user.YEAR = '';
             $scope.user.MONTH = '';
             $scope.user.DAY = '';
@@ -356,6 +356,12 @@ define([
                 $scope.user.BIRTH = $scope.user.YEAR + ($scope.user.MONTH.length == 1 ? '0' + $scope.user.MONTH : $scope.user.MONTH) + ($scope.user.DAY.length == 1 ? '0' + $scope.user.DAY : $scope.user.DAY);
             }
 
+            if ($scope.user.SEX_GB == '') {
+                $('#sex_gb').focus();
+                dialogs.notify('알림', '성별을 확인해주세요.', {size: 'md'});
+                return false;
+            }
+
             if ($scope.user.PHONE_1_1 != '' && $scope.user.PHONE_1_2 != '' && $scope.user.PHONE_1_3 != '') {
                 $scope.user.PHONE_1 = $scope.user.PHONE_1_1 + $scope.user.PHONE_1_2 + $scope.user.PHONE_1_3;
             }
@@ -450,6 +456,7 @@ define([
 
                         if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
                             $scope.step = '04';
+                            $scope.finishUser();
                         } else {
                             $scope.step = '03';
                         }
@@ -506,9 +513,11 @@ define([
 
         // 가입 완료
         $scope.finishUser = function () {
-            $scope.insertItem('com/mail', 'congratulation', item, false)
-                .then(function(data){})
-                ['catch'](function(error){});
+            if ($scope.checkCert) {
+                $scope.insertItem('com/mail', 'congratulation', $scope.user, false)
+                    .then(function(data){})
+                    ['catch'](function(error){});
+            }
         };
 
         // 이전 단계 클릭
@@ -538,7 +547,7 @@ define([
                 $timeout(function() { $scope.click_focus('user_id')}, 100);
             } else if ($scope.step == '02') {
                 $scope.saveUser();
-
+                $scope.finishUser();
 //                if (!$scope.checkSave) {
 //                    dialogs.notify('알림', '입력 정보를 다시 확인해 주세요.', {size: 'md'});
 //                    return;
@@ -560,7 +569,7 @@ define([
                     $scope.step = '04';
                 }
             } else if ($scope.step == '04') {
-                $scope.finishUser();
+
             }
         };
 
