@@ -71,9 +71,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
             ga('send', 'pageview', $location.path());
         });
 
-        $rootScope.$on('$routeChangeStart', function(event, next, current) {
-            $templateCache.remove(current.templateUrl);
-        });
+//        $rootScope.$on('$routeChangeStart', function(event, next, current) {
+//            $templateCache.remove(current.templateUrl);
+//        });
     });
 
     return app;

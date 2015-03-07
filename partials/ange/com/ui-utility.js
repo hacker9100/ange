@@ -43,6 +43,10 @@ define([
             $location.url('myange/baby');
         };
 
+        $scope.click_myangeMileage = function () {
+            $location.url('myange/mileage');
+        };
+
         $scope.click_myangeWriting = function () {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
                 dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
@@ -170,6 +174,9 @@ define([
                 $scope.logout($rootScope.uid).then( function(data) {
                     dialogs.notify('알림', "로그아웃 되었습니다.", {size: 'md'});
 
+                    if ($scope.channel.CHANNEL_NO == 4 ) {
+                        $location.path("/main");
+                    }
 //                    $location.url('main');
                 });
             }

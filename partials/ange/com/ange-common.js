@@ -249,7 +249,7 @@ define([
                 $rootScope.user_gb = null;
                 $rootScope.support_no = null;
 
-                if ($scope.channel.NO == 4 ) {
+                if ($scope.channel.CHANNEL_NO == 4 ) {
                     $location.path("/main");
                     throw( new String('세션이 만료되었습니다. 다시 로그인 해 주세요.'));
                 }
@@ -607,6 +607,7 @@ define([
             if (item.ada_url != undefined && item.ada_url != '') {
                 $scope.adBannerUrl(item.ada_idx, 1)
                     .then(function(data){
+                        alert(2)
                         if ($rootScope.uid != '' && $rootScope.uid != null) {
                             $scope.addMileage('BANNER', null);
                         }

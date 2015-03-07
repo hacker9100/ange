@@ -139,7 +139,7 @@ require.config({
             deps: ['angular', 'angular-translate', 'ui-bootstrap']
         },
         'slick-carousel':{
-            deps: ['jquery']
+            deps: ['jquery', 'angular']
         },
         'ckeditor-jquery':{
             deps:['jquery','ckeditor-core']

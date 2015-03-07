@@ -1124,6 +1124,7 @@ img.userlog_login_pic {
 
 .user_mileage {
     float: right;
+    cursor: pointer;
 }
 
 .babyinfo {
