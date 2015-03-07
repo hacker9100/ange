@@ -152,6 +152,10 @@ switch ($_method) {
 
         } else if ($_type == "samplepackCheck") {
 
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $sql = "SELECT COUNT(*) AS COMP_CNT
                  FROM adm_history_join
                  WHERE ada_idx = ".$_search[ada_idx]."
@@ -290,6 +294,10 @@ switch ($_method) {
             $no = $_d->mysql_insert_id;
 
         }else if($_type == "item") {
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             $upload_path = '../../../upload/files/';
             $file_path = '/storage/ad/';

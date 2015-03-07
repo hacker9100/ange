@@ -67,6 +67,19 @@ define([
         $scope.init = function (){
             $scope.nextclick = true;
             $scope.preclick = false;
+
+            $scope.search.ada_idx = $stateParams.id;
+            $scope.getList('ange/poll', 'check', {}, $scope.search, false)
+                .then(function(data){
+                    var answer_cnt = data[0].POLL_ANSWER_CNT;
+
+                    if (answer_cnt == 1) {
+                        $scope.comp_yn = 'Y';
+                    }else{
+                        $scope.comp_yn = 'N';
+                    }
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.next_click = function(){
@@ -361,62 +374,6 @@ define([
             }
         };
 
-//        $scope.CheckForm = function(p_obj){
-//
-//            var t_pattern = { 'id':/^[a-zA-Z0-9_]+$/,'email':/^[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[@]{1}[-A-Za-z0-9_]+[-A-Za-z0-9_.]*[.]{1}[A-Za-z]{2,5}$/,'number':/^[0-9]+$/ };
-//            console.log(document.testform);
-//
-//            for(var t_cnt=0; t_cnt< document.testform.length; t_cnt++){
-//
-//                var t_obj = p_obj.elements[t_cnt];
-//
-//                // 유효한 항목인지 확인
-//                if (typeof t_obj!='undefined' && t_obj.name!=''){
-//
-//                    // 검사 대상인지 확인
-//                    if (t_obj.title!='' &&  t_obj.type!='button' && t_obj.type!='submit' ){
-//                        var t_item = t_obj.title.split(':');
-//
-//                        if (t_obj.type=='radio' || t_obj.type=='checkbox'){
-//
-//                            var t_value = $('input[name='+t_obj.name+']:checked').val();
-//
-//                            if ( !t_value ){
-//                                alert(t_item[0]+'란은 꼭 선택하셔야만 합니다.');
-//                                t_obj.focus();
-//                                return false;
-//                            }
-//                        }
-//
-//                        if (t_obj.type=='text' || t_obj.type=='password' || t_obj.type=='file' ){
-//
-//                            if (!t_obj.value){
-//                                alert(t_item[0]+'란은 꼭 입력하셔야만 합니다.');
-//                                t_obj.focus();
-//                                return false;
-//                            }
-//
-//                            if (t_obj.alt!='' && Number(t_obj.alt)>t_obj.value.length ){
-//                                alert(t_item[0]+'란에는 최소 '+t_obj.alt+'자 이상 입력하셔야만 합니다.');
-//                                t_obj.focus();
-//                                return false;
-//                            }
-//
-//                            if (t_item.length>1) {
-//                                alert(t_pattern[t_item[1]].test(t_obj.value));
-//                                if (t_pattern[t_item[1]].test(t_obj.value)==false) {
-//                                    alert(t_item[0]+'란에 적절하지 않은 값이 입력되었습니다.');
-//                                    t_obj.focus();
-//                                    return false;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            return true;
-//        }
-
         function CheckForm(p_obj){
 
             //alert(p_obj.name);
@@ -519,6 +476,35 @@ define([
 
 
 
+            $rootScope.jsontext2 = new Array();
+            var poll_length = $('.poll_no').length;
+            console.log(poll_length);
+
+            //$rootScope.jsontext2 = new Array();
+            for(var i=1; i<= poll_length; i++){
+
+                if(document.getElementById("answer"+i).type == 'radio'){
+                    $rootScope.jsontext2[i] = '"'+i+'":"'+$("input[name=answer"+i+"]:checked").val() +'"';
+                }else if(document.getElementById("answer"+i).type == 'checkbox'){
+                    var checkvalue = '';
+                    $("input[name=answer"+i+"]:checked").each(function() {
+                        checkvalue += $(this).val() + ';';
+                    });
+                    $rootScope.jsontext2[i] = '"'+i+'":"'+ checkvalue+'"';
+                }else if(document.getElementById("answer"+i).type == 'text'){
+                    $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                }else if(document.getElementById("answer"+i).type == 'textarea'){
+                    $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                }
+
+            }
+
+            $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+
+            $scope.item.ANSWER = item.ANSWER.replace(/{,/ig, '{');
+            console.log($scope.item.ANSWER);
+
+
             $scope.getList('ange/poll', 'check', {}, $scope.search, false)
                 .then(function(data){
                     var answer_cnt = data[0].POLL_ANSWER_CNT;
@@ -609,6 +595,7 @@ define([
                         }
 
                         $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                        $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
                         console.log($scope.item.ANSWER);
 
                         $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue

@@ -455,65 +455,92 @@ define([
                     if(comp_cnt == 0){
 
                         if($scope.item.ada_que_type == 'question'){ // 문답일때
-                            var answer = [];
-                            $scope.item.QUE_SHORT_ANSWER = ''
-                            $("input[name='answer[]'").each(function(index, element) {
-
-                                $scope.item.QUE_SHORT_ANSWER = $(element).val();
-                                answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-                            })
-
-                            $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
-
-                                console.log($(element).val());
-
-                                $scope.item.QUE_LONG_ANSWER = $(element).val();
-                                answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-                            })
-
-                            var values = {};
-
-                            $('.poll_select_radio:checked').each(function() {
-
-                                if(this.value == undefined){
-                                    values[this.name] = "";
-                                }
-
-                                if(this.value == "기타"){
-                                    console.log($("#etc_answer").val());
-                                    values[this.name] = $("input[name='etc_answer']").val();
-                                }
-
-                                values[this.name] = this.value;
-                                answer.push(values[this.name]); // 객관식
-                                console.log(this.value);
-                            });
-
-                            var check_answer = ''
-                            $('.poll_select_checkbox:checked').each(function() {
-
-                                values[this.name] = ','
-                                if(this.value == undefined){
-                                    values[this.name] = "";
-                                }
-                                values[this.name] += this.value;
-
-                                check_answer += "," + this.value;
-                                //answer.push(check_answer); // 객관식
-
-                                console.log(check_answer);
-                            });
-                            if(check_answer != ''){
-                                answer.push(check_answer);
-                            }
-
+//                            var answer = [];
+//                            $scope.item.QUE_SHORT_ANSWER = ''
+//                            $("input[name='answer[]'").each(function(index, element) {
+//
+//                                $scope.item.QUE_SHORT_ANSWER = $(element).val();
+//                                answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
+//                            })
+//
+//                            $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
+//
+//                                console.log($(element).val());
+//
+//                                $scope.item.QUE_LONG_ANSWER = $(element).val();
+//                                answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
+//                            })
+//
+//                            var values = {};
+//
+//                            $('.poll_select_radio:checked').each(function() {
+//
+//                                if(this.value == undefined){
+//                                    values[this.name] = "";
+//                                }
+//
+//                                if(this.value == "기타"){
+//                                    console.log($("#etc_answer").val());
+//                                    values[this.name] = $("input[name='etc_answer']").val();
+//                                }
+//
+//                                values[this.name] = this.value;
+//                                answer.push(values[this.name]); // 객관식
+//                                console.log(this.value);
+//                            });
+//
+//                            var check_answer = ''
+//                            $('.poll_select_checkbox:checked').each(function() {
+//
+//                                values[this.name] = ','
+//                                if(this.value == undefined){
+//                                    values[this.name] = "";
+//                                }
+//                                values[this.name] += this.value;
+//
+//                                check_answer += "," + this.value;
+//                                //answer.push(check_answer); // 객관식
+//
+//                                console.log(check_answer);
+//                            });
+//                            if(check_answer != ''){
+//                                answer.push(check_answer);
+//                            }
+//
+//                            $rootScope.jsontext2 = new Array();
+//
+//                            $("input[name='index[]'").each(function(index, element) {
+//                                $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
+//                            })
+//
+//                            $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+//                            console.log($scope.item.ANSWER);
                             $rootScope.jsontext2 = new Array();
 
-                            $("input[name='index[]'").each(function(index, element) {
-                                $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-                            })
+                            var poll_length = $('.poll_question_no').length;
+                            console.log(poll_length);
+
+
+                            for(var i=1; i<=poll_length; i++){
+
+                                if(document.getElementById("answer"+i).type == 'radio'){
+                                    $rootScope.jsontext2[i] = '"'+i+'":"'+$("input[name=answer"+i+"]:checked").val() +'"';
+                                }else if(document.getElementById("answer"+i).type == 'checkbox'){
+                                    var checkvalue = '';
+                                    $("input[name=answer"+i+"]:checked").each(function() {
+                                        checkvalue += $(this).val() + ';';
+                                        console.log(checkvalue);
+                                    });
+                                    $rootScope.jsontext2[i] = '"'+i+'":"'+ checkvalue+'"';
+                                }else if(document.getElementById("answer"+i).type == 'text'){
+                                    $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                                }else if(document.getElementById("answer"+i).type == 'textarea'){
+                                    $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                                }
+                            }
 
                             $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                            $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
                             console.log($scope.item.ANSWER);
 
                             $scope.insertItem('ange/comp', 'item', $scope.item, false)
@@ -582,6 +609,36 @@ define([
 
                             });
 
+                            if($scope.item.QUE != undefined ){
+                                $rootScope.jsontext2 = new Array();
+
+                                var poll_length = $('.poll_join_no').length;
+                                console.log(poll_length);
+
+
+                                for(var i=1; i<=poll_length; i++){
+
+                                    if(document.getElementById("answer"+i).type == 'radio'){
+                                        $rootScope.jsontext2[i] = '"'+i+'":"'+$("input[name=answer"+i+"]:checked").val() +'"';
+                                    }else if(document.getElementById("answer"+i).type == 'checkbox'){
+                                        var checkvalue = '';
+                                        $("input[name=answer"+i+"]:checked").each(function() {
+                                            checkvalue += $(this).val() + ';';
+                                            console.log(checkvalue);
+                                        });
+                                        $rootScope.jsontext2[i] = '"'+i+'":"'+ checkvalue+'"';
+                                    }else if(document.getElementById("answer"+i).type == 'text'){
+                                        $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                                    }else if(document.getElementById("answer"+i).type == 'textarea'){
+                                        $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                                    }
+                                }
+
+                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                                $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
+                                console.log($scope.item.ANSWER);
+                            }
+
                             $scope.insertItem('ange/comp', 'item', $scope.item, false)
                                 .then(function(){
 
@@ -608,68 +665,37 @@ define([
                             $scope.item.FILE = $scope.file;
 
                             if($scope.item.QUE != ''){
-                                var answer = [];
-                                $scope.item.QUE_SHORT_ANSWER = ''
-                                $("input[name='answer[]'").each(function(index, element) {
-
-                                    $scope.item.QUE_SHORT_ANSWER = $(element).val();
-                                    answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-                                })
-
-                                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
-
-                                    console.log($(element).val());
-
-                                    $scope.item.QUE_LONG_ANSWER = $(element).val();
-                                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-                                })
-
-                                var values = {};
-
-                                $('.poll_select_radio:checked').each(function() {
-
-                                    if(this.value == undefined){
-                                        values[this.name] = "";
-                                    }
-
-                                    if(this.value == "기타"){
-                                        console.log($("#etc_answer").val());
-                                        values[this.name] = $("input[name='etc_answer']").val();
-                                    }
-
-                                    values[this.name] = this.value;
-                                    answer.push(values[this.name]); // 객관식
-                                    console.log(this.value);
-                                });
-
-                                var check_answer = ''
-                                $('.poll_select_checkbox:checked').each(function() {
-                                    values[this.name] = ','
-                                    if(this.value == undefined){
-                                        values[this.name] = "";
-                                    }
-                                    values[this.name] += this.value;
-
-                                    check_answer += "," + this.value;
-
-                                    console.log(check_answer);
-                                });
-                                if(check_answer != ''){
-                                    answer.push(check_answer);
-                                }
-
                                 $rootScope.jsontext2 = new Array();
 
-                                $("input[name='index[]'").each(function(index, element) {
-                                    $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-                                })
+                                var poll_length = $('.poll_upload_no').length;
+                                console.log(poll_length);
 
-                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+','+$scope.file.name+'}';
+
+                                for(var i=1; i<=poll_length; i++){
+
+                                    if(document.getElementById("answer"+i).type == 'radio'){
+                                        $rootScope.jsontext2[i] = '"'+i+'":"'+$("input[name=answer"+i+"]:checked").val() +'"';
+                                    }else if(document.getElementById("answer"+i).type == 'checkbox'){
+                                        var checkvalue = '';
+                                        $("input[name=answer"+i+"]:checked").each(function() {
+                                            checkvalue += $(this).val() + ';';
+                                            console.log(checkvalue);
+                                        });
+                                        $rootScope.jsontext2[i] = '"'+i+'":"'+ checkvalue+'"';
+                                    }else if(document.getElementById("answer"+i).type == 'text'){
+                                        $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                                    }else if(document.getElementById("answer"+i).type == 'textarea'){
+                                        $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                                    }
+                                }
+
+                                var last_poll_length = 0;
+                                last_poll_length = poll_length+1;
+                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+',"'+last_poll_length+'":"'+ $scope.file.name+'"'+'}';
+                                $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
                                 console.log($scope.item.ANSWER);
 
                             }else{
-
-
                                 $rootScope.jsontext3 = '"1":"'+ $scope.file.name+'"';
                                 $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
                             }

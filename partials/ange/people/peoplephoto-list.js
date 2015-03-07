@@ -93,6 +93,7 @@ define([
                 })
                 ['catch'](function(error){});
 
+            $scope.search.FILE = true;
             // 게시글 전체 건수
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){

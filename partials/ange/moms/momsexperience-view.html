@@ -110,10 +110,7 @@
                                 </div>
                             </div><!-- /.container -->
 
-
-
-
-                                <div id="moms_state" ng-show="item.ada_que_type != 'reply' && uid && showForm == 'compForm'" class="moms_state" style="padding-top:20px;">
+                                <div id="moms_state" ng-show="item.ada_que_type != 'reply' && uid && showForm == 'compForm' && comp_yn == 'N'" class="moms_state" style="padding-top:20px;">
 
                                 <!--<div ng-if="item.ada_que_type == 'join'"  class="moms_form" style="margin:0px; display:block;" ng-model="item">-->
 
@@ -132,12 +129,7 @@
                                             </div>
                                         </div>
 
-
-
                                         <div class="moms_form_bodywrap">
-
-
-
                                             <table id="moms_form_table" class="table" style="float:left; margin-bottom: 0px;">
                                                 <tbody>
                                                 <tr>
@@ -433,12 +425,12 @@
                                 <div ng-if="item.ada_que_type == 'reserve'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
 
                                     <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                                        <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                        <input type="hidden" name="index[]"  class="poll_reserve_no" value="{{query.index}}"/>
                                         <dt>{{query.title}}</dt>
                                         <dd ng-if="query.type == '1'">
                                             <div class="radio-inline">
                                                 <label>
-                                                    <input  type="text" title="답변" name="answer[]" style="width: 250px;"/>
+                                                    <input  type="text" title="답변" name="answer{{query.index}}" id="answer{{query.index}}" style="width: 250px;"/>
                                                     &nbsp;&nbsp;&nbsp;
                                                     <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
                                                 </label>
@@ -447,14 +439,14 @@
                                         <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
                                             <div class="radio-inline">
                                                 <label>
-                                                    <input type="radio" title="문항" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                    <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                 </label>
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
                                             <div class="radio-inline">
                                                 <label>
-                                                    <input type="radio" title="문항" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                    <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                 </label>
                                             </div>
                                             <label>
@@ -464,7 +456,7 @@
                                         <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
                                             <div class="radio-inline">
                                                 <label>
-                                                    <input type="checkbox" title="문항" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                    <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                 </label>
                                             </div>
                                         </dd>
@@ -472,7 +464,7 @@
                                             <div class="radio-inline">
                                                 <label>
                                                     <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                    <textarea name="long_answer[]" title="장문" class="form-control" rows="4" style="resize: none;"></textarea>
+                                                    <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="4" style="resize: none;"></textarea>
                                                 </label>
                                             </div>
                                         </dd>
@@ -484,25 +476,25 @@
                                 <div ng-if="item.ada_que_type == 'question'" ng-model="item" class="moms_form" style="margin:0px; display:block;">
 
                                     <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                                        <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                        <input type="hidden" name="index[]"  class="poll_question_no" value="{{query.index}}"/>
 
                                         <dt style="line-height: 24px; margin-bottom:10px;">{{query.title}}</dt>
 
                                         <dd ng-if="query.type == '1'">
                                             <div class="form-group">
-                                                <input class="col-xs-12 form-control" title="답변" type="text" name="answer[]" placeholder="질문에 대한 대답" />
+                                                <input class="col-xs-12 form-control" title="답변" type="text" name="answer{{query.index}}" id="answer{{query.index}}" placeholder="질문에 대한 대답" />
                                                 &nbsp;&nbsp;&nbsp;
                                                 <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
                                             <div class="form-group" style="padding-left:15px;">
-                                                <input type="radio" title="문항" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
                                             <div class="form-group" style="padding-left:15px;">
-                                                <input type="radio" title="문항" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                             </div>
 
                                             <input class="form-control" type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="margin-left:15px; width: 250px;"/>
@@ -510,13 +502,13 @@
                                         </dd>
                                         <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
                                             <div class="form-group">
-                                                <input type="checkbox" title="문항" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '4'">
                                             <div class="form-group" style="padding:0 15px;">
                                                 <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                <textarea title="장문" name="long_answer[]" class="form-control" rows="6" style="resize: none;"></textarea>
+                                                <textarea title="장문" name="answer{{query.index}}" id="answer{{query.index}}" class="form-control" rows="6" style="resize: none;"></textarea>
                                             </div>
                                         </dd>
 
@@ -525,25 +517,25 @@
 
                                 <div ng-if="item.ada_que_type == 'join'"  ng-model="item" class="moms_form" style="margin:10px; display:block;">
                                     <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                                        <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                        <input type="hidden" name="index[]"  class="poll_join_no" value="{{query.index}}"/>
 
                                         <dt style="line-height: 24px; margin-bottom:10px;">{{query.title}}</dt>
 
                                         <dd ng-if="query.type == '1'">
                                             <div class="form-group">
-                                                <input class="col-xs-12 form-control" type="text" title="답변" name="answer[]" placeholder="질문에 대한 대답" />
+                                                <input class="col-xs-12 form-control" type="text" title="답변" name="answer{{query.index}}" id="answer{{query.index}}" placeholder="질문에 대한 대답" />
                                                 &nbsp;&nbsp;&nbsp;
                                                 <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
                                             <div class="form-group" style="padding-left:15px;">
-                                                <input type="radio" title="문항" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
                                             <div class="form-group" style="padding-left:15px;">
-                                                <input type="radio"  title="문항" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <input type="radio"  title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                             </div>
 
                                                 <input class="form-control" type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="margin-left:15px; width: 250px;"/>
@@ -551,13 +543,13 @@
                                         </dd>
                                         <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
                                             <div class="form-group">
-                                                <input type="checkbox" title="문항" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '4'">
                                             <div class="form-group" style="padding:0 15px;">
                                                 <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                <textarea name="long_answer[]" title="장문" class="form-control" rows="6" style="resize: none;"></textarea>
+                                                <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="6" style="resize: none;"></textarea>
                                             </div>
                                         </dd>
                                     </dl>
@@ -567,25 +559,25 @@
                                 <div ng-if="item.ada_que_type == 'upload'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
 
                                     <dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                                        <input ng-show="query.type != '1'" type="hidden" name="index[]" class="poll_query_no"/>
+                                        <input type="hidden" name="index[]"  class="poll_upload_no" value="{{query.index}}"/>
 
                                         <dt style="line-height: 24px; margin-bottom:10px;">{{query.title}}</dt>
 
                                         <dd ng-if="query.type == '1'">
                                             <div class="form-group">
-                                                <input class="col-xs-12 form-control" title="답변" type="text" name="answer[]" placeholder="질문에 대한 대답" />
+                                                <input class="col-xs-12 form-control" title="답변" type="text" name="answer{{query.index}}" id="answer{{query.index}}" placeholder="질문에 대한 대답" />
                                                 &nbsp;&nbsp;&nbsp;
                                                 <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
                                             <div class="form-group" style="padding-left:15px;">
-                                                <input type="radio" title="문항" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
                                             <div class="form-group" style="padding-left:15px;">
-                                                <input type="radio" title="문항" id="selectanswer2{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                             </div>
 
                                             <input class="form-control" type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="margin-left:15px; width: 250px;"/>
@@ -593,13 +585,13 @@
                                         </dd>
                                         <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
                                             <div class="form-group">
-                                                <input type="checkbox" title="문항" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                             </div>
                                         </dd>
                                         <dd ng-if="query.type == '4'">
                                             <div class="form-group" style="padding:0 15px;">
                                                 <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                <textarea name="long_answer[]" title="장문" class="form-control" rows="6" style="resize: none;"></textarea>
+                                                <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="6" style="resize: none;"></textarea>
                                             </div>
                                         </dd>
                                     </dl>
@@ -748,86 +740,22 @@
                             </div>  <!-- /.moms_review -->
 
 
-                        <!-- 삭제 예정 -->
-                        <!--<div ng-model="item" class="sub_contents_body">-->
-
-                        <!--<div class="container-fluid peopleboard_view_commentwrap">-->
-                        <!--<div class="row peopleboard_view_commenttop">-->
-                        <!--<div class="col-xs-12 peopleboard_view_commenttitle">-->
-                        <!--<span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">댓글등록</span>-->
-                        <!--&lt;!&ndash;<small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>&ndash;&gt;-->
-                        <!--</div>&lt;!&ndash; /.col-xs-12&ndash;&gt;-->
-                        <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
-
-                        <!--<div class="row peopleboard_view_commentbox">-->
-                        <!--<div class="col-xs-10 peopleboard_view_text">-->
-                        <!--<textarea ng-model="item.COMMENT" ng-disabled="uid == null || uid == '' ? true : false" class="form-control" rows="4" style="resize: none;"></textarea>-->
-                        <!--</div>&lt;!&ndash; /.col-xs-10&ndash;&gt;-->
-                        <!--<div class="col-xs-2 peopleboard_view_btns">-->
-
-                        <!--<span>(100자 이내)</span>-->
-                        <!--<a class="reply_submit" ng-click="click_savePeopleBoardComment();">댓글등록</a>-->
-
-                        <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
-                        <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
-                        <!--</div>&lt;!&ndash; /.container &ndash;&gt;-->
-
-
-                        <!--<div class="container-fluid people_view_replywrap" >-->
-                        <!--<div class="row">-->
-
-                        <!--<div class="col-xs-12 people_view_replys" ng-repeat="item in replyList">-->
-                        <!--<dl class="dl-horizontal" >-->
-                        <!--<dt>{{item.NICK_NM}}</dt>-->
-                        <!--<dd><div class="people_view_replys_date">{{item.REG_DT}}</div></dd>-->
-                        <!--<dd style="margin:0px;">-->
-                        <!--{{item.COMMENT}}-->
-                        <!--</dd>-->
-                        <!--<dd style="margin:0px;">-->
-                        <!--<a ng-show="uid == item.REG_UID" ng-click="showCommentDetails = ! showCommentDetails">수정</a>-->
-                        <!--<a ng-show="uid == item.REG_UID" ng-click="click_deleteReply(item.NO);">삭제</a>-->
-                        <!--<a ng-click="click_blind(item.NO);" ng-show="item.BLIND_FL == 'N'" class="table_red">블라인드</a>-->
-                        <!--<a ng-click="click_blind_clear(item.NO);" ng-show="item.BLIND_FL == 'Y'" class="table_red">블라인드해제</a>-->
-                        <!--</dd>-->
-
-                        <!--<p style="font-size:0.86em; margin:4px 0 0 0; "  ng-class="{ 'hidden': ! showCommentDetails }">-->
-                        <!--&nbsp;&nbsp;&nbsp;<input type="text" ng-model="item.UPDATE_COMMENT" style="width:60%;"/>&nbsp;<a ng-click="click_updateReply(item.NO, item.UPDATE_COMMENT);">수정</a>-->
-                        <!--</p>-->
-                        <!--</dl>-->
-                        <!--</div>&lt;!&ndash; /.people_view_replys&ndash;&gt;-->
-
-                        <!--<div class="col-xs-12 people_view_replys" data-ng-show="replyList == ''">-->
-                        <!--<dl class="dl-horizontal" >-->
-                        <!--<dt></dt>-->
-                        <!--<dd><div class="people_view_replys_date"></div></dd>-->
-                        <!--<dd style="margin:0px;">-->
-                        <!--댓글이 없습니다.-->
-                        <!--</dd>-->
-                        <!--</dl>-->
-                        <!--</div>-->
-
-                        <!--<nav class="text-center">-->
-                        <!--<pagination boundary-links="true" total-items="search.TOTAL_COUNT" ng-model="search.PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>-->
-                        <!--</nav>&lt;!&ndash; /.Paging&ndash;&gt;-->
-
-                        <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
-                        <!--</div>&lt;!&ndash; /.container &ndash;&gt;-->
-
-                        <!--</div>-->
-
-
-                            <div class="moms_form_foot" ng-show="uid && item.ada_que_type != 'none'" style="border-bottom:2px solid #111;">
+                            <div class="moms_form_foot" ng-show="!uid && showForm == 'compForm'" style="background-color:#F8F8F8;">
+                                <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">로그인 후에 응모가 가능합니다.</div>
+                            </div> <!-- /.moms_state -->
+                            <div class="moms_form_foot" ng-show="uid && showForm == 'compForm' && comp_yn == 'Y'" style="background-color:#F8F8F8;">
+                                <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">참여한 체험단입니다.</div>
+                            </div>
+                            <div class="moms_form_foot" ng-show="showForm == 'compForm' && uid && item.ada_que_type != 'none'" style="border-bottom:2px solid #111;">
                                 <div class="moms_form_footbtn">
-                                    <button ng-click="click_momsexperiencelist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>취소</button>
-                                    <button ng-click="click_momsexperiencecomp();" ng-hide="item.ada_que_type == 'none' || item.ada_que_type == 'reply'" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
+                                    <button ng-click="click_momsexperiencelist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>목록</button>
+                                    <button ng-click="click_momsexperiencecomp();" ng-hide="item.ada_que_type == 'none' || item.ada_que_type == 'reply'"  class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
                                     <!--&lt;!&ndash;<button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>&ndash;&gt;-->
                                 </div>
                             </div> <!-- /.moms_state -->
                         </form>
-                            <div class="moms_form_foot" ng-show="!uid" style="background-color:#F8F8F8;">
-                                <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">로그인 후에 응모가 가능합니다.</div>
-                            </div> <!-- /.moms_state -->
-                    <!--</form>-->
+
+                        <!--</form>-->
 
 
                         </div><!-- /.sub_contents_wrap -->

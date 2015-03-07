@@ -38,7 +38,8 @@
                                         <div class="col-xs-3 peoplepoll_view_btn" style="padding:0;">
 
                                             <div style="float:right; width:120px; height:45px; margin:0px; padding:0px; text-align:right;">
-                                                <button type="button" class="btn btn-xs btn-info" style="margin:18px 5px 0 0;" ng-click="showPollView = ! showPollView"><span class="glyphicon glyphicon glyphicon-check"></span> 설문결과</button>
+                                                <button type="button" ng-show="showPollView == true" class="btn btn-xs btn-info" style="margin:18px 5px 0 0;" ng-click="showPollView = ! showPollView"><span class="glyphicon glyphicon glyphicon-check"></span> 설문결과</button>
+                                                <button type="button" ng-show="showPollView == false" class="btn btn-xs btn-info" style="margin:18px 5px 0 0;" ng-click="showPollView = ! showPollView"><span class="glyphicon glyphicon glyphicon-check"></span> 설문하기</button>
                                                 <!--<button type="button" class="btn btn-xs btn-info" style="margin:18px 5px 0 0;" ng-click="showPoll = ! showPoll"><span class="glyphicon glyphicon glyphicon-check"></span> 설문조사</button>-->
                                             </div>
 
@@ -60,12 +61,13 @@
                                             <div style="position:absolute; top:-4px; right:-3px;"><img src="/imgs/ange/peoplepoll_bg_righttop.jpg" /></div>
 
                                             <div class="peoplepoll_view_title">
-                                                    <span class="peoplepoll_view_title_qt">
-                                                        <span class="icon_qt_left"></span>
-                                                        <span style="font-weight:bold">{{item.ada_title}}</span>
-                                                        <span class="icon_qt_right"></span>
-                                                    </span>
+                                                <span class="peoplepoll_view_title_qt">
+                                                    <span class="icon_qt_left"></span>
+                                                    <span style="font-weight:bold">{{item.ada_title}}</span>
+                                                    <span class="icon_qt_right"></span>
+                                                </span>
                                                 <p ng-bind-html="renderHtml"></p>
+                                                <span ng-show="comp_yn == 'Y'" style="color: red; text-align: left; font-weight: bold;">참여한 설문조사 입니다.</span>
                                             </div>
 
                                         </div><!-- /.col-01-->
@@ -79,14 +81,14 @@
                                                         <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
                                                             <div class="radio-inline">
                                                                 <label>
-                                                                    <input type="radio" id="answer{{query.index}}" class="poll" name="answer{{query.index}}" title="문항" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                                    <input type="radio" id="answer{{query.index}}" class="poll" ng-disabled="comp_yn == 'Y'" name="answer{{query.index}}" title="문항" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                                 </label>
                                                             </div>
                                                         </dd>
                                                         <dd ng-if="query.type == '1'">
                                                             <div class="radio-inline">
                                                                 <label>
-                                                                    <input  type="text" name="answer{{query.index}}" id="answer{{query.index}}" class="poll" title="답변" style="width: 250px;"/>
+                                                                    <input  type="text" name="answer{{query.index}}" ng-disabled="comp_yn == 'Y'" id="answer{{query.index}}" class="poll" title="답변" style="width: 250px;"/>
                                                                     &nbsp;&nbsp;&nbsp;
                                                                     <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
                                                                 </label>
@@ -95,21 +97,21 @@
                                                         </dd>
                                                         <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
                                                             <div class="form-group" style="padding-left:15px;">
-                                                                <input type="radio" name="answer{{query.index}}" id="answer{{query.index}}" class="poll_radio{{query.index}}"  title="문항" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                                <input type="radio" name="answer{{query.index}}" ng-disabled="comp_yn == 'Y'" id="answer{{query.index}}" class="poll_radio{{query.index}}"  title="문항" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                             </div>
 
-                                                            <input class="form-control" type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="margin-left:15px; width: 250px;"/>
+                                                            <input class="form-control" type="text" ng-disabled="comp_yn == 'Y'" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="margin-left:15px; width: 250px;"/>
 
                                                         </dd>
                                                         <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
                                                             <div class="form-group poll_checkbox">
-                                                                <input type="checkbox" name="answer{{query.index}}" id="answer{{query.index}}" class="poll_check{{query.index}}" title="문항" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                                <input type="checkbox" name="answer{{query.index}}" ng-disabled="comp_yn == 'Y'" id="answer{{query.index}}" class="poll_check{{query.index}}" title="문항" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
                                                             </div>
                                                         </dd>
                                                         <dd ng-if="query.type == '4'">
                                                             <div class="form-group" style="padding:0 15px;">
                                                                 <!--<input ="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                                <textarea name="long_answer[]" name="answer{{query.index}}" id="answer{{query.index}}" class="form-control answer poll" title="장문" rows="6" style="resize: none;"></textarea>
+                                                                <textarea name="long_answer[]" name="answer{{query.index}}" ng-disabled="comp_yn == 'Y'" id="answer{{query.index}}" class="form-control answer poll" title="장문" rows="6" style="resize: none;"></textarea>
                                                             </div>
                                                         </dd>
                                                     </dl>

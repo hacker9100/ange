@@ -340,7 +340,7 @@
                 }
             }else if($_type == 'pre') {
 
-                $sql = "SELECT NO, SUBJECT, BLIND_FL, BOARD_ST FROM ANGE_REVIEW WHERE NO < ".$_search[KEY]." AND BOARD_ST IS NULL OR BOARD_ST <> 'D' AND TARGET_GB='".$_search[TARGET_GB]."' ORDER BY  NO DESC LIMIT 1";
+                $sql = "SELECT NO, SUBJECT, BLIND_FL, BOARD_ST FROM ANGE_REVIEW WHERE NO < ".$_search[KEY]." AND BOARD_ST IS NULL  AND TARGET_GB='".$_search[TARGET_GB]."' ORDER BY  NO DESC LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -351,7 +351,7 @@
                 }
             }else if($_type == 'next') {
 
-                $sql = "SELECT NO, SUBJECT, BLIND_FL, BOARD_ST FROM ANGE_REVIEW WHERE NO > ".$_search[KEY]." AND BOARD_ST IS NULL OR BOARD_ST <> 'D' AND  TARGET_GB='".$_search[TARGET_GB]."' ORDER BY NO LIMIT 1";
+                $sql = "SELECT NO, SUBJECT, BLIND_FL, BOARD_ST FROM ANGE_REVIEW WHERE NO > ".$_search[KEY]." AND BOARD_ST IS NULL  AND  TARGET_GB='".$_search[TARGET_GB]."' ORDER BY NO LIMIT 1";
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -906,9 +906,16 @@
             $_d->sql_beginTransaction();
 
             //$sql = "DELETE FROM ANGE_REVIEW WHERE NO = ".$_key;
-            $sql = "UPDATE ANGE_REVIEW SET
-                 BOARD_ST = 'D'
-                 WHERE NO = ".$_key;
+            $sql = "INSERT INTO ANGE_REVIEW_DEL SELECT * FROM ANGE_REVIEW WHERE NO = ".$_key;
+
+
+            $_d->sql_query($sql);
+
+            $sql = "DELETE FROM ANGE_REVIEW WHERE NO = ".$_key;
+
+//                $sql = "UPDATE COM_BOARD SET
+//                 BOARD_ST = 'D'
+//                 WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
 

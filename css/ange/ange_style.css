@@ -799,6 +799,7 @@ body {
     width:65px;
     height:29px;
     background-position: left top;
+    background-size: 100%;
     background-repeat: no-repeat;
     margin:0;
     padding:0;

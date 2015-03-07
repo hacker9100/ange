@@ -53,7 +53,7 @@ define([
             /*            $scope.search.SORT = 'NOTICE_FL';
              $scope.search.ORDER = 'DESC'*/
 
-            $scope.getList('com/scrap', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('com/scrap', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
