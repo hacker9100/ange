@@ -216,7 +216,7 @@ define([
             templateUrl: function(element, attr) {
                 return '/partials/ange/main/mini-story-list.html';
             },
-            controller: ['$scope', '$attrs', '$location', 'CONSTANT', function($scope, $attrs, $location, CONSTANT) {
+            controller: ['$scope', '$attrs', '$location', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $timeout, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -281,7 +281,7 @@ define([
                 $scope.click_nextCategory = function () {
                     angular.element('#category').slickNext();
                 }
-
+/*
                 $scope.click_selectCategory = function (category, idx) {
                     $scope.search.CATEGORY = [];
 
@@ -290,7 +290,7 @@ define([
 
                     $scope.getMiniList();
                 }
-
+*/
                 // 리스트 선택
                 $scope.click_showView = function (key) {
                     $location.url($scope.option.url + '/' + key);
@@ -310,6 +310,27 @@ define([
                             $scope.list = data;
                         })
                      ['catch'](function(error){$scope.list = [];});
+                };
+
+                // 카테고리 조회
+                $scope.getCategoryList = function () {
+                    $timeout(function() {
+                        for (var i in $scope.category_b) {
+                            // 슬라이드를 추가해 줌
+                            angular.element('#category').slickAdd('<div><li ng-class="cateIdx == '+i+' ? \'foucs\' : \'\'"><a class="rollcate_link">'+$scope.category_b[i].CATEGORY_NM+'</a></li></div>');
+                            //angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width:74px;"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">초기(4-6)</span><img src="imgs/ange/temp/story_food_01.jpg" /></div><span class="mini_story_contentbox_title">단호박 미음</span></div>');
+                        }
+                    }, 500);
+
+                    angular.element('#category').click(function() {
+                        var idx = angular.element('#category').slickCurrentSlide();
+
+                        $scope.search.CATEGORY = [];
+                        $scope.cateIdx = idx;
+                        $scope.search.CATEGORY.push($scope.category_b[idx]);
+
+                        $scope.getMiniList();
+                    });
                 };
 
                 // 리스트 조회
@@ -347,13 +368,13 @@ define([
 
                             }
 
-                            // 광고의 슬라이드을 실행
                             angular.element('#'+$scope.option.id).slickPlay();
                         })
                   ['catch'](function(error){});
                 };
 
                 $scope.getMiniList();
+                $scope.getCategoryList();
                 $scope.getFoodList();
             }]
         }

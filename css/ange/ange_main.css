@@ -209,8 +209,8 @@ a.mini_story_rollcate_left:hover, a.mini_story_rollcate_right:hover {
 	font-family: Arial, sans-serif;
 	font-size:0.82em;
 	height:32px;
-	/*overflow-y: hidden;*/
-	/*overflow-x: hidden;*/
+	overflow-y: hidden;
+	overflow-x: hidden;
 }
 
 .mini_story_rollcate_ul {
@@ -220,8 +220,7 @@ a.mini_story_rollcate_left:hover, a.mini_story_rollcate_right:hover {
 	float:left;
 	margin:0px auto;
 	list-style-type:none;
-	width:100%;
-    border:1px solid red;
+	width:1024px;
 }
 
 .mini_story_rollcate_ul li {
