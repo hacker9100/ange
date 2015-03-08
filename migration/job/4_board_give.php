@@ -30,52 +30,59 @@
         MtUtil::_c("TO-BE DB 연결 실패.");
     }
 
-    $sql = "SELECT idx, kind, cate, id, name, subject, content, rep_idx, hit, supp,
+    $sql = "SELECT idx, status, cate, id, name, subject, content, hit,
                 CASE WHEN wdate IS NULL THEN NULL WHEN LEN(wdate) < 21 THEN wdate ELSE convert(varchar(19), convert(datetime,  left(wdate,charindex(' ',wdate,1)-1)+ ' '+ right(wdate,charindex(' ',reverse(wdate),1)-1)+ case when charindex('오전',wdate,1) > 0 then 'AM' else 'PM' end), 120) END AS wdate
-            FROM dbo.ange_online_board
+            FROM ange_give_board
+            WHERE cate = '01'
+            and idx between 13435 and 15000
             ORDER BY idx
             ";
 
-    $result = $_a->sql_query($sql,true);
+//    $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
         $err = 0;
         $msg = null;
+//        MtUtil::_c($i."> [idx] ".$row['idx'].", [cate] ".$row['cate'].", [id] ".$row['id'].", [name] ".$row['name'].", [head] ".$row['head'].", [subject] ".$row['subject'].", [content] ".$row['content'].", [rep_idx] ".$row['rep_idx'].", [hit] ".$row['hit'].", [recom] ".$row['recom'].", [wdate] ".$row['wdate'].", [notice] ".$row['notice'].", [supp] ".$row['supp'].", [img_ok] ".$row['img_ok']);
 
-        $sql = "INSERT INTO MIG_COM_BOARD
+//        $_t->sql_beginTransaction();
+
+        $sql = "INSERT INTO COM_BOARD
                 (
                     NO
                     ,PARENT_NO
                     ,COMM_NO
                     ,SUBJECT
                     ,BODY
-                    ,BOARD_ST
                     ,BOARD_GB
+                    ,BOARD_ST
                     ,SYSTEM_GB
                     ,REG_UID
                     ,NICK_NM
                     ,REG_DT
+                    ,NOTICE_FL
                     ,HIT_CNT
                     ,BOARD_NO
                     ,MIG_NO
                     ,MIG_COMM_NO
                     ,MIG_TBL
                 ) VALUES (
-                    '".(610200+$row['idx'])."'
-                    ,'".(610000+$row['cate'])."'
-                    ,'94'
+                    '".(550000+$row['idx'])."'
+                    ,'0'
+                    ,'91'
                     ,'".str_replace("'", "\\'",$row['subject'])."'
                     , '".str_replace("'", "\\'",$row['content'])."'
-                    , '".$row['kind']."'
-                    , 'TALK'
+                    , 'BOARD'
+                    , '".$row['status']."'
                     , 'ANGE'
                     , '".$row['id']."'
                     , '".$row['name']."'
                     , '".$row['wdate']."'
+                    , '".($row['status'] == '0' ? 'Y' : 'N')."'
                     , '".$row['hit']."'
-                    , $i
+                    , ".(11999+$i)."
                     , '".$row['idx']."'
-                    , 'ANSWER'
-                    , 'online_board'
+                    , '50'
+                    , 'ange_give_board'
                 )";
 
         $_t->sql_query($sql);

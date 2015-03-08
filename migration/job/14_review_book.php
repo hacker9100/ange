@@ -33,10 +33,11 @@
     $sql = "SELECT
                 idx, dataID, dataName, Name, bIdx, bTB, bDist, BName, blogurl, subject, contents, keyword, wdate
             FROM dbo.book_review
+            WHERE idx between 2241 and 2500
             ORDER BY idx
             ";
 
-//    $result = $_a->sql_query($sql,true);
+    $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
         $err = 0;
         $msg = null;
@@ -46,7 +47,7 @@
         $content = str_replace("'", "\\'",$row['contents']);
         $content = str_replace("\\\\", "\\",$content);
 
-        $sql = "INSERT INTO MIG_ANGE_REVIEW
+        $sql = "INSERT INTO ANGE_REVIEW
                 (
                     NO
                     ,SUBJECT
@@ -73,7 +74,7 @@
                     , '".$row['dataName']."'
                     , '".($row['wdate']->format('Y-m-d H:i:s'))."'
                     , '".$row['blogurl']."'
-                    , $i
+                    , ".(1985+$i)."
                     , '".$row['idx']."'
                     , '".$row['bIdx']."'
                     , '".$row['BName']."'

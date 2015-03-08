@@ -33,7 +33,12 @@
     $sql = "SELECT idx, rep_idx, head, cate, id, name, subject, content, q_hit, scrChk, notice,
                 CASE WHEN q_date IS NULL THEN NULL WHEN LEN(q_date) < 21 THEN q_date ELSE convert(varchar(19), convert(datetime,  left(q_date,charindex(' ',q_date,1)-1)+ ' '+ right(q_date,charindex(' ',reverse(q_date),1)-1)+ case when charindex('오전',q_date,1) > 0 then 'AM' else 'PM' end), 120) END AS q_date
             FROM ange_qna
-            WHERE cate = '09'
+            -- 07
+            WHERE cate = '07' AND idx between 23933 and 25000
+            -- 08
+            --WHERE cate = '08' AND idx between 24035 and 25000
+            -- 09
+            --WHERE cate = '09' AND idx between 24024 and 25000
             ORDER BY idx
             ";
 
@@ -45,7 +50,7 @@
 
 //        $_t->sql_beginTransaction();
 
-        $sql = "INSERT INTO MIG_COM_BOARD
+        $sql = "INSERT INTO COM_BOARD
                 (
                     NO
                     ,PARENT_NO
@@ -68,7 +73,7 @@
                 ) VALUES (
                     '".(580000+$row['idx'])."'
                     ,'".($row['rep_idx'] == 0 ? 0 : 580000+$row['rep_idx'])."'
-                    ,'93'
+                    ,'24'
                     ,'".$row['scrChk']."'
                     ,'".$row['head']."'
                     ,'".($row['rep_idx'] == '0' ? '' : '[RE]').str_replace("'", "\\'",$row['subject'])."'
@@ -80,12 +85,12 @@
                     , '".$row['q_date']."'
                     , '".($row['notice'] == '1' ? 'Y' : 'N')."'
                     , '".$row['q_hit']."'
-                    , $i
+                    , ".(938+$i)."
                     , '".$row['idx']."'
                     , '".$row['cate']."'
                     , 'living_fp'
                 )";
-
+                // 07(24) : 938, 08(23) : 831, 09(22) : 730,
         $_t->sql_query($sql);
 
         if($_t->mysql_errno > 0) {

@@ -6,11 +6,11 @@ define("__AS_IS_USR__" , "newange");
 define("__AS_IS_PWD__" , "dbrdkvhxjf4650");
 define("__AS_IS_DBF__" , "newange");
 
-// TO-BE DB 서버(MY-SQL)
-define("__TO_BE_ADD__" , "14.63.219.171");
-define("__TO_BE_USR__" , "ange");
-define("__TO_BE_PWD__" , "ange#123");
-define("__TO_BE_DBF__" , "ange");
+//// TO-BE DB 서버(MY-SQL)
+//define("__TO_BE_ADD__" , "14.63.219.171");
+//define("__TO_BE_USR__" , "ange");
+//define("__TO_BE_PWD__" , "ange#123");
+//define("__TO_BE_DBF__" , "ange");
 
 //define("__TO_BE_ADD__" , "14.63.219.171");
 //define("__TO_BE_USR__" , "admin_default");

@@ -30,52 +30,53 @@
         MtUtil::_c("TO-BE DB 연결 실패.");
     }
 
-    $sql = "SELECT idx, cate, id, name, head, subject, content, rep_idx, hit, recom, notice, supp, img_ok, mode, bbs_TB, bbs_idx,
+    $sql = "SELECT idx, kind, cate, id, name, subject, content, rep_idx, hit, supp,
                 CASE WHEN wdate IS NULL THEN NULL WHEN LEN(wdate) < 21 THEN wdate ELSE convert(varchar(19), convert(datetime,  left(wdate,charindex(' ',wdate,1)-1)+ ' '+ right(wdate,charindex(' ',reverse(wdate),1)-1)+ case when charindex('오전',wdate,1) > 0 then 'AM' else 'PM' end), 120) END AS wdate
-            FROM dbo.ange_com_board
-            WHERE cate = '07' and head in ('공연후기', '마일리지몰후기', '나눔후기')
+            FROM dbo.ange_online_board
+            where idx between 12633 and 13000
             ORDER BY idx
             ";
 
-    $result = $_a->sql_query($sql,true);
+//    $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
         $err = 0;
         $msg = null;
 
-//        MtUtil::_c($i."> [idx] ".$row['idx'].", [cate] ".$row['cate'].", [id] ".$row['id'].", [name] ".$row['name'].", [head] ".$row['head'].", [subject] ".$row['subject'].", [content] ".$row['content'].", [rep_idx] ".$row['rep_idx'].", [hit] ".$row['hit'].", [recom] ".$row['recom'].", [wdate] ".$row['wdate'].", [notice] ".$row['notice'].", [supp] ".$row['supp'].", [img_ok] ".$row['img_ok']);
-
-        $content = str_replace("'", "\\'",$row['content']);
-        $content = str_replace("\\\\", "\\",$content);
-
-        $sql = "INSERT INTO MIG_ANGE_REVIEW
+        $sql = "INSERT INTO COM_BOARD
                 (
                     NO
+                    ,PARENT_NO
+                    ,COMM_NO
                     ,SUBJECT
                     ,BODY
-                    ,TARGET_GB
+                    ,BOARD_ST
+                    ,BOARD_GB
+                    ,SYSTEM_GB
                     ,REG_UID
                     ,NICK_NM
                     ,REG_DT
-                    ,REVIEW_NO
                     ,HIT_CNT
-                    ,MIG_IMG1
+                    ,BOARD_NO
                     ,MIG_NO
-                    ,MIG_CATEGORY
+                    ,MIG_COMM_NO
                     ,MIG_TBL
                 ) VALUES (
-                    '".$row['idx']."'
+                    '".(610200+$row['idx'])."'
+                    ,'".(610000+$row['cate'])."'
+                    ,'61'
                     ,'".str_replace("'", "\\'",$row['subject'])."'
-                    , '".$content."'
+                    , '".str_replace("'", "\\'",$row['content'])."'
+                    , '".$row['kind']."'
+                    , 'TALK'
                     , 'ANGE'
                     , '".$row['id']."'
                     , '".$row['name']."'
                     , '".$row['wdate']."'
-                    , $i
                     , '".$row['hit']."'
-                    , '".$row['img_ok']."'
+                    , ".(12452+$i)."
                     , '".$row['idx']."'
-                    , '".$row['head']."'
-                    , 'ange_com_board'
+                    , 'ANSWER'
+                    , 'online_board'
                 )";
 
         $_t->sql_query($sql);

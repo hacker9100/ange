@@ -30,8 +30,11 @@
         MtUtil::_c("TO-BE DB 연결 실패.");
     }
 
-    $sql = "SELECT kind, idx, title, content, from_date, to_date, text1, text2, text3
-            FROM dbo.ange_online_list
+    $sql = "SELECT idx, kind, id, name, subject, content, hit, img,
+                CASE WHEN wdate IS NULL THEN NULL WHEN LEN(wdate) < 21 THEN wdate ELSE convert(varchar(19), convert(datetime,  left(wdate,charindex(' ',wdate,1)-1)+ ' '+ right(wdate,charindex(' ',reverse(wdate),1)-1)+ case when charindex('오전',wdate,1) > 0 then 'AM' else 'PM' end), 120) END AS wdate
+            FROM dbo.ange_sample_review
+            WHERE idx between 1566 and 2000
+            ORDER BY idx
             ";
 
     $result = $_a->sql_query($sql,true);
@@ -41,41 +44,38 @@
 
 //        MtUtil::_c($i."> [idx] ".$row['idx'].", [cate] ".$row['cate'].", [id] ".$row['id'].", [name] ".$row['name'].", [head] ".$row['head'].", [subject] ".$row['subject'].", [content] ".$row['content'].", [rep_idx] ".$row['rep_idx'].", [hit] ".$row['hit'].", [recom] ".$row['recom'].", [wdate] ".$row['wdate'].", [notice] ".$row['notice'].", [supp] ".$row['supp'].", [img_ok] ".$row['img_ok']);
 
-        $sql = "INSERT INTO MIG_COM_BOARD
+        $content = str_replace("'", "\\'",$row['content']);
+        $content = str_replace("\\\\", "\\",$content);
+
+        $sql = "INSERT INTO ANGE_REVIEW
                 (
                     NO
-                    ,COMM_NO
                     ,SUBJECT
                     ,BODY
-                    ,BOARD_ST
-                    ,BOARD_GB
-                    ,SYSTEM_GB
-                    ,BOARD_NO
-                    ,ETC1
-                    ,ETC2
-                    ,ETC3
-                    ,ETC4
-                    ,ETC5
+                    ,TARGET_GB
+                    ,REG_UID
+                    ,NICK_NM
+                    ,REG_DT
+                    ,REVIEW_NO
+                    ,HIT_CNT
+                    ,MIG_IMG1
                     ,MIG_NO
-                    ,MIG_COMM_NO
+                    ,MIG_CATEGORY
                     ,MIG_TBL
                 ) VALUES (
-                    '".(610000+$row['idx'])."'
-                    ,'94'
-                    ,'".str_replace("'", "\\'",$row['title'])."'
-                    , '".str_replace("'", "\\'",$row['content'])."'
-                    , '".$row['kind']."'
-                    , 'TALK'
-                    , 'ANGE'
-                    , $i
-                    , '".$row['from_date']."'
-                    , '".$row['to_date']."'
-                    , '".$row['text1']."'
-                    , '".$row['text2']."'
-                    , '".$row['text3']."'
+                    '".(20000+$row['idx'])."'
+                    ,'".str_replace("'", "\\'",$row['subject'])."'
+                    , '".$content."'
+                    , 'SAMPLE'
+                    , '".$row['id']."'
+                    , '".$row['name']."'
+                    , '".$row['wdate']."'
+                    , ".(1342+$i)."
+                    , '".$row['hit']."'
+                    , '".$row['img']."'
                     , '".$row['idx']."'
-                    , 'QUESTION'
-                    , 'online_list'
+                    , '".$row['kind']."'
+                    , 'ange_sample_review'
                 )";
 
         $_t->sql_query($sql);

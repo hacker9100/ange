@@ -32,7 +32,8 @@
 
     $sql = "SELECT idx, cate, id, name, area1, area2, area3, partydate, subject, content, hit, ddate, notice, best
             FROM dbo.dol_review
-            WHERE cate = '04'
+            WHERE cate = '01'
+            WHERE idx between 12121 and 13000
             ORDER BY idx
             ";
 
@@ -73,7 +74,7 @@
                     , '".$row['id']."'
                     , '".$row['name']."'
                     , '".$row['ddate']."'
-                    , $i
+                    , ".(3551+$i)."
                     , '".$row['hit']."'
                     , '".$row['area1']."'
                     , '".$row['area2']."'
@@ -82,6 +83,7 @@
                     , '".$row['cate']."'
                     , 'dol_review'
                 )";
+        // 01 : 3551
 
         $_t->sql_query($sql);
         $no = $_t->mysql_insert_id;

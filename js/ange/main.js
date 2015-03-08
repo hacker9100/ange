@@ -111,40 +111,40 @@ require.config({
         'jquery-ui': {
             deps: ['jquery']
         },
-        'js-bootstrap':{
+        'js-bootstrap': {
             deps:['angular']
         },
-        'ui-bootstrap':{
+        'ui-bootstrap': {
             deps:['jquery','angular','js-bootstrap']
         },
-        'angular-resource':{
+        'angular-resource': {
             deps: ['angular']
         },
-        'angular-sanitize':{
+        'angular-sanitize': {
             deps: ['angular']
         },
-        'angular-ui-router':{
+        'angular-ui-router': {
             deps: ['angular']
         },
-        'angular-translate':{
+        'angular-translate': {
             deps: ['angular']
         },
-        'ng-table':{
+        'ng-table': {
             deps: ['angular']
         },
-        'dialog-translation':{
+        'dialog-translation': {
             deps: ['angular']
         },
-        'dialog':{
+        'dialog': {
             deps: ['angular', 'angular-translate', 'ui-bootstrap']
         },
-        'slick-carousel':{
+        'slick-carousel': {
             deps: ['jquery', 'angular']
         },
-        'ckeditor-jquery':{
+        'ckeditor-jquery': {
             deps:['jquery','ckeditor-core']
         },
-        'ngActivityIndicator':{
+        'ngActivityIndicator': {
             deps:['angular']
         },
 //        'fullcalendar':{
@@ -177,13 +177,13 @@ require.config({
 //        'ngFileupload':{
 //            deps:['jquery','angular','jquery-blueimp-gallery','fileupload','fileupload-process','fileupload-image','fileupload-audio','fileupload-video','fileupload-validate']
 //        },
-        'ng-google-chart':{
+        'ng-google-chart': {
             deps:['jquery', 'angular']
         },
 //        'angular-socialshare':{
 //            deps:['angular']
 //        },
-        'ng-map':{
+        'ng-map': {
             deps:['angular']
         }
     },

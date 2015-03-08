@@ -30,9 +30,9 @@
         MtUtil::_c("TO-BE DB 연결 실패.");
     }
 
-    $sql = "SELECT idx, kind, id, name, subject, content, hit, img,
-                CASE WHEN wdate IS NULL THEN NULL WHEN LEN(wdate) < 21 THEN wdate ELSE convert(varchar(19), convert(datetime,  left(wdate,charindex(' ',wdate,1)-1)+ ' '+ right(wdate,charindex(' ',reverse(wdate),1)-1)+ case when charindex('오전',wdate,1) > 0 then 'AM' else 'PM' end), 120) END AS wdate
-            FROM dbo.ange_sample_review
+    $sql = "SELECT idx, cate, id, name, subject, req_content, hit, res_content, chk, notice, wdate
+            FROM living_fp
+            WHERE idx between 3190 and 4000
             ORDER BY idx
             ";
 
@@ -40,45 +40,100 @@
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
         $err = 0;
         $msg = null;
-
 //        MtUtil::_c($i."> [idx] ".$row['idx'].", [cate] ".$row['cate'].", [id] ".$row['id'].", [name] ".$row['name'].", [head] ".$row['head'].", [subject] ".$row['subject'].", [content] ".$row['content'].", [rep_idx] ".$row['rep_idx'].", [hit] ".$row['hit'].", [recom] ".$row['recom'].", [wdate] ".$row['wdate'].", [notice] ".$row['notice'].", [supp] ".$row['supp'].", [img_ok] ".$row['img_ok']);
 
-        $content = str_replace("'", "\\'",$row['content']);
-        $content = str_replace("\\\\", "\\",$content);
+//        $_t->sql_beginTransaction();
 
-        $sql = "INSERT INTO MIG_ANGE_REVIEW
+        $sql = "INSERT INTO COM_BOARD
                 (
                     NO
+                    ,PARENT_NO
+                    ,COMM_NO
+                    ,HEAD
                     ,SUBJECT
                     ,BODY
-                    ,TARGET_GB
+                    ,BOARD_GB
+                    ,BOARD_ST
+                    ,SYSTEM_GB
                     ,REG_UID
                     ,NICK_NM
                     ,REG_DT
-                    ,REVIEW_NO
+                    ,NOTICE_FL
                     ,HIT_CNT
-                    ,MIG_IMG1
+                    ,BOARD_NO
                     ,MIG_NO
-                    ,MIG_CATEGORY
+                    ,MIG_COMM_NO
                     ,MIG_TBL
                 ) VALUES (
-                    '".(20000+$row['idx'])."'
+                    '".(580000+$row['idx'])."'
+                    ,'0'
+                    ,'25'
+                    ,'".$row['cate']."'
                     ,'".str_replace("'", "\\'",$row['subject'])."'
-                    , '".$content."'
-                    , 'SAMPLE'
+                    , '".str_replace("'", "\\'",$row['req_content'])."'
+                    , 'CLINIC'
+                    , '".$row['chk']."'
+                    , 'ANGE'
                     , '".$row['id']."'
                     , '".$row['name']."'
-                    , '".$row['wdate']."'
-                    , $i
+                    , '".($row['wdate']->format('Y-m-d H:i:s'))."'
+                    , '".($row['notice'] == '1' ? 'Y' : 'N')."'
                     , '".$row['hit']."'
-                    , '".$row['img']."'
+                    , ".(2168+$i)."
                     , '".$row['idx']."'
-                    , '".$row['kind']."'
-                    , 'ange_sample_review'
+                    , '10'
+                    , 'living_fp'
                 )";
 
         $_t->sql_query($sql);
-        $no = $_t->mysql_insert_id;
+
+        if($_t->mysql_errno > 0) {
+            $err++;
+            $msg .= $_t->mysql_error;
+        }
+
+        $sql = "INSERT INTO MIG_COM_BOARD
+                (
+                    NO
+                    ,PARENT_NO
+                    ,COMM_NO
+                    ,HEAD
+                    ,SUBJECT
+                    ,BODY
+                    ,BOARD_GB
+                    ,BOARD_ST
+                    ,SYSTEM_GB
+                    ,REG_UID
+                    ,NICK_NM
+                    ,REG_DT
+                    ,NOTICE_FL
+                    ,HIT_CNT
+                    ,BOARD_NO
+                    ,MIG_NO
+                    ,MIG_COMM_NO
+                    ,MIG_TBL
+                ) VALUES (
+                    '".(582000+$row['idx'])."'
+                    ,'".(580000+$row['idx'])."'
+                    ,'93'
+                    ,'".$row['cate']."'
+                    ,'"."[RE]".str_replace("'", "\\'",$row['subject'])."'
+                    , '".str_replace("'", "\\'",$row['res_content'])."'
+                    , 'CLINIC'
+                    , '0'
+                    , 'ANGE'
+                    , 'angefp1'
+                    , '서원호'
+                    , '".($row['wdate']->format('Y-m-d H:i:s'))."'
+                    , 'N'
+                    , '0'
+                    , $i
+                    , '".(2000+$row['idx'])."'
+                    , '10'
+                    , 'living_fp'
+                )";
+
+        $_t->sql_query($sql);
 
         if($_t->mysql_errno > 0) {
             $err++;

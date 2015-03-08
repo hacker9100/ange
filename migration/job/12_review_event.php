@@ -32,10 +32,11 @@
 
     $sql = "SELECT r_idx, dataID, dataName, Name, pIdx, cateName, pName, blogurl, subject, contents, keyword, img1, img2, img3, wdate, best
             FROM dbo.event_review
+            WHERE r_idx between 2168 and 2500
             ORDER BY r_idx
             ";
 
-//    $result = $_a->sql_query($sql,true);
+    $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
         $err = 0;
         $msg = null;
@@ -45,7 +46,7 @@
         $content = str_replace("'", "\\'",$row['contents']);
         $content = str_replace("\\\\", "\\",$content);
 
-        $sql = "INSERT INTO MIG_ANGE_REVIEW
+        $sql = "INSERT INTO ANGE_REVIEW
                 (
                     NO
                     ,SUBJECT
@@ -72,12 +73,12 @@
                     , '".$content."'
                     , '".$row['best']."'
                     , '".(1000+$row['pIdx'])."'
-                    , 'EVENT'
+                    , 'PRODUCT'
                     , '".$row['dataID']."'
                     , '".$row['dataName']."'
                     , '".($row['wdate']->format('Y-m-d H:i:s'))."'
                     , '".$row['blogurl']."'
-                    , $i
+                    , ".(2024+$i)."
                     , '".$row['img1']."'
                     , '".$row['img2']."'
                     , '".$row['img3']."'

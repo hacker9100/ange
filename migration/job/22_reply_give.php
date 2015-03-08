@@ -29,21 +29,23 @@
     if ($_t->connect_db == "") {
         MtUtil::_c("TO-BE DB 연결 실패.");
     }
-    // 01, 08, 09, 10, 11, 25, 30
-    $sql = "SELECT c_idx, c_id, c_name, comment, comm_idx, comm_tb, comm_cate, rep_idx,
+
+    // 나눔방
+    $sql = "SELECT c_idx, c_id, c_name, comment, comm_idx, comm_tb, cate, c_kind,
                       CASE WHEN c_date IS NULL THEN NULL WHEN LEN(c_date) < 21 THEN c_date ELSE convert(varchar(19), convert(datetime,  left(c_date,charindex(' ',c_date,1)-1)+ ' '+ right(c_date,charindex(' ',reverse(c_date),1)-1)+ case when charindex('오전',c_date,1) > 0 then 'AM' else 'PM' end), 120) END AS c_date
-            FROM dbo.dol_comment
-            WHERE comm_cate in ('01', '04')
+            FROM dbo.give_comment
+            WHERE cate = '01'
+            AND c_idx between 165788 and 166787
             ";
 
-    $result = $_a->sql_query($sql,true);
+//    $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
 //        MtUtil::_c($i."> [c_idx] ".$row['c_idx'].", [c_id] ".$row['c_id'].", [c_name] ".$row['c_name'].", [comment] ".$row['comment'].", [c_date] ".$row['c_date'].", [comm_idx] ".$row['comm_idx'].", [comm_tb] ".$row['comm_tb'].", [comm_cate] ".$row['comm_cate'].", [c_rep_idx] ".$row['c_rep_idx'].", [c_step] ".$row['c_step'].", [c_group_idx] ".$row['c_group_idx']);
 
-        $sql = "INSERT INTO MIG_COM_REPLY
+        $sql = "INSERT INTO COM_REPLY
                 (
                     NO,
-                    PARENT_NO,
+                    LEVEL,
                     REPLY_GB,
                     COMMENT,
                     REG_UID,
@@ -58,21 +60,21 @@
                     MIG_COMM_NO,
                     MIG_TBL
                 ) VALUES (
-                    ".(6770000+$row['c_idx']).",
-                    ".($row['rep_idx'] == 0 ? 0 : 6770000+$row['rep_idx']).",
-                    '".$row['comm_cate']."',
+                    ".(6600000+$row['c_idx']).",
+                    '1',
+                    '".$row['c_kind']."',
                     '".str_replace("'", "\\'",$row['comment'])."',
                     '".$row['c_id']."',
                     '".$row['c_name']."',
                     '".$row['c_date']."',
                     '0',
-                    '".(25000+$row['comm_idx'])."',
-                    'REVIEW',
+                    '".(550000+$row['comm_idx'])."',
+                    'BOARD',
                     'N',
                     '".$row['c_idx']."',
                     '".$row['comm_idx']."',
-                    'DOL',
-                    'dol_comment'
+                    '50',
+                    'ange_give_board'
                 )";
 
         $_t->sql_query($sql);

@@ -29,9 +29,32 @@
     if ($_t->connect_db == "") {
         MtUtil::_c("TO-BE DB 연결 실패.");
     }
-
-    $sql = "SELECT idx, cate, id, name, subject, req_content, hit, res_content, chk, notice, wdate
-            FROM living_fp
+    $comm_no = '11';
+/*
+    $sql = "SELECT idx, cate, id, name, head, subject, content, rep_idx, hit, recom, notice, supp, img_ok, mode, bbs_TB, bbs_idx,
+                CASE WHEN wdate IS NULL THEN NULL WHEN LEN(wdate) < 21 THEN wdate ELSE convert(varchar(19), convert(datetime,  left(wdate,charindex(' ',wdate,1)-1)+ ' '+ right(wdate,charindex(' ',reverse(wdate),1)-1)+ case when charindex('오전',wdate,1) > 0 then 'AM' else 'PM' end), 120) END AS wdate
+            FROM dbo.ange_com_board
+            -- 01
+            --WHERE cate = '01' AND idx between 537108 and 539000
+            -- 08
+            --WHERE cate = '08' AND idx between 537170 and 539000
+            -- 09
+            --WHERE cate = '09' AND idx between 537175 and 539000
+            -- 10
+            --WHERE cate = '10' AND idx between 537177 and 539000
+            -- 11
+            --WHERE cate = '11' AND idx between 537946 and 539000
+            -- 25
+            --WHERE cate = '25' AND idx between 537178 and 539000
+            -- 30
+            WHERE cate = '30' AND idx between 537179 and 539000
+            ORDER BY idx
+            ";
+*/
+    $sql = "SELECT idx, cate, id, name, subject, content, rep_idx, hit, notice, img_ok,
+                CASE WHEN wdate IS NULL THEN NULL WHEN LEN(wdate) < 21 THEN wdate ELSE convert(varchar(19), convert(datetime,  left(wdate,charindex(' ',wdate,1)-1)+ ' '+ right(wdate,charindex(' ',reverse(wdate),1)-1)+ case when charindex('오전',wdate,1) > 0 then 'AM' else 'PM' end), 120) END AS wdate
+            FROM dbo.ange_anony_board
+            WHERE idx between 2176 and 2200
             ORDER BY idx
             ";
 
@@ -39,11 +62,18 @@
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
         $err = 0;
         $msg = null;
+
 //        MtUtil::_c($i."> [idx] ".$row['idx'].", [cate] ".$row['cate'].", [id] ".$row['id'].", [name] ".$row['name'].", [head] ".$row['head'].", [subject] ".$row['subject'].", [content] ".$row['content'].", [rep_idx] ".$row['rep_idx'].", [hit] ".$row['hit'].", [recom] ".$row['recom'].", [wdate] ".$row['wdate'].", [notice] ".$row['notice'].", [supp] ".$row['supp'].", [img_ok] ".$row['img_ok']);
+
+//        $_t->sql_query("INSERT INTO MIG_BOARD_INFO (USER_ID, MIG_NO, MIG_DT, MIG_ST) VALUES ('".$row['id']."', '".$row['idx']."', SYSDATE(), '0')");
+//        $no = $_t->mysql_insert_id;
 
 //        $_t->sql_beginTransaction();
 
-        $sql = "INSERT INTO MIG_COM_BOARD
+        $content = str_replace("'", "\\'",$row['content']);
+        $content = str_replace("src=\"/UserFiles", "src=\"http://www.ange.co.kr/UserFiles",$content);
+/*
+        $sql = "INSERT INTO COM_BOARD
                 (
                     NO
                     ,PARENT_NO
@@ -52,7 +82,6 @@
                     ,SUBJECT
                     ,BODY
                     ,BOARD_GB
-                    ,BOARD_ST
                     ,SYSTEM_GB
                     ,REG_UID
                     ,NICK_NM
@@ -60,47 +89,45 @@
                     ,NOTICE_FL
                     ,HIT_CNT
                     ,BOARD_NO
+                    ,MODE_GB
                     ,MIG_NO
                     ,MIG_COMM_NO
                     ,MIG_TBL
                 ) VALUES (
-                    '".(580000+$row['idx'])."'
-                    ,'0'
-                    ,'93'
-                    ,'".$row['cate']."'
+                    '".$row['idx']."'
+                    ,'".$row['supp']."'
+                    ,'8'
+                    ,'".$row['head']."'
                     ,'".str_replace("'", "\\'",$row['subject'])."'
-                    , '".str_replace("'", "\\'",$row['req_content'])."'
-                    , 'CLINIC'
-                    , '".$row['chk']."'
+                    , '".$content."'
+                    , 'BOARD'
                     , 'ANGE'
                     , '".$row['id']."'
                     , '".$row['name']."'
-                    , '".($row['wdate']->format('Y-m-d H:i:s'))."'
-                    , '".($row['notice'] == '1' ? 'Y' : 'N')."'
+                    , '".$row['wdate']."'
+                    , '".$row['notice']."'
                     , '".$row['hit']."'
-                    , $i
+                    , ".(1171+$i)."
+                    , '".$row['mode']."'
                     , '".$row['idx']."'
-                    , '10'
-                    , 'living_fp'
+                    , '".$row['cate']."'
+                    , 'ange_anony_board'
                 )";
 
-        $_t->sql_query($sql);
+        // BOARD_NO 01 : 286684, 08: 47282, 09 : 65891, 10 : 49233 11 : 906 25 :3894
+*/
 
-        if($_t->mysql_errno > 0) {
-            $err++;
-            $msg .= $_t->mysql_error;
-        }
+        $content = str_replace("'", "\\'",$row['content']);
+        $content = str_replace("src=\"/UserFiles", "src=\"http://www.ange.co.kr/UserFiles",$content);
 
-        $sql = "INSERT INTO MIG_COM_BOARD
+        $sql = "INSERT INTO COM_BOARD
                 (
                     NO
                     ,PARENT_NO
                     ,COMM_NO
-                    ,HEAD
                     ,SUBJECT
                     ,BODY
                     ,BOARD_GB
-                    ,BOARD_ST
                     ,SYSTEM_GB
                     ,REG_UID
                     ,NICK_NM
@@ -112,27 +139,26 @@
                     ,MIG_COMM_NO
                     ,MIG_TBL
                 ) VALUES (
-                    '".(582000+$row['idx'])."'
-                    ,'".(580000+$row['idx'])."'
-                    ,'93'
-                    ,'".$row['cate']."'
-                    ,'"."[RE]".str_replace("'", "\\'",$row['subject'])."'
-                    , '".str_replace("'", "\\'",$row['res_content'])."'
-                    , 'CLINIC'
-                    , '0'
+                    '".(540000+$row['idx'])."'
+                    ,'0'
+                    ,'8'
+                    ,'".str_replace("'", "\\'",$row['subject'])."'
+                    , '".$content."'
+                    , 'BOARD'
                     , 'ANGE'
-                    , 'angefp1'
-                    , '서원호'
-                    , '".($row['wdate']->format('Y-m-d H:i:s'))."'
-                    , 'N'
-                    , '0'
-                    , $i
-                    , '".(2000+$row['idx'])."'
-                    , '10'
-                    , 'living_fp'
+                    , '".$row['id']."'
+                    , '".$row['name']."'
+                    , '".$row['wdate']."'
+                    , '".$row['notice']."'
+                    , '".$row['hit']."'
+                    , ".(1171+$i)."
+                    , '".$row['idx']."'
+                    , '40'
+                    , 'ange_anony_board'
                 )";
 
         $_t->sql_query($sql);
+        $no = $_t->mysql_insert_id;
 
         if($_t->mysql_errno > 0) {
             $err++;

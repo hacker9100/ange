@@ -30,9 +30,9 @@
         MtUtil::_c("TO-BE DB 연결 실패.");
     }
 
-    $sql = "SELECT r_idx, dataID, dataName, Name, pIdx, cateName, pName, blogurl, subject, contents, keyword, img1, img2, img3, wdate, best
-            FROM dbo.tester_review
-            ORDER BY r_idx
+    $sql = "SELECT kind, idx, title, content, from_date, to_date, text1, text2, text3
+            FROM dbo.ange_online_list
+            where idx between 112 and 119
             ";
 
 //    $result = $_a->sql_query($sql,true);
@@ -42,50 +42,41 @@
 
 //        MtUtil::_c($i."> [idx] ".$row['idx'].", [cate] ".$row['cate'].", [id] ".$row['id'].", [name] ".$row['name'].", [head] ".$row['head'].", [subject] ".$row['subject'].", [content] ".$row['content'].", [rep_idx] ".$row['rep_idx'].", [hit] ".$row['hit'].", [recom] ".$row['recom'].", [wdate] ".$row['wdate'].", [notice] ".$row['notice'].", [supp] ".$row['supp'].", [img_ok] ".$row['img_ok']);
 
-        $content = str_replace("'", "\\'",$row['contents']);
-        $content = str_replace("\\\\", "\\",$content);
-
-        $sql = "INSERT INTO MIG_ANGE_REVIEW
+        $sql = "INSERT INTO COM_BOARD
                 (
                     NO
+                    ,COMM_NO
                     ,SUBJECT
                     ,BODY
-                    ,BEST_FL
-                    ,TARGET_NO
-                    ,TARGET_GB
-                    ,REG_UID
-                    ,NICK_NM
-                    ,REG_DT
-                    ,BLOG_URL
-                    ,REVIEW_NO
-                    ,MIG_IMG1
-                    ,MIG_IMG2
-                    ,MIG_IMG3
+                    ,BOARD_ST
+                    ,BOARD_GB
+                    ,SYSTEM_GB
+                    ,BOARD_NO
+                    ,ETC1
+                    ,ETC2
+                    ,ETC3
+                    ,ETC4
+                    ,ETC5
                     ,MIG_NO
-                    ,MIG_PNO
-                    ,MIG_PNM
-                    ,MIG_CATEGORY
+                    ,MIG_COMM_NO
                     ,MIG_TBL
                 ) VALUES (
-                    '".$row['r_idx']."'
-                    ,'".str_replace("'", "\\'",$row['subject'])."'
-                    , '".$content."'
-                    , '".$row['best']."'
-                    , '".$row['pIdx']."'
-                    , 'EXPERIENCE'
-                    , '".$row['dataID']."'
-                    , '".$row['dataName']."'
-                    , '".($row['wdate']->format('Y-m-d H:i:s'))."'
-                    , '".$row['blogurl']."'
-                    , $i
-                    , '".$row['img1']."'
-                    , '".$row['img2']."'
-                    , '".$row['img3']."'
-                    , '".$row['r_idx']."'
-                    , '".$row['pIdx']."'
-                    , '".$row['pName']."'
-                    , '".$row['cateName']."'
-                    , 'tester_review'
+                    '".(610000+$row['idx'])."'
+                    ,'61'
+                    ,'".str_replace("'", "\\'",$row['title'])."'
+                    , '".str_replace("'", "\\'",$row['content'])."'
+                    , '".$row['kind']."'
+                    , 'TALK'
+                    , 'ANGE'
+                    , ".(105+$i)."
+                    , '".$row['from_date']."'
+                    , '".$row['to_date']."'
+                    , '".$row['text1']."'
+                    , '".$row['text2']."'
+                    , '".$row['text3']."'
+                    , '".$row['idx']."'
+                    , 'QUESTION'
+                    , 'online_list'
                 )";
 
         $_t->sql_query($sql);

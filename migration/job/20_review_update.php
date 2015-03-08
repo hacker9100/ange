@@ -37,7 +37,8 @@
 //        MtUtil::_c($i."> [c_idx] ".$row['c_idx'].", [c_id] ".$row['c_id'].", [c_name] ".$row['c_name'].", [comment] ".$row['comment'].", [c_date] ".$row['c_date'].", [comm_idx] ".$row['comm_idx'].", [comm_tb] ".$row['comm_tb'].", [comm_cate] ".$row['comm_cate'].", [c_rep_idx] ".$row['c_rep_idx'].", [c_step] ".$row['c_step'].", [c_group_idx] ".$row['c_group_idx']);
 
         $body = str_replace("'", "\\'",$row['BODY']);
-        $body = str_replace("src=\"/UserFiles", "src=\"http://ange.marveltree.com/UserFiles",$body);
+        $body = str_replace("src=\"/UserFiles", "src=\"http://new.ange.co.kr/UserFiles",$body);
+        $body = str_replace("src=\"/new.ange.co.kr", "src=\"http://www.ange.co.kr/UserFiles",$body);
 
         $sql = "UPDATE ANGE_REVIEW
                 SET

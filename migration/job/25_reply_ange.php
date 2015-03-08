@@ -33,15 +33,15 @@
     $sql = "SELECT c_idx, c_id, c_name, comment, comm_idx, comm_tb, comm_cate, c_rep_idx, c_mode, c_step, c_group_idx,
                       CASE WHEN c_date IS NULL THEN NULL WHEN LEN(c_date) < 21 THEN c_date ELSE convert(varchar(19), convert(datetime,  left(c_date,charindex(' ',c_date,1)-1)+ ' '+ right(c_date,charindex(' ',reverse(c_date),1)-1)+ case when charindex('오전',c_date,1) > 0 then 'AM' else 'PM' end), 120) END AS c_date
             FROM dbo.comm_comment
-            WHERE comm_tb = 'book_review'
-            AND c_idx between 4683404 AND 6541293
+            WHERE comm_cate = '07'
+            AND c_idx between 6541301 and 6551301
             ";
 
 //    $result = $_a->sql_query($sql,true);
     for ($i=0; $row=$_a->sql_fetch_array($result); $i++) {
 //        MtUtil::_c($i."> [c_idx] ".$row['c_idx'].", [c_id] ".$row['c_id'].", [c_name] ".$row['c_name'].", [comment] ".$row['comment'].", [c_date] ".$row['c_date'].", [comm_idx] ".$row['comm_idx'].", [comm_tb] ".$row['comm_tb'].", [comm_cate] ".$row['comm_cate'].", [c_rep_idx] ".$row['c_rep_idx'].", [c_step] ".$row['c_step'].", [c_group_idx] ".$row['c_group_idx']);
 
-        $sql = "INSERT INTO MIG_COM_REPLY
+        $sql = "INSERT INTO COM_REPLY
                 (
                     NO,
                     PARENT_NO,
@@ -74,7 +74,7 @@
                     '".$row['c_mode']."',
                     '".$row['c_idx']."',
                     '".$row['comm_idx']."',
-                    'BOOK',
+                    '".$row['comm_cate']."',
                     'ange_com_board'
                 )";
 

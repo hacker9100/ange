@@ -272,6 +272,16 @@ define([
                     $location.url($scope.option.url);
                 };
 
+                $scope.cateIdx = 0;
+
+                $scope.click_preCategory = function () {
+                    angular.element('#category').slickPrev();
+                }
+
+                $scope.click_nextCategory = function () {
+                    angular.element('#category').slickNext();
+                }
+
                 $scope.click_selectCategory = function (category) {
                     $scope.search.CATEGORY = [];
 
@@ -979,8 +989,7 @@ define([
                             //
                             angular.element('#'+$scope.option.id).click(function() {
                                 var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
-alert(data[idx].ada_url);
-return;
+
                                 if ($scope.option.type == 'banner') {
                                     $scope.click_linkBanner(data[idx]);
                                 } else if ($scope.option.type == 'experience') {
