@@ -282,10 +282,10 @@ define([
                     angular.element('#category').slickNext();
                 }
 
-                $scope.click_selectCategory = function (category) {
+                $scope.click_selectCategory = function (category, idx) {
                     $scope.search.CATEGORY = [];
 
-                    $scope.categoryIdx = category.NO;
+                    $scope.cateIdx = idx;
                     $scope.search.CATEGORY.push(category);
 
                     $scope.getMiniList();
