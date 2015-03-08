@@ -22,7 +22,7 @@
     <div class="samplepack_tagwrap">
         <div class="samplepack_tags orange">
             <!--앙쥬 신규 가입회원 샘플팩 &nbsp;<span style="font-size:1.32em; font-weight:bold;">50 차</span>-->
-            {{item.ada_name}}
+            {{item.ada_title}}
         </div>
     </div>
 
@@ -59,7 +59,7 @@
     <div class="samplepack_tagwrap">
         <div class="samplepack_tags blue">
             <!--앙쥬 기존회원 샘플팩 &nbsp;<span style="font-size:1.32em; font-weight:bold;">시즌 2</span>-->
-            {{item.ada_name}}
+            {{item.ada_title}}
         </div>
     </div>
 
@@ -215,6 +215,9 @@
         </div>  <!-- /.form_rows -->
 
         <!-- form id="fileupload" method="POST" enctype="multipart/form-data" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}" -->
+        <form id="fileupload" method="POST" enctype="multipart/form-data" data-file-upload="options">
+            <input type="hidden" id="version" name="version" value="6">
+
             <!-- file drag-in Box -->
             <div class="row form_rows">
 
@@ -306,24 +309,47 @@
                     <!--<img class="thumbnails_img" src="/imgs/ange/_blank_4by3.gif" />-->
                 <!--</div>-->
             <!--</div>&lt;!&ndash; /.col-xs-3 &ndash;&gt;-->
-            <div ng-show="item.ada_que_type == 'upload'">
-                <form  id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options"> <!-- id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options" -->
+            <!--<div ng-show="item.ada_que_type == 'upload'">-->
+                <!--<form  id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options"> &lt;!&ndash; id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options" &ndash;&gt;-->
+                    <!--<input type="hidden" id="version" name="version" value="1">-->
+                    <!--<div class= "form-group form_basic_group">-->
+                        <!--<label class= "form_basic_label">이미지</label>-->
+                        <!--<div class="row" style="margin-left:110px;">-->
+                            <!--<div class="col-sm-4">-->
+                                <!--<div ng-model="file">-->
+                                    <!--<input ng-model="file.name" type= "text" class= "form-control" style="cursor:default" disabled/>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-sm-2 files">-->
+                                <!--&lt;!&ndash; The fileinput-button span is used to style the file input field as button &ndash;&gt;-->
+                                    <!--<span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">-->
+                                        <!--<i class="glyphicon glyphicon-plus"></i>-->
+                                        <!--<span>탐색기</span>-->
+                                        <!--<input type="file" name="files[]" ng-disabled="disabled">-->
+                                    <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</form>-->
+            <!--</div>-->
+            <div ng-show="item.ada_que_type == 'upload'" class="no-margin" style="padding:8px 5px; margin:0px; width:100%;">
+                <form id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
                     <input type="hidden" id="version" name="version" value="1">
-                    <div class= "form-group form_basic_group">
-                        <label class= "form_basic_label">이미지</label>
-                        <div class="row" style="margin-left:110px;">
-                            <div class="col-sm-4">
+                    <div class= "form-group form_basic_group" style="width:100%; margin:0px; padding:0px;">
+                        <!--<label class= "form_basic_label">이미지</label>-->
+                        <div class="row no-margin" style="width:100%;">
+                            <div class="col-xs-8 no-margin">
                                 <div ng-model="file">
-                                    <input ng-model="file.name" type= "text" class= "form-control" style="cursor:default" disabled/>
+                                    <input ng-model="file.name" type= "text" class="form-control input-sm" style="cursor:default; width: 100%;" disabled/>
                                 </div>
                             </div>
-                            <div class="col-sm-2 files">
+                            <div class="col-xs-2 no-margin files" style="padding-left:5px;">
                                 <!-- The fileinput-button span is used to style the file input field as button -->
-                                    <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                        <span>탐색기</span>
-                                        <input type="file" name="files[]" ng-disabled="disabled">
-                                    </span>
+                                <span class="btn btn-success btn-sm fileinput-button" ng-class="{disabled: disabled}">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>탐색기</span>
+                                    <input type="file" name="files[]" ng-disabled="disabled">
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -331,7 +357,7 @@
             </div>
 
             <form name="pollvaliation" id="samplepackvalidation" onSubmit="return CheckForm(this);">
-            <div class="col-xs-7 dragzone_wrap" style="padding:10px; height:100%;">
+            <div class="col-xs-10 dragzone_wrap" style="padding:8px 5px; height:100%;">
                 <!--<div id="dropzone" name="dropzone" class="dragzone" style="height:86px; margin-bottom:10px;">-->
 
                     <!--<div data-ng-repeat="file in queue">-->
@@ -403,8 +429,32 @@
                     </dl>
                 </div>
 
+                <!--<div ng-show="item.ada_que_type == 'upload'" class="no-margin" style="padding:0px; margin:0px; width:100%;">-->
+                    <!--<form id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">-->
+                        <!--<input type="hidden" id="version" name="version" value="1">-->
+                        <!--<div class= "form-group form_basic_group" style="width:100%; margin:0px; padding:0px;">-->
+                            <!--&lt;!&ndash;<label class= "form_basic_label">이미지</label>&ndash;&gt;-->
+                            <!--<div class="row no-margin" style="width:100%;">-->
+                                <!--<div class="col-xs-8 no-margin">-->
+                                    <!--<div ng-model="file">-->
+                                        <!--<input ng-model="file.name" type= "text" class="form-control input-sm" style="cursor:default; width: 100%;" disabled/>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-2 no-margin files" style="padding-left:5px;">-->
+                                    <!--&lt;!&ndash; The fileinput-button span is used to style the file input field as button &ndash;&gt;-->
+                                        <!--<span class="btn btn-success btn-sm fileinput-button" ng-class="{disabled: disabled}">-->
+                                            <!--<i class="glyphicon glyphicon-plus"></i>-->
+                                            <!--<span>탐색기</span>-->
+                                            <!--<input type="file" name="files[]" ng-disabled="disabled">-->
+                                        <!--</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                <!--</div>-->
+
                 <!-- 참여유형이 업로드 중 질문이 있을때 -->
-                <div ng-if="item.ada_que_type == 'upload'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
+                <div ng-if="item.ada_que_type == 'upload'" ng-model="item" class="moms_form" style="margin:0px; display:block;">
 
                     <dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
                         <input type="hidden" name="index[]"  class="poll_upload_no" value="{{query.index}}"/>
@@ -739,9 +789,6 @@
     <!-- /.row -->
         <!-- /file drag-in Box -->
 
-
-
-
         <!--<div class="row form_rows">-->
             <!--<div class="form_basicinfo">-->
                     <!--<span class="col-xs-2 basicinfo title">-->
@@ -784,7 +831,6 @@
                 <a class="samplepack_submit submitbtn" ng-click="click_saveSamplepackComp();"></a>
             </div>
         </div>
-        </form>
 
         <div class="col-xs-12">
             <div ng-model="ad" class="inven_themeup">
@@ -803,8 +849,8 @@
     <div class="samplepack_tabbox"  ng-class="{ 'hidden': showSamplepackDetails }" style="display:block;">
 
         <ul class="nav nav-tabs nav-justified" id="tab" style="font-size:0.92em; font-weight:700;">
-            <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">주의사항</a></li>
-            <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''"><a ng-click="click_selectTab('2');">샘플팩 구성</a></li>
+            <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('1');">주의사항</a></li>
+            <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('2');">샘플팩 구성</a></li>
 
             <!-- 시즌1 주의사항 -->
             <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
@@ -869,48 +915,198 @@
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
 
-
-
                 <!-- 샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
                 <div class="samplepack_goodsbox_td">
-
                     <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_01_babioniq.jpg')"/>
                         <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
-                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
-                            <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                            <p class="table_green">베비오닉 프리미엄 기저귀</p>
+                            <div class="samplepack_goodsboxbody table_gray">기저귀 발진의 철저한 요인 분석을 통해 의학적으로 처방된 천연 식물 성분과 과학적 기술력을 바탕으로 피부 저자극 기저귀 탄생</div>
+                            <a class="samplepack_sponlink" href="http://www.babioniq.co.kr" target="_blank">http://www.babioniq.co.kr</a>
                         </div>
                     </div>
 
                     <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_02.jpg')"/>
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_02_elleairgoo.jpg')"/>
                         <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
-                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
-                            <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                            <p class="table_green">군 신생아 기저귀</p>
+                            <div class="samplepack_goodsboxbody table_gray">3D엠보싱 가공으로 아기 피부에 닿는 면적을 줄여 피부 부담 경감. 통기성 겉커버, 냄새제거기능, 소변 알림마크사용</div>
+                            <a class="samplepack_sponlink" href="http://www.elleairgoo-n.co.kr" target="_blank">http://www.elleairgoo-n.co.kr</a>
                         </div>
                     </div>  <!-- /.samplepack_goodsbox_td -->
-
                 </div>
                 <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
 
-
                 <div class="samplepack_goodsbox_td">
                     <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_03.jpg')"/>
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_03_touch.jpg')"/>
                         <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
-                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
-                            <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                            <p class="table_green">신생아 페넬로페 뭉침없는 기저귀</p>
+                            <div class="samplepack_goodsboxbody table_gray">피부 친화적 원단을 사용해 아기의 피부에 편안함을 주는 것은 물론 소변 냄새까지 잡아줘 쾌적한 사용감을 준다.
+                                피부 접촉 면적을 최소화 시킨 허니콤엠보싱 기술과 통기성을 높인 더블 통기 시스템으로 아기의 피부로 부터 발진 걱정을 해방</div>
+                            <a class="samplepack_sponlink" href="http://www.the1st-touch.com" target="_blank">http://www.the1st-touch.com</a>
                         </div>
                     </div>
                     <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_04_momida.jpg')"/>
                         <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
-                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
-                            <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                            <p class="table_green">나비잠 기저귀</p>
+                            <div class="samplepack_goodsboxbody table_gray">초박형 두께로 민감한 아기가 사용하기 좋습니다. 얇지만 최고의 흡수력을 자랑하며, 3d 엠보원단으로 더욱 부드러워졌으며 시원하고 쾌적한 상태를 유지해줍니다.</div>
+                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_05_novatis.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">노바티스 오트리빈 아스피레이터(영·유아용 코 흡인기)</p>
+                            <div class="samplepack_goodsboxbody table_gray">스스로 코를 풀지 못하는 2세 미만 아이의 코에 맞춰 개발되었습니다. 안전하고 위생적으로 신생아 콧속에 있는 점액과 이물질을 제거해줍니다.</div>
+                            <a class="samplepack_sponlink" href="http://www.novartis.co.kr" target="_blank">http://www.novartis.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_06_bebe.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">하늘수 프리미엄 물티슈</p>
+                            <div class="samplepack_goodsboxbody table_gray">화학성분이 전혀 없는 무방부제 물티슈! 전성분이 정제수와 징크제올라이트 성분 두가지로 아기들 손입 티슈로 사용가능한 프리미엄 물티슈. 민감성 피부에도 사용가능.</div>
+                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_07_son.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">아이에이커머스 3무 물티슈</p>
+                            <div class="samplepack_goodsboxbody table_gray">불만제로 모범업체 선정. 인체피부 자극 테스트를 완료하여 무자극 제품인증.징크제올라이트만을 사용하여 영/유아 및 가족 모두가 안심하고 사용할 수 있음.</div>
+                            <a class="samplepack_sponlink" href="http://www.ia-commerce.com" target="_blank">http://www.ia-commerce.com</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_08_ma.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">깨끗한나라 비야비야 물티슈</p>
+                            <div class="samplepack_goodsboxbody table_gray">소비자가 가장 원하는 안전한 물티슈. 그 마음에 피부건강까지 담아 만든 깨끗한나라에서 만든 자연주의 제품.</div>
+                            <a class="samplepack_sponlink" href="http://www.byabya.co.kr" target="_blank">http://www.byabya.co.kr</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_09_ia.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">스킨베리 나뛰르 베이비 샴푸 & 바스 + 베이비 로션</p>
+                            <div class="samplepack_goodsboxbody table_gray">프랑스 에코서트 유기농 인증. 아기에게 주는 최고의 선물 오가닉 스킨십. 세상에서 가장 소중한 우리 아기를 위해 스킨베리 나뛰르의 오가닉 스킨십을 선물하세요.</div>
+                            <a class="samplepack_sponlink" href="http://www.greaten.co.kr" target="_blank">http://www.greaten.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_10_byabya.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">고려제약 아토아이비 로션, 크림</p>
+                            <div class="samplepack_goodsboxbody table_gray">無스테로이드, 無항생제, 無항히 스타민으로 천연 성분과 IgY를 함유 하여 피부 장벽을 튼튼하게 만들어 주며, 건조하고 민감한 피부에도 자극 없이 부드럽고 매끄럽게 케어</div>
+                            <a class="samplepack_sponlink" href="http://www.atoib.co.kr" target="_blank">http://www.atoib.co.kr</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+                <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_11_greaten.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">뿌르베베 모이스트 로션</p>
+                            <div class="samplepack_goodsboxbody table_gray">보습효과가 뛰어난 칼란코에 콤플렉스와 9가지 허브 블렌딩이 함유 된 보습제.
+                                33가지 유해성분은 모두 배제 했으며, 피부 의 유수분 밸런스 를 조절하고 수분 증발 을 막아 유해 환경으로부터 연약한 아이 피부를 보호해줌. </div>
+                            <a class="samplepack_sponlink" href="http://pourbebe.net" target="_blank">http://pourbebe.net</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_12_atoib.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">아토팜 아이가 좋아하는 세제</p>
+                            <div class="samplepack_goodsboxbody table_gray">특허 MLE성분으로 피부에 순하고 보호까지 해주는 저자극 유아세제.피부과 자극 테스트 완료. 무첨가 안심처방, 드럼/일반세탁기 겸용</div>
+                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_13_aph.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">아토팜 매터니티 키트</p>
+                            <div class="samplepack_goodsboxbody table_gray">임신 중 팽창되는 피부에 탄력과 유연성을 강화시켜주는 임산부 바디케어크림, 로션. 천연보습인자, 식물성오일의 함유로 보습 지속성이 강화되었습니다.</div>
+                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_14_pourbebe.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">쁘띠앤맘크림&오일로션</p>
+                            <div class="samplepack_goodsboxbody table_gray">집중튼살관리와 동시에 충분한 영양과 수분공급으로 튼살예방 및 개선관리가 가능한 제품.</div>
+                            <a class="samplepack_sponlink"  href="http://www.apharm.co.kr" target="_blank">http://www.apharm.co.kr</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_15_atopalm2.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">베베쿡 기운찬 프로바이오 베베 + 기운찬 프로바이오 패밀리 + 처음 먹는 아기 보리차 + 처음 먹는 아기 루이보스티</p>
+                            <div class="samplepack_goodsboxbody table_gray">유기농 현미와 옥수수를 넣어 더욱 부드럽고 구수한 100% 유기농 아기보리차, 미네랄이 풍부하고 카페인이 없는 베이비 루이보스티, 70억 유산균으로 온 가족의 장 건강에 도움.</div>
+                            <a class="samplepack_sponlink"  href="http://shop.bebecook.com" target="_blank">http://shop.bebecook.com</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_16_atopalm.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">순둥이 프리미엄 물티슈</p>
+                            <div class="samplepack_goodsboxbody table_gray">무 표백, 무 색소, 무 포름알데히드, 무 알코올은 물론, 오존수와 코튼 함유 원단, 천연 항균 성분인 라임 에셀셜 오일을 사용한 순한 아기 물티슈.</div>
+                            <a class="samplepack_sponlink"  href="http://www.suomi.co.kr" target="_blank">http://www.suomi.co.kr</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_17_biol.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">임부용품 전문 쇼핑몰 마미즈</p>
+                            <div class="samplepack_goodsboxbody table_gray">감각 있는 없마들의 선택! 산모와 아기를 위한 최고의 선물! 임신부터 출산까지 산모의 활동성과 체형을 고려한 인체공학적 설계를 통해 상품을 제작, 판매하고 있습니다.</div>
+                            <a class="samplepack_sponlink"  href="http://www.mamiz.co.kr" target="_blank">http://www.mamiz.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_18_mamiz.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">비올란 바스&샴푸 + 영양고보습크림</p>
+                            <div class="samplepack_goodsboxbody table_gray">피부건조, 예민한 피부 등 소중한 내 아이에게 순수하고 부드럽게 잘 맞는 스킨&바디케어 비올란. 이젠 내 아이도 비올란으로 시작하세요.</div>
+                            <a class="samplepack_sponlink"  href="http://www.biolanekorea.com" target="_blank">http://www.biolanekorea.com</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_19_big.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">비앤원 H발란스 샘플킷</p>
+                            <div class="samplepack_goodsboxbody table_gray">임산부 전용 헤어케어 시스템. 100% 식물성분 비이온 계면 활성제 사용으로 안심하고 사용 가능, pH4.6의 약산성 헤어케어 시스템이 두피와 모발의 pH발란스 조절.</div>
+                            <a class="samplepack_sponlink"  href="http://www.biggreen.co.kr" target="_blank">http://www.biggreen.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_20_kbic.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">그라노떼 임산부 커피대용차</p>
+                            <div class="samplepack_goodsboxbody table_gray">무카페인, 무방부제, 무첨가물 100% 천연 곡물로 만든 커피대용차. 임산부나 수유부도 카페인 걱정없이 커피의 맛과 향을 즐길 수 있습니다.</div>
+                            <a class="samplepack_sponlink"  href="http://www.kbic.kr" target="_blank">http://www.kbic.kr</a>
                         </div>
                     </div>  <!-- /.samplepack_goodsbox_td -->
                 </div>
@@ -919,53 +1115,185 @@
             <!-- /시즌 1 샘플팩 구성 -->
 
             <!-- 시즌 2 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '2'"style="display:block;">
+            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '2'" style="display:block;">
                 <span class="tabox_title">신규회원 샘플팩 구성</span>
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
 
-
-
                 <!-- 샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
                 <div class="samplepack_goodsbox_td">
-
                     <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_01_babioniq.jpg')"/>
                         <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
-                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
-                            <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                            <p class="table_green">베비오닉 프리미엄 기저귀</p>
+                            <div class="samplepack_goodsboxbody table_gray">기저귀 발진의 철저한 요인 분석을 통해 의학적으로 처방된 천연 식물 성분과 과학적 기술력을 바탕으로 피부 저자극 기저귀 탄생</div>
+                            <a class="samplepack_sponlink" href="http://www.babioniq.co.kr" target="_blank">http://www.babioniq.co.kr</a>
                         </div>
                     </div>
-
                     <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_02.jpg')"/>
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_02_elleairgoo.jpg')"/>
                         <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
-                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
-                            <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                            <p class="table_green">군 신생아 기저귀</p>
+                            <div class="samplepack_goodsboxbody table_gray">3D엠보싱 가공으로 아기 피부에 닿는 면적을 줄여 피부 부담 경감. 통기성 겉커버, 냄새제거기능, 소변 알림마크사용</div>
+                            <a class="samplepack_sponlink" href="http://www.elleairgoo-n.co.kr" target="_blank">http://www.elleairgoo-n.co.kr</a>
                         </div>
                     </div>  <!-- /.samplepack_goodsbox_td -->
-
                 </div>
                 <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
 
-
                 <div class="samplepack_goodsbox_td">
                     <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_03.jpg')"/>
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_03_touch.jpg')"/>
                         <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
-                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용,신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
-                            <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                            <p class="table_green">신생아 페넬로페 뭉침없는 기저귀</p>
+                            <div class="samplepack_goodsboxbody table_gray">피부 친화적 원단을 사용해 아기의 피부에 편안함을 주는 것은 물론 소변 냄새까지 잡아줘 쾌적한 사용감을 준다. 피부 접촉 면적을 최소화 시킨 허니콤엠보싱 기술과 통기성을 높인 더블 통기 시스템으로 아기의 피부로 부터 발진 걱정을 해방</div>
+                            <a class="samplepack_sponlink" href="http:/www.the1st-touch.com" target="_blank">http:/www.the1st-touch.com</a>
                         </div>
                     </div>
                     <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg')"/>
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_04_milestone.jpg')"/>
                         <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">보솜이 프리미엄 천연코튼 보솜이 프리미엄 보솜이 프리미엄</p>
-                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">신소재 공법으로 개발된 저자극 듀얼 소프트 쿠션커버 사용, 초흡수 에어홀로 우리 아기 엉덩이를 더욱 상쾌하고 보송하게 지켜줍니다.</div>
-                            <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="#" target="_blank">http://www.bosomi.co.kr</a>
+                            <p class="table_green">벨라베이비해피 기저귀</p>
+                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">흡수력의 정석, 3D system 샘방지의 유럽 프리미엄 기저귀.사용 후 변기에 버릴 수 있는 과일향 비데 물티슈.</div>
+                            <a class="samplepack_sponlink" href="http://www.milestonedevelopment-n.co.kr" target="_blank">www.milestonedevelopment.co.kr</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_05_totori.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">헬로토토리 기저귀</p>
+                            <div class="samplepack_goodsboxbody table_gray">공기 솔솔~ 더블 통기시스템. 접착력좋고 부드러운 라운드타입의 테이프. 탄탄한 고탄력 허리밴드, 똑똑한 소변알림줄. 이중샘방지커버까지!</div>
+                            <a class="samplepack_sponlink" href="http://www.totori.co.kr" target="_blank">http://www.totori.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_06_momida.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">나비잠 기저귀</p>
+                            <div class="samplepack_goodsboxbody table_gray">초박형 두께로 민감한 아기가 사용하기 좋습니다. 얇지만 최고의 흡수력을 자랑하며, 3d 엠보원단으로 더욱 부드러워졌으며
+                                시원하고 쾌적한 상태를 유지해줍니다.</div>
+                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_07_momidati.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">하늘수 프리미엄 물티슈</p>
+                            <div class="samplepack_goodsboxbody table_gray">화학성분이 전혀 없는 무방부제 물티슈!! 전성분이 정제수와 징크제올라이트성분 두가지로 아기들 손입 티슈로 사용가능한 프리미엄 물티슈 .
+                                민감성 피부에도 사용가능</div>
+                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_08_byabya.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">깨끗한나라 비야비야 물티슈</p>
+                            <div class="samplepack_goodsboxbody table_gray">소비자가 가장 원하는 안전한 물티슈. 그 마음에 피부건강까지 담아 만든 깨끗한나라에서 만든 자연주의 제품.</div>
+                            <a class="samplepack_sponlink" href="http:/www.byabya.co.kr" target="_blank">http:/www.byabya.co.kr</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_09_ia.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">삼무 프리미엄 휴대용 물티슈</p>
+                            <div class="samplepack_goodsboxbody table_gray">불만제로 모범업체 선정. 인체피부 자극 테스트를 완료하여 무자극 제품인증. 징크제올라이트만을 사용하여 영/유아 및 가족 모두가 안심하고 사용할 수 있음.</div>
+                            <a class="samplepack_sponlink" href="http://www.ia-commerce.com" target="_blank">http://www.ia-commerce.com</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_10_novatis.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">노바티스 오트리빈 아스피레이터(영·유아용 코 흡인기)</p>
+                            <div class="samplepack_goodsboxbody table_gray">스스로 코를 풀지 못하는 2세 미만 아이의 코에 맞춰 개발되었습니다.
+                                안전하고 위생적으로 신생아 콧속에 있는 점액과 이물질을 제거해줍니다</div>
+                            <a class="samplepack_sponlink" href="http://www.novartis.co.kr" target="_blank">http://www.novartis.co.kr</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_11_atopalm.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">아토팜 아이가 좋아하는 세제</p>
+                            <div class="samplepack_goodsboxbody table_gray">특허 MLE성분으로 피부에 순하고 보호까지 해주는 저자극 유아세제.피부과 자극 테스트 완료. 무첨가 안심처방, 드럼/일반세탁기 겸용</div>
+                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_12_atopalm2.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">아토팜 매터니티 키트</p>
+                            <div class="samplepack_goodsboxbody table_gray">임신 중 팽창되는 피부에 탄력과 유연성을 강화시켜주는 임산부 바디케어크림, 로션. 천연보습인자, 식물성오일의 함유로 보습 지속성이 강화되었습니다.</div>
+                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_13_greaten.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">스킨베리 나뛰르 베이비 샴푸 & 바스 + 베이비 로션</p>
+                            <div class="samplepack_goodsboxbody table_gray">프랑스 에코서트 유기농 인증. 아기에게 주는 최고의 선물 오가닉 스킨십.
+                                세상에서 가장 소중한 우리 아기를 위해 스킨베리 나뛰르의 오가닉 스킨십을 선물하세요.</div>
+                            <a class="samplepack_sponlink" href="http://www.greaten.co.kr" target="_blank">http://www.greaten.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_14_cetaphil.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">세타필  바디 키트</p>
+                            <div class="samplepack_goodsboxbody table_gray">건조하고 민감한 피부를 위한 세계인의 선택 세타필! 세타필바로 부드럽게 씻어주고 세타필 로션, 크림으로 전신 보습!</div>
+                            <a class="samplepack_sponlink" href="http://cafe.naver.com/mycetaphil" target="_blank">http://cafe.naver.com/mycetaphil</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_15_swiss.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">스위스나뚜리치 실키로션</p>
+                            <div class="samplepack_goodsboxbody table_gray">순수 자연유래 오일성분과 오렌 지수가 아기의 피부에 보호막을 만들어 수분손실을 최소화. 부드럽게 발리는 텍스쳐의 프리미엄 보습로션.</div>
+                            <a class="samplepack_sponlink" href="http://www.swissnatuerlich.co.kr" target="_blank">http://www.swissnatuerlich.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_16_pourbebe.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">뿌르베베 모이스트 로션</p>
+                            <div class="samplepack_goodsboxbody table_gray">보습효과가 뛰어난 칼란코에 콤플렉스와 9가지 허브 블렌딩이 함유 된 보습제.
+                                33가지 유해성분은 모두 배제 했으며, 피부 의 유수분 밸런스 를 조절하고 수분 증발 을 막아 유해 환경으로부터 연약한 아이 피부를 보호해줌. </div>
+                            <a class="samplepack_sponlink" href="http://pourbebe.net" target="_blank">http://pourbebe.net</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_17_atoib.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">고려제약 아토아이비 로션, 크림</p>
+                            <div class="samplepack_goodsboxbody table_gray">無스테로이드, 無항생제, 無항히 스타민으로 천연 성분과 IgY를 함유 하여 피부 장벽을 튼튼하게 만들어 주며, 건조하고 민감한 피부에도 자극 없이 부드럽고 매끄럽게 케어</div>
+                            <a class="samplepack_sponlink" href="http://www.atoib.co.kr" target="_blank">http://www.atoib.co.kr</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_18_daewoong.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">대웅제약 락피더스 유산균</p>
+                            <div class="samplepack_goodsboxbody table_gray">유산균을 꾸준히 섭취하면 유해균 의 활동이 억제되고 장의 운동과 배변이 원활해지며 몸의 저항성이 향상됩니다. 특히 임신부 섭취 시 효과 탁월.</div>
+                            <a class="samplepack_sponlink" href="http://www.daewoong.co.kr" target="_blank">http://www.daewoong.co.kr</a>
                         </div>
                     </div>  <!-- /.samplepack_goodsbox_td -->
                 </div>

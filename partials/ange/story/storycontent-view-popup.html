@@ -8,22 +8,22 @@
         </div>
 
         <div ng-model="task" class="modal-body">
-            <div class="people_photo_sharewrap" style="width:100%; max-width:780px; position:absolute; top:10px; right:50px;">
+            <div class="people_photo_sharewrap" style="width:100%; max-width:780px; position:absolute; top:10px; right:5%;">
                 <div class="people_share">
-                    <button class="story_sharebtn kakaobtn" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="이 글을 인쇄하려면 클릭"><span class="story_btnicon kakao"></span>카카오</button>
-                    <button class="story_sharebtn twitterbtn" ng-click="click_loginWithTwitter()" title="이 글을 인쇄하려면 클릭"><span class="story_btnicon twitter"></span>트위터</button>
-                    <button class="story_sharebtn facebookbtn" ng-click="click_loginWithFacebook()" title="이 글을 인쇄하려면 클릭"><span class="story_btnicon facebook"></span>페이스북</button>
-                    <button class="story_sharebtn blackbtn" ng-click="click_printDiv('content')" title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
+                    <button class="story_sharebtn kakaobtn" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="카카오스토리에 공유"><span class="story_btnicon kakao"></span>카카오</button>
+                    <button class="story_sharebtn twitterbtn" ng-click="click_loginWithTwitter()" title="트위터에 공유"><span class="story_btnicon twitter"></span>트위터</button>
+                    <button class="story_sharebtn facebookbtn" ng-click="click_loginWithFacebook()" title="페이스북에 공유"><span class="story_btnicon facebook"></span>페이스북</button>
+                    <button class="story_sharebtn blackbtn" ng-click="click_printDiv('content')" title="인쇄하기"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
                     <!--<button class="story_sharebtn blackbtn" ng-click="click_shareContent()" title="이 글을 공유하려면 클릭"><span class="glyphicon glyphicon-cloud-upload sharebtn_icon"></span>공 유</button>-->
-                    <button class="story_sharebtn redbtn" ng-click="click_addScrap();" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>
+                    <button class="story_sharebtn redbtn" ng-click="click_addScrap();" title="스크랩하기"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>
                 </div>
 
-                <div class="peopke_share_mobile">
-                    <button class="story_sharebtn_mobile kakaobtn" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="이 글을 인쇄하려면 클릭"><span class="story_btnicon kakao"></span></button>
-                    <button class="story_sharebtn_mobile twitterbtn" ng-click="click_loginWithTwitter()" title="이 글을 인쇄하려면 클릭"><span class="story_btnicon twitter"></span></button>
-                    <button class="story_sharebtn_mobile facebookbtn" ng-click="click_loginWithFacebook()" title="이 글을 인쇄하려면 클릭"><span class="story_btnicon facebook"></span></button>
-                    <button class="story_sharebtn_mobile blackbtn" ng-click="click_printDiv('content')" title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-print sharebtn_icon"></span></button>
-                    <button class="story_sharebtn_mobile redbtn" ng-click="click_addScrap();" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span></button>
+                <div class="people_share_mobile">
+                    <button class="story_sharebtn_mobile kakao" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="카카오스토리에 공유"></button>
+                    <button class="story_sharebtn_mobile twitter" ng-click="click_loginWithTwitter()" title="트위터에 공유"></button>
+                    <button class="story_sharebtn_mobile facebook" ng-click="click_loginWithFacebook()" title="페이스북에 공유"></button>
+                    <button class="story_sharebtn_mobile priint" ng-click="click_printDiv('content')" title="인쇄하기"></button>
+                    <button class="story_sharebtn_mobile scrap" ng-click="click_addScrap();" title="스크랩하기"></button>
                 </div>
             </div>
             <!--<a id="kakao-login-btn" ng-controller="kakao_share"></a>-->
@@ -178,8 +178,11 @@
                         <div style="text-align:center">
                             <div ng-model="task">
 
-                                <a ng-click="click_addLike()" style="cursor:pointer;">
-                                    <img src="/imgs/ange/btn_story_likebig.png" style="clear:both; float:none; width:293px; height:87px;"/>
+                                <!--<a ng-class="item.LIKE_FL == 'Y' ? 'icon_like_on' : 'icon_like'" style="margin-right:0;" title="공감한 스토리는 자동으로 스크랩됩니다." ng-click="click_addLike($index, item)">좋아요?</a>-->
+
+                                <a ng-click="click_addLike()" title="공감한 스토리는 자동으로 스크랩됩니다." style="cursor:pointer;">
+                                    <img ng-show="!uid || task.LIKE_FL != 'Y'" src="/imgs/ange/btn_like_off.png" style="clear:both; float:none; width:249px; height:63px;"/>
+                                    <img ng-show="task.LIKE_FL == 'Y'" src="/imgs/ange/btn_like_on.png" style="clear:both; float:none; width:249px; height:63px;"/>
                                 </a>
 
                                 <br />

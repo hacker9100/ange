@@ -276,7 +276,7 @@ a.samplepack_gotoreview:hover {
 }
 
 .samplepack_oldrequest {
-    width: 180px;
+    width: 159px;
     height: 27px;
     border:none;
     padding:0px;
@@ -315,7 +315,7 @@ a.samplepack_gotoreview:hover {
     background-position: left top;
 }
 
-.samplepack_newrequest:hover, .samplepack_gotojoin:hover, .samplepack_cofirmfirst:hover, .samplepack_postsend:hover {
+.samplepack_newrequest:hover, .samplepack_oldrequest:hover, .samplepack_gotojoin:hover, .samplepack_cofirmfirst:hover, .samplepack_postsend:hover {
     background-position: left -27px;
 }
 
@@ -430,6 +430,19 @@ a.samplepack_gotoreview:hover {
 
 .samplepack_submit.submitbtn {
     background-image: url('/imgs/ange/samplepack_btn_submit.png');
+}
+
+.samplepack_goodsboxbody {
+    clear:both;
+    font-size:0.86em;
+    line-height:15px;
+}
+.samplepack_sponlink {
+    float:left;
+    margin-top:5px;
+    font-family: arial, sans-serif;
+    font-size:0.82em;
+    color:#868686 !important;
 }
 
 /* 이벤트 임시 클래스 모음 */
