@@ -13,10 +13,11 @@
     <div class="mini_story_rollcate" style="margin-bottom:5px;">
         <a class="mini_story_rollcate_left" ng-click="click_preCategory()">Pre Category</a>
 
-        <div class="mini_story_rollcate_catenames">
-            <ul class="mini_story_rollcate_ul">
-                <slick id="category" current-index="0" infinite="false" dots="false" autoplay="false" slides-to-show="6" slides-to-scroll="1">
+        <div class="col-xs-10 no-margin" style="width:100%; padding:0 2%; height:100%; line-height: 34px;">
+            <!--<ul class="mini_story_rollcate_ul">-->
+                <slick id="category" current-index="0" infinite="false" dots="false" autoplay="false" center-mode="true" slides-to-show="6" slides-to-scroll="1">
                     <!--<div ng-repeat="category in category_b">-->
+                        <!--<a class="rollcate_link" ng-click="click_selectCategory(category, $index)">{{::category.CATEGORY_NM }}</a>-->
                         <!--<li ng-class="cateIdx == $index ? 'foucs' : ''">-->
                             <!--<a class="rollcate_link" ng-click="click_selectCategory(category, $index)">{{::category.CATEGORY_NM }}</a>-->
                         <!--</li>-->
@@ -28,7 +29,7 @@
                     <!--<span ng-if="categoryIdx == category.NO && (cateIdx <= $index) && (cateIdx + 5 > $index)">{{::category.CATEGORY_NM }}</span>-->
                 <!--</li>-->
 
-            </ul>
+            <!--</ul>-->
         </div>
         <a class="mini_story_rollcate_right" ng-click="click_nextCategory()">Next Category</a>
     </div>
