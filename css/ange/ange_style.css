@@ -2490,7 +2490,7 @@ img.blank_wrap {
     vertical-align:top;
 }
 
-.peopke_share_mobile {
+.people_share_mobile {
     display:none;
     float:right;
     line-height:20px;
@@ -2499,7 +2499,7 @@ img.blank_wrap {
 
 
 @media screen and (max-width: 768px) {
-    .peopke_share_mobile {
+    .people_share_mobile {
         display: block;
     }
 
@@ -2571,6 +2571,30 @@ img.blank_wrap {
 .story_btnicon.facebook {
     background-image: url('/imgs/ange/btnicon_facebook.png');
 }
+
+
+.story_sharebtn_mobile {
+    float:left;
+    height:25px;
+    width:25px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+    border:0;
+    background-color: transparent;
+    padding:0;
+    margin-right:6px;
+}
+
+.story_sharebtn_mobile:hover {
+    opacity: 0.7;
+}
+
+.story_sharebtn_mobile.kakao    { background-image: url('/imgs/ange/btn_sns_lg03_kakao.png'); }
+.story_sharebtn_mobile.twitter  { background-image: url('/imgs/ange/btn_sns_lg01_twitter.png'); }
+.story_sharebtn_mobile.facebook { background-image: url('/imgs/ange/btn_sns_lg02_facebook.png'); }
+.story_sharebtn_mobile.priint   { background-image: url('/imgs/ange/btn_sns_lg04_print.png'); }
+.story_sharebtn_mobile.scrap    { background-image: url('/imgs/ange/btn_sns_lg05_scrap.png'); }
 
 
 /* /Story 전용 공유 버튼 */

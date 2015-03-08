@@ -241,6 +241,7 @@ define([
                    $scope.item.ada_date_open = data[0].ada_date_open;
                    $scope.item.ada_date_close = data[0].ada_date_close;
                    $scope.item.ada_date_notice = data[0].ada_date_notice;
+                   $scope.item.ada_title = data[0].ada_title;
 
 
                    $scope.item.TARGET_GB = target_gb;
