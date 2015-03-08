@@ -5,79 +5,79 @@
     Description : app의 최상위 파일로서 최초 로딩되는 index 파일
 -->
 <?php
-    header("Content-type: text/html; charset=utf-8");
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Expires: Tue, 01 Jan 1980 1:00:00 GMT");
-    header("Expires: -1");
-    header("Pragma: no-cache");
+header("Content-type: text/html; charset=utf-8");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Pragma: no-cache");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Expires: Tue, 01 Jan 1980 1:00:00 GMT");
+header("Expires: -1");
 
-    @extract($_SERVER);
+@extract($_SERVER);
 
-    include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
-    MtUtil::_d("### [START]");
+include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+MtUtil::_d("### [START]");
 
-    $_d = new MtJson(null);
+$_d = new MtJson(null);
 
-    $system = "ANGE";
+$system = "ANGE";
 
-    $sql = "SELECT
-                CHANNEL_NO, CHANNEL_ID, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION, COLUMN_CNT
-            FROM
-                COM_CHANNEL
-            WHERE
-                SYSTEM_GB = '".$system."'
-                AND CHANNEL_ST = 'Y'
-            ORDER BY CHANNEL_NO ASC
-            ";
+$sql = "SELECT
+            CHANNEL_NO, CHANNEL_ID, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION, COLUMN_CNT
+        FROM
+            COM_CHANNEL
+        WHERE
+            SYSTEM_GB = '".$system."'
+            AND CHANNEL_ST = 'Y'
+        ORDER BY CHANNEL_NO ASC
+        ";
 
-    $channel_data = $_d->getData($sql);
+$channel_data = $_d->getData($sql);
 
-    $sql = "SELECT
-                CM.NO, CM.MENU_ID, CM.MENU_URL, CM.CHANNEL_NO, CM.MENU_NM, CM.SYSTEM_GB, CM.DIVIDER_FL, DEPTH, CM.LINK_FL, CM.CLASS_GB, CM.MENU_DESC, CM.TAIL_DESC, CM.ETC, AC.NO AS COMM_NO, AC.COMM_GB
-            FROM
-                COM_MENU CM
-                LEFT OUTER JOIN ANGE_COMM AC ON CM.MENU_ID = AC.MENU_ID
-            WHERE
-                CM.SYSTEM_GB  = '".$system."'
-                AND CM.MENU_ST  = 'Y'
-            ORDER BY CM.MENU_ORD ASC
-            ";
+$sql = "SELECT
+            CM.NO, CM.MENU_ID, CM.MENU_URL, CM.CHANNEL_NO, CM.MENU_NM, CM.SYSTEM_GB, CM.DIVIDER_FL, DEPTH, CM.LINK_FL, CM.CLASS_GB, CM.MENU_DESC, CM.TAIL_DESC, CM.ETC, AC.NO AS COMM_NO, AC.COMM_GB
+        FROM
+            COM_MENU CM
+            LEFT OUTER JOIN ANGE_COMM AC ON CM.MENU_ID = AC.MENU_ID
+        WHERE
+            CM.SYSTEM_GB  = '".$system."'
+            AND CM.MENU_ST  = 'Y'
+        ORDER BY CM.MENU_ORD ASC
+        ";
 
-    $menu_data = $_d->getData($sql);
+$menu_data = $_d->getData($sql);
 
-    $title = "";
-    $description = "";
-    $image = "";
-    $url = BASE_URL.$REQUEST_URI;
-    $path = explode('/', $REQUEST_URI);
+$title = "";
+$description = "";
+$image = "";
+$url = BASE_URL.$REQUEST_URI;
+$path = explode('/', $REQUEST_URI);
 
-    if ((sizeof($path) == 5) == 1) {
-        if ($path[1] == "story") {
-            $sql = "SELECT
-                       T.SUBJECT, T.SUMMARY, F.PATH, F.FILE_ID
-                    FROM
-                       CMS_TASK T
-                            LEFT OUTER JOIN CMS_CONTENT C ON T.NO = C.TASK_NO AND C.CURRENT_FL = 'Y'
-                            INNER JOIN CONTENT_SOURCE S ON C.NO = S.TARGET_NO AND S.TARGET_GB = 'CONTENT'
-                            INNER JOIN FILE F ON F.NO = S.SOURCE_NO AND F.FILE_GB = 'MAIN'
-                    WHERE
-                        T.NO = ".$path[4]."
-                    ";
+if ((sizeof($path) == 5) == 1) {
+    if ($path[1] == "story") {
+        $sql = "SELECT
+                   T.SUBJECT, T.SUMMARY, F.PATH, F.FILE_ID
+                FROM
+                   CMS_TASK T
+                        LEFT OUTER JOIN CMS_CONTENT C ON T.NO = C.TASK_NO AND C.CURRENT_FL = 'Y'
+                        INNER JOIN CONTENT_SOURCE S ON C.NO = S.TARGET_NO AND S.TARGET_GB = 'CONTENT'
+                        INNER JOIN FILE F ON F.NO = S.SOURCE_NO AND F.FILE_GB = 'MAIN'
+                WHERE
+                    T.NO = ".$path[4]."
+                ";
 
-            $task_data = $_d->sql_fetch($sql);
+        $task_data = $_d->sql_fetch($sql);
 
-            $title = $task_data['SUBJECT'];
-            $description = $task_data['SUMMARY'];
-            $image = BASE_URL."/thumbnail".$task_data['PATH'].$task_data['FILE_ID'];
-        }
+        $title = $task_data['SUBJECT'];
+        $description = $task_data['SUMMARY'];
+        $image = BASE_URL."/thumbnail".$task_data['PATH'].$task_data['FILE_ID'];
     }
+}
 
-    ob_end_clean();
-    $channel_info = json_encode($channel_data);
-    $menu_info = json_encode($menu_data);
+ob_end_clean();
+$channel_info = json_encode($channel_data);
+$menu_info = json_encode($menu_data);
 
-    MtUtil::_d("### [END]");
+MtUtil::_d("### [END]");
 ?>
 
 <!doctype html>

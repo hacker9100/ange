@@ -13,6 +13,54 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsexperience-view', ['$scope', '$rootScope', '$sce', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope,$rootScope, $sce, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
 
+        $scope.imageMap = function(id) {
+            if (angular.element('img[usemap=#'+id+']').attr('usemap') == undefined) {
+                return;
+            }
+
+            var w = angular.element('img[usemap=#'+id+']').attr('width'),
+                h = angular.element('img[usemap=#'+id+']').attr('height');
+
+            function resize(){
+                if (!w || !h) {
+                    var temp = new Image();
+                    temp.src = angular.element('img[usemap=#'+id+']').attr('src');
+                    if(temp.src == undefined)
+                        temp.src = angular.element('img[usemap=#'+id+']').attr('ng-src');
+
+                    if (!w)
+                        w = temp.width;
+                    if (!h)
+                        h = temp.height;
+                }
+
+                var wPercent = angular.element('img[usemap=#'+id+']').width()/100,
+                    hPercent = angular.element('img[usemap=#'+id+']').height()/100,
+                    map = angular.element('img[usemap=#'+id+']').attr('usemap').replace('#', ''),
+                    c = 'coords';
+
+                angular.element('map[name="' + map + '"]').find('area').each(function(){
+                    var $this = $(this);
+
+                    if (!$this.data(c)){
+                        $this.data(c, $this.attr(c));
+                    }
+
+                    var coords = $this.data(c).split(','),
+                        coordsPercent = new Array(coords.length);
+
+                    for (var i = 0; i<coordsPercent.length; ++i){
+                        if (i % 2 === 0){
+                            coordsPercent[i] = parseInt(((coords[i]/w)*100)*wPercent);
+                        } else {
+                            coordsPercent[i] = parseInt(((coords[i]/h)*100)*hPercent);
+                        };
+                    };
+                    $this.attr(c, coordsPercent.toString());
+                });
+            }
+            angular.element($window).resize(resize).trigger('resize');
+        };
 
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
@@ -302,6 +350,10 @@ define([
                         $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
 
                         $scope.renderHtml = $sce.trustAsHtml($scope.ada_text+data.ada_imagemap);
+
+                        $timeout(function() {
+                            $scope.imageMap('adimage');
+                        }, 500);
 
                         //$scope.D_DAY = parseInt($scope.end_date) - parseInt($scope.todayDate);
 

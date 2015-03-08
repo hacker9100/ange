@@ -5,90 +5,90 @@
     Description : app의 최상위 파일로서 최초 로딩되는 index 파일
 -->
 <?php
-    header("Content-type: text/html; charset=utf-8");
-    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-    header("Cache-Control: post-check=0, pre-check=0", false);
-    header("Expires: Tue, 01 Jan 1980 1:00:00 GMT");
-    header("Expires: -1");
-    header("Pragma: no-cache");
+header("Content-type: text/html; charset=utf-8");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Pragma: no-cache");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Expires: Tue, 01 Jan 1980 1:00:00 GMT");
+header("Expires: -1");
 
-    @extract($_SERVER);
+@extract($_SERVER);
 
-    include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
-    MtUtil::_c("### [START]");
+include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
+MtUtil::_c("### [START]");
 
-    $_d = new MtJson(null);
+$_d = new MtJson(null);
 
-    $system = "CMS";
+$system = "CMS";
 
-    $sql = "SELECT
-                CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION
-            FROM
-                COM_CHANNEL
-            WHERE
-                SYSTEM_GB = '".$system."'
-                AND CHANNEL_ST = 'Y'
-            ORDER BY CHANNEL_NO ASC
-            ";
+$sql = "SELECT
+            CHANNEL_NO, CHANNEL_URL, CHANNEL_NM, TAG, SYSTEM_GB, DROP_FL, POSITION
+        FROM
+            COM_CHANNEL
+        WHERE
+            SYSTEM_GB = '".$system."'
+            AND CHANNEL_ST = 'Y'
+        ORDER BY CHANNEL_NO ASC
+        ";
 
-    $__trn = '';
-    $result = $_d->sql_query($sql,true);
-    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-        $sql = "SELECT
-                    MENU_ID, MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
-                FROM
-                    COM_MENU
-                WHERE
-                    SYSTEM_GB = '".$system."'
-                    AND MENU_ST = 'Y'
-                    AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
-                ORDER BY MENU_ORD ASC
-                ";
-
-        $menu_data = $_d->getData($sql);
-        $row['MENU_INFO'] = $menu_data;
-
-        $__trn->rows[$i] = $row;
-    }
-    $_d->sql_free_result($result);
-    $channel_data = $__trn->{'rows'};
+$__trn = '';
+$result = $_d->sql_query($sql,true);
+for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
     $sql = "SELECT
-                MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, MENU_DESC, TAIL_DESC
+                MENU_ID, MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, DIVIDER_FL, MENU_DESC, TAIL_DESC
             FROM
                 COM_MENU
             WHERE
-                SYSTEM_GB  = '".$system."'
-                AND MENU_ST  = 'Y'
+                SYSTEM_GB = '".$system."'
+                AND MENU_ST = 'Y'
+                AND CHANNEL_NO  = '".$row[CHANNEL_NO]."'
             ORDER BY MENU_ORD ASC
             ";
 
-    $__trn = '';
-    $result = $_d->sql_query($sql,true);
-    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+    $menu_data = $_d->getData($sql);
+    $row['MENU_INFO'] = $menu_data;
 
-        $sql = "SELECT
-                    MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, COLUMN_ORD, ROW_ORD
-                FROM
-                    COM_SUB_MENU
-                WHERE
-                    MENU_URL = '".$row[MENU_URL]."'
-                ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
-                ";
+    $__trn->rows[$i] = $row;
+}
+$_d->sql_free_result($result);
+$channel_data = $__trn->{'rows'};
 
-        $sub_menu_data = $_d->getData($sql);
-        $row['SUB_MENU_INFO'] = $sub_menu_data;
+$sql = "SELECT
+            MENU_URL, CHANNEL_NO, MENU_NM, SYSTEM_GB, MENU_DESC, TAIL_DESC
+        FROM
+            COM_MENU
+        WHERE
+            SYSTEM_GB  = '".$system."'
+            AND MENU_ST  = 'Y'
+        ORDER BY MENU_ORD ASC
+        ";
 
-        $__trn->rows[$i] = $row;
-    }
-    $_d->sql_free_result($result);
-    $menu_data = $__trn->{'rows'};
+$__trn = '';
+$result = $_d->sql_query($sql,true);
+for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-    ob_end_clean();
-    $channel_info = json_encode($channel_data);
-    $menu_info = json_encode($menu_data);
-    MtUtil::_c("### [END]");
+    $sql = "SELECT
+                MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, COLUMN_ORD, ROW_ORD
+            FROM
+                COM_SUB_MENU
+            WHERE
+                MENU_URL = '".$row[MENU_URL]."'
+            ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
+            ";
+
+    $sub_menu_data = $_d->getData($sql);
+    $row['SUB_MENU_INFO'] = $sub_menu_data;
+
+    $__trn->rows[$i] = $row;
+}
+$_d->sql_free_result($result);
+$menu_data = $__trn->{'rows'};
+
+ob_end_clean();
+$channel_info = json_encode($channel_data);
+$menu_info = json_encode($menu_data);
+MtUtil::_c("### [END]");
 ?>
 
 <!doctype html>

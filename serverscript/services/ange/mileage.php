@@ -414,8 +414,8 @@
                     $sql = "UPDATE
                                 COM_USER
                             SET
-                                SUM_POINT = ".$sum_point."
-                                ,REMAIN_POINT = ".$remain_point."
+                                SUM_POINT = SUM_POINT + ".$sum_point."
+                                ,REMAIN_POINT = REMAIN_POINT + ".$remain_point."
                             WHERE
                                 USER_ID = '".$row[USER_ID]."'";
 
@@ -471,10 +471,11 @@
                     $_d->succEnd($no);
                 }
             }else if($_type == 'mileageitemplus'){
-
+                $_d->succEnd('');
+/*
                 $sql = "UPDATE COM_USER SET
-                                SUM_POINT = USE_POINT + ".$_model[REMAIN_POINT]."
-                                ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
+                                SUM_POINT = SUM_POINT + ".$_model[SUM_POINT]."
+                                ,REMAIN_POINT = REMAIN_POINT + ".$_model[REMAIN_POINT]."
                          WHERE USER_ID = '".$_SESSION['uid']."'";
 
                 $_d->sql_query($sql);
@@ -485,10 +486,12 @@
                 } else {
                     $_d->succEnd($no);
                 }
+*/
             }else if($_type == 'mileageitemminus'){
-
+                $_d->succEnd('');
+/*
                 $sql = "UPDATE COM_USER SET
-                                SUM_POINT = SUM_POINT - ".$_model[REMAIN_POINT]."
+                                SUM_POINT = SUM_POINT - ".$_model[SUM_POINT]."
                                 ,REMAIN_POINT = REMAIN_POINT - ".$_model[REMAIN_POINT]."
                          WHERE USER_ID = '".$_SESSION['uid']."'";
 
@@ -500,6 +503,7 @@
                 } else {
                     $_d->succEnd($no);
                 }
+*/
             }
 
             break;

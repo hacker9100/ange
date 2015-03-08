@@ -607,7 +607,6 @@ define([
             if (item.ada_url != undefined && item.ada_url != '') {
                 $scope.adBannerUrl(item.ada_idx, 1)
                     .then(function(data){
-                        alert(2)
                         if ($rootScope.uid != '' && $rootScope.uid != null) {
                             $scope.addMileage('BANNER', null);
                         }
