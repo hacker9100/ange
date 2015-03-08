@@ -5,6 +5,13 @@
     Description : app의 최상위 파일로서 최초 로딩되는 index 파일
 -->
 <?php
+    header("Content-type: text/html; charset=utf-8");
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Expires: Tue, 01 Jan 1980 1:00:00 GMT");
+    header("Expires: -1");
+    header("Pragma: no-cache");
+
     @extract($_SERVER);
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
@@ -94,7 +101,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
-
+<!--
+<meta http-equiv="cache-control" content="max-age=0" />
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="-1" />
+<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+<meta http-equiv="pragma" content="no-cache">
+-->
 <link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />
 <link rel="stylesheet" type="text/css" href="/lib/ngActivityIndicator/css/ngActivityIndicator.css" />
 <link rel="stylesheet" type="text/css" href="/lib/fullcalendar/fullcalendar.css" />

@@ -53,7 +53,7 @@ define([
         $httpProvider.defaults.cache = false;
         $httpProvider.defaults.headers.common['Cache-Control'] = 'no-cache, no-store, must-revalidate';
         $httpProvider.defaults.headers.common['Pragma'] = 'no-cache';
-        $httpProvider.defaults.headers.common['Expires'] = '0';
+        $httpProvider.defaults.headers.common['Expires'] = '-1';
 
         // fileUpload
         delete $httpProvider.defaults.headers.common['X-Requested-With'];

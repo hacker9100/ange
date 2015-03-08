@@ -1226,14 +1226,6 @@
 //                 WHERE NO = ".$_key;
 
                 $_d->sql_query($sql);
-
-//                $sql = "DELETE FROM COM_SCRAP WHERE TARGET_NO = ".$_key;
-//
-////                $sql = "UPDATE COM_BOARD SET
-////                 BOARD_ST = 'D'
-////                 WHERE NO = ".$_key;
-//
-//                $_d->sql_query($sql);
                 /*$no = $_d->mysql_insert_id;*/
 
                 if($_d->mysql_errno > 0) {

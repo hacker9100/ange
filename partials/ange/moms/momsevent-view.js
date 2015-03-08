@@ -782,6 +782,7 @@ define([
                             }
 
                             $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                            $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
                             console.log($scope.item.ANSWER);
 
                             $scope.insertItem('ange/comp', 'item', $scope.item, false)
@@ -914,6 +915,7 @@ define([
                             }
 
                             $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                            $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
                             console.log($scope.item.ANSWER);
 
                             $scope.insertItem('ange/comp', 'item', $scope.item, false)
@@ -1120,6 +1122,7 @@ define([
                                 }
 
                                 $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                                $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
                                 console.log($scope.item.ANSWER);
                             }
 
@@ -1274,7 +1277,11 @@ define([
 
                                 var last_poll_length = 0;
                                 last_poll_length = poll_length+1;
+                                //$scope.item.ANSWER = '{'+$rootScope.jsontext2+',"'+last_poll_length+'":"'+ $scope.file.name+'"'+'}';
                                 $scope.item.ANSWER = '{'+$rootScope.jsontext2+',"'+last_poll_length+'":"'+ $scope.file.name+'"'+'}';
+                                $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
+                                console.log($scope.item.ANSWER);
+
                                 console.log($scope.item.ANSWER);
 
                             }else{

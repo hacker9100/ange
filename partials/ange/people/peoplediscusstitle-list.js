@@ -60,6 +60,8 @@ define([
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'TALK';
+            $scope.search.SORT = 'ETC2';
+            $scope.search.ORDER = 'DESC';
             console.log('온라인토론');
 //            $scope.search.BOARD_GB = 'TALK';
             $scope.search.PARENT_NO = '0';

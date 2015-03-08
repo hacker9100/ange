@@ -476,6 +476,35 @@ define([
 
 
 
+            $rootScope.jsontext2 = new Array();
+            var poll_length = $('.poll_no').length;
+            console.log(poll_length);
+
+            //$rootScope.jsontext2 = new Array();
+            for(var i=1; i<= poll_length; i++){
+
+                if(document.getElementById("answer"+i).type == 'radio'){
+                    $rootScope.jsontext2[i] = '"'+i+'":"'+$("input[name=answer"+i+"]:checked").val() +'"';
+                }else if(document.getElementById("answer"+i).type == 'checkbox'){
+                    var checkvalue = '';
+                    $("input[name=answer"+i+"]:checked").each(function() {
+                        checkvalue += $(this).val() + ';';
+                    });
+                    $rootScope.jsontext2[i] = '"'+i+'":"'+ checkvalue+'"';
+                }else if(document.getElementById("answer"+i).type == 'text'){
+                    $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                }else if(document.getElementById("answer"+i).type == 'textarea'){
+                    $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                }
+
+            }
+
+            $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+
+            $scope.item.ANSWER = item.ANSWER.replace(/{,/ig, '{');
+            console.log($scope.item.ANSWER);
+
+
             $scope.getList('ange/poll', 'check', {}, $scope.search, false)
                 .then(function(data){
                     var answer_cnt = data[0].POLL_ANSWER_CNT;
@@ -566,6 +595,7 @@ define([
                         }
 
                         $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
+                        $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
                         console.log($scope.item.ANSWER);
 
                         $scope.insertItem('ange/poll', 'answear', $scope.item, false) //$scope.queue

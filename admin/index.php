@@ -6,6 +6,12 @@
 -->
 <?php
     header("Content-type: text/html; charset=utf-8");
+    header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+    header("Cache-Control: post-check=0, pre-check=0", false);
+    header("Expires: Tue, 01 Jan 1980 1:00:00 GMT");
+    header("Expires: -1");
+    header("Pragma: no-cache");
+
     @extract($_SERVER);
 
     include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");

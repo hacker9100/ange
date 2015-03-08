@@ -979,7 +979,8 @@ define([
                             //
                             angular.element('#'+$scope.option.id).click(function() {
                                 var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
-
+alert(data[idx].ada_url);
+return;
                                 if ($scope.option.type == 'banner') {
                                     $scope.click_linkBanner(data[idx]);
                                 } else if ($scope.option.type == 'experience') {
@@ -1115,9 +1116,12 @@ define([
             scope: true,
 //            scope: { images:'=' },
 //            replace: true,
-            template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+            template:
                 //'<div class="inven_Highlight"><img ng-src="/imgs/ange/_blank_262by158.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
-                '<div class="inven_subsideRoll"><img ng-src="/imgs/ange/_blank_163by128.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
+                    '<div class="inven_subsideRoll">'+
+                    '   <div ng-show="isLoading" style="top: 40%;left: 40%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+                    '   <img ng-src="/imgs/ange/_blank_163by128.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/>'+
+                    '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -1241,10 +1245,10 @@ define([
             scope: true,
 //            scope: { images:'=' },
 //            replace: true,
-            template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                '<div ng-class="$index == 0 ? \'subside_inven_basic top\' : $index == 1 ? \'subside_inven_basic mid\' : \'subside_inven_basic btm\'" ng-repeat="item in list">' +
-                '   <img ng-src="{{item.img}}" ng-click="click_linkImage(item)" title="{{item.title}}"/>' +
-                '</div>',
+            template:'<div ng-class="$index == 0 ? \'subside_inven_basic top\' : $index == 1 ? \'subside_inven_basic mid\' : \'subside_inven_basic btm\'" ng-repeat="item in list">' +
+                     '   <div ng-show="isLoading" style="top: 40%;left: 40%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+                     '   <img ng-src="{{item.img}}" ng-click="click_linkImage(item)" title="{{item.title}}"/>' +
+                     '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/
