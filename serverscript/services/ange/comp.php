@@ -74,6 +74,11 @@ switch ($_method) {
                 $_d->dataEnd2($data);
             }
         } else if ($_type == 'list') {
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $search_where = "";
             $sort_order = "";
             $limit = "";
@@ -101,6 +106,7 @@ switch ($_method) {
             if (isset($_page)) {
                 $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
             }
+
 
 
             $sql = "SELECT
@@ -137,6 +143,10 @@ switch ($_method) {
                 $_d->dataEnd($sql);
             }
         } else if ($_type == "check") {
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             $sql = "SELECT COUNT(*) AS COMP_CNT
                  FROM adm_history_join

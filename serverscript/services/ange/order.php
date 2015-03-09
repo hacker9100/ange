@@ -125,6 +125,9 @@ switch ($_method) {
 //            if (isset($_search[ORDER_GB]) && $_search[ORDER_GB] != "") {
 //                $search_where .= "AND AC.ORDER_GB = '".$_search[ORDER_GB]."' ";
 //            }
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             if ($_search[ORDER_GB] == 'MILEAGE') {
                 $search_where .= "AND AC.ORDER_GB IN ('MILEAGE','AUCTION') ";
@@ -227,6 +230,10 @@ switch ($_method) {
                 $_d->dataEnd($sql);
             }
         }else if($_type == 'productnolist'){
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             $sql = "SELECT PRODUCT_CODE
                     FROM ANGE_ORDER

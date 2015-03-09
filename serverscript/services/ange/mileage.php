@@ -72,6 +72,10 @@
                 }
             } else if ($_type == 'list'){
 
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
+
                 $search_where = "";
                 $search_table = "";
 
@@ -164,6 +168,10 @@
                 }
             } else if($_type == "mymileagepoint"){
 
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
+
                 if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
                     $search_where .= "AND USER_ID = '".$_SESSION['uid']."'";
                 }
@@ -205,6 +213,8 @@
         case "POST":
 
             if ($_type == "item") {
+
+
                 $err = 0;
                 $msg = "";
 

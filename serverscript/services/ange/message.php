@@ -50,6 +50,9 @@ switch ($_method) {
 
     case "GET":
         if($_type == 'item'){
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             $sql = "SELECT  NO, TO_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = TO_ID) AS TO_NM, FROM_ID, (SELECT NICK_NM FROM COM_USER WHERE USER_ID = FROM_ID) AS FROM_NM, BODY, REG_DT, CHECK_FL
                      FROM (
@@ -72,6 +75,9 @@ switch ($_method) {
             /*               if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
                                $search_where .= "AND AMS.USER_ID = '".$_SESSION['uid']."'";
                            }*/
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             $limit = "";
 
@@ -124,6 +130,10 @@ switch ($_method) {
                 $_d->dataEnd($sql);
             }
         }else if($_type == 'searchuserlist'){
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             $search_where = "";
 
@@ -313,6 +323,10 @@ switch ($_method) {
 
         if($_type == 'check'){
 
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             $sql = "UPDATE ANGE_MESSAGE SET
                             CHECK_FL = 'Y'
                      WHERE NO = '".$_key."'
@@ -328,6 +342,10 @@ switch ($_method) {
             }
 
         } else{
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
 
             $sql = "UPDATE ANGE_MESSAGE SET
                             TO_ID = '".$_model[TO_ID]."'
@@ -348,6 +366,11 @@ switch ($_method) {
         break;
 
     case "DELETE":
+
+        if (!isset($_SESSION['uid'])) {
+            $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+        }
+
         if (!isset($_key) || $_key == '') {
             $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
         }
