@@ -50,6 +50,11 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
         case "GET":
 
             if($_type == 'item'){
+
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
+
                 $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG,
                         REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, ETC1, ETC2, ETC3, REPLY_COUNT ,BOARD_GB,
                         (SELECT SHORT_NM FROM ANGE_COMM WHERE NO = COMM_NO) AS SHORT_NM, COMM_NO
@@ -72,6 +77,10 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $_d->dataEnd2($data);
                 }
             } else if($_type == 'list'){
+
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
 
                 $limit = "";
                 $search_where = "";
@@ -200,9 +209,16 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             break;
 
         case "DELETE":
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
             if (!isset($_key) || $_key == '') {
                 $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
             }
+
+
 
             $sql = "DELETE FROM COM_SCRAP WHERE NO = ".$_key;
 
