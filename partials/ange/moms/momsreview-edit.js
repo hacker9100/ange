@@ -14,60 +14,6 @@ define([
     controllers.controller('momsreview-edit', ['$scope','$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', '$http', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD, $http) {
 
 
-//        $(document).ready(function(){
-//            $("#general").click(function(){
-//                //클릭되었으면
-//                if($("#general").is(":checked")){
-//                    $('#menu_select').removeAttr('disabled');
-//
-///*                    for(var i=0; i < $scope.event.length; i++){
-//                        $('#value_select'+i).attr('disabled', 'disabled');
-//                    }*/
-//                    //클릭이 안되있으면
-//                }else{
-//                    $('#menu_select').attr('disabled', 'disabled');
-//                }
-//            })
-//
-//            $("#value_select").click(function(){
-//
-//                if(!$("#value_select").is(":checked")){
-//                    $('#menu_select').attr('disabled', 'disabled');
-//                }else{
-//                    $('#menu_select').removeAttr('disabled');
-//                }
-//            });
-//
-//        });
-//
-//         $(function(){
-//             $("#general").click(function(){
-//                 //클릭되었으면
-//                 if($("#general").is(":checked")){
-//                     $('#menu_select').removeAttr('disabled');
-//                     //클릭이 안되있으면
-//                 }else{
-//                     $('#menu_select').attr('disabled', 'true');
-//                 }
-//             })
-//
-//             $("#value_select").click(function(){
-//                 if(!$("#value_select").is(":checked")){
-//                     $('#menu_select').attr('disabled', 'disabled');
-//                 }else{
-//                     $('#menu_select').removeAttr('disabled');
-//                 }
-//             });
-//         });
-//
-//        $scope.menu_select = function (idx){
-//            if($("#value_select"+idx).is(":checked")){
-//                $('#menu_select').attr('disabled', 'disabled');
-//            }else{
-//                $('#menu_select').removeAttr('disabled');
-//            }
-//        }
-
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
@@ -153,26 +99,33 @@ define([
                 $scope.community = "체험단/서평단 후기";
                 $scope.search.TARGET_GB = 'EXPERIENCE';
                 $scope.menu = 'experiencereview';
+                $scope.item.MENU = 'PRODUCT';
                 //$scope.item.MENU = 'EXPERIENCE';
             } else if ($stateParams.menu == 'productreview') {
                 $scope.community = "상품 후기";
                 $scope.search.TARGET_GB = 'PRODUCT';
                 $scope.menu = 'productreview';
+                $scope.item.MENU = 'PRODUCT';
+                $scope.search.NOT_SAMPLE = "Y";
                 //$scope.item.MENU = 'PRODUCT';
             } else if ($stateParams.menu == 'angereview') {
                 $scope.community = "앙쥬 후기";
                 $scope.search.TARGET_GB = 'ANGE';
                 $scope.menu = 'experiencereview';
+                $scope.item.MENU = 'ANGE';
                 //$scope.item.MENU = 'PRODUCT';
             } else if ($stateParams.menu == 'samplereview') {
                 $scope.community = "샘플팩 후기";
                 $scope.item.TARGET_GB = 'SAMPLE';
-                $scope.menu = 'experiencereview';
+                $scope.menu = 'samplereview';
+                $scope.item.MENU = 'SAMPLE';
+                $scope.search.NOT_SAMPLE = "N";
                 //$scope.item.MENU = 'SAMPLE';
             } else if ($stateParams.menu == 'samplepackreview') {
                 $scope.community = "앙쥬 샘플팩 후기";
                 $scope.search['TARGET_GB'] = 'SAMPLEPACK';
                 $scope.menu = 'experiencereview';
+                $scope.item.MENU = 'SAMPLE';
                 //$scope.item.MENU = 'SAMPLE';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.community = "이벤트 후기";
@@ -182,10 +135,12 @@ define([
                 $scope.community = "북카페 후기";
                 $scope.search['TARGET_GB'] = 'BOOK';
                 $scope.menu = 'bookreview';
+                $scope.item.MENU = 'BOOK';
             } else if ($stateParams.menu == 'dolreview') {
                 $scope.community = "앙쥬돌 후기";
                 $scope.search['TARGET_GB'] = 'DOL';
                 $scope.menu = 'dolreview';
+                $scope.item.MENU = 'DOL';
             }
 
             $scope.search.USER_ID = true;
@@ -195,7 +150,9 @@ define([
 
             if ($stateParams.id != 0) {
 
-                $scope.getList('ange/event', 'list', {}, $scope.search, false)
+                $scope.reviewUpdate = 'Y';
+
+                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
                 .then(function(data){
                     $scope.event = data;
                     var total_cnt = data[0].TOTAL_COUNT;
@@ -203,8 +160,12 @@ define([
                 })
                 ['catch'](function(error){$scope.event = ""; $scope.total_cnt=0;});
             }else{
+
+                $scope.reviewUpdate = 'N';
+
+                $scope.search.EXIST = true;
                 $scope.search.REVIEW_FL = true;
-                $scope.getList('ange/event', 'list', {}, $scope.search, false)
+                $scope.getList('ange/event', 'selectList', {}, $scope.search, false)
                     .then(function(data){
                         $scope.event = data;
                         var total_cnt = data[0].TOTAL_COUNT;
@@ -252,11 +213,11 @@ define([
                             }
                             $scope.item.TARGET_NO = $scope.event[idx].ada_idx;
                             $("input:radio[name='reveiw_mission']:radio[value='"+$scope.event[idx].ada_idx+"']").attr("checked",true);
+                            //$('#menu_select').removeAttr('disabled');
 
                         } else {
 
                             $("#general").attr("checked",true);
-                            $('#menu_select').removeAttr('disabled');
 
                         }
 
@@ -340,6 +301,10 @@ define([
                             $location.url('/moms/samplepackreview/list');
                         }else if ($stateParams.menu == 'eventreview') {
                             $location.url('/moms/eventreview/list');
+                        }else if ($stateParams.menu == 'bookreview') {
+                            $location.url('/moms/bookreview/list');
+                        }else if ($stateParams.menu == 'dolreview') {
+                            $location.url('/moms/dolreview/list');
                         }
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -362,7 +327,12 @@ define([
                             $location.url('/moms/samplepackreview/list');
                         }else if ($stateParams.menu == 'eventreview') {
                             $location.url('/moms/eventreview/list');
+                        }else if ($stateParams.menu == 'bookreview') {
+                            $location.url('/moms/bookreview/list');
+                        }else if ($stateParams.menu == 'dolreview') {
+                            $location.url('/moms/dolreview/list');
                         }
+
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

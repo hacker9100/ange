@@ -24,7 +24,7 @@
 
     <div class="container-fluid peopleboard_edit_topwrap">
 
-        <div class="row" style="margin:0px auto; margin-bottom:10px;">
+        <div class="row" ng-show="menu == 'samplereview' || menu == 'productreview' || menu == 'productreview'" data-ng-hide="reviewUpdate == 'Y'" style="margin:0px auto; margin-bottom:10px;">
             <div>
 
                 <label class="control-label" style="float:left; width:8%; padding:0; text-align:center; padding:3px 0;">선택</label>
@@ -37,7 +37,8 @@
                         <div class="form-group" data-ng-repeat="list in event" style="float:left; font-size: 0.86em; margin:0 5px 15px 5px; line-height:18px;">
                             <input ng-model="item.TARGET_NO" type="radio" id="value_select{{$index}}" ng-click="menu_select($index);" name="reveiw_mission1" ng-value="{{list.ada_idx}}" style="float:left; margin:4px 6px 0 4px;">
                             <div style="margin-left:22px; word-break: keep-all;">
-                            <span class="table_blue">[{{list.ada_date_notice}}] </span>{{list.ada_title}}<br/>
+
+                            <!--<span class="table_blue">[{{list.ada_date_review_close}}] </span>-->{{list.ada_title}}<br/>
                             </div>
                         </div>
 
@@ -63,7 +64,7 @@
             <div class="col-xs-3" style="padding:0px;">
 
                 <!-- select class="form-control input-sm" -->   <!-- 일반쓰기는 선택 -->
-                <select ng-model="item.MENU" id="menu_select" name="menu_select" class="form-control input-sm"> <!-- 미션 쓰기는 미션선택에 따라 자동 선택되고 disable 됨 -->
+                <select ng-model="item.MENU" id="menu_select" name="menu_select" class="form-control input-sm" disabled> <!-- 미션 쓰기는 미션선택에 따라 자동 선택되고 disable 됨 -->
                     <option value="">선택</option>
                     <option value="PRODUCT" selected>상품 후기</option>
                     <option value="ANGE">앙쥬 후기</option>

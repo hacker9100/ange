@@ -329,49 +329,87 @@
                 }
             } else if ($_type == 'selectList') {
 
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
+
+                $search_common = "";
                 $search_where = "";
-/*                if (isset($_search[EVENT_GB]) && $_search[EVENT_GB] != "") {
-                    $search_where .= "AND EVENT_GB = '".$_search[EVENT_GB]."' ";
-                }*/
+                $sort_order = "";
+                $limit = "";
 
-                if (isset($_search[USER_ID]) && $_search[USER_ID] != "") {
-                    $search_where .= "AND USER_ID = '".$_SESSION['uid']."' ";
+                if(isset($_search[NOT_SAMPLE]) && $_search[NOT_SAMPLE] == "Y"){
+                    $search_where .= "AND b.adp_idx NOT IN (45, 46) ";
                 }
 
-                if (isset($_search[REVIEW_FL]) && $_search[REVIEW_FL] != "") {
-                    $search_where .= "AND REVIEW_FL = 'N'";
+                if(isset($_search[NOT_SAMPLE]) && $_search[NOT_SAMPLE] == "N"){
+                    $search_where .= "AND b.adp_idx IN (45, 46) ";
                 }
 
-                if (isset($_search[JOIN_GB]) && $_search[JOIN_GB] != "") {
-                    $search_where .= "AND JOIN_GB = '".$_search[JOIN_GB]."' ";
+                if(isset($_search[NOT_POST]) && $_search[NOT_POST] == "Y"){
+                    $search_where .= "AND b.adp_idx != 49 ";
                 }
 
-                    $sql = "SELECT
-                                NO, SUBJECT, TARGET_NO, JOIN_NO, USER_ID, NICK_NM, REVIEW_FL, TOTAL_COUNT,REVIEW_YMD
+                if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "N"){
+                    $search_where .= "AND b.adp_idx != 53 ";
+                }
+
+                if(isset($_search[PERFORM_FL]) && $_search[PERFORM_FL] == "Y"){
+                    $search_where .= "AND b.adp_idx = 53 ";
+                }
+
+                if (isset($_search[PRODUCT_CODE]) && $_search[PRODUCT_CODE] != "") {
+                    $search_where .= "AND b.adp_idx = '".$_search[PRODUCT_CODE]."' ";
+                }
+
+                if (isset($_search[EXIST]) && $_search[EXIST] != "") {
+                    $search_where .= "AND NOT EXISTS (SELECT * FROM ANGE_REVIEW WHERE TARGET_NO = a.ada_idx AND REG_UID = '".$_SESSION['uid']."')";
+                }
+
+
+
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                }
+
+
+                // , ada_notice
+                $sql = "SELECT (SELECT ada_title FROM adm_ad a WHERE a.ada_idx = DATA.ada_idx) AS ada_title, ada_idx, adu_id, adu_name,
+                            (SELECT DATE_FORMAT(ada_date_notice, '%Y-%m-%d') FROM adm_ad a WHERE a.ada_idx = DATA.ada_idx) AS ada_date_notice, TOTAL_COUNT,
+                            (SELECT DATE_FORMAT(ada_date_review_close, '%Y-%m-%d') FROM adm_ad a WHERE a.ada_idx = DATA.ada_idx) AS ada_date_review_close
                             FROM
                             (
-                                SELECT NO, (SELECT SUBJECT FROM ANGE_EVENT WHERE NO = ACW.TARGET_NO) AS SUBJECT, TARGET_NO, JOIN_NO,
-                                            USER_ID, NICK_NM, REVIEW_FL, (SELECT REVIEW_YMD FROM ANGE_EVENT WHERE NO = ACW.TARGET_NO) AS REVIEW_YMD
-                                FROM ANGE_COMP_WINNER ACW
-                                 WHERE 1 = 1
-                                 ".$search_where."
-
-                            ) AS DATA,
-                            (
                                 SELECT
-                                    COUNT(*) AS TOTAL_COUNT
-                                FROM ANGE_COMP_WINNER ACW
-                                 WHERE 1 = 1
-                                 ".$search_where."
-                            ) CNT";
+                                      a.ada_idx, a.adu_id, a.adu_name
+                                FROM adm_history_join a, adm_ad b
+                                WHERE 1 = 1
+                                    AND a.ada_idx = b.ada_idx
+                                    AND a.adu_id = '".$_SESSION['uid']."'
+                                    AND a.adhj_date_join IS NOT NULL
+                                    AND a.adhj_date_complete IS NOT NULL
+                                    ".$search_where."
+                            ) AS DATA,
+                            (SELECT @RNUM := 0) R,
+                            (
+                                SELECT COUNT(*) AS TOTAL_COUNT
+                                FROM adm_history_join a, adm_ad b
+                                WHERE 1 = 1
+                                    AND a.ada_idx = b.ada_idx
+                                    AND a.adu_id = '".$_SESSION['uid']."'
+                                    AND a.adhj_date_join IS NOT NULL
+                                    AND a.adhj_date_complete IS NOT NULL
+                                    ".$search_where."
+                            ) CNT
+                            ";
 
-                    $data = $_d->sql_query($sql);
+                $data = $_d->sql_query($sql);
 
-                    if($_d->mysql_errno > 0){
-                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                    }else{
-                        $_d->dataEnd($sql);
-                    }
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd($sql);
+                }
             }
 
 
