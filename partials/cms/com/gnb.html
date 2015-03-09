@@ -19,7 +19,7 @@
 
 			<ul ng-repeat="item in list" ng-class="item.POSITION  == 'LEFT' ? 'nav navbar-nav' : 'nav navbar-nav navbar-right'" style="min-width:110px;">
                 <!-- li class="active" -->
-                <li class="item.DROP_FL == 'Y' : dropdown">
+                <li class="item.DROP_FL == 'Y' : dropdown" style="cursor:pointer;">
                     <a ng-if="item.DROP_FL == 'N'" ng-click="selectMenu(item.CHANNEL_URL)" style="padding-top:20px;">
                         <span class="smalltag">{{item.TAG}}</span>
                         <span ng-if="item.TAG == 'dashboard'" class="glyphicon glyphicon-home"></span> {{item.CHANNEL_NM}}

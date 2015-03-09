@@ -6,7 +6,7 @@
     width: 100%;
 }
 
-mediacaption, subtitle, maintitle, preface, sectionmain, sectionsub, bodyscript, byline, tips, plantitle {
+mediacaption, subtitle, maintitle, preface, sectionmain, sectionsub, bodyscript, byline, #tips, plantitle {
     clear: inherit;
     width:100%;
     outline:1px dotted #DEDEDE;
@@ -33,6 +33,16 @@ mediacaption, subtitle, maintitle, preface, sectionmain, sectionsub, bodyscript,
 
     padding:20px 10px 15px 10px;
     margin: 12px 0;
+}
+
+.hiddentxt {
+    display: block;
+    float:left;
+    width:100%;
+    font-size: 0.78em;
+    color:#de8624;
+    border:1px dotted #DEDEDE;
+    padding:5px;
 }
 
 .template_handle {
