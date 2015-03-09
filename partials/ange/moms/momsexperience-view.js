@@ -378,7 +378,7 @@ define([
                         console.log('a'+data.ada_image);
                         console.log('a'+data.ada_text);
 
-                        if($scope.todayDate <= $scope.open_date){
+                        if($scope.todayDate <= $scope.open_date || $scope.open_date == '00000000'){
                             $scope.showForm = "compForm";
                         }else{
                             $scope.showForm = "reviewForm";

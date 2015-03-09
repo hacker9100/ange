@@ -366,21 +366,6 @@ define([
                             $scope.imageMap('adimage');
                         }, 500);
 
-//                        var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
-//
-//                        $scope.ada_imagemap = $scope.ada_imagemap.replace(pattern, '');
-//                        $scope.ada_imagemap = $scope.ada_imagemap.replace(/&nbsp;/ig, '');
-//                        $scope.ada_imagemap = $scope.ada_imagemap.trim();
-//
-//                        console.log($scope.ada_imagemap);
-//
-                        //<img src="http://angead.marveltree.com/adm/upload/_2.jpg" usemap="#adimage" />
-//                        var day = 1000*60*60*24;
-//
-//                        $scope.D_DAY = parseInt($scope.end_date) - parseInt($scope.todayDate);
-//                        console.log(parseInt($scope.D_DAY/day));
-//
-//                        $scope.D_DAY = parseInt($scope.D_DAY/day);
 
                         $scope.item = data;
                         $scope.item.BOARD_NO = data.ada_idx;
@@ -388,7 +373,10 @@ define([
                         data.ada_preview_img = CONSTANT.AD_FILE_URL + data.ada_preview;
                         data.ada_content_img = CONSTANT.AD_FILE_URL + data.ada_image;
 
-                        if($scope.todayDate <= $scope.open_date2){
+
+                        console.log('$scope.open_date2 = '+$scope.open_date2);
+
+                        if($scope.todayDate <= $scope.open_date2 || $scope.open_date2 == '00000000'){
                             $scope.showForm = "compForm";
                         }else{
                             $scope.showForm = "reviewForm";
