@@ -177,6 +177,10 @@ define([
                     if ($scope.channel.CHANNEL_NO == 4 ) {
                         $location.path("/main");
                     }
+
+                    if ($stateParams.menu == 'supporter') {
+                        $location.path("/people/home");
+                    }
 //                    $location.url('main');
                 });
             }
