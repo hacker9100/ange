@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsexperience-view', ['$scope', '$rootScope', '$sce', '$stateParams', '$location', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope,$rootScope, $sce, $stateParams, $location, dialogs, CONSTANT, UPLOAD) {
+    controllers.controller('momsexperience-view', ['$scope', '$rootScope', '$sce', '$stateParams', '$window', '$location', '$timeout', 'dialogs', 'CONSTANT', 'UPLOAD', function ($scope,$rootScope, $sce, $stateParams, $window, $location, $timeout, dialogs, CONSTANT, UPLOAD) {
 
         $scope.imageMap = function(id) {
             if (angular.element('img[usemap=#'+id+']').attr('usemap') == undefined) {
