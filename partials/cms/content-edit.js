@@ -207,7 +207,32 @@ define([
 
                 case 'tips_template' :
                     var temp =
-                        '<tips>' + '<div class="tip_title">' + 'TIP 제목을 입력하세요' + '</div>' + '내용을 입력하세요.' + '</tips>';
+                        '<div id="tips">' +
+                            '<div class="tip_title">' + 'TIP 제목을 입력하세요' + '</div>' +
+                            '<div class="tip_body">' + '내용을 여기에 입력하세요.' + '</div>' +
+                        '</div>';
+
+                    if (!angular.isUndefined(CKEDITOR)) {
+                        var element = CKEDITOR.dom.element.createFromHtml(temp);
+                        CKEDITOR.instances.editor1.insertElement( element );
+
+                        element = CKEDITOR.dom.element.createFromHtml(blankSpace);
+                        CKEDITOR.instances.editor1.insertElement( element );
+                    }
+//                    $scope.item.BODY = temp + $scope.item.BODY;
+                    break;
+
+                case '16x9movie_template' :
+                    var temp =
+                        '<div class="row">' +
+                            '<div class="col-xs-12 col-sm-offset-1 col-sm-10">' +
+                                '<div class="embed_movie embed-responsive embed-responsive-16by9">' +
+                                    '<iframe class="embed-responsive-item" src="//player.vimeo.com/video/102047284" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' +
+                                '</div>' +
+                                '<div class="hiddentxt">' + '<b>↑</b> 태그수정 모드에서 동영상 주소를 수정(이 글은 본문에서 보이지 않습니다.)' + '</div>' +
+                            '</div>' +
+
+                        '</div>';
 
                     if (!angular.isUndefined(CKEDITOR)) {
                         var element = CKEDITOR.dom.element.createFromHtml(temp);

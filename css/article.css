@@ -862,8 +862,8 @@ byline {
 }
 
 
-tips {
-    display:inline;
+#tips {
+    /*display:inline;*/
     float:left;
     width:100%;
     /* border: 1px solid #E2E2E2; */
@@ -894,6 +894,12 @@ tips {
     /* font-weight: bold; */
 }
 
+.tip_body {
+    float:left;
+    width: 100%;
+    line-height: 20px;
+}
+
 
 plantitle {
     float:left;
@@ -917,6 +923,6 @@ plantitle {
 /* Custom Tags */
 
 /* 에디터에서만 사용된 표시용 클래스를 감춘다. */
-.hiddenline, .template_handle {
+.hiddenline, .hiddentxt, .template_handle {
     display: none;
 }
