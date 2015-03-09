@@ -114,15 +114,15 @@ define(['./directives'], function (directives) {
 
                     if(url == '/people/supporter/list'){
 
-                        console.log($scope.user_gb );
+                        console.log($scope.role);
                         if($scope.uid == null || $scope.uid == ''){
                             dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
                             return;
-                        }else if($scope.user_gb !== 'SUPPORTERS'){
+                        }else if($scope.role == 'SUPPORTERS' || $scope.role == 'ANGE_MANAGER' || $scope.role == 'ANGE_ADMIN'){
+                            $location.url(url);
+                        }else{
                             dialogs.notify('알림', '서포터즈 회원만 이용 가능합니다.', {size: 'md'});
                             return;
-                        }else{
-                            $location.url(url);
                         }
                     }
 
