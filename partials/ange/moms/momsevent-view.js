@@ -982,6 +982,11 @@ define([
 
             } else if($scope.item.ada_que_type == 'reply'){ // 댓글일때
 
+                if($scope.item.COMMENT == undefined || $scope.item.COMMENT == ''){
+                    alert('댓글을 입력하세요');
+                    return;
+                }
+
                 //console.log('{"'+$scope.item.REPLY_SUBJECT+'":"'+ $scope.item.COMMENT+'"}');
                 $scope.item.ANSWER = '{"1":"'+ $scope.item.COMMENT+'"}';
 
