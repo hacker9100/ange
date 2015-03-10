@@ -18,7 +18,7 @@ define([
 
         // 페이징
         //$scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
         $scope.TOTAL_COUNT = 0;
 
         $scope.pageChanged = function() {

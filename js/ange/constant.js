@@ -12,7 +12,7 @@ define([
         "CONSTANT", {
             "SYSTEM_GB" : "ANGE",
             "DASHBOARD_PAGE_SIZE" : 5,
-            "PAGE_SIZE" : 10,
+            "PAGE_SIZE" : 25,
             "BASE_URL" : "http://localhost",
 
             "UPLOAD_INDEX" : "/serverscript/upload/",

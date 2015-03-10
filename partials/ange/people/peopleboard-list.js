@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peopleboard-list', ['$scope', '$rootScope','$stateParams','$q', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $q, $location, dialogs, ngTableParams) {
+    controllers.controller('peopleboard-list', ['$scope', '$rootScope','$stateParams','$q', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $rootScope, $stateParams, $q, $location, dialogs, ngTableParams, CONSTANT) {
 
         /********** 공통 controller 호출 **********/
         //angular.extend(this, $controller('ange-common', {$scope: $rootScope}));
@@ -19,7 +19,7 @@ define([
         $scope.search = {};
 
         // 페이징
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
         $scope.TOTAL_COUNT = 0;
 
         // 검색어 조건
