@@ -22,8 +22,13 @@ define([
         $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
         $scope.TOTAL_COUNT = 0;
 
-        // 검색어 조건
-        var condition = [{name: "제목+내용", value: "SUBJECT+BODY"} , {name: "작성자", value: "NICK_NM"}];
+       // 검색어 조건
+        if($scope.menu.COMM_NO == 8){
+            var condition = [{name: "제목+내용", value: "SUBJECT+BODY"}]; // 앙쥬맘 속풀이방은 익명게시판이므로 작성자 제외
+        }else{
+            var condition = [{name: "제목+내용", value: "SUBJECT+BODY"}, {name: "작성자", value: "NICK_NM"}];
+        }
+
 
         $scope.SEARCH_YN = 'N';
 
