@@ -152,8 +152,8 @@ define([
 //                var check = /^(?=.+[0-9])(?=.+[a-zA-Z])(?=.+[!@#$%^*+=-]).{6,12}$/;
                 var check = /^(?=.+[0-9])(?=.+[a-zA-Z]).{6,12}$/;
 
-                console.log($scope.user.PASSWORD)
-                console.log(check.test($scope.user.PASSWORD))
+//                console.log($scope.user.PASSWORD)
+//                console.log(check.test($scope.user.PASSWORD))
                 if (check.test($scope.user.PASSWORD)) {
                     $scope.availablePW = true;
                 } else {
@@ -193,7 +193,7 @@ define([
 //        });
 
         $scope.$watch('user.EMAIL_SELECT', function() {
-            console.log($scope.user.EMAIL_SELECT);
+//            console.log($scope.user.EMAIL_SELECT);
             if ($scope.user.EMAIL_SELECT != undefined) {
                 if ($scope.user.EMAIL_SELECT == '') {
                     $scope.user.EMAIL_TYPE = '';
@@ -206,7 +206,7 @@ define([
         });
 
         $scope.$watch('user.PREGNENT_FL', function() {
-            console.log($scope.user.PREGNENT_FL);
+//            console.log($scope.user.PREGNENT_FL);
             if ($scope.user.PREGNENT_FL != undefined) {
                 if ($scope.user.PREGNENT_FL == 'N') {
                     $scope.disabledPregnent = true;

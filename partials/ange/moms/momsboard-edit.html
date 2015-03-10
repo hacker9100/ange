@@ -77,6 +77,15 @@
                                             </div><!-- /.col-xs-4 -->
 
                                             <div class="col-xs-3" style="padding:0 0 0 4px; height:100%;">
+                                                <span class="fileinput-button dagbox_btn fil2com large" ng-class="{disabled: disabled}">
+                                                    <div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>
+                                                    <div style="width:63%; float:right; text-align:left;">
+                                                        <strong>내 PC에서</strong><br/>
+                                                        <span style="font-size:0.72em;">첨부파일 찾기</span>
+                                                        <input type="file" name="files[]" multiple ng-disabled="disabled" />
+                                                    </div>
+                                                </span>
+<!--
                                                 <button class="dagbox_btn fil2com large">
                                                     <div>
                                                         <div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>
@@ -87,6 +96,7 @@
                                                         <input type="file" name="files[]" multiple ng-disabled="disabled" />
                                                     </div>
                                                 </button>
+-->
                                                 <!-- span class="glyphicon glyphicon-ok"></span -->
                                                 <!-- button class="dagbox_btn selectall"><span class="glyphicon glyphicon-ok"></span> 전체선택</button>
                                                 <button class="dagbox_btn add"><span class="glyphicon glyphicon-circle-arrow-right"></span> 본문추가</button>

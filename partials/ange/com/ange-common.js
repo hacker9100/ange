@@ -628,7 +628,7 @@ define([
                 }
             }
 
-            $scope.insertItem('ange/mileage', 'signon', item, false)
+            $scope.insertItem('ange/mileage', 'item', item, false)
                 .then(function(data){
                     $rootScope.mileage = data.mileage;
 //                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});

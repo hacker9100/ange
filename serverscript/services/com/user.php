@@ -363,7 +363,9 @@
 
                         $search_where .= "AND U.".$_search['CONDITION']['value']." IN (".$in_condition.") ";
                     } else if ($_search['CONDITION']['value'] == "PHONE") {
-                        $search_where .= "AND ( U.PHONE_1 LIKE '%".$_search['KEYWORD']."%' OR U.PHONE_2 LIKE '%".$_search['KEYWORD']."%' ) ";
+                        $phone = str_replace("-", "",$_search['KEYWORD']);
+
+                        $search_where .= "AND ( U.PHONE_1 = '".$phone."' OR U.PHONE_2 = '".$phone."' ) ";
                     } else {
                         $search_where .= "AND U.".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
                     }
@@ -602,6 +604,16 @@
 
                 $hash = create_hash($password);
 
+                $user_gb = "";
+
+                if (isset($_model[USER_GB]) && $_model[USER_GB] != "") {
+                    if (is_array($_model[USER_GB])) {
+                        $user_gb = $_model[USER_GB][value];
+                    } else {
+                        $user_gb = $_model[USER_GB];
+                    }
+                }
+
                 $sql = "INSERT INTO COM_USER
                         (
                             USER_ID,
@@ -658,7 +670,7 @@
                             '".$_model[ADDR_DETAIL]."',
                             '".$_model[PHONE_1]."',
                             '".$_model[PHONE_2]."',
-                            '".$_model[USER_GB][value]."',
+                            '".$user_gb."',
                             '".((isset($_model[CERT_GB]) && $_model[CERT_GB] == "EMAIL") ? "W" : "N")."',
                             '".$_model[EMAIL]."',
                             '".$_model[SEX_GB]."',
@@ -985,7 +997,6 @@
                             PHONE_1 = '".$_model[PHONE_1]."',
                             PHONE_2 = '".$_model[PHONE_2]."',
                             ".$update_gb."
-                            USER_ST = '".$_model[USER_ST]."',
                             EMAIL = '".$_model[EMAIL]."',
                             SEX_GB = '".$_model[SEX_GB]."',
                             INTRO = '".$_model[INTRO]."',
@@ -1024,7 +1035,14 @@
                     $msg = $_d->mysql_error;
                 }
 
-                $sql = "SELECT
+                if (count($_model[FILE]) > 0) {
+
+                    $sql = "SELECT NO FROM COM_USER WHERE USER_ID = '".$_key."'";
+                    $user = $_d->sql_fetch($sql,true);
+
+                    $target_no = $user['NO'];
+
+                    $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
                             COM_USER U, FILE F, CONTENT_SOURCE S
@@ -1037,33 +1055,32 @@
                             AND F.FILE_GB = 'THUMB'
                         ";
 
-                $result = $_d->sql_query($sql,true);
-                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    $is_delete = true;
+                    $result = $_d->sql_query($sql,true);
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                        $is_delete = true;
 
-                    if (count($_model[FILE]) > 0) {
-                        $file = $_model[FILE];
-                        if ($row[FILE_NM] == $file[name] && $row[FILE_SIZE] == $file[size]) {
-                            $is_delete = false;
+                        if (count($_model[FILE]) > 0) {
+                            $file = $_model[FILE];
+                            if ($row[FILE_NM] == $file[name] && $row[FILE_SIZE] == $file[size]) {
+                                $is_delete = false;
+                            }
+                        }
+
+                        if ($is_delete) {
+                            $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+
+                            $_d->sql_query($sql);
+
+                            $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'USER' AND CONTENT_GB = 'FILE' AND SOURCE_NO = ".$row[NO];
+
+                            $_d->sql_query($sql);
+
+                            if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
+                                unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                            }
                         }
                     }
 
-                    if ($is_delete) {
-                        $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                        $_d->sql_query($sql);
-
-                        $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'USER' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
-
-                        $_d->sql_query($sql);
-
-                        if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                            unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                        }
-                    }
-                }
-
-                if (count($_model[FILE]) > 0) {
                     $file = $_model[FILE];
                     MtUtil::_d("------------>>>>> file : ".$file['name']);
 
@@ -1107,7 +1124,7 @@
                                     ,TARGET_GB
                                     ,SORT_IDX
                                 ) VALUES (
-                                    '".$_model[NO]."'
+                                    '".$target_no."'
                                     , '".$file_no."'
                                     , 'FILE'
                                     , 'USER'

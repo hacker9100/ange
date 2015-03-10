@@ -55,7 +55,7 @@ define([
                 } else {
                     if ($scope.option.type == 'board') {
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_BOARD;
-                        $scope.search.NOTICE_FL = '1';
+                        $scope.search.NOTICE_FL = '0';
                     } else if ($scope.option.type == 'photo') {
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_PHOTO;
                     } else if ($scope.option.type == 'clinic') {
@@ -219,9 +219,9 @@ define([
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
                         '<div class="mini_story">' +
                         '   <div class="miniboard_titlebar">' +
-                        '       <span class="miniboard_title">{{::portletTitle}}</span>' +
+                        '       <span class="miniboard_title">{{portletTitle}}</span>' +
                         '        <a class="miniboard_tab_more" ng-click="click_showList();">더보기</a>' +
-                        '       <div ng-if="option.tab" ng-repeat="tab in :: option.tab" ng-class="tabIdx == $index ? \'miniboard_tab_on\' : \'miniboard_tab\'" ng-click="click_tabIndex($index)">{{::tab.name}}</div>' +
+                        '       <div ng-if="option.tab" ng-repeat="tab in  option.tab" ng-class="tabIdx == $index ? \'miniboard_tab_on\' : \'miniboard_tab\'" ng-click="click_tabIndex($index)">{{tab.name}}</div>' +
                         '    </div>' +
                         '    <div class="mini_story_rollcate" style="margin-bottom:5px;">' +
                         '        <a class="mini_story_rollcate_left" ng-click="click_preCategory()">Pre Category</a>' +
@@ -236,8 +236,8 @@ define([
                         '    <div class="mini_board_contents" ng-repeat="item in list" ng-click="click_showView(item.NO);">' +
                         '        <img ng-src="{{item.MAIN_FILE}}" class="mini_board_contents_img" />' +
                         '        <div class="mini_board_contents_txt">' +
-                        '            <span class="mini_story_txt_head">{{::item.PROJECT_NM}}</span>' +
-                        '            <span class="mini_story_txt_title">| {{::item.SUBJECT}}</span>' +
+                        '            <span class="mini_story_txt_head">{{item.PROJECT_NM}}</span>' +
+                        '            <span class="mini_story_txt_title">| {{item.SUBJECT}}</span>' +
                         '            <ul class="mini_board_feeds">' +
                         '                <li class="mini_reply" style="float: right;">{{item.REPLY_COUNT}}</li>' +
                         '                <li class="mini_like" style="float: right;">{{item.LIKE_CNT}}</li>' +
@@ -254,7 +254,7 @@ define([
                         '            </div>' +
                         '            <div class="col-xs-10 mini_story_contentboxlist_roll">' +
                         '                <div class="mini_story_contentboxlist_wrap">' +
-                        '                    <slick id="{{::option.id}}" dots="false" autoplay="true" center-mode="false" slides-to-show="4" slides-to-scroll="4" autoplay-speed="3000" fade="false" pause-on-hover="false"></slick>' +
+                        '                    <slick id="{{option.id}}" dots="false" autoplay="true" center-mode="false" slides-to-show="4" slides-to-scroll="4" autoplay-speed="3000" fade="false" pause-on-hover="false"></slick>' +
                         '                </div>' +
                         '            </div>' +
                         '        </div>' +
@@ -1019,7 +1019,7 @@ define([
                         '   <div ng-show="option.id == \'event\'" style="position:absolute; width:100%; z-index:9; text-align:center;"><img src="/imgs/ange/ribon_event_now.jpg" style="opacity:0.8"/></div>' +
                         '   <div class="jumbotron_cover_imgs" style="padding-bottom:45px;">' +
                         '       <div id="jumbotron_cover" class="carousel slide" data-ride="carousel">' +
-                        '           <slick id="{{ option.id }}" lazyLoad = "ondemand" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false"></slick>' +
+                        '           <slick id="{{ option.id }}" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false"></slick>' +
                         '       </div>' +
                         '   </div>' +
                         '   <div class="jumbotron_cover_controlbar">' +

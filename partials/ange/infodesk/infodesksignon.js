@@ -20,6 +20,7 @@ define([
         $scope.$watch('newFile', function(data){
             if (typeof data !== 'undefined') {
                 $scope.file = data[0];
+                $scope.isUpload = true;
             }
         });
 
@@ -32,6 +33,7 @@ define([
         var nowYear = now.getFullYear();
 
         $scope.isSave = false;
+        $scope.isUpload = false;
 
         $scope.checkSave = false;
         $scope.checkCert = false;
@@ -94,6 +96,8 @@ define([
             $scope.user.YEAR = '';
             $scope.user.MONTH = '';
             $scope.user.DAY = '';
+            $scope.user.POST_1 = '';
+            $scope.user.POST_2 = '';
             $scope.user.PHONE_1_1 = '';
             $scope.user.PHONE_1_2 = '';
             $scope.user.PHONE_1_3 = '';
@@ -156,8 +160,8 @@ define([
                 var check = /[^a-zA-Z0-9]/;
 //                var check = /^(?=.*[0-9a-zA-Z]).{6,12}$/;
 
-                console.log($scope.user.USER_ID)
-                console.log(check.test($scope.user.USER_ID))
+//                console.log($scope.user.USER_ID)
+//                console.log(check.test($scope.user.USER_ID))
 
                 if ($scope.user.USER_ID.length < 13 && !check.test($scope.user.USER_ID)) {
                     $scope.click_checkUserId();
@@ -180,8 +184,8 @@ define([
 //                var check = /^(?=.+[0-9])(?=.+[a-zA-Z])(?=.+[!@#$%^*+=-]).{6,12}$/;
                 var check = /^(?=.+[0-9])(?=.+[a-zA-Z]).{6,12}$/;
 
-                console.log($scope.user.PASSWORD)
-                console.log(check.test($scope.user.PASSWORD))
+//                console.log($scope.user.PASSWORD)
+//                console.log(check.test($scope.user.PASSWORD))
                 if (check.test($scope.user.PASSWORD)) {
                     $scope.availablePW = true;
                 } else {
@@ -204,15 +208,15 @@ define([
 
         $scope.$watch('user.NICK_NM', function() {
             $scope.user.NICK_NM = $scope.user.NICK_NM.replace( /(\s*)/g, '');
-
+//            console.log('NICK : '+$scope.user.NICK_NM);
             if ($scope.user.NICK_NM != undefined && $scope.user.NICK_NM.length > 1) {
                 var addLen = (escape($scope.user.NICK_NM)+"%u").match(/%u/g).length-1;
                 var totalLen = $scope.user.NICK_NM.length + addLen;
 
-                console.log($scope.user.NICK_NM.length + addLen);
+//                console.log($scope.user.NICK_NM.length + addLen);
 
                 if (totalLen > 3 && totalLen < 13) {
-                    console.log("check");
+//                    console.log("check");
                     $scope.click_checkUserNick();
                 } else {
                     $scope.availableNick = false;
@@ -223,7 +227,7 @@ define([
         });
 
         $scope.$watch('user.EMAIL_SELECT', function() {
-            console.log($scope.user.EMAIL_SELECT);
+//            console.log($scope.user.EMAIL_SELECT);
             if ($scope.user.EMAIL_SELECT != undefined) {
                 if ($scope.user.EMAIL_SELECT == '') {
                     $scope.user.EMAIL_TYPE = '';
@@ -236,7 +240,7 @@ define([
         });
 
         $scope.$watch('user.PREGNENT_FL', function() {
-            console.log($scope.user.PREGNENT_FL);
+//            console.log($scope.user.PREGNENT_FL);
             if ($scope.user.PREGNENT_FL != undefined) {
                 if ($scope.user.PREGNENT_FL == 'N') {
                     $scope.disabledPregnent = true;
@@ -342,6 +346,10 @@ define([
                 $('#user_nm').focus();
                 dialogs.notify('알림', '이름을 확인해주세요.', {size: 'md'});
                 return false;
+            } else if ($scope.user.USER_NM.length < 2) {
+                $('#user_nm').focus();
+                dialogs.notify('알림', '이름을 2자리 이상 입력해주세요.', {size: 'md'});
+                return false;
             }
 
             if ($scope.user.NICK_NM == '' || !$scope.availableNick) {
@@ -431,6 +439,7 @@ define([
 
         // 사용자 정보 저장
         $scope.saveUser = function () {
+
             if (!$scope.checkValidation()) {
                 return;
             }
@@ -441,12 +450,14 @@ define([
             }
 
             $scope.user.SYSTEM_GB = 'ANGE';
+            $scope.user.USER_GB = 'MEMBER';
             $scope.user.BABY = $scope.babies;
             $scope.user.BLOG = $scope.blog;
 
-            if ($scope.file) {
+            if ($scope.file && $scope.isUpload) {
                 $scope.user.FILE = $scope.file;
                 $scope.user.FILE.$destroy = '';
+                $scope.isUpload = false;
             }
 
             if (!$scope.isSave) {
@@ -454,11 +465,12 @@ define([
                 if (!$scope.checkSave) {
                     $scope.insertItem('com/user', 'item', $scope.user, false)
                         .then(function(){
-                            $scope.checkSave = true;
                             $scope.addMileageSignon('CONGRATULATION', '1', $scope.user);
                             $scope.addMileageSignon('CONGRATULATION', '2', $scope.user);
 
+                            $scope.checkSave = true;
                             $scope.isSave = false;
+                            $scope.user.FILE = {};
                             if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
                                 $scope.step = '04';
                                 $scope.finishUser();
@@ -471,6 +483,8 @@ define([
                     $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
                         .then(function(){
                             $scope.isSave = false;
+                            $scope.user.FILE = {};
+
                             if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
                                 $scope.step = '04';
                                 $scope.finishUser();

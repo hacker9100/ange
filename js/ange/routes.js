@@ -86,6 +86,7 @@ define([
         $httpProvider.defaults.headers.common['Cache-Control'] = 'no-cache, no-store, must-revalidate';
         $httpProvider.defaults.headers.common['Pragma'] = 'no-cache';
         $httpProvider.defaults.headers.common['Expires'] = '-1';
+        $httpProvider.defaults.headers.common['Access-Control-Max-Age'] = 0;
     })
 
     return app;
