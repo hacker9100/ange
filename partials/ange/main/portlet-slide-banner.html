@@ -16,7 +16,7 @@
                 autoplay-speed: 자동 롤링 속도,
                 pause-on-hove: 마우스 오버 시 동작
             -->
-            <slick id="{{ option.id }}" lazyLoad = "ondemand" current-index="0" dots="true" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false"></slick>
+            <slick id="{{ option.id }}" lazyLoad = "ondemand" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false"></slick>
 
             <!--<div class="carousel-inner" role="listbox">-->
             <!--<div class="item active"><img src="imgs/ange/temp/events_bg_001_pic.jpg" alt="First Label"></div>-->
@@ -33,12 +33,13 @@
             <a ng-show="!toggle" class="jumbotron_cover_play" ng-click="click_slickPlay()">동작</a>
             <!-- a class="jumbotron_cover_play">재생</a --> <!-- 일시정지 시에 표시 -->
 
-            <!--<ol class="carousel-indicators jumbotron_indicators_wrap">-->
-                <!--&lt;!&ndash;<li data-target="#jumbotron_cover" data-slide-to="{{$index}}" ng-class=" item ? 'jumbotron_indicators_actived' : 'jumbotron_indicators'"></li>&ndash;&gt;-->
-                <!--<li data-target="#jumbotron_cover" data-slide-to="0" class="jumbotron_indicators_actived"></li>-->
+            <ol class="carousel-indicators jumbotron_indicators_wrap" style="left:30px;">
+                <!--<li data-target="#jumbotron_cover" data-slide-to="{{$index}}" ng-class=" item ? 'jumbotron_indicators_actived' : 'jumbotron_indicators'"></li>-->
+                <!--<li ng-repeat="item in list" class="jumbotron_indicators_actived" ng-click="click_slickGoTo($index)" >{{$index}}</li>-->
+                <li ng-repeat="item in list" ng-class=" $index == curIdx ? \'jumbotron_indicators_actived\' : \'jumbotron_indicators\'" ng-click="click_slickGoTo($index)" >{{$index}}</li>
                 <!--<li data-target="#jumbotron_cover" data-slide-to="1" class="jumbotron_indicators"></li>-->
                 <!--<li data-target="#jumbotron_cover" data-slide-to="2" class="jumbotron_indicators"></li>-->
-            <!--</ol>-->
+            </ol>
         </div>
 
         <div class="jumbotron_cover_controlbar_title">{{ coverTitle }}</div>

@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('infodeskboard-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('infodeskboard-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD','CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD,CONSTANT) {
 
         /********** 공통 controller 호출 **********/
             //angular.extend(this, $controller('ange-common', {$scope: $rootScope}));
@@ -19,8 +19,8 @@ define([
         $scope.search = {};
 
         // 페이징
-        $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 10;
+        //$scope.PAGE_NO = 1;
+        $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
         $scope.TOTAL_COUNT = 0;
 
         // 검색어 조건
@@ -115,6 +115,31 @@ define([
                     })
                     ['catch'](function(error){ $scope.tabs = "";});
             }
+
+            var getParam = function(key){
+                var _parammap = {};
+                document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+                    function decode(s) {
+                        return decodeURIComponent(s.split("+").join(" "));
+                    }
+
+                    _parammap[decode(arguments[1])] = decode(arguments[2]);
+                });
+
+                return _parammap[key];
+            };
+
+            console.log('getParam("page_no") = '+getParam("page_no"));
+
+            if(getParam("page_no") == undefined){
+                $scope.PAGE_NO = 1;
+            }else{
+                $scope.PAGE_NO = getParam("page_no");
+                if(getParam("condition") != undefined){
+                    $scope.search.CONDITION.value = getParam("condition");
+                }
+                $scope.search.KEYWORD = getParam("keyword");
+            }
         };
 
         /********** 이벤트 **********/
@@ -162,6 +187,11 @@ define([
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
 
+            $rootScope.NOW_PAGE_NO = $scope.PAGE_NO;
+            $rootScope.CONDITION = $scope.search.CONDITION.value;
+            $rootScope.KEYWORD = $scope.search.KEYWORD;
+
+            console.log($rootScope.CONDITION);
 
             if ($stateParams.menu == 'notice') {
                 $location.url('/infodesk/notice/view/'+key);
@@ -226,12 +256,21 @@ define([
 
         // 검색
         $scope.click_searchPeopleBoard = function(){
+            $scope.PAGE_NO = 1;
             $scope.getPeopleBoardList();
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
         }
 
         // 페이징
         $scope.pageChanged = function() {
+//            console.log('Page changed to: ' + $scope.PAGE_NO);
+//            $scope.getPeopleBoardList();
             console.log('Page changed to: ' + $scope.PAGE_NO);
+            //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO);
+            if($scope.search.KEYWORD == undefined){
+                $scope.search.KEYWORD = '';
+            }
+            $location.url('/infodesk/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
             $scope.getPeopleBoardList();
         };
 

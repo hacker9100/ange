@@ -21,7 +21,7 @@ define([
         // 초기화
         $scope.init = function() {
             // ange-portlet-slide-banner
-            $scope.option_r1_c1 = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: CONSTANT.AD_CODE_BN05, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+            $scope.option_r1_c1 = {title: '롤링 배너', api:'ad/banner', size: 10, id: 'main', type: 'banner', gb: CONSTANT.AD_CODE_BN05, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
             // ange-portlet-link-image
             $scope.option_r2_c2 = {title: '이벤트 배너', api:'ad/banner', size: 1, gb: CONSTANT.AD_CODE_BN06, link: true, open: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};

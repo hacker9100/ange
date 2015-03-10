@@ -51,7 +51,7 @@
         case "GET":
             if($_type == 'item'){
                 $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG,
-                        REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, ETC1, ETC2, ETC3, REPLY_COUNT ,BOARD_GB
+                            REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, ETC1, ETC2, ETC3, REPLY_COUNT ,BOARD_GB
                         FROM (
                             SELECT
                               B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
@@ -72,16 +72,16 @@
                 }
             } else if ($_type == 'list'){
 
-                if (!isset($_SESSION['uid'])) {
-                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
-                }
-
                 $search_where = "";
                 $search_table = "";
 
                 // 검색조건 추가
                 if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
                     $search_where .= "AND AUM.USER_ID = '".$_SESSION['uid']."'";
+                }
+
+                if (isset($_search['USER_ID']) && $_search['USER_ID'] != "") {
+                    $search_where .= "AND AUM.USER_ID = '".$_search['USER_ID']."'";
                 }
 
                 $currentYear = date('Y');
@@ -108,11 +108,7 @@
                             USER_ID, REASON, POINT, EARN_GB, PLACE_GB, EARN_DT, SUBJECT
                         FROM
                         (
-                            SELECT AUM.USER_ID,
-                                 (SELECT SUBJECT FROM ANGE_MILEAGE WHERE NO = AUM.MILEAGE_NO) AS SUBJECT,
-                                 (SELECT REASON FROM ANGE_MILEAGE WHERE NO = AUM.MILEAGE_NO) AS REASON,
-                                 (SELECT POINT FROM ANGE_MILEAGE WHERE NO = AUM.MILEAGE_NO) AS POINT,
-                                 AUM.EARN_GB, AUM.PLACE_GB, AUM.EARN_DT
+                            SELECT AUM.USER_ID, PLACE_GB AS SUBJECT, REASON, POINT, AUM.EARN_GB, AUM.PLACE_GB, AUM.EARN_DT
                             ".$search_table."
                             WHERE 1=1
                              ".$search_where."
@@ -128,37 +124,36 @@
                         WHERE 1 =1
                           AND POINT <> 0
                         ".$limit."
+                        ";
 
-                ";
-
-//                if (isset($_search[STATUS])) {
-//                    $__trn = '';
-//                    $result = $_d->sql_query($sql,true);
-//                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-//
-//                        $sql = "SELECT
-//                                    SUM_POINT,USE_POINT,REMAIN_POINT
-//                                FROM
-//                                    ANGE_MILEAGE_STATUS
-//                                WHERE
-//                                    1=1
-//                                    AND USER_ID = '".$row['USER_ID']."'
-//                                ";
-//
-//                        $category_data = $_d->getData($sql);
-//                        $row['STATUS'] = $category_data;
-//
-//                        $__trn->rows[$i] = $row;
-//                    }
-//                    $_d->sql_free_result($result);
-//                    $data = $__trn->{'rows'};
-//
-//                    if($_d->mysql_errno > 0){
-//                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//                    }else{
-//                        $_d->dataEnd2($data);
-//                    }
-//                }
+    //                if (isset($_search[STATUS])) {
+    //                    $__trn = '';
+    //                    $result = $_d->sql_query($sql,true);
+    //                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+    //
+    //                        $sql = "SELECT
+    //                                    SUM_POINT,USE_POINT,REMAIN_POINT
+    //                                FROM
+    //                                    ANGE_MILEAGE_STATUS
+    //                                WHERE
+    //                                    1=1
+    //                                    AND USER_ID = '".$row['USER_ID']."'
+    //                                ";
+    //
+    //                        $category_data = $_d->getData($sql);
+    //                        $row['STATUS'] = $category_data;
+    //
+    //                        $__trn->rows[$i] = $row;
+    //                    }
+    //                    $_d->sql_free_result($result);
+    //                    $data = $__trn->{'rows'};
+    //
+    //                    if($_d->mysql_errno > 0){
+    //                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+    //                    }else{
+    //                        $_d->dataEnd2($data);
+    //                    }
+    //                }
 
                 $data = $_d->sql_query($sql);
                 if($_d->mysql_errno > 0){
@@ -168,22 +163,18 @@
                 }
             } else if($_type == "mymileagepoint"){
 
-                if (!isset($_SESSION['uid'])) {
-                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
-                }
-
                 if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
                     $search_where .= "AND USER_ID = '".$_SESSION['uid']."'";
                 }
 
                 $sql = "SELECT
-                        SUM_POINT,USE_POINT,REMAIN_POINT
-                    FROM
-                        COM_USER
-                    WHERE
-                        1=1
-                        AND USER_ID = '".$_SESSION['uid']."'
-                    ";
+                            SUM_POINT,USE_POINT,REMAIN_POINT
+                        FROM
+                            COM_USER
+                        WHERE
+                            1=1
+                            AND USER_ID = '".$_SESSION['uid']."'
+                        ";
 
                 $data = $_d->sql_query($sql);
                 if($_d->mysql_errno > 0){
@@ -213,14 +204,18 @@
         case "POST":
 
             if ($_type == "item") {
-
-
                 $err = 0;
                 $msg = "";
 
                 $_d->sql_beginTransaction();
 
                 $where = "";
+
+                if (isset($_model[USER_ID]) && $_model[USER_ID] != "") {
+                    $user_id = $_model[USER_ID];
+                } else {
+                    $user_id = $_SESSION['uid'];
+                }
 
                 if (isset($_model[MILEAGE_GB]) && $_model[MILEAGE_GB] != "") {
                     $where .= "AND MILEAGE_GB  = '".$_model[MILEAGE_GB]."' ";
@@ -256,7 +251,7 @@
                             FROM
                                 ANGE_USER_MILEAGE
                             WHERE
-                                USER_ID = '".$_SESSION['uid']."'
+                                USER_ID = '".$user_id."'
                                 AND MILEAGE_NO = '".$_model['MILEAGE_NO']."'
                                 AND EARN_GB = '".$_model['MILEAGE_GB']."'
                                 ".$where."
@@ -279,7 +274,7 @@
                             POINT,
                             REASON
                         ) VALUES (
-                            '".$_SESSION['uid']."'
+                            '".$user_id."'
                             , SYSDATE()
                             , '".$data['NO']."'
                             , '".$data['MILEAGE_GB']."'
@@ -301,7 +296,7 @@
                             SUM_POINT = SUM_POINT + ".$data['POINT'].",
                             REMAIN_POINT = REMAIN_POINT + ".$data['POINT']."
                         WHERE
-                            USER_ID = '".$_SESSION['uid']."'";
+                            USER_ID = '".$user_id."'";
 
                 $_d->sql_query($sql);
 
@@ -382,23 +377,23 @@
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                     $sql = "INSERT INTO ANGE_USER_MILEAGE
-                        (
-                            USER_ID,
-                            EARN_DT,
-                            MILEAGE_NO,
-                            EARN_GB,
-                            PLACE_GB,
-                            POINT,
-                            REASON
-                        ) VALUES (
-                            '".$row[USER_ID]."'
-                            , SYSDATE()
-                            , '999'
-                            , '".$_model[EARN_GB]."'
-                            , '".$_model[PLACE_GB]."'
-                            , '".$_model[POINT]."'
-                            , '".$_model[REASON]."'
-                        )";
+                            (
+                                USER_ID,
+                                EARN_DT,
+                                MILEAGE_NO,
+                                EARN_GB,
+                                PLACE_GB,
+                                POINT,
+                                REASON
+                            ) VALUES (
+                                '".$row[USER_ID]."'
+                                , SYSDATE()
+                                , '999'
+                                , '".$_model[EARN_GB]."'
+                                , '".$_model[PLACE_GB]."'
+                                , '".$_model[POINT]."'
+                                , '".$_model[REASON]."'
+                            )";
 
                     $_d->sql_query($sql);
 
@@ -407,25 +402,11 @@
                         $msg = $_d->mysql_error;
                     }
 
-                    // ANGE_MILEAGE_STATUS
-                    $sql = "SELECT
-                                SUM_POINT, REMAIN_POINT
-                            FROM
-                                COM_USER
-                            WHERE
-                                USER_ID = '".$row[USER_ID]."'";
-
-                    $mileage_result = $_d->sql_query($sql);
-                    $mileage_data = $_d->sql_fetch_array($mileage_result);
-
-                    $sum_point = $mileage_data[SUM_POINT] + $_model[POINT];
-                    $remain_point = $mileage_data[REMAIN_POINT] + $_model[POINT];
-
                     $sql = "UPDATE
                                 COM_USER
                             SET
-                                SUM_POINT = SUM_POINT + ".$sum_point."
-                                ,REMAIN_POINT = REMAIN_POINT + ".$remain_point."
+                                SUM_POINT = SUM_POINT + ".$_model[POINT]."
+                                ,REMAIN_POINT = REMAIN_POINT + ".$_model[POINT]."
                             WHERE
                                 USER_ID = '".$row[USER_ID]."'";
 
@@ -464,17 +445,17 @@
                             ";
 
                 $_d->sql_query($sql);
-/*
-                // ANGE_MILEAGE_STATUS
-                $sql = "UPDATE COM_USER SET
-                                SUM_POINT = ".$_model[SUM_POINT]."
-                                ,USE_POINT = ".$_model[USE_POINT]."
-                                ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
-                         WHERE USER_ID = '".$_SESSION['uid']."'";
+                /*
+                                // ANGE_MILEAGE_STATUS
+                                $sql = "UPDATE COM_USER SET
+                                                SUM_POINT = ".$_model[SUM_POINT]."
+                                                ,USE_POINT = ".$_model[USE_POINT]."
+                                                ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
+                                         WHERE USER_ID = '".$_SESSION['uid']."'";
 
-                $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
-*/
+                                $_d->sql_query($sql);
+                                $no = $_d->mysql_insert_id;
+                */
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("수정실패입니다:".$_d->mysql_error);
                 } else {
@@ -535,4 +516,4 @@
             }
 
             break;
-    }
+}

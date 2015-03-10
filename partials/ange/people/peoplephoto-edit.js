@@ -39,17 +39,17 @@ define([
                 $scope.item.NOTICE_FL = "false";
             }
 
-            $("#checkall").click(function(){
-                //클릭되었으면
-                if($("#checkall").is(":checked")){
-                    $("input[name='check']").prop("checked",true);
-                    $scope.item.SCRAP_FL = "true";
-                    $scope.item.REPLY_FL = "true";
-                }else{ //클릭이 안되있으면
-                    $("input[name='check']").prop("checked",false);
-                    $scope.checked = false;
-                }
-            })
+//            $("#checkall").click(function(){
+//                //클릭되었으면
+//                if($("#checkall").is(":checked")){
+//                    $("input[name='check']").prop("checked",true);
+//                    $scope.item.SCRAP_FL = "true";
+//                    $scope.item.REPLY_FL = "true";
+//                }else{ //클릭이 안되있으면
+//                    $("input[name='check']").prop("checked",false);
+//                    $scope.checked = false;
+//                }
+//            })
          });
 
         $(function(){
@@ -58,8 +58,8 @@ define([
                     $scope.item.SCRAP_FL = "true";
                 }else{
                     $scope.item.SCRAP_FL = "false";
-                    $("input[name='check']").prop("checked",false);
-                    $("#checkall").attr("checked",false);
+                    //$("input[name='check']").prop("checked",false);
+                    //$("#checkall").attr("checked",false);
                 }
             });
 
@@ -68,8 +68,8 @@ define([
                     $scope.item.REPLY_FL = "true";
                 }else{
                     $scope.item.REPLY_FL = "false";
-                    $("input[name='check']").prop("checked",false);
-                    $("#checkall").attr("checked",false);
+                    //$("input[name='check']").prop("checked",false);
+                    //$("#checkall").attr("checked",false);
                 }
             });
 
@@ -78,8 +78,8 @@ define([
                     $scope.item.NOTICE_FL = "true";
                 }else{
                     $scope.item.NOTICE_FL = "false";
-                    $("input[name='check']").prop("checked",false);
-                    $("#checkall").attr("checked",false);
+                    //$("input[name='check']").prop("checked",false);
+                    //$("#checkall").attr("checked",false);
                 }
             });
         });
@@ -207,9 +207,8 @@ define([
 
                         var files = data.FILES;
                         for(var i in files) {
-                            $scope.queue.push({"no":files[i].NO,"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                            $scope.queue.push({"no":files[i].NO,"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","kind":files[i].FILE_GB,"type":files[i].FILE_EXT,"isUpdate":true});
                         }
-
 
                         $scope.item.NOTICE_FL == '1' ? $scope.item.NOTICE_FL = true : $scope.item.NOTICE_FL = false;
 

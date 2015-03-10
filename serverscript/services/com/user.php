@@ -57,7 +57,8 @@
                         FROM
                             COM_USER
                         WHERE
-                            USER_NM = '".$_search[USER_NM]."'
+                            USER_ST != 'S'
+                            AND USER_NM = '".$_search[USER_NM]."'
                             AND PHONE_2 = '".$_search[PHONE_2]."'
                         ";
 
@@ -74,7 +75,8 @@
                         FROM
                             COM_USER
                         WHERE
-                            USER_ID = '".$_search[USER_ID]."'
+                            USER_ST != 'S'
+                            AND USER_ID = '".$_search[USER_ID]."'
                             AND PHONE_2 = '".$_search[PHONE_2]."'
                         ";
 
@@ -147,7 +149,7 @@
                             U.NO, U.USER_ID, U.USER_NM, U.NICK_NM, U.LUNAR_FL, U.BIRTH, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_GB, U.USER_ST,
                             U.REG_DT, U.FINAL_LOGIN_DT, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_YMD, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_YMD,
                             U.INTRO, U.NOTE, U.MARRIED_FL, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_YMD, U.CENTER_OUT_YMD,
-                            U.EN_ANGE_EMAIL_FL, U.EN_ANGE_SMS_FL, U.EN_ALARM_EMAIL_FL, U.EN_ALARM_SMS_FL, U.EN_STORE_EMAIL_FL, U.EN_STORE_SMS_FL,
+                            U.EN_ANGE_EMAIL_FL, U.EN_ANGE_SMS_FL, U.EN_ALARM_EMAIL_FL, U.EN_ALARM_SMS_FL, U.EN_STORE_EMAIL_FL, U.EN_STORE_SMS_FL, U.SUPPORT_NO,
                             UR.ROLE_ID, (SELECT ROLE_NM FROM COM_ROLE WHERE ROLE_ID = UR.ROLE_ID AND SYSTEM_GB  = '".$_search[SYSTEM_GB]."') AS ROLE_NM, U.CERT_GB
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
@@ -387,7 +389,15 @@
                     $search_where .= "AND U.JOIN_PATH  = '".$_search['JOIN_PATH']."' ";
                 }
                 if (isset($_search['ROLE']) && $_search['ROLE'] != "") {
-                    $search_where .= "AND R.ROLE_ID  = '".$_search['ROLE']['ROLE_ID']."' ";
+                    $in_role = "";
+                    for ($i=0; $i< count($_search['ROLE']); $i++) {
+                        $in_role .= "'".$_search['ROLE'][$i]."'";
+                        if (count($_search['ROLE']) - 1 != $i) $in_role .= ",";
+                    }
+
+                    $search_where .= "AND R.ROLE_ID IN (".$in_role.") AND R.SYSTEM_GB = 'ANGE' ";
+
+//                    $search_where .= "AND R.ROLE_ID  = '".$_search['ROLE']['ROLE_ID']."' ";
                 }
                 if (isset($_search['ROLE_ID']) && $_search['ROLE_ID'] != "") {
                     $arr_roles = explode(",", $_search['ROLE_ID']);
@@ -408,8 +418,15 @@
                     $search_from = "INNER JOIN ADMIN_SAVE_USER SU ON U.USER_ID = SU.USER_ID AND SU.LIST_NO = ".$_search['ADMIN_SAVE_LIST']['NO'];
                 }
 
+                $sql = "SELECT COUNT(*) AS TOTAL_COUNT FROM COM_USER U
+                            INNER JOIN USER_ROLE UR ON U.USER_ID = UR.USER_ID
+                            INNER JOIN COM_ROLE R ON UR.ROLE_ID = R.ROLE_ID ".$search_from."
+                            WHERE 1=1 ".$search_where;
+                $row=$_d->sql_fetch($sql);
+                $t_total_count = $row['TOTAL_COUNT'];
+
                 $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                            0 AS TOTAL_COUNT,
                             DATA.USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, INTRO, NOTE,
                             MARRIED_FL, PREGNENT_FL, BLOG_FL, JOIN_PATH, CONTACT_ID, CARE_CENTER, CENTER_VISIT_YMD, CENTER_OUT_YMD, EN_FL, EN_EMAIL_FL, EN_POST_FL, EN_SMS_FL, EN_PHONE_FL,
                             ROLE_ID, ROLE_NM, SUM_POINT, USE_POINT, REMAIN_POINT, BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS,
@@ -423,7 +440,7 @@
                             SELECT
                                 U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
                                 U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_YMD, U.CENTER_OUT_YMD, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SMS_FL, U.EN_PHONE_FL,
-                                U.SUM_POINT, U.USE_POINT, U.REMAIN_POINT, UR.ROLE_ID, R.ROLE_NM
+                                U.SUM_POINT, U.USE_POINT, U.REMAIN_POINT, UR.ROLE_ID, R.ROLE_NM, U.SUPPORT_NO
                             FROM
                                 COM_USER U
                                 INNER JOIN USER_ROLE UR ON U.USER_ID = UR.USER_ID
@@ -435,26 +452,24 @@
                             ".$sort_order."
                             ".$limit."
                         ) AS DATA
-                        LEFT OUTER JOIN ANGE_USER_BLOG B ON DATA.USER_ID = B.USER_ID,
-                        (SELECT @RNUM := 0) R,
-                        (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
-                            FROM
-                                COM_USER U
-                                INNER JOIN USER_ROLE UR ON U.USER_ID = UR.USER_ID
-                                INNER JOIN COM_ROLE R ON UR.ROLE_ID = R.ROLE_ID
-                                ".$search_from."
-                            WHERE
-                                1 = 1
-                                ".$search_where."
-                        ) CNT
+                        LEFT OUTER JOIN ANGE_USER_BLOG B ON DATA.USER_ID = B.USER_ID
                         ";
-                $data = $_d->sql_query($sql);
+
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                    $__trn->rows[$i] = $row;
+                    $__trn->rows[$i]['TOTAL_COUNT'] = $t_total_count;
+                }
+
+                $_d->sql_free_result($result);
+                $data = $__trn->{'rows'};
+
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 } else {
-                    $_d->dataEnd($sql);
+                    $_d->dataEnd2($data);
                 }
             } else if ($_type == 'statistics') {
                 $search_where = "";
@@ -629,7 +644,8 @@
                             REG_DT,
                             CERT_GB,
                             CERT_DT,
-                            CERT_HASH
+                            CERT_HASH,
+                            SUPPORT_NO
                         ) VALUES (
                             '".$_model[USER_ID]."',
                             '".$_model[USER_NM]."',
@@ -671,7 +687,8 @@
                             SYSDATE(),
                             '".$_model[CERT_GB]."',
                             ".((isset($_model[CERT_GB]) && $_model[CERT_GB] == "EMAIL") ? "null" : "SYSDATE()").",
-                            'ange'
+                            'ange',
+                            '".$_model[SUPPORT_NO]."'
                         )";
 
                 $_d->sql_query($sql);
@@ -989,7 +1006,8 @@
                             EN_ALARM_SMS_FL = '".( $_model[EN_ALARM_SMS_FL] == "true" ? "Y" : 'N' )."',
                             EN_STORE_EMAIL_FL = '".( $_model[EN_STORE_EMAIL_FL] == "true" ? "Y" : 'N' )."',
                             EN_STORE_SMS_FL = '".( $_model[EN_STORE_SMS_FL] == "true" ? "Y" : 'N' )."',
-                            UPDATE_DT = SYSDATE()
+                            UPDATE_DT = SYSDATE(),
+                            SUPPORT_NO = '".$_model[SUPPORT_NO]."'
                         WHERE
                             USER_ID = '".$_key."'
                         ";
@@ -1193,6 +1211,25 @@
                     }
                 }
 
+                if (isset($_model[ROLE_ID]) && $_model[ROLE_ID] != "") {
+                    $sql = "UPDATE USER_ROLE UR, COM_ROLE R
+                            SET
+                                UR.ROLE_ID = '".$_model[ROLE_ID]."'
+                            WHERE
+                                UR.ROLE_ID = R.ROLE_ID
+                                AND UR.USER_ID = '".$_key."'
+                                AND R.SYSTEM_GB = '".$_model[SYSTEM_GB]."'
+                            ";
+
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
+
+                // 관련 부분들 수정후 삭제 할것
                 if (isset($_model[ROLE]) && $_model[ROLE] != "") {
                     $sql = "UPDATE USER_ROLE UR, COM_ROLE R
                             SET
@@ -1249,6 +1286,51 @@
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("수정실패입니다:".$_d->mysql_error);
                 } else {
+                    $_d->succEnd($no);
+                }
+            } else if ($_type == "role") {
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
+
+                $sql = "UPDATE USER_ROLE U, COM_ROLE R
+                        SET
+                            U.ROLE_ID = '".$_model[ROLE_ID]."'
+                        WHERE
+                            U.USER_ID = '".$_key."'
+                            AND U.ROLE_ID = R.ROLE_ID
+                            AND R.SYSTEM_GB = 'ANGE'
+                        ";
+
+                $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($_model[ROLE_ID] == "SUPPORTERS") {
+                    $sql = "UPDATE COM_USER
+                            SET
+                                SUPPORT_NO = '".$_model[SUPPORT_NO]."'
+                            WHERE
+                                USER_ID = '".$_key."'
+                            ";
+
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                } else {
+                    $_d->sql_commit();
                     $_d->succEnd($no);
                 }
             } else if ($_type == 'admin') {
@@ -1360,7 +1442,7 @@
                     $err++;
                     $msg = $_d->mysql_error;
                 }
-
+/*
                 $sql = "SELECT
                             NO, MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
                         FROM
@@ -1451,7 +1533,7 @@
                     $err++;
                     $msg = $_d->mysql_error;
                 }
-
+*/
                 if ($err > 0) {
                     $_d->sql_rollback();
 

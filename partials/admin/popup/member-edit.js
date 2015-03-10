@@ -35,8 +35,11 @@ define([
 
         // 초기화
         $scope.init = function() {
-            var type = [{name: "일반회원", value: "MEMBER"}, {name: "앙쥬클럽", value: "CLUB"}, {name: "서포터즈", value: "SUPPORTERS"}];
+            var type = [{name: "일반회원", value: "MEMBER"}, {name: "앙쥬클럽", value: "CLUB"}];
+            var role = [{name: "회원", value: "MEMBER"}, {name: "서포터즈", value: "SUPPORTERS"}, {name: "방장", value: "ANGE_MEMBER"}, {name: "상담전문가", value: "CLINIC"}, {name: "관리자", value: "ANGE_ADMIN"}];
+
             $scope.type = type;
+            $scope.role = role;
 
             for (var i = 2000; i >= 1950; i--) {
                 year.push(i+'');
@@ -104,7 +107,19 @@ define([
         $scope.click_saveUser = function () {
             $scope.item.SYSTEM_GB = 'ANGE';
 
-            if ($scope.item.YEAR == '' || $scope.item.MONTH == '' || $scope.item.DAY == '') {
+            if ($scope.item.USER_NM == '') {
+                $('#user_nm').focus();
+                dialogs.notify('알림', '이름을 확인해주세요.', {size: 'md'});
+                return;
+            }
+
+            if ($scope.item.NICK_NM == '') {
+                $('#nick_nm').focus();
+                dialogs.notify('알림', '닉네임을 확인해주세요.', {size: 'md'});
+                return;
+            }
+
+            if ( ($scope.item.YEAR == undefined || $scope.item.YEAR == '') || ($scope.item.MONTH == undefined || $scope.item.MONTH == '') || ($scope.item.DAY == undefined || $scope.item.DAY == '') ) {
                 $('#birth').focus();
                 dialogs.notify('알림', '생년월일을 확인해주세요.', {size: 'md'});
                 return;
@@ -118,6 +133,35 @@ define([
                 return;
             } else {
                 $scope.item.ZIP_CODE = $scope.item.POST_1 + $scope.item.POST_2;
+            }
+
+            if ($scope.item.PHONE_2 == '') {
+                $('#phone_2').focus();
+                dialogs.notify('알림', '휴대폰을 확인해주세요.', {size: 'md'});
+                return;
+            }
+
+            if ($scope.item.EMAIL == '') {
+                $('#email').focus();
+                dialogs.notify('알림', '이메일을 확인해주세요.', {size: 'md'});
+                return;
+            }
+
+            if ($scope.item.PREGNENT_FL == '') {
+                $('#pregment').focus();
+                dialogs.notify('알림', '임신여부를 선택해주세요.', {size: 'md'});
+                return;
+            }
+
+            if ($scope.item.MARRIED_FL == '') {
+                $('#married').focus();
+                dialogs.notify('알림', '결혼여부를 선택해주세요.', {size: 'md'});
+                return;
+            }
+
+            if ( ($scope.item.YEAR1 == undefined || $scope.item.YEAR1 == '') || ($scope.item.MONTH1 == undefined || $scope.item.MONTH1 == '') || ($scope.item.DAY1 == undefined || $scope.item.DAY1 == '') ) {
+            } else {
+                $scope.item.BABY_BIRTH_DT = $scope.item.YEAR1 + ($scope.item.MONTH1.length == 1 ? '0' + $scope.item.MONTH1 : $scope.item.MONTH1) + ($scope.item.DAY1.length == 1 ? '0' + $scope.item.DAY1 : $scope.item.DAY1);
             }
             
             $scope.item.BABY = $scope.babies;
@@ -153,7 +197,7 @@ define([
 //                        }
 console.log(JSON.stringify(data))
                         $scope.item = data;
-
+/*
                         var idx = 0;
                         for (var i=0; i < $scope.type.length; i ++) {
                             if ($scope.item.USER_GB == $scope.type[i].value) {
@@ -163,6 +207,7 @@ console.log(JSON.stringify(data))
                         }
 
                         $scope.item.USER_GB = $scope.type[i];
+ */
 
                         if ($scope.item.BIRTH.length == 8) {
                             $scope.item.YEAR = $scope.item.BIRTH.substr(0, 4);

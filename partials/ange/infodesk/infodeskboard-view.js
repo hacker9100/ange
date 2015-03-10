@@ -125,16 +125,23 @@ define([
 
             console.log('$stateParams.menu = '+$stateParams.menu);
 
+            console.log('view $rootScope.NOW_PAGE_NO = '+$rootScope.NOW_PAGE_NO);
+
+            console.log('$stateParams.menu = '+$stateParams.menu);
+            if($rootScope.KEYWORD == undefined){
+                $rootScope.KEYWORD = '';
+            }
+
             if ($stateParams.menu == 'notice') {
-                $location.url('/infodesk/notice/list');
+                $location.url('/infodesk/notice/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             } else if($stateParams.menu == 'system') {
-                $location.url('/infodesk/system/list');
+                $location.url('/infodesk/system/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             } else if($stateParams.menu == 'faq') {
-                $location.url('/infodesk/faq/list');
+                $location.url('/infodesk/faq/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             } else if($stateParams.menu == 'qna') {
-                $location.url('/infodesk/qna/list');
+                $location.url('/infodesk/qna/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             } else if($stateParams.menu == 'myqna') {
-                $location.url('/infodesk/myqna/list');
+                $location.url('/infodesk/myqna/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             }
         };
 

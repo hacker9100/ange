@@ -98,6 +98,10 @@
                     $search_where .= "AND ada_state  = '".$_search[ADA_STATE]."' ";
                 }
 
+                if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
+                    $search_where .= "AND DATE_FORMAT(a.ada_date_close, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
+                }
+
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
                     $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
                 } else {

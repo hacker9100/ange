@@ -35,7 +35,7 @@
                                 <span style="color: green"> {{nick}}&nbsp;님</span><br/>
                                 <!--별초모맘 등급입니다-->
 
-                                <h2>마일리지&nbsp;&nbsp;&nbsp;{{REMAIN_POINT}}&nbsp;&nbsp;&nbsp;점</h2>
+                                <h2>마일리지&nbsp;&nbsp;&nbsp;{{ REMAIN_POINT | number }}&nbsp;&nbsp;&nbsp;점</h2>
                             </div>
 
                             <br/><br/><br/>
@@ -58,16 +58,16 @@
 
                                 <tr> <!--ng-click="click_showViewPeopleBoard(item.NO)"-->
                                     <td class="table_no">
-                                        <span>{{item.RNUM}}</span>
+                                        <span>{{ item.RNUM }}</span>
                                     </td>
                                     <td class="table_author">
-                                        <span>{{item.PLACE_GB}}</span>
+                                        <span>{{ item.PLACE_GB }}</span>
                                     </td>
                                     <td>
-                                        {{ item.REASON | string_limit: 100 }}{{item.REASON > 100 ? '...' : ''}}
+                                        {{ item.REASON | string_limit: 100 }}{{ item.REASON > 100 ? '...' : '' }}
                                     </td>
-                                    <td  class="table_author">{{item.EARN_DT}}</td>
-                                    <td  class="table_author">{{item.POINT}}P</td>
+                                    <td  class="table_author">{{ item.EARN_DT }}</td>
+                                    <td  class="table_author">{{ item.POINT | number }}P</td>
                                     <!--<td class="table_date">{{item.REG_DT}}</td>
                                     <td class="table_hit">{{item.HIT_CNT}}</td></tr>-->
                                 </tr>

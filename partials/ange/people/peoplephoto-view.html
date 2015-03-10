@@ -154,7 +154,7 @@
                                         <a class="btn people_btn submit" title="등록하기" ng-click="click_showCreatePeopleBoard();" style="display:block;">등록</a>
                                     </div>
 
-                                    <div class="col-xs-8" ng-show="uid == item.REG_UID && uid != '' && uid != null && item.BOARD_ST != 'D'">
+                                    <div class="col-xs-8" ng-show="uid == item.REG_UID && uid != '' && uid != null || role == 'ANGE_ADMIN'">
                                         <a class="btn people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeoplePhotoEdit(item);">수정</a>
                                         <a ng-show="uid == item.REG_UID && uid != '' && uid != null" ng-click="click_showPeoplePhotoDelete(item);">삭제</a>
                                     </div>

@@ -107,11 +107,11 @@ define([
             var popupWin = window.open('', '_blank', 'width=1000,height=900');
             popupWin.document.open()
             popupWin.document.write('<html><head>' +
-                                        '<link rel="stylesheet" type="text/css" href="css/ange/normalize.css" >' +
-                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_bootstrap.css" />' +
-                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_style.css" />' +
-                                        '<link rel="stylesheet" type="text/css" href="lib/jquery/css/base/jquery-ui-1.10.2.min.css" />' +
-                                        '<link rel="stylesheet" type="text/css" href="css/article.css" />' +
+                                        '<link rel="stylesheet" type="text/css" href="/css/ange/normalize.css" >' +
+                                        '<link rel="stylesheet" type="text/css" href="/css/ange/ange_bootstrap.css" />' +
+                                        '<link rel="stylesheet" type="text/css" href="/css/ange/ange_style.css" />' +
+                                        '<link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />' +
+                                        '<link rel="stylesheet" type="text/css" href="/css/article.css" />' +
 //                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_main.css" />' +
 //                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_storylist.css" />' +
 //                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_people_main.css" />' +
