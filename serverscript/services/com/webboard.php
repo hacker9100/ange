@@ -586,14 +586,14 @@
 //                }
 
                 if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
-                    $search_where .= "AND NO = '".$_search[CATEGORY_NO]."' ";
+                    $search_where .= "AND CC.NO = '".$_search[CATEGORY_NO]."' ";
                 }
 
-                $sql = "SELECT NO, CATEGORY_NM, NOTE
-                    FROM CMS_CATEGORY
+                $sql = "SELECT CC.NO, CC.CATEGORY_NM, CC.NOTE, (SELECT COUNT(*) FROM COM_BOARD WHERE CATEGORY_NO = CC.NO) AS CNT
+                    FROM CMS_CATEGORY CC
                     WHERE 1=1
-                    AND SYSTEM_GB = 'ANGE'
-                    AND CATEGORY_GB = '".$_search[COMM_NO]."'
+                    AND CC.SYSTEM_GB = 'ANGE'
+                    AND CC.CATEGORY_GB = '".$_search[COMM_NO]."'
                     ".$search_where."
                     ORDER BY SORT_IDX ASC
                 ";
