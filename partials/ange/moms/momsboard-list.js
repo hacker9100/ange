@@ -16,12 +16,17 @@ define([
         $scope.search = {};
 
         // 페이징
-        $scope.PAGE_NO = 1;
+        //$scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = 10;
         $scope.TOTAL_COUNT = 0;
 
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
+            //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO);
+            if($scope.search.KEYWORD == undefined){
+                $scope.search.KEYWORD = '';
+            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
             $scope.getPeopleBoardList();
         };
 
@@ -56,6 +61,30 @@ define([
 //            } else if ($stateParams.menu == 'postwinner') {
 //                $scope.search.EVENT_GB = "POSTCARD";
 //            }
+            var getParam = function(key){
+                var _parammap = {};
+                document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+                    function decode(s) {
+                        return decodeURIComponent(s.split("+").join(" "));
+                    }
+
+                    _parammap[decode(arguments[1])] = decode(arguments[2]);
+                });
+
+                return _parammap[key];
+            };
+
+            console.log('getParam("page_no") = '+getParam("page_no"));
+
+            if(getParam("page_no") == undefined){
+                $scope.PAGE_NO = 1;
+            }else{
+                $scope.PAGE_NO = getParam("page_no");
+                if(getParam("condition") != undefined){
+                    $scope.search.CONDITION.value = getParam("condition");
+                }
+                $scope.search.KEYWORD = getParam("keyword");
+            }
         };
 
         // 게시판 목록 조회
@@ -78,6 +107,13 @@ define([
         };
 
         $scope.click_showViewPeopleBoard = function(key){
+
+            $rootScope.NOW_PAGE_NO = $scope.PAGE_NO;
+            $rootScope.CONDITION = $scope.search.CONDITION.value;
+            $rootScope.KEYWORD = $scope.search.KEYWORD;
+
+            console.log($rootScope.CONDITION);
+
             $location.url('/moms/'+$stateParams.menu+'/view/'+key);
         }
 
@@ -94,7 +130,10 @@ define([
         };
 
         $scope.click_searchPeopleBoard = function (){
+            //$scope.getPeopleBoardList();
+            $scope.PAGE_NO = 1;
             $scope.getPeopleBoardList();
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
         }
 
         $scope.getSession()

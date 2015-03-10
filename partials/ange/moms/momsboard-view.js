@@ -61,7 +61,16 @@ define([
 
             console.log('$stateParams.menu = '+$stateParams.menu);
 
-            $location.url('/moms/'+$stateParams.menu+'/list/');
+            console.log('view $rootScope.NOW_PAGE_NO = '+$rootScope.NOW_PAGE_NO);
+
+            console.log('$stateParams.menu = '+$stateParams.menu);
+            if($rootScope.KEYWORD == undefined){
+                $rootScope.KEYWORD = '';
+            }
+
+            $location.url('/moms/'+$stateParams.menu+'/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
+
+            //$location.url('/moms/'+$stateParams.menu+'/list/');
         };
 
         $scope.addHitCnt = function () {
