@@ -18,29 +18,37 @@
                     <div class= "form-group form_basic_group">
                         <label class= "form_basic_label">유형 <span style="color:#b94a48">*</span></label>
                         <div class= "col-md-4 form_basic_input">
-                            <select ng-model="item.USER_GB" ng-options="type.name for type in type" class= "form-control" ></select>
+                            <select ng-model="item.USER_GB" ng-options="type.value as type.name for type in type" class= "form-control" ></select>
                         </div>
                     </div>
-                    <div class= "form-group form_basic_group" ng-class="{error: edit_form.user_id.$invalid}">
+                    <div class= "form-group form_basic_group">
+                        <label class= "form_basic_label">권한 <span style="color:#b94a48">*</span></label>
+                        <div class= "col-md-6 form_basic_input">
+                            <div class= "col-md-8">
+                                <select ng-model="item.ROLE_ID" ng-options="role.value as role.name for role in role" class= "form-control" ></select>
+                            </div>
+                            <div class= "col-md-4">
+                                <input type="text" ng-model="item.SUPPORT_NO" class= "form-control" placeholder="서포터즈 기수"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class= "form-group form_basic_group">
                         <label class= "form_basic_label">아이디 <span style="color:#b94a48">*</span></label>
                         <div class="col-md-4 form_basic_input">
-                            <input name="user_id" ng-model="item.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디" required/>
+                            <input name="user_id" ng-model="item.USER_ID" type= "text" class= "form-control" placeholder="사용자 아이디"/>
                         </div>
-                        <span ng-show="edit_form.user_id.$dirty && edit_form.user_id.$invalid" class="help-inline">사용자 아이디가 누락되었습니다.</span>
                     </div>
-                    <div class= "form-group form_basic_group" ng-class="{error: edit_form.user_name.$invalid}">
+                    <div class= "form-group form_basic_group">
                         <label class= "form_basic_label">이름 <span style="color:#b94a48">*</span></label>
                         <div class="col-md-4 form_basic_input">
-                            <input name="user_name" ng-model="item.USER_NM" type= "text" class= "form-control" placeholder="사용자 이름" required/>
+                            <input name="user_name" ng-model="item.USER_NM" type= "text" class= "form-control" placeholder="사용자 이름"/>
                         </div>
-                        <span tooltip="test" ng-show="edit_form.user_name.$dirty && edit_form.user_name.$invalid" class="help-inline">사용자 이름이 누락되었습니다.</span>
                     </div>
-                    <div class= "form-group form_basic_group" ng-class="{error: edit_form.nick_name.$invalid}">
+                    <div class= "form-group form_basic_group">
                         <label class= "form_basic_label">대화명 <span style="color:#b94a48">*</span></label>
                         <div class="col-md-4 form_basic_input">
-                            <input name="nick_name" ng-model="item.NICK_NM" type= "text" class= "form-control" placeholder="대화명" required/>
+                            <input name="nick_name" ng-model="item.NICK_NM" type= "text" class= "form-control" placeholder="닉네임"/>
                         </div>
-                        <span tooltip="test" ng-show="edit_form.nick_name.$dirty && edit_form.nick_name.$invalid" class="help-inline">사용자 대화명이 누락되었습니다.</span>
                     </div>
                     <div class= "form-group form_basic_group">
                         <label class= "form_basic_label">생년월일 <span style="color:#b94a48">*</span></label>
@@ -116,7 +124,6 @@
                         <label class= "form_basic_label">E-Mail <span style="color:#b94a48">*</span></label>
                         <div class="col-md-4 form_basic_input">
                             <input name="email" ng-model="item.EMAIL" type= "email" class= "form-control" placeholder= "사용자 이메일"/>
-                            <span ng-show="edit_form.email.$error.email" class="help-inline">이메일 형식이 맞지 않습니다.</span>
                         </div>
                     </div>
 

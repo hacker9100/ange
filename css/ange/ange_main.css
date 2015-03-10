@@ -229,10 +229,16 @@ a.mini_story_rollcate_left:hover, a.mini_story_rollcate_right:hover {
 	float:left;
 }
 
-.mini_story_rollcate_ul li.foucs{
-	color: #2486DE;
-	font-weight: bold;
-	text-decoration: underline;
+/*.mini_story_rollcate_ul li.foucs{*/
+	/*color: #2486DE;*/
+	/*font-weight: bold;*/
+	/*text-decoration: underline;*/
+/*}*/
+
+div.foucsing{
+    color: #2486DE;
+    font-weight: bold;
+    text-decoration: underline;
 }
 
 a.rollcate_link {

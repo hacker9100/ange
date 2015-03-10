@@ -46,6 +46,16 @@ $sql = "SELECT
 
 $menu_data = $_d->getData($sql);
 
+$sql = "SELECT
+            C.NO, C.PARENT_NO, C.CATEGORY_NM, C.CATEGORY_GB, C.CATEGORY_ST, C.REG_DT, C.NOTE
+        FROM
+            CMS_CATEGORY C
+        WHERE
+            SYSTEM_GB  = 'CMS'
+        ";
+
+$category_data = $_d->getData($sql);
+
 $title = "";
 $description = "";
 $image = "";
@@ -69,13 +79,14 @@ if ((sizeof($path) == 5) == 1) {
 
         $title = $task_data['SUBJECT'];
         $description = $task_data['SUMMARY'];
-        $image = BASE_URL."/thumbnail".$task_data['PATH'].$task_data['FILE_ID'];
+        $image = BASE_URL.$task_data['PATH']."thumbnail/".$task_data['FILE_ID'];
     }
 }
 
 ob_end_clean();
 $channel_info = json_encode($channel_data);
 $menu_info = json_encode($menu_data);
+$category_info = json_encode($category_data);
 
 MtUtil::_d("### [END]");
 ?>
@@ -222,6 +233,7 @@ MtUtil::_d("### [END]");
     function ange_init($rootScope) {
         $rootScope.ange_channel = <?=$channel_info?>;
         $rootScope.ange_menu = <?=$menu_info?>;
+        $rootScope.ange_category = <?=$category_info?>;
         $rootScope.mobile = false;
 
         if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -239,8 +251,8 @@ MtUtil::_d("### [END]");
         // 로컬 서버
         Kakao.init('207aa395bc0cb51730547fd97ee9d369');
 
-        // 개발 서버
-//        Kakao.init('207aa395bc0cb51730547fd97ee9d369');
+        // 운영 서버
+//        Kakao.init('d3adadb46723eb3879569ddd4f43bf33');
     }
 </script>
 
