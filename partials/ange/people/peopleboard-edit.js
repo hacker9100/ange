@@ -30,17 +30,17 @@ define([
                 $scope.item.NOTICE_FL = "false";
             }
 
-            $("#checkall").click(function(){
-                //클릭되었으면
-                if($("#checkall").is(":checked")){
-                    $("input[name='check']").prop("checked",true);
-                    $scope.item.SCRAP_FL = "true";
-                    $scope.item.REPLY_FL = "true";
-                }else{ //클릭이 안되있으면
-                    $("input[name='check']").prop("checked",false);
-                    $scope.checked = false;
-                }
-            })
+//            $("#checkall").click(function(){
+//                //클릭되었으면
+//                if($("#checkall").is(":checked")){
+//                    $("input[name='check']").prop("checked",true);
+//                    $scope.item.SCRAP_FL = "true";
+//                    $scope.item.REPLY_FL = "true";
+//                }else{ //클릭이 안되있으면
+//                    $("input[name='check']").prop("checked",false);
+//                    $scope.checked = false;
+//                }
+//            })
 //            $("#check_scrap").click(function(){
 //                if(!$("#check_scrap").is(":checked")){
 //                    $scope.item.SCRAP_FL = "true";
@@ -64,8 +64,8 @@ define([
                     $scope.item.SCRAP_FL = "true";
                 }else{
                     $scope.item.SCRAP_FL = "false";
-                    $("input[name='check']").prop("checked",false);
-                    $("#checkall").attr("checked",false);
+                    //$("input[name='check']").prop("checked",false);
+                    //$("#checkall").attr("checked",false);
                 }
             });
 
@@ -74,8 +74,8 @@ define([
                     $scope.item.REPLY_FL = "true";
                 }else{
                     $scope.item.REPLY_FL = "false";
-                    $("input[name='check']").prop("checked",false);
-                    $("#checkall").attr("checked",false);
+                    //$("input[name='check']").prop("checked",false);
+                    //$("#checkall").attr("checked",false);
                 }
             });
 
@@ -84,8 +84,8 @@ define([
                     $scope.item.NOTICE_FL = "true";
                 }else{
                     $scope.item.NOTICE_FL = "false";
-                    $("input[name='check']").prop("checked",false);
-                    $("#checkall").attr("checked",false);
+                    //$("input[name='check']").prop("checked",false);
+                    //$("#checkall").attr("checked",false);
                 }
             });
         });

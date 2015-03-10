@@ -150,9 +150,9 @@ define([
                 $scope.search.CATEGORY_NO = '';
 
                 // 페이징
-                $scope.PAGE_NO = 1;
+                //$scope.PAGE_NO = 1;
                 $scope.PAGE_SIZE = 9;
-                $scope.TOTAL_COUNT = 0;
+                $scope.SEARCH_TOTAL_COUNT = 0;
 
                 // 초기화 후 조회
                 $scope.list = [];
@@ -161,9 +161,9 @@ define([
                 $scope.search.CATEGORY_NO = category_no;
 
                 // 페이징
-                $scope.PAGE_NO = 1;
+                //$scope.PAGE_NO = 1;
                 $scope.PAGE_SIZE = 9;
-                $scope.TOTAL_COUNT = 0;
+                $scope.SEARCH_TOTAL_COUNT = 0;
 
                 // 초기화 후 조회
                 $scope.list = [];
@@ -205,6 +205,7 @@ define([
 
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
+                    console.log('$scope.SEARCH_TOTAL_COUNT = '+$scope.SEARCH_TOTAL_COUNT);
                 })
                 ['catch'](function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0});
         };
