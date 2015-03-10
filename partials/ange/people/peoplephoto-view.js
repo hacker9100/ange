@@ -138,7 +138,11 @@ define([
 
         // 목록 버튼 클릭
         $scope.click_showPeoplePhotoList = function () {
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+            //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+            if($rootScope.KEYWORD == undefined){
+                $rootScope.KEYWORD = '';
+            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
         };
 
         $scope.addHitCnt = function () {

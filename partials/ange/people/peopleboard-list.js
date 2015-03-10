@@ -19,17 +19,8 @@ define([
         $scope.search = {};
 
         // 페이징
-
         $scope.PAGE_SIZE = 10;
         $scope.TOTAL_COUNT = 0;
-        console.log('$rootScope.NOW_PAGE_NO = '+$rootScope.NOW_PAGE_NO);
-
-        if($rootScope.NOW_PAGE_NO != undefined){
-            $scope.PAGE_NO = $rootScope.NOW_PAGE_NO;
-        }else{
-            $scope.PAGE_NO = 1;
-        }
-
 
         // 검색어 조건
         var condition = [{name: "제목+내용", value: "SUBJECT+BODY"} , {name: "작성자", value: "NICK_NM"}];
@@ -71,7 +62,30 @@ define([
 
             //$scope.search.SORT = 'NOTICE_FL'
 
+            var getParam = function(key){
+                var _parammap = {};
+                document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+                    function decode(s) {
+                        return decodeURIComponent(s.split("+").join(" "));
+                    }
 
+                    _parammap[decode(arguments[1])] = decode(arguments[2]);
+                });
+
+                return _parammap[key];
+            };
+
+            console.log('getParam("page_no") = '+getParam("page_no"));
+
+            if(getParam("page_no") == undefined){
+                $scope.PAGE_NO = 1;
+            }else{
+                $scope.PAGE_NO = getParam("page_no");
+                if(getParam("condition") != undefined){
+                    $scope.search.CONDITION.value = getParam("condition");
+                }
+                $scope.search.KEYWORD = getParam("keyword");
+            }
         };
 
         /********** 이벤트 **********/
@@ -122,45 +136,15 @@ define([
         };
 
         $scope.pageChanged = function() {
+
             console.log('Page changed to: ' + $scope.PAGE_NO);
+            //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO);
+            if($scope.search.KEYWORD == undefined){
+                $scope.search.KEYWORD = '';
+            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
             $scope.getPeopleBoardList();
         };
-
-//        if ($stateParams.menu == 'angeroom') {
-//            $scope.search['COMM_NO'] = '1';
-//        } else if($stateParams.menu == 'momstalk') {
-//            $scope.search['COMM_NO'] = '2';
-//        } else if($stateParams.menu == 'babycare') {
-//            $scope.search['COMM_NO'] = '3';
-//        } else if($stateParams.menu == 'firstbirthtalk') {
-//            $scope.search['COMM_NO'] = '4';
-//        } else if($stateParams.menu == 'booktalk') {
-//            $scope.search['COMM_NO'] = '5';
-//        }
-//
-//        $scope.search.SYSTEM_GB = 'ANGE';
-//
-//        // 게시판 목록 조회
-//        $scope.getPeopleBoardList = function () {
-//            $scope.tableParams = new ngTableParams({
-//                page: 1,                    // show first page
-//                count: $scope.PAGE_SIZE     // count per page
-//            }, {
-//                counts: [],         // hide page counts control
-//                total: 0,           // length of data
-//                getData: function($defer, params) {
-//                    $scope.getList('com/webboard', 'list', {NO: params.page() - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-//                        .then(function(data){
-//                            var total_cnt = data[0].TOTAL_COUNT;
-//                            $scope.TOTAL_COUNT = total_cnt;
-//
-//                            params.total(total_cnt);
-//                            $defer.resolve(data);
-//                        })
-//                        ['catch'](function(error){$scope.TOTAL_COUNT = 0; $defer.resolve([]);});
-//                }
-//            });
-//        };
 
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
@@ -168,6 +152,10 @@ define([
 //            return;
 
             $rootScope.NOW_PAGE_NO = $scope.PAGE_NO;
+            $rootScope.CONDITION = $scope.search.CONDITION.value;
+            $rootScope.KEYWORD = $scope.search.KEYWORD;
+
+            console.log($rootScope.CONDITION);
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
         };
 
@@ -185,7 +173,10 @@ define([
 
         // 검색
         $scope.click_searchPeopleBoard = function(){
+
+            $scope.PAGE_NO = 1;
             $scope.getPeopleBoardList();
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
             $scope.SEARCH_YN = 'Y';
         }
 

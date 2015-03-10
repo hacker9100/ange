@@ -114,9 +114,14 @@ define([
         // 목록 버튼 클릭
         $scope.click_showPeopleBoardList = function () {
 
-            console.log('$stateParams.menu = '+$stateParams.menu);
+            console.log('view $rootScope.NOW_PAGE_NO = '+$rootScope.NOW_PAGE_NO);
 
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+            console.log('$stateParams.menu = '+$stateParams.menu);
+            if($rootScope.KEYWORD == undefined){
+                $rootScope.KEYWORD = '';
+            }
+
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
 
 //            if ($stateParams.menu == 'angeroom') {
 //                $location.url('/people/angeroom/list');

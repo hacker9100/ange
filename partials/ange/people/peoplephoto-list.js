@@ -19,7 +19,7 @@ define([
         $scope.search = {};
 
         // 페이징
-        $scope.PAGE_NO = 1;
+        //$scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = 9;
         $scope.SEARCH_TOTAL_COUNT = 0;
 
@@ -28,6 +28,10 @@ define([
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
             $scope.list = [];
+            if($scope.search.KEYWORD == undefined){
+                $scope.search.KEYWORD = '';
+            }
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
             $scope.getPeopleBoardList();
         };
 
@@ -109,6 +113,32 @@ define([
                     $scope.category_list = data;
                 })
                 ['catch'](function(error){$scope.category_list = ""; });
+
+            // 검색조건유지
+            var getParam = function(key){
+                var _parammap = {};
+                document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+                    function decode(s) {
+                        return decodeURIComponent(s.split("+").join(" "));
+                    }
+
+                    _parammap[decode(arguments[1])] = decode(arguments[2]);
+                });
+
+                return _parammap[key];
+            };
+
+            console.log('getParam("page_no") = '+getParam("page_no"));
+
+            if(getParam("page_no") == undefined){
+                $scope.PAGE_NO = 1;
+            }else{
+                $scope.PAGE_NO = getParam("page_no");
+                if(getParam("condition") != undefined){
+                    $scope.search.CONDITION.value = getParam("condition");
+                }
+                $scope.search.KEYWORD = getParam("keyword");
+            }
         };
 
         /********** 이벤트 **********/
@@ -182,6 +212,11 @@ define([
         // 조회 화면 이동
         $scope.click_showViewPeoplePhoto = function (key) {
 
+            $rootScope.NOW_PAGE_NO = $scope.PAGE_NO;
+            $rootScope.CONDITION = $scope.search.CONDITION.value;
+            $rootScope.KEYWORD = $scope.search.KEYWORD;
+
+            console.log($rootScope.CONDITION);
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
 
         };
@@ -200,11 +235,20 @@ define([
         // 검색
         $scope.click_searchPeopleBoard = function(){
             $scope.list = [];
+            $scope.PAGE_NO = 1;
             $scope.getPeopleBoardList();
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
+
         }
 
-        $scope.init();
-        $scope.getPeopleBoardList();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoardList)
+            ['catch']($scope.reportProblems);
+
+//        $scope.init();
+//        $scope.getPeopleBoardList();
 
     }]);
 });

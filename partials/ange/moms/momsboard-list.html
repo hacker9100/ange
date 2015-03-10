@@ -24,7 +24,7 @@
                                         </div><!-- /btn-group -->
 
                                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                            <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+                                            <input type="text" ng-model="search.KEYWORD" class="form-control" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0" placeholder="검색할 단어를 두자 이상 입력">
 
 												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
 												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
@@ -72,21 +72,51 @@
                                     <!--</td>-->
                                     <!--<td class="table_date">{{item.WINNER_DT}}</td>-->
                                 <!--</tr>-->
+                                    <!--<tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">-->
+                                        <!--<td class="table_no">-->
+                                            <!--<span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.NOTICE_FL == '1' ? '공지' : item.BOARD_NO}}</span>-->
+                                        <!--</td>-->
+                                        <!--<td>-->
+                                            <!--<div style="float:left;">-->
+                                                <!--&lt;!&ndash;<span class="glyphicon glyphicon-lock table_icon_lock"></span>&ndash;&gt;-->
+                                                <!--<span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>-->
+                                                <!--<span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>-->
+                                                <!--<span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>-->
+                                                <!--&lt;!&ndash;<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>&ndash;&gt;-->
+
+                                                <!--<span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>-->
+                                                <!--&lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;-->
+                                                <!--<span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+
+                                                <!--<span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>-->
+
+                                            <!--</div>-->
+
+                                        <!--</td>-->
+                                        <!--<td class="table_date">{{item.REG_DT}}</td>-->
+                                        <!--<td class="table_hit">{{item.HIT_CNT}}</td></tr>-->
+                                    <!--</tr>-->
                                     <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
                                         <td class="table_no">
                                             <span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.BOARD_NO}}</span>
                                         </td>
                                         <td>
-                                            <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
-                                            <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
-                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
-                                            <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>
+                                            <div style="float:left;">
+                                                <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                                <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                                                <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                                <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
+                                                <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
 
-                                            <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>
-                                            <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
-                                            <span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>
-                                            <span class="reply_num feed_count countlike_color table_gray" style="line-height:12px; height:14px;">{{item.LIKE_CNT}}</span>
+                                                <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>
+                                                <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                                <span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                                            </div>
+
+                                            <div style="display:inline-block; float:left;margin-left: 10px;">
+                                                <!--<span class="reply_num feed_count countlike_color table_gray" style="line-height:16px; margin-right:5px;">{{item.LIKE_CNT}}</span>-->
+                                                <span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>
+                                            </div>
                                         </td>
                                         <td class="table_date">{{item.REG_DT}}</td>
                                         <td class="table_hit">{{item.HIT_CNT}}</td></tr>

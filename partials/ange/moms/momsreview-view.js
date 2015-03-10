@@ -133,22 +133,34 @@ define([
 
             console.log('$stateParams.menu = '+$stateParams.menu);
 
+            if($rootScope.KEYWORD == undefined){
+                $rootScope.KEYWORD = '';
+            }
+
             if ($stateParams.menu == 'experiencereview') {
-                $location.url('/moms/experiencereview/list');
+                //$location.url('/moms/experiencereview/list');
+                $location.url('/moms/experiencereview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             } else if ($stateParams.menu == 'productreview') {
-                $location.url('/moms/productreview/list');
+                //$location.url('/moms/productreview/list');
+                $location.url('/moms/productreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             } else if ($stateParams.menu == 'angereview') {
-                $location.url('/moms/angereview/list');
+                //$location.url('/moms/angereview/list');
+                $location.url('/moms/angereview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             } else if ($stateParams.menu == 'samplereview') {
-                $location.url('/moms/samplereview/list');
+                //$location.url('/moms/samplereview/list');
+                $location.url('/moms/samplereview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             } else if ($stateParams.menu == 'samplepackreview') {
-                $location.url('/moms/samplepackreview/list');
+                //$location.url('/moms/samplepackreview/list');
+                $location.url('/moms/samplepackreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             }else if ($stateParams.menu == 'eventreview') {
-                $location.url('/moms/eventreview/list');
+                //$location.url('/moms/eventreview/list');
+                $location.url('/moms/eventreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             }else if ($stateParams.menu == 'bookreview') {
-                $location.url('/moms/bookreview/list');
+                //$location.url('/moms/bookreview/list');
+                $location.url('/moms/bookreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             }else if ($stateParams.menu == 'dolreview') {
-                $location.url('/moms/dolreview/list');
+                //$location.url('/moms/dolreview/list');
+                $location.url('/moms/dolreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             }
         };
 
@@ -575,6 +587,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.likeFl)
+            .then($scope.addHitCnt)
             .then($scope.getPeopleBoard)
             .then($scope.getPreBoard)
             .then($scope.getNextBoard)

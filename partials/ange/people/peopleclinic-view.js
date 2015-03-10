@@ -192,19 +192,16 @@ define([
 
         // 목록 버튼 클릭
         $scope.click_showPeopleClinicList = function () {
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list/');
+            //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list/');
 
-//            if ($stateParams.menu == 'childdevelop') {
-//                $location.url('/people/childdevelop/list');
-//            } else if($stateParams.menu == 'chlidoriental') {
-//                $location.url('/people/chlidoriental/list');
-//            } else if($stateParams.menu == 'obstetrics') {
-//                $location.url('/people/obstetrics/list');
-//            } else if($stateParams.menu == 'momshealth') {
-//                $location.url('/people/momshealth/list');
-//            } else if($stateParams.menu == 'financial') {
-//                $location.url('/people/financial/list');
-//            }
+            console.log('view $rootScope.NOW_PAGE_NO = '+$rootScope.NOW_PAGE_NO);
+
+            console.log('$stateParams.menu = '+$stateParams.menu);
+            if($rootScope.KEYWORD == undefined){
+                $rootScope.KEYWORD = '';
+            }
+
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
         };
 
 
