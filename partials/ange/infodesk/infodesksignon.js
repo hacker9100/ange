@@ -31,6 +31,8 @@ define([
         var now = new Date();
         var nowYear = now.getFullYear();
 
+        $scope.isSave = false;
+
         $scope.checkSave = false;
         $scope.checkCert = false;
 
@@ -447,31 +449,37 @@ define([
                 $scope.user.FILE.$destroy = '';
             }
 
-            if (!$scope.checkSave) {
-                $scope.insertItem('com/user', 'item', $scope.user, false)
-                    .then(function(){
-                        $scope.checkSave = true;
-                        $scope.addMileage('CONGRATULATION', '1');
-                        $scope.addMileage('CONGRATULATION', '2');
+            if (!$scope.isSave) {
+                $scope.isSave = true;
+                if (!$scope.checkSave) {
+                    $scope.insertItem('com/user', 'item', $scope.user, false)
+                        .then(function(){
+                            $scope.checkSave = true;
+                            $scope.addMileageSignon('CONGRATULATION', '1', $scope.user);
+                            $scope.addMileageSignon('CONGRATULATION', '2', $scope.user);
 
-                        if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
-                            $scope.step = '04';
-                            $scope.finishUser();
-                        } else {
-                            $scope.step = '03';
-                        }
-                    })
-                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-            } else {
-                $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
-                    .then(function(){
-                        if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
-                            $scope.step = '04';
-                        } else {
-                            $scope.step = '03';
-                        }
-                    })
-                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            $scope.isSave = false;
+                            if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
+                                $scope.step = '04';
+                                $scope.finishUser();
+                            } else {
+                                $scope.step = '03';
+                            }
+                        })
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                } else {
+                    $scope.updateItem('com/user', 'item', $scope.user.USER_ID, $scope.user, false)
+                        .then(function(){
+                            $scope.isSave = false;
+                            if ($scope.user.CERT_GB == 'PHONE' && $scope.checkCert) {
+                                $scope.step = '04';
+                                $scope.finishUser();
+                            } else {
+                                $scope.step = '03';
+                            }
+                        })
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                }
             }
         };
 

@@ -66,6 +66,7 @@
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
                             U.USER_ID = '".$_key."'
+                            AND U.USER_ST != 'S'
                             AND U.USER_ID = UR.USER_ID
                             AND UR.ROLE_ID = R.ROLE_ID
                             ".$where_search."

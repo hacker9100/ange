@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller("storycontent-list", ['$scope', '$stateParams', '$sce', '$rootScope', '$location', '$modal', '$timeout', 'dialogs', 'UPLOAD', function($scope, $stateParams, $sce, $rootScope, $location, $modal, $timeout, dialogs, UPLOAD) {
+    controllers.controller("storycontent-list", ['$scope', '$stateParams', '$sce', '$rootScope', '$location', '$modal', '$timeout', '$anchorScroll', 'dialogs', 'UPLOAD', function($scope, $stateParams, $sce, $rootScope, $location, $modal, $timeout, $anchorScroll, dialogs, UPLOAD) {
         angular.element(document).ready(function () {
             angular.element('#common').scroll(function () {
                 $timeout(function(){
@@ -24,9 +24,9 @@ define([
                 });
 
 //                console.log("common : "+ (angular.element('#common').prop('scrollHeight') - angular.element('#common').height()));
-//                console.log("scrollTop : "+(angular.element('#common').scrollTop() ));
+                console.log("scrollTop : "+(angular.element('#common').scrollTop() ));
 
-                if (angular.element('#common').scrollTop() + 100 >= angular.element('#common').prop('scrollHeight') - angular.element('#common').height()) {
+                if (angular.element('#common').scrollTop() + 300 >= angular.element('#common').prop('scrollHeight') - angular.element('#common').height()) {
                     if (!$scope.busy) {
                         $scope.PAGE_NO++;
                         $scope.getContentList();
@@ -54,13 +54,13 @@ define([
         // 초기화
         $scope.init = function () {
 
-            if ($scope.menu && $scope.menu.ETC != null) {
+            if ($scope.menu == undefined) {
+
+            } if ($scope.menu && $scope.menu.ETC != null) {
                 $scope.search.CATEGORY_NO = $scope.menu.ETC;
             } else if ($scope.menu && $scope.menu.ETC == null) {
                 $scope.search.CATEGORY_NO = 999;
             }
-
-            console.log('$stateParams.id : '+$stateParams.id)
 
             if ($stateParams.id) {
                 $scope.showContent();
@@ -70,7 +70,10 @@ define([
         /********** 이벤트 **********/
         // 클릭 시 영역으로 focus 이동
         $scope.click_top = function () {
-            $('html,body').animate({scrollTop:0}, 100);
+            $location.hash('top');
+
+            // call $anchorScroll()
+            $anchorScroll();
         }
 
 //        $scope.fetchNext = function() {
@@ -131,7 +134,7 @@ define([
                     $scope.$parent.reload = false;
                     $scope.busy = false;
                     if (isFirst) {
-                        $scope.PAGE_NO = $scope.PAGE_NO + 2;
+                        $scope.PAGE_NO++;
                         $scope.PAGE_SIZE = 15;
                         isFirst = false;
                     }

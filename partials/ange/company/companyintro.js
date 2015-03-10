@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('companyintro', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $window, $location, dialogs, CONSTANT) {
+    controllers.controller('companyintro', ['$rootScope', '$scope', '$window', '$location', '$anchorScroll', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $window, $location, $anchorScroll, dialogs, CONSTANT) {
 
         /********** 초기화 **********/
         $scope.search = {COMPANY_GB: 'PARTNER'};
@@ -57,7 +57,10 @@ define([
         }
 
         $scope.click_focus = function (id) {
-            $('html,body').animate({scrollTop:$('#'+id).offset().top}, 100);
+            $location.hash(id);
+
+            // call $anchorScroll()
+            $anchorScroll();
         }
 
         $scope.getPartnerList = function () {

@@ -13,9 +13,12 @@
     <div class="mini_story_rollcate" style="margin-bottom:5px;">
         <a class="mini_story_rollcate_left" ng-click="click_preCategory()">Pre Category</a>
 
-        <div class="col-xs-10 no-margin" style="width:100%; padding:0 2%; height:100%; line-height: 34px;">
+        <div class="col-xs-12 no-margin" style="width:100%; padding:0 2%; height:100%; line-height: 34px;">
             <!--<ul class="mini_story_rollcate_ul">-->
-                <slick id="category" current-index="0" infinite="false" dots="false" autoplay="false" center-mode="true" slides-to-show="6" slides-to-scroll="1">
+                <slick id="category" current-index="0" infinite="true" dots="false" autoplay="false" center-mode="true" slides-to-show="3" slides-to-scroll="1">
+                    <!--<div ng-repeat="item in cate" ng-class="cateIdx == $index ? 'foucs' : ''" style="float:left; overflow:hidden; white-space:nowrap; text-overflow: ellipsis; width:14%; margin:0 1.3%; text-align:center; font-size:0.86em;">-->
+                        <!--<a class="rollcate_link" title="{{::item.CATEGORY_NM }}" ng-click="click_selectCategory(item, $index)">{{::item.CATEGORY_NM }}</a>-->
+                    <!--</div>-->
                     <!--<div ng-repeat="category in category_b">-->
                         <!--<a class="rollcate_link" ng-click="click_selectCategory(category, $index)">{{::category.CATEGORY_NM }}</a>-->
                         <!--<li ng-class="cateIdx == $index ? 'foucs' : ''">-->

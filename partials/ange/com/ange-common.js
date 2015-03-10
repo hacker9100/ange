@@ -27,13 +27,28 @@ define([
 
         // 현재 메뉴 정보
         $scope.menu = $filter('filter')($rootScope.ange_menu, function (data) {
-            if ($scope.path[2] == 'content') $scope.path[2] = 'happy';
+//            if ($scope.path[2] == 'content') $scope.path[2] = 'happy';
 
             return (data.MENU_ID.indexOf($scope.path[2]) > -1)
         })[0];
 
         // 카테고리 데이터
         $scope.category = [];
+
+        var category_a = [];
+        var category_b = [];
+
+        for (var i in $rootScope.ange_category) {
+            var item = $rootScope.ange_category[i];
+            if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
+                category_a.push(item);
+            } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
+                category_b.push(item);
+            }
+        }
+
+        $scope.category_a = category_a;
+        $scope.category_b = category_b;
 
         if ($scope.path.length > 2 && $scope.menu != undefined) {
             $scope.community = $scope.menu.MENU_NM;
@@ -547,25 +562,6 @@ define([
             .then($scope.sessionCheck)
             ['catch']($scope.reportProblems);
 
-        $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'CMS'}, false).then(function(data){
-            var category_a = [];
-            var category_b = [];
-
-            for (var i in data) {
-                var item = data[i];
-
-                if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
-                    category_a.push(item);
-                } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0' && item.PARENT_NO == '0') {
-                    category_b.push(item);
-                }
-            }
-
-            $scope.category_a = category_a;
-            $scope.category_b = category_b;
-        })
-        ['catch'](function(error){});
-
         $scope.moveAccount = function() {
             if ($rootScope.uid != undefined) {
                 if ($rootScope.user_info.USER_ST == 'W' && $rootScope.user_info.CERT_GB == 'MIG') {
@@ -620,10 +616,8 @@ define([
             }
         };
 
-        // 마일리지 적립
-        $scope.addMileage = function (type, gb) {
-            var item = {};
-
+        // 가입축하 마일리지 적립
+        $scope.addMileageSignon = function (type, gb, item) {
             if (type == 'CONGRATULATION') {
                 if (gb == '1') {
                     item.MILEAGE_GB = '3';
@@ -632,7 +626,21 @@ define([
                     item.MILEAGE_GB = '4';
                     item.MILEAGE_NO = '2';
                 }
-            } else if (type == 'LOGIN') {
+            }
+
+            $scope.insertItem('ange/mileage', 'signon', item, false)
+                .then(function(data){
+                    $rootScope.mileage = data.mileage;
+//                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                })
+                ['catch'](function(error){dialogs.error('오류', '[마일리지]'+error, {size: 'md'});});
+        }
+
+        // 마일리지 적립
+        $scope.addMileage = function (type, gb) {
+            var item = {};
+
+            if (type == 'LOGIN') {
                 item.MILEAGE_GB = '6';
                 item.MILEAGE_NO = '4';
             } else if (type == 'BANNER') {

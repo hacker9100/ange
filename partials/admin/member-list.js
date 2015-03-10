@@ -35,7 +35,8 @@ define([
 
             // 검색조건
             var condition = [{name: "이름", value: "USER_NM", index: 0}, {name: "아이디", value: "USER_ID", index: 1}, {name: "닉네임", value: "NICK_NM", index: 2}, {name: "전화번호", value: "PHONE", index: 3}, {name: "주소", value: "ADDR", index: 4}, {name: "이메일", value: "EMAIL", index: 5}, {name: "생일", value: "BIRTH", index: 6}, {name: "가입기간", value: "REG_DT", index: 7}];
-            var type = [{name: "일반회원", value: "MEMBER"}, {name: "앙쥬클럽", value: "CLUB"}, {name: "서포터즈", value: "SUPPORTERS"}];
+            var type = [{name: "일반회원", value: "MEMBER"}, {name: "앙쥬클럽", value: "CLUB"}];
+            var role = [{name: "회원", value: "MEMBER"}, {name: "서포터즈", value: "SUPPORTERS"}, {name: "방장", value: "ANGE_MEMBER"}, {name: "상담전문가", value: "CLINIC"}, {name: "관리자", value: "ANGE_ADMIN"}];
             // N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING
             var status = [{name: "전체", value: "A"}, {name: "정상", value: "N"}, {name: "불량", value: "P"}, {name: "휴면", value: "D"}, {name: "탈퇴", value: "S"}];
             var act = [{name: "일반정보", value: "A"}, {name: "커뮤니티활동", value: "C"}, {name: "참여활동", value: "P"}, {name: "블로거활동", value: "B"}];
@@ -78,6 +79,7 @@ define([
 
             $scope.condition = condition;
             $scope.type = type;
+            $scope.role = role;
             $scope.status = status;
             $scope.act = act;
             $scope.sort = sort;
@@ -258,13 +260,13 @@ define([
 
                         item.USER_ID_LIST = angular.copy($scope.check_user);
                         item.CHECKED = $scope.action.CHECKED;
-                        item.EARN_GB = 'EARN';
-                        item.PLACE_GB = 'ADMIN';
+                        item.EARN_GB = '999';
+                        item.PLACE_GB = '관리자';
                     } else {
                         item = angular.copy($scope.search);
                         item.CHECKED = $scope.action.CHECKED;
-                        item.EARN_GB = 'EARN';
-                        item.PLACE_GB = 'ADMIN';
+                        item.EARN_GB = '999';
+                        item.PLACE_GB = '관리자';
                     }
 
                     $scope.openPopupMileageRegModal(item);
@@ -583,6 +585,17 @@ define([
         // 유형 변경 기능 클릭
         $scope.change_userType = function (item) {
             $scope.updateItem('com/user', 'type', item.USER_ID, item, true)
+                .then(function(data){
+                    dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+                    $scope.isStatus = false;
+                    $scope.selectUser = '';
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
+        // 권한 변경 기능 클릭
+        $scope.change_userRole = function (item) {
+            $scope.updateItem('com/user', 'role', item.USER_ID, item, true)
                 .then(function(data){
                     dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
                     $scope.isStatus = false;

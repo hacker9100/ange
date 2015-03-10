@@ -60,6 +60,14 @@
                             </div>
                         </div>
                         <div class="row form-group form_basic_group">
+                            <label class= "form_basic_label">권한</label>
+                            <div class="form_basic_input" style="margin-left:60px;">
+                                <div class="checkbox-inline" ng-repeat="item in role" >
+                                    <input checklist-model="search.ROLE" type= "checkbox" checklist-value="item.value" /> {{item.name}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group form_basic_group">
                             <label class= "form_basic_label">상태</label>
                             <div class="form_basic_input" style="margin-left:60px;">
                                 <div class="radio-inline" ng-repeat="item in status" >
@@ -231,14 +239,29 @@
                 <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'유형'">
                     <div ng-show="item.USER_ID == selectUser && isStatus">
                         <select ng-model="item.USER_GB" class= "form-control" ng-change="change_userType(item)">
-                            <option value="MEMBER">일반</option>
+                            <option value="MEMBER">일반회원</option>
                             <option value="CLUB">앙쥬클럽</option>
-                            <option value="SUPPORTERS">서포터즈</option>
                         </select>
                     </div>
                     <div ng-show="item.USER_ID != selectUser">
                         <span ng-if="item.NEW_USER == 'Y'">New</span>
-                        {{ item.USER_GB == 'CLUB' ? '앙쥬클럽' : item.USER_GB == 'SUPPORTERS' ? '서포터즈' : '일반' }}
+                        {{ item.USER_GB == 'CLUB' ? '앙쥬클럽' : '일반회원' }}
+                    </div>
+                </td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'권한'">
+                    <div ng-show="item.USER_ID == selectUser && isStatus">
+                        <select ng-model="item.ROLE_ID" class= "form-control" ng-change="change_userRole(item)">
+                            <option value="MEMBER">회원</option>
+                            <option value="SUPPORTERS">서포터즈</option>
+                            <option value="ANGE_MANAGER">방장</option>
+                            <option value="CLINIC">상담전문가</option>
+                            <option value="ANGE_ADMIN">관리자</option>
+                        </select>
+                        <input type="text" ng-model="item.SUPPORT_NO" class= "form-control" placeholder="서포터즈 기수"/>
+                    </div>
+                    <div ng-show="item.USER_ID != selectUser">
+                        <span ng-if="item.NEW_USER == 'Y'">New</span>
+                        {{ item.ROLE_ID == 'MEMBER' ? '회원' : item.ROLE_ID == 'SUPPORTERS' ? '서포터즈' : item.ROLE_ID == 'ANGE_MANAGER' ? '방장' : item.ROLE_ID == 'CLINIC' ? '상담전문가' : item.ROLE_ID == 'ANGE_ADMIN' ? '관리자' : '회원' }}
                     </div>
                 </td>
                 <td style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'기능'">
@@ -251,7 +274,7 @@
                 </td>
             </tr>
             <tr ng-show="$data == ''">
-                <td colspan="10" style="text-align: center; font-size:0.86em; line-height:38px;">조회 데이터가 없습니다.</td>
+                <td colspan="11" style="text-align: center; font-size:0.86em; line-height:38px;">조회 데이터가 없습니다.</td>
             </tr>
         </table>
         <!-- ////List -->
@@ -348,7 +371,7 @@
                 <div class= "form-group form_basic_group">
                     <label class= "form_basic_label">마일리지 <span style="color:#b94a48">*</span></label>
                     <div class= "col-md-4 form_basic_input">
-                        <input type="text" ng-model="item.POINT" class= "form-control" placeholder="포인트" valid-number/><!--{{item.FROM_ID}}-->
+                        <input type="text" ng-model="item.POINT" class= "form-control" placeholder="포인트"/><!--{{item.FROM_ID}}-->
                     </div>
                 </div>
                 <div class= "form-group form_basic_group">

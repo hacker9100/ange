@@ -213,9 +213,53 @@ define([
             scope: true,
 //            scope: { code:'=' },
 //            replace: true,
-            templateUrl: function(element, attr) {
-                return '/partials/ange/main/mini-story-list.html';
-            },
+//            templateUrl: function(element, attr) {
+//                return '/partials/ange/main/mini-story-list.html';
+//            },
+            template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+                        '<div class="mini_story">' +
+                        '   <div class="miniboard_titlebar">' +
+                        '       <span class="miniboard_title">{{::portletTitle}}</span>' +
+                        '        <a class="miniboard_tab_more" ng-click="click_showList();">더보기</a>' +
+                        '       <div ng-if="option.tab" ng-repeat="tab in :: option.tab" ng-class="tabIdx == $index ? \'miniboard_tab_on\' : \'miniboard_tab\'" ng-click="click_tabIndex($index)">{{::tab.name}}</div>' +
+                        '    </div>' +
+                        '    <div class="mini_story_rollcate" style="margin-bottom:5px;">' +
+                        '        <a class="mini_story_rollcate_left" ng-click="click_preCategory()">Pre Category</a>' +
+                        '        <div class="col-xs-12 no-margin" style="width:100%; padding:0 2%; height:100%; line-height: 34px;">' +
+                        '           <slick id="category" current-index="0" infinite="true" dots="false" autoplay="false" center-mode="true" slides-to-show="3" slides-to-scroll="1">' +
+                        '               <div ng-repeat="item in cate" ng-class=" $index == curIdx ? \'foucsing\' : \'\' " ng-click="click_slickGoTo($index)" style="overflow:hidden; white-space:nowrap; width:100%; text-overflow: ellipsis;  margin:0 1.3%; text-align:center; font-size:0.86em;"><a class="rollcate_link" title="item.CATEGORY_NM">{{item.CATEGORY_NM}}</a></div>' +
+                        '           </slick>' +
+//                      '           <div ng-class="'+($scope.cateIdx == i ? "foucsing" : "")+ '" style="overflow:hidden; white-space:nowrap; width:100%; text-overflow: ellipsis;  margin:0 1.3%; text-align:center; font-size:0.86em;"><a onclick="test" class="rollcate_link" title="'+$scope.category_b[i].CATEGORY_NM+'">'+$scope.category_b[i].CATEGORY_NM+'</a></div>' +
+                        '        </div>' +
+                        '        <a class="mini_story_rollcate_right" ng-click="click_nextCategory()">Next Category</a>' +
+                        '    </div>' +
+                        '    <div class="mini_board_contents" ng-repeat="item in list" ng-click="click_showView(item.NO);">' +
+                        '        <img ng-src="{{item.MAIN_FILE}}" class="mini_board_contents_img" />' +
+                        '        <div class="mini_board_contents_txt">' +
+                        '            <span class="mini_story_txt_head">{{::item.PROJECT_NM}}</span>' +
+                        '            <span class="mini_story_txt_title">| {{::item.SUBJECT}}</span>' +
+                        '            <ul class="mini_board_feeds">' +
+                        '                <li class="mini_reply" style="float: right;">{{item.REPLY_COUNT}}</li>' +
+                        '                <li class="mini_like" style="float: right;">{{item.LIKE_CNT}}</li>' +
+                        '            </ul>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '    <div class="mini_story_contentbox">' +
+                        '        <div class="row" style="margin:0 auto; position:relative;">' +
+                        '            <div class="col-xs-2" style="padding:4px;">' +
+                        '                <span class="mini_story_contentbox_kortitle">임신부<br /><strong>솔루션</strong></span>' +
+                        '                <div class="mini_story_contentbox_engtitle">Health<br />&nbsp;&nbsp;& Food</div>' +
+                        '                <a class="miniboard_tab_slideprev" style="margin-top:-12px;" title="이전">이전슬라이드</a>' +
+                        '                <a class="miniboard_tab_slidenext" style="margin-top:-12px;" title="다음">다음슬라이드</a>' +
+                        '            </div>' +
+                        '            <div class="col-xs-10 mini_story_contentboxlist_roll">' +
+                        '                <div class="mini_story_contentboxlist_wrap">' +
+                        '                    <slick id="{{::option.id}}" dots="false" autoplay="true" center-mode="false" slides-to-show="4" slides-to-scroll="4" autoplay-speed="3000" fade="false" pause-on-hover="false"></slick>' +
+                        '                </div>' +
+                        '            </div>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '</div>',
             controller: ['$scope', '$attrs', '$location', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $timeout, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -276,12 +320,18 @@ define([
 
                 $scope.click_preCategory = function () {
                     angular.element('#category').slickPrev();
+                    $scope.curIdx--;
+                    // 클릭 슬라이드로 변경
+                    $scope.click_slickGoTo($scope.curIdx);
                 }
 
                 $scope.click_nextCategory = function () {
                     angular.element('#category').slickNext();
+                    $scope.curIdx++
+                    // 클릭 슬라이드로 변경
+                    $scope.click_slickGoTo($scope.curIdx);
                 }
-/*
+
                 $scope.click_selectCategory = function (category, idx) {
                     $scope.search.CATEGORY = [];
 
@@ -290,7 +340,7 @@ define([
 
                     $scope.getMiniList();
                 }
-*/
+
                 // 리스트 선택
                 $scope.click_showView = function (key) {
                     $location.url($scope.option.url + '/' + key);
@@ -314,16 +364,29 @@ define([
 
                 // 카테고리 조회
                 $scope.getCategoryList = function () {
+                    $scope.cate = $scope.category_b;
+/*
                     $timeout(function() {
                         for (var i in $scope.category_b) {
                             // 슬라이드를 추가해 줌
-                            angular.element('#category').slickAdd('<div><li ng-class="cateIdx == '+i+' ? \'foucs\' : \'\'"><a class="rollcate_link">'+$scope.category_b[i].CATEGORY_NM+'</a></li></div>');
+                            angular.element('#category').slickAdd('<div ng-click="test()" id="category'+i+'" name= "category'+i+'" ng-class="'+($scope.cateIdx == i ? "foucsing" : "")+ '" style="overflow:hidden; white-space:nowrap; width:100%; text-overflow: ellipsis;  margin:0 1.3%; text-align:center; font-size:0.86em;"><a onclick="test" class="rollcate_link" title="'+$scope.category_b[i].CATEGORY_NM+'">'+$scope.category_b[i].CATEGORY_NM+'</a></div>');
                             //angular.element('#'+$scope.option.id).slickAdd('<div class="mini_story_contentboxlist" style="width:74px;"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">초기(4-6)</span><img src="imgs/ange/temp/story_food_01.jpg" /></div><span class="mini_story_contentbox_title">단호박 미음</span></div>');
                         }
-                    }, 500);
+                    }, 1000);
 
                     angular.element('#category').click(function() {
                         var idx = angular.element('#category').slickCurrentSlide();
+
+//                        for (var i=0; i < $scope.category_b.length; i++) {
+//                            if (i = idx) {
+//                                alert(idx);
+//                                angular.element('#category'+i).addClass("foucsing");
+//                            } else {
+//                                if (angular.element('#category'+i).hasClass("foucsing")) {
+//                                    angular.element('#category'+i).removeClass("foucsing");
+//                                }
+//                            }
+//                        }
 
                         $scope.search.CATEGORY = [];
                         $scope.cateIdx = idx;
@@ -331,6 +394,26 @@ define([
 
                         $scope.getMiniList();
                     });
+*/
+/*
+                    $scope.$watch(function() {
+                        // 현재 슬라이드를 반환
+                        return angular.element('#category').slickCurrentSlide();
+                    }, function(newVal, oldVal) {
+                        $scope.curIdx = newVal;
+                    });
+*/
+                    $scope.click_slickGoTo = function(idx) {
+                        $scope.curIdx = idx;
+
+                        // 클릭 슬라이드로 변경
+                        angular.element('#category').slickGoTo(idx);
+
+                        $scope.search.CATEGORY = [];
+                        $scope.search.CATEGORY.push($scope.cate[idx]);
+
+                        $scope.getMiniList();
+                    }
                 };
 
                 // 리스트 조회
@@ -519,7 +602,7 @@ define([
 
                 // 검색 조건에 진행 상태 추가
 //                $scope.search.FILE = true;
-//                $scope.search.PROCESS = "process";
+                $scope.search.PROCESS = true;
                 $scope.search.ADA_TYPE_IN = "'event', 'exp'";
                 $scope.search.ADP_CODE_NOT_IN = "'samplepack1', 'samplepack2', 'postcard'";
                 $scope.search.SORT = 'ada_date_open';
@@ -786,6 +869,7 @@ define([
                     $scope.search.BANNER_GB = $scope.option.gb;
                     type = $scope.option.type;
                 } else if ($scope.option.type == 'banner') {
+                    $scope.search.PROCESS = true;
                     $scope.search.ADP_IDX = $scope.option.gb;
                     $scope.search.BANNER_ST = 1;
 //                } else if ($scope.option.type == 'experience') {
@@ -928,9 +1012,28 @@ define([
             scope: true,
 //            scope: { option: '=ngModel' },
 //            replace: true,
-            templateUrl: function(element, attrs) {
-                return '/partials/ange/main/portlet-slide-banner.html';
-            },
+//            templateUrl: '/partials/ange/main/portlet-slide-banner.html',
+            template: '<div class="jumbotron_cover" style="position:absolute; top:0px; left:0px;">' +
+                        '   <div ng-show="isLoading" style="top: 45%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+                        '   <div ng-show="option.id == \'experience\'" style="position:absolute; width:100%; z-index:9; text-align:center;"><img src="/imgs/ange/ribon_exper_now.jpg" style="opacity:0.8"/></div>' +
+                        '   <div ng-show="option.id == \'event\'" style="position:absolute; width:100%; z-index:9; text-align:center;"><img src="/imgs/ange/ribon_event_now.jpg" style="opacity:0.8"/></div>' +
+                        '   <div class="jumbotron_cover_imgs" style="padding-bottom:45px;">' +
+                        '       <div id="jumbotron_cover" class="carousel slide" data-ride="carousel">' +
+                        '           <slick id="{{ option.id }}" lazyLoad = "ondemand" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false"></slick>' +
+                        '       </div>' +
+                        '   </div>' +
+                        '   <div class="jumbotron_cover_controlbar">' +
+                        '       <div class="black_shade_nomargin"></div>' +
+                        '       <div class="jumbotron_cover_controlset">' +
+                        '               <a ng-show="toggle" class="jumbotron_cover_pause" ng-click="click_slickPause()">일시정지</a>' +
+                        '               <a ng-show="!toggle" class="jumbotron_cover_play" ng-click="click_slickPlay()">동작</a>' +
+                        '           <ol class="carousel-indicators jumbotron_indicators_wrap" style="left:30px;">' +
+                        '               <li ng-repeat="item in list" ng-class=" $index == curIdx ? \'jumbotron_indicators_actived\' : \'jumbotron_indicators\'" ng-click="click_slickGoTo($index)" ></li>' +
+                        '           </ol>' +
+                        '       </div>' +
+                        '       <div class="jumbotron_cover_controlbar_title">{{ coverTitle }}</div>' +
+                        '   </div>' +
+                        '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $window, $timeout, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -946,6 +1049,7 @@ define([
                 $scope.PAGE_NO = 0;
                 $scope.PAGE_SIZE = $scope.option.size;
 
+                $scope.search.PROCESS = true;
                 $scope.search.ADA_STATE = 1;
 
                 // 검색 조건 추가
@@ -1002,12 +1106,12 @@ define([
 //                                }
 
                                 // 슬라이드를 추가해 줌
-                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><img data-lazy="'+img+'" style="width:100%;"/></div></div>');
+                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active"><img data-lazy="'+img+'" style="width:100%; cursor:pointer;"/></div></div>');
 //                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active" style="border:1px solid red;">'+link+'<img class="moms_nowing" src="/imgs/ange/_blank_4by3.gif" style="background-image: url('+ img + '); border:1px solid blue;"/></a></div></div>');
 //                                angular.element('#'+$scope.option.id).slickAdd('<div class="carousel-inner" role="listbox"><div class="item active">'+url+'<img src="imgs/ange/temp/moms_jb_01.jpg" alt="First Label"></a></div></div>');
                             }
 
-                            //
+                            $scope.curId = $scope.option.id;
                             angular.element('#'+$scope.option.id).click(function() {
                                 var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
 
@@ -1028,8 +1132,16 @@ define([
                                 // 현재 슬라이드를 반환
                                 return angular.element('#'+$scope.option.id).slickCurrentSlide();
                             }, function(newVal, oldVal) {
+                                $scope.curIdx = newVal;
                                 $scope.coverTitle = data[newVal].ada_title;
                             });
+
+                            $scope.click_slickGoTo = function(idx) {
+                                $scope.curIdx = idx;
+
+                                // 클릭 슬라이드로 변경
+                                angular.element('#'+$scope.option.id).slickGoTo(idx);
+                            }
                         })
                         ['catch'](function(error){$scope.list = [];});
                 };
@@ -1166,6 +1278,7 @@ define([
 
                 // 검색 조건 추가
                 if ($scope.option.api == 'ad/banner') {
+//                    $scope.search.PROCESS = true;
                     $scope.search.ADP_IDX = $scope.option.gb;
                     $scope.search.ADA_STATE = 1;
                     $scope.search.MENU = $scope.path[1];
@@ -1229,6 +1342,7 @@ define([
 
                 // 검색 조건 추가
                 if ($scope.option.api == 'ad/banner') {
+                    $scope.search.PROCESS = true;
                     $scope.search.ADP_IDX = $scope.option.gb;
                     $scope.search.ADA_STATE = 1;
                     $scope.search.MENU = $scope.path[1];
@@ -1293,6 +1407,7 @@ define([
 
                 // 검색 조건 추가
                 if ($scope.option.api == 'ad/banner') {
+//                    $scope.search.PROCESS = true;
                     $scope.search.ADP_IDX = $scope.option.gb;
                     $scope.search.ADA_STATE = 1;
                     $scope.search.MENU = $scope.path[1];
