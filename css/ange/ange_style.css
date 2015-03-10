@@ -71,18 +71,24 @@ body {
 }
 
 .panel_content {
-    min-width: 762px;
+    /*min-width: 762px;*/
     float: left;
     width: 100%;
     background-color: #fff;
-    min-height:860px;
     margin:0px auto;
     border-left:1px solid #EFEFEF;
     border-right:1px solid #EFEFEF;
-    height:100%;
+    /*height:100%;*/
     overflow: auto;
     overflow-x: hidden;
     /*overflow-y: auto;*/
+}
+
+@media screen and (min-width: 768px) {
+    .panel_content {
+        min-height:860px;
+        height:100%;
+    }
 }
 
 /************************************************/
@@ -126,8 +132,8 @@ body {
     height: calc(100% - 74px);
     /*padding-top:180px;*/
     /*padding-top:218px;*/ /*서브메뉴 핸들러 38px추가 */
-    overflow-y: auto;
-    overflow-x: hidden;
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
 }
 
 
@@ -378,7 +384,7 @@ body {
 /* Main Responsive Style Set */
 
 .content_wrap {
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .ng_mainwrap {
@@ -386,8 +392,8 @@ body {
     height:100%;
     width:100%;
 
-    overflow-y: auto;
-    overflow-x: hidden;
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
 }
 
 .ng_wrap {
@@ -403,8 +409,9 @@ body {
     position:relative;
     padding-right: 5px;
     height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;}
+    /*overflow-y: auto;*/
+    /*overflow-x: hidden;*/
+}
 
 .mainbar {
     float: left;
@@ -578,8 +585,8 @@ body {
 .slide0 {
     width:58%;
     min-width:720px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    /*overflow-x: hidden;*/
+    /*overflow-y: auto;*/
 }
 
 .main_subar_wrap .subar.slide1, .main_subar_wrap .subar.slide2, .main_subar_wrap .subar.slide3 {
@@ -770,18 +777,24 @@ body {
 
 .mobile-header {
     display:none;
-    position:relative;
-    width:110px;
+    position:absolute;
+    width:60%;
+    left:50%;
+    margin-left:-30%;
     height:75px;
-    margin:0px auto;
+    /*margin:0px auto;*/
     padding:8px 18px;
     z-index: 99;
 }
 
 .mobilelogo {
-    width:100%;
-    height:100%;
+    position:absolute;
+    /*width:60%;*/
+    height:75%;
     cursor:pointer;
+    left:50%;
+    top:10px;
+    margin-left: -37px;
 
     background-image: url(/imgs/ange/ui_logo_01.png);
     background-size: contain;
@@ -830,6 +843,7 @@ body {
     text-indent: -9999px;
     cursor:pointer;
     background-repeat: no-repeat;
+    opacity: 0.75;
 }
 
 .gnb_right{
@@ -875,9 +889,26 @@ body {
 .ch_search { background:url('/imgs/ange/ui_gnbbtn_06_search.png'); }
 .ch_store { background:url('/imgs/ange/ui_gnbbtn_05_store.png'); }
 
-.gnb_chnnel:hover, .gnb_store:hover {
+.gnb_chnnel:hover {
+    /*background-position:left -47px;*/
+    opacity: 1;
+}
+
+.gnb_chnnel.nowmenu {
+    cursor: default;
+    opacity: 1;
     background-position:left -47px;
 }
+
+.gnb_store:hover {
+    background-position:left -47px;
+}
+
+.gnb_store.nowmenu {
+    cursor: default;
+    background-position:left -94px;
+}
+
 
 .gnb_search:hover {
     background-position:left -29px;
@@ -906,7 +937,9 @@ body {
     }
 
     .gnb{
+        position:absolute;
         margin:0px;
+        top:75px;
     }
 
     .gnb_menu {
@@ -1425,11 +1458,13 @@ a.footer_blogto:hover, a.footer_blogto:focus {	background-position: left -16px; 
 }
 
 .localmenu_mobile_wrap {
+    position:absolute;
     display: none;
     width: 100%;
     float:right;
     background-color: #666;
     color: #fff;
+    top:-50px;
 }
 
 .localmenu_mobile_col {
@@ -1456,12 +1491,10 @@ a.footer_blogto:hover, a.footer_blogto:focus {	background-position: left -16px; 
         display: block;
     }
 
-    .sub_content_wrap {
+    .content_wrap, .sub_content_wrap {
         border:1px solid transparent;
-    }
-
-    .content_wrap {
-        border:1px solid transparent;
+        position:relative;
+        margin-top:183px;
     }
 }
 
@@ -1569,19 +1602,52 @@ a.lnb_handle_close:hover {
     line-height:16px;
 }
 
+.localmenu_link.main.nowmenu {
+    /*background-color:#ddd;*/
+    border:1px solid transparent;
+    border-radius: 10px;
+    color:#fff;
+}
+
+.localmenu_link.orange.nowmenu {
+    background-color: orange;
+}
+.localmenu_link.blue.nowmenu {
+    background-color: skyblue;
+}
+
+.localmenu_link.sub.nowmenu {
+    color:#fff;
+    background-color:#A0A0A0;
+    border:1px solid transparent;
+    border-radius: 8px;
+    cursor:default;
+}
+
+.localmenu_link.main.notlink {
+    color:#333;
+    cursor: default;
+    text-decoration: none;
+}
+
+/*not(.etc)*/
 .localmenu_link:hover {
     text-decoration: none;
 }
 
-.localmenu_link.orange:hover {
+.nowmenu:hover {
+    color:#fff !important;
+}
+
+.localmenu_link.main.orange:not(.notlink):hover {
     color:darkred;
 }
 
-.localmenu_link.blue:hover {
+.localmenu_link.main.blue:not(.notlink):hover {
     color:darkblue;
 }
 
-.localmenu_link.sub:hover {
+.localmenu_link.sub:not(.notlink):hover {
     color:black;
 }
 
@@ -2421,8 +2487,8 @@ ul.contentguide {
 @media screen and (max-width: 1200px) {
     /* 모바일 사이즈일 경우 사이드 배너를 하단으로 이동 */
     .ng_mainwrap {
-        overflow: auto;
-        overflow-x: hidden;
+        /*overflow: auto;*/
+        /*overflow-x: hidden;*/
     }
 
     .subside_wrap {
@@ -2466,6 +2532,12 @@ ul.contentguide {
 
 }
 
+@media screen and (max-width: 768px) {
+    /* 모바일 사이즈일 경우 사이드 배너를 하단으로 이동 */
+    .ng_mainwrap {
+        /*overflow: inherit;*/
+    }
+}
 
 /* 인벤토리(이미지로딩) 선영역 지정 */
 

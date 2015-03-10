@@ -21,7 +21,6 @@
                             <div class="container-fluid no-margin">
                                 <div class="row no-margin">
                                     <div class="col-xs-12 no-margin" style="text-align:center;">
-
                                         <div class="club_tabs" data-ng-click="click_selectTab('1');" ng-class="selectIdx == '1' ? 'selected' : ''">
                                             클럽안내
                                         </div>
@@ -33,7 +32,6 @@
                                         <div class="club_tabs" data-ng-click="click_selectTab('3');" ng-class="selectIdx == '3' ? 'selected' : ''">
                                             클럽게시판
                                         </div>
-
                                     </div><!-- /.col-xs-12-->
 
                                     <div class="col-xs-12 no-margin" style="text-align:center;">
@@ -51,9 +49,9 @@
                                             </dl>
 
                                             <dl ng-show="selectIdx == '3'" style="display:block;"> <!-- 클럽혜택 메뉴 -->
-                                                <dd class="ended">앙쥬클럽 게시판</dd>
+                                                <dd>앙쥬클럽 이야기방</dd>
+                                                <dd class="ended">앙쥬클럽 상담방</dd>
                                             </dl>
-
                                         </div>
                                     </div><!-- /.col-xs-12-->
 
@@ -546,7 +544,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12 peopleboard_view_contentbody">
 
-                                                        <ul class="store_warning" style="font-size:0.92em; color:#464646;">
+                                                        <ul class="store_warning" style="font-size:0.92em; padding:10px 25px; color:#464646;">
 
                                                             <li>도서는 <span class="table_red">무료배송</span> 됩니다.</li>
                                                             <li><span class="table_red">전화주문</span>만 가능합니다.</li>

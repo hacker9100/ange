@@ -6,13 +6,13 @@
 	<div class="gnb" ng-controller="ui-gnb">
 
 		<div class="gnb_menu">
-			<a href="/story/content/list" ng-class="channel_nm == 'story' ? 'abc' : 'abc nowmenu'" class="gnb_chnnel chnnel1">ANGE Story</a>
-			<a href="/people/home" ng-class="channel_nm == 'people' ? 'abc' : 'abc nowmenu'" class="gnb_chnnel chnnel2">ANGE People</a>
-			<a href="/moms/home" ng-class="channel_nm == 'moms' ? 'abc' : 'abc nowmenu'" class="gnb_chnnel chnnel3">ANGE Mom's</a>
-            <a ng-click="click_myange();" ng-class="channel_nm == 'myange' ? 'abc' : 'abc nowmenu'" class="gnb_chnnel chnnel4">My ANGE</a>
+			<a href="/story/content/list" ng-class="channeltitle == 'story' ? 'gnb_chnnel chnnel1 nowmenu' : 'gnb_chnnel chnnel1'">ANGE Story</a>
+			<a href="/people/home" ng-class="channeltitle == 'people' ? 'gnb_chnnel chnnel2 nowmenu' : 'gnb_chnnel chnnel2'">ANGE People</a>
+			<a href="/moms/home" ng-class="channeltitle == 'moms' ? 'gnb_chnnel chnnel3 nowmenu' : 'gnb_chnnel chnnel3'">ANGE Mom's</a>
+            <a ng-click="click_myange();" ng-class="channeltitle == 'myange' ? 'gnb_chnnel chnnel4 nowmenu' : 'gnb_chnnel chnnel4'">My ANGE</a>
 
 			<div class="gnb_right">
-				<a class="gnb_store ch_store">ANGE Store</a>
+				<a ng-class="channeltitle == 'store' ? 'gnb_store ch_store nowmenu' : 'gnb_store ch_store'">ANGE Store</a>
 				<!--<a href="/store/home" class="gnb_store ch_store">ANGE Store</a>-->
 
 				<form class="search_formgroup">
@@ -35,46 +35,45 @@
         </div>
 	</div>
 
+    <!--<div class="localmenu_mobile_wrap" ng-controller="ui-lnb-mobile">-->
+        <!--<div class="localmenu_mobile_col">-->
+            <!--<span class="glyphicon glyphicon-home"></span>  &lt;!&ndash; 채널홈으로 이동 &ndash;&gt;-->
+        <!--</div>-->
+        <!--<div class="localmenu_mobile_col smenu">-->
+            <!--<div class="btn-group" role="group" aria-label="Depth-1">-->
+                <!--<div class="btn-group" role="button">-->
+                    <!--<button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; text-decoration: none;">-->
+                        <!--행복한 임신-->
+                        <!--<span class="caret" style="margin-left:5px;"></span>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu" role="menu" style="top:33px;">-->
+                        <!--<li><a href="#">행복한 임신</a></li>-->
+                        <!--<li><a href="#">기분좋은 출산</a></li>-->
+                        <!--<li><a href="#">즐거운 육아</a></li>-->
+                        <!--<li><a href="#">현명한 부모</a></li>-->
+                        <!--<li><a href="#">앙쥬 스페셜</a></li>-->
+                        <!--<li><a href="#">앙쥬 매거진</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
 
-    <div class="localmenu_mobile_wrap" ng-controller="ui-lnb-mobile">
-        <div class="localmenu_mobile_col">
-            <span class="glyphicon glyphicon-home"></span>  <!-- 채널홈으로 이동 -->
-        </div>
-        <div class="localmenu_mobile_col smenu">
-            <div class="btn-group" role="group" aria-label="Depth-1">
-                <div class="btn-group" role="button">
-                    <button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; text-decoration: none;">
-                        행복한 임신
-                        <span class="caret" style="margin-left:5px;"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" style="top:33px;">
-                        <li><a href="#">행복한 임신</a></li>
-                        <li><a href="#">기분좋은 출산</a></li>
-                        <li><a href="#">즐거운 육아</a></li>
-                        <li><a href="#">현명한 부모</a></li>
-                        <li><a href="#">앙쥬 스페셜</a></li>
-                        <li><a href="#">앙쥬 매거진</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="localmenu_mobile_col smenu">
-            <div class="btn-group" role="group" aria-label="Depth-2">
-                <div class="btn-group" role="button">
-                    <button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; text-decoration: none;">
-                        임신부 지침서
-                        <span class="caret" style="margin-left:5px;"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu" style="top:33px;">
-                        <li><a href="#">임신부 지침서</a></li>
-                        <li><a href="#">푸드 솔루션</a></li>
-                        <li><a href="#">뷰티/헬스 솔루션</a></li>
-                        <li><a href="#">임신부용품</a></li>
-                        <li><a href="#">태교/태담</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!--<div class="localmenu_mobile_col smenu">-->
+            <!--<div class="btn-group" role="group" aria-label="Depth-2">-->
+                <!--<div class="btn-group" role="button">-->
+                    <!--<button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; text-decoration: none;">-->
+                        <!--임신부 지침서-->
+                        <!--<span class="caret" style="margin-left:5px;"></span>-->
+                    <!--</button>-->
+                    <!--<ul class="dropdown-menu" role="menu" style="top:33px;">-->
+                        <!--<li><a href="#">임신부 지침서</a></li>-->
+                        <!--<li><a href="#">푸드 솔루션</a></li>-->
+                        <!--<li><a href="#">뷰티/헬스 솔루션</a></li>-->
+                        <!--<li><a href="#">임신부용품</a></li>-->
+                        <!--<li><a href="#">태교/태담</a></li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
 	<!-- /GNB -->

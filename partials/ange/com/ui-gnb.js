@@ -13,6 +13,8 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('ui-gnb', ['$scope', '$rootScope', '$location', 'dialogs', '$stateParams', function ($scope, $rootScope, $location, dialogs, $stateParams) {
 
+        $scope.channeltitle = $stateParams.channel; //채널 타이틀(GNB 하이라이트용)
+
         var spMenu = $location.path().split('/');
 
         var channel_nm = $stateParams.channel;
