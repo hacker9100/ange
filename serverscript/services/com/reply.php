@@ -140,7 +140,7 @@
                     $search_common .= "AND CONCAT(YEAR,'-',MONTH,'-',DAY) = CONCAT('".$_search[YEAR]."','-' ,'".$_search[MONTH]."', '-', '".$_search[DAY]."')";
                 }
 
-                $sql = "SELECT NO, SUBJECT
+                $sql = "SELECT NO, SUBJECT, BODY
                      FROM ANGE_TALK
                      WHERE 1=1
                      ".$search_common."
