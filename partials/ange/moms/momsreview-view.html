@@ -94,7 +94,7 @@
                         <a class="btn people_btn submit" title="등록하기" style="display:block;" ng-click="click_showCreateReview();">등록</a>
                     </div>
 
-                    <div class="col-xs-8" ng-show="item.REG_UID == uid">
+                    <div class="col-xs-8" ng-show="item.REG_UID == uid || role == 'ANGE_ADMIN'">
                         <a class="btn people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeopleBoardEdit(item);">수정</a>
                         <a  style="display:block;" ng-click="click_showPeopleBoardDelete(item);">삭제</a> <!--class="btn people_btn cancel" title="작성취소"-->
                     </div>
