@@ -588,9 +588,9 @@
                             ,'".$ip."'
                             ,'/signin'
                         )";
-*/
 
                 $_d->sql_query($sql);
+*/
 
                 unset($_SESSION['user_info']);
                 unset($_SESSION['uid']);

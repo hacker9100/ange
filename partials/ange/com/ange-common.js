@@ -675,6 +675,8 @@ define([
                     item.MILEAGE_NO = '15';
                 } else if (gb == '12') {    // 나의 맛잇는 레시피
                     item.MILEAGE_NO = '61';
+                } else if (gb == '13') {    // 피플 맛집
+                    item.MILEAGE_NO = '151';
                 } else {
                     return;
                 }
@@ -711,7 +713,9 @@ define([
                     item.MILEAGE_NO = '16';
                 } else if (gb == '12') {    // 나의 맛잇는 레시피
                     item.MILEAGE_NO = '62';
-                } else if (gb == 'EXPERIENCE') {    // 나의 맛잇는 레시피
+                } else if (gb == '13') {    // 피플 맛집
+                    item.MILEAGE_NO = '152';
+                } else if (gb == 'EXPERIENCE') {    // 체험단 후기
                     item.MILEAGE_NO = '62';
                 } else if (gb == 'EVENT') {         // 이벤트 후기
                     item.MILEAGE_NO = '85';

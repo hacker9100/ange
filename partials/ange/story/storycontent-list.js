@@ -23,7 +23,7 @@ define([
                     $scope.isLoading = true;
                 });
 
-//                console.log("common : "+ (angular.element('#common').prop('scrollHeight') - angular.element('#common').height()));
+                console.log("common : "+ (angular.element('#common').prop('scrollHeight') - angular.element('#common').height()));
                 console.log("scrollTop : "+(angular.element('#common').scrollTop() ));
 
                 if (angular.element('#common').scrollTop() + 300 >= angular.element('#common').prop('scrollHeight') - angular.element('#common').height()) {

@@ -269,7 +269,7 @@ http://plnkr.co/edit/KzjIMN
     <div class="panel_ad" ng-include=" '/partials/ange/com/ui-ads.html' "></div>
 
     <!-- View가 표시될 영역 -->
-    <div ui-view class="panel_content"></div>
+    <div ui-view id="common" class="panel_content"></div>
 
     <div class="panel_user" ng-include=" '/partials/ange/com/ui-utility.html' "></div>
     <!--<div ng-show="role != '' && role!=null">{{role}}</div>-->
