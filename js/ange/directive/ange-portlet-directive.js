@@ -656,6 +656,24 @@ define([
                     $location.url('moms/'+menu+'/view/'+item.ada_idx);
                 };
 
+                var date = new Date();
+
+                // GET YYYY, MM AND DD FROM THE DATE OBJECT
+                var year = date.getFullYear().toString();
+                var mm = (date.getMonth()+1).toString();
+                var dd  = date.getDate().toString();
+
+                if(mm < 10) {
+                    mm = '0'+mm;
+                }
+
+                if(dd < 10) {
+                    dd = '0'+dd;
+                }
+
+                var today = year+'-'+mm+'-'+dd;
+                $scope.todayDate = today;
+
                 // 슬라이드 이미지 조회
                 $scope.getPortletList = function (api) {
                     $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
@@ -680,12 +698,14 @@ define([
                                 }
 
                                 // 슬라이드를 추가해 줌
+                                // ( data[i].ada_state == 0 ? '<div class="mini_event_closed"></div>' : '' )
                                 angular.element('#'+$scope.option.id).slickAdd(
                                     '<div class="col-xs-4 mini_event_contentcol">' +
                                         '<a href="/moms/'+menu+'/view/'+data[i].ada_idx+'">' +
                                         '<div class="mini_event_content">' +
 //                                                '<div class="mini_event_closed"></div>' +
-                                        ( data[i].ada_state == 0 ? '<div class="mini_event_closed"></div>' : '' ) +
+                                        ( data[i].ada_date_open > $scope.todayDate ? '<div class="mini_event_comingsoon"></div>' : '' ) +
+                                        ( data[i].ada_date_close < $scope.todayDate ? '<div class="mini_event_closed"></div>' : '' ) +
                                         '<img class="mini_event_txt_img" src="/imgs/ange/_blank_4by3.gif" style="background-image:url(\''+img+'\');"/>' +
                                         '<div class="mini_event_txt_title">' +
                                         ( data[i].ada_type == "event" ? '<span class="mini_event_txt_emblem coloremblem_purple">이벤트</span>' : data[i].ada_type == "exp" ? '<span class="mini_event_txt_emblem coloremblem_blue">체험단</span>' : '<span class="mini_event_txt_emblem coloremblem_brown">서평단</span>') +
