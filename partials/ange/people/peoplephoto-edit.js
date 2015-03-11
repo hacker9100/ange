@@ -159,6 +159,7 @@ define([
 
             $scope.search.COMM_NO = $scope.menu.COMM_NO;
             $scope.search.COMM_GB = 'PHOTO';
+            $scope.search.ALL = true;
 
             $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
@@ -257,6 +258,20 @@ define([
 
         // 게사판 저장 버튼 클릭
         $scope.click_savePeoplePhoto = function () {
+
+            console.log($scope.item.CATEGORY_NO);
+
+            // 개발
+//            if($scope.item.CATEGORY_NO == 92 || $scope.item.CATEGORY_NO == 127 || $scope.item.CATEGORY_NO == 118){
+//                dialogs.notify('알림', '카테고리를 선택하세요.', {size: 'md'});
+//                return;
+//            }
+
+            // 운영
+//            if($scope.item.CATEGORY_NO == 144 || $scope.item.CATEGORY_NO == 155 || $scope.item.CATEGORY_NO == 147){
+//                dialogs.notify('알림', '카테고리를 선택하세요.', {size: 'md'});
+//                return;
+//            }
 
             $scope.item.SYSTEM_GB = 'ANGE';
             $scope.item.BOARD_GB = 'PHOTO';

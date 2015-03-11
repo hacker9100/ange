@@ -147,7 +147,7 @@
                                             <span class="glyphicon glyphicon-chevron-up"></span> 이전글
                                         </div><!-- /.col-xs-2-->
                                         <div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">
-                                            <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}&nbsp;({{preBoardView.NICK_NM}})</a>
+                                            <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}&nbsp;<span ng-show="search.COMM_NO != 8">({{preBoardView.NICK_NM}})</span></a>
                                             <a ng-show="preBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">작성자가 삭제한 글입니다</a>
                                             <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
                                             <!--<a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}&nbsp;({{preBoardView.NICK_NM}})</a>-->
@@ -162,7 +162,7 @@
                                             <span class="glyphicon glyphicon-chevron-down"></span> 다음글
                                         </div><!-- /.col-xs-2-->
                                         <div data-ng-show="nextBoardView != ''" class="col-xs-10 board_basicinfo_subject">
-                                            <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}&nbsp;({{nextBoardView.NICK_NM}})</a>
+                                            <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}&nbsp;<span ng-show="search.COMM_NO != 8">({{nextBoardView.NICK_NM}})</span></a>
                                             <a ng-show="nextBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">작성자가 삭제한 글입니다</a>
                                             <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
                                         </div><!-- /.col-xs-10-->

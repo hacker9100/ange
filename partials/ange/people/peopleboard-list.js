@@ -48,9 +48,22 @@ define([
 
         //$scope.uid = $rootScope.uid;
 
+        // 서포터즈 게시판 권한 체크
+
+
         /********** 초기화 **********/
             // 초기화
         $scope.init = function() {
+
+            console.log($rootScope.role);
+
+            if($scope.menu.COMM_NO == 31){
+
+                if($rootScope.role == 'MEMBER' || $rootScope.role == 'CLINIC'){
+                    dialogs.notify('알림', '서포터즈 회원만 이용 가능합니다.', {size: 'md'});
+                    $location.url('/people/home');
+                }
+            }
 
             console.log($scope.menu.COMM_NO);
 
