@@ -900,3 +900,14 @@ span .bold {font-weight:bold; margin-right:5px;}
 	background-repeat: no-repeat;
 	z-index:9;
 }
+
+.mini_event_comingsoon {
+    position:absolute;
+    right:4px;
+    top:-1px;
+    width:71px;
+    height: 44px;
+    background-image: url('/imgs/ange/mini_event_comingsoon.png');
+    background-repeat: no-repeat;
+    z-index:9;
+}
