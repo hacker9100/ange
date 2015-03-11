@@ -13,6 +13,9 @@ define([
     // 사용할 서비스를 주입
     controllers.controller("storycontent-list", ['$scope', '$stateParams', '$sce', '$rootScope', '$location', '$modal', '$timeout', '$anchorScroll', 'dialogs', 'UPLOAD', function($scope, $stateParams, $sce, $rootScope, $location, $modal, $timeout, $anchorScroll, dialogs, UPLOAD) {
         angular.element(document).ready(function () {
+            console.log("common : "+ (angular.element('#common').prop('scrollHeight') - angular.element('#common').height()));
+            console.log("scrollTop : "+(angular.element('#common').scrollTop() ));
+
             angular.element('#common').scroll(function () {
                 $timeout(function(){
                     //$scope.images;
@@ -23,7 +26,7 @@ define([
                     $scope.isLoading = true;
                 });
 
-//                console.log("common : "+ (angular.element('#common').prop('scrollHeight') - angular.element('#common').height()));
+                console.log("common : "+ (angular.element('#common').prop('scrollHeight') - angular.element('#common').height()));
                 console.log("scrollTop : "+(angular.element('#common').scrollTop() ));
 
                 if (angular.element('#common').scrollTop() + 300 >= angular.element('#common').prop('scrollHeight') - angular.element('#common').height()) {

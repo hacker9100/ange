@@ -159,8 +159,7 @@
                             AND U.USER_ID = '".$_key."'
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
+                $data  = $_d->sql_fetch($sql);
 
                 $sql = "SELECT
                             R.ROLE_ID, R.ROLE_NM, R.ROLE_GB
@@ -172,8 +171,7 @@
                             ".$search_where."
                         ";
 
-                $result = $_d->sql_query($sql);
-                $role_data  = $_d->sql_fetch_array($result);
+                $role_data  = $_d->sql_fetch($sql);
 
                 $data['ROLE'] = $role_data;
 
@@ -186,8 +184,7 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $mileage_result = $_d->sql_query($sql);
-                    $mileage_data  = $_d->sql_fetch_array($mileage_result);
+                    $mileage_data  = $_d->sql_fetch($sql);
                     $data['MILEAGE'] = $mileage_data;
 
                     $sql = "SELECT
@@ -203,8 +200,7 @@
                                 AND F.FILE_GB = 'THUMB'
                             ";
 
-                    $file_result = $_d->sql_query($sql);
-                    $file_data = $_d->sql_fetch_array($file_result);
+                    $file_data = $_d->sql_fetch($sql);
                     $data['FILE'] = $file_data;
 
                     $sql = "SELECT
@@ -226,8 +222,7 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $blog_result = $_d->sql_query($sql);
-                    $blog_data  = $_d->sql_fetch_array($blog_result);
+                    $blog_data  = $_d->sql_fetch($sql);
                     $data['BLOG'] = $blog_data;
                 }
 

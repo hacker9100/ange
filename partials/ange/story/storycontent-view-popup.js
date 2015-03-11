@@ -60,8 +60,15 @@ define([
         // 콘텐츠 조회
         $scope.getContent = function () {
             var deferred = $q.defer();
+
+            var category_no = '';
+
+            for (var i in data.CATEGORY) {
+                category_no += data.CATEGORY[i].NO + (i != (data.CATEGORY.length - 1) ? ',' : '');
+            }
+
             $q.all([
-                    $scope.getList('cms/task', 'list', {NO:$scope.S_PAGE_NO, SIZE:6}, {CATEGORY: data.CATEGORY, FILE: true, PHASE: '30, 31', SORT: 'RAND()', ORDER: ''}, false).then(function(data){
+                    $scope.getList('cms/task', 'list', {NO:$scope.S_PAGE_NO, SIZE:6}, {CATEGORY_NO: category_no, FILE: true, PHASE: '30, 31', SORT: 'RAND()', ORDER: ''}, false).then(function(data){
                         $scope.totalPage = Math.round(data.length / 2);
 
                         for (var i in data) {

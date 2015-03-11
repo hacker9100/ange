@@ -20,6 +20,7 @@ define([
         $scope.$watch('newFile', function(data){
             if (typeof data !== 'undefined') {
                 $scope.file = data[0];
+                $scope.isUpload = true;
             }
         });
 
@@ -30,6 +31,8 @@ define([
         var day = [];
         var now = new Date();
         var nowYear = now.getFullYear();
+
+        $scope.isUpload = false;
 
         $scope.checkSave = false;
 
@@ -396,6 +399,7 @@ define([
             if ($scope.file) {
                 $scope.user.FILE = $scope.file;
                 $scope.user.FILE.$destroy = '';
+                $scope.isUpload = false;
             }
 
             var isWate = false;;
@@ -423,6 +427,8 @@ define([
                             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 */
+                    $scope.user.FILE = {};
+
                     $scope.item = {};
                     $scope.item.SYSTEM_GB = 'ANGE';
 
@@ -501,7 +507,7 @@ define([
                     $scope.user.EMAIL_TYPE = '';
 
                     var file = data.FILE;
-                    if (file != undefined) {
+                    if (file != false && file != null) {
                         $scope.file = {"name":file.FILE_NM,"size":file.FILE_SIZE,"url":UPLOAD.BASE_URL+file.PATH+file.FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+file.FILE_NM,"deleteType":"DELETE"};
                     }
 

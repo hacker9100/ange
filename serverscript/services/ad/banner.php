@@ -131,8 +131,9 @@
                     $msg = $_d->mysql_error;
                 }
 
-                for ($i=0; $row=$_d->sql_fetch_array($data); $i++) {
-                    $sql2 = "INSERT INTO adm_history_banner
+                if ($data) {
+                    for ($i=0; $row=$_d->sql_fetch_array($data); $i++) {
+                        $sql2 = "INSERT INTO adm_history_banner
                         (
                             ada_idx,
                             adu_guid,
@@ -153,7 +154,8 @@
                             ,SYSDATE()
                         )";
 
-                    $_d->sql_query($sql2);
+                        $_d->sql_query($sql2);
+                    }
                 }
 
                 if($err > 0){
