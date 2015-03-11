@@ -376,7 +376,7 @@ define([
 
                         console.log('$scope.open_date2 = '+$scope.open_date2);
 
-                        if($scope.todayDate <= $scope.open_date2 || $scope.open_date2 == '00000000'){
+                        if($scope.todayDate < $scope.end_date2|| $scope.open_date == '00000000'){ //if($scope.todayDate <= $scope.open_date2 || $scope.open_date2 == '00000000'){
                             $scope.showForm = "compForm";
                         }else{
                             $scope.showForm = "reviewForm";
@@ -1653,6 +1653,10 @@ define([
             if ($rootScope.uid != undefined) {
                 $scope.logout($rootScope.uid).then( function(data) {});
             }
+        }
+
+        $scope.click_review = function(){
+            $location.url('/moms/productreview/edit/0');
         }
 
         $scope.getSession()

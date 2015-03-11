@@ -472,30 +472,30 @@
                                                             </div>  <!-- /.form-inline -->
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td align="center" class="table_td_gray">
-                                                            추가정보1
-                                                        </td>
-                                                        <td>
-                                                            <input ng-model="item.ADD1"type="text" class="form-control input-sm">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="center" class="table_td_gray">
-                                                            추가정보2
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" ng-model="item.ADD2" class="form-control input-sm">
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="center" class="table_td_gray">
-                                                            추가정보3
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" ng-model="item.ADD3" class="form-control input-sm">
-                                                        </td>
-                                                    </tr>
+                                                    <!--<tr>-->
+                                                        <!--<td align="center" class="table_td_gray">-->
+                                                            <!--추가정보1-->
+                                                        <!--</td>-->
+                                                        <!--<td>-->
+                                                            <!--<input ng-model="item.ADD1"type="text" class="form-control input-sm">-->
+                                                        <!--</td>-->
+                                                    <!--</tr>-->
+                                                    <!--<tr>-->
+                                                        <!--<td align="center" class="table_td_gray">-->
+                                                            <!--추가정보2-->
+                                                        <!--</td>-->
+                                                        <!--<td>-->
+                                                            <!--<input type="text" ng-model="item.ADD2" class="form-control input-sm">-->
+                                                        <!--</td>-->
+                                                    <!--</tr>-->
+                                                    <!--<tr>-->
+                                                        <!--<td align="center" class="table_td_gray">-->
+                                                            <!--추가정보3-->
+                                                        <!--</td>-->
+                                                        <!--<td>-->
+                                                            <!--<input type="text" ng-model="item.ADD3" class="form-control input-sm">-->
+                                                        <!--</td>-->
+                                                    <!--</tr>-->
                                                     <tr>
                                                         <td align="center" class="table_td_gray">
                                                             신청이유
@@ -823,10 +823,14 @@
                             <div class="moms_form_foot" ng-show="uid && showForm == 'compForm' && comp_yn == 'Y'" style="background-color:#F8F8F8;">
                                 <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">참여한 이벤트입니다.</div>
                             </div>
+                            <div class="moms_form_foot" ng-show="end_date2 < todayDate" style="background-color:#F8F8F8;">
+                                <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">본 이벤트는 종료되었습니다.</div>
+                                <button ng-click="click_review();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>후기등록</button>
+                            </div>
                             <div class="moms_form_foot" ng-show="uid" style="border-bottom:2px solid #111;">
                                 <div  class="moms_form_footbtn">
                                     <button ng-click="click_momseventlist();" class="common_btn blackbtn" title="취소"><span class="glyphicon glyphicon-remove-circle sharebtn_icon"></span>목록</button>
-                                    <button ng-click="click_momseventcomp();" ng-hide="item.ada_que_type == 'none' || item.ada_que_type == 'reply'" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
+                                    <button ng-click="click_momseventcomp();" ng-hide="item.ada_que_type == 'none' || item.ada_que_type == 'reply' || comp_yn == 'Y'" class="common_btn bluebtn" title="등록"><span class="glyphicon glyphicon-upload sharebtn_icon"></span>등록</button>
                                     <!--&lt;!&ndash;<button ng-click="click_momseventcomp();" class="common_btn redbtn" title="수정"><span class="glyphicon glyphicon-ok-circle sharebtn_icon"></span>수정</button>&ndash;&gt;-->
                                 </div>
                             </div> <!-- /.moms_state -->

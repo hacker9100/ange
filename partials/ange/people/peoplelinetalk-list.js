@@ -333,6 +333,15 @@ define([
         // 일 선택
         $scope.search_day = function(day){
 
+
+            var searchdate = $scope.search.YEAR+'-'+$scope.search.MONTH+day;
+            console.log($scope.search.MONTH);
+            console.log($scope.search.YEAR);
+            if(today < searchdate){
+                dialogs.notify('알림', '오늘과 이전일 톡주제만 검색이 가능합니다.', {size: 'md'});
+                return;
+            }
+
             $scope.search.DAY = day;
 
             $scope.replyList = [];

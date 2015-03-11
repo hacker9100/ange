@@ -93,13 +93,13 @@ define([
 
                 console.log($scope.check);
 
-                if($scope.check != reg_dt){
+                if($scope.check != reg_dt && $rootScope.role == 'MEMBER'){
                     dialogs.notify('알림', $scope.month+'월에 가입한 신규회원만 신청이 가능합니다.', {size: 'md'});
                     return;
                 }
 
             }else if(season == 'season2'){
-                if($scope.todayDay < 25){ // 기존회원 --> 매달 25일 ~ 매달 말일
+                if($scope.todayDay < 25 && $rootScope.role == 'MEMBER'){ // 기존회원 --> 매달 25일 ~ 매달 말일
                     dialogs.notify('알림', '기존회원 샘플팩 신청기간이 아닙니다.', {size: 'md'});
                     return;
                 }
