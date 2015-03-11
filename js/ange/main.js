@@ -34,7 +34,7 @@ require.config({
         'angular-resource': '../../lib/angular-1.2.1/angular-resource', // restful방식으로 http 통신을 통한 서비스를 한다.
         'angular-sanitize': '../../lib/angular-1.2.1/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
         'angular-ui-router': '../../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
-        'angular-translate': '../../lib/angular_ori/angular-translate.min', //
+        'angular-translate': '../../lib/angular/angular-translate.min', //
         'i18n': '../../lib/angular-1.2.1/i18n/angular-locale_ko-kr', //
 //        'ngCookies': '../../lib/angular/angular-cookies.min', //
 

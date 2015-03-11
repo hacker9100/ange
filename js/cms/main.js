@@ -32,7 +32,7 @@ require.config({
         'angular': '../../lib/angular-1.2.1/angular', // angularjs를 사용한다.
         'angular-resource': '../../lib/angular-1.2.1/angular-resource', // restful방식으로 http 통신을 통한 서비스를 한다.
         'angular-sanitize': '../../lib/angular-1.2.1/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
-        'angular-translate': '../../lib/angular_ori/angular-translate.min', //
+        'angular-translate': '../../lib/angular/angular-translate.min', //
 
 //        'angular': '../../lib/angular/angular', // angularjs를 사용한다.
 //        'angular-resource': '../../lib/angular/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.

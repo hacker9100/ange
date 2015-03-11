@@ -266,7 +266,7 @@ http://plnkr.co/edit/KzjIMN
 <body ng-controller="ange_init">
 
 <div class="wrap">
-<!--    <div class="panel_ad" ng-include=" '/partials/ange/com/ui-ads.html' "></div>-->
+    <div class="panel_ad" ng-include=" '/partials/ange/com/ui-ads.html' "></div>
 
     <!-- View가 표시될 영역 -->
     <div ui-view class="panel_content"></div>
