@@ -180,6 +180,135 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
             }else if ($_type == "chartlist") {
 
+                $sql2 = "SELECT ada_que_info
+                        FROM adm_ad
+                        WHERE ada_idx = ".$_search[ada_idx]."
+                        ";
+
+                $result2 = $_d->sql_query($sql2,true);
+                $data2 = $_d->sql_fetch_array($result2);
+
+                $data2['ada_que_info'] = str_replace('&quot;','"',$data2['ada_que_info']);
+                $view_que['info'] = json_decode($data2['ada_que_info'],true);
+
+                $sql = "SELECT adhj_answers
+                        FROM adm_history_join
+                        WHERE ada_idx = ".$_search[ada_idx]."
+                        ";
+
+
+                $result = $_d->sql_query($sql,true);
+                //$data = $_d->sql_fetch_array($result);
+
+                $qcnt=0;
+
+                $data = null;
+
+                for ($i=0; $lval=$_d->sql_fetch_array($result); $i++) {
+
+                    MtUtil::_d("### [END] [DATA] lval['adhj_answers'] = ".json_encode($lval['adhj_answers']));
+
+                    $t_answer = json_decode($lval['adhj_answers'],true); // $lval['adhj_answers']
+
+                    if ($t_answer){
+                        $qcnt++;
+
+                        $t_item = explode(';',$lval2);
+                        $t_item = array_map(trim,$t_item);
+
+//                        foreach($t_answer as $lkey2=>$lval2){ // $lkey2=>$lval2
+//                            if (isset($a_answer[$lkey2][$lval2])){ // [$lkey2][$lval2]
+//                                $a_answer[$lkey2][$lval2]++; // [$lkey2][$lval2]
+//                            }else{
+//
+//                                $a_answer[$lkey2][$lval2]=1;
+//                            }
+//                        }
+                        foreach($t_answer as $lkey2=>$lval2){ // $lkey2=>$lval2
+                            $t_item = explode(';',$lval2);
+                            $t_item = array_map(trim,$t_item);
+//                            $t_item = array_map(trim,$t_item);
+
+//                            if (isset($a_answer[$lkey2][$lval2])){ // [$lkey2][$lval2]
+//                                $a_answer[$lkey2][$lval2]++; // [$lkey2][$lval2]
+//                            }else{
+//
+//                                $a_answer[$lkey2][$lval2]=1;
+//                            }
+                            foreach($t_item as $lkey3=>$lval3){
+
+                                if ($lval3!=''){
+
+                                    if (isset($a_answer[$lkey2][$lval3])){
+
+                                        $a_answer[$lkey2][$lval3]++;
+
+                                    }else{
+
+                                        $a_answer[$lkey2][$lval3]=1;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    $data['answer'] = $a_answer;
+                }
+
+                $lcnt=0;
+                foreach($data['answer'] as $lkey=>$lval){
+                    $lcnt++;
+                    $t_stream = "[";
+                    $t_stream .= "['선택','응답율']";
+                    arsort($lval); // 가장큰것부터 정렬
+
+
+                    if ($view_que['info'][$lcnt-1]['type']==3){
+
+                        foreach($lval as $lkey2=>$lval2){
+                            $icnt++;
+                            $t_rate = (round((int)$lval2/(int)$qcnt*1000)/10);
+                            $t_stream .= "^['{$lkey2}'|{$t_rate}]";
+                        }
+                        //$t_stream .= "]";
+                        //$graphdata_answer2[$lcnt]=$t_stream;
+                        //json_encode($graphdata_answer2[$lcnt], true);
+                    }else{
+                        foreach($lval as $lkey2=>$lval2){
+
+                            $t_rate = (round((int)$lval2/(int)$qcnt*1000)/10);
+                            $t_stream .= "^['{$lkey2}'|{$t_rate}]";
+                        }
+                    }
+                    $t_stream .= "]";
+
+                    $graphdata_answer[$lcnt]=$t_stream;
+
+                    json_encode($graphdata_answer[$lcnt], true);
+                }
+
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    ob_end_clean();
+
+                    echo json_encode($graphdata_answer, true); // $data['answer']
+                    exit;
+                }
+            }else if ($_type == "chartlist2") {
+
+                $sql2 = "SELECT ada_que_info
+                        FROM adm_ad
+                        WHERE ada_idx = ".$_search[ada_idx]."
+                        ";
+
+                $result2 = $_d->sql_query($sql2,true);
+                $data2 = $_d->sql_fetch_array($result2);
+
+                $data2['ada_que_info'] = str_replace('&quot;','"',$data2['ada_que_info']);
+                $view_que['info'] = json_decode($data2['ada_que_info'],true);
+
 
                 $sql = "SELECT adhj_answers
                         FROM adm_history_join
@@ -204,11 +333,29 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                         $qcnt++;
 
                         foreach($t_answer as $lkey2=>$lval2){ // $lkey2=>$lval2
-                            if (isset($a_answer[$lkey2][$lval2])){ // [$lkey2][$lval2]
-                                $a_answer[$lkey2][$lval2]++; // [$lkey2][$lval2]
-                            }else{
+                            $t_item = explode(';',$lval2);
+                            $t_item = array_map(trim,$t_item);
+//                            $t_item = array_map(trim,$t_item);
 
-                                $a_answer[$lkey2][$lval2]=1;
+//                            if (isset($a_answer[$lkey2][$lval2])){ // [$lkey2][$lval2]
+//                                $a_answer[$lkey2][$lval2]++; // [$lkey2][$lval2]
+//                            }else{
+//
+//                                $a_answer[$lkey2][$lval2]=1;
+//                            }
+                            foreach($t_item as $lkey3=>$lval3){
+
+                                if ($lval3!=''){
+
+                                    if (isset($a_answer[$lkey2][$lval3])){
+
+                                        $a_answer[$lkey2][$lval3]++;
+
+                                    }else{
+
+                                        $a_answer[$lkey2][$lval3]=1;
+                                    }
+                                }
                             }
                         }
 
@@ -238,28 +385,45 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $lcnt++;
                     $t_stream = "[";
                     $t_stream .= "['선택','응답율']";
-                    arsort($lval); // 가장큰것부터 정렬
-                    foreach($lval as $lkey2=>$lval2){
+//                    arsort($lval); // 가장큰것부터 정렬
+//                    foreach($lval as $lkey2=>$lval2){
+//
+//                        //MtUtil::_d("### [END] [DATA] lval['testtesttest'] = ".$lkey2.":".$lval2);
+//
+//                        $t_rate = (round((int)$lval2/(int)$qcnt*1000)/10);
+//                        $lkey3 = str_replace(';', '', $lkey2);
+//                        MtUtil::_d("### [END] [DATA] lval['key3'] = ".$lkey3);
+//                        $t_stream .= "^['{$lkey2}'|{$t_rate}]";
+//                    }
+//                    $t_stream .= "]";
+//
+//                    $graphdata_answer2[$lcnt]=$t_stream;
+//
+//                    json_encode($graphdata_answer2[$lcnt], true);
 
-                        //MtUtil::_d("### [END] [DATA] lval['testtesttest'] = ".$lkey2.":".$lval2);
+                    $icnt=0;
+                    $t_data = '';
+                    arsort($lval);
+                    if ($view_que['info'][$lcnt-1]['type']==3){
 
-                        $t_rate = (round((int)$lval2/(int)$qcnt*1000)/10);
-                        $t_stream .= "^['{$lkey2}'|{$t_rate}]";
+                        foreach($lval as $lkey2=>$lval2){
+                            $icnt++;
+                            $t_rate = (round((int)$lval2/(int)$qcnt*1000)/10);
+                            $t_stream .= "^['{$lkey2}'|{$t_rate}]";
+                        }
+                        $t_stream .= "]";
+                        $graphdata_answer2[$lcnt]=$t_stream;
+                        json_encode($graphdata_answer2[$lcnt], true);
                     }
-                    $t_stream .= "]";
 
-                    $graphdata_answer[$lcnt]=$t_stream;
-
-                    json_encode($graphdata_answer[$lcnt], true);
                 }
-
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 }else{
                     ob_end_clean();
 
-                    echo json_encode($graphdata_answer, true); // $data['answer']
+                    echo json_encode($graphdata_answer2, true); // $data['answer']
                     exit;
                 }
             }

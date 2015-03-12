@@ -175,7 +175,7 @@
                                                     <dd ng-if="query.type == '1'">
                                                         <div class="radio-inline">
                                                             <label>
-                                                                <input  type="text" name="answer[]" style="width: 250px;"/>
+                                                                <!--<input  type="text" name="answer[]" style="width: 250px;"/>-->
                                                                 &nbsp;&nbsp;&nbsp;
                                                                 <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
                                                             </label>
@@ -194,6 +194,12 @@
                                                     <div ng-if="query.type == '0'">
                                                         <div  style="width: 100%; height: 200px;">
                                                             <div google-chart chart="chart[$index]" style="height:200px; width:100%;"></div>
+                                                            <!--<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>-->
+                                                        </div>
+                                                    </div>
+                                                    <div ng-if="query.type == '3'">
+                                                        <div  style="width: 100%; height: 200px;">
+                                                            <div google-chart chart="chartObject[$index]"></div>
                                                             <!--<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>-->
                                                         </div>
                                                     </div>

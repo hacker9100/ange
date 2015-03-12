@@ -596,41 +596,7 @@
                 //
 //                AND CC.CATEGORY_NM <> '전체'
 
-                $sql = "SELECT NO, CATEGORY_NM, NOTE, (SELECT COUNT(*) FROM COM_BOARD WHERE CATEGORY_NO = DATA.NO) AS CNT
-                    FROM(
-                    SELECT CC.NO, CC.CATEGORY_NM, CC.NOTE
-                                        FROM CMS_CATEGORY CC
-                                        WHERE 1=1
-                                        AND CC.SYSTEM_GB = 'ANGE'
-                                        AND CC.CATEGORY_GB = '".$_search[COMM_NO]."'
-                                        ".$search_where."
-                                        ORDER BY SORT_IDX ASC
-                    ) AS DATA
-                ";
-
-                $data = $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0){
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                }else{
-                    $_d->dataEnd($sql);
-                }
-            }else if ($_type == 'clubcategory') {
-
-//                if (isset($_search[COMM_NO]) && $_search[COMM_NO] == "") {
-//                    $search_where .= "AND CATEGORY_GB = '".$_search[COMM_NO]."' ";
-//                }
-
-                if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
-                    $search_where .= "AND CC.NO = '".$_search[CATEGORY_NO]."' ";
-                }
-
-                if (isset($_search[ALL]) && $_search[ALL] != "") {
-                    $search_where .= "AND CC.CATEGORY_NM <> '전체'";
-                }
-                //
-//                AND CC.CATEGORY_NM <> '전체'
-
+                // , (SELECT COUNT(*) FROM COM_BOARD WHERE CATEGORY_NO = DATA.NO) AS CNT
                 $sql = "SELECT NO, CATEGORY_NM, NOTE
                     FROM(
                     SELECT CC.NO, CC.CATEGORY_NM, CC.NOTE
