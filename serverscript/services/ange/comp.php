@@ -144,9 +144,9 @@ switch ($_method) {
             }
         } else if ($_type == "check") {
 
-            if (!isset($_SESSION['uid'])) {
-                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
-            }
+//            if (!isset($_SESSION['uid'])) {
+//                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+//            }
 
             $sql = "SELECT COUNT(*) AS COMP_CNT
                  FROM adm_history_join
@@ -162,9 +162,9 @@ switch ($_method) {
 
         } else if ($_type == "samplepackCheck") {
 
-            if (!isset($_SESSION['uid'])) {
-                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
-            }
+//            if (!isset($_SESSION['uid'])) {
+//                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+//            }
 
             $sql = "SELECT COUNT(*) AS COMP_CNT
                  FROM adm_history_join

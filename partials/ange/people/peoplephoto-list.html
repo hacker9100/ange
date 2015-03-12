@@ -85,7 +85,7 @@
                             <div class="peoplep_list_tab">
                                 <ul class="nav nav-tabs">
                                     <li role="presentation" ng-repeat="tab in category_list" ng-class="selectIdx == $index ? 'active' : ''">
-                                        <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}<span ng-hide="$index == 0">({{tab.CNT}})</span></a>
+                                        <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}</a> <!-- <span ng-hide="$index == 0">({{tab.CNT}})</span> -->
                                     </li>
                                 </ul>
 

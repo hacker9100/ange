@@ -149,7 +149,8 @@ define([
 
                 }], item, {size:size,keyboard: true}, $scope);
             dlg.result.then(function(){
-                $scope.getPeopleBoardList();
+                $scope.photoList = [];
+                $scope.getPeoplePhotoList();
             },function(){
 
             });
@@ -318,6 +319,8 @@ define([
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
+                    $scope.reply = {};
+
                     $scope.getItem('com/webboard', 'item', item.NO, {}, false)
                         .then(function(data){
                             $scope.item = data;
@@ -362,6 +365,7 @@ define([
 
                 }], item, {size:size,keyboard: true}, $scope);
             dlg.result.then(function(){
+                $scope.photoList = [];
                 $scope.getPeoplePhotoList();
             },function(){
 

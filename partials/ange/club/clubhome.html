@@ -49,8 +49,8 @@
                                             </dl>
 
                                             <dl ng-show="selectIdx == '3'" style="display:block;"> <!-- 클럽혜택 메뉴 -->
-                                                <dd>앙쥬클럽 이야기방</dd>
-                                                <dd class="ended">앙쥬클럽 상담방</dd>
+                                                <dd><a id="click_board" ng-click="click_board('board');">앙쥬클럽 이야기방</a></dd>
+                                                <dd class="ended"><a id="click_clinic" ng-click="click_board('clinic');">앙쥬클럽 상담방</a></dd>
                                             </dl>
                                         </div>
                                     </div><!-- /.col-xs-12-->
@@ -578,14 +578,22 @@
                             <!-- 07. 클럽게시판 > 앙쥬클럽 게시판 -->
                             <div ng-show="selectIdx == '3'" style="display: block;">
                                 <div class="container-fluid no-margin">
-                                    <div class="row no-margin">
+                                    <div ng-show="selectBoard == 'board'" class="row no-margin">
                                         <div class="col-xs-12 no-margin" style="position: relative;">
 
-                                            일반게시판 삽입됩니다.<br />
-                                            게시판 접근권한은 앙쥬클럽 회원만 가능합니다.
+                                            <div ng-include=" '/partials/ange/club/clubboard-list.html' "></div>
+                                            <!--<div id="load_board"></div>-->
 
                                         </div><!-- /.col-xs-12-->
                                     </div><!-- /.row -->
+                                    <div ng-show="selectBoard == 'clinic'" class="row no-margin">
+                                        <div class="col-xs-12 no-margin" style="position: relative;">
+
+                                            <!--<div id="load_clinic"></div>-->
+                                            <div ng-include=" '/partials/ange/club/clubclinic-list.html' "></div>
+
+                                        </div><!-- /.col-xs-12-->
+                                    </div>
                                 </div><!-- /.container -->
                             </div>
                             <!-- /07. 클럽게시판 > 앙쥬클럽 게시판 -->

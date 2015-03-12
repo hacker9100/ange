@@ -110,6 +110,12 @@ define([
 
     // 앙쥬클럽
     '../../../partials/ange/club/clubhome',
+    '../../../partials/ange/club/clubboard-list',
+    '../../../partials/ange/club/clubboard-view',
+    '../../../partials/ange/club/clubboard-edit',
+    '../../../partials/ange/club/clubclinic-list',
+    '../../../partials/ange/club/clubclinic-view',
+    '../../../partials/ange/club/clubclinic-edit',
 
     '../../../partials/ange/join/jointerms',
     '../../../partials/ange/join/joinuserinfo',

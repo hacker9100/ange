@@ -1,0 +1,213 @@
+<div class="mainbar sub-slide0" data-ng-controller="clubclinic-edit">
+    <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+        <div class="row">
+
+        <div class="col-xs-12 v-cell-3">
+            <div class="comp_basic h-cell-dynamic">
+
+                <div class="sub_contents_wrap">
+
+                    <div class="sub_contents_title">
+                        <span class="sub_contents_bullet"></span>
+                        <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3>
+                    </div>
+                </div><!-- /.sub_contents_wrap -->
+
+                <div ng-model="item" class="sub_contents_body">
+
+                    <!-- peopleboard_edit -->
+                    <div class="people_edit_wrap">
+
+                        <div class="container-fluid peopleboard_edit_topwrap">
+
+                            <div class="row" style="margin:0px auto; margin-bottom:10px;">
+
+
+                                <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">말머리</label>
+
+                                <div class="col-xs-3" style="padding:0;">
+
+                                    <!-- 일반게시판 메뉴 서포터즈를 제외한 일반게시판들-->
+                                    <select  ng-model="item.HEAD" class="form-control input-sm" role="menu">
+                                        <option value="">선택없음</option>
+                                        <option value="이벤트-교육후기">이벤트-교육후기</option>
+                                        <option value="이벤트-분만체험">이벤트-분만체험</option>
+                                        <option value="조리원후기">조리원후기</option>
+                                        <option value="맘들에게 물어요">맘들에게 물어요</option>
+                                        <option value="주제글">주제글</option>
+                                    </select>
+
+                                </div>
+
+                            </div><!-- /.row -->
+
+                            <div class="row" style="margin:0px auto; margin-bottom:10px;">
+
+                                <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">제목</label>
+
+                                <div class="col-xs-3" style="padding:0;">
+                                    <div class="input-group">
+                                        <select ng-model="item.CATEGORY_NO" class= "form-control input-sm">
+                                            <option data-ng-repeat="category in categorylist" value="{{category.NO}}">{{category.NOTE}}</option>
+                                        </select>
+                                    </div><!-- /input-group -->
+                                </div>
+
+                                <div class="col-xs-8" style="padding-left:5px;">
+                                    <input ng-model="item.SUBJECT" type="text" class="input-sm form-control" placeholder="제목을 입력하세요">
+                                </div><!-- /.col-xs-7 -->
+                            </div>
+
+                            <!-- file drag-in Box -->
+                            <!--<form id="fileupload" method="POST" enctype="multipart/form-data" ng-controller="file" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">-->
+                            <form id="fileupload" method="POST" enctype="multipart/form-data" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">
+                                <input type="hidden" id="version" name="version" value="6">
+
+                                <!-- file drag-in Box -->
+                                <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
+
+                                    <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">
+                                        파일
+                                    </label>
+
+                                    <div class="col-xs-8 dragzone_wrap">
+                                        <div id="dropzone" name="dropzone" class="dragzone">
+
+                                            <div data-ng-repeat="file in queue">
+                                                <div class="files_row">
+                                                    <input type="checkbox" checklist-model="item.queue" checklist-value="file" style="vertical-align: top;" aria-label="...">
+                                                    <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
+                                                    <span class="filename">{{file.name}}</span>
+                                                    <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">{{file.size | formatFileSize}}</div>
+                                                    <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;" data-ng-show="file.error">{{file.error}}</div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div><!-- /.col-xs-4 -->
+
+                                    <div class="col-xs-3" style="padding:0 0 0 4px; height:100%;">
+                                        <!--<div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>-->
+                                    <span class="fileinput-button dagbox_btn fil2com large" ng-class="{disabled: disabled}">
+                                        <div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>
+                                        <div style="width:63%; float:right; text-align:left;">
+                                            <strong>내 PC에서</strong><br/>
+                                            <span style="font-size:0.72em;">첨부파일 찾기</span>
+                                            <input type="file" name="files[]" multiple ng-disabled="disabled" />
+                                        </div>
+                                    </span>
+                                </div><!-- /.col-xs-2 -->
+
+                        </div><!-- /.row -->
+                        <!-- /file drag-in Box -->
+
+                        <!-- image thumbnails -->
+                        <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
+
+                            <label class="col-xs-1">
+
+                            </label>
+
+                            <div class="col-xs-11 col-xs-offset-1" style="padding:0;">
+                                <div class="thumbnailzone">
+                                    <div data-ng-repeat="file in queue">
+                                        <div class="thumbnails selectedthumb" ng-style="{'background-image': 'url({{file.thumbnailUrl}})'}">
+                                            <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                            <div  class="thumbnails_img_check"><input type="checkbox" checklist-model="item.queue" checklist-value="file"></div>
+                                            <div style="position: absolute; right:0px; top:0px; width:20px; height:20px;">
+                                                <a title="대표이미지로 지정" ng-click="click_selectMainImage(file)" ng-show="file.kind != 'MAIN'"><span class="glyphicon glyphicon-star thumbnails_img_star"></span></a>
+                                                <img src="/imgs/ange/people_featureimage.png" alt="대표이미지" title="대표이미지" ng-show="file.kind == 'MAIN'"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Thumbnail List -->
+
+                                    <div class="thumbnails_func" style="padding: 10px 0;">
+                                        <a ng-class="checkAll ? 'thumbnails_func_selectall allselected' : 'thumbnails_func_selectall'" ng-click="click_checkAllToggle()"></a>
+                                        <!-- span class="thumbnails_func_selectall allselected"></span -->	<!-- allselected : 토글 -->
+                                        <a class="thumbnails_func_selectadd" ng-click="click_checkFileEditor()"></a>
+                                        <a class="thumbnails_func_selectdel" ng-click="click_checkFileDestroy()"></a>
+                                    </div>
+                                </div>
+                            </div><!-- /.col-xs-4 -->
+
+                        </div><!-- /.row -->
+                        <!-- image thumbnails -->
+                        </form><!-- /.row -->
+                        <!-- /file drag-in Box -->
+
+
+                    </div> <!-- /.peopleboard_edit_topwrap -->
+
+                    <!-- Ediotr Box -->
+                    <div class="row people_editor_wrap">
+                        <div class="col-xs-12 people_editor">
+                            <!--에디터 넣을자리 <br/>-->
+                            <!--- (글꼴, 글색, 글크기(12,14,16,18pt)/  <br/>-->
+                            <!--- 본문 정렬   <br/>-->
+                            <!--- 굵게,기울기,취소,밑줄  <br/>-->
+                            <!--- HTML-->
+                            <div style="border:1px solid #DEDEDE; width:100%; float:left;">
+                                <div>
+                                    <textarea id="editor1" ng-model="item.BODY" ckeditor="editorOptions" disabled="{{scope.isDisabled}}"></textarea>
+                                </div>
+                            </div>
+                        </div><!-- /.people_editor -->
+                    </div><!-- /.row -->
+                    <!-- /Ediotr  Box -->
+
+                    <!-- Option-->
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            <!--<div class="peopleboard_options">-->
+                            <!--<input type="checkbox" style="vertical-align: top;" id="checkall" name="checkall" checked/> &lt;!&ndash;checked&ndash;&gt;-->
+                            <!--<span class="filename">전체 선택</span>-->
+                            <!--</div>-->
+
+                            <!--<div class="peopleboard_options">-->
+                                <!--<input type="checkbox" name="check" id="check_reply" ng-model="item.REPLY_FL" style="vertical-align: top;" ng-checked="checked"/>-->
+                                <!--<span class="filename">댓글 허용</span>-->
+                            <!--</div>-->
+
+                            <!--<div class="peopleboard_options">-->
+                                <!--<input type="checkbox" name="check" id="check_scrap" ng-model="item.SCRAP_FL" style="vertical-align: top;" ng-checked="checked"/>-->
+                                <!--<span class="filename">스크랩 허용</span>-->
+                            <!--</div>-->
+
+                            <div class="peopleboard_options" ng-show="role == 'ANGE_ADMIN'">
+                                <input ng-model="item.NOTICE_FL" type="checkbox" name="noti_check" id="notice_fl" style="vertical-align: top;"/>
+                                <span class="filename">공지글</span>
+                            </div>
+
+                        </div><!-- /.people_editor -->
+                    </div><!-- /.row -->
+                    <!-- /Option -->
+
+                    <div class="container-fluid people_view_btnwrap">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>
+                                <a class="btn people_btn submit" title="등록하기" style="display:block;" ng-click="click_savePeopleBoard();">등록</a>
+                            </div>
+                        </div><!-- /.row -->
+                    </div><!-- /.people_view_btnwrap -->
+
+                </div>
+                <!-- /peopleboard_edit -->
+            </div><!-- /.sub_contents_body -->
+
+            <div class="sub_contents_ads" style="display:none;">
+                <div>
+                </div>
+            </div>
+
+            </div>
+        </div>
+
+    </div> <!-- rows -->
+
+    </div>
+</div>
