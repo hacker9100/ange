@@ -48,7 +48,7 @@ define([
                 $location.url('/club/home');
             }else if($rootScope.role == 'ANGE_ADMIN'){
                 $location.url('/club/home');
-            }else if($rootScope.role == 'CLINIC'){
+            }else if($rootScope.user_gb == 'CLINIC'){
                 $location.url('/club/home');
             }else{
                 dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
