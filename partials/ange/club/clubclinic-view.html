@@ -1,0 +1,192 @@
+<div class="mainbar sub-slide0" data-ng-controller="clubclinic-view">
+    <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+
+        <div class="row">
+
+            <div class="col-xs-12 v-cell-3">
+                <div class="comp_basic h-cell-dynamic">
+
+                    <div class="sub_contents_wrap">
+
+                        <div class="sub_contents_title">
+                            <span class="sub_contents_bullet"></span>
+                            <h3 style="font-weight:bold;">앙쥬클럽 상담방 <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3>
+                        </div>
+                    </div><!-- /.sub_contents_wrap -->
+
+                    <div ng-model="item" class="sub_contents_body">
+
+                        <!-- peopleboard_view -->
+                        <div class="people_view_wrap">
+
+                            <div class="container-fluid peopleboard_view_topwrap">
+
+
+                                <div class="row peopleboard_view_basicinfo">
+                                    <div class="col-xs-2 board_basicinfo_label">
+                                        제목
+                                    </div><!-- /.col-xs-2-->
+                                    <div class="col-xs-10  board_basicinfo_subject">
+                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{item.SUBJECT}}</span>
+                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다</span>
+                                        <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글입니다</span>
+                                        <!--<span ng-show="item.REG_DT1 == item.REG_NEW_DT" class="table_icon_new">N</span>-->
+                                        <!--<span class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                    </div><!-- /.col-xs-10-->
+                                </div><!-- /.row -->
+
+
+                                <div class="row peopleboard_view_basicinfo">
+                                    <div ng-if="menu.COMM_NO != 8" class="col-xs-2  board_basicinfo_label">
+                                        작성자
+                                    </div><!-- /.col-xs-2-->
+                                    <div ng-if="menu.COMM_NO != 8" class="col-xs-4 board_basicinfo_subject">
+                                        {{item.NICK_NM}}
+                                    </div><!-- /.col-xs-4-->
+                                    <!--<div class="col-xs-1  board_basicinfo_label">-->
+                                    <!--작성일-->
+                                    <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
+                                    <div class="col-xs-5 board_basicinfo_subject date" style="margin-right: 10px;">
+                                        {{item.REG_DT}}
+                                    </div><!-- /.col-xs-4-->
+                                </div><!-- /.row -->
+
+
+                                <div style="float:right; margin:10px 0 0 0; padding:3px; font-size:0.80em;">
+                                    <div style="display:inline; bottom:8px; right:0;">
+                                        <span class="feed_count countlike_color table_gray">{{item.LIKE_CNT}}</span>		<!-- 공감수 -->
+                                        <span class="feed_count countreply_color table_gray">{{item.REPLY_COUNT}}</span>	<!-- 댓글수 -->
+                                    </div>
+
+                                    <!--<div class="people_share" style="float:right; line-height:20px; vertical-align:top;">-->
+                                    <button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'N'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공 감</button>
+                                    <button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'Y'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공감취소</button>
+                                    <button ng-show="item.SCRAP_FL == 'Y'" class="people_sharebtn blackbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>
+                                    <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
+                                    <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭" ng-click="click_boardReport2(item)"><span class="glyphicon glyphicon-print sharebtn_icon"></span>신고</button>
+                                    <!--</div>-->
+                                </div>
+
+                            </div><!-- /.container -->
+
+
+                            <div class="container-fluid peopleboard_view_contentwrap">
+                                <div class="row">
+                                    <div ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" class="col-xs-12 peopleboard_view_contentbody">
+
+                                        <!-- Editor CSS 적용 -->
+                                        <div ng-bind-html="item.BODY" style="margin:0px auto; padding:25px 10px;"></div>
+
+                                        <!--<p>산부인과와 산후조리원에 관한 앙쥬폴 떳네요.</p>-->
+                                        <!--<p>얼른하고왔어요</p>-->
+                                        <!--<p>참여인수가 3명이니..</p>-->
+                                        <!--<p>이제 올라온지 얼마 안되서 그런가봐여</p>-->
+                                        <!--<p>얼른하시고 마일리지 적립받으세요.ㅎㅎ</p>-->
+                                        <!--<p>아아..좀만 더더 노력하면 앞자리 숫자 바뀔듯한데</p>-->
+                                        <!--<p>힘드네요....</p>-->
+                                        <!--<p>&nbsp;</p>-->
+                                        <!--<p>아아 앙플이 전같지 않고</p>-->
+                                        <!--<p>또 말일 다가오니 다들 주춤모드 같고</p>-->
+                                        <!--<p>확실히 글도 많지 않고</p>-->
+                                        <!--<p>그리고 앙플기간인데도 불구하고 랭킹이 떨어졌다는 것도 참....</p>-->
+
+                                        <!-- Editor CSS 적용 -->
+
+                                    </div>
+                                    <div ng-show="item.BOARD_ST == 'D'" class="col-xs-12 peopleboard_view_contentbody">
+
+                                        <!-- Editor CSS 적용 -->
+                                        <div style="margin:0px auto; padding:25px 10px;">작성자가 삭제한 글입니다.</div>
+
+                                    </div>
+                                    <div ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'" class="col-xs-12 peopleboard_view_contentbody">
+
+                                        <!-- Editor CSS 적용 -->
+                                        <div style="margin:0px auto; padding:25px 10px;">관리자에 의해 블라인드 처리된 글입니다</div>
+
+                                    </div>
+                                    <!-- /.col-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
+
+                            <div class="container-fluid people_view_btnwrap">
+                                <div class="row">
+                                    <div class="col-xs-4">
+                                        <a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>
+                                        <a class="btn people_btn submit" title="등록하기" ng-click="click_showCreatePeopleBoard();" style="display:block;">등록</a>
+                                    </div>
+
+
+
+                                    <div class="col-xs-4" ng-show="uid == item.REG_UID && uid != '' && uid != null || role == 'ANGE_ADMIN'">
+                                        <!--<a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		&lt;!&ndash;  모든 항목을 선택하고 작성이 완료되면 disable 제거 &ndash;&gt;-->
+                                        <!--<a class="btn people_btn confirm" title="확인" style="display:block;" ng-click="click_showPeopleBoardList();">확인</a>-->
+                                        <!--<a class="btn people_btn cancel" title="작성취소" style="display:none;" ng-click="click_showPeopleBoardList();">취소</a>-->
+                                        <a class="btn people_btn modify" title="수정하기" style="display:block; float: left;" ng-click="click_showPeopleBoardEdit(item);">수정</a>
+                                        <!--<a class="btn people_btn cancel" title="작성취소" style="display:block;" >삭제</a>-->
+                                        <a ng-click="click_showPeopleBoardDelete(item);" style="display:block;">삭제</a>
+                                    </div>
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
+                            <div ng-show="item.REPLY_FL == 'Y'">
+                                <div class="people_view_replys">
+                                    <module-reply></module-reply>
+                                </div>
+                            </div>
+
+                            <div ng-show="item.NOTICE_FL == 0" class="container-fluid peopleboard_view_otherswrap">
+
+                                <div class="row peopleboard_view_others">
+                                    <div class="col-xs-2 board_basicinfo_label">
+                                        <span class="glyphicon glyphicon-chevron-up"></span> 이전글
+                                    </div><!-- /.col-xs-2-->
+                                    <div data-ng-show="preBoardView != ''" class="col-xs-10  board_basicinfo_subject">
+                                        <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}&nbsp;<span ng-show="search.COMM_NO != 8">({{preBoardView.NICK_NM}})</span></a>
+                                        <a ng-show="preBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">작성자가 삭제한 글입니다</a>
+                                        <a ng-show="preBoardView.BOARD_ST != 'D' && preBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
+                                        <!--<a data-ng-click="click_showViewPeopleBoard(preBoardView.NO)">{{preBoardView.SUBJECT}}&nbsp;({{preBoardView.NICK_NM}})</a>-->
+                                    </div><!-- /.col-xs-10-->
+                                    <div data-ng-show="preBoardView == false" class="col-xs-10  board_basicinfo_subject">
+                                        이전 글이 없습니다
+                                    </div><!-- /.col-xs-10-->
+                                </div><!-- /.row -->
+
+                                <div class="row peopleboard_view_others">
+                                    <div class="col-xs-2  board_basicinfo_label">
+                                        <span class="glyphicon glyphicon-chevron-down"></span> 다음글
+                                    </div><!-- /.col-xs-2-->
+                                    <div data-ng-show="nextBoardView != ''" class="col-xs-10 board_basicinfo_subject">
+                                        <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'N'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">{{nextBoardView.SUBJECT}}&nbsp;<span ng-show="search.COMM_NO != 8">({{nextBoardView.NICK_NM}})</span></a>
+                                        <a ng-show="nextBoardView.BOARD_ST == 'D'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">작성자가 삭제한 글입니다</a>
+                                        <a ng-show="nextBoardView.BOARD_ST != 'D' && nextBoardView.BLIND_FL == 'Y'" data-ng-click="click_showViewPeopleBoard(nextBoardView.NO)">관리자에 의해 블라인드 처리가 된 글입니다.</a>
+                                    </div><!-- /.col-xs-10-->
+                                    <div data-ng-show="nextBoardView == false || nextBoardView == '' || nextBoardView == null" class="col-xs-10 board_basicinfo_subject">
+                                        다음 글이 없습니다
+                                    </div><!-- /.col-xs-10-->
+                                </div><!-- /.row -->
+
+                            </div><!-- /.container -->
+
+
+                        </div>
+                        <!-- /peopleboard_view -->
+
+                    </div>
+                    <!-- /peopleboard_edit -->
+                </div><!-- /.sub_contents_body -->
+
+                <div class="sub_contents_ads" style="display:none;">
+                    <div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div> <!-- rows -->
+
+</div>
