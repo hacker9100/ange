@@ -334,9 +334,13 @@ define([
         $scope.search_day = function(day){
 
 
-            var searchdate = $scope.search.YEAR+'-'+$scope.search.MONTH+day;
-            console.log($scope.search.MONTH);
-            console.log($scope.search.YEAR);
+            var searchdate = $scope.search.YEAR+$scope.search.MONTH+day;
+            today = today.replace(/-/gi, "");
+//            console.log($scope.search.MONTH);
+//            console.log($scope.search.YEAR);
+
+            console.log(searchdate);
+            console.log(today);
             if(today < searchdate){
                 dialogs.notify('알림', '오늘과 이전일 톡주제만 검색이 가능합니다.', {size: 'md'});
                 return;
