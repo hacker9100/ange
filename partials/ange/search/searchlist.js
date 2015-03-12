@@ -309,9 +309,9 @@ define([
         $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
-            .then($scope.getPeopleBoardList)
-            .then($scope.getPeoplePhotoList)
-            .then($scope.getPeopleClinicList)
+//            .then($scope.getPeopleBoardList)
+//            .then($scope.getPeoplePhotoList)
+//            .then($scope.getPeopleClinicList)
             .catch($scope.reportProblems);
     }]);
 });
