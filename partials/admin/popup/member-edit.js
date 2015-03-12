@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('member-edit', ['$scope', '$stateParams', '$location', 'dialogs', function ($scope, $stateParams, $location, dialogs) {
+    controllers.controller('member-edit', ['$scope', '$stateParams', '$location', '$window', 'dialogs', function ($scope, $stateParams, $location, $window, dialogs) {
 
         if ($scope.isModal) {
 //            $scope.id = data;
@@ -84,7 +84,27 @@ define([
         };
 
         /********** 이벤트 **********/
-            // 정보수신동의 전체체크
+        // 우편번호 검색
+        $scope.click_openDaumPostcode = function () {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                    // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
+                    $scope.item.POST_1 = document.getElementById('post_1').value = data.postcode1;
+                    $scope.item.POST_2 = document.getElementById('post_2').value = data.postcode2;
+                    $scope.item.ADDR = document.getElementById('addr').value = data.address;
+
+                    //전체 주소에서 연결 번지 및 ()로 묶여 있는 부가정보를 제거하고자 할 경우,
+                    //아래와 같은 정규식을 사용해도 된다. 정규식은 개발자의 목적에 맞게 수정해서 사용 가능하다.
+                    //var addr = data.address.replace(/(\s|^)\(.+\)$|\S+~\S+/g, '');
+                    //document.getElementById('addr').value = addr;
+
+                    document.getElementById('addr_detail').focus();
+                }
+            }).open()
+        };
+
+        // 정보수신동의 전체체크
         $scope.click_checkAllAgree = function () {
             $scope.checkAllAgree = !$scope.checkAllAgree;
 

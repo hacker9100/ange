@@ -249,10 +249,10 @@ MtUtil::_d("### [END]");
 //        alert(_isNotMobile);
 
         // 로컬 서버
-        Kakao.init('207aa395bc0cb51730547fd97ee9d369');
+//        Kakao.init('207aa395bc0cb51730547fd97ee9d369');
 
         // 운영 서버
-//        Kakao.init('d3adadb46723eb3879569ddd4f43bf33');
+        Kakao.init('d3adadb46723eb3879569ddd4f43bf33');
     }
 </script>
 

@@ -140,7 +140,9 @@
                     } else {
                         $sql = "SELECT
                                     TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                                    NO, YEAR, (SELECT SERIES_NM FROM CMS_SERIES WHERE NO = DATA.SERIES_NO) AS SERIES_NM, SERIES_NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST
+                                    NO, YEAR, (SELECT SERIES_NM FROM CMS_SERIES WHERE NO = DATA.SERIES_NO) AS SERIES_NM, SERIES_NO, SUBJECT, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PROJECT_ST,
+                                    (SELECT COUNT(1) FROM CMS_TASK T WHERE T.PROJECT_NO = DATA.NO) AS TASK_CNT,
+                                    (SELECT COUNT(1) FROM CMS_TASK T WHERE T.PROJECT_NO = DATA.NO AND T.PHASE > 29) AS DIST_CNT
                                 FROM
                                 (
                                     SELECT
