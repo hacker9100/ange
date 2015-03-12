@@ -13,7 +13,8 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('clubhome', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $window, $location, dialogs, UPLOAD) {
 
-        if($rootScope.user_gb != 'CLUB'){
+        console.log($rootScope.role);
+        if($rootScope.user_gb != 'CLUB' || $rootScope.role != 'ANGE_ADMIN'){
             dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
             $location.url('/main');
         }
