@@ -147,6 +147,11 @@ define([
                         $modalInstance.close();
                     };
 
+                    $scope.click_forgotInfo = function () {
+                        $location.url('infodesk/forgot/request');
+                        $modalInstance.close();
+                    };
+
                     $scope.click_joinMember = function () {
                         $location.url('infodesk/signon');
                         $modalInstance.close();

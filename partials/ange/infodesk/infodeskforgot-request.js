@@ -148,15 +148,20 @@ define([
 
         // 사용자 정보 확인
         $scope.click_forgotInfo = function () {
-            if ($scope.user.CERT_NO == $scope.user.CERT_NO_CP) {
-                dialogs.notify('알림', '인증 되었습니다.', {size: 'md'});
-                $scope.checkCert = true;
+            if ($scope.isSMS) {
+                if ($scope.user.CERT_NO == $scope.user.CERT_NO_CP) {
+                    dialogs.notify('알림', '인증 되었습니다.', {size: 'md'});
+                    $scope.checkCert = true;
+                } else {
+                    dialogs.error('오류', '인증번호가 일치하지 않습니다.', {size: 'md'});
+                    $scope.checkCert = false;
+                }
             } else {
-                dialogs.error('오류', '인증번호가 일치하지 않습니다.', {size: 'md'});
-                $scope.checkCert = false;
+                dialogs.error('오류', '회원 인증이 되지않았습니다.', {size: 'md'});
             }
+
         }
-/*
+
         // 인증번호 확인
         $scope.click_checkCertNo = function () {
             if ($scope.user.CERT_NO == $scope.user.CERT_NO_CP) {
@@ -166,7 +171,6 @@ define([
                 dialogs.error('오류', '인증번호가 일치하지 않습니다.', {size: 'md'});
             }
         };
-*/
 
         // 이전 단계 클릭
         $scope.click_changeStep = function (step) {

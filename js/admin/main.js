@@ -30,9 +30,9 @@ require.config({
         'ui-bootstrap': '../../lib/ui-bootstrap/ui-bootstrap-0.11.2', // bootstrap의 ui 컴포넌트를 사용하게한다.(Customizing)
 
         // angularjs 모듈
-        'angular': '../../lib/angular-1.2.1/angular', // angularjs를 사용한다.
-        'angular-resource': '../../lib/angular-1.2.1/angular-resource', // restful방식으로 http 통신을 통한 서비스를 한다.
-        'angular-sanitize': '../../lib/angular-1.2.1/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
+        'angular': '../../lib/angular/angular', // angularjs를 사용한다.
+        'angular-resource': '../../lib/angular/angular-resource', // restful방식으로 http 통신을 통한 서비스를 한다.
+        'angular-sanitize': '../../lib/angular/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
         'angular-ui-router': '../../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
         'angular-translate': '../../lib/angular/angular-translate.min', //
         'i18n': '../../lib/angular-1.2.1/i18n/angular-locale_ko-kr', //
