@@ -21,7 +21,7 @@ define([
         // 초기화
         $scope.init = function() {
             // ange-portlet-slide-banner
-            $scope.option_r1_c1 = {title: '롤링 배너', api:'ad/banner', size: 10, id: 'main', type: 'banner', gb: CONSTANT.AD_CODE_BN05, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+            $scope.option_r1_c1 = {title: '롤링 배너', api:'ad/banner', size: 99, id: 'main', type: 'banner', gb: CONSTANT.AD_CODE_BN05, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
             // ange-portlet-link-image
             $scope.option_r2_c2 = {title: '이벤트 배너', api:'ad/banner', size: 1, gb: CONSTANT.AD_CODE_BN06, link: true, open: true, image: '/imgs/ange/temp/temp_maineventbanner.png'};
@@ -43,7 +43,7 @@ define([
             $scope.option_r5_c2 = {title: '전문가상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/home', image: false, head: false, date: false, nick: false};
 
             // ange-portlet-basic-list
-            $scope.option_r6_c1 = {title: '앙쥬후기', api:'ange/review', size: 5, type: 'review', url: '/moms/review', defIdx: 3, tab: [{no: 'sample', menu: 'samplereview', name: '샘플팩'}, {no: 'event', menu: 'eventreview', name: '이벤트/체험단'}, {no: 'product', menu: 'productreview', name: '상품'}, {no: 'ange', menu: 'angereview', name: '앙쥬'}], image: true, head: false, date: false, nick: true};
+            $scope.option_r6_c1 = {title: '앙쥬후기', api:'ange/review', size: 5, type: 'review', url: '/moms/review', defIdx: 2, tab: [{no: 'sample', menu: 'samplereview', name: '샘플팩'}, {no: 'product', menu: 'productreview', name: '상품'}, {no: 'ange', menu: 'angereview', name: '앙쥬'}], image: true, head: false, date: false, nick: true};
 
             // ange-portlet-basic-list
             $scope.option_r6_c2 = {title: '공지사항&당첨자발표', api:'com/webboard', size: 5, type: 'notice', url: '/infodesk/notice/list', image: false, head: false, date: false, nick: false};

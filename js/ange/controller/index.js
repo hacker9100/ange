@@ -124,5 +124,7 @@ define([
 
     // 회사소개
     '../../../partials/ange/company/companyintro',
-    '../../../partials/ange/company/companyaffiliates'
+    '../../../partials/ange/company/companyaffiliates',
+
+    '../../../partials/ange/search/searchlist'
 ], function () {});
