@@ -166,37 +166,20 @@ define([
 
         $scope.search = {};
         // 초기화
+
         $scope.init = function() {
-
-//            if ($stateParams.menu == 'angeroom') {
-//                //$scope.community = "앙쥬맘 수다방";
-//                $scope.item.COMM_NO = 1;
-//            } else if($stateParams.menu == 'momstalk') {
-//                //$scope.community = "예비맘 출산맘";
-//                $scope.item.COMM_NO = 2;
-//            } else if($stateParams.menu == 'babycare') {
-//                //$scope.community = "육아방";
-//                $scope.item.COMM_NO = 3;
-//            } else if($stateParams.menu == 'firstbirthtalk') {
-//                //$scope.community = "돌잔치 톡톡톡";
-//                $scope.item.COMM_NO = 4;
-//            } else if($stateParams.menu == 'booktalk') {
-//                //$scope.community = "책수다";
-//                $scope.item.COMM_NO = 5;
-//            }else if($stateParams.menu == 'supporter') {
-//                //$scope.community = "서포터즈";
-//                $scope.item.COMM_NO = 21;
-//            }
-
-            if($rootScope.user_gb == 'SUPPORTERS'){
-                $scope.item.CATEGORY_NO = $rootScope.support_no;
-            }
-
             $scope.item.COMM_NO = 71;
 
             $scope.search.COMM_NO = 71;
             $scope.search.COMM_GB = 'CLUB';
             $scope.search.ALL = true;
+
+            $scope.getList('com/webboard', 'category', {}, $scope.search, true)
+                .then(function(data){
+                    $scope.categorylist = data;
+                    $scope.item.CATEGORY_NO = data[0].NO;
+                })
+                ['catch'](function(error){$scope.categorylist = ""});
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
                 .then(function(data){
@@ -206,12 +189,6 @@ define([
                 })
                 ['catch'](function(error){});
 
-            $scope.getList('com/webboard', 'clubcategory', {}, $scope.search, true)
-                .then(function(data){
-                    $scope.categorylist = data;
-                    $scope.item.CATEGORY_NO = data[0].NO;
-                })
-                ['catch'](function(error){$scope.categorylist = ""});
 
         };
 

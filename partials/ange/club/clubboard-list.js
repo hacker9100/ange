@@ -59,7 +59,7 @@ define([
 
             // 카테고리 탭 셋팅
             $scope.search.COMM_NO = 71;
-            $scope.getList('com/webboard', 'clubcategory', {}, $scope.search, true)
+            $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
                     $scope.category_list = data;
                 })
@@ -101,6 +101,7 @@ define([
                 }
                 $scope.search.KEYWORD = getParam("keyword");
             }
+
         };
 
         /********** 이벤트 **********/

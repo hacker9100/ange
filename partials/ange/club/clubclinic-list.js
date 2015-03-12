@@ -52,9 +52,11 @@ define([
 //            $scope.search.BOARD_ST = 'D';
 
             $scope.search.COMM_NO = 72;
+            $scope.search.COMM_GB = 'CLUB';
             //$scope.uid = $rootScope.uid;
+            $scope.search.PARENT_NO = '0';
 
-            $scope.getList('com/webboard', 'clubcategory', {}, $scope.search, true)
+            $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
                     $scope.category_list = data;
                 })

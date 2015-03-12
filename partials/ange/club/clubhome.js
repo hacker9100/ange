@@ -14,16 +14,23 @@ define([
     controllers.controller('clubhome', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $window, $location, dialogs, UPLOAD) {
 
         console.log($rootScope.role);
+        console.log($rootScope.user_gb);
 
 //        if($rootScope.role != 'ANGE_ADMIN'){
 //            dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
 //            $location.url('/main');
 //        }
 //
-//        if($rootScope.user_gb != 'CLUB'){
+//        if($rootScope.user_gb != 'CLUB' || $rootScope.role != 'ANGE_ADMIN'){
 //            dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
 //            $location.url('/main');
 //        }
+
+//        if($rootScope.role != 'ANGE_ADMIN' ){ //|| $rootScope.user_gb != 'CLUB'
+//            dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
+//            return;
+//        }
+
 
         $scope.search = {};
 
@@ -47,8 +54,8 @@ define([
 //        });
 
         /********** 초기화 **********/
-        $scope.init = function () {
 
+        $scope.init = function () {
             var getParam = function(key){
                 var _parammap = {};
                 document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
@@ -80,6 +87,7 @@ define([
                 }
                 $scope.search.KEYWORD = getParam("keyword");
             }
+
         };
 
         /********** 이벤트 **********/

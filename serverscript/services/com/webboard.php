@@ -187,7 +187,7 @@
                     $search_where .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
                 }
 
-                if(isset($_search[COMM_NO]) && ( $_search[COMM_GB] == "CLINIC" || $_search[COMM_GB] == "TALK" )){
+                if(isset($_search[COMM_NO]) && ( $_search[COMM_GB] == "CLINIC" || $_search[COMM_GB] == "TALK" || $_search[COMM_GB] == "CLUB")){
                     if (isset($_search[PARENT_NO]) && $_search[PARENT_NO] != "") {
                         $search_where .= "AND PARENT_NO = '".$_search[PARENT_NO]."' ";
                     }else{

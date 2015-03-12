@@ -56,6 +56,9 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+
+            $scope.VIEW_ROLE = 'CLINIC';
+
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
             $scope.search.COMM_NO = 71;
             $scope.search.COMM_GB = 'CLUB';
@@ -125,12 +128,39 @@ define([
             if ($stateParams.id != 0) {
                 return $scope.getItem('com/webboard', 'item', $stateParams.id, {}, false)
                     .then(function(data){
+
                         $scope.item = data;
+
                         var files = data.FILES;
                         for(var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
+                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":CONSTANT.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":CONSTANT.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":CONSTANT.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":CONSTANT.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
-                        $scope.search.TARGET_NO = $stateParams.id;
+
+
+                        if(data.BOARD_ST == 'D'){
+                            if(data.REPLY_YN == 'N'){
+                                $scope.item.BODY = "작성자가 삭제한 글 입니다";
+                            } else {
+                                $scope.item.BODY = "작성자가 삭제한 글 입니다"+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                            }
+                        }else{
+                            if(data.BLIND_FL == 'N'){
+                                if(data.REPLY_YN == 'N'){
+                                    $scope.item.BODY;
+                                } else {
+                                    $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                                }
+                            }else{
+                                if(data.REPLY_YN == 'N'){
+                                    $scope.item.BODY = "관리자에 의해 블라인드 처리가 된 글입니다";
+                                } else {
+                                    $scope.item.BODY = "관리자에 의해 블라인드 처리가 된 글입니다"+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                                }
+                            }
+                        }
+
+                        $scope.reply.SUBJECT = "[답변]"+$scope.item.SUBJECT;
+                        $scope.reply.PARENT_NO = $scope.item.NO;
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
@@ -312,6 +342,23 @@ define([
                 console.log("결재 오류");
             });
         }
+
+
+        // 답글 등록
+        $scope.click_savePeopleBoardComment = function () {
+
+            $scope.reply.SYSTEM_GB = 'ANGE';
+            $scope.reply.COMM_NO = 72;
+            $scope.insertItem('com/webboard', 'item', $scope.reply, false)
+                .then(function(){
+
+                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                    $location.url('/club/home?tab=3&type=clinic');
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
+
+
         /********** 화면 초기화 **********/
 
         $scope.getSession()

@@ -24,28 +24,41 @@
 
                             <div class="row" style="margin:0px auto; margin-bottom:10px;">
 
-                                <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">제목</label>
 
-                                <div  ng-show="item.COMM_NO != 31" class="col-xs-3" style="padding:0;">
+                                <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">말머리</label>
+
+                                <div class="col-xs-3" style="padding:0;">
 
                                     <!-- 일반게시판 메뉴 서포터즈를 제외한 일반게시판들-->
-                                    <select  ng-model="item.COMM_NO" class="form-control input-sm" role="menu" disabled>
-                                        <option value="1">앙쥬맘 수다방</option>
-                                        <option value="2">예비맘 출산맘</option>
-                                        <option value="3">육아방</option>
-                                        <option value="4">돌잔치 톡톡톡</option>
-                                        <option value="5">책수다</option>
-                                        <option value="6">힘내라 워킹방</option>
-                                        <option value="7">임신 준비방</option>
-                                        <option value="8">앙쥬맘 속풀이방</option>
+                                    <select  ng-model="item.HEAD" class="form-control input-sm" role="menu">
+                                        <option value="">선택없음</option>
+                                        <option value="이벤트-교육후기">이벤트-교육후기</option>
+                                        <option value="이벤트-분만체험">이벤트-분만체험</option>
+                                        <option value="조리원후기">조리원후기</option>
+                                        <option value="맘들에게 물어요">맘들에게 물어요</option>
+                                        <option value="주제글">주제글</option>
                                     </select>
 
-                                </div><!-- /.col-xs-4 -->
+                                </div>
+
+                            </div><!-- /.row -->
+
+                            <div class="row" style="margin:0px auto; margin-bottom:10px;">
+
+                                <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">제목</label>
+
+                                <div class="col-xs-3" style="padding:0;">
+                                    <div class="input-group">
+                                        <select ng-model="item.CATEGORY_NO" class= "form-control input-sm">
+                                            <option data-ng-repeat="category in categorylist" value="{{category.NO}}">{{category.NOTE}}</option>
+                                        </select>
+                                    </div><!-- /input-group -->
+                                </div>
 
                                 <div class="col-xs-8" style="padding-left:5px;">
                                     <input ng-model="item.SUBJECT" type="text" class="input-sm form-control" placeholder="제목을 입력하세요">
                                 </div><!-- /.col-xs-7 -->
-                            </div><!-- /.row -->
+                            </div>
 
                             <!-- file drag-in Box -->
                             <!--<form id="fileupload" method="POST" enctype="multipart/form-data" ng-controller="file" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}">-->
@@ -154,17 +167,17 @@
                             <!--<span class="filename">전체 선택</span>-->
                             <!--</div>-->
 
-                            <div class="peopleboard_options">
-                                <input type="checkbox" name="check" id="check_reply" ng-model="item.REPLY_FL" style="vertical-align: top;" ng-checked="checked"/>
-                                <span class="filename">댓글 허용</span>
-                            </div>
+                            <!--<div class="peopleboard_options">-->
+                                <!--<input type="checkbox" name="check" id="check_reply" ng-model="item.REPLY_FL" style="vertical-align: top;" ng-checked="checked"/>-->
+                                <!--<span class="filename">댓글 허용</span>-->
+                            <!--</div>-->
 
-                            <div class="peopleboard_options">
-                                <input type="checkbox" name="check" id="check_scrap" ng-model="item.SCRAP_FL" style="vertical-align: top;" ng-checked="checked"/>
-                                <span class="filename">스크랩 허용</span>
-                            </div>
+                            <!--<div class="peopleboard_options">-->
+                                <!--<input type="checkbox" name="check" id="check_scrap" ng-model="item.SCRAP_FL" style="vertical-align: top;" ng-checked="checked"/>-->
+                                <!--<span class="filename">스크랩 허용</span>-->
+                            <!--</div>-->
 
-                            <div class="peopleboard_options" ng-show="role == 'ANGE_MANAGER' || role == 'ANGE_ADMIN'">
+                            <div class="peopleboard_options" ng-show="role == 'ANGE_ADMIN'">
                                 <input ng-model="item.NOTICE_FL" type="checkbox" name="noti_check" id="notice_fl" style="vertical-align: top;"/>
                                 <span class="filename">공지글</span>
                             </div>

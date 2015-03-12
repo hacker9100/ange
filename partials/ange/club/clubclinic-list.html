@@ -49,7 +49,7 @@
                     <td align="center"><span class="board_th">제목</span></td>
                     <td ng-if="menu.COMM_NO != 8" width="120" align="center"><span class="board_th">작성자</span></td>
                     <td width="80" align="center"><span class="board_th">작성일</span></td>
-                    <td width="60" align="center"><span class="board_th">조회</span></td>
+                    <td width="60" align="center"><span class="board_th">답변</span></td>
                 </tr>
                 </thead>
 
@@ -62,7 +62,7 @@
                     <td>
                         <div style="float:left;">
                             <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                            <span style="font-size:0.86em;" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                            <span style="font-size:0.86em;" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">[{{item.CATEGORY_NM}}] {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
                             <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
                             <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
                             <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
@@ -79,7 +79,7 @@
                     </td>
                     <td ng-if="menu.COMM_NO != 8" class="table_author"><div ng-bind-html="item.NICK_NM"></div></td> <!-- {{}} -->
                     <td class="table_date">{{item.REG_DT}}</td>
-                    <td class="table_hit">{{item.HIT_CNT}}</td></tr>
+                    <td class="table_hit">{{item.BOARD_REPLY_COUNT > 0 ? '완료' : '대기중'}}</td></tr>
                 </tr>
 
                 </tbody>

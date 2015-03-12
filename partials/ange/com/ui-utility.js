@@ -29,20 +29,38 @@ define([
         };
 
         $scope.click_goClub = function () {
-            $scope.comming_soon();
-            return;
+//            $scope.comming_soon();
+//            return;
 
-//            if ($rootScope.uid == '' || $rootScope.uid == null) {
-//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
-//                return;
-//            }
-//
-//            if($rootScope.user_gb != 'CLUB'){
+            console.log('$rootScope.user_gb = '+$rootScope.user_gb);
+            console.log('$rootScope.role = '+$rootScope.role);
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                return;
+            }
+
+//            if($rootScope.user_gb != 'CLUB' || $rootScope.role != 'ANGE_ADMIN'){
 //                dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
 //                return;
 //            }
 
-            $location.url('/club/home');
+            if($rootScope.user_gb == 'CLUB'){
+                $location.url('/club/home');
+            }else if($rootScope.role == 'ANGE_ADMIN'){
+                $location.url('/club/home');
+            }else if($rootScope.role == 'CLINIC'){
+                $location.url('/club/home');
+            }else{
+                dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
+                return;
+            }
+
+//            if($rootScope.role != 'ANGE_ADMIN' ){ //|| $rootScope.user_gb != 'CLUB'
+//                dialogs.notify('알림', '앙쥬클럽 회원만 사용가능 합니다.', {size: 'md'});
+//                return;
+//            }
+
+
         };
 
         $scope.click_settingAccount = function () {
