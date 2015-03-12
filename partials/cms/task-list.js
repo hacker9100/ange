@@ -13,6 +13,8 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('task-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'COMMON', function ($scope, $rootScope, $stateParams, $location, dialogs, COMMON) {
 
+        $scope.isModal = false;
+
         /********** 초기화 **********/
         // 목록 데이터
         $scope.listData = [];
@@ -107,7 +109,8 @@ define([
 
         // 등록 버튼 클릭
         $scope.click_createNewTask = function () {
-            $location.url('/task/edit/0');
+//            if ($scope.isModal) $scope.openPopupEditTask(0);
+//            else $location.url('/task/edit/0');
         };
 
         // 태스크 조회 화면 이동
@@ -137,8 +140,31 @@ define([
                 return;
             }
 
-            $location.url('/'+$stateParams.menu+'/edit/'+item.NO);
+            if ($scope.isModal) $scope.openPopupEditContent(item.NO);
+            else $location.url('/'+$stateParams.menu+'/edit/'+item.NO);
         };
+
+        $scope.openPopupEditContent = function (id) {
+            var dlg = dialogs.create('/partials/cms/content-edit-popup.html',
+                ['$scope', '$modalInstance', 'data', function($scope, $modalInstance, data) {
+//                    /********** 공통 controller 호출 **********/
+//                    angular.extend(this, $controller('content', {$scope: $scope}));
+
+                    $scope.isModal = true;
+                    $scope.id = id;
+
+                    $scope.click_close = function(){
+                        $modalInstance.close();
+                    }
+
+                }], id, {size: 'lg', keyboard: true, backdrop: false}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        };
+
 
         // 이력조회 버튼 클릭
         $scope.click_showGetHistory = function (key) {

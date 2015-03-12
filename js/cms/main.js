@@ -14,6 +14,7 @@ require.config({
     // require.js가 로딩되면 이 객체를 자동으로 읽어 들여 반영한다.
     // baseUrl은 JavaScript 파일들이 존재하는 base 위치를 지정한다.
     baseUrl:'/js/cms',
+    urlArgs: "bust=" +  (new Date()).getTime(),
 
     // paths는 baseUrl에서 지정한 경로에 존재하지 않는 모듈을 찾기위해서 경로를 매핑해준다.
     // 보통 맨뒤 js확장자는 별도롤 붙이지 않으며, 맨 뒤에 js를 붙이지 않아도 자동으로 js를 붙여서 찾아준다.
@@ -29,9 +30,9 @@ require.config({
         'ui-bootstrap': '../../lib/ui-bootstrap/ui-bootstrap-0.11.2', // bootstrap의 ui 컴포넌트를 사용하게한다.
 
         // angularjs 모듈
-        'angular': '../../lib/angular-1.2.1/angular', // angularjs를 사용한다.
-        'angular-resource': '../../lib/angular-1.2.1/angular-resource', // restful방식으로 http 통신을 통한 서비스를 한다.
-        'angular-sanitize': '../../lib/angular-1.2.1/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
+        'angular': '../../lib/angular/angular', // angularjs를 사용한다.
+        'angular-resource': '../../lib/angular/angular-resource', // restful방식으로 http 통신을 통한 서비스를 한다.
+        'angular-sanitize': '../../lib/angular/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
         'angular-translate': '../../lib/angular/angular-translate.min', //
 
 //        'angular': '../../lib/angular/angular', // angularjs를 사용한다.

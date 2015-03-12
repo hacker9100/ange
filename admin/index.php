@@ -111,6 +111,9 @@ MtUtil::_a("### [START]");
 <script src="/lib/respond/respond.min.js"></script>
 <![endif]-->
 
+<!-- 다음 무편번호 서비스 추가 -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>
+
 <script>
     function admin_init($rootScope, $location) {
         $rootScope.admin_channel = <?=$channel_info?>;

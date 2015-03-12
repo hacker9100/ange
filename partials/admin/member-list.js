@@ -34,7 +34,7 @@ define([
         $scope.init = function() {
 
             // 검색조건
-            var condition = [{name: "이름", value: "USER_NM", index: 0}, {name: "아이디", value: "USER_ID", index: 1}, {name: "닉네임", value: "NICK_NM", index: 2}, {name: "전화번호", value: "PHONE", index: 3}, {name: "주소", value: "ADDR", index: 4}, {name: "이메일", value: "EMAIL", index: 5}, {name: "생일", value: "BIRTH", index: 6}, {name: "가입기간", value: "REG_DT", index: 7}];
+            var condition = [{name: "이름", value: "USER_NM", index: 0}, {name: "아이디", value: "USER_ID", index: 1}, {name: "닉네임", value: "NICK_NM", index: 2}, {name: "전화번호", value: "PHONE_1", index: 3}, {name: "휴대폰", value: "PHONE_2", index: 4}, {name: "주소", value: "ADDR", index: 5}, {name: "이메일", value: "EMAIL", index: 6}, {name: "생일", value: "BIRTH", index: 7}, {name: "가입기간", value: "REG_DT", index: 8}];
             var type = [{name: "일반회원", value: "MEMBER"}, {name: "앙쥬클럽", value: "CLUB"}];
             var role = [{name: "회원", value: "MEMBER"}, {name: "서포터즈", value: "SUPPORTERS"}, {name: "방장", value: "ANGE_MEMBER"}, {name: "상담전문가", value: "CLINIC"}, {name: "관리자", value: "ANGE_ADMIN"}];
             // N : NORMAL, P : POOR, D : DORMANCY, S : SECESSION, W : WAITING

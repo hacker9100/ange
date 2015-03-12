@@ -347,20 +347,25 @@
                     $search_where .= "AND R.SYSTEM_GB  = '".$_search['SYSTEM_GB']."' ";
                 }
 
-                if ((isset($_search['CONDITION']) && $_search['CONDITION']['index'] < 6) && (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "")) {
+                if ((isset($_search['CONDITION']) && $_search['CONDITION']['index'] < 7) && (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "")) {
                     if ($_search['CONDITION']['value'] == "USER_NM" || $_search['CONDITION']['value'] == "USER_ID" || $_search['CONDITION']['value'] == "NICK_NM") {
                         $arr_keywords = explode(",", $_search['KEYWORD']);
-                        $in_condition = "";
-                        for ($i=0; $i< sizeof($arr_keywords); $i++) {
-                            $in_condition .= "'".trim($arr_keywords[$i])."'";
-                            if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
-                        }
 
-                        $search_where .= "AND U.".$_search['CONDITION']['value']." IN (".$in_condition.") ";
-                    } else if ($_search['CONDITION']['value'] == "PHONE") {
+                        if (sizeof($arr_keywords) == 1) {
+                            $search_where .= "AND U.".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
+                        } else {
+                            $in_condition = "";
+                            for ($i=0; $i< sizeof($arr_keywords); $i++) {
+                                $in_condition .= "'".trim($arr_keywords[$i])."'";
+                                if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
+                            }
+
+                            $search_where .= "AND U.".$_search['CONDITION']['value']." IN (".$in_condition.") ";
+                        }
+                    } else if ($_search['CONDITION']['value'] == "PHONE_1" || $_search['CONDITION']['value'] == "PHONE_2") {
                         $phone = str_replace("-", "",$_search['KEYWORD']);
 
-                        $search_where .= "AND ( U.PHONE_1 = '".$phone."' OR U.PHONE_2 = '".$phone."' ) ";
+                        $search_where .= "AND U.".$_search['CONDITION']['value']." LIKE '%".$phone."%' ";
                     } else {
                         $search_where .= "AND U.".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
                     }
@@ -426,8 +431,7 @@
                             0 AS TOTAL_COUNT,
                             DATA.USER_ID, USER_NM, NICK_NM, ZIP_CODE, ADDR, ADDR_DETAIL, PHONE_1, PHONE_2, EMAIL, SEX_GB, USER_GB, USER_ST, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, INTRO, NOTE,
                             MARRIED_FL, PREGNENT_FL, BLOG_FL, JOIN_PATH, CONTACT_ID, CARE_CENTER, CENTER_VISIT_YMD, CENTER_OUT_YMD, EN_FL, EN_EMAIL_FL, EN_POST_FL, EN_SMS_FL, EN_PHONE_FL,
-                            ROLE_ID, ROLE_NM, SUM_POINT, USE_POINT, REMAIN_POINT, BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS,
-                            (SELECT COUNT(1) FROM ANGE_USER_BABY UB WHERE UB.USER_ID = DATA.USER_ID) AS BABY_CNT,
+                            ROLE_ID, ROLE_NM, SUM_POINT, USE_POINT, REMAIN_POINT, BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS, SUPPORT_NO, BABY_CNT,
                             (SELECT COUNT(1) FROM COM_BOARD CB WHERE CB.REG_UID = DATA.USER_ID) AS BOARD_CNT,
                             (SELECT COUNT(1) FROM COM_REPLY CR WHERE CR.REG_UID = DATA.USER_ID) AS REPLY_CNT,
                             (SELECT COUNT(1) FROM ANGE_REVIEW AR WHERE AR.REG_UID = DATA.USER_ID) AS REVIEW_CNT,
@@ -437,7 +441,7 @@
                             SELECT
                                 U.USER_ID, U.USER_NM, U.NICK_NM, U.ZIP_CODE, U.ADDR, U.ADDR_DETAIL, U.PHONE_1, U.PHONE_2, U.EMAIL, U.SEX_GB, U.USER_GB, U.USER_ST, U.REG_DT, U.FINAL_LOGIN_DT, U.INTRO, U.NOTE,
                                 U.MARRIED_FL, U.PREGNENT_FL, U.BLOG_FL, U.JOIN_PATH, U.CONTACT_ID, U.CARE_CENTER, U.CENTER_VISIT_YMD, U.CENTER_OUT_YMD, U.EN_FL, U.EN_EMAIL_FL, U.EN_POST_FL, U.EN_SMS_FL, U.EN_PHONE_FL,
-                                U.SUM_POINT, U.USE_POINT, U.REMAIN_POINT, UR.ROLE_ID, R.ROLE_NM, U.SUPPORT_NO
+                                U.SUM_POINT, U.USE_POINT, U.REMAIN_POINT, UR.ROLE_ID, R.ROLE_NM, U.BABY_CNT, U.SUPPORT_NO
                             FROM
                                 COM_USER U
                                 INNER JOIN USER_ROLE UR ON U.USER_ID = UR.USER_ID
@@ -1239,10 +1243,7 @@
                         $err++;
                         $msg = $_d->mysql_error;
                     }
-                }
-
-                // 관련 부분들 수정후 삭제 할것
-                if (isset($_model[ROLE]) && $_model[ROLE] != "") {
+                } else if (isset($_model[ROLE]) && $_model[ROLE] != "") {
                     $sql = "UPDATE USER_ROLE UR, COM_ROLE R
                             SET
                                 UR.ROLE_ID = '".$_model[ROLE][ROLE_ID]."',

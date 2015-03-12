@@ -34,6 +34,8 @@ define([
     '../../../partials/cms/task-view',
     '../../../partials/cms/content-edit',
     '../../../partials/cms/content-view',
+    '../../../partials/cms/content-edit-popup',
+//    '../../../partials/cms/content-view-popup',
     '../../../partials/cms/publish-list',
     '../../../partials/cms/publish-edit',
     // CMS 게시판
