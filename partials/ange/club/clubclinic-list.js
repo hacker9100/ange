@@ -52,10 +52,26 @@ define([
 //            $scope.search.BOARD_ST = 'D';
 
             $scope.search.COMM_NO = 72;
+            $scope.search.COMM_GB = 'CLUB';
             //$scope.uid = $rootScope.uid;
+            $scope.search.PARENT_NO = '0';
+            $scope.search.TOTAL_COUNT = true;
 
-            $scope.getList('com/webboard', 'clubcategory', {}, $scope.search, true)
+            $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
+
+                    for(var i in data) {
+
+                        //console.log(data[i].TOTAL);
+                        if (data[i].TOTAL != null) {
+
+                            console.log(data[i].TOTAL.TOTAL_COUNT);
+                            var file_cnt = data[i].TOTAL.TOTAL_COUNT;
+                            data[i].TOTAL_COUNT = file_cnt;
+
+                        }
+                    }
+
                     $scope.category_list = data;
                 })
                 ['catch'](function(error){$scope.category_list = ""; });

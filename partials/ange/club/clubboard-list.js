@@ -59,8 +59,23 @@ define([
 
             // 카테고리 탭 셋팅
             $scope.search.COMM_NO = 71;
-            $scope.getList('com/webboard', 'clubcategory', {}, $scope.search, true)
+            $scope.search.TOTAL_COUNT = true;
+
+            $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
+
+                    for(var i in data) {
+
+                        //console.log(data[i].TOTAL);
+                        if (data[i].TOTAL != null) {
+
+                            console.log(data[i].TOTAL.TOTAL_COUNT);
+                            var file_cnt = data[i].TOTAL.TOTAL_COUNT;
+                            data[i].TOTAL_COUNT = file_cnt;
+
+                        }
+                    }
+
                     $scope.category_list = data;
                 })
                 ['catch'](function(error){$scope.category_list = ""; });
@@ -101,6 +116,7 @@ define([
                 }
                 $scope.search.KEYWORD = getParam("keyword");
             }
+
         };
 
         /********** 이벤트 **********/

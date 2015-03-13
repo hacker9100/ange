@@ -341,9 +341,12 @@ define([
 
             console.log(searchdate);
             console.log(today);
-            if(today < searchdate){
-                dialogs.notify('알림', '오늘과 이전일 톡주제만 검색이 가능합니다.', {size: 'md'});
-                return;
+
+            if($rootScope.role != 'ANGE_ADMIN'){
+                if(today < searchdate){
+                    dialogs.notify('알림', '오늘과 이전일 톡주제만 검색이 가능합니다.', {size: 'md'});
+                    return;
+                }
             }
 
             $scope.search.DAY = day;

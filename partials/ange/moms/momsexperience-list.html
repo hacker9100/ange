@@ -28,6 +28,8 @@
                             </div>  <!-- col-xs-12 -->
                         </div>  <!-- /.row -->
 
+                        <div ng-show="menu == 'experienceprocess'"><span>진행중인 체험단 <strong>{{TOTAL_COUNT == null? 0 : TOTAL_COUNT}}</strong>건</span></div>
+                        <div ng-show="menu == 'experiencepast'"><span>지난 체험단 <strong>{{TOTAL_COUNT == null? 0 : TOTAL_COUNT}}</strong>건</span></div>
 
                         <!-- 체험단&이벤트 목록 -->
                         <div class="img-lst" id="listr">

@@ -187,7 +187,7 @@
                     $search_where .= "AND COMM_NO = '".$_search[COMM_NO]."' ";
                 }
 
-                if(isset($_search[COMM_NO]) && ( $_search[COMM_GB] == "CLINIC" || $_search[COMM_GB] == "TALK" )){
+                if(isset($_search[COMM_NO]) && ( $_search[COMM_GB] == "CLINIC" || $_search[COMM_GB] == "TALK" || $_search[COMM_GB] == "CLUB")){
                     if (isset($_search[PARENT_NO]) && $_search[PARENT_NO] != "") {
                         $search_where .= "AND PARENT_NO = '".$_search[PARENT_NO]."' ";
                     }else{
@@ -610,6 +610,35 @@
                 ";
 
                 $data = $_d->sql_query($sql);
+                $__trn = '';
+                $result = $_d->sql_query($sql,true);
+
+                if($_search['TOTAL_COUNT']) {
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                        $sql = "SELECT
+                                    COUNT(*) AS TOTAL_COUNT
+                                FROM
+                                    COM_BOARD B
+                                WHERE
+                                    B.CATEGORY_NO = ".$row['NO']."";
+
+                        $total_count_result = $_d->sql_query($sql);
+                        $total_count_data = $_d->sql_fetch_array($total_count_result);
+                        $row['TOTAL'] = $total_count_data;
+
+                        $__trn->rows[$i] = $row;
+                    }
+
+                    $_d->sql_free_result($result);
+                    $data = $__trn->{'rows'};
+
+                    if ($_d->mysql_errno > 0) {
+                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                    } else {
+                        $_d->dataEnd2($data);
+                    }
+                }
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);

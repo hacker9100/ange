@@ -204,7 +204,7 @@
                 }
 
                 if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
-                    $search_where .= "AND DATE_FORMAT(a.ada_date_close, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
+                    $search_where .= "AND DATE_FORMAT(a.ada_date_close, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')  AND  DATE_FORMAT(NOW(), '%Y-%m-%d') >= DATE_FORMAT(a.ada_date_open, '%Y-%m-%d')";
                 }
 
                 if (isset($_search[PAST]) && $_search[PAST] != "") {
