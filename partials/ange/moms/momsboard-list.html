@@ -135,9 +135,12 @@
 
                             <div class="container-fluid people_view_btnwrap">
                                 <div class="row">
-                                    <div class="col-xs-4">
-                                        <a class="btn people_btn list" title="목록으로" style="display:none;">리스트</a>
-                                        <a class="btn people_btn submit" title="등록하기" ng-show="role == 'ANGE_ADMIN'" ng-click="click_showCreatePeopleBoard();">등록</a>
+                                    <div class="col-xs-6">
+                                        <!--<a class="btn people_btn list" title="목록으로" style="display:none;">리스트</a>-->
+                                        <!--<a class="btn people_btn submit" title="등록하기" ng-show="role == 'ANGE_ADMIN'" ng-click="click_showCreatePeopleBoard();">등록</a>-->
+                                        <a class="people_btn list" title="목록으로" style="display:none;">리스트</a>
+                                        <a class="people_btn register" title="등록하기" style="display:block;" ng-show="role == 'ANGE_ADMIN'" ng-click="click_showCreatePeopleBoard();">등록</a>
+                                        <a class="people_btn comment" title="의견쓰기" style="display:none;">의견쓰기</a>
                                     </div>
 
                                     <div class="col-xs-8">

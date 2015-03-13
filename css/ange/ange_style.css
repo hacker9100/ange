@@ -36,12 +36,14 @@ html {
     min-height: 100%;
     margin:0;
     padding:0;
+    text-rendering: auto; /* auto | optimizeSpeed | optimizeLegibility | geometricPrecision | inherit; */
 }
 
 body {
     font-family: "나눔고딕", "Nanum Gothic", Helvetica, Arial, sans-serif;
     background: URL("/imgs/ange/body_bg_01.png");
     height: 100%;
+    text-rendering: auto; /* auto | optimizeSpeed | optimizeLegibility | geometricPrecision | inherit; */
 }
 
 .wrap {
@@ -1861,6 +1863,7 @@ td.table_no {
     font-weight: 700;
     font-size: 0.86em;
     text-align: center;
+    padding-top: 12px !important;
 }
 
 td.table_date {
@@ -1970,25 +1973,36 @@ a.people_boardmanager:hover {
 }
 
 a.people_btn{
-    width: 63px;
-    height: 25px;
-    padding:0px;
-    opacity: 0.75;
+    width: 80px;
+    height: 28px;
+    /*opacity: 0.75;*/
     background-repeat: no-repeat;
+    background-position: left top;
     text-indent: -9999px;
+    padding:0;
     margin: 0 4px;
 }
 
 a.people_btn:hover {
-    opacity: 1;
+    background-position: left -28px;
 }
 
-a.people_btn.submit { float:left; background-image: url('/imgs/ange/people_btn_submit.png'); }
-a.people_btn.list   { float:left; background-image: url('/imgs/ange/people_btn_list.png'); }
-a.people_btn.modify { float:right; background-image: url('/imgs/ange/people_btn_modify.png'); }
-a.people_btn.cancel { float:right; background-image: url('/imgs/ange/people_btn_cancel.png'); }
-a.people_btn.vote   { float:right; background-image: url('/imgs/ange/people_btn_vote.png'); }
-a.people_btn.confirm { float:right; background-image: url('/imgs/ange/people_btn_confirm.png'); }
+/*a.people_btn.submit { float:left; background-image: url('/imgs/ange/people_btn_submit.png'); }*/
+/*a.people_btn.list   { float:left; background-image: url('/imgs/ange/people_btn_list.png'); }*/
+/*a.people_btn.modify { float:right; background-image: url('/imgs/ange/people_btn_modify.png'); }*/
+/*a.people_btn.cancel { float:right; background-image: url('/imgs/ange/people_btn_cancel.png'); }*/
+/*a.people_btn.vote   { float:right; background-image: url('/imgs/ange/people_btn_vote.png'); }*/
+/*a.people_btn.confirm { float:right; background-image: url('/imgs/ange/people_btn_confirm.png'); }*/
+
+a.people_btn.register { float:left; background-image: url('/imgs/ange/pp_btn_register.png'); }
+a.people_btn.list   { float:left; background-image: url('/imgs/ange/pp_btn_list.png'); }
+a.people_btn.comment { float:left; background-image: url('/imgs/ange/pp_btn_comment.png'); }
+a.people_btn.modify { float:right; background-image: url('/imgs/ange/pp_btn_modify.png'); }
+a.people_btn.submit { float:right; background-image: url('/imgs/ange/pp_btn_complete.png'); }
+a.people_btn.cancel { float:right; background-image: url('/imgs/ange/pp_btn_cancle.png'); }
+a.people_btn.vote   { float:right; background-image: url('/imgs/ange/pp_btn_poll.png'); }
+a.people_btn.confirm { float:right; background-image: url('/imgs/ange/pp_btn_ok.png'); }
+a.people_btn.delete { float:right; background-image: url('/imgs/ange/pp_btn_delete.png'); }
 
 
 .dragzone {
@@ -2670,6 +2684,50 @@ img.blank_wrap {
 .story_sharebtn_mobile.scrap    { background-image: url('/imgs/ange/btn_sns_lg05_scrap.png'); }
 
 
+td.normaltype {
+    display: table-cell;
+}
+
+td.mobiletype {
+    display: none;
+}
+
+.board_thead.normaltype {
+    display: table-row;
+}
+
+.board_thead.mobiletype {
+    display: none;
+}
+
+nav.normaltype {
+    display: block;
+}
+
+nav.mobiletype {
+    display: none;
+}
+
+
+@media screen and (max-width: 768px) {
+    td.normaltype, .board_thead.normaltype, nav.normaltype {
+        display: none;
+    }
+
+    td.mobiletype {
+        display: table-cell;
+    }
+
+    .board_thead.mobiletype {
+        display: table-row ;
+    }
+
+    nav.mobiletype {
+        display: block;
+    }
+}
+
+
 /* /Story 전용 공유 버튼 */
 
 .profile_pic {
@@ -2722,3 +2780,4 @@ img.blank_wrap {
         display: block;
     }
 }
+

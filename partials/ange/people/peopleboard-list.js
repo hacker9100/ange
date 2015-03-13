@@ -21,6 +21,8 @@ define([
         // 페이징
         $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
         $scope.TOTAL_COUNT = 0;
+        $scope.TOTAL_PAGES = 0;
+
 
        // 검색어 조건
         if($scope.menu.COMM_NO == 8){
@@ -146,6 +148,9 @@ define([
                     $scope.list = data;
 
                     $scope.isLoding = false;
+
+                    $scope.TOTAL_PAGES = Math.ceil($scope.TOTAL_COUNT / $scope.PAGE_SIZE);
+                    //console.log(Math.ceil($scope.TOTAL_COUNT / $scope.PAGE_SIZE));
                 })
                 ['catch'](function(error){
                     $scope.TOTAL_COUNT = 0; $scope.list = "";
@@ -154,6 +159,10 @@ define([
         };
 
         $scope.pageChanged = function() {
+
+            $scope.list = "";
+
+            $scope.isLoding = false;
 
             console.log('Page changed to: ' + $scope.PAGE_NO);
             //$location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO);

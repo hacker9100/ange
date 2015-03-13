@@ -13,7 +13,7 @@
 
             <div class="sub_contents_title">
                 <span class="sub_contents_bullet"></span>
-                <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a></h3>
+                <h3 style="font-weight:bold;">{{community}} </h3><!-- <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a> -->
             </div>
         </div><!-- /.sub_contents_wrap -->
 
@@ -102,16 +102,17 @@
         <div class="container-fluid people_view_btnwrap">
             <div class="row">
                 <div class="col-xs-4">
-                    <a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>
+                    <a class="people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>
+                    <a class="people_btn register" ng-show="uid == item.REG_UID && uid != '' && uid != null || role == 'ANGE_ADMIN'" title="등록하기" style="display:block;" ng-click="click_showCreatePeopleBoard();">등록</a>
                 </div>
 
                 <div class="col-xs-8" ng-show="uid == item.REG_UID && uid != '' && uid != null || role == 'ANGE_ADMIN'">
                     <a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
-                    <a class="btn people_btn confirm" title="확인" style="display:block;" ng-click="click_showPeopleBoardList();">확인</a>
+                    <a class="btn people_btn confirm" title="확인" style="display:none;" ng-click="click_showPeopleBoardList();">확인</a>
                     <a class="btn people_btn submit" title="등록하기" style="display:none;">등록</a>
                     <a class="btn people_btn cancel" title="작성취소" style="display:none;">취소</a>
-                    <a class="btn people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeopleBoardEdit(item);">수정</a>
-                    <a class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeopleBoardDelete(item);">삭제</a>
+                    <a class="people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeopleBoardEdit(item);">수정</a>
+                    <a class="people_btn delete" title="삭제" style="display:block;" ng-click="click_showPeopleBoardDelete(item);">삭제</a>
                 </div>
             </div><!-- /.row -->
         </div><!-- /.container -->

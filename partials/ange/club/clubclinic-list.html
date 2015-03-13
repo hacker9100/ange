@@ -37,7 +37,7 @@
             <div class="peoplep_list_tab">
                 <ul class="nav nav-tabs">
                     <li role="presentation" ng-repeat="tab in category_list" ng-class="selectIdx == $index ? 'active' : ''">
-                        <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}</a>
+                        <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}<span ng-hide="$index == 0">({{tab.TOTAL_COUNT}})</span></a>
                     </li>
                 </ul>
             </div>
@@ -101,20 +101,23 @@
                 <div class="row">
                     <div class="col-xs-4">
                         <a class="btn people_btn list" title="목록으로" style="display:none;">리스트</a>
-                        <a class="btn people_btn submit" title="등록하기" ng-click="click_showCreatePeopleBoard();">등록</a>
+                        <a class="people_btn register" title="등록하기" style="display:block;" ng-click="click_showCreatePeopleBoard();">등록</a>
+                        <!--<a class="btn people_btn submit" title="등록하기" ng-click="click_showCreatePeopleBoard();">등록</a>-->
                     </div>
 
-                    <div class="col-xs-8">
-                        <a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
-                        <a class="btn people_btn confirm" title="확인" style="display:none;">확인</a>
-                        <a class="btn people_btn cancel" title="작성취소" style="display:none;">취소</a>
-                        <a class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>
+                    <div class="col-xs-6">
+                        <a class="people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
+                        <a class="people_btn submit" title="완료" style="display:none;">완료</a>
+                        <a class="people_btn confirm" title="확인" style="display:none;">확인</a>
+                        <a class="people_btn cancel" title="작성취소" style="display:none;">취소</a>
+                        <a class="people_btn modify" title="수정" style="display:none;">수정</a>
+                        <a class="people_btn delete" title="삭제" style="display:none;">삭제</a>
                     </div>
                 </div><!-- /.row -->
             </div><!-- /.container -->
 
             <nav class="text-center">
-                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm"  ng-change="pageChanged()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                <pagination boundary-links="true" total-items="TOTAL_COUNT" items-per-page="25" ng-model="PAGE_NO" class="pagination-sm"  ng-change="pageChanged()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 
                 <!--<ul class="pagination pagination-sm table_paging">-->
                 <!--<li class="disabled">-->

@@ -20,6 +20,7 @@ define([
         //$scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
         $scope.TOTAL_COUNT = 0;
+        $scope.TOTAL_PAGES = 0;
 
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
@@ -155,6 +156,8 @@ define([
                     }
 
                     $scope.list = data;
+
+                    $scope.TOTAL_PAGES = Math.ceil($scope.TOTAL_COUNT / $scope.PAGE_SIZE);
 
                 })
                 ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});

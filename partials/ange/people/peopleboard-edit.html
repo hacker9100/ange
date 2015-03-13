@@ -2,23 +2,18 @@
     <!-- mainbar -->
     <div class="mainbar sub-slide0">
         <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
-
-
             <div class="row">
-
                 <div class="col-xs-12 v-cell-3">
                     <div class="comp_basic h-cell-dynamic">
 
                         <div class="sub_contents_wrap">
-
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
-                                <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3>
+                                <h3 style="font-weight:bold;">{{community}} <a class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3> <!-- href="#"  -->
                             </div>
                         </div><!-- /.sub_contents_wrap -->
 
                         <div ng-model="item" class="sub_contents_body">
-
                             <!-- peopleboard_edit -->
                             <div class="people_edit_wrap">
 
@@ -123,7 +118,7 @@
                                                         <input type="file" name="files[]" multiple ng-disabled="disabled" />
                                                     </div>
                                                 </span>
-<!--
+    <!--
                                                 <button class="dagbox_btn fil2com large">
                                                     <div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>
                                                     <div style="width:63%; float:right; text-align:left;">
@@ -132,7 +127,7 @@
                                                         <input type="file" name="files[]" multiple ng-disabled="disabled" />
                                                     </div>
                                                 </button>
--->
+    -->
                                                 <!-- span class="glyphicon glyphicon-ok"></span -->
                                                 <!-- button class="dagbox_btn selectall"><span class="glyphicon glyphicon-ok"></span> 전체선택</button>
                                                 <button class="dagbox_btn add"><span class="glyphicon glyphicon-circle-arrow-right"></span> 본문추가</button>
@@ -152,7 +147,7 @@
                                             <div class="col-xs-11 col-xs-offset-1" style="padding:0;">
                                                 <div class="thumbnailzone">
 
-<!--                                                    <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
+    <!--                                                    <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
                                                         별모양을 클릭하여 대표이미지를 지정하세요.
                                                         <span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>
                                                     </div>-->
@@ -183,7 +178,7 @@
                                         <!-- image thumbnails -->
                                     </form><!-- /.row -->
                                     <!-- /file drag-in Box -->
-
+                                    </div>
 
                                 </div> <!-- /.peopleboard_edit_topwrap -->
 
@@ -248,37 +243,47 @@
 
                                 <div class="container-fluid people_view_btnwrap">
                                     <div class="row">
-                                        <div class="col-xs-4">
-                                            <a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>
-                                            <a class="btn people_btn submit" title="등록하기" style="display:block;" ng-click="click_savePeopleBoard();">등록</a>
+                                        <div class="col-xs-6">
+                                            <a class="people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>
+                                            <a class="people_btn register" title="등록하기" style="display:none;">등록</a>
+                                            <a class="people_btn comment" title="의견쓰기" style="display:none;">의견쓰기</a>
                                         </div>
 
-                                        <div class="col-xs-8">
-                                            <a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
-                                            <a class="btn people_btn confirm" title="확인" style="display:none;">확인</a>
-                                            <a class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeopleBoardList();">취소</a>
-                                            <a class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>
+                                        <div class="col-xs-6">
+                                            <a class="people_btn vote" title="투표하기" style="display:none;">투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
+                                            <a class="people_btn submit" title="완료" style="display:block;" ng-click="click_savePeopleBoard();">완료</a>
+                                            <a class="people_btn confirm" title="확인" style="display:none;">확인</a>
+                                            <a class="people_btn cancel" title="작성" style="display:none;" ng-click="click_showPeopleBoardList();">취소</a>
+                                            <a class="people_btn modify" title="수정" style="display:none;">수정</a>
+                                            <a class="people_btn delete" title="삭제" style="display:none;">삭제</a>
                                         </div>
                                     </div><!-- /.row -->
-                                </div><!-- /.people_view_btnwrap -->
 
-                            </div>
+                                    <!--<div class="row">-->
+                                        <!--<div class="col-xs-4">-->
+                                            <!--<a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>-->
+                                            <!--<a class="btn people_btn submit" title="등록하기" style="display:block;" ng-click="click_savePeopleBoard();">등록</a>-->
+                                        <!--</div>-->
+
+                                        <!--<div class="col-xs-8">-->
+                                            <!--<a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		&lt;!&ndash;  모든 항목을 선택하고 작성이 완료되면 disable 제거 &ndash;&gt;-->
+                                            <!--<a class="btn people_btn confirm" title="확인" style="display:none;">확인</a>-->
+                                            <!--<a class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeopleBoardList();">취소</a>-->
+                                            <!--<a class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>-->
+                                        <!--</div>-->
+                                    <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
+                                <!--</div>&lt;!&ndash; /.people_view_btnwrap &ndash;&gt;-->
+                                </div>
+
                             <!-- /peopleboard_edit -->
-                        </div><!-- /.sub_contents_body -->
+                        </div>  <!-- /.sub_contents_body -->
 
-                        <div class="sub_contents_ads" style="display:none;">
-                            <div>
-                            </div>
-                        </div>
+                    </div>  <!-- /.comp_basic -->
+                </div>  <!-- /.v-cell-3 -->
+            </div>  <!-- /.rows -->
+        </div> <!-- /.container-fluid -->
+    </div>  <!-- /.mainbar -->
 
-                    </div>
-                </div>
-
-            </div> <!-- rows -->
-
-        </div><!-- container-fluid -->
-
-    </div>
 
     <div class="subar sub-slide1">
         <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
