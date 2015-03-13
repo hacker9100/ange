@@ -36,12 +36,14 @@ html {
     min-height: 100%;
     margin:0;
     padding:0;
+    text-rendering: auto; /* auto | optimizeSpeed | optimizeLegibility | geometricPrecision | inherit; */
 }
 
 body {
     font-family: "나눔고딕", "Nanum Gothic", Helvetica, Arial, sans-serif;
     background: URL("/imgs/ange/body_bg_01.png");
     height: 100%;
+    text-rendering: auto; /* auto | optimizeSpeed | optimizeLegibility | geometricPrecision | inherit; */
 }
 
 .wrap {
