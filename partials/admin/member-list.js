@@ -204,7 +204,22 @@ define([
                 case 'blacklist' :
                 case 'mail' :
                 case 'sms' :
-                    alert("준비중입니다.")
+                    var item = {};
+
+                    if ($scope.action.CHECKED == 'C' ) {
+                        if ($scope.check_user.length == 0) {
+                            dialogs.notify('알림', '선택한 회원이 없습니다..', {size: 'md'});
+                            return;
+                        }
+
+                        item.USER_ID_LIST = angular.copy($scope.check_user);
+                        item.CHECKED = $scope.action.CHECKED;
+                    } else {
+                        item = angular.copy($scope.search);
+                        item.CHECKED = $scope.action.CHECKED;
+                    }
+
+                    $scope.openPopupSendSMSModal(item);
                     break;
                 case 'remove' :
                     $scope.click_removeSearch();
@@ -400,6 +415,38 @@ define([
                         $scope.insertItem('admin/user_list', 'list', $scope.item, false)
                             .then(function(data){
                                 dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                            })
+                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                        $modalInstance.close();
+                        //console.log($scope.item);
+                    };
+
+                    $scope.click_close = function(){
+                        $modalInstance.close();
+                    }
+
+                }], user, {size: 'lg',keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
+        };
+
+        $scope.openPopupSendSMSModal = function (user) {
+            var dlg = dialogs.create('sendsms_popup.html',
+                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
+
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('content', {$scope: $scope}));
+
+                    $scope.item = data;
+
+                    $scope.click_reg = function () {
+                        $scope.insertItem('com/sms', 'brodcast', $scope.item, true)
+                            .then(function(data){
+                                dialogs.notify('알림', '정상적으로 전송되었습니다.', {size: 'md'});
                             })
                             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 

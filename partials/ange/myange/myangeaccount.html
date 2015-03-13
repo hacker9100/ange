@@ -172,6 +172,25 @@
 
                             <div class="row form_rows">
                                 <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>성별</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
+
+                                        <span class="col-xs-10 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                                <input id="sex_gb" ng-model="user.SEX_GB" type="radio" value="M" style="float: left; margin:10px 0 0 15px;">
+                                                <span style="float:left; margin-left:5px;">남</span>
+
+                                                <input ng-model="user.SEX_GB" type="radio" value="F" style="float: left; margin:10px 0 0 15px;" ng-checked="true">
+                                                <span style="float:left; margin-left:5px;">여</span>
+                                            </div>
+                                        </span>
+                                </div>  <!-- /.form_basicinfo -->
+                            </div>  <!-- /.form_rows -->
+
+                            <div class="row form_rows">
+                                <div class="form_basicinfo">
                                     <span class="col-xs-2 basicinfo title">
                                         <strong>주소</strong>
                                         <span class="table_blue">*</span>
