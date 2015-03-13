@@ -91,11 +91,24 @@ define([
         $scope.getPeopleBoardList = function () {
 
             $scope.isLoding = true;
+
+            $scope.search.FILE_EXIST = true;
+
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
                     /*$scope.total(total_cnt);*/
+
+                    for(var i in data) {
+
+                        if (data[i].FILE != null) {
+                            var file_cnt = data[i].FILE[0].FILE_CNT;
+                            data[i].FILE_CNT = file_cnt;
+
+                        }
+                    }
+
                     $scope.list = data;
 
                     $scope.isLoding = false;

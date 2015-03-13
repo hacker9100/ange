@@ -201,6 +201,14 @@ define([
                 $rootScope.KEYWORD = '';
             }
 
+            if($rootScope.CONDITION == undefined){
+                $rootScope.CONDITION = 'SUBJECT';
+            }
+
+            if($rootScope.NOW_PAGE_NO == undefined){
+                $rootScope.NOW_PAGE_NO = 1;
+            }
+
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
         };
 
