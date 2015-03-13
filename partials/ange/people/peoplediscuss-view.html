@@ -13,7 +13,7 @@
 
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
-                                <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3>
+                                <h3 style="font-weight:bold;">{{community}} <a class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3><!-- href="#"  -->
                             </div>
                         </div><!-- /.sub_contents_wrap -->
 
@@ -147,7 +147,7 @@
                                             <a class="people_btn comment" title="의견쓰기" style="display:block;" ng-click="click_showCreatePeopleBoard();">의견쓰기</a>
                                         </div>
 
-                                        <div class="col-xs-6">
+                                        <div class="col-xs-6" ng-show="uid == item.REG_UID && uid != '' && uid != null || role == 'ANGE_ADMIN'">
                                             <a class="people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
                                             <a class="people_btn submit" title="완료" style="display:none;">완료</a>
                                             <a class="people_btn confirm" title="확인" style="display:none;">확인</a>
