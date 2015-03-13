@@ -99,11 +99,9 @@
                         <a class="people_btn comment" title="의견쓰기" style="display:none;">의견쓰기</a>
                     </div>
 
-                    <div class="col-xs-6" ng-show="item.REG_UID == uid || role == 'ANGE_ADMIN'">
-                        <!--<a class="btn people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeopleBoardEdit(item);">수정</a>-->
-                        <!--<a  style="display:block;" ng-click="click_showPeopleBoardDelete(item);">삭제</a> &lt;!&ndash;class="btn people_btn cancel" title="작성취소"&ndash;&gt;-->
-                        <a class="people_btn modify" title="수정" style="display:block;" ng-click="click_showPeopleBoardEdit(item);">수정</a>
-                        <a class="people_btn delete" title="삭제" style="display:block;" ng-click="click_showPeopleBoardDelete(item);">삭제</a>
+                    <div class="col-xs-8" ng-show="item.REG_UID == uid || role == 'ANGE_ADMIN'">
+                        <a class="btn people_btn modify" title="수정하기" style="display:block;" ng-click="click_showPeopleBoardEdit(item);">수정</a>
+                        <a  style="display:block;" ng-click="click_showPeopleBoardDelete(item);">삭제</a> <!--class="btn people_btn cancel" title="작성취소"-->
                     </div>
                 </div><!-- /.row -->
             </div><!-- /.container -->
