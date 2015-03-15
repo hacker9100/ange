@@ -19,31 +19,50 @@
                         </div><!-- /.sub_contents_wrap -->
 
                         <div class="sub_contents_body">
-                            <select id="birth" ng-model="search.YEAR" ng-options="v for v in search_year" ng-change="change_year(search.YEAR);" class= "form-control" style="width:110px;float: left;">
-                                <option value="" selected>선택</option>
-                            </select>
-
-                            <br/><br/><br/><br/>
-                            <div class="table_blue">적립하는 재미! 사용하는 혜택! 앙쥬 마일리지</div>
-                            <ul style="margin-left:20px; font-size:0.92em;">
-                                <li>마일리지는 앙쥬 콘텐츠의 다양한 활동을 통해 적립이 가능합니다.</li>
-                                <li>마일리지는 부여된 일자부터 3년 이내에 사용하셔야 합니다.</li>
-                                <li>회원 탈퇴 시 적립된 마일리지는 소멸됩니다.</li>
-                            </ul>
-                            <br/>
-                            <div style="border:2px solid skyblue;text-align: center;">
-                                <span style="color: green"> {{nick}}&nbsp;님</span><br/>
-                                <!--별초모맘 등급입니다-->
-
-                                <h2>마일리지&nbsp;&nbsp;&nbsp;{{ REMAIN_POINT | number }}&nbsp;&nbsp;&nbsp;점</h2>
+                            <div class="mileage_titlebox">
+                                <div class="mileage_titletxt table_red">적립하는 재미! 사용하는 혜택! <span style="color:#333;">앙쥬 마일리지</span></div>
+                                <ul style="margin-left:20px; margin-top:10px;font-size:0.92em;">
+                                    <li>마일리지는 앙쥬 콘텐츠의 다양한 활동을 통해 적립이 가능합니다.</li>
+                                    <li>마일리지는 <span class="table_red">부여된 일자부터 3년 이내에 사용</span>하셔야 합니다.</li>
+                                    <li>회원 탈퇴 시 적립된 마일리지는 소멸됩니다.</li>
+                                </ul>
                             </div>
 
-                            <br/><br/><br/>
+                            <div class="mileage_infobox">
+                                <div class="col-sm-5" style="font-weight:600;"><span class="table_blue">{{nick}}</span> 님의 마일리지</div>
+                                <div class="col-sm-7">
+                                    <span class="table_gray">사용가능 마일리지 |</span>
+                                    <span class="table_red" style="font-size:1.68em; margin-left:20px;">{{ REMAIN_POINT | number }}</span>
+                                    <span class="table_red">P</span>
+                                </div>
+                                <!--<span style="color: green"> {{nick}}&nbsp;님</span><br/>-->
+                                <!--&lt;!&ndash;별초모맘 등급입니다&ndash;&gt;-->
+                                <!--<h2>마일리지&nbsp;&nbsp;&nbsp;{{ REMAIN_POINT | number }}&nbsp;&nbsp;&nbsp;점</h2>-->
+                            </div>
+
+                            <h4 style="font-weight:600; margin-top:40px;">마일리지 적립 및 사용 내역</h4>
+
+                            <div style="display:inline-block; width:100%; background-color:#ededed; padding:5px 0; margin-top:10px">
+                                <span style="float:left; line-height:30px;padding:0 10px;">년도별 조회</span>
+                                <select id="birth" ng-model="search.YEAR" ng-options="v for v in search_year" ng-change="change_year(search.YEAR);" class="form-control input-sm" style="width:120px;float:left;">
+                                    <!--<option value="" selected>선택</option>-->
+                                </select>
+                            </div>
                             <!-- peoplepoll_list -->
                             <table id="comp_board_table" class="table table-hover">
 
-                                <thead>
-                                <tr class="board_thead" height="48">
+                                <!--<thead>-->
+                                <!--<tr class="board_thead normaltype" height="48"  style="min-width:360px;">-->
+                                    <!--<td width="9%" align="center"><span class="board_th">번호</span></td>-->
+                                    <!--<td align="center"><span class="board_th">제목</span></td>-->
+                                    <!--<td ng-if="menu.COMM_NO != 8" width="120" align="center"><span class="board_th">작성자</span></td>-->
+                                    <!--<td width="80" align="center"><span class="board_th">작성일</span></td>-->
+                                    <!--<td width="60" align="center"><span class="board_th">조회</span></td>-->
+                                <!--</tr>-->
+                                <!--</thead>-->
+
+                                <thead style="min-width:360px;">
+                                <tr class="board_thead normaltype" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td width="150" align="center"><span class="board_th">구분</span></td>
                                     <td><span class="board_th">적립내용</span></td>
@@ -54,22 +73,40 @@
                                 </tr>
                                 </thead>
 
-                                <tbody class="on" ng-repeat="item in list">
+                                <tbody ng-repeat="item in list">
 
                                 <tr> <!--ng-click="click_showViewPeopleBoard(item.NO)"-->
-                                    <td class="table_no">
+                                    <td class="table_no normaltype"><span>{{ item.RNUM }}</span></td>
+                                    <td class="table_author normaltype"><span>{{ item.PLACE_GB }}</span></td>
+                                    <td class="table_author normaltype">{{ item.REASON | string_limit: 100 }}{{ item.REASON > 100 ? '...' : '' }}</td>
+                                    <td class="table_author normaltype">{{ item.EARN_DT }}</td>
+                                    <td class="table_author normaltype">{{ item.POINT | number }}P</td>
+
+                                    <!---- 모바일 TD ------>
+                                    <td class="table_no mobiletype" style="width: 10% !important;">
                                         <span>{{ item.RNUM }}</span>
                                     </td>
-                                    <td class="table_author">
-                                        <span>{{ item.PLACE_GB }}</span>
+
+                                    <td class="mobiletype" colspan="1" style="width: 90% !important; position:relative;">
+
+                                        <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;">
+                                            <span style="font-size:0.86em; color:#888;">{{ item.PLACE_GB }}</span>
+                                        </div>
+                                        <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;">
+                                            <span style="font-size:0.92em; font-weight:600;">
+                                                {{ item.REASON | string_limit: 100 }}{{ item.REASON > 100 ? '...' : '' }}
+                                            </span>
+
+                                        </div>
+                                        <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;">
+                                            <span style="font-size:0.78em; color:#888;">{{ item.EARN_DT }}</span>
+                                        </div>
+                                        <!--<div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;">-->
+                                            <!--<span style="font-size:0.86em; color:#888;">{{ item.POINT | number }}P</span>-->
+                                        <!--</div>-->
+                                        <div class="table_red" style="position:absolute; right:18px; top:18px; margin:10px;">{{ item.POINT | number }}P</div>
+
                                     </td>
-                                    <td>
-                                        {{ item.REASON | string_limit: 100 }}{{ item.REASON > 100 ? '...' : '' }}
-                                    </td>
-                                    <td  class="table_author">{{ item.EARN_DT }}</td>
-                                    <td  class="table_author">{{ item.POINT | number }}P</td>
-                                    <!--<td class="table_date">{{item.REG_DT}}</td>
-                                    <td class="table_hit">{{item.HIT_CNT}}</td></tr>-->
                                 </tr>
 
                                 </tbody>
@@ -87,11 +124,20 @@
                                 </tbody>
                             </table><!-- /.List-->
 
-                            <nav class="text-center">
+                            <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" items-per-page="25" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
-                            <!-- /peoplepoll_list -->
 
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="25" ng-model="PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_PAGES}}
+                                </div>
+                            </nav>
+                            <!--<nav class="text-center">                                -->
+                                <!--<pagination boundary-links="true" total-items="TOTAL_COUNT" items-per-page="25" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>-->
+                            <!--</nav>&lt;!&ndash; /.Paging&ndash;&gt;-->
+                            <!-- /peoplepoll_list -->
                         </div><!-- /.sub_contents_body -->
                     </div>
                 </div>

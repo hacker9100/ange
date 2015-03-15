@@ -2728,6 +2728,82 @@ nav.mobiletype {
 }
 
 
+/* mobile footer */
+
+.mobilefooter_logobox {
+    margin-top:18px;
+    width:100%;
+    padding:0px 18px;
+}
+
+.mobilefooter_logobox_logos {
+    float:left;
+    border-right:1px solid #eee;
+    font-size:1.54em;
+    font-weight:600;
+    margin-top:10px;
+    padding:12px 32px 26px 16px;
+}
+
+.mobilefooter_logobox_logotype {
+    text-align: center;
+}
+
+.mobilefooter_logobox_links {
+    text-align: center;
+    margin-left: -25px;
+}
+
+.mobilefooter_menubox {
+    float:left;
+    line-height:18px;
+    margin-left: 18px;
+    margin-top:8px;
+}
+
+.mobilefooter_menubox_menus {
+    font-size:0.92em;
+    margin-top:6px;
+    margin-bottom:10px;
+}
+
+.mobilefooter_copyright {
+    margin-top:6px
+}
+
+@media screen and (max-width: 768px) {
+    .mobilefooter_logobox_logos {
+        border:none;
+        width:100%;
+        text-align:center;
+    }
+    .mobilefooter_logobox_links {
+        width:170px;
+        margin:0px auto;
+    }
+
+    .mobilefooter_logobox_links {
+        margin-top:10px;
+        border-top:1px solid #ddd;
+    }
+
+    a.footer_mailto, a.footer_fbto, a.footer_blogto, a.footer_kakaoto {
+        float: left;
+    }
+
+    .mobilefooter_menubox {
+        float:none;
+        text-align: center;
+        margin:0px auto;
+        padding:0px;
+    }
+
+    .mobilefooter_infos {
+        display:none;
+    }
+}
+
+
 /* /Story 전용 공유 버튼 */
 
 .profile_pic {
@@ -2780,4 +2856,3 @@ nav.mobiletype {
         display: block;
     }
 }
-

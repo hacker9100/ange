@@ -38,6 +38,7 @@ define([
 
         $scope.search_year = year;
 
+
         //
         $scope.pageBoardChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
@@ -45,7 +46,7 @@ define([
         };
 
         $scope.init = function(){
-
+            $scope.search.YEAR = nowYear + '';
             $scope.search.REG_UID = $rootScope.uid;
             $scope.search.STATUS = true;
 
@@ -100,6 +101,7 @@ define([
                     $scope.list = data;
 
                     $scope.isLoding = false;
+                    $scope.TOTAL_PAGES = Math.ceil($scope.TOTAL_COUNT / $scope.PAGE_SIZE);
                 })
                 ['catch'](function(error){$scope.TOTAL_COUNT = 0;
                     $scope.list = "";
