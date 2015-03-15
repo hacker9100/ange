@@ -13,7 +13,8 @@
 
         <div class="sub_contents_title">
             <span class="sub_contents_bullet"></span>
-            <h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a></h3>
+            <!--<h3 style="font-weight:bold;">{{community}} <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a></h3>-->
+            <h3 style="font-weight:bold;">{{community}} </h3>
         </div>
     </div><!-- /.sub_contents_wrap -->
 
@@ -251,33 +252,24 @@
             </div>
 
             <div class="col-xs-6">
-                <a class="people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
+                <a class="people_btn vote" title="투표하기" style="display:none;">투표</a>		<!--  모든 항목을 선택하고 작성이 완료되면 disable 제거 -->
                 <a class="people_btn submit" title="완료" style="display:block;" ng-click="click_savePeopleBoard();">완료</a>
                 <a class="people_btn confirm" title="확인" style="display:none;">확인</a>
-                <a class="people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeopleBoardList();">취소</a>
+                <a class="people_btn cancel" title="작성" style="display:none;" ng-click="click_showPeopleBoardList();">취소</a>
                 <a class="people_btn modify" title="수정" style="display:none;">수정</a>
                 <a class="people_btn delete" title="삭제" style="display:none;">삭제</a>
             </div>
         </div><!-- /.row -->
-
-        <!--<div class="row">-->
-            <!--<div class="col-xs-4">-->
-                <!--<a class="btn people_btn list" title="목록으로" style="display:block;" ng-click="click_showPeopleBoardList();">리스트</a>-->
-            <!--</div>-->
-
-            <!--<div class="col-xs-8">-->
-                <!--<a class="btn people_btn vote" title="투표하기" style="display:none;" disabled>투표</a>		&lt;!&ndash;  모든 항목을 선택하고 작성이 완료되면 disable 제거 &ndash;&gt;-->
-                <!--<a class="btn people_btn confirm" title="확인" style="display:none;">확인</a>-->
-                <!--<a class="btn people_btn submit" title="등록하기" style="display:block;" ng-click="click_savePeopleBoard();">등록</a>-->
-                <!--<a class="btn people_btn cancel" title="작성취소" style="display:block;" ng-click="click_showPeopleBoardList();">취소</a>-->
-                <!--<a class="btn people_btn modify" title="수정하기" style="display:none;">수정</a>-->
-            <!--</div>-->
-        <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
     </div><!-- /.people_view_btnwrap -->
 
     </div>
     <!-- /peopleboard_edit -->
     </div><!-- /.sub_contents_body -->
+
+    <div class="sub_contents_ads" style="display:none;">
+        <div>
+        </div>
+    </div>
 
     </div>
     </div>

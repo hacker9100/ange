@@ -127,7 +127,7 @@
                         NOTE,
                         SYSTEM_GB
                     ) VALUES (
-                        ".( (isset($_model[PARENT]) && $_model[PARENT] != "") ? $_model[PARENT][NO] : (isset($_model[PARENT_NO]) && $_model[PARENT_NO] != "") ? $_model[PARENT_NO] : 0 )."
+                        ".( (isset($_model[PARENT_NO]) && $_model[PARENT_NO] != "") ? $_model[PARENT_NO] : (isset($_model[PARENT]) && $_model[PARENT] != "") ? $_model[PARENT][NO] : 0 )."
                         , '".$_model[CATEGORY_NM]."'
                         , '".$_model[CATEGORY_GB]."'
                         , '0'
@@ -135,8 +135,6 @@
                         , '".$_model[NOTE]."'
                         , '".$_model[SYSTEM_GB]."'
                     )";
-
-            MtUtil::_d("### [POST_DATA] ".$sql);
 
             $_d->sql_query($sql);
             $no = $_d->mysql_insert_id;
@@ -160,7 +158,7 @@
 
             $sql = "UPDATE CMS_CATEGORY
                     SET
-                        PARENT_NO = ".( isset($_model[PARENT_NO]) && $_model[PARENT_NO] != "" ? $_model[PARENT_NO] : 0 )."
+                        PARENT_NO = ".( isset($_model[PARENT_NO]) && $_model[PARENT_NO] != "" ? $_model[PARENT_NO] : (isset($_model[PARENT]) && $_model[PARENT] != "") ? $_model[PARENT][NO] : 0 )."
                         ,CATEGORY_NM = '".$_model[CATEGORY_NM]."'
                         ,CATEGORY_GB = '".$_model[CATEGORY_GB]."'
                         ,CATEGORY_ST = '".$_model[CATEGORY_ST]."'

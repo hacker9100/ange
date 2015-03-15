@@ -193,6 +193,8 @@ define([
         /********** 화면 초기화 **********/
         //$scope.init();
 
+        $scope.isLoding = false;
+
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
 
@@ -203,6 +205,8 @@ define([
             $scope.search.ORDER = 'DESC';
             //$scope.search.FILE = true;
             $scope.search.FILE = true;
+
+            $scope.isLoding = true;
 
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
@@ -217,6 +221,8 @@ define([
                         console.log($scope.list);
                     }
 
+                    $scope.isLoding = false;
+
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
 
@@ -226,7 +232,7 @@ define([
                     $scope.TOTAL_PAGES = Math.ceil($scope.SEARCH_TOTAL_COUNT/$scope.PAGE_SIZE);
 
                 })
-                ['catch'](function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0});
+                ['catch'](function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0; $scope.isLoding = false;});
         };
 
         // 조회 화면 이동

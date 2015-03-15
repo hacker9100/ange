@@ -360,6 +360,35 @@
     </div>
 </script>
 
+<script type="text/ng-template" id="sendsms_popup.html">
+    <div class="modal-header article_windowtitle">
+        문자 발송
+        <a ng-click="click_ok()" style="float:right; cursor:pointer;">Close</a>
+    </div>
+    <div class="modal-body">
+        <form role="form" name="edit_form" class="form-horizontal form_basic_100">
+            <div class="row form_basic_wrap">
+                <!--<div class= "form-group form_basic_group">-->
+                    <!--<label class= "form_basic_label">마일리지 <span style="color:#b94a48">*</span></label>-->
+                    <!--<div class= "col-md-4 form_basic_input">-->
+                        <!--<input type="text" ng-model="item.POINT" class= "form-control" placeholder="포인트"/>&lt;!&ndash;{{item.FROM_ID}}&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">문자 발송 내용 </label>
+                    <div class= "col-md-9 form_basic_input">
+                        <textarea type="text" ng-model="item.MESSAGE" class= "form-control" placeholder="내용"/><!--{{item.FROM_ID}}-->
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-default btn-sm" style="margin:0px auto;" ng-click="click_reg();">등록</button>
+        <button class="btn btn-default btn-sm" style="margin:0px auto;" ng-click="click_close();">닫기</button>
+    </div>
+</script>
+
 <script type="text/ng-template" id="mileage_popup.html">
     <div class="modal-header article_windowtitle">
         마일리지 적립

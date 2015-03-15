@@ -316,6 +316,10 @@ define([
                 $('#user_nm').focus();
                 dialogs.notify('알림', '이름을 확인해주세요.', {size: 'md'});
                 return;
+            } else if ($scope.user.USER_NM.length < 2) {
+                $('#user_nm').focus();
+                dialogs.notify('알림', '이름을 2자리 이상 입력해주세요.', {size: 'md'});
+                return false;
             }
 
 //            if (!$scope.availableNick) {

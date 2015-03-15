@@ -107,8 +107,61 @@
 //                $sql = "select max(mt_pr) from em_smt_tran";
 //                $smt_pr = $_d->sql_fetch($sql);
 
-                for ($i=0; $i< sizeof($_model['SMS']); $i++) {
-                    $sql = "insert into em_smt_client
+                if ($_model[CHECKED] == "C") {
+                    if (isset($_model[USER_ID_LIST])) {
+                        $in_str = "";
+                        $in_size = sizeof($_model[USER_ID_LIST]);
+                        for ($i=0; $i< $in_size; $i++) {
+                            $in_str .= "'".trim($_model[USER_ID_LIST][$i])."'";
+                            if ($in_size - 1 != $i) $in_str .= ",";
+                        }
+
+                        $search_where = "AND USER_ID IN (".$in_str.") ";
+                    }
+                } else {
+                    if ((isset($_model[CONDITION]) && $_model[CONDITION] != "") && (isset($_model[KEYWORD]) && $_model[KEYWORD] != "")) {
+                        if ($_model[CONDITION][value] == "USER_NM" || $_model[CONDITION][value] == "USER_ID" || $_model[CONDITION][value] == "NICK_NM") {
+                            $arr_keywords = explode(",", $_model[KEYWORD]);
+                            $in_condition = "";
+                            for ($i=0; $i< sizeof($arr_keywords); $i++) {
+                                $in_condition .= "'".trim($arr_keywords[$i])."'";
+                                if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
+                            }
+
+                            $search_where .= "AND ".$_model[CONDITION][value]." IN (".$in_condition.") ";
+                        } else if ($_model[CONDITION][value] == "PHONE") {
+                            $search_where .= "AND ( PHONE_1 LIKE '%".$_model[KEYWORD]."%' OR PHONE_2 LIKE '%".$_model[KEYWORD]."%' ) ";
+                        } else {
+                            $search_where .= "AND ".$_model[CONDITION][value]." LIKE '%".$_model[KEYWORD]."%' ";
+                        }
+                    }
+                    if (isset($_model[TYPE]) && $_model[TYPE] != "") {
+
+                        $in_type = "";
+                        for ($i=0; $i< count($_model[TYPE]); $i++) {
+                            $in_type .= "'".$_model[TYPE][$i]."'";
+                            if (count($_model[TYPE]) - 1 != $i) $in_type .= ",";
+                        }
+
+                        $search_where .= "AND USER_GB IN (".$in_type.") ";
+                    }
+                    if (isset($_model[STATUS]) && $_model[STATUS] != "" && $_model[STATUS][value] != "A") {
+                        $search_where .= "AND USER_ST  = '".$_model[STATUS][value]."' ";
+                    }
+                }
+
+                $sql = "SELECT USER_ID, PHONE_2
+                        FROM
+                            COM_USER
+                        WHERE
+                            1 = 1
+                            ".$search_where."
+                        ";
+
+                $result = $_d->sql_query($sql,true);
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+                    if ($row[PHONE_2] != "") {
+                        $sql = "insert into em_smt_client
                             (
                                 mt_pr,
                                 mt_seq,
@@ -123,17 +176,18 @@
                                 '".$no."',
                                 '".$i."',
                                 1,
-                                '".$_model["SMS"][$i]['PHONE']."',
-                                '".$_model["SMS"][$i]['WORD1']."',
-                                '".$_model["SMS"][$i]['WORD2']."',
-                                '".$_model["SMS"][$i]['WORD3']."'
+                                '".$row[PHONE_2]."',
+                                '".$_model['WORD1']."',
+                                '".$_model['WORD2']."',
+                                '".$_model['WORD3']."'
                             )";
 
-                    $_d->sql_query($sql);
+                        $_d->sql_query($sql);
 
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
                     }
                 }
 
