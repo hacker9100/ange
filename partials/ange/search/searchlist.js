@@ -18,6 +18,21 @@ define([
             $scope.community = "검색";
 
             $scope.photoList = [];
+
+            var getParam = function(key){
+                var _parammap = {};
+                document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+                    function decode(s) {
+                        return decodeURIComponent(s.split("+").join(" "));
+                    }
+
+                    _parammap[decode(arguments[1])] = decode(arguments[2]);
+                });
+
+                return _parammap[key];
+            };
+
+            $scope.search.SEARCH_KEYWORD = getParam("search_key");
         };
 
         $scope.search = {};
@@ -55,7 +70,6 @@ define([
         var today = year+'-'+mm+'-'+dd;
 
         $scope.todayDate = today;
-        $scope.init();
 
         // 스토리 목록 조회
         $scope.getStoryList = function () {
