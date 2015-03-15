@@ -21,6 +21,7 @@ define([
         $scope.showDetails = false;
         $scope.search = {SYSTEM_GB: 'ANGE'};
 
+        var COMM_NO = 71;
 
         $scope.TARGET_NO = $stateParams.id;
         $scope.TARGET_GB = 'CLUB';
@@ -57,7 +58,7 @@ define([
         // 초기화
         $scope.init = function(session) {
             // TODO: 수정 버튼은 권한 체크후 수정 권한이 있을 경우만 보임
-            $scope.search.COMM_NO = 71;
+            $scope.search.COMM_NO = COMM_NO;
             $scope.search.COMM_GB = 'CLUB';
 
             $scope.getList('com/webboard', 'manager', {}, $scope.search, true)
@@ -144,7 +145,7 @@ define([
 
         // 이전글
         $scope.getPreBoard = function (){
-            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+            $scope.search.COMM_NO = COMM_NO;
             $scope.search.KEY = $stateParams.id;
 
             if ($stateParams.id != 0) {
@@ -159,7 +160,7 @@ define([
         // 다음글
         $scope.getNextBoard = function (){
 
-            $scope.search.COMM_NO = $scope.menu.COMM_NO;
+            $scope.search.COMM_NO = COMM_NO;
             $scope.search.KEY = $stateParams.id;
 
             if ($stateParams.id != 0) {

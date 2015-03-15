@@ -1,211 +1,218 @@
 <div id="top">
 
-    <div id="articlewrap" class="articlewrap">
+<div id="articlewrap" class="articlewrap">
 
-        <div class="modal-header article_windowtitle">
-            앙쥬스토리
-            <a ng-click="click_ok()" style="float:right; font-size:1.24em; cursor:pointer;"><span class="glyphicon glyphicon-remove-circle"></span></a>
-        </div>
+<div class="modal-header article_windowtitle">
+    앙쥬스토리
+    <a ng-click="click_ok()" style="float:right; font-size:1.24em; cursor:pointer;"><span class="glyphicon glyphicon-remove-circle"></span></a>
+</div>
 
-        <div ng-model="task" class="modal-body">
-            <div class="people_photo_sharewrap" style="width:100%; max-width:780px; position:absolute; top:10px; right:5%;">
-                <div class="people_share">
-                    <button class="story_sharebtn kakaobtn" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="카카오스토리에 공유"><span class="story_btnicon kakao"></span>카카오</button>
-                    <button class="story_sharebtn twitterbtn" ng-click="click_loginWithTwitter()" title="트위터에 공유"><span class="story_btnicon twitter"></span>트위터</button>
-                    <button class="story_sharebtn facebookbtn" ng-click="click_loginWithFacebook()" title="페이스북에 공유"><span class="story_btnicon facebook"></span>페이스북</button>
-                    <button class="story_sharebtn blackbtn" ng-click="click_printDiv('content')" title="인쇄하기"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
-                    <!--<button class="story_sharebtn blackbtn" ng-click="click_shareContent()" title="이 글을 공유하려면 클릭"><span class="glyphicon glyphicon-cloud-upload sharebtn_icon"></span>공 유</button>-->
-                    <button class="story_sharebtn redbtn" ng-click="click_addScrap();" title="스크랩하기"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>
+<div ng-model="task" class="modal-body">
+<div class="people_photo_sharewrap" style="width:100%; max-width:780px; position:absolute; top:10px; right:5%;">
+    <style>
+        .ebook_view_button{ display: block; float: left; border-radius: 6px; border: 1px solid #FF8000; color: #FF8000; padding: 5px 10px; cursor: pointer;}
+        .ebook_view_button:hover{ background-color: #fff; }
+    </style>
+    <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=19&catimage=&callmode=admin','_blank','width=1100,height=750');" data-ng-show="task.NO=='481'" class="ebook_view_button" style="">eBook 보기</div>
+    <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=23&catimage=&callm','_blank','width=1100,height=750');" data-ng-show="task.NO=='414'" class="ebook_view_button" style="">eBook 보기</div>
+
+    <div class="people_share">
+        <button class="story_sharebtn kakaobtn" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="카카오스토리에 공유"><span class="story_btnicon kakao"></span>카카오</button>
+        <button class="story_sharebtn twitterbtn" ng-click="click_loginWithTwitter()" title="트위터에 공유"><span class="story_btnicon twitter"></span>트위터</button>
+        <button class="story_sharebtn facebookbtn" ng-click="click_loginWithFacebook()" title="페이스북에 공유"><span class="story_btnicon facebook"></span>페이스북</button>
+        <button class="story_sharebtn blackbtn" ng-click="click_printDiv('content')" title="인쇄하기"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
+        <!--<button class="story_sharebtn blackbtn" ng-click="click_shareContent()" title="이 글을 공유하려면 클릭"><span class="glyphicon glyphicon-cloud-upload sharebtn_icon"></span>공 유</button>-->
+        <button class="story_sharebtn redbtn" ng-click="click_addScrap();" title="스크랩하기"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>
+    </div>
+
+    <div class="people_share_mobile">
+        <button class="story_sharebtn_mobile kakao" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="카카오스토리에 공유"></button>
+        <button class="story_sharebtn_mobile twitter" ng-click="click_loginWithTwitter()" title="트위터에 공유"></button>
+        <button class="story_sharebtn_mobile facebook" ng-click="click_loginWithFacebook()" title="페이스북에 공유"></button>
+        <button class="story_sharebtn_mobile priint" ng-click="click_printDiv('content')" title="인쇄하기"></button>
+        <button class="story_sharebtn_mobile scrap" ng-click="click_addScrap();" title="스크랩하기"></button>
+    </div>
+</div>
+<!--<a id="kakao-login-btn" ng-controller="kakao_share"></a>-->
+
+<div class="story-row previewwrap" style="margin-top:40px;">
+
+    <!--<a ng-click="click_printDiv('content')" class="btn primary large no-print">Print this quote</a>-->
+
+    <div id="content" name="content" ng-model="content" class="story-col-xs-12 article_previewwrap">
+
+        <!--<div ng-bind-html="renderHtml(content.BODY)"></div>-->
+        <div ng-bind-html="renderHtml"></div>
+
+        <div>
+
+            <div class="storyplus_wrap">
+                <div class="modal-header article_windowtitle">
+                    스토리플러스
                 </div>
 
-                <div class="people_share_mobile">
-                    <button class="story_sharebtn_mobile kakao" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="카카오스토리에 공유"></button>
-                    <button class="story_sharebtn_mobile twitter" ng-click="click_loginWithTwitter()" title="트위터에 공유"></button>
-                    <button class="story_sharebtn_mobile facebook" ng-click="click_loginWithFacebook()" title="페이스북에 공유"></button>
-                    <button class="story_sharebtn_mobile priint" ng-click="click_printDiv('content')" title="인쇄하기"></button>
-                    <button class="story_sharebtn_mobile scrap" ng-click="click_addScrap();" title="스크랩하기"></button>
+                <div style="padding:15px 15px; font-size:0.78em; color:#e25d4c; font-weight:700;"><span class="glyphicon glyphicon-plus"></span> 같은 카테고리 스토리</div>
+
+                <div class="story_plus_thumb" ng-repeat="item in plusList" ng-show="currentPage > ( $index / 2 ) && ( $index / 2 ) >= ( currentPage - 1 )">
+                    <!--<img class="story_plus_pic" ng-src="{{item.FILE}}" ng-click="click_changeContentDetail(item)">-->
+                    <img class="story_plus_pic" src="/imgs/ange/_blank.gif" ng-click="click_changeContentDetail(item)" style="background-image:url({{item.FILE}});">
+                    <div class="table_blue story_plus_title">{{ item.SUBJECT | limitTo: 10 }}{{item.SUBJECT > 10 ? '...' : ''}}</div>
+                    <div class="table_gray story_plus_series">{{ item.PROJECT_NM }}</div>
+                </div>
+
+                <div data-ng-show="plusList == '' || plusList == null" style="width:65%; padding: 40px 0; margin:0px auto; color:#646464; font-size:0.86em; text-align:center; line-height:18px;">
+                    같은 카테고리 내의 기사가 없습니다.
+                </div>
+
+                <div style="width:75%; text-align:center;font-size: 0.78em; margin:0px auto;">
+                    <a class="miniboard_tab_slideprev" title="이전" ng-click="click_prevPlus()">이전슬라이드</a>
+                    <span><span class="table_blue">{{ currentPage }}</span> / {{ totalPage }}</span>
+                    <a class="miniboard_tab_slidenext" title="다음" style="float:right;" ng-click="click_nextPlus()">다음슬라이드</a>
                 </div>
             </div>
-            <!--<a id="kakao-login-btn" ng-controller="kakao_share"></a>-->
 
-            <div class="story-row previewwrap" style="margin-top:40px;">
+            <!-- peoplepoll_list -->
+            <table id="comp_board_table" class="table table-hover" style="width:100%;">
 
-                <!--<a ng-click="click_printDiv('content')" class="btn primary large no-print">Print this quote</a>-->
+                <thead>
+                <tr class="board_thead" height="48">
+                    <td colspan="2">
+                        <span class="board_th">{{ task.EDITOR_NM }}</span>
+                        <small class="table_gray">에디터의 기사를 이어볼 수 있습니다.</small>
+                    </td>
+                    <!--<td align="center" style="min-width:50px;">-->
+                    <!--<span class="board_th"><small class="table_gray">조회수</small></span>-->
+                    <!--</td>-->
+                </tr>
+                </thead>
 
-                <div id="content" name="content" ng-model="content" class="story-col-xs-12 article_previewwrap">
+                <tbody class="on" ng-repeat="item in editorList">
 
-                    <!--<div ng-bind-html="renderHtml(content.BODY)"></div>-->
-                    <div ng-bind-html="renderHtml"></div>
+                <tr ng-click="click_changeContentDetail(item)" style="cursor:pointer;">
+                    <td width="30%" style="min-width:100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" class="table_no">
+                        <span class="table_blue">{{ item.SERIES_NM }} [{{ item.PROJECT_NM }}]</span>
+                    </td>
+                    <td style="font-size: 0.86em; line-height:16px; word-break: break-all;">
+                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                        <span>{{ item.SUBJECT | limitTo: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span>
+                        <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? [item.REPLY_COUNT] : ''}}</span>
+                        <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                        <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                        <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                    </td>
+                    <!--<td width="15%" style="min-width:82px;" class="table_date">{{item.REG_DT}}</td>-->
+                    <!--<td width="5%" class="table_hit">{{item.HIT_CNT}}</td></tr>-->
+                </tr>
 
-                    <div>
+                </tbody>
 
-                        <div class="storyplus_wrap">
-                            <div class="modal-header article_windowtitle">
-                                스토리플러스
-                            </div>
+                <tbody class="on" data-ng-show="editorList == '' || editorList == null">
+                <tr>
+                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                </tr>
+                </tbody>
+            </table><!-- /.List-->
+        </div>
 
-                            <div style="padding:15px 15px; font-size:0.78em; color:#e25d4c; font-weight:700;"><span class="glyphicon glyphicon-plus"></span> 같은 카테고리 스토리</div>
+        <div ng-if="showProduct" class="row" style="width:100%; padding-top:25px; margin:0px auto;">
 
-                            <div class="story_plus_thumb" ng-repeat="item in plusList" ng-show="currentPage > ( $index / 2 ) && ( $index / 2 ) >= ( currentPage - 1 )">
-                                <!--<img class="story_plus_pic" ng-src="{{item.FILE}}" ng-click="click_changeContentDetail(item)">-->
-                                <img class="story_plus_pic" src="/imgs/ange/_blank.gif" ng-click="click_changeContentDetail(item)" style="background-image:url({{item.FILE}});">
-                                <div class="table_blue story_plus_title">{{ item.SUBJECT | limitTo: 10 }}{{item.SUBJECT > 10 ? '...' : ''}}</div>
-                                <div class="table_gray story_plus_series">{{ item.PROJECT_NM }}</div>
-                            </div>
+            <span class="board_th">관련상품</span>
+            <small class="table_gray">기사와 관련된 상품을 모았습니다.</small>
 
-                            <div data-ng-show="plusList == '' || plusList == null" style="width:65%; padding: 40px 0; margin:0px auto; color:#646464; font-size:0.86em; text-align:center; line-height:18px;">
-                                같은 카테고리 내의 기사가 없습니다.
-                            </div>
+            <div class="col-xs-12 v-cell-4">
+                <div class="comp_basic h-cell-1-dynamic">
+                    <!-- mini_mileagemall -->
+                    <div class="comp_goods" ng-model="store">
+                        <div class="row mini_event_contentlist" style="margin:0px;">
 
-                            <div style="width:75%; text-align:center;font-size: 0.78em; margin:0px auto;">
-                                <a class="miniboard_tab_slideprev" title="이전" ng-click="click_prevPlus()">이전슬라이드</a>
-                                <span><span class="table_blue">{{ currentPage }}</span> / {{ totalPage }}</span>
-                                <a class="miniboard_tab_slidenext" title="다음" style="float:right;" ng-click="click_nextPlus()">다음슬라이드</a>
-                            </div>
-                        </div>
-
-                        <!-- peoplepoll_list -->
-                        <table id="comp_board_table" class="table table-hover" style="width:100%;">
-
-                            <thead>
-                            <tr class="board_thead" height="48">
-                                <td colspan="2">
-                                    <span class="board_th">{{ task.EDITOR_NM }}</span>
-                                    <small class="table_gray">에디터의 기사를 이어볼 수 있습니다.</small>
-                                </td>
-                                <!--<td align="center" style="min-width:50px;">-->
-                                    <!--<span class="board_th"><small class="table_gray">조회수</small></span>-->
-                                <!--</td>-->
-                            </tr>
-                            </thead>
-
-                            <tbody class="on" ng-repeat="item in editorList">
-
-                            <tr ng-click="click_changeContentDetail(item)" style="cursor:pointer;">
-                                <td width="30%" style="min-width:100px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" class="table_no">
-                                    <span class="table_blue">{{ item.SERIES_NM }} [{{ item.PROJECT_NM }}]</span>
-                                </td>
-                                <td style="font-size: 0.86em; line-height:16px; word-break: break-all;">
-                                    <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                    <span>{{ item.SUBJECT | limitTo: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span>
-                                    <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? [item.REPLY_COUNT] : ''}}</span>
-                                    <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
-                                    <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
-                                    <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
-                                </td>
-                                <!--<td width="15%" style="min-width:82px;" class="table_date">{{item.REG_DT}}</td>-->
-                                <!--<td width="5%" class="table_hit">{{item.HIT_CNT}}</td></tr>-->
-                            </tr>
-
-                            </tbody>
-
-                            <tbody class="on" data-ng-show="editorList == '' || editorList == null">
-                            <tr>
-                                <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
-                            </tr>
-                            </tbody>
-                        </table><!-- /.List-->
-                    </div>
-
-                    <div ng-if="showProduct" class="row" style="width:100%; padding-top:25px; margin:0px auto;">
-
-                        <span class="board_th">관련상품</span>
-                        <small class="table_gray">기사와 관련된 상품을 모았습니다.</small>
-
-                        <div class="col-xs-12 v-cell-4">
-                            <div class="comp_basic h-cell-1-dynamic">
-                                <!-- mini_mileagemall -->
-                                <div class="comp_goods" ng-model="store">
-                                    <div class="row mini_event_contentlist" style="margin:0px;">
-
-                                        <a class="comp_slide_btn_w30 prev" title="이전" style="margin-left:0%;">이전</a>
-                                        <a class="comp_slide_btn_w30 next" title="다음">다음</a>
+                            <a class="comp_slide_btn_w30 prev" title="이전" style="margin-left:0%;">이전</a>
+                            <a class="comp_slide_btn_w30 next" title="다음">다음</a>
 
 
-                                        <div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">
-                                            <div class="mini_event_content" style="border:none; text-align:center;">
-                                                <img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_01.jpg"  style="float:none; width:85%; max-width:100px;"/>
-                                                <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">(주)대웅제약</div>
-                                                <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">이지덤플러스 밴드 5매</div>
+                            <div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">
+                                <div class="mini_event_content" style="border:none; text-align:center;">
+                                    <img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_01.jpg"  style="float:none; width:85%; max-width:100px;"/>
+                                    <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">(주)대웅제약</div>
+                                    <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">이지덤플러스 밴드 5매</div>
 
-                                                <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
-                                                    <span class="mini_mileagemall_price"> 5,000</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xs-4 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">
-                                            <div class="mini_event_content" style="border:none; text-align:center;">
-                                                <img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_02.jpg"  style="float:none; width:85%; max-width:100px;"/>
-                                                <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">쁘띠마리에</div>
-                                                <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em;  text-align:center; color: #2eaed3;">블루코어 일회용 수유패드 26매</div>
-
-                                                <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
-                                                    <span class="mini_mileagemall_price"> 5,000</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">
-                                            <div class="mini_event_content" style="border:none; text-align:center;">
-                                                <img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_03.jpg"  style="float:none; width:85%; max-width:100px;"/>
-                                                <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">누비</div>
-                                                <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">몬스터 스텐 커틀러리 세트</div>
-
-                                                <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
-                                                    <span class="mini_mileagemall_price"> 5,000</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
+                                    <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
+                                        <span class="mini_mileagemall_price"> 5,000</span>
                                     </div>
                                 </div>
-                                <!-- /mini_mileagemall -->
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="col-xs-12">
-                        <div ng-model="ad" class="inven_themeup">
-                            <a class="ADbanner_image" title="{{ad.ada_title}}">
-                                <!--<img ng-src="{{ad.FILE}}"/>-->
-                                <img img ng-src="{{ad.img}}" ng-click="click_linkBanner(ad)"/>
-                            </a>
-                        </div>
-                    </div>
+                            <div class="col-xs-4 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">
+                                <div class="mini_event_content" style="border:none; text-align:center;">
+                                    <img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_02.jpg"  style="float:none; width:85%; max-width:100px;"/>
+                                    <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">쁘띠마리에</div>
+                                    <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em;  text-align:center; color: #2eaed3;">블루코어 일회용 수유패드 26매</div>
 
-                    <div class="col-xs-12">
-                        <div style="text-align:center">
-                            <div ng-model="task">
-
-                                <!--<a ng-class="item.LIKE_FL == 'Y' ? 'icon_like_on' : 'icon_like'" style="margin-right:0;" title="공감한 스토리는 자동으로 스크랩됩니다." ng-click="click_addLike($index, item)">좋아요?</a>-->
-
-                                <a ng-click="click_addLike()" title="공감한 스토리는 자동으로 스크랩됩니다." style="cursor:pointer;">
-                                    <img ng-show="!uid || task.LIKE_FL != 'Y'" src="/imgs/ange/btn_like_off.png" style="clear:both; float:none; width:249px; height:63px;"/>
-                                    <img ng-show="task.LIKE_FL == 'Y'" src="/imgs/ange/btn_like_on.png" style="clear:both; float:none; width:249px; height:63px;"/>
-                                </a>
-
-                                <br />
-
-                                <div class="table_gray" style="font-size:0.86em; line-height:38px;">현재 <span class="table_red">{{task.LIKE_CNT}}</span> 명의 회원이 공감하고 있습니다.</BR></div>
-
+                                    <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
+                                        <span class="mini_mileagemall_price"> 5,000</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="col-xs-12" style="padding-bottom: 25px;">
-                        <div class="people_view_replys">
-                            <module-reply></module-reply>
+                            <div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">
+                                <div class="mini_event_content" style="border:none; text-align:center;">
+                                    <img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_03.jpg"  style="float:none; width:85%; max-width:100px;"/>
+                                    <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">누비</div>
+                                    <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">몬스터 스텐 커틀러리 세트</div>
+
+                                    <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
+                                        <span class="mini_mileagemall_price"> 5,000</span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
+                    <!-- /mini_mileagemall -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <div ng-model="ad" class="inven_themeup">
+                <a class="ADbanner_image" title="{{ad.ada_title}}">
+                    <!--<img ng-src="{{ad.FILE}}"/>-->
+                    <img img ng-src="{{ad.img}}" ng-click="click_linkBanner(ad)"/>
+                </a>
+            </div>
+        </div>
+
+        <div class="col-xs-12">
+            <div style="text-align:center">
+                <div ng-model="task">
+
+                    <!--<a ng-class="item.LIKE_FL == 'Y' ? 'icon_like_on' : 'icon_like'" style="margin-right:0;" title="공감한 스토리는 자동으로 스크랩됩니다." ng-click="click_addLike($index, item)">좋아요?</a>-->
+
+                    <a ng-click="click_addLike()" title="공감한 스토리는 자동으로 스크랩됩니다." style="cursor:pointer;">
+                        <img ng-show="!uid || task.LIKE_FL != 'Y'" src="/imgs/ange/btn_like_off.png" style="clear:both; float:none; width:249px; height:63px;"/>
+                        <img ng-show="task.LIKE_FL == 'Y'" src="/imgs/ange/btn_like_on.png" style="clear:both; float:none; width:249px; height:63px;"/>
+                    </a>
+
+                    <br />
+
+                    <div class="table_gray" style="font-size:0.86em; line-height:38px;">현재 <span class="table_red">{{task.LIKE_CNT}}</span> 명의 회원이 공감하고 있습니다.</BR></div>
 
                 </div>
             </div>
         </div>
 
-        <div class="modal-footer" style="background-color:#FAFAFA; float:none; text-align:center;">
-            <button class="btn btn-default btn-sm" style="margin:0px auto;" ng-click="click_ok()">닫기</button>
+        <div class="col-xs-12" style="padding-bottom: 25px;">
+            <div class="people_view_replys">
+                <module-reply></module-reply>
+            </div>
         </div>
 
     </div>
+</div>
+</div>
+
+<div class="modal-footer" style="background-color:#FAFAFA; float:none; text-align:center;">
+    <button class="btn btn-default btn-sm" style="margin:0px auto;" ng-click="click_ok()">닫기</button>
+</div>
+
+</div>
 </div>

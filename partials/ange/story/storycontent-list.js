@@ -116,9 +116,10 @@ define([
 
                     for (var i in data) {
                         if ($scope.path[2] == 'special' && i < data.length - 1 ) {
-                            if (i == 0 || data[i].DEPLOY_YMD.substr(0, 7) != data[i-1].DEPLOY_YMD.substr(0, 7)) {
+                            if ( ( isFirst && i == 0 ) || ( !isFirst && i == 0 && data[i].PROJECT_NM.substr(0, 6) != $scope.list[$scope.list.length-1].PROJECT_NM.substr(0, 6) ) || ( i > 0 && data[i].PROJECT_NM.substr(0, 6) != data[i-1].PROJECT_NM.substr(0, 6) ) ) {
                                 data[i].TYPE = 'COVER';
-                                data[i].MONTH = data[i].DEPLOY_YMD.substr(5, 2);
+                                data[i].YEAR = data[i].PROJECT_NM.substr(0, 4);
+                                data[i].MONTH = data[i].PROJECT_NM.substr(4, 2);
                                 $scope.list.push(angular.copy(data[i]));
                             }
                         }

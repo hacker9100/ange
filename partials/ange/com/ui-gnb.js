@@ -39,6 +39,9 @@ define([
             $location.url('/myange/mileage');
         }
 
+        $scope.click_showSearch = function (){
+            $location.url('/search/list');
+        }
 	}]);
 
 

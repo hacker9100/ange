@@ -368,12 +368,23 @@
     <div class="modal-body">
         <form role="form" name="edit_form" class="form-horizontal form_basic_100">
             <div class="row form_basic_wrap">
-                <!--<div class= "form-group form_basic_group">-->
-                    <!--<label class= "form_basic_label">마일리지 <span style="color:#b94a48">*</span></label>-->
-                    <!--<div class= "col-md-4 form_basic_input">-->
-                        <!--<input type="text" ng-model="item.POINT" class= "form-control" placeholder="포인트"/>&lt;!&ndash;{{item.FROM_ID}}&ndash;&gt;-->
-                    <!--</div>-->
-                <!--</div>-->
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">발신 번호 <span style="color:#b94a48">*</span></label>
+                    <div class= "col-md-4 form_basic_input">
+                        <input type="text" ng-model="item.SEND_PHONE" class= "form-control" placeholder="발신 번호"/><!--{{item.FROM_ID}}-->
+                    </div>
+                </div>
+                <div class= "form-group form_basic_group">
+                    <label class= "form_basic_label">추가 발신자 </label>
+                    <div class= "col-md-8 form_basic_input">
+                        <div class= "col-md-4">
+                            <input type="text" ng-model="item.ADD_PHONE" class= "form-control" placeholder="추가 발신자"/><!--{{item.FROM_ID}}-->
+                        </div>
+                        <div class= "col-md-4">
+                            <span>번호를 [,]로 구분해주세요</span>
+                        </div>
+                    </div>
+                </div>
                 <div class= "form-group form_basic_group">
                     <label class= "form_basic_label">문자 발송 내용 </label>
                     <div class= "col-md-9 form_basic_input">

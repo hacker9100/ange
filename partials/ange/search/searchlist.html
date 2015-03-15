@@ -1,191 +1,248 @@
 <div ng-controller="searchlist" class="ng_wrap">
-    <!-- mainbar -->
-    <div class="mainbar sub-slide0">
-        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+<!-- mainbar -->
+<div class="mainbar sub-slide0">
+<div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+
+<div class="row">
+
+<div class="col-xs-12 v-cell-3">
+<div class="comp_basic h-cell-dynamic">
+
+<div class="sub_contents_wrap">
+
+    <div class="sub_contents_title">
+        <span class="sub_contents_bullet"></span>
+        <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
+    </div>
+
+</div><!-- /.sub_contents_wrap -->
 
 
-            <div class="row">
 
-                <div class="col-xs-12 v-cell-3">
-                    <div class="comp_basic h-cell-dynamic">
-
-                        <div class="sub_contents_wrap">
-
-                                <div class="sub_contents_title">
-                                    <span class="sub_contents_bullet"></span>
-                                    <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
-                                </div>
-
-                        </div><!-- /.sub_contents_wrap -->
+<div style="clear: both; padding-bottom: 70px; padding-left: 250px; ">
+    <form class="search_formgroup ng-pristine ng-valid" style="">
+        <div class="form-group search_form">
+            <input type="text" class="form-control search_input" ng-model="search.SEARCH_KEYWORD" placeholder="검색">
+        </div>
+        <a class="gnb_search ch_search" ng-click="showSearchResult()" title="검색">Search</a>
+    </form>
+</div>
 
 
-                        <div class="sub_contents_body">
+<div class="sub_contents_body">
 
-                            <h4 style="font-weight:bold;">일반게시판 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
+    <h4 style="font-weight:bold;">스토리</h4>
 
-                            <!-- peoplepoll_list -->
-                            <table id="comp_board_table" class="table table-hover">
+        <!-- story_list -->
+        <table id="story_board_table" class="table table-hover">
 
-                                <thead>
-                                <tr class="board_thead" height="48">
-                                    <td align="center"><span class="board_th">제목</span></td>
-                                    <td width="120" align="center"><span class="board_th">작성자</span></td>
-                                    <td width="80" align="center"><span class="board_th">작성일</span></td>
-                                    <td width="60" align="center"><span class="board_th">조회</span></td>
-                                </tr>
-                                </thead>
+            <thead>
+            <tr class="board_thead" height="48">
+                <td align="center"><span class="board_th">제목</span></td>
+                <td width="120" align="center"><span class="board_th">작성자</span></td>
+                <td width="80" align="center"><span class="board_th">작성일</span></td>
+                <td width="60" align="center"><span class="board_th">조회</span></td>
+            </tr>
+            </thead>
 
-                                <tbody class="on" ng-repeat="item in boardList">
+            <tbody class="on" ng-repeat="item in storyList">
 
-                                <tr ng-click="click_showViewPeopleBoard(item.COMM_NO, item.NO)" style="cursor:pointer;">
-                                    <td>
-                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{item.SHORT_NM != ''? '['+item.SHORT_NM+']' : ''}}&nbsp;{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
-                                        <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
-                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
-                                        <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>
-                                        <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
-                                        <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
-                                        <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
-                                    </td>
-                                    <td  class="table_author">{{item.NICK_NM}}</td>
-                                    <td class="table_date">{{item.REG_DT}}</td>
-                                    <td class="table_hit">{{item.HIT_CNT}}</td></tr>
-                                </tr>
+            <tr ng-click="click_showViewStory(item.COMM_NO, item.NO)" style="cursor:pointer;">
+                <td>
+                    <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                    <a href="/story/content/list/{{ item.NO}}" target="_blank">
+                        <span> {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                        <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                        <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                        <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                    </a>
 
-                                </tbody>
+                </td>
+                <td  class="table_author">{{item.EDITOR_NM}}</td>
+                <td class="table_date">{{item.REG_DT}}</td>
+                <td class="table_hit">{{item.HIT_CNT}}</td></tr>
+            </tr>
 
-                                <tbody class="on" data-ng-show="boardList == '' || boardList == null">
+            </tbody>
 
-                                <tr>
-                                    <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
-                                </tr>
+            <tbody class="on" data-ng-show="storyList == '' || storyList == null">
 
-                                </tbody>
-                            </table><!-- /.List-->
+            <tr>
+                <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+            </tr>
 
-                            <nav class="text-center">
-                                <pagination boundary-links="true" total-items="BOARD_TOTAL_COUNT" ng-model="BOARD_PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-                            </nav><!-- /.Paging-->
-                            <!-- /peoplepoll_list -->
+            </tbody>
+        </table><!-- /.List-->
+        <nav class="text-center normaltype">
+            <pagination boundary-links="true" total-items="STORY_TOTAL_COUNT" items-per-page="9" ng-model="STORY_PAGE_NO" class="pagination-sm"  ng-change="pageChanged_story()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+        </nav>
+        <!-- /story_list -->
 
-                            <br/>
+        <br/>
 
-                            <h4 style="font-weight:bold;">사진게시판 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
+        <h4 style="font-weight:bold;">일반게시판</h3>
 
-                            <div class="container-fluid peoplephoto_list_wrap">
-                                <div class="row">
-                                    <div class="col-xs-12 v-cell-4">
-                                        <div class="comp_basic h-cell-dynamic">
+            <!-- peoplepoll_list -->
+            <table id="people_board_table" class="table table-hover" style="">
 
-                                            <div ng-repeat='item in photoList'>
-                                                <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
-                                                <div class="col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.PHOTO_TYPE" -->
-                                                    <div ng-click="click_showViewPeoplePhoto(item.COMM_NO, item.NO)" class="people_photo_content">
-                                                        <div class="people_photo_imgbox">
-                                                            <!--<img class="people_photo_img" ng-src="{{item.MAIN_FILE}}"/>-->
-                                                            <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
-                                                            <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" />
-                                                            <img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" /> <!-- 삭제처리했을때 블라인드 이미지 추가해야함-->
-                                                            <div class="people_photo_cate">
-                                                                <span>{{item.CATEGORY_NM}}</span>
-                                                                <div style="position:absolute; display:inline; bottom:8px; right:0;">
-                                                                    <span class="feed_count countlike table_white">{{item.LIKE_CNT}}</span><!-- 공감수 -->
-                                                                    <span class="feed_count countreply table_white">{{item.REPLY_COUNT}}</span>	<!-- 댓글수 -->
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                <thead>
+                <tr class="board_thead" height="48">
+                    <td align="center"><span class="board_th">제목</span></td>
+                    <td width="120" align="center"><span class="board_th">작성자</span></td>
+                    <td width="80" align="center"><span class="board_th">작성일</span></td>
+                    <td width="60" align="center"><span class="board_th">조회</span></td>
+                </tr>
+                </thead>
 
-                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}</div>
-                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</div>
-                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</div>
-                                                        <div class="people_photo_info"><span class="table_blue">{{item.NICK_NM}}</span> | {{item.REG_DT}}</div>
-                                                    </div><!-- /.people_photo_content -->
-                                                </div><!-- /.people_photo_contentcol -->
-                                            </div><!-- /.people_photo_contentlist -->		<!-- 1줄	 -->
+                <tbody class="on" ng-repeat="item in boardList">
 
-                                            <div ng-show="photoList == ''">
-                                                <p>조회 데이터가 없습니다.</p>
+                <tr ng-click="click_showViewPeopleBoard(item.COMM_NO, item.NO)" style="cursor:pointer;">
+                    <td>
+                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                        <a href="/people/{{item.MENU_ID}}/view/{{item.NO}}" target="_blank">
+                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{item.SHORT_NM != ''? '['+item.SHORT_NM+']' : ''}}&nbsp;{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                            <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>
+                            <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                            <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                            <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                        </a>
+                    </td>
+                    <td  class="table_author">{{item.NICK_NM}}</td>
+                    <td class="table_date">{{item.REG_DT}}</td>
+                    <td class="table_hit">{{item.HIT_CNT}}</td></tr>
+                </tr>
+
+                </tbody>
+
+                <tbody class="on" data-ng-show="boardList == '' || boardList == null">
+
+                <tr>
+                    <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                </tr>
+
+                </tbody>
+            </table><!-- /.List-->
+            <nav class="text-center normaltype">
+                <pagination boundary-links="true" total-items="BOARD_TOTAL_COUNT" items-per-page="9" ng-model="BOARD_PAGE_NO" class="pagination-sm"  ng-change="pageChanged_board()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+            </nav>
+
+            <!-- /peoplepoll_list -->
+
+            <br/>
+
+            <h4 style="font-weight:bold;">사진게시판</h4>
+
+            <div class="container-fluid peoplephoto_list_wrap">
+                <div class="row">
+                    <div class="col-xs-12 v-cell-4">
+                        <div class="comp_basic h-cell-dynamic">
+
+                            <div ng-repeat='item in photoList'>
+                                <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
+                                <div class="col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.PHOTO_TYPE" -->
+                                    <div ng-click="click_showViewPeoplePhoto(item.COMM_NO, item.NO)" class="people_photo_content">
+                                        <div class="people_photo_imgbox">
+                                            <!--<img class="people_photo_img" ng-src="{{item.MAIN_FILE}}"/>-->
+                                            <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
+                                            <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" />
+                                            <img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" /> <!-- 삭제처리했을때 블라인드 이미지 추가해야함-->
+                                            <div class="people_photo_cate">
+                                                <span>{{item.CATEGORY_NM}}</span>
+                                                <div style="position:absolute; display:inline; bottom:8px; right:0;">
+                                                    <span class="feed_count countlike table_white">{{item.LIKE_CNT}}</span><!-- 공감수 -->
+                                                    <span class="feed_count countreply table_white">{{item.REPLY_COUNT}}</span>	<!-- 댓글수 -->
+                                                </div>
                                             </div>
+                                        </div>
 
-                                        </div><!-- /.comp_basic -->
-                                    </div><!-- /.v-cell-4 -->
-                                </div><!-- /.row -->
-                            </div><!-- /.peoplephoto_list_wrap -->
+                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
+                                            <a href="/people/{{item.MENU_ID}}/view/{{item.NO}}" target="_blank">
+                                                {{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}
+                                            </a>
+                                        </div>
+                                        <div class="people_photo_info"><span class="table_blue">{{item.NICK_NM}}</span> | {{item.REG_DT}}</div>
+                                    </div><!-- /.people_photo_content -->
+                                </div><!-- /.people_photo_contentcol -->
+                            </div><!-- /.people_photo_contentlist -->		<!-- 1줄	 -->
 
-                            <nav class="text-center">
-                                <pagination boundary-links="true" total-items="PHOTO_TOTAL_COUNT" ng-model="PHOTO_PAGE_NO" class="pagination-sm" ng-change="pagePhotoChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-                            </nav><!-- /.Paging-->
+                            <div ng-show="photoList == ''" style="text-align: center;">
+                                <p>조회 데이터가 없습니다.</p>
+                            </div>
 
-                            <br/>
+                        </div><!-- /.comp_basic -->
+                    </div><!-- /.v-cell-4 -->
+                </div><!-- /.row -->
+            </div><!-- /.peoplephoto_list_wrap -->
+            <nav class="text-center normaltype">
+                <pagination boundary-links="true" total-items="PHOTO_TOTAL_COUNT" items-per-page="9" ng-model="PHOTO_PAGE_NO" class="pagination-sm"  ng-change="pageChanged_photo()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+            </nav>
+            <br/>
 
-                            <h4 style="font-weight:bold;">상담게시판 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
-                            <!-- peoplepoll_list -->
-                            <table id="comp_board_table" class="table table-hover">
+            <h4 style="font-weight:bold;">상담게시판 <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h4>
+            <!-- peoplepoll_list -->
+            <table id="clinic_board_table" class="table table-hover">
 
-                                <thead>
-                                <tr class="board_thead" height="48">
-                                    <td><span class="board_th">제목</span></td>
-                                    <td width="92" align="center"><span class="board_th">작성자</span></td>
-                                    <td width="80"><span class="board_th">작성일</span></td>
-                                    <td width="60" align="center"><span class="board_th">답변</span></td>
-                                </tr>
-                                </thead>
+                <thead>
+                <tr class="board_thead" height="48">
+                    <td><span class="board_th">제목</span></td>
+                    <td width="92" align="center"><span class="board_th">작성자</span></td>
+                    <td width="80"><span class="board_th">작성일</span></td>
+                    <td width="60" align="center"><span class="board_th">답변</span></td>
+                </tr>
+                </thead>
 
-                                <tbody class="on" ng-repeat="item in clinicList">
+                <tbody class="on" ng-repeat="item in clinicList">
 
-                                    <tr ng-click="click_showViewPeopleClinic(item.COMM_NO, item.NO)" style="cursor:pointer;">
-                                        <td>
-                                            <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
-                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
-                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 된 글입니다</span>
-                                            <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                <tr ng-click="click_showViewPeopleClinic(item.COMM_NO, item.NO)" style="cursor:pointer;">
+                    <td>
+                        <a href="/people/{{item.MENU_ID}}/view/{{item.NO}}" target="_blank">
+                            <!--span ng-class="item.PASSWORD != '' ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span-->
+                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{item.PASSWORD}}{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                            <!--<span class="reply_num">[2]</span>-->
+                            <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                            <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                            <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                        </a>
+                    </td>
+                    <td  class="table_author">{{item.NICK_NM}}</td>
+                    <td class="table_date">{{item.REG_DT}}</td>
+                    <td class="table_hit">{{item.BOARD_REPLY_FL}}</td></tr>
+                </tr>
 
-                                            <!--<span class="reply_num">[2]</span>-->
-                                            <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
-                                            <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
-                                            <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
-                                        </td>
-                                        <td  class="table_author">{{item.NICK_NM}}</td>
-                                        <td class="table_date">{{item.REG_DT}}</td>
-                                        <td class="table_hit">{{item.BOARD_REPLY_FL}}</td></tr>
-                                    </tr>
+                </tbody>
 
-                                </tbody>
+                <tbody class="on" data-ng-show="clinicList == '' || clinicList == null">
 
-                                <tbody class="on" data-ng-show="clinicList == '' || clinicList == null">
+                <tr>
+                    <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                </tr>
 
-                                    <tr>
-                                        <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
-                                    </tr>
+                </tbody>
+            </table><!-- /.List-->
+            <nav class="text-center normaltype">
+                <pagination boundary-links="true" total-items="CLINIC_TOTAL_COUNT" items-per-page="9" ng-model="CLINIC_PAGE_NO" class="pagination-sm"  ng-change="pageChanged_clinic()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+            </nav>
 
-                                </tbody>
-                            </table><!-- /.List-->
+</div>
+</div>
+</div>
 
-                            <nav class="text-center">
-                                <pagination boundary-links="true" total-items="CLINIC_TOTAL_CNT" ng-model="CLINIC_PAGE_NO" class="pagination-sm" ng-change="pageClinicChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-                            </nav><!-- /.Paging-->
-
-                        </div>
-                    </div>
-                </div>
-
-            </div> <!-- rows -->
+</div> <!-- rows -->
 
 
-        </div><!-- container-fluid -->
+</div><!-- container-fluid -->
 
-    </div>
+</div>
 
-    <div class="subar sub-slide1">
-        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+<div class="subar sub-slide1">
+    <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
 
-        <!-- 1200px 이하일 경우 표시되는 footer -->
-        <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
-        <!-- /1200px 이하일 경우 표시되는 footer -->
-    </div>
+    <!-- 1200px 이하일 경우 표시되는 footer -->
+    <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
+    <!-- /1200px 이하일 경우 표시되는 footer -->
+</div>
 
-    <!-- /Main Page Layout Set -->
+<!-- /Main Page Layout Set -->
 </div>
 
 <script type="text/ng-template" id="myangeboard_view.html">

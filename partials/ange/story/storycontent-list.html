@@ -103,7 +103,8 @@
                             <div ng-switch-when="COVER">
                                 <div class="bob_title">
                                     <p>앙쥬스페셜</p>
-                                    <div class="bob_title_han">{{ item.DEPLOY_YMD | date:'yyyy' }}년 {{ item.DEPLOY_YMD | date:'MM' }}월</div>
+                                    <!--<div class="bob_title_han">{{ item.PROJECT_NM | date:'yyyy' }}년 {{ item.PROJECT_NM | date:'MM' }}월</div>-->
+                                    <div class="bob_title_han">{{ item.YEAR }}년 {{ item.MONTH }}월</div>
                                     <div class="bob_title_eng">
                                         {{
                                         item.MONTH == '01' ? 'January' :

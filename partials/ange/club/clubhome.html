@@ -472,10 +472,12 @@
                                             </div>
 
                                             <div class="col-xs-12 no-margin">
-                                                <div ng-model="ad" class="inven_themeup">
-                                                    <a class="ADbanner_image" title="배너타이틀">
+
+                                                <div ng-model="banner1" class="inven_themeup">
+                                                    <a class="ADbanner_image" title="{{banner1.ada_title}}">
                                                         <!--<img ng-src="{{ad.FILE}}"/>-->
-                                                        <img img src="/imgs/ange/temp/bn_jumbo.jpg"/>
+                                                        <!--<img ng-src="/imgs/ange/temp/bn_jumbo.jpg"/>-->
+                                                        <img ng-src="{{banner1.img}}"/>
                                                     </a>
                                                 </div>
                                             </div>
@@ -551,7 +553,7 @@
                                                             <li>주문 시 <span class="table_blue">&lt;앙쥬클럽회원&gt;</span> 임을 말씀하셔야 할인혜택을 받을수 있습니다.</li>
                                                             <li><span class="table_red">현금결제만</span> 가능합니다.(무통장입금)</li>
                                                             <li>주문한 도서는 <span class="table_red">반품,환불,취소가 되지 않습니다.</span></li>
-                                                            <li>상기 이벤트는 도서 재고에 다라 사전 공지없이 종료될 수 있습니다.</li>
+                                                            <li>상기 이벤트는 도서 재고에 따라 사전 공지없이 종료될 수 있습니다.</li>
 
                                                         </ul>
 
@@ -561,10 +563,10 @@
                                             <!-- /주의사항 -->
 
                                             <div class="col-xs-12 no-margin">
-                                                <div ng-model="ad" class="inven_themeup">
-                                                    <a class="ADbanner_image" title="배너타이틀">
+                                                <div ng-model="banner2" class="inven_themeup">
+                                                    <a class="ADbanner_image" title="{{banner2.ada_title}}">
                                                         <!--<img ng-src="{{ad.FILE}}"/>-->
-                                                        <img img src="/imgs/ange/temp/bn_jumbo.jpg"/>
+                                                        <img ng-src="{{banner2.img}}"/>
                                                     </a>
                                                 </div>
                                             </div>

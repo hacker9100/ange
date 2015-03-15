@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('clubhome', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $window, $location, dialogs, UPLOAD) {
+    controllers.controller('clubhome', ['$rootScope', '$scope', '$window', '$location', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $window, $location, dialogs, CONSTANT) {
 
         console.log($rootScope.role);
         console.log($rootScope.user_gb);
@@ -110,6 +110,31 @@ define([
             $scope.selectBoard = board_gb;
 
         }
+
+
+        // 하단 배너 이미지 조회
+        $scope.getBanner1 = function () {
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: CONSTANT.AD_CODE_BN01, ADA_STATE: 1}, false)
+                .then(function(data){
+                    $scope.banner1 = data[0];
+                    $scope.banner1.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                })
+                ['catch'](function(error){});
+        };
+
+        $scope.getBanner1();
+
+        // 하단 배너 이미지 조회
+        $scope.getBanner2 = function () {
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: CONSTANT.AD_CODE_BN01, ADA_STATE: 1}, false)
+                .then(function(data){
+                    $scope.banner2 = data[0];
+                    $scope.banner2.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                })
+                ['catch'](function(error){});
+        };
+
+        $scope.getBanner2();
 
         $scope.getSession()
             .then($scope.sessionCheck)

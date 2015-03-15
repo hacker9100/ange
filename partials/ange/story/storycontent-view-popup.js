@@ -36,12 +36,12 @@ define([
 
         /********** 콘텐츠 랜더링 **********/
 
-/*
-        $scope.renderHtml = function(html_code) {
-            return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
-//            return html_code;
-        };
-*/
+        /*
+         $scope.renderHtml = function(html_code) {
+         return html_code != undefined ? $sce.trustAsHtml(html_code) : '';
+         //            return html_code;
+         };
+         */
 
         /********** 이벤트 **********/
         $scope.click_ok = function () {
@@ -114,11 +114,11 @@ define([
             var popupWin = window.open('', '_blank', 'width=1000,height=900');
             popupWin.document.open()
             popupWin.document.write('<html><head>' +
-                                        '<link rel="stylesheet" type="text/css" href="/css/ange/normalize.css" >' +
-                                        '<link rel="stylesheet" type="text/css" href="/css/ange/ange_bootstrap.css" />' +
-                                        '<link rel="stylesheet" type="text/css" href="/css/ange/ange_style.css" />' +
-                                        '<link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />' +
-                                        '<link rel="stylesheet" type="text/css" href="/css/article.css" />' +
+                '<link rel="stylesheet" type="text/css" href="/css/ange/normalize.css" >' +
+                '<link rel="stylesheet" type="text/css" href="/css/ange/ange_bootstrap.css" />' +
+                '<link rel="stylesheet" type="text/css" href="/css/ange/ange_style.css" />' +
+                '<link rel="stylesheet" type="text/css" href="/lib/jquery/css/base/jquery-ui-1.10.2.min.css" />' +
+                '<link rel="stylesheet" type="text/css" href="/css/article.css" />' +
 //                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_main.css" />' +
 //                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_storylist.css" />' +
 //                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_people_main.css" />' +
@@ -130,7 +130,7 @@ define([
 //                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_infodesk_main.css" />' +
 //                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_join.css" />' +
 //                                        '<link rel="stylesheet" type="text/css" href="css/ange/ange_moms.css" />' +
-                                    '</head><body onload="window.print()"><div class="modal-body"><div class="story-row previewwrap"><div class="story-col-xs-12 article_previewwrap">' + printContents + '</div></div></div></html>');
+                '</head><body onload="window.print()"><div class="modal-body"><div class="story-row previewwrap"><div class="story-col-xs-12 article_previewwrap">' + printContents + '</div></div></div></html>');
             popupWin.document.close();
         };
 

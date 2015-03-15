@@ -90,7 +90,7 @@
                         (
                             sysdate(),
                             '".$_model['MESSAGE']."',
-                            '023334650',
+                            '".$_model['SEND_PHONE']."',
                             '0',
                             'Y',
                             '9'
@@ -177,6 +177,39 @@
                                 '".$i."',
                                 1,
                                 '".$row[PHONE_2]."',
+                                '".$_model['WORD1']."',
+                                '".$_model['WORD2']."',
+                                '".$_model['WORD3']."'
+                            )";
+
+                        $_d->sql_query($sql);
+
+                        if($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
+                    }
+                }
+
+                if (isset($_model[ADD_PHONE])) {
+                    $arr_phone = explode(",", $_model[ADD_PHONE]);
+                    for ($j=0; $j< sizeof($arr_phone); $j++) {
+                        $sql = "insert into em_smt_client
+                            (
+                                mt_pr,
+                                mt_seq,
+                                msg_status,
+                                recipient_num,
+                                change_word1,
+                                change_word2,
+                                change_word3
+                            )
+                            values
+                            (
+                                '".$no."',
+                                '".($i+$j)."',
+                                1,
+                                '".str_replace("-", "", trim($arr_phone[$j]))."',
                                 '".$_model['WORD1']."',
                                 '".$_model['WORD2']."',
                                 '".$_model['WORD3']."'
