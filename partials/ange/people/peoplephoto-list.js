@@ -219,7 +219,12 @@ define([
 
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
-                    console.log('$scope.SEARCH_TOTAL_COUNT = '+$scope.SEARCH_TOTAL_COUNT);
+
+                    //alert(i + " : " + data[0].CATEGORY_NM + "(" +search_total_cnt + ")");
+                    var search_now_category = data[0].CATEGORY_NM;
+                    $scope.SEARCH_NOW_CATEGORY = search_now_category;
+                    $scope.TOTAL_PAGES = Math.ceil($scope.SEARCH_TOTAL_COUNT/$scope.PAGE_SIZE);
+
                 })
                 ['catch'](function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0});
         };

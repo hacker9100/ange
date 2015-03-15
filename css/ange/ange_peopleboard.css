@@ -31,11 +31,17 @@
 }
 
 .peoplep_list_tab {
+    display: block;
 	padding: 0px 10px 6px 10px; 
 	background-image:url(/imgs/ange/comp_miniboard_hr.png); 
 	background-repeat: repeat-x; 
 	background-position: bottom;
 }
+
+.peoplep_list_dropdown {
+    display: none;
+}
+
 
 .peoplep_list_tab .tab_nopadding {
     padding-right:0px; padding-left:0px;
@@ -53,6 +59,22 @@
 .people_photo_contentcol {
 	padding:0px;
 }
+
+@media screen and (max-width: 768px) {
+    .peoplep_list_tab {
+        display: none;
+    }
+
+    .peoplep_list_dropdown {
+        display: block;
+    }
+}
+
+/*@media screen and (max-width: 768px) {*/
+    /*.people_photo_contentcol {*/
+        /*width:100% !important;*/
+    /*}*/
+/*}*/
 
 .people_photo_content {
 	width:100%;

@@ -8,12 +8,28 @@
                 <h3 style="font-weight:bold;">앙쥬클럽 이야기방 <a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">{{COMM_MG_NM}}</span></a></h3>
             </div>
 
+            <div class="container-fluid sub_contents_customizewrap">
+                <div class="row">
+                    <div class="col-xs-12 sub_contents_customize" style="height:255px;">
+
+                        <center>
+                            <img class="people_customize_bg" ng-src="/imgs/ange/club_board_talk_img.png" />
+                            <!--<img ng-if="tmpMenu == 'chlidoriental'" class="people_customize_bg" src="/imgs/temp/medical_consulting_child_03.png" />-->
+                            <!--<img ng-if="tmpMenu == 'obstetrics'" class="people_customize_bg" src="/imgs/temp/medical_consulting_babymom_03.png" />-->
+                            <!--<img ng-if="tmpMenu == 'momshealth'" class="people_customize_bg" src="/imgs/temp/medical_consulting_mom_03.png" />-->
+                            <!--<img ng-if="tmpMenu == 'financial'" class="people_customize_bg" src="/imgs/temp/medical_consulting_money_03.png" />-->
+                        </center>
+
+                    </div><!-- /.col-xs-12-->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+
             <div class="container-fluid sub_contents_search">
                 <div class="row">
                     <div class="col-xs-12" style="padding:0">
 
                         <div class="btn-group" style="float:left;">
-                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
+                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class="form-control input-sm" placeholder="검색선택"></select>
                         </div><!-- /btn-group -->
 
                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">

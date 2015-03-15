@@ -35,6 +35,18 @@
                                 <div class="row">
                                     <div class="col-xs-12" style="padding:0">
 
+                                        <div class="btn-group col-xs-12 col-sm-2" style="padding:2px 0px;">
+                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class="form-control input-sm" placeholder="검색선택"></select>
+                                        </div><!-- /btn-group -->
+
+                                        <div class="input-group input-group-sm col-xs-12 col-sm-7" style="padding:2px 0px;">
+                                            <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0"  class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+
+                                            <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+                                                <button class="btn btn-default"  type="button" ><span class="glyphicon glyphicon-search"></span></button>
+                                            </span>
+                                        </div>
+
 <!--                                        <div class="btn-group" style="float:left;">
                                             <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
 
@@ -47,18 +59,18 @@
                                                 <li><a href="#">제목+내용</a></li>
                                                 <li><a href="#">작성자</a></li>
                                             </ul>-->
-                                        <div class="btn-group" style="float:left;">
-                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
-                                        </div><!-- /btn-group -->
+                                        <!--<div class="btn-group" style="float:left;">-->
+                                            <!--<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>-->
+                                        <!--</div>&lt;!&ndash; /btn-group &ndash;&gt;-->
 
-                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                            <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+                                        <!--<div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">-->
+                                            <!--<input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0" class="form-control" placeholder="검색할 단어를 두자 이상 입력">-->
 
-                                            <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
-                                            <button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
-                                            </span>
+                                            <!--<span class="input-group-btn" ng-click="click_searchPeopleBoard();">-->
+                                            <!--<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>-->
+                                            <!--</span>-->
 
-                                        </div>
+                                        <!--</div>-->
 
                                         <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
                                             <div class="input-group input-group-sm">
@@ -69,16 +81,41 @@
                                             </div>
                                         </div -->
 
+                                        <!--<div class="btn-group col-xs-12" style="padding:2px 0px;">-->
+                                            <!--<select ng-model="category_list" ng-options="tab.CATEGORY_NM for tab in category_list" class="form-control input-sm" placeholder="전체"></select>-->
+                                        <!--</div>&lt;!&ndash; /btn-group &ndash;&gt;-->
+
+                                        <!--<div class="peoplep_list_tab">-->
+                                            <!--<ul class="nav nav-tabs">-->
+                                                <!--<li role="presentation" ng-repeat="tab in category_list" ng-class="selectIdx == $index ? 'active' : ''">-->
+                                                    <!--<a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}<span ng-hide="$index == 0">({{tab.TOTAL_COUNT}})</span></a> &lt;!&ndash; <span ng-hide="$index == 0">({{tab.CNT}})</span> &ndash;&gt;-->
+                                                <!--</li>-->
+                                            <!--</ul>-->
+                                        <!--</div>&lt;!&ndash; /.peoplep_list_tab &ndash;&gt;-->
+
                                     </div><!-- /.col-xs-12-->
 
                                     <div class="col-xs-12 people_searchresult" style="display:block;">	<!-- 검색 시에만 표시됩니다. -->
                                         {{PHOTO_TOTAL_COUNT}}개의 게시물 중 <span class="table_red">{{SEARCH_TOTAL_COUNT == null ? 0 : SEARCH_TOTAL_COUNT}}</span> 개가 검색되었습니다.
                                     </div><!-- /.col-xs-12-->
+
+                                    <div class="peoplep_list_dropdown">
+                                        <!--<pre>{{SEARCH_NOW_CATEGORY || '전체'}}</pre>-->
+                                        <button type="button" class="btn btn-default btn-sm col-xs-12 dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                            {{SEARCH_NOW_CATEGORY || '전체'}} &nbsp;
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li ng-repeat="tab in category_list">
+                                                <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}<span ng-hide="$index == 0">({{tab.TOTAL_COUNT}})</span></a>
+                                                <!-- span ng-hide="$index == 0">({{tab.CNT}})</span -->
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div><!-- /.row -->
                             </div><!-- /.container -->
 
                         </div><!-- /.sub_contents_wrap -->
-
 
                         <div class="sub_contents_body">
                             <!-- peoplephoto_list -->
@@ -88,16 +125,6 @@
                                         <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}<span ng-hide="$index == 0">({{tab.TOTAL_COUNT}})</span></a> <!-- <span ng-hide="$index == 0">({{tab.CNT}})</span> -->
                                     </li>
                                 </ul>
-
-                                <!--<ul class="nav nav-tabs">-->
-                                    <!--<li role="presentation" class="active"><a>전체</a></li>-->
-                                    <!--<li role="presentation"><a>이유식</a></li>-->
-                                    <!--<li role="presentation"><a>반찬</a></li>-->
-                                    <!--<li role="presentation"><a>한끼식사</a></li>-->
-                                    <!--<li role="presentation"><a>간식</a></li>-->
-                                    <!--<li role="presentation"><a>나들이</a></li>-->
-                                    <!--<li role="presentation"><a>스페셜</a></li>-->
-                                <!--</ul>-->
                             </div><!-- /.peoplep_list_tab -->
 
                             <div class="container-fluid peoplephoto_list_wrap">
@@ -107,12 +134,12 @@
 
                                             <div ng-repeat='item in list'>
                                             <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
-                                                <div class="col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
+                                                <div class="col-xs-12 col-sm-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
                                                     <div ng-click="click_showViewPeoplePhoto(item.NO)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
                                                             <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
                                                             <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" />
-                                                            <img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/_blank.gif')" /> <!-- 삭제처리했을때 블라인드 이미지 추가해야함-->
+                                                            <img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/noimage.png')" /> <!-- 삭제처리했을때 블라인드 이미지 추가해야함-->
                                                             <!--<img src="{{item.MAIN_FILE}}" class="people_photo_img" style="width: 240px; height: 240px;"/>-->
                                                             <div class="people_photo_cate">
                                                                 <span>{{item.CATEGORY_NM}}</span>
@@ -172,28 +199,20 @@
                                 <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
                             </div><!-- /.container -->
 
-                            <nav class="text-center">
-                                <pagination boundary-links="true" total-items="SEARCH_TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-<!--                                <ul class="pagination pagination-sm table_paging">
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="disabled">
-                                        <a href="#"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><span aria-hidden="true"><span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></span></a>
-                                    </li>
-                                </ul>-->
+                            <nav class="text-center normaltype">
+                                <pagination boundary-links="true" total-items="SEARCH_TOTAL_COUNT" items-per-page="9" ng-model="PAGE_NO" class="pagination-sm"  ng-change="pageChanged()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="SEARCH_TOTAL_COUNT" ng-change="pageChanged()" items-per-page="9" ng-model="PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_PAGES}}
+                                </div>
+                            </nav>
+
+                            <!--<nav class="text-center">-->
+                                <!--<pagination boundary-links="true" total-items="SEARCH_TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>&lt;!&ndash; -->
+                            <!--</nav>&lt;!&ndash; /.Paging&ndash;&gt;-->
                             <!-- /peoplephoto_list -->
 
                         </div><!-- /.sub_contents_body -->
