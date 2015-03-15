@@ -53,7 +53,7 @@ define(['./directives'], function (directives) {
 
                         if (scope.menu_info[j].DEPTH == '1') {
                             if( nowpath[2] == path[2] ){
-                                templet += '<a class="localmenu_link main ' + angular.lowercase(scope.menu_info[j].CLASS_GB) + ' nowmenu" ng-click="click_selectMenu(1, \''+scope.menu_info[j].MENU_ID+'\', \''+scope.menu_info[j].MENU_URL + '\', \'' + scope.menu_info[j].LINK_FL+'\')" style="cursor:default;' + (scope.menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '')+'">' + scope.menu_info[j].MENU_NM + '</a>';
+                                templet += '<a class="localmenu_link main ' + angular.lowercase(scope.menu_info[j].CLASS_GB) + ' nowmenu" ng-click="click_selectMenu(1, \''+scope.menu_info[j].MENU_ID+'\', \'\', \''+scope.menu_info[j].MENU_URL + '\', \'' + scope.menu_info[j].LINK_FL+'\')" style="cursor:default;' + (scope.menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '')+'">' + scope.menu_info[j].MENU_NM + '</a>';
                             } else {
                                 templet += '<a class="localmenu_link main ' + angular.lowercase(scope.menu_info[j].CLASS_GB) + (scope.menu_info[j].LINK_FL == 'N' ? ' notlink' : '') + '" ng-click="click_selectMenu(\''+scope.menu_info[j].MENU_URL + '\', \'' + scope.menu_info[j].LINK_FL+'\')" style="' + (scope.menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '') + '">' + scope.menu_info[j].MENU_NM + '</a>';
 //                                templet += '<a class="localmenu_link main ' + angular.lowercase(scope.menu_info[j].CLASS_GB) + '" ng-click="click_selectMenu(\''+scope.menu_info[j].MENU_URL + '\', \'' + scope.menu_info[j].LINK_FL+'\')" style="' + (scope.menu_info[j].LINK_FL == 'N' ? 'cursor:default;' : 'cursor:pointer;')+(scope.menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '') + '">' + scope.menu_info[j].MENU_NM + '</a>';
@@ -67,9 +67,9 @@ define(['./directives'], function (directives) {
                                 //templet += '<div style="font-size:0.68em;">' + scope.location + '<br />' + scope.menu_info[j].MENU_URL + '</div>'; //임시블럭
 
                                 if( nowpath[2] == path[2] ){
-                                    templet += '<a class="localmenu_link sub nowmenu" ng-click="click_selectMenu(2, \''+scope.menu_info[j].MENU_ID+'\', \''+scope.menu_info[j].MENU_URL+'\', \''+scope.menu_info[j].LINK_FL+'\')" style="' + (scope.menu_info[j].LINK_FL == 'C' ? 'color:#bcbcbc;' : '') + '">' + scope.menu_info[j].MENU_NM + '</a>';
+                                    templet += '<a class="localmenu_link sub nowmenu" ng-click="click_selectMenu(2, \''+scope.menu_info[j].MENU_ID+'\', \''+scope.menu_info[j].PARENT_ID+'\', \''+scope.menu_info[j].MENU_URL+'\', \''+scope.menu_info[j].LINK_FL+'\')" style="' + (scope.menu_info[j].LINK_FL == 'C' ? 'color:#bcbcbc;' : '') + '">' + scope.menu_info[j].MENU_NM + '</a>';
                                 } else {
-                                    templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(2, \''+scope.menu_info[j].MENU_ID+'\', \''+scope.menu_info[j].MENU_URL+'\', \''+scope.menu_info[j].LINK_FL+'\')" style="' + (scope.menu_info[j].LINK_FL == 'C' ? 'color:#bcbcbc;' : '') + '">' + scope.menu_info[j].MENU_NM + '</a>';
+                                    templet += '<a class="localmenu_link sub" ng-click="click_selectMenu(2, \''+scope.menu_info[j].MENU_ID+'\', \''+scope.menu_info[j].PARENT_ID+'\', \''+scope.menu_info[j].MENU_URL+'\', \''+scope.menu_info[j].LINK_FL+'\')" style="' + (scope.menu_info[j].LINK_FL == 'C' ? 'color:#bcbcbc;' : '') + '">' + scope.menu_info[j].MENU_NM + '</a>';
                                 }
                             }
                         }
@@ -176,16 +176,16 @@ define(['./directives'], function (directives) {
 //                            }
 
                             if( scope.menu_info[k].DEPTH == '1'){
-                                menu_big += '<li><a href="" ng-click="click_selectMenu(1, \''+scope.menu_info[k].MENU_ID+'\', \''+scope.menu_info[k].MENU_URL+'\', \''+scope.menu_info[k].LINK_FL+'\')" >' + scope.menu_info[k].MENU_NM + '</a></li>';
+                                menu_big += '<li><a href="" ng-click="click_selectMenu(1, \''+scope.menu_info[k].MENU_ID+'\', \'\', \''+scope.menu_info[k].MENU_URL+'\', \''+scope.menu_info[k].LINK_FL+'\')" >' + scope.menu_info[k].MENU_NM + '</a></li>';
                             } else {
-                                menu_small += '<li><a href="" ng-click="click_selectMenu(2, \''+scope.menu_info[k].MENU_ID+'\', \''+scope.menu_info[k].MENU_URL+'\', \''+scope.menu_info[k].LINK_FL+'\')" >' + scope.menu_info[k].MENU_NM + '</a></li>';
+                                menu_small += '<li><a href="" ng-click="click_selectMenu(2, \''+scope.menu_info[k].MENU_ID+'\', \'\', \''+scope.menu_info[k].MENU_URL+'\', \''+scope.menu_info[k].LINK_FL+'\')" >' + scope.menu_info[k].MENU_NM + '</a></li>';
                             }
                         }
                     }
 
-                    templet += now_title;
-                    console.log(menu_big);
-
+//                    templet += now_title;
+//                    console.log(menu_big);
+                    templet += '                {{ depth1_nm == \'\' ? \'대메뉴\' : depth1_nm }}';
                     templet += '                   <span class="caret" style="margin-left:5px;"></span>';
                     templet += '               </button>';
                     templet += '                <ul class="dropdown-menu" role="menu" style="top:33px;">';
@@ -197,15 +197,15 @@ define(['./directives'], function (directives) {
                                 '</div>' +
                                 '</div>';
 
-                    templet += '    <div class="localmenu_mobile_col smenu">';
+                    templet += '    <div ng-show="depth2 != \'\'" class="localmenu_mobile_col smenu">';
                     templet += '        <div class="btn-group" role="group" aria-label="Depth-2">';
                     templet += '            <div class="btn-group" role="button">';
                     templet += '                <button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; text-decoration: none;">';
-                    templet += '                Depth2';
+                    templet += '                {{ depth2_nm == \'\' ? \'소메뉴\' : depth2_nm }}';
                     templet += '                   <span class="caret" style="margin-left:5px;"></span>';
                     templet += '                </button>';
                     templet += '                <ul class="dropdown-menu" role="menu" style="top:33px;">';
-                    templet += '                    <li ng-repeat="small in depth2" ><a ng-click="click_selectMenu(2, small.MENU_ID, small.MENU_URL, small.LINK_FL)" > {{ small.MENU_NM }} </a></li>';
+                    templet += '                    <li ng-repeat="small in depth2" ><a ng-click="click_selectMenu(2, small.MENU_ID, small.PARENT_ID, small.MENU_URL, small.LINK_FL)" > {{ small.MENU_NM }} </a></li>';
 
 //                    templet += menu_small;
 
@@ -253,20 +253,41 @@ define(['./directives'], function (directives) {
 //                    })
 //                        ['catch'](function(error){});
 
-//                    var current_menu = null;
-//
-//                    for (var i in $scope.menu_info) {
-//                        console.log($scope.menu_info[i].DEPTH)
-//                        if ($scope.menu_info[i].DEPTH == '1' && $scope.menu_info[i+1].DEPTH != '1') {
-//                            current_menu = $scope.menu_info[i];
-//                        } else if ($scope.menu_info[i].DEPTH == '2' && $scope.menu_info[i+1].DEPTH != '2') {
-//                            current_menu.SUB_MENU.push($scope.menu_info[i]);
-//                        }
-//                    }
+                    var current_menu = null;
+                    var current_pid = null;
+                    $scope.depth2 = [];
+                    $scope.depth1_nm = '';
+                    $scope.depth2_nm = '';
+
+                    for (var i in $scope.menu_info) {
+                        if ($scope.menu_info[i].DEPTH == '1') {
+                            current_menu = $scope.menu_info[i];
+                            current_menu.SUB_MENU = [];
+                        } else if ($scope.menu_info[i].DEPTH == '2') {
+                            $scope.menu_info[i].PARENT_ID = current_menu.MENU_ID;
+                            current_menu.SUB_MENU.push($scope.menu_info[i]);
+                        }
+
+                        if ($scope.menu_info[i].MENU_ID == $scope.path[2]) {
+                            if ($scope.menu_info[i].DEPTH == '1') {
+                                $scope.depth1_nm = $scope.menu_info[i].MENU_NM;
+                            } else {
+                                $scope.depth2_nm = $scope.menu_info[i].MENU_NM;
+                                current_pid = current_menu.MENU_ID;
+                            }
+                        }
+                    }
+
+                    for (var i in $scope.menu_info) {
+                        if ($scope.menu_info[i].DEPTH == '1' && $scope.menu_info[i].MENU_ID == current_pid) {
+                            $scope.depth1_nm = $scope.menu_info[i].MENU_NM;
+                            $scope.depth2 = $scope.menu_info[i].SUB_MENU;
+                        }
+                    }
                 };
 
                 /********** 이벤트 **********/
-                $scope.click_selectMenu = function(depth, id, url, link) {
+                $scope.click_selectMenu = function(depth, id, pid, url, link) {
 
                     if($scope.location == url){
 
@@ -300,6 +321,28 @@ define(['./directives'], function (directives) {
                         dialogs.notify('알림', '점검중입니다.', {size: 'md'});
                     } else if (link != 'N') {
                         $location.url(url);
+                    }
+
+                    $scope.depth2 = [];
+                    $scope.depth1_nm = '';
+                    $scope.depth2_nm = '';
+
+                    if (depth == 1) {
+                        for (var i in $scope.menu_info) {
+                            if ($scope.menu_info[i].DEPTH == '1' && $scope.menu_info[i].MENU_ID == id) {
+                                $scope.depth1_nm = $scope.menu_info[i].MENU_NM;
+                                $scope.depth2 = $scope.menu_info[i].SUB_MENU;
+                            }
+                        }
+                    } else  if (depth == 2) {
+                        for (var i in $scope.menu_info) {
+                            if ($scope.menu_info[i].DEPTH == '2' && $scope.menu_info[i].MENU_ID == id) {
+                                $scope.depth2_nm = $scope.menu_info[i].MENU_NM;
+                            } else if ($scope.menu_info[i].DEPTH == '1' && $scope.menu_info[i].MENU_ID == pid) {
+                                $scope.depth1_nm = $scope.menu_info[i].MENU_NM;
+                                $scope.depth2 = $scope.menu_info[i].SUB_MENU;
+                            }
+                        }
                     }
 
 //                    var checkDepth = false;

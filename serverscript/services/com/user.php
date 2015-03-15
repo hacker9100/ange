@@ -877,7 +877,38 @@
                         $to_user = $_model[USER_NM];
                         $headers = "From: hacker9100@gmail.com";
                         $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-                        $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>이메일 인증</a>";
+//                        $message = "안녕하세요. ".$_model[USER_NM]." 회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>이메일 인증</a>";
+                        $message = "<head>
+                                    <title>@ange_member</title>
+                                    <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+                                    </head>
+                                    <body bgcolor='#FFFFFF' leftmargin='0' topmargin='0' marginwidth='0' marginheight='0'>
+                                    <!-- Save for Web Slices (@ange_member.psd) -->
+                                    <table id='Table_01' width='676' border='0' cellpadding='0' cellspacing='0'>
+                                        <tr>
+                                            <td width='50'>
+                                                <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_01.jpg' width='676' height='107' alt=''></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_02.jpg' width='676' height='150' alt=''></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_03-2.jpg' alt='' width='676' height='183' usemap='#Map' border='0'>
+                                                <map name='Map'>
+                                                    <area shape='rect' coords='180,80,495,142' href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>
+                                                </map>
+                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_04.jpg' width='676' height='148' alt=''>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    </body>
+                                    </html>";
 
 //                        MtUtil::sendMail($to, $subject, $message, $headers);
                         MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
@@ -913,7 +944,38 @@
                 $to_user = $_model[USER_NM];
                 $headers = "From: hacker9100@gmail.com";
                 $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
-                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>이메일 인증</a>";
+//                $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>이메일 인증</a>";
+                $message = "<head>
+                            <title>@ange_member</title>
+                            <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+                            </head>
+                            <body bgcolor='#FFFFFF' leftmargin='0' topmargin='0' marginwidth='0' marginheight='0'>
+                            <!-- Save for Web Slices (@ange_member.psd) -->
+                            <table id='Table_01' width='676' border='0' cellpadding='0' cellspacing='0'>
+                                <tr>
+                                    <td width='50'>
+                                        <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_01.jpg' width='676' height='107' alt=''></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_02.jpg' width='676' height='150' alt=''></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_03-2.jpg' alt='' width='676' height='183' usemap='#Map' border='0'>
+                                        <map name='Map'>
+                                            <area shape='rect' coords='180,80,495,142' href='".BASE_URL."/serverscript/services/com/user.php?_method=PUT&_type=cert&_key=".$_model[USER_ID]."&_hash=ange'>
+                                        </map>
+                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img src='".BASE_URL."/imgs/ange/mail/@ange_mailconfirm_04.jpg' width='676' height='148' alt=''>
+                                    </td>
+                                </tr>
+                            </table>
+                            </body>
+                            </html>";
 
                 MtUtil::_d("------------>>>>> mail : ");
 
