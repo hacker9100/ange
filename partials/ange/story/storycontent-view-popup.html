@@ -8,28 +8,35 @@
 </div>
 
 <div ng-model="task" class="modal-body">
-<div class="people_photo_sharewrap" style="width:100%; max-width:780px; position:absolute; top:10px; right:5%;">
+<div class="people_photo_sharewrap" style="width:90%; margin:0px auto; margin-top:15px;">
     <style>
-        .ebook_view_button{ display: block; float: left; border-radius: 6px; border: 1px solid #FF8000; color: #FF8000; padding: 5px 10px; cursor: pointer;}
+        .ebook_view_button{ display: block; float: left; border-radius: 12px; margin-top:2px; border: 1px solid #FF8000; color: #FF8000; padding: 2px 4px; cursor: pointer; line-height:14px; font-size:0.78em;}
         .ebook_view_button:hover{ background-color: #fff; }
     </style>
-    <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=19&catimage=&callmode=admin','_blank','width=1100,height=750');" data-ng-show="task.NO=='481'" class="ebook_view_button" style="">eBook 보기</div>
-    <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=23&catimage=&callm','_blank','width=1100,height=750');" data-ng-show="task.NO=='414'" class="ebook_view_button" style="">eBook 보기</div>
+    <!--<div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=19&catimage=&callmode=admin','_blank','width=1100,height=750');" data-ng-show="task.NO=='481'" class="ebook_view_button" style="">eBook 보기</div>-->
+    <!--<div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=23&catimage=&callm','_blank','width=1100,height=750');" data-ng-show="task.NO=='414'" class="ebook_view_button" style="">eBook 보기</div>-->
 
     <div class="people_share">
-        <button class="story_sharebtn kakaobtn" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="카카오스토리에 공유"><span class="story_btnicon kakao"></span>카카오</button>
-        <button class="story_sharebtn twitterbtn" ng-click="click_loginWithTwitter()" title="트위터에 공유"><span class="story_btnicon twitter"></span>트위터</button>
-        <button class="story_sharebtn facebookbtn" ng-click="click_loginWithFacebook()" title="페이스북에 공유"><span class="story_btnicon facebook"></span>페이스북</button>
-        <button class="story_sharebtn blackbtn" ng-click="click_printDiv('content')" title="인쇄하기"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
+        <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=19&catimage=&callmode=admin','_blank','width=1100,height=750');" data-ng-show="task.NO=='481'" class="ebook_view_button">
+            <span class="glyphicon glyphicon-book" aria-hidden="true"></span> eBook
+        </div>
+        <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=23&catimage=&callm','_blank','width=1100,height=750');" data-ng-show="task.NO=='414'" class="ebook_view_button">
+            <span class="glyphicon glyphicon-book" aria-hidden="true"></span> eBook
+        </div>
+
         <!--<button class="story_sharebtn blackbtn" ng-click="click_shareContent()" title="이 글을 공유하려면 클릭"><span class="glyphicon glyphicon-cloud-upload sharebtn_icon"></span>공 유</button>-->
         <button class="story_sharebtn redbtn" ng-click="click_addScrap();" title="스크랩하기"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>
+        <button class="story_sharebtn blackbtn" ng-click="click_printDiv('storycontent')" title="인쇄하기"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
+        <button class="story_sharebtn facebookbtn" ng-click="click_loginWithFacebook()" title="페이스북에 공유"><span class="story_btnicon facebook"></span>페이스북</button>
+        <button class="story_sharebtn twitterbtn" ng-click="click_loginWithTwitter()" title="트위터에 공유"><span class="story_btnicon twitter"></span>트위터</button>
+        <button class="story_sharebtn kakaobtn" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="카카오스토리에 공유"><span class="story_btnicon kakao"></span>카카오</button>
     </div>
 
     <div class="people_share_mobile">
         <button class="story_sharebtn_mobile kakao" id="kakao-login-btn" ng-click="click_loginWithKakao()" title="카카오스토리에 공유"></button>
         <button class="story_sharebtn_mobile twitter" ng-click="click_loginWithTwitter()" title="트위터에 공유"></button>
         <button class="story_sharebtn_mobile facebook" ng-click="click_loginWithFacebook()" title="페이스북에 공유"></button>
-        <button class="story_sharebtn_mobile priint" ng-click="click_printDiv('content')" title="인쇄하기"></button>
+        <button class="story_sharebtn_mobile priint" ng-click="click_printDiv('storycontent')" title="인쇄하기"></button>
         <button class="story_sharebtn_mobile scrap" ng-click="click_addScrap();" title="스크랩하기"></button>
     </div>
 </div>
@@ -42,9 +49,10 @@
     <div id="content" name="content" ng-model="content" class="story-col-xs-12 article_previewwrap">
 
         <!--<div ng-bind-html="renderHtml(content.BODY)"></div>-->
-        <div ng-bind-html="renderHtml"></div>
+        <div id="storycontent" name="storycontent" ng-bind-html="renderHtml"></div>
 
         <div>
+            <p style="page-break-before: always; "></p>
 
             <div class="storyplus_wrap">
                 <div class="modal-header article_windowtitle">

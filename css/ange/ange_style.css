@@ -2575,6 +2575,7 @@ img.blank_wrap {
     float:right;
     line-height:20px;
     vertical-align:top;
+    width:100%;
 }
 
 .people_share_mobile {
@@ -2583,7 +2584,6 @@ img.blank_wrap {
     line-height:20px;
     vertical-align:top;
 }
-
 
 @media screen and (max-width: 768px) {
     .people_share_mobile {
@@ -2595,14 +2595,15 @@ img.blank_wrap {
     }
 }
 
-
-
 .story_sharebtn {
     font-size: 0.78em;
+    line-height: 16px;
     line-height: 16px;
     background-color:#fff;
     border-radius:20px;
     opacity: 0.75;
+    float:right;
+    margin-right:4px;
 }
 
 .story_sharebtn.redbtn {
