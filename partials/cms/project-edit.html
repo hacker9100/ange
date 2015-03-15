@@ -121,10 +121,10 @@
                     <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 개요.."/>
                 </div>
             </div>
-            <div class= "form-group form_basic_group" ng-show="item.NO">
-                <label class= "form_basic_label"></label>
-                <div class="form_basic_input">
-                    <input ng-model="item.COMPLETE_FL" type="checkbox"> 이 프로젝트의 모든 콘텐츠 등록이 완료되었습니다.
+            <div class="form-group form_basic_group" ng-show="item.NO" style="height:40px;">
+                <!--<label class= "form_basic_label"></label>-->
+                <div class="form_basic_input" style="float:none;margin-top:15px;">
+                    <input ng-model="item.COMPLETE_FL" type="checkbox" style="float:none;"> 이 프로젝트의 모든 콘텐츠 등록이 완료되었습니다.
                 </div>
             </div>
 
