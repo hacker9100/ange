@@ -30,7 +30,7 @@ define([
                 sd_01 = CONSTANT.AD_CODE_BN17;
                 sd_02 = CONSTANT.AD_CODE_BN16;
             } else if ($scope.channel.CHANNEL_NO == 8) {
-                sd_01 = CONSTANT.AD_CODE_BN29;
+                sd_01 = CONSTANT.AD_CODE_BN56;
                 sd_02 = CONSTANT.AD_CODE_BN30;
             }
 
