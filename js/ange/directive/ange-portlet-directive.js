@@ -1076,6 +1076,7 @@ define([
                 if ($scope.option.type == 'banner') {
                     $scope.search.ADP_IDX = $scope.option.gb == undefined ? '' : $scope.option.gb;
                     $scope.search.BANNER_ST = 1;
+                    $scope.search.ADA_TYPE = $scope.option.type;
                     $scope.search.MENU = $scope.path[1];
                     $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
                 } else if ($scope.option.type == 'experience') {
@@ -1301,6 +1302,7 @@ define([
 //                    $scope.search.PROCESS = true;
                     $scope.search.ADP_IDX = $scope.option.gb;
                     $scope.search.ADA_STATE = 1;
+                    $scope.search.ADA_TYPE = 'banner';
                     $scope.search.MENU = $scope.path[1];
                     $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
                 }
@@ -1365,6 +1367,7 @@ define([
                     $scope.search.PROCESS = true;
                     $scope.search.ADP_IDX = $scope.option.gb;
                     $scope.search.ADA_STATE = 1;
+                    $scope.search.ADA_TYPE = 'banner';
                     $scope.search.MENU = $scope.path[1];
                     $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
                 }
@@ -1430,6 +1433,7 @@ define([
 //                    $scope.search.PROCESS = true;
                     $scope.search.ADP_IDX = $scope.option.gb;
                     $scope.search.ADA_STATE = 1;
+                    $scope.search.ADA_TYPE = 'banner';
                     $scope.search.MENU = $scope.path[1];
                     $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
                 }

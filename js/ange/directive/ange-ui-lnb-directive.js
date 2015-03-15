@@ -55,7 +55,7 @@ define(['./directives'], function (directives) {
                             if( nowpath[2] == path[2] ){
                                 templet += '<a class="localmenu_link main ' + angular.lowercase(scope.menu_info[j].CLASS_GB) + ' nowmenu" ng-click="click_selectMenu(1, \''+scope.menu_info[j].MENU_ID+'\', \'\', \''+scope.menu_info[j].MENU_URL + '\', \'' + scope.menu_info[j].LINK_FL+'\')" style="cursor:default;' + (scope.menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '')+'">' + scope.menu_info[j].MENU_NM + '</a>';
                             } else {
-                                templet += '<a class="localmenu_link main ' + angular.lowercase(scope.menu_info[j].CLASS_GB) + (scope.menu_info[j].LINK_FL == 'N' ? ' notlink' : '') + '" ng-click="click_selectMenu(\''+scope.menu_info[j].MENU_URL + '\', \'' + scope.menu_info[j].LINK_FL+'\')" style="' + (scope.menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '') + '">' + scope.menu_info[j].MENU_NM + '</a>';
+                                templet += '<a class="localmenu_link main ' + angular.lowercase(scope.menu_info[j].CLASS_GB) + (scope.menu_info[j].LINK_FL == 'N' ? ' notlink' : '') + '" ng-click="click_selectMenu(1, \''+scope.menu_info[j].MENU_ID+'\', \'\', \''+scope.menu_info[j].MENU_URL + '\', \'' + scope.menu_info[j].LINK_FL+'\')" style="' + (scope.menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '') + '">' + scope.menu_info[j].MENU_NM + '</a>';
 //                                templet += '<a class="localmenu_link main ' + angular.lowercase(scope.menu_info[j].CLASS_GB) + '" ng-click="click_selectMenu(\''+scope.menu_info[j].MENU_URL + '\', \'' + scope.menu_info[j].LINK_FL+'\')" style="' + (scope.menu_info[j].LINK_FL == 'N' ? 'cursor:default;' : 'cursor:pointer;')+(scope.menu_info[j].LINK_FL == 'C' ? 'opacity:.35;' : '') + '">' + scope.menu_info[j].MENU_NM + '</a>';
                             }
 
@@ -185,7 +185,7 @@ define(['./directives'], function (directives) {
 
 //                    templet += now_title;
 //                    console.log(menu_big);
-                    templet += '                {{ depth1_nm == \'\' ? \'대메뉴\' : depth1_nm }}';
+                    templet += '                {{ depth1_nm == \'\' ? \'선택\' : depth1_nm }}';
                     templet += '                   <span class="caret" style="margin-left:5px;"></span>';
                     templet += '               </button>';
                     templet += '                <ul class="dropdown-menu" role="menu" style="top:33px;">';
@@ -201,7 +201,7 @@ define(['./directives'], function (directives) {
                     templet += '        <div class="btn-group" role="group" aria-label="Depth-2">';
                     templet += '            <div class="btn-group" role="button">';
                     templet += '                <button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; text-decoration: none;">';
-                    templet += '                {{ depth2_nm == \'\' ? \'소메뉴\' : depth2_nm }}';
+                    templet += '                {{ depth2_nm == \'\' ? \'선택\' : depth2_nm }}';
                     templet += '                   <span class="caret" style="margin-left:5px;"></span>';
                     templet += '                </button>';
                     templet += '                <ul class="dropdown-menu" role="menu" style="top:33px;">';

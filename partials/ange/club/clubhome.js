@@ -114,7 +114,14 @@ define([
 
         // 하단 배너 이미지 조회
         $scope.getBanner1 = function () {
-            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: CONSTANT.AD_CODE_BN01, ADA_STATE: 1}, false)
+            $scope.search = {};
+            $scope.search.ADP_IDX = CONSTANT.AD_CODE_BN57;
+            $scope.search.ADA_STATE = 1;
+            $scope.search.ADA_TYPE = 'banner';
+            $scope.search.MENU = $scope.path[1];
+            $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, $scope.search, false)
                 .then(function(data){
                     $scope.banner1 = data[0];
                     $scope.banner1.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
@@ -126,7 +133,14 @@ define([
 
         // 하단 배너 이미지 조회
         $scope.getBanner2 = function () {
-            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, {ADP_IDX: CONSTANT.AD_CODE_BN01, ADA_STATE: 1}, false)
+            $scope.search = {};
+            $scope.search.ADP_IDX = CONSTANT.AD_CODE_BN57;
+            $scope.search.ADA_STATE = 1;
+            $scope.search.ADA_TYPE = 'banner';
+            $scope.search.MENU = $scope.path[1];
+            $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, $scope.search, false)
                 .then(function(data){
                     $scope.banner2 = data[0];
                     $scope.banner2.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;

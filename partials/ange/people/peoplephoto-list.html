@@ -122,7 +122,7 @@
                             <div class="peoplep_list_tab">
                                 <ul class="nav nav-tabs">
                                     <li role="presentation" ng-repeat="tab in category_list" ng-class="selectIdx == $index ? 'active' : ''">
-                                        <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}<span ng-hide="$index == 0">({{tab.TOTAL_COUNT}})</span></a> <!-- <span ng-hide="$index == 0">({{tab.CNT}})</span> -->
+                                        <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}<span ng-hide="true">({{tab.TOTAL_COUNT}})</span></a> <!-- <span ng-hide="$index == 0">({{tab.CNT}})</span> -->
                                     </li>
                                 </ul>
                             </div><!-- /.peoplep_list_tab -->
@@ -205,9 +205,7 @@
                             </div><!-- /.container -->
 
                             <nav class="text-center normaltype">
-                                <pagination boundary-links="true" total-items="SEARCH_TOTAL_COUNT" items-per-page="9" ng-model="PAGE_NO" class="pagination-sm"  ng-change="pageChanged()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-                            <nav class="text-center">
-                                <pagination boundary-links="true" items-per-page="9" total-items="SEARCH_TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                <pagination boundary-links="true" total-items="SEARCH_TOTAL_COUNT" items-per-page="9" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 <!--                                <ul class="pagination pagination-sm table_paging">
                                     <li class="disabled">
                                         <a href="#"><span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>

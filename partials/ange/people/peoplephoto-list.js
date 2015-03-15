@@ -107,7 +107,7 @@ define([
                 })
                 ['catch'](function(error){$scope.PHOTO_TOTAL_COUNT = 0;});
 
-            $scope.search.TOTAL_COUNT = true;
+//            $scope.search.TOTAL_COUNT = true;
             // 카테고리 탭 셋팅
             $scope.getList('com/webboard', 'category', {}, $scope.search, true)
                 .then(function(data){
