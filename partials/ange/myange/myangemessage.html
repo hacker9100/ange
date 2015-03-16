@@ -217,7 +217,10 @@
 
                             <div class="people_view_wrap" style="display:block;" ng-show="searchUsetList == 'Y'">
                                 <dl ng-repeat="item in list" style="width:90%; margin:18px auto;">
-                                    <dd ng-click="select_user(item.USER_ID, item.NICK_NM);" style="float:left; width:33%; cursor:pointer;"><img class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}"> {{item.NICK_NM}}</dd>
+                                    <dd ng-click="select_user(item.USER_ID, item.NICK_NM);" style="float:left; width:33%; cursor:pointer;">
+                                        <img ng-if="!item.profileImg" class="profile_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}">
+                                        <img ng-if="item.profileImg" class="profile_pic" ng-style="{'background-image' : 'url('+item.profileImg+')'}"> {{item.NICK_NM}}
+                                    </dd>
                                 </dl>
 
                                 <dl ng-show="list == '' || list == null" style="width:90%; margin:18px auto;">
