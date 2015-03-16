@@ -49,24 +49,21 @@ switch ($_method) {
 //                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
 //                }
 
-
-
             $err = 0;
             $msg = "";
 
             $sql = "SELECT
-	                        USER_ID, PRODUCT_NO, (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AC.PRODUCT_NO) AS PRODUCT_NM,
-	                        PRODUCT_CNT, REG_DT
-                        FROM
-                            ANGE_CART AC
-                        WHERE
-                            PRODUCT_NO = ".$_key."
-                            ".$search_where."
+                        USER_ID, PRODUCT_NO, (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AC.PRODUCT_NO) AS PRODUCT_NM,
+                        PRODUCT_CNT, REG_DT
+                    FROM
+                        ANGE_CART AC
+                    WHERE
+                        PRODUCT_NO = ".$_key."
+                        ".$search_where."
 
-                        ";
+                    ";
 
-            $result = $_d->sql_query($sql);
-            $data = $_d->sql_fetch_array($result);
+            $data = $_d->sql_fetch($sql);
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -74,37 +71,16 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'PRODUCT'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
+                    FROM
+                        COM_FILE F
+                    WHERE
+                        F.TARGET_GB = 'PRODUCT'
+                        AND F.TARGET_NO = ".$_key."
+                    ";
 
             $file_data = $_d->getData($sql);
             $data['FILES'] = $file_data;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            /*
-                            $sql = "SELECT
-                                        NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
-                                    FROM
-                                        COM_REPLY
-                                    WHERE
-                                        TARGET_NO = ".$_key."
-                                    ";
-
-                            $reply_data = $_d->getData($sql);
-                            $data['REPLY'] = $reply_data;
-            */
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -138,9 +114,10 @@ switch ($_method) {
                 $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
             }
 
-            $sql = "SELECT    PRODUCT_NO, USER_ID, PRODUCT_CNT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PRODUCT_NM, PRICE,
-                           TOTAL_COUNT, PRODUCT_CNT * PRICE AS TOTAL_PRICE, PRODUCT_GB, NO, DELEIVERY_ST, DELEIVERY_PRICE,DIRECT_PRICE,
-                           CASE PRODUCT_GB WHEN 'CUMMERCE' THEN '커머스' WHEN 'AUCTION' THEN '경매소' WHEN 'MILEAGE' THEN '마일리지' ELSE '기타' END AS PRODUCT_GB_NM
+            $sql = "SELECT
+                       PRODUCT_NO, USER_ID, PRODUCT_CNT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PRODUCT_NM, PRICE,
+                       TOTAL_COUNT, PRODUCT_CNT * PRICE AS TOTAL_PRICE, PRODUCT_GB, NO, DELEIVERY_ST, DELEIVERY_PRICE,DIRECT_PRICE,
+                       CASE PRODUCT_GB WHEN 'CUMMERCE' THEN '커머스' WHEN 'AUCTION' THEN '경매소' WHEN 'MILEAGE' THEN '마일리지' ELSE '기타' END AS PRODUCT_GB_NM
                   FROM (
                             SELECT AC.PRODUCT_NO, AC.USER_ID, AC.PRODUCT_CNT, AC.REG_DT, AP.PRODUCT_NM, AP.PRICE, AP.PRODUCT_GB, AC.NO,
                                     AP.DELEIVERY_ST, AP.DELEIVERY_PRICE, AP.DIRECT_PRICE
@@ -173,19 +150,16 @@ switch ($_method) {
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    FILE F, CONTENT_SOURCE S
-                                WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'PRODUCT'
-                                    AND F.FILE_GB = 'MAIN'
-                                    AND S.TARGET_NO = ".$row['PRODUCT_NO']."
-                                ";
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                COM_FILE F
+                            WHERE
+                                F.TARGET_GB = 'PRODUCT'
+                                AND F.FILE_GB = 'MAIN'
+                                AND F.TARGET_NO = ".$row['PRODUCT_NO']."
+                            ";
 
-                    $category_data = $_d->getData($sql);
-                    $row['FILE'] = $category_data;
+                    $row['FILE'] = $_d->getData($sql);
 
                     $__trn->rows[$i] = $row;
                 }
@@ -294,21 +268,21 @@ switch ($_method) {
 
                     // 상품 재고 수정 SUM_IN_CNT(재고량) SUM_OUT_CNT(주문량)
                     $sql = "UPDATE ANGE_PRODUCT
-                        SET
-                            SUM_IN_CNT = SUM_IN_CNT - ".$e[PRODUCT_CNT].",
-                            SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
-                        WHERE
-                            NO = $e[PRODUCT_NO]
-                        ";
+                            SET
+                                SUM_IN_CNT = SUM_IN_CNT - ".$e[PRODUCT_CNT].",
+                                SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
+                            WHERE
+                                NO = $e[PRODUCT_NO]
+                            ";
                     $_d->sql_query($sql);
 
                     if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
 
                         $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
-                               SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
-                           FROM ANGE_PRODUCT
-                           WHERE PARENT_NO = ".$e[PARENT_NO]."
-                    ";
+                                   SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
+                               FROM ANGE_PRODUCT
+                               WHERE PARENT_NO = ".$e[PARENT_NO]."
+                                ";
 
                         $result = $_d->sql_query($sql,true);
                         for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
@@ -334,37 +308,10 @@ switch ($_method) {
                 $msg = $_d->mysql_error;
             }
 
-            MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
-
             if($err > 0){
                 $_d->sql_rollback();
                 $_d->failEnd("등록실패입니다:".$msg);
             }else{
-                $sql = "INSERT INTO CMS_HISTORY
-                        (
-                            WORK_ID
-                            ,WORK_GB
-                            ,WORK_DT
-                            ,WORKER_ID
-                            ,OBJECT_ID
-                            ,OBJECT_GB
-                            ,ACTION_GB
-                            ,IP
-                            ,ACTION_PLACE
-                        ) VALUES (
-                            '".$_model[WORK_ID]."'
-                            ,'CREATE'
-                            ,SYSDATE()
-                            ,'".$_SESSION['uid']."'
-                            ,'.$no.'
-                            ,'BOARD'
-                            ,'CREATE'
-                            ,'".$ip."'
-                            ,'/webboard'
-                        )";
-
-                $_d->sql_query($sql);
-
                 $_d->sql_commit();
                 $_d->succEnd($no);
             }
@@ -404,8 +351,6 @@ switch ($_method) {
                             MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
 
                             $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-
-                            MtUtil::_d("------------>>>>> body_str : ".$body_str);
                         } else {
                             $insert_path[$i] = array(path => '', uid => '');
                         }
@@ -417,8 +362,6 @@ switch ($_method) {
                 $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
                 break;
             }
-
-            MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
 
             $err = 0;
             $msg = "";
@@ -446,16 +389,13 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'PRODUCT'
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        FILE F
+                    WHERE
+                        F.TARGET_GB = 'PRODUCT'
+                        AND F.TARGET_NO = ".$_key."
+                    ";
 
             $result = $_d->sql_query($sql,true);
 
@@ -463,36 +403,10 @@ switch ($_method) {
                 $_d->sql_rollback();
                 $_d->failEnd("수정실패입니다:".$msg);
             }else{
-                $sql = "INSERT INTO CMS_HISTORY
-                        (
-                            WORK_ID
-                            ,WORK_GB
-                            ,WORK_DT
-                            ,WORKER_ID
-                            ,OBJECT_ID
-                            ,OBJECT_GB
-                            ,ACTION_GB
-                            ,IP
-                            ,ACTION_PLACE
-                        ) VALUES (
-                            '".$_model[WORK_ID]."'
-                            ,'UPDATE'
-                            ,SYSDATE()
-                            ,'".$_SESSION['uid']."'
-                            ,'.$_key.'
-                            ,'BOARD'
-                            ,'UPDATE'
-                            ,'".$ip."'
-                            ,'/webboard'
-                        )";
-
+                $_d->sql_commit();
+                $_d->succEnd($no);
             }
         }
-        $_d->sql_query($sql);
-
-        $_d->sql_commit();
-        $_d->succEnd($no);
-
 
         break;
 
@@ -513,37 +427,11 @@ switch ($_method) {
         $sql = "DELETE FROM ANGE_CART WHERE NO = ".$_key;
 
         $_d->sql_query($sql);
-        /*$no = $_d->mysql_insert_id;*/
 
         if($err > 0){
             $_d->sql_rollback();
             $_d->failEnd("삭제실패입니다:".$msg);
         }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'DELETE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$_key.'
-                        ,'BOARD'
-                        ,'DELETE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-            $_d->sql_query($sql);
-
             $_d->sql_commit();
             $_d->succEnd($no);
         }

@@ -78,7 +78,6 @@
                     $limit .= "LIMIT ".(($_search[PAGE_NO] - 1) * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
                 }
 
-                //TODO: 조회
                 $sql = "SELECT
                             NO, PARENT_NO, COMMENT, (SELECT COUNT(NO) FROM COM_REPLY WHERE PARENT_NO = R.NO ".$search_common.") AS RE_COUNT, LEVEL, REPLY_NO, R.NICK_NM
                             ,DATE_FORMAT(R.REG_DT, '%Y-%m-%d %H:%i') AS REG_DT, BLIND_FL, REG_UID, (SELECT COUNT(NO) FROM COM_REPLY WHERE 1=1 ".$search_common.") AS TOTAL_COUNT
@@ -114,14 +113,6 @@
                 $_d->sql_free_result($result);
                 $data['COMMENT'] = $__trn->{'rows'};
 
-                //TODO: 목록 조회
-                /*                $data = $_d->sql_query($sql);
-                                if ($_d->mysql_errno > 0) {
-                                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                                } else {
-                                    $_d->dataEnd($sql);
-                                }*/
-
                 if($_d->mysql_errno > 0) {
                     $err++;
                     $msg = $_d->mysql_error;
@@ -141,9 +132,9 @@
                 }
 
                 $sql = "SELECT NO, SUBJECT, BODY
-                     FROM ANGE_TALK
-                     WHERE 1=1
-                     ".$search_common."
+                        FROM ANGE_TALK
+                        WHERE 1=1
+                         ".$search_common."
                 ";
 
                 $__trn = '';
@@ -160,42 +151,16 @@
                     $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
-                            FILE F, CONTENT_SOURCE S
+                            COM_FILE F
                         WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'TALK'
-                            AND S.TARGET_NO = ".$data['NO']."
+                            F.TARGET_GB = 'TALK'
+                            AND F.TARGET_NO = ".$data['NO']."
                             AND F.FILE_GB = 'MAIN'
                         ";
 
                     $file_data = $_d->sql_fetch($sql);
                     $data['FILE'] = $file_data;
                 }
-
-
-//                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-//
-//                    $sql = "SELECT
-//                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
-//                        FROM
-//                            FILE F, CONTENT_SOURCE S
-//                        WHERE
-//                            F.NO = S.SOURCE_NO
-//                            AND S.CONTENT_GB = 'FILE'
-//                            AND S.TARGET_GB = 'TALK'
-//                            AND S.TARGET_NO = ".$row['NO']."
-//                            AND F.FILE_GB = 'MAIN'
-//                        ";
-//                    $category_data = $_d->getData($sql);
-//                    $row['TALK_FILE'] = $category_data;
-//
-//                    $__trn->rows[$i] = $row;
-//                }
-
-
-//                $_d->sql_free_result($result);
-//                $data = $__trn->{'rows'};
 
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -389,82 +354,26 @@
             $sql = "DELETE FROM COM_REPLY WHERE PARENT_NO = ".$_key;
             $_d->sql_query($sql);
 
-            $sql = "DELETE FROM COM_REPLY WHERE NO = ".$_key;
-            $_d->sql_query($sql);
-
-            /*$no = $_d->mysql_insert_id;*/
-
-            /*$sql = "SELECT
-                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                    FROM
-                        FILE F, CONTENT_SOURCE S
-                    WHERE
-                        F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'REVIEW'
-                        AND S.TARGET_NO = ".$_key."
-                        AND F.THUMB_FL = '0'
-                    ";
-
-            $result = $_d->sql_query($sql,true);
-            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                $_d->sql_query($sql);
-
-                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'REVIEW' AND TARGET_NO = ".$row[NO];
-
-                $_d->sql_query($sql);
-
-                MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-
-                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'thumbnail/'.$row[FILE_ID]);
-                    unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
-                }
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
             }
 
+            $sql = "DELETE FROM COM_REPLY WHERE NO = ".$_key;
             $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
             }
 
-
             if($err > 0){
                 $_d->sql_rollback();
-                $_d->failEnd("삭제실패입니다:".$msg);
+                $_d->failEnd("수정실패입니다:".$msg);
             }else{
-                $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'DELETE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$_key.'
-                        ,'BOARD'
-                        ,'DELETE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";*/
-
-                $_d->sql_query($sql);
-
                 $_d->sql_commit();
                 $_d->succEnd($no);
+            }
 
             break;
     }

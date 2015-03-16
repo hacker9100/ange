@@ -69,8 +69,7 @@ if ((sizeof($path) == 5) == 1) {
                 FROM
                    CMS_TASK T
                         LEFT OUTER JOIN CMS_CONTENT C ON T.NO = C.TASK_NO AND C.CURRENT_FL = 'Y'
-                        INNER JOIN CONTENT_SOURCE S ON C.NO = S.TARGET_NO AND S.TARGET_GB = 'CONTENT'
-                        INNER JOIN FILE F ON F.NO = S.SOURCE_NO AND F.FILE_GB = 'MAIN'
+                        INNER JOIN COM_FILE F ON C.NO = F.TARGET_NO  AND F.TARGET_GB = 'CONTENT' AND F.FILE_GB = 'MAIN'
                 WHERE
                     T.NO = ".$path[4]."
                 ";

@@ -75,8 +75,8 @@
                             WHERE
                               B.NO = ".$_key."
                             )  A";
-                $result = $_d->sql_query($sql);
-                $data = $_d->sql_fetch_array($result);
+
+                $data = $_d->sql_fetch($sql);
 
                 if($_d->mysql_errno > 0) {
                     $err++;
@@ -86,17 +86,14 @@
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB, F.FILE_EXT
                         FROM
-                            FILE F, CONTENT_SOURCE S
+                            COM_FILE F
                         WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'BOARD'
-                            AND S.TARGET_NO = ".$_key."
+                            F.TARGET_GB = 'BOARD'
+                            AND F.TARGET_NO = ".$_key."
                             AND F.THUMB_FL = '0'
                         ";
 
-                $file_data = $_d->getData($sql);
-                $data['FILES'] = $file_data;
+                $data['FILES'] = $_d->getData($sql);
 
                 if($_d->mysql_errno > 0) {
                     $err++;
@@ -113,22 +110,8 @@
                                 AND B.NO = ".$_key."
                             ";
 
-                    $category_data = $_d->sql_fetch($sql);
-                    $data['CATEGORY'] = $category_data;
+                    $data['CATEGORY'] = $_d->sql_fetch($sql);
                 }
-
-                /*
-                                $sql = "SELECT
-                                            NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
-                                        FROM
-                                            COM_REPLY
-                                        WHERE
-                                            TARGET_NO = ".$_key."
-                                        ";
-
-                                $reply_data = $_d->getData($sql);
-                                $data['REPLY'] = $reply_data;
-                */
 
                 if($_d->mysql_errno > 0) {
                     $err++;
@@ -155,13 +138,8 @@
                            WHERE
                               B.NO = ".$_key."
                                     )  A";
-                    $result = $_d->sql_query($sql);
-                    $data = $_d->sql_fetch_array($result);
 
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
+                    $data = $_d->sql_fetch($sql);
 
                     if($_d->mysql_errno > 0) {
                         $err++;
@@ -260,45 +238,6 @@
                 if(isset($_search[BOARD_ST]) && $_search[BOARD_ST] != ""){
                     $search_where .= "AND BOARD_ST IS NULL";
                 }
-/*
-                // AND PARENT_NO = 0
-                $sql = "SELECT
-                          TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                          DATA.NO, PARENT_NO, HEAD, SUBJECT, DATA.REG_UID, DATA.REG_NM, DATA.NICK_NM, DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
-                          (DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
-	                      CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, CATEGORY_NO,
-	                      BOARD_NO, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT,
-	                      (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'BOARD') AS REPLY_COUNT,
-                          (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = DATA.NO) AS BOARD_REPLY_COUNT,
-	                      (SELECT CATEGORY_NM FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM, BOARD_ST,
-	                      IF(BOARD_REPLY_COUNT > 0,'Y','N') AS BOARD_REPLY_FL, ETC1, ETC2, ETC3, ETC4, BLIND_FL
-                        FROM
-                        (
-                            SELECT
-                                B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.REG_UID, B.REG_NM, NICK_NM, B.REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.WARNING_FL, B.BEST_FL, B.NOTICE_FL, B.TAG, B.COMM_NO,
-                                B.PASSWORD, B.BOARD_NO, B.CATEGORY_NO, B.BOARD_ST,
-                                (SELECT COUNT(*) AS BOARD_REPLY_COUNT FROM COM_BOARD WHERE PARENT_NO = B.NO) AS BOARD_REPLY_COUNT, ETC1, ETC2, ETC3, ETC4, BLIND_FL
-                            FROM
-                                COM_BOARD B
-                            WHERE
-                                1=1
-                                ".$search_where."
-                            ORDER BY NOTICE_FL DESC".$sort_order."
-                            ".$limit."
-                        ) AS DATA
-                        LEFT OUTER JOIN ANGE_COMM C ON DATA.COMM_NO = C.NO,
-                        (SELECT @RNUM := 0) R,
-                        (
-                            SELECT
-                                COUNT(*) AS TOTAL_COUNT
-                            FROM
-                                COM_BOARD B
-                            WHERE
-                                1=1
-                                ".$search_where."
-                        ) CNT
-                        ";
-*/
 
                 $sql = "SELECT COUNT(*) AS TOTAL_COUNT FROM COM_BOARD B WHERE 1=1 ".$search_where;
                 $result = $_d->sql_query($sql,true);
@@ -346,18 +285,13 @@
                         $sql = "SELECT
                                     F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                                 FROM
-                                    FILE F, CONTENT_SOURCE S
+                                    COM_FILE F
                                 WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'BOARD'
+                                    F.TARGET_GB = 'BOARD'
                                     AND F.FILE_GB = 'MAIN'
-                                    AND F.THUMB_FL = 0
-                                    AND S.TARGET_NO = ".$row['NO']."";
+                                    AND F.TARGET_NO = ".$row['NO']."";
 
-                        $file_result = $_d->sql_query($sql);
-                        $file_data = $_d->sql_fetch_array($file_result);
-                        $row['FILE'] = $file_data;
+                        $row['FILE'] = $_d->sql_fetch($sql);
 
                         $__trn->rows[$i] = $row;
                         $__trn->rows[$i]['TOTAL_COUNT'] = $t_total_count;
@@ -377,19 +311,16 @@
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                         $sql =  "SELECT
-                            COUNT(F.NO) AS FILE_CNT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'BOARD'
-                            AND S.TARGET_NO = ".$row['NO']."
-                            AND F.THUMB_FL = '0'
+                                    COUNT(F.NO) AS FILE_CNT
+                                 FROM
+                                    COM_FILE F
+                                 WHERE
+                                    F.TARGET_GB = 'BOARD'
+                                    AND F.TARGET_NO = ".$row['NO']."
+                                    AND F.THUMB_FL = '0'
                                 ";
 
-                        $category_data = $_d->getData($sql);
-                        $row['FILE'] = $category_data;
+                        $row['FILE'] = $_d->getData($sql);
 
                         $__trn->rows[$i] = $row;
                         $__trn->rows[$i]['TOTAL_COUNT'] = $t_total_count;
@@ -415,8 +346,7 @@
                                     AND B.NO = ".$row['NO']."
                                 ";
 
-                        $category_data = $_d->sql_fetch($sql);
-                        $row['CATEGORY'] = $category_data;
+                        $row['CATEGORY'] = $_d->sql_fetch($sql);
 
                         $__trn->rows[$i] = $row;
                         $__trn->rows[$i]['TOTAL_COUNT'] = $t_total_count;
@@ -511,18 +441,13 @@
                         $sql = "SELECT
                                     F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                                 FROM
-                                    FILE F, CONTENT_SOURCE S
+                                    COM_FILE F
                                 WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'BOARD'
+                                    F.TARGET_GB = 'BOARD'
                                     AND F.FILE_GB = 'MAIN'
-                                    AND F.THUMB_FL = 0
-                                    AND S.TARGET_NO = ".$row['NO']."";
+                                    AND F.TARGET_NO = ".$row['NO']."";
 
-                        $file_result = $_d->sql_query($sql);
-                        $file_data = $_d->sql_fetch_array($file_result);
-                        $row['FILE'] = $file_data;
+                        $row['FILE'] = $_d->sql_fetch($sql);
 
                         $__trn->rows[$i] = $row;
                     }
@@ -558,8 +483,7 @@
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 }else{
-                    $result = $_d->sql_query($sql);
-                    $data = $_d->sql_fetch_array($result);
+                    $data = $_d->sql_fetch($sql);
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'next') {
@@ -576,8 +500,7 @@
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 }else{
-                    $result = $_d->sql_query($sql);
-                    $data = $_d->sql_fetch_array($result);
+                    $data = $_d->sql_fetch($sql);
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'category') {
@@ -613,7 +536,6 @@
                     ) AS DATA
                 ";
 
-                $data = $_d->sql_query($sql);
                 $__trn = '';
                 $result = $_d->sql_query($sql,true);
 
@@ -888,7 +810,7 @@
 //                        $_d->failEnd("대표이미지를 선택하세요.");
 //                    }
 
-                    $sql = "INSERT INTO FILE
+                    $sql = "INSERT INTO COM_FILE
                     (
                         FILE_NM
                         ,FILE_ID
@@ -899,6 +821,9 @@
                         ,REG_DT
                         ,FILE_ST
                         ,FILE_GB
+                        ,FILE_ORD
+                        ,TARGET_NO
+                        ,TARGET_GB
                     ) VALUES (
                         '".$file[name]."'
                         , '".$insert_path[$i][uid]."'
@@ -909,29 +834,9 @@
                         , SYSDATE()
                         , 'C'
                         , '".$file[kind]."'
-                    )";
-
-                    $_d->sql_query($sql);
-                    $file_no = $_d->mysql_insert_id;
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO CONTENT_SOURCE
-                    (
-                        TARGET_NO
-                        ,SOURCE_NO
-                        ,CONTENT_GB
-                        ,TARGET_GB
-                        ,SORT_IDX
-                    ) VALUES (
-                        '".$no."'
-                        , '".$file_no."'
-                        , 'FILE'
-                        , 'BOARD'
                         , '".$i."'
+                        , '".$no."'
+                        , 'BOARD'
                     )";
 
                     $_d->sql_query($sql);
@@ -1061,13 +966,10 @@
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
-                            FILE F, CONTENT_SOURCE S
+                            COM_FILE F
                         WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'BOARD'
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
+                            F.TARGET_GB = 'BOARD'
+                            AND F.TARGET_NO = ".$_key."
                         ";
 
                 $result = $_d->sql_query($sql,true);
@@ -1090,12 +992,7 @@
 
                     if ($is_delete == "Y") {
                         MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                        $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                        $_d->sql_query($sql);
-
-                        $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND CONTENT_GB = 'FILE' AND SOURCE_NO = ".$row[NO]." AND TARGET_NO = ".$_key."";
-                        // TARGET_NO
+                        $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
 
                         $_d->sql_query($sql);
 
@@ -1123,7 +1020,7 @@
                         }
 
                         if ($insert_path[$i][uid] != "") {
-                            $sql = "INSERT INTO FILE
+                            $sql = "INSERT INTO COM_FILE
                             (
                                 FILE_NM
                                 ,FILE_ID
@@ -1134,6 +1031,9 @@
                                 ,REG_DT
                                 ,FILE_ST
                                 ,FILE_GB
+                                ,FILE_ORD
+                                ,TARGET_NO
+                                ,TARGET_GB
                             ) VALUES (
                                 '".$file[name]."'
                                 , '".$insert_path[$i][uid]."'
@@ -1144,29 +1044,9 @@
                                 , SYSDATE()
                                 , 'C'
                                 , '".$file[kind]."'
-                            )";
-
-                            $_d->sql_query($sql);
-                            $file_no = $_d->mysql_insert_id;
-
-                            if($_d->mysql_errno > 0) {
-                                $err++;
-                                $msg = $_d->mysql_error;
-                            }
-
-                            $sql = "INSERT INTO CONTENT_SOURCE
-                            (
-                                TARGET_NO
-                                ,SOURCE_NO
-                                ,CONTENT_GB
-                                ,TARGET_GB
-                                ,SORT_IDX
-                            ) VALUES (
-                                '".$_key."'
-                                , '".$file_no."'
-                                , 'FILE'
-                                , 'BOARD'
                                 , '".$i."'
+                                , '".$_key."'
+                                , 'BOARD'
                             )";
 
                             $_d->sql_query($sql);
@@ -1183,31 +1063,6 @@
                     $_d->sql_rollback();
                     $_d->failEnd("수정실패입니다:".$msg);
                 }else{
-                    $sql = "INSERT INTO CMS_HISTORY
-                        (
-                            WORK_ID
-                            ,WORK_GB
-                            ,WORK_DT
-                            ,WORKER_ID
-                            ,OBJECT_ID
-                            ,OBJECT_GB
-                            ,ACTION_GB
-                            ,IP
-                            ,ACTION_PLACE
-                        ) VALUES (
-                            '".$_model[WORK_ID]."'
-                            ,'UPDATE'
-                            ,SYSDATE()
-                            ,'".$_SESSION['uid']."'
-                            ,'.$_key.'
-                            ,'BOARD'
-                            ,'UPDATE'
-                            ,'".$ip."'
-                            ,'/webboard'
-                        )";
-
-                    $_d->sql_query($sql);
-
                     $_d->sql_commit();
                     $_d->succEnd($no);
                 }
@@ -1309,26 +1164,18 @@
                 $sql = "SELECT
                         F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                     FROM
-                        FILE F, CONTENT_SOURCE S
+                        COM_FILE F
                     WHERE
-                        F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'BOARD'
-                        AND S.TARGET_NO = ".$_key."
-                        AND F.THUMB_FL = '0'
+                        F.TARGET_GB = 'BOARD'
+                        AND F.TARGET_NO = ".$_key."
                     ";
 
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                     MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
 
                     $_d->sql_query($sql);
-
-                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND TARGET_NO = ".$row[NO];
-
-                    $_d->sql_query($sql);
-
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                     if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                         unlink('../../..'.$row[PATH].$row[FILE_ID]);
@@ -1336,8 +1183,6 @@
                         unlink('../../..'.$row[PATH].'medium/'.$row[FILE_ID]);
                     }
                 }
-
-//                $sql = "DELETE FROM COM_BOARD WHERE PARENT_NO = ".$_key;
 
                 $_d->sql_query($sql);
                 $no = $_d->mysql_insert_id;

@@ -108,9 +108,7 @@ define([
 
                     for (var i=0; i<data.length; i++) {
                         var file = data[i].FILE;
-                        for(var j in file) {
-                            data[i].MAIN_FILE = UPLOAD.BASE_URL+file[j].PATH+file[j].FILE_ID;
-                        }
+                        data[i].MAIN_FILE = UPLOAD.BASE_URL+file.PATH+file.FILE_ID;
                     }
 
 //                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;

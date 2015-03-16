@@ -49,28 +49,7 @@
     switch ($_method) {
 
         case "GET":
-            if($_type == 'item'){
-                $sql = "SELECT NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG,
-                            REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, ETC1, ETC2, ETC3, REPLY_COUNT ,BOARD_GB
-                        FROM (
-                            SELECT
-                              B.NO, B.PARENT_NO, B.HEAD, B.SUBJECT, B.BODY, B.REG_UID, B.REG_NM, DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT, B.HIT_CNT, B.LIKE_CNT, B.SCRAP_CNT, B.REPLY_CNT, B.NOTICE_FL, B.WARNING_FL, B.BEST_FL, B.TAG,
-                              (SELECT BODY FROM COM_BOARD WHERE PARENT_NO = B.NO) AS REPLY_BODY, B.SCRAP_FL, B.REPLY_FL, B.ETC1, B.ETC2, B.ETC3, (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = B.NO) AS REPLY_COUNT, B.BOARD_GB
-                            FROM
-                              COM_BOARD B
-                            WHERE
-                              B.NO = ".$_key."
-                            )  A";
-
-                $data = $_d->sql_query($sql);
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                } else {
-                    $result = $_d->sql_query($sql);
-                    $data = $_d->sql_fetch_array($result);
-                    $_d->dataEnd2($data);
-                }
-            } else if ($_type == 'list'){
+            if ($_type == 'list'){
 
                 $search_where = "";
                 $search_table = "";
@@ -125,35 +104,6 @@
                           AND POINT <> 0
                         ".$limit."
                         ";
-
-    //                if (isset($_search[STATUS])) {
-    //                    $__trn = '';
-    //                    $result = $_d->sql_query($sql,true);
-    //                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-    //
-    //                        $sql = "SELECT
-    //                                    SUM_POINT,USE_POINT,REMAIN_POINT
-    //                                FROM
-    //                                    ANGE_MILEAGE_STATUS
-    //                                WHERE
-    //                                    1=1
-    //                                    AND USER_ID = '".$row['USER_ID']."'
-    //                                ";
-    //
-    //                        $category_data = $_d->getData($sql);
-    //                        $row['STATUS'] = $category_data;
-    //
-    //                        $__trn->rows[$i] = $row;
-    //                    }
-    //                    $_d->sql_free_result($result);
-    //                    $data = $__trn->{'rows'};
-    //
-    //                    if($_d->mysql_errno > 0){
-    //                        $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-    //                    }else{
-    //                        $_d->dataEnd2($data);
-    //                    }
-    //                }
 
                 $data = $_d->sql_query($sql);
                 if($_d->mysql_errno > 0){
@@ -445,56 +395,12 @@
                             ";
 
                 $_d->sql_query($sql);
-                /*
-                                // ANGE_MILEAGE_STATUS
-                                $sql = "UPDATE COM_USER SET
-                                                SUM_POINT = ".$_model[SUM_POINT]."
-                                                ,USE_POINT = ".$_model[USE_POINT]."
-                                                ,REMAIN_POINT = ".$_model[REMAIN_POINT]."
-                                         WHERE USER_ID = '".$_SESSION['uid']."'";
-
-                                $_d->sql_query($sql);
-                                $no = $_d->mysql_insert_id;
-                */
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->succEnd($no);
-                }
-            }else if($_type == 'mileageitemplus'){
-                $_d->succEnd('');
-/*
-                $sql = "UPDATE COM_USER SET
-                                SUM_POINT = SUM_POINT + ".$_model[SUM_POINT]."
-                                ,REMAIN_POINT = REMAIN_POINT + ".$_model[REMAIN_POINT]."
-                         WHERE USER_ID = '".$_SESSION['uid']."'";
-
-                $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
 
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("수정실패입니다:".$_d->mysql_error);
                 } else {
                     $_d->succEnd($no);
                 }
-*/
-            }else if($_type == 'mileageitemminus'){
-                $_d->succEnd('');
-/*
-                $sql = "UPDATE COM_USER SET
-                                SUM_POINT = SUM_POINT - ".$_model[SUM_POINT]."
-                                ,REMAIN_POINT = REMAIN_POINT - ".$_model[REMAIN_POINT]."
-                         WHERE USER_ID = '".$_SESSION['uid']."'";
-
-                $_d->sql_query($sql);
-                $no = $_d->mysql_insert_id;
-
-                if ($_d->mysql_errno > 0) {
-                    $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-                } else {
-                    $_d->succEnd($no);
-                }
-*/
             }
 
             break;
@@ -507,7 +413,6 @@
             $sql = "DELETE FROM ANGE_MILEAGE WHERE NO = ".$_key;
 
             $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
 
             if ($_d->mysql_errno > 0) {
                 $_d->failEnd("삭제실패입니다:".$_d->mysql_error);

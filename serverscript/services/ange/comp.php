@@ -54,96 +54,7 @@
 
 switch ($_method) {
     case "GET":
-        if ($_type == 'item') {
-            $sql = "SELECT
-                        NO, TARGET_NO, USER_ID, NICK_NM, USER_NM, REG_DT, PREG_FL, BABY_MONTH,
-                        BABY_AGE, BLOG_URL, ANSWER,
-                        ADD1, ADD2, ADD3,HOPE_REASON, SIZE1, SIZE2, SIZE3, ANGE_MEET, PLACE, PREGNANT_WEEKS, CHILD_AGE, CHILD_FL
-                    FROM
-                        ANGE_COMP
-                    WHERE
-                        NO = ".$_key."
-                    ";
-
-            $data = $_d->sql_query($sql);
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-            } else {
-                $result = $_d->sql_query($sql);
-                $data = $_d->sql_fetch_array($result);
-                $_d->dataEnd2($data);
-            }
-        } else if ($_type == 'list') {
-
-            if (!isset($_SESSION['uid'])) {
-                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
-            }
-
-            $search_where = "";
-            $sort_order = "";
-            $limit = "";
-
-/*            if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                $search_where .= "AND S.SECTION_NM LIKE '%".$_search[KEYWORD]."%' ";
-            }
-
-            if (isset($_search[SEARCH_SEASON_NM][SEASON_NM]) && $_search[SEARCH_SEASON_NM][SEASON_NM] != "") {
-                $search_where .= "AND S.SEASON_NM  = '".$_search[SEARCH_SEASON_NM][SEASON_NM]."' ";
-            }
-
-            if (isset($_search[SORT]) && $_search[SORT] != "") {
-                $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
-            }*/
-
-//            if (isset($_search[USER_ID]) && $_search[USER_ID] != "") {
-//                $search_where .= "AND AC.USER_ID  = '".$_search[USER_ID]."' ";
-//            }
-//
-//            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-//                $search_where .= "AND AC.TARGET_GB  = '".$_search[TARGET_GB]."' ";
-//            }
-
-            if (isset($_page)) {
-                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
-            }
-
-
-
-            $sql = "SELECT TOTAL_COUNT, ada_idx, adu_id, adu_name, ada_title, date_join_check, date_complete_check, ada_type, DATE_FORMAT(adhj_date_request, '%Y-%m-%d') as adhj_date_request,
-                        CASE WHEN date_join_check = 1 and date_complete_check = 1 THEN 'Y' ELSE 'N' END AS COMP_YN
-                        FROM
-                        (
-                             SELECT  a.ada_idx, a.adu_id, a.adu_name, b.ada_title,
-                                     CASE WHEN a.adhj_date_join IS NOT NULL THEN 1 ELSE 0 END AS date_join_check, case WHEN a.adhj_date_complete IS NOT NULL THEN 1 ELSE 0 END AS date_complete_check,
-                                     b.ada_type, a.adhj_date_request
-                             FROM adm_history_join a, adm_ad b
-                             WHERE 1 = 1
-                              AND a.ada_idx = b.ada_idx
-                              AND b.ada_type <> 'survey'
-                               AND a.adu_id = '".$_SESSION['uid']."'
-                               ".$search_where."
-                             ORDER BY adhj_date_request DESC
-                             ".$limit."
-                        ) AS DATA,
-                        (SELECT @RNUM := 0) R,
-                        (
-                             SELECT COUNT(*) AS TOTAL_COUNT
-                             FROM adm_history_join a, adm_ad b
-                             WHERE 1 = 1
-                               AND a.ada_idx = b.ada_idx
-                               AND b.ada_type <> 'survey'
-                               AND a.adu_id = '".$_SESSION['uid']."'
-                               ".$search_where."
-                        ) CNT
-                        ";
-
-            $data = $_d->sql_query($sql);
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-            } else {
-                $_d->dataEnd($sql);
-            }
-        } else if ($_type == "check") {
+        if ($_type == "check") {
 
 //            if (!isset($_SESSION['uid'])) {
 //                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
@@ -179,49 +90,8 @@ switch ($_method) {
                 $_d->dataEnd($sql);
             }
 
-        }else if ($_type == "check_1") {
-
-            $sql = "SELECT COUNT(*) AS COMP_CNT
-                 FROM ANGE_COMP
-                 WHERE TARGET_NO = ".$_search[TARGET_NO]."
-                   AND USER_ID = '".$_SESSION['uid']."'";
-
-            $data = $_d->sql_query($sql);
-            if($_d->mysql_errno > 0){
-                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-            }else{
-                $_d->dataEnd($sql);
-            }
-
         }
-//        else if ($_type == 'samplepackCheck') {
-//
-//            $search_where = "";
-//            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-//                $search_where .= "AND ACW.TARGET_NO =".$_search[TARGET_NO]."";
-//            }
-//
-//            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-//                $search_where .= "  AND ACW.TARGET_GB ='".$_search[TARGET_GB]."'";
-//            }
-//
-//            $sql = "SELECT COUNT(*) COUNT
-//                    FROM COM_USER CU
-//                    INNER JOIN ANGE_COMP_WINNER ACW
-//                    ON CU.USER_ID = ACW.USER_ID
-//                    WHERE 1=1
-//                      AND CU.PREGNENT_FL = 'Y'
-//                      AND CU.USER_ID = '".$_SESSION['uid']."'
-//                      ".$search_where."
-//                      ";
-//
-//            $data = $_d->sql_query($sql);
-//            if($_d->mysql_errno > 0){
-//                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-//            }else{
-//                $_d->dataEnd($sql);
-//            }
-//        }
+
         break;
 
     case "POST":
@@ -233,78 +103,7 @@ switch ($_method) {
         $FORM = json_decode(file_get_contents("php://input"),true);
         $_d->sql_beginTransaction();
 
-        if($_type == "eventitem"){
-
-            $sql = "INSERT INTO ANGE_COMP
-                            (
-                                TARGET_NO,
-                                USER_ID,
-                                NICK_NM,
-                                USER_NM,
-                                REG_DT,
-                                PREG_FL,
-                                BABY_MONTH,
-                                BABY_AGE,
-                                BLOG_URL,
-                                ANSWER,
-                                ADD1,
-                                ADD2,
-                                ADD3,
-                                CHILD_CNT,
-                                PHONE1,
-                                PHONE2,
-                                PRODUCT,
-                                CREDIT_FL,
-                                REASON,
-                                TARGET_GB,
-                                HOPE_REASON,
-                                SIZE1,
-                                SIZE2,
-                                SIZE3,
-                                ANGE_MEET,
-                                PLACE,
-                                PREGNANT_WEEKS,
-                                CHILD_AGE,
-                                CHILD_FL,
-                                BABY_BIRTH
-                            ) VALUES (
-                                 '".$_model[NO]."'
-                                , '".$_SESSION['uid']."'
-                                , '".$_SESSION['nick']."'
-                                , '".$_SESSION['name']."'
-                                , SYSDATE()
-                                , '".$_model[PREG_FL]."'
-                                ,'".$_model[BABY_MONTH]."'
-                                ,'".$_model[BABY_AGE]."'
-                                ,'".$_model[BLOG_URL]."'
-                                ,'".$_model[ANSWER]."'
-                                ,'".$_model[ADD1]."'
-                                ,'".$_model[ADD2]."'
-                                ,'".$_model[ADD3]."'
-                                ,'".$_model[CHILD_CNT]."'
-                                , '".$_SESSION['phone1']."'
-                                , '".$_SESSION['phone2']."'
-                                ,'".$_model[PRODUCT]."'
-                                ,'".$_model[CREDIT_FL]."'
-                                ,'".$_model[REASON]."'
-                                ,'".$_model[TARGET_GB]."'
-                                ,'".$_model[HOPE_REASON]."'
-                                ,'".$_model[SIZE1]."'
-                                ,'".$_model[SIZE2]."'
-                                ,'".$_model[SIZE3]."'
-                                ,'".$_model[ANGE_MEET]."'
-                                ,'".$_model[PLACE]."'
-                                ,".$_model[PREGNANT_WEEKS]."
-                                ,'".$_model[CHILD_AGE]."'
-                                ,'".$_model[CHILD_FL]."'
-                                ,'".$_model[BABY_BIRTH]."'
-                            )";
-
-            $_d->sql_query($sql);
-
-            $no = $_d->mysql_insert_id;
-
-        }else if($_type == "item") {
+        if($_type == "item") {
 
             if (!isset($_SESSION['uid'])) {
                 $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
@@ -338,30 +137,28 @@ switch ($_method) {
 
             // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
             $sql = "INSERT INTO adm_history_join
-                                (
-                                    ada_idx,
-                                    adu_id,
-                                    adu_name,
-                                    adhj_date_request,
-                                    adhj_answers
-                                ) VALUES (
-                                     '".$_model[ada_idx]."'
-                                    , '".$_SESSION['uid']."'
-                                    , '".$_SESSION['name']."'
-                                    , NOW()
-                                    , '".$_model[ANSWER]."'
-                                )";
+                    (
+                        ada_idx,
+                        adu_id,
+                        adu_name,
+                        adhj_date_request,
+                        adhj_answers
+                    ) VALUES (
+                         '".$_model[ada_idx]."'
+                        , '".$_SESSION['uid']."'
+                        , '".$_SESSION['name']."'
+                        , NOW()
+                        , '".$_model[ANSWER]."'
+                    )";
 
             $_d->sql_query($sql);
 
             // 신청자명 증가
             $sql = "UPDATE adm_ad
-                  SET  ada_count_request = ada_count_request + 1
-                  WHERE ada_idx = '".$_model[ada_idx]."'";
+                    SET  ada_count_request = ada_count_request + 1
+                    WHERE ada_idx = '".$_model[ada_idx]."'";
 
             $_d->sql_query($sql);
-
-
         }
         if ($_d->mysql_errno > 0) {
             $_d->failEnd("등록실패입니다:".$_d->mysql_error);
@@ -373,64 +170,6 @@ switch ($_method) {
         break;
 
     case "PUT":
-
-
-        //            $FORM = json_decode(file_get_contents("php://input"),true);
-
-        MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
-
-        /*            if($_model[OLD_SEASON_NM] != "" || $_model[OLD_SEASON_NM] != $_model[SEASON_NM]){
-                        $sql = "UPDATE CMS_SECTION SET
-                                    SEASON_NM = '".$_model[SEASON_NM]."'
-                             WHERE SEASON_NM = '".$_model[OLD_SEASON_NM]."'
-                                ";
-                    }else{
-                        if (!isset($_key) || $_key == '') {
-                            $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
-                        }
-                        $sql = "UPDATE CMS_SECTION
-                                        SET
-                                            SECTION_NM = '".$_model[SECTION_NM]."'
-                                            ,SORT_IDX = '".$_model[SORT_IDX]."'
-                                            ,NOTE = '".$_model[NOTE]."'
-                                        WHERE
-                                            NO = ".$_key."
-                                    ";
-                    }*/
-        $sql = "UPDATE ANGE_COMP
-                            SET
-                                USER_ID = '".$_SESSION['uid']."'
-                                ,NICK_NM = '".$_SESSION['nick']."'
-                                ,USER_NM = '".$_SESSION['name']."'
-                                ,PREG_FL = '".$_model[PREG_FL]."'
-                                ,BABY_MONTH = '".$_model[BABY_MONTH]."'
-                                ,BABY_AGE = '".$_model[BABY_AGE]."'
-                                ,BLOG_URL = '".$_model[BLOG_URL]."'
-                                ,ANSWER = '".$_model[ANSWER]."'
-                                ,ADD1 = '".$_model[ADD1]."'
-                                ,ADD2 = '".$_model[ADD2]."'
-                                ,ADD3 = '".$_model[ADD3]."'
-                                ,CHILD_CNT  = '".$_model[CHILD_CNT]."'
-                                ,PHONE1  = '".$_SESSION['phone1']."'
-                                ,PHONE2  = '".$_SESSION['phone2']."'
-                                ,CREDIT_FL = '".$_model['CREDIT_FL']."'
-                                ,REASON = '".$_model['REASON']."'
-                            WHERE
-                                NO = ".$_key."
-
-         ";
-        // ,SEASON_NM = '".$_model[SEASON_NM]."'
-
-
-        $_d->sql_query($sql);
-        $no = $_d->mysql_insert_id;
-
-        if ($_d->mysql_errno > 0) {
-            $_d->failEnd("수정실패입니다:".$_d->mysql_error);
-        } else {
-            $_d->succEnd($no);
-        }
-
         break;
 
     case "DELETE":

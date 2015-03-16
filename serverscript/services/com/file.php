@@ -39,20 +39,12 @@
 
     switch ($_method) {
         case "GET":
-            if ($_type == 'item') {
-
-            } else if ($_type == 'list') {
-
-            }
-
             break;
 
         case "POST":
-
             break;
 
         case "PUT":
-
             break;
 
         case "DELETE":
@@ -65,32 +57,9 @@
 
             $_d->sql_beginTransaction();
 
-            $sql = "SELECT
-                        F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO
-                    FROM
-                        FILE F, CONTENT_SOURCE S
-                    WHERE
-                        AND F.NO = S.SOURCE_NO
-                        AND C.TASK_NO = '".$_key."'
-                        AND S.CONTENT_GB = 'FILE'
-                    ";
-
-            $file_result = $_d->sql_query($sql);
-            $file_data = $_d->sql_fetch_array($file_result);
-
-            $sql = "DELETE FROM CONTENT_SOURCE WHERE SOURCE_NO = '".$_key."' AND CONTENT_GB = 'FILE'";
+            $sql = "DELETE FROM COM_FILE WHERE NO = '".$_key."'";
 
             $_d->sql_query($sql);
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            $sql = "DELETE FROM FILE WHERE NO = '".$_key."'";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
                 $err++;

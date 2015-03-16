@@ -7,14 +7,9 @@
     <div class="mini_peoplebabymodel_slider">
         <div class="mini_peoplebabymodel_slider_pic">
 
-            <slick id="{{option.id}}" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="1" autoplay-speed="3000" fade="false" pause-on-hover="false"></slick>
-
-            <!--<dl>-->
-                <!--<dd><a href="#"><img src="imgs/ange/mini_peoplebabymodel_01.png" width="99" height="119" alt="" /></a></dd>-->
-                <!--<dd><a href="#"><img src="imgs/ange/mini_peoplebabymodel_02.png" width="99" height="119" alt="" /></a></dd>-->
-                <!--<dd><a href="#"><img src="imgs/ange/mini_peoplebabymodel_03.png" width="99" height="119" alt="" /></a></dd>-->
-                <!--<dd><a href="#"><img src="imgs/ange/mini_peoplebabymodel_04.png" width="99" height="119" alt="" /></a></dd>-->
-            <!--</dl>-->
+            <slick id="{{option.id}}" init-onload="true" data="list" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="1" autoplay-speed="3000" fade="false" pause-on-hover="false">
+                <div ng-repeat="item in list" class="mini_peoplebabymodel_imgwrap"><a href="{{ item.URL }}"><img src="/imgs/ange/_blank.gif" width="99" height="119" alt="" class="mini_peoplebabymodel_img" ng-style="{ 'background-image': 'url( {{ item.MAIN_FILE }} )' }" /></a></div>
+            </slick>
         </div>
         <span class="prev_btn" ng-click="click_slickPrev()">이전 버튼</span><span class="next_btn" ng-click="click_slickNext()">다음 버튼</span>
     </div>

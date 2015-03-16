@@ -96,8 +96,7 @@
                             USER_ID = '".$_key."'
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
+                $data  = $_d->sql_fetch($sql);
 
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -113,8 +112,7 @@
                             USER_ID = '".$_key."'
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
+                $data  = $_d->sql_fetch($sql);
 
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -171,9 +169,7 @@
                             ".$search_where."
                         ";
 
-                $role_data  = $_d->sql_fetch($sql);
-
-                $data['ROLE'] = $role_data;
+                $data['ROLE'] = $_d->sql_fetch($sql);
 
                 if (isset($_search[DETAIL])) {
                     $sql = "SELECT
@@ -184,24 +180,20 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $mileage_data  = $_d->sql_fetch($sql);
-                    $data['MILEAGE'] = $mileage_data;
+                    $data['MILEAGE'] = $_d->sql_fetch($sql);
 
                     $sql = "SELECT
                                 F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                             FROM
-                                COM_USER U, FILE F, CONTENT_SOURCE S
+                                COM_USER U, COM_FILE F
                             WHERE
-                                U.NO = S.TARGET_NO
-                                AND F.NO = S.SOURCE_NO
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_GB = 'USER'
+                                U.NO = F.TARGET_NO
+                                AND F.TARGET_GB = 'USER'
                                 AND U.USER_ID = '".$_key."'
                                 AND F.FILE_GB = 'THUMB'
                             ";
 
-                    $file_data = $_d->sql_fetch($sql);
-                    $data['FILE'] = $file_data;
+                    $data['FILE'] = $_d->sql_fetch($sql);
 
                     $sql = "SELECT
                                 BABY_NM, BABY_BIRTH, BABY_SEX_GB, CARE_CENTER, CENTER_VISIT_YMD, CENTER_OUT_YMD
@@ -211,8 +203,7 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $baby_data = $_d->getData($sql);
-                    $data['BABY'] = $baby_data;
+                    $data['BABY'] = $_d->getData($sql);
 
                     $sql = "SELECT
                                 BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS
@@ -398,8 +389,6 @@
                     }
 
                     $search_where .= "AND R.ROLE_ID IN (".$in_role.") AND R.SYSTEM_GB = 'ANGE' ";
-
-//                    $search_where .= "AND R.ROLE_ID  = '".$_search['ROLE']['ROLE_ID']."' ";
                 }
                 if (isset($_search['ROLE_ID']) && $_search['ROLE_ID'] != "") {
                     $arr_roles = explode(",", $_search['ROLE_ID']);
@@ -642,10 +631,6 @@
                             CENTER_VISIT_YMD,
                             CENTER_OUT_YMD,
                             EN_FL,
-    #                        EN_EMAIL_FL,
-    #                        EN_POST_FL,
-    #                        EN_SMS_FL,
-    #                        EN_PHONE_FL,
                             EN_ANGE_EMAIL_FL,
                             EN_ANGE_SMS_FL,
                             EN_ALARM_EMAIL_FL,
@@ -685,10 +670,6 @@
                             '".$_model[CENTER_VISIT_YMD]."',
                             '".$_model[CENTER_OUT_YMD]."',
                             '".$_model[EN_FL]."',
-    #                        '".$_model[EN_EMAIL_FL]."',
-    #                        '".$_model[EN_POST_FL]."',
-    #                        '".$_model[EN_SMS_FL]."',
-    #                        '".$_model[EN_PHONE_FL]."',
                             '".( $_model[EN_ANGE_EMAIL_FL] == "true" ? "Y" : "N" )."',
                             '".( $_model[EN_ANGE_SMS_FL] == "true" ? "Y" : "N" )."',
                             '".( $_model[EN_ALARM_EMAIL_FL] == "true" ? "Y" : "N" )."',
@@ -751,7 +732,7 @@
                 if (isset($_model[FILE]) && $_model[FILE] != "") {
                     $file = $_model[FILE];
 
-                    $sql = "INSERT INTO FILE
+                    $sql = "INSERT INTO COM_FILE
                             (
                                 FILE_NM
                                 ,FILE_ID
@@ -762,6 +743,9 @@
                                 ,REG_DT
                                 ,FILE_ST
                                 ,FILE_GB
+                                ,FILE_ORD
+                                ,TARGET_NO
+                                ,TARGET_GB
                             ) VALUES (
                                 '".$file[name]."'
                                 , '".$insert_path[uid]."'
@@ -772,29 +756,9 @@
                                 , SYSDATE()
                                 , 'C'
                                 , '".strtoupper($file[kind])."'
-                            )";
-
-                    $_d->sql_query($sql);
-                    $file_no = $_d->mysql_insert_id;
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO CONTENT_SOURCE
-                            (
-                                TARGET_NO
-                                ,SOURCE_NO
-                                ,CONTENT_GB
-                                ,TARGET_GB
-                                ,SORT_IDX
-                            ) VALUES (
-                                '".$no."'
-                                , '".$file_no."'
-                                , 'FILE'
+                                , '".$i."'
+                                , '".$no."'
                                 , 'USER'
-                                , '0'
                             )";
 
                     $_d->sql_query($sql);
@@ -1084,11 +1048,6 @@
                             USER_ID = '".$_key."'
                         ";
 
-    // 에러가 발생하여 주석처리
-    //                        EN_EMAIL_FL = '".$_model[EN_EMAIL_FL]."',
-    //                        EN_POST_FL = '".$_model[EN_POST_FL]."',
-    //                        EN_SNS_FL = '".$_model[EN_SNS_FL]."',
-    //                        EN_PHONE_FL = '".$_model[EN_PHONE_FL]."'
                 $_d->sql_query($sql);
 
                 if($_d->mysql_errno > 0) {
@@ -1106,12 +1065,10 @@
                     $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
-                            COM_USER U, FILE F, CONTENT_SOURCE S
+                            COM_USER U, COM_FILE F
                         WHERE
-                            U.NO = S.TARGET_NO
-                            AND F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'USER'
+                            U.NO = F.TARGET_NO
+                            AND F.TARGET_GB = 'USER'
                             AND U.USER_ID = '".$_key."'
                             AND F.FILE_GB = 'THUMB'
                         ";
@@ -1128,11 +1085,7 @@
                         }
 
                         if ($is_delete) {
-                            $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                            $_d->sql_query($sql);
-
-                            $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'USER' AND CONTENT_GB = 'FILE' AND SOURCE_NO = ".$row[NO];
+                            $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
 
                             $_d->sql_query($sql);
 
@@ -1146,7 +1099,7 @@
                     MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                     if ($insert_path[uid] != "") {
-                        $sql = "INSERT INTO FILE
+                        $sql = "INSERT INTO COM_FILE
                                 (
                                     FILE_NM
                                     ,FILE_ID
@@ -1157,6 +1110,9 @@
                                     ,REG_DT
                                     ,FILE_ST
                                     ,FILE_GB
+                                    ,FILE_ORD
+                                    ,TARGET_NO
+                                    ,TARGET_GB
                                 ) VALUES (
                                     '".$file[name]."'
                                     , '".$insert_path[uid]."'
@@ -1167,29 +1123,9 @@
                                     , SYSDATE()
                                     , 'C'
                                     , '".strtoupper($file[kind])."'
-                                )";
-
-                        $_d->sql_query($sql);
-                        $file_no = $_d->mysql_insert_id;
-
-                        if($_d->mysql_errno > 0) {
-                            $err++;
-                            $msg = $_d->mysql_error;
-                        }
-
-                        $sql = "INSERT INTO CONTENT_SOURCE
-                                (
-                                    TARGET_NO
-                                    ,SOURCE_NO
-                                    ,CONTENT_GB
-                                    ,TARGET_GB
-                                    ,SORT_IDX
-                                ) VALUES (
-                                    '".$target_no."'
-                                    , '".$file_no."'
-                                    , 'FILE'
+                                    , '".$i."'
+                                    , '".$target_no."'
                                     , 'USER'
-                                    , '0'
                                 )";
 
                         $_d->sql_query($sql);
@@ -1517,98 +1453,7 @@
                     $err++;
                     $msg = $_d->mysql_error;
                 }
-/*
-                $sql = "SELECT
-                            NO, MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
-                        FROM
-                            ANGE_MILEAGE
-                        WHERE
-                            POINT_ST = '0'
-                            AND NO = '1'
-                            AND MILEAGE_GB = '3'
-                        ";
 
-                $mileage_data1 = $_d->sql_fetch($sql);
-
-                $sql = "INSERT INTO ANGE_USER_MILEAGE
-                        (
-                            USER_ID,
-                            EARN_DT,
-                            MILEAGE_NO,
-                            EARN_GB,
-                            PLACE_GB,
-                            POINT,
-                            REASON
-                        ) VALUES (
-                            '".$_key."'
-                            , SYSDATE()
-                            , '".$mileage_data1['NO']."'
-                            , '".$mileage_data1['MILEAGE_GB']."'
-                            , '".$mileage_data1['SUBJECT']."'
-                            , '".$mileage_data1['POINT']."'
-                            , '".$mileage_data1['REASON']."'
-                        )";
-
-                $_d->sql_query($sql);
-
-                if ($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "SELECT
-                            NO, MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
-                        FROM
-                            ANGE_MILEAGE
-                        WHERE
-                            POINT_ST = '0'
-                            AND NO = '2'
-                            AND MILEAGE_GB = '4'
-                        ";
-
-                $mileage_data2 = $_d->sql_fetch($sql);
-
-                $sql = "INSERT INTO ANGE_USER_MILEAGE
-                        (
-                            USER_ID,
-                            EARN_DT,
-                            MILEAGE_NO,
-                            EARN_GB,
-                            PLACE_GB,
-                            POINT,
-                            REASON
-                        ) VALUES (
-                            '".$_key."'
-                            , SYSDATE()
-                            , '".$mileage_data2['NO']."'
-                            , '".$mileage_data2['MILEAGE_GB']."'
-                            , '".$mileage_data2['SUBJECT']."'
-                            , '".$mileage_data2['POINT']."'
-                            , '".$mileage_data2['REASON']."'
-                        )";
-
-                $_d->sql_query($sql);
-
-                if ($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "UPDATE
-                            COM_USER
-                        SET
-                            SUM_POINT = ".($mileage_data1['POINT'] + $mileage_data2['POINT']).",
-                            REMAIN_POINT = ".($mileage_data1['POINT'] + $mileage_data2['POINT'])."
-                        WHERE
-                            USER_ID = '".$_key."'";
-
-                $_d->sql_query($sql);
-
-                if ($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-*/
                 if ($err > 0) {
                     $_d->sql_rollback();
 

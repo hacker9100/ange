@@ -70,7 +70,7 @@ define([
     // 마이앙쥬
     '../../../partials/ange/myange/myangehome',
     '../../../partials/ange/myange/myangecalendar',
-    '../../../partials/ange/myange/myangealbum',
+    '../../../partials/ange/myange/myangealbum-list',
     '../../../partials/ange/myange/myangeaccount',
     '../../../partials/ange/myange/myangebaby',
     '../../../partials/ange/myange/myangegroup',

@@ -57,8 +57,7 @@ switch ($_method) {
                         ".$search_where."
                     ";
 
-            $result = $_d->sql_query($sql);
-            $data = $_d->sql_fetch_array($result);
+            $data = $_d->sql_fetch($sql);
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -66,14 +65,13 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                            NO, FILE_NM, FILE_SIZE, FILE_ID, PATH, THUMB_FL, ORIGINAL_NO, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            COM_FILE
-                        WHERE
-                            TARGET_GB = 'COMPANY'
-                            AND TARGET_NO = ".$_key."
-                            AND THUMB_FL = '0'
-                        ";
+                        NO, FILE_NM, FILE_SIZE, FILE_ID, PATH, THUMB_FL, ORIGINAL_NO, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        COM_FILE
+                    WHERE
+                        TARGET_GB = 'COMPANY'
+                        AND TARGET_NO = ".$_key."
+                    ";
 
             $file_data = $_d->sql_fetch($sql);
             $data['FILE'] = $file_data;
@@ -290,12 +288,12 @@ switch ($_method) {
             $to_user = __SMTP_USR_NM__;
             $subject = "$_model[COMPANY_NM]의 제휴&광고문의 입니다.";
             $message = "안녕하세요. ".$_model[COMPANY_NM]."의 제휴&광고문의 내용입니다.".
-                "<br>기업명 : ".$_model[COMPANY_NM].
-                "<br>담당자 : ".$_model[COMPANY_NM].
-                "<br>담당자 : ".$_model[URL].
-                "<br>유선전화 : ".$_model[PHONE_1].
-                "<br>휴대폰 : ".$_model[PHONE_2].
-                "<br>내용 : ".$_model[NOTE].
+                        "<br>기업명 : ".$_model[COMPANY_NM].
+                        "<br>담당자 : ".$_model[COMPANY_NM].
+                        "<br>담당자 : ".$_model[URL].
+                        "<br>유선전화 : ".$_model[PHONE_1].
+                        "<br>휴대폰 : ".$_model[PHONE_2].
+                        "<br>내용 : ".$_model[NOTE].
 
             $result = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
 
@@ -380,7 +378,6 @@ switch ($_method) {
                     WHERE
                         TARGET_GB = 'COMPANY'
                         AND TARGET_NO = ".$_key."
-                        AND THUMB_FL = '0'
                     ";
 
             $result = $_d->sql_query($sql,true);
@@ -487,7 +484,6 @@ switch ($_method) {
                 WHERE
                     TARGET_GB = 'COMPANY'
                     AND TARGET_NO = ".$_key."
-                    AND THUMB_FL = '0'
                 ";
 
         $result = $_d->sql_query($sql,true);
