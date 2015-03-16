@@ -298,12 +298,16 @@ ul.mini_board_feeds {
 
 .mini_peoplebabymodel_top{
 	position:absolute; 
-	width:98%;
+	width:100%;
 	top:0;
 	left:0;
-	height:72px;
-	background-image: url('/imgs/ange/mini_peoplebabymodel_top.png');
+	height:30%;
+    /*border:1px solid blue;*/
+    background-color:#303c45;  /*군청색bg*/
+	/*background-image: url('/imgs/ange/mini_peoplebabymodel_top.png');*/
 	z-index:10;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 }
 
 .mini_peoplebabymodel_top_bg {
@@ -311,8 +315,8 @@ ul.mini_board_feeds {
 	top:30px;
 	width:99.7%;
 	height:20%;
-	z-index:10;
-	background-color:#303c45;  /*군청색bg*/
+	/*z-index:10;*/
+    /*border:1px solid red;*/
 	z-index:20;
 }
 

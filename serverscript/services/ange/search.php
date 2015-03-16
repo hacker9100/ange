@@ -72,12 +72,16 @@ switch ($_method) {
 
             }else{
 
+                if ($_search[BOARD_GB]=='BOARD'){
+                    $search_where = " and CB.COMM_NO in (1,2,3,4,5,6,7) " ;
+                }
+
                 if ($_search[BOARD_GB]=='CLINIC'){
                     $search_where = " and ( PASSWORD='' or PASSWORD is null ) and CB.PARENT_NO=0 and CB.SUBJECT<>'' " ;
                 }
 
                 if ($_search[BOARD_GB]=='PHOTO'){
-                    $search_where = " and CB.COMM_NO<>92 " ;
+                    $search_where = " and CB.COMM_NO in (11,12,13) " ;
                 }
 
                 $sql = "select count(*) as TOTAL_COUNT from COM_BOARD CB where BOARD_GB='{$_search[BOARD_GB]}' and NOTICE_FL=0 {$search_where} and ( SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or BODY LIKE '%{$_search[SEARCH_KEYWORD]}%'); ";

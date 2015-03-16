@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('myangemessage', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('myangemessage', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope,$rootScope, $stateParams, $location, dialogs, CONSTANT) {
 
         $scope.search = {};
 
@@ -285,6 +285,12 @@ define([
                             .then(function(data){
                                 var total_cnt = data[0].TOTAL_COUNT;
                                 $scope.USER_TOTAL_COUNT = total_cnt;
+
+                                for (var i in data) {
+                                    if (data[i].FILE != null ) {
+                                        data[i].profileImg = CONSTANT.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                                    }
+                                }
 
                                 /*$scope.total(total_cnt);*/
                                 $scope.list = data;
