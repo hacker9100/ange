@@ -176,8 +176,7 @@
                                                     <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
 
                                                         <div class="item" style="position:absolute;">
-                                                            <!-- img ng-src="{{item.MAIN_FILE}}" style="height: 155px;" class="webzine_moms_featureimg" -->
-                                                            <img ng-src="{{item.MAIN_FILE}}" class="webzine_moms_featureimg" style="height: 155px; background-image: url(/imgs/ange/temp/temp_recipe_02.jpg);">
+                                                            <img src="/imgs/ange/_blank_4by3.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
                                                         </div>
 
                                                         <div class="webzine_list_wrap">
@@ -206,6 +205,10 @@
                                             </div>
 
                                         </div>  <!-- /.comp_basic -->
+
+                                        <nav class="text-center normaltype">
+                                            <pagination boundary-links="true" total-items="TOTAL_COUNT" items-per-page="5" ng-model="PAGE_NO" class="pagination-sm" max-size="10" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                        </nav><!-- /.Paging-->
                                     </div>  <!-- /.v-cell-4 -->
                                 </div>  <!-- /.row -->
                             </div>  <!-- /.peoplephoto_list_wrap -->

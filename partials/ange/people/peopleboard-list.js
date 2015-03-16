@@ -123,7 +123,10 @@ define([
             $scope.search.ORDER = 'DESC'*/
 
             if($stateParams.menu == 'supporter'){
-                $scope.search.CATEGORY_NO = $rootScope.support_no;
+
+                if($rootScope.role != 'ANGE_ADMIN'){
+                    $scope.search.CATEGORY_NO = $rootScope.support_no;
+                }
             }
 
             $scope.search.FILE_EXIST = true;

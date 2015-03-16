@@ -57,7 +57,7 @@ switch ($_method) {
             $sql = "SELECT
                         NO, PRODUCT_NM, PRODUCT_GB, COMPANY_NO, COMPANY_NM, URL, BODY, PRICE, STOCK_FL, SUM_IN_CNT, SUM_OUT_CNT, NOTE, DELEIVERY_PRICE,
                         DELEIVERY_ST, DIRECT_PRICE, ORDER_YN,(SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
-                        (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT
+                        (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, PARENT_NO
                     FROM
                         ANGE_PRODUCT AP
                     WHERE
@@ -170,25 +170,21 @@ switch ($_method) {
                 }else if($_search[PRODUCT_TYPE] == 5){
                     $search_where .= "AND PRICE >= 100000 ";
                 }
-
             }
 
-/*            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
-            }*/
+            for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
+                $category = $_search[CATEGORY][$i];
+                $search_where .= "AND CATEGORY_NO = '".$category[NO]."' ";
+            }
+
 
             if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                 $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
             }
 
-            /*AND BODY LIKE '%".$_search[KEYWORD]."%'";*/
-//                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-//                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
-//                }
-
-                if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
-                }
+            if (isset($_page)) {
+                $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+            }
 
             $sql = "SELECT
                         NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, TOTAL_COUNT, PERIOD, ORDER_YN, DIRECT_PRICE,AUCTION_AMOUNT,AUCTION_COUNT
@@ -221,34 +217,37 @@ switch ($_method) {
 
             $data = null;
 
-            if (isset($_search[FILE])) {
-                $__trn = '';
-                $result = $_d->sql_query($sql,true);
+            $__trn = '';
+            $result = $_d->sql_query($sql,true);
+
+            if($_search['FILE']) {
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                            FROM
-                                FILE F, CONTENT_SOURCE S
-                            WHERE
-                                F.NO = S.SOURCE_NO
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_GB = 'PRODUCT'
-                                AND F.FILE_GB = 'MAIN'
-                                AND S.TARGET_NO = ".$row['NO']."
-                            ";
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    FILE F, CONTENT_SOURCE S
+                                WHERE
+                                    F.NO = S.SOURCE_NO
+                                    AND S.CONTENT_GB = 'FILE'
+                                    AND S.TARGET_GB = 'PRODUCT'
+                                    AND F.FILE_GB = 'MAIN'
+                                    AND F.THUMB_FL = 0
+                                    AND S.TARGET_NO = ".$row['NO']."";
 
-                    $category_data = $_d->getData($sql);
-                    $row['FILE'] = $category_data;
+                    $file_result = $_d->sql_query($sql);
+                    $file_data = $_d->sql_fetch_array($file_result);
+                    $row['FILE'] = $file_data;
 
                     $__trn->rows[$i] = $row;
                 }
+
                 $_d->sql_free_result($result);
                 $data = $__trn->{'rows'};
 
-                if($_d->mysql_errno > 0){
+                if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-                }else{
+                } else {
                     $_d->dataEnd2($data);
                 }
             }else if(isset($_search[BOARD_NEXT]) && $_search[BOARD_NEXT] != "") {

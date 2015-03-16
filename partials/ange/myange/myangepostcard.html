@@ -25,7 +25,7 @@
 
                                 <thead>
                                 <tr class="board_thead" height="48">
-                                    <td width="80" align="center"><span class="board_th">작성일</span></td>
+                                    <td width="80" align="center"><span class="board_th">신청일</span></td>
                                     <td align="center"><span class="board_th">제목</span></td>
                                     <td width="100" align="center"><span class="board_th">응모/당첨</span></td>
                                 </tr>
@@ -34,9 +34,9 @@
                                 <tbody class="on" ng-repeat="item in list">
 
                                 <tr > <!--style="cursor:pointer;"-->
-                                    <td class="table_date">{{item.REG_DT}}</td>
-                                    <td>{{item.SUBJECT}}</td>
-                                    <td  class="table_author">{{item.COMP_CNT == 0 ? '응모' : '당첨'}}</td>
+                                    <td class="table_date">{{item.adhj_date_request}}</td>
+                                    <td>{{item.ada_title}}</td>
+                                    <td  class="table_author">{{item.COMP_YN == 'N' ? '응모' : '당첨'}}</td>
                                 </tr>
 
                                 </tbody>
@@ -51,7 +51,7 @@
                             </table><!-- /.List-->
 
                             <nav class="text-center">
-                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" items-per-page="25" class="pagination-sm" ng-change="pageBoardChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
                             <!-- /peoplepoll_list -->
 

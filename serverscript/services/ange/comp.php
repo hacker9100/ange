@@ -95,13 +95,13 @@ switch ($_method) {
                 $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
             }*/
 
-            if (isset($_search[USER_ID]) && $_search[USER_ID] != "") {
-                $search_where .= "AND AC.USER_ID  = '".$_search[USER_ID]."' ";
-            }
-
-            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
-                $search_where .= "AND AC.TARGET_GB  = '".$_search[TARGET_GB]."' ";
-            }
+//            if (isset($_search[USER_ID]) && $_search[USER_ID] != "") {
+//                $search_where .= "AND AC.USER_ID  = '".$_search[USER_ID]."' ";
+//            }
+//
+//            if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
+//                $search_where .= "AND AC.TARGET_GB  = '".$_search[TARGET_GB]."' ";
+//            }
 
             if (isset($_page)) {
                 $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
@@ -109,29 +109,30 @@ switch ($_method) {
 
 
 
-            $sql = "SELECT
-                            TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM, NO, TARGET_NO, USER_ID, NICK_NM, USER_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PREG_FL, BABY_MONTH,
-                            BABY_AGE, BLOG_URL, ANSWER,
-                            ADD1, ADD2, ADD3, HOPE_REASON, SIZE1, SIZE2, SIZE3, ANGE_MEET, PLACE, PREGNANT_WEEKS, CHILD_AGE, CHILD_FL,
-                            (SELECT SUBJECT FROM ANGE_EVENT WHERE NO = DATA.TARGET_NO) AS SUBJECT, COMP_CNT, TARGET_GB,
-                            (SELECT COUNT(1) FROM ANGE_COMP_WINNER WHERE JOIN_NO = DATA.NO) AS ANGE_COMP_FL
+            $sql = "SELECT TOTAL_COUNT, ada_idx, adu_id, adu_name, ada_title, date_join_check, date_complete_check, ada_type, DATE_FORMAT(adhj_date_request, '%Y-%m-%d') as adhj_date_request,
+                        CASE WHEN date_join_check = 1 and date_complete_check = 1 THEN 'Y' ELSE 'N' END AS COMP_YN
                         FROM
                         (
-                             SELECT  AC.NO, AC.TARGET_NO, AC.USER_ID, AC.NICK_NM, AC.USER_NM, AC.REG_DT, AC.PREG_FL, AC.BABY_MONTH,
-                                      AC.BABY_AGE, AC.BLOG_URL, AC.ANSWER,
-                                      AC.ADD1, AC.ADD2, AC.ADD3, AC.HOPE_REASON, AC.SIZE1, AC.SIZE2, AC.SIZE3, AC.ANGE_MEET, AC.PLACE, AC.PREGNANT_WEEKS, AC.CHILD_AGE, AC.CHILD_FL,
-                                      (SELECT COUNT(*) FROM ANGE_COMP_WINNER WHERE TARGET_NO = AC.TARGET_NO AND JOIN_NO = AC.NO AND TARGET_GB = AC.TARGET_GB) AS COMP_CNT, AC.TARGET_GB
-                             FROM ANGE_COMP AC
-                             WHERE 1=1
+                             SELECT  a.ada_idx, a.adu_id, a.adu_name, b.ada_title,
+                                     CASE WHEN a.adhj_date_join IS NOT NULL THEN 1 ELSE 0 END AS date_join_check, case WHEN a.adhj_date_complete IS NOT NULL THEN 1 ELSE 0 END AS date_complete_check,
+                                     b.ada_type, a.adhj_date_request
+                             FROM adm_history_join a, adm_ad b
+                             WHERE 1 = 1
+                              AND a.ada_idx = b.ada_idx
+                              AND b.ada_type <> 'survey'
+                               AND a.adu_id = '".$_SESSION['uid']."'
                                ".$search_where."
-                             ORDER BY REG_DT DESC
+                             ORDER BY adhj_date_request DESC
                              ".$limit."
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
                         (
                              SELECT COUNT(*) AS TOTAL_COUNT
-                             FROM ANGE_COMP AC
-                             WHERE 1=1
+                             FROM adm_history_join a, adm_ad b
+                             WHERE 1 = 1
+                               AND a.ada_idx = b.ada_idx
+                               AND b.ada_type <> 'survey'
+                               AND a.adu_id = '".$_SESSION['uid']."'
                                ".$search_where."
                         ) CNT
                         ";

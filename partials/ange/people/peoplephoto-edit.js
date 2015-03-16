@@ -314,7 +314,7 @@ define([
                     $scope.item.NOTICE_FL = "false";
                 }
 
-                $scope.insertItem('com/webboard', 'item', $scope.item, false)
+                $scope.s('com/webboard', 'item', $scope.item, false)
                     .then(function(){
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});

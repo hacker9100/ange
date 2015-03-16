@@ -22,6 +22,32 @@ define([
         $scope.mileage = true;
         $scope.cummerce = false;
 
+        $(document).ready(function() {
+            $("input:radio:first").prop("checked", true).trigger("click");
+            $(".product_gb").click(function() {
+
+                if($(this).val() == "mileage"){
+                    $scope.mileage = true;
+                    $scope.cummerce = false;
+                } else if ($(this).val() == "cummerce"){
+                    $scope.mileage = false;
+                    $scope.cummerce = true;
+                }
+
+                //alert("clicked");
+//                $('input[name="cartlist"]').change(function(){
+//                    if($(this).val() == "mileage"){
+//                        $scope.mileage = true;
+//                        $scope.cummerce = false;
+//                    } else if ($(this).val() == "cummerce"){
+//                        $scope.mileage = false;
+//                        $scope.cummerce = true;
+//                    }
+//                });
+
+            });
+        });
+
         $(function(){
             $scope.click_cartlist = function(){
 

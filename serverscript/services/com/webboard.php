@@ -590,6 +590,10 @@
                     $search_where .= "AND CC.NO = '".$_search[CATEGORY_NO]."' ";
                 }
 
+                if (isset($_search[PARENT_NO]) && $_search[PARENT_NO] != "") {
+                    $search_where .= "AND CC.PARENT_NO = '".$_search[PARENT_NO]."' ";
+                }
+
                 if (isset($_search[ALL]) && $_search[ALL] != "") {
                     $search_where .= "AND CC.CATEGORY_NM <> '전체'";
                 }
