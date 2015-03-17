@@ -97,13 +97,21 @@ define([
 
             angular.forEach($scope.queue, function(file) {
                 file.kind = '';
+
+                console.log(file);
             });
 
             if (file.kind == 'MAIN') {
                 file.kind = '';
             } else {
                 file.kind = 'MAIN';
+                console.log(file);
+                if (!angular.isUndefined(CKEDITOR)) {
+                    var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.url+'" />' );
+                    CKEDITOR.instances.editor1.insertElement( element );
+                }
             }
+
         };
 
         $scope.click_checkAllToggle = function () {
@@ -314,7 +322,7 @@ define([
                     $scope.item.NOTICE_FL = "false";
                 }
 
-                $scope.s('com/webboard', 'item', $scope.item, false)
+                $scope.insertItem('com/webboard', 'item', $scope.item, false)
                     .then(function(){
 
                         dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
