@@ -153,7 +153,7 @@
                         $sql = "SELECT
                                     F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                                 FROM
-                                    COM_FILE F,
+                                    COM_FILE F
                                 WHERE
                                     F.TARGET_GB = 'REVIEW'
                                     AND F.FILE_GB = 'MAIN'
