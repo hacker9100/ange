@@ -131,8 +131,10 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 //                        ) CNT
 //                        ";
 
-                // , ada_notice
-                $sql = "SELECT TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
+                // , ada_notice (@RNUM := @RNUM -1)+1  AS RNUM @RNUM := @RNUM + 1 AS RNUM
+
+                // (SELECT @RNUM := 0) R,
+                $sql = "SELECT TOTAL_COUNT, (@RNUM := @RNUM -1)+1  AS RNUM,
                              ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_option_quantity, ada_image, ada_preview, ada_imagemap
                              ,ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url, ada_type, ada_title, ada_que_type
                              ,DATE_FORMAT(ada_date_notice, '%Y-%m-%d') as ada_date_notice
@@ -148,7 +150,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                                 ".$sort_order."
                                 ".$limit."
                         ) AS DATA,
-                        (SELECT @RNUM := 0) R,
+                        (SELECT @RNUM := (SELECT COUNT(*) FROM adm_ad WHERE 1=1 AND ada_type = 'survey' ".$search_where.")) R,
                         (
                             SELECT COUNT(*) AS TOTAL_COUNT
                             FROM adm_ad

@@ -99,8 +99,16 @@
                     $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
                 }
 
+//                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
+//                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+//                }
+
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                    if($_search[CONDITION][value] == "SUBJECT+BODY"){
+                        $search_where .= "AND (SUBJECT LIKE '%".$_search[KEYWORD]."%' OR BODY LIKE '%".$_search[KEYWORD]."%') ";
+                    }else{
+                        $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    }
                 }
 
                 if (isset($_page)) {
@@ -532,14 +540,11 @@
                 if( trim($_model[BODY]) == '' ){
                     $_d->failEnd("내용이 비어있습니다");
                 }
-
+                
                 $sql = "UPDATE ANGE_REVIEW
                     SET
                         SUBJECT = '".addslashes($_model[SUBJECT])."',
                         BODY = '".addslashes($_model[BODY])."',
-                        REG_UID = '".$_SESSION['uid']."',
-                        NICK_NM = '".$_SESSION['nick']."',
-                        REG_DT = SYSDATE(),
                         HIT_CNT = '".$_model[HIT_CNT]."',
                         LIKE_CNT = '".$_model[LIKE_CNT]."',
                         REPLY_CNT = '".$_model[REPLY_CNT]."',

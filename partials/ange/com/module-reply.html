@@ -8,7 +8,8 @@
 
         <div class="col-xs-12 people_view_replys" ng-repeat="replyItem in replyList">
             <dl class="dl-horizontal" >
-                <dt>{{replyItem.NICK_NM}}</dt>
+                <dt ng-show="comm_no != 8">{{replyItem.NICK_NM}}</dt>
+                <dt ng-show="comm_no == 8">*{{replyItem.NICK_NM | limitTo : 1}}*</dt>
                 <dd><div class="people_view_replys_date">{{replyItem.REG_DT}}</div></dd>
                 <dd style="margin:0px; margin-top:8px;">
                     <!--{{replyItem.BLIND_FL == 'N' ? replyItem.COMMENT : '관리자에 의해 블라인드 된 의견입니다'}}&lt;!&ndash;{{replyItem.COMMENT}}&ndash;&gt;-->
@@ -35,7 +36,8 @@
             <div class="reply_child"  ng-class="{ 'hidden': ! showDetails }"> <!--ng-class="{ 'hidden': ! showDetails }"-->
                 <dl ng-repeat="reItem in replyItem.REPLY_COMMENT">
                     <dt>
-                        <span>└&nbsp;</span>{{reItem.NICK_NM}}
+                        <span ng-show="comm_no != 8"><span>└&nbsp;</span>{{reItem.NICK_NM}}</span>
+                        <span ng-show="comm_no == 8"><span>└&nbsp;</span>*{{reItem.NICK_NM | limitTo : 1}}*</span>
                         <small>
                             <div class="smalldate">
                                 {{reItem.REG_DT}}

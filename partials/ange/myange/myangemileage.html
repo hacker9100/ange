@@ -23,7 +23,7 @@
                                 <div class="mileage_titletxt table_red">적립하는 재미! 사용하는 혜택! <span style="color:#333;">앙쥬 마일리지</span></div>
                                 <ul style="margin-left:20px; margin-top:10px;font-size:0.92em;">
                                     <li>마일리지는 앙쥬 콘텐츠의 다양한 활동을 통해 적립이 가능합니다.</li>
-                                    <li>마일리지는 <span class="table_red">부여된 일자부터 3년 이내에 사용</span>하셔야 합니다.</li>
+                                    <!--<li>마일리지는 <span class="table_red">부여된 일자부터 3년 이내에 사용</span>하셔야 합니다.</li>-->
                                     <li>회원 탈퇴 시 적립된 마일리지는 소멸됩니다.</li>
                                 </ul>
                             </div>
@@ -43,9 +43,14 @@
                             <h4 style="font-weight:600; margin-top:40px;">마일리지 적립 및 사용 내역</h4>
 
                             <div style="display:inline-block; width:100%; background-color:#ededed; padding:5px 0; margin-top:10px">
-                                <span style="float:left; line-height:30px;padding:0 10px;">년도별 조회</span>
+                                <span style="float:left; line-height:30px;padding:0 10px;">연도별 조회</span>
                                 <select id="birth" ng-model="search.YEAR" ng-options="v for v in search_year" ng-change="change_year(search.YEAR);" class="form-control input-sm" style="width:120px;float:left;">
                                     <!--<option value="" selected>선택</option>-->
+                                </select>
+
+                                <span style="float:left; line-height:30px;padding:0 10px;">월별 조회</span>
+                                <select id="month" ng-model="search.MONTH" ng-options="v for v in month" ng-change="change_month(search.MONTH);" class="form-control input-sm" style="width:70px;">
+                                    <option value="" selected>월</option>
                                 </select>
                             </div>
                             <!-- peoplepoll_list -->

@@ -95,7 +95,7 @@ define([
             // 신청폼에 회원정보를 셋팅
             $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                 .then(function(data){
-                    $scope.item = data;
+                    $rootScope.user_info = data;
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
@@ -192,7 +192,7 @@ define([
 
                 $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                     .then(function(data){
-                        $scope.item = data;
+                        $scope.user_info = data;
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){

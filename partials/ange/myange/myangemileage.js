@@ -38,6 +38,26 @@ define([
 
         $scope.search_year = year;
 
+        var date = new Date();
+
+        var month = [];
+
+        var thisyear = date.getFullYear().toString();
+        var mm = (date.getMonth()+1).toString();
+        var dd  = date.getDate().toString();
+
+        var lastdd = new Date(thisyear, mm ,0);
+        var lastday = lastdd.getDate();
+
+        for (var i = 1; i <= 12; i++) {
+
+            if(i < 10){
+                i = '0'+i;
+            }
+            month.push(i+'');
+        }
+
+        $scope.month = month;
 
         //
         $scope.pageBoardChanged = function() {
@@ -114,6 +134,15 @@ define([
 
             $scope.search.YEAR = year;
             $scope.getPeopleBoardList();
+        }
+
+        // 월 선택
+        $scope.change_month = function(month){
+
+            $scope.search.MONTH = month;
+
+            $scope.getPeopleBoardList();
+//            $scope.getPeopleReplyList();
         }
 
         $scope.getSession()

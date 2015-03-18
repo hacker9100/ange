@@ -134,13 +134,13 @@ switch ($_method) {
             if (isset($_search[PRODUCT_TYPE]) && $_search[PRODUCT_TYPE] != "" && $_search[PRODUCT_TYPE] != "ALL") {
 
                 if($_search[PRODUCT_TYPE] == 1){
-                    $search_where .= "AND PRICE < 10000 ";
+                    $search_where .= "AND PRICE <= 10000 ";
                 }else if($_search[PRODUCT_TYPE] == 2){
-                    $search_where .= "AND PRICE < 30000 ";
+                    $search_where .= "AND PRICE <= 30000 ";
                 }else if($_search[PRODUCT_TYPE] == 3){
-                    $search_where .= "AND PRICE < 50000 ";
+                    $search_where .= "AND PRICE <= 50000 ";
                 }else if($_search[PRODUCT_TYPE] == 4){
-                    $search_where .= "AND PRICE < 100000 ";
+                    $search_where .= "AND PRICE <= 100000 ";
                 }else if($_search[PRODUCT_TYPE] == 5){
                     $search_where .= "AND PRICE >= 100000 ";
                 }

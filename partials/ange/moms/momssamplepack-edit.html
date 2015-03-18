@@ -122,20 +122,20 @@
                 </div>
             </div>
 
-            <div class="row form_rows">
-                <div class="form_basicinfo">
-                        <span class="col-xs-2 basicinfo title">
-                            <strong>아이디</strong>
-                            <span class="table_blue">*</span>
-                        </span>
+            <!--<div class="row form_rows">-->
+                <!--<div class="form_basicinfo">-->
+                        <!--<span class="col-xs-2 basicinfo title">-->
+                            <!--<strong>아이디</strong>-->
+                            <!--<span class="table_blue">*</span>-->
+                        <!--</span>-->
 
-                        <span class="col-xs-4 basicinfo input">
-                            <div class="form-group" style="margin:0 5px">
-                                <input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>
-                            </div>
-                        </span>
-                </div>  <!-- /.form_basicinfo -->
-            </div>  <!-- /.form_rows -->
+                        <!--<span class="col-xs-4 basicinfo input">-->
+                            <!--<div class="form-group" style="margin:0 5px">-->
+                                <!--<input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
+                            <!--</div>-->
+                        <!--</span>-->
+                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+            <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
             <div class="row form_rows">
                 <div class="form_basicinfo">
@@ -146,26 +146,27 @@
 
                         <span class="col-xs-4 basicinfo input">
                             <div class="form-group" style="margin:0 5px">
-                                <input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>
+                                <!--<input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
+                                {{user_info.NICK_NM}}<!--({{user_info.USER_ID}}) -->
                             </div>
                         </span>
                 </div>  <!-- /.form_basicinfo -->
             </div>  <!-- /.form_rows -->
 
-            <div class="row form_rows">
-                <div class="form_basicinfo">
-                        <span class="col-xs-2 basicinfo title">
-                            <strong>가입일자</strong>
-                            <span class="table_blue">*</span>
-                        </span>
+            <!--<div class="row form_rows">-->
+                <!--<div class="form_basicinfo">-->
+                        <!--<span class="col-xs-2 basicinfo title">-->
+                            <!--<strong>가입일자</strong>-->
+                            <!--<span class="table_blue">*</span>-->
+                        <!--</span>-->
 
-                        <span class="col-xs-4 basicinfo input">
-                            <div class="form-group" style="margin:0 5px">
-                                <input type="text" ng-model="item.REG_DT" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>
-                            </div>
-                        </span>
-                </div>  <!-- /.form_basicinfo -->
-            </div>  <!-- /.form_rows -->
+                        <!--<span class="col-xs-4 basicinfo input">-->
+                            <!--<div class="form-group" style="margin:0 5px">-->
+                                <!--<input type="text" ng-model="item.REG_DT" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
+                            <!--</div>-->
+                        <!--</span>-->
+                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+            <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
         <div class="row form_rows">
             <div class="form_basicinfo">
@@ -181,7 +182,8 @@
                         </span>
                         <span class="col-xs-3 basicinfo input">
                             <div class="form-group" style="margin:0 5px">
-                                <input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>
+                                <!--<input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
+                                {{user_info.PHONE_1}}
                             </div>
                         </span>
                         <span class="col-xs-1 basicinfo input">
@@ -191,7 +193,8 @@
                         </span>
                         <span class="col-xs-3 basicinfo input">
                             <div class="form-group" style="margin:0 5px">
-                                <input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>
+                                <!--<input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
+                                {{user_info.PHONE_2}}
                             </div>
                         </span>
             </div>  <!-- /.form_basicinfo -->
@@ -206,9 +209,9 @@
 
                         <span class="col-xs-10 basicinfo input">
                             <div class="form-group" style="margin:0 5px">
-                                <p><input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder="" disabled></p>
-                                <p><input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR" placeholder="" disabled></p>
-                                <input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>
+                                <p>{{user_info.ZIP_CODE| limitTo: 3}}-{{user_info.ZIP_CODE| limitTo: -3}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder="" disabled>--></p>
+                                <p>{{user_info.ADDR}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR" placeholder="" disabled>--></p>
+                                {{user_info.ADDR_DETAIL}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>-->
                             </div>
                         </span>
             </div>  <!-- /.form_basicinfo -->
@@ -303,7 +306,7 @@
                 <span class="table_blue">*</span>
             </span>
 
-            <div ng-show="item.ada_que_type == 'upload'" class="no-margin" style="padding:8px 5px; margin:0px; width:100%;">
+            <div  class="no-margin" style="padding:8px 5px; margin:0px; width:100%;"> <!-- ng-show="item.ada_que_type == 'upload'" -->
                 <form id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
                     <input type="hidden" id="version" name="version" value="1">
                     <div class= "form-group form_basic_group" style="width:100%; margin:0px; padding:0px;">

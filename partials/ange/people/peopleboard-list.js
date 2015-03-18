@@ -115,7 +115,7 @@ define([
 //            $location.url('people/poll/edit/'+item.NO);
         };
 
-        $scope.isLoding = false;
+        $scope.isLoding = true;
 
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {

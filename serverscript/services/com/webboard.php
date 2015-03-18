@@ -209,7 +209,7 @@
 
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     if($_search[CONDITION][value] == "SUBJECT+BODY"){
-                        $search_where .= "AND SUBJECT LIKE '%".$_search[KEYWORD]."%' AND BODY LIKE '%".$_search[KEYWORD]."%'";
+                        $search_where .= "AND (SUBJECT LIKE '%".$_search[KEYWORD]."%' OR BODY LIKE '%".$_search[KEYWORD]."%')";
                     }else{
                         $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
                     }
@@ -937,8 +937,6 @@
                         HEAD = '".$_model[HEAD]."'
                         ,SUBJECT = '".addslashes($_model[SUBJECT])."'
                         ,BODY = '".addslashes($_model[BODY])."'
-                        ,REG_UID = '".$_SESSION['uid']."'
-                        ,REG_NM = '".$_model[REG_NM]."'
                         ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "1" : "0")."'
                         ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
                         ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'
