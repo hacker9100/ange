@@ -91,15 +91,16 @@ define([
             $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                 .then(function(data){
 
-                    $scope.item.USER_ID = data.USER_ID;
-                    $scope.item.USER_NM = data.USER_NM;
-                    $scope.item.NICK_NM = data.NICK_NM;
-                    $scope.item.ADDR = data.ADDR;
-                    $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
-                    $scope.item.REG_DT = data.REG_DT;
-                    $scope.item.REG_DT = data.REG_DT;
-                    $scope.item.PHONE_1 = data.PHONE_1;
-                    $scope.item.PHONE_2 = data.PHONE_2;
+                    $rootScope.user_info = data;
+//                    $scope.item.USER_ID = data.USER_ID;
+//                    $scope.item.USER_NM = data.USER_NM;
+//                    $scope.item.NICK_NM = data.NICK_NM;
+//                    $scope.item.ADDR = data.ADDR;
+//                    $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
+//                    $scope.item.REG_DT = data.REG_DT;
+//                    $scope.item.REG_DT = data.REG_DT;
+//                    $scope.item.PHONE_1 = data.PHONE_1;
+//                    $scope.item.PHONE_2 = data.PHONE_2;
 
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});

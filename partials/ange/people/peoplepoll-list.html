@@ -37,7 +37,7 @@
                                         <!--</div>&lt;!&ndash; /btn-group &ndash;&gt;-->
 
                                         <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                            <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+                                            <input type="text" ng-model="search.KEYWORD" class="form-control" ng-keyup="($event.which === 13) ? click_searchPoll() : 0" placeholder="검색할 단어를 두자 이상 입력">
 
                                             <span class="input-group-btn" ng-click="click_searchPoll();">
                                                 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" ></span></button>

@@ -76,6 +76,10 @@
                     $search_table .= "FROM ANGE_USER_MILEAGE AUM";
                 }
 
+                if (isset($_search[MONTH]) && $_search[MONTH] != "") {
+                    $search_where .= "AND DATE_FORMAT(AUM.EARN_DT, '%m') = '".$_search[MONTH]."'";
+                }
+
                 $limit = "";
 
                 if (isset($_page)) {

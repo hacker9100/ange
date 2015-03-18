@@ -294,6 +294,22 @@
                                                 </tr>
                                                 <tr>
                                                     <td align="center" class="table_td_gray">
+                                                        출산 예정일
+                                                    </td>
+                                                    <td>
+                                                        <select id="birth" ng-model="item.DELIVERY_YEAR" ng-options="v for v in babyYear" class= "form-control" style="width:110px;float: left;">
+                                                            <option value="" selected>년</option>
+                                                        </select>
+                                                        <select ng-model="item.DELIVERY_MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;float: left;">
+                                                            <option value="" selected>월</option>
+                                                        </select>
+                                                        <select ng-model="item.DELIVERY_DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                            <option value="" selected>일</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" class="table_td_gray">
                                                         상품설명<br/>스크랩한<br/>
                                                         블로그 주소
                                                     </td>

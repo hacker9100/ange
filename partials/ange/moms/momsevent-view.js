@@ -93,7 +93,7 @@ define([
         var minute = [];
 
 
-        for (var i = nowYear + 1; i >= 1995; i--) {
+        for (var i = nowYear ; i >= nowYear - 1; i--) {
             babyYear.push(i+'');
         }
 

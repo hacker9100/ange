@@ -193,7 +193,7 @@ define([
         /********** 화면 초기화 **********/
         //$scope.init();
 
-        $scope.isLoding = false;
+        $scope.isLoding = true;
 
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
