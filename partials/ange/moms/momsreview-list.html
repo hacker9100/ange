@@ -17,42 +17,23 @@
                             </div>
 
                             <div class="container-fluid sub_contents_search">
+
                                 <div class="row">
                                     <div class="col-xs-12" style="padding:0">
 
-                                        <!--                                        <div class="btn-group" style="float:left;">
-                                                                                    <button type="button" class="btn btn-default btn-sm" style="text-align:left;">제목 + 본문</button>
 
-                                                                                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                                                        <span class="caret"></span>
-                                                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                                                    </button>
-
-                                                                                    <ul class="dropdown-menu" role="menu">
-                                                                                        <li><a href="#">제목+내용</a></li>
-                                                                                        <li><a href="#">작성자</a></li>
-                                                                                    </ul>-->
-                                        <div class="btn-group" style="float:left;">
-                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control input-sm" placeholder="검색선택"></select>
+                                        <div class="btn-group col-xs-12 col-sm-2" style="padding:2px 0px;">
+                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class="form-control input-sm" placeholder="검색선택"></select>
                                         </div><!-- /btn-group -->
 
-                                        <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                            <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
+                                        <div class="input-group input-group-sm col-xs-12 col-sm-7" style="padding:2px 0px;">
+                                            <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0"  class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
-												<span class="input-group-btn" ng-click="click_searchPeopleBoard();">
-												<button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
-												</span>
-
+                                            <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+                                                <button class="btn btn-default"  type="button" ><span class="glyphicon glyphicon-search"></span></button>
+                                            </span>
                                         </div>
 
-                                        <!-- div style="float:right; width:120px; margin:0px; padding:0px;">
-                                            <div class="input-group input-group-sm">
-                                                <span class="input-group-addon">
-                                                    <input type="checkbox" />
-                                                </span>
-                                                <input type="text" class="form-control table_filtercheck" placeholder="진행중" style="background:#fff; padding-top: 2px; cursor:default; font-size: 0.86em;" disabled />
-                                            </div>
-                                        </div -->
 
                                     </div><!-- /.col-xs-12-->
                                 </div><!-- /.row -->
@@ -66,21 +47,21 @@
                             <!-- review_list -->
                             <table id="comp_board_table" class="table table-hover">
 
-                                <thead>
-                                <tr class="board_thead" height="48">
+                                <thead style="min-width:360px;">
+                                <tr class="board_thead normaltype" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td colspan="2" align="left"><span class="board_th">내용</span></td>
                                     <td width="80" align="center"><span class="board_th">조회</span></td>
                                 </tr>
                                 </thead>
 
-                                <tbody class="on" ng-repeat="item in list">
+                                <tbody class="on" ng-repeat="item in list" style="width:100%; min-width:320px !important;">
                                 <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
-                                    <td class="table_no" style="vertical-align: middle;">
+                                    <td class="table_no normaltype" style="vertical-align: middle;">
                                         <span>{{item.REVIEW_NO}}</span>
                                     </td>
 
-                                    <td width="18%" style="min-width:150px;">
+                                    <td width="18%" class="normaltype" style="min-width:150px;">
                                         <div class="review_thumbnails" >
                                             <!--<img class="thumbnails_img" style="width: 157px;height: 116px;" ng-src="{{item.MAIN_FILE}}" />-->
                                             <img src="/imgs/ange/_blank_4by3.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
@@ -88,9 +69,7 @@
                                         <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
                                     </td>
 
-                                    </td>
-
-                                    <td style="padding-right:15px;">
+                                    <td class="normaltype" style="padding-right:15px;">
                                         <div style="font-size:1.08em; font-weight:600; height:46px;">
                                             <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span>
                                             <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
@@ -104,11 +83,11 @@
                                         <!--<span class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                         <!--<div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: keep-all;">{{item.BODY | string_limit : 50}}{{item.BODY > 50 ? '...' : ''}}</div>-->
 
-                                        <div class="table_gray" style="width:100%; text-align: justify; font-size:0.92em; word-break: break-all; height:38px; overflow:hidden; text-overflow:ellipsis; ">
+                                        <div class="table_gray" style="width:100%; text-align: justify; font-size:0.92em; word-break: break-all; height:38px; overflow:hidden; text-overflow:ellipsis;">
                                             {{item.BODY | string_limit : 200}}
                                         </div>
                                     </td>
-                                    <td class="table_hit">
+                                    <td class="table_hit normaltype">
                                         <div class="table_date" style="font-size:0.86em;">
                                             <div style="float:right; margin-top:10px; display:inline; padding:8px 0 0 18px;">
                                                 <div class="feed_count counthit_color table_gray" title="조회수" style="line-height:12px; height:26px;">{{item.HIT_CNT}}</div>   <!-- 히트수 -->
@@ -120,15 +99,61 @@
                                         </div>
                                     </td>
                                 </tr>
-                                </tbody>
 
-                                <tbody class="on" data-ng-show="list == '' || list == null">
+                                <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
+                                    <!---- 모바일 TD ------>
+                                    <td class="table_no mobiletype" align="center" style="position:relative; font-size:1em; font-weight:400; padding-bottom:50px;">
 
-                                <tr>
-                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                        <div class="review_thumbnails">
+                                            <!--<img class="thumbnails_img" style="width: 157px;height: 116px;" ng-src="{{item.MAIN_FILE}}" />-->
+                                            <img src="/imgs/ange/_blank_4by3.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}');" />
+
+                                            <div style="position:absolute; left:0; top:0; color:#fff; font-size:0.68em; background-color:#000; padding:2px 4px; opacity:.5">
+                                                {{item.REVIEW_NO}}
+                                            </div>
+                                        </div>
+
+                                        <div style="width:100%; font-size:1.08em; font-weight:600; height:20px; overflow: hidden; white-space: inherit; text-overflow: ellipsis;">
+                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" style="">{{ item.SUBJECT | limitTo: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span>
+                                            <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
+                                            <span ng-show="item.NEW_FL == 1" class="table_icon_new" style="vertical-align: middle;">N</span>
+                                        </div>
+                                        <div class="table_blue" style="clear:both; margin-top:8px; font-size:0.86em;">{{item.NICK_NM}}</span> &nbsp;|&nbsp; <span class="table_gray">{{item.REG_DT}}</span></div>
+
+                                        <div ng-show="item.BODY" class="table_gray" style="clear:both; font-weight:400; width:100%; text-align: justify; font-size:0.92em; word-break: break-all; height:38px; overflow:hidden; text-overflow:ellipsis; margin-top:6px;">
+                                            {{item.BODY | string_limit : 200}}
+                                        </div>
+
+                                        <div style="position:absolute; font-size:0.78em; bottom:10px; left:50%; margin-left:-60px; text-align:center;">
+                                            <div class="feed_count countreply_color table_gray" title="댓글수" style="line-height:12px; height:26px;">{{item.REPLY_CNT}}</div>	<!-- 댓글수 -->
+                                            <div class="feed_count countlike_color table_gray" title="공감수" style="line-height:12px; height:26px;">{{item.LIKE_CNT}}</div>   <!-- 공감수 -->
+                                            <div class="feed_count counthit_color table_gray" title="조회수" style="line-height:12px; height:26px;">{{item.HIT_CNT}}</div>   <!-- 히트수 -->
+                                            <!--<div ng-if="item.REPLY_FL == 'Y'" class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">{{item.REPLY_CNT}}</div>	&lt;!&ndash; 댓글수 &ndash;&gt;-->
+                                        </div>
+                                    </td>
                                 </tr>
+                                </tbody>
+
+                                <tbody data-ng-show="list == '' || list == null">
+
+                                    <tr ng-show="isLoding">
+                                        <td colspan="4" style="text-align: center">
+                                            <!--로딩 중 입니다.-->
+                                            <img src="/imgs/ange/loading_01.gif" />
+                                        </td>
+                                    </tr>
+
+                                    <tr ng-show="!isLoding">
+                                        <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
+                                    </tr>
+
+                                <!--<tr>-->
+                                    <!--<td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>-->
+                                <!--</tr>-->
 
                                 </tbody>
+
                             </table><!-- /.List-->
 
                             <div class="container-fluid people_view_btnwrap">
@@ -154,6 +179,13 @@
                             <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" items-per-page="25" ng-model="PAGE_NO" class="pagination-sm" max-size="10" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="25" ng-model="PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_PAGES}}
+                                </div>
+                            </nav>
 
                         </div><!-- /.sub_contents_body -->
 

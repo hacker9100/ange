@@ -13,7 +13,7 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('momsreview-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD','CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD,CONSTANT) {
 
-
+        $scope.isLoding = true;
         $scope.search = {};
 
         // 페이징
@@ -35,6 +35,7 @@ define([
         $scope.todayDate = today;
 
         $scope.pageChanged = function() {
+            $scope.isLoding = true;
             console.log('Page changed to: ' + $scope.PAGE_NO);
 
             // 페이징
@@ -54,7 +55,7 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-
+            $scope.isLoding = true;
             $scope.search.BOARD_ST = 'D';
 
             if ($stateParams.menu == 'experiencereview') {
@@ -132,6 +133,8 @@ define([
         // 게시판 목록 조회
         $scope.getMomsReviewList = function () {
 
+            $scope.isLoding = true;
+
             $scope.search.SYSTEM_GB = 'ANGE';
             /*            $scope.search.SORT = 'NOTICE_FL';
              $scope.search.ORDER = 'DESC'*/
@@ -139,6 +142,7 @@ define([
 
             $scope.getList('ange/review', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
+
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
 
@@ -160,8 +164,14 @@ define([
 
                         $scope.list.push(data[i]);
                     }
+
+                    $scope.isLoding = false;
+                    $scope.TOTAL_PAGES = Math.ceil($scope.TOTAL_COUNT / $scope.PAGE_SIZE);
                 })
-                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){
+                    $scope.TOTAL_COUNT = 0; $scope.list = "";
+                    $scope.isLoding = false;
+                });
         };
 
         // 조회 화면 이동

@@ -21,33 +21,43 @@
                                 </h3>
                             </div>
 
-                            <!-- 체험단&이벤트 목록 -->
-                            <div class="row webzine_moms_list">
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-1" style="width:100%; padding:0; margin:0px;">
-                                        <div class="item" style="position:absolute;"><img ng-src="{{item.ada_preview_img}}"  style="height: 155px;" class="webzine_moms_featureimg"></div>
+                            <div class="row webzine_moms_list_detail" style="margin-bottom: 0px;">
+                                <div class="col-xs-12 no-margin">
+                                    <div class="comp_basic h-cell-dynamic no-margin">
+
+                                        <div class="webzine_list_imgbox">
+                                            <img src="/imgs/ange/_blank_262by158.gif" style="background-image:url('{{item.ada_preview_img}}');" class="webzine_moms_featureimg">
+                                            <!--<img src="/imgs/ange/_blank_262by158.gif" style="background-image:url('/imgs/ange/temp/moms_jb_01.jpg');" class="webzine_moms_featureimg">-->
+                                        </div>
+
                                         <div class="webzine_list_wrap">
-
                                             <div class="webzine_list_title">
-                                                {{item.ada_title}}
-
+                                                <div class="webzine_list_titletxt">{{item.ada_title}}</div>
                                                 <div class="webzine_list_bottomwrap">
-                                                    <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_open}} ~ {{item.ada_date_close}}</span></div>
-                                                    <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_quantity}}명</span></div>
+                                                    <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_open}}~{{item.ada_date_close}}</span></div>
+                                                    <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_quantity}} 명</span></div>
                                                     <div class="webzine_list_item"><strong>당첨발표</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_notice}}</span></div>
                                                 </div>
-                                            </div>
 
+                                                <!--<div class="webzine_list_btnwrap">-->
+                                                <!--<button class="webzine_list_btn red" title="응모하기" ng-show="showForm == 'reviewForm'" ng-click="comp_momsevent(item.NO)">응모하기</button><br />-->
+                                                <!--<button class="webzine_list_btn default" title="상세보기" ng-click="view_momsevent(item.NO)">상세보기</button>-->
+                                                <!--</div>-->
+                                            </div>
                                         </div>
+
                                     </div>  <!-- comp_basic -->
-                                </div>  <!-- col-xs-12 -->
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
-                                        <div class="webzine_list_infowrap">
+                                </div>  <!-- col-xs-8 -->
+                            </div>
+
+                            <div>
+                                <div class="col-xs-12 no-margin">
+                                    <div class="comp_basic h-cell-dynamic no-margin">
+                                        <div class="webzine_list_infowrap" style="margin-bottom:30px;">
                                             <dl>
                                                 <dt class="table_red">추가정보</dt>
                                                 <!--<dd><strong>마감일</strong><span class="table_gray" style="margin-left:8px;">{{D_DAY > 0 ? 'D-'+D_DAY : '마감'}}</span></dd>-->
-                                                <dd><strong>후기마감일</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_review_close}}({{D_DAY > 0 ? 'D-'+D_DAY : '마감'}})</span></dd>
+                                                <dd><strong>후기마감일</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_review_close}} ({{D_DAY > 0 ? 'D-'+D_DAY : '마감'}})</span></dd>
                                                 <!--<dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>-->
                                                 <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_delivery}}원</span></dd>
                                                 <!--<dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>-->
