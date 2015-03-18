@@ -21,9 +21,9 @@
 
                                     <div class="row" style="margin:0px auto; margin-bottom:10px;">
 
-                                        <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">제목</label>
+                                        <label class="col-xs-1 control-label normaltype" style="padding:0; text-align:center; padding:3px 0;">제목</label>
 
-                                        <div  ng-show="item.COMM_NO != 31" class="col-xs-3" style="padding:0;">
+                                        <div  ng-show="item.COMM_NO != 31" class="col-sx-12 col-sm-3" style="padding:2px;">
 
                                                 <!--<input type="text" class="form-control input-sm" aria-label="..." value="게시판 선택" disabled style="background-color:#fff;">
 
@@ -60,7 +60,7 @@
 
                                         </div><!-- /.col-xs-4 -->
 
-                                        <div class="col-xs-8" style="padding-left:5px;">
+                                        <div class="col-xs-12 col-sm-8" style="padding:2px;">
                                             <input ng-model="item.SUBJECT" type="text" class="input-sm form-control" placeholder="제목을 입력하세요">
                                         </div><!-- /.col-xs-7 -->
                                     </div><!-- /.row -->
@@ -88,11 +88,11 @@
                                         <!-- file drag-in Box -->
                                         <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
 
-                                            <label class="col-xs-1 control-label" style="padding:0; text-align:center; padding:3px 0;">
+                                            <label class="col-xs-1 control-label normaltype" style="padding:0; text-align:center; padding:3px 0;">
                                                 파일
                                             </label>
 
-                                            <div class="col-xs-8 dragzone_wrap">
+                                            <div class="col-xs-9 col-sm-8 dragzone_wrap" style="padding:2px;">
                                                 <div id="dropzone" name="dropzone" class="dragzone">
 
                                                     <div data-ng-repeat="file in queue">
@@ -111,8 +111,8 @@
                                             <div class="col-xs-3" style="padding:0 0 0 4px; height:100%;">
                                                 <!--<div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>-->
                                                 <span class="fileinput-button dagbox_btn fil2com large" ng-class="{disabled: disabled}">
-                                                    <div style="width:37%; float:left; padding:2px 2% 0 0 ;"><img src="/imgs/ange/file2com_icon.png" style="float:right;width:34px; margin-bottom:10px; " /></span></div>
-                                                    <div style="width:63%; float:right; text-align:left;">
+                                                    <div class="inputfile_btn_lg"><img class="inputfile_btn_lg_img" src="/imgs/ange/file2com_icon.png" /></span></div>
+                                                    <div class="inputfile_btn_guidetxt">
                                                         <strong>내 PC에서</strong><br/>
                                                         <span style="font-size:0.72em;">첨부파일 찾기</span>
                                                         <input type="file" name="files[]" multiple ng-disabled="disabled" />

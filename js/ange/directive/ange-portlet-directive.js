@@ -194,50 +194,50 @@ define([
 //                return '/partials/ange/main/mini-story-list.html';
 //            },
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                      '<div class="mini_story">' +
-                      '   <div class="miniboard_titlebar">' +
-                      '       <span class="miniboard_title">{{portletTitle}}</span>' +
-                      '        <a class="miniboard_tab_more" ng-click="click_showList();">더보기</a>' +
-                      '       <div ng-if="option.tab" ng-repeat="tab in  option.tab" ng-class="tabIdx == $index ? \'miniboard_tab_on\' : \'miniboard_tab\'" ng-click="click_tabIndex($index)">{{tab.name}}</div>' +
-                      '    </div>' +
-                      '    <div class="mini_story_rollcate" style="margin-bottom:5px;">' +
-                      '        <a class="mini_story_rollcate_left" ng-click="click_preCategory()">Pre Category</a>' +
-                      '        <div class="col-xs-12 no-margin" style="width:100%; padding:0 2%; height:100%; line-height: 34px;">' +
-                      '           <slick id="category" current-index="0" infinite="true" dots="false" autoplay="false" center-mode="true" slides-to-show="3" slides-to-scroll="1">' +
-                      '               <div ng-repeat="item in cate" ng-class=" $index == curIdx ? \'foucsing\' : \'\' " ng-click="click_slickGoTo($index)" style="overflow:hidden; white-space:nowrap; width:100%; text-overflow: ellipsis;  margin:0 1.3%; text-align:center; font-size:0.86em;"><a class="rollcate_link" title="item.CATEGORY_NM">{{item.CATEGORY_NM}}</a></div>' +
-                      '           </slick>' +
-                      '        </div>' +
-                      '        <a class="mini_story_rollcate_right" ng-click="click_nextCategory()">Next Category</a>' +
-                      '    </div>' +
-                      '    <div class="mini_board_contents" ng-repeat="item in list" ng-click="click_showView(item.NO);">' +
-                      '        <img ng-src="{{item.MAIN_FILE}}" class="mini_board_contents_img" />' +
-                      '        <div class="mini_board_contents_txt">' +
-                      '            <span class="mini_story_txt_head">{{item.PROJECT_NM}}</span>' +
-                      '            <span class="mini_story_txt_title">| {{item.SUBJECT}}</span>' +
-                      '            <ul class="mini_board_feeds">' +
-                      '                <li class="mini_reply" style="float: right;">{{item.REPLY_COUNT}}</li>' +
-                      '                <li class="mini_like" style="float: right;">{{item.LIKE_CNT}}</li>' +
-                      '            </ul>' +
-                      '        </div>' +
-                      '    </div>' +
-                      '    <div class="mini_story_contentbox">' +
-                      '        <div class="row" style="margin:0 auto; position:relative;">' +
-                      '            <div class="col-xs-2" style="padding:4px;">' +
-                      '                <span class="mini_story_contentbox_kortitle">임신부<br /><strong>솔루션</strong></span>' +
-                      '                <div class="mini_story_contentbox_engtitle">Health<br />&nbsp;&nbsp;& Food</div>' +
-                      '                <a class="miniboard_tab_slideprev" style="margin-top:-12px;" title="이전">이전슬라이드</a>' +
-                      '                <a class="miniboard_tab_slidenext" style="margin-top:-12px;" title="다음">다음슬라이드</a>' +
-                      '            </div>' +
-                      '            <div class="col-xs-10 mini_story_contentboxlist_roll">' +
-                      '                <div class="mini_story_contentboxlist_wrap">' +
-                      '                    <slick id="{{option.id}}" init-onload="true" data="list2" dots="false" autoplay="true" center-mode="false" slides-to-show="4" slides-to-scroll="4" autoplay-speed="3000" fade="false" pause-on-hover="false">' +
-                      '                       <div ng-repeat="item in list2" class="mini_story_contentboxlist" style="width: 100px"><a href="/story/content/list/{{ item.NO }}"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">{{ item.time }}</span><img src="/imgs/ange/_blank_4by3.gif" ng-style="{ \'background-image\': \'url( {{ item.MAIN_FILE }} )\' }"/></div><div class="mini_story_contentbox_title">{{ item.SUBJECT }}</div></a></div>' +
-                      '                   </slick>' +
-                      '                </div>' +
-                      '            </div>' +
-                      '        </div>' +
-                      '    </div>' +
-                      '</div>',
+                '<div class="mini_story">' +
+                '   <div class="miniboard_titlebar">' +
+                '       <span class="miniboard_title">{{portletTitle}}</span>' +
+                '        <a class="miniboard_tab_more" ng-click="click_showList();">더보기</a>' +
+                '       <div ng-if="option.tab" ng-repeat="tab in  option.tab" ng-class="tabIdx == $index ? \'miniboard_tab_on\' : \'miniboard_tab\'" ng-click="click_tabIndex($index)">{{tab.name}}</div>' +
+                '    </div>' +
+                '    <div class="mini_story_rollcate" style="margin-bottom:5px;">' +
+                '        <a class="mini_story_rollcate_left" ng-click="click_preCategory()">Pre Category</a>' +
+                '        <div class="col-xs-12 no-margin" style="width:100%; padding:0 2%; height:100%; line-height: 34px;">' +
+                '           <slick id="category" current-index="0" infinite="true" dots="false" autoplay="false" center-mode="true" slides-to-show="3" slides-to-scroll="1">' +
+                '               <div ng-repeat="item in cate" ng-class=" $index == curIdx ? \'foucsing\' : \'\' " ng-click="click_slickGoTo($index)" style="overflow:hidden; white-space:nowrap; width:100%; text-overflow: ellipsis;  margin:0 1.3%; text-align:center; font-size:0.86em;"><a class="rollcate_link" title="item.CATEGORY_NM">{{item.CATEGORY_NM}}</a></div>' +
+                '           </slick>' +
+                '        </div>' +
+                '        <a class="mini_story_rollcate_right" ng-click="click_nextCategory()">Next Category</a>' +
+                '    </div>' +
+                '    <div class="mini_board_contents" ng-repeat="item in list" ng-click="click_showView(item.NO);">' +
+                '        <img ng-src="{{item.MAIN_FILE}}" class="mini_board_contents_img" />' +
+                '        <div class="mini_board_contents_txt">' +
+                '            <span class="mini_story_txt_head">{{item.PROJECT_NM}}</span>' +
+                '            <span class="mini_story_txt_title">| {{item.SUBJECT}}</span>' +
+                '            <ul class="mini_board_feeds">' +
+                '                <li class="mini_reply" style="float: right;">{{item.REPLY_COUNT}}</li>' +
+                '                <li class="mini_like" style="float: right;">{{item.LIKE_CNT}}</li>' +
+                '            </ul>' +
+                '        </div>' +
+                '    </div>' +
+                '    <div class="mini_story_contentbox">' +
+                '        <div class="row" style="margin:0 auto; position:relative;">' +
+                '            <div class="col-xs-2" style="padding:4px;">' +
+                '                <span class="mini_story_contentbox_kortitle">임신부<br /><strong>솔루션</strong></span>' +
+                '                <div class="mini_story_contentbox_engtitle">Health<br />&nbsp;&nbsp;& Food</div>' +
+                '                <a class="miniboard_tab_slideprev" style="margin-top:-12px;" title="이전">이전슬라이드</a>' +
+                '                <a class="miniboard_tab_slidenext" style="margin-top:-12px;" title="다음">다음슬라이드</a>' +
+                '            </div>' +
+                '            <div class="col-xs-10 mini_story_contentboxlist_roll">' +
+                '                <div class="mini_story_contentboxlist_wrap">' +
+                '                    <slick id="{{option.id}}" init-onload="true" data="list2" dots="false" autoplay="true" center-mode="false" slides-to-show="4" slides-to-scroll="4" autoplay-speed="3000" fade="false" pause-on-hover="false">' +
+                '                       <div ng-repeat="item in list2" class="mini_story_contentboxlist" style="width: 100px"><a href="/story/content/list/{{ item.NO }}"><div class="mini_story_contentbox_img"><span class="mini_story_contentbox_cate">{{ item.time }}</span><img src="/imgs/ange/_blank_4by3.gif" ng-style="{ \'background-image\': \'url( {{ item.MAIN_FILE }} )\' }"/></div><div class="mini_story_contentbox_title">{{ item.SUBJECT }}</div></a></div>' +
+                '                   </slick>' +
+                '                </div>' +
+                '            </div>' +
+                '        </div>' +
+                '    </div>' +
+                '</div>',
             controller: ['$scope', '$attrs', '$location', 'CONSTANT', function($scope, $attrs, $location, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -337,7 +337,7 @@ define([
 
                             $scope.list = data;
                         })
-                     ['catch'](function(error){$scope.list = [];});
+                        ['catch'](function(error){$scope.list = [];});
                 };
 
                 // 카테고리 조회
@@ -385,7 +385,7 @@ define([
                                 $scope.list2 = data;
                             }
                         })
-                  ['catch'](function(error){});
+                        ['catch'](function(error){});
                 };
 
                 $scope.getMiniList();
@@ -862,12 +862,12 @@ define([
 //            scope: { option: '=ngModel' },
 //            replace: true,
             template: '<slick id="{{ option.id }}" init-onload="true" data="list" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false" style="padding:0px 6px; cursor:pointer;">' +
-                      '   <div ng-repeat="item in list" ><img ng-src="{{ item.MAIN_FILE }}"/></div>' +
-                      '</slick>'+
-                      '<div class="ads_indicators_wrap">' +
-                      '   <div ng-repeat="item in list" ng-click="click_slickGoTo($index)" ng-class=" $index == curIdx && option.id == curId ? \'ads_indicators now\' : \'ads_indicators\'">' +
-                      '   </div>' +
-                      '</div>',
+                '   <div ng-repeat="item in list" ><img ng-src="{{ item.MAIN_FILE }}"/></div>' +
+                '</slick>'+
+                '<div class="ads_indicators_wrap">' +
+                '   <div ng-repeat="item in list" ng-click="click_slickGoTo($index)" ng-class=" $index == curIdx && option.id == curId ? \'ads_indicators now\' : \'ads_indicators\'">' +
+                '   </div>' +
+                '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $window, $timeout, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -975,8 +975,8 @@ define([
                       '   <div class="jumbotron_cover_controlbar">' +
                       '       <div class="black_shade_nomargin"></div>' +
                       '       <div class="jumbotron_cover_controlset">' +
-                      '               <a ng-show="toggle" class="jumbotron_cover_pause" ng-click="click_slickPause()">일시정지</a>' +
-                      '               <a ng-show="!toggle" class="jumbotron_cover_play" ng-click="click_slickPlay()">동작</a>' +
+                      '           <a ng-show="toggle" class="jumbotron_cover_pause" ng-click="click_slickPause()">일시정지</a>' +
+                      '           <a ng-show="!toggle" class="jumbotron_cover_play" ng-click="click_slickPlay()">동작</a>' +
                       '           <ol class="carousel-indicators jumbotron_indicators_wrap" style="left:30px;">' +
                       '               <li ng-repeat="item in slideList" ng-class=" $index == curIdx ? \'jumbotron_indicators_actived\' : \'jumbotron_indicators\'" ng-click="click_slickGoTo($index)" ></li>' +
                       '           </ol>' +
@@ -1095,9 +1095,9 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             template: '<div class="inven_subsideRoll">'+
-                      '   <div ng-show="isLoading" style="top: 40%;left: 40%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                      '   <img ng-src="/imgs/ange/_blank_163by128.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/>'+
-                      '</div>',
+                '   <div ng-show="isLoading" style="top: 40%;left: 40%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+                '   <img ng-src="/imgs/ange/_blank_163by128.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/>'+
+                '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -1160,7 +1160,7 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             template: '<div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                      '<div class="inven_Highlight"><img ng-src="/imgs/ange/_blank_262by158.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
+                '<div class="inven_Highlight"><img ng-src="/imgs/ange/_blank_262by158.gif" ng-click="click_linkImage()" title="{{title}}" style="background-image:url({{img}}); width:100%;"/></div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -1223,9 +1223,9 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             template: '<div ng-class="$index == 0 ? \'subside_inven_basic top\' : $index == 1 ? \'subside_inven_basic mid\' : \'subside_inven_basic btm\'" ng-repeat="item in list">' +
-                      '   <div ng-show="isLoading" style="top: 40%;left: 40%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                      '   <img ng-src="{{item.img}}" ng-click="click_linkImage(item)" title="{{item.title}}"/>' +
-                      '</div>',
+                '   <div ng-show="isLoading" style="top: 40%;left: 40%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
+                '   <img ng-src="{{item.img}}" ng-click="click_linkImage(item)" title="{{item.title}}"/>' +
+                '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
                 /********** 초기화 **********/

@@ -135,12 +135,12 @@ define(['./directives'], function (directives) {
 
                     templet += '<div ng-if="'+ (path[1] != 'main') + '" class="localmenu_mobile_wrap" ng-controller="ui-lnb-mobile">';
                     templet += '    <div class="localmenu_mobile_col" ng-click="channelhometo(\'' + channel.CHANNEL_URL + '\')">';
-                    templet += '        <span class="glyphicon glyphicon-home" style="margin-top:5px;"></span>  <!-- 채널홈으로 이동 -->';
+                    templet += '        <span class="glyphicon glyphicon-home" style="margin-top:2px;"></span>  <!-- 채널홈으로 이동 -->';
                     templet += '    </div>';
                     templet += '    <div class="localmenu_mobile_col smenu">';
                     templet += '        <div class="btn-group" role="group" aria-label="Depth-1">';
                     templet += '            <div class="btn-group" role="button">';
-                    templet += '               <button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; text-decoration: none;">';
+                    templet += '               <button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; font-size:1em; text-decoration: none;">';
                     //templet += '                선택하세요';
 
                     var now_title = '';
@@ -200,7 +200,7 @@ define(['./directives'], function (directives) {
                     templet += '    <div ng-show="depth2 != \'\'" class="localmenu_mobile_col smenu">';
                     templet += '        <div class="btn-group" role="group" aria-label="Depth-2">';
                     templet += '            <div class="btn-group" role="button">';
-                    templet += '                <button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; text-decoration: none;">';
+                    templet += '                <button type="button" class="btn btn-link dropdown-toggle no-margin" data-toggle="dropdown" aria-expanded="false" style="color:#fff; font-size:1em; text-decoration: none;">';
                     templet += '                {{ depth2_nm == \'\' ? \'선택\' : depth2_nm }}';
                     templet += '                   <span class="caret" style="margin-left:5px;"></span>';
                     templet += '                </button>';

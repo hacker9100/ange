@@ -1,52 +1,65 @@
 <div ng-controller="product-list">
-    <div>
-        <div class="col-md-6">
-            <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(0)">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>마일리지몰 상품</span>
-            </button>
-            <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(1)">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>경매소 상품</span>
-            </button>
-            <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(2)">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>커머스 상품</span>
-            </button>
-        </div>
-        <div>
-            <button class="btn btn-success fileinput-button" data-ng-click="click_createProduct()">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>등록</span>
-            </button>
+
+    <div class="container-fluid no-margin" style="width:100%;">
+        <div class="row">
+
+            <div class="col-xs-9">
+
+
+                <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(0)">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>마일리지몰 상품</span>
+                </button>
+                <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(1)">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>경매소 상품</span>
+                </button>
+                <button class="btn btn-success fileinput-button" data-ng-click="click_selectTab(2)">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>커머스 상품</span>
+                </button>
+
+
+            </div>
+
+            <div  class="col-xs-3">
+                <button class="btn btn-info fileinput-button" data-ng-click="click_createProduct()" style="float:right;">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>상품등록</span>
+                </button>
+            </div>
         </div>
     </div>
 
-    <div class="container-fluid peoplephoto_list_wrap">
-        <div class="row">
-            <div class="col-xs-12 v-cell-4">
-                <div class="comp_basic h-cell-dynamic">
+
+    <div class="container-fluid no-margin" style="width:100%; margin-top:20px;">
+        <div class="row" style="width:100%; float: left; margin:0px auto; padding:18px; border:1px solid #ddd; ">
+            <div class="col-xs-12 no-margin" style="float:left;">
+                <div class="comp_basic h-cell-dynamic no-margin">
 
                     <!-- 마일리지몰 썸네일 타입 -->
-                    <div style="display: block;" ng-repeat='item in list'>
-                        <div class="col-xs-4 people_photo_contentcol">
-                            <div ng-click="click_showViewPeoplePhoto(item.NO)" class="people_photo_content">
-                                <div class="people_photo_imgbox">
-                                    <img class="people_photo_img" ng-src="{{item.MAIN_FILE}}" style="background-image: url('/imgs/ange/temp/temp_recipe_02.jpg');"/>
-                                </div>
-                                <div class="people_photo_txt">{{item.PRODUCT_NM}}</div>
-                                <div class="people_photo_info"><span class="table_blue">{{item.PRICE}}</span> P</div>({{item.SUM_IN_CNT - item.SUM_OUT_CNT}})
-                                <button class="btn btn-success fileinput-button" data-ng-click="click_showEditProduct(item)">
-                                    <i class="glyphicon glyphicon-plus"></i>
+                    <div class="col-xs-3 people_photo_contentcol" style="display: block;" ng-repeat='item in list'>
+                        <div ng-click="click_showViewPeoplePhoto(item.NO)" class="people_photo_content" style="font-size:0.86em; text-align: center;">
+                            <div class="people_photo_imgbox">
+                                <img src="/imgs/ange/_blank.gif" style="background-image: url('{{item.MAIN_FILE}}'); background-position: center center; background-size: cover;" width="100%" />
+                            </div>
+                            <div style="height:36px; overflow:hidden; text-overflow:ellipsis;">{{item.PRODUCT_NM}}</div>
+                            <div class="people_photo_info"><span class="table_blue">{{item.PRICE}}</span> P ({{item.SUM_IN_CNT - item.SUM_OUT_CNT}})</div>
+
+                            <div style="width:100%; margin-top:15px;">
+                                <button class="btn btn-default btn-xs fileinput-button" data-ng-click="click_showEditProduct(item)">
+                                    <i class="glyphicon glyphicon-pencil"></i>
                                     <span>수정</span>
                                 </button>
-                                <button class="btn btn-success fileinput-button" data-ng-click="click_showStockProduct($index, item)">
-                                    <i class="glyphicon glyphicon-plus"></i>
+                                <button class="btn btn-default btn-xs fileinput-button" data-ng-click="click_showStockProduct($index, item)">
+                                    <i class="glyphicon glyphicon-dashboard"></i>
                                     <span>재고</span>
                                 </button>
-                            </div>  <!-- /.people_photo_content -->
-                        </div>  <!-- /.people_photo_contentcol -->
-                    </div>  <!-- 1줄	 -->
+                            </div>
+                        </div>  <!-- /.people_photo_content -->
+                    </div>  <!-- /.people_photo_contentcol -->
+                    <!-- 1줄	 -->
+
                     <div ng-show="list == ''">
                         <p>조회 데이터가 없습니다.</p>
                     </div>

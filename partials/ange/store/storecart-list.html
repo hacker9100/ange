@@ -215,17 +215,17 @@
                                                 </div>
                                                 <div class="cart_caculbody">
                                                     <div class="cart_caculbody_cell bordered">
-                                                        {{user_info.MILEAGE.REMAIN_POINT}}P
+                                                        {{ user_info.REMAIN_POINT | number }}P
                                                         <span class="glyphicon glyphicon-minus" style="position:absolute; color:#d8d8d8; font-size: 1.86em; right:-10px; top:24px;"></span>
                                                     </div>
                                                     <div class="cart_caculbody_cell bordered">
-                                                        {{sum_price}}P
+                                                        {{sum_price | number }}P
                                                         <span class="glyphicon glyphicon-minus" style="position:absolute; color:#d8d8d8; font-size: 1.78em; right:-10px; top:20px;"></span>
                                                         <span class="glyphicon glyphicon-minus" style="position:absolute; color:#d8d8d8; font-size: 1.78em; right:-10px; top:28px;"></span>
                                                     </div>
                                                     <div class="cart_caculbody_cell">
                                                         <div class="notenoughmileage" ng-show="total_mileage < 0"></div> <!-- 마일리지가 부족할 경우 display:none 시킴 data-ng-style="total_mileage < 0 ? display:block; : display:none;" -->
-                                                        <span style="color:#fe0000">{{total_mileage}}P</span>
+                                                        <span style="color:#fe0000">{{total_mileage | number }}P</span>
                                                     </div>
                                                 </div>
 
@@ -705,65 +705,65 @@
                                                     </div>  <!-- /.form_basicinfo -->
                                                 </div>  <!-- /.form_rows -->
 
-                                                <div style="border-bottom:1px solid #333;">
-                                                    <span class="table_gray" style="float:left; line-height: 40px; font-size:1.12em; margin-top:38px; ">
-                                                        <strong>결제</strong>정보입력
-                                                    </span>
-                                                </div>
+                                                <!--<div style="border-bottom:1px solid #333;">-->
+                                                    <!--<span class="table_gray" style="float:left; line-height: 40px; font-size:1.12em; margin-top:38px; ">-->
+                                                        <!--<strong>결제</strong>정보입력-->
+                                                    <!--</span>-->
+                                                <!--</div>-->
 
-                                                <div class="moms_form_titlebar">
-                                                    | 결제 정보
-                                                </div>
+                                                <!--<div class="moms_form_titlebar">-->
+                                                    <!--| 결제 정보-->
+                                                <!--</div>-->
 
-                                                <div class="row form_rows">
-                                                    <div class="form_basicinfo">
-                                                            <span class="col-xs-2 basicinfo title">
-                                                                <strong>결제금액</strong>
-                                                            </span>
-                                                            <span class="col-xs-10 basicinfo input" style="padding-left:18px;">
-                                                                <span class="table_blue">{{TOTAL_PRICE}}</span>
-                                                            </span>
-                                                    </div>  <!-- /.form_basicinfo -->
-                                                </div>  <!-- /.form_rows -->
+                                                <!--<div class="row form_rows">-->
+                                                    <!--<div class="form_basicinfo">-->
+                                                            <!--<span class="col-xs-2 basicinfo title">-->
+                                                                <!--<strong>결제금액</strong>-->
+                                                            <!--</span>-->
+                                                            <!--<span class="col-xs-10 basicinfo input" style="padding-left:18px;">-->
+                                                                <!--<span class="table_blue">{{TOTAL_PRICE}}</span>-->
+                                                            <!--</span>-->
+                                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                                <div class="row form_rows">
-                                                    <div class="form_basicinfo">
-                                                        <span class="col-xs-2 basicinfo title">
-                                                            <strong>결제수단</strong>
-                                                        </span>
+                                                <!--<div class="row form_rows">-->
+                                                    <!--<div class="form_basicinfo">-->
+                                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                                            <!--<strong>결제수단</strong>-->
+                                                        <!--</span>-->
 
-                                                        <span class="col-xs-10 basicinfo input">
-                                                            <div style="font-size:0.86em; padding:5px 0 0 0; width:100%; line-height:20px; color:#333;">
-                                                                <label>
-                                                                    <input type="radio" name="pay_gb" ng-model="item.PAY_GB"  value="CREDIT" style="margin-left:18px; vertical-align: top;" checked>
-                                                                    신용카드
-                                                                </label>
-                                                                <label>
-                                                                    <input type="radio" name="pay_gb"  ng-model="item.PAY_GB" value="NOBANKBOOK" style="margin-left:18px; vertical-align: top;">
-                                                                    가상계좌(무통장입금)
-                                                                </label>
-                                                            </div>
-                                                        </span>
-                                                    </div>  <!-- /.form_basicinfo -->
-                                                </div>  <!-- /.form_rows -->
+                                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                                            <!--<div style="font-size:0.86em; padding:5px 0 0 0; width:100%; line-height:20px; color:#333;">-->
+                                                                <!--<label>-->
+                                                                    <!--<input type="radio" name="pay_gb" ng-model="item.PAY_GB"  value="CREDIT" style="margin-left:18px; vertical-align: top;" checked>-->
+                                                                    <!--신용카드-->
+                                                                <!--</label>-->
+                                                                <!--<label>-->
+                                                                    <!--<input type="radio" name="pay_gb"  ng-model="item.PAY_GB" value="NOBANKBOOK" style="margin-left:18px; vertical-align: top;">-->
+                                                                    <!--가상계좌(무통장입금)-->
+                                                                <!--</label>-->
+                                                            <!--</div>-->
+                                                        <!--</span>-->
+                                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                                <div class="row form_rows" style="margin-bottom:20px;">
-                                                    <div class="form_basicinfo">
-                                                        <span class="col-xs-12 basicinfo input" style="padding:20px 40px;">
+                                                <!--<div class="row form_rows" style="margin-bottom:20px;">-->
+                                                    <!--<div class="form_basicinfo">-->
+                                                        <!--<span class="col-xs-12 basicinfo input" style="padding:20px 40px;">-->
 
-                                                            <ul class="store_warning" style="font-size:0.86em; line-height:20px; word-break:keep-all; color:#464646;">
-                                                                <li>신용카드 결제 시 화면 아래 '결제하기' 버튼을 클릭하시면 신용카드 결제 창이 나타납니다.</li>
-                                                                <li>신용카드 결제 신청 시 승인 진행에 다소 시간이 소요될 수 있으므로 '중지', '새로고침'을 누르지 마시고 결과 화면이 나타날 때까지 기다려 주십시오.</li>
-                                                                <li>신용카드는 결제 후/무통장입금은 입금확인 후 배송이 이루어집니다.</li>
-                                                                <li>결제완료 후 취소 요청 시, 마이앙쥬 > 주문/구매현황에서 [취소]를 이용하시면 됩니다.</li>
-                                                                <ul class="list-unstyled">
-                                                                    <li>(상품출고는 토요일에도 정상적으로 이루어집니다.)</li>
-                                                                </ul>
+                                                            <!--<ul class="store_warning" style="font-size:0.86em; line-height:20px; word-break:keep-all; color:#464646;">-->
+                                                                <!--<li>신용카드 결제 시 화면 아래 '결제하기' 버튼을 클릭하시면 신용카드 결제 창이 나타납니다.</li>-->
+                                                                <!--<li>신용카드 결제 신청 시 승인 진행에 다소 시간이 소요될 수 있으므로 '중지', '새로고침'을 누르지 마시고 결과 화면이 나타날 때까지 기다려 주십시오.</li>-->
+                                                                <!--<li>신용카드는 결제 후/무통장입금은 입금확인 후 배송이 이루어집니다.</li>-->
+                                                                <!--<li>결제완료 후 취소 요청 시, 마이앙쥬 > 주문/구매현황에서 [취소]를 이용하시면 됩니다.</li>-->
+                                                                <!--<ul class="list-unstyled">-->
+                                                                    <!--<li>(상품출고는 토요일에도 정상적으로 이루어집니다.)</li>-->
+                                                                <!--</ul>-->
 
-                                                            </ul>
-                                                        </span>
-                                                    </div>  <!-- /.form_basicinfo -->
-                                                </div>  <!-- /.form_rows -->
+                                                            <!--</ul>-->
+                                                        <!--</span>-->
+                                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
 
                                             </div>  <!-- /.row -->

@@ -29,18 +29,21 @@
                                 </div>  <!-- col-xs-12 -->
                             </div>  <!-- /.row -->
 
-                            <div ><span>진행중인 이벤트 <strong>{{TOTAL_COUNT == null? 0 : TOTAL_COUNT}}</strong>건</span></div>
+                            <div><span style="font-size:0.92em; color:#868686; margin-left:4px;">진행중인 이벤트 <strong class="table_red">{{TOTAL_COUNT == null? 0 : TOTAL_COUNT}}</strong>건</span></div>
 
                             <!-- 체험단&이벤트 목록 -->
-                            <div class="row webzine_moms_list" ng-repeat="item in list">
-                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                            <div class="row webzine_moms_list" ng-repeat="item in list" ng-click="comp_momsevent(item)">
+                                <div class="col-xs-12 no-margin">
+                                    <div class="comp_basic h-cell-dynamic no-margin">
 
-                                        <div class="item" style="position:absolute;" ng-click="comp_momsevent(item)"><img src="{{item.ada_preview_img}}" style="height: 155px;" class="webzine_moms_featureimg"></div>
+                                        <div class="webzine_list_imgbox">
+                                            <img src="/imgs/ange/_blank_262by158.gif" style="background-image:url('{{item.ada_preview_img}}');" class="webzine_moms_featureimg">
+                                            <!--<img src="/imgs/ange/_blank_262by158.gif" style="background-image:url('/imgs/ange/temp/moms_jb_01.jpg');" class="webzine_moms_featureimg">-->
+                                        </div>
 
                                         <div class="webzine_list_wrap">
-                                            <div class="webzine_list_title" ng-click="comp_momsevent(item)" style="cursor: pointer;">
-                                                {{item.ada_title}}
+                                            <div class="webzine_list_title">
+                                                <div class="webzine_list_titletxt">{{item.ada_title}}</div>
                                                 <div class="webzine_list_bottomwrap">
                                                     <div class="webzine_list_item"><strong>모집기간</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_date_open}}~{{item.ada_date_close}}</span></div>
                                                     <div class="webzine_list_item"><strong>당첨인원</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_quantity}}</span></div>
@@ -53,6 +56,7 @@
                                                 <!--</div>-->
                                             </div>
                                         </div>
+
                                     </div>  <!-- comp_basic -->
                                 </div>  <!-- col-xs-8 -->
                             </div>  <!-- /.row -->
