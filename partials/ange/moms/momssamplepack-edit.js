@@ -198,7 +198,7 @@ define([
                 $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                     .then(function(data){
 
-                        $scope.item = data;
+                        $scope.user_info = data;
                         console.log($scope.item);
 
                     })
