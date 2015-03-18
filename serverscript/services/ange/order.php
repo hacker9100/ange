@@ -421,16 +421,16 @@ switch ($_method) {
                     // 상품구분 존재하면서 구분값이 마일리지몰 일때
                     if(isset($e[PRODUCT_GB]) && $e[PRODUCT_GB] == 'MILEAGE'){
 
-                        $sql = "UPDATE ANGE_MILEAGE_STATUS
+                        $sql = "UPDATE COM_USER
                             SET
-                                USE_POINT = USE_POINT + ".$e[TOTAL_PRICE].",
+                                SUM_POINT = SUM_POINT + ".$e[TOTAL_PRICE].",
                                 REMAIN_POINT = REMAIN_POINT - ".$e[TOTAL_PRICE]."
                             WHERE
                                 USER_ID = '".$_SESSION['uid']."'
                             ";
                         $_d->sql_query($sql);
 
-                        $sql = "UPDATE ANGE_MILEAGE_STATUS
+                        $sql = "UPDATE COM_USER
                             SET
                                 SUM_POINT = (USE_POINT + ".$e[TOTAL_PRICE].") + (REMAIN_POINT - ".$e[TOTAL_PRICE].")
                             WHERE

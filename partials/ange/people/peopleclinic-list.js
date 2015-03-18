@@ -117,6 +117,8 @@ define([
         /********** 화면 초기화 **********/
         //$scope.init();
 
+        $scope.isLoding = true;
+
         // 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
 
@@ -137,6 +139,7 @@ define([
 
             $scope.search.FILE_EXIST = true;
 
+            $scope.isLoding = true;
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
@@ -157,10 +160,12 @@ define([
 
                     $scope.list = data;
 
+                    $scope.isLoding = false;
+
                     $scope.TOTAL_PAGES = Math.ceil($scope.TOTAL_COUNT / $scope.PAGE_SIZE);
 
                 })
-                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = "";});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0; $scope.list = ""; $scope.isLoding = false;});
         };
 
         // 조회 화면 이동(비밀글)
