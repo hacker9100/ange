@@ -71,6 +71,7 @@ define([
     '../../../partials/ange/myange/myangehome',
     '../../../partials/ange/myange/myangecalendar',
     '../../../partials/ange/myange/myangealbum-list',
+    '../../../partials/ange/myange/myangealbum-view-popup',
     '../../../partials/ange/myange/myangeaccount',
     '../../../partials/ange/myange/myangebaby',
     '../../../partials/ange/myange/myangegroup',

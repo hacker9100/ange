@@ -52,7 +52,16 @@
 
     switch ($_method) {
         case "GET":
-            if ($_type == 'item') {
+            if ($_type == 'total') {
+                $sql = "SELECT COUNT(*) AS TOTAL_COUNT FROM ANGE_ALBUM B WHERE REG_UID = '{$_SESSION['uid']}'";
+                $result=$_d->sql_fetch($sql);
+
+                if($_d->mysql_errno > 0){
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                }else{
+                    $_d->dataEnd2($result);
+                }
+            } else if ($_type == 'item') {
                 $err = 0;
                 $msg = "";
 
@@ -75,36 +84,34 @@
                 $sort_order = "REG_DT DESC";
                 $limit = "";
 
-                if (isset($_search[COMM_NO_IN]) && $_search[COMM_NO_IN] != "") {
-                    $search_where .= "AND COMM_NO IN (".$_search[COMM_NO_IN].") ";
+                if (isset($_search['COMM_NO_IN]']) && $_search['COMM_NO_IN'] != "") {
+                    $search_where .= "AND COMM_NO IN ({$_search['COMM_NO_IN']}) ";
                 }
 
-                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                    $search_where .= "AND B.REG_UID = '".$_search[REG_UID]."' ";
+                if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
+                    $search_where .= "AND B.REG_UID = '{$_search['REG_UID']}' ";
                 }
 
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    if($_search[CONDITION][value] == "SUBJECT+BODY"){
-                        $search_where .= "AND SUBJECT LIKE '%".$_search[KEYWORD]."%' AND SUMMARY LIKE '%".$_search[KEYWORD]."%'";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    if($_search['CONDITION']['value'] == "SUBJECT+BODY"){
+                        $search_where .= "AND SUBJECT LIKE '%{$_search['KEYWORD']}' AND SUMMARY LIKE '%{$_search['KEYWORD']}%' ";
                     }else{
-                        $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                        $search_where .= "AND {$_search['CONDITION']['value']} LIKE '%{$_search['KEYWORD']}' ";
                     }
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order = $_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order = "{$_search['SORT']} {$_search['ORDER']} ";
                 }
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", {$_page['SIZE']} ";
                 }
 
-                $sql = "SELECT COUNT(*) AS TOTAL_COUNT FROM COM_BOARD B WHERE 1=1 ".$search_where;
-                $result = $_d->sql_query($sql,true);
-                $row=$_d->sql_fetch_array($result);
-                $t_total_count = $row['TOTAL_COUNT'];
+                $sql = "SELECT COUNT(*) AS TOTAL_COUNT FROM ANGE_ALBUM B WHERE REG_UID = '{$_SESSION['uid']}' {$search_where}";
+                $row=$_d->sql_fetch($sql);
 
-                $sql = "SELECT DATA.*, F.* FROM
+                $sql = "SELECT {$row['TOTAL_COUNT']} AS TOTAL_COUNT, DATA.*, F.* FROM
                         (
                             SELECT * FROM ANGE_ALBUM WHERE REG_UID = '".$_SESSION['uid']."' ".$search_where."
                             ORDER BY ".$sort_order."

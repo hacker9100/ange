@@ -405,7 +405,7 @@ define([
             templateUrl: function(element, attr) {
                 return '/partials/ange/main/portlet-channel-list.html';
             },
-            controller: ['$scope', '$attrs', '$location', 'CONSTANT', function($scope, $attrs, $location, CONSTANT) {
+            controller: ['$scope', '$rootScope', '$attrs', '$location', 'CONSTANT', function($scope, $rootScope, $attrs, $location, CONSTANT) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -443,6 +443,9 @@ define([
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_CLINIC;
                     } else if ($scope.option.type == 'notice') {
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_NOTICE;
+                    } else if ($scope.option.type == 'writing') {
+                        $scope.search.REG_UID = $rootScope.uid;
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_BOARD+ ',' +CONSTANT.COMM_NO_FAQ;
                     }
                 }
 
@@ -452,7 +455,7 @@ define([
                 }
 
                 /********** 이벤트 **********/
-                    // 탭 클릭
+                // 탭 클릭
                 $scope.click_tabIndex = function (idx) {
                     $scope.tabIdx = idx;
 
@@ -471,18 +474,76 @@ define([
                     if ($scope.option.tab != undefined) {
                         $location.url($scope.option.tab[$scope.tabIdx].menu+'/list');
                     } else {
-                        $location.url($scope.option.url+'/list');
+                        if ($scope.option.type == 'writing') {
+                            $location.url($scope.option.url);
+                        } else {
+                            $location.url($scope.option.url+'/list');
+                        }
                     }
                 };
 
                 // 리스트 선택
-                $scope.click_showView = function (key) {
-                    $location.url($scope.option.tab[$scope.tabIdx].menu+'/view/'+key);
+                $scope.click_showView = function (item) {
+                    if ($scope.option.type == 'writing') {
+                        var menu = '';
+
+                        switch(item.COMM_NO) {
+                            case '1' :
+                                menu = 'angeroom';
+                                break;
+                            case '2' :
+                                menu = 'momstalk';
+                                break;
+                            case '3' :
+                                menu = 'babycare';
+                                break;
+                            case '4' :
+                                menu = 'firstbirthtalk';
+                                break;
+                            case '5' :
+                                menu = 'booktalk';
+                                break;
+                            case '6' :
+                                menu = 'working';
+                                break;
+                            case '7' :
+                                menu = 'readypreg';
+                                break;
+                            case '8' :
+                                menu = 'anony';
+                                break;
+                            case '21' :
+                                menu = 'childdevelop';
+                                break;
+                            case '22' :
+                                menu = 'chlidoriental';
+                                break;
+                            case '23' :
+                                menu = 'obstetrics';
+                                break;
+                            case '24' :
+                                menu = 'momshealth';
+                                break;
+                            case '25' :
+                                menu = 'financial';
+                                break;
+                            case '51' :
+                                menu = 'notice';
+                                break;
+                            case '52' :
+                                menu = 'system';
+                                break;
+                        }
+
+                        $location.url("people/"+menu+'/view/'+item.NO);
+                    } else {
+                        $location.url($scope.option.tab[$scope.tabIdx].menu+'/view/'+item.NO);
+                    }
                 };
 
                 // 이미지 클릭
-                $scope.click_firstImage = function (img) {
-                    $location.url($scope.option.tab[$scope.tabIdx].menu+'/view/'+img.NO);
+                $scope.click_firstImage = function (item) {
+                    $location.url($scope.option.tab[$scope.tabIdx].menu+'/view/'+item.NO);
                 };
 
                 // 리스트 조회
@@ -724,6 +785,75 @@ define([
         }
     }]);
 
+    // 슬라이드를 동적으로 생성
+    directives.directive('angePortletSlideAlbum', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+            scope: true,
+//            replace: true,
+            templateUrl: function(element, attr) {
+                return '/partials/ange/main/portlet-slide-album.html';
+            },
+            controller: ['$scope', '$attrs', '$location', 'CONSTANT', function($scope, $attrs, $location, CONSTANT) {
+
+                /********** 초기화 **********/
+                $scope.option = $scope.$eval($attrs.ngModel);
+
+                // 검색 조건
+                $scope.search = {};
+
+                // 일시정지, 동작 상태
+                $scope.toggle = true;
+
+                // 상단 타이틀
+                $scope.portletTitle = $scope.option.title;
+
+                // 페이징
+                $scope.PAGE_NO = 0;
+                $scope.PAGE_SIZE = $scope.option.size;
+
+                /********** 이벤트 **********/
+                // 다음 슬라이드
+                $scope.click_slickPrev = function() {
+                    angular.element('#'+$scope.option.id).slickPrev();
+                };
+
+                // 이전 슬라이드
+                $scope.click_slickNext = function() {
+                    angular.element('#'+$scope.option.id).slickNext();
+                };
+
+                // 목록 이동
+                $scope.click_showList = function () {
+                    $location.url($scope.option.url+'/list');
+                };
+
+                // 선택
+                $scope.click_showView = function (key) {
+                    $location.url($scope.option.url+'/view/'+key);
+                };
+
+                // 슬라이드 이미지 조회
+                $scope.getPortletList = function () {
+                    $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
+                        .then(function(data){
+                            for(var i in data) {
+                                if (data[i].FILE_ID != null) {
+                                    data[i].ALBUM_FILE = CONSTANT.BASE_URL + data[i].PATH + 'thumbnail/' + data[i].FILE_ID;
+                                    data[i].URL = $scope.option.url+"/view/"+data[i].NO;
+                                }
+                            }
+
+                            $scope.list = data;
+                        })
+                        ['catch'](function(error){});
+                };
+
+                $scope.getPortletList();
+            }]
+        }
+    }]);
+
     // 좌측 배너를 동적으로 생성
     directives.directive('angePortletSlideAds', ['$controller', function($controller) {
         return {
@@ -837,8 +967,8 @@ define([
                       '   <div ng-show="option.id == \'event\'" style="position:absolute; width:100%; z-index:9; text-align:center;"><img src="/imgs/ange/ribon_event_now.jpg" style="opacity:0.8"/></div>' +
                       '   <div class="jumbotron_cover_imgs" style="padding-bottom:45px;">' +
                       '       <div id="jumbotron_cover" class="carousel slide" data-ride="carousel">' +
-                      '           <slick id="{{ option.id }}" init-onload="true" data="list" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false">' +
-                      '               <div ng-repeat="item in list" class="carousel-inner" role="listbox"><div class="item active"><img ng-src="{{ item.MAIN_FILE }}" style="width:100%; cursor:pointer;"/></div></div>' +
+                      '           <slick id="{{ option.id }}" init-onload="true" data="slideList" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false">' +
+                      '               <div ng-repeat="item in slideList" class="carousel-inner" role="listbox"><div class="item active"><img ng-src="{{ item.MAIN_FILE }}" style="width:100%; cursor:pointer;"/></div></div>' +
                       '           </slick>' +
                       '       </div>' +
                       '   </div>' +
@@ -848,7 +978,7 @@ define([
                       '               <a ng-show="toggle" class="jumbotron_cover_pause" ng-click="click_slickPause()">일시정지</a>' +
                       '               <a ng-show="!toggle" class="jumbotron_cover_play" ng-click="click_slickPlay()">동작</a>' +
                       '           <ol class="carousel-indicators jumbotron_indicators_wrap" style="left:30px;">' +
-                      '               <li ng-repeat="item in list" ng-class=" $index == curIdx ? \'jumbotron_indicators_actived\' : \'jumbotron_indicators\'" ng-click="click_slickGoTo($index)" ></li>' +
+                      '               <li ng-repeat="item in slideList" ng-class=" $index == curIdx ? \'jumbotron_indicators_actived\' : \'jumbotron_indicators\'" ng-click="click_slickGoTo($index)" ></li>' +
                       '           </ol>' +
                       '       </div>' +
                       '       <div class="jumbotron_cover_controlbar_title">{{ coverTitle }}</div>' +
@@ -922,7 +1052,7 @@ define([
                                 data[i].MAIN_FILE = CONSTANT.AD_FILE_URL + data[i].ada_preview;
                             }
 
-                            $scope.list = data;
+                            $scope.slideList = data;
 
                             $scope.curId = $scope.option.id;
                             angular.element('#'+$scope.option.id).click(function() {
@@ -949,7 +1079,7 @@ define([
                                 });
                             }, 500);
                         })
-                        ['catch'](function(error){$scope.list = [];});
+                        ['catch'](function(error){$scope.slideList = [];});
                 };
 
                 $scope.getPortletList();

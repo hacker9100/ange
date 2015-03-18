@@ -379,8 +379,8 @@
                         REVIEW_NO,
                         BLIND_FL
                     ) VALUES (
-                        '".$_model[SUBJECT]."',
-                        '".$_model[BODY]."',
+                        '".addslashes($_model[SUBJECT])."',
+                        '".addslashes($_model[BODY])."',
                         '".$_SESSION['uid']."',
                         '".$_SESSION['nick']."',
                         SYSDATE(),
@@ -535,8 +535,8 @@
 
                 $sql = "UPDATE ANGE_REVIEW
                     SET
-                        SUBJECT = '".$_model[SUBJECT]."',
-                        BODY = '".$_model[BODY]."',
+                        SUBJECT = '".addslashes($_model[SUBJECT])."',
+                        BODY = '".addslashes($_model[BODY])."',
                         REG_UID = '".$_SESSION['uid']."',
                         NICK_NM = '".$_SESSION['nick']."',
                         REG_DT = SYSDATE(),

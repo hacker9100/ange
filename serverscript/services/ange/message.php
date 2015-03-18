@@ -69,7 +69,7 @@ switch ($_method) {
                 $data = $_d->sql_fetch_array($result);
                 $_d->dataEnd2($data);
             }
-        } else if($_type == 'list'){
+        } else if($_type == 'list') {
 
             // 검색조건 추가
             /*               if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
@@ -195,6 +195,16 @@ switch ($_method) {
 
             $_d->sql_free_result($result);
             $data = $__trn->{'rows'};
+
+            if ($_d->mysql_errno > 0) {
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            } else {
+                $_d->dataEnd2($data);
+            }
+        } else if($_type == 'tocount') {
+            $sql = " SELECT COUNT(*) AS TO_CNT FROM ANGE_MESSAGE WHERE TO_ID = '".$_SESSION['uid']."' AND CHECK_FL <> 'Y'";
+
+            $data = $_d->sql_fetch($sql);
 
             if ($_d->mysql_errno > 0) {
                 $_d->failEnd("조회실패입니다:".$_d->mysql_error);

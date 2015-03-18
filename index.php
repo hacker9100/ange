@@ -168,6 +168,7 @@ MtUtil::_d("### [END]");
 <link rel="stylesheet" type="text/css" href="css/ange/ange_moms_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_myange_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_myange.css" />
+<link rel="stylesheet" type="text/css" href="css/ange/ange_myangealbum.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_store_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_infodesk_main.css" />
 <link rel="stylesheet" type="text/css" href="css/ange/ange_join.css" />

@@ -210,7 +210,7 @@
                         '".$_model[REPLY_NO]."',
                         '".$_model[REPLY_GB]."',
                         '".$_model[LEVEL]."',
-                        '".str_replace("'", "\\'",$_model[COMMENT])."',
+                        '".addslashes($_model[COMMENT])."',
                         '".$_SESSION['uid']."',
                         '".$_SESSION['nick']."',
                         '".$_SESSION['name']."',
@@ -311,7 +311,7 @@
 
                 $sql = "UPDATE COM_REPLY
                         SET
-                            COMMENT = '".$_model[COMMENT]."',
+                            COMMENT = '".addslashes($_model[COMMENT])."',
                             REG_UID = '".$_SESSION['uid']."',
                             NICK_NM = '".$_SESSION['nick']."',
                             REG_NM = '".$_SESSION['name']."'
