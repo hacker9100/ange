@@ -25,28 +25,30 @@
                                         <!--<img src="/imgs/ange/_blank_262by158.gif" style="background-image:url('/imgs/ange/temp/moms_jb_01.jpg');" class="webzine_moms_featureimg">-->
                                     </div>
 
-                                    <div class="webzine_list_wrap">
+                                    <div class="review_list_wrap">
                                         <div class="webzine_list_title">
                                             <div class="webzine_list_titletxt">{{item.SUBJECT}}</div>
                                             <div class="webzine_list_bottomwrap">
 
                                                 <div class="webzine_list_item"><strong>작성자</strong><span class="table_gray" style="margin-left:8px;">{{item.NICK_NM}}</span></div>
                                                 <div class="webzine_list_item"><strong>작성일</strong><span class="table_gray" style="margin-left:8px;">{{item.REG_DT}}</span></div>
-                                                <div class="webzine_list_item"><strong>블로그주소</strong><span class="table_gray" style="margin-left:8px;">{{item.BLOG_URL}}</span></div>
+                                                <div class="webzine_list_item"><strong>블로그주소</strong>
+                                                    <a class="webzine_list_link" href="{{item.BLOG_URL}" target="_blank"><span class="table_gray" style="margin-left:8px;" title="{{item.BLOG_URL}}">{{item.BLOG_URL}}</span></a>
+                                                </div>
 
                                                 <div style="float:none; margin-top:16px; padding:0px; font-size:0.92em; width:100%; min-height:25px;">
                                                     <!--<div class="people_share" style="float:right; line-height:20px; vertical-align:top;">-->
                                                     <div style="float:right; line-height:20px;">
-                                                        <div style="display:inline; margin-top:10px;">
+                                                        <div style="float:left; display:inline; margin:5px 0 10px 0;">
                                                             <span class="feed_count countlike_color table_gray">{{item.LIKE_CNT}}</span>	<!-- 공감수 -->
                                                             <span class="feed_count countreply_color table_gray">{{item.REPLY_CNT}}</span>	<!-- 댓글수 -->
                                                         </div>
-                                                        <div style="display:inline;">
+                                                        <div style="float:left; display:inline; margin:5px 0 10px 0;">
                                                             <button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'N'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공 감</button>
-                                                            <button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'Y'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공감취소</button>
-                                                            <button ng-show="item.SCRAP_FL == 'Y'" class="people_sharebtn redbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>스크랩</button>
-                                                            <button class="people_sharebtn blackbtn"  title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>프린트</button>
-                                                            <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭" ng-click="click_boardReport(item)"><span class="glyphicon glyphicon-print sharebtn_icon"></span>신고</button>
+                                                            <button class="people_sharebtn graybtn" ng-show="LIKE_FL == 'Y'" title="공감취소" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공감취소</button>
+                                                            <button ng-show="item.SCRAP_FL == 'Y'" class="people_sharebtn blackbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>
+                                                            <button class="people_sharebtn blackbtn"  title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-print sharebtn_icon"></span>프린트</button>
+                                                            <button class="people_sharebtn graybtn" title="이 글을 인쇄하려면 클릭" ng-click="click_boardReport(item)"><span class="glyphicon glyphicon-ban-circle sharebtn_icon"></span>신고</button>
                                                         </div>
                                                     </div>
                                                     <!--</div>-->

@@ -7,8 +7,15 @@
 }
 
 .webzine_list_wrap {
-    position:relative;
-    height:158px;
+    position: relative;
+    height: 158px;
+    width: 100%;
+    padding: 0 0 0 260px;
+}
+
+.review_list_wrap {
+    position: relative;
+    height: 196px;
     width: 100%;
     padding: 0 0 0 260px;
 }
@@ -55,7 +62,8 @@
 
 .webzine_list_bottomwrap {
     position:absolute;
-    bottom:15px;
+    width:95%;
+    bottom:10px;
     font-size:0.78em;
     font-weight:400;
     line-height:14px;
@@ -86,6 +94,19 @@
     margin-top:10px;
     padding-left:5px;
     border-left: 2px solid #fb6362;
+    width:100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+..webzine_list_link {
+    text-decoration: none;
+}
+
+.webzine_list_link span:hover {
+    text-decoration: none;
+    color:#2486de;
 }
 
 .webzine_list_btnwrap {
@@ -136,7 +157,7 @@
         /*background-color:#fff;*/
     }
 
-    .webzine_list_wrap {
+    .webzine_list_wrap, .review_list_wrap {
         height:100%;
         float:none;
         padding:15px;

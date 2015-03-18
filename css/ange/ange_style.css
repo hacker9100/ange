@@ -2063,6 +2063,8 @@ a.people_btn.delete { float:right; background-image: url('/imgs/ange/pp_btn_dele
     border:1px solid #4cae4c;
     border-radius:6px;
     font-size:1.08em;
+    width:100%;
+    height:100%;
     /*
     background-image: url('/imgs/ange/file2com_icon.png');
     background-repeat: no-repeat;
@@ -2220,6 +2222,38 @@ a.people_btn.delete { float:right; background-image: url('/imgs/ange/pp_btn_dele
     color:#fff;
 }
 
+.inputfile_btn_lg {
+    float:left;
+    width:37%;
+    padding:20px 2% 0 0;
+}
+.inputfile_btn_lg_img {
+    float:right;
+    width:34px;
+    margin-bottom:10px;
+}
+.inputfile_btn_guidetxt {
+    width:63%;
+    float:right;
+    margin-top:18px;
+    text-align:left;
+}
+
+@media screen and (max-width: 768px) {
+    .inputfile_btn_lg {
+        width:100%;
+        height:100%;
+        background-image: url('/imgs/ange/file2com_icon.png');
+        background-position: top 15px center;
+        background-repeat: no-repeat;
+    }
+    .inputfile_btn_guidetxt {
+        display: none;
+    }
+    .inputfile_btn_lg_img {
+        display: none;
+    }
+}
 
 /* 이벤트(맘스) 공용 버튼 */
 
@@ -2716,9 +2750,16 @@ nav.mobiletype {
     display: none;
 }
 
+label.normaltype {
+    display: block;
+}
+
+label.mobiletype {
+    display: none;
+}
 
 @media screen and (max-width: 768px) {
-    td.normaltype, .board_thead.normaltype, nav.normaltype {
+    td.normaltype, .board_thead.normaltype, nav.normaltype,label.normaltype {
         display: none;
     }
 
@@ -2730,7 +2771,7 @@ nav.mobiletype {
         display: table-row ;
     }
 
-    nav.mobiletype {
+    nav.mobiletype, label.mobiletype {
         display: block;
     }
 }
