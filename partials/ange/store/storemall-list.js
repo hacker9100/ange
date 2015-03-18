@@ -102,33 +102,33 @@ define([
 
         });
 
-        $scope.click_selectTab = function (idx, category_no) {
-
-            $scope.selectIdx = idx;
-            if(idx == 0){
-                $scope.search.CATEGORY_NO = '';
-
-                // 페이징
-                $scope.PAGE_NO = 1;
-                $scope.PAGE_SIZE = 9;
-                $scope.SEARCH_TOTAL_COUNT = 0;
-
-                // 초기화 후 조회
-                $scope.list = [];
-                $scope.click_showPeopleBoardList();
-            }else{
-                $scope.search.CATEGORY_NO = idx;
-
-                // 페이징
-                $scope.PAGE_NO = 1;
-                $scope.PAGE_SIZE = 9;
-                $scope.SEARCH_TOTAL_COUNT = 0;
-
-                // 초기화 후 조회
-                $scope.list = [];
-                $scope.click_showPeopleBoardList();
-            }
-        };
+//        $scope.click_selectTab = function (idx, category_no) {
+//
+//            $scope.selectIdx = idx;
+//            if(idx == 0){
+//                //$scope.search.CATEGORY_NO = '';
+//
+//                // 페이징
+//                $scope.PAGE_NO = 1;
+//                $scope.PAGE_SIZE = 9;
+//                $scope.SEARCH_TOTAL_COUNT = 0;
+//
+//                // 초기화 후 조회
+//                $scope.list = [];
+//                $scope.click_showPeopleBoardList();
+//            }else{
+//                //$scope.search.CATEGORY_NO = idx;
+//
+//                // 페이징
+//                $scope.PAGE_NO = 1;
+//                $scope.PAGE_SIZE = 9;
+//                $scope.SEARCH_TOTAL_COUNT = 0;
+//
+//                // 초기화 후 조회
+//                $scope.list = [];
+//                $scope.click_showPeopleBoardList();
+//            }
+//        };
 
         $scope.click_selectCategory = function(idx, category) {
             $scope.category[idx] = category;
@@ -188,6 +188,11 @@ define([
                 $scope.search.PRODUCT_TYPE = $scope.selectIdx;
             }
 
+            $scope.PAGE_NO = 1;
+            $scope.PAGE_SIZE = 9;
+            $scope.SEARCH_TOTAL_COUNT = 0;
+
+            $scope.list = [];
             $scope.click_showPeopleBoardList();
         };
 
