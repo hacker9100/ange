@@ -27,12 +27,19 @@ define([
 
             angular.forEach($scope.queue, function(file) {
                 file.kind = '';
+
+                console.log(file);
             });
 
             if (file.kind == 'MAIN') {
                 file.kind = '';
             } else {
                 file.kind = 'MAIN';
+                console.log(file);
+                if (!angular.isUndefined(CKEDITOR)) {
+                    var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.url+'" />' );
+                    CKEDITOR.instances.editor1.insertElement( element );
+                }
             }
         };
 
@@ -111,7 +118,7 @@ define([
             } else if ($stateParams.menu == 'angereview') {
                 $scope.community = "앙쥬 후기";
                 $scope.search.TARGET_GB = 'ANGE';
-                $scope.menu = 'experiencereview';
+                $scope.menu = 'angereview';
                 $scope.item.MENU = 'ANGE';
                 //$scope.item.MENU = 'PRODUCT';
             } else if ($stateParams.menu == 'samplereview') {

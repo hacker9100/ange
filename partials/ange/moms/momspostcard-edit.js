@@ -95,7 +95,7 @@ define([
             // 신청폼에 회원정보를 셋팅
             $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                 .then(function(data){
-                    $scope.item = data;
+                    $rootScope.user_info = data;
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
@@ -146,16 +146,7 @@ define([
                     $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                         .then(function(data){
 
-                            $scope.item.USER_ID = data.USER_ID;
-                            $scope.item.USER_NM = data.USER_NM;
-                            $scope.item.NICK_NM = data.NICK_NM;
-                            $scope.item.ADDR = data.ADDR;
-                            $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
-                            $scope.item.REG_DT = data.REG_DT;
-                            $scope.item.REG_DT = data.REG_DT;
-                            $scope.item.PHONE_1 = data.PHONE_1;
-                            $scope.item.PHONE_2 = data.PHONE_2;
-                            $scope.item.BLOG_URL = data.BLOG_URL;
+                            $scope.item = data;
 
                         })
                         ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -203,7 +194,7 @@ define([
 
                 $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                     .then(function(data){
-                        $scope.item = data;
+                        $scope.user_info = data;
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             },function(){

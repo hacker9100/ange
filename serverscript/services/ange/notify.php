@@ -214,10 +214,6 @@
             break;
 
         case "PUT":
-            if (!isset($_key) || $_key == '') {
-                $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
-            }
-
             break;
 
         case "DELETE":

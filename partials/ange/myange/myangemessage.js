@@ -201,6 +201,8 @@ define([
 
                     $scope.selectUser = "N";
 
+                    $scope.search = {};
+
                     console.log(item);
                     $scope.item = {};
 
@@ -241,6 +243,7 @@ define([
                         $modalInstance.close();
                     }
 
+                    $scope.search.FILE = true;
                     // 사용자 조회 검색 클릭
                     $scope.click_searchUser = function (name) { //item
 
@@ -279,6 +282,8 @@ define([
                     $scope.USER_PAGE_SIZE = 15;
                     $scope.USER_TOTAL_COUNT = 0;
 
+
+
                     // 사용자 리스트
                     $scope.searchUserList = function () {
                         $scope.getList('ange/message', 'searchuserlist', {NO: $scope.USER_PAGE_NO - 1, SIZE: $scope.USER_PAGE_SIZE}, $scope.search, true)
@@ -288,7 +293,10 @@ define([
 
                                 for (var i in data) {
                                     if (data[i].FILE != null ) {
-                                        data[i].profileImg = CONSTANT.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+
+                                        data[i].profileImg = CONSTANT.BASE_URL + data[i].FILE.PATH + data[i].FILE.FILE_ID;
+                                        data[i].FILE_YN = data[i].FILE.FILE_ID;
+                                        console.log(data[i].FILE_YN);
                                     }
                                 }
 
@@ -302,7 +310,7 @@ define([
                     };
 
                     // 사용자 선택
-                    $scope.select_user = function (to_id, to_nm){
+                    $scope.select_user = function (to_id, to_nm, file_yn, img){
 
                         if(to_id == $scope.uid){
                             dialogs.notify('알림', '본인에게 보낼 수 없습니다.', {size: 'md'});
@@ -314,6 +322,8 @@ define([
 
                             $scope.item.TO_ID = to_id;
                             $scope.item.TO_NM = to_nm;
+                            $scope.item.FILE_YN = file_yn;
+                            $scope.item.profileImg = img;
 
                             $scope.searchUsetList = "N";
                             console.log($scope.item.TO_ID);

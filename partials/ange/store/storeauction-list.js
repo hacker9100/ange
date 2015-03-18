@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('storeauction-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('storeauction-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD','CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD,CONSTANT) {
 
         $scope.selectIdx = 0;
 
@@ -114,8 +114,10 @@ define([
                         data[i].AUCTION_AMOUNT  = data[i].AUCTION_AMOUNT.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
                         if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                            var img = CONSTANT.BASE_URL + '/storage/product/' + 'thumbnail/' + data[i].FILE.FILE_ID;
                             data[i].MAIN_FILE = img;
+
+                            $scope.item.MAIN_FILE = img;
 
                         }
                     }

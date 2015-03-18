@@ -130,6 +130,8 @@ define([
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];
 
+        $scope.isLoding = true;
+
         // 게시판 목록 조회
         $scope.getMomsReviewList = function () {
 

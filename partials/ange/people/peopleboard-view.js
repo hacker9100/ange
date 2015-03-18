@@ -117,6 +117,16 @@ define([
             console.log('view $rootScope.NOW_PAGE_NO = '+$rootScope.NOW_PAGE_NO);
 
             console.log('$stateParams.menu = '+$stateParams.menu);
+
+
+            if($rootScope.CONDITION == undefined){
+                $rootScope.CONDITION = 'SUBJECT';
+            }
+
+            if($rootScope.NOW_PAGE_NO == undefined){
+                $rootScope.NOW_PAGE_NO = 1;
+            }
+
             if($rootScope.KEYWORD == undefined){
                 $rootScope.KEYWORD = '';
             }

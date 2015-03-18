@@ -139,6 +139,9 @@ define([
                         //console.log($rootScope.arr[i]);
 
                         //console.log($rootScope.arr[i]);
+
+                        $scope.percent = [];
+
                         $scope.chart[i] = {};
                         $scope.chartObject[i] = {};
                         //$scope.chart[i].data = '';
@@ -165,7 +168,7 @@ define([
                                 $rootScope.jsontext[i] = '{"v":"'+ $rootScope.arr2[i][j][0]+'"}';
                                 $rootScope.jsontext2[i] = '{"v":'+ $rootScope.arr2[i][j][1]+'}';
 
-                                console.log($rootScope.jsontext[i]);
+                                console.log($rootScope.arr2[i][j][1]);
                                 $rootScope.contact[i] = JSON.parse($rootScope.jsontext[i]);
                                 $rootScope.contact2[i] = JSON.parse($rootScope.jsontext2[i]);
 
@@ -325,6 +328,7 @@ define([
                                     //console.log(select_answer[i]);
 
                                     $rootScope.aa.push(select_answer[i]);
+
                                 }
 
                             }else if(parse_que_data[x].type == 1){ // 주관식일때

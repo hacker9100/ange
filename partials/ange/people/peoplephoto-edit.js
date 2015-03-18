@@ -97,13 +97,21 @@ define([
 
             angular.forEach($scope.queue, function(file) {
                 file.kind = '';
+
+                console.log(file);
             });
 
             if (file.kind == 'MAIN') {
                 file.kind = '';
             } else {
                 file.kind = 'MAIN';
+                console.log(file);
+                if (!angular.isUndefined(CKEDITOR)) {
+                    var element = CKEDITOR.dom.element.createFromHtml( '<img alt="" src="'+file.url+'" />' );
+                    CKEDITOR.instances.editor1.insertElement( element );
+                }
             }
+
         };
 
         $scope.click_checkAllToggle = function () {

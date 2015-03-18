@@ -136,8 +136,9 @@
 
                                             <!-- Editor CSS 적용 img max-width: 720px -->
                                             <!--<img src="/imgs/temp/temp_productimg.jpg" style="width:100%;"/>-->
-                                            <img ng-src="{{item.MAIN_FILE}}" style="width:100%;"/>
+                                            <!--<img ng-src="{{item.MAIN_FILE}}" style="width:100%;"/>-->
                                             <!-- img ng-src="{{item.MAIN_FILE}}" style="width:100%;"/ -->
+                                            <div ng-bind-html="item.BODY"></div>
 
                                         </div><!-- /.col-12-->
                                     </div><!-- /.row -->
@@ -171,43 +172,56 @@
                                                     <thead>
                                                     <tr class="board_thead" height="48">
                                                         <td width="9%" align="center"><span class="board_th">번호</span></td>
-                                                        <td colspan="2" width="15%"><span class="board_th">내용</span></td>
-                                                        <td width="60" align="center"><span class="board_th">조회</span></td>
+                                                        <td colspan="2" align="left"><span class="board_th">내용</span></td>
+                                                        <td width="80" align="center"><span class="board_th">조회</span></td>
                                                     </tr>
                                                     </thead>
 
                                                     <tbody class="on" ng-repeat="item in reviewList">
                                                     <tr ng-click="click_showViewReview(item.NO)" style="cursor:pointer;">
-                                                        <td class="table_no">
-                                                            <span>{{item.RNUM}}</span>
+                                                        <td class="table_no" style="vertical-align: middle;">
+                                                            <span>{{item.REVIEW_NO}}</span>
                                                         </td>
 
-                                                        <td width="18%">
+                                                        <td width="18%" style="min-width:150px;">
                                                             <div class="review_thumbnails" >
-                                                                <img class="thumbnails_img" ng-src="{{item.MAIN_FILE}}" />
+                                                                <!--<img class="thumbnails_img" style="width: 157px;height: 116px;" ng-src="{{item.MAIN_FILE}}" />-->
+                                                                <img src="/imgs/ange/_blank_4by3.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
                                                             </div>
                                                             <!-- img src="" style="width:100%; border:1px solid #ddd;" -->
                                                         </td>
 
                                                         </td>
-                                                        <td>
-                                                            <span style="font-size:1.08em; font-weight:600;"> {{ item.SUBJECT | string_limit: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
-                                                            <span class="table_icon_new">N</span>
-                                                            <span class="glyphicon glyphicon-picture table_icon_pic"></span>
 
-                                                            <div class="table_date" style="font-size:0.86em; line-height:36px;">
-                                                                <span class="table_blue">{{item.NICK_NM}}</span> &nbsp;|&nbsp; <span style=""></span>{{item.REG_DT}}
+                                                        <td style="padding-right:15px;">
+                                                            <div style="font-size:1.08em; font-weight:600; height:46px;">
+                                                                <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span>
+                                                                <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                                                <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
+                                                                <span ng-show="item.NEW_FL == 1" class="table_icon_new" style="vertical-align: middle;">N</span>
+                                                            </div>
 
-                                                                <div style="float:right; margin-top:10px; display:inline; padding:0px; bottom:0; right:0;">
-                                                                    <span class="feed_count countlike_color table_gray" style="line-height:12px; height:14px;">{{item.LIKE_CNT}}</span>		<!-- 공감수 -->
-                                                                    <span class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">{{item.REPLY_CNT}}</span>	<!-- 댓글수 -->
+
+                                                            <div class="table_blue" style="font-size:0.86em;">{{item.NICK_NM}}</span> &nbsp;|&nbsp; <span class="table_gray">{{item.REG_DT}}</span></div>
+
+                                                            <!--<span class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                                            <!--<div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: keep-all;">{{item.BODY | string_limit : 50}}{{item.BODY > 50 ? '...' : ''}}</div>-->
+
+                                                            <div class="table_gray" style="width:100%; text-align: justify; font-size:0.92em; word-break: break-all; height:38px; overflow:hidden; text-overflow:ellipsis; ">
+                                                                {{item.BODY | string_limit : 200}}
+                                                            </div>
+                                                        </td>
+                                                        <td class="table_hit">
+                                                            <div class="table_date" style="font-size:0.86em;">
+                                                                <div style="float:right; margin-top:10px; display:inline; padding:8px 0 0 18px;">
+                                                                    <div class="feed_count counthit_color table_gray" title="조회수" style="line-height:12px; height:26px;">{{item.HIT_CNT}}</div>   <!-- 히트수 -->
+                                                                    <div class="feed_count countlike_color table_gray" title="공감수" style="line-height:12px; height:26px;">{{item.LIKE_CNT}}</div>   <!-- 공감수 -->
+                                                                    <!--<div ng-if="item.REPLY_FL == 'Y'" class="feed_count countreply_color table_gray" style="line-height:12px; height:14px;">{{item.REPLY_CNT}}</div>	&lt;!&ndash; 댓글수 &ndash;&gt;-->
+                                                                    <div class="feed_count countreply_color table_gray" title="댓글수" style="line-height:12px; height:26px;">{{item.REPLY_CNT}}</div>	<!-- 댓글수 -->
                                                                 </div>
 
                                                             </div>
-                                                            <div class="table_gray" ng-bind-html="item.BODY | string_limit : 200" style="text-align: justify; font-size:0.92em; word-break: break-all;">
-                                                            </div>
                                                         </td>
-                                                        <td class="table_hit">{{item.HIT_CNT}}</td></tr>
                                                     </tr>
                                                     </tbody>
 
@@ -222,7 +236,7 @@
 
 
                                                 <nav class="text-center">
-                                                    <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+                                                    <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" items-per-page="5" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                                                 </nav><!-- /.Paging-->
                                                 <!-- /peoplepoll_list -->
 

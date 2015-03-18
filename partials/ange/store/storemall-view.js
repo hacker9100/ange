@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('storemall-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('storemall-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD',  function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
         // 첨부파일 초기화
         $scope.queue = [];
@@ -24,6 +24,7 @@ define([
         $scope.selectIdx = 1;
 
         // 페이징
+        $scope.reviewList = [];
         $scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = 5;
         $scope.TOTAL_COUNT = 0;
@@ -50,8 +51,6 @@ define([
         $scope.click_selectTab = function (idx) {
             $scope.selectIdx = idx;
 
-            //$("#tabs-"+idx).focus();
-
             $("#tabs-"+idx)[0].scrollIntoView();  // O, jQuery  이용시
         };
 
@@ -77,18 +76,46 @@ define([
 
         // 리뷰 리스트
         $scope.getReviewList = function (){
+            $scope.search.FILE = true;
+
             $scope.getList('ange/review', 'list', {NO: $scope.PAGE_NO - 1, SIZE: $scope.PAGE_SIZE}, $scope.search, false)
                 .then(function(data){
-                    $scope.reviewList = data;
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
+
+                    for(var i in data) {
+                        // /storage/review/
+
+                        var img = UPLOAD.BASE_URL + '/storage/review/' + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        data[i].TYPE = 'REVIEW';
+                        data[i].FILE = img;
+
+                        var source = data[i].BODY;
+                        var pattern = /<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig;
+
+                        source = source.replace(pattern, '');
+                        source = source.replace(/&nbsp;/ig, '');
+                        source = source.trim();
+
+                        data[i].BODY = source;
+
+                        $scope.reviewList.push(data[i]);
+                    }
                 })
                 ['catch'](function(error){$scope.reviewList = ""; $scope.TOTAL_COUNT=0;});
         }
 
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
+
+            // 페이징
+//            $scope.PAGE_NO = 1;
+//            $scope.PAGE_SIZE = 10;
+//            $scope.TOTAL_COUNT = 0;
+
+            $scope.reviewList = [];
             $scope.getReviewList();
+
         };
 
         $scope.$watch('product.CNT', function() {
@@ -123,7 +150,8 @@ define([
                 $scope.productsList = [];
             }else{
                 $scope.product.CNT = 1;
-                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB, "SUM_IN_OUT" : item.SUM_IN_OUT});
+                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+                //, "SUM_IN_OUT" : item.SUM_IN_OUT}
 
 
                 // , "RECEIPTOR_NM" : $rootScope.user_info.USER_NM, "RECEIPT_ADDR" :$rootScope.user_info.ADDR, "RECEIPT_ADDR_DETAIL" : $rootScope.user_info.ADDR_DETAIL, "RECEIPT_PHONE" : $rootScope.user_info.PHONE_2
@@ -141,7 +169,8 @@ define([
 
             if($("#checkProduct").is(":checked")){
                 $scope.product.CNT = 1;
-                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB, "SUM_IN_OUT" : item.SUM_IN_OUT});
+                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+                //, "SUM_IN_OUT" : item.SUM_IN_OUT
             }else{
                 $scope.productsList = [];
             }
@@ -185,8 +214,9 @@ define([
                         var files = data.FILES;
                         for(var i in files) {
                             if (files[i].FILE_GB == 'MAIN') {
-//                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                                var img = UPLOAD.BASE_URL + files[i].PATH + 'thumbnail/' + files[i].FILE_ID;
+
+                                //files[i].PATH
+                                var img = UPLOAD.BASE_URL + '/storage/product/' + 'thumbnail/' + files[i].FILE_ID;
                                 data.MAIN_FILE = img;
                             }
                         }
@@ -209,10 +239,6 @@ define([
 
             $scope.insertItem('ange/cart', 'item', $scope.item, false)
                 .then(function(){
-                    //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
-                    //$scope.openViewScrapModal($scope.item.CART, 'lg');
-
-                    //$location.url('store/cart/list/'+$stateParams.menu);
 
                     if (confirm("찜목록에 등록되었습니다. 찜목록으로 이동하시겠습니까?") == true){    //확인
                         $location.url('store/order/list');
@@ -281,6 +307,13 @@ define([
 
             $location.url('/moms/productreview/edit/0');
         }
+
+        // 조회 화면 이동
+        $scope.click_showViewReview = function (key) {
+
+            $location.url('/moms/productreview/view/'+key);
+
+        };
 
         /********** 화면 초기화 **********/
 /*        $scope.getSession()

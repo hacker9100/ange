@@ -77,7 +77,8 @@
 
                                                     <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
                                                         <input type="hidden" name="index[]"  class="poll_no" value="{{query.index}}"/> <!-- query. -->
-                                                        <dt>{{query.title}}</dt>
+                                                        <!--<dt>{{query.title}}</dt>-->
+                                                        <dt>Q{{$index+1}} {{query.title}}</dt>
                                                         <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
                                                             <div class="radio-inline">
                                                                 <label>
@@ -171,7 +172,7 @@
 
                                                 <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
                                                     <input type="hidden" name="index[]" class="poll_query_no"/> <!-- query. -->
-                                                    <dt>{{query.title}}</dt>
+                                                    <dt>Q{{$index+1}} {{query.title}}</dt>
                                                     <dd ng-if="query.type == '1'">
                                                         <div class="radio-inline">
                                                             <label>
@@ -192,8 +193,8 @@
                                                     </dd>
 
                                                     <div ng-if="query.type == '0'">
-                                                        <div  style="width: 100%; height: 200px;">
-                                                            <div google-chart chart="chart[$index]" style="height:200px; width:100%;"></div>
+                                                        <div>
+                                                            <div google-chart chart="chart[$index]" ></div> <!-- style="height:200px; width:100%;" -->
                                                             <!--<canvas id="pie{{$index}}" class="chart chart-pie chart-xs" data="data1" labels="labels1" style="width: 100px; height: 100px;"></canvas>-->
                                                         </div>
                                                     </div>

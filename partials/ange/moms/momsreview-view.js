@@ -137,6 +137,14 @@ define([
                 $rootScope.KEYWORD = '';
             }
 
+            if($rootScope.NOW_PAGE_NO == undefined){
+                $rootScope.NOW_PAGE_NO = 1;
+            }
+
+            if($rootScope.CONDITION == undefined){
+                $rootScope.CONDITION = 'SUBJECT+BODY';
+            }
+
             if ($stateParams.menu == 'experiencereview') {
                 //$location.url('/moms/experiencereview/list');
                 $location.url('/moms/experiencereview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);

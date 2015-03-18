@@ -57,7 +57,7 @@
 
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.NICK_NM,  U.PASSWORD, U.PHONE_1, U.PHONE_2, U.EMAIL, U.ADDR, U.ADDR_DETAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
-                            UR.ROLE_ID, R.ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB,
+                            UR.ROLE_ID, R.ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB, U.ZIP_CODE,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT,
@@ -72,8 +72,7 @@
                             ".$where_search."
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data = $_d->sql_fetch_array($result);
+                $data = $_d->sql_fetch($sql);
 
                 if($_d->mysql_errno > 0) {
                     $err++;
@@ -120,25 +119,21 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $mileage_result = $_d->sql_query($sql);
-                    $mileage_data  = $_d->sql_fetch_array($mileage_result);
+                    $mileage_data  = $_d->sql_fetch($sql);
                     $data['MILEAGE'] = $mileage_data;
 
                     $sql = "SELECT
                                 F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                             FROM
-                                COM_USER U, FILE F, CONTENT_SOURCE S
+                                COM_USER U, COM_FILE F
                             WHERE
-                                U.NO = S.TARGET_NO
-                                AND F.NO = S.SOURCE_NO
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_GB = 'USER'
+                                U.NO = F.TARGET_NO
+                                AND F.TARGET_GB = 'USER'
                                 AND U.USER_ID = '".$_key."'
                                 AND F.FILE_GB = 'THUMB'
                             ";
 
-                    $file_result = $_d->sql_query($sql);
-                    $file_data = $_d->sql_fetch_array($file_result);
+                    $file_data = $_d->sql_fetch($sql);
                     $data['FILE'] = $file_data;
 
                     $sql = "SELECT
@@ -160,8 +155,7 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $blog_result = $_d->sql_query($sql);
-                    $blog_data  = $_d->sql_fetch_array($blog_result);
+                    $blog_data  = $_d->sql_fetch($sql);
                     $data['BLOG'] = $blog_data;
                 } else {
                     $_d->failEnd("아이디나 패스워드를 확인해주세요.");
@@ -418,8 +412,7 @@
                             ".$where_search."
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data = $_d->sql_fetch_array($result);
+                $data = $_d->sql_fetch($sql);
 
                 if($_d->mysql_errno > 0) {
                     $err++;
@@ -454,25 +447,21 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $mileage_result = $_d->sql_query($sql);
-                    $mileage_data  = $_d->sql_fetch_array($mileage_result);
+                    $mileage_data  = $_d->sql_fetch($sql);
                     $data['MILEAGE'] = $mileage_data;
 
                     $sql = "SELECT
                                 F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                             FROM
-                                COM_USER U, FILE F, CONTENT_SOURCE S
+                                COM_USER U, COM_FILE F
                             WHERE
-                                U.NO = S.TARGET_NO
-                                AND F.NO = S.SOURCE_NO
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_GB = 'USER'
+                                U.NO = F.TARGET_NO
+                                AND F.TARGET_GB = 'USER'
                                 AND U.USER_ID = '".$_key."'
                                 AND F.FILE_GB = 'THUMB'
                             ";
 
-                    $file_result = $_d->sql_query($sql);
-                    $file_data = $_d->sql_fetch_array($file_result);
+                    $file_data = $_d->sql_fetch($sql);
                     $data['FILE'] = $file_data;
 
                     $sql = "SELECT

@@ -11,12 +11,12 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('myangepostcard', ['$rootScope', '$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($rootScope, $scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('myangepostcard', ['$rootScope', '$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD','CONSTANT', function ($rootScope, $scope, $stateParams, $location, dialogs, UPLOAD,CONSTANT) {
 
         $scope.search = {};
 
         $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
         $scope.TOTAL_COUNT = 0;
 
         //

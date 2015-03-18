@@ -22,6 +22,9 @@ define([
         $scope.showReCommentDetails = false;
 
         console.log($rootScope.uid);
+        console.log($scope.menu.COMM_NO);
+
+        $scope.comm_no = $scope.menu.COMM_NO;
 
         if($rootScope.uid == undefined){
             $scope.nouserid = true;

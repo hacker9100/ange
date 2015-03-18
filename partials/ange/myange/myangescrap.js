@@ -21,7 +21,7 @@ define([
 
         // 페이징
         $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = 25;
         $scope.TOTAL_COUNT = 0;
 
         $scope.pageChanged = function() {
@@ -100,22 +100,30 @@ define([
             }else if(comm_no == 13) {
                 $location.url('/people/peopletaste/view/'+key);
             }else if(comm_no == 21) {
-                $location.url('/people/childdevelop/view'+key);
+                $location.url('/people/childdevelop/view/'+key);
             }else if(comm_no == 22) {
-                $location.url('/people/chlidoriental/view'+key);
+                $location.url('/people/chlidoriental/view/'+key);
             }else if(comm_no == 23) {
-                $location.url('/people/obstetrics/view'+key);
+                $location.url('/people/obstetrics/view/'+key);
             }else if(comm_no == 24) {
-                $location.url('/people/momshealth/view'+key);
+                $location.url('/people/momshealth/view/'+key);
             }else if(comm_no == 25) {
-                $location.url('/people/financial/view'+key);
+                $location.url('/people/financial/view/'+key);
             }
         };
 
         // 콘텐츠 클릭 조회
+//        $scope.click_showViewContent = function (item) {
+//            $scope.openModal(item, 'lg');
+//        };
+
         $scope.click_showViewContent = function (item) {
-            $scope.openModal(item, 'lg');
-        };
+            $scope.getItem('cms/task', 'item', item.TARGET_NO, {}, true)
+                .then(function(data){
+                    $scope.openModal(data, 'lg');
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        }
 
         // 콘텐츠보기 모달창
         $scope.openModal = function (content, size) {
@@ -137,51 +145,6 @@ define([
                 console.log("결재 오류");
             });
         }
-
-        /*$scope.openViewScrapModal = function (item, size) {
-            var dlg = dialogs.create('myangescrap_view.html',
-                ['$scope', '$modalInstance', '$controller', 'data', function($scope, $modalInstance, $controller, data) {
-
-                   *//* $scope.getItem('com/webboard', 'item', item, {}, false)
-                        .then(function(data){
-                            $scope.item = data;
-                            var files = data.FILES;
-                            for(var i in files) {
-                                $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                            }
-
-                            //$scope.search.TARGET_NO = $stateParams.id;
-                        })
-                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-
-                    $scope.item = data;*//*
-                    *//********** 공통 controller 호출 **********//*
-                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
-
-                    $scope.getItem('com/webboard', 'item', item.NO, {}, false)
-                        .then(function(data){
-                            $scope.item = data;
-                            var files = data.FILES;
-                            for(var i in files) {
-                                $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":UPLOAD.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
-                            }
-
-                            //$scope.search.TARGET_NO = $stateParams.id;
-                        })
-                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
-                    $scope.click_ok = function () {
-                        $modalInstance.close();
-                    };
-
-                }], item, {size:size,keyboard: true}, $scope);
-            dlg.result.then(function(){
-
-            },function(){
-
-            });
-        };*/
 
         // 일반게시글 삭제
         $scope.delete_board = function (item){

@@ -66,17 +66,13 @@
                     $sql = "SELECT
                                 F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                             FROM
-                                FILE F, CONTENT_SOURCE S
+                                COM_FILE F
                             WHERE
-                                F.NO = S.SOURCE_NO
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_GB = 'PROJECT'
-                                AND S.TARGET_NO = ".$_key."
-                                AND F.THUMB_FL = '0'
+                                F.TARGET_GB = 'PROJECT'
+                                AND F.TARGET_NO = ".$_key."
                             ";
 
-                    $file_data = $_d->getData($sql);
-                    $data['FILE'] = $file_data;
+                    $data['FILE'] = $_d->getData($sql);
                 }
 
                 if ($_d->mysql_errno > 0) {
@@ -131,7 +127,7 @@
 
                     if (isset($_search[ROLE]) && $_search[ROLE] != "") {
                         $sql = "SELECT
-                                        NO AS PROJECT_NO, SUBJECT
+                                    NO AS PROJECT_NO, SUBJECT
                                 FROM
                                     CMS_PROJECT
                                 WHERE
@@ -181,26 +177,6 @@
             break;
 
         case "POST":
-//            $form = json_decode(file_get_contents("php://input"),true);
-/*
-            $upload_path = '../upload/';
-            $source_path = '../../../';
-
-            if (count($form[FILES]) > 0) {
-                $files = $form[FILES];
-
-//                @mkdir('$source_path');
-
-                for ($i = 0 ; $i < count($form[FILES]); $i++) {
-                    $file = $files[$i];
-
-                    if (file_exists($upload_path.$file[name])) {
-                        rename($upload_path.$file[name], $source_path.$file[name]);
-                    }
-                }
-            }
-*/
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             if ( trim($_model[SUBJECT]) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
@@ -280,7 +256,7 @@
 
                 MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                $sql = "INSERT INTO FILE
+                $sql = "INSERT INTO COM_FILE
                         (
                             FILE_NM
                             ,FILE_ID
@@ -290,6 +266,10 @@
                             ,THUMB_FL
                             ,REG_DT
                             ,FILE_ST
+                            ,FILE_GB
+                            ,FILE_ORD
+                            ,TARGET_NO
+                            ,TARGET_GB
                         ) VALUES (
                             '".$file[name]."'
                             , '".$insert_path[uid]."'
@@ -299,29 +279,10 @@
                             , '0'
                             , SYSDATE()
                             , 'C'
-                        )";
-
-                $_d->sql_query($sql);
-                $ori_file_no = $_d->mysql_insert_id;
-
-                if ($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
-
-                $sql = "INSERT INTO CONTENT_SOURCE
-                        (
-                            TARGET_NO
-                            ,SOURCE_NO
-                            ,CONTENT_GB
-                            ,TARGET_GB
-                            ,SORT_IDX
-                        ) VALUES (
-                            '".$no."'
-                            , '".$ori_file_no."'
-                            , 'FILE'
+                            , '".$file[kind]."'
+                            , '".$i."'
+                            , '".$no."'
                             , 'PROJECT'
-                            , '0'
                         )";
 
                 $_d->sql_query($sql);
@@ -346,9 +307,6 @@
             if (!isset($_key) || $_key == '') {
                 $_d->failEnd("수정실패입니다:"."KEY가 누락되었습니다.");
             }
-
-//            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
 
             $upload_path = '../../../upload/files/';
             $file_path = '/storage/cms/';
@@ -415,13 +373,10 @@
             $sql = "SELECT
                         F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                     FROM
-                        FILE F, CONTENT_SOURCE S
+                        COM_FILE F
                     WHERE
-                        F.NO = S.SOURCE_NO
-                        AND S.CONTENT_GB = 'FILE'
-                        AND S.TARGET_GB = 'PROJECT'
-                        AND S.TARGET_NO = ".$_key."
-                        AND F.THUMB_FL = '0'
+                        F.TARGET_GB = 'PROJECT'
+                        AND F.TARGET_NO = ".$_key."
                     ";
 
             $result = $_d->sql_query($sql,true);
@@ -437,11 +392,7 @@
 
                 if ($is_delete) {
                     MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                    $_d->sql_query($sql);
-
-                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'PROJECT' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
 
                     $_d->sql_query($sql);
 
@@ -461,7 +412,7 @@
                 MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                 if ($insert_path[uid] != "") {
-                    $sql = "INSERT INTO FILE
+                    $sql = "INSERT INTO COM_FILE
                             (
                                 FILE_NM
                                 ,FILE_ID
@@ -471,6 +422,10 @@
                                 ,THUMB_FL
                                 ,REG_DT
                                 ,FILE_ST
+                                ,FILE_GB
+                                ,FILE_ORD
+                                ,TARGET_NO
+                                ,TARGET_GB
                             ) VALUES (
                                 '".$file[name]."'
                                 , '".$insert_path[uid]."'
@@ -480,29 +435,10 @@
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                            )";
-
-                    $_d->sql_query($sql);
-                    $file_no = $_d->mysql_insert_id;
-
-                    if ($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO CONTENT_SOURCE
-                            (
-                                TARGET_NO
-                                ,SOURCE_NO
-                                ,CONTENT_GB
-                                ,TARGET_GB
-                                ,SORT_IDX
-                            ) VALUES (
-                                '".$_key."'
-                                , '".$file_no."'
-                                , 'FILE'
-                                , 'PROJECT'
+                                , '".$file[kind]."'
                                 , '".$i."'
+                                , '".$_key."'
+                                , 'PROJECT'
                             )";
 
                     $_d->sql_query($sql);
@@ -540,8 +476,7 @@
                         PROJECT_NO = ".$_key."
                     ";
 
-            $result = $_d->sql_query($sql);
-            $data = $_d->sql_fetch_array($result);
+            $data = $_d->sql_fetch($sql);
 
             if ($data["COUNT"] > 0) {
                 $err++;

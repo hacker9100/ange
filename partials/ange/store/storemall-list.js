@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('storemall-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('storemall-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD, CONSTANT) {
 
         $scope.selectIdx = 0;
 
@@ -19,11 +19,14 @@ define([
 
         // 페이징
         $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = 9;
         $scope.TOTAL_COUNT = 0;
+
+        $scope.list = [];
 
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
+            $scope.list = [];
             $scope.click_showPeopleBoardList();
         };
 
@@ -60,23 +63,27 @@ define([
 
             $scope.selectIdx = 'ALL';
 
-            /*            if ($stateParams.menu == 'mileagemall') {
-             if($rootScope.uid == '' || $rootScope.uid == null){
-             dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
-             $location.url('/store/home');
-             }
-             }*/
-
-            $scope.getList('ange/product', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('ange/product', 'list', {}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
 
                     $scope.TOTAL_COUNT = total_cnt;
-
-                    /*$scope.total(total_cnt);*/
-                    $scope.list = data;
                 })
-                ['catch'](function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
+                ['catch'](function(error){$scope.TOTAL_COUNT = 0;});
+
+            $scope.search.COMM_NO = 'STORE';
+
+            if($stateParams.menu == 'mileagemall'){
+                $scope.search.PARENT_NO = 1;
+            }else{
+                $scope.search.PARENT_NO = 2;
+            }
+
+            $scope.getList('com/webboard', 'category', {}, $scope.search, true)
+                .then(function(data){
+                    $scope.category_list = data;
+                })
+                ['catch'](function(error){$scope.category_list = ""; });
         };
 
         $(function () {
@@ -95,9 +102,53 @@ define([
 
         });
 
+//        $scope.click_selectTab = function (idx, category_no) {
+//
+//            $scope.selectIdx = idx;
+//            if(idx == 0){
+//                //$scope.search.CATEGORY_NO = '';
+//
+//                // 페이징
+//                $scope.PAGE_NO = 1;
+//                $scope.PAGE_SIZE = 9;
+//                $scope.SEARCH_TOTAL_COUNT = 0;
+//
+//                // 초기화 후 조회
+//                $scope.list = [];
+//                $scope.click_showPeopleBoardList();
+//            }else{
+//                //$scope.search.CATEGORY_NO = idx;
+//
+//                // 페이징
+//                $scope.PAGE_NO = 1;
+//                $scope.PAGE_SIZE = 9;
+//                $scope.SEARCH_TOTAL_COUNT = 0;
+//
+//                // 초기화 후 조회
+//                $scope.list = [];
+//                $scope.click_showPeopleBoardList();
+//            }
+//        };
+
+        $scope.click_selectCategory = function(idx, category) {
+            $scope.category[idx] = category;
+            console.log($scope.category[idx]);
+            $scope.list = [];
+            $scope.click_showPeopleBoardList();
+        };
+
         /********** 이벤트 **********/
             // 게시판 목록 이동
         $scope.click_showPeopleBoardList = function () {
+
+            $scope.search.CATEGORY = [];
+
+            if ($scope.category != '') {
+                console.log($scope.category)
+                for (var i in $scope.category) {
+                    if ($scope.category[i] != null) $scope.search.CATEGORY.push($scope.category[i]);
+                }
+            }
 
             $scope.search.FILE = true;
             $scope.getList('ange/product', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
@@ -108,17 +159,12 @@ define([
                     for(var i in data) {
 
                         data[i].PRICE  = data[i].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-                        console.log(data[i].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+                        var img = CONSTANT.BASE_URL + '/storage/product/' + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        data[i].TYPE = 'PRODUCT';
+                        data[i].FILE = img;
 
-                        if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
-                            data[i].MAIN_FILE = img;
-
-                        }
+                        $scope.list.push(data[i]);
                     }
-
-                    /*$scope.total(total_cnt);*/
-                    $scope.list = data;
                 })
                 ['catch'](function(error){$scope.list = ""; $scope.SEARCH_TOTAL_COUNT = 0;});
 
@@ -142,6 +188,11 @@ define([
                 $scope.search.PRODUCT_TYPE = $scope.selectIdx;
             }
 
+            $scope.PAGE_NO = 1;
+            $scope.PAGE_SIZE = 9;
+            $scope.SEARCH_TOTAL_COUNT = 0;
+
+            $scope.list = [];
             $scope.click_showPeopleBoardList();
         };
 
@@ -149,17 +200,10 @@ define([
         $scope.click_showViewPeoplePhoto = function (key) {
 
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
-
-//            if ($stateParams.menu == 'angemodel') {
-//                $location.url('/people/angemodel/view/'+key);
-//            } else if($stateParams.menu == 'recipearcade') {
-//                $location.url('/people/recipearcade/view/'+key);
-//            } else if($stateParams.menu == 'peopletaste') {
-//                $location.url('/people/peopletaste/view/'+key);
-//            }
         };
         // 검색
         $scope.click_searchPeopleBoard = function(){
+            $scope.list = [];
             $scope.click_showPeopleBoardList();
         }
 

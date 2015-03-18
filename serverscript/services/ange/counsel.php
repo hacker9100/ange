@@ -45,66 +45,22 @@ switch ($_method) {
         if ($_type == 'item') {
             $search_where = "";
 
-//                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-//                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
-//                }
-
-
-
             $err = 0;
             $msg = "";
 
-            $sql = "SELECT NO, PRODUCT_NO, SUBJECT, BODY, COUNSEL_ST, PROGRESS_ST, USER_ID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
+            $sql = "SELECT
+                        NO, PRODUCT_NO, SUBJECT, BODY, COUNSEL_ST, PROGRESS_ST, USER_ID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                         (SELECT PRODUCT_CODE FROM ANGE_ORDER WHERE PRODUCT_NO = AO.PRODUCT_NO AND USER_ID = '".$_SESSION['uid']."') AS PRODUCT_CODE,
 		                (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AO.PRODUCT_NO) AS PRODUCT_NM, AO.CHANGE_PRODUCT_NO
-                        FROM
-                            ANGE_ORDER_COUNSEL AO
-                        WHERE
-                            NO = ".$_key."
-                            ".$search_where."
-
-                        ";
+                    FROM
+                        ANGE_ORDER_COUNSEL AO
+                    WHERE
+                        NO = ".$_key."
+                        ".$search_where."
+                    ";
 
             $result = $_d->sql_query($sql);
             $data = $_d->sql_fetch_array($result);
-
-/*            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'PRODUCT'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
-
-            $file_data = $_d->getData($sql);
-            $data['FILES'] = $file_data;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            /*
-                            $sql = "SELECT
-                                        NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
-                                    FROM
-                                        COM_REPLY
-                                    WHERE
-                                        TARGET_NO = ".$_key."
-                                    ";
-
-                            $reply_data = $_d->getData($sql);
-                            $data['REPLY'] = $reply_data;*/
-
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -138,11 +94,6 @@ switch ($_method) {
                 $search_where .= "AND DATE_FORMAT(AC.REG_DT, '%Y-%m-%d') BETWEEN '".$_search[START_DT]."' AND '".$_search[END_DT]."'";
             }
 
-            /*AND BODY LIKE '%".$_search[KEYWORD]."%'";*/
-//                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-//                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
-//                }
-
             if (isset($_page)) {
                 $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
             }
@@ -150,7 +101,7 @@ switch ($_method) {
             $sql = "SELECT    TOTAL_COUNT, NO, PRODUCT_NO, SUBJECT, COUNSEL_ST, PROGRESS_ST,
                           CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE ' ' END AS PROGRESS_ST_NM,
                           USER_ID, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PRODUCT_NM, SUM_PRICE, PRODUCT_CNT, PRODUCT_GB, PRODUCT_CODE, CHANGE_PRODUCT_NO
-                  FROM (
+                    FROM (
                              SELECT AC.NO, AC.PRODUCT_NO, AC.SUBJECT, AC.COUNSEL_ST, AC.PROGRESS_ST, AC.USER_ID, AC.REG_DT,
                                        AP.PRODUCT_NM, AP.PRODUCT_GB,
                                         AO.PRODUCT_CODE, AO.SUM_PRICE,AO.PRODUCT_CNT, AC.CHANGE_PRODUCT_NO
@@ -186,16 +137,14 @@ switch ($_method) {
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    FILE F, CONTENT_SOURCE S
-                                WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'PRODUCT'
-                                    AND F.FILE_GB = 'MAIN'
-                                    AND S.TARGET_NO = ".$row['PRODUCT_NO']."
-                                ";
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                COM_FILE F
+                            WHERE
+                                F.TARGET_GB = 'PRODUCT'
+                                AND F.FILE_GB = 'MAIN'
+                                AND F.TARGET_NO = ".$row['PRODUCT_NO']."
+                            ";
 
                     $category_data = $_d->getData($sql);
                     $row['FILE'] = $category_data;
@@ -291,38 +240,37 @@ switch ($_method) {
         }
 
         $sql = "INSERT INTO ANGE_ORDER_COUNSEL
-                    (
-                        PRODUCT_NO,
-                        PRODUCT_CODE,
-                        CHANGE_PRODUCT_NO,
-                        SUBJECT,
-                        BODY,
-                        COUNSEL_ST,
-                        PROGRESS_ST,
-                        USER_ID,
-                        REG_DT
-                    ) VALUES (
-                        ".$_model[PRODUCT][PRODUCT_NO].",
-                        '".$_model[PRODUCT_CODE][PRODUCT_CODE]."',
-                        ".$_change_product_no.",
-                        '".$_model[SUBJECT]."',
-                        '".$_model[BODY]."',
-                        '".$_model[COUNSEL_ST]."',
-                        1,
-                        '".$_SESSION['uid']."',
-                        SYSDATE()
-                    )";
+                (
+                    PRODUCT_NO,
+                    PRODUCT_CODE,
+                    CHANGE_PRODUCT_NO,
+                    SUBJECT,
+                    BODY,
+                    COUNSEL_ST,
+                    PROGRESS_ST,
+                    USER_ID,
+                    REG_DT
+                ) VALUES (
+                    ".$_model[PRODUCT][PRODUCT_NO].",
+                    '".$_model[PRODUCT_CODE][PRODUCT_CODE]."',
+                    ".$_change_product_no.",
+                    '".$_model[SUBJECT]."',
+                    '".$_model[BODY]."',
+                    '".$_model[COUNSEL_ST]."',
+                    1,
+                    '".$_SESSION['uid']."',
+                    SYSDATE()
+                )";
 
         $_d->sql_query($sql);
         $no = $_d->mysql_insert_id;
 
         $sql = "UPDATE ANGE_ORDER_COUNSEL
-                        SET
-                           PROGRESS_ST  = 1
-                        WHERE
-                            PRODUCT_NO = '".$_model[PRODUCT][PRODUCT_NO]."'
-                        ";
-
+                SET
+                   PROGRESS_ST  = 1
+                WHERE
+                    PRODUCT_NO = '".$_model[PRODUCT][PRODUCT_NO]."'
+                ";
 
         $_d->sql_query($sql);
 
@@ -343,28 +291,34 @@ switch ($_method) {
                     $_d->failEnd("대표이미지를 선택하세요.");
                 }*/
 
-                $sql = "INSERT INTO FILE
-                    (
-                        FILE_NM
-                        ,FILE_ID
-                        ,PATH
-                        ,FILE_EXT
-                        ,FILE_SIZE
-                        ,THUMB_FL
-                        ,REG_DT
-                        ,FILE_ST
-                        ,FILE_GB
-                    ) VALUES (
-                        '".$file[name]."'
-                        , '".$insert_path[$i][uid]."'
-                        , '".$insert_path[$i][path]."'
-                        , '".$file[type]."'
-                        , '".$file[size]."'
-                        , '0'
-                        , SYSDATE()
-                        , 'C'
-                        , '".$file[kind]."'
-                    )";
+                $sql = "INSERT INTO COM_FILE
+                        (
+                            FILE_NM
+                            ,FILE_ID
+                            ,PATH
+                            ,FILE_EXT
+                            ,FILE_SIZE
+                            ,THUMB_FL
+                            ,REG_DT
+                            ,FILE_ST
+                            ,FILE_GB
+                            ,FILE_ORD
+                            ,TARGET_NO
+                            ,TARGET_GB
+                        ) VALUES (
+                            '".$file[name]."'
+                            , '".$insert_path[$i][uid]."'
+                            , '".$insert_path[$i][path]."'
+                            , '".$file[type]."'
+                            , '".$file[size]."'
+                            , '0'
+                            , SYSDATE()
+                            , 'C'
+                            , '".$file[kind]."'
+                            , '".$i."'
+                            , '".$no."'
+                            , 'PRODUCT'
+                        )";
 
                 $_d->sql_query($sql);
                 $file_no = $_d->mysql_insert_id;
@@ -373,62 +327,13 @@ switch ($_method) {
                     $err++;
                     $msg = $_d->mysql_error;
                 }
-
-                $sql = "INSERT INTO CONTENT_SOURCE
-                    (
-                        TARGET_NO
-                        ,SOURCE_NO
-                        ,CONTENT_GB
-                        ,TARGET_GB
-                        ,SORT_IDX
-                    ) VALUES (
-                        '".$no."'
-                        , '".$file_no."'
-                        , 'FILE'
-                        , 'REVIEW'
-                        , '".$i."'
-                    )";
-
-                $_d->sql_query($sql);
-
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
-                }
             }
         }
-
-        MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
 
         if($err > 0){
             $_d->sql_rollback();
             $_d->failEnd("등록실패입니다:".$msg);
         }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'CREATE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$no.'
-                        ,'BOARD'
-                        ,'CREATE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-            $_d->sql_query($sql);
-
             $_d->sql_commit();
             $_d->succEnd($no);
         }
@@ -442,61 +347,10 @@ switch ($_method) {
                 $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
             }
 
-            $upload_path = '../../../upload/files/';
-            $file_path = '/storage/product/';
-            $source_path = '../../..'.$file_path;
-            $insert_path = array();
-
-            $body_str = $_model[BODY];
-
-            try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
-                    if (!file_exists($source_path) && !is_dir($source_path)) {
-                        @mkdir($source_path);
-                        @mkdir($source_path.'thumbnail/');
-                        @mkdir($source_path.'medium/');
-                    }
-
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                        $file = $files[$i];
-
-                        if (file_exists($upload_path.$file[name])) {
-                            $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                            rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                            $insert_path[$i] = array(path => $file_path, uid => $uid);
-
-                            MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                            MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
-
-                            $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-
-                            MtUtil::_d("------------>>>>> body_str : ".$body_str);
-                        } else {
-                            $insert_path[$i] = array(path => '', uid => '');
-                        }
-                    }
-                }
-
-                $_model[BODY] = $body_str;
-            } catch(Exception $e) {
-                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-                break;
-            }
-
-            MtUtil::_d("------------>>>>> json : ".json_encode(file_get_contents("php://input"),true));
-
             $err = 0;
             $msg = "";
 
             $_d->sql_beginTransaction();
-
-
-            /*            if( trim($_model[PRODUCT_NM]) == '' ){
-                            $_d->failEnd("제목을 작성 하세요");
-                        }*/
 
             $sql = "UPDATE ANGE_ORDER_COUNSEL
                     SET
@@ -513,54 +367,14 @@ switch ($_method) {
                 $msg = $_d->mysql_error;
             }
 
-            $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'PRODUCT'
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
-
-            $result = $_d->sql_query($sql,true);
-
             if($err > 0){
                 $_d->sql_rollback();
                 $_d->failEnd("수정실패입니다:".$msg);
             }else{
-                $sql = "INSERT INTO CMS_HISTORY
-                        (
-                            WORK_ID
-                            ,WORK_GB
-                            ,WORK_DT
-                            ,WORKER_ID
-                            ,OBJECT_ID
-                            ,OBJECT_GB
-                            ,ACTION_GB
-                            ,IP
-                            ,ACTION_PLACE
-                        ) VALUES (
-                            '".$_model[WORK_ID]."'
-                            ,'UPDATE'
-                            ,SYSDATE()
-                            ,'".$_SESSION['uid']."'
-                            ,'.$_key.'
-                            ,'BOARD'
-                            ,'UPDATE'
-                            ,'".$ip."'
-                            ,'/webboard'
-                        )";
-
+                $_d->sql_commit();
+                $_d->succEnd($no);
             }
         }
-        $_d->sql_query($sql);
-
-        $_d->sql_commit();
-        $_d->succEnd($no);
-
 
         break;
 
@@ -581,37 +395,11 @@ switch ($_method) {
         $sql = "DELETE FROM ANGE_PRODUCT_COUNSEL WHERE NO = ".$_key;
 
         $_d->sql_query($sql);
-        /*$no = $_d->mysql_insert_id;*/
 
         if($err > 0){
             $_d->sql_rollback();
             $_d->failEnd("삭제실패입니다:".$msg);
         }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'DELETE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$_key.'
-                        ,'BOARD'
-                        ,'DELETE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-            $_d->sql_query($sql);
-
             $_d->sql_commit();
             $_d->succEnd($no);
         }

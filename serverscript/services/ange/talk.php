@@ -80,12 +80,10 @@ switch ($_method) {
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
-                            FILE F, CONTENT_SOURCE S
+                            COM_FILE F
                         WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'TALK'
-                            AND S.TARGET_NO = ".$data['NO']."
+                            F.TARGET_GB = 'TALK'
+                            AND F.TARGET_NO = ".$data['NO']."
                             AND F.FILE_GB = 'MAIN'
                         ";
 
@@ -98,28 +96,11 @@ switch ($_method) {
             }else{
                 $_d->dataEnd2($data);
             }
-        } else if ($_type == 'list') {
-
-            $search_common = "";
-            $search_where = "";
-            $sort_order = "";
-            $limit = "";
-
-            $sql = "";
-
-            $data = $_d->sql_query($sql);
-
-            if($_d->mysql_errno > 0){
-                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-            }else{
-                $_d->dataEnd($sql);
-            }
         }
 
         break;
 
     case "POST":
-//            $form = json_decode(file_get_contents("php://input"),true);
         if (!isset($_SESSION['uid'])) {
             $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
         }
@@ -185,7 +166,7 @@ switch ($_method) {
         if (isset($_model[FILE]) && $_model[FILE] != "") {
             $file = $_model[FILE];
 
-            $sql = "INSERT INTO FILE
+            $sql = "INSERT INTO COM_FILE
                     (
                         FILE_NM
                         ,FILE_ID
@@ -196,6 +177,9 @@ switch ($_method) {
                         ,REG_DT
                         ,FILE_ST
                         ,FILE_GB
+                        ,FILE_ORD
+                        ,TARGET_NO
+                        ,TARGET_GB
                     ) VALUES (
                         '".$file[name]."'
                         , '".$insert_path[uid]."'
@@ -206,30 +190,10 @@ switch ($_method) {
                         , SYSDATE()
                         , 'C'
                         , '".$file[kind]."'
+                        , '".$i."'
+                        , '".$no."'
+                        , 'TALK'
                     )";
-
-            $_d->sql_query($sql);
-            $file_no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            $sql = "INSERT INTO CONTENT_SOURCE
-                (
-                    TARGET_NO
-                    ,SOURCE_NO
-                    ,CONTENT_GB
-                    ,TARGET_GB
-                    ,SORT_IDX
-                ) VALUES (
-                    '".$no."'
-                    , '".$file_no."'
-                    , 'FILE'
-                    , 'TALK'
-                    , '0'
-                )";
 
             $_d->sql_query($sql);
 
@@ -310,13 +274,10 @@ switch ($_method) {
             $sql = "SELECT
                         F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                     FROM
-                        FILE F, CONTENT_SOURCE S
+                        COM_FILE F
                     WHERE
-                        F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'TALK'
-                        AND S.CONTENT_GB = 'FILE'
-                        AND S.TARGET_NO = ".$_key."
-                        AND F.THUMB_FL = '0'
+                        F.TARGET_GB = 'TALK'
+                        AND F.TARGET_NO = ".$_key."
                     ";
 
             $result_data = $_d->sql_fetch($sql,true);
@@ -331,15 +292,9 @@ switch ($_method) {
 
             if ($result_data && $is_delete) {
                 MtUtil::_d("------------>>>>> DELETE NO : ".$result_data[NO]);
-                $sql = "DELETE FROM FILE WHERE NO = ".$result_data[NO];
+                $sql = "DELETE FROM COM_FILE WHERE NO = ".$result_data[NO];
 
                 $_d->sql_query($sql);
-
-                $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'BOARD' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$result_data[NO];
-
-                $_d->sql_query($sql);
-
-                MtUtil::_d("------------>>>>> DELETE NO : ".$result_data[NO]);
 
                 if (file_exists('../../..'.$result_data[PATH].$result_data[FILE_ID])) {
                     unlink('../../..'.$result_data[PATH].$result_data[FILE_ID]);
@@ -350,7 +305,7 @@ switch ($_method) {
                 $file = $_model[FILE];
 
                 if ($insert_path[uid] != "") {
-                    $sql = "INSERT INTO FILE
+                    $sql = "INSERT INTO COM_FILE
                             (
                                 FILE_NM
                                 ,FILE_ID
@@ -361,6 +316,9 @@ switch ($_method) {
                                 ,REG_DT
                                 ,FILE_ST
                                 ,FILE_GB
+                                ,FILE_ORD
+                                ,TARGET_NO
+                                ,TARGET_GB
                             ) VALUES (
                                 '".$file[name]."'
                                 , '".$insert_path[uid]."'
@@ -371,32 +329,13 @@ switch ($_method) {
                                 , SYSDATE()
                                 , 'C'
                                 , '".$file[kind]."'
+                                , '".$i."'
+                                , '".$_key."'
+                                , 'TALK'
                             )";
 
                     $_d->sql_query($sql);
                     $file_no = $_d->mysql_insert_id;
-
-                    if($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
-
-                    $sql = "INSERT INTO CONTENT_SOURCE
-                            (
-                                TARGET_NO
-                                ,SOURCE_NO
-                                ,CONTENT_GB
-                                ,TARGET_GB
-                                ,SORT_IDX
-                            ) VALUES (
-                                '".$_key."'
-                                , '".$file_no."'
-                                , 'FILE'
-                                , 'TALK'
-                                , '0'
-                            )";
-
-                    $_d->sql_query($sql);
 
                     if($_d->mysql_errno > 0) {
                         $err++;
@@ -434,26 +373,18 @@ switch ($_method) {
         $sql = "SELECT
                         F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                     FROM
-                        FILE F, CONTENT_SOURCE S
+                        COM_FILE F
                     WHERE
-                        F.NO = S.SOURCE_NO
-                        AND S.TARGET_GB = 'REVIEW'
-                        AND S.TARGET_NO = ".$_key."
-                        AND F.THUMB_FL = '0'
+                        F.TARGET_GB = 'REVIEW'
+                        AND F.TARGET_NO = ".$_key."
                     ";
 
         $result = $_d->sql_query($sql,true);
         for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
             MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-            $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+            $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
 
             $_d->sql_query($sql);
-
-            $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'REVIEW' AND TARGET_NO = ".$row[NO];
-
-            $_d->sql_query($sql);
-
-            MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
             if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                 unlink('../../..'.$row[PATH].$row[FILE_ID]);
@@ -463,7 +394,6 @@ switch ($_method) {
         }
 
         $_d->sql_query($sql);
-        $no = $_d->mysql_insert_id;
 
         if($_d->mysql_errno > 0) {
             $err++;
@@ -475,31 +405,6 @@ switch ($_method) {
             $_d->sql_rollback();
             $_d->failEnd("삭제실패입니다:".$msg);
         }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'DELETE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$_key.'
-                        ,'BOARD'
-                        ,'DELETE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-            $_d->sql_query($sql);
-
             $_d->sql_commit();
             $_d->succEnd($no);
         }

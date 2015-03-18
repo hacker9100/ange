@@ -179,12 +179,10 @@ switch ($_method) {
                 $sql = "SELECT
                                 F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                             FROM
-                                COM_USER U, FILE F, CONTENT_SOURCE S
+                                COM_USER U, COM_FILE F
                             WHERE
-                                U.NO = S.TARGET_NO
-                                AND F.NO = S.SOURCE_NO
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_GB = 'USER'
+                                U.NO = F.TARGET_NO
+                                AND F.TARGET_GB = 'USER'
                                 AND U.USER_ID = '".$row['USER_ID']."'
                                 AND F.FILE_GB = 'THUMB'
                             ";
@@ -294,12 +292,12 @@ switch ($_method) {
             }
 
             $sql = "SELECT USER_ID, NICK_NM
-                        FROM
-                            COM_USER
-                        WHERE
-                            1 = 1
-                            ".$search_where."
-                        ";
+                    FROM
+                        COM_USER
+                    WHERE
+                        1 = 1
+                        ".$search_where."
+                    ";
 
             $result = $_d->sql_query($sql,true);
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {

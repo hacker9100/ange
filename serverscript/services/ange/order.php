@@ -45,28 +45,20 @@ switch ($_method) {
         if ($_type == 'item') {
             $search_where = "";
 
-//                if (isset($_search[COMM_GB]) && $_search[COMM_GB] != "") {
-//                    $search_where .= "AND COMM_GB = '".$_search[COMM_GB]."' ";
-//                }
-
-
-
             $err = 0;
             $msg = "";
 
             $sql = "SELECT
-	                        NO, PRODUCT_NO, PRODUCT_CNT, SUM_PRICE, ORDER_DT, RECEIPTOR_NM, RECEIPT_ADDR, RECEIPT_ADDR_DETAIL, RECEIPT_PHONE, REQUEST_NOTE, ORDER_ST,
-	                        (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AO.PRODUCT_NO) AS PRODUCT_NM, ORDER_GB
-                        FROM
-                            ANGE_ORDER AO
-                        WHERE
-                            NO = ".$_key."
-                            ".$search_where."
+                        NO, PRODUCT_NO, PRODUCT_CNT, SUM_PRICE, ORDER_DT, RECEIPTOR_NM, RECEIPT_ADDR, RECEIPT_ADDR_DETAIL, RECEIPT_PHONE, REQUEST_NOTE, ORDER_ST,
+                        (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AO.PRODUCT_NO) AS PRODUCT_NM, ORDER_GB
+                    FROM
+                        ANGE_ORDER AO
+                    WHERE
+                        NO = ".$_key."
+                        ".$search_where."
+                    ";
 
-                        ";
-
-            $result = $_d->sql_query($sql);
-            $data = $_d->sql_fetch_array($result);
+            $data = $_d->sql_fetch($sql);
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -74,37 +66,16 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'PRODUCT'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
+                    FROM
+                        COM_FILE F
+                    WHERE
+                        F.TARGET_GB = 'PRODUCT'
+                        AND F.TARGET_NO = ".$_key."
+                    ";
 
             $file_data = $_d->getData($sql);
             $data['FILES'] = $file_data;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            /*
-                            $sql = "SELECT
-                                        NO, PARENT_NO, REPLY_NO, REPLY_GB, SYSTEM_GB, COMMENT, REG_ID, REG_NM, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, SCORE
-                                    FROM
-                                        COM_REPLY
-                                    WHERE
-                                        TARGET_NO = ".$_key."
-                                    ";
-
-                            $reply_data = $_d->getData($sql);
-                            $data['REPLY'] = $reply_data;
-            */
 
             if($_d->mysql_errno > 0) {
                 $err++;
@@ -137,10 +108,6 @@ switch ($_method) {
                 $search_where .= "AND AC.ORDER_GB = 'NAMING' ";
             }
 
-            /*            if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
-                            $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
-                        }*/
-
             if (isset($_search[PRODUCT_NM]) && $_search[PRODUCT_NM] != "") {
                 $search_where .= "AND AP.PRODUCT_NM LIKE '%".$_search[PRODUCT_NM]."%'";
             }
@@ -149,11 +116,6 @@ switch ($_method) {
                 $search_where .= "AND DATE_FORMAT(AC.ORDER_DT, '%Y-%m-%d') BETWEEN '".$_search[START_DT]."' AND '".$_search[END_DT]."'";
             }
 
-            /*AND BODY LIKE '%".$_search[KEYWORD]."%'";*/
-//                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-//                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
-//                }
-
             if (isset($_page)) {
                 $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
             }
@@ -161,7 +123,7 @@ switch ($_method) {
             $sql = "SELECT   NO, PRODUCT_CNT, SUM_PRICE, PRODUCT_NO, USER_ID, ORDER_DT,DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_DT,
                             CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_GB_NM, PRODUCT_NM, PRODUCT_GB, TOTAL_COUNT, PRICE, ORDER_GB,ORDER_ST,
                             CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, PARENT_PRODUCT_NM, PRODUCT_CODE, DIRECT_PRICE
-                  FROM (
+                    FROM (
                                 SELECT AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.PRODUCT_NO, AC.USER_ID,  AC.ORDER_GB, AP.PRODUCT_NM, AP.PRODUCT_GB, AP.PRICE, AC.ORDER_DT, AC.ORDER_ST,
                                 			(SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO) AS PROGRESS_ST, AP.PARENT_NO,
                                         (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AP.PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE,
@@ -197,16 +159,14 @@ switch ($_method) {
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    FILE F, CONTENT_SOURCE S
-                                WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'PRODUCT'
-                                    AND F.FILE_GB = 'MAIN'
-                                    AND S.TARGET_NO = ".$row['PRODUCT_NO']."
-                                ";
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                COM_FILE F
+                            WHERE
+                                F.TARGET_GB = 'PRODUCT'
+                                AND F.FILE_GB = 'MAIN'
+                                AND F.TARGET_NO = ".$row['PRODUCT_NO']."
+                            ";
 
                     $category_data = $_d->getData($sql);
                     $row['FILE'] = $category_data;
@@ -344,15 +304,13 @@ switch ($_method) {
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    FILE F, CONTENT_SOURCE S
-                                WHERE
-                                    F.NO = S.SOURCE_NO
-                                    AND S.CONTENT_GB = 'FILE'
-                                    AND S.TARGET_GB = 'PRODUCT'
-                                    AND F.FILE_GB = 'MAIN'
-                                    AND S.TARGET_NO = ".$row['PRODUCT_NO']."
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                COM_FILE F
+                            WHERE
+                                F.TARGET_GB = 'PRODUCT'
+                                AND F.FILE_GB = 'MAIN'
+                                AND F.TARGET_NO = ".$row['PRODUCT_NO']."
                                 ";
 
                     $category_data = $_d->getData($sql);
@@ -463,16 +421,16 @@ switch ($_method) {
                     // 상품구분 존재하면서 구분값이 마일리지몰 일때
                     if(isset($e[PRODUCT_GB]) && $e[PRODUCT_GB] == 'MILEAGE'){
 
-                        $sql = "UPDATE ANGE_MILEAGE_STATUS
+                        $sql = "UPDATE COM_USER
                             SET
-                                USE_POINT = USE_POINT + ".$e[TOTAL_PRICE].",
+                                SUM_POINT = SUM_POINT + ".$e[TOTAL_PRICE].",
                                 REMAIN_POINT = REMAIN_POINT - ".$e[TOTAL_PRICE]."
                             WHERE
                                 USER_ID = '".$_SESSION['uid']."'
                             ";
                         $_d->sql_query($sql);
 
-                        $sql = "UPDATE ANGE_MILEAGE_STATUS
+                        $sql = "UPDATE COM_USER
                             SET
                                 SUM_POINT = (USE_POINT + ".$e[TOTAL_PRICE].") + (REMAIN_POINT - ".$e[TOTAL_PRICE].")
                             WHERE
@@ -635,31 +593,6 @@ switch ($_method) {
             $_d->sql_rollback();
             $_d->failEnd("등록실패입니다:".$msg);
         }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'CREATE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$no.'
-                        ,'BOARD'
-                        ,'CREATE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-            $_d->sql_query($sql);
-
             $_d->sql_commit();
             $_d->succEnd($no);
         }
@@ -745,16 +678,13 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            FILE F, CONTENT_SOURCE S
-                        WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'PRODUCT'
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_NO = ".$_key."
-                            AND F.THUMB_FL = '0'
-                        ";
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        COM_FILE F
+                    WHERE
+                        F.TARGET_GB = 'PRODUCT'
+                        AND F.TARGET_NO = ".$_key."
+                    ";
 
             $result = $_d->sql_query($sql,true);
 
@@ -784,36 +714,10 @@ switch ($_method) {
                 $_d->sql_rollback();
                 $_d->failEnd("수정실패입니다:".$msg);
             }else{
-                $sql = "INSERT INTO CMS_HISTORY
-                        (
-                            WORK_ID
-                            ,WORK_GB
-                            ,WORK_DT
-                            ,WORKER_ID
-                            ,OBJECT_ID
-                            ,OBJECT_GB
-                            ,ACTION_GB
-                            ,IP
-                            ,ACTION_PLACE
-                        ) VALUES (
-                            '".$_model[WORK_ID]."'
-                            ,'UPDATE'
-                            ,SYSDATE()
-                            ,'".$_SESSION['uid']."'
-                            ,'.$_key.'
-                            ,'BOARD'
-                            ,'UPDATE'
-                            ,'".$ip."'
-                            ,'/webboard'
-                        )";
-
+                $_d->sql_commit();
+                $_d->succEnd($no);
             }
         }
-        $_d->sql_query($sql);
-
-        $_d->sql_commit();
-        $_d->succEnd($no);
-
 
         break;
 
@@ -834,37 +738,11 @@ switch ($_method) {
         $sql = "DELETE FROM ANGE_ORDER WHERE NO = ".$_key;
 
         $_d->sql_query($sql);
-        /*$no = $_d->mysql_insert_id;*/
 
         if($err > 0){
             $_d->sql_rollback();
             $_d->failEnd("삭제실패입니다:".$msg);
         }else{
-            $sql = "INSERT INTO CMS_HISTORY
-                    (
-                        WORK_ID
-                        ,WORK_GB
-                        ,WORK_DT
-                        ,WORKER_ID
-                        ,OBJECT_ID
-                        ,OBJECT_GB
-                        ,ACTION_GB
-                        ,IP
-                        ,ACTION_PLACE
-                    ) VALUES (
-                        '".$_model[WORK_ID]."'
-                        ,'DELETE'
-                        ,SYSDATE()
-                        ,'".$_SESSION['uid']."'
-                        ,'.$_key.'
-                        ,'BOARD'
-                        ,'DELETE'
-                        ,'".$ip."'
-                        ,'/webboard'
-                    )";
-
-            $_d->sql_query($sql);
-
             $_d->sql_commit();
             $_d->succEnd($no);
         }

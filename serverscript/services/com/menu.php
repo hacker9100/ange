@@ -40,8 +40,7 @@
                         ORDER BY SORT_IDX ASC
                         ";
 
-                $result = $_d->sql_query($sql);
-                $data  = $_d->sql_fetch_array($result);
+                $data  = $_d->sql_fetch($sql);
 
                 $sql = "SELECT
                             MENU_URL, SUB_MENU, POSITION, TITLE, SUB_MENU_GB, API, CSS, COLUMN_ORD, ROW_ORD
@@ -52,8 +51,7 @@
                         ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
                         ";
 
-                $sub_menu_data = $_d->getData($sql);
-                $row['SUB_MENU_INFO'] = $sub_menu_data;
+                $row['SUB_MENU_INFO'] = $_d->getData($sql);
 
                 if ($_d->mysql_errno > 0) {
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
@@ -92,8 +90,7 @@
                                 ORDER BY MENU_ORD ASC
                                 ";
 
-                        $menu_data = $_d->getData($sql);
-                        $row['MENU_INFO'] = $menu_data;
+                        $row['MENU_INFO'] = $_d->getData($sql);
                     }
 
                     $__trn->rows[$i] = $row;
@@ -152,8 +149,7 @@
                                     AND NO IN (".$in_str.")
                                 ";
 
-                        $category_data = $_d->getData($sql);
-                        $row['CATEGORY'] = $category_data;
+                        $row['CATEGORY'] = $_d->getData($sql);
                     } else if ($row['CHANNEL_NO'] == '2') {
                         $sql = "SELECT
                                     NO, COMM_NM, COMM_GB, COMM_ST, COMM_CLASS, COMM_MG_ID, COMM_MG_NM, NOTE
@@ -163,13 +159,10 @@
                                     MENU_ID = '".$row['MENU_ID']."'
                                 ";
 
-                        $community_result = $_d->sql_query($sql);
-                        $community_data = $_d->sql_fetch_array($community_result);
-                        $row['COMM'] = $community_data;
+                        $row['COMM'] = $_d->sql_fetch($sql);
 
-
-                        if ($community_data['COMM_GB'] == "CLINIC") {
-                            $sql = "SELECT NO FROM COM_USER WHERE USER_ID = '".$community_data['COMM_MG_ID']."'";
+                        if ($row['COMM']['COMM_GB'] == "CLINIC") {
+                            $sql = "SELECT NO FROM COM_USER WHERE USER_ID = '".$row['COMM']['COMM_MG_ID']."'";
                             $user = $_d->sql_fetch($sql,true);
 
                             $target_gb = "USER";
@@ -178,7 +171,7 @@
                             }
                         } else {
                             $target_gb = "COMMUNITY";
-                            $target_no = $community_data['NO'];
+                            $target_no = $row['COMM']['NO'];
                         }
                     }
 
@@ -192,25 +185,21 @@
                                 ORDER BY COLUMN_ORD ASC, ROW_ORD ASC
                                 ";
 
-                        $sub_menu_data = $_d->getData($sql);
-                        $row['SUB_MENU'] = $sub_menu_data;
+                        $row['SUB_MENU'] = $_d->getData($sql);
                     }
 
                     if ($_search[FILE]) {
                         $sql = "SELECT
                                 F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
                             FROM
-                                FILE F, CONTENT_SOURCE S
+                                COM_FILE F
                             WHERE
-                                F.NO = S.SOURCE_NO
-                                AND F.FILE_GB IN ('MAIN', 'MANAGER')
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_GB = '".$target_gb."'
-                                AND S.TARGET_NO = '".$target_no."'
+                                F.FILE_GB IN ('MAIN', 'MANAGER')
+                                AND F.TARGET_GB = '".$target_gb."'
+                                AND F.TARGET_NO = '".$target_no."'
                             ";
 
-                        $file_data = $_d->getData($sql);
-                        $row['FILES'] = $file_data;
+                        $row['FILES'] = $_d->getData($sql);
                     }
 
                     $__trn->rows[$i] = $row;
@@ -250,16 +239,13 @@
                     $sql = "SELECT
                                 F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT, F.FILE_GB
                             FROM
-                                FILE F, CONTENT_SOURCE S
+                                COM_FILE F
                             WHERE
-                                F.NO = S.SOURCE_NO
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_GB = 'SUB_MENU'
-                                AND S.TARGET_NO = ".$row[NO]."
+                                F.TARGET_GB = 'SUB_MENU'
+                                AND F.TARGET_NO = ".$row[NO]."
                             ";
 
-                    $file_data = $_d->getData($sql);
-                    $row['FILES'] = $file_data;
+                    $row['FILES'] = $_d->getData($sql);
 
                     $__trn->rows[$i] = $row;
                 }
@@ -404,7 +390,7 @@
                             MtUtil::_d("------------>>>>> file : ".$file['name']);
                             MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
-                            $sql = "INSERT INTO FILE
+                            $sql = "INSERT INTO COM_FILE
                                     (
                                         FILE_NM
                                         ,FILE_ID
@@ -415,6 +401,9 @@
                                         ,REG_DT
                                         ,FILE_ST
                                         ,FILE_GB
+                                        ,FILE_ORD
+                                        ,TARGET_NO
+                                        ,TARGET_GB
                                     ) VALUES (
                                         '".$file[name]."'
                                         , '".$insert_path[$i][uid]."'
@@ -425,29 +414,9 @@
                                         , SYSDATE()
                                         , 'C'
                                         , '".strtoupper($file[kind])."'
-                                    )";
-
-                            $_d->sql_query($sql);
-                            $file_no = $_d->mysql_insert_id;
-
-                            if($_d->mysql_errno > 0) {
-                                $err++;
-                                $msg = $_d->mysql_error;
-                            }
-
-                            $sql = "INSERT INTO CONTENT_SOURCE
-                                    (
-                                        TARGET_NO
-                                        ,SOURCE_NO
-                                        ,CONTENT_GB
-                                        ,TARGET_GB
-                                        ,SORT_IDX
-                                    ) VALUES (
-                                        '".$target_no."'
-                                        , '".$file_no."'
-                                        , 'FILE'
-                                        , '".$target_gb."'
                                         , '".$i."'
+                                        , '".$target_no."'
+                                        , '".$target_gb."'
                                     )";
 
                             $_d->sql_query($sql);
@@ -548,7 +517,7 @@
                         MtUtil::_d("------------>>>>> file : ".$file['name']);
                         MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[$i][path]);
 
-                        $sql = "INSERT INTO FILE
+                        $sql = "INSERT INTO COM_FILE
                                 (
                                     FILE_NM
                                     ,FILE_ID
@@ -559,6 +528,9 @@
                                     ,REG_DT
                                     ,FILE_ST
                                     ,FILE_GB
+                                    ,FILE_ORD
+                                    ,TARGET_NO
+                                    ,TARGET_GB
                                 ) VALUES (
                                     '".$file[name]."'
                                     , '".$insert_path[$i][uid]."'
@@ -569,29 +541,9 @@
                                     , SYSDATE()
                                     , 'C'
                                     , '".strtoupper($file[kind])."'
-                                )";
-
-                        $_d->sql_query($sql);
-                        $file_no = $_d->mysql_insert_id;
-
-                        if($_d->mysql_errno > 0) {
-                            $err++;
-                            $msg = $_d->mysql_error;
-                        }
-
-                        $sql = "INSERT INTO CONTENT_SOURCE
-                                (
-                                    TARGET_NO
-                                    ,SOURCE_NO
-                                    ,CONTENT_GB
-                                    ,TARGET_GB
-                                    ,SORT_IDX
-                                ) VALUES (
-                                    '".$no."'
-                                    , '".$file_no."'
-                                    , 'FILE'
-                                    , 'SUB_MENU'
                                     , '".$i."'
+                                    , '".$no."'
+                                    , 'SUB_MENU'
                                 )";
 
                         $_d->sql_query($sql);
@@ -726,13 +678,11 @@
                     $sql = "SELECT
                                 F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                             FROM
-                                FILE F, CONTENT_SOURCE S
+                                COM_FILE F
                             WHERE
-                                F.NO = S.SOURCE_NO
-                                AND F.FILE_GB IN ('MAIN', 'MANAGER')
-                                AND S.CONTENT_GB = 'FILE'
-                                AND S.TARGET_GB = '".$target_gb."'
-                                AND S.TARGET_NO = '".$target_no."'
+                                F.FILE_GB IN ('MAIN', 'MANAGER')
+                                AND F.TARGET_GB = '".$target_gb."'
+                                AND F.TARGET_NO = '".$target_no."'
                             ";
 
                     $result = $_d->sql_query($sql,true);
@@ -750,15 +700,9 @@
 
                         if ($is_delete) {
                             MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                            $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+                            $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
 
                             $_d->sql_query($sql);
-
-                            $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = '".$target_gb."' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
-
-                            $_d->sql_query($sql);
-
-                            MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                             if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                                 unlink('../../..'.$row[PATH].$row[FILE_ID]);
@@ -774,7 +718,7 @@
                             MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                             if ($insert_path[$i][uid] != "") {
-                                $sql = "INSERT INTO FILE
+                                $sql = "INSERT INTO COM_FILE
                                         (
                                             FILE_NM
                                             ,FILE_ID
@@ -785,6 +729,9 @@
                                             ,REG_DT
                                             ,FILE_ST
                                             ,FILE_GB
+                                            ,FILE_ORD
+                                            ,TARGET_NO
+                                            ,TARGET_GB
                                         ) VALUES (
                                             '".$file[name]."'
                                             , '".$insert_path[$i][uid]."'
@@ -795,29 +742,9 @@
                                             , SYSDATE()
                                             , 'C'
                                             , '".strtoupper($file[kind])."'
-                                        )";
-
-                                $_d->sql_query($sql);
-                                $file_no = $_d->mysql_insert_id;
-
-                                if($_d->mysql_errno > 0) {
-                                    $err++;
-                                    $msg = $_d->mysql_error;
-                                }
-
-                                $sql = "INSERT INTO CONTENT_SOURCE
-                                        (
-                                            TARGET_NO
-                                            ,SOURCE_NO
-                                            ,CONTENT_GB
-                                            ,TARGET_GB
-                                            ,SORT_IDX
-                                        ) VALUES (
-                                            '".$target_no."'
-                                            , '".$file_no."'
-                                            , 'FILE'
-                                            , '".$target_gb."'
                                             , '".$i."'
+                                            , '".$target_no."'
+                                            , '".$target_gb."'
                                         )";
 
                                 $_d->sql_query($sql);
@@ -830,23 +757,6 @@
                         }
                     }
                 }
-
-//                if (isset($_model[ROLE]) && $_model[ROLE] != "") {
-//                    $sql = "UPDATE USER_ROLE
-//                            SET
-//                                ROLE_ID = '".$_model[ROLE][ROLE_ID]."'
-//                                ,REG_DT = SYSDATE()
-//                            WHERE
-//                                USER_ID = '".$_key."'
-//                            ";
-//
-//                    $_d->sql_query($sql);
-//
-//                    if($_d->mysql_errno > 0) {
-//                        $err++;
-//                        $msg = $_d->mysql_error;
-//                    }
-//                }
 
                 if ($err > 0) {
                     $_d->sql_rollback();
@@ -922,12 +832,10 @@
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
-                            FILE F, CONTENT_SOURCE S
+                            COM_FILE F
                         WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'SUB_MENU'
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_NO = ".$_key."
+                            F.TARGET_GB = 'SUB_MENU'
+                            AND F.TARGET_NO = ".$_key."
                         ";
 
                 $result = $_d->sql_query($sql,true);
@@ -945,15 +853,9 @@
 
                     if ($is_delete) {
                         MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                        $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
+                        $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
 
                         $_d->sql_query($sql);
-
-                        $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'SUB_MENU' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
-
-                        $_d->sql_query($sql);
-
-                        MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
 
                         if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
                             unlink('../../..'.$row[PATH].$row[FILE_ID]);
@@ -969,51 +871,34 @@
                         MtUtil::_d("------------>>>>> file : ".$file['name']);
 
                         if ($insert_path[$i][uid] != "") {
-                            $sql = "INSERT INTO FILE
-                            (
-                                FILE_NM
-                                ,FILE_ID
-                                ,PATH
-                                ,FILE_EXT
-                                ,FILE_SIZE
-                                ,THUMB_FL
-                                ,REG_DT
-                                ,FILE_ST
-                                ,FILE_GB
-                            ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[$i][uid]."'
-                                , '".$insert_path[$i][path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
-                                , '0'
-                                , SYSDATE()
-                                , 'C'
-                                , '".strtoupper($file[kind])."'
-                            )";
-
-                            $_d->sql_query($sql);
-                            $file_no = $_d->mysql_insert_id;
-
-                            if($_d->mysql_errno > 0) {
-                                $err++;
-                                $msg = $_d->mysql_error;
-                            }
-
-                            $sql = "INSERT INTO CONTENT_SOURCE
-                            (
-                                TARGET_NO
-                                ,SOURCE_NO
-                                ,CONTENT_GB
-                                ,TARGET_GB
-                                ,SORT_IDX
-                            ) VALUES (
-                                '".$_key."'
-                                , '".$file_no."'
-                                , 'FILE'
-                                , 'SUB_MENU'
-                                , '".$i."'
-                            )";
+                            $sql = "INSERT INTO COM_FILE
+                                    (
+                                        FILE_NM
+                                        ,FILE_ID
+                                        ,PATH
+                                        ,FILE_EXT
+                                        ,FILE_SIZE
+                                        ,THUMB_FL
+                                        ,REG_DT
+                                        ,FILE_ST
+                                        ,FILE_GB
+                                        ,FILE_ORD
+                                        ,TARGET_NO
+                                        ,TARGET_GB
+                                    ) VALUES (
+                                        '".$file[name]."'
+                                        , '".$insert_path[$i][uid]."'
+                                        , '".$insert_path[$i][path]."'
+                                        , '".$file[type]."'
+                                        , '".$file[size]."'
+                                        , '0'
+                                        , SYSDATE()
+                                        , 'C'
+                                        , '".strtoupper($file[kind])."'
+                                        , '".$i."'
+                                        , '".$_key."'
+                                        , 'SUB_MENU'
+                                    )";
 
                             $_d->sql_query($sql);
 
@@ -1059,21 +944,15 @@
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
-                            FILE F, CONTENT_SOURCE S
+                            COM_FILE F
                         WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_GB = 'MENU'
-                            AND S.TARGET_NO = ".$_key."
+                            F.TARGET_GB = 'MENU'
+                            AND F.TARGET_NO = ".$_key."
                         ";
 
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                    $_d->sql_query($sql);
-
-                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'SUB_MENU' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
 
                     $_d->sql_query($sql);
 
@@ -1108,21 +987,15 @@
                 $sql = "SELECT
                             F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                         FROM
-                            FILE F, CONTENT_SOURCE S
+                            COM_FILE F
                         WHERE
-                            F.NO = S.SOURCE_NO
-                            AND S.TARGET_GB = 'SUB_MENU'
-                            AND S.CONTENT_GB = 'FILE'
-                            AND S.TARGET_NO = ".$_key."
+                            F.TARGET_GB = 'SUB_MENU'
+                            AND F.TARGET_NO = ".$_key."
                         ";
 
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                    $sql = "DELETE FROM FILE WHERE NO = ".$row[NO];
-
-                    $_d->sql_query($sql);
-
-                    $sql = "DELETE FROM CONTENT_SOURCE WHERE TARGET_GB = 'SUB_MENU' AND CONTENT_GB = 'FILE' AND TARGET_NO = ".$row[NO];
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$row[NO];
 
                     $_d->sql_query($sql);
 
