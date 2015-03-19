@@ -145,9 +145,7 @@ define([
                     //console.log($scope.user_info);
                     $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
                         .then(function(data){
-
                             $scope.item = data;
-
                         })
                         ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 

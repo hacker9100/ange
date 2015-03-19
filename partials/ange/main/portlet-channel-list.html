@@ -1,16 +1,16 @@
 <div ng-show="isLoading" style="position: absolute; top: 20%;left: 48%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>
 
-<div ng-class="option.type == 'review' ? 'mini_peopleboard' : 'mini_peopleboard'" style="border:1px solid #e4e2e5; background-color:#f8f6f9; border-radius:12px;">
+<div ng-class="option.type == 'review' ? 'mini_peopleboard' : option.type == 'writing' ? 'comp_activity' : 'mini_peopleboard'" style="border:1px solid #e4e2e5; background-color:#f8f6f9; border-radius:12px;">
     <div ng-class="option.type == 'review' ? 'peopleboard_top' : 'peopleboard_top'">
-        <div class="miniboard_titlebar" style="padding-top:0px;">
-            <span ng-class="option.type == 'review' ? 'people_miniboard_title' : 'people_miniboard_title'">{{ portletTitle }}</span>
-            <a ng-class="option.type == 'review' ? 'people_miniboard_tab_more' : 'people_miniboard_tab_more'" ng-click="click_showList();">더보기</a>
+        <div class="miniboard_titlebar">
+            <span ng-class="option.type == 'review' ? 'people_miniboard_title' : option.type == 'writing' ? 'mini_community_title' : 'people_miniboard_title'">{{ portletTitle }}</span>
+            <a ng-class="option.type == 'review' ? 'people_miniboard_tab_more' : option.type == 'writing' ? 'miniboard_tab_more' : 'people_miniboard_tab_more'" ng-click="click_showList();">더보기</a>
 
             <div ng-if="option.tab" ng-repeat="tab in option.tab" ng-class="tabIdx == $index ? 'miniboard_tab_on' : 'miniboard_tab'" ng-click="click_tabIndex($index)" style="line-height: 16px;">{{tab.name}}</div>
         </div>
     </div>
 
-    <div ng-class="option.type == 'review' ? 'miniboard_contents' : option.type == 'photo' ? 'taste_miniboard_contents' : 'miniboard_contents'">
+    <div ng-class="option.type == 'review' ? 'miniboard_contents' : option.type == 'photo' ? 'taste_miniboard_contents' : option.type == 'writing' ? 'miniboard_community_contents' : 'miniboard_contents'">
 
         <div ng-if="option.image" class="taste_miniboard_img" ng-click="click_firstImage(img)">
             <!--<img ng-src="{{img.URL}}" stlye="width:25%; border:2px solid red; background-size:cover;">-->
@@ -18,9 +18,9 @@
             <img src="/imgs/ange/_blank_story.gif" style="background-image: url('{{img.URL}}');" />
         </div>
 
-        <div ng-class="option.type == 'review' ? 'mini_review_contents-noimg' : option.type == 'photo' ? 'taste_mini_board_contents' : 'mini_board_contents'" ng-repeat="item in list" style="padding:2px 0px;">
+        <div ng-class="option.type == 'review' ? 'mini_review_contents-noimg' : option.type == 'photo' ? 'taste_mini_board_contents' : option.type == 'writing' ? 'mini_community_contents' : 'mini_board_contents'" ng-repeat="item in list" style="padding:2px 0px;">
             <!--<img src="" class="mini_board_contents_img" />-->
-            <div class="mini_board_contents_txt" style="display:inline; overflow:auto; text-align:left; line-height:16px;" ng-click="click_showView(item.NO);">
+            <div class="mini_board_contents_txt" style="display:inline; overflow:auto; text-align:left; line-height:16px;" ng-click="click_showView(item);">
 
                 <span ng-show="option.head" class="mini_community_txt_head">[{{ item.SHORT_NM }}]&nbsp;</span>
                 <span class="mini_story_txt_title">

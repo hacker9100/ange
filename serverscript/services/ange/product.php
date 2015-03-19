@@ -146,6 +146,10 @@ switch ($_method) {
                 }
             }
 
+            if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
+                $search_where .= "AND CATEGORY_NO = '".$_search[CATEGORY_NO]."' ";
+            }
+
             for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
                 $category = $_search[CATEGORY][$i];
                 $search_where .= "AND CATEGORY_NO = '".$category[NO]."' ";
@@ -356,48 +360,15 @@ switch ($_method) {
 
             $_d->sql_beginTransaction();
 
-            $sql = "INSERT INTO ANGE_PRODUCT
-                    (
-                        PRODUCT_NM,
-                        PRODUCT_GB,
-                        COMPANY_NO,
-                        COMPANY_NM,
-                        BODY,
-                        URL,
-                        PRICE,
-                        SUM_IN_CNT,
-                        SUM_OUT_CNT,
-                        NOTE,
-                        DELEIVERY_PRICE,
-                        DELEIVERY_ST
-                    ) VALUES (
-                        '".$_model[PRODUCT_NM]."',
-                        '".$_model[PRODUCT_GB][value]."',
-                        '".$_model[COMPANY_NO]."',
-                        '".$_model[COMPANY_NM]."',
-                        '".$_model[BODY]."',
-                        '".$_model[URL]."',
-                        '".$_model[PRICE]."',
-                        '".$_model[SUM_IN_CNT]."',
-                        '".$_model[SUM_OUT_CNT]."',
-                        '".$_model[NOTE]."',
-                        '".$_model[DELEIVERY_PRICE]."',
-                        '".$_model[DELEIVERY_ST]."'
-                    )";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
             if (count($_model[CATEGORY]) > 0) {
                 $categories = $_model[CATEGORY];
 
                 for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
                     $category = $categories[$i];
+
+                    if ($category['PARENT_NO'] == "1") {
+                        $category_no = $category['NO'];
+                    }
 
                     $sql = "INSERT INTO CONTENT_CATEGORY
                             (
@@ -417,6 +388,45 @@ switch ($_method) {
                         $msg = $_d->mysql_error;
                     }
                 }
+            }
+
+            $sql = "INSERT INTO ANGE_PRODUCT
+                    (
+                        PRODUCT_NM,
+                        PRODUCT_GB,
+                        COMPANY_NO,
+                        COMPANY_NM,
+                        BODY,
+                        URL,
+                        PRICE,
+                        SUM_IN_CNT,
+                        SUM_OUT_CNT,
+                        NOTE,
+                        DELEIVERY_PRICE,
+                        DELEIVERY_ST,
+                        CATEGORY_NO
+                    ) VALUES (
+                        '".$_model[PRODUCT_NM]."',
+                        '".$_model[PRODUCT_GB][value]."',
+                        '".$_model[COMPANY_NO]."',
+                        '".$_model[COMPANY_NM]."',
+                        '".$_model[BODY]."',
+                        '".$_model[URL]."',
+                        '".$_model[PRICE]."',
+                        '".$_model[SUM_IN_CNT]."',
+                        '".$_model[SUM_OUT_CNT]."',
+                        '".$_model[NOTE]."',
+                        '".$_model[DELEIVERY_PRICE]."',
+                        '".$_model[DELEIVERY_ST]."'
+                        '".$category_no."'
+                    )";
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
             }
 
             $sql = "INSERT INTO ANGE_PRODUCT_STOCK
@@ -623,29 +633,6 @@ switch ($_method) {
                 $_d->failEnd("제목을 작성 하세요");
             }
 
-            $sql = "UPDATE ANGE_PRODUCT
-                    SET
-                        PRODUCT_NM = '".$_model[PRODUCT_NM]."',
-                        PRODUCT_GB = '".$_model[PRODUCT_GB][value]."',
-                        COMPANY_NO = '".$_model[COMPANY_NO]."',
-                        COMPANY_NM = '".$_model[COMPANY_NM]."',
-                        BODY = '".$_model[BODY]."',
-                        PRICE = ".$_model[PRICE].",
-                        SUM_IN_CNT = ".$_model[SUM_IN_CNT].",
-                        SUM_OUT_CNT = ".$_model[SUM_OUT_CNT].",
-                        NOTE = '".$_model[NOTE]."'
-                    WHERE
-                        NO = ".$_key."
-                ";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
             if (count($_model[CATEGORY]) > 0) {
 
                 $sql = "DELETE FROM CONTENT_CATEGORY
@@ -666,6 +653,10 @@ switch ($_method) {
                 for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
                     $category = $categories[$i];
 
+                    if ($category['PARENT_NO'] == "1") {
+                        $category_no = $category['NO'];
+                    }
+
                     $sql = "INSERT INTO CONTENT_CATEGORY
                             (
                                 CATEGORY_NO
@@ -684,6 +675,30 @@ switch ($_method) {
                         $msg = $_d->mysql_error;
                     }
                 }
+            }
+
+            $sql = "UPDATE ANGE_PRODUCT
+                    SET
+                        PRODUCT_NM = '".$_model[PRODUCT_NM]."',
+                        PRODUCT_GB = '".$_model[PRODUCT_GB][value]."',
+                        COMPANY_NO = '".$_model[COMPANY_NO]."',
+                        COMPANY_NM = '".$_model[COMPANY_NM]."',
+                        BODY = '".$_model[BODY]."',
+                        PRICE = ".$_model[PRICE].",
+                        SUM_IN_CNT = ".$_model[SUM_IN_CNT].",
+                        SUM_OUT_CNT = ".$_model[SUM_OUT_CNT].",
+                        NOTE = '".$_model[NOTE]."',
+                        CATEGORY_NO = '".$category_no."'
+                    WHERE
+                        NO = ".$_key."
+                ";
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
             }
 
             $sql = "SELECT

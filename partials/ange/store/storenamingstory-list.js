@@ -2,7 +2,7 @@
  * Author : Sung-hwan Kim
  * Email  : hacker9100@marveltree.com
  * Date   : 2014-12-31
- * Description : storenaming-list.html 화면 콘트롤러
+ * Description : storenamingstory-list.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('storenaming-list', ['$scope', '$rootScope','$stateParams','$q', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $q, $location, dialogs, ngTableParams) {
+    controllers.controller('storenamingstory-list', ['$scope', '$rootScope','$stateParams','$q', '$location', 'dialogs', 'ngTableParams', function ($scope, $rootScope, $stateParams, $q, $location, dialogs, ngTableParams) {
 
         /********** 공통 controller 호출 **********/
             //angular.extend(this, $controller('ange-common', {$scope: $rootScope}));
@@ -87,7 +87,7 @@ define([
 
         // 조회 화면 이동
         $scope.click_showViewPeopleBoard = function (key) {
-            $location.url('/store/naming/view/'+key);
+            $location.url('/store/namingstory/view/'+key);
         };
 
         /********** 화면 초기화 **********/

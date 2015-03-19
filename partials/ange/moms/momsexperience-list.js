@@ -59,7 +59,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            $scope.option = {title: '롤링 배너', api:'ad/banner', size: 5, id: 'main', type: 'banner', gb: 5, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
+            $scope.option_r1 = {title: '롤링 배너', api:'ad/banner', size: 99, id: 'main', type: 'banner', gb: CONSTANT.AD_CODE_BN05, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
             if ($stateParams.menu == 'experienceprocess') {
                 $scope.community = "진행중인 체험단";

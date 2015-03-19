@@ -1,0 +1,40 @@
+<div class="comp_goods">
+    <div class="row mini_event_contentlist" style="margin:0px;">
+
+        <div class="col-xs-3" style="padding:0;">
+            <div class="mini_mileagemall_menuwrap">
+
+                <dl>
+                    <dt><span class="glyphicon glyphicon-shopping-cart" style="float:left; font-size: 1.24em; margin-top:12px; margin-right:4px; vertical-align:middle; "></span> 앙쥬 마일리지몰</dt>
+                    <div ng-repeat="item in category" ng-click="click_selectCategory($index, item)">
+                        <dd ng-class="$index == curIdx ? 'selected' : ''">{{ item.CATEGORY_NM }}</dd>
+                    </div>
+                </dl>
+
+            </div>
+
+        </div>
+
+        <a class="comp_slide_btn_w30 prev" title="이전" ng-click="click_slickPrev()" style="margin-left:25%;">이전</a>
+        <a class="comp_slide_btn_w30 next" title="다음" ng-click="click_slickNext()">다음</a>
+
+        <slick id="{{option.id}}" init-onload="true" data="list" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="3" autoplay-speed="3000" fade="false" pause-on-hover="false">
+            <div ng-repeat="item in list" class="col-xs-3 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">
+                <div class="mini_event_content" style="border:none; text-align:center;">
+                    <a href="{{ item.URL }}">
+                        <img src="/imgs/ange/_blank.gif" class="mini_event_txt_img" style="float:none; width:85%; max-width:100px;" ng-style="{ 'background-image': 'url( {{ item.PRODUCT_FILE }} )' }" />
+                        <!--<img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_02.jpg"  style="float:none; width:85%; max-width:100px;"/>-->
+                    </a>
+                    <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">{{ item.COMPANY_NM }}</div>
+                    <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em;  text-align:center; color: #2eaed3;">{{ item.PRODUCT_NM }}</div>
+
+                    <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
+                        <span class="mini_mileagemall_price"> {{ item.PRICE | number }} </span>
+                    </div>
+
+                </div>
+            </div>
+        </slick>
+
+    </div>
+</div>

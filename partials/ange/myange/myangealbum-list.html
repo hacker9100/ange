@@ -18,7 +18,7 @@
 
                             <div class="container-fluid sub_contents_search">
                                 <div class="row">
-                                    <div class="col-xs-12" style="padding:0">
+                                    <div class="col-xs-9" style="padding:0">
 
                                         <div class="btn-group col-xs-12 col-sm-2" style="padding:2px 0px;">
                                             <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class="form-control input-sm" placeholder="검색선택"></select>
@@ -34,8 +34,16 @@
 
                                     </div><!-- /.col-xs-12-->
 
+                                    <div class="col-xs-3" style="float: right; padding: 0">
+
+                                        <div class="btn-group col-xs-12" style="padding:2px 0px;">
+                                            <select ng-model="m_view_mode" ng-options="mode.name for mode in modes" ng-change="change_mode()" class="form-control input-sm" placeholder="보기 모드"></select>
+                                        </div><!-- /btn-group -->
+
+                                    </div>
+
                                     <div class="col-xs-12 people_searchresult" style="display:block;">	<!-- 검색 시에만 표시됩니다. -->
-                                        {{PHOTO_TOTAL_COUNT}}개의 게시물 중 <span class="table_red">{{SEARCH_TOTAL_COUNT == null ? 0 : SEARCH_TOTAL_COUNT}}</span> 개가 검색되었습니다.
+                                        {{TOTAL_COUNT}}개의 게시물 중 <span class="table_red">{{SEARCH_COUNT == null ? 0 : SEARCH_COUNT}}</span> 개가 검색되었습니다.
                                     </div><!-- /.col-xs-12-->
                                 </div><!-- /.row -->
                             </div><!-- /.container -->
@@ -46,26 +54,19 @@
                             <div class="container-fluid peoplephoto_list_wrap">
                                 <div class="row">
                                     <div class="col-xs-12 v-cell-4">
-                                        <div class="comp_basic h-cell-dynamic">
+                                        <div ng-show="m_view_mode.value == 'COLLECTION'" class="comp_basic h-cell-dynamic">
 
-                                            <div ng-repeat='item in list'>
+                                            <div ng-repeat="item in list">
                                                 <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
                                                 <div class="col-xs-12 col-sm-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
-                                                    <div ng-click="click_showViewPeoplePhoto(item.NO)" class="people_photo_content">
+                                                    <div ng-click="click_showViewMyAlbum(item)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
-                                                            <img src="/imgs/ange/_blank.gif" class="people_photo_img" ng-style="{ 'background-image' : 'url( {{ item.FILE }} )' }" />
+                                                            <img src="/imgs/ange/_blank.gif" class="people_photo_img" ng-style="{ 'background-image' : 'url( {{ item.ALBUM_FILE }} )' }" />
                                                             <!--<img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/noimage.png')" /> &lt;!&ndash; 삭제처리했을때 블라인드 이미지 추가해야함&ndash;&gt;-->
-                                                            <div class="people_photo_cate">
-                                                                <span>{{item.CATEGORY_NM}}</span>
-                                                                <div style="position:absolute; display:inline; bottom:8px; right:0;">
-                                                                    <span class="feed_count countlike table_white">{{item.LIKE_CNT}}</span><!-- 공감수 -->
-                                                                    <span class="feed_count countreply table_white">{{item.PHOTO_REPLY_COUNT}}</span>	<!-- 댓글수 -->
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                         <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}</div>
                                                         <div class="people_photo_txt" ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</div>
-                                                        <div class="people_photo_info"><span class="table_blue">{{item.NICK_NM}}</span> | {{item.REG_DT}}</div>
+                                                        <div class="people_photo_info"><span class="table_blue">{{ item.SUBJECT }}</span> | {{ item.SHOOTING_YMD }}</div>
                                                     </div><!-- /.people_photo_content -->
                                                 </div><!-- /.people_photo_contentcol -->
                                             </div><!-- /.people_photo_contentlist -->		<!-- 1줄	 -->
@@ -80,6 +81,20 @@
 
 
                                         </div><!-- /.comp_basic -->
+
+                                        <div ng-show="m_view_mode.value == 'ALBUM'" class="comp_basic h-cell-dynamic">
+                                            <div class="album_image">
+                                                <img ng-src="{{current.ALBUM_FILE}}" alt="{{current.SUBJECT}}">
+                                            </div>
+
+                                            <div class="thumb_wrapper">
+                                                <ul class="thumb_list">
+                                                    <li ng-repeat="item in list" class="thumb_imgbox" ng-click="click_currentImage(item)">
+                                                        <img src="/imgs/ange/_blank.gif" class="thumb_img" ng-style="{ 'background-image' : 'url( {{ item.ALBUM_FILE }} )' }">
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div><!-- /.v-cell-4 -->
                                 </div><!-- /.row -->
                             </div><!-- /.peoplephoto_list_wrap -->

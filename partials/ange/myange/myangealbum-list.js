@@ -24,9 +24,13 @@ define([
 
         // 검색어 조건
         var condition = [{name: "제목", value: "SUBJECT"} , {name: "내용", value: "SUMMARY"}];
+        var mode = [{name: "모아보기", value: "COLLECTION"} , {name: "앨범보기", value: "ALBUM"}];
 
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];
+
+        $scope.modes = mode;
+        $scope.m_view_mode = mode[0];
 
         $scope.pageChanged = function() {
             $scope.list = [];
@@ -34,12 +38,18 @@ define([
                 $scope.search.KEYWORD = '';
             }
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
-            $scope.getPeopleBoardList();
+            $scope.getMyAlbumList();
         };
 
         /********** 초기화 **********/
         // 초기화
         $scope.init = function(session) {
+
+            $scope.getItem('ange/album', 'total', null, null, true)
+                .then(function(data){
+                    $scope.TOTAL_COUNT = data.TOTAL_COUNT;
+                })
+                ['catch'](function(error){});
 
             // 검색조건유지
             var getParam = function(key){
@@ -67,6 +77,21 @@ define([
         };
 
         /********** 이벤트 **********/
+        // 보기모드 변경
+        $scope.change_mode = function(mode) {
+            alert(mode.value);
+
+            $scope.m_view_mode = mode;
+        }
+
+        function firstImage() {
+            $scope.current = _.first($scope.list);
+        }
+
+        $scope.click_currentImage = function (item) {
+            $scope.current = item;
+        };
+
         // 우측 메뉴 클릭
         $scope.click_showViewAlbum = function(item) {
             $location.url('myange/album/view/1');
@@ -84,17 +109,54 @@ define([
 
             $scope.getList('ange/album', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
+                    console.log(JSON.stringify(data))
                     for(var i in data) {
-                        data[i].FILE = CONSTANT.BASE_URL + data[i].PATH + 'thumbnail/' + data[i].FILE_ID;
+                        data[i].ALBUM_FILE = CONSTANT.BASE_URL + data[i].PATH + 'thumbnail/' + data[i].FILE_ID;
 
                         $scope.list.push(data[i]);
                     }
 
+                    firstImage();
+
                     $scope.isLoding = false;
 
-                    $scope.TOTAL_COUNT = data[0].TOTAL_COUNT;
+                    $scope.SEARCH_COUNT = data[0].TOTAL_COUNT;
                 })
-                ['catch'](function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0; $scope.isLoding = false;});
+                ['catch'](function(error){$scope.list = ""; $scope.SEARCH_COUNT = 0; $scope.isLoding = false;});
+        };
+
+        // 검색
+        $scope.click_searchMyAlbum = function(){
+            $scope.list = [];
+            $scope.PAGE_NO = 1;
+            $scope.getPeopleBoardList();
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
+
+        }
+
+        // 조회 버튼 클릭
+        $scope.click_showViewMyAlbum = function (item) {
+            $scope.openViewMyAlbumModal(item, 'lg');
+        };
+
+        $scope.openViewMyAlbumModal = function (item, size) {
+            var dlg = dialogs.create('partials/ange/myange/myangealbum-view-popup.html',
+                ['$scope', '$rootScope', '$modalInstance', '$controller', 'data', function($scope, $rootScope, $modalInstance, $controller, data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope, $rootScope : $rootScope}));
+
+                    $scope.item = data;
+
+                    // 닫기
+                    $scope.click_close = function(){
+                        $modalInstance.close();
+                    }
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
         };
 
         // 등록 버튼 클릭
@@ -107,15 +169,6 @@ define([
 
             $scope.openViewMyAlbumRegModal(null, null, 'lg');
         };
-
-        // 검색
-        $scope.click_searchMyAlbum = function(){
-            $scope.list = [];
-            $scope.PAGE_NO = 1;
-            $scope.getPeopleBoardList();
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list?page_no='+$scope.PAGE_NO+'&condition='+$scope.search.CONDITION.value+'&keyword='+$scope.search.KEYWORD);
-
-        }
 
         $scope.openViewMyAlbumRegModal = function (content, item,  size) {
             var dlg = dialogs.create('myangealbum-edit.html',

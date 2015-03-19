@@ -1,0 +1,30 @@
+<div class="comp_album">
+    <div class="comp_album_titlebar">
+        <span class="comp_album_titlebar_title">마이앨범</span>
+        <span class="comp_album_titlebar_desc">추억을 기록하세요. 추억을 뽐내보세요^^</span>
+
+        <a ng-click="click_showList()" class="miniboard_tab_more">더보기</a>
+    </div>
+
+    <div class="comp_album_content">
+
+        <a class="comp_slide_btn_w30 prev" ng-click="click_slickPrev()" title="이전">이전</a>
+        <a class="comp_slide_btn_w30 next" ng-click="click_slickNext()" title="다음">다음</a>
+
+        <div class="comp_album_content_wrap">
+            <!--<div class="comp_album_content_scroll">-->
+
+                <slick id="{{option.id}}" init-onload="true" data="list" dots="false" autoplay="true" center-mode="false" slides-to-show="5" slides-to-scroll="1" autoplay-speed="3000" fade="false" pause-on-hover="false">
+                    <div ng-repeat="item in list" class="comp_album_contents">
+                        <img class="userlog_login_pic" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( {{ item.ALBUM_FILE }} )' }"/>
+                        <a href="{{ item.URL }}" class="comp_album_content_txt">
+                            {{ item.SHOOTING_YMD }} <br>
+                            <span class="comp_album_content_txt_title">{{ item.SUBJECT }}</span>
+                        </a>
+                    </div>
+                </slick>
+
+            <!--</div>-->
+        </div>
+    </div>
+</div>

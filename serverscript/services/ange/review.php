@@ -387,8 +387,8 @@
                         REVIEW_NO,
                         BLIND_FL
                     ) VALUES (
-                        '".$_model[SUBJECT]."',
-                        '".$_model[BODY]."',
+                        '".addslashes($_model[SUBJECT])."',
+                        '".addslashes($_model[BODY])."',
                         '".$_SESSION['uid']."',
                         '".$_SESSION['nick']."',
                         SYSDATE(),
@@ -540,15 +540,11 @@
                 if( trim($_model[BODY]) == '' ){
                     $_d->failEnd("내용이 비어있습니다");
                 }
-
-                // REG_UID = '".$_SESSION['uid']."',
-                //NICK_NM = '".$_SESSION['nick']."',
-                //REG_DT = SYSDATE(),
-
+                
                 $sql = "UPDATE ANGE_REVIEW
                     SET
-                        SUBJECT = '".$_model[SUBJECT]."',
-                        BODY = '".$_model[BODY]."',
+                        SUBJECT = '".addslashes($_model[SUBJECT])."',
+                        BODY = '".addslashes($_model[BODY])."',
                         HIT_CNT = '".$_model[HIT_CNT]."',
                         LIKE_CNT = '".$_model[LIKE_CNT]."',
                         REPLY_CNT = '".$_model[REPLY_CNT]."',

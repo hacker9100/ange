@@ -401,6 +401,10 @@
                     $search_where .= "AND COMM_NO != '".$_search[COMM_NO_NOT]."' ";
                 }
 
+                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+                    $search_where .= "AND REG_UID = '".$_search[REG_UID]."' ";
+                }
+
                 if (isset($_search[SORT]) && $_search[SORT] != "") {
                     $sort_order = ", ".$_search[SORT]." ".$_search[ORDER]." ";
                 }
@@ -759,8 +763,8 @@
                         '".$_model[PARENT_NO]."'
                         ,'".$_model[COMM_NO]."'
                         ,'".$_model[HEAD]."'
-                        ,'".$_model[SUBJECT]."'
-                        , '".$_model[BODY]."'
+                        ,'".addslashes($_model[SUBJECT])."'
+                        , '".addslashes($_model[BODY])."'
                         , '".$_model[BOARD_GB]."'
                         , '".$_model[SYSTEM_GB]."'
                         , '".$_SESSION['uid']."'
@@ -928,14 +932,11 @@
                     $_d->failEnd("내용이 비어있습니다");
                 }
 
-
-                // ,REG_UID = '".$_SESSION['uid']."'
-                // ,REG_NM = '".$_model[REG_NM]."'
                 $sql = "UPDATE COM_BOARD
                     SET
                         HEAD = '".$_model[HEAD]."'
-                        ,SUBJECT = '".$_model[SUBJECT]."'
-                        ,BODY = '".$_model[BODY]."'
+                        ,SUBJECT = '".addslashes($_model[SUBJECT])."'
+                        ,BODY = '".addslashes($_model[BODY])."'
                         ,NOTICE_FL = '".($_model[NOTICE_FL] == "true" ? "1" : "0")."'
                         ,SCRAP_FL = '".($_model[SCRAP_FL] == "true" ? "Y" : "N")."'
                         ,REPLY_FL = '".($_model[REPLY_FL] == "true" ? "Y" : "N")."'

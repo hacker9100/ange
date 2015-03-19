@@ -2,7 +2,7 @@
  * Author : Sunghwan Kim
  * Email  : hacker9100@gmail.com
  * Date   : 2015-01-06
- * Description : storenaming-dream.html 화면 콘트롤러
+ * Description : storenamingdream.html 화면 콘트롤러
  */
 
 define([
@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('storenaming-dream', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('storedream', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
 
         // 초기화
         $scope.init = function(session) {

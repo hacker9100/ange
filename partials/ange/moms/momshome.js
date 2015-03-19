@@ -15,10 +15,10 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-            // ange-portlet-slide-exprience
+            // ange-portlet-slide-banner
             $scope.option_r1_c1 = {title: '롤링 체험단', api:'ad/banner', size: 5, id: 'experience', type: 'experience', gb: CONSTANT.AD_CODE_BN28, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
-            // ange-portlet-slide-exprience
+            // ange-portlet-slide-banner
             $scope.option_r1_c2 = {title: '롤링 이벤트', api:'ad/banner', size: 5, id: 'event', type: 'event', gb: CONSTANT.AD_CODE_BN09, dots: true, autoplay: true, centerMode: true, showNo: 1, fade: 'true'};
 
             // ange-portlet-channel-list

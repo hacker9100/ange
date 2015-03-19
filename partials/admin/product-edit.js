@@ -38,9 +38,9 @@ define([
                     for (var i in data) {
                         var item = data[i];
 
-                        if (item.CATEGORY_GB == '1' && item.CATEGORY_ST == '0') {
+                        if (item.CATEGORY_GB == 'STORE' && item.PARENT_NO == '1' && item.CATEGORY_ST == '0') {
                             category_a.push(item);
-                        } else if (item.CATEGORY_GB == '2' && item.CATEGORY_ST == '0') {
+                        } else if (item.CATEGORY_GB == 'STORE' && item.PARENT_NO == '2' && item.CATEGORY_ST == '0') {
                             category_b.push(item);
                         }
                     }
