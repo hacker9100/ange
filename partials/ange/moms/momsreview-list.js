@@ -160,6 +160,11 @@ define([
 
                         source = source.replace(pattern, '');
                         source = source.replace(/&nbsp;/ig, '');
+                        source = source.replace(/<!--StartFragment-->/ig, '');
+                        source = source.replace(/&#39;/ig, '');
+                        source = source.replace(/&quot;/ig, '"');
+                        source = source.replace(/&lt;/ig, '<');
+                        source = source.replace(/&gt;/ig, '>');
                         source = source.trim();
 
                         data[i].BODY = source;
