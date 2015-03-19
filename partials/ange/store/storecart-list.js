@@ -23,13 +23,19 @@ define([
         $scope.cummerce = false;
 
         $(document).ready(function() {
-            $("input:radio:first").prop("checked", true).trigger("click");
+
+//            $("input:radio:first").prop("checked", true).trigger("click");
+            $('input:radio[class=product_gb][id=cartmileage]').prop('checked', true);
             $(".product_gb").click(function() {
 
                 if($(this).val() == "mileage"){
+
+                    $('input:radio[name=cartlist]:input[value=mileage]').attr("checked", true);
                     $scope.mileage = true;
                     $scope.cummerce = false;
                 } else if ($(this).val() == "cummerce"){
+
+                    $('input:radio[name=cartlist]:input[value=cummerce]').attr("checked", true);
                     $scope.mileage = false;
                     $scope.cummerce = true;
                 }

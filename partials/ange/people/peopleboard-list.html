@@ -162,7 +162,10 @@
                                                 <span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>
                                             </div>
                                         </td>
-                                        <td ng-if="menu.COMM_NO != 8" class="table_author normaltype"><div ng-bind-html="item.NICK_NM"></div></td> <!-- {{}} -->
+                                        <td ng-if="menu.COMM_NO != 8" class="table_author normaltype">
+                                            <div ng-show="item.NICK_NM != ''" ng-bind-html="item.NICK_NM"></div>
+                                            <!--<div ng-show="item.NICK_NM == null || item.NICK_NM != ''">{{item.REG_USER_NM}}</div>-->
+                                        </td> <!-- {{}} -->
                                         <td class="table_date normaltype">{{item.REG_DT}}</td>
                                         <td class="table_hit normaltype">{{item.HIT_CNT}}</td></tr>
 

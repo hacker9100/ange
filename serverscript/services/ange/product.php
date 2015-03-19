@@ -125,9 +125,7 @@ switch ($_method) {
                 $search_where .= "AND PRODUCT_GB = '".$_search[PRODUCT_GB]."' ";
             }
 
-            if ($_search[ORDER_YN] == "Y") {
-                $search_where .= "AND ORDER_YN = '".$_search[ORDER_YN]."' ";
-            } else if ($_search[ORDER_YN] == "N"){
+            if (isset($_search[ORDER_YN]) && $_search[ORDER_YN] != "") {
                 $search_where .= "AND ORDER_YN = '".$_search[ORDER_YN]."' ";
             }
 

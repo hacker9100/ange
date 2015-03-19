@@ -199,7 +199,9 @@ define([
                 return;
             }
 
-            if(hour < 10 || 15 < hour){
+
+            console.log(hour);
+            if(hour < 10 || 15 <= hour){
                 dialogs.notify('알림', '경매 참여 시간이 아닙니다.', {size: 'md'});
                 return;
             }
@@ -263,9 +265,16 @@ define([
 
         }
 
-        $scope.init();
-        $scope.click_showStoreAuctionList();
-        $scope.click_showPeopleBoardList();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.click_showStoreAuctionList)
+            .then($scope.click_showPeopleBoardList)
+            ['catch']($scope.reportProblems);
+
+//        $scope.init();
+//        $scope.click_showStoreAuctionList();
+//        $scope.click_showPeopleBoardList();
 
     }]);
 });

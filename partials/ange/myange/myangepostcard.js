@@ -48,10 +48,12 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getCompList)
             ['catch']($scope.reportProblems);
 
-        $scope.init();
-        $scope.getCompList();
+//        $scope.init();
+//        $scope.getCompList();
         /*$scope.viewCheckFl();*/
 
     }]);
