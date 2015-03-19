@@ -84,6 +84,7 @@ define([
         // 날짜 셀렉트 박스셋팅
         var year = [];
         var babyYear = [];
+        var babyBirthYear = [];
         var day = [];
         var now = new Date();
         var nowYear = now.getFullYear();
@@ -94,8 +95,12 @@ define([
         var minute = [];
 
 
-        for (var i = nowYear; i >= nowYear-1; i--) {
+        for (var i = nowYear; i >= nowYear-10; i--) {
             babyYear.push(i+'');
+        }
+
+        for (var i = nowYear+1; i >= nowYear; i--) {
+            babyBirthYear.push(i+'');
         }
 
         for (var i = 1; i <= 12; i++) {
@@ -114,6 +119,7 @@ define([
             day.push(i+'');
         }
 
+        $scope.babyBirthYear = babyBirthYear;
         $scope.babyYear = babyYear;
         $scope.month = month;
         $scope.day = day;
