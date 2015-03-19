@@ -181,15 +181,18 @@
                                 <!-- peoplephoto_list -->
                                 <div class="peoplep_list_tab" ng-show="menu == 'mileagemall'">
                                     <ul class="nav nav-tabs nav-justified">
-                                        <li role="presentation" ng-class="selectIdx == 'ALL' ? 'active' : ''"><a ng-click="click_selectTab('ALL');"  class="tab_nopadding"><small>전체</small></a></li>
-                                        <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');"   class="tab_nopadding"><small>~10,000&nbsp;P</small></a></li>
-                                        <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''"><a ng-click="click_selectTab('2');"   class="tab_nopadding"><small>~30,000&nbsp;P</small></a></li>
-                                        <li role="presentation" ng-class="selectIdx == '3' ? 'active' : ''" ><a ng-click="click_selectTab('3');"  class="tab_nopadding"><small>~50,000&nbsp;P</small></a></li>
-                                        <li role="presentation" ng-class="selectIdx == '4' ? 'active' : ''"><a ng-click="click_selectTab('4');"   class="tab_nopadding"><small>~100,000&nbsp;P</small></a></li>
-                                        <li role="presentation" ng-class="selectIdx == '5' ? 'active' : ''"><a ng-click="click_selectTab('5');"   class="tab_nopadding"><small>100,000&nbsp;P~</small></a></li>
-                                        <!--<li role="presentation" ng-repeat="tab in category_list" ng-class="selectIdx == $index ? 'active' : ''">-->
-                                            <!--<a ng-click="click_selectTab($index, tab.NO)" class="tab_nopadding"><small>{{tab.CATEGORY_NM}}</small></a> &lt;!&ndash; <span ng-hide="$index == 0">({{tab.CNT}})</span> &ndash;&gt;-->
-                                        <!--</li>-->
+                                        <!--<li role="presentation" ng-class="selectIdx == 'ALL' ? 'active' : ''"><a ng-click="click_selectTab('ALL');"  class="tab_nopadding"><small>전체</small></a></li>-->
+                                        <!--<li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');"   class="tab_nopadding"><small>~10,000&nbsp;P</small></a></li>-->
+                                        <!--<li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''"><a ng-click="click_selectTab('2');"   class="tab_nopadding"><small>~30,000&nbsp;P</small></a></li>-->
+                                        <!--<li role="presentation" ng-class="selectIdx == '3' ? 'active' : ''" ><a ng-click="click_selectTab('3');"  class="tab_nopadding"><small>~50,000&nbsp;P</small></a></li>-->
+                                        <!--<li role="presentation" ng-class="selectIdx == '4' ? 'active' : ''"><a ng-click="click_selectTab('4');"   class="tab_nopadding"><small>~100,000&nbsp;P</small></a></li>-->
+                                        <!--<li role="presentation" ng-class="selectIdx == '5' ? 'active' : ''"><a ng-click="click_selectTab('5');"   class="tab_nopadding"><small>100,000&nbsp;P~</small></a></li>-->
+                                        <li role="presentation" ng-class="selectIdx == 0 ? 'active' : ''">
+                                            <a ng-click="click_selectTab(0, tab.NO)" class="tab_nopadding"><small>전체</small></a>
+                                        </li>
+                                        <li role="presentation" ng-repeat="tab in category_list" ng-class="selectIdx == $index+1 ? 'active' : ''">
+                                            <a ng-click="click_selectTab($index+1, tab.NO)" class="tab_nopadding"><small>{{tab.CATEGORY_NM}}</small></a> <!-- <span ng-hide="$index == 0">({{tab.CNT}})</span> -->
+                                        </li>
                                     </ul>
                                 </div>  <!-- /.peoplep_list_tab -->
 

@@ -125,6 +125,12 @@ define([
                 $location.url('/moms/samplepackreview/edit/'+item.NO);
             }else if ($stateParams.menu == 'eventreview') {
                 $location.url('/moms/eventreview/edit/'+item.NO);
+            }else if ($stateParams.menu == 'storereview') {
+                $location.url('/moms/storereview/edit/'+item.NO);
+            }else if ($stateParams.menu == 'dolreview') {
+                $location.url('/moms/dolreview/edit/'+item.NO);
+            }else if ($stateParams.menu == 'bookreview') {
+                $location.url('/moms/bookreview/edit/'+item.NO);
             }
         };
 
@@ -169,6 +175,9 @@ define([
             }else if ($stateParams.menu == 'dolreview') {
                 //$location.url('/moms/dolreview/list');
                 $location.url('/moms/dolreview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
+            }else if ($stateParams.menu == 'storereview') {
+                //$location.url('/moms/dolreview/list');
+                $location.url('/moms/storereview/list?page_no='+$rootScope.NOW_PAGE_NO+'&condition='+$rootScope.CONDITION+'&keyword='+$rootScope.KEYWORD);
             }
         };
 
@@ -264,6 +273,8 @@ define([
                 $scope.search['TARGET_GB'] = 'SAMPLEPACK';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.item.TARGET_GB = 'EVENT';
+            }else if ($stateParams.menu == 'storereview') {
+                $scope.item.TARGET_GB = 'STORE';
             }
 
 
@@ -302,6 +313,12 @@ define([
                 $scope.search['TARGET_GB'] = 'SAMPLEPACK';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.item.TARGET_GB = 'EVENT';
+            }else if ($stateParams.menu == 'storereview') {
+                $scope.item.TARGET_GB = 'STORE';
+            }else if ($stateParams.menu == 'bookreview') {
+                $scope.item.TARGET_GB = 'BOOK';
+            }else if ($stateParams.menu == 'dolreview') {
+                $scope.item.TARGET_GB = 'DOL';
             }
 
             $scope.REPLY_COMMENT = $scope.reply;
@@ -334,6 +351,12 @@ define([
                 $scope.search['TARGET_GB'] = 'SAMPLEPACK';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.search['TARGET_GB'] = 'EVENT';
+            }else if ($stateParams.menu == 'bookreview') {
+                $scope.search['TARGET_GB'] = 'BOOK';
+            }else if ($stateParams.menu == 'dolreview') {
+                $scope.search['TARGET_GB'] = 'DOL';
+            }else if ($stateParams.menu == 'storereview') {
+                $scope.search['TARGET_GB'] = 'STORE';
             }
 
             $scope.search.KEY = $stateParams.id;
@@ -363,6 +386,12 @@ define([
                 $scope.search['TARGET_GB'] = 'SAMPLEPACK';
             }else if ($stateParams.menu == 'eventreview') {
                 $scope.search['TARGET_GB'] = 'EVENT';
+            }else if ($stateParams.menu == 'bookreview') {
+                $scope.search['TARGET_GB'] = 'BOOK';
+            }else if ($stateParams.menu == 'dolreview') {
+                $scope.search['TARGET_GB'] = 'DOL';
+            }else if ($stateParams.menu == 'storereview') {
+                $scope.search['TARGET_GB'] = 'STORE';
             }
 
             $scope.search.KEY = $stateParams.id;

@@ -68,7 +68,7 @@ define(['./directives'], function (directives) {
                             path[2] = 'event';
                         } else if (path[2] == 'experiencewinner' || path[2] == 'eventwinner' || path[2] == 'supporterboard' || path[2] == 'postwinner') {
                             path[2] = 'board';
-                        } else if (path[2] == 'experiencereview' || path[2] == 'productreview' || path[2] == 'angereview' || path[2] == 'samplereview' || path[2] == 'samplepackreview' || path[2] == 'eventreview' || path[2] == 'bookreview' || path[2] == 'dolreview') {
+                        } else if (path[2] == 'experiencereview' || path[2] == 'productreview' || path[2] == 'angereview' || path[2] == 'samplereview' || path[2] == 'samplepackreview' || path[2] == 'eventreview' || path[2] == 'bookreview' || path[2] == 'dolreview' || path[2] == 'storereview') {
                             path[2] = 'review';
                         } else if (path[2] == 'ranknow' || path[2] == 'rankbest') {
                             path[2] = 'rank';

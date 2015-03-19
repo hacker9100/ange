@@ -128,11 +128,10 @@ switch ($_method) {
                                 			(SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO) AS PROGRESS_ST, AP.PARENT_NO,
                                         (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AP.PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE,
                                         AP.DIRECT_PRICE
-                                FROM ANGE_ORDER AC
-                                LEFT OUTER JOIN ANGE_PRODUCT AP
-                                ON AC.PRODUCT_NO = AP.NO
+                                FROM ANGE_ORDER AC ,ANGE_PRODUCT AP
                                 WHERE  1 = 1
-                                AND AC.USER_ID = '".$_SESSION['uid']."'
+                                 AND AC.PRODUCT_NO = AP.NO
+                                 AND AC.USER_ID = '".$_SESSION['uid']."'
                                 ".$search_where."
                               ORDER BY NO DESC
                               ".$limit."
@@ -140,12 +139,9 @@ switch ($_method) {
                     (SELECT @RNUM := 0) R,
                     (
                             SELECT COUNT(*) AS TOTAL_COUNT
-                            FROM ANGE_ORDER AC
-                            LEFT OUTER JOIN ANGE_PRODUCT AP
-                            ON AC.PRODUCT_NO = AP.NO
-                            LEFT OUTER JOIN ANGE_ORDER_COUNSEL AOC
-                            ON AC.PRODUCT_NO = AOC.PRODUCT_NO
-                            WHERE  1 = 1
+                            FROM ANGE_ORDER AC ,ANGE_PRODUCT AP
+                                WHERE  1 = 1
+                                 AND AC.PRODUCT_NO = AP.NO
                             AND AC.USER_ID = '".$_SESSION['uid']."'
                             ".$search_where."
                     ) CNT
@@ -670,6 +666,17 @@ switch ($_method) {
                 ";
 
             $_d->sql_query($sql);
+
+            $sql = "UPDATE
+                            COM_USER
+                        SET
+                            SUM_POINT = SUM_POINT + ".$_model[PRICE].",
+                            REMAIN_POINT = REMAIN_POINT + ".$_model[PRICE]."
+                        WHERE
+                            USER_ID = '".$_SESSION['uid']."'";
+
+            $_d->sql_query($sql);
+
             $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
