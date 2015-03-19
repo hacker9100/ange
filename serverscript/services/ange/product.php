@@ -144,6 +144,10 @@ switch ($_method) {
                 }
             }
 
+            if (isset($_search[NOT_PRODUCRT_NO]) && $_search[NOT_PRODUCRT_NO] != "") {
+                $search_where .= "AND NO  != '".$_search[NOT_PRODUCRT_NO]."' ";
+            }
+
             if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
                 $search_where .= "AND CATEGORY_NO = '".$_search[CATEGORY_NO]."' ";
             }
@@ -367,24 +371,6 @@ switch ($_method) {
                     if ($category['PARENT_NO'] == "1") {
                         $category_no = $category['NO'];
                     }
-
-                    $sql = "INSERT INTO CONTENT_CATEGORY
-                            (
-                                CATEGORY_NO
-                                ,TARGET_NO
-                                ,TARGET_GB
-                            ) VALUES (
-                                '".$category[NO]."'
-                                , '".$no."'
-                                , 'PRODUCT'
-                            )";
-
-                    $_d->sql_query($sql);
-
-                    if ($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
-                    }
                 }
             }
 
@@ -415,7 +401,7 @@ switch ($_method) {
                         '".$_model[SUM_OUT_CNT]."',
                         '".$_model[NOTE]."',
                         '".$_model[DELEIVERY_PRICE]."',
-                        '".$_model[DELEIVERY_ST]."'
+                        '".$_model[DELEIVERY_ST]."',
                         '".$category_no."'
                     )";
 
@@ -425,6 +411,36 @@ switch ($_method) {
             if($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
+            }
+
+            if (count($_model[CATEGORY]) > 0) {
+                $categories = $_model[CATEGORY];
+
+                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                    $category = $categories[$i];
+
+                    if ($category['PARENT_NO'] == "1") {
+                        $category_no = $category['NO'];
+                    }
+
+                    $sql = "INSERT INTO CONTENT_CATEGORY
+                            (
+                                CATEGORY_NO
+                                ,TARGET_NO
+                                ,TARGET_GB
+                            ) VALUES (
+                                '".$category[NO]."'
+                                , '".$no."'
+                                , 'PRODUCT'
+                            )";
+
+                    $_d->sql_query($sql);
+
+                    if ($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
             }
 
             $sql = "INSERT INTO ANGE_PRODUCT_STOCK
@@ -632,6 +648,42 @@ switch ($_method) {
             }
 
             if (count($_model[CATEGORY]) > 0) {
+                $categories = $_model[CATEGORY];
+
+                for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                    $category = $categories[$i];
+
+                    if ($category['PARENT_NO'] == "1") {
+                        $category_no = $category['NO'];
+                    }
+                }
+            }
+
+            $sql = "UPDATE ANGE_PRODUCT
+                    SET
+                        PRODUCT_NM = '".$_model[PRODUCT_NM]."',
+                        PRODUCT_GB = '".$_model[PRODUCT_GB][value]."',
+                        COMPANY_NO = '".$_model[COMPANY_NO]."',
+                        COMPANY_NM = '".$_model[COMPANY_NM]."',
+                        BODY = '".$_model[BODY]."',
+                        PRICE = ".$_model[PRICE].",
+                        SUM_IN_CNT = ".$_model[SUM_IN_CNT].",
+                        SUM_OUT_CNT = ".$_model[SUM_OUT_CNT].",
+                        NOTE = '".$_model[NOTE]."',
+                        CATEGORY_NO = '".$category_no."'
+                    WHERE
+                        NO = ".$_key."
+                ";
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if (count($_model[CATEGORY]) > 0) {
 
                 $sql = "DELETE FROM CONTENT_CATEGORY
                         WHERE
@@ -673,30 +725,6 @@ switch ($_method) {
                         $msg = $_d->mysql_error;
                     }
                 }
-            }
-
-            $sql = "UPDATE ANGE_PRODUCT
-                    SET
-                        PRODUCT_NM = '".$_model[PRODUCT_NM]."',
-                        PRODUCT_GB = '".$_model[PRODUCT_GB][value]."',
-                        COMPANY_NO = '".$_model[COMPANY_NO]."',
-                        COMPANY_NM = '".$_model[COMPANY_NM]."',
-                        BODY = '".$_model[BODY]."',
-                        PRICE = ".$_model[PRICE].",
-                        SUM_IN_CNT = ".$_model[SUM_IN_CNT].",
-                        SUM_OUT_CNT = ".$_model[SUM_OUT_CNT].",
-                        NOTE = '".$_model[NOTE]."',
-                        CATEGORY_NO = '".$category_no."'
-                    WHERE
-                        NO = ".$_key."
-                ";
-
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
             }
 
             $sql = "SELECT
@@ -874,6 +902,19 @@ switch ($_method) {
             $_d->sql_query($sql);
 
             if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            $sql = "DELETE FROM CONTENT_CATEGORY
+                    WHERE
+                        TARGET_GB = 'PRODUCT'
+                        AND TARGET_NO = ".$_key."
+                    ";
+
+            $_d->sql_query($sql);
+
+            if ($_d->mysql_errno > 0) {
                 $err++;
                 $msg = $_d->mysql_error;
             }

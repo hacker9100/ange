@@ -84,6 +84,18 @@ define([
             $location.url('/product/edit/'+item.NO);
         };
 
+        $scope.click_deleteProduct = function(item) {
+            var dialog = dialogs.confirm('알림', '삭제 하시겠습니까.', {size: 'md'});
+
+            dialog.result.then(function(btn){
+                $scope.deleteItem('ange/product', 'item', item.NO, true)
+                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'}); $scope.getProductList();})
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
+        };
+
         // 메뉴 수정
         $scope.click_updateMenu = function () {
             $scope.item.CATEGORY = $scope.CATEGORY;
