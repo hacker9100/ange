@@ -288,7 +288,7 @@ define([
 
                     dialogs.notify('알림', '네이밍 신청이 완료되었습니다.', {size: 'md'});
 
-                    $location.url('/store/naming/intro');
+                    $location.url('/store/namingintro');
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
@@ -296,7 +296,7 @@ define([
         }
 
         $scope.click_intro = function(){
-            $location.url('store/naming/intro');
+            $location.url('store/namingintro');
         }
 
         // 후기 작성 화면이동
