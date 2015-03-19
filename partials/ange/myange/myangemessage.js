@@ -43,8 +43,12 @@ define([
             $scope.search.SYSTEM_GB = 'ANGE';
             $scope.getList('ange/message', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
-                    var total_cnt = data[0].TOTAL_COUNT;
+
+                    //console.log(data);
+                    var total_cnt = data[0].TOTAL_CNT;
                     $scope.TOTAL_COUNT = total_cnt;
+
+                    //console.log($scope.TOTAL_COUNT);
 
                     for(var i in data) {
 

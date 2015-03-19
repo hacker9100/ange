@@ -96,7 +96,8 @@
                     </td>
                     <td ng-if="menu.COMM_NO != 8" class="table_author">
                         <div ng-show="item.NICK_NM != ''" ng-bind-html="item.NICK_NM"></div>
-                        <div ng-show="item.NICK_NM == null || item.NICK_NM != ''">{{item.REG_USER_NM}}</div>
+                        <!--<div ng-show="item.NICK_NM == null || item.NICK_NM != ''">{{item.REG_USER_NM}}</div>-->
+                        <!--{{item.REG_USER_NM}}-->
                     </td> <!-- {{}} -->
                     <td class="table_date">{{item.REG_DT}}</td>
                     <td class="table_hit">{{item.HIT_CNT}}</td></tr>
