@@ -83,14 +83,14 @@ define([
                         }
 
                         for (var i in data.CATEGORY) {
-                            if (data.CATEGORY[i].CATEGORY_GB == 1) {
+                            if (data.CATEGORY[i].PARENT_NO == 1) {
                                 for (var j in $scope.category_a) {
                                     if ($scope.category_a[j].NO == data.CATEGORY[i].NO) {
                                         $scope.category_1 = $scope.category_a[j];
                                         break;
                                     }
                                 }
-                            } else if (data.CATEGORY[i].CATEGORY_GB == 2) {
+                            } else if (data.CATEGORY[i].PARENT_NO == 2) {
                                 for (var j in $scope.category_b) {
                                     if ($scope.category_b[j].NO == data.CATEGORY[i].NO) {
                                         $scope.category_2 = $scope.category_b[j];
@@ -116,15 +116,17 @@ define([
             var ckMain = false;
 
             for(var i in $scope.item.FILES) {
-                $scope.item.FILES[i].$destroy = '';
-                $scope.item.FILES[i].$editor = '';
-
                 if ($scope.item.FILES[i].kind == 'MAIN') ckMain = true;
             }
 
             if (!ckMain) {
                 dialogs.notify('알림', '메인이미지를 선택하세요.', {size: 'md'});
                 return;
+            }
+
+            for(var i in $scope.item.FILES) {
+                $scope.item.FILES[i].$destroy = '';
+                $scope.item.FILES[i].$editor = '';
             }
 
             $scope.item.CATEGORY = [];

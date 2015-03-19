@@ -315,6 +315,35 @@ define([
 
         };
 
+        // 다음 슬라이드
+        $scope.click_slickPrev = function() {
+            angular.element('#product').slickPrev();
+        };
+
+        // 이전 슬라이드
+        $scope.click_slickNext = function() {
+            angular.element('#product').slickNext();
+        };
+
+        // 선택
+        $scope.click_showView = function (item) {
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+item.NO);
+        };
+
+        // 슬라이드 이미지 조회
+        $scope.getProductList = function (api) {
+            $scope.getList($scope.option.api, 'list', {NO:0, SIZE:9}, {FILE: true, PRODUCT_GB: 'MILEAGE', NOT_PRODUCT_NO: $stateParams.id}, true)
+                .then(function(data){
+                    for (var i in data) {
+                        data[i].PRODUCT_FILE = CONSTANT.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        data[i].URL = $scope.option.url+"/view/"+data[i].NO;
+                    }
+
+                    $scope.list = data;
+                })
+                ['catch'](function(error){$scope.list = []});
+        };
+
         /********** 화면 초기화 **********/
 /*        $scope.getSession()
             .then($scope.sessionCheck)
@@ -324,6 +353,7 @@ define([
         $scope.init();
         $scope.getPeopleBoard();
         $scope.getReviewList();
+        $scope.getProductList();
         //s$scope.addSumPrice($scope.item.PRICE, 1 , 0);
 
     }]);
