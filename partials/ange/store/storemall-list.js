@@ -61,7 +61,7 @@ define([
         // 초기화
         $scope.init = function(session) {
 
-            $scope.selectIdx = 'ALL';
+            //$scope.selectIdx = 'ALL';
 
             $scope.getList('ange/product', 'list', {}, $scope.search, true)
                 .then(function(data){
@@ -102,33 +102,33 @@ define([
 
         });
 
-//        $scope.click_selectTab = function (idx, category_no) {
-//
-//            $scope.selectIdx = idx;
-//            if(idx == 0){
-//                //$scope.search.CATEGORY_NO = '';
-//
-//                // 페이징
-//                $scope.PAGE_NO = 1;
-//                $scope.PAGE_SIZE = 9;
-//                $scope.SEARCH_TOTAL_COUNT = 0;
-//
-//                // 초기화 후 조회
-//                $scope.list = [];
-//                $scope.click_showPeopleBoardList();
-//            }else{
-//                //$scope.search.CATEGORY_NO = idx;
-//
-//                // 페이징
-//                $scope.PAGE_NO = 1;
-//                $scope.PAGE_SIZE = 9;
-//                $scope.SEARCH_TOTAL_COUNT = 0;
-//
-//                // 초기화 후 조회
-//                $scope.list = [];
-//                $scope.click_showPeopleBoardList();
-//            }
-//        };
+        $scope.click_selectTab = function (idx, category_no) {
+
+            $scope.selectIdx = idx;
+            if(idx == 0){
+                $scope.search.CATEGORY_NO = '';
+
+                // 페이징
+                $scope.PAGE_NO = 1;
+                $scope.PAGE_SIZE = 9;
+                $scope.SEARCH_TOTAL_COUNT = 0;
+
+                // 초기화 후 조회
+                $scope.list = [];
+                $scope.click_showPeopleBoardList();
+            }else{
+                $scope.search.CATEGORY_NO = category_no;
+
+                // 페이징
+                $scope.PAGE_NO = 1;
+                $scope.PAGE_SIZE = 9;
+                $scope.SEARCH_TOTAL_COUNT = 0;
+
+                // 초기화 후 조회
+                $scope.list = [];
+                $scope.click_showPeopleBoardList();
+            }
+        };
 
         $scope.click_selectCategory = function(idx, category) {
             $scope.category[idx] = category;
@@ -172,29 +172,29 @@ define([
 
         /********** 이벤트 **********/
             // 탭 클릭 이동
-        $scope.click_selectTab = function (idx) {
-            $scope.selectIdx = idx;
-
-            if ($stateParams.menu == 'mileagemall') {
-                $scope.search.PRODUCT_GB = 'MILEAGE';
-            } else if ($stateParams.menu == 'cummerce') {
-                $scope.search.PRODUCT_GB = 'CUMMERCE';
-            }
-
-            if(idx == 0){
-                $scope.search.PRODUCT_TYPE = 'ALL';
-                $scope.selectPhoto = 'ALL';
-            }else{
-                $scope.search.PRODUCT_TYPE = $scope.selectIdx;
-            }
-
-            $scope.PAGE_NO = 1;
-            $scope.PAGE_SIZE = 9;
-            $scope.SEARCH_TOTAL_COUNT = 0;
-
-            $scope.list = [];
-            $scope.click_showPeopleBoardList();
-        };
+//        $scope.click_selectTab = function (idx) {
+//            $scope.selectIdx = idx;
+//
+//            if ($stateParams.menu == 'mileagemall') {
+//                $scope.search.PRODUCT_GB = 'MILEAGE';
+//            } else if ($stateParams.menu == 'cummerce') {
+//                $scope.search.PRODUCT_GB = 'CUMMERCE';
+//            }
+//
+//            if(idx == 0){
+//                $scope.search.PRODUCT_TYPE = 'ALL';
+//                $scope.selectPhoto = 'ALL';
+//            }else{
+//                $scope.search.PRODUCT_TYPE = $scope.selectIdx;
+//            }
+//
+//            $scope.PAGE_NO = 1;
+//            $scope.PAGE_SIZE = 9;
+//            $scope.SEARCH_TOTAL_COUNT = 0;
+//
+//            $scope.list = [];
+//            $scope.click_showPeopleBoardList();
+//        };
 
         // 조회 화면 이동
         $scope.click_showViewPeoplePhoto = function (key) {
@@ -215,11 +215,18 @@ define([
                 return;
             }
 
-            $location.url('/moms/productreview/edit/0');
+            $location.url('/moms/storereview/edit/0');
         }
 
-        $scope.init();
-        $scope.click_showPeopleBoardList();
+//        $scope.init();
+//        $scope.click_showPeopleBoardList();
+
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.click_showPeopleBoardList)
+            ['catch']($scope.reportProblems);
+
 
     }]);
 });

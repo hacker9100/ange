@@ -410,6 +410,8 @@ define([
                 $scope.item.ORDER_ST = 1;
                 $scope.item.PRODUCT_NO = item.PRODUCT_NO;
                 $scope.item.PRODUCT_NM = item.PRODUCT_NM;
+                $scope.item.PRICE = item.SUM_PRICE;
+
                 $scope.updateItem('ange/order', 'item', item.NO, $scope.item, false)
                     .then(function(){
                         dialogs.notify('알림', '주문취소 되었습니다.', {size: 'md'});

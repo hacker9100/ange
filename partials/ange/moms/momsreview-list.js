@@ -82,6 +82,9 @@ define([
             } else if ($stateParams.menu == 'dolreview') {
                 $scope.community = "앙쥬돌 후기";
                 $scope.search['TARGET_GB'] = 'DOL';
+            }else if ($stateParams.menu == 'storereview') {
+                $scope.community = "스토어 후기";
+                $scope.search['TARGET_GB'] = 'STORE';
             }
 
             console.log($scope.menu.COMM_NO);

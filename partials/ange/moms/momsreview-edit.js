@@ -148,6 +148,11 @@ define([
                 $scope.search['TARGET_GB'] = 'DOL';
                 $scope.menu = 'dolreview';
                 $scope.item.MENU = 'DOL';
+            } else if ($stateParams.menu == 'storereview') {
+                $scope.community = "스토어 후기";
+                $scope.search['TARGET_GB'] = 'STORE';
+                $scope.menu = 'storereview';
+                $scope.item.MENU = 'STORE';
             }
 
             $scope.search.USER_ID = true;
@@ -280,6 +285,9 @@ define([
                 }else if ($stateParams.menu == 'dolreview') {
                     $scope.item.TARGET_GB = 'DOL';
                     $scope.item.MENU = 'DOL';
+                }else if ($stateParams.menu == 'storereview') {
+                    $scope.item.TARGET_GB = 'STORE';
+                    $scope.item.MENU = 'STORE';
                 }
             }else{
                 $scope.item.TARGET_GB = $scope.item.MENU;
@@ -310,6 +318,8 @@ define([
                             $location.url('/moms/bookreview/list');
                         }else if ($stateParams.menu == 'dolreview') {
                             $location.url('/moms/dolreview/list');
+                        }else if ($stateParams.menu == 'storereview') {
+                            $location.url('/moms/storereview/list');
                         }
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -336,6 +346,8 @@ define([
                             $location.url('/moms/bookreview/list');
                         }else if ($stateParams.menu == 'dolreview') {
                             $location.url('/moms/dolreview/list');
+                        }else if ($stateParams.menu == 'storereview') {
+                            $location.url('/moms/storereview/list');
                         }
 
                     })

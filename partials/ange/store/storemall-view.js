@@ -69,7 +69,7 @@ define([
             }
 
             // 리뷰 리스트
-            $scope.search.TARGET_GB = 'PRODUCT';
+            $scope.search.TARGET_GB = 'STORE';
             $scope.search.TARGET_NO = $stateParams.id;
 
         };
@@ -305,7 +305,7 @@ define([
                 return;
             }
 
-            $location.url('/moms/productreview/edit/0');
+            $location.url('/moms/storereview/edit/0');
         }
 
         // 조회 화면 이동
@@ -345,15 +345,17 @@ define([
         };
 
         /********** 화면 초기화 **********/
-/*        $scope.getSession()
+        $scope.getSession()
             .then($scope.sessionCheck)
             .then($scope.init)
-            .then($scope.getCmsBoard)
-            ['catch']($scope.reportProblems);*/
-        $scope.init();
-        $scope.getPeopleBoard();
-        $scope.getReviewList();
-        $scope.getProductList();
+            .then($scope.getPeopleBoard)
+            .then($scope.getReviewList)
+            .then($scope.getProductList)
+            ['catch']($scope.reportProblems);
+//        $scope.init();
+//        $scope.getPeopleBoard();
+//        $scope.getReviewList();
+//        $scope.getProductList();
         //s$scope.addSumPrice($scope.item.PRICE, 1 , 0);
 
     }]);
