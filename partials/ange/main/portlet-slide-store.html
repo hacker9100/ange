@@ -1,14 +1,14 @@
 <div class="comp_goods">
     <div class="row mini_event_contentlist" style="margin:0px;">
 
-        <div class="col-xs-3" style="padding:0;">
+        <div class="col-xs-3" style="padding:0; z-index:50; ">
             <div class="mini_mileagemall_menuwrap">
 
                 <dl>
-                    <dt><span class="glyphicon glyphicon-shopping-cart" style="float:left; font-size: 1.24em; margin-top:12px; margin-right:4px; vertical-align:middle; "></span> 앙쥬 마일리지몰</dt>
-                    <div ng-repeat="item in category" ng-click="click_selectCategory($index, item)">
-                        <dd ng-class="$index == curIdx ? 'selected' : ''">{{ item.CATEGORY_NM }}</dd>
-                    </div>
+                    <dt><span class="glyphicon glyphicon-shopping-cart" style="float:left; font-size: 1.24em; margin-top:12px; margin-right:4px; vertical-align:middle; "></span> 마일리지몰</dt>
+                    <!--<div style="border:1px solid red;">-->
+                        <dd ng-class="$index == curIdx ? 'selected' : ''" ng-repeat="item in category" ng-click="click_selectCategory($index, item)">{{ item.CATEGORY_NM }}</dd>
+                    <!--</div>-->
                 </dl>
 
             </div>
@@ -18,7 +18,7 @@
         <a class="comp_slide_btn_w30 prev" title="이전" ng-click="click_slickPrev()" style="margin-left:25%;">이전</a>
         <a class="comp_slide_btn_w30 next" title="다음" ng-click="click_slickNext()">다음</a>
 
-        <slick id="{{option.id}}" init-onload="true" data="list" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="3" autoplay-speed="3000" fade="false" pause-on-hover="false">
+        <slick id="{{option.id}}" init-onload="true" data="list" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="3" autoplay-speed="3000" fade="false" pause-on-hover="false" style="z-index:49;">
             <div ng-repeat="item in list" class="col-xs-3 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">
                 <div class="mini_event_content" style="border:none; text-align:center;">
                     <a href="{{ item.URL }}">

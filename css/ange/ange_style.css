@@ -1420,6 +1420,15 @@ a.footer_blogto:hover, a.footer_blogto:focus {	background-position: left -16px; 
     }
 }
 
+@media (max-width: 768px) {
+    .col_mobile_left {
+        padding-right:0;
+    }
+    .col_mobile_right {
+        padding-left:0;
+    }
+}
+
 .v-cell-1, .v-cell-2, .v-cell-3, .v-cell-4 {
     margin:0;
     padding:0;
