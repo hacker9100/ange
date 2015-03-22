@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('product-edit', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('product-edit', ['$scope', '$stateParams', '$location', '$timeout', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, $timeout, dialogs, UPLOAD) {
 
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
@@ -28,7 +28,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('cms/category', 'list', {}, {SYSTEM_GB: 'ANGE'}, false)
+            $scope.getList('cms/category', 'list', {}, {}, false)
                 .then(function(data){
                     $scope.category = data;
 
@@ -40,7 +40,7 @@ define([
 
                         if (item.CATEGORY_GB == 'STORE' && item.PARENT_NO == '1' && item.CATEGORY_ST == '0') {
                             category_a.push(item);
-                        } else if (item.CATEGORY_GB == 'STORE' && item.PARENT_NO == '2' && item.CATEGORY_ST == '0') {
+                        } else if (item.CATEGORY_GB == '2' && item.PARENT_NO == '73' && item.CATEGORY_ST == '0') {
                             category_b.push(item);
                         }
                     }
@@ -62,7 +62,6 @@ define([
         /********** 이벤트 **********/
         // 게시판 목록 이동
         $scope.click_showProductList = function () {
-            alert(0)
             history.back();
 //            $location.url('/product/list');
         };
@@ -72,38 +71,40 @@ define([
             if ($stateParams.id != 0) {
                 $scope.getItem('ange/product', 'item', $stateParams.id, {}, false)
                     .then(function(data){
-                        $scope.item = data;
-                        $scope.item.STOCK_FL == 'Y' ? $scope.item.STOCK_FL = true : $scope.item.STOCK_FL = false;
+                        $timeout(function() {
+                            $scope.item = data;
+                            $scope.item.STOCK_FL == 'Y' ? $scope.item.STOCK_FL = true : $scope.item.STOCK_FL = false;
 
-                        for (var i in $scope.product_gb) {
-                            if ($scope.product_gb[i].value == $scope.item.PRODUCT_GB) {
-                                $scope.item.PRODUCT_GB = $scope.product_gb[i];
-                                break;
-                            }
-                        }
-
-                        for (var i in data.CATEGORY) {
-                            if (data.CATEGORY[i].PARENT_NO == 1) {
-                                for (var j in $scope.category_a) {
-                                    if ($scope.category_a[j].NO == data.CATEGORY[i].NO) {
-                                        $scope.category_1 = $scope.category_a[j];
-                                        break;
-                                    }
-                                }
-                            } else if (data.CATEGORY[i].PARENT_NO == 2) {
-                                for (var j in $scope.category_b) {
-                                    if ($scope.category_b[j].NO == data.CATEGORY[i].NO) {
-                                        $scope.category_2 = $scope.category_b[j];
-                                        break;
-                                    }
+                            for (var i in $scope.product_gb) {
+                                if ($scope.product_gb[i].value == $scope.item.PRODUCT_GB) {
+                                    $scope.item.PRODUCT_GB = $scope.product_gb[i];
+                                    break;
                                 }
                             }
-                        }
 
-                        var files = data.FILES;
-                        for (var i in files) {
-                            $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","vsersion":6,"kind":files[i].FILE_GB});
-                        }
+                            for (var i in data.CATEGORY) {
+                                if (data.CATEGORY[i].PARENT_NO == 1) {
+                                    for (var j in $scope.category_a) {
+                                        if ($scope.category_a[j].NO == data.CATEGORY[i].NO) {
+                                            $scope.category_1 = $scope.category_a[j];
+                                            break;
+                                        }
+                                    }
+                                } else if (data.CATEGORY[i].PARENT_NO == 73) {
+                                    for (var j in $scope.category_b) {
+                                        if ($scope.category_b[j].NO == data.CATEGORY[i].NO) {
+                                            $scope.category_2 = $scope.category_b[j];
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+
+                            var files = data.FILES;
+                            for (var i in files) {
+                                $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":UPLOAD.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":UPLOAD.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"deleteUrl":UPLOAD.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE","vsersion":6,"kind":files[i].FILE_GB});
+                            }
+                        }, 500);
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

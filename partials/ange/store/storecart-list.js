@@ -302,7 +302,7 @@ define([
             $rootScope.orderlist = list;
 
             var cnt = list.length;
-            if($scope.product_gb == 'mileage'){
+            if($scope.product_gb == 'MILEAGE'){
                 if(cnt > 2){
                     dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
                     return;

@@ -61,7 +61,6 @@
                                                 <!--<dd><strong>후기작성기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></dd>-->
                                                 <dd><strong>배송비</strong><span class="table_gray" style="margin-left:8px;">{{item.ada_option_delivery}}원</span></dd>
                                                 <!--<dd><strong>선물</strong><span class="table_gray" style="margin-left:8px;">{{item.GIFT_NM}}</span></dd>-->
-                                                <dd><strong>홈페이지</strong><span class="table_gray" style="margin-left:8px;"><a ng-href="{{item.ada_url}}"><!--{{item.COMPANY_NM}}-->{{item.ada_url}}</a></span></dd>
                                                 <dd><strong>현재응모자수</strong><span class="table_gray" style="margin-left:8px;"><span class="table_red">{{item.ada_count_request}}</span>명<!--({{item.HIT_CNT}} 조회)--></span></dd>
                                             </dl>
                                         </div>
@@ -104,7 +103,7 @@
                                         <!--<img src="http://ad.ange.co.kr/adm/upload/newange_event01.jpg" alt="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." title="앙쥬시즌2 댓글이벤트에 오신것을 환영합니다." style="width:100%;"><a href="http://new.ange.co.kr/story/content/list" title="앙쥬스토리 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event02.jpg" alt="앙쥬스토리 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/people/home" title="앙쥬피플 체험페이지 방문" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event03.jpg" alt="앙쥬피플 체험페이지 방문" style="width:100%;"></a><a href="http://new.ange.co.kr/moms/home" title="앙쥬맘스 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event04.jpg" alt="앙쥬맘스 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event05.jpg" alt="마이앙쥬 둘러보러 가기" style="width:100%;"><a href="http://new.ange.co.kr/store/home" title="앙쥬스토어 둘러보러 가기" target="_blank"><img src="http://ad.ange.co.kr/adm/upload/newange_event06.jpg" alt="앙쥬스토어 둘러보러 가기" style="width:100%;"></a><img src="http://ad.ange.co.kr/adm/upload/newange_event07.jpg" alt="아래 댓글을 작성하면 자동응모됩니다" title="아래 댓글을 작성하면 자동응모됩니다" style="width:100%;">-->
                                         <div ng-if="tempEvent" id="content" ng-bind-html="item.ada_detail"></div>
 
-                                        <div ng-if="item.ada_image == '' || item.ada_image == null ||  item.ada_image == undefined" ng-bind-html="renderHtml"></div>
+                                        <div ng-if="item.ada_image == '' || item.ada_image == null ||  item.ada_image == undefined || item.item.ada_text != ''" ng-bind-html="renderHtml"></div>
                                         <!--<div ng-if="item.ada_image != '' || item.ada_image != null ||  item.ada_image != undefined" ng-bind-html="renderHtml"></div>-->
                                         <!--<div ng-if="item.ada_text != ''" ng-bind-html="renderHtml"></div>-->
 

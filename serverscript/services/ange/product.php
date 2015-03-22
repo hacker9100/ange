@@ -666,6 +666,7 @@ switch ($_method) {
                         COMPANY_NO = '".$_model[COMPANY_NO]."',
                         COMPANY_NM = '".$_model[COMPANY_NM]."',
                         BODY = '".$_model[BODY]."',
+                        URL = '".$_model[URL]."',
                         PRICE = ".$_model[PRICE].",
                         SUM_IN_CNT = ".$_model[SUM_IN_CNT].",
                         SUM_OUT_CNT = ".$_model[SUM_OUT_CNT].",

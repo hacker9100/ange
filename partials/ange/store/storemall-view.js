@@ -235,6 +235,13 @@ define([
         // 장바구니추가
         $scope.click_addcart = function (){
 
+            if($stateParams.menu == 'mileagemall'){
+                if($scope.total() > $rootScope.mileage){
+                    dialogs.notify('알림', '잔여 마일리지가 부족합니다', {size: 'md'});
+                    return;
+                }
+            }
+
             $scope.item.CART = $scope.productsList;
 
             $scope.insertItem('ange/cart', 'item', $scope.item, false)
@@ -250,10 +257,15 @@ define([
         }
 
         // 전체 금액 계산
-       $scope.addSumPrice = function(price, cnt, index){
-            $scope.productsList[index].TOTAL_PRICE += price * cnt;
+        $scope.addSumPrice = function(price, cnt, index){
+            if(cnt > 2){
+                dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
+                $scope.productsList[index].PRODUCT_CNT = 0;
+                return;
+            }
 
-       }
+            $scope.productsList[index].TOTAL_PRICE += price * cnt;
+        }
 
         // 전체 합계
         $scope.total = function() {
@@ -283,7 +295,7 @@ define([
                     return;
                 }
 
-                if($scope.TOTAL_MILEAGE > $scope.user_info.MILEAGE.REMAIN_POINT){
+                if($scope.TOTAL_MILEAGE > $rootScope.mileage){
                     dialogs.notify('알림', '잔여 마일리지가 부족합니다', {size: 'md'});
                     return;
                 }
@@ -332,7 +344,7 @@ define([
 
         // 슬라이드 이미지 조회
         $scope.getProductList = function (api) {
-            $scope.getList($scope.option.api, 'list', {NO:0, SIZE:9}, {FILE: true, PRODUCT_GB: 'MILEAGE', NOT_PRODUCT_NO: $stateParams.id}, true)
+            $scope.getList('ange/product', 'list', {NO:0, SIZE:9}, {FILE: true, PRODUCT_GB: 'MILEAGE', NOT_PRODUCT_NO: $stateParams.id}, true)
                 .then(function(data){
                     for (var i in data) {
                         data[i].PRODUCT_FILE = CONSTANT.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;
