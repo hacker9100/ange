@@ -208,7 +208,7 @@
                                                             <div class="people_photo_imgbox">
                                                                 <img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
                                                             </div>
-                                                            <div class="people_photo_txt">{{item.PRODUCT_NM}}<span ng-if="item.SUM_IN_CNT <= item.SUM_OUT_CNT">(품절)</span></div>
+                                                            <div class="people_photo_txt">{{item.PRODUCT_NM}}<span ng-if="item.SUM_CNT <= 0">(품절)</span></div>
                                                             <div class="people_photo_info"><span class="table_blue">{{item.PRICE}}</span> P</div>
                                                         </div>  <!-- /.people_photo_content -->
                                                     </div>  <!-- /.people_photo_contentcol -->
