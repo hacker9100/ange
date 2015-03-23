@@ -15,6 +15,7 @@ define([
 
         $scope.search = {};
         $scope.item = {};
+        $scope.sumitem = {};
 
        /* $('.mileagelist').removeClass('hide');
         $('.cummercelist').addClass('hide');*/
@@ -23,6 +24,8 @@ define([
         $scope.cummerce = false;
 
         $(document).ready(function() {
+
+
 
 //            $("input:radio:first").prop("checked", true).trigger("click");
             $('input:radio[class=product_gb][id=cartmileage]').prop('checked', true);
@@ -69,13 +72,55 @@ define([
             }
         });
 
+        $scope.click_mileageall = function(){
+            //클릭되었으면
+            if($("#checkmileageall").is(":checked")){
+                //alert();
+                $(".checkmileage").prop("checked",true);
+            }else{ //클릭이 안되있으면
+                $(".checkmileage").prop("checked",true);
+            }
+        }
+
          // 초기화
         $scope.init = function() {
+
+            $scope.item.CART = $scope.productsList;
 
             $scope.step = '01';
             $scope.community = "장바구니";
 
             $rootScope.info = {};
+
+            // 회원정보 신청폼에 셋팅
+//            $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
+//                .then(function(data){
+//
+//                    $rootScope.item = data;
+//
+//                })
+//                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+            if($rootScope.mileagecartlist != ''){
+
+                $scope.sumitem.CART = $rootScope.mileagecartlist;
+
+                $scope.insertItem('ange/order', 'sumitem', $scope.sumitem, false)
+                    .then(function(){
+                    })
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }
+
+            if($rootScope.cummercecartlist != ''){
+
+                $scope.sumitem.CART = $rootScope.cummercecartlist;
+
+                $scope.insertItem('ange/order', 'sumitem', $scope.sumitem, false)
+                    .then(function(){
+                    })
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }
+
         };
 
         $scope.click_cartlist = function(){
@@ -202,6 +247,7 @@ define([
                 $scope.mileage_open = 'Y';
                 $scope.sum_price += parseInt($scope.mileagelist[idx].TOTAL_PRICE);
                 $scope.total_mileage = parseInt($scope.user_info.REMAIN_POINT - $scope.sum_price);
+                $(".checkmileageall").prop("checked",true);
 
             }else{
                 $scope.mileage_open = 'N';
@@ -301,7 +347,11 @@ define([
 
             $rootScope.orderlist = list;
 
-            var cnt = list.length;
+            //var cnt = list.length;
+            var cnt = $(".checkmileage").length;
+
+            console.log(cnt);
+
             if($scope.product_gb == 'MILEAGE'){
                 if(cnt > 2){
                     dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
@@ -343,6 +393,9 @@ define([
                     .then(function(data){
 
                         $rootScope.info = data;
+
+                        $scope.item.ZIP_CODE1 = data.ZIP_CODE.substr(0,3);
+                        $scope.item.ZIP_CODE2 = data.ZIP_CODE.substr(3,3);
 
                         $scope.item.USER_ID = data.USER_ID;
                         $scope.item.RECEIPTOR_NM = data.USER_NM;
@@ -455,7 +508,7 @@ define([
 
             // 상품 주문 등록
             $scope.insertItem('ange/order', 'item', $scope.item, false)
-                .then(function(){
+                .then(function(data){
                     $scope.step = 3;
                     $rootScope.REQUEST_NOTE = $scope.item.REQUEST_NOTE;
 
@@ -471,6 +524,7 @@ define([
 
                     $scope.PAY_INFO = $scope.item.PAY_GB;
 
+                    $rootScope.mileage = data.mileage;
                     $scope.orderlist();
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -491,16 +545,18 @@ define([
                         $scope.getItem('com/user', 'item', $scope.uid, {} , false)
                             .then(function(data){
 
-                                $scope.item.USER_ID = data.USER_ID;
-                                $scope.item.USER_NM = data.USER_NM;
-                                $scope.item.NICK_NM = data.NICK_NM;
-                                $scope.item.ADDR = data.ADDR;
-                                $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
-                                $scope.item.REG_DT = data.REG_DT;
-                                $scope.item.REG_DT = data.REG_DT;
-                                $scope.item.PHONE_1 = data.PHONE_1;
-                                $scope.item.PHONE_2 = data.PHONE_2;
-                                $scope.item.BLOG_URL = data.BLOG_URL;
+//                                $scope.item.USER_ID = data.USER_ID;
+//                                $scope.item.USER_NM = data.USER_NM;
+//                                $scope.item.NICK_NM = data.NICK_NM;
+//                                $scope.item.ADDR = data.ADDR;
+//                                $scope.item.ADDR_DETAIL = data.ADDR_DETAIL;
+//                                $scope.item.REG_DT = data.REG_DT;
+//                                $scope.item.REG_DT = data.REG_DT;
+//                                $scope.item.PHONE_1 = data.PHONE_1;
+//                                $scope.item.PHONE_2 = data.PHONE_2;
+//                                $scope.item.BLOG_URL = data.BLOG_URL;
+
+                                $scope.item = data;
 
                             })
                             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -599,10 +655,16 @@ define([
         }
 
         /********** 이벤트 **********/
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.cartList)
+            .then($scope.cartCummerceList)
+            ['catch']($scope.reportProblems);
 
-        $scope.init();
-
-        $scope.cartList();
-        $scope.cartCummerceList();
+//        $scope.init();
+//
+//        $scope.cartList();
+//        $scope.cartCummerceList();
     }]);
 });

@@ -122,15 +122,18 @@ switch ($_method) {
 
             $sql = "SELECT   NO, PRODUCT_CNT, SUM_PRICE, PRODUCT_NO, USER_ID, ORDER_DT,DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_DT,
                             CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_GB_NM, PRODUCT_NM, PRODUCT_GB, TOTAL_COUNT, PRICE, ORDER_GB,ORDER_ST,
-                            CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, PARENT_PRODUCT_NM, PRODUCT_CODE, DIRECT_PRICE
+                            CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE, DIRECT_PRICE
                     FROM (
-                                SELECT AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.PRODUCT_NO, AC.USER_ID,  AC.ORDER_GB, AP.PRODUCT_NM, AP.PRODUCT_GB, AP.PRICE, AC.ORDER_DT, AC.ORDER_ST,
-                                			(SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO) AS PROGRESS_ST, AP.PARENT_NO,
-                                        (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AP.PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE,
-                                        AP.DIRECT_PRICE
-                                FROM ANGE_ORDER AC ,ANGE_PRODUCT AP
+                                SELECT AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.PRODUCT_NO, AC.USER_ID, AC.ORDER_DT, AC.ORDER_ST,
+                                        PRODUCT_CODE, AC.ORDER_GB,
+                                        (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AC.PRODUCT_NO) AS PRODUCT_NM,
+                                        (SELECT PRODUCT_GB FROM ANGE_PRODUCT WHERE NO = AC.PRODUCT_NO) AS PRODUCT_GB,
+                                        (SELECT PRICE FROM ANGE_PRODUCT WHERE NO = AC.PRODUCT_NO) AS PRICE,
+                                        (SELECT PARENT_NO FROM ANGE_PRODUCT WHERE NO = AC.PRODUCT_NO) AS PARENT_NO,
+                                        (SELECT  DIRECT_PRICE FROM ANGE_PRODUCT WHERE NO = AC.PRODUCT_NO) AS DIRECT_PRICE,
+                                			  (SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO AND PRODUCT_CODE = AC.PRODUCT_CODE) AS PROGRESS_ST
+                                FROM ANGE_ORDER AC
                                 WHERE  1 = 1
-                                 AND AC.PRODUCT_NO = AP.NO
                                  AND AC.USER_ID = '".$_SESSION['uid']."'
                                 ".$search_where."
                               ORDER BY NO DESC
@@ -139,9 +142,8 @@ switch ($_method) {
                     (SELECT @RNUM := 0) R,
                     (
                             SELECT COUNT(*) AS TOTAL_COUNT
-                            FROM ANGE_ORDER AC ,ANGE_PRODUCT AP
+                            FROM ANGE_ORDER AC
                                 WHERE  1 = 1
-                                 AND AC.PRODUCT_NO = AP.NO
                             AND AC.USER_ID = '".$_SESSION['uid']."'
                             ".$search_where."
                     ) CNT
@@ -361,6 +363,8 @@ switch ($_method) {
                 $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
             }
 
+            $_total_mileage = 0;
+
             // 주문코드 생성
             /*$sql = "SELECT if (IFNULL(MAX(NO), 0)+1, CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B)),CONCAT('AB',DATE_FORMAT(NOW(),'%Y%m%d'),(SELECT IFNULL(MAX(NO), 0)+1 AS CNT FROM ANGE_ORDER B))) AS PRODUCT_CODE
                     FROM ANGE_ORDER";
@@ -369,6 +373,7 @@ switch ($_method) {
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                 $_model[PRODUCT_CODE] = $row[PRODUCT_CODE];
             }*/
+
 
             if (isset($_model[ORDER]) && $_model[ORDER] != "") {
                 foreach ($_model[ORDER] as $e) {
@@ -433,6 +438,10 @@ switch ($_method) {
                                 USER_ID = '".$_SESSION['uid']."'
                             ";
                         $_d->sql_query($sql);
+
+                        //$_SESSION['mileage'] = $_SESSION['mileage'] - $e[TOTAL_PRICE];
+                        $_total_mileage += $e[TOTAL_PRICE];
+
                     }
 
                     // 상품구분이 존재하면서 구분값이 경매소일때
@@ -473,6 +482,24 @@ switch ($_method) {
                     }
                 }
             }
+
+            if ($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if ($err > 0) {
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            } else {
+
+                $_SESSION['mileage'] = $_SESSION['mileage'] - $_total_mileage;
+
+                $_d->sql_commit();
+                $_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
+                //$_d->succEnd($no);
+            }
+
         }else if($_type == "namingitem"){
             if (!isset($_SESSION['uid'])) {
                 $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
@@ -576,22 +603,82 @@ switch ($_method) {
                             '".$_model[REQUEST_NOTE]."'
                         )";
             $_d->sql_query($sql);
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            }else{
+                $_d->sql_commit();
+                $_d->succEnd($no);
+            }
+        }else if($_type == 'sumitem'){
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+            }
+
+            $_d->sql_beginTransaction();
+            if (isset($_model[CART]) && $_model[CART] != "") {
+                foreach ($_model[CART] as $e) {
+
+                    // 상품 재고 수정 SUM_IN_CNT(재고량) SUM_OUT_CNT(주문량)
+                    $sql = "UPDATE ANGE_PRODUCT
+                                SET
+                                    SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
+                                WHERE
+                                    NO = $e[PRODUCT_NO]
+                                ";
+                    $_d->sql_query($sql);
+
+                    if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
+
+                        $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
+                                       SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
+                                   FROM ANGE_PRODUCT
+                                   WHERE PARENT_NO = ".$e[PARENT_NO]."
+                                    ";
+
+                        $result = $_d->sql_query($sql,true);
+                        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                            $sql = "UPDATE ANGE_PRODUCT
+                                SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
+                                    SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
+                                WHERE NO = ".$e[PARENT_NO]."
+                            ";
+                            $_d->sql_query($sql);
+                        }
+                    }
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
+            }
+
+            if($_d->mysql_errno > 0) {
+                $err++;
+                $msg = $_d->mysql_error;
+            }
+
+            if($err > 0){
+                $_d->sql_rollback();
+                $_d->failEnd("등록실패입니다:".$msg);
+            }else{
+                $_d->sql_commit();
+                $_d->succEnd($no);
+            }
+
         }
 
-        if($_d->mysql_errno > 0) {
-            $err++;
-            $msg = $_d->mysql_error;
-        }
-
-        MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
-
-        if($err > 0){
-            $_d->sql_rollback();
-            $_d->failEnd("등록실패입니다:".$msg);
-        }else{
-            $_d->sql_commit();
-            $_d->succEnd($no);
-        }
 
         break;
 
@@ -677,6 +764,8 @@ switch ($_method) {
 
             $_d->sql_query($sql);
 
+            $_SESSION['mileage'] = $_SESSION['mileage'] + $_model[PRICE];
+
             $no = $_d->mysql_insert_id;
 
             if($_d->mysql_errno > 0) {
@@ -699,6 +788,7 @@ switch ($_method) {
             $sql = "INSERT INTO ANGE_ORDER_COUNSEL
                     (
                         PRODUCT_NO,
+                        PRODUCT_CODE,
                         SUBJECT,
                         BODY,
                         COUNSEL_ST,
@@ -707,6 +797,7 @@ switch ($_method) {
                         REG_DT
                     ) VALUES (
                         ".$_model[PRODUCT_NO].",
+                        ".$_model[PRODUCT_CODE].",
                         '".$_model[PRODUCT_NM]."',
                         '주문취소합니다',
                         1,
@@ -723,6 +814,8 @@ switch ($_method) {
             }else{
                 $_d->sql_commit();
                 $_d->succEnd($no);
+                //$_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
+
             }
         }
 

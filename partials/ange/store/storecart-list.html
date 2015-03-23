@@ -89,7 +89,7 @@
                                                     <thead>
                                                         <tr class="board_thead" height="48" align="center">
                                                             <td width="15">
-                                                                <span class="board_th"><input type="checkbox" style="float:none;"></span>
+                                                                <span class="board_th"><input type="checkbox" class="checkmileageall" id="checkmileageall" style="float:none;"></span>
                                                             </td>
                                                             <td colspan="2"><span class="board_th">상품정보</span></td>
                                                             <td width="88"><span class="board_th">금액</span></td>
@@ -103,7 +103,7 @@
                                                         <tr style="border-bottom:1px solid #ddd;" ng-repeat="item in mileagelist">
                                                             <td class="table_no">
                                                                 <!-- 품절 또는 기간만료등으로 구매불가 상태일 경우에는 disabled -->
-                                                                <input type="checkbox" name="name"  model="item.selected" data-ng-disabled="item.SUM_IN_OUT == 0" id="name{{$index}}" ng-value="item" style="float:none;" ng-click="click_sumprice(item.PRODUCT_GB,$index);">
+                                                                <input type="checkbox" name="name"  model="item.selected" class="checkmileage" data-ng-disabled="item.SUM_IN_OUT == 0" id="name{{$index}}" ng-value="item" style="float:none;" ng-click="click_sumprice(item.PRODUCT_GB,$index);">
                                                             </td>
                                                             <td class="table_title" style="width:70px; font-size: 0.92em;">
                                                                 <div class="cart_thumb" style="background-image: url('/imgs/ange/temp/mileagemall_01.jpg');">
@@ -397,9 +397,9 @@
                                                         <span class="col-xs-8 basicinfo input">
                                                             <div class="form-group" style="margin:0 5px">
                                                                 <div class="postno_search">
-                                                                    <input type="text" class="form-control postno_search" value="123" style="float:left; cursor:pointer; width:65px;  background-color: #fff;" disabled>
+                                                                    <input type="text" class="form-control postno_search" ng-model="item.ZIP_CODE1" style="float:left; cursor:pointer; width:65px;  background-color: #fff;" disabled>
                                                                     <span style="float:left; margin:0 4px;"> &dash; </span>
-                                                                    <input type="text" class="form-control postno_search"  value="456" style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
+                                                                    <input type="text" class="form-control postno_search"  ng-model="item.ZIP_CODE2" style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
                                                                 </div>
                                                             </div>
                                                         </span>
@@ -427,29 +427,29 @@
                                                         </span>
 
                                                         <span class="col-xs-2"></span>
-                                                        <span class="col-xs-10 basicinfo divide"></span>
+                                                        <!--<span class="col-xs-10 basicinfo divide"></span>-->
 
-                                                        <span class="col-xs-2 basicinfo title"></span>
-                                                        <span class="col-xs-2 basicinfo subtitle">
-                                                            <div class="form-group" style="margin:0 5px">도로명 주소</div>
-                                                        </span>
+                                                        <!--<span class="col-xs-2 basicinfo title"></span>-->
+                                                        <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                                            <!--<div class="form-group" style="margin:0 5px">도로명 주소</div>-->
+                                                        <!--</span>-->
 
-                                                        <span class="col-xs-8 basicinfo input">
-                                                            <div class="form-group" style="margin:0 5px">
-                                                                <input type="text" class="form-control inline_input" style="cursor:pointer; background-color: #fff;" disabled>
-                                                            </div>
-                                                        </span>
+                                                        <!--<span class="col-xs-8 basicinfo input">-->
+                                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                                <!--<input type="text" class="form-control inline_input" style="cursor:pointer; background-color: #fff;" disabled>-->
+                                                            <!--</div>-->
+                                                        <!--</span>-->
 
-                                                        <span class="col-xs-2 basicinfo title"></span>
-                                                        <span class="col-xs-2 basicinfo subtitle">
-                                                            <div class="form-group" style="margin:0 5px">도로명 상세</div>
-                                                        </span>
+                                                        <!--<span class="col-xs-2 basicinfo title"></span>-->
+                                                        <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                                            <!--<div class="form-group" style="margin:0 5px">도로명 상세</div>-->
+                                                        <!--</span>-->
 
-                                                        <span class="col-xs-8 basicinfo input">
-                                                            <div class="form-group" style="margin:0 5px">
-                                                                <input type="text" class="form-control" style="margin:0px;">
-                                                            </div>
-                                                        </span>
+                                                        <!--<span class="col-xs-8 basicinfo input">-->
+                                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                                <!--<input type="text" class="form-control" style="margin:0px;">-->
+                                                            <!--</div>-->
+                                                        <!--</span>-->
 
                                                     </div>  <!-- /.form_basicinfo -->
                                                 </div>  <!-- /.form_rows -->
@@ -584,9 +584,9 @@
                                                         <span class="col-xs-8 basicinfo input">
                                                             <div class="form-group" style="margin:0 5px">
                                                                 <div class="postno_search">
-                                                                    <input type="text" class="form-control postno_search" value="123"  style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
+                                                                    <input type="text" class="form-control postno_search" ng-model="item.ZIP_CODE1" style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
                                                                     <span style="float:left; margin:0 4px;"> &dash; </span>
-                                                                    <input type="text" class="form-control postno_search" value="456"  style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
+                                                                    <input type="text" class="form-control postno_search" ng-model="item.ZIP_CODE2"  style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
                                                                 </div>
                                                             </div>
                                                         </span>
@@ -614,29 +614,29 @@
                                                         </span>
 
                                                         <span class="col-xs-2"></span>
-                                                        <span class="col-xs-10 basicinfo divide"></span>
+                                                        <!--<span class="col-xs-10 basicinfo divide"></span>-->
 
-                                                        <span class="col-xs-2 basicinfo title"></span>
-                                                        <span class="col-xs-2 basicinfo subtitle">
-                                                            <div class="form-group" style="margin:0 5px">도로명 주소</div>
-                                                        </span>
+                                                        <!--<span class="col-xs-2 basicinfo title"></span>-->
+                                                        <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                                            <!--<div class="form-group" style="margin:0 5px">도로명 주소</div>-->
+                                                        <!--</span>-->
 
-                                                        <span class="col-xs-8 basicinfo input">
-                                                            <div class="form-group" style="margin:0 5px">
-                                                                <input type="text" class="form-control inline_input" style="cursor:pointer; background-color: #fff;" disabled>
-                                                            </div>
-                                                        </span>
+                                                        <!--<span class="col-xs-8 basicinfo input">-->
+                                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                                <!--<input type="text" class="form-control inline_input" style="cursor:pointer; background-color: #fff;" disabled>-->
+                                                            <!--</div>-->
+                                                        <!--</span>-->
 
-                                                        <span class="col-xs-2 basicinfo title"></span>
-                                                        <span class="col-xs-2 basicinfo subtitle">
-                                                            <div class="form-group" style="margin:0 5px">도로명 상세</div>
-                                                        </span>
+                                                        <!--<span class="col-xs-2 basicinfo title"></span>-->
+                                                        <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                                            <!--<div class="form-group" style="margin:0 5px">도로명 상세</div>-->
+                                                        <!--</span>-->
 
-                                                        <span class="col-xs-8 basicinfo input">
-                                                            <div class="form-group" style="margin:0 5px">
-                                                                <input type="text" class="form-control" style="margin:0px;">
-                                                            </div>
-                                                        </span>
+                                                        <!--<span class="col-xs-8 basicinfo input">-->
+                                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                                <!--<input type="text" class="form-control" style="margin:0px;">-->
+                                                            <!--</div>-->
+                                                        <!--</span>-->
 
                                                     </div>  <!-- /.form_basicinfo -->
                                                 </div>  <!-- /.form_rows -->
@@ -956,31 +956,31 @@
                                                                             </div>
                                                                         </span>
 
-                                                                        <span class="col-xs-2 basicinfo title"></span>
-                                                                        <span class="col-xs-2 basicinfo subtitle">
-                                                                            <div class="form-group" style="margin:0 5px">도로명 주소</div>
-                                                                        </span>
-                                                                        <span class="col-xs-8 basicinfo input">
-                                                                            <div class="form-group" style="margin:0 5px">
-                                                                                <span class="cart_bodytxt">{{item.RECEIPT_ADDR1}}&nbsp;{{item.RECEIPT_ADDR_DETAIL1}}</span>
-                                                                            </div>
-                                                                        </span>
+                                                                        <!--<span class="col-xs-2 basicinfo title"></span>-->
+                                                                        <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                                                            <!--<div class="form-group" style="margin:0 5px">도로명 주소</div>-->
+                                                                        <!--</span>-->
+                                                                        <!--<span class="col-xs-8 basicinfo input">-->
+                                                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                                                <!--<span class="cart_bodytxt">{{item.RECEIPT_ADDR1}}&nbsp;{{item.RECEIPT_ADDR_DETAIL1}}</span>-->
+                                                                            <!--</div>-->
+                                                                        <!--</span>-->
                                                     </div>  <!-- /.form_basicinfo -->
                                                 </div>  <!-- /.form_rows -->
 
-                                                <div class="row form_rows">
-                                                    <div class="form_basicinfo">
-                                                                        <span class="col-xs-2 basicinfo title">
-                                                                            <strong>유선전화</strong>
-                                                                        </span>
+                                                <!--<div class="row form_rows">-->
+                                                    <!--<div class="form_basicinfo">-->
+                                                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                                                            <!--<strong>유선전화</strong>-->
+                                                                        <!--</span>-->
 
-                                                                        <span class="col-xs-10 basicinfo input">
-                                                                            <div class="form" style="float:left; margin:0 5px">
-                                                                                <span class="cart_bodytxt">{{item.RECEIPT_PHONE1}}</span>
-                                                                            </div>
-                                                                        </span>
-                                                    </div>  <!-- /.form_basicinfo -->
-                                                </div>  <!-- /.form_rows -->
+                                                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                                                            <!--<div class="form" style="float:left; margin:0 5px">-->
+                                                                                <!--<span class="cart_bodytxt">{{item.RECEIPT_PHONE1}}</span>-->
+                                                                            <!--</div>-->
+                                                                        <!--</span>-->
+                                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
                                                 <div class="row form_rows">
                                                     <div class="form_basicinfo">
@@ -1043,7 +1043,7 @@
 
                                                                         <span class="col-xs-8 basicinfo input">
                                                                             <div class="form-group" style="margin:0 5px">
-                                                                                <span class="cart_bodytxt">123-456</span>
+                                                                                <span class="cart_bodytxt">{{item.ZIP_CODE1}}-{{item.ZIP_CODE2}}</span>
                                                                             </div>
                                                                         </span>
 
@@ -1057,31 +1057,31 @@
                                                                             </div>
                                                                         </span>
 
-                                                        <span class="col-xs-2 basicinfo title"></span>
-                                                                        <span class="col-xs-2 basicinfo subtitle">
-                                                                            <div class="form-group" style="margin:0 5px">도로명 주소</div>
-                                                                        </span>
-                                                                        <span class="col-xs-8 basicinfo input">
-                                                                            <div class="form-group" style="margin:0 5px">
-                                                                                <span class="cart_bodytxt">{{item.RECEIPT_ADDR}}&nbsp;{{item.RECEIPT_ADDR_DETAIL}}</span>
-                                                                            </div>
-                                                                        </span>
+                                                        <!--<span class="col-xs-2 basicinfo title"></span>-->
+                                                                        <!--<span class="col-xs-2 basicinfo subtitle">-->
+                                                                            <!--<div class="form-group" style="margin:0 5px">도로명 주소</div>-->
+                                                                        <!--</span>-->
+                                                                        <!--<span class="col-xs-8 basicinfo input">-->
+                                                                            <!--<div class="form-group" style="margin:0 5px">-->
+                                                                                <!--<span class="cart_bodytxt">{{item.RECEIPT_ADDR}}&nbsp;{{item.RECEIPT_ADDR_DETAIL}}</span>-->
+                                                                            <!--</div>-->
+                                                                        <!--</span>-->
                                                     </div>  <!-- /.form_basicinfo -->
                                                 </div>  <!-- /.form_rows -->
 
-                                                <div class="row form_rows">
-                                                    <div class="form_basicinfo">
-                                                                        <span class="col-xs-2 basicinfo title">
-                                                                            <strong>유선전화</strong>
-                                                                        </span>
+                                                <!--<div class="row form_rows">-->
+                                                    <!--<div class="form_basicinfo">-->
+                                                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                                                            <!--<strong>유선전화</strong>-->
+                                                                        <!--</span>-->
 
-                                                                        <span class="col-xs-10 basicinfo input">
-                                                                            <div class="form" style="float:left; margin:0 5px">
-                                                                                <span class="cart_bodytxt">{{item.RECEIPT_PHONE}}</span>
-                                                                            </div>
-                                                                        </span>
-                                                    </div>  <!-- /.form_basicinfo -->
-                                                </div>  <!-- /.form_rows -->
+                                                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                                                            <!--<div class="form" style="float:left; margin:0 5px">-->
+                                                                                <!--<span class="cart_bodytxt">{{item.RECEIPT_PHONE}}</span>-->
+                                                                            <!--</div>-->
+                                                                        <!--</span>-->
+                                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
                                                 <div class="row form_rows">
                                                     <div class="form_basicinfo">
@@ -1111,94 +1111,94 @@
                                                     </div>  <!-- /.form_basicinfo -->
                                                 </div>  <!-- /.form_rows -->
 
-                                                <div style="border-bottom:1px solid #333;">
-                                                                    <span class="table_gray" style="float:left; line-height: 40px; font-size:1.12em; margin-top:38px; ">
-                                                                        <strong>결제</strong>정보입력
-                                                                    </span>
-                                                </div>
+                                                <!--<div style="border-bottom:1px solid #333;">-->
+                                                                    <!--<span class="table_gray" style="float:left; line-height: 40px; font-size:1.12em; margin-top:38px; ">-->
+                                                                        <!--<strong>결제</strong>정보입력-->
+                                                                    <!--</span>-->
+                                                <!--</div>-->
 
 
 
-                                                <div class="moms_form_titlebar">
-                                                    | 결제 정보
-                                                </div>
+                                                <!--<div class="moms_form_titlebar">-->
+                                                    <!--| 결제 정보-->
+                                                <!--</div>-->
 
-                                                <div class="row form_rows">
-                                                    <div class="form_basicinfo">
-                                                                            <span class="col-xs-2 basicinfo title">
-                                                                                <strong>결제금액</strong>
-                                                                            </span>
-                                                                            <span class="col-xs-10 basicinfo input" style="padding-left:18px;">
-                                                                                <span class="table_blue">{{TOTAL_PRICE}}</span>
-                                                                            </span>
-                                                    </div>  <!-- /.form_basicinfo -->
-                                                </div>  <!-- /.form_rows -->
+                                                <!--<div class="row form_rows">-->
+                                                    <!--<div class="form_basicinfo">-->
+                                                                            <!--<span class="col-xs-2 basicinfo title">-->
+                                                                                <!--<strong>결제금액</strong>-->
+                                                                            <!--</span>-->
+                                                                            <!--<span class="col-xs-10 basicinfo input" style="padding-left:18px;">-->
+                                                                                <!--<span class="table_blue">{{TOTAL_PRICE}}</span>-->
+                                                                            <!--</span>-->
+                                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                                <div class="row form_rows">
-                                                    <div class="form_basicinfo">
-                                                                        <span class="col-xs-2 basicinfo title">
-                                                                            <strong>결제수단</strong>
-                                                                        </span>
+                                                <!--<div class="row form_rows">-->
+                                                    <!--<div class="form_basicinfo">-->
+                                                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                                                            <!--<strong>결제수단</strong>-->
+                                                                        <!--</span>-->
 
-                                                                        <span class="col-xs-10 basicinfo input">
-                                                                            <div style="font-size:0.86em; padding:5px 0 0 0; width:100%; line-height:20px; color:#333;">
-                                                                                <label>
-                                                                                    <input type="radio" name="pay_info_gb" id="pay_info_gb1" ng-value="CREDIT" style="margin-left:18px; vertical-align: top;">
-                                                                                    신용카드
-                                                                                </label>
-                                                                                <label>
-                                                                                    <input type="radio" name="pay_info_gb" id="pay_info_gb2" ng-value="NOBANKBOOK" style="margin-left:18px; vertical-align: top;">
-                                                                                    가상계좌(무통장입금)
-                                                                                </label>
-                                                                            </div>
-                                                                        </span>
-                                                    </div>  <!-- /.form_basicinfo -->
-                                                </div>  <!-- /.form_rows -->
+                                                                        <!--<span class="col-xs-10 basicinfo input">-->
+                                                                            <!--<div style="font-size:0.86em; padding:5px 0 0 0; width:100%; line-height:20px; color:#333;">-->
+                                                                                <!--<label>-->
+                                                                                    <!--<input type="radio" name="pay_info_gb" id="pay_info_gb1" ng-value="CREDIT" style="margin-left:18px; vertical-align: top;">-->
+                                                                                    <!--신용카드-->
+                                                                                <!--</label>-->
+                                                                                <!--<label>-->
+                                                                                    <!--<input type="radio" name="pay_info_gb" id="pay_info_gb2" ng-value="NOBANKBOOK" style="margin-left:18px; vertical-align: top;">-->
+                                                                                    <!--가상계좌(무통장입금)-->
+                                                                                <!--</label>-->
+                                                                            <!--</div>-->
+                                                                        <!--</span>-->
+                                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                                <div class="row form_rows" ng-if="PAY_INFO == 'CREDIT'">
-                                                    <div class="form_basicinfo">
-                                                                        <!-- 무통장 입금일 경우 -->
-                                                                        <span class="col-xs-2 basicinfo title">
-                                                                            <strong>가상계좌</strong>
-                                                                        </span>
-                                                                        <span class="col-xs-10 basicinfo input" style="font-size:0.92em; color:#2782ba;">
-                                                                            입금은행 : <strong>국민은행</strong> / 계좌번호 : <strong>123456-04-123456</strong> / 예금주 : <strong>(주)무크하우스</strong>
-                                                                        </span>
+                                                <!--<div class="row form_rows" ng-if="PAY_INFO == 'CREDIT'">-->
+                                                    <!--<div class="form_basicinfo">-->
+                                                                        <!--&lt;!&ndash; 무통장 입금일 경우 &ndash;&gt;-->
+                                                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                                                            <!--<strong>가상계좌</strong>-->
+                                                                        <!--</span>-->
+                                                                        <!--<span class="col-xs-10 basicinfo input" style="font-size:0.92em; color:#2782ba;">-->
+                                                                            <!--입금은행 : <strong>국민은행</strong> / 계좌번호 : <strong>123456-04-123456</strong> / 예금주 : <strong>(주)무크하우스</strong>-->
+                                                                        <!--</span>-->
 
-                                                                        <span class="col-xs-2 basicinfo title">
-                                                                            <strong>입금기한</strong>
-                                                                       </span>
-                                                                        <span class="col-xs-10 basicinfo input" style="font-size:0.92em;">
-                                                                            <strong>2015-01-22 자정까지</strong>
-                                                                            <span class="table_gray">(주문 후 7일 이내)</span>
-                                                                        </span>
-                                                                        <!-- /무통장 입금일 경우 -->
+                                                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                                                            <!--<strong>입금기한</strong>-->
+                                                                       <!--</span>-->
+                                                                        <!--<span class="col-xs-10 basicinfo input" style="font-size:0.92em;">-->
+                                                                            <!--<strong>2015-01-22 자정까지</strong>-->
+                                                                            <!--<span class="table_gray">(주문 후 7일 이내)</span>-->
+                                                                        <!--</span>-->
+                                                                        <!--&lt;!&ndash; /무통장 입금일 경우 &ndash;&gt;-->
 
-                                                                        <!-- 신용카드일 경우 -->
-                                                                        <span class="col-xs-2 basicinfo title">
-                                                                            <strong>신용카드</strong>
-                                                                        </span>
-                                                                        <span class="col-xs-10 basicinfo input" style="font-size:0.92em; color:#2782ba;">
-                                                                            <strong>신한카드</strong> / 할부 : <strong>일시불</strong>
-                                                                        </span>
-                                                                        <!-- /신용카드일 경우 -->
-                                                    </div>  <!-- /.form_basicinfo -->
-                                                </div>  <!-- /.form_rows -->
+                                                                        <!--&lt;!&ndash; 신용카드일 경우 &ndash;&gt;-->
+                                                                        <!--<span class="col-xs-2 basicinfo title">-->
+                                                                            <!--<strong>신용카드</strong>-->
+                                                                        <!--</span>-->
+                                                                        <!--<span class="col-xs-10 basicinfo input" style="font-size:0.92em; color:#2782ba;">-->
+                                                                            <!--<strong>신한카드</strong> / 할부 : <strong>일시불</strong>-->
+                                                                        <!--</span>-->
+                                                                        <!--&lt;!&ndash; /신용카드일 경우 &ndash;&gt;-->
+                                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                                <div class="row form_rows" style="margin-bottom:20px;" ng-if="PAY_INFO == 'NOBANKBOOK'">
-                                                    <div class="form_basicinfo">
-                                                                        <span class="col-xs-12 basicinfo input" style="padding:20px 40px; background-color: #f8f8f8;">
+                                                <!--<div class="row form_rows" style="margin-bottom:20px;" ng-if="PAY_INFO == 'NOBANKBOOK'">-->
+                                                    <!--<div class="form_basicinfo">-->
+                                                                        <!--<span class="col-xs-12 basicinfo input" style="padding:20px 40px; background-color: #f8f8f8;">-->
 
-                                                                            <ul class="store_warning" style="font-size:0.86em; line-height:20px; word-break:keep-all; color:#464646;">
-                                                                                <li>무통장 입금은 주문 후 7일 이내에 입금이 되지 않으면 자동주문취소됩니다.</li>
-                                                                                <li>입금확인은 수시 확인되며 입금 확인 시 배송이 진행됩니다.</li>
-                                                                                <li>제품은 입금 순으로 배송되므로 입금시점에 상품 재고 부족시에 취소될 수 있습니다.</li>
-                                                                                <li>입금계좌정보는 입력하신 이메일에서도 확인하실 수 있습니다.</li>
-                                                                                <li class="table_red">비회원 구매의 경우 주문번호를 입력하셔야 주문내역조회가 가능합니다.</li>
-                                                                            </ul>
-                                                                        </span>
-                                                    </div>  <!-- /.form_basicinfo -->
-                                                </div>  <!-- /.form_rows -->
+                                                                            <!--<ul class="store_warning" style="font-size:0.86em; line-height:20px; word-break:keep-all; color:#464646;">-->
+                                                                                <!--<li>무통장 입금은 주문 후 7일 이내에 입금이 되지 않으면 자동주문취소됩니다.</li>-->
+                                                                                <!--<li>입금확인은 수시 확인되며 입금 확인 시 배송이 진행됩니다.</li>-->
+                                                                                <!--<li>제품은 입금 순으로 배송되므로 입금시점에 상품 재고 부족시에 취소될 수 있습니다.</li>-->
+                                                                                <!--<li>입금계좌정보는 입력하신 이메일에서도 확인하실 수 있습니다.</li>-->
+                                                                                <!--<li class="table_red">비회원 구매의 경우 주문번호를 입력하셔야 주문내역조회가 가능합니다.</li>-->
+                                                                            <!--</ul>-->
+                                                                        <!--</span>-->
+                                                    <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
                                             </div>  <!-- /.sub_contents_body -->
 
