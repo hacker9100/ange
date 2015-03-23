@@ -75,13 +75,13 @@ define([
             } else if($stateParams.menu == 'qna') {
                 $scope.community = "문의/게시판";
                 $scope.menu = "qna";
-                $scope.VIEW_ROLE = 'CMS_ADMIN';
+                $scope.VIEW_ROLE = 'ANGE_ADMIN';
                 $scope.search.COMM_NO = 54;
                 $scope.search.COMM_GB = 'QNA';
             } else if($stateParams.menu == 'myqna') {
                 $scope.community = "내 질문과 답변";
                 $scope.menu = "myqna";
-                $scope.VIEW_ROLE = 'CMS_ADMIN';
+                $scope.VIEW_ROLE = 'ANGE_ADMIN';
                 $scope.search.COMM_NO = 55;
                 $scope.search.COMM_GB = 'QNA';
             }

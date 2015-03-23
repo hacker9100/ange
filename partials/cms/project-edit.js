@@ -57,7 +57,7 @@ define([
                 })
                 ['catch'](function(error){throw('시리즈:'+error);});
 
-            for (var i = 2010; i < nowYear + 5; i++) {
+            for (var i = 1999; i < nowYear + 2; i++) {
                 year.push(i+'');
             }
 

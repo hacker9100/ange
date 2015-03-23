@@ -32,7 +32,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            for (var i = nowYear - 5; i < nowYear + 5; i++) {
+            for (var i = 1999; i < nowYear + 2; i++) {
                 year.push(i+'');
             }
 

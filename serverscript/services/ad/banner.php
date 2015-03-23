@@ -131,7 +131,8 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if ($data && $_search[ADA_TYPE] == 'banner') {
+//                if ($data && $_search[ADA_TYPE] == 'banner') {
+                if ($data) {
                     for ($i=0; $row=$_d->sql_fetch_array($data); $i++) {
                         $sql2 = "INSERT INTO adm_history_banner
                         (

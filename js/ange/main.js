@@ -14,7 +14,7 @@ require.config({
     // require.js가 로딩되면 이 객체를 자동으로 읽어 들여 반영한다.
     // baseUrl은 JavaScript 파일들이 존재하는 base 위치를 지정한다.
     baseUrl: '/js/ange',
-    urlArgs: "bust=" +  (new Date()).getTime(),
+    urlArgs: "bust=" + (new Date()).getTime(),
 
     // paths는 baseUrl에서 지정한 경로에 존재하지 않는 모듈을 찾기위해서 경로를 매핑해준다.
     // 보통 맨뒤 js확장자는 별도롤 붙이지 않으며, 맨 뒤에 js를 붙이지 않아도 자동으로 js를 붙여서 찾아준다.

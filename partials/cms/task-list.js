@@ -37,7 +37,7 @@ define([
         $scope.init = function() {
             $scope.oneAtATime = true;
 
-            for (var i = nowYear - 5; i < nowYear + 5; i++) {
+            for (var i = 1999; i < nowYear + 2; i++) {
                 year.push(i+'');
             }
 
@@ -109,6 +109,7 @@ define([
 
         // 등록 버튼 클릭
         $scope.click_createNewTask = function () {
+            $location.url('/task/edit/0');
 //            if ($scope.isModal) $scope.openPopupEditTask(0);
 //            else $location.url('/task/edit/0');
         };
