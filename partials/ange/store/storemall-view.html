@@ -18,27 +18,27 @@
                             </div>
 
                             <!-- 체험단&이벤트 목록 -->
-                            <div class="row webzine_moms_list">
-                                <div class="col-xs-4 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
-                                        <div class="item" style="border:1px solid #ddd;">
-                                            <img ng-src="{{item.MAIN_FILE}}" style="width:100%;" />
+                            <div class="row webzine_store_list">
+                                <div class="col-xs-12 col-sm-4 no-margin">
+                                    <div class="comp_basic h-cell-dynamic no-margin">
+                                        <div class="webzine_store_featureimgbox">
+                                            <img class="webzine_store_featureimg" src="/imgs/ange/_blank.gif" style="width:100%; background-image:url({{item.MAIN_FILE}})" />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-xs-8 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-dynamic" style="width:100%; padding:2px 0px; padding-left:25px; margin:0px;">
+                                <div class="col-xs-12 col-sm-8 no-margin" >
+                                    <div class="comp_basic h-cell-dynamic no-margin">
 
-                                        <div class="">
+                                        <div class="store_col_info_wrap">
 
-                                            <p style="font-size:1.24em; line-height:22px; font-weight:600; word-break: keep-all;">{{item.PRODUCT_NM}}</p>
+                                            <div class="store_col_info_title">{{item.PRODUCT_NM}}</div>
 
                                             <div class="store_col_info">
                                                 <div class="store_list_item maininfo" ng-show="menu == 'mileage'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{PRICE}} P</span></div>
                                                 <div class="store_list_item maininfo" ng-show="menu == 'cummerce'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{PRICE}} 원</span></div>
                                                 <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{DELEIVERY_PRICE}} 원({{item.DELEIVERY_ST == 1 ? '착불' : '선불'}})</span></div>
-                                                <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">아이앤와이</span></div>
+                                                <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.COMPANY_NM}}</span></div>
                                                 <div class="store_list_item maininfo"><strong>수량</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.SUM_IN_CNT}}</span></div>
                                                 <div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" target="_blank" href="{{item.URL}}">{{item.URL}}</a></span></div>
                                                 <!--<div class="store_list_item maininfo"><strong>외부링크</strong>-->
@@ -50,19 +50,19 @@
 
 
                                             <div class="store_col_info">
-                                                <div class="store_list_item" style="width:100%; height:30px; line-height:24px;">
-                                                    <span class="" style="float:left; width:30%;">제품선택(필수)</span>
-                                                    <span class="" style="float:left; width:70%;" data-ng-show="products != null">
-                                                        <select ng-options="p.PRODUCT_NM for p in products" ng-model="item.PRODUCT_NO" class="form-control input-sm" ng-change="addProductList(item.PRODUCT_NO, item)">
-                                                            <option value="" selected>선택</option>
-                                                        </select>
-                                                    </span>
-                                                    <span class="" style="float:left; width:70%;" data-ng-show="products == null">
+                                                <div class="store_list_item" style="width:100%; line-height:24px;">
+                                                    <div class="store_list_item_label">제품선택(필수)</div>
+                                                    <div class="store_list_item_txt" data-ng-show="products != null">
                                                         <!--<select ng-options="p.PRODUCT_NM for p in item" ng-model="item.PRODUCT_NO" class="form-control input-sm" ng-change="addProductList(item.PRODUCT_NO, item)">
                                                             &lt;!&ndash;<option value="item.NO" selected>{{item.PRODUCT_NM}}</option>&ndash;&gt;
                                                             <option value="" selected>선택</option>
                                                         </select>-->
-                                                        <input type="checkbox" ng-model="item.PRODUCT_NO" id="checkProduct" ng-value="item.NO" ng-click="addcheckboxProductList(item, item)"> {{item.PRODUCT_NM}}
+                                                        <select ng-options="p.PRODUCT_NM for p in products" ng-model="item.PRODUCT_NO" class="form-control input-sm" ng-change="addProductList(item.PRODUCT_NO, item)">
+                                                            <option value="" selected>선택</option>
+                                                        </select>
+                                                    </div>
+                                                    <span class="store_list_item_txt" data-ng-show="products == null">
+                                                        <input type="checkbox" ng-model="item.PRODUCT_NO" id="checkProduct" ng-value="item.NO" ng-click="addcheckboxProductList(item, item)" checked> {{item.PRODUCT_NM}}
                                                     </span>
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
@@ -71,17 +71,17 @@
                                                 <!-- 제품을 선택하면 리스트 추가됨 -->
                                                 <div class="store_list_item" >
                                                     <input type="hidden" ng-model="product.NO"/>
-                                                    <span class="store_optiontitle">{{product.PRODUCT_NM}}</span>
-                                                    <span class="store_optionea">
+                                                    <div class="store_optiontitle">{{product.PRODUCT_NM}}</div>
+                                                    <div class="store_optionea">
                                                         <input type="text" ng-model="product.PRODUCT_CNT" numbers-only class="form-control input-sm" ng-change="addSumPrice(item.PRICE, product.PRODUCT_CNT, $index)" placeholder="" />
                                                         <span> 개</span>
                                                         <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>-->
 
-                                                    </span>
-                                                    <span class="store_optionprice">
+                                                    </div>
+                                                    <div class="store_optionprice">
                                                         {{item.PRICE * product.PRODUCT_CNT}}
                                                         <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeProduct($index);">x</button>
-                                                    </span>
+                                                    </div>
 
                                                     <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">x</button>-->
                                                 </div>
@@ -123,10 +123,15 @@
                                 <!-- store_view -->
                                 <div class="store_view_tab">
                                     <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
-                                        <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">상품안내</a></li>  <!--class="active"-->
-                                        <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''"><a ng-click="click_selectTab('2');">상품후기</a></li>
-                                        <li role="presentation" ng-class="selectIdx == '3' ? 'active' : ''"><a ng-click="click_selectTab('3');">관련상품</a></li>
-                                        <li role="presentation" ng-class="selectIdx == '4' ? 'active' : ''"><a ng-click="click_selectTab('4');">주의사항</a></li>
+                                        <!--<li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">상품안내</a></li>  &lt;!&ndash;class="active"&ndash;&gt;-->
+                                        <!--<li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''"><a ng-click="click_selectTab('2');">상품후기</a></li>-->
+                                        <!--<li role="presentation" ng-class="selectIdx == '3' ? 'active' : ''"><a ng-click="click_selectTab('3');">관련상품</a></li>-->
+                                        <!--<li role="presentation" ng-class="selectIdx == '4' ? 'active' : ''"><a ng-click="click_selectTab('4');">주의사항</a></li>-->
+
+                                        <li role="presentation" class="active"><a>상품안내</a></li>  <!--class="active"-->
+                                        <li role="presentation"><a ng-click="click_selectTab('2');">상품후기</a></li>
+                                        <li role="presentation"><a ng-click="click_selectTab('3');">관련상품</a></li>
+                                        <li role="presentation"><a ng-click="click_selectTab('4');">주의사항</a></li>
                                     </ul>
                                 </div>  <!-- /.store_view_tab -->
 
@@ -144,7 +149,14 @@
                                     </div><!-- /.row -->
                                 </div><!-- /.container -->
 
-
+                                <div class="store_view_tab">
+                                    <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
+                                        <li role="presentation"><a ng-click="click_selectTab('1');">상품안내</a></li>  <!--class="active"-->
+                                        <li role="presentation" class="active"><a>상품후기</a></li>
+                                        <li role="presentation"><a ng-click="click_selectTab('3');">관련상품</a></li>
+                                        <li role="presentation"><a ng-click="click_selectTab('4');">주의사항</a></li>
+                                    </ul>
+                                </div>  <!-- /.store_view_tab -->
                                 <div id="tabs-2" class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '2'" -->
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
@@ -247,10 +259,18 @@
                                 </div><!-- /.container -->
                                 <!-- /후기 -->
 
-
+                                <div class="store_view_tab">
+                                    <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
+                                        <li role="presentation"><a ng-click="click_selectTab('1');">상품안내</a></li>  <!--class="active"-->
+                                        <li role="presentation"><a ng-click="click_selectTab('2');">상품후기</a></li>
+                                        <li role="presentation" class="active"><a>관련상품</a></li>
+                                        <li role="presentation"><a ng-click="click_selectTab('4');">주의사항</a></li>
+                                    </ul>
+                                </div>  <!-- /.store_view_tab -->
                                 <div id="tabs-3" class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '3'" -->
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
+                                            같은 카테고리의 제품이 없습니다.
 
                                             <!--<div class="row" style="width:100%; margin:0px auto;">-->
 
@@ -404,12 +424,19 @@
                                 </div><!-- /.container -->
                                 <!-- /관련상품 -->
 
-
+                                <div class="store_view_tab">
+                                    <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
+                                        <li role="presentation"><a ng-click="click_selectTab('1');">상품안내</a></li>  <!--class="active"-->
+                                        <li role="presentation"><a ng-click="click_selectTab('2');">상품후기</a></li>
+                                        <li role="presentation"><a ng-click="click_selectTab('3');">관련상품</a></li>
+                                        <li role="presentation" class="active"><a>주의사항</a></li>
+                                    </ul>
+                                </div>  <!-- /.store_view_tab -->
                                 <div id="tabs-4"  class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '4'"-->
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
-                                            <ul class="store_warning" style="font-size:0.92em; color:#464646;">
+                                            <ul class="store_warning">
 
                                                 <li>부정적인 방법으로 마일리지 취득 시 공지없이 취득한 마일리지는 차감됩니다.</li>
                                                 <li>마일리지 상품은 모두 착불로 발송됩니다</li>
