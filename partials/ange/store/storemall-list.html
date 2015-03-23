@@ -204,11 +204,11 @@
                                                 <!-- 마일리지몰 썸네일 타입 -->
                                                 <div style="display: block;"  ng-show="menu == 'mileagemall'" ng-repeat='item in list'>
                                                     <div class="col-xs-4 people_photo_contentcol">
-                                                        <div ng-click="click_showViewPeoplePhoto(item.NO)" class="people_photo_content">
+                                                        <div ng-click="click_showViewPeoplePhoto(item)" class="people_photo_content">
                                                             <div class="people_photo_imgbox">
                                                                 <img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
                                                             </div>
-                                                            <div class="people_photo_txt">{{item.PRODUCT_NM}}</div>
+                                                            <div class="people_photo_txt">{{item.PRODUCT_NM}}<span ng-if="item.SUM_IN_CNT <= item.SUM_OUT_CNT">(품절)</span></div>
                                                             <div class="people_photo_info"><span class="table_blue">{{item.PRICE}}</span> P</div>
                                                         </div>  <!-- /.people_photo_content -->
                                                     </div>  <!-- /.people_photo_contentcol -->

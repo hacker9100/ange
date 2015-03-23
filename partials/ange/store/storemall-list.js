@@ -197,9 +197,13 @@ define([
 //        };
 
         // 조회 화면 이동
-        $scope.click_showViewPeoplePhoto = function (key) {
+        $scope.click_showViewPeoplePhoto = function (item) {
+            if (item.SUM_IN_CNT <= item.SUM_OUT_CNT) {
+                dialogs.notify('알림', '품절된 상품입니다.', {size: 'md'});
+                return;
+            }
 
-            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
+            $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+item.NO);
         };
         // 검색
         $scope.click_searchPeopleBoard = function(){
