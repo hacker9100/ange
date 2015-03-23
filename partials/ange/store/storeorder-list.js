@@ -61,6 +61,18 @@ define([
                     }
                 });
             }
+
+            $(':radio[name="cartlist"]').click(function(){
+                //alert('aaaaa');
+                var gubun = $(':radio[name="cartlist"]:checked').val();
+                if(gubun == 'mileage'){
+                    $scope.mileage = true;
+                    $scope.cummerce = false;
+                }else{
+                    $scope.mileage = false;
+                    $scope.cummerce = true;
+                }
+            });
         });
 
         // 초기화
