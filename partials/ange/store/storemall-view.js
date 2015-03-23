@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('storemall-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD',  function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('storemall-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', 'CONSTANT', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD,CONSTANT) {
 
         // 첨부파일 초기화
         $scope.queue = [];
