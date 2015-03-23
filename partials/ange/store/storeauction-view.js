@@ -235,13 +235,13 @@ define([
 
 
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
+        $scope.getSession()
          .then($scope.sessionCheck)
          .then($scope.init)
-         .then($scope.getCmsBoard)
-         ['catch']($scope.reportProblems);*/
-        $scope.init();
-        $scope.getPeopleBoard();
+         .then($scope.getPeopleBoard)
+         ['catch']($scope.reportProblems);
+//        $scope.init();
+//        $scope.getPeopleBoard();
 
     }]);
 });
