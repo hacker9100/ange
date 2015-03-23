@@ -131,10 +131,21 @@ define([
 
                     $scope.click_reg = function () {
 
-                        if($scope.reitem.BODY == undefined){
+                        //console.log(trim($scope.reitem.BODY));
+
+                        $scope.reitem.BODY = $scope.reitem.BODY.replace(/^\s+|\s+$/g,'');
+
+                        console.log($scope.reitem.BODY);
+
+                        if($scope.reitem.BODY == undefined || $scope.reitem.BODY == ""){
                             alert('내용을 입력하세요');
                             return;
                         }
+
+//                        if(trim($scope.reitem.BODY) == ""){
+//                            alert('내용을 입력하세요');
+//                            return;
+//                        }
 
                         if($scope.reitem.TO_ID == undefined){
                             alert('수신자를 검색해서 선택하세요');
@@ -224,7 +235,18 @@ define([
                         console.log($scope.item.BODY);
                         console.log($scope.item.TO_ID);
 
-                        if($scope.item.BODY == undefined){
+//                        if($scope.item.BODY == undefined){
+//                            alert('내용을 입력하세요');
+//                            return;
+//                        }
+
+                        //console.log(trim($scope.item.BODY));
+
+                        $scope.item.BODY = $scope.item.BODY.replace(/^\s+|\s+$/g,'');
+
+                        console.log($scope.item.BODY);
+
+                        if($scope.item.BODY == undefined || $scope.item.BODY == ""){
                             alert('내용을 입력하세요');
                             return;
                         }

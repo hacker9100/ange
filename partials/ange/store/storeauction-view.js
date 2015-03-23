@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('storeauction-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('storeauction-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD','CONSTANT', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD,CONSTANT) {
 
         // 첨부파일 초기화
         $scope.queue = [];
@@ -235,13 +235,13 @@ define([
 
 
         /********** 화면 초기화 **********/
-        /*        $scope.getSession()
+        $scope.getSession()
          .then($scope.sessionCheck)
          .then($scope.init)
-         .then($scope.getCmsBoard)
-         ['catch']($scope.reportProblems);*/
-        $scope.init();
-        $scope.getPeopleBoard();
+         .then($scope.getPeopleBoard)
+         ['catch']($scope.reportProblems);
+//        $scope.init();
+//        $scope.getPeopleBoard();
 
     }]);
 });

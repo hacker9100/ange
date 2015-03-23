@@ -733,66 +733,6 @@ define([
 
                         if(comp_cnt == 0){
 
-//                            var answer = [];
-//                            $scope.item.QUE_SHORT_ANSWER = ''
-//
-//                            $("input[name='answer[]'").each(function(index, element) { // 주관식
-//
-//                                console.log($(element).val());
-//
-//                                $scope.item.QUE_SHORT_ANSWER = $(element).val();
-//                                answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-//                            })
-//
-//                            $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
-//
-//                                console.log($(element).val());
-//
-//                                $scope.item.QUE_LONG_ANSWER = $(element).val();
-//                                answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-//                            })
-//
-//                            var values = {};
-//
-//                            $('.poll_select_radio:checked').each(function(index) {
-//
-//
-//                                values[this.name] = this.value;
-//                                answer.push(values[this.name]);
-//                                console.log(this.value);
-//                            });
-//
-//                            var check_answer = ''
-//                            $('.poll_select_checkbox:checked').each(function(index) {
-//
-//            //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-//            //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
-//            //                        return false;
-//            //                    }
-//                                values[this.name] = ','
-//                                if(this.value == undefined){
-//                                    values[this.name] = "";
-//                                }
-//                                values[this.name] += this.value;
-//
-//                                check_answer += this.value
-//                                answer.push(check_answer); // 객관식
-//
-//                                console.log(check_answer);
-//                            });
-//
-//                            $rootScope.jsontext2 = new Array();
-//
-//                            // .poll_query_no input[name='index[]'
-//                            // $(".poll_query_no").each(function(index, element) {
-//                            //    $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-//                            // })
-//
-//                            for(var i=0; i<answer.length; i++){
-//                                var index = parseInt(i+1);
-//                                $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-//                            }
-
                             $rootScope.jsontext2 = new Array();
 
                             var poll_length = $('.poll_question_no').length;
@@ -844,6 +784,44 @@ define([
 
             } else if($scope.item.ada_que_type == 'reserve'){ // 날짜예약선택
 
+                // 정보제공 동의체크 확인
+                if($("#credit_agreement_Y").is(":checked")){
+                    $scope.item.CREDIT_FL = 'Y';
+                }else{
+                    alert('제 3자 정보제공에 동의 하셔야 상품 발송이 가능합니다.');
+                    return;
+                }
+
+                if($scope.item.BABY_YEAR == undefined){
+                    alert('아기 생일년도를 선택하세요');
+                    return;
+                }
+
+                if($scope.item.BABY_MONTH == undefined){
+                    alert('아기 생년월을 선택하세요');
+                    return;
+                }
+
+                if($scope.item.BABY_DAY == undefined){
+                    alert('아기 생년일을 선택하세요');
+                    return;
+                }
+
+                if($scope.item.DELIVERY_YEAR == undefined){
+                    alert('출산예정일 연도를 선택하세요');
+                    return;
+                }
+
+                if($scope.item.DELIVERY_MONTH == undefined){
+                    alert('출산예정일 월을 선택하세요');
+                    return;
+                }
+
+                if($scope.item.DELIVERY_DAY == undefined){
+                    alert('출산예정일 일을 선택하세요');
+                    return;
+                }
+
                 $scope.search.ada_idx = $scope.item.ada_idx;
 
                 $scope.getList('ange/comp', 'check', {}, $scope.search, false)
@@ -851,81 +829,6 @@ define([
                         var comp_cnt = data[0].COMP_CNT;
 
                         if(comp_cnt == 0){
-
-//                            var answer = [];
-//                            $scope.item.QUE_SHORT_ANSWER = ''
-//
-//                            $("input[name='answer[]'").each(function(index, element) {
-//
-//
-//                                $scope.item.QUE_SHORT_ANSWER = $(element).val();
-//                                answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-//                            })
-//
-//                            $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
-//
-//
-//
-//                                $scope.item.QUE_LONG_ANSWER = $(element).val();
-//                                answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-//                            })
-//
-//                            var values = {};
-//
-//                            $('.poll_select_radio:checked').each(function(index) {
-//
-////                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-////                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
-////                        return false
-////                    }
-////
-////                        if(this.value == undefined){
-////                            values[this.name] = "";
-////                        }
-////
-////                        if(this.value == "기타"){
-////                            console.log($("#etc_answer").val());
-////                            values[this.name] = $("input[name='etc_answer']").val();
-////                        }
-//
-//                                values[this.name] = this.value;
-//                                answer.push(values[this.name]);
-//                                console.log(this.value);
-//                            });
-//
-//                            var check_answer = ''
-//                            $('.poll_select_checkbox:checked').each(function(index) {
-//
-//        //                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-//        //                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
-//        //                        return false;
-//        //                    }
-//                                values[this.name] = ','
-//                                if(this.value == undefined){
-//                                    values[this.name] = "";
-//                                }
-//                                values[this.name] += this.value;
-//
-//                                check_answer += this.value
-//                                answer.push(check_answer); // 객관식
-//
-//                                console.log(check_answer);
-//                            });
-//
-//                            $rootScope.jsontext2 = new Array();
-//
-//                            // .poll_query_no input[name='index[]'
-//        //                    $(".poll_query_no").each(function(index, element) {
-//        //                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-//        //                    })
-//
-//                            for(var i=0; i<answer.length; i++){
-//                                var index = parseInt(i+1);
-//                                $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-//                            }
-//
-//                            $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
-//                            console.log($scope.item.ANSWER);
                             $rootScope.jsontext2 = new Array();
 
                             var poll_length = $('.poll_reserve_no').length;
@@ -1023,6 +926,36 @@ define([
                     return;
                 }
 
+                if($scope.item.BABY_YEAR == undefined){
+                    alert('아기 생일년도를 선택하세요');
+                    return;
+                }
+
+                if($scope.item.BABY_MONTH == undefined){
+                    alert('아기 생년월을 선택하세요');
+                    return;
+                }
+
+                if($scope.item.BABY_DAY == undefined){
+                    alert('아기 생년일을 선택하세요');
+                    return;
+                }
+
+                if($scope.item.DELIVERY_YEAR == undefined){
+                    alert('출산예정일 연도를 선택하세요');
+                    return;
+                }
+
+                if($scope.item.DELIVERY_MONTH == undefined){
+                    alert('출산예정일 월을 선택하세요');
+                    return;
+                }
+
+                if($scope.item.DELIVERY_DAY == undefined){
+                    alert('출산예정일 일을 선택하세요');
+                    return;
+                }
+
                 $scope.search.ada_idx = $scope.item.ada_idx;
 
                 $scope.getList('ange/comp', 'check', {}, $scope.search, false)
@@ -1040,104 +973,46 @@ define([
                             // 임신주차는 0으로 셋팅(int 형이라 null로 넣으면 쿼리에러 발생)
                             $scope.item.PREGNANT_WEEKS = 0;
 
-                            // 추가한 블로그 갯수 만큼 반복
-                            //console.log($scope.item.BLOG);
+
+                            var babybirthday = '';
+                            babybirthday = $scope.item.BABY_YEAR + '-' + $scope.item.BABY_MONTH + '-' + $scope.item.BABY_DAY;
+
+                            var deliveryday = '';
+                            deliveryday = $scope.item.DELIVERY_YEAR + '-' + $scope.item.DELIVERY_MONTH + '-' + $scope.item.DELIVERY_DAY;
+
+                            console.log(babybirthday);
+                            console.log(deliveryday);
+
                             if($scope.item.BLOG == undefined){
                                 alert('블로그 주소를 입력하세요');
                                 return;
                             }
 
-                            // 추가한 블로그 갯수 만큼 반복
                             var cnt = $scope.item.BLOG.length;
+
                             $scope.item.BLOG_URL = '';
                             $("input[name='blog[]'").each(function(index, element) {
                                 if(index != (cnt -1)){
-                                    $scope.item.BLOG_URL += $(element).val()+', ';
+                                    $scope.item.BLOG_URL += $(element).val()+';';
                                 }else{
                                     $scope.item.BLOG_URL += $(element).val();
                                 }
 
                             });
 
-                            if($scope.item.QUE != undefined){ //$scope.item.QUE != '' ||
+                            $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
 
-//                                var answer = [];
-//                                $scope.item.QUE_SHORT_ANSWER = ''
-//
-//                                $("input[name='answer[]'").each(function(index, element) {
-//
-//
-//                                    console.log($(element).val());
-//
-//                                    $scope.item.QUE_SHORT_ANSWER = $(element).val();
-//                                    answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-//                                })
-//
-//                                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
-//
-//
-//                                    console.log($(element).val());
-//
-//                                    $scope.item.QUE_LONG_ANSWER = $(element).val();
-//                                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-//                                })
-//
-//                                var values = {};
-//
-//                                $('.poll_select_radio:checked').each(function(index) {
-//
-////                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-////                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
-////                        return false;
-////                    }
-////
-////                        if(this.value == undefined){
-////                            values[this.name] = "";
-////                        }
-////
-////                        if(this.value == "기타"){
-////                            console.log($("#etc_answer").val());
-////                            values[this.name] = $("input[name='etc_answer']").val();
-////                        }
-//
-//                                    values[this.name] = this.value;
-//                                    answer.push(values[this.name]);
-//                                    console.log(this.value);
-//                                });
-//
-//                                var check_answer = ''
-//                                $('.poll_select_checkbox:checked').each(function(index) {
-//
-////                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-////                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
-////                        return false;
-////                    }
-//                                    values[this.name] = ','
-//                                    if(this.value == undefined){
-//                                        values[this.name] = "";
-//                                    }
-//                                    values[this.name] += this.value;
-//
-//                                    check_answer += this.value
-//                                    answer.push(check_answer); // 객관식
-//
-//                                    console.log(check_answer);
-//                                });
-//
-//                                $rootScope.jsontext2 = new Array();
-//
-//                                // .poll_query_no input[name='index[]'
-////                    $(".poll_query_no").each(function(index, element) {
-////                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-////                    })
-//
-//                                for(var i=0; i<answer.length; i++){
-//                                    var index = parseInt(i+1);
-//                                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-//                                }
-//
-//                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
-//                                console.log($scope.item.ANSWER);
+                            console.log($scope.item.REASON);
+
+                            if($scope.item.REASON == undefined || $scope.item.REASON == ""){
+                                alert('신청사유를 작성하세요');
+                                return;
+                            }
+
+                            var answer = '"1":"'+babybirthday+'","2":"'+deliveryday+'","3":"'+$scope.item.BLOG_URL+'","4":"'+$scope.item.REASON+'"';
+                            console.log(answer);
+
+                            if($scope.item.QUE != undefined){
                                 $rootScope.jsontext2 = new Array();
 
                                 var poll_length = $('.poll_join_no').length;
@@ -1147,23 +1022,26 @@ define([
                                 for(var i=1; i<=poll_length; i++){
 
                                     if(document.getElementById("answer"+i).type == 'radio'){
-                                        $rootScope.jsontext2[i] = '"'+i+'":"'+$("input[name=answer"+i+"]:checked").val() +'"';
+                                        $rootScope.jsontext2[i] = '"'+parseInt(i+4)+'":"'+$("input[name=answer"+i+"]:checked").val() +'"';
                                     }else if(document.getElementById("answer"+i).type == 'checkbox'){
                                         var checkvalue = '';
                                         $("input[name=answer"+i+"]:checked").each(function() {
                                             checkvalue += $(this).val() + ';';
                                             console.log(checkvalue);
                                         });
-                                        $rootScope.jsontext2[i] = '"'+i+'":"'+ checkvalue+'"';
+                                        $rootScope.jsontext2[i] = '"'+parseInt(i+4)+'":"'+ checkvalue+'"';
                                     }else if(document.getElementById("answer"+i).type == 'text'){
-                                        $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                                        $rootScope.jsontext2[i] = '"'+parseInt(i+4)+'":"'+ document.getElementById("answer"+i).value+'"';
                                     }else if(document.getElementById("answer"+i).type == 'textarea'){
-                                        $rootScope.jsontext2[i] = '"'+i+'":"'+ document.getElementById("answer"+i).value+'"';
+                                        $rootScope.jsontext2[i] = '"'+parseInt(i+4)+'":"'+ document.getElementById("answer"+i).value+'"';
                                     }
                                 }
 
-                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+'}';
-                                $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
+                                $scope.item.ANSWER = '{'+answer+$rootScope.jsontext2+'}';
+                                //$scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
+                                console.log($scope.item.ANSWER);
+                            }else{
+                                $scope.item.ANSWER = '{'+answer+'}';
                                 console.log($scope.item.ANSWER);
                             }
 
@@ -1216,82 +1094,7 @@ define([
 
                             console.log($scope.item.QUE);
 
-                            if($scope.item.QUE != undefined){  // $scope.item.QUE != '' ||
-//                                var answer = [];
-//                                $scope.item.QUE_SHORT_ANSWER = ''
-//
-//                                $("input[name='answer[]'").each(function(index, element) {
-//
-//                                    console.log($(element).val());
-//
-//                                    $scope.item.QUE_SHORT_ANSWER = $(element).val();
-//                                    answer.push($scope.item.QUE_SHORT_ANSWER); // 주관식
-//                                })
-//
-//                                $("textarea[name='long_answer[]'").each(function(index, element) { // 장문
-//
-//                                    console.log($(element).val());
-//
-//                                    $scope.item.QUE_LONG_ANSWER = $(element).val();
-//                                    answer.push($scope.item.QUE_LONG_ANSWER); // 주관식
-//                                })
-//
-//                                var values = {};
-//
-//                                $('.poll_select_radio:checked').each(function(index) {
-//
-////                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-////                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
-////                        return false;
-////                    }
-////
-////                        if(this.value == undefined){
-////                            values[this.name] = "";
-////                        }
-////
-////                        if(this.value == "기타"){
-////                            console.log($("#etc_answer").val());
-////                            values[this.name] = $("input[name='etc_answer']").val();
-////                        }
-//
-//                                    values[this.name] = this.value;
-//                                    answer.push(values[this.name]);
-//                                    console.log(this.value);
-//                                });
-//
-//                                var check_answer = ''
-//                                $('.poll_select_checkbox:checked').each(function(index) {
-//
-////                    if($(".poll_query_no").length !=  $('.poll_select_radio').length){
-////                        dialogs.notify('알림', '문항을 작성하세요', {size: 'md'});
-////                        return false;
-////                    }
-//                                    values[this.name] = ','
-//                                    if(this.value == undefined){
-//                                        values[this.name] = "";
-//                                    }
-//                                    values[this.name] += this.value;
-//
-//                                    check_answer += this.value
-//                                    answer.push(check_answer); // 객관식
-//
-//                                    console.log(check_answer);
-//                                });
-//
-//                                $rootScope.jsontext2 = new Array();
-//
-//                                // .poll_query_no input[name='index[]'
-////                    $(".poll_query_no").each(function(index, element) {
-////                        $rootScope.jsontext2[index] = '"'+index+'":"'+ answer[index]+'"'; //[index] [$(element).val()]
-////                    })
-//
-//                                for(var i=0; i<answer.length; i++){
-//                                    var index = parseInt(i+1);
-//                                    $rootScope.jsontext2[i] = '"'+index+'":"'+ answer[i]+'"';
-//                                }
-//
-//                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+$scope.file.name+'}';
-//                                console.log($scope.item.ANSWER);
+                            if($scope.item.QUE != undefined){
                                 $rootScope.jsontext2 = new Array();
 
                                 var poll_length = $('.poll_upload_no').length;

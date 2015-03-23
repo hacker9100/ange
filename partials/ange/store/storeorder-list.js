@@ -61,6 +61,18 @@ define([
                     }
                 });
             }
+
+            $(':radio[name="cartlist"]').click(function(){
+                //alert('aaaaa');
+                var gubun = $(':radio[name="cartlist"]:checked').val();
+                if(gubun == 'mileage'){
+                    $scope.mileage = true;
+                    $scope.cummerce = false;
+                }else{
+                    $scope.mileage = false;
+                    $scope.cummerce = true;
+                }
+            });
         });
 
         // 초기화
@@ -163,6 +175,11 @@ define([
         // 커머스 상품 장바구니 이동
         $scope.click_cummerce_reg = function (list , idx){
 
+            if(list[idx].SUM_CNT < 0){
+                dialogs.notify('알림', '품절된 상품입니다', {size: 'md'});
+                return;
+            }
+
             $rootScope.cummercecartlist = [];
             $rootScope.cummercecartlist.push(list[idx]);
 
@@ -174,6 +191,13 @@ define([
 
         // 마일리지 상품 장바구니 이동
         $scope.click_mileage_reg = function (list , idx){
+
+            console.log(list[idx].SUM_CNT);
+
+            if(list[idx].SUM_CNT < 0){
+                dialogs.notify('알림', '품절된 상품입니다', {size: 'md'});
+                return;
+            }
 
             $rootScope.mileagecartlist = [];
             $rootScope.mileagecartlist.push(list[idx]);

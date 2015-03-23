@@ -84,7 +84,7 @@
                                                             <a href="#"><strong>{{ item.PRODUCT_NM}}</strong> </a>
 
                                                             <!-- 마일리지몰 목록에서 표시됩니다. -->
-                                                            <div ng-if="item.PRODUCT_GB == 'MILEAGE'" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all; display:block;">
+                                                            <div ng-if="item.PRODUCT_GB == 'MILEAGE'" ng-show="item.SUM_CNT <= 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all; display:block;">
                                                                 <!-- div class="table_blue">구매가능</div -->
                                                                 <div class="table_red">품절</div>
                                                             </div>
@@ -140,9 +140,9 @@
                                                             <a href="#"><strong>{{ item.PRODUCT_NM}}</strong></a>
 
                                                             <!-- 커머스/네이밍 목록에서 표시됩니다. -->
-                                                            <div class="table_gray" ng-show="item.SUM_IN_OUT > 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_blue">구매가능</span></div>
-                                                            <div class="table_gray" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_red">품절</span></div>
-                                                            <div class="table_gray" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_red">기간만료</span></div>
+                                                            <div class="table_gray" ng-show="item.SUM_CNT > 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;"><span class="table_blue">구매가능</span></div> <!-- 기간 {{item.PERIOD}}  -->
+                                                            <div class="table_gray" ng-show="item.SUM_CNT <= 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;"><span class="table_red">품절</span></div> <!-- 기간 {{item.PERIOD}}  -->
+                                                            <!--<div class="table_gray" ng-show="item.SUM_IN_OUT == 0" style="font-size: 0.86em; margin-top:16px; word-break: keep-all;">기간 {{item.PERIOD}} <span class="table_red">기간만료</span></div>-->
                                                             <!-- /커머스/네이밍 목록에서 표시됩니다. -->
 
                                                         </td>

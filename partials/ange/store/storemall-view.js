@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('storemall-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD',  function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('storemall-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', 'CONSTANT', function ($scope,$rootScope, $stateParams, $location, dialogs, UPLOAD,CONSTANT) {
 
         // 첨부파일 초기화
         $scope.queue = [];
@@ -233,13 +233,18 @@ define([
         };
 
         // 장바구니추가
-        $scope.click_addcart = function (){
+        $scope.click_addcart = function (cnt){
 
             if($stateParams.menu == 'mileagemall'){
                 if($scope.total() > $rootScope.mileage){
                     dialogs.notify('알림', '잔여 마일리지가 부족합니다', {size: 'md'});
                     return;
                 }
+            }
+
+            if(cnt < 0){
+                dialogs.notify('알림', '품절된 상품입니다', {size: 'md'});
+                return;
             }
 
             $scope.item.CART = $scope.productsList;

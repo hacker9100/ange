@@ -413,13 +413,15 @@ define([
                 $scope.item.PRICE = item.SUM_PRICE;
 
                 $scope.updateItem('ange/order', 'item', item.NO, $scope.item, false)
-                    .then(function(){
+                    .then(function(data){
                         dialogs.notify('알림', '주문취소 되었습니다.', {size: 'md'});
                         //$scope.getPeopleBoardList();
 
                         $scope.getMileageList();
                         $scope.getCummerceList();
                         $scope.getNamingList();
+
+                        //$rootScope.mileage = data.mileage;
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
@@ -442,10 +444,19 @@ define([
             $scope.getNamingList();
         };
 
-        $scope.init();
-        $scope.getMileageList();
-        $scope.getCummerceList();
-        $scope.getNamingList();
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getMileageList)
+            .then($scope.getCummerceList)
+            .then($scope.getNamingList)
+            ['catch']($scope.reportProblems);
+
+
+//        $scope.init();
+//        $scope.getMileageList();
+//        $scope.getCummerceList();
+//        $scope.getNamingList();
 
     }]);
 });

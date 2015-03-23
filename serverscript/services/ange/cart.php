@@ -117,10 +117,11 @@ switch ($_method) {
             $sql = "SELECT
                        PRODUCT_NO, USER_ID, PRODUCT_CNT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PRODUCT_NM, PRICE,
                        TOTAL_COUNT, PRODUCT_CNT * PRICE AS TOTAL_PRICE, PRODUCT_GB, NO, DELEIVERY_ST, DELEIVERY_PRICE,DIRECT_PRICE,
-                       CASE PRODUCT_GB WHEN 'CUMMERCE' THEN '커머스' WHEN 'AUCTION' THEN '경매소' WHEN 'MILEAGE' THEN '마일리지' ELSE '기타' END AS PRODUCT_GB_NM
+                       CASE PRODUCT_GB WHEN 'CUMMERCE' THEN '커머스' WHEN 'AUCTION' THEN '경매소' WHEN 'MILEAGE' THEN '마일리지' ELSE '기타' END AS PRODUCT_GB_NM,
+                       SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT
                   FROM (
                             SELECT AC.PRODUCT_NO, AC.USER_ID, AC.PRODUCT_CNT, AC.REG_DT, AP.PRODUCT_NM, AP.PRICE, AP.PRODUCT_GB, AC.NO,
-                                    AP.DELEIVERY_ST, AP.DELEIVERY_PRICE, AP.DIRECT_PRICE
+                                    AP.DELEIVERY_ST, AP.DELEIVERY_PRICE, AP.DIRECT_PRICE, AP.SUM_IN_CNT , AP.SUM_OUT_CNT
                             FROM
                                 ANGE_CART AC INNER JOIN ANGE_PRODUCT AP
                             ON AC.PRODUCT_NO = AP.NO
@@ -267,34 +268,33 @@ switch ($_method) {
                     $_d->sql_query($sql);
 
                     // 상품 재고 수정 SUM_IN_CNT(재고량) SUM_OUT_CNT(주문량)
-                    $sql = "UPDATE ANGE_PRODUCT
-                            SET
-                                SUM_IN_CNT = SUM_IN_CNT - ".$e[PRODUCT_CNT].",
-                                SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
-                            WHERE
-                                NO = $e[PRODUCT_NO]
-                            ";
-                    $_d->sql_query($sql);
-
-                    if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
-
-                        $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
-                                   SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
-                               FROM ANGE_PRODUCT
-                               WHERE PARENT_NO = ".$e[PARENT_NO]."
-                                ";
-
-                        $result = $_d->sql_query($sql,true);
-                        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-
-                            $sql = "UPDATE ANGE_PRODUCT
-                            SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
-                                SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
-                            WHERE NO = ".$e[PARENT_NO]."
-                        ";
-                            $_d->sql_query($sql);
-                        }
-                    }
+//                    $sql = "UPDATE ANGE_PRODUCT
+//                            SET
+//                                SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
+//                            WHERE
+//                                NO = $e[PRODUCT_NO]
+//                            ";
+//                    $_d->sql_query($sql);
+//
+//                    if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
+//
+//                        $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
+//                                   SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
+//                               FROM ANGE_PRODUCT
+//                               WHERE PARENT_NO = ".$e[PARENT_NO]."
+//                                ";
+//
+//                        $result = $_d->sql_query($sql,true);
+//                        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+//
+//                            $sql = "UPDATE ANGE_PRODUCT
+//                            SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
+//                                SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
+//                            WHERE NO = ".$e[PARENT_NO]."
+//                        ";
+//                            $_d->sql_query($sql);
+//                        }
+//                    }
 
                     if($_d->mysql_errno > 0) {
                         $err++;
