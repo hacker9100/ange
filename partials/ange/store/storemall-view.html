@@ -28,7 +28,7 @@
                                 </div>
 
                                 <div class="col-xs-8 v-cell-4" style="margin:0px;">
-                                    <div class="comp_basic h-cell-dynamic" style="width:100%; padding:2px; 0px; padding-left:25px; margin:0px;">
+                                    <div class="comp_basic h-cell-dynamic" style="width:100%; padding:2px 0px; padding-left:25px; margin:0px;">
 
                                         <div class="">
 
@@ -40,12 +40,12 @@
                                                 <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{DELEIVERY_PRICE}} 원({{item.DELEIVERY_ST == 1 ? '착불' : '선불'}})</span></div>
                                                 <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">아이앤와이</span></div>
                                                 <div class="store_list_item maininfo"><strong>수량</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.SUM_IN_CNT}}</span></div>
-                                                <div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="#">http://www.inyinternational.com</a></span></div>
-                                                <div class="store_list_item maininfo"><strong>외부링크</strong>
-                                                    <span class="table_gray" style="position:absolute; top:8px; left:120px; line-height:12px; word-break:break-all; width:65%;">
-                                                        <a style="font-size:0.86em;" href="#">http://www.inyinternational.com/sub/sub2_3.asp</a>
-                                                    </span>
-                                                </div>
+                                                <div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" target="_blank" href="{{item.URL}}">{{item.URL}}</a></span></div>
+                                                <!--<div class="store_list_item maininfo"><strong>외부링크</strong>-->
+                                                    <!--<span class="table_gray" style="position:absolute; top:8px; left:120px; line-height:12px; word-break:break-all; width:65%;">-->
+                                                        <!--<a style="font-size:0.86em;" href="#">http://www.inyinternational.com/sub/sub2_3.asp</a>-->
+                                                    <!--</span>-->
+                                                <!--</div>-->
                                             </div>  <!-- /.store_col_info -->
 
 
@@ -314,89 +314,89 @@
                                             <!--</div>  &lt;!&ndash; /.row &ndash;&gt;-->
 
 
-                                            <div class="row" style="width:100%; margin:0px auto; margin-top:32px;">
+                                            <!--<div class="row" style="width:100%; margin:0px auto; margin-top:32px;">-->
 
-                                                <div class="peoplep_list_tab">
-                                                    <span class="board_th" style="font-size:1.44em;">같은 카테고리 상품</span>
-                                                    <small class="table_gray">이 상품과 같은 카테고리에 속한 다른 상품</small>
-                                                </div><!-- /.peoplep_list_tab -->
-
-
-                                                <div class="col-xs-12 v-cell-4">
-                                                    <div class="comp_basic h-cell-1-dynamic">
-                                                        <!-- mini_mileagemall -->
-
-                                                        <div class="comp_goods" ng-model="store" style="border:none; border-bottom: 1px solid #dedede;">
-                                                            <div class="row mini_event_contentlist">
-
-                                                                <a class="comp_slide_btn_w30 prev" title="이전" ng-click="click_slickPrev()" style="margin-left:25%;">이전</a>
-                                                                <a class="comp_slide_btn_w30 next" title="다음" ng-click="click_slickNext()">다음</a>
-
-                                                                <slick id="product" init-onload="true" data="list" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="3" autoplay-speed="3000" fade="false" pause-on-hover="false">
-                                                                    <div ng-repeat="item in productList" class="col-xs-3 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">
-                                                                        <div class="mini_event_content" style="border:none; text-align:center;">
-                                                                            <a href="{{ item.URL }}">
-                                                                                <img src="/imgs/ange/_blank.gif" class="mini_event_txt_img" style="float:none; width:85%; max-width:100px;" ng-style="{ 'background-image': 'url( {{ item.PRODUCT_FILE }} )' }" />
-                                                                                <!--<img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_02.jpg"  style="float:none; width:85%; max-width:100px;"/>-->
-                                                                            </a>
-                                                                            <div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">{{ item.COMPANY_NM }}</div>
-                                                                            <div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em;  text-align:center; color: #2eaed3;">{{ item.PRODUCT_NM }}</div>
-
-                                                                            <div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">
-                                                                                <span class="mini_mileagemall_price"> {{ item.PRICE | number }} </span>
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                </slick>
+                                                <!--<div class="peoplep_list_tab">-->
+                                                    <!--<span class="board_th" style="font-size:1.44em;">같은 카테고리 상품</span>-->
+                                                    <!--<small class="table_gray">이 상품과 같은 카테고리에 속한 다른 상품</small>-->
+                                                <!--</div>&lt;!&ndash; /.peoplep_list_tab &ndash;&gt;-->
 
 
-                                                                <!--<a class="comp_slide_btn_w30 prev" title="이전" style="margin-left:0%;">이전</a>-->
-                                                                <!--<a class="comp_slide_btn_w30 next" title="다음">다음</a>-->
+                                                <!--<div class="col-xs-12 v-cell-4">-->
+                                                    <!--<div class="comp_basic h-cell-1-dynamic">-->
+                                                        <!--&lt;!&ndash; mini_mileagemall &ndash;&gt;-->
 
+                                                        <!--<div class="comp_goods" ng-model="store" style="border:none; border-bottom: 1px solid #dedede;">-->
+                                                            <!--<div class="row mini_event_contentlist">-->
 
-                                                                <!--<div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">-->
-                                                                    <!--<div class="mini_event_content" style="border:none; text-align:center;">-->
-                                                                        <!--<img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_01.jpg"  style="float:none; width:85%; max-width:100px;"/>-->
-                                                                        <!--<div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">(주)대웅제약</div>-->
-                                                                        <!--<div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">이지덤플러스 밴드 5매</div>-->
+                                                                <!--<a class="comp_slide_btn_w30 prev" title="이전" ng-click="click_slickPrev()" style="margin-left:25%;">이전</a>-->
+                                                                <!--<a class="comp_slide_btn_w30 next" title="다음" ng-click="click_slickNext()">다음</a>-->
 
-                                                                        <!--<div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">-->
-                                                                            <!--<span class="mini_mileagemall_price"> 5,000</span>-->
+                                                                <!--<slick id="product" init-onload="true" data="list" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="3" autoplay-speed="3000" fade="false" pause-on-hover="false">-->
+                                                                    <!--<div ng-repeat="item in productList" class="col-xs-3 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">-->
+                                                                        <!--<div class="mini_event_content" style="border:none; text-align:center;">-->
+                                                                            <!--<a href="{{ item.URL }}">-->
+                                                                                <!--<img src="/imgs/ange/_blank.gif" class="mini_event_txt_img" style="float:none; width:85%; max-width:100px;" ng-style="{ 'background-image': 'url( {{ item.PRODUCT_FILE }} )' }" />-->
+                                                                                <!--&lt;!&ndash;<img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_02.jpg"  style="float:none; width:85%; max-width:100px;"/>&ndash;&gt;-->
+                                                                            <!--</a>-->
+                                                                            <!--<div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">{{ item.COMPANY_NM }}</div>-->
+                                                                            <!--<div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em;  text-align:center; color: #2eaed3;">{{ item.PRODUCT_NM }}</div>-->
+
+                                                                            <!--<div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">-->
+                                                                                <!--<span class="mini_mileagemall_price"> {{ item.PRICE | number }} </span>-->
+                                                                            <!--</div>-->
+
                                                                         <!--</div>-->
                                                                     <!--</div>-->
-                                                                <!--</div>-->
+                                                                <!--</slick>-->
 
-                                                                <!--<div class="col-xs-4 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">-->
-                                                                    <!--<div class="mini_event_content" style="border:none; text-align:center;">-->
-                                                                        <!--<img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_02.jpg"  style="float:none; width:85%; max-width:100px;"/>-->
-                                                                        <!--<div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">쁘띠마리에</div>-->
-                                                                        <!--<div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em;  text-align:center; color: #2eaed3;">블루코어 일회용 수유패드 26매</div>-->
 
-                                                                        <!--<div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">-->
-                                                                            <!--<span class="mini_mileagemall_price"> 5,000</span>-->
-                                                                        <!--</div>-->
-                                                                    <!--</div>-->
-                                                                <!--</div>-->
+                                                                <!--&lt;!&ndash;<a class="comp_slide_btn_w30 prev" title="이전" style="margin-left:0%;">이전</a>&ndash;&gt;-->
+                                                                <!--&lt;!&ndash;<a class="comp_slide_btn_w30 next" title="다음">다음</a>&ndash;&gt;-->
 
-                                                                <!--<div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">-->
-                                                                    <!--<div class="mini_event_content" style="border:none; text-align:center;">-->
-                                                                        <!--<img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_03.jpg"  style="float:none; width:85%; max-width:100px;"/>-->
-                                                                        <!--<div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">누비</div>-->
-                                                                        <!--<div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">몬스터 스텐 커틀러리 세트</div>-->
 
-                                                                        <!--<div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">-->
-                                                                            <!--<span class="mini_mileagemall_price"> 5,000</span>-->
-                                                                        <!--</div>-->
-                                                                    <!--</div>-->
-                                                                <!--</div>-->
+                                                                <!--&lt;!&ndash;<div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">&ndash;&gt;-->
+                                                                    <!--&lt;!&ndash;<div class="mini_event_content" style="border:none; text-align:center;">&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;<img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_01.jpg"  style="float:none; width:85%; max-width:100px;"/>&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;<div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">(주)대웅제약</div>&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;<div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">이지덤플러스 밴드 5매</div>&ndash;&gt;-->
 
-                                                            </div>
-                                                        </div>
-                                                        <!-- /mini_mileagemall -->
-                                                    </div>  <!-- /.comp_basic -->
-                                                </div>  <!-- /.col-xs-12 -->
-                                            </div>  <!-- /.row -->
+                                                                        <!--&lt;!&ndash;<div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">&ndash;&gt;-->
+                                                                            <!--&lt;!&ndash;<span class="mini_mileagemall_price"> 5,000</span>&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                                                                <!--&lt;!&ndash;<div class="col-xs-4 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">&ndash;&gt;-->
+                                                                    <!--&lt;!&ndash;<div class="mini_event_content" style="border:none; text-align:center;">&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;<img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_02.jpg"  style="float:none; width:85%; max-width:100px;"/>&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;<div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">쁘띠마리에</div>&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;<div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em;  text-align:center; color: #2eaed3;">블루코어 일회용 수유패드 26매</div>&ndash;&gt;-->
+
+                                                                        <!--&lt;!&ndash;<div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">&ndash;&gt;-->
+                                                                            <!--&lt;!&ndash;<span class="mini_mileagemall_price"> 5,000</span>&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                                                                <!--&lt;!&ndash;<div class="col-xs-4 mini_event_contentcol" style="margin:12px 0;">&ndash;&gt;-->
+                                                                    <!--&lt;!&ndash;<div class="mini_event_content" style="border:none; text-align:center;">&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;<img class="mini_event_txt_img" src="imgs/ange/temp/mileagemall_03.jpg"  style="float:none; width:85%; max-width:100px;"/>&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;<div class="mini_event_txt_duration" style="width:100%; margin-top:18px; line-height:14px; text-align:center; color:#464646;">누비</div>&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;<div class="mini_event_txt_title" style="width:100%; margin-top:8px; font-weight:600; font-size:1em; text-align:center; color: #2eaed3;">몬스터 스텐 커틀러리 세트</div>&ndash;&gt;-->
+
+                                                                        <!--&lt;!&ndash;<div class="mini_event_txt_duration" style="width:100%; margin-top:8px; line-height:12px; font-size:1em; font-family: arial, san-serif; text-align:center; color:#464646;">&ndash;&gt;-->
+                                                                            <!--&lt;!&ndash;<span class="mini_mileagemall_price"> 5,000</span>&ndash;&gt;-->
+                                                                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                        <!--&lt;!&ndash; /mini_mileagemall &ndash;&gt;-->
+                                                    <!--</div>  &lt;!&ndash; /.comp_basic &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.col-xs-12 &ndash;&gt;-->
+                                            <!--</div>  &lt;!&ndash; /.row &ndash;&gt;-->
 
 
                                         </div><!-- /.col-12-->

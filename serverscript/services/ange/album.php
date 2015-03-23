@@ -143,7 +143,7 @@
             try {
                 if (count($_model[FILES]) > 0) {
                     $files = $_model[FILES];
-                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                    if (!file_exists($source_path.'thumbnail/') && !is_dir($source_path.'thumbnail/')) {
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                     }
@@ -266,7 +266,7 @@
             try {
                 if (count($_model[FILE]) > 0) {
                     $file = $_model[FILE];
-                    if (!file_exists($source_path) && !is_dir($source_path)) {
+                    if (!file_exists($source_path.'thumbnail/') && !is_dir($source_path.'thumbnail/')) {
                         @mkdir($source_path);
                         @mkdir($source_path.'thumbnail/');
                     }
