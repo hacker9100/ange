@@ -117,10 +117,11 @@ switch ($_method) {
             $sql = "SELECT
                        PRODUCT_NO, USER_ID, PRODUCT_CNT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, PRODUCT_NM, PRICE,
                        TOTAL_COUNT, PRODUCT_CNT * PRICE AS TOTAL_PRICE, PRODUCT_GB, NO, DELEIVERY_ST, DELEIVERY_PRICE,DIRECT_PRICE,
-                       CASE PRODUCT_GB WHEN 'CUMMERCE' THEN '커머스' WHEN 'AUCTION' THEN '경매소' WHEN 'MILEAGE' THEN '마일리지' ELSE '기타' END AS PRODUCT_GB_NM
+                       CASE PRODUCT_GB WHEN 'CUMMERCE' THEN '커머스' WHEN 'AUCTION' THEN '경매소' WHEN 'MILEAGE' THEN '마일리지' ELSE '기타' END AS PRODUCT_GB_NM,
+                       SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT
                   FROM (
                             SELECT AC.PRODUCT_NO, AC.USER_ID, AC.PRODUCT_CNT, AC.REG_DT, AP.PRODUCT_NM, AP.PRICE, AP.PRODUCT_GB, AC.NO,
-                                    AP.DELEIVERY_ST, AP.DELEIVERY_PRICE, AP.DIRECT_PRICE
+                                    AP.DELEIVERY_ST, AP.DELEIVERY_PRICE, AP.DIRECT_PRICE, AP.SUM_IN_CNT , AP.SUM_OUT_CNT
                             FROM
                                 ANGE_CART AC INNER JOIN ANGE_PRODUCT AP
                             ON AC.PRODUCT_NO = AP.NO

@@ -233,13 +233,18 @@ define([
         };
 
         // 장바구니추가
-        $scope.click_addcart = function (){
+        $scope.click_addcart = function (cnt){
 
             if($stateParams.menu == 'mileagemall'){
                 if($scope.total() > $rootScope.mileage){
                     dialogs.notify('알림', '잔여 마일리지가 부족합니다', {size: 'md'});
                     return;
                 }
+            }
+
+            if(cnt < 0){
+                dialogs.notify('알림', '품절된 상품입니다', {size: 'md'});
+                return;
             }
 
             $scope.item.CART = $scope.productsList;
