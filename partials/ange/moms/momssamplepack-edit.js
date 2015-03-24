@@ -74,6 +74,16 @@ define([
                 dd = '0'+dd;
             }
 
+            var now = new Date();
+            var babyBirthYear = [];
+            var nowYear = now.getFullYear();
+
+            for (var i = nowYear+1; i >= nowYear; i--) {
+                babyBirthYear.push(i+'');
+            }
+
+
+            $scope.babyBirthYear = babyBirthYear;
             $scope.year = year;
             $scope.next_year = next_year;
             $scope.month = mm;
@@ -450,12 +460,12 @@ define([
                     return;
                 }
 
-                var mileage_point = $rootScope.mileage;
-
-                if(mileage_point < 2000){
-                    alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
-                    return;
-                }
+//                var mileage_point = $rootScope.mileage;
+//
+//                if(mileage_point < 2000){
+//                    alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
+//                    return;
+//                }
             }
 
 
@@ -603,6 +613,29 @@ define([
 
                         }else if($scope.item.ada_que_type == 'upload'){
 
+                            if($scope.item.YEAR == undefined){
+                                alert('출산예정일 연도를 선택하세요');
+                                return;
+                            }
+
+                            if($scope.item.MONTH == undefined){
+                                alert('출산예정일 월을 선택하세요');
+                                return;
+                            }
+
+                            if($scope.item.DAY == undefined){
+                                alert('출산예정일 일을 선택하세요');
+                                return;
+                            }
+
+                            var deliveryday = '';
+                            deliveryday = $scope.item.YEAR + '-' + $scope.item.MONTH + '-' + $scope.item.DAY;
+
+                            console.log(deliveryday);
+
+                            var answer2 = '"1":"'+deliveryday+'",';
+                            console.log(answer2);
+
                             // 문답일때
                             var answer = [];
                             $rootScope.jsontext3 = "";
@@ -643,18 +676,16 @@ define([
                                 }
 
                                 var last_poll_length = 0;
-                                last_poll_length = poll_length+1;
+                                last_poll_length = poll_length+2;
                                 //$scope.item.ANSWER = '{'+$rootScope.jsontext2+',"'+last_poll_length+'":"'+ $scope.file.name+'"'+'}';
-                                $scope.item.ANSWER = '{'+$rootScope.jsontext2+',"'+last_poll_length+'":"'+ $scope.file.name+'"'+'}';
-                                $scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
-                                console.log($scope.item.ANSWER);
-
+                                $scope.item.ANSWER = '{'+answer2+$rootScope.jsontext2+',"'+last_poll_length+'":"'+ $scope.file.name+'"'+'}';
+                                //$scope.item.ANSWER = $scope.item.ANSWER.replace(/{,/ig, '{');
                                 console.log($scope.item.ANSWER);
 
                             }else{
 
-                                $rootScope.jsontext3 = '"1":"'+ $scope.file.name+'"';
-                                $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
+                                $rootScope.jsontext3 = '"2":"'+ $scope.file.name+'"';
+                                $scope.item.ANSWER = '{'+answer2+$rootScope.jsontext3+'}';
 
 
                             }

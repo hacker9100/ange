@@ -235,11 +235,8 @@
                                                 <span class="col-xs-10 basicinfo input">
                                                     <div class="form-inline" style="margin:0 5px">
 
-                                                        <select class="form-control" ng-model="item.YEAR" style="width:110px;">
+                                                        <select id="birth" ng-model="item.YEAR" ng-options="v for v in babyBirthYear" class= "form-control" style="width:110px;float: left;">
                                                             <option value="" selected>선택</option>
-                                                            <option value="2015">2015</option>
-                                                            <option value="2016">2016</option>
-                                                            <option value="2017">2017</option>
                                                         </select>
 
                                                         <select class="form-control" ng-model="item.MONTH" style="width:75px;">

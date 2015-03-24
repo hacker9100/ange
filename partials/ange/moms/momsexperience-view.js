@@ -1299,7 +1299,7 @@ define([
                             }else{
 
                                 $rootScope.jsontext3 = '"5":"'+ $scope.file.name+'"';
-                                $scope.item.ANSWER = '{'+$rootScope.jsontext3+'}';
+                                $scope.item.ANSWER = '{'+answer+$rootScope.jsontext3+'}';
                                 console.log($scope.item.ANSWER);
                             }
 
