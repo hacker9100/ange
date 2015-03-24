@@ -460,12 +460,12 @@ define([
                     return;
                 }
 
-//                var mileage_point = $rootScope.mileage;
-//
-//                if(mileage_point < 2000){
-//                    alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
-//                    return;
-//                }
+                var mileage_point = $rootScope.mileage;
+
+                if(mileage_point < 2000){
+                    alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
+                    return;
+                }
             }
 
 
