@@ -11,13 +11,13 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('momsboard-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('momsboard-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT) {
 
         $scope.search = {};
 
         // 페이징
         //$scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
         $scope.TOTAL_COUNT = 0;
 
         $scope.pageChanged = function() {

@@ -981,12 +981,12 @@ define([
 //            scope: { option: '=ngModel' },
 //            replace: true,
             template: '<slick id="{{ option.id }}" init-onload="true" data="list" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false" style="padding:0px 6px; cursor:pointer;">' +
-                '   <div ng-repeat="item in list" ><img ng-src="{{ item.MAIN_FILE }}"/></div>' +
-                '</slick>'+
-                '<div class="ads_indicators_wrap">' +
-                '   <div ng-repeat="item in list" ng-click="click_slickGoTo($index)" ng-class=" $index == curIdx && option.id == curId ? \'ads_indicators now\' : \'ads_indicators\'">' +
-                '   </div>' +
-                '</div>',
+                      '   <div ng-repeat="item in list" ><a ng-click="click_linkBanner(item)"><img ng-src="{{ item.MAIN_FILE }}"/></a></div>' +
+                      '</slick>'+
+                      '<div class="ads_indicators_wrap">' +
+                      '   <div ng-repeat="item in list" ng-click="click_slickGoTo($index)" ng-class=" $index == curIdx && option.id == curId ? \'ads_indicators now\' : \'ads_indicators\'">' +
+                      '   </div>' +
+                      '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', '$timeout', 'CONSTANT', function($scope, $attrs, $location, $window, $timeout, CONSTANT) {
 
                 /********** 초기화 **********/
@@ -1044,6 +1044,7 @@ define([
                             $scope.list = data;
 
                             $scope.curId = $scope.option.id;
+/*
                             angular.element('#'+$scope.option.id).click(function() {
                                 var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
 
@@ -1053,6 +1054,7 @@ define([
                                     $location.url(data[idx].URL);
                                 }
                             });
+*/
 
                             $timeout(function() {
                                 // 이미지가 변경될 때 하단에 변경해 줌
@@ -1088,7 +1090,7 @@ define([
                       '   <div class="jumbotron_cover_imgs" style="padding-bottom:45px;">' +
                       '       <div id="jumbotron_cover" class="carousel slide" data-ride="carousel">' +
                       '           <slick id="{{ option.id }}" init-onload="true" data="slideList" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false">' +
-                      '               <div ng-repeat="item in slideList" class="carousel-inner" role="listbox"><div class="item active"><img ng-src="{{ item.MAIN_FILE }}" style="width:100%; cursor:pointer;"/></div></div>' +
+                      '               <div ng-repeat="item in slideList" class="carousel-inner" role="listbox"><div class="item active"><a ng-click="click_linkBanner(item)"><img ng-src="{{ item.MAIN_FILE }}" style="width:100%; cursor:pointer;"/></a></div></div>' +
                       '           </slick>' +
                       '       </div>' +
                       '   </div>' +
@@ -1174,6 +1176,7 @@ define([
                             $scope.slideList = data;
 
                             $scope.curId = $scope.option.id;
+/*
                             angular.element('#'+$scope.option.id).click(function() {
                                 var idx = angular.element('#'+$scope.option.id).slickCurrentSlide();
 
@@ -1185,7 +1188,7 @@ define([
                                     $location.url('/moms/eventprocess/view/'+data[idx].ada_idx)
                                 }
                             });
-
+*/
                             $timeout(function() {
                                 // 이미지가 변경될 때 우측 하단에 현재 광고 설명을 변경해 줌
                                 $scope.$watch(function() {
