@@ -699,20 +699,26 @@ define([
 
                                 $rootScope.jsontext3 = '"3":"'+ $scope.file.name+'"';
                                 $scope.item.ANSWER = '{'+answer2+$rootScope.jsontext3+'}';
-
-
                             }
 
                             console.log($scope.item.ANSWER);
-                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                                .then(function(data){
+                            console.log($scope.item.ada_count_request);
 
-                                    $rootScope.mileage = data.mileage;
-                                    dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
+                            if($scope.item.ada_count_request == 200){
 
-                                    $location.url('/moms/samplepack/intro');
-                                })
-                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                                dialogs.notify('알림', '샘플팩 신청이 마감되었습니다.', {size: 'md'});
+                                $location.url('/moms/samplepack/intro');
+                            }else{
+                                $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                    .then(function(data){
+
+                                        $rootScope.mileage = data.mileage;
+                                        dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
+
+                                        $location.url('/moms/samplepack/intro');
+                                    })
+                                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                            }
                         }
 
                     }else{
