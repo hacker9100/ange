@@ -411,6 +411,8 @@ define([
                 $scope.item.PRODUCT_NO = item.PRODUCT_NO;
                 $scope.item.PRODUCT_NM = item.PRODUCT_NM;
                 $scope.item.PRICE = item.SUM_PRICE;
+                $scope.item.PRODUCT_CNT = item.PRODUCT_CNT;
+                $scope.item.PRODUCT_CODE = item.PRODUCT_CODE;
 
                 $scope.updateItem('ange/order', 'item', item.NO, $scope.item, false)
                     .then(function(data){
