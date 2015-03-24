@@ -198,12 +198,12 @@
                 $sql = "SELECT TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                              ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_option_quantity, ada_image, ada_preview, ada_imagemap
                              ,ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url, ada_type, ada_title, ada_que_type
-                             ,DATE_FORMAT(ada_date_notice, '%Y-%m-%d') as ada_date_notice
+                             ,DATE_FORMAT(ada_date_notice, '%Y-%m-%d') as ada_date_notice, ada_count_request
                         FROM
                         (
                             SELECT
                                   ada_idx, ada_type, ada_title, ada_url, ada_date_open, ada_date_close, ada_option_quantity, ada_image, ada_preview, ada_imagemap,
-                                  ada_state, ada_que_info, ada_que_type, ada_date_notice
+                                  ada_state, ada_que_info, ada_que_type, ada_date_notice, ada_count_request
                             FROM adm_ad a, adm_product p
                             WHERE 1 = 1
                             	  AND a.adp_idx = p.adp_idx

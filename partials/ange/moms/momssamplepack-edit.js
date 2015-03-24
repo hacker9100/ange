@@ -243,6 +243,7 @@ define([
                    $scope.item.ada_date_close = data[0].ada_date_close;
                    $scope.item.ada_date_notice = data[0].ada_date_notice;
                    $scope.item.ada_title = data[0].ada_title;
+                   $scope.item.ada_count_request = data[0].ada_count_request;
 
 
                    $scope.item.TARGET_GB = target_gb;
@@ -756,6 +757,27 @@ define([
                 ['catch'](function(error){});
         }
 
+
+        $scope.click_compCheck = function (){
+
+            $scope.search.ada_idx = $scope.item.ada_idx;
+            $scope.search.TARGET_GB = $scope.item.target_gb;
+
+            $scope.getList('ange/comp', 'samplepackCheck', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                .then(function(data){
+
+                    var checkCnt = data[0].COMP_CNT;
+
+                    if(checkCnt ==0){
+                        $scope.showSamplepackDetails = true;
+                    }else{
+                        dialogs.notify('알림', '이미 샘플팩 신청을 했습니다.', {size: 'md'});
+                        return;
+                    }
+
+                })
+                ['catch'](function(error){});
+        }
 
 //        $scope.init();
 //        $scope.click_sampleSeasonList();
