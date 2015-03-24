@@ -11,14 +11,35 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('samplepack-edit', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('samplepack-edit', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', '$http',function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD,$http) {
 
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
         // 파일 업로드 후 파일 정보가 변경되면 화면에 로딩
         $scope.$watch('newFile', function(data){
             if (typeof data !== 'undefined') {
-                $scope.file = data[0];
+                //console.log(data[0].name);
+                var filename = data[0].name;
+                var extend = filename.slice(filename.indexOf(".") + 1).toLowerCase(); //파일 확장자를 잘라내고, 비교를 위해 소문자로 변경.
+
+                //console.log(extend);
+
+                if(extend != "jpg" && extend != "png" &&  extend != "gif" &&  extend != "bmp"){ //확장자를 확인.
+                    //$scope.file = "";
+                    //$scope.file = {};
+                    //$scope.queue = [];
+
+                    console.log(data[0]);
+
+                    $scope.file1 = {};
+
+                    alert('이미지 파일(jpg, png, gif, bmp)만 등록 가능합니다.');
+                    return;
+                }else{
+                    $scope.file1 = data[0];
+
+                    console.log($scope.file);
+                }
             }
         });
 
@@ -636,7 +657,9 @@ define([
 
                             console.log($scope.item.REASON);
 
-                            $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            if($scope.item.REASON != undefined){
+                                $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            }
 
                             if($scope.item.REASON == undefined || $scope.item.REASON == ""){
                                 alert('태동느낌을 작성하세요');
@@ -652,15 +675,15 @@ define([
                             var answer = [];
                             $rootScope.jsontext3 = "";
 
-                            console.log($scope.file);
+                            console.log($scope.file1);
 
-                            if ($scope.file == undefined) {
+                            if ($scope.file1 == undefined) {
                                 dialogs.notify('알림', '이미지를 등록해야합니다.', {size: 'md'});
                                 return;
                             }
 
 
-                            $scope.item.FILE = $scope.file;
+                            $scope.item.FILE = $scope.file1;
 
                             if($scope.item.QUE != undefined){
 
@@ -697,7 +720,7 @@ define([
 
                             }else{
 
-                                $rootScope.jsontext3 = '"3":"'+ $scope.file.name+'"';
+                                $rootScope.jsontext3 = '"3":"'+ $scope.file1.name+'"';
                                 $scope.item.ANSWER = '{'+answer2+$rootScope.jsontext3+'}';
                             }
 
