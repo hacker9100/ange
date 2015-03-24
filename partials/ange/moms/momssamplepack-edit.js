@@ -453,20 +453,20 @@ define([
                 return;
             }
 
-            if($scope.season_gb == 'SAMPLE2'){
-
-                if($scope.checked == 'N'){
-                    dialogs.notify('알림', '신청 자격을 확인해주세요.', {size: 'md'});
-                    return;
-                }
-
-                var mileage_point = $rootScope.mileage;
-
-                if(mileage_point < 2000){
-                    alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
-                    return;
-                }
-            }
+//            if($scope.season_gb == 'SAMPLE2'){
+//
+//                if($scope.checked == 'N'){
+//                    dialogs.notify('알림', '신청 자격을 확인해주세요.', {size: 'md'});
+//                    return;
+//                }
+//
+//                var mileage_point = $rootScope.mileage;
+//
+//                if(mileage_point < 2000){
+//                    alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
+//                    return;
+//                }
+//            }
 
 
             $scope.getList('ange/comp', 'check', {}, $scope.search, false)
