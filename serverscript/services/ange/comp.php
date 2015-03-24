@@ -230,7 +230,7 @@ switch ($_method) {
             $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
         }
 
-        $FORM = json_decode(file_get_contents("php://input"),true);
+//        $FORM = json_decode(file_get_contents("php://input"),true);
         $_d->sql_beginTransaction();
 
         if($_type == "eventitem"){
@@ -304,6 +304,13 @@ switch ($_method) {
 
             $no = $_d->mysql_insert_id;
 
+            if ($_d->mysql_errno > 0) {
+                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+            } else {
+                $_d->sql_commit();
+                $_d->succEnd($no);
+            }
+
         }else if($_type == "item") {
 
             if (!isset($_SESSION['uid'])) {
@@ -362,12 +369,26 @@ switch ($_method) {
             $_d->sql_query($sql);
 
 
-        }
-        if ($_d->mysql_errno > 0) {
-            $_d->failEnd("등록실패입니다:".$_d->mysql_error);
-        } else {
-            $_d->sql_commit();
-            $_d->succEnd($no);
+            if(isset($_model[MILEAGE]) && $_model[MILEAGE] != ""){
+                $sql = "UPDATE COM_USER
+                                SET
+                                    SUM_POINT = SUM_POINT + 2000,
+                                    REMAIN_POINT = REMAIN_POINT - 2000
+                                WHERE
+                                    USER_ID = '".$_SESSION['uid']."'
+                                ";
+                $_d->sql_query($sql);
+
+                $_SESSION['mileage'] = $_SESSION['mileage'] - 2000;
+            }
+
+            if ($_d->mysql_errno > 0) {
+                $_d->failEnd("등록실패입니다:".$_d->mysql_error);
+            } else {
+                $_d->sql_commit();
+                //$_d->succEnd($no);
+                $_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
+            }
         }
 
         break;

@@ -453,7 +453,7 @@ define([
                 return;
             }
 
-//            if($scope.season_gb == 'SAMPLE2'){
+            if($scope.season_gb == 'SAMPLE2'){
 //
 //                if($scope.checked == 'N'){
 //                    dialogs.notify('알림', '신청 자격을 확인해주세요.', {size: 'md'});
@@ -466,7 +466,8 @@ define([
 //                    alert('보유 마일리지가 부족하여 신청이 불가능 합니다');
 //                    return;
 //                }
-//            }
+                $scope.item.MILEAGE = true;
+            }
 
 
             $scope.getList('ange/comp', 'check', {}, $scope.search, false)
@@ -631,9 +632,19 @@ define([
                             var deliveryday = '';
                             deliveryday = $scope.item.YEAR + '-' + $scope.item.MONTH + '-' + $scope.item.DAY;
 
+
+                            console.log($scope.item.REASON);
+
+                            $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+
+                            if($scope.item.REASON == undefined || $scope.item.REASON == ""){
+                                alert('태동느낌을 작성하세요');
+                                return;
+                            }
+
                             console.log(deliveryday);
 
-                            var answer2 = '"1":"'+deliveryday+'",';
+                            var answer2 = '"1":"'+deliveryday+'","2":"'+$scope.item.REASON+'"';
                             console.log(answer2);
 
                             // 문답일때
@@ -646,6 +657,7 @@ define([
                                 dialogs.notify('알림', '이미지를 등록해야합니다.', {size: 'md'});
                                 return;
                             }
+
 
                             $scope.item.FILE = $scope.file;
 
@@ -684,7 +696,7 @@ define([
 
                             }else{
 
-                                $rootScope.jsontext3 = '"2":"'+ $scope.file.name+'"';
+                                $rootScope.jsontext3 = '"3":"'+ $scope.file.name+'"';
                                 $scope.item.ANSWER = '{'+answer2+$rootScope.jsontext3+'}';
 
 
@@ -692,7 +704,9 @@ define([
 
                             console.log($scope.item.ANSWER);
                             $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                                .then(function(){
+                                .then(function(data){
+
+                                    $rootScope.mileage = data.mileage;
                                     dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
 
                                     $location.url('/moms/samplepack/intro');
