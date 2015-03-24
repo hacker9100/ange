@@ -754,6 +754,16 @@ switch ($_method) {
 
             $_d->sql_query($sql);
 
+            $sql = "UPDATE ANGE_PRODUCT
+                    SET
+                        SUM_OUT_CNT = SUM_OUT_CNT- ".$_model[PRODUCT_CNT]."
+                    WHERE
+                        NO = ".$_model[PRODUCT_NO]."
+                ";
+
+            $_d->sql_query($sql);
+
+
             $sql = "UPDATE
                             COM_USER
                         SET
@@ -797,7 +807,7 @@ switch ($_method) {
                         REG_DT
                     ) VALUES (
                         ".$_model[PRODUCT_NO].",
-                        ".$_model[PRODUCT_CODE].",
+                        '".$_model[PRODUCT_CODE]."',
                         '".$_model[PRODUCT_NM]."',
                         '주문취소합니다',
                         1,
