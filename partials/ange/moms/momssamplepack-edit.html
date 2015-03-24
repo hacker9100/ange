@@ -799,11 +799,11 @@
     <div class="samplepack_tabbox"  ng-class="{ 'hidden': showSamplepackDetails }" style="display:block;">
 
         <ul class="nav nav-tabs nav-justified" id="tab" style="font-size:0.92em; font-weight:700;">
-            <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('1');">주의사항</a></li>
-            <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('2');">샘플팩 구성</a></li>
+            <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('1');">샘플팩 구성</a></li>
+            <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('2');">주의사항</a></li>
 
             <!-- 시즌1 주의사항 -->
-            <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
+            <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '2'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
                 <span class="tabox_title">신청방법</span>
                 <ol>
                     <li>앙쥬 홈페이지 (www.ange.co.kr)에 회원가입합니다.</li>
@@ -833,7 +833,7 @@
             <!-- /시즌1 주의사항 -->
 
             <!-- 시즌2 주의사항 -->
-            <div id="tabs-1" class="tabox_body"  ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
+            <div id="tabs-1" class="tabox_body"  ng-if="selectIdx == '2'" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
                 <span class="tabox_title">신청방법</span>
                 <ol>
                     <li>상단 <mark><span class="table_red">신청자격확인</span></mark> 을 통해 신청자격을 먼저 확인하세요.</li>
@@ -860,7 +860,7 @@
             <!-- /시즌2 주의사항 -->
 
             <!-- 시즌 1 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" ng-if="selectIdx == '2'" style="display:block;">
+            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" ng-if="selectIdx == '1'" style="display:block;">
                 <span class="tabox_title">기존회원 샘플팩 구성</span>
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
@@ -1065,7 +1065,7 @@
             <!-- /시즌 1 샘플팩 구성 -->
 
             <!-- 시즌 2 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '2'" style="display:block;">
+            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '1'" style="display:block;">
                 <span class="tabox_title">신규회원 샘플팩 구성</span>
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
