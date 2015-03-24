@@ -31,6 +31,7 @@ define([
 
         $scope.search = {};
 
+        //$("#checkProduct").attr("checked", false);
         $(function () {
 
             $(".tab_content").hide();
@@ -161,19 +162,30 @@ define([
         // 체크박스 상품 추가
         $scope.addcheckboxProductList = function (products, item){
 
+            //alert('');
             if ($rootScope.uid == '' || $rootScope.uid == null) {
                 dialogs.notify('알림', '로그인 후 상품선택이 가능합니다.', {size: 'md'});
                 $("#checkProduct").attr("checked",false);
                 return;
             }
 
-            if($("#checkProduct").is(":checked")){
-                $scope.product.CNT = 1;
-                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
-                //, "SUM_IN_OUT" : item.SUM_IN_OUT
-            }else{
-                $scope.productsList = [];
-            }
+            $scope.product.CNT = 1;
+            $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+
+//            if($scope.checkboxproduct == 'Y'){
+//                $scope.product.CNT = 1;
+//                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+//            }else{
+//                $scope.productsList = [];
+//            }
+
+//            if($("#checkProduct").is(":checked")){
+//                $scope.product.CNT = 1;
+//                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+//                //, "SUM_IN_OUT" : item.SUM_IN_OUT
+//            }else{
+//                $scope.productsList = [];
+//            }
 
         }
 
@@ -222,8 +234,12 @@ define([
                         }
 
                         $scope.products = data.PRODUCTS;
-
                         $scope.item = data;
+
+                        if($scope.products == null){
+                            $scope.checkboxproduct = 'Y';
+                            $scope.addcheckboxProductList($scope.item, $scope.item);
+                        }
 
                         $scope.PRICE = data.PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
                         $scope.DELEIVERY_PRICE = data.DELEIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
