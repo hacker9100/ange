@@ -53,7 +53,11 @@
     switch ($_method) {
         case "GET":
             if ($_type == 'total') {
-                $sql = "SELECT COUNT(*) AS TOTAL_COUNT FROM ANGE_ALBUM B WHERE REG_UID = '{$_SESSION['uid']}'";
+                if (isset($_search['PARENT_NO']) && $_search['PARENT_NO'] != "") {
+                    $search_where .= "AND PARENT_NO = '{$_search['PARENT_NO']}' ";
+                }
+
+                $sql = "SELECT COUNT(*) AS TOTAL_COUNT FROM ANGE_ALBUM B WHERE REG_UID = '{$_SESSION['uid']}' {$search_where}";
                 $result=$_d->sql_fetch($sql);
 
                 if($_d->mysql_errno > 0){
@@ -84,12 +88,16 @@
                 $sort_order = "REG_DT DESC";
                 $limit = "";
 
+                if (isset($_search['PARENT_NO']) && $_search['PARENT_NO'] != "") {
+                    $search_where .= "AND PARENT_NO = '{$_search['PARENT_NO']}' ";
+                }
+
                 if (isset($_search['COMM_NO_IN]']) && $_search['COMM_NO_IN'] != "") {
                     $search_where .= "AND COMM_NO IN ({$_search['COMM_NO_IN']}) ";
                 }
 
                 if (isset($_search['REG_UID']) && $_search['REG_UID'] != "") {
-                    $search_where .= "AND B.REG_UID = '{$_search['REG_UID']}' ";
+                    $search_where .= "AND REG_UID = '{$_search['REG_UID']}' ";
                 }
 
                 if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
@@ -111,11 +119,11 @@
                 $sql = "SELECT COUNT(*) AS TOTAL_COUNT FROM ANGE_ALBUM B WHERE REG_UID = '{$_SESSION['uid']}' {$search_where}";
                 $row=$_d->sql_fetch($sql);
 
-                $sql = "SELECT {$row['TOTAL_COUNT']} AS TOTAL_COUNT, DATA.*, F.* FROM
+                $sql = "SELECT {$row['TOTAL_COUNT']} AS TOTAL_COUNT, DATA.*, F.* FROM, (SELECT COUNT(*) FROM ANGE_ALBUM WHERE PARENT_NO = DATA.NO) AS PHOTO_CNT
                         (
-                            SELECT * FROM ANGE_ALBUM WHERE REG_UID = '".$_SESSION['uid']."' ".$search_where."
-                            ORDER BY ".$sort_order."
-                            ".$limit."
+                            SELECT * FROM ANGE_ALBUM WHERE REG_UID = '{$_SESSION['uid']}' {$search_where}
+                            ORDER BY {$sort_order}
+                            {$limit}
                         ) AS DATA, COM_FILE F
                         WHERE DATA.NO = F.TARGET_NO AND F.TARGET_GB = 'ALBUM'";
 

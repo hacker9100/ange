@@ -143,6 +143,30 @@ define([
 
         };
 
+        // 우편번호 검색
+        $scope.click_openDaumPostcode = function () {
+
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    var addr = data.address.replace(/(\s|^)\(.+\)$|\S+~\S+/g, '');
+
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                    // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
+                    $scope.item.RECEIPT_ZIP_CODE1 = document.getElementById('receipt_post_1').value = data.postcode1;
+                    $scope.item.RECEIPT_ZIP_CODE2 = document.getElementById('receipt_post_2').value = data.postcode2;
+                    $scope.item.RECEIPT_ADDR = document.getElementById('receipt_addr').value = addr;
+//                        $scope.user.ADDR = document.getElementById('addr').value = data.address;
+
+                    //전체 주소에서 연결 번지 및 ()로 묶여 있는 부가정보를 제거하고자 할 경우,
+                    //아래와 같은 정규식을 사용해도 된다. 정규식은 개발자의 목적에 맞게 수정해서 사용 가능하다.
+                    //var addr = data.address.replace(/(\s|^)\(.+\)$|\S+~\S+/g, '');
+                    //document.getElementById('addr').value = addr;
+
+                    document.getElementById('receipt_addr_detail').focus();
+                }
+            }).open();
+        };
+
         $scope.click_cartlist = function(){
 
             $('input[name="cartlist"]').change(function(){
@@ -417,17 +441,19 @@ define([
                         $scope.item.ZIP_CODE1 = data.ZIP_CODE.substr(0,3);
                         $scope.item.ZIP_CODE2 = data.ZIP_CODE.substr(3,3);
 
-                        $scope.item.USER_ID = data.USER_ID;
-                        $scope.item.RECEIPTOR_NM = data.USER_NM;
-                        $scope.item.RECEIPT_PHONE = data.PHONE_2;
-                        $scope.item.RECEIPT_ADDR = data.ADDR;
-                        $scope.item.RECEIPT_ADDR_DETAIL = data.ADDR_DETAIL;
-
                         $scope.item.RECEIPTOR_NM1 = data.USER_NM;
                         $scope.item.RECEIPT_PHONE1 = data.PHONE_2;
                         $scope.item.RECEIPT_ADDR1 = data.ADDR;
                         $scope.item.RECEIPT_ADDR_DETAIL1 = data.ADDR_DETAIL;
 
+                        $scope.item.RECEIPT_ZIP_CODE1 = $scope.item.ZIP_CODE1;
+                        $scope.item.RECEIPT_ZIP_CODE2 = $scope.item.ZIP_CODE2;
+
+                        $scope.item.USER_ID = data.USER_ID;
+                        $scope.item.RECEIPTOR_NM = data.USER_NM;
+                        $scope.item.RECEIPT_PHONE = data.PHONE_2;
+                        $scope.item.RECEIPT_ADDR = data.ADDR;
+                        $scope.item.RECEIPT_ADDR_DETAIL = data.ADDR_DETAIL;
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
@@ -474,12 +500,16 @@ define([
 
                 $scope.item.RECEIPTOR_NM1 = $rootScope.info.USER_NM;
                 $scope.item.RECEIPT_PHONE1 = $rootScope.info.PHONE_2;
+                $scope.item.RECEIPT_ZIP_CODE1 = $rootScope.info.ZIP_CODE.substr(0,3);
+                $scope.item.RECEIPT_ZIP_CODE2 = $rootScope.info.ZIP_CODE.substr(3,3);
                 $scope.item.RECEIPT_ADDR1 = $rootScope.info.ADDR;
                 $scope.item.RECEIPT_ADDR_DETAIL1 = $rootScope.info.ADDR_DETAIL;
             }else if(val == 'N'){
                 $scope.item.USER_ID = '';
                 $scope.item.RECEIPTOR_NM = '';
                 $scope.item.RECEIPT_PHONE = '';
+                $scope.item.RECEIPT_ZIP_CODE1 = '';
+                $scope.item.RECEIPT_ZIP_CODE2 = '';
                 $scope.item.RECEIPT_ADDR = '';
                 $scope.item.RECEIPT_ADDR_DETAIL = '';
             }
@@ -667,6 +697,15 @@ define([
         // 나의 주문현황으로 이동
         $scope.click_myorder = function () {
             $location.url('/myange/orderlist');
+        }
+
+        // 계속 쇼핑하기 이동
+        $scope.click_storeMall = function () {
+            if($scope.product_gb == 'cummerce'){
+                $location.url('/store/cummerce/list');
+            } else {
+                $location.url('/store/mileagemall/list');
+            }
         }
 
         // 스토어 메인으로 이동

@@ -151,7 +151,7 @@ define([
             }
 
             $scope.search.FILE = true;
-            $scope.getList('ange/product', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+            $scope.getList('ange/product', 'list', {}, $scope.search, true)
                 .then(function(data){
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;

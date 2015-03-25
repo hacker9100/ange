@@ -343,6 +343,19 @@ switch ($_method) {
                 break;
             }
 
+            if(isset($_model[MILEAGE]) && $_model[MILEAGE] != ""){
+                // 신청자명 증가
+                $sql = "SELECT ada_count_request FROM adm_ad
+                        WHERE ada_idx = '".$_model[ada_idx]."'";
+
+                $data = $_d->sql_fetch($sql);
+
+                if ($data['ada_count_request'] >= 200) {
+                    $_d->failEnd("샘플팩 신청이 마감되었습니다.");
+                    break;
+                }
+            }
+
             // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
             $sql = "INSERT INTO adm_history_join
                                 (
@@ -370,9 +383,30 @@ switch ($_method) {
 
 
             if(isset($_model[MILEAGE]) && $_model[MILEAGE] != ""){
+                $sql = "INSERT INTO ANGE_USER_MILEAGE
+                                (
+                                    USER_ID,
+                                    EARN_DT,
+                                    MILEAGE_NO,
+                                    EARN_GB,
+                                    PLACE_GB,
+                                    POINT,
+                                    REASON
+                                ) VALUES (
+                                    '".$_SESSION['uid']."'
+                                    , SYSDATE()
+                                    , '990'
+                                    , '990'
+                                    , '샘플팩'
+                                    , '2000'
+                                    , '샘플팩2 신청'
+                                )";
+
+                $_d->sql_query($sql);
+
                 $sql = "UPDATE COM_USER
                                 SET
-                                    SUM_POINT = SUM_POINT + 2000,
+                                    USE_POINT = USE_POINT + 2000,
                                     REMAIN_POINT = REMAIN_POINT - 2000
                                 WHERE
                                     USER_ID = '".$_SESSION['uid']."'

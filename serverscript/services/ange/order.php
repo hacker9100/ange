@@ -422,18 +422,31 @@ switch ($_method) {
                     // 상품구분 존재하면서 구분값이 마일리지몰 일때
                     if(isset($e[PRODUCT_GB]) && $e[PRODUCT_GB] == 'MILEAGE'){
 
-                        $sql = "UPDATE COM_USER
-                            SET
-                                SUM_POINT = SUM_POINT + ".$e[TOTAL_PRICE].",
-                                REMAIN_POINT = REMAIN_POINT - ".$e[TOTAL_PRICE]."
-                            WHERE
-                                USER_ID = '".$_SESSION['uid']."'
-                            ";
+                        $sql = "INSERT INTO ANGE_USER_MILEAGE
+                                (
+                                    USER_ID,
+                                    EARN_DT,
+                                    MILEAGE_NO,
+                                    EARN_GB,
+                                    PLACE_GB,
+                                    POINT,
+                                    REASON
+                                ) VALUES (
+                                    '".$_SESSION['uid']."'
+                                    , SYSDATE()
+                                    , '992'
+                                    , '992'
+                                    , '마일리지몰'
+                                    , '".$e[TOTAL_PRICE]."'
+                                    , '마일리지몰 상품 구매'
+                                )";
+
                         $_d->sql_query($sql);
 
                         $sql = "UPDATE COM_USER
                             SET
-                                SUM_POINT = (USE_POINT + ".$e[TOTAL_PRICE].") + (REMAIN_POINT - ".$e[TOTAL_PRICE].")
+                                USE_POINT = USE_POINT + ".$e[TOTAL_PRICE].",
+                                REMAIN_POINT = REMAIN_POINT - ".$e[TOTAL_PRICE]."
                             WHERE
                                 USER_ID = '".$_SESSION['uid']."'
                             ";
@@ -441,7 +454,6 @@ switch ($_method) {
 
                         //$_SESSION['mileage'] = $_SESSION['mileage'] - $e[TOTAL_PRICE];
                         $_total_mileage += $e[TOTAL_PRICE];
-
                     }
 
                     // 상품구분이 존재하면서 구분값이 경매소일때

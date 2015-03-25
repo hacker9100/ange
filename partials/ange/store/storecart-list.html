@@ -406,7 +406,7 @@
 
                                                         <span class="col-xs-2 basicinfo title"></span>
                                                         <span class="col-xs-2 basicinfo subtitle">
-                                                            <div class="form-group" style="margin:0 5px">지번 주소</div>
+                                                            <div class="form-group" style="margin:0 5px">주소</div>
                                                         </span>
 
                                                         <span class="col-xs-8 basicinfo input">
@@ -417,7 +417,7 @@
 
                                                         <span class="col-xs-2 basicinfo title"></span>
                                                         <span class="col-xs-2 basicinfo subtitle">
-                                                            <div class="form-group" style="margin:0 5px">지번 상세</div>
+                                                            <div class="form-group" style="margin:0 5px">상세 주소</div>
                                                         </span>
 
                                                         <span class="col-xs-8 basicinfo input">
@@ -583,33 +583,33 @@
 
                                                         <span class="col-xs-8 basicinfo input">
                                                             <div class="form-group" style="margin:0 5px">
-                                                                <div class="postno_search">
-                                                                    <input type="text" class="form-control postno_search" ng-model="item.ZIP_CODE1" style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
+                                                                <div class="form-inline postno_search">
+                                                                    <input id="receipt_post_1" type="text" class="form-control postno_search" ng-model="item.RECEIPT_ZIP_CODE1" style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
                                                                     <span style="float:left; margin:0 4px;"> &dash; </span>
-                                                                    <input type="text" class="form-control postno_search" ng-model="item.ZIP_CODE2"  style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
-                                                                </div>
+                                                                    <input id="receipt_post_2" type="text" class="form-control postno_search" ng-model="item.RECEIPT_ZIP_CODE2"  style="float:left; cursor:pointer; width:65px; background-color: #fff;" disabled>
+                                                                    <button type="button" class="btn btn-sm btn-info" ng-click="click_openDaumPostcode()"><span class="glyphicon glyphicon-plus"></span> 우편번호</button></div>
                                                             </div>
                                                         </span>
 
                                                         <span class="col-xs-2 basicinfo title"></span>
                                                         <span class="col-xs-2 basicinfo subtitle">
-                                                            <div class="form-group" style="margin:0 5px">지번 주소</div>
+                                                            <div class="form-group" style="margin:0 5px">주소</div>
                                                         </span>
 
                                                         <span class="col-xs-8 basicinfo input">
                                                             <div class="form-group" style="margin:0 5px">
-                                                                <input type="text" class="form-control inline_input" ng-model="item.RECEIPT_ADDR" style="float:left; cursor:pointer; background-color: #fff;" disabled>
+                                                                <input id="receipt_addr" type="text" class="form-control inline_input" ng-model="item.RECEIPT_ADDR" style="float:left; cursor:pointer; background-color: #fff;" disabled>
                                                             </div>
                                                         </span>
 
                                                         <span class="col-xs-2 basicinfo title"></span>
                                                         <span class="col-xs-2 basicinfo subtitle">
-                                                            <div class="form-group" style="margin:0 5px">지번 상세</div>
+                                                            <div class="form-group" style="margin:0 5px">상세 주소</div>
                                                         </span>
 
                                                         <span class="col-xs-8 basicinfo input">
                                                             <div class="form-group" style="margin:0 5px">
-                                                                <input type="text" class="form-control inline_input" ng-model="item.RECEIPT_ADDR_DETAIL" style="float:left; margin:0px;">
+                                                                <input id="receipt_addr_detail" type="text" class="form-control inline_input" ng-model="item.RECEIPT_ADDR_DETAIL" style="float:left; margin:0px;">
                                                             </div>
                                                         </span>
 
@@ -873,7 +873,7 @@
 
                                                     <td class="table_date" align="right" style="padding-top:22px;">
                                                         결제 금액 : {{TOTAL_SUM_PRICE}}
-                                                        <span ng-show="list[0].DELEIVERY_ST == 2">배송비 : {{TOTAL_DELEIVERY_PRICE}} ({{list[0].DELEIVERY_ST == '2' ? '선불' : '착불'}})</span> &nbsp;
+                                                        <span ng-show="list[0].DELEIVERY_ST == 2">배송비 : {{TOTAL_DELEIVERY_PRICE}} ({{list[0].DELEIVERY_ST == '0' ? '착불' : '선불'}})</span> &nbsp;
                                                         <br/>
                                                         합계 : {{TOTAL_PRICE}}
                                                     </td>
@@ -948,7 +948,7 @@
 
                                                                         <span class="col-xs-2 basicinfo title"></span>
                                                                         <span class="col-xs-2 basicinfo subtitle">
-                                                                            <div class="form-group" style="margin:0 5px">지번 주소</div>
+                                                                            <div class="form-group" style="margin:0 5px">주소</div>
                                                                         </span>
                                                                         <span class="col-xs-8 basicinfo input">
                                                                             <div class="form-group" style="margin:0 5px">
@@ -1049,7 +1049,7 @@
 
                                                         <span class="col-xs-2 basicinfo title"></span>
                                                                         <span class="col-xs-2 basicinfo subtitle">
-                                                                            <div class="form-group" style="margin:0 5px">지번 주소</div>
+                                                                            <div class="form-group" style="margin:0 5px">주소</div>
                                                                         </span>
                                                                         <span class="col-xs-8 basicinfo input">
                                                                             <div class="form-group" style="margin:0 5px">
@@ -1210,8 +1210,8 @@
 
 
                             <div style="text-align: right;">
-                                <button class="cart_btn line-black" style="display: inline-block;">계속쇼핑</button>
-                                <button class="cart_btn line-red" ng-click="click_storemain();" style="display: inline-block;">메인가기</button>
+                                <button class="cart_btn line-black" ng-click="click_storeMall();" style="display: inline-block;">계속쇼핑</button>
+                                <!--<button class="cart_btn line-red" ng-click="click_storemain();" style="display: inline-block;">메인가기</button>-->
                                 <button class="cart_btn solid-red" ng-click="click_myorder();" style="display: inline-block;">주문/구매내역 보러가기</button>
                             </div>
 

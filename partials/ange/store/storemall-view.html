@@ -34,9 +34,9 @@
                                             <div class="store_col_info">
                                                 <div class="store_list_item maininfo" ng-show="menu == 'mileage'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{PRICE}} P</span></div>
                                                 <div class="store_list_item maininfo" ng-show="menu == 'cummerce'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{PRICE}} 원</span></div>
-                                                <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{DELEIVERY_PRICE}} 원({{item.DELEIVERY_ST == 1 ? '착불' : '선불'}})</span></div>
+                                                <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{DELEIVERY_PRICE}} 원({{item.DELEIVERY_ST == 1 ? '선불' : '착불'}})</span></div>
                                                 <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.COMPANY_NM}}</span></div>
-                                                <div class="store_list_item maininfo"><strong>수량</strong>
+                                                <div ng-show="role == 'ANGE_ADMIN'" class="store_list_item maininfo"><strong>수량</strong>
                                                     <span ng-class="item.SUM_CNT > 0 ? 'table_gray' : 'table_red'" style="position:absolute; left:120px;">{{item.SUM_CNT >  0 ? item.SUM_CNT : '품절'}}</span>
                                                 </div>
                                                 <!--<div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="{{item.URL}}">{{item.URL}}</a></span></div>-->
@@ -105,7 +105,7 @@
                                                         <br />
                                                         {{menu == 'cummerce' ? total() : 0}} 원
                                                         <br />
-                                                        {{item.DELEIVERY_ST == 1 ? '착불' : '선불'}}
+                                                        {{item.DELEIVERY_ST == 1 ? '선불' : '착불'}}
                                                     </span>
                                                 </div>
 

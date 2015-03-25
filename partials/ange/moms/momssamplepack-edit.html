@@ -1,1277 +1,1269 @@
 <div ng-controller="samplepack-edit" class="ng_wrap">
 
-<!-- mainbar -->
-<div class="mainbar sub-slide0">
+    <!-- mainbar -->
+    <div class="mainbar sub-slide0">
 
-<div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
 
-<div class="row">
+            <div class="row">
 
-<div class="col-xs-12 v-cell-3">
-<div class="comp_basic h-cell-dynamic">
+                <div class="col-xs-12 v-cell-3">
+                    <div class="comp_basic h-cell-dynamic">
 
-<div class="sub_contents_wrap">
+                        <div class="sub_contents_wrap">
 
-<div class="sub_contents_title">
-    <span class="sub_contents_bullet"></span>
-    <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
-</div>
-
-<!-- 시즌 1 -->
-<div ng-show="season_gb == 'SAMPLE1'" class="samplepack_types subs" style="display:block;">
-    <div class="samplepack_tagwrap">
-        <div class="samplepack_tags orange">
-            <!--앙쥬 신규 가입회원 샘플팩 &nbsp;<span style="font-size:1.32em; font-weight:bold;">50 차</span>-->
-            {{item.ada_title}}
-        </div>
-    </div>
-
-    <div  class="samplepack_smalltitle">
-        <h2><strong>임신/육아용품 샘플팩 증정</strong></h2>
-        <br />
-        <h4><strong>신규 임신부 회원</strong></h4>
-        <p class="table_blue samplepack_subguide">임신하셨어요? 앙쥬맘이 되어주세요.</p>
-    </div>
-
-
-    <dl class="dl-horizontal samplepack_new_howto">
-        <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-01 ~ {{Day}}</strong></dd>-->
-        <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-01 ~ {{Day}}</strong></dd>-->
-        <dt><span class="table_red">신청기간</span></dt><dd><strong>{{item.ada_date_open}} ~ {{item.ada_date_close}}</strong></dd>
-        <!--<dt><span class="table_red">당첨발표</span></dt><dd><strong>{{next_year}}-{{next_month}}-05</strong> (이벤트 당첨자 발표 게시판)</dd>-->
-        <dt><span class="table_red">당첨발표</span></dt><dd><strong>{{ada_date_notice}}</strong> (이벤트 당첨자 발표 게시판)</dd>
-        <dt><span class="table_red">증정인원</span></dt><dd><strong>{{month}}</strong> 월에 앙쥬에 신규가입한 임산부</dd>
-        <dt><span class="table_red">선물발송</span></dt><dd>{{next_year}}-{{next_month}}-09 전후 예정 (무료배송)</dd>
-        <dt><span class="table_red">신청방법</span></dt><dd><strong>{{month}}</strong> 월에 신규가입한 후 <strong><mark>산모이름과 예정일이 적힌</mark></strong> 산모수첩 또는 초음파 이미지 등록(1장만 가능)</dd>
-    </dl>
-
-    <div  class="samplepack_warning">
-        <blockquote class="table_red" style="font-size:0.92em;">
-            신청 후에는 사진 교체할 수 없습니다.<br />
-            남자 및 출산모, 이미 샘플팩을 신청했거나 받은 경우 신청이 불가능합니다.
-        </blockquote>
-    </div>
-</div>
-<!-- /시즌 1 -->
-
-<!-- 시즌 2 -->
-<div ng-show="season_gb == 'SAMPLE2'" class="samplepack_types subs" style="display:block;">
-    <div class="samplepack_tagwrap">
-        <div class="samplepack_tags blue">
-            <!--앙쥬 기존회원 샘플팩 &nbsp;<span style="font-size:1.32em; font-weight:bold;">시즌 2</span>-->
-            {{item.ada_title}}
-        </div>
-    </div>
-
-    <div  class="samplepack_smalltitle">
-        <h2><strong>임신/육아용품 샘플팩 증정</strong></h2>
-        <br />
-        <h4><strong>기존 앙쥬(임신부) 회원</strong></h4>
-        <p class="table_blue samplepack_subguide">우리아이 첫태동을 잊을수가 없어요</p>
-    </div>
-
-
-    <dl class="dl-horizontal samplepack_new_howto">
-        <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-25 ~ {{Day}}</strong></dd>-->
-        <!--<dt><span class="table_red">당첨발표</span></dt><dd><strong>{{next_year}}-{{next_month}}-05</strong> (이벤트 당첨자 발표 게시판)</dd>-->
-        <!--<dt><span class="table_red">증정인원</span></dt><dd>신규 임신부 샘플팩을 받지 못한 임신부인 앙쥬맘</dd>-->
-        <!--<dt><span class="table_red">선물발송</span></dt><dd>{{next_year}}-{{next_month}}-09 전후 예정 (착불 2500원)</dd>-->
-        <!--<dt><span class="table_red">신청방법</span></dt><dd><strong><mark>산모이름과 예정일이 적힌</mark></strong> 산모수첩 또는 초음파 이미지 등록(1장만 가능)</dd>-->
-        <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-01 ~ {{Day}}</strong></dd>-->
-        <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-01 ~ {{Day}}</strong></dd>-->
-        <dt><span class="table_red">신청기간</span></dt><dd><strong>{{item.ada_date_open}} ~ {{item.ada_date_close}}</strong></dd>
-        <!--<dt><span class="table_red">당첨발표</span></dt><dd><strong>{{next_year}}-{{next_month}}-05</strong> (이벤트 당첨자 발표 게시판)</dd>-->
-        <dt><span class="table_red">신청인원</span></dt><dd><strong>{{item.ada_count_request == null ? 0 : item.ada_count_request}} 명</strong></dd>
-        <dt><span class="table_red">증정인원</span></dt><dd><strong>200 명</strong></dd>
-        <dt><span class="table_red">선물발송</span></dt><dd>{{next_year}}-{{next_month}}-09 전후 예정 (무료배송)</dd>
-        <dt><span class="table_red">신청방법</span></dt><dd><strong><mark>산모이름과 예정일이 적힌</mark></strong> 산모수첩 또는 초음파 이미지 등록(1장만 가능)</dd>
-    </dl>
-
-    <div  class="samplepack_warning">
-        <blockquote class="table_red" style="font-size:0.92em;">
-            신청 후에는 사진 교체할 수 없습니다.<br />
-            남자 및 출산모, 이미 샘플팩을 신청했거나 받은 경우 신청이 불가능합니다.
-        </blockquote>
-    </div>
-</div>
-<!-- /시즌 2 -->
-
-<!-- 시즌 1 -->
-<div ng-show="season_gb == 'SAMPLE1'" class="samplepack_btnbox" style="display:block;">
-    <button ng-click="click_joinon();" class="samplepack_gotojoin"></button>
-    <button ng-click="showSamplepackDetails = ! showSamplepackDetails" class="samplepack_newrequest"></button>
-</div>
-<!-- /시즌 1 -->
-
-<!-- 시즌 2 -->
-<div ng-show="season_gb == 'SAMPLE2'" class="samplepack_btnbox" style="display:block;">
-    <button ng-click="click_samplepackCheck();" ng-show="checked == 'N'" class="samplepack_cofirmfirst"></button>  <!-- 신정차격 확인 후 신청 가능하도록 구성 신청자격 확인되면 none  -->
-    <button class="samplepack_cofirmfirst_now" ng-show="checked == 'Y'" disabled></button> <!--신청자격이 활성화되면 inline -->
-    <button ng-click="click_compCheck();" class="samplepack_oldrequest"></button>
-    <!-- ng-click="showSamplepackDetails = ! showSamplepackDetails" -->
-</div>
-<!-- /시즌 2 -->
-
-
-    <!-- 신청 폼 -->
-    <div class="samplepack_formwrap" ng-model="item" style="display:block;" ng-class="{ 'hidden': ! showSamplepackDetails }">
-            <div class="samplepack_form_title" style="background:#333; height:46px; padding:10px;">
-                <span class="table_blue" style="font-size:1.18em; float:left;">| 샘플팩 신청양식</span>
-                <div style="float:right;">
-                    <small><span class="table_blue">정보가 다르신가요?</span></small>
-                    <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">정보수정</button>
-                </div>
-            </div>
-
-            <!--<div class="row form_rows">-->
-                <!--<div class="form_basicinfo">-->
-                        <!--<span class="col-xs-2 basicinfo title">-->
-                            <!--<strong>아이디</strong>-->
-                            <!--<span class="table_blue">*</span>-->
-                        <!--</span>-->
-
-                        <!--<span class="col-xs-4 basicinfo input">-->
-                            <!--<div class="form-group" style="margin:0 5px">-->
-                                <!--<input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
-                            <!--</div>-->
-                        <!--</span>-->
-                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
-            <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
-
-            <div class="row form_rows">
-                <div class="form_basicinfo">
-                        <span class="col-xs-2 basicinfo title">
-                            <strong>신청자명</strong>
-                            <span class="table_blue">*</span>
-                        </span>
-
-                        <span class="col-xs-4 basicinfo input">
-                            <div class="form-group" style="margin:0 5px">
-                                <!--<input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
-                                {{user_info.NICK_NM}}<!--({{user_info.USER_ID}}) -->
+                            <div class="sub_contents_title">
+                                <span class="sub_contents_bullet"></span>
+                                <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
-                        </span>
-                </div>  <!-- /.form_basicinfo -->
-            </div>  <!-- /.form_rows -->
 
-            <!--<div class="row form_rows">-->
-                <!--<div class="form_basicinfo">-->
-                        <!--<span class="col-xs-2 basicinfo title">-->
-                            <!--<strong>가입일자</strong>-->
-                            <!--<span class="table_blue">*</span>-->
-                        <!--</span>-->
+                            <!-- 시즌 1 -->
+                            <div ng-show="season_gb == 'SAMPLE1'" class="samplepack_types subs" style="display:block;">
+                                <div class="samplepack_tagwrap">
+                                    <div class="samplepack_tags orange">
+                                        <!--앙쥬 신규 가입회원 샘플팩 &nbsp;<span style="font-size:1.32em; font-weight:bold;">50 차</span>-->
+                                        {{item.ada_title}}
+                                    </div>
+                                </div>
 
-                        <!--<span class="col-xs-4 basicinfo input">-->
-                            <!--<div class="form-group" style="margin:0 5px">-->
-                                <!--<input type="text" ng-model="item.REG_DT" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
-                            <!--</div>-->
-                        <!--</span>-->
-                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
-            <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
-
-        <div class="row form_rows">
-            <div class="form_basicinfo">
-                        <span class="col-xs-2 basicinfo title">
-                            <strong>연락처</strong>
-                            <span class="table_blue">*</span>
-                        </span>
-
-                        <span class="col-xs-2 basicinfo input">
-                            <div class="form-group" style="margin:0 5px; text-align:right;">
-                                <small class="table_gray">전화번호</small>
-                            </div>
-                        </span>
-                        <span class="col-xs-3 basicinfo input">
-                            <div class="form-group" style="margin:0 5px">
-                                <!--<input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
-                                {{user_info.PHONE_1}}
-                            </div>
-                        </span>
-                        <span class="col-xs-1 basicinfo input">
-                            <div class="form-group" style="margin:0 5px; text-align:right;">
-                                <small class="table_gray">휴대폰</small>
-                            </div>
-                        </span>
-                        <span class="col-xs-3 basicinfo input">
-                            <div class="form-group" style="margin:0 5px">
-                                <!--<input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
-                                {{user_info.PHONE_2}}
-                            </div>
-                        </span>
-            </div>  <!-- /.form_basicinfo -->
-        </div>  <!-- /.form_rows -->
-
-        <div class="row form_rows">
-            <div class="form_basicinfo">
-                        <span class="col-xs-2 basicinfo title">
-                            <strong>받으실 곳</strong>
-                            <span class="table_blue">*</span>
-                        </span>
-
-                        <span class="col-xs-10 basicinfo input">
-                            <div class="form-group" style="margin:0 5px">
-                                <p>{{user_info.ZIP_CODE| limitTo: 3}}-{{user_info.ZIP_CODE| limitTo: -3}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder="" disabled>--></p>
-                                <p>{{user_info.ADDR}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR" placeholder="" disabled>--></p>
-                                {{user_info.ADDR_DETAIL}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>-->
-                            </div>
-                        </span>
-            </div>  <!-- /.form_basicinfo -->
-        </div>  <!-- /.form_rows -->
-
-        <!-- form id="fileupload" method="POST" enctype="multipart/form-data" data-file-upload="options" data-ng-class="{'fileupload-processing': processing() || loadingFiles}" -->
-        <form id="fileupload" method="POST" enctype="multipart/form-data" data-file-upload="options">
-            <input type="hidden" id="version" name="version" value="6">
-
-            <!-- file drag-in Box -->
-            <div class="row form_rows">
+                                <div  class="samplepack_smalltitle">
+                                    <h2><strong>임신/육아용품 샘플팩 증정</strong></h2>
+                                    <br />
+                                    <h4><strong>신규 임신부 회원</strong></h4>
+                                    <p class="table_blue samplepack_subguide">임신하셨어요? 앙쥬맘이 되어주세요.</p>
+                                </div>
 
 
-                        <div class="row form_rows">
-                            <div class="form_basicinfo">
-                                                <span class="col-xs-2 basicinfo title">
-                                                    <strong>출산예정일</strong>
-                                                    <span class="table_blue">*</span>
-                                                </span>
+                                <dl class="dl-horizontal samplepack_new_howto">
+                                    <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-01 ~ {{Day}}</strong></dd>-->
+                                    <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-01 ~ {{Day}}</strong></dd>-->
+                                    <dt><span class="table_red">신청기간</span></dt><dd><strong>{{item.ada_date_open}} ~ {{item.ada_date_close}}</strong></dd>
+                                    <!--<dt><span class="table_red">당첨발표</span></dt><dd><strong>{{next_year}}-{{next_month}}-05</strong> (이벤트 당첨자 발표 게시판)</dd>-->
+                                    <dt><span class="table_red">당첨발표</span></dt><dd><strong>{{ada_date_notice}}</strong> (이벤트 당첨자 발표 게시판)</dd>
+                                    <dt><span class="table_red">증정인원</span></dt><dd><strong>{{month}}</strong> 월에 앙쥬에 신규가입한 임산부</dd>
+                                    <dt><span class="table_red">선물발송</span></dt><dd>{{next_year}}-{{next_month}}-09 전후 예정 (무료배송)</dd>
+                                    <dt><span class="table_red">신청방법</span></dt><dd><strong>{{month}}</strong> 월에 신규가입한 후 <strong><mark>산모이름과 예정일이 적힌</mark></strong> 산모수첩 또는 초음파 이미지 등록(1장만 가능)</dd>
+                                </dl>
 
-                                                <span class="col-xs-10 basicinfo input">
-                                                    <div class="form-inline" style="margin:0 5px">
-
-                                                        <select id="birth" ng-model="item.YEAR" ng-options="v for v in babyBirthYear" class= "form-control" style="width:110px;float: left;">
-                                                            <option value="" selected>선택</option>
-                                                        </select>
-
-                                                        <select class="form-control" ng-model="item.MONTH" style="width:75px;">
-                                                            <option value="" selected>월</option>
-                                                            <option>01</option>
-                                                            <option>02</option>
-                                                            <option>03</option>
-                                                            <option>04</option>
-                                                            <option>05</option>
-                                                            <option>06</option>
-                                                            <option>07</option>
-                                                            <option>08</option>
-                                                            <option>09</option>
-                                                            <option>10</option>
-                                                            <option>11</option>
-                                                            <option>12</option>
-                                                        </select>
-
-                                                        <select class="form-control" ng-model="item.DAY" style="width:75px;" >
-                                                            <option value="" selected>일</option>
-                                                            <option>01</option>
-                                                            <option>02</option>
-                                                            <option>03</option>
-                                                            <option>04</option>
-                                                            <option>05</option>
-                                                            <option>06</option>
-                                                            <option>07</option>
-                                                            <option>08</option>
-                                                            <option>09</option>
-                                                            <option>10</option>
-                                                            <option>11</option>
-                                                            <option>12</option>
-                                                            <option>13</option>
-                                                            <option>14</option>
-                                                            <option>15</option>
-                                                            <option>16</option>
-                                                            <option>17</option>
-                                                            <option>18</option>
-                                                            <option>19</option>
-                                                            <option>20</option>
-                                                            <option>21</option>
-                                                            <option>22</option>
-                                                            <option>23</option>
-                                                            <option>24</option>
-                                                            <option>25</option>
-                                                            <option>26</option>
-                                                            <option>27</option>
-                                                            <option>28</option>
-                                                            <option>29</option>
-                                                            <option>30</option>
-                                                            <option>31</option>
-                                                        </select>
-                                                    </div>
-                                                </span>
-
-                            </div>  <!-- /.form_basicinfo -->
-                        </div>  <!-- /.form_rows -->
-
-            </div><!-- /.row -->
-            <!-- /file drag-in Box -->
-
-            <span class="col-xs-2 basicinfo title">
-                <strong>증빙자료</strong>
-                <span class="table_blue">*</span>
-            </span>
-
-            <div  class="no-margin" style="padding:8px 5px; margin:0px; width:100%;"> <!-- ng-show="item.ada_que_type == 'upload'" -->
-                <form id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
-                    <input type="hidden" id="version" name="version" value="1">
-                    <div class= "form-group form_basic_group" style="width:100%; margin:0px; padding:0px;">
-                        <!--<label class= "form_basic_label">이미지</label>-->
-                        <div class="row no-margin" style="width:100%;">
-                            <div class="col-xs-8 no-margin">
-                                <div ng-model="file1">
-                                    <input ng-model="file1.name" type= "text" class="form-control input-sm" style="cursor:default; width: 100%;" disabled/>
+                                <div  class="samplepack_warning">
+                                    <blockquote class="table_red" style="font-size:0.92em;">
+                                        신청 후에는 사진 교체할 수 없습니다.<br />
+                                        남자 및 출산모, 이미 샘플팩을 신청했거나 받은 경우 신청이 불가능합니다.
+                                    </blockquote>
                                 </div>
                             </div>
-                            <div class="col-xs-2 no-margin files" style="padding-left:5px;">
-                                <!-- The fileinput-button span is used to style the file input field as button -->
-                                <span class="btn btn-success btn-sm fileinput-button" ng-class="{disabled: disabled}">
-                                    <i class="glyphicon glyphicon-plus"></i>
-                                    <span>탐색기</span>
-                                    <input type="file" name="files[]" ng-disabled="disabled">
+                            <!-- /시즌 1 -->
+
+                            <!-- 시즌 2 -->
+                            <div ng-show="season_gb == 'SAMPLE2'" class="samplepack_types subs" style="display:block;">
+                                <div class="samplepack_tagwrap">
+                                    <div class="samplepack_tags blue">
+                                        <!--앙쥬 기존회원 샘플팩 &nbsp;<span style="font-size:1.32em; font-weight:bold;">시즌 2</span>-->
+                                        {{item.ada_title}}
+                                    </div>
+                                </div>
+
+                                <div  class="samplepack_smalltitle">
+                                    <h2><strong>임신/육아용품 샘플팩 증정</strong></h2>
+                                    <br />
+                                    <h4><strong>기존 앙쥬(임신부) 회원</strong></h4>
+                                    <p class="table_blue samplepack_subguide">우리아이 첫태동을 잊을수가 없어요</p>
+                                </div>
+
+
+                                <dl class="dl-horizontal samplepack_new_howto">
+                                    <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-25 ~ {{Day}}</strong></dd>-->
+                                    <!--<dt><span class="table_red">당첨발표</span></dt><dd><strong>{{next_year}}-{{next_month}}-05</strong> (이벤트 당첨자 발표 게시판)</dd>-->
+                                    <!--<dt><span class="table_red">증정인원</span></dt><dd>신규 임신부 샘플팩을 받지 못한 임신부인 앙쥬맘</dd>-->
+                                    <!--<dt><span class="table_red">선물발송</span></dt><dd>{{next_year}}-{{next_month}}-09 전후 예정 (착불 2500원)</dd>-->
+                                    <!--<dt><span class="table_red">신청방법</span></dt><dd><strong><mark>산모이름과 예정일이 적힌</mark></strong> 산모수첩 또는 초음파 이미지 등록(1장만 가능)</dd>-->
+                                    <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-01 ~ {{Day}}</strong></dd>-->
+                                    <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-01 ~ {{Day}}</strong></dd>-->
+                                    <dt><span class="table_red">신청기간</span></dt><dd><strong>{{item.ada_date_open}} ~ {{item.ada_date_close}}</strong></dd>
+                                    <!--<dt><span class="table_red">당첨발표</span></dt><dd><strong>{{next_year}}-{{next_month}}-05</strong> (이벤트 당첨자 발표 게시판)</dd>-->
+                                    <dt><span class="table_red">신청가능</span></dt><dd><strong>{{item.ada_count_request == null ? 200 : ( 200 - item.ada_count_request)}} 명</strong></dd>
+                                    <dt><span class="table_red">증정인원</span></dt><dd><strong>200 명</strong></dd>
+                                    <dt><span class="table_red">선물발송</span></dt><dd>{{next_year}}-{{next_month}}-09 전후 예정 (무료배송)</dd>
+                                    <dt><span class="table_red">신청방법</span></dt><dd><strong><mark>산모이름과 예정일이 적힌</mark></strong> 산모수첩 또는 초음파 이미지 등록(1장만 가능)</dd>
+                                </dl>
+
+                                <div  class="samplepack_warning">
+                                    <blockquote class="table_red" style="font-size:0.92em;">
+                                        신청 후에는 사진 교체할 수 없습니다.<br />
+                                        남자 및 출산모, 이미 샘플팩을 신청했거나 받은 경우 신청이 불가능합니다.
+                                    </blockquote>
+                                </div>
+                            </div>
+                            <!-- /시즌 2 -->
+
+                            <!-- 시즌 1 -->
+                            <div ng-show="season_gb == 'SAMPLE1'" class="samplepack_btnbox" style="display:block;">
+                                <button ng-click="click_joinon();" class="samplepack_gotojoin"></button>
+                                <button ng-click="click_compCheck();" class="samplepack_newrequest"></button>
+                            </div>
+                            <!-- /시즌 1 -->
+
+                            <!-- 시즌 2 -->
+                            <div ng-show="season_gb == 'SAMPLE2'" class="samplepack_btnbox" style="display:block;">
+                                <button ng-click="click_samplepackCheck();" ng-show="checked == 'N'" class="samplepack_cofirmfirst"></button>  <!-- 신정차격 확인 후 신청 가능하도록 구성 신청자격 확인되면 none  -->
+                                <button class="samplepack_cofirmfirst_now" ng-show="checked == 'Y'" disabled></button> <!--신청자격이 활성화되면 inline -->
+                                <button ng-click="click_compCheck();" class="samplepack_oldrequest"></button>
+                                <!-- ng-click="showSamplepackDetails = ! showSamplepackDetails" -->
+                            </div>
+                            <!-- /시즌 2 -->
+
+
+                            <!-- 신청 폼 -->
+                            <div class="samplepack_formwrap" ng-model="item" style="display:block;" ng-class="{ 'hidden': ! showSamplepackDetails }">
+                                <div class="samplepack_form_title" style="background:#333; height:46px; padding:10px;">
+                                    <span class="table_blue" style="font-size:1.18em; float:left;">| 샘플팩 신청양식</span>
+                                    <div style="float:right;">
+                                        <small><span class="table_blue">정보가 다르신가요?</span></small>
+                                        <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">정보수정</button>
+                                    </div>
+                                </div>
+
+                                <!--<div class="row form_rows">-->
+                                <!--<div class="form_basicinfo">-->
+                                <!--<span class="col-xs-2 basicinfo title">-->
+                                <!--<strong>아이디</strong>-->
+                                <!--<span class="table_blue">*</span>-->
+                                <!--</span>-->
+
+                                <!--<span class="col-xs-4 basicinfo input">-->
+                                <!--<div class="form-group" style="margin:0 5px">-->
+                                <!--<input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
+                                <!--</div>-->
+                                <!--</span>-->
+                                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
+
+                                <div class="row form_rows">
+                                    <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>신청자명</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
+
+                                        <span class="col-xs-4 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <!--<input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
+                                                {{user_info.NICK_NM}}<!--({{user_info.USER_ID}}) -->
+                                            </div>
+                                        </span>
+                                    </div>  <!-- /.form_basicinfo -->
+                                </div>  <!-- /.form_rows -->
+
+                                <!--<div class="row form_rows">-->
+                                <!--<div class="form_basicinfo">-->
+                                <!--<span class="col-xs-2 basicinfo title">-->
+                                <!--<strong>가입일자</strong>-->
+                                <!--<span class="table_blue">*</span>-->
+                                <!--</span>-->
+
+                                <!--<span class="col-xs-4 basicinfo input">-->
+                                <!--<div class="form-group" style="margin:0 5px">-->
+                                <!--<input type="text" ng-model="item.REG_DT" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
+                                <!--</div>-->
+                                <!--</span>-->
+                                <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+                                <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
+
+                                <div class="row form_rows">
+                                    <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>연락처</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
+
+                                        <span class="col-xs-2 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px; text-align:right;">
+                                                <small class="table_gray">전화번호</small>
+                                            </div>
+                                        </span>
+                                        <span class="col-xs-3 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <!--<input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
+                                                {{user_info.PHONE_1}}
+                                            </div>
+                                        </span>
+                                        <span class="col-xs-1 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px; text-align:right;">
+                                                <small class="table_gray">휴대폰</small>
+                                            </div>
+                                        </span>
+                                        <span class="col-xs-3 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <!--<input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
+                                                {{user_info.PHONE_2}}
+                                            </div>
+                                        </span>
+                                    </div>  <!-- /.form_basicinfo -->
+                                </div>  <!-- /.form_rows -->
+
+                                <div class="row form_rows">
+                                    <div class="form_basicinfo">
+                                        <span class="col-xs-2 basicinfo title">
+                                            <strong>받으실 곳</strong>
+                                            <span class="table_blue">*</span>
+                                        </span>
+
+                                        <span class="col-xs-10 basicinfo input">
+                                            <div class="form-group" style="margin:0 5px">
+                                                <p>{{user_info.ZIP_CODE| limitTo: 3}}-{{user_info.ZIP_CODE| limitTo: -3}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" value="(123-456)" placeholder="" disabled>--></p>
+                                                <p>{{user_info.ADDR}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR" placeholder="" disabled>--></p>
+                                                {{user_info.ADDR_DETAIL}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>-->
+                                            </div>
+                                        </span>
+                                    </div>  <!-- /.form_basicinfo -->
+                                </div>  <!-- /.form_rows -->
+
+                                <!-- file drag-in Box -->
+                                <div class="row form_rows">
+
+
+                                    <div class="row form_rows">
+                                        <div class="form_basicinfo">
+                                            <span class="col-xs-2 basicinfo title">
+                                                <strong>출산예정일</strong>
+                                                <span class="table_blue">*</span>
+                                            </span>
+
+                                            <span class="col-xs-10 basicinfo input">
+                                                <div class="form-inline" style="margin:0 5px">
+
+                                                    <select id="birth" ng-model="item.YEAR" ng-options="v for v in babyBirthYear" class= "form-control" style="width:110px;float: left;">
+                                                        <option value="" selected>선택</option>
+                                                    </select>
+
+                                                    <select class="form-control" ng-model="item.MONTH" style="width:75px;">
+                                                        <option value="" selected>월</option>
+                                                        <option>01</option>
+                                                        <option>02</option>
+                                                        <option>03</option>
+                                                        <option>04</option>
+                                                        <option>05</option>
+                                                        <option>06</option>
+                                                        <option>07</option>
+                                                        <option>08</option>
+                                                        <option>09</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                    </select>
+
+                                                    <select class="form-control" ng-model="item.DAY" style="width:75px;" >
+                                                        <option value="" selected>일</option>
+                                                        <option>01</option>
+                                                        <option>02</option>
+                                                        <option>03</option>
+                                                        <option>04</option>
+                                                        <option>05</option>
+                                                        <option>06</option>
+                                                        <option>07</option>
+                                                        <option>08</option>
+                                                        <option>09</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                        <option>13</option>
+                                                        <option>14</option>
+                                                        <option>15</option>
+                                                        <option>16</option>
+                                                        <option>17</option>
+                                                        <option>18</option>
+                                                        <option>19</option>
+                                                        <option>20</option>
+                                                        <option>21</option>
+                                                        <option>22</option>
+                                                        <option>23</option>
+                                                        <option>24</option>
+                                                        <option>25</option>
+                                                        <option>26</option>
+                                                        <option>27</option>
+                                                        <option>28</option>
+                                                        <option>29</option>
+                                                        <option>30</option>
+                                                        <option>31</option>
+                                                    </select>
+                                                </div>
+                                            </span>
+
+                                        </div>  <!-- /.form_basicinfo -->
+                                    </div>  <!-- /.form_rows -->
+
+                                </div><!-- /.row -->
+                                <!-- /file drag-in Box -->
+
+                                <span class="col-xs-2 basicinfo title">
+                                    <strong>증빙자료</strong>
+                                    <span class="table_blue">*</span>
                                 </span>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
 
-            <form name="pollvaliation" id="samplepackvalidation" onSubmit="return CheckForm(this);">
-            <div class="col-xs-10 dragzone_wrap" style="padding:8px 5px; height:100%;">
-                <!--<div id="dropzone" name="dropzone" class="dragzone" style="height:86px; margin-bottom:10px;">-->
-
-                    <!--<div data-ng-repeat="file in queue">-->
-                        <!--<div class="files_row">-->
-                            <!--<input type="checkbox" checklist-model="checkFile" checklist-value="file" style="vertical-align: top;" aria-label="...">-->
-                            <!--<span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>-->
-                            <!--<span class="filename">{{file.name}}</span>-->
-                            <!--<div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">{{file.size | formatFileSize}}</div>-->
-                            <!--<div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;" data-ng-show="file.error">{{file.error}}</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-
-                <!--</div>  &lt;!&ndash; /.dropzone &ndash;&gt;-->
-
-                <!--<button class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-picture"></span> 파일찾기</button>-->
-
-                <!--<dl style="font-weight:400; margin:10px 0; padding:0; font-size:0.86em;">-->
-                    <!--<dd class="table_gray">※ 산모이름과 예정일이 함께 나와야 함</dd>-->
-                    <!--<dd class="table_gray">※ 사진은 1MB이하로 등록</dd>-->
-                    <!--<dd class="table_gray">※ 사진은 1장만 등록 가능</dd>-->
-                <!--</dl>-->
-                <!-- 참여유형이 질문일때 -->
-                <div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
-                    <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                        <input type="hidden" name="index[]"  class="poll_question_no" value="{{query.index}}"/>
-                        <dt>{{query.title}}</dt>
-                        <dd ng-if="query.type == '1'">
-                            <div class="radio-inline">
-                                <label>
-                                    <input  type="text" title="답변" name="answer{{query.index}}" id="answer{{query.index}}" style="width: 250px;"/>
-                                    &nbsp;&nbsp;&nbsp;
-                                    <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
-                                </label>
-                            </div>
-                        </dd>
-                        <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
-                            <div class="radio-inline">
-                                <label>
-                                    <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                </label>
-                            </div>
-                        </dd>
-                        <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
-                            <div class="radio-inline">
-                                <label>
-                                    <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                </label>
-                            </div>
-                            <label>
-                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
-                            </label>
-                        </dd>
-                        <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
-                            <div class="radio-inline">
-                                <label>
-                                    <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                </label>
-                            </div>
-                        </dd>
-                        <dd ng-if="query.type == '4'">
-                            <!--<div class="radio-inline">-->
-                            <!--<label>-->
-                            <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                            <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="4" style="resize: none;"></textarea>
-                            <!--</label>-->
-                            <!--</div>-->
-                        </dd>
-
-                    </dl>
-                </div>
-
-                <!-- 참여유형이 업로드 중 질문이 있을때 -->
-                <div ng-if="item.ada_que_type == 'upload'" ng-model="item" class="moms_form" style="margin:0px; display:block;">
-
-                    <dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                        <input type="hidden" name="index[]"  class="poll_upload_no" value="{{query.index}}"/>
-
-                        <dt style="line-height: 24px; margin-bottom:10px;">{{query.title}}</dt>
-
-                        <dd ng-if="query.type == '1'">
-                            <div class="form-group">
-                                <input class="col-xs-12 form-control" title="답변" type="text" name="answer{{query.index}}" id="answer{{query.index}}" placeholder="질문에 대한 대답" />
-                                &nbsp;&nbsp;&nbsp;
-                                <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
-                            </div>
-                        </dd>
-                        <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
-                            <div class="form-group" style="padding-left:15px;">
-                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                            </div>
-                        </dd>
-                        <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
-                            <div class="form-group" style="padding-left:15px;">
-                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                            </div>
-
-                            <input class="form-control" type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="margin-left:15px; width: 250px;"/>
-
-                        </dd>
-                        <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
-                            <div class="form-group">
-                                <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                            </div>
-                        </dd>
-                        <dd ng-if="query.type == '4'">
-                            <div class="form-group" style="padding:0 15px;">
-                                <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="6" style="resize: none;"></textarea>
-                            </div>
-                        </dd>
-                    </dl>
-                </div>
-
-                <!-- 참여유형이 댓글일때 -->
-                <div ng-if="item.ada_que_type == 'reply' && !tempEvent"  ng-model="item" class="sub_contents_body">
-
-                    <div class="container-fluid peopleboard_view_commentwrap">
-                        <div class="row peopleboard_view_commenttop">
-                            <div class="col-xs-12 peopleboard_view_commenttitle">
-                                <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">{{item.REPLY_SUBJECT}}</span>
-                                <!--<small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>-->
-                            </div><!-- /.col-xs-12-->
-                        </div><!-- /.row -->
-
-                        <div class="row peopleboard_view_commentbox">
-                            <div class="col-xs-10 peopleboard_view_text">
-                                <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
-                            </div><!-- /.col-xs-10-->
-                        </div><!-- /.row -->
-                    </div><!-- /.container -->
-                </div>
-                <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
-
-                <div ng-if="item.ada_que_type == 'join'"  class="moms_form" style="margin:0px; display:block;" ng-model="item">
-
-                <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-                    <h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>
-                </div>
-
-                <div class="col-xs-12 v-cell-4" style="padding:0px;">
-                    <div class="comp_basic h-cell-dynamic" style="margin:0px;">
-
-                        <div class="moms_form_titlebar">
-                            | 회원정보
-                            <div style="float:right;">
-                                <small>신청을 위해서 정확한 정보가 필요합니다. 정보가 다르신가요?</small>
-                                <button class="webzine_list_btn red" ng-click="click_update_user_info();" style="line-height:18px;" title="정보수정">정보수정</button><br />
-                            </div>
-                        </div>
-
-                        <div class="moms_form_bodywrap">
-
-                            <table id="moms_form_table" class="table" style="float:left; margin-bottom: 0px;">
-                                <tbody>
-                                <tr>
-                                    <td width="100" align="center" class="table_td_gray">
-                                        신청자
-                                    </td>
-                                    <td>
-                                        {{USER_NM}}({{USER_ID}})
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100" align="center" class="table_td_gray">
-                                        주소
-                                    </td>
-                                    <td>
-                                        {{ADDR}}&nbsp;{{ADDR_DETAIL}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100" align="center" class="table_td_gray">
-                                        연락처
-                                    </td>
-                                    <td>
-                                        <span>전화번호</span>{{PHONE_1}}
-                                        <span>휴대폰</span>{{PHONE_2}}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100" align="center" class="table_td_gray">
-                                        임신여부
-                                    </td>
-                                    <td>
-                                        <div ng-show="preg_fl == 'N'">
-                                            <span style="display: block;">해당없음</span>
+                                <div  class="no-margin" style="padding:8px 5px; margin:0px; width:100%;"> <!-- ng-show="item.ada_que_type == 'upload'" -->
+                                    <form id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
+                                        <input type="hidden" id="version" name="version" value="1">
+                                        <div class= "form-group form_basic_group" style="width:100%; margin:0px; padding:0px;">
+                                            <!--<label class= "form_basic_label">이미지</label>-->
+                                            <div class="row no-margin" style="width:100%;">
+                                                <div class="col-xs-8 no-margin">
+                                                    <div ng-model="file1">
+                                                        <input ng-model="file1.name" type= "text" class="form-control input-sm" style="cursor:default; width: 100%;" disabled/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-2 no-margin files" style="padding-left:5px;">
+                                                <!-- The fileinput-button span is used to style the file input field as button -->
+                                                    <span class="btn btn-success btn-sm fileinput-button" ng-class="{disabled: disabled}">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                        <span>탐색기</span>
+                                                        <input type="file" name="files[]" ng-disabled="disabled">
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div ng-show="preg_fl == 'Y'">
-                                            <span style="display: block;">임신 중 <small class="table_gray">(<strong>{{baby_birth_dt}}</strong> 출산예정)</small></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100" align="center" class="table_td_gray">
-                                        자녀정보
-                                    </td>
-                                    <td>
-                                        <span style="display:none;">없음</span>
-                                        <div style="display:block;">
-                                            <span class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td width="100" align="center" class="table_td_gray">
-                                        블로그
-                                    </td>
-                                    <td>
-                                        <span style="display:none;">없음</span>
-                                        <a href="#" class="table_blue" style="font-size:0.94em;">http://blog.naver.com/abcdefg</a>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table><!-- /.List-->
+                                    </form>
+                                </div>
 
-                            <div class="clearfix" style="clear:both; width:100%; padding:20px 18px; background-color:#faf0de;">
-                                <p style="white-space: pre;">{{item.ada_guide}}</p>
-                            </div>
+                                <!--<div id="dropzone" name="dropzone" class="dragzone" style="height:86px; margin-bottom:10px;">-->
 
-                        </div><!-- /.moms_form_bodywrap -->
-                    </div>  <!-- /.comp_basic -->
-                </div>  <!-- /.col-xs-12 -->
+                                <!--<div data-ng-repeat="file in queue">-->
+                                <!--<div class="files_row">-->
+                                <!--<input type="checkbox" checklist-model="checkFile" checklist-value="file" style="vertical-align: top;" aria-label="...">-->
+                                <!--<span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>-->
+                                <!--<span class="filename">{{file.name}}</span>-->
+                                <!--<div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">{{file.size | formatFileSize}}</div>-->
+                                <!--<div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;" data-ng-show="file.error">{{file.error}}</div>-->
+                                <!--</div>-->
+                                <!--</div>-->
 
-                <div class="col-xs-12 v-cell-4" style="padding:0px;">
-                    <div class="comp_basic h-cell-dynamic" style="width:100%; margin:0px;">
-                        <div class="moms_form_bodywrap">
+                                <!--</div>  &lt;!&ndash; /.dropzone &ndash;&gt;-->
 
-                            <div class="moms_form_titlebar" style="float:left; height:45px; line-height:45px; width:100%; padding:0px 10px; color:#4cace8; background-color:#333;">
-                                | 신청서 작성
-                            </div>
+                                <!--<button class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-picture"></span> 파일찾기</button>-->
 
-                            <table id="moms_form_table" class="table" style="float:left; border-bottom:1px solid #333; margin-bottom: 0px;">
-                                <tbody>
-                                <tr>
-                                    <td width="100" align="center" class="table_td_gray">
-                                        제목
-                                    </td>
-                                    <td>
-                                        <strong>{{item.ada_title}}</strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" class="table_td_gray">
-                                        아기 생년월일
-                                    </td>
-                                    <td>
-                                        <select id="birth" ng-model="item.BABY_YEAR" ng-options="v for v in babyYear" class= "form-control" style="width:110px;float: left;">
-                                            <option value="" selected>년</option>
-                                        </select>
-                                        <select ng-model="item.BABY_MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;float: left;">
-                                            <option value="" selected>월</option>
-                                        </select>
-                                        <select ng-model="item.BABY_DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">
-                                            <option value="" selected>일</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" class="table_td_gray">
-                                        상품설명<br/>스크랩한<br/>
-                                        블로그 주소
-                                    </td>
-                                    <td>
-                                        <div class="form-inline" style="float:left; margin:0px; padding:0px;">
+                                <!--<dl style="font-weight:400; margin:10px 0; padding:0; font-size:0.86em;">-->
+                                <!--<dd class="table_gray">※ 산모이름과 예정일이 함께 나와야 함</dd>-->
+                                <!--<dd class="table_gray">※ 사진은 1MB이하로 등록</dd>-->
+                                <!--<dd class="table_gray">※ 사진은 1장만 등록 가능</dd>-->
+                                <!--</dl>-->
+                                <!-- 참여유형이 질문일때 -->
+                                <div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
+                                    <dl data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                        <input type="hidden" name="index[]"  class="poll_question_no" value="{{query.index}}"/>
+                                        <dt>{{query.title}}</dt>
+                                        <dd ng-if="query.type == '1'">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input  type="text" title="답변" name="answer{{query.index}}" id="answer{{query.index}}" style="width: 250px;"/>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                            <label>
+                                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+                                            </label>
+                                        </dd>
+                                        <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '4'">
+                                            <!--<div class="radio-inline">-->
+                                            <!--<label>-->
+                                            <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="4" style="resize: none;"></textarea>
+                                            <!--</label>-->
+                                            <!--</div>-->
+                                        </dd>
 
-                                            <div class="row form_rows bottom" style="margin:0px;  border:none;" id="add_blog">
+                                    </dl>
+                                </div>
 
-                                                <div class="form_basicinfo" style="margin:0px;">
-                                                    <span class="col-xs-12 basicinfo input blog" id="blog_url">
-                                                        <div class="form-inline">
-                                                            <input type="text" ng-model="item.BLOG" name="blog[]" style="width: 629px"  class="form-control input-sm">
-                                                            <div style="float:right; width:5%;">
-                                                                <button type="button" class="btn btn-xs btn-warning button" ng-click="delete_blog_url();"><span class="glyphicon glyphicon-minus"></span></button>
+                                <!-- 참여유형이 업로드 중 질문이 있을때 -->
+                                <div ng-if="item.ada_que_type == 'upload'" ng-model="item" class="moms_form" style="margin:0px; display:block;">
+
+                                    <dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                        <input type="hidden" name="index[]"  class="poll_upload_no" value="{{query.index}}"/>
+
+                                        <dt style="line-height: 24px; margin-bottom:10px;">{{query.title}}</dt>
+
+                                        <dd ng-if="query.type == '1'">
+                                            <div class="form-group">
+                                                <input class="col-xs-12 form-control" title="답변" type="text" name="answer{{query.index}}" id="answer{{query.index}}" placeholder="질문에 대한 대답" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                            <div class="form-group" style="padding-left:15px;">
+                                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                            <div class="form-group" style="padding-left:15px;">
+                                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            </div>
+
+                                            <input class="form-control" type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="margin-left:15px; width: 250px;"/>
+
+                                        </dd>
+                                        <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                            <div class="form-group">
+                                                <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" style="margin-left:15px;" ng-value="select"/> {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '4'">
+                                            <div class="form-group" style="padding:0 15px;">
+                                                <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="6" style="resize: none;"></textarea>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </div>
+
+                                <!-- 참여유형이 댓글일때 -->
+                                <div ng-if="item.ada_que_type == 'reply' && !tempEvent"  ng-model="item" class="sub_contents_body">
+
+                                    <div class="container-fluid peopleboard_view_commentwrap">
+                                        <div class="row peopleboard_view_commenttop">
+                                            <div class="col-xs-12 peopleboard_view_commenttitle">
+                                                <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">{{item.REPLY_SUBJECT}}</span>
+                                                <!--<small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>-->
+                                            </div><!-- /.col-xs-12-->
+                                        </div><!-- /.row -->
+
+                                        <div class="row peopleboard_view_commentbox">
+                                            <div class="col-xs-10 peopleboard_view_text">
+                                                <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
+                                            </div><!-- /.col-xs-10-->
+                                        </div><!-- /.row -->
+                                    </div><!-- /.container -->
+                                </div>
+                                <!-- 응모기간 중에는 moms_form : display-block / 기간 후에는 moms_reviews display-block -->
+
+                                <div ng-if="item.ada_que_type == 'join'"  class="moms_form" style="margin:0px; display:block;" ng-model="item">
+
+                                    <div class="webzine_listbar" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
+                                        <h4><span class="glyphicon glyphicon-th-list h4_icon table_gray"></span>응모하기</h4>
+                                    </div>
+
+                                    <div class="col-xs-12 v-cell-4" style="padding:0px;">
+                                        <div class="comp_basic h-cell-dynamic" style="margin:0px;">
+
+                                            <div class="moms_form_titlebar">
+                                                | 회원정보
+                                                <div style="float:right;">
+                                                    <small>신청을 위해서 정확한 정보가 필요합니다. 정보가 다르신가요?</small>
+                                                    <button class="webzine_list_btn red" ng-click="click_update_user_info();" style="line-height:18px;" title="정보수정">정보수정</button><br />
+                                                </div>
+                                            </div>
+
+                                            <div class="moms_form_bodywrap">
+
+                                                <table id="moms_form_table" class="table" style="float:left; margin-bottom: 0px;">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="100" align="center" class="table_td_gray">
+                                                            신청자
+                                                        </td>
+                                                        <td>
+                                                            {{USER_NM}}({{USER_ID}})
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="100" align="center" class="table_td_gray">
+                                                            주소
+                                                        </td>
+                                                        <td>
+                                                            {{ADDR}}&nbsp;{{ADDR_DETAIL}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="100" align="center" class="table_td_gray">
+                                                            연락처
+                                                        </td>
+                                                        <td>
+                                                            <span>전화번호</span>{{PHONE_1}}
+                                                            <span>휴대폰</span>{{PHONE_2}}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="100" align="center" class="table_td_gray">
+                                                            임신여부
+                                                        </td>
+                                                        <td>
+                                                            <div ng-show="preg_fl == 'N'">
+                                                                <span style="display: block;">해당없음</span>
                                                             </div>
-                                                        </div>
+                                                            <div ng-show="preg_fl == 'Y'">
+                                                                <span style="display: block;">임신 중 <small class="table_gray">(<strong>{{baby_birth_dt}}</strong> 출산예정)</small></span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="100" align="center" class="table_td_gray">
+                                                            자녀정보
+                                                        </td>
+                                                        <td>
+                                                            <span style="display:none;">없음</span>
+                                                            <div style="display:block;">
+                                                                <span class="table_blue">{{baby_cnt}}</span> 명 (남 <strong>{{baby_male_cnt}}</strong> 명, 여 <strong>{{baby_female_cnt}}</strong> 명)
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="100" align="center" class="table_td_gray">
+                                                            블로그
+                                                        </td>
+                                                        <td>
+                                                            <span style="display:none;">없음</span>
+                                                            <a href="#" class="table_blue" style="font-size:0.94em;">http://blog.naver.com/abcdefg</a>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table><!-- /.List-->
+
+                                                <div class="clearfix" style="clear:both; width:100%; padding:20px 18px; background-color:#faf0de;">
+                                                    <p style="white-space: pre;">{{item.ada_guide}}</p>
+                                                </div>
+
+                                            </div><!-- /.moms_form_bodywrap -->
+                                        </div>  <!-- /.comp_basic -->
+                                    </div>  <!-- /.col-xs-12 -->
+
+                                    <div class="col-xs-12 v-cell-4" style="padding:0px;">
+                                        <div class="comp_basic h-cell-dynamic" style="width:100%; margin:0px;">
+                                            <div class="moms_form_bodywrap">
+
+                                                <div class="moms_form_titlebar" style="float:left; height:45px; line-height:45px; width:100%; padding:0px 10px; color:#4cace8; background-color:#333;">
+                                                    | 신청서 작성
+                                                </div>
+
+                                                <table id="moms_form_table" class="table" style="float:left; border-bottom:1px solid #333; margin-bottom: 0px;">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td width="100" align="center" class="table_td_gray">
+                                                            제목
+                                                        </td>
+                                                        <td>
+                                                            <strong>{{item.ada_title}}</strong>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="table_td_gray">
+                                                            아기 생년월일
+                                                        </td>
+                                                        <td>
+                                                            <select id="birth" ng-model="item.BABY_YEAR" ng-options="v for v in babyYear" class= "form-control" style="width:110px;float: left;">
+                                                                <option value="" selected>년</option>
+                                                            </select>
+                                                            <select ng-model="item.BABY_MONTH" ng-options="v for v in month" class= "form-control" style="width:75px;float: left;">
+                                                                <option value="" selected>월</option>
+                                                            </select>
+                                                            <select ng-model="item.BABY_DAY" ng-options="v for v in day" class= "form-control" style="width:75px;">
+                                                                <option value="" selected>일</option>
+                                                            </select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="table_td_gray">
+                                                            상품설명<br/>스크랩한<br/>
+                                                            블로그 주소
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-inline" style="float:left; margin:0px; padding:0px;">
+
+                                                                <div class="row form_rows bottom" style="margin:0px;  border:none;" id="add_blog">
+
+                                                                    <div class="form_basicinfo" style="margin:0px;">
+                                                                                        <span class="col-xs-12 basicinfo input blog" id="blog_url">
+                                                                                            <div class="form-inline">
+                                                                                                <input type="text" ng-model="item.BLOG" name="blog[]" style="width: 629px"  class="form-control input-sm">
+                                                                                                <div style="float:right; width:5%;">
+                                                                                                    <button type="button" class="btn btn-xs btn-warning button" ng-click="delete_blog_url();"><span class="glyphicon glyphicon-minus"></span></button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </span>
+
+                                                                        <span class="col-xs-12 basicinfo divide" style="margin:0px; width:684px"></span> <!-- width:100%; -->
+
+                                                                                        <span class="col-xs-12 basicinfo input">
+                                                                                            <div style="text-align:right; padding:0 10px;">
+
+                                                                                                <span class="table_blue"><small>미션에 따라 블로그 갯수만큼 추가해주세요</small></span>
+
+                                                                                                <button type="button" id="blog_add" ng-click="click_add_blog();" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-plus"></span> 추가</button>
+
+                                                                                            </div>
+                                                                                        </span>
+
+                                                                    </div>  <!-- /.form_basicinfo -->
+                                                                </div>  <!-- /.form_rows -->
+
+                                                            </div>  <!-- /.form-inline -->
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="table_td_gray">
+                                                            추가정보1
+                                                        </td>
+                                                        <td>
+                                                            <input ng-model="item.ADD1"type="text" class="form-control input-sm">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="table_td_gray">
+                                                            추가정보2
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" ng-model="item.ADD2" class="form-control input-sm">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="table_td_gray">
+                                                            추가정보3
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" ng-model="item.ADD3" class="form-control input-sm">
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="table_td_gray">
+                                                            신청이유
+                                                        </td>
+                                                        <td>
+                                                            <textarea class="form-control input-sm" ng-model="item.REASON" style="min-width:100%; max-width:100%;" rows="8"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" class="table_td_gray">
+                                                            개인정보<br />
+                                                            제3자<br />
+                                                            정보제공 안내<br />
+                                                        </td>
+                                                        <td>
+                                                            <div class="table_gray" style="font-size:0.94em;">
+                                                                체험단 선정 후 상품 발송을 위하여 개인정보(이름, 전화번호, 주소)를 체험단 상품 제공업체에
+                                                                제공되며, 해당업체는 상품 발송 완료시까지만 보유 및 이용하게 됩니다.
+                                                            </div>
+                                                            <div class="table_blue" style="font-size:0.94em; line-height:38px;">
+                                                                제 3자 정보제공에 동의하시나요?
+                                                            </div>
+                                                            <div class="form-group" style="margin:0 5px; line-height:32px;">
+                                                                <input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="Y" id="credit_agreement_Y" style="float: left; margin:10px 0 0 15px;">
+                                                                <span class="credit_agreement_span">동의함</span>
+
+                                                                <input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="N" id="credit_agreement_N" style="float: left; margin:10px 0 0 15px;">
+                                                                <span class="credit_agreement_span">동의안함</span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+                                                    </tbody>
+                                                </table><!-- /.List-->
+                                            </div><!-- /.moms_form_bodywrap -->
+                                        </div>  <!-- /.comp_basic -->
+                                    </div>  <!-- /.col-xs-12 -->
+
+                                    <dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
+                                        <input type="hidden" name="index[]"  class="poll_join_no" value="{{query.index}}"/>
+                                        <dt>{{query.title}}</dt>
+                                        <dd ng-if="query.type == '1'">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input  type="text" title="답변" name="answer{{query.index}}" id="answer{{query.index}}" style="width: 250px;"/>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                            <label>
+                                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+                                            </label>
+                                        </dd>
+                                        <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+                                            <div class="radio-inline">
+                                                <label>
+                                                    <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                </label>
+                                            </div>
+                                        </dd>
+                                        <dd ng-if="query.type == '4'">
+                                            <!--<div class="radio-inline">-->
+                                            <!--<label>-->
+                                            <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                            <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="4" style="resize: none;"></textarea>
+                                            <!--</label>-->
+                                            <!--</div>-->
+                                        </dd>
+
+                                    </dl>
+
+                                    </div>  <!-- /.moms_form -->
+                                </div>  <!-- /.dragzone_wrap -->
+                                <!-- /.row -->
+                                <!-- /file drag-in Box -->
+
+                                <div class="row form_rows">
+                                    <div class="form_basicinfo">
+                                                    <span class="col-xs-2 basicinfo title">
+                                                        <strong>태동느낌</strong>
+                                                        <span class="table_blue">*</span>
                                                     </span>
 
-                                                    <span class="col-xs-12 basicinfo divide" style="margin:0px; width:684px"></span> <!-- width:100%; -->
-
-                                                    <span class="col-xs-12 basicinfo input">
-                                                        <div style="text-align:right; padding:0 10px;">
-
-                                                            <span class="table_blue"><small>미션에 따라 블로그 갯수만큼 추가해주세요</small></span>
-
-                                                            <button type="button" id="blog_add" ng-click="click_add_blog();" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-plus"></span> 추가</button>
-
+                                                    <span class="col-xs-10 basicinfo input">
+                                                        <div class="form-group" style="margin:0 5px">
+                                                            <p>
+                                                                <textarea ng-model="item.REASON" class="form-control input-sm" rows="10" style="width:100%; min-width:100%; max-width:100%;"></textarea>
+                                                            </p>
                                                         </div>
                                                     </span>
+                                    </div>  <!-- /.form_basicinfo -->
+                                </div>  <!-- /.form_rows -->
 
-                                                </div>  <!-- /.form_basicinfo -->
-                                            </div>  <!-- /.form_rows -->
 
-                                        </div>  <!-- /.form-inline -->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" class="table_td_gray">
-                                        추가정보1
-                                    </td>
-                                    <td>
-                                        <input ng-model="item.ADD1"type="text" class="form-control input-sm">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" class="table_td_gray">
-                                        추가정보2
-                                    </td>
-                                    <td>
-                                        <input type="text" ng-model="item.ADD2" class="form-control input-sm">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" class="table_td_gray">
-                                        추가정보3
-                                    </td>
-                                    <td>
-                                        <input type="text" ng-model="item.ADD3" class="form-control input-sm">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" class="table_td_gray">
-                                        신청이유
-                                    </td>
-                                    <td>
-                                        <textarea class="form-control input-sm" ng-model="item.REASON" style="min-width:100%; max-width:100%;" rows="8"></textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center" class="table_td_gray">
-                                        개인정보<br />
-                                        제3자<br />
-                                        정보제공 안내<br />
-                                    </td>
-                                    <td>
-                                        <div class="table_gray" style="font-size:0.94em;">
-                                            체험단 선정 후 상품 발송을 위하여 개인정보(이름, 전화번호, 주소)를 체험단 상품 제공업체에
-                                            제공되며, 해당업체는 상품 발송 완료시까지만 보유 및 이용하게 됩니다.
+                                <div class="samplepack_guidebox" style="float:left; width:100%; border-bottom: 1px solid #333;">
+                                    <center>
+                                        <div style="width:80px; height:80px; border:1px solid #4cace8; background-color:#4cace8; border-radius: 50%; line-height:80px; color:#fff; text-align: center;">
+                                            주의사항
                                         </div>
-                                        <div class="table_blue" style="font-size:0.94em; line-height:38px;">
-                                            제 3자 정보제공에 동의하시나요?
+                                    </center>
+
+                                    <ol class="samplepack_howto">
+                                        <li class="table_red">한번 등록한 내용은 변경하실 수 없습니다.</li>
+                                        <li>반드시 <span class="table_blue"><u>임신부만 응모</u></span>하세요 <strong>(남자회원 신청불가)</strong></li>
+                                        <li>임신부 증거자료는 1장만 등록 가능하며 <span class="table_blue"><u>사진이 미흡할 경우 당첨이 취소</u></span>됩니다.<br />(관련없는 사진, 예정일이 없는 사진을 올려줄 경우)</li>
+                                        <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 선정에서 제외됩니다.</li>
+                                        <li>당첨자 발표 후 별도 주소확인은 하지 않으며 주소가 불분명할 경우 선물은 발송되지 않습니다. (번지수가 없거나 아파트 동, 호수 없는 경우)</li>
+                                        <li>회원 탈퇴 후 재가입하여 신청하더라도 신청기록은 남기 때문에 샘플팩 선정에서 제외됩니다.</li>
+                                        <li>샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체 사정으로 공지없이 변경될 수 있습니다.</li>
+                                    </ol>
+                                </div>
+
+                                <div style="float:left; position:relative; width:100%;">
+                                    <div style="clear:both; text-align: center; width:225px; margin:0px auto; padding-top:10px 0 40px 0;">
+                                        <a class="samplepack_submit cancelbtn" href="/moms/samplepack/intro"></a>
+                                        <a class="samplepack_submit submitbtn" ng-click="click_saveSamplepackComp();"></a>
+                                    </div>
+                                </div>
+
+                                <!-- /신청폼 -->
+
+
+                                <div class="samplepack_tabbox"  ng-class="{ 'hidden': showSamplepackDetails }" style="display:block;">
+
+                                <ul class="nav nav-tabs nav-justified" id="tab" style="font-size:0.92em; font-weight:700;">
+                                <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('1');">주의사항</a></li>
+                                <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('2');">샘플팩 구성</a></li>
+
+                                <!-- 시즌1 주의사항 -->
+                                <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
+                                    <span class="tabox_title">신청방법</span>
+                                    <ol>
+                                        <li>앙쥬 홈페이지 (www.ange.co.kr)에 회원가입합니다.</li>
+                                        <li>[신규회원 샘플팩 신청] 버튼을 눌러서 해당 내용을 입력합니다.</li>
+                                        <li>반드시 임신부증거사진(산모이름과 예정일이 함게 나와있는 사진 1장)을 포함해야 합니다.</li>
+                                        <li>응모자 중 500명을 추첨해서 발송해드립니다. 당첨자 발표일에 공지사항 게시판을 확인하세요.</li>
+                                    </ol>
+
+                                    <span class="table_red tabox_title" style="border-bottom:2px solid #e25d4c;">회원 탈퇴 후 재가입하여 신청시</span>
+                                    <ul>
+                                        <li class="table_red">샘플팩 신청 및 당첨자 기록은 본사에 보유되어 있기 때문에 당첨자에서 제외됩니다.</li>
+                                    </ul>
+
+                                    <span class="tabox_title">주의사항</span>
+                                    <ul>
+                                        <li>반드시 임신부만 응모하세요.(남성/출산맘 응모불가)</li>
+                                        <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 당첨이 취소됩니다.</li>
+                                        <li>주소가 불분명할 경우 추첨대상에서 제외됩니다.(아파트 동/호수 없는 경우, 번지수 없는 경우)</li>
+                                        <li>샘플팩은 재발송되지 않습니다.</li>
+                                        <li>신청IP, 반으시는 주소가 같을 경우 중복 발송하지 않습니다.</li>
+                                        <li>신청기간 내 회원가입한 임신부만을 대상으로 합니다.</li>
+                                        <li>샘플팩 구성은 업체사정으로 공지없이 변경될 수 있습니다.</li>
+                                        <li>신청한 내용(사진)은 변경할 수 없으므로 신중히 작성해주시기 바랍니다.</li>
+                                        <li>탈퇴 후 재가입하셔도 응모기록은 보유되기 때문에 당첨에서 제외됩니다.</li>
+                                    </ul>
+                                </div>  <!-- /#samplepack_new_warning -->
+                                <!-- /시즌1 주의사항 -->
+
+                                <!-- 시즌2 주의사항 -->
+                                <div id="tabs-1" class="tabox_body"  ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
+                                    <span class="tabox_title">신청방법</span>
+                                    <ol>
+                                        <li>상단 <mark><span class="table_red">신청자격확인</span></mark> 을 통해 신청자격을 먼저 확인하세요.</li>
+                                        <li><mark><span class="table_red">기존회원 샘플팩 신청</span></mark> 버튼을 눌러서 해당 내용을 입력합니다.</li>
+                                        <li>반드시 임신부증거사진(산모이름과 예정일이 함게 나와있는 사진 1장)을 포함해야 합니다.</li>
+                                        <li>우리아이 첫 태동의 느낌을 작성해 주세요.</li>
+                                        <li class="table_red">신청 시 마일리지 2,000p 차감(부족 시 신청 불가능)</li>
+                                    </ol>
+
+                                    <span class="tabox_title">주의사항</span>
+                                    <ul>
+                                        <li>등록된 임신부 인증 사진이 미흡할 경우 당첨이 취소됩니다.<br />(관렵없는 사진, 예정일이 없는 사진을 올릴 경우)</li>
+                                        <li><span class="table_red">선착순으로 증정</span>되며 마일리지가 부족하면 신청이 되지 않습니다.</li>
+                                        <li>별도의 주소 확인은 하지 않으며 발송시점 주소가 불분명할 경우 당첨이 취소됩니다.<br />(아파트 동/호수 없는 경우, 번지수 없는 경우)</li>
+                                        <li>신청한 내용(사진)은 변경할 수 없으므로 신중히 작성해주시기 바랍니다.</li>
+                                        <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 당첨이 취소됩니다.</li>
+                                        <li>샘플팩 구성은 업체사정으로 공지없이 변경될 수 있습니다.</li>
+                                        <li>첫 태동의 느낌을 작성하지 않으면 신청되지 않습니다.</li>
+                                        <li>선착순으로 제공됨으로 별도의 당첨 공지를 하지 않습니다.</li>
+                                        <li>신청IP, 받으시는 주소가 같을 경우 중복 발생하지 않습니다.</li>
+                                        <li><span class="table_red">착불 2,500원</span>으로 발송됩니다.(제주지역 추가운임 발생)</li>
+                                    </ul>
+                                </div>  <!-- /#samplepack_new_warning -->
+                                <!-- /시즌2 주의사항 -->
+
+                                <!-- 시즌 1 샘플팩 구성 -->
+                                <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" ng-if="selectIdx == '2'" style="display:block;">
+                                <span class="tabox_title">기존회원 샘플팩 구성</span>
+                                <br />
+                                <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
+
+                                <!-- 샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_01_babioniq.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">베비오닉 프리미엄 기저귀</p>
+                                            <div class="samplepack_goodsboxbody table_gray">기저귀 발진의 철저한 요인 분석을 통해 의학적으로 처방된 천연 식물 성분과 과학적 기술력을 바탕으로 피부 저자극 기저귀 탄생</div>
+                                            <a class="samplepack_sponlink" href="http://www.babioniq.co.kr" target="_blank">http://www.babioniq.co.kr</a>
                                         </div>
-                                        <div class="form-group" style="margin:0 5px; line-height:32px;">
-                                            <input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="Y" id="credit_agreement_Y" style="float: left; margin:10px 0 0 15px;">
-                                            <span class="credit_agreement_span">동의함</span>
+                                    </div>
 
-                                            <input type="radio" ng-model="item.CREDIT_FL" name="credit_agreement" value="N" id="credit_agreement_N" style="float: left; margin:10px 0 0 15px;">
-                                            <span class="credit_agreement_span">동의안함</span>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_02_elleairgoo.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">군 신생아 기저귀</p>
+                                            <div class="samplepack_goodsboxbody table_gray">3D엠보싱 가공으로 아기 피부에 닿는 면적을 줄여 피부 부담 경감. 통기성 겉커버, 냄새제거기능, 소변 알림마크사용</div>
+                                            <a class="samplepack_sponlink" href="http://www.elleairgoo-n.co.kr" target="_blank">http://www.elleairgoo-n.co.kr</a>
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+                                <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
 
-                                </tbody>
-                            </table><!-- /.List-->
-                        </div><!-- /.moms_form_bodywrap -->
-                    </div>  <!-- /.comp_basic -->
-                </div>  <!-- /.col-xs-12 -->
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_03_touch.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">신생아 페넬로페 뭉침없는 기저귀</p>
+                                            <div class="samplepack_goodsboxbody table_gray">피부 친화적 원단을 사용해 아기의 피부에 편안함을 주는 것은 물론 소변 냄새까지 잡아줘 쾌적한 사용감을 준다.
+                                                피부 접촉 면적을 최소화 시킨 허니콤엠보싱 기술과 통기성을 높인 더블 통기 시스템으로 아기의 피부로 부터 발진 걱정을 해방</div>
+                                            <a class="samplepack_sponlink" href="http://www.the1st-touch.com" target="_blank">http://www.the1st-touch.com</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_04_momida.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">나비잠 기저귀</p>
+                                            <div class="samplepack_goodsboxbody table_gray">초박형 두께로 민감한 아기가 사용하기 좋습니다. 얇지만 최고의 흡수력을 자랑하며, 3d 엠보원단으로 더욱 부드러워졌으며 시원하고 쾌적한 상태를 유지해줍니다.</div>
+                                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
 
-                <dl ng-show="item.QUE != ''" data-ng-repeat="query in item.QUE">  <!-- ng-if="item.ada_que_type == 'question'" -->
-                    <input type="hidden" name="index[]"  class="poll_join_no" value="{{query.index}}"/>
-                    <dt>{{query.title}}</dt>
-                    <dd ng-if="query.type == '1'">
-                        <div class="radio-inline">
-                            <label>
-                                <input  type="text" title="답변" name="answer{{query.index}}" id="answer{{query.index}}" style="width: 250px;"/>
-                                &nbsp;&nbsp;&nbsp;
-                                <!--<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>-->
-                            </label>
-                        </div>
-                    </dd>
-                    <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
-                        <div class="radio-inline">
-                            <label>
-                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                            </label>
-                        </div>
-                    </dd>
-                    <dd ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
-                        <div class="radio-inline">
-                            <label>
-                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                            </label>
-                        </div>
-                        <label>
-                            <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
-                        </label>
-                    </dd>
-                    <dd ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
-                        <div class="radio-inline">
-                            <label>
-                                <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                            </label>
-                        </div>
-                    </dd>
-                    <dd ng-if="query.type == '4'">
-                        <!--<div class="radio-inline">-->
-                        <!--<label>-->
-                        <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                        <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="4" style="resize: none;"></textarea>
-                        <!--</label>-->
-                        <!--</div>-->
-                    </dd>
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_05_novatis.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">노바티스 오트리빈 아스피레이터(영·유아용 코 흡인기)</p>
+                                            <div class="samplepack_goodsboxbody table_gray">스스로 코를 풀지 못하는 2세 미만 아이의 코에 맞춰 개발되었습니다. 안전하고 위생적으로 신생아 콧속에 있는 점액과 이물질을 제거해줍니다.</div>
+                                            <a class="samplepack_sponlink" href="http://www.novartis.co.kr" target="_blank">http://www.novartis.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_06_bebe.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">하늘수 프리미엄 물티슈</p>
+                                            <div class="samplepack_goodsboxbody table_gray">화학성분이 전혀 없는 무방부제 물티슈! 전성분이 정제수와 징크제올라이트 성분 두가지로 아기들 손입 티슈로 사용가능한 프리미엄 물티슈. 민감성 피부에도 사용가능.</div>
+                                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
 
-                </dl>
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_07_son.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">아이에이커머스 3무 물티슈</p>
+                                            <div class="samplepack_goodsboxbody table_gray">불만제로 모범업체 선정. 인체피부 자극 테스트를 완료하여 무자극 제품인증.징크제올라이트만을 사용하여 영/유아 및 가족 모두가 안심하고 사용할 수 있음.</div>
+                                            <a class="samplepack_sponlink" href="http://www.ia-commerce.com" target="_blank">http://www.ia-commerce.com</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_08_ma.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">깨끗한나라 비야비야 물티슈</p>
+                                            <div class="samplepack_goodsboxbody table_gray">소비자가 가장 원하는 안전한 물티슈. 그 마음에 피부건강까지 담아 만든 깨끗한나라에서 만든 자연주의 제품.</div>
+                                            <a class="samplepack_sponlink" href="http://www.byabya.co.kr" target="_blank">http://www.byabya.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
 
-                </div>  <!-- /.moms_form -->
-            </div>  <!-- /.dragzone_wrap -->
-    <!-- /.row -->
-        <!-- /file drag-in Box -->
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_09_ia.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">스킨베리 나뛰르 베이비 샴푸 & 바스 + 베이비 로션</p>
+                                            <div class="samplepack_goodsboxbody table_gray">프랑스 에코서트 유기농 인증. 아기에게 주는 최고의 선물 오가닉 스킨십. 세상에서 가장 소중한 우리 아기를 위해 스킨베리 나뛰르의 오가닉 스킨십을 선물하세요.</div>
+                                            <a class="samplepack_sponlink" href="http://www.greaten.co.kr" target="_blank">http://www.greaten.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_10_byabya.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">고려제약 아토아이비 로션, 크림</p>
+                                            <div class="samplepack_goodsboxbody table_gray">無스테로이드, 無항생제, 無항히 스타민으로 천연 성분과 IgY를 함유 하여 피부 장벽을 튼튼하게 만들어 주며, 건조하고 민감한 피부에도 자극 없이 부드럽고 매끄럽게 케어</div>
+                                            <a class="samplepack_sponlink" href="http://www.atoib.co.kr" target="_blank">http://www.atoib.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+                                <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
 
-        <div class="row form_rows">
-            <div class="form_basicinfo">
-                    <span class="col-xs-2 basicinfo title">
-                        <strong>태동느낌</strong>
-                        <span class="table_blue">*</span>
-                    </span>
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_11_greaten.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">뿌르베베 모이스트 로션</p>
+                                            <div class="samplepack_goodsboxbody table_gray">보습효과가 뛰어난 칼란코에 콤플렉스와 9가지 허브 블렌딩이 함유 된 보습제.
+                                                33가지 유해성분은 모두 배제 했으며, 피부 의 유수분 밸런스 를 조절하고 수분 증발 을 막아 유해 환경으로부터 연약한 아이 피부를 보호해줌. </div>
+                                            <a class="samplepack_sponlink" href="http://pourbebe.net" target="_blank">http://pourbebe.net</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_12_atoib.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">아토팜 아이가 좋아하는 세제</p>
+                                            <div class="samplepack_goodsboxbody table_gray">특허 MLE성분으로 피부에 순하고 보호까지 해주는 저자극 유아세제.피부과 자극 테스트 완료. 무첨가 안심처방, 드럼/일반세탁기 겸용</div>
+                                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
 
-                    <span class="col-xs-10 basicinfo input">
-                        <div class="form-group" style="margin:0 5px">
-                            <p>
-                                <textarea ng-model="item.REASON" class="form-control input-sm" rows="10" style="width:100%; min-width:100%; max-width:100%;"></textarea>
-                            </p>
-                        </div>
-                    </span>
-            </div>  <!-- /.form_basicinfo -->
-        </div>  <!-- /.form_rows -->
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_13_aph.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">아토팜 매터니티 키트</p>
+                                            <div class="samplepack_goodsboxbody table_gray">임신 중 팽창되는 피부에 탄력과 유연성을 강화시켜주는 임산부 바디케어크림, 로션. 천연보습인자, 식물성오일의 함유로 보습 지속성이 강화되었습니다.</div>
+                                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_14_pourbebe.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">쁘띠앤맘크림&오일로션</p>
+                                            <div class="samplepack_goodsboxbody table_gray">집중튼살관리와 동시에 충분한 영양과 수분공급으로 튼살예방 및 개선관리가 가능한 제품.</div>
+                                            <a class="samplepack_sponlink"  href="http://www.apharm.co.kr" target="_blank">http://www.apharm.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
 
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_15_atopalm2.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">베베쿡 기운찬 프로바이오 베베 + 기운찬 프로바이오 패밀리 + 처음 먹는 아기 보리차 + 처음 먹는 아기 루이보스티</p>
+                                            <div class="samplepack_goodsboxbody table_gray">유기농 현미와 옥수수를 넣어 더욱 부드럽고 구수한 100% 유기농 아기보리차, 미네랄이 풍부하고 카페인이 없는 베이비 루이보스티, 70억 유산균으로 온 가족의 장 건강에 도움.</div>
+                                            <a class="samplepack_sponlink"  href="http://shop.bebecook.com" target="_blank">http://shop.bebecook.com</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_16_atopalm.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">순둥이 프리미엄 물티슈</p>
+                                            <div class="samplepack_goodsboxbody table_gray">무 표백, 무 색소, 무 포름알데히드, 무 알코올은 물론, 오존수와 코튼 함유 원단, 천연 항균 성분인 라임 에셀셜 오일을 사용한 순한 아기 물티슈.</div>
+                                            <a class="samplepack_sponlink"  href="http://www.suomi.co.kr" target="_blank">http://www.suomi.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
 
-        <div class="samplepack_guidebox" style="float:left; width:100%; border-bottom: 1px solid #333;">
-            <center>
-                <div style="width:80px; height:80px; border:1px solid #4cace8; background-color:#4cace8; border-radius: 50%; line-height:80px; color:#fff; text-align: center;">
-                    주의사항
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_17_biol.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">임부용품 전문 쇼핑몰 마미즈</p>
+                                            <div class="samplepack_goodsboxbody table_gray">감각 있는 없마들의 선택! 산모와 아기를 위한 최고의 선물! 임신부터 출산까지 산모의 활동성과 체형을 고려한 인체공학적 설계를 통해 상품을 제작, 판매하고 있습니다.</div>
+                                            <a class="samplepack_sponlink"  href="http://www.mamiz.co.kr" target="_blank">http://www.mamiz.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_18_mamiz.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">비올란 바스&샴푸 + 영양고보습크림</p>
+                                            <div class="samplepack_goodsboxbody table_gray">피부건조, 예민한 피부 등 소중한 내 아이에게 순수하고 부드럽게 잘 맞는 스킨&바디케어 비올란. 이젠 내 아이도 비올란으로 시작하세요.</div>
+                                            <a class="samplepack_sponlink"  href="http://www.biolanekorea.com" target="_blank">http://www.biolanekorea.com</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_19_big.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">비앤원 H발란스 샘플킷</p>
+                                            <div class="samplepack_goodsboxbody table_gray">임산부 전용 헤어케어 시스템. 100% 식물성분 비이온 계면 활성제 사용으로 안심하고 사용 가능, pH4.6의 약산성 헤어케어 시스템이 두피와 모발의 pH발란스 조절.</div>
+                                            <a class="samplepack_sponlink"  href="http://www.biggreen.co.kr" target="_blank">http://www.biggreen.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_20_kbic.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">그라노떼 임산부 커피대용차</p>
+                                            <div class="samplepack_goodsboxbody table_gray">무카페인, 무방부제, 무첨가물 100% 천연 곡물로 만든 커피대용차. 임산부나 수유부도 카페인 걱정없이 커피의 맛과 향을 즐길 수 있습니다.</div>
+                                            <a class="samplepack_sponlink"  href="http://www.kbic.kr" target="_blank">http://www.kbic.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                            </div>  <!-- /#samplepack_new_goods -->
+                            <!-- /시즌 1 샘플팩 구성 -->
+
+                            <!-- 시즌 2 샘플팩 구성 -->
+                            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '2'" style="display:block;">
+                                <span class="tabox_title">신규회원 샘플팩 구성</span>
+                                <br />
+                                <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
+
+                                <!-- 샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_01_babioniq.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">베비오닉 프리미엄 기저귀</p>
+                                            <div class="samplepack_goodsboxbody table_gray">기저귀 발진의 철저한 요인 분석을 통해 의학적으로 처방된 천연 식물 성분과 과학적 기술력을 바탕으로 피부 저자극 기저귀 탄생</div>
+                                            <a class="samplepack_sponlink" href="http://www.babioniq.co.kr" target="_blank">http://www.babioniq.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_02_elleairgoo.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">군 신생아 기저귀</p>
+                                            <div class="samplepack_goodsboxbody table_gray">3D엠보싱 가공으로 아기 피부에 닿는 면적을 줄여 피부 부담 경감. 통기성 겉커버, 냄새제거기능, 소변 알림마크사용</div>
+                                            <a class="samplepack_sponlink" href="http://www.elleairgoo-n.co.kr" target="_blank">http://www.elleairgoo-n.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+                                <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
+
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_03_touch.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">신생아 페넬로페 뭉침없는 기저귀</p>
+                                            <div class="samplepack_goodsboxbody table_gray">피부 친화적 원단을 사용해 아기의 피부에 편안함을 주는 것은 물론 소변 냄새까지 잡아줘 쾌적한 사용감을 준다. 피부 접촉 면적을 최소화 시킨 허니콤엠보싱 기술과 통기성을 높인 더블 통기 시스템으로 아기의 피부로 부터 발진 걱정을 해방</div>
+                                            <a class="samplepack_sponlink" href="http:/www.the1st-touch.com" target="_blank">http:/www.the1st-touch.com</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_04_milestone.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">벨라베이비해피 기저귀</p>
+                                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">흡수력의 정석, 3D system 샘방지의 유럽 프리미엄 기저귀.사용 후 변기에 버릴 수 있는 과일향 비데 물티슈.</div>
+                                            <a class="samplepack_sponlink" href="http://www.milestonedevelopment-n.co.kr" target="_blank">www.milestonedevelopment.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_05_totori.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">헬로토토리 기저귀</p>
+                                            <div class="samplepack_goodsboxbody table_gray">공기 솔솔~ 더블 통기시스템. 접착력좋고 부드러운 라운드타입의 테이프. 탄탄한 고탄력 허리밴드, 똑똑한 소변알림줄. 이중샘방지커버까지!</div>
+                                            <a class="samplepack_sponlink" href="http://www.totori.co.kr" target="_blank">http://www.totori.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_06_momida.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">나비잠 기저귀</p>
+                                            <div class="samplepack_goodsboxbody table_gray">초박형 두께로 민감한 아기가 사용하기 좋습니다. 얇지만 최고의 흡수력을 자랑하며, 3d 엠보원단으로 더욱 부드러워졌으며
+                                                시원하고 쾌적한 상태를 유지해줍니다.</div>
+                                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_07_momidati.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">하늘수 프리미엄 물티슈</p>
+                                            <div class="samplepack_goodsboxbody table_gray">화학성분이 전혀 없는 무방부제 물티슈!! 전성분이 정제수와 징크제올라이트성분 두가지로 아기들 손입 티슈로 사용가능한 프리미엄 물티슈 .
+                                                민감성 피부에도 사용가능</div>
+                                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_08_byabya.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">깨끗한나라 비야비야 물티슈</p>
+                                            <div class="samplepack_goodsboxbody table_gray">소비자가 가장 원하는 안전한 물티슈. 그 마음에 피부건강까지 담아 만든 깨끗한나라에서 만든 자연주의 제품.</div>
+                                            <a class="samplepack_sponlink" href="http:/www.byabya.co.kr" target="_blank">http:/www.byabya.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_09_ia.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">삼무 프리미엄 휴대용 물티슈</p>
+                                            <div class="samplepack_goodsboxbody table_gray">불만제로 모범업체 선정. 인체피부 자극 테스트를 완료하여 무자극 제품인증. 징크제올라이트만을 사용하여 영/유아 및 가족 모두가 안심하고 사용할 수 있음.</div>
+                                            <a class="samplepack_sponlink" href="http://www.ia-commerce.com" target="_blank">http://www.ia-commerce.com</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_10_novatis.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">노바티스 오트리빈 아스피레이터(영·유아용 코 흡인기)</p>
+                                            <div class="samplepack_goodsboxbody table_gray">스스로 코를 풀지 못하는 2세 미만 아이의 코에 맞춰 개발되었습니다.
+                                                안전하고 위생적으로 신생아 콧속에 있는 점액과 이물질을 제거해줍니다</div>
+                                            <a class="samplepack_sponlink" href="http://www.novartis.co.kr" target="_blank">http://www.novartis.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_11_atopalm.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">아토팜 아이가 좋아하는 세제</p>
+                                            <div class="samplepack_goodsboxbody table_gray">특허 MLE성분으로 피부에 순하고 보호까지 해주는 저자극 유아세제.피부과 자극 테스트 완료. 무첨가 안심처방, 드럼/일반세탁기 겸용</div>
+                                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_12_atopalm2.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">아토팜 매터니티 키트</p>
+                                            <div class="samplepack_goodsboxbody table_gray">임신 중 팽창되는 피부에 탄력과 유연성을 강화시켜주는 임산부 바디케어크림, 로션. 천연보습인자, 식물성오일의 함유로 보습 지속성이 강화되었습니다.</div>
+                                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_13_greaten.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">스킨베리 나뛰르 베이비 샴푸 & 바스 + 베이비 로션</p>
+                                            <div class="samplepack_goodsboxbody table_gray">프랑스 에코서트 유기농 인증. 아기에게 주는 최고의 선물 오가닉 스킨십.
+                                                세상에서 가장 소중한 우리 아기를 위해 스킨베리 나뛰르의 오가닉 스킨십을 선물하세요.</div>
+                                            <a class="samplepack_sponlink" href="http://www.greaten.co.kr" target="_blank">http://www.greaten.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_14_cetaphil.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">세타필  바디 키트</p>
+                                            <div class="samplepack_goodsboxbody table_gray">건조하고 민감한 피부를 위한 세계인의 선택 세타필! 세타필바로 부드럽게 씻어주고 세타필 로션, 크림으로 전신 보습!</div>
+                                            <a class="samplepack_sponlink" href="http://cafe.naver.com/mycetaphil" target="_blank">http://cafe.naver.com/mycetaphil</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_15_swiss.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">스위스나뚜리치 실키로션</p>
+                                            <div class="samplepack_goodsboxbody table_gray">순수 자연유래 오일성분과 오렌 지수가 아기의 피부에 보호막을 만들어 수분손실을 최소화. 부드럽게 발리는 텍스쳐의 프리미엄 보습로션.</div>
+                                            <a class="samplepack_sponlink" href="http://www.swissnatuerlich.co.kr" target="_blank">http://www.swissnatuerlich.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_16_pourbebe.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">뿌르베베 모이스트 로션</p>
+                                            <div class="samplepack_goodsboxbody table_gray">보습효과가 뛰어난 칼란코에 콤플렉스와 9가지 허브 블렌딩이 함유 된 보습제.
+                                                33가지 유해성분은 모두 배제 했으며, 피부 의 유수분 밸런스 를 조절하고 수분 증발 을 막아 유해 환경으로부터 연약한 아이 피부를 보호해줌. </div>
+                                            <a class="samplepack_sponlink" href="http://pourbebe.net" target="_blank">http://pourbebe.net</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                                <div class="samplepack_goodsbox_td">
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_17_atoib.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">고려제약 아토아이비 로션, 크림</p>
+                                            <div class="samplepack_goodsboxbody table_gray">無스테로이드, 無항생제, 無항히 스타민으로 천연 성분과 IgY를 함유 하여 피부 장벽을 튼튼하게 만들어 주며, 건조하고 민감한 피부에도 자극 없이 부드럽고 매끄럽게 케어</div>
+                                            <a class="samplepack_sponlink" href="http://www.atoib.co.kr" target="_blank">http://www.atoib.co.kr</a>
+                                        </div>
+                                    </div>
+                                    <div class="samplepack_goodsbox">
+                                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_18_daewoong.jpg')"/>
+                                        <div class="samplepack_goodsboxtxt">
+                                            <p class="table_green">대웅제약 락피더스 유산균</p>
+                                            <div class="samplepack_goodsboxbody table_gray">유산균을 꾸준히 섭취하면 유해균 의 활동이 억제되고 장의 운동과 배변이 원활해지며 몸의 저항성이 향상됩니다. 특히 임신부 섭취 시 효과 탁월.</div>
+                                            <a class="samplepack_sponlink" href="http://www.daewoong.co.kr" target="_blank">http://www.daewoong.co.kr</a>
+                                        </div>
+                                    </div>  <!-- /.samplepack_goodsbox_td -->
+                                </div>
+
+                            </div>  <!-- /#samplepack_new_goods -->
+                            <!-- /시즌 2 샘플팩 구성 -->
+
+                            </ul>   <!-- /.nav-tabs -->
+                            </div>
+
+                            <div class="col-xs-12">
+                                <div ng-model="banner" class="inven_themeup">
+                                    <a ng-click="click_linkBanner(banner)" class="ADbanner_image" title="{{banner.ada_title}}">
+                                        <!--<img ng-src="{{ad.FILE}}"/>-->
+                                        <img ng-src="{{banner.img}}"/>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div><!-- /.sub_contents_wrap -->
+                    </div>
                 </div>
-            </center>
 
-            <ol class="samplepack_howto">
-                <li class="table_red">한번 등록한 내용은 변경하실 수 없습니다.</li>
-                <li>반드시 <span class="table_blue"><u>임신부만 응모</u></span>하세요 <strong>(남자회원 신청불가)</strong></li>
-                <li>임신부 증거자료는 1장만 등록 가능하며 <span class="table_blue"><u>사진이 미흡할 경우 당첨이 취소</u></span>됩니다.<br />(관련없는 사진, 예정일이 없는 사진을 올려줄 경우)</li>
-                <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 선정에서 제외됩니다.</li>
-                <li>당첨자 발표 후 별도 주소확인은 하지 않으며 주소가 불분명할 경우 선물은 발송되지 않습니다. (번지수가 없거나 아파트 동, 호수 없는 경우)</li>
-                <li>회원 탈퇴 후 재가입하여 신청하더라도 신청기록은 남기 때문에 샘플팩 선정에서 제외됩니다.</li>
-                <li>샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체 사정으로 공지없이 변경될 수 있습니다.</li>
-            </ol>
-        </div>
-
-        <div style="float:left; position:relative; width:100%;">
-            <div style="clear:both; text-align: center; width:225px; margin:0px auto; padding-top:10px 0 40px 0;">
-                <a class="samplepack_submit cancelbtn" href="/moms/samplepack/intro"></a>
-                <a class="samplepack_submit submitbtn" ng-click="click_saveSamplepackComp();"></a>
-            </div>
-        </div>
-
-        <div class="col-xs-12">
-            <div ng-model="ad" class="inven_themeup">
-                <a class="ADbanner_image" title="배너타이틀">
-                    <!--<img ng-src="{{ad.FILE}}"/>-->
-                    <img img src="/imgs/ange/temp/story_banner.jpg"/>
-                </a>
-            </div>
-        </div>
+            </div> <!-- rows -->
 
 
+        </div><!-- container-fluid -->
+    </div><!-- /.mainbar -->
+
+
+    <div class="subar sub-slide1">
+        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+
+        <!-- 1200px 이하일 경우 표시되는 footer -->
+        <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
+        <!-- /1200px 이하일 경우 표시되는 footer -->
     </div>
-    <!-- /신청폼 -->
-
-
-    <div class="samplepack_tabbox"  ng-class="{ 'hidden': showSamplepackDetails }" style="display:block;">
-
-        <ul class="nav nav-tabs nav-justified" id="tab" style="font-size:0.92em; font-weight:700;">
-            <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('1');">샘플팩 구성</a></li>
-            <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('2');">주의사항</a></li>
-
-            <!-- 시즌1 주의사항 -->
-            <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '2'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
-                <span class="tabox_title">신청방법</span>
-                <ol>
-                    <li>앙쥬 홈페이지 (www.ange.co.kr)에 회원가입합니다.</li>
-                    <li>[신규회원 샘플팩 신청] 버튼을 눌러서 해당 내용을 입력합니다.</li>
-                    <li>반드시 임신부증거사진(산모이름과 예정일이 함게 나와있는 사진 1장)을 포함해야 합니다.</li>
-                    <li>응모자 중 500명을 추첨해서 발송해드립니다. 당첨자 발표일에 공지사항 게시판을 확인하세요.</li>
-                </ol>
-
-                <span class="table_red tabox_title" style="border-bottom:2px solid #e25d4c;">회원 탈퇴 후 재가입하여 신청시</span>
-                <ul>
-                    <li class="table_red">샘플팩 신청 및 당첨자 기록은 본사에 보유되어 있기 때문에 당첨자에서 제외됩니다.</li>
-                </ul>
-
-                <span class="tabox_title">주의사항</span>
-                <ul>
-                    <li>반드시 임신부만 응모하세요.(남성/출산맘 응모불가)</li>
-                    <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 당첨이 취소됩니다.</li>
-                    <li>주소가 불분명할 경우 추첨대상에서 제외됩니다.(아파트 동/호수 없는 경우, 번지수 없는 경우)</li>
-                    <li>샘플팩은 재발송되지 않습니다.</li>
-                    <li>신청IP, 반으시는 주소가 같을 경우 중복 발송하지 않습니다.</li>
-                    <li>신청기간 내 회원가입한 임신부만을 대상으로 합니다.</li>
-                    <li>샘플팩 구성은 업체사정으로 공지없이 변경될 수 있습니다.</li>
-                    <li>신청한 내용(사진)은 변경할 수 없으므로 신중히 작성해주시기 바랍니다.</li>
-                    <li>탈퇴 후 재가입하셔도 응모기록은 보유되기 때문에 당첨에서 제외됩니다.</li>
-                </ul>
-            </div>  <!-- /#samplepack_new_warning -->
-            <!-- /시즌1 주의사항 -->
-
-            <!-- 시즌2 주의사항 -->
-            <div id="tabs-1" class="tabox_body"  ng-if="selectIdx == '2'" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
-                <span class="tabox_title">신청방법</span>
-                <ol>
-                    <li>상단 <mark><span class="table_red">신청자격확인</span></mark> 을 통해 신청자격을 먼저 확인하세요.</li>
-                    <li><mark><span class="table_red">기존회원 샘플팩 신청</span></mark> 버튼을 눌러서 해당 내용을 입력합니다.</li>
-                    <li>반드시 임신부증거사진(산모이름과 예정일이 함게 나와있는 사진 1장)을 포함해야 합니다.</li>
-                    <li>우리아이 첫 태동의 느낌을 작성해 주세요.</li>
-                    <li class="table_red">신청 시 마일리지 2,000p 차감(부족 시 신청 불가능)</li>
-                </ol>
-
-                <span class="tabox_title">주의사항</span>
-                <ul>
-                    <li>등록된 임신부 인증 사진이 미흡할 경우 당첨이 취소됩니다.<br />(관렵없는 사진, 예정일이 없는 사진을 올릴 경우)</li>
-                    <li><span class="table_red">선착순으로 증정</span>되며 마일리지가 부족하면 신청이 되지 않습니다.</li>
-                    <li>별도의 주소 확인은 하지 않으며 발송시점 주소가 불분명할 경우 당첨이 취소됩니다.<br />(아파트 동/호수 없는 경우, 번지수 없는 경우)</li>
-                    <li>신청한 내용(사진)은 변경할 수 없으므로 신중히 작성해주시기 바랍니다.</li>
-                    <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 당첨이 취소됩니다.</li>
-                    <li>샘플팩 구성은 업체사정으로 공지없이 변경될 수 있습니다.</li>
-                    <li>첫 태동의 느낌을 작성하지 않으면 신청되지 않습니다.</li>
-                    <li>선착순으로 제공됨으로 별도의 당첨 공지를 하지 않습니다.</li>
-                    <li>신청IP, 받으시는 주소가 같을 경우 중복 발생하지 않습니다.</li>
-                    <li><span class="table_red">착불 2,500원</span>으로 발송됩니다.(제주지역 추가운임 발생)</li>
-                </ul>
-            </div>  <!-- /#samplepack_new_warning -->
-            <!-- /시즌2 주의사항 -->
-
-            <!-- 시즌 1 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" ng-if="selectIdx == '1'" style="display:block;">
-                <span class="tabox_title">기존회원 샘플팩 구성</span>
-                <br />
-                <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
-
-                <!-- 샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_01_babioniq.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">베비오닉 프리미엄 기저귀</p>
-                            <div class="samplepack_goodsboxbody table_gray">기저귀 발진의 철저한 요인 분석을 통해 의학적으로 처방된 천연 식물 성분과 과학적 기술력을 바탕으로 피부 저자극 기저귀 탄생</div>
-                            <a class="samplepack_sponlink" href="http://www.babioniq.co.kr" target="_blank">http://www.babioniq.co.kr</a>
-                        </div>
-                    </div>
-
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_02_elleairgoo.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">군 신생아 기저귀</p>
-                            <div class="samplepack_goodsboxbody table_gray">3D엠보싱 가공으로 아기 피부에 닿는 면적을 줄여 피부 부담 경감. 통기성 겉커버, 냄새제거기능, 소변 알림마크사용</div>
-                            <a class="samplepack_sponlink" href="http://www.elleairgoo-n.co.kr" target="_blank">http://www.elleairgoo-n.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-                <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_03_touch.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">신생아 페넬로페 뭉침없는 기저귀</p>
-                            <div class="samplepack_goodsboxbody table_gray">피부 친화적 원단을 사용해 아기의 피부에 편안함을 주는 것은 물론 소변 냄새까지 잡아줘 쾌적한 사용감을 준다.
-                                피부 접촉 면적을 최소화 시킨 허니콤엠보싱 기술과 통기성을 높인 더블 통기 시스템으로 아기의 피부로 부터 발진 걱정을 해방</div>
-                            <a class="samplepack_sponlink" href="http://www.the1st-touch.com" target="_blank">http://www.the1st-touch.com</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_04_momida.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">나비잠 기저귀</p>
-                            <div class="samplepack_goodsboxbody table_gray">초박형 두께로 민감한 아기가 사용하기 좋습니다. 얇지만 최고의 흡수력을 자랑하며, 3d 엠보원단으로 더욱 부드러워졌으며 시원하고 쾌적한 상태를 유지해줍니다.</div>
-                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_05_novatis.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">노바티스 오트리빈 아스피레이터(영·유아용 코 흡인기)</p>
-                            <div class="samplepack_goodsboxbody table_gray">스스로 코를 풀지 못하는 2세 미만 아이의 코에 맞춰 개발되었습니다. 안전하고 위생적으로 신생아 콧속에 있는 점액과 이물질을 제거해줍니다.</div>
-                            <a class="samplepack_sponlink" href="http://www.novartis.co.kr" target="_blank">http://www.novartis.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_06_bebe.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">하늘수 프리미엄 물티슈</p>
-                            <div class="samplepack_goodsboxbody table_gray">화학성분이 전혀 없는 무방부제 물티슈! 전성분이 정제수와 징크제올라이트 성분 두가지로 아기들 손입 티슈로 사용가능한 프리미엄 물티슈. 민감성 피부에도 사용가능.</div>
-                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_07_son.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">아이에이커머스 3무 물티슈</p>
-                            <div class="samplepack_goodsboxbody table_gray">불만제로 모범업체 선정. 인체피부 자극 테스트를 완료하여 무자극 제품인증.징크제올라이트만을 사용하여 영/유아 및 가족 모두가 안심하고 사용할 수 있음.</div>
-                            <a class="samplepack_sponlink" href="http://www.ia-commerce.com" target="_blank">http://www.ia-commerce.com</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_08_ma.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">깨끗한나라 비야비야 물티슈</p>
-                            <div class="samplepack_goodsboxbody table_gray">소비자가 가장 원하는 안전한 물티슈. 그 마음에 피부건강까지 담아 만든 깨끗한나라에서 만든 자연주의 제품.</div>
-                            <a class="samplepack_sponlink" href="http://www.byabya.co.kr" target="_blank">http://www.byabya.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_09_ia.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">스킨베리 나뛰르 베이비 샴푸 & 바스 + 베이비 로션</p>
-                            <div class="samplepack_goodsboxbody table_gray">프랑스 에코서트 유기농 인증. 아기에게 주는 최고의 선물 오가닉 스킨십. 세상에서 가장 소중한 우리 아기를 위해 스킨베리 나뛰르의 오가닉 스킨십을 선물하세요.</div>
-                            <a class="samplepack_sponlink" href="http://www.greaten.co.kr" target="_blank">http://www.greaten.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_10_byabya.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">고려제약 아토아이비 로션, 크림</p>
-                            <div class="samplepack_goodsboxbody table_gray">無스테로이드, 無항생제, 無항히 스타민으로 천연 성분과 IgY를 함유 하여 피부 장벽을 튼튼하게 만들어 주며, 건조하고 민감한 피부에도 자극 없이 부드럽고 매끄럽게 케어</div>
-                            <a class="samplepack_sponlink" href="http://www.atoib.co.kr" target="_blank">http://www.atoib.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-                <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_11_greaten.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">뿌르베베 모이스트 로션</p>
-                            <div class="samplepack_goodsboxbody table_gray">보습효과가 뛰어난 칼란코에 콤플렉스와 9가지 허브 블렌딩이 함유 된 보습제.
-                                33가지 유해성분은 모두 배제 했으며, 피부 의 유수분 밸런스 를 조절하고 수분 증발 을 막아 유해 환경으로부터 연약한 아이 피부를 보호해줌. </div>
-                            <a class="samplepack_sponlink" href="http://pourbebe.net" target="_blank">http://pourbebe.net</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_12_atoib.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">아토팜 아이가 좋아하는 세제</p>
-                            <div class="samplepack_goodsboxbody table_gray">특허 MLE성분으로 피부에 순하고 보호까지 해주는 저자극 유아세제.피부과 자극 테스트 완료. 무첨가 안심처방, 드럼/일반세탁기 겸용</div>
-                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_13_aph.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">아토팜 매터니티 키트</p>
-                            <div class="samplepack_goodsboxbody table_gray">임신 중 팽창되는 피부에 탄력과 유연성을 강화시켜주는 임산부 바디케어크림, 로션. 천연보습인자, 식물성오일의 함유로 보습 지속성이 강화되었습니다.</div>
-                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_14_pourbebe.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">쁘띠앤맘크림&오일로션</p>
-                            <div class="samplepack_goodsboxbody table_gray">집중튼살관리와 동시에 충분한 영양과 수분공급으로 튼살예방 및 개선관리가 가능한 제품.</div>
-                            <a class="samplepack_sponlink"  href="http://www.apharm.co.kr" target="_blank">http://www.apharm.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_15_atopalm2.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">베베쿡 기운찬 프로바이오 베베 + 기운찬 프로바이오 패밀리 + 처음 먹는 아기 보리차 + 처음 먹는 아기 루이보스티</p>
-                            <div class="samplepack_goodsboxbody table_gray">유기농 현미와 옥수수를 넣어 더욱 부드럽고 구수한 100% 유기농 아기보리차, 미네랄이 풍부하고 카페인이 없는 베이비 루이보스티, 70억 유산균으로 온 가족의 장 건강에 도움.</div>
-                            <a class="samplepack_sponlink"  href="http://shop.bebecook.com" target="_blank">http://shop.bebecook.com</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_16_atopalm.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">순둥이 프리미엄 물티슈</p>
-                            <div class="samplepack_goodsboxbody table_gray">무 표백, 무 색소, 무 포름알데히드, 무 알코올은 물론, 오존수와 코튼 함유 원단, 천연 항균 성분인 라임 에셀셜 오일을 사용한 순한 아기 물티슈.</div>
-                            <a class="samplepack_sponlink"  href="http://www.suomi.co.kr" target="_blank">http://www.suomi.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_17_biol.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">임부용품 전문 쇼핑몰 마미즈</p>
-                            <div class="samplepack_goodsboxbody table_gray">감각 있는 없마들의 선택! 산모와 아기를 위한 최고의 선물! 임신부터 출산까지 산모의 활동성과 체형을 고려한 인체공학적 설계를 통해 상품을 제작, 판매하고 있습니다.</div>
-                            <a class="samplepack_sponlink"  href="http://www.mamiz.co.kr" target="_blank">http://www.mamiz.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_18_mamiz.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">비올란 바스&샴푸 + 영양고보습크림</p>
-                            <div class="samplepack_goodsboxbody table_gray">피부건조, 예민한 피부 등 소중한 내 아이에게 순수하고 부드럽게 잘 맞는 스킨&바디케어 비올란. 이젠 내 아이도 비올란으로 시작하세요.</div>
-                            <a class="samplepack_sponlink"  href="http://www.biolanekorea.com" target="_blank">http://www.biolanekorea.com</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_19_big.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">비앤원 H발란스 샘플킷</p>
-                            <div class="samplepack_goodsboxbody table_gray">임산부 전용 헤어케어 시스템. 100% 식물성분 비이온 계면 활성제 사용으로 안심하고 사용 가능, pH4.6의 약산성 헤어케어 시스템이 두피와 모발의 pH발란스 조절.</div>
-                            <a class="samplepack_sponlink"  href="http://www.biggreen.co.kr" target="_blank">http://www.biggreen.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_20_kbic.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">그라노떼 임산부 커피대용차</p>
-                            <div class="samplepack_goodsboxbody table_gray">무카페인, 무방부제, 무첨가물 100% 천연 곡물로 만든 커피대용차. 임산부나 수유부도 카페인 걱정없이 커피의 맛과 향을 즐길 수 있습니다.</div>
-                            <a class="samplepack_sponlink"  href="http://www.kbic.kr" target="_blank">http://www.kbic.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-            </div>  <!-- /#samplepack_new_goods -->
-            <!-- /시즌 1 샘플팩 구성 -->
-
-            <!-- 시즌 2 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '1'" style="display:block;">
-                <span class="tabox_title">신규회원 샘플팩 구성</span>
-                <br />
-                <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
-
-                <!-- 샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_01_babioniq.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">베비오닉 프리미엄 기저귀</p>
-                            <div class="samplepack_goodsboxbody table_gray">기저귀 발진의 철저한 요인 분석을 통해 의학적으로 처방된 천연 식물 성분과 과학적 기술력을 바탕으로 피부 저자극 기저귀 탄생</div>
-                            <a class="samplepack_sponlink" href="http://www.babioniq.co.kr" target="_blank">http://www.babioniq.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_02_elleairgoo.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">군 신생아 기저귀</p>
-                            <div class="samplepack_goodsboxbody table_gray">3D엠보싱 가공으로 아기 피부에 닿는 면적을 줄여 피부 부담 경감. 통기성 겉커버, 냄새제거기능, 소변 알림마크사용</div>
-                            <a class="samplepack_sponlink" href="http://www.elleairgoo-n.co.kr" target="_blank">http://www.elleairgoo-n.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-                <!-- /샘플팩 구성 소개 : samplepack_goodsbox_td(한 줄)에 2개씩 표시하여 반복 -->
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_03_touch.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">신생아 페넬로페 뭉침없는 기저귀</p>
-                            <div class="samplepack_goodsboxbody table_gray">피부 친화적 원단을 사용해 아기의 피부에 편안함을 주는 것은 물론 소변 냄새까지 잡아줘 쾌적한 사용감을 준다. 피부 접촉 면적을 최소화 시킨 허니콤엠보싱 기술과 통기성을 높인 더블 통기 시스템으로 아기의 피부로 부터 발진 걱정을 해방</div>
-                            <a class="samplepack_sponlink" href="http:/www.the1st-touch.com" target="_blank">http:/www.the1st-touch.com</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_04_milestone.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">벨라베이비해피 기저귀</p>
-                            <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">흡수력의 정석, 3D system 샘방지의 유럽 프리미엄 기저귀.사용 후 변기에 버릴 수 있는 과일향 비데 물티슈.</div>
-                            <a class="samplepack_sponlink" href="http://www.milestonedevelopment-n.co.kr" target="_blank">www.milestonedevelopment.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_05_totori.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">헬로토토리 기저귀</p>
-                            <div class="samplepack_goodsboxbody table_gray">공기 솔솔~ 더블 통기시스템. 접착력좋고 부드러운 라운드타입의 테이프. 탄탄한 고탄력 허리밴드, 똑똑한 소변알림줄. 이중샘방지커버까지!</div>
-                            <a class="samplepack_sponlink" href="http://www.totori.co.kr" target="_blank">http://www.totori.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_06_momida.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">나비잠 기저귀</p>
-                            <div class="samplepack_goodsboxbody table_gray">초박형 두께로 민감한 아기가 사용하기 좋습니다. 얇지만 최고의 흡수력을 자랑하며, 3d 엠보원단으로 더욱 부드러워졌으며
-                                시원하고 쾌적한 상태를 유지해줍니다.</div>
-                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_07_momidati.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">하늘수 프리미엄 물티슈</p>
-                            <div class="samplepack_goodsboxbody table_gray">화학성분이 전혀 없는 무방부제 물티슈!! 전성분이 정제수와 징크제올라이트성분 두가지로 아기들 손입 티슈로 사용가능한 프리미엄 물티슈 .
-                                민감성 피부에도 사용가능</div>
-                            <a class="samplepack_sponlink" href="http://www.momida.com" target="_blank">http://www.momida.com</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_08_byabya.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">깨끗한나라 비야비야 물티슈</p>
-                            <div class="samplepack_goodsboxbody table_gray">소비자가 가장 원하는 안전한 물티슈. 그 마음에 피부건강까지 담아 만든 깨끗한나라에서 만든 자연주의 제품.</div>
-                            <a class="samplepack_sponlink" href="http:/www.byabya.co.kr" target="_blank">http:/www.byabya.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_09_ia.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">삼무 프리미엄 휴대용 물티슈</p>
-                            <div class="samplepack_goodsboxbody table_gray">불만제로 모범업체 선정. 인체피부 자극 테스트를 완료하여 무자극 제품인증. 징크제올라이트만을 사용하여 영/유아 및 가족 모두가 안심하고 사용할 수 있음.</div>
-                            <a class="samplepack_sponlink" href="http://www.ia-commerce.com" target="_blank">http://www.ia-commerce.com</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_10_novatis.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">노바티스 오트리빈 아스피레이터(영·유아용 코 흡인기)</p>
-                            <div class="samplepack_goodsboxbody table_gray">스스로 코를 풀지 못하는 2세 미만 아이의 코에 맞춰 개발되었습니다.
-                                안전하고 위생적으로 신생아 콧속에 있는 점액과 이물질을 제거해줍니다</div>
-                            <a class="samplepack_sponlink" href="http://www.novartis.co.kr" target="_blank">http://www.novartis.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_11_atopalm.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">아토팜 아이가 좋아하는 세제</p>
-                            <div class="samplepack_goodsboxbody table_gray">특허 MLE성분으로 피부에 순하고 보호까지 해주는 저자극 유아세제.피부과 자극 테스트 완료. 무첨가 안심처방, 드럼/일반세탁기 겸용</div>
-                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_12_atopalm2.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">아토팜 매터니티 키트</p>
-                            <div class="samplepack_goodsboxbody table_gray">임신 중 팽창되는 피부에 탄력과 유연성을 강화시켜주는 임산부 바디케어크림, 로션. 천연보습인자, 식물성오일의 함유로 보습 지속성이 강화되었습니다.</div>
-                            <a class="samplepack_sponlink" href="http://www.atopalm.co.kr" target="_blank">http://www.atopalm.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_13_greaten.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">스킨베리 나뛰르 베이비 샴푸 & 바스 + 베이비 로션</p>
-                            <div class="samplepack_goodsboxbody table_gray">프랑스 에코서트 유기농 인증. 아기에게 주는 최고의 선물 오가닉 스킨십.
-                                세상에서 가장 소중한 우리 아기를 위해 스킨베리 나뛰르의 오가닉 스킨십을 선물하세요.</div>
-                            <a class="samplepack_sponlink" href="http://www.greaten.co.kr" target="_blank">http://www.greaten.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_14_cetaphil.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">세타필  바디 키트</p>
-                            <div class="samplepack_goodsboxbody table_gray">건조하고 민감한 피부를 위한 세계인의 선택 세타필! 세타필바로 부드럽게 씻어주고 세타필 로션, 크림으로 전신 보습!</div>
-                            <a class="samplepack_sponlink" href="http://cafe.naver.com/mycetaphil" target="_blank">http://cafe.naver.com/mycetaphil</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_15_swiss.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">스위스나뚜리치 실키로션</p>
-                            <div class="samplepack_goodsboxbody table_gray">순수 자연유래 오일성분과 오렌 지수가 아기의 피부에 보호막을 만들어 수분손실을 최소화. 부드럽게 발리는 텍스쳐의 프리미엄 보습로션.</div>
-                            <a class="samplepack_sponlink" href="http://www.swissnatuerlich.co.kr" target="_blank">http://www.swissnatuerlich.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_16_pourbebe.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">뿌르베베 모이스트 로션</p>
-                            <div class="samplepack_goodsboxbody table_gray">보습효과가 뛰어난 칼란코에 콤플렉스와 9가지 허브 블렌딩이 함유 된 보습제.
-                                33가지 유해성분은 모두 배제 했으며, 피부 의 유수분 밸런스 를 조절하고 수분 증발 을 막아 유해 환경으로부터 연약한 아이 피부를 보호해줌. </div>
-                            <a class="samplepack_sponlink" href="http://pourbebe.net" target="_blank">http://pourbebe.net</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-                <div class="samplepack_goodsbox_td">
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_17_atoib.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">고려제약 아토아이비 로션, 크림</p>
-                            <div class="samplepack_goodsboxbody table_gray">無스테로이드, 無항생제, 無항히 스타민으로 천연 성분과 IgY를 함유 하여 피부 장벽을 튼튼하게 만들어 주며, 건조하고 민감한 피부에도 자극 없이 부드럽고 매끄럽게 케어</div>
-                            <a class="samplepack_sponlink" href="http://www.atoib.co.kr" target="_blank">http://www.atoib.co.kr</a>
-                        </div>
-                    </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_18_daewoong.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">대웅제약 락피더스 유산균</p>
-                            <div class="samplepack_goodsboxbody table_gray">유산균을 꾸준히 섭취하면 유해균 의 활동이 억제되고 장의 운동과 배변이 원활해지며 몸의 저항성이 향상됩니다. 특히 임신부 섭취 시 효과 탁월.</div>
-                            <a class="samplepack_sponlink" href="http://www.daewoong.co.kr" target="_blank">http://www.daewoong.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
-                </div>
-
-            </div>  <!-- /#samplepack_new_goods -->
-            <!-- /시즌 2 샘플팩 구성 -->
-
-        </ul>   <!-- /.nav-tabs -->
-    </div>
-
-</div><!-- /.sub_contents_wrap -->
-</div>
-</div>
-
-</div> <!-- rows -->
-
-
-</div><!-- container-fluid -->
-</div><!-- /.mainbar -->
-
-
-<div class="subar sub-slide1">
-    <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
-
-    <!-- 1200px 이하일 경우 표시되는 footer -->
-    <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
-    <!-- /1200px 이하일 경우 표시되는 footer -->
-</div>
 
 <!-- /Main Page Layout Set -->
 </div>
@@ -1304,10 +1296,10 @@
                 휴대폰번호 <input type="text" class="form-control" ng-model="item.PHONE_2" class= "form-control" placeholder="휴대폰번호"/>
             </div>
             <!--<div class= "form-group">-->
-                <!--임신여부 <input type="radio"  value="Y" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y-->
-                <!--&nbsp;-->
-                <!--<input type="radio" id="preg_N"  name="preg" value="N"  ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N-->
-                <!--<div ng-show="checked == 'Y'" id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 20150112"/></div>-->
+            <!--임신여부 <input type="radio"  value="Y" id="preg_Y" name="preg" ng-model="item.PREGNENT_FL" placeholder="출산여부"/>Y-->
+            <!--&nbsp;-->
+            <!--<input type="radio" id="preg_N"  name="preg" value="N"  ng-model="item.PREGNENT_FL" placeholder="출산여부"/>N-->
+            <!--<div ng-show="checked == 'Y'" id="birth_dt">출산예정일 <input type="text" class="form-control" ng-model="item.BABY_BIRTH_DT" class= "form-control" placeholder="ex) 20150112"/></div>-->
             <!--</div>-->
         </div>
     </div>

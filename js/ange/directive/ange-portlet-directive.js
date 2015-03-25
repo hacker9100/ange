@@ -981,7 +981,7 @@ define([
 //            scope: { option: '=ngModel' },
 //            replace: true,
             template: '<slick id="{{ option.id }}" init-onload="true" data="list" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false" style="padding:0px 6px; cursor:pointer;">' +
-                      '   <div ng-repeat="item in list" ><a ng-click="click_linkBanner(item)"><img ng-src="{{ item.MAIN_FILE }}"/></a></div>' +
+                      '   <div ng-repeat="item in list" ><a ng-click="click_Banner(item)"><img ng-src="{{ item.MAIN_FILE }}"/></a></div>' +
                       '</slick>'+
                       '<div class="ads_indicators_wrap">' +
                       '   <div ng-repeat="item in list" ng-click="click_slickGoTo($index)" ng-class=" $index == curIdx && option.id == curId ? \'ads_indicators now\' : \'ads_indicators\'">' +
@@ -1026,6 +1026,14 @@ define([
 
                     // 클릭 슬라이드로 변경
                     angular.element('#'+$scope.option.id).slickGoTo(idx);
+                }
+
+                $scope.click_Banner = function(item) {
+                    if ($scope.option.type == 'banner') {
+                        $scope.click_linkBanner(item);
+                    } else if ($scope.option.type == 'ange') {
+                        $location.url(item.URL);
+                    }
                 }
 
                 // 롤링 이미지 조회

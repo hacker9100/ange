@@ -11,9 +11,9 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('samplepack-edit', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'UPLOAD', '$http',function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD,$http) {
+    controllers.controller('samplepack-edit', ['$scope', '$rootScope','$stateParams', '$location', 'dialogs', 'CONSTANT', '$http',function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT, $http) {
 
-        $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+        $scope.options = { url: CONSTANT.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
         // 파일 업로드 후 파일 정보가 변경되면 화면에 로딩
         $scope.$watch('newFile', function(data){
@@ -325,7 +325,7 @@ define([
                    if($scope.item.ada_que_type == 'upload'){
 
                        // 파일 업로드 설정
-                       $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
+                       $scope.options = { url: CONSTANT.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
 
                        // 파일 업로드 후 파일 정보가 변경되면 화면에 로딩
                        $scope.$watch('newFile', function(data){
@@ -476,6 +476,13 @@ define([
             }
 
             if($scope.season_gb == 'SAMPLE2'){
+
+                if($scope.item.ada_count_request > 199){
+
+                    dialogs.notify('알림', '샘플팩 신청이 마감되었습니다.', {size: 'md'});
+                    $location.url('/moms/samplepack/intro');
+                    return;
+                }
 
                 if($scope.checked == 'N'){
                     dialogs.notify('알림', '신청 자격을 확인해주세요.', {size: 'md'});
@@ -727,21 +734,15 @@ define([
                             console.log($scope.item.ANSWER);
                             console.log($scope.item.ada_count_request);
 
-                            if($scope.item.ada_count_request == 200){
+                            $scope.insertItem('ange/comp', 'item', $scope.item, false)
+                                .then(function(data){
 
-                                dialogs.notify('알림', '샘플팩 신청이 마감되었습니다.', {size: 'md'});
-                                $location.url('/moms/samplepack/intro');
-                            }else{
-                                $scope.insertItem('ange/comp', 'item', $scope.item, false)
-                                    .then(function(data){
+                                    $rootScope.mileage = data.mileage;
+                                    dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
 
-                                        $rootScope.mileage = data.mileage;
-                                        dialogs.notify('알림', '샘플팩 신청이 완료되었습니다.', {size: 'md'});
-
-                                        $location.url('/moms/samplepack/intro');
-                                    })
-                                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-                            }
+                                    $location.url('/moms/samplepack/intro');
+                                })
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }
 
                     }else{
@@ -763,6 +764,12 @@ define([
 
         // 신청자격 여부 체크
         $scope.click_samplepackCheck = function (){
+
+            if($scope.season_gb == 'SAMPLE2' && $scope.item.ada_count_request > 199){
+
+                dialogs.notify('알림', '샘플팩 신청이 마감되었습니다.', {size: 'md'});
+                $location.url('/moms/samplepack/intro');
+            }
 
             $scope.search.ada_idx = $scope.item.ada_idx;
             $scope.search.TARGET_GB = $scope.item.target_gb;
@@ -789,6 +796,12 @@ define([
 
         $scope.click_compCheck = function (){
 
+            if($scope.season_gb == 'SAMPLE2' && $scope.item.ada_count_request > 199){
+
+                dialogs.notify('알림', '샘플팩 신청이 마감되었습니다.', {size: 'md'});
+                $location.url('/moms/samplepack/intro');
+            }
+
             $scope.search.ada_idx = $scope.item.ada_idx;
             $scope.search.TARGET_GB = $scope.item.target_gb;
 
@@ -807,6 +820,25 @@ define([
                 })
                 ['catch'](function(error){});
         }
+
+        // 하단 배너 이미지 조회
+        $scope.getBanner = function () {
+            $scope.search = {};
+            $scope.search.ADP_IDX = CONSTANT.AD_CODE_BN55;
+            $scope.search.ADA_STATE = 1;
+            $scope.search.ADA_TYPE = 'banner';
+            $scope.search.MENU = $scope.path[1];
+            $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+
+            $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, $scope.search, false)
+                .then(function(data){
+                    $scope.banner = data[0];
+                    $scope.banner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                })
+                ['catch'](function(error){});
+        };
+
+        $scope.getBanner();
 
 //        $scope.init();
 //        $scope.click_sampleSeasonList();

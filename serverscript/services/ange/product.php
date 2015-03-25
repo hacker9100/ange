@@ -180,7 +180,7 @@ switch ($_method) {
                             1 = 1
                             AND PARENT_NO = 0
                             ".$search_where."
-                         ORDER BY NO DESC
+                         ORDER BY PRICE ASC
                          ".$limit."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
