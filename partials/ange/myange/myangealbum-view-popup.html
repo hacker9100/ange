@@ -16,31 +16,32 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-1 board_basicinfo_subject">
-                                    제목
-                                </div><!-- /.col-xs-2-->
-                                <div class="col-xs-10 board_basicinfo_subject">
-                                    <sapn> {{ item.SUBJECT }} </sapn>
-                                </div><!-- /.col-xs-10-->
+                                <!--<div class="col-xs-1 board_basicinfo_subject">-->
+                                    <!--제목-->
+                                <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
+                                <div class="col-xs-12 album_detail_subject">
+                                    {{ item.SUBJECT }}
+                                </div><!-- /.col-xs-12-->
                             </div>
 
                             <div class="row">
-                                <div class="col-xs-1 board_basicinfo_subject">
-                                    촬영일
-                                </div><!-- /.col-xs-2-->
-                                <div class="col-xs-10 board_basicinfo_subject">
-                                    <sapn> {{ item.SHOOTING_YMD }} </sapn>
-                                </div><!-- /.col-xs-10-->
-                            </div>
-
-                            <div class="row peopleboard_view_basicinfo">
-                                <div class="col-xs-1 board_basicinfo_subject">
-                                    내용
-                                </div>
-                                <div class="col-xs-10 board_basicinfo_subject">
+                                <!--<div class="col-xs-1 board_basicinfo_subject">-->
+                                <!--내용-->
+                                <!--</div>-->
+                                <div class="col-xs-12 album_detail_memo">
                                     <span> {{ item.SUMMARY }} </span>
                                 </div>
                             </div><!-- /.people_editor -->
+
+                            <div class="row peopleboard_view_basicinfo">
+                                <!--<div class="col-xs-1 board_basicinfo_subject">-->
+                                    <!--촬영일-->
+                                <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
+                                <div class="col-xs-12 album_detail_date">
+                                    <sapn> {{item.SHOOTING_YMD}} 의 추억을 담아...</sapn>
+                                </div><!-- /.col-xs-12-->
+                            </div>
+
                         </div><!-- /.container -->
 
                         <div class="container-fluid people_view_btnwrap">

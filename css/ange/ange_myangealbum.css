@@ -1,9 +1,11 @@
 .album_image {
-    width: 620px;
+    width: 100%;
     margin-bottom: 10px;
 }
 
 .album_image img {
+    width: 100%;
+    max-width:600px;
     display: block;
     margin: auto;
 }
@@ -33,4 +35,34 @@
     width:25%;
     background-size: cover;
     background-position: center center;
+}
+
+.album_detail_subject {
+    width:90%;
+    float:none;
+    margin:0px auto;
+    font-size: 1.12em;
+    font-weight: 600;
+    color:#0081c2;
+    padding:10px 0;
+    text-align:center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.album_detail_date {
+    width:85%;
+    float:none;
+    font-size: 0.86em;
+    margin:0px auto;
+    padding:0 0 15px 0;
+    color:#686868;
+}
+
+.album_detail_memo {
+    width:85%;
+    float:none;
+    margin:0px auto;
+    padding:5px 0;
 }

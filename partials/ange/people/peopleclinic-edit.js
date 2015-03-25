@@ -123,9 +123,9 @@ define([
         $scope.init = function(session) {
 
             if ($stateParams.menu == 'childdevelop') {
-                $scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
+                $scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <hr></hr>";
             } else if($stateParams.menu == 'chlidoriental') {
-                $scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
+                $scope.item.BODY = "<span style='color: #0000ff'>아이 만나이 :</span> <br/><span style='color: #0000ff'>아이 성별:</span> <hr></hr>";
             } else if($stateParams.menu == 'obstetrics') {
                 $scope.item.BODY = "<span style='color: #0000ff'>문의 대상 : <span style='color: #808080'>예) 아이, 본인</span></span> <br/><span style='color: #0000ff'>문의 나이:</span> <br/>---------------------------------------------------------------------------------------------------------------------------------------------";
             } else if($stateParams.menu == 'momshealth') {

@@ -2,10 +2,7 @@
     <!-- mainbar -->
     <div class="mainbar sub-slide0">
         <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
-
-
             <div class="row">
-
                 <div class="col-xs-12 v-cell-3">
                     <div class="comp_basic h-cell-dynamic">
 
@@ -27,7 +24,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12 col-sm-8 no-margin" >
+                                <div class="col-xs-12 col-sm-8 no-margin">
                                     <div class="comp_basic h-cell-dynamic no-margin">
 
                                         <div class="store_col_info_wrap">
@@ -64,7 +61,7 @@
                                                         </select>
                                                     </div>
                                                     <span class="store_list_item_txt" data-ng-show="products == null">
-                                                        <input type="checkbox" ng-model="item.PRODUCT_NO" id="checkProduct" ng-value="item.NO"  ng-checked="checkboxproduct == 'Y'"  checked> {{item.PRODUCT_NM}} <!-- ng-click="addcheckboxProductList(item, item)" checked -->
+                                                        <input type="checkbox" ng-model="item.PRODUCT_NO" id="checkProduct" ng-value="item.NO"  ng-checked="checkboxproduct == 'Y'" checked disabled> {{item.PRODUCT_NM}} <!-- ng-click="addcheckboxProductList(item, item)" checked -->
                                                     </span>
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
@@ -89,9 +86,10 @@
                                                 </div>
                                             </div>  <!-- /.store_col_info -->
 
-                                            <div ng-if="uid != '' && uid != null" ng-show="productsList != ''">
-                                                <button type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">찜목록</button>
-                                                <!--<button type="button" ng-click="click_addOrder()" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">구매하기</button>-->
+                                            <!--<div ng-if="uid != '' && uid != null" ng-show="productsList != ''">-->
+                                            <div ng-if="uid != '' && uid != null" style="float:left; width:100%; text-align:right; padding:12px 0;">
+                                                <button ng-if="productsList != ''" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다">찜목록</button>
+                                                <button ng-if="productsList == ''" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다" disabled>찜목록</button>
                                             </div>
 
                                             <div class="store_col_info" style="border-bottom:none">
@@ -123,7 +121,7 @@
                             <div tabsclass="sub_contents_body" style="border-top:2px solid #000; margin-top:0px;">
 
                                 <!-- store_view -->
-                                <div class="store_view_tab">
+                                <div id="tabs-1" class="store_view_tab">
                                     <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
                                         <!--<li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">상품안내</a></li>  &lt;!&ndash;class="active"&ndash;&gt;-->
                                         <!--<li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''"><a ng-click="click_selectTab('2');">상품후기</a></li>-->
@@ -136,8 +134,7 @@
                                         <li role="presentation"><a ng-click="click_selectTab('4');">주의사항</a></li>
                                     </ul>
                                 </div>  <!-- /.store_view_tab -->
-
-                                <div id="tabs-1" class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '1'" -->
+                                <div class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '1'" -->
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -151,7 +148,7 @@
                                     </div><!-- /.row -->
                                 </div><!-- /.container -->
 
-                                <div class="store_view_tab">
+                                <div id="tabs-2" class="store_view_tab">
                                     <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
                                         <li role="presentation"><a ng-click="click_selectTab('1');">상품안내</a></li>  <!--class="active"-->
                                         <li role="presentation" class="active"><a>상품후기</a></li>
@@ -159,7 +156,7 @@
                                         <li role="presentation"><a ng-click="click_selectTab('4');">주의사항</a></li>
                                     </ul>
                                 </div>  <!-- /.store_view_tab -->
-                                <div id="tabs-2" class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '2'" -->
+                                <div class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '2'" -->
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
@@ -221,7 +218,7 @@
                                                             <!--<span class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                                             <!--<div class="table_gray" style="text-align: justify; font-size:0.92em; word-break: keep-all;">{{item.BODY | string_limit : 50}}{{item.BODY > 50 ? '...' : ''}}</div>-->
 
-                                                            <div class="table_gray" style="width:100%; text-align: justify; font-size:0.92em; word-break: break-all; height:38px; overflow:hidden; text-overflow:ellipsis; ">
+                                                            <div class="table_gray" style="width:100%; text-align: justify; font-size:0.92em; word-break: break-all; height:38px; overflow:hidden; text-overflow:ellipsis;">
                                                                 {{item.BODY | string_limit : 200}}
                                                             </div>
                                                         </td>
@@ -261,7 +258,7 @@
                                 </div><!-- /.container -->
                                 <!-- /후기 -->
 
-                                <div class="store_view_tab">
+                                <div id="tabs-3" class="store_view_tab">
                                     <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
                                         <li role="presentation"><a ng-click="click_selectTab('1');">상품안내</a></li>  <!--class="active"-->
                                         <li role="presentation"><a ng-click="click_selectTab('2');">상품후기</a></li>
@@ -269,10 +266,10 @@
                                         <li role="presentation"><a ng-click="click_selectTab('4');">주의사항</a></li>
                                     </ul>
                                 </div>  <!-- /.store_view_tab -->
-                                <div id="tabs-3" class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '3'" -->
+                                <div class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '3'" -->
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
-                                            같은 카테고리의 제품이 없습니다.
+                                            <div style="text-align:center; padding:20px 0;">관련 상품이 없습니다.</div>
 
                                             <!--<div class="row" style="width:100%; margin:0px auto;">-->
 
@@ -413,20 +410,19 @@
                                                                     <!--</div>-->
                                                                 <!--</div>-->
 
-                                                            </div>
-                                                        </div>
-                                                        <!-- /mini_mileagemall -->
-                                                    </div>  <!-- /.comp_basic -->
-                                                </div>  <!-- /.col-xs-12 -->
-                                            </div>  <!-- /.row -->
-
+                                                            <!--</div>-->
+                                                        <!--</div>-->
+                                                        <!--&lt;!&ndash; /mini_mileagemall &ndash;&gt;-->
+                                                    <!--</div>  &lt;!&ndash; /.comp_basic &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.col-xs-12 &ndash;&gt;-->
+                                            <!--</div>  &lt;!&ndash; /.row &ndash;&gt;-->
 
                                         </div><!-- /.col-12-->
                                     </div><!-- /.row -->
                                 </div><!-- /.container -->
                                 <!-- /관련상품 -->
 
-                                <div class="store_view_tab">
+                                <div id="tabs-4" class="store_view_tab">
                                     <ul class="nav nav-tabs" id="tab">   <!--class="nav nav-tabs"-->
                                         <li role="presentation"><a ng-click="click_selectTab('1');">상품안내</a></li>  <!--class="active"-->
                                         <li role="presentation"><a ng-click="click_selectTab('2');">상품후기</a></li>
@@ -434,12 +430,11 @@
                                         <li role="presentation" class="active"><a>주의사항</a></li>
                                     </ul>
                                 </div>  <!-- /.store_view_tab -->
-                                <div id="tabs-4"  class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '4'"-->
+                                <div class="container-fluid peopleboard_view_contentwrap"> <!-- data-ng-show="selectIdx == '4'"-->
                                     <div class="row">
                                         <div class="col-xs-12 peopleboard_view_contentbody">
 
                                             <ul class="store_warning">
-
                                                 <li>부정적인 방법으로 마일리지 취득 시 공지없이 취득한 마일리지는 차감됩니다.</li>
                                                 <li>마일리지 상품은 모두 착불로 발송됩니다</li>
 
@@ -450,13 +445,11 @@
 
                                                 <li>마일리지는 마일리지몰에서만 사용가능합니다.</li>
                                                 <li>마일리지 적립방법은 업체 사정상 변경될 수 있습니다</li>
-                                                <li>마일리지는 소멸기간이 없으며 회원을 탈퇴할 경우 소멸됩니다.
-                                            (단, 2년간 로그인 기록이 없는 경우 마일리지 소멸)</li>
+                                                <li>마일리지는 소멸기간이 없으며 회원을 탈퇴할 경우 소멸됩니다. (단, 2년간 로그인 기록이 없는 경우 마일리지 소멸)</li>
                                                 <li>나눔방/경매소/이벤트 당첨 등 배송건이 있을 시 꼭, 배송요청란에 사유와 함께 '합포장'이라고 명시해주세요.</li>
                                                 <li>마일리지몰 상품은 제품의 하자가 아닌경우를 제외하고 교환 및 반품이 불가능합니다.</li>
                                                 <li>배송은 주문일로부터 2~3일내 발송을 원칙으로 하며 토,일,공휴일은 배송기간에 포함되지 않습니다.</li>
                                                 <li>상품은 업체 사정상 변경이나 사진과 상이할 수 있습니다.</li>
-
                                             </ul>
 
                                         </div><!-- /.col-12-->
@@ -469,16 +462,12 @@
                             </div>  <!-- /.sub_contents_body -->
 
 
-                        </div><!-- /.sub_contents_wrap -->
-                    </div>
-                </div>
-
-            </div> <!-- rows -->
-
-
-        </div><!-- container-fluid -->
-
-    </div>
+                        </div>  <!-- /.sub_contents_wrap -->
+                    </div>  <!-- comp_basic -->
+                </div>  <!-- col-xs-12 -->
+            </div>  <!-- rows -->
+        </div>  <!-- container-fluid -->
+    </div>  <!-- mainbar -->
 
     <div class="subar sub-slide1">
         <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
@@ -489,4 +478,5 @@
     </div>
 
     <!-- /Main Page Layout Set -->
-</div>
+
+</div>  <!-- /.ng_wrap -->
