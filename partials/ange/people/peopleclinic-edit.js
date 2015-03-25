@@ -11,7 +11,11 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peopleclinic-edit', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('peopleclinic-edit', ['$scope', '$rootScope', '$sce', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $sce, $stateParams, $location, dialogs, UPLOAD) {
+
+        $scope.renderHtml = function(html) {
+            return html != undefined ? $sce.trustAsHtml(html) : '';
+        }
 
         //<p><input name="버튼" id="btn" onclick="test();" type="button" value="test" /></p>
 

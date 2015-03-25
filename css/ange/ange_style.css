@@ -2177,11 +2177,25 @@ a.people_btn.delete { float:right; background-image: url('/imgs/ange/pp_btn_dele
     height:600px;
 }
 
+.people_editor_mobilewrap {
+    margin:0px auto;
+    margin-bottom:10px;
+    height:280px;
+}
+
 .people_editor {
     height:100%;
     padding:0;
     border-bottom:1px solid #ddd;
 }
+
+.people_mobile_editable{
+    height: 250px;
+    width: 100%;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
 
 .peopleboard_options {
     float: left;
