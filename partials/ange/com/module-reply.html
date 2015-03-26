@@ -25,7 +25,8 @@
 
                         <p style="font-size:0.86em; margin:4px 0 0 0; " ng-class="{ 'hidden': ! showCommentDetails }">
                             &nbsp;&nbsp;&nbsp;<!--<input type="text" ng-model="replyItem.UPDATE_COMMENT"  style="width:60%;"/>-->
-                            <textarea id="editor1" ng-model="replyItem.UPDATE_COMMENT" id="comment" name="comment[]"  placeholder="{{replyItem.COMMENT}}" class="form-control input-md" rows="2" style="resize: none;" ng-keyup="fnByteCal();"></textarea>&nbsp;<a ng-click="click_updateReply(replyItem.NO, replyItem.UPDATE_COMMENT);">수정</a>
+                    <!-- placeholder="{{replyItem.COMMENT}}"  -->
+                            <textarea id="editor1" ng-model="replyItem.UPDATE_COMMENT" id="comment" ng-init="replyItem.UPDATE_COMMENT = replyItem.COMMENT" name="comment[]"  class="form-control input-md" rows="2" style="resize: none;" ng-keyup="fnByteCal();"></textarea>&nbsp;<a ng-click="click_updateReply(replyItem.NO, replyItem.UPDATE_COMMENT);">수정</a>
                     <!--  -->
                         </p>
                         <!-- 관리자 또는 방장에게만 보여집니다. -->
@@ -50,7 +51,7 @@
                         </small>
                         <p style="font-size:0.86em; margin:4px 0 0 0; "  ng-class="{ 'hidden': ! showReCommentDetails }">
                             <br/>
-                            &nbsp;&nbsp;&nbsp;<input type="text" data-ng-disabled="nouserid" ng-model="reItem.UPDATE_COMMENT" placeholder="{{reItem.COMMENT}}" style="width:60%;"/>&nbsp;<a ng-click="click_updateReply(reItem.NO, reItem.UPDATE_COMMENT);">수정</a>
+                            &nbsp;&nbsp;&nbsp;<input type="text" data-ng-disabled="nouserid" ng-model="reItem.UPDATE_COMMENT" ng-init="reItem.UPDATE_COMMENT = reItem.COMMENT" style="width:60%;"/>&nbsp;<a ng-click="click_updateReply(reItem.NO, reItem.UPDATE_COMMENT);">수정</a>
                         </p><!--ng-show="uid == reItem.REG_UID && replyItem.BLIND_FL == 'N'">-->
                     </dt>
                     <dd>{{reItem.BLIND_FL == 'N' ? reItem.COMMENT : '관리자에 의해 블라인드된 댓글입니다'}}</dd>
