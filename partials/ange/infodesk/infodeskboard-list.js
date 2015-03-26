@@ -21,6 +21,7 @@ define([
         // 페이징
         //$scope.PAGE_NO = 1;
         $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
+        //$scope.PAGE_SIZE = 10;
         $scope.TOTAL_COUNT = 0;
 
         // 검색어 조건
@@ -172,10 +173,14 @@ define([
             /*            $scope.search.SORT = 'NOTICE_FL';
              $scope.search.ORDER = 'DESC'*/
 
+            $scope.search.FILE_EXIST = true;
+
             $scope.getList('com/webboard', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.TOTAL_COUNT = total_cnt;
+
+                    console.log(data[0].TOTAL_COUNT);
 
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
@@ -278,11 +283,13 @@ define([
 
         $scope.getSession()
             .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.getPeopleBoardList)
             ['catch']($scope.reportProblems);
 
 
-        $scope.init();
-        $scope.getPeopleBoardList();
+//        $scope.init();
+//        $scope.getPeopleBoardList();
 
         /*        $scope.test = function(session){
          console.log(session);

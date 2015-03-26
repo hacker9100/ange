@@ -769,7 +769,7 @@ define([
 
                 dialogs.notify('알림', '샘플팩 신청이 마감되었습니다.', {size: 'md'});
                 $location.url('/moms/samplepack/intro');
-            }
+            }else{
 
             $scope.search.ada_idx = $scope.item.ada_idx;
             $scope.search.TARGET_GB = $scope.item.target_gb;
@@ -791,6 +791,7 @@ define([
 
                 })
                 ['catch'](function(error){});
+            }
         }
 
 
