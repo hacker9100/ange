@@ -17,7 +17,8 @@
                             </div>
 
                             <!-- 경매품목 -->
-                            <div class="row webzine_moms_list">
+
+                            <div class="row webzine_store_list">
                                 <div class="col-xs-12 v-cell-4" style="margin:0px;">
                                     <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin: 0px;">
                                         <div class="store_auctiontime">
@@ -27,58 +28,86 @@
                                     </div>
                                 </div>  <!-- /.col-xs-12 -->
 
-                                <div style="float:left;">
 
-                                    <div class="col-xs-4 v-cell-4" style="margin:0px;">
-                                        <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
-                                            <div class="item" style="border:1px solid #ddd;">
-                                                <!--<img ng-src="/imgs/ange/temp/brandmall_01.jpg" style="width:100%;" />-->
-                                                <img ng-src="item.MAIN_FILE" style="width:100%;" />
-                                            </div>
+                                <div class="col-xs-12 col-sm-4 no-margin">
+                                    <div class="comp_basic h-cell-dynamic no-margin">
+                                        <div class="webzine_store_featureimgbox">
+                                            <img class="webzine_store_featureimg" src="/imgs/ange/_blank.gif" style="width:100%; background-image:url({{item.MAIN_FILE}})" />
                                         </div>
-                                    </div>  <!-- /.col-xs-4 -->
+                                    </div>
+                                </div>
 
-                                    <div class="col-xs-8 v-cell-4" style="margin:0px;" data-ng-repeat="item in list">
-                                        <div class="comp_basic h-cell-dynamic" style="width:100%; padding:2px; 0px; padding-left:25px; margin:0px;">
+                            <!--<div class="row webzine_moms_list">-->
+                                <!--<div class="col-xs-12 v-cell-4" style="margin:0px;">-->
+                                    <!--<div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin: 0px;">-->
+                                        <!--<div class="store_auctiontime">-->
+                                            <!--<strong>마일리지 경매소 운영시간</strong> :-->
+                                            <!--<span class="table_red">AM 10:00 ~ PM 3:00</span> <span class="table_gray">/ 상품 당일 발송</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>  &lt;!&ndash; /.col-xs-12 &ndash;&gt;-->
 
-                                            <div class="table_gray" style="height:24px;">
-                                                <small>
-                                                    <div class="table_blue" style="float:left;">{{item.PERIOD}} 경매</div>
-                                                    <!--<div style="float:right;">[상품번호 M20141023]</div>-->
-                                                </small>
-                                            </div>
+                                <!--<div style="float:left;">-->
 
-                                            <p style="font-size:1.24em; line-height:22px; font-weight:600; word-break: keep-all;">
-                                                {{item.PRODUCT_NM}}
-                                            </p>
+                                    <!--<div class="col-xs-4 v-cell-4" style="margin:0px;">-->
+                                        <!--<div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">-->
+                                            <!--<div class="item" style="border:1px solid #ddd;">-->
+                                                <!--&lt;!&ndash;<img ng-src="/imgs/ange/temp/brandmall_01.jpg" style="width:100%;" />&ndash;&gt;-->
+                                                <!--<img ng-src="item.MAIN_FILE" style="width:100%;" />-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+                                    <!--</div>  &lt;!&ndash; /.col-xs-4 &ndash;&gt;-->
 
-                                            <div class="store_col_info">
-                                                <div class="store_list_item maininfo"><strong>소비자금액</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE}} 원</span></div>
-                                                <div class="store_list_item maininfo"><strong>바로구매가</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DIRECT_PRICE}} 원</span></div>
-                                                <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">아이앤와이</span></div>
-                                                <div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="#">http://www.inyinternational.com</a></span></div>
-                                                <div class="store_list_item maininfo"><strong>외부링크</strong>
-                                                    <span class="table_gray" style="position:absolute; top:8px; left:120px; line-height:12px; word-break:break-all; width:65%;">
-                                                        <a style="font-size:0.86em;" href="#">http://www.inyinternational.com/sub/sub2_3.asp</a>
-                                                    </span>
+                                    <!--<div class="col-xs-8 v-cell-4" style="margin:0px;" data-ng-repeat="item in list">-->
+                                        <!--<div class="comp_basic h-cell-dynamic" style="width:100%; padding:2px; 0px; padding-left:25px; margin:0px;">-->
+
+
+                                    <div class="col-xs-12 col-sm-8 no-margin">
+                                        <div class="comp_basic h-cell-dynamic no-margin">
+
+                                            <div class="store_col_info_wrap">
+
+                                                <div class="table_gray" style="height:24px;">
+                                                    <small>
+                                                        <div class="table_blue" style="float:left;">{{item.PERIOD}} 경매</div>
+                                                        <!--<div style="float:right;">[상품번호 M20141023]</div>-->
+                                                    </small>
                                                 </div>
-                                            </div>  <!-- /.store_col_info -->
 
-                                            <div class="store_col_progress" style="position:relative; float:left; background-color:#ededed; padding:20px 10px; width:100%;">
-                                                <div style="float:left;">
-                                                    <strong>경매현황</strong>
-                                                    <span class="table_gray" style="position:absolute; left:120px;">
-                                                        현재 <strong>{{item.AUCTION_AMOUNT}}</strong> 원
-                                                        <a href="#" style="margin-left:18px;"><small>입찰 : {{item.AUCTION_COUNT != '0' ? item.AUCTION_COUNT : '0'}}건</small></a>
-                                                    </span>
-                                                </div>
-                                            </div>  <!-- /.store_col_info -->
+                                                <div class="store_col_info_title">{{item.PRODUCT_NM}}</div>
+                                                <!--<p style="font-size:1.24em; line-height:22px; font-weight:600; word-break: keep-all;">-->
+                                                    <!--{{item.PRODUCT_NM}}-->
+                                                <!--</p>-->
 
-                                            <div class="store_col_btn">
-                                                <button ng-click="click_showViewPeoplePhoto(item.NO)" class="btn btn-default">상세정보</button>
-                                                <button ng-click="click_auction(item.NO)" class="btn btn-info">경매참여</button>
-                                                <button ng-click="click_addcart(list)" class="btn btn-warning">바로구매</button>
-                                            </div>  <!-- /.store_col_info -->
+                                                <div class="store_col_info">
+                                                    <div class="store_list_item maininfo"><strong>소비자금액</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE}} 원</span></div>
+                                                    <div class="store_list_item maininfo"><strong>바로구매가</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DIRECT_PRICE}} 원</span></div>
+                                                    <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.COMPANY_NM}}</span></div>
+                                                    <!--<div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="#">http://www.inyinternational.com</a></span></div>-->
+                                                    <!--<div class="store_list_item maininfo"><strong>외부링크</strong>-->
+                                                        <!--<span class="table_gray" style="position:absolute; top:8px; left:120px; line-height:12px; word-break:break-all; width:65%;">-->
+                                                            <!--<a style="font-size:0.86em;" href="#">http://www.inyinternational.com/sub/sub2_3.asp</a>-->
+                                                        <!--</span>-->
+                                                    <!--</div>-->
+                                                </div>  <!-- /.store_col_info -->
+
+                                                <div class="store_col_progress">
+                                                    <div style="float:left;">
+                                                        <strong>경매현황</strong>
+                                                        <span class="table_gray" style="position:absolute; top:20px; right:10px;">
+                                                            현재 <strong>{{item.AUCTION_AMOUNT}}</strong> 원
+                                                            <a href="#" style="margin-left:8px;"><small>입찰 : {{item.AUCTION_COUNT != '0' ? item.AUCTION_COUNT : '0'}}건</small></a>
+                                                        </span>
+                                                    </div>
+                                                </div>  <!-- /.store_col_info -->
+
+                                                <div class="store_col_btn" style="padding:16px 0;">
+                                                    <button ng-click="click_showViewPeoplePhoto(item.NO)" class="btn btn-default">상세정보</button>
+                                                    <button ng-click="click_auction(item.NO)" class="btn btn-info">경매참여</button>
+                                                    <button ng-click="click_addcart(list)" class="btn btn-warning">바로구매</button>
+                                                </div>  <!-- /.store_col_info -->
+
+                                            </div>  <!-- /.store_col_info_wrap -->
 
                                         </div>  <!-- comp_basic -->
                                     </div>  <!-- col-xs-8 -->
@@ -110,7 +139,7 @@
                         </div><!-- /.sub_contents_wrap -->
 
                         <div class="row" style="width:100%; margin:0px auto; line-height:32px; ">
-                            <div class="peoplep_list_tab">
+                            <div class="store_list_tab">
                                 <span class="board_th" style="font-size:1.44em;">경매소 이용 안내</span>
                             </div><!-- /.peoplep_list_tab -->
                         </div>
@@ -145,9 +174,9 @@
 
 
                         <div class="row" style="width:100%; margin:0px auto; line-height:32px; ">
-                            <div class="peoplep_list_tab">
+                            <div class="store_list_tab">
                                 <span class="board_th" style="font-size:1.44em;">지난 경매소 물품</span>
-                                <small class="table_gray">이전 경매소 물품을 확인할 수 있습니다.</small>
+                                <small class="table_gray" style="white-space: nowrap;">이전 경매소 물품을 확인할 수 있습니다.</small>
                             </div><!-- /.peoplep_list_tab -->
                         </div>
 
@@ -155,22 +184,31 @@
                             <div class="row">
                                 <div class="col-xs-12" style="padding:0">
 
-                                    <div class="btn-group" style="float:left;">
-                                        <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
-                                    </div>
+                                    <div class="btn-group col-xs-12 col-sm-2" style="padding:2px 0px;">
+                                        <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class="form-control input-sm" placeholder="검색선택"></select>
+                                    </div><!-- /btn-group -->
 
-                                        <!--<div class="btn-group" style="float:left;">-->
-                                        <!--<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>-->
-                                        <!--</div>&lt;!&ndash; /btn-group &ndash;&gt;-->
-
-                                    <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
+                                    <div class="input-group input-group-sm col-xs-12 col-sm-7" style="padding:2px 0px;">
                                         <input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
                                         <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
-                                        <button class="btn btn-default"  type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                            <button class="btn btn-default"  type="button" ><span class="glyphicon glyphicon-search"></span></button>
                                         </span>
-
                                     </div>
+
+                                    <!--<div class="btn-group" style="float:left;">-->
+                                        <!--<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>-->
+                                    <!--</div>-->
+                                    <!--&lt;!&ndash;<div class="btn-group" style="float:left;">&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&lt;!&ndash; /btn-group &ndash;&gt;&ndash;&gt;-->
+
+                                    <!--<div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">-->
+                                        <!--<input type="text" ng-model="search.KEYWORD" class="form-control" placeholder="검색할 단어를 두자 이상 입력">-->
+                                        <!--<span class="input-group-btn" ng-click="click_searchPeopleBoard();">-->
+                                            <!--<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>-->
+                                        <!--</span>-->
+                                    <!--</div>-->
 
                                 </div>  <!-- /.col-xs-12-->
 
@@ -205,7 +243,7 @@
                                                                 <div class="webzine_list_bottomwrap">
                                                                     <div class="webzine_list_item"><strong>경매일자</strong><span class="table_gray" style="margin-left:8px;">2015-11-15</span></div>
                                                                     <div class="webzine_list_item"><strong>낙찰유형</strong><span class="table_gray" style="margin-left:8px;">마일리지</span></div> <!-- /마일리지/바로구매 -->
-                                                                    <div class="webzine_list_item"><strong>낙차가격</strong><span class="table_gray" style="margin-left:8px;">{{item.PRICE}} P</span></div>
+                                                                    <div class="webzine_list_item"><strong>낙찰가격</strong><span class="table_gray" style="margin-left:8px;">{{item.PRICE}} P</span></div>
                                                                 </div>
 
                                                                 <div class="webzine_list_btnwrap">
@@ -218,7 +256,7 @@
                                                 </div>  <!-- col-xs-12 -->
                                             </div>  <!-- /.row -->
 
-                                            <div class="row webzine_moms_list" style="display: block; margin-top:0px;" ng-show="prevlist == '' || prevlist == null">
+                                            <div style="display: block; height:80px; color:#888; margin-top:0px;" ng-show="prevlist == '' || prevlist == null">
                                                   <p style="text-align: center;">조회 데이터가 없습니다</p>
                                             </div>
 

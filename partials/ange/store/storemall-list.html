@@ -218,39 +218,75 @@
                                                 </div>
 
                                                 <!-- 커머스 리스트 타입 -->
-                                                <div class="row webzine_moms_list" style="display: block;" ng-show="menu == 'cummerce'" ng-repeat='item in list'>
-                                                    <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                                        <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                                <div class="row webzine_moms_list" ng-click="click_showViewPeoplePhoto(item.NO)" style="display: block;" ng-show="menu == 'cummerce'" ng-repeat='item in list'>
+                                                    <div class="col-xs-12 no-margin">
+                                                        <div class="comp_basic h-cell-dynamic no-margin">
 
-                                                            <div class="item" style="position:absolute;">
-                                                                <img ng-src="{{item.FILE}}" style="height: 155px;" class="webzine_moms_featureimg">
-                                                                <!--<img src="/imgs/ange/_blank_4by3.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />-->
-                                                            </div>  <!-- /.item -->
+                                                            <div class="webzine_list_imgbox">
+                                                                <img src="/imgs/ange/_blank_262by158.gif" style="background-image:url('{{item.FILE}}');" class="webzine_moms_featureimg">
+                                                                <!--<img src="/imgs/ange/_blank_262by158.gif" style="background-image:url('/imgs/ange/temp/moms_jb_01.jpg');" class="webzine_moms_featureimg">-->
+                                                            </div>
 
                                                             <div class="webzine_list_wrap">
                                                                 <div class="webzine_list_title">
-                                                                    <!-- {{item.SUBJECT}} -->
-                                                                    {{item.PRODUCT_NM}}
-
+                                                                    <div class="webzine_list_titletxt">{{item.PRODUCT_NM}}</div>
                                                                     <div class="webzine_list_bottomwrap">
                                                                         <div class="webzine_list_item"><strong>공구기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></div>
                                                                         <div class="webzine_list_item"><strong>공구가격</strong><span class="table_gray" style="margin-left:8px;"><del>25,000원</del> → {{item.PRICE}}원</span></div>
                                                                         <div class="webzine_list_item"><strong>판매수량</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_IN_CNT}}</span></div>
                                                                     </div>
 
-                                                                    <div class="webzine_list_btnwrap">
-                                                                        <button class="webzine_list_btn red" title="응모하기" ng-click="click_showViewPeoplePhoto(item.NO)">구매하기</button><br />
-                                                                        <button class="webzine_list_btn default" title="상세보기" ng-click="click_review()">후기작성</button>
-                                                                    </div>
-                                                                </div>  <!-- /.webzine_list_title -->
-                                                            </div>  <!-- /.webzine_list_wrap -->
+                                                                    <!--<div class="webzine_list_btnwrap">-->
+                                                                        <!--<button class="webzine_list_btn red" title="응모하기" ng-click="click_showViewPeoplePhoto(item.NO)">구매하기</button><br />-->
+                                                                        <!--<button class="webzine_list_btn default" title="상세보기" ng-click="click_review()">후기작성</button>-->
+                                                                    <!--</div>-->
+                                                                    <!--<div class="webzine_list_btnwrap">-->
+                                                                    <!--<button class="webzine_list_btn red" title="응모하기" ng-show="showForm == 'reviewForm'" ng-click="comp_momsevent(item.NO)">응모하기</button><br />-->
+                                                                    <!--<button class="webzine_list_btn default" title="상세보기" ng-click="view_momsevent(item.NO)">상세보기</button>-->
+                                                                    <!--</div>-->
+                                                                </div>
+                                                            </div>
 
                                                         </div>  <!-- comp_basic -->
-                                                    </div>  <!-- col-xs-12 -->
+                                                    </div>  <!-- col-xs-8 -->
                                                 </div>  <!-- /.row -->
                                                 <div ng-show="menu == 'cummerce' && list == ''">
                                                     <p><center>조회 데이터가 없습니다.</center></p>
                                                 </div>
+
+                                                <!--<div class="row webzine_moms_list" style="display: block;" ng-show="menu == 'cummerce'" ng-repeat='item in list'>-->
+                                                    <!--<div class="col-xs-12 v-cell-4" style="margin:0px;">-->
+                                                        <!--<div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">-->
+
+                                                            <!--<div class="item" style="position:absolute;">-->
+                                                                <!--<img ng-src="{{item.FILE}}" style="height: 155px;" class="webzine_moms_featureimg">-->
+                                                                <!--&lt;!&ndash;<img src="/imgs/ange/_blank_4by3.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />&ndash;&gt;-->
+                                                            <!--</div>  &lt;!&ndash; /.item &ndash;&gt;-->
+
+                                                            <!--<div class="webzine_list_wrap">-->
+                                                                <!--<div class="webzine_list_title">-->
+                                                                    <!--&lt;!&ndash; {{item.SUBJECT}} &ndash;&gt;-->
+                                                                    <!--{{item.PRODUCT_NM}}-->
+
+                                                                    <!--<div class="webzine_list_bottomwrap">-->
+                                                                        <!--<div class="webzine_list_item"><strong>공구기간</strong><span class="table_gray" style="margin-left:8px;">{{item.PERIOD}}</span></div>-->
+                                                                        <!--<div class="webzine_list_item"><strong>공구가격</strong><span class="table_gray" style="margin-left:8px;"><del>25,000원</del> → {{item.PRICE}}원</span></div>-->
+                                                                        <!--<div class="webzine_list_item"><strong>판매수량</strong><span class="table_gray" style="margin-left:8px;">{{item.SUM_IN_CNT}}</span></div>-->
+                                                                    <!--</div>-->
+
+                                                                    <!--<div class="webzine_list_btnwrap">-->
+                                                                        <!--<button class="webzine_list_btn red" title="응모하기" ng-click="click_showViewPeoplePhoto(item.NO)">구매하기</button><br />-->
+                                                                        <!--<button class="webzine_list_btn default" title="상세보기" ng-click="click_review()">후기작성</button>-->
+                                                                    <!--</div>-->
+                                                                <!--</div>  &lt;!&ndash; /.webzine_list_title &ndash;&gt;-->
+                                                            <!--</div>  &lt;!&ndash; /.webzine_list_wrap &ndash;&gt;-->
+
+                                                        <!--</div>  &lt;!&ndash; comp_basic &ndash;&gt;-->
+                                                    <!--</div>  &lt;!&ndash; col-xs-12 &ndash;&gt;-->
+                                                <!--</div>  &lt;!&ndash; /.row &ndash;&gt;-->
+                                                <!--<div ng-show="menu == 'cummerce' && list == ''">-->
+                                                    <!--<p><center>조회 데이터가 없습니다.</center></p>-->
+                                                <!--</div>-->
 
                                             </div><!-- /.comp_basic -->
                                         </div><!-- /.v-cell-4 -->

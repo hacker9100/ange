@@ -1344,9 +1344,9 @@ define([
             scope: true,
 //            scope: { images:'=' },
 //            replace: true,
-            template: '<div ng-class="$index == 0 ? \'subside_inven_basic top\' : $index == 1 ? \'subside_inven_basic mid\' : \'subside_inven_basic btm\'" ng-repeat="item in list">' +
+            template: '<div ng-class="$index == 0 ? \'subside_inven_basic top\' : $index == 1 ? \'subside_inven_basic mid\' : \'subside_inven_basic btm\'" ng-repeat="item in list"><span style="color:#555;"></span>' +
                 '   <div ng-show="isLoading" style="top: 40%;left: 40%; z-index: 1000;" class="ai-circled ai-indicator ai-grey-spin"></div>' +
-                '   <img ng-src="{{item.img}}" ng-click="click_linkImage(item)" title="{{item.title}}"/>' +
+                '   <img ng-show="{{item.img}}" ng-src="{{item.img}}" ng-click="click_linkImage(item)" title="{{item.title}}"/>' +
                 '</div>',
             controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
 
