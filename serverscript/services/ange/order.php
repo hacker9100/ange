@@ -134,8 +134,9 @@ switch ($_method) {
                                 			  (SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO AND PRODUCT_CODE = AC.PRODUCT_CODE) AS PROGRESS_ST
                                 FROM ANGE_ORDER AC
                                 WHERE  1 = 1
+                                 AND AC.ORDER_ST = 0
                                  AND AC.USER_ID = '".$_SESSION['uid']."'
-                                ".$search_where."
+                                 ".$search_where."
                               ORDER BY NO DESC
                               ".$limit."
                     ) AS DATA,
@@ -143,9 +144,10 @@ switch ($_method) {
                     (
                             SELECT COUNT(*) AS TOTAL_COUNT
                             FROM ANGE_ORDER AC
-                                WHERE  1 = 1
-                            AND AC.USER_ID = '".$_SESSION['uid']."'
-                            ".$search_where."
+                            WHERE  1 = 1
+                              AND AC.ORDER_ST = 0
+                              AND AC.USER_ID = '".$_SESSION['uid']."'
+                              ".$search_where."
                     ) CNT
                         ";
 
