@@ -86,7 +86,7 @@ define([
 
             $scope.search.SYSTEM_GB = 'ANGE';
             $scope.search.BOARD_GB = 'BOARD';
-            $scope.search.SORT = 'NOTICE_FL';
+            $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC'
 
             $scope.getList('com/webboard', 'list', {NO: $scope.BOARD_PAGE_NO- 1, SIZE: $scope.BOARD_PAGE_SIZE}, $scope.search, true)
@@ -106,22 +106,22 @@ define([
 
             $rootScope.COMM_NO = comm_no;
 
-//            if (comm_no == 1) {
-//                $location.url('/people/angeroom/view/'+key);
-//            } else if(comm_no == 2) {
-//                $location.url('/people/momstalk/view/'+key);
-//            } else if(comm_no == 3) {
-//                $location.url('/people/babycare/view/'+key);
-//            } else if(comm_no == 4) {
-//                $location.url('/people/firstbirthtalk/view/'+key);
-//            } else if(comm_no == 5) {
-//                $location.url('/people/booktalk/view/'+key);
-//            }
+            if (comm_no == 1) {
+                $location.url('/people/angeroom/view/'+key);
+            } else if(comm_no == 2) {
+                $location.url('/people/momstalk/view/'+key);
+            } else if(comm_no == 3) {
+                $location.url('/people/babycare/view/'+key);
+            } else if(comm_no == 4) {
+                $location.url('/people/firstbirthtalk/view/'+key);
+            } else if(comm_no == 5) {
+                $location.url('/people/booktalk/view/'+key);
+            }
 
-            $scope.board_item = {};
-            $scope.board_item.COMM_NO = comm_no;
-            $scope.board_item.NO = key;
-            $scope.openViewBoardModal($scope.board_item, 'lg'); //{NO : item.key}
+//            $scope.board_item = {};
+//            $scope.board_item.COMM_NO = comm_no;
+//            $scope.board_item.NO = key;
+//            $scope.openViewBoardModal($scope.board_item, 'lg'); //{NO : item.key}
         };
 
         $scope.openViewBoardModal = function (item, size) {
@@ -162,7 +162,7 @@ define([
             $scope.search.SYSTEM_GB = 'ANGE';
             $scope.search.BOARD_GB = 'PHOTO';
             $scope.search.FILE = true;
-            $scope.search.SORT = 'NOTICE_FL';
+            $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC'
 
 
@@ -210,19 +210,19 @@ define([
         // 사진 게시판 조회 화면 이동
         $scope.click_showViewPeoplePhoto = function (comm_no, key) {
 
-//            $rootScope.COMM_NO = comm_no;
-//
-//            if (comm_no == 6) {
-//                $location.url('/people/angemodel/view/'+key);
-//            } else if(comm_no ==7) {
-//                $location.url('/people/recipearcade/view/'+key);
-//            } else if(comm_no == 8) {
-//                $location.url('/people/peopletaste/view/'+key);
-//            }
-            $scope.photo_item = {};
-            $scope.photo_item.COMM_NO = comm_no;
-            $scope.photo_item.NO = key;
-            $scope.openViewPhotoModal($scope.photo_item, 'lg'); //{NO : item.key}
+            $rootScope.COMM_NO = comm_no;
+
+            if (comm_no == 6) {
+                $location.url('/people/angemodel/view/'+key);
+            } else if(comm_no ==7) {
+                $location.url('/people/recipearcade/view/'+key);
+            } else if(comm_no == 8) {
+                $location.url('/people/peopletaste/view/'+key);
+            }
+//            $scope.photo_item = {};
+//            $scope.photo_item.COMM_NO = comm_no;
+//            $scope.photo_item.NO = key;
+//            $scope.openViewPhotoModal($scope.photo_item, 'lg'); //{NO : item.key}
         };
 
         $scope.openViewPhotoModal = function (item, size) {
@@ -274,7 +274,7 @@ define([
         $scope.getPeopleClinicList = function () {
 
             $scope.search.SYSTEM_GB = 'ANGE';
-            $scope.search.SORT = 'NOTICE_FL';
+            $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC'
             $scope.search.BOARD_GB = 'CLINIC';
 
@@ -293,23 +293,23 @@ define([
         // 상담 게시판 조회 화면 이동
         $scope.click_showViewPeopleClinic = function (comm_no, key) {
 
-//            $rootScope.COMM_NO = comm_no;
-//
-//            if (comm_no == 9) {
-//                $location.url('/people/childdevelop/view/'+key);
-//            } else if(comm_no == 10) {
-//                $location.url('/people/chlidoriental/view/'+key);
-//            } else if(comm_no == 11) {
-//                $location.url('/people/obstetrics/view/'+key);
-//            } else if(comm_no == 12) {
-//                $location.url('/people/momshealth/view/'+key);
-//            } else if(comm_no == 13) {
-//                $location.url('/people/financial/view/'+key);
-//            }
-            $scope.clinic_item = {};
-            $scope.clinic_item.COMM_NO = comm_no;
-            $scope.clinic_item.NO = key;
-            $scope.openViewClinicModal($scope.clinic_item, 'lg'); //{NO : item.key}
+            $rootScope.COMM_NO = comm_no;
+
+            if (comm_no == 9) {
+                $location.url('/people/childdevelop/view/'+key);
+            } else if(comm_no == 10) {
+                $location.url('/people/chlidoriental/view/'+key);
+            } else if(comm_no == 11) {
+                $location.url('/people/obstetrics/view/'+key);
+            } else if(comm_no == 12) {
+                $location.url('/people/momshealth/view/'+key);
+            } else if(comm_no == 13) {
+                $location.url('/people/financial/view/'+key);
+            }
+//            $scope.clinic_item = {};
+//            $scope.clinic_item.COMM_NO = comm_no;
+//            $scope.clinic_item.NO = key;
+//            $scope.openViewClinicModal($scope.clinic_item, 'lg'); //{NO : item.key}
         };
 
         $scope.openViewClinicModal = function (item, size) {
