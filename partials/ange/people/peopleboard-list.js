@@ -61,7 +61,7 @@ define([
 
             if($scope.menu.COMM_NO == 31){
 
-                if($rootScope.role == 'SUPPORTERS' || $rootScope.role == 'ANGE_MANAGER' || $scope.role == 'ANGE_ADMIN'){
+                if($rootScope.role == 'MEMBER' || $rootScope.role == 'CLINIC'){
                     dialogs.notify('알림', '서포터즈 회원만 이용 가능합니다.', {size: 'md'});
                     $location.url('/people/home');
                 }

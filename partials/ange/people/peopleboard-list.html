@@ -132,7 +132,7 @@
                                 <tr class="board_thead normaltype" height="48"  style="min-width:360px;">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td align="center"><span class="board_th">제목</span></td>
-                                    <td ng-if="menu.COMM_NO != 8" width="120" align="center"><span class="board_th">작성자</span></td>
+                                    <td ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" width="120" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80" align="center"><span class="board_th">작성일</span></td>
                                     <td width="60" align="center"><span class="board_th">조회</span></td>
                                 </tr>
@@ -162,7 +162,7 @@
                                                 <span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>
                                             </div>
                                         </td>
-                                        <td ng-if="menu.COMM_NO != 8" class="table_author normaltype">
+                                        <td ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="table_author normaltype">
                                             <div ng-show="item.NICK_NM != ''" ng-bind-html="item.NICK_NM"></div>
                                             <!--<div ng-show="item.NICK_NM == null || item.NICK_NM != ''">{{item.REG_USER_NM}}</div>-->
                                         </td> <!-- {{}} -->
@@ -196,7 +196,7 @@
                                                 <span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>
                                             </div>
 
-                                            <div class="table_blue" ng-bind-html="item.NICK_NM" style="font-size:0.78em; color:#868686; margin-top:10px;"></div>
+                                            <div ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="table_blue" ng-bind-html="item.NICK_NM" style="font-size:0.78em; color:#868686; margin-top:10px;"></div>
                                             <div class="table_date" style="font-size:0.78em; color:#868686;">{{item.REG_DT+'  /  조회수 '+item.HIT_CNT}}</div>
                                         </td>
 

@@ -94,7 +94,8 @@ define([
         };
 
         $scope.click_infodesk = function () {
-            $location.url('infodesk/home');
+            $location.url('infodesk/qna/list');
+//            $location.url('infodesk/home');
         };
 
         // 로그인 모달창

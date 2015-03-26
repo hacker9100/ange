@@ -317,6 +317,15 @@ define(['./directives'], function (directives) {
                         }
                     }
 
+                    if(url == '/infodesk/signon'){ // 회원 가입
+                        if($scope.session != null){
+                            dialogs.notify('알림', '로그인된 사용자는 회원가입을 할수 없습니다.', {size: 'md'});
+                            return;
+                        }else{
+                            $location.url(url);
+                        }
+                    }
+
                     if (link == 'C') {
                         dialogs.notify('알림', '점검중입니다.', {size: 'md'});
                     } else if (link != 'N') {

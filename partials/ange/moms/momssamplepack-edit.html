@@ -81,7 +81,10 @@
         <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>{{year}}-{{month}}-01 ~ {{Day}}</strong></dd>-->
         <dt><span class="table_red">신청기간</span></dt><dd><strong>{{item.ada_date_open}} ~ {{item.ada_date_close}}</strong></dd>
         <!--<dt><span class="table_red">당첨발표</span></dt><dd><strong>{{next_year}}-{{next_month}}-05</strong> (이벤트 당첨자 발표 게시판)</dd>-->
-        <dt><span class="table_red">신청인원</span></dt><dd><strong>{{item.ada_count_request == null ? 0 : item.ada_count_request}} 명</strong></dd>
+        <dt><span class="table_red">신청가능</span></dt>
+            <dd ng-show="item.ada_count_request == null"><strong>0 명</strong></dd>
+            <dd ng-show="item.ada_count_request != null && item.ada_count_request < 200"><strong>{{200 - item.ada_count_request}} 명</strong></dd>
+            <dd ng-show="item.ada_count_request != null && item.ada_count_request >= 200"><strong>마감</strong></dd>
         <dt><span class="table_red">증정인원</span></dt><dd><strong>200 명</strong></dd>
         <dt><span class="table_red">선물발송</span></dt><dd>{{next_year}}-{{next_month}}-09 전후 예정 (무료배송)</dd>
         <dt><span class="table_red">신청방법</span></dt><dd><strong><mark>산모이름과 예정일이 적힌</mark></strong> 산모수첩 또는 초음파 이미지 등록(1장만 가능)</dd>
@@ -99,7 +102,7 @@
 <!-- 시즌 1 -->
 <div ng-show="season_gb == 'SAMPLE1'" class="samplepack_btnbox" style="display:block;">
     <button ng-click="click_joinon();" class="samplepack_gotojoin"></button>
-    <button ng-click="showSamplepackDetails = ! showSamplepackDetails" class="samplepack_newrequest"></button>
+    <button ng-click="click_compCheck();" class="samplepack_newrequest"></button>
 </div>
 <!-- /시즌 1 -->
 
@@ -782,16 +785,6 @@
             </div>
         </div>
 
-        <div class="col-xs-12">
-            <div ng-model="ad" class="inven_themeup">
-                <a class="ADbanner_image" title="배너타이틀">
-                    <!--<img ng-src="{{ad.FILE}}"/>-->
-                    <img img src="/imgs/ange/temp/story_banner.jpg"/>
-                </a>
-            </div>
-        </div>
-
-
     </div>
     <!-- /신청폼 -->
 
@@ -799,11 +792,11 @@
     <div class="samplepack_tabbox"  ng-class="{ 'hidden': showSamplepackDetails }" style="display:block;">
 
         <ul class="nav nav-tabs nav-justified" id="tab" style="font-size:0.92em; font-weight:700;">
-            <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('1');">샘플팩 구성</a></li>
-            <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('2');">주의사항</a></li>
+            <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('1');">주의사항</a></li>
+            <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('2');">샘플팩 구성</a></li>
 
             <!-- 시즌1 주의사항 -->
-            <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '2'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
+            <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
                 <span class="tabox_title">신청방법</span>
                 <ol>
                     <li>앙쥬 홈페이지 (www.ange.co.kr)에 회원가입합니다.</li>
@@ -833,7 +826,7 @@
             <!-- /시즌1 주의사항 -->
 
             <!-- 시즌2 주의사항 -->
-            <div id="tabs-1" class="tabox_body"  ng-if="selectIdx == '2'" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
+            <div id="tabs-1" class="tabox_body"  ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
                 <span class="tabox_title">신청방법</span>
                 <ol>
                     <li>상단 <mark><span class="table_red">신청자격확인</span></mark> 을 통해 신청자격을 먼저 확인하세요.</li>
@@ -860,7 +853,7 @@
             <!-- /시즌2 주의사항 -->
 
             <!-- 시즌 1 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" ng-if="selectIdx == '1'" style="display:block;">
+            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" ng-if="selectIdx == '2'" style="display:block;">
                 <span class="tabox_title">기존회원 샘플팩 구성</span>
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
@@ -1065,7 +1058,7 @@
             <!-- /시즌 1 샘플팩 구성 -->
 
             <!-- 시즌 2 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '1'" style="display:block;">
+            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '2'" style="display:block;">
                 <span class="tabox_title">신규회원 샘플팩 구성</span>
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
@@ -1252,6 +1245,15 @@
             <!-- /시즌 2 샘플팩 구성 -->
 
         </ul>   <!-- /.nav-tabs -->
+    </div>
+
+    <div class="col-xs-12">
+        <div ng-model="banner" class="inven_themeup">
+            <a ng-click="click_linkBanner(banner)" class="ADbanner_image" title="{{banner.ada_title}}">
+                <!--<img ng-src="{{ad.FILE}}"/>-->
+                <img ng-src="{{banner.img}}"/>
+            </a>
+        </div>
     </div>
 
 </div><!-- /.sub_contents_wrap -->

@@ -188,7 +188,7 @@ define([
 //                $scope.item.COMM_NO = 21;
 //            }
 
-            if($rootScope.user_gb == 'SUPPORTERS'){
+            if($scope.menu.COMM_NO == '31' && ( $rootScope.role == 'SUPPORTERS' || $rootScope.role == 'ANGE_MANAGER' || $scope.role == 'ANGE_ADMIN' )){
                 $scope.item.CATEGORY_NO = $rootScope.support_no;
             }
 

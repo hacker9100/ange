@@ -63,6 +63,7 @@ define([
             "AD_CODE_BN30" : "30",
             "AD_CODE_BN31" : "31",
             "AD_CODE_BN54" : "54",
+            "AD_CODE_BN55" : "55",
             "AD_CODE_BN56" : "56",
             "AD_CODE_BN57" : "57"
         }

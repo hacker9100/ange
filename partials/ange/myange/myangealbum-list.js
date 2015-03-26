@@ -28,6 +28,7 @@ define([
 
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];
+        $scope.search.PARENT_NO = $stateParams.id == undefined ? 0 : $stateParams.id;
 
         $scope.modes = mode;
         $scope.m_view_mode = mode[0];
@@ -44,12 +45,7 @@ define([
         /********** 초기화 **********/
         // 초기화
         $scope.init = function(session) {
-
-            $scope.getItem('ange/album', 'total', null, null, true)
-                .then(function(data){
-                    $scope.TOTAL_COUNT = data.TOTAL_COUNT;
-                })
-                ['catch'](function(error){});
+            $scope.getMyAlbumTotalCnt();
 
             // 검색조건유지
             var getParam = function(key){
@@ -79,8 +75,6 @@ define([
         /********** 이벤트 **********/
         // 보기모드 변경
         $scope.change_mode = function(mode) {
-            alert(mode.value);
-
             $scope.m_view_mode = mode;
         }
 
@@ -98,6 +92,14 @@ define([
         };
 
         $scope.isLoding = false;
+
+        $scope.getMyAlbumTotalCnt = function () {
+            $scope.getItem('ange/album', 'total', null, null, true)
+                .then(function(data){
+                    $scope.TOTAL_COUNT = data.TOTAL_COUNT;
+                })
+                ['catch'](function(error){});
+        };
 
         // 게시판 목록 조회
         $scope.getMyAlbumList = function () {
