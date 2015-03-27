@@ -29,7 +29,7 @@
 
                                         <div class="store_col_info_wrap">
 
-                                            <div class="store_col_info_title">{{item.PRODUCT_NM}}</div>
+                                            <div class="store_col_info_title">{{item.PRODUCT_NM}}<span ng-if="item.SUM_CNT <= 0">(품절)</span></div>
 
                                             <div class="store_col_info">
                                                 <div class="store_list_item maininfo" ng-show="menu == 'mileage'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{PRICE}} P</span></div>
@@ -72,7 +72,7 @@
                                                     <input type="hidden" ng-model="product.NO"/>
                                                     <div class="store_optiontitle">{{product.PRODUCT_NM}}</div>
                                                     <div class="store_optionea">
-                                                        <input type="text" ng-model="product.PRODUCT_CNT" numbers-only class="form-control input-sm" ng-change="addSumPrice(item.PRICE, product.PRODUCT_CNT, $index)" placeholder="" />
+                                                        <input type="text" ng-model="product.PRODUCT_CNT" ng-init="product.PRODUCT_CNT = 1" numbers-only class="form-control input-sm" ng-change="addSumPrice(item.PRICE, product.PRODUCT_CNT, $index, item.SUM_CNT)" placeholder="" />
                                                         <span> 개</span>
                                                         <!--<button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다">변경</button>-->
 
@@ -88,8 +88,8 @@
 
                                             <!--<div ng-if="uid != '' && uid != null" ng-show="productsList != ''">-->
                                             <div ng-if="uid != '' && uid != null" style="float:left; width:100%; text-align:right; padding:12px 0;">
-                                                <button ng-if="productsList != ''" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다">찜목록</button>
-                                                <button ng-if="productsList == ''" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다" disabled>찜목록</button>
+                                                <button ng-if="productsList != ''" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다">장바구니</button>
+                                                <button ng-if="productsList == ''" type="button" ng-click="click_addcart(item.SUM_CNT)" class="btn btn-sm btn-info" title="구매 수량을 변경할 수 있습니다" disabled>장바구니</button>
                                             </div>
 
                                             <div class="store_col_info" style="border-bottom:none">

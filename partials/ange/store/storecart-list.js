@@ -112,15 +112,7 @@ define([
 
             $rootScope.info = {};
 
-            // 회원정보 신청폼에 셋팅
-//            $scope.getItem('com/user', 'item', $scope.uid, $scope.item , false)
-//                .then(function(data){
-//
-//                    $rootScope.item = data;
-//
-//                })
-//                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-
+            // 마일리지몰 수량수정
             if($rootScope.mileagecartlist != ''){
 
                 $scope.sumitem.CART = $rootScope.mileagecartlist;
@@ -131,6 +123,7 @@ define([
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
 
+            // 커머스 수량수정
             if($rootScope.cummercecartlist != ''){
 
                 $scope.sumitem.CART = $rootScope.cummercecartlist;
@@ -190,46 +183,49 @@ define([
 
             $scope.search.PRODUCT_GB = "mileage";
 
-//            $scope.getList('ange/cart', 'list', {}, $scope.search, true)
-//                .then(function(data){
-//                    var total_cnt = data[0].TOTAL_COUNT;
-//                    $scope.TOTAL_COUNT = total_cnt;
-//
-//                    $scope.sum_price = 0;
-//                    for(var i in data) {
-//                        if (data[i].FILE != null) {
-//                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
-//                            data[i].MAIN_FILE = img;
-//
-//                        }
-//                        $scope.sum_price += parseInt(data[i].TOTAL_PRICE);
-//                    }
-//                    $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
-//
-//
-//                    console.log(data);
-//                    $scope.mileagelist = data;
-//                })
-//                ['catch'](function(error){$scope.mileagelist = ""; $scope.TOTAL_COUNT = 0;});
+            $scope.search.FILE = true;
 
-            if($rootScope.mileagecartlist != ''){
+            $scope.search.PRODUCT_GB = "mileage";
+            $scope.getList('ange/cart', 'list', {}, $scope.search, true)
+                .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
 
-                //$scope.TOTAL_COUNT = $scope.mileagecartlist.length;
+                    $scope.sum_price = 0;
+                    for(var i in data) {
+                        if (data[i].FILE != null) {
+                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                            data[i].MAIN_FILE = img;
 
-                for(var i in $rootScope.mileagecartlist) {
-                    if ($rootScope.mileagecartlist[i].FILE != null) {
-                        var img = UPLOAD.BASE_URL + $rootScope.mileagecartlist[i].FILE[0].PATH + 'thumbnail/' + $rootScope.mileagecartlist[i].FILE[0].FILE_ID;
-                        $rootScope.mileagecartlist[i].MAIN_FILE = img;
-
+                        }
+                        $scope.sum_price += parseInt(data[i].TOTAL_PRICE);
                     }
-                    $scope.sum_price += parseInt($rootScope.mileagecartlist[i].TOTAL_PRICE);
-                }
-                $scope.mileagelist = $rootScope.mileagecartlist;
+                    //$scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
+                    $scope.total_mileage2 = parseInt($rootScope.mileage - $scope.sum_price);
+                    console.log('$scope.total_mileage2 = '+$scope.total_mileage2);
 
-            }else{
-                $scope.mileagelist = "";
-                //$scope.TOTAL_COUNT = 0;
-            }
+                    $scope.mileagelist = data;
+                })
+                ['catch'](function(error){$scope.mileagelist = ""; $scope.TOTAL_COUNT = 0;});
+
+//            if($rootScope.mileagecartlist != ''){
+//
+//                //$scope.TOTAL_COUNT = $scope.mileagecartlist.length;
+//
+//                for(var i in $rootScope.mileagecartlist) {
+//                    if ($rootScope.mileagecartlist[i].FILE != null) {
+//                        var img = UPLOAD.BASE_URL + $rootScope.mileagecartlist[i].FILE[0].PATH + 'thumbnail/' + $rootScope.mileagecartlist[i].FILE[0].FILE_ID;
+//                        $rootScope.mileagecartlist[i].MAIN_FILE = img;
+//
+//                    }
+//                    $scope.sum_price += parseInt($rootScope.mileagecartlist[i].TOTAL_PRICE);
+//                }
+//                $scope.mileagelist = $rootScope.mileagecartlist;
+//
+//            }else{
+//                $scope.mileagelist = "";
+//                //$scope.TOTAL_COUNT = 0;
+//            }
         }
 
         // 커머스 장바구니 리스트
@@ -238,45 +234,48 @@ define([
             $scope.search.FILE = true;
             $scope.search.PRODUCT_GB = "cummerce";
 
-//            $scope.getList('ange/cart', 'list', {}, $scope.search, true)
-//                .then(function(data){
-//                    var total_cnt = data[0].TOTAL_COUNT;
-//                    $scope.TOTAL_COUNT = total_cnt;
-//
-//                    $scope.sum_price = 0;
-//                    for(var i in data) {
-//                        if (data[i].FILE != null) {
-//                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
-//                            data[i].MAIN_FILE = img;
-//
-//                        }
-//                        $scope.sum_price += parseInt(data[i].TOTAL_PRICE);
-//                    }
-//                    $scope.total_mileage = parseInt($scope.user_info.MILEAGE.REMAIN_POINT - $scope.sum_price);
-//
-//
-//                    $scope.cummercelist = data;
-//                })
-//                ['catch'](function(error){$scope.cummercelist = ""; $scope.TOTAL_COUNT = 0;});
+            $scope.search.FILE = true;
+            $scope.search.PRODUCT_GB = "cummerce";
 
-            if($rootScope.cummercecartlist != ''){
+            $scope.getList('ange/cart', 'list', {}, $scope.search, true)
+                .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
+                    $scope.TOTAL_COUNT = total_cnt;
 
-                //$scope.TOTAL_COUNT = $scope.cummercelist.length;
+                    $scope.sum_price = 0;
+                    for(var i in data) {
+                        if (data[i].FILE != null) {
+                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                            data[i].MAIN_FILE = img;
 
-                for(var i in $rootScope.cummercecartlist) {
-                    if ($rootScope.cummercecartlist[i].FILE != null) {
-                        var img = UPLOAD.BASE_URL + $rootScope.cummercecartlist[i].FILE[0].PATH + 'thumbnail/' + $rootScope.cummercecartlist[i].FILE[0].FILE_ID;
-                        $rootScope.cummercecartlist[i].MAIN_FILE = img;
-
+                        }
+                        $scope.sum_price += parseInt(data[i].TOTAL_PRICE);
                     }
-                    $scope.sum_price += parseInt($rootScope.cummercecartlist[i].TOTAL_PRICE);
-                }
-                $scope.cummercelist = $rootScope.cummercecartlist;
+                    //$scope.total_mileage = parseInt($rootScope.mileage - $scope.sum_price);
 
-            }else{
-                $scope.cummercelist = "";
-                //$scope.TOTAL_COUNT = 0;
-            }
+
+                    $scope.cummercelist = data;
+                })
+                ['catch'](function(error){$scope.cummercelist = ""; $scope.TOTAL_COUNT = 0;});
+
+//            if($rootScope.cummercecartlist != ''){
+//
+//                //$scope.TOTAL_COUNT = $scope.cummercelist.length;
+//
+//                for(var i in $rootScope.cummercecartlist) {
+//                    if ($rootScope.cummercecartlist[i].FILE != null) {
+//                        var img = UPLOAD.BASE_URL + $rootScope.cummercecartlist[i].FILE[0].PATH + 'thumbnail/' + $rootScope.cummercecartlist[i].FILE[0].FILE_ID;
+//                        $rootScope.cummercecartlist[i].MAIN_FILE = img;
+//
+//                    }
+//                    $scope.sum_price += parseInt($rootScope.cummercecartlist[i].TOTAL_PRICE);
+//                }
+//                $scope.cummercelist = $rootScope.cummercecartlist;
+//
+//            }else{
+//                $scope.cummercelist = "";
+//                //$scope.TOTAL_COUNT = 0;
+//            }
 
         }
 
@@ -287,17 +286,26 @@ define([
 
             $scope.mileage_gb = product_gb;
 
-            if($("input:checkbox[id='name"+idx+"']").is(":checked")){
-                $scope.mileage_open = 'Y';
-                $scope.sum_price += parseInt($scope.mileagelist[idx].TOTAL_PRICE);
-                $scope.total_mileage = parseInt($scope.user_info.REMAIN_POINT - $scope.sum_price);
-                $(".checkmileageall").prop("checked",true);
+//            if($("input:checkbox[id='name"+idx+"']").is(":checked")){
+//                $scope.mileage_open = 'Y';
+//                $scope.sum_price += parseInt($scope.mileagelist[idx].TOTAL_PRICE);
+//            }else{
+//                $scope.mileage_open = 'N';
+//                $scope.sum_price -= parseInt($scope.mileagelist[idx].TOTAL_PRICE);
+//                //$scope.total_mileage = parseInt($rootScope.mileage - $scope.sum_price);
+//            }
 
-            }else{
+            $("input[name='name[]']:checked").each(function(index) {
+                $scope.mileage_open = 'Y';
+                $scope.sum_price += parseInt($scope.mileagelist[index].TOTAL_PRICE);
+            });
+
+            if($scope.sum_price == 0){
                 $scope.mileage_open = 'N';
-                $scope.sum_price -= parseInt($scope.mileagelist[idx].TOTAL_PRICE);
-                $scope.total_mileage = parseInt($scope.user_info.REMAIN_POINT - $scope.sum_price);
             }
+
+            console.log($scope.sum_price);
+            $scope.total_mileage = parseInt($rootScope.mileage - $scope.sum_price);
 
         }
 
@@ -308,34 +316,30 @@ define([
             var no = list[idx].NO;
             $scope.CART_NO = no;
 
-//            $scope.deleteItem('ange/cart', 'item', $scope.CART_NO, true)
-//                .then(function(){
-//                    if(product_gb == 'mileage'){
-//                        $scope.mileagelist.splice(idx, 1);
-//                    }else if(product_gb == 'cummerce'){
-//                        $scope.cummercelist.splice(idx, 1);
-//                    }
-//                })
-//                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            var no = list[idx].NO;
+            $scope.CART_NO = no;
 
-/*            var dialog = dialogs.confirm('알림', '선택 상품을 삭제 하시겠습니까.', {size: 'md'});
+            var dialog = dialogs.confirm('알림', '선택 상품을 삭제 하시겠습니까.', {size: 'md'});
 
             dialog.result.then(function(btn){
                 $scope.deleteItem('ange/cart', 'item', $scope.CART_NO, true)
                     .then(function(){
-                        $scope.list.splice(idx, 1);
-                        $scope.cartList();
+                        if(product_gb == 'mileage'){
+                            $scope.mileagelist.splice(idx, 1);
+                        }else if(product_gb == 'cummerce'){
+                            $scope.cummercelist.splice(idx, 1);
+                        }
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
-            });*/
+            });
 
-            if(product_gb == 'mileage'){
-                $scope.mileagelist.splice(idx, 1);
-            }else if(product_gb == 'cummerce'){
-                $scope.cummercelist.splice(idx, 1);
-            }
+//            if(product_gb == 'mileage'){
+//                $scope.mileagelist.splice(idx, 1);
+//            }else if(product_gb == 'cummerce'){
+//                $scope.cummercelist.splice(idx, 1);
+//            }
         }
 
         // 커머스 상품 선택해서 주문
@@ -349,22 +353,17 @@ define([
         }
 
         // 선택 상품 주문
-        $scope.click_select_reg = function(list){
+        $scope.click_select_reg = function(list, mileage_gb){
 
             var idx = 0;
-            var count = $("input:checkbox[name='name']:checked").length;
+            var count = $("input:checkbox[name='name[]']:checked").length;
 
             if(count == 0){
                 dialogs.notify('알림', '상품을 선택해 주세요', {size: 'md'});
                 return;
             }
 
-            if($scope.mileage_gb == 'MILEAGE'){
-                if(count > 2){
-                    dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
-                    return;
-                }
-
+            if(mileage_gb == 'MILEAGE'){
                 if($scope.total_mileage < 0){
                     dialogs.notify('알림', '잔여 마일리지가 부족합니다', {size: 'md'});
                     return;
@@ -387,22 +386,13 @@ define([
         }
 
         // 전체 상품 주문
-        $scope.click_reg = function (list){
+        $scope.click_reg = function (list,mileage_gb){
 
             $rootScope.orderlist = list;
 
-            //var cnt = list.length;
-            var cnt = $(".checkmileage").length;
-
-            console.log(cnt);
-
-            if($scope.product_gb == 'MILEAGE'){
-                if(cnt > 2){
-                    dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
-                    return;
-                }
-
-                if($scope.total_mileage < 0){
+            console.log('mileage_gb = '+mileage_gb);
+            if(mileage_gb == 'MILEAGE'){
+                if($scope.total_mileage2 < 0){
                     dialogs.notify('알림', '잔여 마일리지가 부족합니다', {size: 'md'});
                     return;
                 }

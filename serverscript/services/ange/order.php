@@ -417,6 +417,34 @@ switch ($_method) {
                     $_d->sql_query($sql);
                     $no = $_d->mysql_insert_id;
 
+                    $sql = "UPDATE ANGE_PRODUCT
+                                SET
+                                    SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
+                                WHERE
+                                    NO = $e[PRODUCT_NO]
+                                ";
+                    $_d->sql_query($sql);
+
+                    if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
+
+                        $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
+                                       SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
+                                   FROM ANGE_PRODUCT
+                                   WHERE PARENT_NO = ".$e[PARENT_NO]."
+                                    ";
+
+                        $result = $_d->sql_query($sql,true);
+                        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                            $sql = "UPDATE ANGE_PRODUCT
+                                SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
+                                    SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
+                                WHERE NO = ".$e[PARENT_NO]."
+                            ";
+                            $_d->sql_query($sql);
+                        }
+                    }
+
                     // 찜했던 상품들 삭제
                     $sql = "DELETE FROM ANGE_CART WHERE PRODUCT_NO = ".$e[PRODUCT_NO]."";
                     $_d->sql_query($sql);
