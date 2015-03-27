@@ -63,12 +63,19 @@ switch ($_method) {
             /* 스토리 검색 */
             if ($_search[BOARD_GB]=='STORY'){
 
-                $sql = "select count(*) as TOTAL_COUNT from CMS_TASK where PHASE>='30' and (SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) ";
+                //$sql = "select count(*) as TOTAL_COUNT from CMS_TASK where PHASE>='30' and (SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) ";
+                $sql = "select count(*) as TOTAL_COUNT from CMS_TASK T INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO where T.PHASE>='30' and (T.SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) ";
                 $result = $_d->sql_query($sql,true);
                 $row=$_d->sql_fetch_array($result);
                 $t_total_count = $row['TOTAL_COUNT'];
 
-                $sql = "select * from CMS_TASK where PHASE>='30' and ( SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) order by NO desc {$limit};";
+                //$sql = "select * from CMS_TASK where PHASE>='30' and ( SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) order by NO desc {$limit};";
+                $sql = "select P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO
+                        from CMS_TASK T INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
+                        where T.PHASE>='30'
+                        and ( T.SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' )
+                        order by NO desc {$limit};";
+
 
             }else{
 
