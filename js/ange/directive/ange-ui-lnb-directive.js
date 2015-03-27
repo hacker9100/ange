@@ -326,6 +326,16 @@ define(['./directives'], function (directives) {
                         }
                     }
 
+                    if(url == '/store/cart/list'){
+
+                        if($scope.uid == null || $scope.uid == ''){
+                            dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
+                            return;
+                        }else{
+                            $location.url(url);
+                        }
+                    }
+
                     if (link == 'C') {
                         dialogs.notify('알림', '점검중입니다.', {size: 'md'});
                     } else if (link != 'N') {
