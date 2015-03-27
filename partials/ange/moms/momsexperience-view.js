@@ -741,18 +741,21 @@ define([
                 }
 
                 if($scope.item.DELIVERY_YEAR == undefined){
-                    alert('출산예정일 연도를 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_YEAR = '';
+                }else{
+                    $scope.item.DELIVERY_YEAR = $scope.item.DELIVERY_YEAR;
                 }
 
                 if($scope.item.DELIVERY_MONTH == undefined){
-                    alert('출산예정일 월을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_MONTH = '';
+                }else{
+                    $scope.item.DELIVERY_MONTH = $scope.item.DELIVERY_MONTH;
                 }
 
                 if($scope.item.DELIVERY_DAY == undefined){
-                    alert('출산예정일 일을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_DAY = '';
+                }else{
+                    $scope.item.DELIVERY_DAY = $scope.item.DELIVERY_DAY;
                 }
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
@@ -872,19 +875,23 @@ define([
                     return;
                 }
 
+
                 if($scope.item.DELIVERY_YEAR == undefined){
-                    alert('출산예정일 연도를 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_YEAR = '';
+                }else{
+                    $scope.item.DELIVERY_YEAR = $scope.item.DELIVERY_YEAR;
                 }
 
                 if($scope.item.DELIVERY_MONTH == undefined){
-                    alert('출산예정일 월을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_MONTH = '';
+                }else{
+                    $scope.item.DELIVERY_MONTH = $scope.item.DELIVERY_MONTH;
                 }
 
                 if($scope.item.DELIVERY_DAY == undefined){
-                    alert('출산예정일 일을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_DAY = '';
+                }else{
+                    $scope.item.DELIVERY_DAY = $scope.item.DELIVERY_DAY;
                 }
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
@@ -1043,18 +1050,21 @@ define([
                 }
 
                 if($scope.item.DELIVERY_YEAR == undefined){
-                    alert('출산예정일 연도를 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_YEAR = '';
+                }else{
+                    $scope.item.DELIVERY_YEAR = $scope.item.DELIVERY_YEAR;
                 }
 
                 if($scope.item.DELIVERY_MONTH == undefined){
-                    alert('출산예정일 월을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_MONTH = '';
+                }else{
+                    $scope.item.DELIVERY_MONTH = $scope.item.DELIVERY_MONTH;
                 }
 
                 if($scope.item.DELIVERY_DAY == undefined){
-                    alert('출산예정일 일을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_DAY = '';
+                }else{
+                    $scope.item.DELIVERY_DAY = $scope.item.DELIVERY_DAY;
                 }
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
@@ -1199,18 +1209,21 @@ define([
                 }
 
                 if($scope.item.DELIVERY_YEAR == undefined){
-                    alert('출산예정일 연도를 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_YEAR = '';
+                }else{
+                    $scope.item.DELIVERY_YEAR = $scope.item.DELIVERY_YEAR;
                 }
 
                 if($scope.item.DELIVERY_MONTH == undefined){
-                    alert('출산예정일 월을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_MONTH = '';
+                }else{
+                    $scope.item.DELIVERY_MONTH = $scope.item.DELIVERY_MONTH;
                 }
 
                 if($scope.item.DELIVERY_DAY == undefined){
-                    alert('출산예정일 일을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_DAY = '';
+                }else{
+                    $scope.item.DELIVERY_DAY = $scope.item.DELIVERY_DAY;
                 }
 
 
@@ -1345,18 +1358,21 @@ define([
                 }
 
                 if($scope.item.DELIVERY_YEAR == undefined){
-                    alert('출산예정일 연도를 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_YEAR = '';
+                }else{
+                    $scope.item.DELIVERY_YEAR = $scope.item.DELIVERY_YEAR;
                 }
 
                 if($scope.item.DELIVERY_MONTH == undefined){
-                    alert('출산예정일 월을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_MONTH = '';
+                }else{
+                    $scope.item.DELIVERY_MONTH = $scope.item.DELIVERY_MONTH;
                 }
 
                 if($scope.item.DELIVERY_DAY == undefined){
-                    alert('출산예정일 일을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_DAY = '';
+                }else{
+                    $scope.item.DELIVERY_DAY = $scope.item.DELIVERY_DAY;
                 }
 
                 if($scope.item.BLOG == undefined){

@@ -785,41 +785,58 @@ define([
             } else if($scope.item.ada_que_type == 'reserve'){ // 날짜예약선택
 
                 // 정보제공 동의체크 확인
-                if($("#credit_agreement_Y").is(":checked")){
-                    $scope.item.CREDIT_FL = 'Y';
-                }else{
-                    alert('제 3자 정보제공에 동의 하셔야 상품 발송이 가능합니다.');
-                    return;
-                }
+//                if($("#credit_agreement_Y").is(":checked")){
+//                    $scope.item.CREDIT_FL = 'Y';
+//                }else{
+//                    alert('제 3자 정보제공에 동의 하셔야 상품 발송이 가능합니다.');
+//                    return;
+//                }
+//
+//                if($scope.item.BABY_YEAR == undefined){
+//                    alert('아기 생일년도를 선택하세요');
+//                    return;
+//                }
+//
+//                if($scope.item.BABY_MONTH == undefined){
+//                    alert('아기 생년월을 선택하세요');
+//                    return;
+//                }
+//
+//                if($scope.item.BABY_DAY == undefined){
+//                    alert('아기 생년일을 선택하세요');
+//                    return;
+//                }
 
-                if($scope.item.BABY_YEAR == undefined){
-                    alert('아기 생일년도를 선택하세요');
-                    return;
-                }
-
-                if($scope.item.BABY_MONTH == undefined){
-                    alert('아기 생년월을 선택하세요');
-                    return;
-                }
-
-                if($scope.item.BABY_DAY == undefined){
-                    alert('아기 생년일을 선택하세요');
-                    return;
-                }
-
+//                if($scope.item.DELIVERY_YEAR == undefined){
+//                    alert('출산예정일 연도를 선택하세요');
+//                    return;
+//                }
+//
+//                if($scope.item.DELIVERY_MONTH == undefined){
+//                    alert('출산예정일 월을 선택하세요');
+//                    return;
+//                }
+//
+//                if($scope.item.DELIVERY_DAY == undefined){
+//                    alert('출산예정일 일을 선택하세요');
+//                    return;
+//                }
                 if($scope.item.DELIVERY_YEAR == undefined){
-                    alert('출산예정일 연도를 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_YEAR = '';
+                }else{
+                    $scope.item.DELIVERY_YEAR = $scope.item.DELIVERY_YEAR;
                 }
 
                 if($scope.item.DELIVERY_MONTH == undefined){
-                    alert('출산예정일 월을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_MONTH = '';
+                }else{
+                    $scope.item.DELIVERY_MONTH = $scope.item.DELIVERY_MONTH;
                 }
 
                 if($scope.item.DELIVERY_DAY == undefined){
-                    alert('출산예정일 일을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_DAY = '';
+                }else{
+                    $scope.item.DELIVERY_DAY = $scope.item.DELIVERY_DAY;
                 }
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
@@ -942,18 +959,21 @@ define([
                 }
 
                 if($scope.item.DELIVERY_YEAR == undefined){
-                    alert('출산예정일 연도를 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_YEAR = '';
+                }else{
+                    $scope.item.DELIVERY_YEAR = $scope.item.DELIVERY_YEAR;
                 }
 
                 if($scope.item.DELIVERY_MONTH == undefined){
-                    alert('출산예정일 월을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_MONTH = '';
+                }else{
+                    $scope.item.DELIVERY_MONTH = $scope.item.DELIVERY_MONTH;
                 }
 
                 if($scope.item.DELIVERY_DAY == undefined){
-                    alert('출산예정일 일을 선택하세요');
-                    return;
+                    $scope.item.DELIVERY_DAY = '';
+                }else{
+                    $scope.item.DELIVERY_DAY = $scope.item.DELIVERY_DAY;
                 }
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
@@ -1219,9 +1239,12 @@ define([
 
             // clone 속성을 true 로 지정하면 이벤트도 같이 복사됨
             var new_blog =  $('span.blog:last').clone(true);
+            new_blog.find('input').val('');
             $("#blog_url").append(new_blog);
 
-            $(".button").removeAttr('disabled');
+            $(".button").each(function(index){
+                $(".button:eq("+index+1+")").removeAttr('disabled');
+            })
         }
 
         // 블로그 삭제
