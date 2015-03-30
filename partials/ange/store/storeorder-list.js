@@ -219,10 +219,16 @@ define([
         }
 
         /********** 이벤트 **********/
+        $scope.getSession()
+            .then($scope.sessionCheck)
+            .then($scope.init)
+            .then($scope.cartList)
+            .then($scope.cartCummerceList)
+            ['catch']($scope.reportProblems);
 
-        $scope.init();
-
-        $scope.cartList();
-        $scope.cartCummerceList();
+//        $scope.init();
+//
+//        $scope.cartList();
+//        $scope.cartCummerceList();
     }]);
 });

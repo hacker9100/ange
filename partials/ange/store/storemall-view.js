@@ -141,7 +141,7 @@ define([
         // 상품 추가
         $scope.addProductList = function (products, item){
 
-            if ($rootScope.uid == '' || $rootScope.uid == null) {
+            if ($scope.uid == '' || $scope.uid == null) {
                 dialogs.notify('알림', '로그인 후 상품선택이 가능합니다.', {size: 'md'});
                 //$("#checkProduct").attr("checked",false);
                 return;
@@ -151,7 +151,7 @@ define([
                 $scope.productsList = [];
             }else{
                 $scope.product.CNT = 1;
-                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
                 //, "SUM_IN_OUT" : item.SUM_IN_OUT}
 
 
@@ -163,8 +163,8 @@ define([
         $scope.addcheckboxProductList = function (products, item){
 
             //alert('');
-            if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 상품선택이 가능합니다.', {size: 'md'});
+            if ($scope.uid == '' || $scope.uid == null) {
+                dialogs.notify('알림', '로그인 후 장바구니에 상품 담기가 가능합니다.', {size: 'md'});
                 $("#checkProduct").attr("checked",false);
                 return;
             }
@@ -251,6 +251,11 @@ define([
         // 장바구니추가
         $scope.click_addcart = function (cnt){
 
+            if(cnt <= 0){
+                dialogs.notify('알림', '품절된 상품입니다', {size: 'md'});
+                return;
+            }
+
             if($stateParams.menu == 'mileagemall'){
                 if($scope.total() > $rootScope.mileage){
                     dialogs.notify('알림', '잔여 마일리지가 부족합니다', {size: 'md'});
@@ -258,18 +263,13 @@ define([
                 }
             }
 
-            if(cnt < 0){
-                dialogs.notify('알림', '품절된 상품입니다', {size: 'md'});
-                return;
-            }
-
             $scope.item.CART = $scope.productsList;
 
             $scope.insertItem('ange/cart', 'item', $scope.item, false)
                 .then(function(){
 
-                    if (confirm("찜목록에 등록되었습니다. 찜목록으로 이동하시겠습니까?") == true){    //확인
-                        $location.url('store/order/list');
+                    if (confirm("장바구니에 등록되었습니다. 장바구니로 이동하시겠습니까?") == true){    //확인
+                        $location.url('store/cart/list');
                     }else{   //취소
                         return;
                     }
@@ -278,10 +278,16 @@ define([
         }
 
         // 전체 금액 계산
-        $scope.addSumPrice = function(price, cnt, index){
+        $scope.addSumPrice = function(price, cnt, index, sum_cnt){
             if(cnt > 2){
-                dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다', {size: 'md'});
-                $scope.productsList[index].PRODUCT_CNT = 0;
+                dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다.', {size: 'md'});
+                $scope.productsList[index].PRODUCT_CNT = 1;
+                return;
+            }
+
+            if(sum_cnt < cnt){
+                dialogs.notify('알림', '현재 상품 재고수량이 1개 존재합니다.', {size: 'md'});
+                $scope.productsList[index].PRODUCT_CNT = 1;
                 return;
             }
 
@@ -344,7 +350,7 @@ define([
         // 조회 화면 이동
         $scope.click_showViewReview = function (key) {
 
-            $location.url('/moms/productreview/view/'+key);
+            $location.url('/moms/storereview/view/'+key);
 
         };
 

@@ -63,12 +63,19 @@ switch ($_method) {
             /* 스토리 검색 */
             if ($_search[BOARD_GB]=='STORY'){
 
-                $sql = "select count(*) as TOTAL_COUNT from CMS_TASK where PHASE>='30' and (SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) ";
+                //$sql = "select count(*) as TOTAL_COUNT from CMS_TASK where PHASE>='30' and (SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) ";
+                $sql = "select count(*) as TOTAL_COUNT from CMS_TASK T INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO where T.PHASE>='30' and (T.SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) ";
                 $result = $_d->sql_query($sql,true);
                 $row=$_d->sql_fetch_array($result);
                 $t_total_count = $row['TOTAL_COUNT'];
 
-                $sql = "select * from CMS_TASK where PHASE>='30' and ( SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) order by NO desc {$limit};";
+                //$sql = "select * from CMS_TASK where PHASE>='30' and ( SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' ) order by NO desc {$limit};";
+                $sql = "select P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO
+                        from CMS_TASK T INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
+                        where T.PHASE>='30'
+                        and ( T.SUBJECT LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.SUMMARY LIKE '%{$_search[SEARCH_KEYWORD]}%' or T.TAG LIKE '%{$_search[SEARCH_KEYWORD]}%' )
+                        order by NO desc {$limit};";
+
 
             }else{
 
@@ -126,7 +133,36 @@ switch ($_method) {
                 } else {
                     $_d->dataEnd2($data);
                 }
-            } else {
+            } else if($_search['STORY_FILE']) {
+                for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                    $sql = "SELECT
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                COM_FILE F
+                            WHERE
+                                F.TARGET_GB = 'CONTENT'
+                                AND F.FILE_GB = 'MAIN'
+                                AND F.TARGET_NO = ".$row['NO']."";
+
+                    $file_result = $_d->sql_query($sql);
+                    $file_data = $_d->sql_fetch_array($file_result);
+                    $row['FILE'] = $file_data;
+
+                    $__trn->rows[$i] = $row;
+                    $__trn->rows[$i]['TOTAL_COUNT'] = $t_total_count;
+                }
+
+                $_d->sql_free_result($result);
+                $data = $__trn->{'rows'};
+
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
+            }
+            else {
 
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
                     $__trn->rows[$i] = $row;

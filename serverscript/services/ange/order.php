@@ -274,7 +274,7 @@ switch ($_method) {
                     (
                         SELECT
                             AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.RECEIPTOR_NM, AC.PRODUCT_NO, AC.USER_ID, AC.ORDER_GB, AP.PRODUCT_NM, AP.PRODUCT_GB, AP.PRICE, AC.ORDER_DT, AC.ORDER_ST,
-                            (SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO) AS PROGRESS_ST, AP.PARENT_NO,
+                            (SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO AND PRODUCT_CODE = AC.PRODUCT_CODE) AS PROGRESS_ST, AP.PARENT_NO,
                             (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AP.PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE, AC.PAY_GB, AC.PAY_DT
                         FROM
                             ANGE_ORDER AC
@@ -416,6 +416,34 @@ switch ($_method) {
 
                     $_d->sql_query($sql);
                     $no = $_d->mysql_insert_id;
+
+                    $sql = "UPDATE ANGE_PRODUCT
+                                SET
+                                    SUM_OUT_CNT = SUM_OUT_CNT + ".$e[PRODUCT_CNT]."
+                                WHERE
+                                    NO = $e[PRODUCT_NO]
+                                ";
+                    $_d->sql_query($sql);
+
+                    if(isset($e[PARENT_NO]) && $e[PARENT_NO] != 0){
+
+                        $sql = "SELECT SUM(SUM_IN_CNT) AS SUM_IN_CNT,
+                                       SUM(SUM_OUT_CNT) AS SUM_OUT_CNT
+                                   FROM ANGE_PRODUCT
+                                   WHERE PARENT_NO = ".$e[PARENT_NO]."
+                                    ";
+
+                        $result = $_d->sql_query($sql,true);
+                        for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                            $sql = "UPDATE ANGE_PRODUCT
+                                SET SUM_IN_CNT = ".$row['SUM_IN_CNT'].",
+                                    SUM_OUT_CNT = ".$row['SUM_OUT_CNT']."
+                                WHERE NO = ".$e[PARENT_NO]."
+                            ";
+                            $_d->sql_query($sql);
+                        }
+                    }
 
                     // 찜했던 상품들 삭제
                     $sql = "DELETE FROM ANGE_CART WHERE PRODUCT_NO = ".$e[PRODUCT_NO]."";

@@ -75,6 +75,7 @@ define([
         $scope.getStoryList = function () {
 
             $scope.search.FILE = false;
+            $scope.search.STORY_FILE = true;
             $scope.search.BOARD_GB = 'STORY';
 
             $scope.getList('ange/search', 'list', {NO: $scope.STORY_PAGE_NO- 1, SIZE: $scope.STORY_PAGE_SIZE}, $scope.search, true)
@@ -83,6 +84,12 @@ define([
 
                     $scope.STORY_TOTAL_COUNT = total_cnt;
 
+                    for(var i in data) {
+                        var img = UPLOAD.BASE_URL + '/storage/cms/' + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        data[i].TYPE = 'CONTENT';
+                        data[i].FILE = img;
+                        //$scope.photoList.push(data[i]);
+                    }
                     /*$scope.total(total_cnt);*/
                     $scope.storyList = data;
 
