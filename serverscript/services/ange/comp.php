@@ -179,6 +179,26 @@ switch ($_method) {
                 $_d->dataEnd($sql);
             }
 
+        } else if ($_type == "compcount") {
+
+//            if (!isset($_SESSION['uid'])) {
+//                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+//            }
+
+            $sql = "SELECT COUNT(*) AS COMP_CNT
+                    FROM adm_history_join a, adm_ad b
+                    WHERE 1 = 1
+                        AND a.ada_idx = b.ada_idx
+                        AND b.ada_type <> 'survey'
+                        AND a.adu_id = '".$_SESSION['uid']."'";
+
+            $data = $_d->sql_fetch($sql);
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd2($data);
+            }
+
         }else if ($_type == "check_1") {
 
             $sql = "SELECT COUNT(*) AS COMP_CNT

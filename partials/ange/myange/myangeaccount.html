@@ -104,15 +104,16 @@
 
                                     <span class="col-xs-4 basicinfo input">
                                         <div class="form-group" style="margin:0 5px">
-                                            <input id="user_nm" ng-model="user.USER_NM" type="text" class="form-control" style="cursor: default; background-color: #fff; margin:0px;" placeholder="Name">
+                                            <!--<input id="user_nm" ng-model="user.USER_NM" type="text" class="form-control" style="cursor: default; background-color: #fff; margin:0px;" placeholder="Name">-->
+                                            <span style="float:left; margin-left:5px;">{{user.USER_NM}}</span>
                                         </div>
                                     </span>
 
-                                    <span class="col-xs-6 basicinfo desc">
-                                        <span class="table_gray" style="display:block;">실명을 입력하세요</span>
-                                        <span class="table_blue" style="display:none;">사용가능</span>
-                                        <span class="table_red" style="display:none;">사용불가</span>
-                                    </span>
+                                    <!--<span class="col-xs-6 basicinfo desc">-->
+                                        <!--<span class="table_gray" style="display:block;">실명을 입력하세요</span>-->
+                                        <!--<span class="table_blue" style="display:none;">사용가능</span>-->
+                                        <!--<span class="table_red" style="display:none;">사용불가</span>-->
+                                    <!--</span>-->
                                 </div>  <!-- /.form_basicinfo -->
                             </div>  <!-- /.form_rows -->
 
@@ -245,6 +246,7 @@
                                         <div class="form-inline" style="margin:0 5px">
                                             <select ng-model="user.PHONE_1_1" class="form-control" style="width:110px;">
                                                 <option value="">지역번호</option>
+                                                <option value="070">070</option>
                                                 <option value="02">02</option>
                                                 <option value="031">031</option>
                                                 <option value="032">032</option>

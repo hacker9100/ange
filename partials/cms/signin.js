@@ -48,9 +48,9 @@ define([
         $scope.sessionCheck = function(session) {
             if (session.USER_ID != undefined && session.USER_ID != '') {
                 if (session.SYSTEM_GB != 'CMS') {
-                    dialogs.error('오류', '다른 시스템에 로그인되어있습니다. 로그인 페이지로 이동합니다.', {size: 'md'});
+//                    dialogs.error('오류', '다른 시스템에 로그인되어있습니다. 로그인 페이지로 이동합니다.', {size: 'md'});
                     $scope.logout($rootScope.uid).then( function(data) {
-                        $location.path('/signin');
+//                        $location.path('/signin');
                     });
 
                     return;

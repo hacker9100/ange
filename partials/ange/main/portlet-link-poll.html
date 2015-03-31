@@ -1,5 +1,5 @@
 <div class="peoplepoll" ng-model="item">
-    <div class="poll_left"></div>
+    <div ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" class="poll_left"></div>
     <div class="poll_right"></div>
     <!-- 최근 poll 제목 -->
     <div class="poll_txt">

@@ -141,6 +141,15 @@ define([
                 //$location.path("/signin");
                 //throw( new String('로그인 후 사용가능합니다.') );
             } else {
+                if (session.SYSTEM_GB != 'ADMIN') {
+//                    dialogs.error('오류', '다른 시스템에 로그인되어있습니다. 로그인 페이지로 이동합니다.', {size: 'md'});
+                    $scope.logout($rootScope.uid).then( function(data) {
+                        $location.path('/signin');
+                    });
+
+                    return;
+                }
+
                 $rootScope.session = session;
 
                 $rootScope.authenticated = true;

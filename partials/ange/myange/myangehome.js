@@ -18,11 +18,20 @@ define([
             // ange-portlet-slide-album
             $scope.option_r1_c1 = {title: '나의 앨범', api:'ange/album', size: 12, id: 'album', url: '/myange/album', dots: false, autoplay: true, centerMode: true, showNo: 6, fade: 'false'};
 
+            // ange-portlet-order-list
+            $scope.option_r3_c1 = {title: '주문/구매내역', api:'ange/order', size: 3, channel: "myange", type: 'order', url: '/myange/orderlist', defIdx: 0, tab: [{gb: 'MILEAGE', menu: '/myange/orderlist', name: '마일리지몰'}, {gb: 'CUMMERCE', menu: '/myange/orderlist', name: '공동구매'}], image: true, head: true, date: false, nick: false};
+
             // ange-portlet-channel-list
             $scope.option_r3_c2 = {title: '내활동', api:'com/webboard', size: 5, channel: "people", type: 'writing', url: '/myange/writing', image: false, head: true, date: false, nick: false};
         };
 
         /********** 이벤트 **********/
+        $scope.getItem('ange/comp', 'compcount', null, false)
+            .then(function(data){
+                $scope.COMP_CNT = data.COMP_CNT;
+            })
+            ['catch'](function(error){$scope.COMP_CNT = 0;});
+
         $scope.getItem('ange/message', 'tocount', null, false)
             .then(function(data){
                 $scope.TO_CNT = data.TO_CNT;

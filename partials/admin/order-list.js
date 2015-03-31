@@ -19,6 +19,7 @@ define([
 
         // 검색 조건
         $scope.search = {};
+        $scope.action = {};
 
         // 목록 데이터
         $scope.list = [];
@@ -85,8 +86,42 @@ define([
         $scope.$watch('check_order', function(newArr, oldArr) {
             if (newArr != undefined && newArr != '') {
                 $scope.check_cnt = newArr.length;
+            } else {
+                $scope.check_cnt = 0;
             }
         }, true);
+
+        // 실행 버튼 클릭
+        $scope.click_function = function () {
+
+            switch($scope.action.FUNCTION.value) {
+                case 'excel' :
+                    var item = {};
+
+                    if ($scope.action.CHECKED == 'C' ) {
+                        if ($scope.check_order.length == 0) {
+                            dialogs.notify('알림', '선택한 주문이 없습니다..', {size: 'md'});
+                            return;
+                        }
+
+                        item.ORDER_NO_LIST = angular.copy($scope.check_order);
+                        item.CHECKED = $scope.action.CHECKED;
+                    } else {
+                        item = angular.copy($scope.search);
+                        item.CHECKED = $scope.action.CHECKED;
+                    }
+
+                    var dataUrl = CONSTANT.BASE_URL+'/serverscript/services/admin/excel.php?_type=order&_search='+JSON.stringify(item);
+
+                    var link = document.createElement('a');
+                    angular.element(link)
+                        .attr('href', dataUrl)
+                        .attr('target', '_blank')
+                    link.click();
+
+                    break;
+            };
+        };
 
         $scope.click_selectTab = function (tabIdx) {
             $scope.tab = tabIdx;
