@@ -427,26 +427,24 @@
                         AND THUMB_FL = '0'
                     ";
 
-            $result = $_d->sql_query($sql,true);
-            for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                $is_delete = true;
+            $result = $_d->sql_fetch($sql,true);
+            $is_delete = true;
 
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
-                    if ($row[FILE_NM] == $file[name] && $row[FILE_SIZE] == $file[size]) {
-                        $is_delete = false;
-                    }
+            if (count($_model[FILE]) > 0) {
+                $file = $_model[FILE];
+                if ($result[FILE_NM] == $file[name] && $result[FILE_SIZE] == $file[size]) {
+                    $is_delete = false;
                 }
+            }
 
-                if ($is_delete) {
-                    MtUtil::_d("------------>>>>> DELETE NO : ".$row[NO]);
-                    $sql = "DELETE COM_FROM FILE WHERE TARGET_GB = 'BANNER' NO = ".$row[NO];
+            if ($is_delete) {
+                MtUtil::_d("------------>>>>> DELETE NO : ".$result[NO]);
+                $sql = "DELETE FROM COM_FILE WHERE TARGET_GB = 'BANNER' AND NO = ".$result[NO];
 
-                    $_d->sql_query($sql);
+                $_d->sql_query($sql);
 
-                    if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                        unlink('../../..'.$row[PATH].$row[FILE_ID]);
-                    }
+                if (file_exists('../../..'.$result[PATH].$result[FILE_ID])) {
+                    unlink('../../..'.$result[PATH].$result[FILE_ID]);
                 }
             }
 
