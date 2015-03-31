@@ -116,6 +116,8 @@ define([
                 $location.url('/people/firstbirthtalk/view/'+key);
             } else if(comm_no == 5) {
                 $location.url('/people/booktalk/view/'+key);
+            } else if(comm_no == 31) {
+                $location.url('/people/supporter/view/'+key);
             }
 
 //            $scope.board_item = {};

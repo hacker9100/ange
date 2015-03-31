@@ -821,23 +821,23 @@ define([
 //                    alert('출산예정일 일을 선택하세요');
 //                    return;
 //                }
-                if($scope.item.DELIVERY_YEAR == undefined){
-                    $scope.item.DELIVERY_YEAR = '';
-                }else{
-                    $scope.item.DELIVERY_YEAR = $scope.item.DELIVERY_YEAR;
-                }
-
-                if($scope.item.DELIVERY_MONTH == undefined){
-                    $scope.item.DELIVERY_MONTH = '';
-                }else{
-                    $scope.item.DELIVERY_MONTH = $scope.item.DELIVERY_MONTH;
-                }
-
-                if($scope.item.DELIVERY_DAY == undefined){
-                    $scope.item.DELIVERY_DAY = '';
-                }else{
-                    $scope.item.DELIVERY_DAY = $scope.item.DELIVERY_DAY;
-                }
+//                if($scope.item.DELIVERY_YEAR == undefined){
+//                    $scope.item.DELIVERY_YEAR = '';
+//                }else{
+//                    $scope.item.DELIVERY_YEAR = $scope.item.DELIVERY_YEAR;
+//                }
+//
+//                if($scope.item.DELIVERY_MONTH == undefined){
+//                    $scope.item.DELIVERY_MONTH = '';
+//                }else{
+//                    $scope.item.DELIVERY_MONTH = $scope.item.DELIVERY_MONTH;
+//                }
+//
+//                if($scope.item.DELIVERY_DAY == undefined){
+//                    $scope.item.DELIVERY_DAY = '';
+//                }else{
+//                    $scope.item.DELIVERY_DAY = $scope.item.DELIVERY_DAY;
+//                }
 
                 $scope.search.ada_idx = $scope.item.ada_idx;
 

@@ -112,7 +112,11 @@
                                     <td  ng-show="infomenu == 'qna' || infomenu == 'myqna'"  class="table_author">{{item.NICK_NM}}</td>
                                     <td class="table_date">{{item.REG_DT}}</td>
                                     <!--<td ng-show="menu != 'qna' || menu != 'myqna'" align="center">{{item.HIT_CNT}}</td></tr>-->
-                                    <td ng-show="infomenu == 'qna' || infomenu == 'myqna'" align="center">{{item.BOARD_REPLY_FL}}</td></tr>
+                                    <td ng-show="infomenu == 'qna' || infomenu == 'myqna'" align="center">
+                                        <!--{{item.BOARD_REPLY_FL}}-->
+                                        <img ng-show="item.BOARD_REPLY_FL ==  'Y'" src="/imgs/ange/endBtn_.jpg">
+                                        <img ng-show="item.BOARD_REPLY_FL ==  'N'" src="/imgs/ange/waitBtn_.jpg">
+                                    </td></tr>
                                 </tr>
 
                                 </tbody>
