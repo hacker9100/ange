@@ -65,6 +65,15 @@ define([
     '../../../partials/admin/site-main',
     '../../../partials/admin/category-main',
 
+    // ADMIN 클럽 관리
+    '../../../partials/admin/clubuser-list',
+    '../../../partials/admin/present-list',
+    '../../../partials/admin/stock-list',
+    '../../../partials/admin/report-list',
+    '../../../partials/admin/educenter-list',
+    '../../../partials/admin/presentapply-list',
+    '../../../partials/admin/presentgive-list',
+
     // ADMIN 관리자
     '../../../partials/admin/user-main',
     '../../../partials/admin/permission-main'

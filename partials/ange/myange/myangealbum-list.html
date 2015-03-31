@@ -9,7 +9,7 @@
                 <div class="col-xs-12 v-cell-3">
                     <div class="comp_basic h-cell-dynamic">
 
-                        <div class="sub_contents_wrap">
+                        <div ng-show="!isAlbum" class="sub_contents_wrap">
 
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
@@ -27,7 +27,7 @@
                                         <div class="input-group input-group-sm col-xs-12 col-sm-7" style="padding:2px 0px;">
                                             <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0"  class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
-                                            <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+                                            <span class="input-group-btn" ng-click="click_searchMyAlbum();">
                                                 <button class="btn btn-default"  type="button" ><span class="glyphicon glyphicon-search"></span></button>
                                             </span>
                                         </div>
@@ -37,7 +37,7 @@
                                     <div class="col-xs-12 col-sm-3" style="float: right; padding: 0">
 
                                         <div class="btn-group col-xs-12" style="padding:2px 0px;">
-                                            <select ng-model="m_view_mode" ng-options="mode.name for mode in modes" ng-change="change_mode()" class="form-control input-sm" placeholder="보기 모드"></select>
+                                            <select ng-model="m_view_mode" ng-options="mode.name for mode in modes" class="form-control input-sm" placeholder="보기 모드"></select>
                                         </div><!-- /btn-group -->
 
                                     </div>
@@ -89,7 +89,7 @@
                                         </div><!-- /.comp_basic -->
 
                                         <div ng-show="m_view_mode.value == 'ALBUM'" class="comp_basic h-cell-dynamic">
-                                            <div class="album_image">
+                                            <div class="album_image" ng-click="click_showViewMyAlbum(current)" >
                                                 <img ng-src="{{current.ALBUM_FILE}}" alt="{{current.SUBJECT}}">
                                             </div>
 
@@ -108,8 +108,8 @@
                             <div class="container-fluid people_view_btnwrap">
                                 <div class="row">
                                     <div class="col-xs-6">
-                                        <a class="people_btn list" title="목록으로" style="display:none;">리스트</a>
-                                        <a class="people_btn register" title="등록하기" style="display:block;" ng-click="click_showCreateMyAlbum();">등록</a>
+                                        <a class="people_btn list" title="앨범목록" style="display:block;" ng-show="!isAlbum" ng-click="click_showMyAlbum();">앨범</a>
+                                        <a class="people_btn register" title="등록하기" style="display:block;" ng-show="!isAlbum" ng-click="click_showCreateMyPicture();">등록</a>
                                         <a class="people_btn comment" title="의견쓰기" style="display:none;">의견쓰기</a>
                                     </div>
 
@@ -119,21 +119,21 @@
                                         <a class="people_btn confirm" title="확인" style="display:none;">확인</a>
                                         <a class="people_btn cancel" title="작성취소" style="display:none;">취소</a>
                                         <a class="people_btn modify" title="수정" style="display:none;">수정</a>
-                                        <a class="people_btn delete" title="삭제" style="display:none;">삭제</a>
+                                        <a class="people_btn delete" title="삭제" style="display:block;" ng-show="!isAlbum" ng-click="click_deleteMyAlbum();">삭제</a>
                                     </div>
                                 </div><!-- /.row -->
                             </div><!-- /.container -->
 
-                            <nav class="text-center normaltype">
-                                <pagination boundary-links="true" total-items="TOTAL_COUNT" items-per-page="9" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-                            </nav><!-- /.Paging-->
+                            <!--<nav class="text-center normaltype">-->
+                                <!--<pagination boundary-links="true" total-items="TOTAL_COUNT" items-per-page="9" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()"  max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>-->
+                            <!--</nav>&lt;!&ndash; /.Paging&ndash;&gt;-->
 
-                            <nav class="text-center mobiletype" style="position:relative;">
-                                <pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="9" ng-model="PAGE_NO"></pager>
-                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
-                                    <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_PAGES}}
-                                </div>
-                            </nav>
+                            <!--<nav class="text-center mobiletype" style="position:relative;">-->
+                                <!--<pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="9" ng-model="PAGE_NO"></pager>-->
+                                <!--<div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">-->
+                                    <!--<span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_PAGES}}-->
+                                <!--</div>-->
+                            <!--</nav>-->
 
                         </div><!-- /.sub_contents_body -->
 
@@ -178,7 +178,65 @@
                         <div class="container-fluid">
 
                             <div class="row peopleboard_view_basicinfo" style="padding-bottom:15px;">
-                                <div class="col-xs-1 control_label">
+                                <div class="col-xs-1 board_basicinfo_label">
+                                    제목
+                                </div><!-- /.col-xs-2-->
+                                <div class="col-xs-10 board_basicinfo_subject" style="padding-top:8px;">
+                                    <input class="form-control input-sm" type="text" ng-model="item.SUBJECT" style="width:40%; float:left;"/>
+                                </div><!-- /.col-xs-10-->
+                            </div>
+
+                            <div class="row" style="padding-bottom:15px;">
+                                <div class="col-xs-1 board_basicinfo_label">
+                                    내용
+                                </div><!-- /.col-xs-2-->
+                                <div class="col-xs-10 board_basicinfo_subject" style="padding-top:8px;">
+                                    <textarea id="editor1" ng-model="item.SUMMARY" class="form-control input-md" rows="10" style="width:100%; min-width:100%; max-width:100%;resize: none;" placeholder="내용을 입력하세요."></textarea>
+                                </div><!-- /.col-xs-10-->
+                            </div>
+
+                        </div><!-- /.container -->
+
+                        <div class="container-fluid people_view_btnwrap">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                </div>
+
+                                <div class="col-xs-8" style="text-align: right;">
+                                    <button class="btn btn-default btn-sm" ng-click="click_close()">취소</button>
+                                    <button class="btn btn-info btn-sm" ng-click="click_reg()">등록</button>
+                                </div>
+                            </div><!-- /.row -->
+                        </div><!-- /.container -->
+                    </div><!-- /.row -->
+                </div><!-- /.container -->
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--<div class="modal-footer">-->
+    <!--<button class="btn btn-primary" ng-click="click_reg();">등록</button>-->
+    <!--<button class="btn btn-primary" ng-click="click_close();">닫기</button>-->
+    <!--</div>-->
+</script>
+
+<script type="text/ng-template" id="myangepicture-edit.html">
+    <div class="modal-header" style="background-color:#FAFAFA;">
+        <span style="font-size:0.86em; margin-left:5px; color:#888;">ange Album</span>
+        <h2 class="modal-title" style="color:#b26b41; font-weight:bold;">사진 등록</h2>
+    </div>
+    <div class="modal-body">
+        <div class="body_wrap">
+            <div class="panel panel-master contentpannel" style="border:none; display:block;">
+                <div class="contentpannel-body" >
+                    <div class="people_view_wrap">
+
+                        <div class="container-fluid">
+
+                            <div class="row peopleboard_view_basicinfo" style="padding-bottom:15px;">
+                                <div class="col-xs-1 board_basicinfo_label">
                                     제목
                                 </div><!-- /.col-xs-2-->
                                 <div class="col-xs-10 board_basicinfo_subject" style="padding-top:8px;">
@@ -187,7 +245,7 @@
                             </div>
 
                             <div class="row peopleboard_view_basicinfo" style="padding-bottom:15px;">
-                                <div class="col-xs-1 control_label">
+                                <div class="col-xs-1 board_basicinfo_label">
                                     촬영일
                                 </div><!-- /.col-xs-2-->
                                 <div class="col-xs-10 board_basicinfo_subject" style="padding-top:8px;">
@@ -195,6 +253,15 @@
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open($event, 'shooting')"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
+                                </div><!-- /.col-xs-10-->
+                            </div>
+
+                            <div class="row peopleboard_view_basicinfo" style="padding-bottom:15px;">
+                                <div class="col-xs-1 board_basicinfo_label">
+                                    내용
+                                </div><!-- /.col-xs-2-->
+                                <div class="col-xs-10 board_basicinfo_subject" style="padding-top:8px;">
+                                    <textarea id="editor1" ng-model="item.SUMMARY" class="form-control input-md" rows="10" style="width:100%; min-width:100%; max-width:100%;resize: none;" placeholder="내용을 입력하세요."></textarea>
                                 </div><!-- /.col-xs-10-->
                             </div>
                         </div><!-- /.container -->
@@ -236,66 +303,63 @@
                                 </span>
                             </div><!-- /.col-xs-2 -->
 
-                        </div><!-- /.row -->
-                        <!-- /file drag-in Box -->
-
-                        <!-- image thumbnails -->
-                        <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
-
-                            <label class="col-xs-1">
-
-                            </label>
-
-                            <div class="col-xs-11 col-xs-offset-1" style="padding:0;">
-                                <div class="thumbnailzone">
-
-                                    <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
-                                        <span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>
-                                    </div>
-
-                                    <!-- Thumbnail List -->
-                                    <div data-ng-repeat="file in queue">
-                                        <div class="thumbnails selectedthumb" ng-style="{'background-image': 'url({{file.thumbnailUrl}})'}">
-                                            <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
-                                            <div  class="thumbnails_img_check"><input type="checkbox" checklist-model="item.queue" checklist-value="file"></div>
-                                        </div>
-                                    </div>
-                                    <!-- /Thumbnail List -->
-
-                                    <div class="thumbnails_func" style="float:right; padding: 10px 0;">
-                                        <a ng-class="checkAll ? 'thumbnails_func_selectall allselected' : 'thumbnails_func_selectall'" ng-click="click_checkAllToggle()"></a>
-                                        <!--ng-class="checkAll ? 'thumbnails_func_selectall allselected' : 'thumbnails_func_selectall'"-->
-                                        <!-- span class="thumbnails_func_selectall allselected"></span -->	<!-- allselected : 토글 -->
-                                        <a class="thumbnails_func_selectdel" ng-click="click_checkFileDestroy()"></a>
-                                    </div>
-                                </div>
-                            </div><!-- /.col-xs-4 -->
-
-                        </div><!-- /.row -->
-                        <!-- image thumbnails -->
-                        </form>
-
-                        <div class="col-xs-12" style="padding-bottom:20px;">
-                            <textarea id="editor1" ng-model="item.SUMMARY" class="form-control input-md" rows="10" style="width:100%; min-width:100%; max-width:100%;resize: none;" placeholder="내용을 입력하세요."></textarea>
-                        </div><!-- /.people_editor -->
-
-                        <div class="container-fluid people_view_btnwrap">
-                            <div class="row">
-                                <div class="col-xs-4">
-                                </div>
-
-                                <div class="col-xs-8" style="text-align: right;">
-                                    <button class="btn btn-default btn-sm" ng-click="click_close()">취소</button>
-                                    <button class="btn btn-info btn-sm" ng-click="click_reg()">등록</button>
-                                </div>
-                            </div><!-- /.row -->
-                        </div><!-- /.container -->
                     </div><!-- /.row -->
-                </div><!-- /.container -->
+                    <!-- /file drag-in Box -->
 
-            </div>
+                    <!-- image thumbnails -->
+                    <div class="row" style="margin:0px auto; margin-bottom:10px; height:90px;">
+
+                        <label class="col-xs-1">
+
+                        </label>
+
+                        <div class="col-xs-11 col-xs-offset-1" style="padding:0;">
+                            <div class="thumbnailzone">
+
+                                <div class="thumbnailzone_featureguide" style="margin-bottom:12px;">
+                                    <!--<span style="font-size:0.94em; color:#868686;">(폭)999px/(높이)999px</span>-->
+                                    <span style="font-size:0.94em; color:#868686;">10MB 이하 이미지</span>
+                                </div>
+
+                                <!-- Thumbnail List -->
+                                <div data-ng-repeat="file in queue">
+                                    <div class="thumbnails selectedthumb" ng-style="{'background-image': 'url({{file.thumbnailUrl}})'}">
+                                        <img class="thumbnails_img" src="/imgs/ange/_blank.gif" />
+                                        <div  class="thumbnails_img_check"><input type="checkbox" checklist-model="item.queue" checklist-value="file"></div>
+                                    </div>
+                                </div>
+                                <!-- /Thumbnail List -->
+
+                                <div class="thumbnails_func" style="float:right; padding: 10px 0;">
+                                    <a ng-class="checkAll ? 'thumbnails_func_selectall allselected' : 'thumbnails_func_selectall'" ng-click="click_checkAllToggle()"></a>
+                                    <!--ng-class="checkAll ? 'thumbnails_func_selectall allselected' : 'thumbnails_func_selectall'"-->
+                                    <!-- span class="thumbnails_func_selectall allselected"></span -->	<!-- allselected : 토글 -->
+                                    <a class="thumbnails_func_selectdel" ng-click="click_checkFileDestroy()"></a>
+                                </div>
+                            </div>
+                        </div><!-- /.col-xs-4 -->
+
+                    </div><!-- /.row -->
+                    <!-- image thumbnails -->
+                    </form>
+
+                    <div class="container-fluid people_view_btnwrap">
+                        <div class="row">
+                            <div class="col-xs-4">
+                            </div>
+
+                            <div class="col-xs-8" style="text-align: right;">
+                                <button class="btn btn-default btn-sm" ng-click="click_close()">취소</button>
+                                <button class="btn btn-info btn-sm" ng-click="click_reg()">등록</button>
+                            </div>
+                        </div><!-- /.row -->
+                    </div><!-- /.container -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
 
         </div>
+
+    </div>
     </div>
 
     <!--<div class="modal-footer">-->

@@ -52,9 +52,15 @@
                 </div>
             </div>
             <div class= "form-group form_basic_group">
-                <label class= "form_basic_label">포인트 점수</label>
+                <label class= "form_basic_label">{{item.PRODUCT_GB.value == 'MILEAGE' ? '포인트 점수' : '소비자금액'}}</label>
                 <div class="col-xs-6 form_basic_input">
                     <input ng-model="item.PRICE" type= "text" class= "form-control" placeholder= "포인트 점수"/>
+                </div>
+            </div>
+            <div ng-show="item.PRODUCT_GB.value == 'AUCTION'" class= "form-group form_basic_group">
+                <label class= "form_basic_label">바로구매가</label>
+                <div class="col-xs-6 form_basic_input">
+                    <input ng-model="item.DIRECT_PRICE" type= "text" class= "form-control" placeholder= "바로구매가"/>
                 </div>
             </div>
             <div class= "form-group form_basic_group">

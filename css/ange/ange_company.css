@@ -164,3 +164,79 @@
     background-repeat: no-repeat;
     margin-bottom: 40px;
 }
+
+p.sub{margin-top:5px; width:310px; font-size:1.2em; background-color:#feffcf; font-weight:600; color:#000;letter-spacing:-1px;}
+
+.mok_introtxt {
+    float:left;
+    width:95%;
+    height:280px;
+    color:#666;
+    word-break: keep-all;
+    line-height:20px;
+    text-align:justify;
+    padding:4px 12px;
+}
+
+.company_introtxt {
+    float:left;
+    width:60%;
+    height:350px;
+    color:#666;
+    word-break: keep-all;
+    line-height:20px;
+    text-align:justify;
+    padding:4px 12px;
+}
+
+.company_introtxt2 {
+    float:left;
+    width:60%;
+    height:380px;
+    color:#666;
+    word-break: keep-all;
+    line-height:20px;
+    text-align:justify;
+    padding:4px 12px;
+}
+
+.company_introtxt3 {
+    float:left;
+    width:60%;
+    height:440px;
+    color:#666;
+    word-break: keep-all;
+    line-height:20px;
+    text-align:justify;
+    padding:4px 12px;
+}
+
+.company_intro {
+    float:right;
+    width:35%;
+    height:250px;
+    padding-top:70px;
+    text-align:center
+} /*company_img*/
+
+.company_intro2 {
+    float:right;
+    width:35%;
+    height:300px;
+    padding-top:120px;
+    text-align:center
+} /*company_img*/
+
+.company_intro3 {
+    float:right;
+    width:35%;
+    height:330px;
+    padding-top:140px;
+    text-align:center
+} /*company_img*/
+
+.company_introtxt_title {font-size:1.438em; color:#000; font-weight:600;}
+.company_introtxt_title2 {font-size:1.7em; color:#000; font-weight:700;}
+.company_introtxt_title span.num {position:relative;top:6px;}
+.angeBtn {position:relative;width:100%; text-align:center;}
+.angeBtn a {}

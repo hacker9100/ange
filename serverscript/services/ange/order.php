@@ -267,13 +267,13 @@ switch ($_method) {
             $sql = "SELECT
                         TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
                         NO, PRODUCT_CNT, SUM_PRICE, RECEIPTOR_NM, PRODUCT_NO, USER_ID, DATE_FORMAT(ORDER_DT, '%Y-%m-%d') AS ORDER_YMD, PAY_GB, DATE_FORMAT(PAY_DT, '%Y-%m-%d') AS PAY_YMD,
-                        CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_GB_NM,
-                        PRODUCT_NM, PRODUCT_GB, PRICE, ORDER_GB, ORDER_ST,
+                        CASE ORDER_ST when 0 then '결제완료' when 1 then '주문접수' when 2 then '상품준비중' when 3 then '배송중' when 4 then '배송완료' when 5 then '주문취소' ELSE 6 end AS ORDER_ST_NM,
+                        PRODUCT_NM, PRODUCT_GB, PRICE, ORDER_GB, ORDER_ST, REQUEST_NOTE,
                         CASE PROGRESS_ST WHEN 1 THEN '접수완료' WHEN 2 THEN '처리중' WHEN 3 THEN '처리완료' ELSE '' END AS PROGRESS_ST_NM, PARENT_NO, PARENT_PRODUCT_NM, PRODUCT_CODE
                     FROM
                     (
                         SELECT
-                            AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.RECEIPTOR_NM, AC.PRODUCT_NO, AC.USER_ID, AC.ORDER_GB, AP.PRODUCT_NM, AP.PRODUCT_GB, AP.PRICE, AC.ORDER_DT, AC.ORDER_ST,
+                            AC.NO, AC.PRODUCT_CNT, AC.SUM_PRICE, AC.RECEIPTOR_NM, AC.PRODUCT_NO, AC.USER_ID, AC.ORDER_GB, AP.PRODUCT_NM, AP.PRODUCT_GB, AP.PRICE, AC.ORDER_DT, AC.ORDER_ST, AC.REQUEST_NOTE,
                             (SELECT PROGRESS_ST FROM ANGE_ORDER_COUNSEL WHERE PRODUCT_NO = AC.PRODUCT_NO AND PRODUCT_CODE = AC.PRODUCT_CODE) AS PROGRESS_ST, AP.PARENT_NO,
                             (SELECT PRODUCT_NM FROM ANGE_PRODUCT WHERE NO = AP.PARENT_NO) AS PARENT_PRODUCT_NM, PRODUCT_CODE, AC.PAY_GB, AC.PAY_DT
                         FROM
@@ -807,12 +807,12 @@ switch ($_method) {
 
 
             $sql = "UPDATE
-                            COM_USER
-                        SET
-                            SUM_POINT = SUM_POINT + ".$_model[PRICE].",
-                            REMAIN_POINT = REMAIN_POINT + ".$_model[PRICE]."
-                        WHERE
-                            USER_ID = '".$_SESSION['uid']."'";
+                        COM_USER
+                    SET
+                        SUM_POINT = SUM_POINT + ".$_model[PRICE].",
+                        REMAIN_POINT = REMAIN_POINT + ".$_model[PRICE]."
+                    WHERE
+                        USER_ID = '".$_SESSION['uid']."'";
 
             $_d->sql_query($sql);
 
@@ -868,6 +868,22 @@ switch ($_method) {
                 $_d->succEnd($no);
                 //$_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
 
+            }
+        } else if ($_type == "status") {
+            $sql = "UPDATE ANGE_ORDER
+                    SET
+                        ORDER_ST = '".$_model[ORDER_ST]."'
+                    WHERE
+                        NO = ".$_key."
+                    ";
+
+            $_d->sql_query($sql);
+            $no = $_d->mysql_insert_id;
+
+            if ($_d->mysql_errno > 0) {
+                $_d->failEnd("수정실패입니다:".$_d->mysql_error);
+            } else {
+                $_d->succEnd($no);
             }
         }
 
