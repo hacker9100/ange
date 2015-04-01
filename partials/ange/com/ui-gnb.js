@@ -39,8 +39,44 @@ define([
             $scope.search.SEARCH_KEYWORD = getParam("search_key");
         };
 
-        $scope.click_channel = function() {
+//        <a href="/story/content/list" ng-class="channeltitle == 'story' ? 'gnb_chnnel chnnel1 nowmenu' : 'gnb_chnnel chnnel1'">ANGE Story</a>
+//        <a href="/people/home" ng-class="channeltitle == 'people' ? 'gnb_chnnel chnnel2 nowmenu' : 'gnb_chnnel chnnel2'">ANGE People</a>
+//            <a href="/moms/home" ng-class="channeltitle == 'moms' ? 'gnb_chnnel chnnel3 nowmenu' : 'gnb_chnnel chnnel3'">ANGE Mom's</a>
+//        <a ng-click="click_myange();" ng-class="channeltitle == 'myange' ? 'gnb_chnnel chnnel4 nowmenu' : 'gnb_chnnel chnnel4'">My ANGE</a>
+//
+//        <div class="gnb_right">
+//            <a href="/store/mileagemall/list" ng-class="channeltitle == 'store' ? 'gnb_store ch_store nowmenu' : 'gnb_store ch_store'">ANGE Store</a>
+//            <!--<a href="/store/home" class="gnb_store ch_store">ANGE Store</a>--
 
+        $scope.click_channel = function(menu) {
+            if(menu != $scope.channeltitle) {
+                switch(menu){
+                    case 'story':
+                        $location.url('/story/content/list');
+                        break;
+                    case 'people':
+                        $location.url('/people/home');
+                        break;
+                    case 'moms':
+                        $location.url('/moms/home');
+                        break;
+                    case 'myange':
+                        $scope.click_myange();
+                        break;
+                    case 'store':
+                        $location.url('/store/mileagemall/list');
+                        break;
+                    case 'infodesk':
+                        $location.url('/infodesk/qna/list');
+                        break;
+                    default:
+                        dialogs.notify('알림', '잘못된 접근입니다.', {size: 'md'});
+                        $location.url('/');
+                        break;
+                }
+            } else {
+                console.log ("[" + $scope.channeltitle + "] 현재 메뉴입니다.")
+            }
         };
 
         $scope.click_login = function () {
@@ -79,7 +115,31 @@ define([
 
         /********** 이벤트 **********/
         $scope.click_channel = function() {
-
+            switch(menu){
+                case 'story':
+                    $location.url('/story/content/list');
+                    break;
+                case 'people':
+                    $location.url('/people/home');
+                    break;
+                case 'moms':
+                    $location.url('/moms/home');
+                    break;
+                case 'myange':
+                    alert(menu);
+                    $scope.click_myange();
+                    break;
+                case 'store':
+                    $location.url('/store/mileagemall/list');
+                    break;
+                case 'infodesk':
+                    $location.url('/infodesk/qna/list');
+                    break;
+                default:
+                    dialogs.notify('알림', '잘못된 접근입니다.', {size: 'md'});
+                    $location.url('/');
+                    break;
+            }
         };
 
         $scope.click_login = function () {
