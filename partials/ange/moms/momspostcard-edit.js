@@ -209,7 +209,7 @@ define([
 
             $scope.search.PRODUCT_CODE = 49;
 
-            $scope.search.ADA_STATE = 1;
+            //$scope.search.ADA_STATE = 1;
             $scope.search.SORT = 'ada_date_regi';
             $scope.search.ORDER = 'DESC'
 

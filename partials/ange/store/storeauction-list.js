@@ -128,6 +128,8 @@ define([
                         $scope.item.AUCTION_AMOUNT  = data[0].AUCTION_AMOUNT.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                     }
 
+                    $scope.item.AUCTION_COUNT = data[0].AUCTION_COUNT;
+
                     for(var i in data) {
 
                         if (data[i].FILE != null) {

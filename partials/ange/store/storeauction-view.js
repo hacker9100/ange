@@ -184,8 +184,13 @@ define([
 
             $scope.insertItem('ange/cart', 'item', $scope.item, false)
                 .then(function(){
-                    alert('찜목록으로 이동합니다');
-                    $location.url('store/cart/list/'+$stateParams.menu);
+//                    alert('찜목록으로 이동합니다');
+//                    $location.url('store/cart/list/'+$stateParams.menu);
+                    if (confirm("장바구니에 등록되었습니다. 장바구니로 이동하시겠습니까?") == true){    //확인
+                        $location.url('store/cart/list');
+                    }else{   //취소
+                        return;
+                    }
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
@@ -210,8 +215,14 @@ define([
 
             $scope.insertItem('ange/cart', 'item', $scope.item, false)
                 .then(function(){
-                    alert('찜목록으로 이동합니다');
-                    $location.url('store/cart/list/'+$stateParams.menu);
+//                    alert('찜목록으로 이동합니다');
+//                    $location.url('store/cart/list/'+$stateParams.menu);
+                    if (confirm("장바구니에 등록되었습니다. 장바구니로 이동하시겠습니까?") == true){    //확인
+                        $location.url('store/cart/list');
+                    }else{   //취소
+                        return;
+                    }
+
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
