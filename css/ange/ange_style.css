@@ -58,6 +58,44 @@ body {
     padding:0 244px 0 165px;
 }
 
+/* Main Color Set [channel Theme] */
+.ange_lightred  { color: #fce5e9; }
+.ange_softred   { color: #f8bbc1; }
+.ange_red       { color: #e56366; }       /*스토리*/
+.ange_darkred   { color: #9b212f; }
+
+.ange_lightgreen { color: #e8f7c6; }
+.ange_softgreen  { color: #bfdb85; }
+.ange_green      { color: #80c833; }     /*피플*/
+.ange_darkgreen  { color: #43873f; }
+
+.ane_lightpink  { color: #ffe3f1; }
+.ane_softpink   { color: #f4afce; }
+.ane_pink       { color: #f668b2; }       /*이벤트*/
+.ane_darkpink   { color: #b5286f; }
+
+.ange_lightchoco { color: #ffe2d7; }
+.ange_softchoco  { color: #e9b69f; }
+.ange_choco      { color: #b66e43; }     /*마이앙쥬*/
+.ange_darkchoco  { color: #9b482b; }
+
+.ange_lightblue { color: #def9ff; }
+.ange_softblue  { color: #a6ddee; }
+.ange_blue      { color: #47b6d6; }      /*스토어*/
+.ange_darkblue  { color: #066f7a; }
+
+.ange_lightorange{ color: #fff1dc; }
+.ange_softorange { color: #ffdda5; }
+.ange_orange     { color: #f1a81a; }      /*그룹*/
+.ange_darkorange { color: #ac6d28; }
+
+.ange_lightgray { color: #efefef; }
+.ange_softgray  { color: #d6dade; }
+.ange_gray      { color: #a7b0bc; }      /*노멀*/
+.ange_darkgray  { color: #595e63; }
+
+.ange_black { color: #2d2f30; }     /*먹*/
+
 .panel_ad {
     position:relative;
     float:left;
@@ -232,6 +270,11 @@ body {
     border-radius: 5px;
     text-align:center;
     /*opacity: 0.5;*/
+    border:1px solid #eee;
+
+
+    -webkit-box-shadow: 0 0 6px rgba(15, 0, 15, .08);
+    box-shadow: 0 0 6px rgba(15, 0, 15, .08);
 }
 
 .ads_indicators_wrap {
@@ -724,244 +767,9 @@ body {
 }
 /* - Sub Page Responsive Style Set - */
 
-
-.gnb{
-    float:left;
-    width:100%;
-    background-color:#f4f4f4;
-    margin:25px 0 0 0;
-    border: none;
-    padding:0;
-}
-
-.gnb_menu {
-    display:block;
-    float:left;
-    padding:0;
-    margin:0;
-    width:100%;
-    padding:0 0 0 10px;
-    border-bottom: 1px solid #EFEFEF;
-}
-
-.gnb_mobile_menu {
-    display:none;
-    padding:0;
-    margin:0;
-    width:100%;
-    height:58px;
-    border-bottom: 1px solid #EFEFEF;
-}
-
-.gnb_mobile_menu ul{
-    display:inline-block;
-    padding:0;
-    margin:0;
-    width:100%;
-    height:100%;
-    font-size:1.28em;
-    font-weight: 700;
-}
-
-.gnb_mobile_menu ul li{
-    float:left;
-    display:block;
-    padding:0;
-    margin:0;
-    height:100%;
-    text-align: center;
-}
-
-.gnb_mobile_menu ul li.menu {
-    width:20%;
-    margin-top:10px;
-}
-
-.mobile-header {
-    display:none;
-    position:absolute;
-    width:60%;
-    left:50%;
-    margin-left:-30%;
-    height:75px;
-    /*margin:0px auto;*/
-    padding:8px 18px;
-    z-index: 99;
-}
-
-.mobilelogo {
-    position:absolute;
-    /*width:60%;*/
-    height:75%;
-    cursor:pointer;
-    left:50%;
-    top:10px;
-    margin-left: -37px;
-
-    background-image: url(/imgs/ange/ui_logo_01.png);
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-}
-
-.gnb_subtxt {
-    /*display: block;*/
-    font-size:0.64em;
-    color:#AAA;
-}
-
-.gnb_subtxt.mobile {
-    width:65px;
-    height:29px;
-    background-position: left top;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    margin:0;
-    padding:0;
-    margin-top:5px;
-}
-
-.gnb_subtxt.mobile:hover {
-    background-position: left -29px;
-}
-
-.gnb_subtxt.mobile.story { background-image: url('/imgs/ange/gnb_mobile_ch01.png');}
-.gnb_subtxt.mobile.people { background-image: url('/imgs/ange/gnb_mobile_ch02.png');}
-.gnb_subtxt.mobile.moms { background-image: url('/imgs/ange/gnb_mobile_ch03.png');}
-.gnb_subtxt.mobile.store { background-image: url('/imgs/ange/gnb_mobile_ch04.png');}
-.gnb_subtxt.mobile.myange { background-image: url('/imgs/ange/gnb_mobile_ch05.png');}
-
-.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story.png'); }
-/*.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story_open.png'); }*/
-.chnnel2 { 	background:url('/imgs/ange/ui_gnbbtn_02_people.png'); }
-.chnnel3 { 	background:url('/imgs/ange/ui_gnbbtn_03_moms.png'); }
-.chnnel4 { 	background:url('/imgs/ange/ui_gnbbtn_04_my.png'); }
-
-.gnb_chnnel {
-    float:left;
-    width:120px;
-    height:47px;
-    margin:0 0 0 10px;
-    text-indent: -9999px;
-    cursor:pointer;
-    background-repeat: no-repeat;
-    opacity: 0.75;
-}
-
-.gnb_right{
-    float: right;
-    width:195px;
-    padding:0;
-    margin:0;
-}
-
-. search_formgroup{
-    float:right;
-    display:inline-block;
-    margin:0;
-    padding:0;
-}
-
-.gnb_store {
-    float:left;
-    width:120px;
-    height:47px;
-    margin:0 18px 0 0;
-    text-indent: -9999px;
-    cursor:pointer;
-    background-repeat: no-repeat;
-}
-
-.gnb_search {
-    float:left;
-    width:29px;
-    height:29px;
-    margin:10px 18px 0 5px;
-    text-indent: -9999px;
-    cursor:pointer;
-    background-repeat: no-repeat;
-}
-
-.search_form{
-    float:left;
-    margin:8px 0 0 0;
-    height:25px;
-}
-
-.ch_search { background:url('/imgs/ange/ui_gnbbtn_06_search.png'); }
-.ch_store { background:url('/imgs/ange/ui_gnbbtn_05_store.png'); }
-
-.gnb_chnnel:hover {
-    /*background-position:left -47px;*/
-    opacity: 1;
-}
-
-.gnb_chnnel.nowmenu {
-    cursor: default;
-    opacity: 1;
-    background-position:left -47px;
-}
-
-.gnb_store:hover {
-    background-position:left -47px;
-}
-
-.gnb_store.nowmenu {
-    cursor: default;
-    background-position:left -94px;
-}
-
-
-.gnb_search:hover {
-    background-position:left -29px;
-}
-
-.search_input {
-    float:left;
-    width:140px;
-    display: none;
-    margin:0:
-}
-
-.search_input_page {
-    border:none;
-    width:100%;
-    border-radius: 0;
-    font-size: 1.21em;
-    border:4px solid deepskyblue;
-}
-
-@media screen and (min-width: 1280px) {
-    .gnb_right{
-        width:335px;
-    }
-    .search_input {
-        display: block;
-    }
-
-}
-
 @media screen and (max-width: 768px) {
     .panel_ad {
         display: none;
-    }
-
-    .gnb{
-        position:absolute;
-        margin:0px;
-        top:75px;
-    }
-
-    .gnb_menu {
-        display: none;
-    }
-
-    .gnb_mobile_menu {
-        display: block;
-    }
-
-    .mobile-header {
-        display: block;
     }
 
     .slide0{
@@ -1004,7 +812,7 @@ a.tablet_arrow:hover, a.tablet_arrow:focus {
 }
 
 
-/*로그인*/
+/* 로그인 */
 .comp_userlog{
     position:relative;
     margin-top:36px;
@@ -1022,6 +830,158 @@ a.tablet_arrow:hover, a.tablet_arrow:focus {
     border-bottom:1px solid #b1b1b1;
     text-align:center;
 }
+
+/* 로그인 Modal */
+.loginmodal_title {
+    background-color:#000;
+    height:40px;
+    width:730px;
+    padding:0px;
+}
+
+.loginmodal_body {
+    clear:both;
+    position:relative;
+    width:730px;
+    height:304px;
+    border:1px solid transparent;
+    background-color:#fff;
+    border-radius: 0px;
+    padding:0px;
+}
+
+.loginmodal_inputwrap {
+    float:left;
+    width:408px;
+}
+
+.loginmodal_input {
+    width:248px;
+}
+
+.loginmodal_ad {
+    float:right;
+    width:320px;
+}
+
+.login_exit {
+    float:right;
+    color:#ccc !important;
+    margin-right:10px;
+    cursor: pointer;
+}
+
+.login_exit:hover {
+    text-decoration: none;
+    color:#fff !important;
+}
+
+.login_side {
+    padding-top:24px;
+    height:100px;
+    width:100%;
+    margin:25px 0;
+    border-top:1px solid #ddd;
+}
+
+.login_side_link {
+    margin-top:12px;
+    font-weight: 600;
+}
+
+.login_side_link a {
+    cursor:pointer;
+}
+
+.login_side_link a:hover {
+    text-decoration:none;
+    color: #2fbcfe;
+}
+
+.login_side_idpw {
+    float:left;
+    width:50%;
+    text-align: center;
+    padding-bottom:8px;
+    border-right:1px solid #ddd;
+}
+
+.login_side_join {
+    float:left;
+    width:50%;
+    text-align: center;
+    padding-bottom:8px
+}
+
+.submit_login {
+    position:absolute;
+    right: 25px;
+    top:38px;
+    color:#fff;
+    background-color:#4cace8;
+    height: 84px;
+    width: 84px;
+    border:1px solid transparent;
+    border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+    .loginmodal_title {
+        width:100%;
+    }
+
+    .loginmodal_body {
+        width:100%;
+        height:110%;
+    }
+
+    .loginmodal_inputwrap {
+        float:none;
+        width:100%;
+    }
+
+    .loginmodal_input {
+        width:100%;
+    }
+
+    .submit_login {
+        position:relative;
+        right: 0px;
+        top:0px;
+        color:#fff;
+        background-color:#4cace8;
+        height: 50px;
+        width: 100%;
+        border:1px solid transparent;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    .loginmodal_ad {
+        float:none;
+        width:100%;
+        margin:0px auto;
+        text-align: center;
+    }
+    .login_side {
+        padding:0px;
+        width:100%;
+        margin:0px auto;
+        border-top:1px solid transparent;
+    }
+    .login_side_idpw{
+        width:100%;
+        border:none;
+        border-bottom:1px solid #ddd;
+        padding:10px;
+    }
+    .login_side_join {
+        width:100%;
+        padding:10px;
+        border-bottom:1px solid #ddd;
+    }
+}
+
 
 /** 로그아웃 상태 구성 **/
 .userlog_utility{
@@ -2029,8 +1989,8 @@ a.people_btn.delete { float:right; background-image: url('/imgs/ange/pp_btn_dele
     border:1px solid #ddd;
     border-radius:4px;
     line-height:18px;
-    overflow:auto;
-    overflow-x:none;
+    overflow: auto;
+    overflow-x: hidden;
 
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
@@ -2359,54 +2319,6 @@ ul.contentguide {
     background-position: left 10% center;
     background-size: 20%;
 }
-
-.login_exit {
-    float:right;
-    color:#ccc !important;
-    margin-right:10px;
-    cursor: pointer;
-}
-
-.login_exit:hover {
-    text-decoration: none;
-    color:#fff !important;
-}
-
-.login_side {
-    padding-top:24px;
-    height:100px;
-    width:100%;
-    margin:25px 0;
-    border-top:1px solid #ddd;
-}
-
-.login_side_link {
-    margin-top:12px;
-    font-weight: 600;
-}
-
-.login_side_link a {
-    cursor:pointer;
-}
-
-.login_side_link a:hover {
-    text-decoration:none;
-    color: #2fbcfe;
-}
-
-.submit_login {
-    position:absolute;
-    right: 25px;
-    top:38px;
-    color:#fff;
-    background-color:#4cace8;
-    height: 84px;
-    width: 84px;
-    border:1px solid transparent;
-    border-radius: 5px;
-}
-
-
 
 
 /* Sub side banner */

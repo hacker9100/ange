@@ -103,7 +103,7 @@
 <!-- /Utility Panel -->
 
 <script type="text/ng-template" id="login_modal.html">
-    <div class="modal-header" style="background-color:#000; height:40px; width:730px; padding:0px;">
+    <div class="modal-header loginmodal_title">
         <div class="login_modal_title" style="color:#fff; line-height:40px; padding-left:12px;">
             <strong>로그인</strong>
             <span style="color:#CCC;"> <small>| LOGIN</small> </span>
@@ -112,14 +112,14 @@
         </div>
     </div>
 
-    <div class="modal-body" style="clear:both; position:relative; width:730px; height:304px; border:1px solid transparent; background-color:#fff; border-radius: 0px; padding:0px;">
-        <div style="float:left; width:408px;">
+    <div class="modal-body loginmodal_body">
+        <div class="loginmodal_inputwrap">
             <div ng-model="approval" class="row" class="form-horizontal" style="position:relative; padding:38px 42px;">
                 <form>
-                    <div class= "form-group" style="width:248px;">
+                    <div class="form-group loginmodal_input">
                         <input type="text" class="form-control" ng-model="item.id" class="form-control" placeholder="아이디"/>
                     </div>
-                    <div class= "form-group" style="width:248px;">
+                    <div class="form-group loginmodal_input">
                         <input type="password" class="form-control" ng-model="item.password" class="form-control" placeholder="비밀번호"/>
                     </div>
 
@@ -129,27 +129,28 @@
                         </label>
                     </div>
 
+                    <button type="submit" class="submit_login" ng-click="click_ok()">로그인</button>
+
                     <div class="login_side">
 
-                        <div style="float:left; width:50%; text-align: center; padding-bottom:8px; border-right:1px solid #ddd;">
+                        <div class="login_side_idpw">
                             <span class="table_gray" style="font-size:0.78em;">아이디/비밀번호 잊으셨나요?</span>
                             <div class="login_side_link"><a ng-click="click_forgotInfo()">아이디/비밀번호 찾기</a></div>
                         </div>
 
-                        <div style="float:left; width:50%; text-align: center; padding-bottom:8px; ">
+                        <div class="login_side_join">
                             <span class="table_gray" style="font-size:0.78em;">아직 회원이 아니신가요?</span>
                             <div class="login_side_link"><a ng-click="click_joinMember()">회원가입</a></div>
                         </div>
                     </div>
-                    <button type="submit" class="submit_login" ng-click="click_ok()">로그인</button>
                 </form>
             </div>
         </div>
 
-        <div style="float:right; width:320px;">
+        <div class="loginmodal_ad">
             <a ng-model="loginBanner" title="{{loginBanner.ada_title}}">
                 <!--<img ng-src="{{ad.FILE}}"/>-->
-                <img img ng-src="{{loginBanner.img}}" ng-click="click_linkBanner(loginBanner)"/>
+                <img ng-src="{{loginBanner.img}}" ng-click="click_linkBanner(loginBanner)" style="width:100%; margin:0px auto; max-width:320px;"/>
             </a>
             <!--<a href="#"><img src="/imgs/ange/temp/login_ad_01.jpg" title="배너타이틀"/></a>-->
         </div>

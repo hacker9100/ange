@@ -5,7 +5,7 @@
 	<!-- GNB -->
 	<div class="gnb" ng-controller="ui-gnb">
 
-		<div class="gnb_menu">
+		<div class="gnb_menu" style="display:none;">
 			<a href="/story/content/list" ng-class="channeltitle == 'story' ? 'gnb_chnnel chnnel1 nowmenu' : 'gnb_chnnel chnnel1'">ANGE Story</a>
 			<a href="/people/home" ng-class="channeltitle == 'people' ? 'gnb_chnnel chnnel2 nowmenu' : 'gnb_chnnel chnnel2'">ANGE People</a>
 			<a href="/moms/home" ng-class="channeltitle == 'moms' ? 'gnb_chnnel chnnel3 nowmenu' : 'gnb_chnnel chnnel3'">ANGE Mom's</a>
@@ -24,6 +24,43 @@
 				</form>
 			</div>
 		</div>
+
+        <div class="gnb_desktop_menu">
+            <div class="gnb_leftwrap">
+                <span ng-click="click_channel('story')" ng-class="channeltitle == 'story' ? 'nav_menus ange_red nowgnb boarding' : 'nav_menus linked boarding'"><div class="gnb_menutitle">스토리</div><div class="gnb_menudesc">디지털매거진</div></span>
+                <span ng-click="click_channel('people')" ng-class="channeltitle == 'people' ? 'nav_menus ange_green nowgnb boarding' : 'nav_menus linked boarding'"><div class="gnb_menutitle">피 플</div><div class="gnb_menudesc">커뮤니티</div></span>
+                <span ng-click="click_channel('moms')" ng-class="channeltitle == 'moms' ? 'nav_menus ane_pink nowgnb boarding' : 'nav_menus linked boarding'"><div class="gnb_menutitle">이벤트</div><div class="gnb_menudesc">체험단♡이벤트</div></span>
+                <span ng-click="click_channel('myange')" ng-class="channeltitle == 'myange' ? 'nav_menus ange_choco nowgnb boarding' : 'nav_menus linked boarding'"><div class="gnb_menutitle">마이앙쥬</div><div class="gnb_menudesc">나의맞춤서비스</div></span>
+                <span ng-click="click_channel('store')" ng-class="channeltitle == 'store' ? 'nav_menus ange_blue nowgnb' : 'nav_menus linked'"><div class="gnb_menutitle">스토어</div><div class="gnb_menudesc">ange Store</div></span>
+            </div>
+
+            <div class="gnb_rightwrap">
+                <form class="search_formgroup">
+                    <div class="form-group search_form">
+                        <input type="text" ng-model="search.SEARCH_KEYWORD" class="form-control search_input" id="exampleInputPassword2" placeholder="검색" />
+                    </div>
+                    <!--<a class="gnb_search ch_search" ng-click="click_showSearch()" title="검색">Search</a>-->
+                    <input type="submit" class="gnb_search ch_search" ng-click="click_showSearch()" title="검색" style="border:none;">
+                </form>
+            </div>
+            <!--<a href="/story/content/list" ng-class="channeltitle == 'story' ? 'gnb_chnnel chnnel1 nowmenu' : 'gnb_chnnel chnnel1'">ANGE Story</a>-->
+            <!--<a href="/people/home" ng-class="channeltitle == 'people' ? 'gnb_chnnel chnnel2 nowmenu' : 'gnb_chnnel chnnel2'">ANGE People</a>-->
+            <!--<a href="/moms/home" ng-class="channeltitle == 'moms' ? 'gnb_chnnel chnnel3 nowmenu' : 'gnb_chnnel chnnel3'">ANGE Mom's</a>-->
+            <!--<a ng-click="click_myange();" ng-class="channeltitle == 'myange' ? 'gnb_chnnel chnnel4 nowmenu' : 'gnb_chnnel chnnel4'">My ANGE</a>-->
+
+            <!--<div class="gnb_right">-->
+                <!--<a href="/store/mileagemall/list" ng-class="channeltitle == 'store' ? 'gnb_store ch_store nowmenu' : 'gnb_store ch_store'">ANGE Store</a>-->
+                <!--&lt;!&ndash;<a href="/store/home" class="gnb_store ch_store">ANGE Store</a>&ndash;&gt;-->
+
+                <!--<form class="search_formgroup">-->
+                    <!--<div class="form-group search_form">-->
+                        <!--<input type="text" ng-model="search.SEARCH_KEYWORD" class="form-control search_input" id="exampleInputPassword2" placeholder="검색" />-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;<a class="gnb_search ch_search" ng-click="click_showSearch()" title="검색">Search</a>&ndash;&gt;-->
+                    <!--<input type="submit" class="gnb_search ch_search" ng-click="click_showSearch()" title="검색" style="border:none;">-->
+                <!--</form>-->
+            <!--</div>-->
+        </div>
 
         <div class="gnb_mobile_menu">
             <ul>
