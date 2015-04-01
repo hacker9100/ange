@@ -235,7 +235,7 @@ define([
 
         $scope.init();
         $scope.getContentList();
-        $scope.getAdvertList();
+//        $scope.getAdvertList();
     }]);
 });
 

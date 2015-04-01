@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$window', '$location', '$q', 'dataService', '$filter', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $stateParams, $window, $location, $q, dataService, $filter, dialogs, CONSTANT) {
+    controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$window', '$location', '$timeout', '$q', 'dataService', '$filter', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $stateParams, $window, $location, $timeout, $q, dataService, $filter, dialogs, CONSTANT) {
 
         $scope.comming_soon = function() {
             dialogs.notify('알림', '점검중입니다.', {size: 'md'});
@@ -264,9 +264,14 @@ define([
                 $rootScope.user_gb = null;
                 $rootScope.support_no = null;
 
-                if ($scope.channel.CHANNEL_NO == 4 ) {
+                if ($scope.channel.CHANNEL_NO == 4 && $rootScope.isLogout != true) {
+                    $rootScope.isLogout = true;
                     $location.path("/main");
                     throw( new String('세션이 만료되었습니다. 다시 로그인 해 주세요.'));
+
+                    $timeout(function() {
+                        $scope.isLogout = false;
+                    },2000);
                 }
 //                $location.path("/signin");
 //                throw( new String('세션이 만료되었습니다.') );
@@ -275,6 +280,47 @@ define([
 //                $location.path("/signin");
 //                throw( new String('로그인 후 사용가능합니다.') );
             } else {
+                if (session.SYSTEM_GB != 'ANGE') {
+//                    dialogs.error('오류', '다른 시스템에 로그인되어있습니다. 로그인 페이지로 이동합니다.', {size: 'md'});
+                    $scope.logout($rootScope.uid).then( function(data) {
+                        $rootScope.session = null;
+
+                        $rootScope.login = false;
+                        $rootScope.authenticated = false;
+                        $rootScope.user_info = null;
+                        $rootScope.uid = '';
+                        $rootScope.name = '';
+                        $rootScope.mileage = 0;
+                        $rootScope.role = '';
+                        $rootScope.menu_role = null;
+                        $rootScope.email = '';
+                        $rootScope.nick = '';
+
+                        $rootScope.addr = null;
+                        $rootScope.addr_detail = null;
+                        $rootScope.phone1 = null;
+                        $rootScope.phone2 = null;
+
+                        $rootScope.preg_fl = null;
+                        $rootScope.baby_birth_dt = null;
+
+                        $rootScope.user_gb = null;
+                        $rootScope.support_no = null;
+
+                        if ($scope.channel.CHANNEL_NO == 4 && $rootScope.isLogout != true) {
+                            $rootScope.isLogout = true;
+                            $location.path("/main");
+                            throw( new String('세션이 만료되었습니다. 다시 로그인 해 주세요.'));
+
+                            $timeout(function() {
+                                $scope.isLogout = false;
+                            },2000);
+                        }
+                    });
+
+                    return;
+                }
+
                 $rootScope.session = session;
 
                 $rootScope.login = true;

@@ -1,0 +1,24 @@
+<div class="comp_purchase">
+    <div class="miniboard_titlebar">
+        <span class="miniboard_title">{{ portletTitle }}</span>
+
+        <a class="miniboard_tab_more" ng-click="click_showList();">더보기</a>
+
+        <div ng-if="option.tab" ng-repeat="tab in option.tab" ng-class="tabIdx == $index ? 'miniboard_tab_on' : 'miniboard_tab'" ng-click="click_tabIndex($index)" style="line-height: 16px;">{{tab.name}}</div>
+    </div>
+
+
+    <div class="comp_purchase_contentwrap">
+        <div class="comp_purchase_content" ng-repeat="item in list" >
+            <img class="comp_purchase_content_img" ng-src="{{item.MAIN_FILE}}" />
+            <div class="comp_purchase_content_date">[{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}]</div>
+            <div class="comp_purchase_content_name">{{ item.PRODUCT_NM }}</div>
+            <div class="comp_purchase_content_price">{{ item.PRODUCT_GB == 'MILEAGE' ? item.SUM_PRICE : item.DIRECT_PRICE }} {{ item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원' }}</div>
+        </div>
+    </div>
+
+    <div ng-show="list == '' || list == null" style="width:100%; text-align: center; !important;">
+        조회 데이터가 없습니다.
+    </div>
+
+</div>

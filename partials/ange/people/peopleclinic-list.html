@@ -109,7 +109,11 @@
                                     </td>
                                     <td class="table_author">{{item.NICK_NM == null || item.NICK_NM == '' ? item.REG_USER_NM : item.NICK_NM}}</td>
                                     <td class="table_date">{{item.REG_DT}}</td>
-                                    <td class="table_hit">{{item.BOARD_REPLY_COUNT > 0 ? '완료' : '대기중'}}</td></tr>
+                                    <td class="table_hit">
+                                        <!--{{item.BOARD_REPLY_COUNT > 0 ? '완료' : '대기중'}}-->
+                                        <img ng-show="item.BOARD_REPLY_COUNT > 0" src="/imgs/ange/endBtn_.jpg">
+                                        <img ng-show="item.BOARD_REPLY_COUNT == 0" src="/imgs/ange/waitBtn_.jpg">
+                                    </td></tr>
                                 </tr>
 
                                 </tbody>

@@ -58,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-<!--
+
                 <div class="col-xs-4" style="padding-left:20px; border-left: 1px solid #DEDEDE; display:block;">
                     <div class="form_basic_wrap">
                         <div class="row form-group form_basic_group">
@@ -88,7 +88,7 @@
                         </div>
                     </div>
                 </div>
--->
+
             </div>
         </div>
 
@@ -101,48 +101,100 @@
             </div>
         </div>
 
-        <table class="table">
-            <thead>
-            <tr style="background-color: #333; border-left:1px solid black;">
-                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;"></th>
-                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">주문자 ID(받는사람)</th>
-                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">상품명</th>
-                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">수량</th>
-                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">총합계</th>
-                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">주문구분(주문일)</th>
-                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">결재구분(결재일)</th>
-                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">상태</th>
-                <th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">기능</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="item in list">
-                <td><input ng-model="item.CHECKED" type= "checkbox" checklist-model="check_order" checklist-value="item.NO"/></td>
-                <td style="width:150px; font-size:0.94em; line-height:38px;">{{ item.USER_ID }}<br>({{ item.RECEIPTOR_NM }})</td>
-                <td style="font-size:0.94em; line-height:38px;">{{ item.PRODUCT_NM }}</td>
-                <td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.PRODUCT_CNT }}</td>
-                <td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.SUM_PRICE }}</td>
-                <td style="width:150px; font-size:0.94em; line-height:38px;">{{ item.ORDER_GB}}<br>({{ item.ORDER_YMD }})</td>
-                <td style="width:150px; font-size:0.94em; line-height:38px;">{{ item.PAY_GB}}<br>({{ item.PAY_YMD }})</td>
-                <td style="width:150px; font-size:0.94em; line-height:38px;">{{ item.ORDER_ST}}</td>
-                <td style="width:200px; font-size:0.94em; line-height:38px;">
-                    <!--<button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="내용편집" ng-click="click_editSubMenu(item)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>-->
-                    <!--<button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-click="click_deleteMenu(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>-->
+        <table ng-table="tableParams" class="table" style="border-bottom: 1px solid #868686;">
+            <tr ng-repeat="item in $data">
+                <td style="width:20px; font-size:0.94em; line-height:38px;" class="text-center" data-title="''">
+                    <input ng-model="item.CHECKED" type= "checkbox" checklist-model="check_order" checklist-value="item.NO"/>
+                </td>
+                <td style="width:150px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'주문자 ID(받는사람)'">
+                    {{ item.USER_ID }}({{ item.RECEIPTOR_NM }})
+                </td>
+                <td style="width:200px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'상품명'">
+                    {{ item.PRODUCT_NM }}
+                </td>
+                <td style="width:50px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'수량'">
+                    {{ item.PRODUCT_CNT }}
+                </td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'총합계'">
+                    {{ item.SUM_PRICE }}
+                </td>
+                <td style="width:300px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'메모'">
+                    {{ item.REQUEST_NOTE }}
+                </td>
+                <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'주문구분(주문일)'">
+                    {{ item.ORDER_GB == 'MILEAGE' ? '마일리지몰' : item.ORDER_GB == 'CUMMERCE' ? '커머스' : '네이밍' }}<br>({{ item.ORDER_YMD }})
+                </td>
+                <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'결재구분(결재일)'">
+                    {{ item.PAY_GB == 'CREDIT' ? '카드' : '마일리지' }}<br>({{ item.PAY_YMD }})
+                </td>
+                <td style="width:130px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'상태'">
+                    <div ng-show="item.NO == selectOrder && isStatus">
+                        <select ng-model="item.ORDER_ST" class= "form-control" ng-change="change_orderStatus(item)">
+                            <option value="0">결제완료</option>
+                            <option value="1">주문접수</option>
+                            <option value="2">상품준비중</option>
+                            <option value="3">배송중</option>
+                            <option value="4">배송완료</option>
+                            <option value="5">주문취소</option>
+                            <option value="6">환불/교환</option>
+                        </select>
+                    </div>
+                    <div ng-show="item.NO != selectOrder">
+                        {{ item.ORDER_ST == '0' ? '결제완료' : item.ORDER_ST == '1' ? '주문접수' : item.ORDER_ST == '2' ? '상품준비중' : item.ORDER_ST == '3' ? '배송중' : item.ORDER_ST == '4' ? '배송완료' : item.ORDER_ST == '5' ? '주문취소' : '환불/교환' }}
+                    </div>
+                </td>
+                <td style="width:80px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'기능'">
+                    <!--<button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="상세보기" ng-click="click_showViewUser(item)"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>-->
+                    <button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="상태변경" ng-click="click_changeStatusOrder(item)" ng-disabled=""><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></button>
                 </td>
             </tr>
-            </tbody>
-
-            <tbody class="on" data-ng-show="list == '' || list == null">
-            <tr>
-                <td colspan="9" style="text-align: center">조회 데이터가 없습니다.</td>
+            <tr ng-show="$data == ''">
+                <td colspan="11" style="text-align: center; font-size:0.86em; line-height:38px;">조회 데이터가 없습니다.</td>
             </tr>
-            </tbody>
         </table>
 
+        <!--<table class="table">-->
+            <!--<thead>-->
+            <!--<tr style="background-color: #333; border-left:1px solid black;">-->
+                <!--<th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;"></th>-->
+                <!--<th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">주문자 ID(받는사람)</th>-->
+                <!--<th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">상품명</th>-->
+                <!--<th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">수량</th>-->
+                <!--<th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">총합계</th>-->
+                <!--<th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">주문구분(주문일)</th>-->
+                <!--<th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">결재구분(결재일)</th>-->
+                <!--<th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">상태</th>-->
+                <!--<th style="color:#eee; font-size:0.92em; font-weight:400; line-height:40px; border-top:1px solid #444; border-bottom:1px solid #111; border-left:1px solid #000; border-right:1px solid #444;">기능</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr ng-repeat="item in list">-->
+                <!--<td><input ng-model="item.CHECKED" type= "checkbox" checklist-model="check_order" checklist-value="item.NO"/></td>-->
+                <!--<td style="width:150px; font-size:0.94em; line-height:38px;">{{ item.USER_ID }}({{ item.RECEIPTOR_NM }})</td>-->
+                <!--<td style="font-size:0.94em; line-height:38px;">{{ item.PRODUCT_NM }}</td>-->
+                <!--<td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.PRODUCT_CNT }}</td>-->
+                <!--<td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.SUM_PRICE }}</td>-->
+                <!--<td style="width:200px; font-size:0.94em; line-height:38px;">{{ item.ORDER_GB == 'MILEAGE' ? '마일리지몰' : item.ORDER_GB == 'CUMMERCE' ? '커머스' : '네이밍' }}({{ item.ORDER_YMD }})</td>-->
+                <!--<td style="width:200px; font-size:0.94em; line-height:38px;">{{ item.PAY_GB == 'CREDIT' ? '카드' : '마일리지' }}({{ item.PAY_YMD }})</td>-->
+                <!--<td style="width:100px; font-size:0.94em; line-height:38px;">{{ item.ORDER_ST == '0' ? '결제완료' : item.ORDER_ST == '1' ? '주문접수' : item.ORDER_ST == '2' ? '상품준비중' : item.ORDER_ST == '3' ? '배송중' : item.ORDER_ST == '4' ? '배송완료' : item.ORDER_ST == '5' ? '주문취소' : '' }}</td>-->
+                <!--<td style="width:100px; font-size:0.94em; line-height:38px;">-->
+                    <!--&lt;!&ndash;<button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:black;" title="내용편집" ng-click="click_editSubMenu(item)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-click="click_deleteMenu(item)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>&ndash;&gt;-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+
+            <!--<tbody class="on" data-ng-show="list == '' || list == null">-->
+            <!--<tr>-->
+                <!--<td colspan="9" style="text-align: center">조회 데이터가 없습니다.</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+        <!--</table>-->
+
         <!-- 페이징 -->
-        <nav class="text-center">
-            <pagination boundary-links="true" total-items="TOTAL_CNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
-        </nav>
+        <!--<nav class="text-center">-->
+            <!--<pagination boundary-links="true" total-items="TOTAL_CNT" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>-->
+        <!--</nav>-->
         <!-- ////Contents Include -->
     </div>
 </div>

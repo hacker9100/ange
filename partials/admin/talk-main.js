@@ -36,6 +36,7 @@ define([
         var now = new Date();
         var nowYear = now.getFullYear();
         var nowMonth = now.getMonth() + 1;
+        var nowDay = now.getDate();
         var lastDay = ( new Date( nowYear, nowMonth, 0) ).getDate();
 
         $scope.showEdit = false;
@@ -60,6 +61,9 @@ define([
 
             $scope.search.YEAR = nowYear;
             $scope.search.MONTH = (nowMonth < 10) ? '0' + nowMonth : nowMonth + '';
+            $scope.search.DAY = nowDay;
+
+            $scope.click_showEditTalk();
         };
 
         /********** 이벤트 **********/

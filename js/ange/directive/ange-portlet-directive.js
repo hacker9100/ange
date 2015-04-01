@@ -566,6 +566,88 @@ define([
         }
     }]);
 
+    // 채널 주문/구매내역 리스트를 동적으로 생성
+    directives.directive('angePortletOrderList', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+            scope: true,
+//            scope: { code:'=' },
+//            replace: true,
+            templateUrl: function(element, attr) {
+                return '/partials/ange/main/portlet-order-list.html';
+            },
+            controller: ['$scope', '$rootScope', '$attrs', '$location', 'CONSTANT', function($scope, $rootScope, $attrs, $location, CONSTANT) {
+
+                /********** 초기화 **********/
+                $scope.option = $scope.$eval($attrs.ngModel);
+
+                // 검색 조건
+                $scope.search = {};
+
+                // 상단 타이틀
+                $scope.portletTitle = $scope.option.title;
+
+                // 탭 번호
+                $scope.tabIdx = $scope.option.defIdx;
+
+                // 페이징
+                $scope.PAGE_NO = 0;
+                $scope.PAGE_SIZE = $scope.option.size;
+
+                // 검색 조건에 커뮤니티 번호 추가
+                if ($scope.option.tab != undefined) {
+                    $scope.search.ORDER_GB = $scope.option.tab[$scope.tabIdx].gb;
+                }
+
+                // 검색 조건에 대표 이미지 여부 추가
+                if ($scope.option.image != undefined) {
+                    $scope.search.FILE = true;
+                }
+
+                /********** 이벤트 **********/
+                // 탭 클릭
+                $scope.click_tabIndex = function (idx) {
+                    $scope.tabIdx = idx;
+
+                    $scope.search.ORDER_GB = $scope.option.tab[$scope.tabIdx].gb;
+
+                    // 탭 번호로 리스트 조회
+                    $scope.getMiniList();
+                }
+
+                // 더보기 버튼 클릭
+                $scope.click_showList = function () {
+                    if ($scope.option.tab != undefined) {
+                        $location.url($scope.option.tab[$scope.tabIdx].menu);
+                    }
+                };
+
+                // 리스트 선택
+                $scope.click_showView = function (item) {
+                    $location.url($scope.option.tab[$scope.tabIdx].menu);
+                };
+
+                // 리스트 조회
+                $scope.getMiniList = function () {
+                    $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                        .then(function(data){
+
+                            if ($scope.option.image != undefined && $scope.option.image) {
+                                for(var i in data) {
+                                    data[i].MAIN_FILE = CONSTANT.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                                }
+                            }
+
+                            $scope.list = data;
+                        })
+                        ['catch'](function(error){$scope.list = [];});
+                };
+
+                $scope.getMiniList();
+            }]
+        }
+    }]);
+
     // 슬라이드를 동적으로 생성
     directives.directive('angePortletSlidePage', ['$controller', function($controller) {
         return {
@@ -801,6 +883,7 @@ define([
 
                 // 검색 조건
                 $scope.search = {};
+                $scope.search.PARENT_NO_NOT = '0';
 
                 // 일시정지, 동작 상태
                 $scope.toggle = true;
@@ -915,7 +998,9 @@ define([
                     $scope.curIdx = idx;
 
                     $scope.search.CATEGORY_NO = item.NO;
-                    $scope.getPortletList();
+
+                    angular.element('#'+$scope.option.id).slickFilter(item.NO);
+//                    $scope.getPortletList();
                 };
 
                 // 일시 정지 버튼
@@ -1489,6 +1574,25 @@ define([
 
                 $scope.PAGE_NO = 0;
                 $scope.PAGE_SIZE = 1;
+
+                var date = new Date();
+
+                // GET YYYY, MM AND DD FROM THE DATE OBJECT
+                var year = date.getFullYear().toString();
+                var mm = (date.getMonth()+1).toString();
+                var dd  = date.getDate().toString();
+
+                if(mm < 10){
+                    mm = '0'+mm;
+                }
+
+                if(dd < 10){
+                    dd = '0'+dd;
+                }
+
+                var today = year+'-'+mm+'-'+dd;
+
+                $scope.todayDate = today;
 
                 /********** 이벤트 **********/
                     // 투표 클릭

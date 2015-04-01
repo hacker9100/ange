@@ -17,7 +17,7 @@ define([
 
         /********** 페이지 타이틀 **********/
         angular.forEach($rootScope.admin_menu, function(menu) {
-            if (menu.MENU_URL.indexOf(spMenu[1]+"/") > -1) {
+            if (menu.MENU_URL.indexOf('/'+spMenu[1]+'/') > -1) {
                 $scope.$parent.$parent.pageTitle = menu.MENU_NM;
                 $scope.$parent.$parent.pageDescription = menu.MENU_DESC;
                 $scope.$parent.$parent.tailDescription = menu.TAIL_DESC;

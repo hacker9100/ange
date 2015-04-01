@@ -168,12 +168,12 @@ switch ($_method) {
 
             $sql = "SELECT
                         NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, TOTAL_COUNT, PERIOD, ORDER_YN, DIRECT_PRICE,AUCTION_AMOUNT,AUCTION_COUNT,
-                        SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT
+                        SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT, COMPANY_NM
                     FROM
                     (
                         SELECT NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, PERIOD, ORDER_YN, DIRECT_PRICE,
                                 (SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
-                                (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT
+                                (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, COMPANY_NM
                         FROM
                             ANGE_PRODUCT AP
                         WHERE
@@ -384,6 +384,7 @@ switch ($_method) {
                         BODY,
                         URL,
                         PRICE,
+                        DIRECT_PRICE,
                         SUM_IN_CNT,
                         SUM_OUT_CNT,
                         NOTE,
@@ -398,6 +399,7 @@ switch ($_method) {
                         '".$_model[BODY]."',
                         '".$_model[URL]."',
                         '".$_model[PRICE]."',
+                        '".$_model[DIRECT_PRICE]."',
                         '".$_model[SUM_IN_CNT]."',
                         '".$_model[SUM_OUT_CNT]."',
                         '".$_model[NOTE]."',
@@ -669,6 +671,7 @@ switch ($_method) {
                         BODY = '".$_model[BODY]."',
                         URL = '".$_model[URL]."',
                         PRICE = ".$_model[PRICE].",
+                        DIRECT_PRICE = ".$_model[DIRECT_PRICE].",
                         SUM_IN_CNT = ".$_model[SUM_IN_CNT].",
                         SUM_OUT_CNT = ".$_model[SUM_OUT_CNT].",
                         NOTE = '".$_model[NOTE]."',

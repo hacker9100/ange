@@ -236,13 +236,15 @@ define([
                         $scope.products = data.PRODUCTS;
                         $scope.item = data;
 
+
+                        $scope.PRICE = data.PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                        $scope.DELEIVERY_PRICE = data.DELEIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+
                         if($scope.products == null){
                             $scope.checkboxproduct = 'Y';
                             $scope.addcheckboxProductList($scope.item, $scope.item);
                         }
 
-                        $scope.PRICE = data.PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                        $scope.DELEIVERY_PRICE = data.DELEIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }
