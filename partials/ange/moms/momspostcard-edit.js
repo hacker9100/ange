@@ -209,6 +209,10 @@ define([
 
             $scope.search.PRODUCT_CODE = 49;
 
+            $scope.search.ADA_STATE = 1;
+            $scope.search.SORT = 'ada_date_regi';
+            $scope.search.ORDER = 'DESC'
+
             $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var target_gb = data[0].EVENT_GB;
@@ -217,7 +221,10 @@ define([
                     $scope.item.ada_date_open = data[0].ada_date_open;
                     $scope.item.ada_date_close = data[0].ada_date_close;
                     $scope.item.ada_date_notice = data[0].ada_date_notice;
+                    $scope.item.ada_title = data[0].ada_title;
 
+                    $scope.item.ada_notice_month = $scope.item.ada_date_notice.substr(5,2);
+                    console.log('$scope.item.ada_notice_month  = '+$scope.item.ada_notice_month );
 
                     $scope.item.TARGET_GB = target_gb;
                     $scope.item.TARGET_NO = target_no;

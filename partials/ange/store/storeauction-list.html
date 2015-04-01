@@ -29,7 +29,7 @@
                                 </div>  <!-- /.col-xs-12 -->
 
 
-                                <div class="col-xs-12 col-sm-4 no-margin">
+                                <div class="col-xs-12 col-sm-4 no-margin" ng-show="list != null && list != ''">
                                     <div class="comp_basic h-cell-dynamic no-margin">
                                         <div class="webzine_store_featureimgbox">
                                             <img class="webzine_store_featureimg" src="/imgs/ange/_blank.gif" style="width:100%; background-image:url({{item.MAIN_FILE}})" />
@@ -62,7 +62,7 @@
                                         <!--<div class="comp_basic h-cell-dynamic" style="width:100%; padding:2px; 0px; padding-left:25px; margin:0px;">-->
 
 
-                                    <div class="col-xs-12 col-sm-8 no-margin">
+                                    <div class="col-xs-12 col-sm-8 no-margin" ng-show="list != null && list != ''">
                                         <div class="comp_basic h-cell-dynamic no-margin">
 
                                             <div class="store_col_info_wrap">
@@ -118,9 +118,9 @@
 
                                     <div class="col-xs-4 v-cell-4" style="margin:0px;">
                                         <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
-                                            <div class="item" style="border:1px solid #ddd;">
+                                            <div class="item webzine_store_featureimgbox" style="border:1px solid #ddd;">
                                                 <!--<img ng-src="/imgs/ange/temp/brandmall_01.jpg" style="width:100%;" />-->
-                                                <img ng-src="item.MAIN_FILE" style="width:100%;" />
+                                                <img class="webzine_store_featureimg" src="/imgs/ange/_blank.gif" style="width:100%; background-image:url({{item.MAIN_FILE}})" />
                                             </div>
                                         </div>
                                     </div>  <!-- /.col-xs-4 -->

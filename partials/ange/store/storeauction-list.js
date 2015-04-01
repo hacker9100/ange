@@ -74,9 +74,11 @@ define([
                 $scope.TOTAL_COUNT = total_cnt;
 
                 /*$scope.total(total_cnt);*/
-                $scope.list = data;
+                //$scope.list = data;
             })
-            ['catch'](function(error){$scope.list = ""; $scope.TOTAL_COUNT = 0;});
+            ['catch'](function(error){
+            //$scope.list = "";
+            $scope.TOTAL_COUNT = 0;});
         };
 
         $(function () {
@@ -98,20 +100,35 @@ define([
         /********** 이벤트 **********/
         $scope.click_showStoreAuctionList = function(){
             $scope.search.FILE = true;
-            $scope.search.ORDER_YN = 'N';
+            //$scope.search.ORDER_YN = 'N';
 
             $scope.getList('ange/product', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
+
+
+                    console.log(data);
+
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
 
+                    $scope.item.PRICE  = data[0].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+
+                    $scope.item.PRODUCT_NM = data[0].PRODUCT_NM;
+
+                    $scope.item.COMPANY_NM = data[0].COMPANY_NM;
+
+
+                    $scope.item.NO = data[0].NO;
+
+                    $scope.item.DIRECT_PRICE  = data[0].DIRECT_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+
+                    if(data[0].AUCTION_AMOUNT == null){
+                        $scope.item.AUCTION_AMOUNT = 0;
+                    }else{
+                        $scope.item.AUCTION_AMOUNT  = data[0].AUCTION_AMOUNT.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                    }
+
                     for(var i in data) {
-
-                        data[i].PRICE  = data[i].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-
-                        data[i].DIRECT_PRICE  = data[i].DIRECT_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-
-                        data[i].AUCTION_AMOUNT  = data[i].AUCTION_AMOUNT.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
                         if (data[i].FILE != null) {
                             var img = CONSTANT.BASE_URL + '/storage/product/' + 'thumbnail/' + data[i].FILE.FILE_ID;
@@ -180,8 +197,6 @@ define([
 
         // 조회 화면 이동
         $scope.click_showViewPeoplePhoto = function (key) {
-            console.log('aaaaa');
-
             $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/view/'+key);
         };
 
@@ -252,7 +267,7 @@ define([
                                 //dialogs.notify('알림', '장바구니에 등록되었습니다. 계속 쇼핑 하시겠습니까?', {size: 'md'});
                                 //$scope.openViewScrapModal($scope.item.CART, 'lg');
 
-                                alert('찜목록으로 이동합니다.');
+                                alert('장바구니로 이동합니다.');
 
                                 $location.url('store/cart/list/'+$stateParams.menu);
                             })
