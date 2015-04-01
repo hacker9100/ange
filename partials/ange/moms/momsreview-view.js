@@ -85,6 +85,18 @@ define([
                 $scope.community = "이벤트 후기";
                 $scope.item.TARGET_GB = 'EVENT';
                 $scope.menu = 'experiencereview';
+            }else if ($stateParams.menu == 'bookreview') {
+                $scope.community = "서평단 후기";
+                $scope.item.TARGET_GB = 'BOOK';
+                $scope.menu = 'bookreview';
+            } else if ($stateParams.menu == 'dolreview') {
+                $scope.community = "앙쥬돌 후기";
+                $scope.item.TARGET_GB = 'DOL';
+                $scope.menu = 'dolreview';
+            }else if ($stateParams.menu == 'storereview') {
+                $scope.community = "스토어 후기";
+                $scope.item.TARGET_GB = 'STORE';
+                $scope.menu = 'storereview';
             }
 
             if ($stateParams.menu == 'experiencereview') {

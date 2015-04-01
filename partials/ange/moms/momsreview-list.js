@@ -77,7 +77,7 @@ define([
                 $scope.community = "이벤트 후기";
                 $scope.search['TARGET_GB'] = 'EVENT';
             } else if ($stateParams.menu == 'bookreview') {
-                $scope.community = "북카페 후기";
+                $scope.community = "서평단 후기";
                 $scope.search['TARGET_GB'] = 'BOOK';
             } else if ($stateParams.menu == 'dolreview') {
                 $scope.community = "앙쥬돌 후기";
