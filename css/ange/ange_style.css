@@ -96,6 +96,15 @@ body {
 
 .ange_black { color: #2d2f30; }     /*먹*/
 
+
+.ange_customBtn_0 {
+    padding: 0;
+    margin: 0;
+    border: none;
+    /*opacity: 0.75;*/
+    background-color: transparent;
+}
+
 .panel_ad {
     position:relative;
     float:left;

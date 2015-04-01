@@ -14,7 +14,7 @@
 }
 
 .company_tabs.center {
-    float:left;
+    display:inline-block;
     width:1%;
     background: none;
     border:none;
@@ -32,6 +32,20 @@
     background-color: #fff;
     cursor: default;
     z-index: 99;
+}
+
+@media screen and (max-width: 768px) {
+    .company_tabs {
+        float:none;
+        width: 100%;
+        border-radius: 5px;
+    }
+    .company_tabs.center {
+        display: none;
+    }
+    .company_tabs.selected {
+        border-bottom:1px solid #ddd;
+    }
 }
 
 .company_intro_wrap {
@@ -165,78 +179,108 @@
     margin-bottom: 40px;
 }
 
-p.sub{margin-top:5px; width:310px; font-size:1.2em; background-color:#feffcf; font-weight:600; color:#000;letter-spacing:-1px;}
-
-.mok_introtxt {
-    float:left;
-    width:95%;
-    height:280px;
-    color:#666;
+.ange_markbox {
+    padding:12px 8px;
     word-break: keep-all;
-    line-height:20px;
-    text-align:justify;
-    padding:4px 12px;
+    font-weight:600;
+    font-size:1.21em;
+    text-align:center;
+    background-color: #feffcf;
+    width:100%;
 }
 
-.company_introtxt {
-    float:left;
-    width:60%;
-    height:350px;
-    color:#666;
-    word-break: keep-all;
-    line-height:20px;
+.company_bodytxt {
+    width:100%;
     text-align:justify;
-    padding:4px 12px;
+    word-break:keep-all;
+    padding:8px;
+    font-size:0.86em;
+    margin:4px auto;
 }
 
-.company_introtxt2 {
-    float:left;
-    width:60%;
-    height:380px;
-    color:#666;
-    word-break: keep-all;
-    line-height:20px;
-    text-align:justify;
-    padding:4px 12px;
+.company_intro_section {
+    margin-bottom:38px;
 }
 
-.company_introtxt3 {
-    float:left;
-    width:60%;
-    height:440px;
-    color:#666;
-    word-break: keep-all;
-    line-height:20px;
-    text-align:justify;
-    padding:4px 12px;
+.company_mtitle {
+    font-weight:600;
+    font-size:1.12em;
+    margin-bottom:10px;
+    line-height: 1em;
 }
 
-.company_intro {
-    float:right;
-    width:35%;
-    height:250px;
-    padding-top:70px;
-    text-align:center
-} /*company_img*/
+/*p.sub{margin-top:5px; width:310px; font-size:1.2em; background-color:#feffcf; font-weight:600; color:#000;letter-spacing:-1px;}*/
 
-.company_intro2 {
-    float:right;
-    width:35%;
-    height:300px;
-    padding-top:120px;
-    text-align:center
-} /*company_img*/
+/*.mok_introtxt {*/
+    /*float:left;*/
+    /*width:95%;*/
+    /*height:280px;*/
+    /*color:#666;*/
+    /*word-break: keep-all;*/
+    /*line-height:20px;*/
+    /*text-align:justify;*/
+    /*padding:4px 12px;*/
+/*}*/
 
-.company_intro3 {
-    float:right;
-    width:35%;
-    height:330px;
-    padding-top:140px;
-    text-align:center
-} /*company_img*/
+/*.company_introtxt {*/
+    /*float:left;*/
+    /*width:60%;*/
+    /*height:350px;*/
+    /*color:#666;*/
+    /*word-break: keep-all;*/
+    /*line-height:20px;*/
+    /*text-align:justify;*/
+    /*padding:4px 12px;*/
+/*}*/
 
-.company_introtxt_title {font-size:1.438em; color:#000; font-weight:600;}
-.company_introtxt_title2 {font-size:1.7em; color:#000; font-weight:700;}
-.company_introtxt_title span.num {position:relative;top:6px;}
-.angeBtn {position:relative;width:100%; text-align:center;}
-.angeBtn a {}
+/*.company_introtxt2 {*/
+    /*float:left;*/
+    /*width:60%;*/
+    /*height:380px;*/
+    /*color:#666;*/
+    /*word-break: keep-all;*/
+    /*line-height:20px;*/
+    /*text-align:justify;*/
+    /*padding:4px 12px;*/
+/*}*/
+
+/*.company_introtxt3 {*/
+    /*float:left;*/
+    /*width:60%;*/
+    /*height:440px;*/
+    /*color:#666;*/
+    /*word-break: keep-all;*/
+    /*line-height:20px;*/
+    /*text-align:justify;*/
+    /*padding:4px 12px;*/
+/*}*/
+
+/*.company_intro {*/
+    /*float:right;*/
+    /*width:35%;*/
+    /*height:250px;*/
+    /*padding-top:70px;*/
+    /*text-align:center*/
+/*} *//*company_img*/
+
+/*.company_intro2 {*/
+    /*float:right;*/
+    /*width:35%;*/
+    /*height:300px;*/
+    /*padding-top:120px;*/
+    /*text-align:center*/
+/*} *//*company_img*/
+
+/*.company_intro3 {*/
+    /*float:right;*/
+    /*width:35%;*/
+    /*height:330px;*/
+    /*padding-top:140px;*/
+    /*text-align:center*/
+/*} *//*company_img*/
+
+/*.company_introtxt_title {font-size:1.438em; color:#000; font-weight:600;}*/
+/*.company_introtxt_title2 {font-size:1.7em; color:#000; font-weight:700;}*/
+/*.company_introtxt_title span.num {position:relative;top:6px;}*/
+/*.angeBtn {position:relative;width:100%; text-align:center;}*/
+/*.angeBtn a {}*/

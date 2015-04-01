@@ -37,7 +37,8 @@ define([
         $scope.selectIdx = 1;
 
         $scope.selectSubIdx = 1;
-        $scope.selectBoard = 'board';
+        //$scope.selectBoard = 'board';
+        $scope.selectBoard = '';
 
         var condition = [{name: "제목+내용", value: "SUBJECT+BODY"}, {name: "작성자", value: "NICK_NM"}, {name: "말머리", value: "HEAD"}];
         $scope.conditions = condition;
@@ -94,10 +95,12 @@ define([
         $scope.click_selectTab = function (idx){
             $scope.selectIdx = idx;
 
-            if(idx == 1){
+            if (idx == 1){
                 $scope.selectSubIdx = 1;
-            }else {
+            } else if (idx == 2) {
                 $scope.selectSubIdx = 5;
+            } else {
+                $scope.selectSubIdx = 7;
             }
         }
 
