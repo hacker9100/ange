@@ -255,6 +255,9 @@ define([
                $scope.season_gb = 'SAMPLE2';
            }
 
+            $scope.search.SORT = 'ada_date_regi';
+            $scope.search.ORDER = 'DESC'
+
            $scope.getList('ange/event', 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var target_gb = data[0].ada_type;
