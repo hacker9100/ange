@@ -120,7 +120,11 @@ define([
 
                     $scope.item.NO = data[0].NO;
 
-                    $scope.item.DIRECT_PRICE  = data[0].DIRECT_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                    if(data[0].DIRECT_PRICE == null){
+                        $scope.item.DIRECT_PRICE = 0;
+                    }else{
+                        $scope.item.DIRECT_PRICE  = data[0].DIRECT_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                    }
 
                     if(data[0].AUCTION_AMOUNT == null){
                         $scope.item.AUCTION_AMOUNT = 0;
