@@ -44,15 +44,9 @@ define([
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];
 
-//        $(document).ready( function() {
-//            $("#click_board").on("click", function() {
-//                $("#load_board").load("/partials/ange/club/clubboard-list.html");
-//            });
-//
-//            $("#click_clinic").on("click", function() {
-//                $("#load_clinic").load("/partials/ange/club/clubclinic-list.html");
-//            });
-//        });
+        //$scope.search.CONDITION.value = condition[0].value;
+
+
 
         /********** 초기화 **********/
 
@@ -83,9 +77,17 @@ define([
                 }else{
                     $scope.PAGE_NO = getParam("page_no")
                 }
+//
                 if(getParam("condition") != undefined){
-                    $scope.search.CONDITION.value = getParam("condition");
+//                    //$scope.search.CONDITION.value = getParam("condition");
+//                    console.log('getParam("condition") = '+getParam("condition"));
+//                    //$scope.search.CONDITION.value = getParam("condition");
+//                    condition[0].value = getParam("condition");
+//                    $scope.search.CONDITION.value = condition[0].value;
+                }else{
+                    $scope.search.CONDITION.value = condition[0].value;
                 }
+
                 $scope.search.KEYWORD = getParam("keyword");
             }
 

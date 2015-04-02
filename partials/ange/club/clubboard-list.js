@@ -32,6 +32,7 @@ define([
         $scope.conditions = condition;
         $scope.search.CONDITION = condition[0];
 
+        $scope.search.CONDITION.value = condition[0].value;
         var date = new Date();
 
         // GET YYYY, MM AND DD FROM THE DATE OBJECT
