@@ -816,33 +816,33 @@
 //                    }
 
                     $sql = "INSERT INTO COM_FILE
-                    (
-                        FILE_NM
-                        ,FILE_ID
-                        ,PATH
-                        ,FILE_EXT
-                        ,FILE_SIZE
-                        ,THUMB_FL
-                        ,REG_DT
-                        ,FILE_ST
-                        ,FILE_GB
-                        ,FILE_ORD
-                        ,TARGET_NO
-                        ,TARGET_GB
-                    ) VALUES (
-                        '".$file[name]."'
-                        , '".$insert_path[$i][uid]."'
-                        , '".$insert_path[$i][path]."'
-                        , '".$file[type]."'
-                        , '".$file[size]."'
-                        , '0'
-                        , SYSDATE()
-                        , 'C'
-                        , '".$file[kind]."'
-                        , '".$i."'
-                        , '".$no."'
-                        , 'BOARD'
-                    )";
+                            (
+                                FILE_NM
+                                ,FILE_ID
+                                ,PATH
+                                ,FILE_EXT
+                                ,FILE_SIZE
+                                ,THUMB_FL
+                                ,REG_DT
+                                ,FILE_ST
+                                ,FILE_GB
+                                ,FILE_ORD
+                                ,TARGET_NO
+                                ,TARGET_GB
+                            ) VALUES (
+                                '".$file[name]."'
+                                , '".$insert_path[$i][uid]."'
+                                , '".$insert_path[$i][path]."'
+                                , '".$file[type]."'
+                                , '".$file[size]."'
+                                , '0'
+                                , SYSDATE()
+                                , 'C'
+                                , '".$file[kind]."'
+                                , '".$i."'
+                                , '".$no."'
+                                , 'BOARD'
+                            )";
 
                     $_d->sql_query($sql);
 
@@ -853,7 +853,139 @@
                 }
             }
 
-            MtUtil::_d("------------>>>>> mysql_errno : ".$_d->mysql_errno);
+            if ($_model[BOARD_GB] == "CLINIC") {
+                $sql = "SELECT
+                            C.COMM_NM, C.COMM_MG_ID, C.COMM_MG_NM, C.EN_SMS_FL, U.USER_NM, U.EMAIL, U.PHONE_2
+                        FROM
+                            ANGE_COMM C
+                            LEFT OUTER JOIN COM_USER U ON C.COMM_MG_ID = U.USER_ID
+                        WHERE
+                            C.NO = '".$_model[COMM_NO]."'
+                        ";
+
+                $data = $_d->sql_fetch($sql);
+
+                if ($data[EN_SMS_FL] == 'Y') {
+                    $sql = "insert into em_smt_tran
+                            (
+                                date_client_req,
+                                content,
+                                callback,
+                                service_type,
+                                broadcast_yn,
+                                msg_status,
+                                recipient_num
+                            )
+                            values
+                            (
+                                sysdate(),
+                                '[앙쥬] 전문가 상담실에 질문을 게시했습니다.',
+                                '023334650',
+                                '0',
+                                'N',
+                                '1',
+                                '".$data['PHONE_2']."'
+                            )";
+
+                    $_d->sql_query($sql);
+
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+                }
+
+                if (isset($data[EMAIL]) && $data[EMAIL] != "") {
+                    $from_email = __SMTP_USR__;
+                    $from_user = __SMTP_USR_NM__;
+//                    $to = $data['EMAIL'];
+//                    $to_user = $data['USER_NM'];
+                    $to = "hacker9100@gmail.com";
+                    $to_user = "김성환";
+                    $subject = "[앙쥬] 전문가 상담실에 질문을 게시했습니다.";
+                    $message = "<html>
+                                <head>
+                                <title>@ange_member</title>
+                                <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+                                </head>
+                                <body bgcolor='#FFFFFF' leftmargin='0' topmargin='0' marginwidth='0' marginheight='0'>
+                                <!-- Save for Web Slices (@ange_member.psd) -->
+                                <table id='Table_01' width='676' border='0' cellpadding='0' cellspacing='0'>
+                                    <tr style='1px solid red'>
+                                        <td align='center' style='background-image:url(".BASE_URL."/imgs/ange/mail/bg.jpg)'>
+                                            <table width='423' border='0' >
+                                                <tr>
+
+                                                    <td><img src='".BASE_URL."/imgs/ange/mail/01.jpg' width='64' height='17'></td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <th width='22%' align='left' valign='middle' style='padding: 10px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC; background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>이름</th>
+                                                    <td width='78%' align='left' valign='middle' style='padding: 13px 10px 10px; border:1px solid #CCC;  font-size:12px; font:'돋움'''>".$_SESSION['name']."</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal;border:1px solid #CCC;  background-color:#f2f2f2;  font-size:12px; font:'돋움'' scope='row'>아이디</th>
+                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움' border-bottom-style: solid;'>".$_SESSION['uid']."</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC;  background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>닉네임</th>
+                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움'border-bottom-style: solid;'>".$_SESSION['nick']."</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC;  background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>질문</th>
+                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움'border-bottom-style: solid;'>".$_model[SUBJECT]."</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC;  background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>내용</th>
+                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움'border-bottom-style: solid;'>".$_model[BODY]."</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style='height:30px'>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align='center' style='background-image:url(".BASE_URL."/imgs/ange/mail/bg.jpg)'>
+                                            <form action='".BASE_URL."/serverscript/services/external/interface.php' method='post'>
+                                            <input type='hidden' id='_method' name='_method' value='POST'>
+                                            <input type='hidden' id='_type' name='_type' value='clinic'>
+                                            <input type='hidden' id='parent_no' name='parent_no' value='".$no."'>
+                                            <input type='hidden' id='comm_no' name='comm_no' value='".$_model[COMM_NO]."'>
+
+                                            <table width='423' border='0' >
+                                                <tr>
+                                                    <th width='22%' align='left' valign='middle' style='padding: 10px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC; background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>주제</th>
+                                                    <td width='78%' align='left' valign='middle' style='padding: 13px 10px 10px; border:1px solid #CCC;  font-size:12px; font:'돋움'''><input type='text' id='subject' name='subject' value='[RE]".$_model[SUBJECT]."'></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal;border:1px solid #CCC;  background-color:#f2f2f2;  font-size:12px; font:'돋움'' scope='row'>답변</th>
+                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움' border-bottom-style: solid;'><textarea id='body' name='body' style='width:100%; height:200px'></textarea></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan='2' align='center' valign='middle' >
+                                                        <input type='submit' value='전송'>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- End Save for Web Slices -->
+                                </body>
+                                </html>";
+
+                    MtUtil::_d("------------>>>>> mail : ");
+                    MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
+                }
+            }
 
             if($err > 0){
                 $_d->sql_rollback();

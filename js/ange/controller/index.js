@@ -107,6 +107,7 @@ define([
     '../../../partials/ange/infodesk/infodeskboard-view',
     '../../../partials/ange/infodesk/infodeskboard-edit',
     '../../../partials/ange/infodesk/infodeskforgot-request',
+    '../../../partials/ange/infodesk/infodeskdrop-request',
     '../../../partials/ange/infodesk/infodesksignon',
 
     // 앙쥬클럽
