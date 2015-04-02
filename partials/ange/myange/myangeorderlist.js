@@ -407,7 +407,7 @@ define([
             var dialog = dialogs.confirm('알림', '주문취소를 하시겠습니까.', {size: 'md'});
 
             dialog.result.then(function(btn){
-                $scope.item.ORDER_ST = 1;
+                $scope.item.ORDER_ST = 5;
                 $scope.item.PRODUCT_NO = item.PRODUCT_NO;
                 $scope.item.PRODUCT_NM = item.PRODUCT_NM;
                 $scope.item.PRICE = item.SUM_PRICE;

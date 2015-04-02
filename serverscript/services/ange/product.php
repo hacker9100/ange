@@ -179,6 +179,7 @@ switch ($_method) {
                         WHERE
                             1 = 1
                             AND PARENT_NO = 0
+                            AND SUM_IN_CNT - SUM_OUT_CNT > 0
                             ".$search_where."
                          ORDER BY PRICE ASC
                          ".$limit."
@@ -192,6 +193,7 @@ switch ($_method) {
                         WHERE
                             1 = 1
                             AND PARENT_NO = 0
+                            AND SUM_IN_CNT - SUM_OUT_CNT > 0
                             ".$search_where."
                     ) CNT
                     ";
