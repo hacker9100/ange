@@ -24,9 +24,20 @@
 							ul.cell_day>li { float: left; padding: 10px 10px; width: 14%; height: 80px; background-color: #f0f0f0; list-style-type: none; text-align: center; border: 1px solid #fff; }
 							ul.cell_day>li.blind { background-color: #f0f0f0; color: #ccc; }
 							ul.cell_day>li.normal { background-color: #eee; color: #000; }
+							ul.cell_day>li.event { background-color: #39f; color: #000; }
+							
+							ul.cell_list { width: 100%; }
+							ul.cell_list>li { padding: 10px 10px; background-color: #eee; list-style-type: none; text-align: left; border: 1px solid #fff; } 
 							</style>
 							
 							<div style="width: 800px;">
+								<div style="clear: both; width: 400px; height: 50px; margin: 0px auto;">
+									<a href="javascript:void(0);" ng-click="moveCalendar(search.year,search.month,-1);" style="float: left; border-radius: 5px; background-color: #aaa; color: #fff; padding: 0px 10px;">이전달</a>
+									<div id="view_month" style="float: left; font-size: 2em; padding: 0px 50px;">
+										{{search.year}}. {{search.month}}
+									</div>
+									<a href="javascript:void(0);" ng-click="moveCalendar(search.year,search.month,1);" style="float: left; border-radius: 5px; background-color: #aaa; color: #fff; padding: 0px 10px;">다음달</a>
+								</div>
 								<ul class="cell_dayname">
 									<li>SUN</li>
 									<li>MOM</li>
@@ -37,11 +48,13 @@
 									<li>SAT</li>
 								</ul>
 								<!-- item.type = normal / hidden / event -->
-								<ul class="cell_day" ng-repeat="item in data">
-									<li class="{{item.type}}">{{item.day}}</li>
+								<ul class="cell_day" ng-repeat="item in data.calendar">
+									<li class="{{item.type}}" title="{{item.event}}">{{item.day}}<br/></li>
 								</ul>
-							
-							
+								
+								<ul class="cell_list" ng-repeat="item in data.list" style="">
+									<li class="{{item.type}}" title="{{item.event}}">{{item.day}}일 {{item.event}}<br/></li>
+								</ul>
 							</div>
 
                         </div><!-- /.sub_contents_wrap -->

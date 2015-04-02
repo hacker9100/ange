@@ -234,6 +234,10 @@
                                     <i class="glyphicon glyphicon-edit"></i>
                                     <span>태스크 편집</span>
                                 </button>
+                                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_deleteTask($index);" ng-show="isTask && (role == 'CMS_ADMIN' || role == 'MANAGER')">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    <span>태스크 삭제</span>
+                                </button>
                                 <button type="button" class="btn btn-primary btn-xs start" ng-click="click_showViewContent(item.NO);" ng-show="!isTask">
                                     <i class="glyphicon glyphicon-book"></i>
                                     <span>{{viewContentBtn}}</span>

@@ -152,5 +152,6 @@ define([
         };
 
         $scope.getPartnerList();
+
 	}]);
 });

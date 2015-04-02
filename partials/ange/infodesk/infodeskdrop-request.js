@@ -27,17 +27,23 @@ define([
                 return;
             }
 
-            $scope.deleteItem('com/user', 'terminate', $rootScope.uid, false)
-                .then(function(){
-                    $scope.logout($rootScope.uid).then( function(data) {
+            var dialog = dialogs.confirm('알림', '탈퇴 하시겠습니까.', {size: 'md'});
 
-                        dialogs.notify('알림', '정상적으로 탈퇴 되었습니다.', {size: 'md'});
-                        $location.url('/main');
-                    });
+            dialog.result.then(function(btn){
+                $scope.deleteItem('com/user', 'terminate', $rootScope.uid, false)
+                    .then(function(){
+                        $scope.logout($rootScope.uid).then( function(data) {
+
+                            dialogs.notify('알림', '정상적으로 탈퇴 되었습니다.', {size: 'md'});
+                            $location.url('/main');
+                        });
 
 
-                })
-                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                    })
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
         };
 
         $scope.init();

@@ -44,7 +44,11 @@
                                 <img src="/imgs/ange/_blank.gif" style="background-image: url('{{item.MAIN_FILE}}'); background-position: center center; background-size: cover;" width="100%" />
                             </div>
                             <div style="height:36px; overflow:hidden; text-overflow:ellipsis;">{{item.PRODUCT_NM}}</div>
-                            <div class="people_photo_info"><span class="table_blue">{{item.PRICE}}</span> P ({{item.SUM_IN_CNT - item.SUM_OUT_CNT}})</div>
+                            <div class="people_photo_info">
+                                <span class="table_blue">{{item.PRICE}}</span> {{item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원'}}
+                                ({{item.SUM_IN_CNT - item.SUM_OUT_CNT}})
+                                <span style="color:red; font-weight:bold;">{{item.SOLD_OUT == 'Y' ? '품절' : ''}}</span>
+                            </div>
 
                             <div style="width:100%; margin-top:15px;">
                                 <button class="btn btn-default btn-xs fileinput-button" data-ng-click="click_showEditProduct(item)">

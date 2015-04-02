@@ -907,18 +907,52 @@
             break;
 
         case "DELETE":
-            if (!isset($_key) || $_key == '') {
-                $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
-            }
+            if ($_type == "terminate") {
+                if (!isset($_key) || $_key == '') {
+                    $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
+                }
 
-            $sql = "DELETE FROM CMS_TASK WHERE NO = ".$_key;
+                $err = 0;
+                $msg = "";
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
+                $_d->sql_beginTransaction();
+
+                $sql = "INSERT INTO CMS_TASK_DEL
+                            SELECT * FROM CMS_TASK WHERE NO = '".$_key."'";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                $sql = "DELETE FROM CMS_TASK WHERE NO = '".$_key."'";
+
+                $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("삭제실패입니다:".$msg);
+                } else {
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
             } else {
-                $_d->succEnd($no);
+                if (!isset($_key) || $_key == '') {
+                    $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
+                }
+
+                $sql = "DELETE FROM CMS_TASK WHERE NO = ".$_key;
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("삭제실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->succEnd($no);
+                }
             }
 
             break;

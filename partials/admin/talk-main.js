@@ -61,7 +61,7 @@ define([
 
             $scope.search.YEAR = nowYear;
             $scope.search.MONTH = (nowMonth < 10) ? '0' + nowMonth : nowMonth + '';
-            $scope.search.DAY = nowDay;
+            $scope.search.DAY = (nowDay < 10) ? '0' + nowDay : nowDay + '';
 
             $scope.click_showEditTalk();
         };

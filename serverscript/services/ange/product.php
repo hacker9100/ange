@@ -51,7 +51,8 @@ switch ($_method) {
             $sql = "SELECT
                         NO, PRODUCT_NM, PRODUCT_GB, COMPANY_NO, COMPANY_NM, URL, BODY, PRICE, STOCK_FL, SUM_IN_CNT, SUM_OUT_CNT, NOTE, DELEIVERY_PRICE,
                         DELEIVERY_ST, DIRECT_PRICE, ORDER_YN,(SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
-                        (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, PARENT_NO, SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT
+                        (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, PARENT_NO, SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT,
+                        IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT
                     FROM
                         ANGE_PRODUCT AP
                     WHERE
@@ -152,6 +153,10 @@ switch ($_method) {
                 $search_where .= "AND CATEGORY_NO = '".$_search[CATEGORY_NO]."' ";
             }
 
+            if (isset($_search[SOLD_OUT]) && $_search[SOLD_OUT] == "N") {
+                $search_where .= "AND SUM_IN_CNT - SUM_OUT_CNT > 0 ";
+            }
+
             for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
                 $category = $_search[CATEGORY][$i];
                 $search_where .= "AND CATEGORY_NO = '".$category[NO]."' ";
@@ -168,20 +173,20 @@ switch ($_method) {
 
             $sql = "SELECT
                         NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, TOTAL_COUNT, PERIOD, ORDER_YN, DIRECT_PRICE,AUCTION_AMOUNT,AUCTION_COUNT,
-                        SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT, COMPANY_NM
+                        SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT, SOLD_OUT, COMPANY_NM
                     FROM
                     (
                         SELECT NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, PERIOD, ORDER_YN, DIRECT_PRICE,
                                 (SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
-                                (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, COMPANY_NM
+                                (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, COMPANY_NM,
+                                IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT
                         FROM
                             ANGE_PRODUCT AP
                         WHERE
                             1 = 1
                             AND PARENT_NO = 0
-                            AND SUM_IN_CNT - SUM_OUT_CNT > 0
                             ".$search_where."
-                         ORDER BY PRICE ASC
+                         ORDER BY SOLD_OUT ASC, PRICE ASC
                          ".$limit."
                     ) AS DATA,
                     (SELECT @RNUM := 0) R,
@@ -193,7 +198,6 @@ switch ($_method) {
                         WHERE
                             1 = 1
                             AND PARENT_NO = 0
-                            AND SUM_IN_CNT - SUM_OUT_CNT > 0
                             ".$search_where."
                     ) CNT
                     ";
