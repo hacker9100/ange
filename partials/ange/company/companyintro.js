@@ -63,6 +63,35 @@ define([
             $anchorScroll();
         }
 
+        $scope.download_click = function (no) {
+            switch(no){
+                case 1:
+                    window.open ('/imgs/ange/temp/20150324_angemediakit.pdf', '_blank');
+                    //location.href = '/imgs/ange/temp/20150324_angemediakit.pdf';
+                    break;
+                case 2:
+                    window.open ('/imgs/ange/temp/201503_angebeakwa.pdf', '_blank');
+                    //$location.url = '/imgs/ange/temp/201503_angebeakwa.pdf';
+                    break;
+                case 3:
+                    alert('준비중입니다');
+                    //window.open ('/imgs/ange/temp/20150324_angemediakit.pdf', '_blank');
+                    //$location.url = '/imgs/ange/temp/20150324_angemediakit.pdf';
+                    break;
+                case 4:
+                    window.open ('/imgs/ange/temp/201503_angedisplayad.pdf', '_blank');
+                    //$location.url = '/imgs/ange/temp/201503_angedisplayad.pdf';
+                    break;
+                case 5:
+                    window.open ('/imgs/ange/temp/201503_angestudio.pdf', '_blank');
+                    //$location.url = '/imgs/ange/temp/201503_angestudio.pdf';
+                    break;
+                default:
+                    alert('다운로드 경로를 찾을 수 없습니다.');
+                    break;
+            }
+        }
+
         $scope.getPartnerList = function () {
             $scope.getList('ange/company', 'list', {}, $scope.search, true)
                 .then(function(data){

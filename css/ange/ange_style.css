@@ -101,8 +101,12 @@ body {
     padding: 0;
     margin: 0;
     border: none;
-    /*opacity: 0.75;*/
+    opacity: 0.75;
     background-color: transparent;
+}
+
+.ange_customBtn_0:hover {
+    opacity: 1;
 }
 
 .panel_ad {
