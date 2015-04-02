@@ -16,6 +16,10 @@ define([
         // 초기화
         $scope.init = function(session) {
 			
+			// $scope.search.year 가 null 일때 당해 입력
+			// $scope.search.month 가 null 일때 당월 입력
+			$scope.search = {"year":"2015","month":"4"};
+			
             $scope.community = "캘린더";
 			$scope.monthtable = "<b>Hi</b>";
 			
@@ -33,7 +37,7 @@ define([
 								"11":{ "day":"1","event":"" },
 								"12":{ "day":"1","event":"" },
 								"13":{ "day":"2","event":"" } 
-							}
+							};
 							
 			
 			$scope.getEventList();
@@ -42,10 +46,8 @@ define([
 		
 		// 일반 게시판 목록 조회
         $scope.getEventList = function () {
-
-            //$scope.search.BOARD_GB = 'BOARD';
-
-            $scope.getList('ange/calendar', 'list', {USER_ID: "test004", YEAR: "2015", MONTH:"3" }, $scope.search, true)
+			
+            $scope.getList('ange/calendar', 'list', {}, {"year":$scope.search.year,"month":$scope.search.month}, true)
                 .then(function(data){
 					
                     $scope.data = data;
@@ -56,8 +58,27 @@ define([
 				});
         };
 
-
+		$scope.moveCalendar = function (p_year,p_month,p_add) {
+			
+			p_year = parseInt(p_year);
+			p_month = parseInt(p_month)+p_add;
+			
+			if (p_month>12) { 
+				p_month=1;
+				p_year++; 
+			}
+			if (p_month<1) { 
+				p_month=12;
+				p_year--; 
+			}
+			
+			$scope.search.year = p_year;
+			$scope.search.month = p_month;
+            $scope.getEventList();
+        };
+		
         $scope.init();
+		
 
     }]);
 });

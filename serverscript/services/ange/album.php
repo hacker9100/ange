@@ -92,6 +92,10 @@
                     $search_where .= "AND PARENT_NO = '{$_search['PARENT_NO']}' ";
                 }
 
+                if (isset($_search['PARENT_NO_NOT']) && $_search['PARENT_NO_NOT'] != "") {
+                    $search_where .= "AND PARENT_NO <> '{$_search['PARENT_NO_NOT']}' ";
+                }
+
                 if (isset($_search['COMM_NO_IN]']) && $_search['COMM_NO_IN'] != "") {
                     $search_where .= "AND COMM_NO IN ({$_search['COMM_NO_IN']}) ";
                 }

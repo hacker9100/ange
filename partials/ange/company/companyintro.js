@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('companyintro', ['$rootScope', '$scope', '$element', '$window', '$location', '$anchorScroll', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $window, $location, $anchorScroll, dialogs, CONSTANT) {
+    controllers.controller('companyintro', ['$rootScope', '$scope', '$window', '$location', '$anchorScroll', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $window, $location, $anchorScroll, dialogs, CONSTANT) {
 
         /********** 초기화 **********/
         $scope.search = {COMPANY_GB: 'PARTNER'};

@@ -55,6 +55,7 @@ define([
 
         $scope.community = "마일리지 경매소";
         $scope.search.PRODUCT_GB = 'AUCTION';
+        $scope.search.SOLD_OUT = 'N';
         $scope.menu = 'auction';
 
         // 초기화

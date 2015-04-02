@@ -373,7 +373,7 @@ define([
 
         // 슬라이드 이미지 조회
         $scope.getProductList = function (api) {
-            $scope.getList('ange/product', 'list', {NO:0, SIZE:9}, {FILE: true, PRODUCT_GB: 'MILEAGE', NOT_PRODUCT_NO: $stateParams.id}, true)
+            $scope.getList('ange/product', 'list', {NO:0, SIZE:9}, {FILE: true, PRODUCT_GB: 'MILEAGE', NOT_PRODUCT_NO: $stateParams.id, SOLD_OUT: 'N'}, true)
                 .then(function(data){
                     for (var i in data) {
                         data[i].PRODUCT_FILE = CONSTANT.BASE_URL + data[i].FILE.PATH + 'thumbnail/' + data[i].FILE.FILE_ID;

@@ -129,6 +129,18 @@ define([
             $location.url('/task/edit/'+item.NO);
         };
 
+        // 태스크 삭제
+        $scope.click_deleteTask = function (item) {
+            if (!($rootScope.role == 'CMS_ADMIN' || $rootScope.role == 'MANAGER')) {
+                dialogs.notify('알림', "삭제 권한이 없습니다.", {size: 'md'});
+                return;
+            }
+
+            $scope.deleteItem('cms/task', 'item', item.NO, false)
+                .then(function(){  })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
+
         // 콘텐츠 조회 화면 이동
         $scope.click_showViewContent = function (key) {
             $location.url('/'+$stateParams.menu+'/view/'+key);
@@ -158,7 +170,7 @@ define([
                         $modalInstance.close();
                     }
 
-                }], id, {size: 'lg', keyboard: true, backdrop: false}, $scope);
+                }], id, {size: 'lg', keyboard: true, backdrop: 'static'}, $scope);
             dlg.result.then(function(){
 
             },function(){
@@ -196,14 +208,19 @@ define([
 
             var task = $scope.list[idx];
 
-            if (task.PHASE == '30') {
-                dialogs.notify('알림', '완료 상태의 태스크는 삭제할 수 없습니다.', {size: 'md'});
-                return;
-            }
+//            if (task.PHASE == '30') {
+//                dialogs.notify('알림', '완료 상태의 태스크는 삭제할 수 없습니다.', {size: 'md'});
+//                return;
+//            }
+            var dialog = dialogs.confirm('알림', '태스크를 삭제 하시겠습니까.', {size: 'md'});
 
-            $scope.deleteItem('cms/task', 'item', task.NO, true)
-                .then(function(){dialogs.notify('알림', '삭제 되었습니다.', {size: 'md'});})
-                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            dialog.result.then(function(btn){
+                $scope.deleteItem('cms/task', 'terminate', task.NO, true)
+                    .then(function(){dialogs.notify('알림', '삭제 되었습니다.', {size: 'md'}); $scope.list.splice(idx, 1); })
+                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            }, function(btn) {
+                return;
+            });
         };
 
         // 페이지 사이즈

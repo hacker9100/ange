@@ -50,10 +50,12 @@ define([
         if ($stateParams.menu == 'mileagemall') {
             $scope.community = "마일리지몰";
             $scope.search.PRODUCT_GB = 'MILEAGE';
+            $scope.search.SOLD_OUT = 'N';
             $scope.menu = 'mileagemall';
         } else {
             $scope.community = "앙쥬커머스";
             $scope.search.PRODUCT_GB = 'CUMMERCE';
+            $scope.search.SOLD_OUT = 'N';
             $scope.menu = 'cummerce';
         }
 
