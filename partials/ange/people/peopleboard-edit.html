@@ -183,7 +183,7 @@
                                 </div> <!-- /.peopleboard_edit_topwrap -->
 
                                 <!-- Ediotr Box -->
-                                <div class="row people_editor_wrap">
+                                <div ng-show="!mobile" class="row people_editor_wrap">
                                     <div class="col-xs-12 people_editor">
                                         <!--에디터 넣을자리 <br/>-->
                                         <!--- (글꼴, 글색, 글크기(12,14,16,18pt)/  <br/>-->
@@ -197,7 +197,15 @@
                                         </div>
                                     </div><!-- /.people_editor -->
                                 </div><!-- /.row -->
+
+                                <div ng-show="mobile" class="row people_editor_mobilewrap">
+                                    <div class="col-xs-12 people_editor">
+                                        <div class="form-control people_mobile_editable" contenteditable="true" ng-bind-html="renderHtml(item.BODY)">
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- /Ediotr  Box -->
+
 
                                 <!-- Option-->
                                 <div class="row">
