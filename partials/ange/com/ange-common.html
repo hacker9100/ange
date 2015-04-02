@@ -1,11 +1,18 @@
-<div ng-include=" '/partials/ange/com/ui-gnb.html' "></div>
+<div class="panel_ad" ng-include=" '/partials/ange/com/ui-ads.html' "></div>
 
-<div ng-class="ui_wraptype">
+<div id="common" class="panel_content">
+    <div ng-include=" '/partials/ange/com/ui-gnb.html' "></div>
 
-    <!--<div ng-if="menu[1] != 'main'" ng-include=" '/partials/ange/com/ui-lnb.html' "></div>-->
+    <div ng-class="ui_wraptype">
 
-    <ui-lnb></ui-lnb>
+        <!--<div ng-if="menu[1] != 'main'" ng-include=" '/partials/ange/com/ui-lnb.html' "></div>-->
 
-    <ange-body></ange-body>
+        <ui-lnb></ui-lnb>
 
+        <ange-body></ange-body>
+
+    </div>
 </div>
+
+<div class="panel_user" ng-include=" '/partials/ange/com/ui-utility.html' "></div>
+<!--<div ng-show="role != '' && role!=null">{{role}}</div>-->

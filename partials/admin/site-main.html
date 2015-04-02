@@ -215,6 +215,15 @@
                         <span style="float:left; margin:10px 0 0 15px;">하위메뉴</span>
                     </div>
                 </div>
+                <div ng-if="tab == 2 && item.COMM.COMM_GB == 'CLINIC'" class= "form-group form_basic_group" ng-class="{error: edit_form.item_st.$invalid}">
+                    <label class= "form_basic_label">SMS 수신여부 <span style="color:#b94a48">*</span></label>
+                    <div class="form_basic_input">
+                        <input ng-model="item.COMM.EN_SMS_FL" type="radio" value="Y" style="float: left; margin:13px 0 0 15px;" ng-checked>
+                        <span style="float:left; margin:10px 0 0 15px;">예</span>
+                        <input ng-model="item.COMM.EN_SMS_FL" type="radio" value="N" style="float: left; margin:13px 0 0 15px;">
+                        <span style="float:left; margin:10px 0 0 15px;">아니오</span>
+                    </div>
+                </div>
                 <div class= "form-group form_basic_group">
                     <label class= "form_basic_label">순번 <span style="color:#b94a48">*</span></label>
                     <div ng-if="tab == 0" class="form_basic_input">

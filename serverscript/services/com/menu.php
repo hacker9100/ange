@@ -365,6 +365,7 @@
                                 ,COMM_GB
                                 ,COMM_MG_ID
                                 ,COMM_MG_NM
+                                ,EN_SMS_FL
                             ) VALUES (
                                 '".$_model[MENU_ID]."'
                                 , '".$_model[MENU_NM]."'
@@ -372,6 +373,7 @@
                                 , '".$_model[COMM][COMM_GB]."'
                                 , '".$_model[COMM][COMM_MG_ID]."'
                                 , '".$_model[COMM][COMM_MG_NM]."'
+                                , '".$_model[COMM][EN_SMS_FL]."'
                             )";
 
                     $_d->sql_query($sql);
@@ -662,7 +664,8 @@
                                 SHORT_NM = '".$_model[MENU_NM]."',
                                 COMM_GB = '".$_model[COMM][COMM_GB]."',
                                 COMM_MG_ID = '".$_model[COMM][COMM_MG_ID]."',
-                                COMM_MG_NM = '".$_model[COMM][COMM_MG_NM]."'
+                                COMM_MG_NM = '".$_model[COMM][COMM_MG_NM]."',
+                                EN_SMS_FL = '".$_model[COMM][EN_SMS_FL]."'
                             WHERE
                                 NO = '".$_model[COMM][NO]."'
                             ";
