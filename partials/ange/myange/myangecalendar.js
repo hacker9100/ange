@@ -15,23 +15,48 @@ define([
 
         // 초기화
         $scope.init = function(session) {
+			
             $scope.community = "캘린더";
+			$scope.monthtable = "<b>Hi</b>";
+			
+			$scope.data = 	{ 
+								"1":{ "day":"1","event":"" },
+								"2":{ "day":"1","event":"" },
+								"3":{ "day":"1","event":"" },
+								"4":{ "day":"1","event":"" },
+								"5":{ "day":"1","event":"" },
+								"6":{ "day":"1","event":"" },
+								"7":{ "day":"1","event":"" },
+								"8":{ "day":"1","event":"" },
+								"9":{ "day":"1","event":"" },
+								"10":{ "day":"1","event":"" },
+								"11":{ "day":"1","event":"" },
+								"12":{ "day":"1","event":"" },
+								"13":{ "day":"2","event":"" } 
+							}
+							
+			
+			$scope.getEventList();
+        };
+		
+		
+		// 일반 게시판 목록 조회
+        $scope.getEventList = function () {
+
+            //$scope.search.BOARD_GB = 'BOARD';
+
+            $scope.getList('ange/calendar', 'list', {USER_ID: "test004", YEAR: "2015", MONTH:"3" }, $scope.search, true)
+                .then(function(data){
+					
+                    $scope.data = data;
+
+                })
+                ['catch'](function(error){
+					alert('error');
+				});
         };
 
-        /********** 이벤트 **********/
-        // 게시판 목록 이동
-//        $scope.click_showPeopleBoardList = function () {
-//            if ($stateParams.menu == 'angeroom') {
-//                $location.url('/people/angeroom/list');
-//            }
-//        };
 
-        /********** 화면 초기화 **********/
-/*        $scope.getSession()
-            .then($scope.sessionCheck)
-            .then($scope.init)
-            .then($scope.getCmsBoard)
-            ['catch']($scope.reportProblems);*/
         $scope.init();
 
     }]);

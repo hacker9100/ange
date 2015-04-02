@@ -98,7 +98,7 @@
                                                             <!--<div class="angeBtn">-->
                                                                 <!--<a href="#" target="_blank"><IMG SRC="/imgs/ange/intro/aBtn1.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></a>-->
                                                             <!--</div>-->
-                                                            <button class="ange_customBtn_0" style="opacity:.5;" disabled><IMG SRC="/imgs/ange/intro/aBtn1.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></button>
+                                                            <button ng-click="download_click(1)" class="ange_customBtn_0"><IMG SRC="/imgs/ange/intro/aBtn1.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></button>
                                                         </div>
                                                     </div>
 
@@ -129,7 +129,7 @@
                                                             <!--<div class="angeBtn">-->
                                                             <!--<a href="#" target="_blank"><IMG SRC="/imgs/ange/intro/aBtn1.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></a>-->
                                                             <!--</div>-->
-                                                            <button class="ange_customBtn_0" style="opacity:.5;" disabled><IMG SRC="/imgs/ange/intro/abbtn.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></button>
+                                                            <button ng-click="download_click(2)" class="ange_customBtn_0"><IMG SRC="/imgs/ange/intro/abbtn.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></button>
                                                         </div>
                                                     </div>
 
@@ -167,7 +167,7 @@
                                                             <!--<div class="angeBtn">-->
                                                             <!--<a href="#" target="_blank"><IMG SRC="/imgs/ange/intro/aBtn1.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></a>-->
                                                             <!--</div>-->
-                                                            <button class="ange_customBtn_0" style="opacity:.5;" disabled><IMG SRC="/imgs/ange/intro/aBtn3.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></button>
+                                                            <!--<button ng-click="download_click(3)" class="ange_customBtn_0" style="opacity:.5;" disabled><IMG SRC="/imgs/ange/intro/aBtn3.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></button>-->
                                                         </div>
                                                     </div>
 
@@ -205,7 +205,7 @@
                                                             <!--<div class="angeBtn">-->
                                                             <!--<a href="#" target="_blank"><IMG SRC="/imgs/ange/intro/aBtn1.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></a>-->
                                                             <!--</div>-->
-                                                            <button class="ange_customBtn_0" style="opacity:.5;" disabled><IMG SRC="/imgs/ange/intro/aBtn4.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></button>
+                                                            <button ng-click="download_click(4)" class="ange_customBtn_0"><IMG SRC="/imgs/ange/intro/aBtn4.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></button>
                                                         </div>
                                                     </div>
 
@@ -241,7 +241,7 @@
                                                             <!--<div class="angeBtn">-->
                                                             <!--<a href="#" target="_blank"><IMG SRC="/imgs/ange/intro/aBtn1.jpg" WIDTH="165" HEIGHT="28" BORDER="0" ALT=""></a>-->
                                                             <!--</div>-->
-                                                            <button class="ange_customBtn_0" style="opacity:.5;" disabled><IMG SRC="/imgs/ange/intro/wBtn.jpg" WIDTH="206" HEIGHT="28" BORDER="0" ALT=""></button>
+                                                            <button ng-click="download_click(5)" class="ange_customBtn_0"><IMG SRC="/imgs/ange/intro/wBtn.jpg" WIDTH="206" HEIGHT="28" BORDER="0" ALT=""></button>
                                                         </div>
                                                     </div>
 
@@ -280,8 +280,9 @@
                             <!-- 02. 찾아오시는길 -->
                             <div style="display: block;" ng-show="selectIdx == '2'">
 
-                                <div style="margin-top:60px; width:100%;border:1px solid #ddd;">
+                                <div style="margin-top:60px; width:100%; border:1px solid #ddd;">
                                     <!--<map center="-34.397, 150.644" zoom="8"></map>-->
+
                                     <map center="37.5478341, 126.9311811" zoom="17" style="width:100%;">
                                         <info-window visible="true" position="37.5477341, 126.9310811">
                                             <span style="font-size: 0.86em; padding-bottom:6px; line-height: 14px;">
@@ -289,6 +290,7 @@
                                             </span>
                                         </info-window>
                                     </map>
+
                                 </div>
 
                                 <div class="container-fluid no-margin">
@@ -835,74 +837,74 @@
                             </div>
                             <!-- /04. 개인정보 취급방침 -->
 
-                            <div class="row">
-                                <div class="col-xs-4 v-cell-3">
-                                    <div class="comp_basic comp_splite_left h-cell-dynamic">
+                            <!--<div class="row">-->
+                                <!--<div class="col-xs-4 v-cell-3">-->
+                                    <!--<div class="comp_basic comp_splite_left h-cell-dynamic">-->
 
-                                        <!-- mini_infodeskpds -->
-                                        <div class="comp_infodeskpds">
+                                        <!--&lt;!&ndash; mini_infodeskpds &ndash;&gt;-->
+                                        <!--<div class="comp_infodeskpds">-->
 
-                                            <div class="mini_infodeskpds_title">
-                                                <div class="mini_infodeskpds_name">자료실</div>
-                                                <a href="http://get.adobe.com/kr/reader/" target="_blank">Adobe PDF Viewer</a>
-                                                <div>프로그램 설치가 필요합니다.</div>
-                                            </div>
+                                            <!--<div class="mini_infodeskpds_title">-->
+                                                <!--<div class="mini_infodeskpds_name">자료실</div>-->
+                                                <!--<a href="http://get.adobe.com/kr/reader/" target="_blank">Adobe PDF Viewer</a>-->
+                                                <!--<div>프로그램 설치가 필요합니다.</div>-->
+                                            <!--</div>-->
 
-                                            <div class="mini_infodeskpds_link" style="opacity:0.4; cursor:default;">
-                                                <p><span style="color: #fb6362;">앙쥬</span>매체소개서</p>
-                                                <a style="cursor:default;">파일 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>
-                                            </div>
+                                            <!--<div class="mini_infodeskpds_link" style="opacity:0.4; cursor:default;">-->
+                                                <!--<p><span style="color: #fb6362;">앙쥬</span>매체소개서</p>-->
+                                                <!--<a style="cursor:default;">파일 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>-->
+                                            <!--</div>-->
 
-                                        </div>
-                                        <!-- /mini_infodeskpds -->
+                                        <!--</div>-->
+                                        <!--&lt;!&ndash; /mini_infodeskpds &ndash;&gt;-->
 
-                                    </div>
-                                </div>
+                                    <!--</div>-->
+                                <!--</div>-->
 
-                                <div class="col-xs-4 v-cell-3">
-                                    <div class="comp_basic comp_splite_middle h-cell-dynamic">
+                                <!--<div class="col-xs-4 v-cell-3">-->
+                                    <!--<div class="comp_basic comp_splite_middle h-cell-dynamic">-->
 
-                                        <!-- mini_infodeskpds -->
-                                        <div class="comp_infodeskpds">
+                                        <!--&lt;!&ndash; mini_infodeskpds &ndash;&gt;-->
+                                        <!--<div class="comp_infodeskpds">-->
 
-                                            <div class="mini_infodeskpds_link" style="cursor:default;">
-                                                <p><span style="color: #fb6362;">앙쥬</span>미디어키트</p>
-                                                <a href="/imgs/ange/temp/20150226_angeMediakit.pdf" target="_blank">PDF 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>
-                                            </div>
+                                            <!--<div class="mini_infodeskpds_link" style="cursor:default;">-->
+                                                <!--<p><span style="color: #fb6362;">앙쥬</span>미디어키트</p>-->
+                                                <!--<a href="/imgs/ange/temp/20150226_angeMediakit.pdf" target="_blank">PDF 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>-->
+                                            <!--</div>-->
 
-                                            <div class="mini_infodeskpds_link" style="opacity:0.4; cursor:default;">
-                                                <p><span style="color: #fb6362;">앙쥬그룹</span>사용자설명서</p>
-                                                <a style="cursor:default;">PDF 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>
-                                            </div>
+                                            <!--<div class="mini_infodeskpds_link" style="opacity:0.4; cursor:default;">-->
+                                                <!--<p><span style="color: #fb6362;">앙쥬그룹</span>사용자설명서</p>-->
+                                                <!--<a style="cursor:default;">PDF 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>-->
+                                            <!--</div>-->
 
-                                        </div>
-                                        <!-- /mini_infodeskpds -->
+                                        <!--</div>-->
+                                        <!--&lt;!&ndash; /mini_infodeskpds &ndash;&gt;-->
 
-                                    </div>
-                                </div>
+                                    <!--</div>-->
+                                <!--</div>-->
 
-                                <div class="col-xs-4 v-cell-3">
-                                    <div class="comp_basic comp_splite_right h-cell-dynamic">
+                                <!--<div class="col-xs-4 v-cell-3">-->
+                                    <!--<div class="comp_basic comp_splite_right h-cell-dynamic">-->
 
-                                        <!-- mini_infodeskpds -->
-                                        <div class="comp_infodeskpds">
+                                        <!--&lt;!&ndash; mini_infodeskpds &ndash;&gt;-->
+                                        <!--<div class="comp_infodeskpds">-->
 
-                                            <div class="mini_infodeskpds_link" style="opacity:0.4; cursor:default;">
-                                                <p><span style="color: #fb6362;">육아백과</span>미디어키트</p>
-                                                <a style="cursor:default;">PDF 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>
-                                            </div>
+                                            <!--<div class="mini_infodeskpds_link" style="opacity:0.4; cursor:default;">-->
+                                                <!--<p><span style="color: #fb6362;">육아백과</span>미디어키트</p>-->
+                                                <!--<a style="cursor:default;">PDF 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>-->
+                                            <!--</div>-->
 
-                                            <div class="mini_infodeskpds_link" style="opacity:0.4; cursor:default;">
-                                                <p><span style="color: #fb6362;">앙쥬온라인</span>상품소개서</p>
-                                                <a style="cursor:default;">PDF 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>
-                                            </div>
+                                            <!--<div class="mini_infodeskpds_link" style="opacity:0.4; cursor:default;">-->
+                                                <!--<p><span style="color: #fb6362;">앙쥬온라인</span>상품소개서</p>-->
+                                                <!--<a style="cursor:default;">PDF 다운로드 <span class="glyphicon glyphicon-cloud-download" aria-hidden="true"></span></a>-->
+                                            <!--</div>-->
 
-                                        </div>
-                                        <!-- /mini_infodeskpds -->
+                                        <!--</div>-->
+                                        <!--&lt;!&ndash; /mini_infodeskpds &ndash;&gt;-->
 
-                                    </div>
-                                </div>
-                            </div> <!-- row end -->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div> &lt;!&ndash; row end &ndash;&gt;-->
 
 
                         </div><!-- /.sub_contents_wrap -->

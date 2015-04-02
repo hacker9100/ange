@@ -88,12 +88,11 @@
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'check') {
-                $sql = "SELECT
-                            COUNT(*) AS COUNT
-                        FROM
-                            COM_USER
-                        WHERE
-                            USER_ID = '".$_key."'
+                $sql = "SELECT SUM(CNT) AS COUNT FROM (
+                            SELECT COUNT(*) AS CNT FROM COM_USER WHERE USER_ID = '".$_key."'
+                            UNION ALL
+                            SELECT COUNT(*) AS CNT FROM COM_USER_DEL WHERE USER_ID = '".$_key."'
+                        ) A
                         ";
 
                 $data  = $_d->sql_fetch($sql);
@@ -120,23 +119,21 @@
                     $_d->dataEnd2($data);
                 }
             } else if ($_type == 'nick') {
-            $sql = "SELECT
-                        COUNT(*) AS COUNT
-                    FROM
-                        COM_USER
-                    WHERE
-                        NICK_NM = '".$_key."'
-                    ";
+                $sql = "SELECT SUM(CNT) AS COUNT FROM (
+                            SELECT COUNT(*) AS CNT FROM COM_USER WHERE NICK_NM = '".$_key."'
+                            UNION ALL
+                            SELECT COUNT(*) AS CNT FROM COM_USER_DEL WHERE NICK_NM = '".$_key."'
+                        ) A
+                        ";
 
-            $result = $_d->sql_query($sql);
-            $data  = $_d->sql_fetch_array($result);
+                $data  = $_d->sql_fetch($sql);
 
-            if ($_d->mysql_errno > 0) {
-                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
-            } else {
-                $_d->dataEnd2($data);
-            }
-        } else if ($_type == 'item') {
+                if ($_d->mysql_errno > 0) {
+                    $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+                } else {
+                    $_d->dataEnd2($data);
+                }
+            } else if ($_type == 'item') {
                 $search_where = "";
 
                 if (isset($_search[SYSTEM_GB]) && $_search[SYSTEM_GB] != "") {
@@ -1575,40 +1572,74 @@
             break;
 
         case "DELETE":
-            if (!isset($_key) || $_key == '') {
-                $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
-            }
+            if ($_type == "terminate") {
+                if (!isset($_key) || $_key == '') {
+                    $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
+                }
 
-            $err = 0;
-            $msg = "";
+                $err = 0;
+                $msg = "";
 
-            $_d->sql_beginTransaction();
+                $_d->sql_beginTransaction();
 
-            $sql = "DELETE FROM USER_ROLE WHERE USER_ID = '".$_key."'";
+                $sql = "INSERT INTO COM_USER_DEL
+                            SELECT * FROM COM_USER WHERE USER_ID = '".$_key."'";
 
-            $_d->sql_query($sql);
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+                $sql = "DELETE FROM COM_USER WHERE USER_ID = '".$_key."'";
 
-            $sql = "DELETE FROM COM_USER WHERE USER_ID = '".$_key."'";
+                $_d->sql_query($sql);
 
-            $_d->sql_query($sql);
-            $no = $_d->mysql_insert_id;
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
-
-            if ($err > 0) {
-                $_d->sql_rollback();
-                $_d->failEnd("삭제실패입니다:".$msg);
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("삭제실패입니다:".$msg);
+                } else {
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
             } else {
-                $_d->sql_commit();
-                $_d->succEnd($no);
+                if (!isset($_key) || $_key == '') {
+                    $_d->failEnd("삭제실패입니다:"."KEY가 누락되었습니다.");
+                }
+
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
+
+                $sql = "DELETE FROM USER_ROLE WHERE USER_ID = '".$_key."'";
+
+                $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                $sql = "DELETE FROM COM_USER WHERE USER_ID = '".$_key."'";
+
+                $_d->sql_query($sql);
+                $no = $_d->mysql_insert_id;
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if ($err > 0) {
+                    $_d->sql_rollback();
+                    $_d->failEnd("삭제실패입니다:".$msg);
+                } else {
+                    $_d->sql_commit();
+                    $_d->succEnd($no);
+                }
             }
 
             break;

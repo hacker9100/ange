@@ -17,7 +17,32 @@
                             </div>
 
                             </br>
-                            calendar
+							
+							<style>
+							ul.cell_dayname { clear: both; width: 100%; height: 50px;}
+							ul.cell_dayname>li { float: left; padding: 10px 10px; width: 14%; height: 40px; background-color: #eee; list-style-type: none; text-align: center; border: 1px solid #fff; } 
+							ul.cell_day>li { float: left; padding: 10px 10px; width: 14%; height: 80px; background-color: #f0f0f0; list-style-type: none; text-align: center; border: 1px solid #fff; }
+							ul.cell_day>li.blind { background-color: #f0f0f0; color: #ccc; }
+							ul.cell_day>li.normal { background-color: #eee; color: #000; }
+							</style>
+							
+							<div style="width: 800px;">
+								<ul class="cell_dayname">
+									<li>SUN</li>
+									<li>MOM</li>
+									<li>TUE</li>
+									<li>WED</li>
+									<li>THU</li>
+									<li>FRI</li>
+									<li>SAT</li>
+								</ul>
+								<!-- item.type = normal / hidden / event -->
+								<ul class="cell_day" ng-repeat="item in data">
+									<li class="{{item.type}}">{{item.day}}</li>
+								</ul>
+							
+							
+							</div>
 
                         </div><!-- /.sub_contents_wrap -->
                     </div>

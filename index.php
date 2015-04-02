@@ -271,15 +271,8 @@ MtUtil::_d("### [END]");
 
 <body ng-controller="ange_init">
 
-<div class="wrap">
-    <div class="panel_ad" ng-include=" '/partials/ange/com/ui-ads.html' "></div>
-
-    <!-- View가 표시될 영역 -->
-    <div ui-view id="common" class="panel_content"></div>
-
-    <div class="panel_user" ng-include=" '/partials/ange/com/ui-utility.html' "></div>
-    <!--<div ng-show="role != '' && role!=null">{{role}}</div>-->
-</div>
+<!-- View가 표시될 영역 -->
+<div ui-view class="wrap"></div>
 
 <!--
     requireJS를 사용하기 위한 부분으로,
