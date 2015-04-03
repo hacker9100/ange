@@ -16,6 +16,55 @@
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
+                            <div class="container-fluid sub_contents_search">
+                                <div class="row">
+                                    <div class="col-xs-6" style="padding:0">
+                                        <div class="input-group input-group-sm  col-sm-7" style="padding:2px 0px;">
+                                            엄마가 태어난 날&nbsp;&nbsp;<strong>({{MOM_BIRTH_YEAR}}-{{MOM_BIRTH_MONTH}}-{{MOM_BIRTH_DAY}})</strong><span class="input-group-btn"><button class="btn btn-default"  ng-click="click_saveMomsBirthCoupon();"type="button" ><span class="glyphicon glyphicon-save"></span></button></span>
+                                        </div>
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
+                            <div class="container-fluid sub_contents_search">
+                                <div class="row">
+                                    <div class="col-xs-6" style="padding:0">
+                                        <div class="input-group input-group-sm  col-sm-7" style="padding:2px 0px;">
+                                            엄마가 된 날&nbsp;&nbsp;<strong>({{BABY_BIRTH_YEAR}}-{{BABY_BIRTH_MONTH}}-{{BABY_BIRTH_DAY}})</strong><span class="input-group-btn"><button class="btn btn-default"  ng-click="click_saveMomsBecomeCoupon();"type="button" ><span class="glyphicon glyphicon-save"></span></button></span>
+                                        </div>
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
+                            <br/>
+                            <div class="container-fluid sub_contents_search">
+                                * 쿠폰받기 기준<br/>
+                                &nbsp;&nbsp;- 축하 쿠폰은 회원정보상의 생년월일을 기준으로 3일전후하여 매년 1회 받을 수 있습니다.<br>
+                                &nbsp;&nbsp;&nbsp; 예) 3월 5일이 생일인 경우 3월2일 ~ 8일 사이에 받을 수 있음.<br>
+                                &nbsp;&nbsp;- 아이의 경우 가장 먼저 기록된 생일 기준으로 1자녀만 해당<br>
+                                <br/><br/>
+                                * 쿠폰 주의사항<br/>
+                                &nbsp;&nbsp;- 해당기간에 본 페이지에서 <font color="orange">[쿠폰받기]</font>를 해야 적립이 이루어집니다 <font color="red">(음력/양력 구분없이 등록된 날짜에 적립가능)</font><br>
+                                &nbsp;&nbsp;- 생년월일은 한 번 지정되면 <font color="orange">변경이 불가능</font>합니다.<br>
+                                &nbsp;&nbsp;- 기간 내 적립 받지 않은 쿠폰은 <font color="orange">재발행 되지 않습니다.</font><br>
+                            </div><!-- /.container -->
+
+
+                            <br/>
+                            <div class="container-fluid sub_contents_search">
+                                <div class="row">
+                                    <div class="col-xs-12" style="padding:0">
+                                        <div class="input-group input-group-sm col-xs-12 col-sm-7" style="padding:2px 0px;">
+                                            <input type="text" ng-model="item.COUPON_CD" ng-keyup="($event.which === 13) ? click_saveCoupon() : 0"  class="form-control" placeholder="쿠폰번호를 입력하세요">
+
+                                            <span class="input-group-btn" ng-click="click_saveCoupon();">
+                                                <button class="btn btn-default"  type="button" ><span class="glyphicon glyphicon-save"></span></button>
+                                            </span>
+                                        </div>
+                                    </div><!-- /.col-xs-12-->
+                                </div><!-- /.row -->
+                            </div><!-- /.container -->
+
                         </div><!-- /.sub_contents_wrap -->
 
                         <div class="sub_contents_body">
@@ -26,10 +75,9 @@
                                 <thead>
                                 <tr class="board_thead" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
-                                    <td><span class="board_th">쿠폰번호</span></td>
-                                    <td><span class="board_th">쿠폰명</span></td>
-                                    <td width="80"><span class="board_th">작성일</span></td>
-                                    <td width="90" align="center"><span class="board_th">사용여부</span></td>
+                                    <td width="15%" align="center"><span class="board_th">쿠폰번호</span></td>
+                                    <td align="center"><span class="board_th">쿠폰명</span></td>
+                                    <td width="80"  align="center"><span class="board_th">등록일</span></td>
                                 </tr>
                                 </thead>
 
@@ -39,8 +87,7 @@
                                     <td class="table_no"><span>{{item.RNUM}}</span></td>
                                     <td>{{item.COUPON_CD}}</td>
                                     <td>{{item.COUPON_NM}}</td>
-                                    <td class="table_date">{{item.COUPON_REG_DT}}</td>
-                                    <td class="table_hit">{{item.USE_FL}}</td></tr>
+                                    <td class="table_date">{{item.REG_DT}}</td>
                                 </tr>
 
                                 </tbody>
@@ -48,7 +95,7 @@
                                 <tbody class="on" data-ng-show="list == '' || list == null">
 
                                 <tr>
-                                    <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
+                                    <td colspan="4" style="text-align: center">조회 데이터가 없습니다.</td>
                                 </tr>
 
                                 </tbody>

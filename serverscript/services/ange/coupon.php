@@ -53,7 +53,7 @@ switch ($_method) {
 
             $sql = "SELECT NO, COUPON_NM, COUPON_GB, COUPON_CD, USE_FL, REG_DT, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
                      FROM (
-                                SELECT NO, COUPON_NM, COUPON_GB, COUPON_CD, USE_FL, REG_DT
+                                SELECT NO, COUPON_NM, COUPON_GB, COUPON_ST, USER_ID, REG_DT, COUPON_CD
                                 FROM ANGE_COUPON
                                 WHERE NO = ".$_key."
                      )  A";
@@ -79,30 +79,42 @@ switch ($_method) {
                 $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
             }
 
-            // 검색조건 추가
-            if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
-                $search_where .= "AND AUM.USER_ID = '".$_SESSION['uid']."'";
+//            // 검색조건 추가
+//            if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+//                $search_where .= "AND AUM.USER_ID = '".$_SESSION['uid']."'";
+//            }
+
+            if (!isset($_SESSION['uid'])) {
+                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
             }
 
-            $sql = " SELECT USER_ID, COUPON_NM, COUPON_REG_DT, REG_DT, USE_FL,TOTAL_CNT,@RNUM := @RNUM + 1 AS RNUM,COUPON_CD
+            $sql = " SELECT USER_ID,
+                         COUPON_NM,
+                         DATE_FORMAT(REG_DT, '%Y-%m-%d') as REG_DT,
+                         TOTAL_CNT,
+                         (@RNUM := @RNUM -1)+1  AS RNUM,
+                         COUPON_CD,
+                         CASE COUPON_GB
+                            WHEN 'ANGE' THEN '앙쥬맘쿠폰(마일리지적립)'
+                            WHEN 'EXPO' THEN '박람회 쿠폰(마일리지적립)'
+                            WHEN 'MAGAZINE' THEN '매거진다운로드(마일리지적립)'
+                         ELSE '' END AS COUPON_GB_NM,
+                         COUPON_GB
                         FROM
                         (
-                            SELECT AUC.USER_ID,
-                                     (SELECT COUPON_NM FROM ANGE_COUPON WHERE NO = AUC.COUPON_NO) AS COUPON_NM,
-                                     (SELECT REG_DT FROM ANGE_COUPON WHERE NO = AUC.COUPON_NO) AS COUPON_REG_DT,
-                                     (SELECT COUPON_CD FROM ANGE_COUPON WHERE NO = AUC.COUPON_NO) AS COUPON_CD,
-                                     AUC.REG_DT, AUC.USE_FL
-                            FROM ANGE_USER_COUPON AUC
+                            SELECT NO, COUPON_NM, COUPON_GB, COUPON_ST, USER_ID, REG_DT, COUPON_CD
+                            FROM ANGE_COUPON
                             WHERE 1=1
-                         ".$search_where."
-                         ".$limit."
+                              AND USER_ID = '".$_SESSION['uid']."'
+                            ORDER BY REG_DT DESC
+                            ".$limit."
                         ) AS DATA,
-                        (SELECT @RNUM := 0) R,
+                        (SELECT @RNUM := (SELECT COUNT(*) FROM ANGE_COUPON WHERE 1=1 AND USER_ID = '".$_SESSION['uid']."')) R,
                         (
                             SELECT COUNT(*) TOTAL_CNT
-                            FROM ANGE_USER_COUPON AUC
+                            FROM ANGE_COUPON AUC
                             WHERE 1=1
-                            ".$search_where."
+                              AND USER_ID = '".$_SESSION['uid']."'
                         ) TO_CNT
                 ";
 
@@ -112,6 +124,31 @@ switch ($_method) {
             }else{
                 $_d->dataEnd($sql);
             }
+        }else if ($_type == "couponCheck") {
+
+//            if (!isset($_SESSION['uid'])) {
+//                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+//            }
+            $search_where = "";
+
+            if (isset($_search[YEAR]) && $_search[YEAR] != "") {
+                $search_where .= "AND DATE_FORMAT(NOW(), '%Y') = '".$_search[YEAR]."'";
+            }
+
+            $sql = "SELECT COUNT(*) AS COUPON_CNT
+                 FROM ANGE_COUPON
+                 WHERE 1 = 1
+                   AND COUPON_CD = '".$_search[COUPON_CD]."'
+                   AND USER_ID = '".$_SESSION['uid']."'
+                   ".$search_where."";
+
+            $data = $_d->sql_query($sql);
+            if($_d->mysql_errno > 0){
+                $_d->failEnd("조회실패입니다:".$_d->mysql_error);
+            }else{
+                $_d->dataEnd($sql);
+            }
+
         }
 
         break;
@@ -123,24 +160,61 @@ switch ($_method) {
                             COUPON_GB,
                             COUPON_CD,
                             USE_FL,
+                            USER_ID,
                             REG_DT
                         ) VALUES (
                              '".$_model[COUPON_NM]."'
                             , '".$_model[COUPON_GB]."'
                             , '".$_model[COUPON_CD]."'
                             , 'Y'
+                            , '".$_SESSION['uid']."'
                             , SYSDATE()
                         )";
 
         /*".$_model[SORT_IDX]."*/
 
         $_d->sql_query($sql);
-        $no = $_d->mysql_insert_id;
+
+        if(isset($_model[MILEAGE]) && $_model[MILEAGE] != ""){
+            $sql = "INSERT INTO ANGE_USER_MILEAGE
+                                (
+                                    USER_ID,
+                                    EARN_DT,
+                                    MILEAGE_NO,
+                                    EARN_GB,
+                                    PLACE_GB,
+                                    POINT,
+                                    REASON
+                                ) VALUES (
+                                    '".$_SESSION['uid']."'
+                                    , SYSDATE()
+                                    , '0'
+                                    , '0'
+                                    , '쿠폰등록'
+                                    ,  '".$_model[MILEAGE]."'
+                                    , '쿠폰등록'
+                                )";
+
+            $_d->sql_query($sql);
+
+            $sql = "UPDATE COM_USER
+                                SET
+                                    SUM_POINT = SUM_POINT + ".$_model[MILEAGE].",
+                                    REMAIN_POINT = REMAIN_POINT + ".$_model[MILEAGE]."
+                                WHERE
+                                    USER_ID = '".$_SESSION['uid']."'
+                                ";
+            $_d->sql_query($sql);
+
+            $_SESSION['mileage'] = $_SESSION['mileage'] + 1000;
+        }
 
         if ($_d->mysql_errno > 0) {
             $_d->failEnd("등록실패입니다:".$_d->mysql_error);
         } else {
-            $_d->succEnd($no);
+            $_d->sql_commit();
+            //$_d->succEnd($no);
+            $_d->dataEnd2(array("mileage" => $_SESSION['mileage']));
         }
 
         break;
