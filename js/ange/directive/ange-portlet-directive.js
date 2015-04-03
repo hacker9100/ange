@@ -58,7 +58,7 @@ define([
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_CLINIC;
                         $scope.search.PARENT_NO = '0';
                     } else if ($scope.option.type == 'notice') {
-                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_NOTICE;
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_REPORT;
                     }
                 }
 
@@ -442,7 +442,7 @@ define([
                     } else if ($scope.option.type == 'clinic') {
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_CLINIC;
                     } else if ($scope.option.type == 'notice') {
-                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_NOTICE;
+                        $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_REPORT;
                     } else if ($scope.option.type == 'writing') {
                         $scope.search.REG_UID = $rootScope.uid;
                         $scope.search.COMM_NO_IN = CONSTANT.COMM_NO_BOARD+ ',' +CONSTANT.COMM_NO_FAQ;
@@ -999,8 +999,12 @@ define([
 
                     $scope.search.CATEGORY_NO = item.NO;
 
-                    angular.element('#'+$scope.option.id).slickFilter(item.NO);
-//                    $scope.getPortletList();
+//                    angular.element('#'+$scope.option.id).slickFilter(item.NO);
+//                    angular.element('#'+$scope.option.id).unslick();
+//                    angular.element('#'+$scope.option.id).slickRemoveAll();
+//                    angular.element('#'+$scope.option.id).slick();
+//                    angular.element('#'+$scope.option.id).slickSetOption({initOnload: 'true', data: $scope.list});
+                    $scope.getPortletList();
                 };
 
                 // 일시 정지 버튼

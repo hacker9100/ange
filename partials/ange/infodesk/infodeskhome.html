@@ -1,5 +1,4 @@
 <div ng-controller="infodeskhome" class="ng_wrap">
-    <img src="/imgs/ange/white_opacity75.png" class="temp_blind">
     <!-- Main Page Layout Set -->
     <div class="mainbar sub-slide0">
 
@@ -18,9 +17,9 @@
                                     <span class="comp_infodeskfaq_title">자주묻는 질문</span>
 
                                     <div class="input-group comp_infodeskfaq_search">
-                                        <input type="text" class="form-control comp_infodeskfaq_input" placeholder="궁금한 키워드 또는 질문을 적어주세요">
+                                        <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchFaq() : 0" class="form-control comp_infodeskfaq_input" placeholder="궁금한 키워드 또는 질문을 적어주세요">
                                         <span class="input-group-btn">
-                                            <button class="btn btn-default comp_infodeskfaq_btn" type="button">
+                                            <button ng-click="click_searchFaq()" class="btn btn-default comp_infodeskfaq_btn" type="button">
                                             <span class="glyphicon glyphicon-search"></span>
                                             </button>
                                         </span>
@@ -31,10 +30,11 @@
 
                                 <div class="comp_infodeskfaq_guidewrap">
                                     <div class="comp_infodeskfaq_guide">
-                                        10월에 신청하신 신규회원 샘플팩은 11월 4일 당첨자 발표를 확인하세요. <br />
-                                        단, 시즌2는 모두 증정이라 당첨자발표를 하지 않습니다. <br />
-                                        - 게시판에 글/그림등록이 안된다면 [자주하는 질문] 13번, 20번을 참고하세요. <br />
-                                        <a><span class="glyphicon glyphicon-star"></span> 샘플팩 신청관련하여 문의하시기 전에 읽어보세요!! >> CLICK !!</a>
+                                        <div ng-bind-html="faq.BODY" style="margin:0px auto; padding:50px;"></div>
+                                        <!--10월에 신청하신 신규회원 샘플팩은 11월 4일 당첨자 발표를 확인하세요. <br />-->
+                                        <!--단, 시즌2는 모두 증정이라 당첨자발표를 하지 않습니다. <br />-->
+                                        <!--- 게시판에 글/그림등록이 안된다면 [자주하는 질문] 13번, 20번을 참고하세요. <br />-->
+                                        <!--<a><span class="glyphicon glyphicon-star"></span> 샘플팩 신청관련하여 문의하시기 전에 읽어보세요!! >> CLICK !!</a>-->
                                     </div>
                                 </div>
 
@@ -42,13 +42,19 @@
                                 <div class="comp_infodeskfaq_contentwrap">
 
                                     <ul class="nav nav-tabs">
-                                        <li role="presentation" class="active"><a href="#">BEST10</a></li>
-                                        <li role="presentation"><a href="#">회원관련</a></li>
-                                        <li role="presentation"><a href="#">마일리지</a></li>
-                                        <li role="presentation"><a href="#">커뮤니티</a></li>
-                                        <li role="presentation"><a href="#">이벤트/체험단</a></li>
-                                        <li role="presentation"><a href="#">스토어</a></li>
+                                        <li role="presentation" ng-repeat="tab in tabs" ng-class="selectIdx == $index ? 'active' : ''">
+                                            <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}</a>
+                                        </li>
                                     </ul>
+
+                                    <!--<ul class="nav nav-tabs">-->
+                                        <!--<li role="presentation" class="active"><a href="#">BEST10</a></li>-->
+                                        <!--<li role="presentation"><a href="#">회원관련</a></li>-->
+                                        <!--<li role="presentation"><a href="#">마일리지</a></li>-->
+                                        <!--<li role="presentation"><a href="#">커뮤니티</a></li>-->
+                                        <!--<li role="presentation"><a href="#">이벤트/체험단</a></li>-->
+                                        <!--<li role="presentation"><a href="#">스토어</a></li>-->
+                                    <!--</ul>-->
 
                                     <br />
 
@@ -62,22 +68,37 @@
                                     </tr>
                                     </thead>
 
-                                    <tbody>
-                                    <tr>
-                                    <th scope="row">1</th>
-                                    <td><span class="faq_blue">회원관련</span></td>
-                                    <td>앙쥬 메일이 안왔어요.</td>
+                                    <tbody ng-repeat="item in list">
+
+                                    <tr ng-click="click_showViewFaq(item)">
+                                        <th scope="row">{{ item.BOARD_NO }}</th>
+                                        <td><span class="faq_blue">{{item.CATEGORY_NM}}</span></td>
+                                        <td>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</td>
                                     </tr>
 
-                                    <tr><th scope="row">2</th><td><span class="faq_blue">커뮤니티</span></td><td>사진 등록은 어떻게 하나요</td></tr>
-                                    <tr><th scope="row">3</th><td><span class="faq_blue">이벤트/체험단</span></td><td>이벤트 페이지 스크랩한 주소(URL)은 무엇을 말하나요?</td></tr>
-                                    <tr><th scope="row">4</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>
-                                    <tr><th scope="row">5</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>
-                                    <tr><th scope="row">6</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>
-                                    <tr><th scope="row">7</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>
-                                    <tr><th scope="row">8</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>
-                                    <tr><th scope="row">9</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>
-                                    <tr><th scope="row">10</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>
+                                    <!--<tr>-->
+                                    <!--<th scope="row">1</th>-->
+                                    <!--<td><span class="faq_blue">회원관련</span></td>-->
+                                    <!--<td>앙쥬 메일이 안왔어요.</td>-->
+                                    <!--</tr>-->
+
+                                    <!--<tr><th scope="row">2</th><td><span class="faq_blue">커뮤니티</span></td><td>사진 등록은 어떻게 하나요</td></tr>-->
+                                    <!--<tr><th scope="row">3</th><td><span class="faq_blue">이벤트/체험단</span></td><td>이벤트 페이지 스크랩한 주소(URL)은 무엇을 말하나요?</td></tr>-->
+                                    <!--<tr><th scope="row">4</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>-->
+                                    <!--<tr><th scope="row">5</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>-->
+                                    <!--<tr><th scope="row">6</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>-->
+                                    <!--<tr><th scope="row">7</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>-->
+                                    <!--<tr><th scope="row">8</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>-->
+                                    <!--<tr><th scope="row">9</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>-->
+                                    <!--<tr><th scope="row">10</th><td><span class="faq_blue">회원관련</span></td><td>앙쥬 메일이 안왔어요.</td></tr>-->
+
+                                    </tbody>
+
+                                    <tbody class="on" ng-show="!isLoding && (list == '' || list == null)">
+
+                                    <tr>
+                                        <td colspan="3" style="text-align: center">조회 데이터가 없습니다.</td>
+                                    </tr>
 
                                     </tbody>
                                     </table>
@@ -106,81 +127,84 @@
                                 <div class="peopleboard_top">
                                     <div class="mini_community_titlebar" style=""border:1px solid red;">
                                         <span class="mini_community_title" style="color:#019bd4;">앙쥬소식</span>
-                                        <a class="miniboard_tab_more">더보기</a>
+                                        <a class="miniboard_tab_more" ng-click="click_showList('notice');">더보기</a>
                                     </div>
                                 </div>
 
                                 <div class="miniboard_community_contents">
 
-                                    <div class="mini_community_contents">
+                                    <div class="mini_community_contents" ng-repeat="item in noticeList" >
                                         <!--<img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표<kbd class="kbd_new">N</kbd></span>
+                                        <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;" ng-click="click_showView(item);">
+                                            <span class="mini_community_txt_title">
+                                                <span class="mini_community_txt_head">[{{ item.SHORT_NM }}]&nbsp;</span>
+                                                {{ item.SUBJECT | string_limit:30 }}<kbd ng-show="item.NEW_FL == '1'" class="kbd_new">N</kbd>
+                                            </span>
                                         </div>
                                     </div>
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[점검]&nbsp;</span>서버다운<kbd class="kbd_new">N</kbd></span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[점검]&nbsp;</span>서버다운<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--<img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표<kbd class="kbd_new">N</kbd></span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;<img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[점검]&nbsp;</span>서버다운<kbd class="kbd_new">N</kbd></span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[점검]&nbsp;</span>서버다운<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </div>
 
 
@@ -199,81 +223,92 @@
                                 <div class="peopleboard_top">
                                     <div class="mini_community_titlebar" style=""border:1px solid red;">
                                         <span class="mini_community_title" style="color:#699f00;">Q&A</span>
-                                        <a class="miniboard_tab_more">더보기</a>
+                                        <a class="miniboard_tab_more" ng-click="click_showList('qna');">더보기</a>
                                     </div>
                                 </div>
 
                                 <div class="miniboard_community_contents">
 
-                                    <div class="mini_community_contents">
+                                    <div class="mini_community_contents" ng-repeat="item in qnaList" >
                                         <!--<img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표<kbd class="kbd_new">N</kbd></span>
+                                        <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;" ng-click="click_showView(item);">
+                                            <span class="mini_community_txt_title">
+                                                <span class="mini_community_txt_head">[{{ item.SHORT_NM }}]&nbsp;</span>
+                                                <span ng-show="item.PASSWORD_FL == '1'" class="glyphicon glyphicon-lock" style="color:#e25d4c; font-size:0.78em; margin-right:4px;"></span>
+                                                {{ item.SUBJECT | string_limit:30 }}<kbd ng-show="item.NEW_FL == '1'" class="kbd_new">N</kbd>
+                                            </span>
                                         </div>
                                     </div>
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[점검]&nbsp;</span>서버다운<kbd class="kbd_new">N</kbd></span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;<img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[점검]&nbsp;</span>서버다운<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--<img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표<kbd class="kbd_new">N</kbd></span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[점검]&nbsp;</span>서버다운<kbd class="kbd_new">N</kbd></span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;<img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt" style="overflow:auto; text-align:left;">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[점검]&nbsp;</span>서버다운<kbd class="kbd_new">N</kbd></span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
 
-                                    <div class="mini_community_contents">
-                                        <!--  <img src="" class="mini_board_contents_img" />-->
-                                        <div class="mini_board_contents_txt">
-                                            <span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>
-                                        </div>
-                                    </div>
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+
+                                    <!--<div class="mini_community_contents">-->
+                                        <!--&lt;!&ndash;  <img src="" class="mini_board_contents_img" />&ndash;&gt;-->
+                                        <!--<div class="mini_board_contents_txt">-->
+                                            <!--<span class="mini_community_txt_title"><span class="mini_community_txt_head">[당첨]&nbsp;</span>로또 당첨자 발표</span>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
                                 </div>
 
                             </div>
