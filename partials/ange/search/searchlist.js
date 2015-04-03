@@ -74,9 +74,11 @@ define([
         // 스토리 목록 조회
         $scope.getStoryList = function () {
 
-            $scope.search.FILE = false;
+            //$scope.search.FILE = false;
             $scope.search.STORY_FILE = true;
             $scope.search.BOARD_GB = 'STORY';
+
+            $scope.storyList = [];
 
             $scope.getList('ange/search', 'list', {NO: $scope.STORY_PAGE_NO- 1, SIZE: $scope.STORY_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
@@ -88,10 +90,10 @@ define([
                         var img = UPLOAD.BASE_URL + '/storage/cms/' + 'thumbnail/' + data[i].FILE.FILE_ID;
                         data[i].TYPE = 'CONTENT';
                         data[i].FILE = img;
-                        //$scope.photoList.push(data[i]);
+                        $scope.storyList.push(data[i]);
                     }
                     /*$scope.total(total_cnt);*/
-                    $scope.storyList = data;
+                    //$scope.storyList = data;
 
                 })
                 ['catch'](function(error){
@@ -107,7 +109,8 @@ define([
         // 일반 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
 
-            $scope.search.FILE = false;
+            //$scope.search.FILE = false;
+            //$scope.search.STORY_FILE = false;
             $scope.search.BOARD_GB = 'BOARD';
 
             $scope.getList('ange/search', 'list', {NO: $scope.BOARD_PAGE_NO- 1, SIZE: $scope.BOARD_PAGE_SIZE}, $scope.search, true)
@@ -130,6 +133,7 @@ define([
         $scope.getPeoplePhotoList = function () {
 
             $scope.search.FILE = true;
+            //$scope.search.STORY_FILE = false;
             $scope.search.BOARD_GB = 'PHOTO';
 
             $scope.getList('ange/search', 'list', {NO: $scope.PHOTO_PAGE_NO- 1, SIZE: $scope.PHOTO_PAGE_SIZE}, $scope.search, true)

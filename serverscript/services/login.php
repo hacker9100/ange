@@ -61,7 +61,7 @@
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT,
-                            U.USER_GB, U.SUPPORT_NO, U.REMAIN_POINT
+                            U.USER_GB, U.SUPPORT_NO, U.REMAIN_POINT, U.BIRTH
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE

@@ -137,13 +137,16 @@ switch ($_method) {
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                            FROM
-                                COM_FILE F
-                            WHERE
-                                F.TARGET_GB = 'CONTENT'
-                                AND F.FILE_GB = 'MAIN'
-                                AND F.TARGET_NO = ".$row['NO']."";
+                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                                FROM
+                                    CMS_CONTENT C, COM_FILE F
+                                WHERE
+                                    C.NO = F.TARGET_NO
+                                    AND C.TASK_NO = ".$row['NO']."
+                                    AND C.CURRENT_FL = 'Y'
+                                    AND F.TARGET_GB = 'CONTENT'
+                                    AND F.FILE_GB = 'MAIN'
+                                ";
 
                     $file_result = $_d->sql_query($sql);
                     $file_data = $_d->sql_fetch_array($file_result);
