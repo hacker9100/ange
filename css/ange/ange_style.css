@@ -2706,7 +2706,7 @@ nav.normaltype {
     display: block;
 }
 
-nav.mobiletype {
+nav.mobiletype, button.mobiletype {
     display: none;
 }
 
@@ -2731,7 +2731,7 @@ label.mobiletype {
         display: table-row ;
     }
 
-    nav.mobiletype, label.mobiletype {
+    nav.mobiletype, label.mobiletype, button.mobiletype {
         display: block;
     }
 }
