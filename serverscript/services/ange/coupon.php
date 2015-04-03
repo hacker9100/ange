@@ -135,6 +135,10 @@ switch ($_method) {
                 $search_where .= "AND DATE_FORMAT(NOW(), '%Y') = '".$_search[YEAR]."'";
             }
 
+            if (isset($_search[MONTH]) && $_search[MONTH] != "") {
+                $search_where .= "AND DATE_FORMAT(NOW(), '%Y%m') = '".$_search[MONTH]."'";
+            }
+
             $sql = "SELECT COUNT(*) AS COUPON_CNT
                  FROM ANGE_COUPON
                  WHERE 1 = 1

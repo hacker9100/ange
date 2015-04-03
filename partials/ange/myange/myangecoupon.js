@@ -250,16 +250,24 @@ define([
 
             $scope.item.MILEAGE = 1000;
 
+            var coupon_gb = $scope.item.COUPON_CD.split('_');
+            coupon_gb = coupon_gb[0];
+
             $scope.search.COUPON_CD = $scope.item.COUPON_CD;
+            if(coupon_gb = 'MAGAZINE'){
+                //$scope.search.MONTH = coupon_gb[1];
+                //console.log(coupon_gb[1]);
+                var month = $scope.item.COUPON_CD.split('_');
+                console.log(month[1]);
+                $scope.search.MONTH = month[1];
+            }
+
             $scope.getList('ange/coupon', 'couponCheck', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
 
                     var couponCnt = data[0].COUPON_CNT;
 
                     if(couponCnt ==0){
-
-                        var coupon_gb = $scope.item.COUPON_CD.split('_');
-                        coupon_gb = coupon_gb[0];
 
                         if(coupon_gb == 'ANGE'){
                             $scope.item.COUPON_GB = 'ANGE'
