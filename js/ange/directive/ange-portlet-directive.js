@@ -1608,7 +1608,7 @@ define([
         }
     }]);
 
-    // 앙쥬 설문을 동적으로 생성
+    // 앙쥬 링크를 동적으로 생성
     directives.directive('angePortletLinkMenu', ['$controller', function($controller) {
         return {
             restrict: 'EA',
@@ -1628,6 +1628,100 @@ define([
                 $scope.click_moveMenu = function () {
                     $location.url($scope.option.url);
                 };
+            }]
+        }
+    }]);
+
+    // 캘린더를 동적으로 생성
+    directives.directive('angePortletCalendar', ['$controller', function($controller) {
+        return {
+            restrict: 'EA',
+            scope: true,
+//            scope: { images:'=' },
+//            replace: true,
+            templateUrl: function(element, attr) {
+                return '/partials/ange/main/portlet-calendar.html';
+            },
+            controller: ['$scope', '$attrs', '$location', '$window', 'CONSTANT', function($scope, $attrs, $location, $window, CONSTANT) {
+
+                /********** 초기화 **********/
+                $scope.option = $scope.$eval($attrs.ngModel);
+
+                // 검색 조건
+                $scope.search = {};
+
+                // 페이징
+                $scope.PAGE_NO = 0;
+                $scope.PAGE_SIZE = $scope.option.size;
+
+                // 검색 조건 추가
+//                $scope.search.SYSTEM_GB = 'ANGE';
+//                $scope.search.NOTICE_FL = '0';
+
+                // 검색 조건에 커뮤니티 번호 추가
+                if ($scope.option.type != undefined) {
+//                    $scope.search.COMM_NO = $scope.option.comm;
+//                    $scope.search.BOARD_GB = angular.uppercase($scope.option.type);
+                    $scope.search.FILE = true;
+                    $scope.search.COMM_NO = '11';
+                }
+
+                /********** 이벤트 **********/
+                $scope.search = {"year":"2015","month":"4"};
+
+                $scope.community = "캘린더";
+                $scope.monthtable = "<b>Hi</b>";
+
+                $scope.data = 	{
+                                    "1":{ "day":"1","event":"" },
+                                    "2":{ "day":"1","event":"" },
+                                    "3":{ "day":"1","event":"" },
+                                    "4":{ "day":"1","event":"" },
+                                    "5":{ "day":"1","event":"" },
+                                    "6":{ "day":"1","event":"" },
+                                    "7":{ "day":"1","event":"" },
+                                    "8":{ "day":"1","event":"" },
+                                    "9":{ "day":"1","event":"" },
+                                    "10":{ "day":"1","event":"" },
+                                    "11":{ "day":"1","event":"" },
+                                    "12":{ "day":"1","event":"" },
+                                    "13":{ "day":"2","event":"" }
+                                };
+
+                $scope.moveCalendar = function (p_year,p_month,p_add) {
+
+                    p_year = parseInt(p_year);
+                    p_month = parseInt(p_month)+p_add;
+
+                    if (p_month>12) {
+                        p_month=1;
+                        p_year++;
+                    }
+                    if (p_month<1) {
+                        p_month=12;
+                        p_year--;
+                    }
+
+                    $scope.search.year = p_year;
+                    $scope.search.month = p_month;
+                    $scope.getEventList();
+                };
+
+                // 이미지 조회
+                $scope.getEventList = function () {
+
+                    $scope.getList('ange/calendar', 'list', {}, {"year":$scope.search.year,"month":$scope.search.month}, true)
+                        .then(function(data){
+
+                            $scope.data = data;
+
+                        })
+                        ['catch'](function(error){
+                        alert('error');
+                    });
+                };
+
+                $scope.getEventList();
             }]
         }
     }]);

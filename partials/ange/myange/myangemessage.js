@@ -124,8 +124,7 @@ define([
 
                     $scope.viewCheckFl = function () {
                         $scope.updateItem('ange/message', 'check', item.NO, {ROLE: true}, false)
-                            .then(function(){
-                            })
+                            .then(function(data){ $rootScope.message = data.message; })
                             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                     }
 

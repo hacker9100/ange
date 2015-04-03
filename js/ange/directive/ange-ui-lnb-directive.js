@@ -353,6 +353,8 @@ define(['./directives'], function (directives) {
                                 $scope.depth2 = $scope.menu_info[i].SUB_MENU;
                             }
                         }
+
+                        $scope.click_selectMenu(2, $scope.depth2[0].MENU_ID, '', $scope.depth2[0].MENU_URL, $scope.depth2[0].LINK_FL);
                     } else  if (depth == 2) {
                         for (var i in $scope.menu_info) {
                             if ($scope.menu_info[i].DEPTH == '2' && $scope.menu_info[i].MENU_ID == id) {

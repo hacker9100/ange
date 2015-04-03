@@ -13,7 +13,7 @@ define([
             "SYSTEM_GB" : "ANGE",
             "DASHBOARD_PAGE_SIZE" : 5,
             "PAGE_SIZE" : 25,
-            "BASE_URL" : "http://localhost",
+            "BASE_URL" : "http://ange.marveltree.com",
 
             "UPLOAD_INDEX" : "/serverscript/upload/",
 
@@ -76,7 +76,7 @@ define([
     app.constant(
         "UPLOAD", {
             "UPLOAD_INDEX" : "/serverscript/upload/",
-            "BASE_URL" : "http://localhost"
+            "BASE_URL" : "http://ange.marveltree.com"
         }
     );
 

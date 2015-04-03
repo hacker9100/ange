@@ -291,6 +291,7 @@ define([
                         $rootScope.uid = '';
                         $rootScope.name = '';
                         $rootScope.mileage = 0;
+                        $rootScope.message = 0;
                         $rootScope.role = '';
                         $rootScope.menu_role = null;
                         $rootScope.email = '';
@@ -329,6 +330,7 @@ define([
                 $rootScope.uid = session.USER_ID;
                 $rootScope.name = session.USER_NM;
                 $rootScope.mileage = session.REMAIN_POINT;
+                $rootScope.message = session.MESSAGE_CNT;
                 $rootScope.role = session.ROLE_ID;
                 $rootScope.menu_role = session.MENU_ROLE;
                 $rootScope.email = session.EMAIL;
@@ -546,7 +548,7 @@ define([
                         console.log(data.msg);
                         deferred.reject(data.msg);
                     } else {
-                        deferred.resolve();
+                        deferred.resolve(data);
                     }
                 }
 

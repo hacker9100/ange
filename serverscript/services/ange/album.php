@@ -332,50 +332,85 @@
             break;
 
         case "PUT":
-            if (!isset($_SESSION['uid'])) {
-                $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
-            }
-
-            $upload_path = '../../../upload/files/';
-            $file_path = '/storage/user/'.$_SESSION['uid'].'/';
-            $source_path = '../../..'.$file_path;
-            $insert_path = array();
-
-            try {
-                if (count($_model[FILES]) > 0) {
-                    $files = $_model[FILES];
-
-                    if (!file_exists($source_path.'thumbnail/') && !is_dir($source_path.'thumbnail/')) {
-                        @mkdir($source_path);
-                        @mkdir($source_path.'thumbnail/');
-                    }
-
-                    for ($i = 0 ; $i < count($_model[FILES]); $i++) {
-                        $file = $files[$i];
-
-                        if (file_exists($upload_path.$file[name])) {
-                            $uid = uniqid();
-                            rename($upload_path.$file[name], $source_path.$uid);
-                            rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
-
-                        } else {
-                            $insert_path[$i] = array(path => '', uid => '', kind => '');
-                        }
-                    }
+            if ($_type == "album") {
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
                 }
 
-            } catch(Exception $e) {
-                $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
-                break;
-            }
+                $err = 0;
+                $msg = "";
 
-            $err = 0;
-            $msg = "";
+                $_d->sql_beginTransaction();
 
-            $_d->sql_beginTransaction();
+                $sql = "UPDATE ANGE_ALBUM
+                    SET
+                        SUBJECT = '".$_model[SUBJECT]."'
+                        ,BODY = '".$_model[BODY]."'
+                        ,SUMMARY = '".$_model[SUMMARY]."'
+                    WHERE
+                        NO = ".$_key."
+                    ";
 
-            $sql = "UPDATE ANGE_ALBUM
+                $_d->sql_query($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($_key);
+                }
+
+            } else if ($_type == "picture") {
+                if (!isset($_SESSION['uid'])) {
+                    $_d->failEnd("세션이 만료되었습니다. 다시 로그인 해주세요.");
+                }
+
+                $upload_path = '../../../upload/files/';
+                $file_path = '/storage/user/'.$_SESSION['uid'].'/';
+                $source_path = '../../..'.$file_path;
+                $insert_path = array();
+
+                try {
+                    if (count($_model[FILES]) > 0) {
+                        $files = $_model[FILES];
+
+                        if (!file_exists($source_path.'thumbnail/') && !is_dir($source_path.'thumbnail/')) {
+                            @mkdir($source_path);
+                            @mkdir($source_path.'thumbnail/');
+                        }
+
+                        for ($i = 0 ; $i < count($_model[FILES]); $i++) {
+                            $file = $files[$i];
+
+                            if (file_exists($upload_path.$file[name])) {
+                                $uid = uniqid();
+                                rename($upload_path.$file[name], $source_path.$uid);
+                                rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+
+                            } else {
+                                $insert_path[$i] = array(path => '', uid => '', kind => '');
+                            }
+                        }
+                    }
+
+                } catch(Exception $e) {
+                    $_d->failEnd("파일 업로드 중 오류가 발생했습니다.");
+                    break;
+                }
+
+                $err = 0;
+                $msg = "";
+
+                $_d->sql_beginTransaction();
+
+                $sql = "UPDATE ANGE_ALBUM
                     SET
                         SUBJECT = '".$_model[SUBJECT]."'
                         ,BODY = '".$_model[BODY]."'
@@ -388,14 +423,14 @@
                         NO = ".$_key."
                     ";
 
-            $_d->sql_query($sql);
+                $_d->sql_query($sql);
 
-            if($_d->mysql_errno > 0) {
-                $err++;
-                $msg = $_d->mysql_error;
-            }
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
 
-            $sql = "SELECT
+                $sql = "SELECT
                         F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                     FROM
                         COM_FILE F
@@ -404,47 +439,47 @@
                         AND F.TARGET_NO = ".$_key."
                     ";
 
-            $result = $_d->sql_fetch($sql);
-            $is_delete = true;
+                $result = $_d->sql_fetch($sql);
+                $is_delete = true;
 
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
-                for ($i = 0 ; $i < count($files); $i++) {
-                    if ($result[FILE_NM] == $files[$i][name] && $result[FILE_SIZE] == $files[$i][size]) {
-                        $is_delete = false;
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
+                    for ($i = 0 ; $i < count($files); $i++) {
+                        if ($result[FILE_NM] == $files[$i][name] && $result[FILE_SIZE] == $files[$i][size]) {
+                            $is_delete = false;
+                        }
                     }
                 }
-            }
 
-            if ($is_delete) {
-                $sql = "DELETE FROM ANGE_ALBUM WHERE NO = ".$_key;
+                if ($is_delete) {
+                    $sql = "DELETE FROM ANGE_ALBUM WHERE NO = ".$_key;
 
-                $_d->sql_query($sql);
+                    $_d->sql_query($sql);
 
-                if($_d->mysql_errno > 0) {
-                    $err++;
-                    $msg = $_d->mysql_error;
+                    if($_d->mysql_errno > 0) {
+                        $err++;
+                        $msg = $_d->mysql_error;
+                    }
+
+                    $sql = "DELETE FROM COM_FILE WHERE NO = ".$result[NO];
+                    $_d->sql_query($sql);
+
+                    if (file_exists('../../..'.$result[PATH].$result[FILE_ID])) {
+                        unlink('../../..'.$result[PATH].$result[FILE_ID]);
+                        unlink('../../..'.$result[PATH].'thumbnail/'.$result[FILE_ID]);
+                    }
                 }
 
-                $sql = "DELETE FROM COM_FILE WHERE NO = ".$result[NO];
-                $_d->sql_query($sql);
+                if (count($_model[FILES]) > 0) {
+                    $files = $_model[FILES];
 
-                if (file_exists('../../..'.$result[PATH].$result[FILE_ID])) {
-                    unlink('../../..'.$result[PATH].$result[FILE_ID]);
-                    unlink('../../..'.$result[PATH].'thumbnail/'.$result[FILE_ID]);
-                }
-            }
+                    for ($i = 0 ; $i < count($files); $i++) {
+                        $file = $files[$i];
 
-            if (count($_model[FILES]) > 0) {
-                $files = $_model[FILES];
+                        MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                for ($i = 0 ; $i < count($files); $i++) {
-                    $file = $files[$i];
-
-                    MtUtil::_d("------------>>>>> file : ".$file['name']);
-
-                    if ($insert_path[$i][uid] != "") {
-                        $sql = "INSERT INTO ANGE_ALBUM
+                        if ($insert_path[$i][uid] != "") {
+                            $sql = "INSERT INTO ANGE_ALBUM
                                 (
                                     PARENT_NO
                                     ,ALBUM_GB
@@ -471,10 +506,10 @@
                                     , '".$_model[SHOOTING_YMD]."'
                                 )";
 
-                        $_d->sql_query($sql);
-                        $no = $_d->mysql_insert_id;
+                            $_d->sql_query($sql);
+                            $no = $_d->mysql_insert_id;
 
-                        $sql = "INSERT INTO COM_FILE
+                            $sql = "INSERT INTO COM_FILE
                         (
                             FILE_NM
                             ,FILE_ID
@@ -503,22 +538,23 @@
                             , 'ALBUM'
                         )";
 
-                        $_d->sql_query($sql);
+                            $_d->sql_query($sql);
 
-                        if($_d->mysql_errno > 0) {
-                            $err++;
-                            $msg = $_d->mysql_error;
+                            if($_d->mysql_errno > 0) {
+                                $err++;
+                                $msg = $_d->mysql_error;
+                            }
                         }
                     }
                 }
-            }
 
-            if($err > 0){
-                $_d->sql_rollback();
-                $_d->failEnd("수정실패입니다:".$msg);
-            }else{
-                $_d->sql_commit();
-                $_d->succEnd($_key);
+                if($err > 0){
+                    $_d->sql_rollback();
+                    $_d->failEnd("수정실패입니다:".$msg);
+                }else{
+                    $_d->sql_commit();
+                    $_d->succEnd($_key);
+                }
             }
 
             break;

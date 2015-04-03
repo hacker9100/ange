@@ -40,6 +40,13 @@ define([
             });
         });
 
+        $scope.addStory = function () {
+            if (!$scope.busy) {
+                $scope.PAGE_NO++;
+                $scope.getContentList();
+            }
+        }
+
         /********** 초기화 **********/
         $scope.$parent.reload = false;
         $scope.busy = false;

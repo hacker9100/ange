@@ -18,6 +18,9 @@ define([
             // ange-portlet-slide-album
             $scope.option_r1_c1 = {title: '나의 앨범', api:'ange/album', size: 12, id: 'album', url: '/myange/album', dots: false, autoplay: true, centerMode: true, showNo: 6, fade: 'false'};
 
+            // ange-portlet-calendar
+            $scope.option_r2_c1 = {title: '마이캘린더', api:'ange/order', size: 3, channel: "myange", type: 'order', url: '/myange/orderlist', defIdx: 0, tab: [{gb: 'MILEAGE', menu: '/myange/orderlist', name: '마일리지몰'}, {gb: 'CUMMERCE', menu: '/myange/orderlist', name: '공동구매'}], image: true, head: true, date: false, nick: false};
+
             // ange-portlet-order-list
             $scope.option_r3_c1 = {title: '주문/구매내역', api:'ange/order', size: 3, channel: "myange", type: 'order', url: '/myange/orderlist', defIdx: 0, tab: [{gb: 'MILEAGE', menu: '/myange/orderlist', name: '마일리지몰'}, {gb: 'CUMMERCE', menu: '/myange/orderlist', name: '공동구매'}], image: true, head: true, date: false, nick: false};
 
@@ -49,6 +52,7 @@ define([
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope, $rootScope : $rootScope}));
 
+                    $scope.isHome = true;
                     $scope.item = data;
 
                     // 닫기

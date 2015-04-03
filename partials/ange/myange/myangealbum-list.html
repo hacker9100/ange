@@ -59,19 +59,25 @@
                                             <div ng-repeat="item in list">
                                                 <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
                                                 <div class="col-xs-12 col-sm-3 album_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
-                                                    <div ng-click="click_showViewMyAlbum(item)" class="album_photo_content">
-                                                        <div class="album_photo_imgbox">
+                                                    <div class="album_photo_content">
+                                                        <div class="album_photo_imgbox" ng-click="click_showViewMyAlbum(item)">
                                                             <img src="/imgs/ange/_blank.gif" class="album_photo_img" ng-style="{ 'background-image' : 'url( {{ item.ALBUM_FILE }} )' }" />
                                                             <!--<img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/noimage.png')" /> &lt;!&ndash; 삭제처리했을때 블라인드 이미지 추가해야함&ndash;&gt;-->
                                                         </div>
                                                         <div style="width:100%; text-align:center; font-size:0.86em;">
-                                                            <div class="album_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}</div>
-                                                            <div class="album_photo_txt" ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</div>
                                                             <div class="album_photo_txt">
-                                                                <span class="table_blue">{{ item.SUBJECT }}</span>
-                                                                <br />
-                                                                {{ item.SHOOTING_YMD }}
+                                                                <span class="table_blue">{{ item.SUBJECT }}</span><br />{{ item.SHOOTING_YMD }}
                                                             </div>
+                                                        </div>
+                                                        <div ng-if="item.ALBUM_GB != 'ADD'" style="width:100%; text-align:center;">
+                                                            <button class="btn btn-default btn-xs fileinput-button" data-ng-click="click_showEditMyAlbum(item, $index)">
+                                                                <i class="glyphicon glyphicon-pencil"></i>
+                                                                <span>수정</span>
+                                                            </button>
+                                                            <button class="btn btn-default btn-xs fileinput-button" data-ng-click="click_deleteMyAlbum(item, $index)">
+                                                                <i class="glyphicon glyphicon-trash"></i>
+                                                                <span>삭제</span>
+                                                            </button>
                                                         </div>
                                                     </div><!-- /.people_photo_content -->
                                                 </div><!-- /.people_photo_contentcol -->
