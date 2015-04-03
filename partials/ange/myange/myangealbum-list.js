@@ -102,18 +102,38 @@ define([
         };
 
         // 앨범 삭제 클릭
-        $scope.click_deleteMyAlbum = function() {
-            var dialog = dialogs.confirm('알림', '앨범을 삭제 하시겠습니까. 앨범에 속한 모든 사진이 함께 삭제 됩니다.', {size: 'md'});
+        $scope.click_deleteMyAlbum = function(item, idx) {
 
-            dialog.result.then(function(btn){
-                $scope.deleteItem('ange/album', 'album', $stateParams.id, true)
-                    .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
-                        $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
-                    })
-                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-            }, function(btn) {
-                return;
-            });
+            if (item == undefined || item.ALBUM_GB == 'ALBUM') {
+                var dialog = dialogs.confirm('알림', '앨범을 삭제 하시겠습니까? 앨범에 속한 모든 사진이 함께 삭제 됩니다.', {size: 'md'});
+
+                dialog.result.then(function(btn){
+                    $scope.deleteItem('ange/album', 'album', item != undefined ? item.NO : $stateParams.id, true)
+                        .then(function(){dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                            if (item != undefined) {
+                                $scope.list.splice(idx, 1);
+                            } else {
+                                $location.url('/'+$stateParams.channel+'/'+$stateParams.menu+'/list');
+                            }
+                        })
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                }, function(btn) {
+                    return;
+                });
+            } else {
+                var dialog = dialogs.confirm('알림', '사진을 삭제 하시겠습니까?', {size: 'md'});
+
+                dialog.result.then(function(btn){
+                    $scope.deleteItem('ange/album', 'picture', item.NO, true)
+                        .then(function(data){
+                            dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                            $scope.list.splice(idx, 1);
+                        })
+                        ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                }, function(btn) {
+                    return;
+                });
+            }
         };
 
         $scope.getMyAlbumTotalCnt = function () {
@@ -190,16 +210,23 @@ define([
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope, $rootScope : $rootScope}));
 
+                    $scope.isHome = false;
                     $scope.item = data;
 
                     $scope.click_delete = function () {
 
-                        $scope.deleteItem('ange/album', 'picture', $scope.item.NO, true)
-                            .then(function(data){
-                                dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
-                                $modalInstance.close('DELETE');
-                            })
-                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        var dialog = dialogs.confirm('알림', '사진을 삭제 하시겠습니까?', {size: 'md'});
+
+                        dialog.result.then(function(btn){
+                            $scope.deleteItem('ange/album', 'picture', item.NO, true)
+                                .then(function(data){
+                                    dialogs.notify('알림', '정상적으로 삭제되었습니다.', {size: 'md'});
+                                    $modalInstance.close('DELETE');
+                                })
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        }, function(btn) {
+                            return;
+                        });
                     };
 
                     $scope.click_update = function () {
@@ -224,6 +251,16 @@ define([
             });
         };
 
+        // 앨범/사진 수정 버튼 클릭
+        $scope.click_showEditMyAlbum = function (item, idx) {
+
+            if (item.ALBUM_GB == 'ALBUM') {
+                $scope.openViewMyAlbumRegModal(item, idx, 'lg');
+            } else {
+                $scope.openViewMyPictureRegModal(item, idx, 'lg');
+            }
+        };
+
         // 앨범 등록 버튼 클릭
         $scope.click_showCreateMyAlbum = function () {
 
@@ -232,27 +269,40 @@ define([
                 return;
             }
 
-            $scope.openViewMyAlbumRegModal(null, 'lg');
+            $scope.openViewMyAlbumRegModal(null, null, 'lg');
         };
 
-        $scope.openViewMyAlbumRegModal = function (item,  size) {
+        $scope.openViewMyAlbumRegModal = function (item, idx, size) {
             var dlg = dialogs.create('myangealbum-edit.html',
                 ['$scope', '$rootScope', '$modalInstance', '$controller', '$filter', '$http', 'CONSTANT', 'data', function($scope, $rootScope, $modalInstance, $controller, $filter, $http, CONSTANT, data) {
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope, $rootScope : $rootScope}));
 
-                    $scope.content = data;
-
                     $scope.item = {};
+
+                    if (data != null) {
+                        $scope.item = data;
+                    }
 
                     $scope.click_reg = function () {
 
-                        $scope.insertItem('ange/album', 'album', $scope.item, true)
-                            .then(function(data){
-                                dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                                $modalInstance.close('CREATE');
-                            })
-                            ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        if (data == null) {
+                            $scope.insertItem('ange/album', 'album', $scope.item, true)
+                                .then(function(data){
+                                    dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
+                                    $scope.item.ACTION = 'CREATE';
+                                    $modalInstance.close($scope.item);
+                                })
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        } else {
+                            $scope.updateItem('ange/album', 'album', $scope.item.NO, $scope.item, true)
+                                .then(function(data){
+                                    dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
+                                    $scope.item.ACTION = 'UPDATE';
+                                    $modalInstance.close($scope.item);
+                                })
+                                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+                        }
                     };
 
                     // 닫기
@@ -260,10 +310,12 @@ define([
                         $modalInstance.close();
                     }
                 }], item, {size:size,keyboard: true}, $scope);
-            dlg.result.then(function(action){
-                if (action == 'CREATE') {
+            dlg.result.then(function(data){
+                if (data.ACTION == 'CREATE') {
                     $scope.list = [];
                     $scope.getMyAlbumList();
+                } else if (data.ACTION == 'UPDATE') {
+                    $scope.list[idx] = data;
                 }
             },function(){
 
@@ -281,7 +333,7 @@ define([
             $scope.openViewMyPictureRegModal(null, 'lg');
         };
 
-        $scope.openViewMyPictureRegModal = function (item,  size) {
+        $scope.openViewMyPictureRegModal = function (item, idx, size) {
             var dlg = dialogs.create('myangepicture-edit.html',
                 ['$scope', '$rootScope', '$modalInstance', '$controller', '$filter', '$http', 'CONSTANT', 'data', function($scope, $rootScope, $modalInstance, $controller, $filter, $http, CONSTANT, data) {
                     /********** 공통 controller 호출 **********/
@@ -368,14 +420,14 @@ define([
                             $scope.insertItem('ange/album', 'picture', $scope.item, true)
                                 .then(function(data){
                                     dialogs.notify('알림', '정상적으로 등록되었습니다.', {size: 'md'});
-                                    $modalInstance.close();
+                                    $modalInstance.close($scope.item);
                                 })
                                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         } else {
                             $scope.updateItem('ange/album', 'picture', $scope.item.NO, $scope.item, true)
                                 .then(function(data){
                                     dialogs.notify('알림', '정상적으로 수정되었습니다.', {size: 'md'});
-                                    $modalInstance.close();
+                                    $modalInstance.close($scope.item);
                                 })
                                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
                         }
@@ -386,9 +438,11 @@ define([
                         $modalInstance.close();
                     }
                 }], item, {size:size,keyboard: true}, $scope);
-            dlg.result.then(function(){
-                $scope.list = [];
-                $scope.getMyAlbumList();
+            dlg.result.then(function(data){
+                if (data) {
+                    $scope.list = [];
+                    $scope.getMyAlbumList();
+                }
             },function(){
 
             });

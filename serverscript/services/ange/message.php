@@ -371,7 +371,20 @@ switch ($_method) {
             if ($_d->mysql_errno > 0) {
                 $_d->failEnd("수정실패입니다:".$_d->mysql_error);
             } else {
-                $_d->succEnd($no);
+
+                $sql = "SELECT
+                                COUNT(*) AS TO_CNT
+                            FROM
+                                ANGE_MESSAGE
+                            WHERE
+                                CHECK_FL = 'N'
+                                AND TO_ID = '".$_SESSION['uid']."'
+                            ";
+
+                $message_data  = $_d->sql_fetch($sql);
+                $_SESSION['message'] = $message_data['TO_CNT'];
+
+                $_d->dataEnd2(array("message" => $_SESSION['message']));
             }
 
         } else{

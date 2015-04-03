@@ -155,6 +155,7 @@ define([
                                 $rootScope.user_info = data;
                                 $rootScope.uid = data.USER_ID;
                                 $rootScope.mileage = data.REMAIN_POINT;
+                                $rootScope.message = data.MESSAGE_CNT;
                                 $rootScope.name = data.USER_NM;
                                 $rootScope.role = data.ROLE_ID;
                                 $rootScope.system = data.SYSTEM_GB;

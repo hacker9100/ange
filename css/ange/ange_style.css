@@ -1195,6 +1195,18 @@ a.util2 {
     background-image:url('/imgs/ange/comp_login_btn_02_message.jpg');
     text-indent: -9999px;
 }
+.message_icon_new {
+    position:absolute;
+    font-family: arial, san-serif;
+    font-size: 0.64em;
+    font-weight: bold;
+    color: #fbffdc;
+    padding: 0 2px;
+    margin-left:5px;
+    background-color: #ffa405;
+    border:1px solid transparent;
+    border-radius: 2px;
+}
 
 a.util3 {
     float: left;

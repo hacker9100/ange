@@ -57,7 +57,7 @@
 
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.NICK_NM,  U.PASSWORD, U.PHONE_1, U.PHONE_2, U.EMAIL, U.ADDR, U.ADDR_DETAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
-                            UR.ROLE_ID, R.ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB, U.ZIP_CODE,
+                            UR.ROLE_ID, R.ROLE_NM, R.SYSTEM_GB, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB, U.ZIP_CODE,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT,
@@ -91,6 +91,18 @@
                     if ( $_model[password] != "pass" && !validate_password($_model[password], $data['PASSWORD'])) {
                         $_d->failEnd("아이디나 패스워드를 확인해주세요.");
                     }
+
+                    $sql = "SELECT
+                                COUNT(*) AS TO_CNT
+                            FROM
+                                ANGE_MESSAGE
+                            WHERE
+                                CHECK_FL = 'N'
+                                AND TO_ID = '".$_key."'
+                            ";
+
+                    $message_data  = $_d->sql_fetch($sql);
+                    $data['MESSAGE_CNT'] = $message_data['TO_CNT'];
 
                     $sql = "SELECT
                                 M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
@@ -219,7 +231,8 @@
                     $_SESSION['name'] = $data['USER_NM'];
                     $_SESSION['role'] = $data['ROLE_ID'];
                     $_SESSION['mileage'] = $data['REMAIN_POINT'];
-                    $_SESSION['system'] = $_model['SYSTEM_GB'];
+                    $_SESSION['message'] = $data['MESSAGE_CNT'];
+                    $_SESSION['system'] = $data['SYSTEM_GB'];
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
 
                     $_SESSION['addr'] = $data['ADDR'];
@@ -253,6 +266,7 @@
                         unset($_SESSION['name']);
                         unset($_SESSION['role']);
                         unset($_SESSION['mileage']);
+                        unset($_SESSION['message']);
                         unset($_SESSION['system']);
                         unset($_SESSION['menu_role']);
 
@@ -277,6 +291,18 @@
                     {
                         MtUtil::_d("### [SESSION CHECK2]");
 
+                        $sql = "SELECT
+                                COUNT(*) AS TO_CNT
+                            FROM
+                                ANGE_MESSAGE
+                            WHERE
+                                CHECK_FL = 'N'
+                                AND TO_ID = '".$_SESSION['uid']."'
+                            ";
+
+                        $message_data  = $_d->sql_fetch($sql);
+                        $data['MESSAGE_CNT'] = $message_data['TO_CNT'];
+
                         if (!isset($_SESSION['ip']) || $_SESSION['ip']==''){ $_SESSION['ip'] = MtUtil::getClientIp(); }
                         if (!isset($_SESSION['guid']) || $_SESSION['guid']==''){ $_SESSION['guid'] = uniqid('',true); }
 
@@ -289,6 +315,7 @@
                         $sess['USER_NM'] = $_SESSION['name'];
                         $sess['ROLE_ID'] = $_SESSION['role'];
                         $sess['REMAIN_POINT'] = $_SESSION['mileage'];
+                        $sess['MESSAGE_CNT'] = $data['MESSAGE_CNT'];
                         $sess['SYSTEM_GB'] = $_SESSION['system'];
                         $sess['MENU_ROLE'] = $_SESSION['menu_role'];
 
@@ -321,7 +348,8 @@
                         $sess['NICK_NM'] = 'Guest';
                         $sess['USER_NM'] = 'Guest';
                         $sess['ROLE_ID'] = '';
-                        $sess['MILEAGE'] = '';
+                        $sess['REMAIN_POINT'] = '';
+                        $sess['MESSAGE_CNT'] = '';
                         $sess['SYSTEM_GB'] = '';
                         $sess['MENU_ROLE'] = '';
 
@@ -364,6 +392,7 @@
                     unset($_SESSION['name']);
                     unset($_SESSION['role']);
                     unset($_SESSION['system']);
+                    unset($_SESSION['message']);
                     unset($_SESSION['menu_role']);
                     unset($_SESSION['timeout']);
 
@@ -375,6 +404,7 @@
                 $_SESSION['nick'] = $_model['user_nick'];
                 $_SESSION['name'] = null;
                 $_SESSION['role'] = null;
+                $_SESSION['message'] = null;
                 $_SESSION['system'] = null;
                 $_SESSION['menu_role'] = null;
                 $_SESSION['timeout'] = time();
@@ -398,7 +428,7 @@
 
                 $sql = "SELECT
                             U.USER_ID, U.USER_NM, U.NICK_NM,  U.PASSWORD, U.PHONE_1, U.PHONE_2, U.EMAIL, U.ADDR, U.ADDR_DETAIL, U.USER_ST, DATE_FORMAT(U.REG_DT, '%Y-%m-%d') AS REG_DT, DATE_FORMAT(U.FINAL_LOGIN_DT, '%Y-%m-%d') AS FINAL_LOGIN_DT, U.INTRO, U.NOTE,
-                            UR.ROLE_ID, R.ROLE_NM, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB,
+                            UR.ROLE_ID, R.ROLE_NM, R.SYSTEM_GB, U.PREGNENT_FL, U.BABY_BIRTH_DT, U.CERT_GB,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT,
@@ -420,6 +450,18 @@
                 }
 
                 if ($data) {
+                    $sql = "SELECT
+                                COUNT(*) AS TO_CNT
+                            FROM
+                                ANGE_MESSAGE
+                            WHERE
+                                CHECK_FL = 'N'
+                                AND TO_ID = '".$_key."'
+                            ";
+
+                    $message_data  = $_d->sql_fetch($sql);
+                    $data['MESSAGE_CNT'] = $message_data['TO_CNT'];
+
                     $sql = "SELECT
                                 M.MENU_ID, M.ROLE_ID, M.MENU_FL, M.LIST_FL, M.VIEW_FL, M.EDIT_FL, M.MODIFY_FL
                             FROM
@@ -527,7 +569,8 @@
                     $_SESSION['name'] = $data['USER_NM'];
                     $_SESSION['role'] = $data['ROLE_ID'];
                     $_SESSION['mileage'] = $data['REMAIN_POINT'];
-                    $_SESSION['system'] = $_model['SYSTEM_GB'];
+                    $_SESSION['message'] = $data['MESSAGE_CNT'];
+                    $_SESSION['system'] = $data['SYSTEM_GB'];
                     $_SESSION['menu_role'] = $data['MENU_ROLE'];
 
                     $_SESSION['addr'] = $data['ADDR'];
@@ -587,6 +630,7 @@
                 unset($_SESSION['name']);
                 unset($_SESSION['role']);
                 unset($_SESSION['mileage']);
+                unset($_SESSION['message']);
                 unset($_SESSION['system']);
                 unset($_SESSION['menu_role']);
 //                unset($_SESSION['email']);

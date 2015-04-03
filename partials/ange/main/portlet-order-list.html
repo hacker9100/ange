@@ -15,10 +15,9 @@
             <div class="comp_purchase_content_name">{{ item.PRODUCT_NM }}</div>
             <div class="comp_purchase_content_price">{{ item.PRODUCT_GB == 'MILEAGE' ? item.SUM_PRICE : item.DIRECT_PRICE }} {{ item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원' }}</div>
         </div>
-    </div>
 
-    <div ng-show="list == '' || list == null" style="width:100%; text-align: center; !important;">
-        조회 데이터가 없습니다.
+        <div ng-show="list == '' || list == null" style="width:100%; text-align: center; !important;">
+            조회 데이터가 없습니다.
+        </div>
     </div>
-
 </div>
