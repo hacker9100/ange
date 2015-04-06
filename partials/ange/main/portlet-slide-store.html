@@ -18,7 +18,7 @@
         <a class="comp_slide_btn_w30 prev" title="이전" ng-click="click_slickPrev()" style="margin-left:25%;">이전</a>
         <a class="comp_slide_btn_w30 next" title="다음" ng-click="click_slickNext()">다음</a>
 
-        <slick id="{{option.id}}" init-onload="true" data="list" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="3" autoplay-speed="3000" fade="false" pause-on-hover="false" style="z-index:49;">
+        <slick id="{{option.id}}" init-onload="true" data="list" init-reload="true" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="3" autoplay-speed="3000" fade="false" pause-on-hover="false" style="z-index:49;">
             <div ng-repeat="item in list" class="col-xs-3 mini_event_contentcol" style="margin:12px 0; border-left:1px solid #DEDEDE; border-right:1px solid #DEDEDE;">
                 <div class="mini_event_content" style="border:none; text-align:center;">
                     <a href="{{ item.URL }}">

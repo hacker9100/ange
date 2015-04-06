@@ -61,7 +61,8 @@
                                                 <div class="col-xs-12 col-sm-3 album_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
                                                     <div class="album_photo_content">
                                                         <div class="album_photo_imgbox" ng-click="click_showViewMyAlbum(item)">
-                                                            <img src="/imgs/ange/_blank.gif" class="album_photo_img" ng-style="{ 'background-image' : 'url( {{ item.ALBUM_FILE }} )' }" />
+                                                            <img ng-if="item.NEW_ALBUM" src="/imgs/ange/_blank.gif" class="album_photo_img" ng-style="{ 'background-image' : 'url( /imgs/ange/newalbum_imgnone.png )' }" />
+                                                            <img ng-if="!item.NEW_ALBUM" src="/imgs/ange/_blank.gif" class="album_photo_img" ng-style="{ 'background-image' : 'url( {{ item.ALBUM_FILE }} )' }" />
                                                             <!--<img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/noimage.png')" /> &lt;!&ndash; 삭제처리했을때 블라인드 이미지 추가해야함&ndash;&gt;-->
                                                         </div>
                                                         <div style="width:100%; text-align:center; font-size:0.86em;">

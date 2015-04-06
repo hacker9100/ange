@@ -792,68 +792,11 @@
     <div class="samplepack_tabbox"  ng-class="{ 'hidden': showSamplepackDetails }" style="display:block;">
 
         <ul class="nav nav-tabs nav-justified" id="tab" style="font-size:0.92em; font-weight:700;">
-            <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('1');">주의사항</a></li>
-            <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('2');">샘플팩 구성</a></li>
-
-            <!-- 시즌1 주의사항 -->
-            <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
-                <span class="tabox_title">신청방법</span>
-                <ol>
-                    <li>앙쥬 홈페이지 (www.ange.co.kr)에 회원가입합니다.</li>
-                    <li>[신규회원 샘플팩 신청] 버튼을 눌러서 해당 내용을 입력합니다.</li>
-                    <li>반드시 임신부증거사진(산모이름과 예정일이 함게 나와있는 사진 1장)을 포함해야 합니다.</li>
-                    <li>응모자 중 500명을 추첨해서 발송해드립니다. 당첨자 발표일에 공지사항 게시판을 확인하세요.</li>
-                </ol>
-
-                <span class="table_red tabox_title" style="border-bottom:2px solid #e25d4c;">회원 탈퇴 후 재가입하여 신청시</span>
-                <ul>
-                    <li class="table_red">샘플팩 신청 및 당첨자 기록은 본사에 보유되어 있기 때문에 당첨자에서 제외됩니다.</li>
-                </ul>
-
-                <span class="tabox_title">주의사항</span>
-                <ul>
-                    <li>반드시 임신부만 응모하세요.(남성/출산맘 응모불가)</li>
-                    <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 당첨이 취소됩니다.</li>
-                    <li>주소가 불분명할 경우 추첨대상에서 제외됩니다.(아파트 동/호수 없는 경우, 번지수 없는 경우)</li>
-                    <li>샘플팩은 재발송되지 않습니다.</li>
-                    <li>신청IP, 반으시는 주소가 같을 경우 중복 발송하지 않습니다.</li>
-                    <li>신청기간 내 회원가입한 임신부만을 대상으로 합니다.</li>
-                    <li>샘플팩 구성은 업체사정으로 공지없이 변경될 수 있습니다.</li>
-                    <li>신청한 내용(사진)은 변경할 수 없으므로 신중히 작성해주시기 바랍니다.</li>
-                    <li>탈퇴 후 재가입하셔도 응모기록은 보유되기 때문에 당첨에서 제외됩니다.</li>
-                </ul>
-            </div>  <!-- /#samplepack_new_warning -->
-            <!-- /시즌1 주의사항 -->
-
-            <!-- 시즌2 주의사항 -->
-            <div id="tabs-1" class="tabox_body"  ng-if="selectIdx == '1'" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
-                <span class="tabox_title">신청방법</span>
-                <ol>
-                    <li>상단 <mark><span class="table_red">신청자격확인</span></mark> 을 통해 신청자격을 먼저 확인하세요.</li>
-                    <li><mark><span class="table_red">기존회원 샘플팩 신청</span></mark> 버튼을 눌러서 해당 내용을 입력합니다.</li>
-                    <li>반드시 임신부증거사진(산모이름과 예정일이 함게 나와있는 사진 1장)을 포함해야 합니다.</li>
-                    <li>우리아이 첫 태동의 느낌을 작성해 주세요.</li>
-                    <li class="table_red">신청 시 마일리지 2,000p 차감(부족 시 신청 불가능)</li>
-                </ol>
-
-                <span class="tabox_title">주의사항</span>
-                <ul>
-                    <li>등록된 임신부 인증 사진이 미흡할 경우 당첨이 취소됩니다.<br />(관렵없는 사진, 예정일이 없는 사진을 올릴 경우)</li>
-                    <li><span class="table_red">선착순으로 증정</span>되며 마일리지가 부족하면 신청이 되지 않습니다.</li>
-                    <li>별도의 주소 확인은 하지 않으며 발송시점 주소가 불분명할 경우 당첨이 취소됩니다.<br />(아파트 동/호수 없는 경우, 번지수 없는 경우)</li>
-                    <li>신청한 내용(사진)은 변경할 수 없으므로 신중히 작성해주시기 바랍니다.</li>
-                    <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 당첨이 취소됩니다.</li>
-                    <li>샘플팩 구성은 업체사정으로 공지없이 변경될 수 있습니다.</li>
-                    <li>첫 태동의 느낌을 작성하지 않으면 신청되지 않습니다.</li>
-                    <li>선착순으로 제공됨으로 별도의 당첨 공지를 하지 않습니다.</li>
-                    <li>신청IP, 받으시는 주소가 같을 경우 중복 발생하지 않습니다.</li>
-                    <li><span class="table_red">착불 2,500원</span>으로 발송됩니다.(제주지역 추가운임 발생)</li>
-                </ul>
-            </div>  <!-- /#samplepack_new_warning -->
-            <!-- /시즌2 주의사항 -->
+            <li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('2');">샘플팩 구성</a></li>
+            <li role="presentation" ng-class="selectIdx == '2' ? 'active' : ''" style="cursor:pointer;"><a ng-click="click_selectTab('1');">주의사항</a></li>
 
             <!-- 시즌 1 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" ng-if="selectIdx == '2'" style="display:block;">
+            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE2'" ng-if="selectIdx == '1'" style="display:block;">
                 <span class="tabox_title">기존회원 샘플팩 구성</span>
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
@@ -1038,7 +981,7 @@
                 <div class="samplepack_goodsbox_td">
                     <div class="samplepack_goodsbox">
                         <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_19_big.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
+                            <div class="samplepack_goodsboxtxt">
                             <p class="table_green">비앤원 H발란스 샘플킷</p>
                             <div class="samplepack_goodsboxbody table_gray">임산부 전용 헤어케어 시스템. 100% 식물성분 비이온 계면 활성제 사용으로 안심하고 사용 가능, pH4.6의 약산성 헤어케어 시스템이 두피와 모발의 pH발란스 조절.</div>
                             <a class="samplepack_sponlink"  href="http://www.biggreen.co.kr" target="_blank">http://www.biggreen.co.kr</a>
@@ -1054,11 +997,44 @@
                     </div>  <!-- /.samplepack_goodsbox_td -->
                 </div>
 
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_21_goongsecret1.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">궁중비책 섬유세제 & 섬유유연제</p>
+                            <div class="samplepack_goodsboxbody table_gray">한방성분인 오지탕이 연약한 아기 피부를 보호한다.섬유세제는 중성세제로 울,니트같은 의류세탁이가능하다. 특히 섬유유연제는 소취 기능 한방 성분이 추가로 들어 있어 젖비린내와 실내 건조시 나는 눅눅한 냄새를 제거해준다.</div>
+                            <a class="samplepack_sponlink"  href="http://http://goongsecret.0to7.com" target="_blank">http://goongsecret.0to7.com</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_22_goongsecret2.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">공중비책 스킨케어 키드</p>
+                            <div class="samplepack_goodsboxbody table_gray">한층 더 업그레이드 된 한방성분과 기술로 연약한 아기피부를 건강하게 보고해줍니다.</div>
+                            <a class="samplepack_sponlink"  href="http://goongsecret.0to7.com" target="_blank">http://goongsecret.0to7.com</a>
+                        </div>
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
+                <div class="samplepack_goodsbox_td">
+                    <div class="samplepack_goodsbox">
+                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack2_23_nanddong.jpg')"/>
+                        <div class="samplepack_goodsboxtxt">
+                            <p class="table_green">난쟁이똥자루 오가닉 아기양 볼딸랑이 만들기 DIY세트</p>
+                            <div class="samplepack_goodsboxbody table_gray">화학 물질을 전혀 사용하지 않아 오염되지 않은 토양에서, 유기농법으로 재배한 목화를 사용하여, 원사에서부터 제품이 되기까지에서 화학처리 ,가공을 최소화 한 무형광 원단을 사용합니다.</div>
+                            <a class="samplepack_sponlink"  href="http://www.nanddong.com" target="_blank">http://www.nanddong.com</a>
+                        </div>
+                    </div>
+                    <div class="samplepack_goodsbox">
+
+                    </div>  <!-- /.samplepack_goodsbox_td -->
+                </div>
+
             </div>  <!-- /#samplepack_new_goods -->
             <!-- /시즌 1 샘플팩 구성 -->
 
             <!-- 시즌 2 샘플팩 구성 -->
-            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '2'" style="display:block;">
+            <div id="tabs-2" class="tabox_body" ng-show="season_gb == 'SAMPLE1' && selectIdx == '1'" style="display:block;">
                 <span class="tabox_title">신규회원 샘플팩 구성</span>
                 <br />
                 <p style="margin-top:10px;"><small class="table_gray">※샘플팩의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
@@ -1231,18 +1207,67 @@
                             <a class="samplepack_sponlink" href="http://www.atoib.co.kr" target="_blank">http://www.atoib.co.kr</a>
                         </div>
                     </div>
-                    <div class="samplepack_goodsbox">
-                        <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/img_samplepack_18_daewoong.jpg')"/>
-                        <div class="samplepack_goodsboxtxt">
-                            <p class="table_green">대웅제약 락피더스 유산균</p>
-                            <div class="samplepack_goodsboxbody table_gray">유산균을 꾸준히 섭취하면 유해균 의 활동이 억제되고 장의 운동과 배변이 원활해지며 몸의 저항성이 향상됩니다. 특히 임신부 섭취 시 효과 탁월.</div>
-                            <a class="samplepack_sponlink" href="http://www.daewoong.co.kr" target="_blank">http://www.daewoong.co.kr</a>
-                        </div>
-                    </div>  <!-- /.samplepack_goodsbox_td -->
                 </div>
 
             </div>  <!-- /#samplepack_new_goods -->
             <!-- /시즌 2 샘플팩 구성 -->
+
+            <!-- 시즌1 주의사항 -->
+            <div id="tabs-1" class="tabox_body" ng-if="selectIdx == '2'" ng-show="season_gb == 'SAMPLE1'" style="display:block;">
+                <span class="tabox_title">신청방법</span>
+                <ol>
+                    <li>앙쥬 홈페이지 (www.ange.co.kr)에 회원가입합니다.</li>
+                    <li>[신규회원 샘플팩 신청] 버튼을 눌러서 해당 내용을 입력합니다.</li>
+                    <li>반드시 임신부증거사진(산모이름과 예정일이 함게 나와있는 사진 1장)을 포함해야 합니다.</li>
+                    <li>응모자 중 500명을 추첨해서 발송해드립니다. 당첨자 발표일에 공지사항 게시판을 확인하세요.</li>
+                </ol>
+
+                <span class="table_red tabox_title" style="border-bottom:2px solid #e25d4c;">회원 탈퇴 후 재가입하여 신청시</span>
+                <ul>
+                    <li class="table_red">샘플팩 신청 및 당첨자 기록은 본사에 보유되어 있기 때문에 당첨자에서 제외됩니다.</li>
+                </ul>
+
+                <span class="tabox_title">주의사항</span>
+                <ul>
+                    <li>반드시 임신부만 응모하세요.(남성/출산맘 응모불가)</li>
+                    <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 당첨이 취소됩니다.</li>
+                    <li>주소가 불분명할 경우 추첨대상에서 제외됩니다.(아파트 동/호수 없는 경우, 번지수 없는 경우)</li>
+                    <li>샘플팩은 재발송되지 않습니다.</li>
+                    <li>신청IP, 반으시는 주소가 같을 경우 중복 발송하지 않습니다.</li>
+                    <li>신청기간 내 회원가입한 임신부만을 대상으로 합니다.</li>
+                    <li>샘플팩 구성은 업체사정으로 공지없이 변경될 수 있습니다.</li>
+                    <li>신청한 내용(사진)은 변경할 수 없으므로 신중히 작성해주시기 바랍니다.</li>
+                    <li>탈퇴 후 재가입하셔도 응모기록은 보유되기 때문에 당첨에서 제외됩니다.</li>
+                </ul>
+            </div>  <!-- /#samplepack_new_warning -->
+            <!-- /시즌1 주의사항 -->
+
+            <!-- 시즌2 주의사항 -->
+            <div id="tabs-1" class="tabox_body"  ng-if="selectIdx == '2'" ng-show="season_gb == 'SAMPLE2'" style="display:block;">
+                <span class="tabox_title">신청방법</span>
+                <ol>
+                    <li>상단 <mark><span class="table_red">신청자격확인</span></mark> 을 통해 신청자격을 먼저 확인하세요.</li>
+                    <li><mark><span class="table_red">기존회원 샘플팩 신청</span></mark> 버튼을 눌러서 해당 내용을 입력합니다.</li>
+                    <li>반드시 임신부증거사진(산모이름과 예정일이 함게 나와있는 사진 1장)을 포함해야 합니다.</li>
+                    <li>우리아이 첫 태동의 느낌을 작성해 주세요.</li>
+                    <li class="table_red">신청 시 마일리지 2,000p 차감(부족 시 신청 불가능)</li>
+                </ol>
+
+                <span class="tabox_title">주의사항</span>
+                <ul>
+                    <li>등록된 임신부 인증 사진이 미흡할 경우 당첨이 취소됩니다.<br />(관렵없는 사진, 예정일이 없는 사진을 올릴 경우)</li>
+                    <li><span class="table_red">선착순으로 증정</span>되며 마일리지가 부족하면 신청이 되지 않습니다.</li>
+                    <li>별도의 주소 확인은 하지 않으며 발송시점 주소가 불분명할 경우 당첨이 취소됩니다.<br />(아파트 동/호수 없는 경우, 번지수 없는 경우)</li>
+                    <li>신청한 내용(사진)은 변경할 수 없으므로 신중히 작성해주시기 바랍니다.</li>
+                    <li>임신부 증거자료가 본인의 것이 아니거나 중복해서 등록할 경우 당첨이 취소됩니다.</li>
+                    <li>샘플팩 구성은 업체사정으로 공지없이 변경될 수 있습니다.</li>
+                    <li>첫 태동의 느낌을 작성하지 않으면 신청되지 않습니다.</li>
+                    <li>선착순으로 제공됨으로 별도의 당첨 공지를 하지 않습니다.</li>
+                    <li>신청IP, 받으시는 주소가 같을 경우 중복 발생하지 않습니다.</li>
+                    <li><span class="table_red">착불 2,500원</span>으로 발송됩니다.(제주지역 추가운임 발생)</li>
+                </ul>
+            </div>  <!-- /#samplepack_new_warning -->
+            <!-- /시즌2 주의사항 -->
 
         </ul>   <!-- /.nav-tabs -->
     </div>

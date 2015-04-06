@@ -102,10 +102,19 @@
                     <input ng-model="item.TAG" type= "text" class= "form-control" placeholder= "태그"/>
                 </div>
             </div>
-            <div class= "form-group form_basic_group">
+            <div class= "form-group form_basic_group" style="height:50px;">
                 <label class= "form_basic_label">설명</label>
                 <div class= "col-xs-6 form_basic_input">
                     <textarea ng-model="item.NOTE" class= "form-control" placeholder= "간략한 설명.."/>
+                </div>
+            </div>
+            <div class="form-group form_basic_group">
+                <label class= "form_basic_label">기사광고 여부</label>
+                <div class="col-xs-1 form_basic_input" style="float:none;margin-top:9px;">
+                    <input ng-model="item.AD_FL" type="checkbox" style="float:none;">
+                </div>
+                <div class="col-xs-11 form_basic_input" style="margin:10px 130px 10px;">
+                    <span style="margin-top:9px;">이 태스크는 기사형 광고입니다.</span>
                 </div>
             </div>
         </form>

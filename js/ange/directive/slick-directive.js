@@ -49,7 +49,8 @@ define(['./directives'], function (directives) {
             variableWidth: '@',
             vertical: '@',
             prevArrow: '@',
-            nextArrow: '@'
+            nextArrow: '@',
+            initReload: '@'
           },
           link: function (scope, element, attrs) {
             var initializeSlick, isInitialized;
@@ -136,6 +137,8 @@ define(['./directives'], function (directives) {
                 if (newVal != null && !isInitialized) {
                   initializeSlick();
                   return isInitialized = true;
+                } else if (newVal != null && scope.initReload) {
+                  initializeSlick();
                 }
               });
             } else {

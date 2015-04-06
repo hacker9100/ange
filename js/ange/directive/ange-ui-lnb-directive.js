@@ -326,6 +326,15 @@ define(['./directives'], function (directives) {
                         }
                     }
 
+                    if(url == '/infodesk/drop/request'){ // 회원 탈퇴
+                        if($scope.session == null){
+                            dialogs.notify('알림', '로그인 후 이용 가능합니다.', {size: 'md'});
+                            return;
+                        }else{
+                            $location.url(url);
+                        }
+                    }
+
                     if(url == '/store/cart/list'){
 
                         if($scope.uid == null || $scope.uid == ''){

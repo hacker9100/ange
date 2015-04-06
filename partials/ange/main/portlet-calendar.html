@@ -9,33 +9,21 @@
             </div>
 
             <style>
-                ul.cell_dayname { clear: both; width: 100%; height: 30px;}
-                ul.cell_dayname>li { float: left; padding: 10px 10px; width: 14%; height: 25px; background-color: #eee; list-style-type: none; text-align: center; border: 1px solid #fff; }
-                ul.cell_day>li { float: left; padding: 10px 10px; width: 14%; height: 25px; background-color: #f0f0f0; list-style-type: none; text-align: center; border: 1px solid #fff; }
+                ul.cell_day { clear: both; width: 100%; }
+                ul.cell_day>li { float: left; padding: 10px 5px; width: 14%; height: 30px; background-color: #f0f0f0; list-style-type: none; text-align: center; border: 1px solid #fff; }
                 ul.cell_day>li.blind { background-color: #f0f0f0; color: #ccc; }
                 ul.cell_day>li.normal { background-color: #eee; color: #000; }
                 ul.cell_day>li.event { background-color: #39f; color: #000; }
 
-                ul.cell_list { width: 100%; }
-                ul.cell_list>li { padding: 10px 10px; background-color: #eee; list-style-type: none; text-align: left; border: 1px solid #fff; }
+                ul.cell_list { width: 100%; background-color: #eee; line-height: 1.4em;}
+                ul.cell_list>li { padding: 5px 0px; margin-top: 1px; background-color: #fff; list-style-type: none; text-align: left; border: 1px solid #fff; font-size: 0.75em;}
             </style>
 
-            <div class="comp_calendar_viewer_content" style="padding:10px; height:200px;">
-                <div style="width:100%; height:100%; margin:0px auto; border:1px solid #EFEFEF; font-size:0.72em; font-weight: 400; color:#888; padding:5px;">
-                    <ul class="cell_dayname">
-                        <li>SUN</li>
-                        <li>MOM</li>
-                        <li>TUE</li>
-                        <li>WED</li>
-                        <li>THU</li>
-                        <li>FRI</li>
-                        <li>SAT</li>
-                    </ul>
-                    <!-- item.type = normal / hidden / event -->
-                    <ul class="cell_day" ng-repeat="item in data.calendar">
-                        <li class="{{item.type}}" title="{{item.event}}">{{item.day}}<br/></li>
-                    </ul>
-                </div>
+            <div class="comp_calendar_viewer_content" style="padding:0px 0px 0px 5px; height:200px;">
+                <!-- item.type = normal / hidden / event -->
+                <ul class="cell_day">
+                    <li class="{{item.type}}" title="{{item.event}}" ng-repeat="item in data.calendar">{{item.day}}<br/></li>
+                </ul>
             </div>
         </div>
 

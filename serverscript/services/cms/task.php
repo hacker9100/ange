@@ -52,7 +52,8 @@
                 $sql = "SELECT
                             P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
                             T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SERIES_NM, C.SEASON_NM, C.SECTION_NM, P.YEAR, T.LIKE_CNT, T.HIT_CNT, SCRAP_CNT, REPLY_CNT,
-                            CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL
+                            CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL, T.AD_CODE,
+                            CASE WHEN T.AD_CODE IS NULL THEN 'N' ELSE 'Y' END AS AD_FL
                         FROM
                             CMS_TASK T
                             INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
@@ -240,13 +241,14 @@
                             PROJECT_NM, NO, PHASE, SUBJECT, SUMMARY, EDITOR_ID, EDITOR_NM, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                             CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM, (SELECT SECTION_NM FROM CMS_SECTION S WHERE S.NO = SECTION_NO) AS SECTION_NM,
                             HIT_CNT, SCRAP_CNT, LIKE_CNT, REPLY_CNT, LIKE_FL,
-                            (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'CONTENT') AS REPLY_COUNT
+                            (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'CONTENT') AS REPLY_COUNT, AD_CODE,
+                            CASE WHEN AD_CODE IS NULL THEN 'N' ELSE 'Y' END AS AD_FL
                         FROM
                         (
                             SELECT
                                 P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
                                 T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, T.HIT_CNT, T.SCRAP_CNT, T.LIKE_CNT, T.REPLY_CNT, S.SERIES_NM,
-                                CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL
+                                CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL, T.AD_CODE
                             FROM
                                 CMS_TASK T
                                 INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
@@ -511,6 +513,7 @@
                             ,SECTION_NO
                             ,TAG
                             ,NOTE
+                            ,AD_CODE
                         ) VALUES (
                             '".$_model[PHASE]."'
                             ,'".$_model[SUBJECT]."'
@@ -525,6 +528,7 @@
                             ,".$section_no."
                             ,'".$_model[TAG]."'
                             ,'".$_model[NOTE]."'
+                            ,".( $_model[AD_FL] == "true" ? '"AD"' : "NULL" )."
                         )";
 
                 $_d->sql_query($sql);
@@ -735,6 +739,7 @@
                             ,SECTION_NO = ".$section_no."
                             ,TAG = '".$_model[TAG]."'
                             ,NOTE = '".$_model[NOTE]."'
+                            ,AD_CODE = ".( $_model[AD_FL] == "true" ? '"AD"' : "NULL" )."
                         WHERE
                             NO = ".$_key."
                         ";

@@ -998,9 +998,8 @@ define([
                     $scope.curIdx = idx;
 
                     $scope.search.CATEGORY_NO = item.NO;
-
+                    angular.element('#'+$scope.option.id).unslick();
 //                    angular.element('#'+$scope.option.id).slickFilter(item.NO);
-//                    angular.element('#'+$scope.option.id).unslick();
 //                    angular.element('#'+$scope.option.id).slickRemoveAll();
 //                    angular.element('#'+$scope.option.id).slick();
 //                    angular.element('#'+$scope.option.id).slickSetOption({initOnload: 'true', data: $scope.list});

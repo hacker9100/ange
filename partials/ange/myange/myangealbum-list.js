@@ -148,7 +148,8 @@ define([
             if ($scope.isAlbum) {
                 var add = {};
                 add.ALBUM_GB = 'ADD';
-                add.ALBUM_FILE = CONSTANT.BASE_URL + '/imgs/ange/comp_bg_naming.png';
+                add.ALBUM_FILE = CONSTANT.BASE_URL + '/imgs/ange/newalbum_add.png';
+                add.NEW_ALBUM = false;
 
                 $scope.list.push(add);
             }
@@ -169,6 +170,7 @@ define([
                     for(var i in data) {
 //                        if (data[i].FILE_ID == null)
                         data[i].ALBUM_FILE = CONSTANT.BASE_URL + data[i].PATH + 'thumbnail/' + data[i].FILE_ID;
+                        data[i].NEW_ALBUM = (data[i].ALBUM_GB == 'ALBUM' && data[i].PATH == null) ? true : false;
 
                         $scope.list.push(data[i]);
                     }

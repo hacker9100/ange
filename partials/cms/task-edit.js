@@ -212,6 +212,8 @@ define([
                         }
                     }
                     $scope.item.SECTION = $scope.sections[idx];
+
+                    $scope.item.AD_FL = (data.AD_FL == 'Y') ? true : false;
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
