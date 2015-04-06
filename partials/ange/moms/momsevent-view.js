@@ -371,7 +371,7 @@ define([
 
                         console.log('$scope.open_date2 = '+$scope.open_date2);
 
-                        if($scope.todayDate < $scope.end_date2|| $scope.open_date == '00000000'){ //if($scope.todayDate <= $scope.open_date2 || $scope.open_date2 == '00000000'){
+                        if($scope.todayDate <= $scope.end_date2|| $scope.open_date == '00000000'){ //if($scope.todayDate <= $scope.open_date2 || $scope.open_date2 == '00000000'){
                             $scope.showForm = "compForm";
                         }else{
                             $scope.showForm = "reviewForm";
@@ -1020,7 +1020,9 @@ define([
 
                             });
 
-                            $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            if($scope.item.REASON != undefined){
+                                $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            }
 
                             console.log($scope.item.REASON);
 

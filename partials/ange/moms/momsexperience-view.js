@@ -373,7 +373,7 @@ define([
                         console.log('a'+data.ada_image);
                         console.log('a'+data.ada_text);
 
-                        if($scope.todayDate < $scope.end_date2|| $scope.open_date == '00000000'){ //  <= $scope.open_date
+                        if($scope.todayDate <= $scope.end_date2|| $scope.open_date == '00000000'){ //  <= $scope.open_date
                             $scope.showForm = "compForm";
                         }else{
                             $scope.showForm = "reviewForm";
@@ -793,7 +793,9 @@ define([
 
                             });
 
-                            $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            if($scope.item.REASON != undefined){
+                                $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            }
 
                             console.log($scope.item.REASON);
 
@@ -928,7 +930,9 @@ define([
 
                             });
 
-                            $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            if($scope.item.REASON != undefined){
+                                $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            }
 
                             console.log($scope.item.REASON);
 
@@ -1109,7 +1113,9 @@ define([
 
                             });
 
-                            $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            if($scope.item.REASON != undefined){
+                                $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            }
 
                             console.log($scope.item.REASON);
 
@@ -1262,7 +1268,9 @@ define([
 
                             });
 
-                            $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            if($scope.item.REASON != undefined){
+                                $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            }
 
                             console.log($scope.item.REASON);
 
@@ -1408,7 +1416,9 @@ define([
 
                             });
 
-                            $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            if($scope.item.REASON != undefined){
+                                $scope.item.REASON = $scope.item.REASON.replace(/^\s+|\s+$/g,'');
+                            }
 
                             console.log($scope.item.REASON);
 
