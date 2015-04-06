@@ -132,7 +132,10 @@ define([
 
                         //console.log(trim($scope.reitem.BODY));
 
-                        $scope.reitem.BODY = $scope.reitem.BODY.replace(/^\s+|\s+$/g,'');
+                        if($scope.reitem.BODY != undefined){
+                            $scope.reitem.BODY = $scope.reitem.BODY.replace(/^\s+|\s+$/g,'');
+                        }
+
 
                         console.log($scope.reitem.BODY);
 
@@ -241,7 +244,9 @@ define([
 
                         //console.log(trim($scope.item.BODY));
 
-                        $scope.item.BODY = $scope.item.BODY.replace(/^\s+|\s+$/g,'');
+                        if($scope.item.BODY != undefined){
+                            $scope.item.BODY = $scope.item.BODY.replace(/^\s+|\s+$/g,'');
+                        }
 
                         console.log($scope.item.BODY);
 
