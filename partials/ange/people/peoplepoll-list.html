@@ -73,7 +73,7 @@
                             <table id="comp_board_table" class="table table-hover">
 
                                 <thead>
-                                <tr class="board_thead" height="48">
+                                <tr class="board_thead normaltype" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td width="60"><span class="board_th">상태</span></td>
                                     <td><span class="board_th">제목</span></td>
@@ -87,15 +87,47 @@
 
                                     <!--<tr ng-class="item.END_YMD <= todayDate ? '' : 'ended'" ng-click="click_showViewAngePoll(item.NO)">-->
                                     <tr  ng-class="item.ada_state == 1 ? '' : 'ended'" ng-click="click_showViewAngePoll(item)"> <!-- ng-class="item.ada_state == 1 ? '' : 'ended'" -->
-                                        <td class="table_no">{{item.RNUM}}</td>
-                                        <td>
-                                            <span ng-if="item.ada_state == 0 || item.ada_date_open > todayDate" class="table_gray">준비</span> <!-- 'table_gray'  && item.ada_date_close > todayDate item.ada_state == 0 &&  -->
-                                            <span ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" class="table_red">진행중</span> <!-- 'table_gray' -->
-                                            <span ng-if="item.ada_date_close < todayDate" class="table_gray">완료</span> <!-- 'table_gray'  item.ada_state == 0 &&  item.ada_date_open < todayDate ||  -->
+                                        <td class="table_no normaltype">{{item.RNUM}}</td>
+                                        <td class="table_date normaltype">
+                                            <!--<span ng-if="item.ada_state == 0 || item.ada_date_open > todayDate" class="table_gray">준비</span> &lt;!&ndash; 'table_gray'  && item.ada_date_close > todayDate item.ada_state == 0 &&  &ndash;&gt;-->
+                                            <!--<span ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" class="table_red">진행중</span> &lt;!&ndash; 'table_gray' &ndash;&gt;-->
+                                            <!--<span ng-if="item.ada_date_close < todayDate" class="table_gray">완료</span> &lt;!&ndash; 'table_gray'  item.ada_state == 0 &&  item.ada_date_open < todayDate ||  &ndash;&gt;-->
+
+                                            <img ng-if="item.ada_state == 0 || item.ada_date_open > todayDate"  src="/imgs/ange/waitBtn_.jpg">
+                                            <img ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" src="/imgs/ange/goBtn_.jpg">
+                                            <img ng-if="item.ada_date_close < todayDate" src="/imgs/ange/endBtn_.jpg">
+
+
+
                                         </td>
                                         <!--<td><span ng-class="item.END_YMD <= todayDate ? 'table_red' : 'table_gray'">{{item.END_YMD <= todayDate ? '진행중' : '완료'}}</span></td>-->
-                                        <td valign="middle">{{item.ada_title}}</td>
-                                        <td class="table_date">{{item.ada_date_open}}~<br />{{item.ada_date_close}}</td>
+                                        <td class="normaltype" valign="middle">{{item.ada_title}}</td>
+                                        <td class="table_date normaltype">{{item.ada_date_open}}~<br />{{item.ada_date_close}}</td>
+                                    </tr>
+
+
+                                    <tr ng-class="item.ada_state == 1 ? '' : 'ended'" ng-click="click_showViewAngePoll(item)"> <!-- ng-class="item.ada_state == 1 ? '' : 'ended'" -->
+                                        <!---- 모바일 TD ------>
+                                        <td class="table_no mobiletype" style="width: 10% !important;">
+                                            <span >{{item.RNUM}}</span>
+                                        </td>
+
+                                        <td class="mobiletype" colspan="1" style="width: 90% !important;">
+                                            <div style="display:inline-block;">
+                                                <img ng-if="item.ada_state == 0 || item.ada_date_open > todayDate"  src="/imgs/ange/waitBtn_.jpg">
+                                                <img ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" src="/imgs/ange/goBtn_.jpg">
+                                                <img ng-if="item.ada_date_close < todayDate" src="/imgs/ange/endBtn_.jpg">
+                                            </div>
+
+                                            <div>
+                                                <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;">
+                                                    {{item.ada_title}}
+                                                </div>
+                                            </div>
+
+                                            <div class="table_date" style="font-size:0.78em; color:#868686;">{{item.ada_date_open}} ~ {{item.ada_date_close}}</div>
+                                        </td>
+
                                     </tr>
 
                                 </tbody>

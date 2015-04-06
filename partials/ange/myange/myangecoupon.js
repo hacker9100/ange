@@ -70,7 +70,8 @@ define([
 
             $scope.getList('ange/coupon', 'list', {NO: $scope.PAGE_NO- 1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
-                    var total_cnt = data[0].TOTAL_COUNT;
+                    var total_cnt = data[0].TOTAL_CNT;
+                    console.log(total_cnt);
                     $scope.TOTAL_COUNT = total_cnt;
 
                     /*$scope.total(total_cnt);*/

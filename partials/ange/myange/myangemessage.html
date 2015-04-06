@@ -24,7 +24,7 @@
                             <table id="comp_board_table" class="table table-hover">
 
                                 <thead>
-                                    <tr class="board_thead" >
+                                    <tr class="board_thead normaltype" >
                                         <td width="9%" align="center"><span class="board_th">상태</span></td>
                                         <td align="center"><span class="board_th">내용</span></td>
                                         <td width="120" align="center"><span class="board_th">대화상대</span></td>
@@ -36,22 +36,49 @@
                                 <tbody class="on" ng-repeat="item in list">
 
                                     <tr ng-click="click_showViewMessage(item)" style="cursor:pointer;">
-                                        <td class="table_no">
+                                        <td class="table_no normaltype">
                                             <!--<span ng-class="item.item.STATUS == 'RECIEVE' ? 'table_blue' : 'table_green'">{{item.STATUS == 'RECIEVE' ? '받→' : '보←'}} </span>-->
                                             <img data-ng-show="item.STATUS != 'RECIEVE'" src="/imgs/ange/icon_message_out.png" />
                                             <img data-ng-show="item.STATUS == 'RECIEVE'" src="/imgs/ange/icon_message_in.png" />
                                         </td>
-                                        <td>
+                                        <td class="normaltype">
                                             <!--<div class="table_gray" ng-bind-html="item.BODY | string_limit : 50"></div>-->
                                             {{item.BODY | string_limit : 20}}{{item.BODY > 20 ? '...' : ''}}
                                         </td>
-                                        <td class="table_author">{{item.STATUS == 'RECIEVE' ? item.FROM_NM : item.TO_NM }}</td>
+                                        <td class="table_author normaltype">{{item.STATUS == 'RECIEVE' ? item.FROM_NM : item.TO_NM }}</td>
                                         <!--<td class="table_author">{{item.FROM_NM}}</td>-->
-                                        <td class="table_date" align="center">{{item.REG_DT}}</td>
-                                        <td class="table_hit">
+                                        <td class="table_date normaltype" align="center">{{item.REG_DT}}</td>
+                                        <td class="table_hit normaltype">
                                             <img data-ng-show="item.CHECK_FL == 'Y'" src="/imgs/ange/icon_messagecheck.png" />
                                             <img data-ng-show="item.CHECK_FL != 'Y'" src="/imgs/ange/icon_messagecheck_ok.png" />
                                         </td>
+                                    </tr>
+
+                                    <tr ng-click="click_showViewMessage(item)" style="cursor:pointer;">
+                                        <!---- 모바일 TD ------>
+                                        <td class="table_no mobiletype" style="width: 10% !important;">
+                                            <img data-ng-show="item.STATUS != 'RECIEVE'" src="/imgs/ange/icon_message_out.png" />
+                                            <img data-ng-show="item.STATUS == 'RECIEVE'" src="/imgs/ange/icon_message_in.png" />
+                                        </td>
+
+                                        <td class="mobiletype" colspan="1" style="width: 90% !important;">
+                                            <div>
+                                                <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;">
+                                                    {{item.BODY | string_limit : 20}}{{item.BODY > 20 ? '...' : ''}}
+                                                </div>
+                                            </div>
+
+                                            <div style="display:inline-block;">
+                                                {{item.REG_DT}}
+                                            </div>
+
+                                            <div class="table_blue" style="font-size:0.78em; color:#868686; margin-top:10px;">{{item.STATUS == 'RECIEVE' ? item.FROM_NM : item.TO_NM }}</div>
+                                            <div class="table_date" style="font-size:0.78em; color:#868686;">
+                                                <img data-ng-show="item.CHECK_FL == 'Y'" src="/imgs/ange/icon_messagecheck.png" />
+                                                <img data-ng-show="item.CHECK_FL != 'Y'" src="/imgs/ange/icon_messagecheck_ok.png" />
+                                            </div>
+                                        </td>
+
                                     </tr>
 
                                 </tbody>
@@ -65,9 +92,16 @@
                                 </tbody>
                             </table><!-- /.List-->
 
-                            <nav class="text-center">
+                            <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" item-per-pages="10" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="25" ng-model="PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_COUNT}}
+                                </div>
+                            </nav>
                             <!-- /peoplepoll_list -->
 
                         </div><!-- /.sub_contents_body -->

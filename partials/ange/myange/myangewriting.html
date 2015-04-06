@@ -27,7 +27,7 @@
                             <table id="comp_board_table" class="table table-hover">
 
                                 <thead>
-                                <tr class="board_thead" height="48">
+                                <tr class="board_thead normaltype" height="48">
                                     <td align="center"><span class="board_th">제목</span></td>
                                     <td width="120" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80" align="center"><span class="board_th">작성일</span></td>
@@ -38,7 +38,7 @@
                                 <tbody class="on" ng-repeat="item in boardList">
 
                                 <tr ng-click="click_showViewPeopleBoard(item.COMM_NO, item.NO)" style="cursor:pointer;">
-                                    <td>
+                                    <td class="normaltype">
                                         <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
                                         <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{item.SHORT_NM != ''? '['+item.SHORT_NM+']' : ''}}&nbsp;{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
                                         <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
@@ -48,9 +48,41 @@
                                         <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                         <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
                                     </td>
-                                    <td  class="table_author">{{item.NICK_NM}}</td>
-                                    <td class="table_date">{{item.REG_DT}}</td>
-                                    <td class="table_hit">{{item.HIT_CNT}}</td></tr>
+                                    <td  class="table_author normaltype">{{item.NICK_NM}}</td>
+                                    <td class="table_date normaltype">{{item.REG_DT}}</td>
+                                    <td class="table_hit normaltype">{{item.HIT_CNT}}</td></tr>
+                                </tr>
+
+                                <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                    <!---- 모바일 TD ------>
+                                    <td class="table_no mobiletype" style="width: 10% !important;">
+                                        <span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.NOTICE_FL == '1' ? '공지' : item.BOARD_NO}}</span>
+                                    </td>
+
+                                    <td class="mobiletype" colspan="1" style="width: 90% !important;">
+                                        <div>
+                                            <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
+                                                <span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                                <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                                <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
+                                                <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
+                                            </div>
+
+
+                                            <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                                            <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                            <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                                        </div>
+
+                                        <div style="display:inline-block;">
+                                            <span class="reply_num feed_count countlike_color table_gray" style="line-height:16px; margin-right:5px;">{{item.LIKE_CNT}}</span>
+                                            <span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>
+                                        </div>
+
+                                        <div ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="table_blue" ng-bind-html="item.NICK_NM" style="font-size:0.78em; color:#868686; margin-top:10px;"></div>
+                                        <div class="table_date" style="font-size:0.78em; color:#868686;">{{item.REG_DT+'  /  조회수 '+item.HIT_CNT}}</div>
+                                    </td>
+
                                 </tr>
 
                                 </tbody>
@@ -64,9 +96,16 @@
                                 </tbody>
                             </table><!-- /.List-->
 
-                            <nav class="text-center">
+                            <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="BOARD_TOTAL_COUNT" items-per-page="5" ng-model="BOARD_PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="BOARD_TOTAL_COUNT" ng-change="pageBoardChanged()" items-per-page="5" ng-model="BOARD_PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{BOARD_PAGE_NO}}</span> / {{BOARD_TOTAL_COUNT}}
+                                </div>
+                            </nav>
                             <!-- /peoplepoll_list -->
 
                             <br/>
@@ -80,7 +119,7 @@
 
                                             <div ng-repeat='item in photoList'>
                                                 <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
-                                                <div class="col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.PHOTO_TYPE" -->
+                                                <div class="col-xs-12  col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.PHOTO_TYPE" -->
                                                     <div ng-click="click_showViewPeoplePhoto(item.COMM_NO, item.NO)" class="people_photo_content">
                                                         <div class="people_photo_imgbox">
                                                             <!--<img class="people_photo_img" ng-src="{{item.MAIN_FILE}}"/>-->
@@ -113,9 +152,16 @@
                                 </div><!-- /.row -->
                             </div><!-- /.peoplephoto_list_wrap -->
 
-                            <nav class="text-center">
+                            <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="PHOTO_TOTAL_COUNT" items-per-page="6" ng-model="PHOTO_PAGE_NO" class="pagination-sm" ng-change="pagePhotoChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="PHOTO_TOTAL_COUNT" ng-change="pagePhotoChanged()" items-per-page="5" ng-model="PHOTO_PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{PHOTO_PAGE_NO}}</span> / {{PHOTO_TOTAL_COUNT}}
+                                </div>
+                            </nav>
 
                             <br/>
 
@@ -124,7 +170,7 @@
                             <table id="comp_board_table" class="table table-hover">
 
                                 <thead>
-                                <tr class="board_thead" height="48">
+                                <tr class="board_thead normaltype" height="48">
                                     <td><span class="board_th">제목</span></td>
                                     <td width="92" align="center"><span class="board_th">작성자</span></td>
                                     <td width="80"><span class="board_th">작성일</span></td>
@@ -135,7 +181,7 @@
                                 <tbody class="on" ng-repeat="item in clinicList">
 
                                     <tr ng-click="click_showViewPeopleClinic(item.COMM_NO, item.NO)" style="cursor:pointer;">
-                                        <td>
+                                        <td class="normaltype">
                                             <span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>
                                             <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
                                             <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 된 글입니다</span>
@@ -146,9 +192,41 @@
                                             <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                             <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
                                         </td>
-                                        <td  class="table_author">{{item.NICK_NM}}</td>
-                                        <td class="table_date">{{item.REG_DT}}</td>
-                                        <td class="table_hit">{{item.BOARD_REPLY_FL}}</td></tr>
+                                        <td  class="table_author normaltype">{{item.NICK_NM}}</td>
+                                        <td class="table_date normaltype">{{item.REG_DT}}</td>
+                                        <td class="table_hit normaltype">{{item.BOARD_REPLY_FL}}</td></tr>
+                                    </tr>
+
+                                    <tr ng-click="item.PASSWORD_FL != 0 ? click_showViewPeopleBoard(item.NO, item.REG_UID, item.PASSWORD_FL) : click_showViewPeopleBoard2(item.NO)" style="cursor:pointer;">
+                                        <!---- 모바일 TD ------>
+                                        <td class="table_no mobiletype" style="width: 10% !important;">
+                                            <span >{{item.BOARD_NO}}</span>
+                                        </td>
+
+                                        <td class="mobiletype" colspan="1" style="width: 90% !important;">
+                                            <div>
+                                                <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
+                                                    {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                                    <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                                    <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
+                                                    <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
+                                                </div>
+
+
+                                                <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
+                                                <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                                <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                                            </div>
+
+                                            <div style="display:inline-block;">
+                                                <img ng-show="item.BOARD_REPLY_COUNT > 0" src="/imgs/ange/endBtn_.jpg">
+                                                <img ng-show="item.BOARD_REPLY_COUNT == 0" src="/imgs/ange/waitBtn_.jpg">
+                                            </div>
+
+                                            <div ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="table_blue" ng-bind-html="item.NICK_NM" style="font-size:0.78em; color:#868686; margin-top:10px;"></div>
+                                            <div class="table_date" style="font-size:0.78em; color:#868686;">{{item.REG_DT+'  /  조회수 '+item.HIT_CNT}}</div>
+                                        </td>
+
                                     </tr>
 
                                 </tbody>
@@ -162,9 +240,16 @@
                                 </tbody>
                             </table><!-- /.List-->
 
-                            <nav class="text-center">
+                            <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="CLINIC_TOTAL_CNT" items-per-page="5" ng-model="CLINIC_PAGE_NO" class="pagination-sm" ng-change="pageClinicChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="CLINIC_TOTAL_CNT" ng-change="pageClinicChanged()" items-per-page="5" ng-model="CLINIC_PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{CLINIC_PAGE_NO}}</span> / {{CLINIC_TOTAL_CNT}}
+                                </div>
+                            </nav>
 
                         </div>
                     </div>

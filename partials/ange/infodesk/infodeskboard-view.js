@@ -175,7 +175,7 @@ define([
                         if(data.REPLY_YN == 'N'){
                             $scope.item.BODY;
                         } else {
-                            $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>관리자 답변<br>"+data.REPLY_BODY+"</p>";
+                            $scope.item.BODY = data.BODY+"<br><br><br><br><br><p><font color='blue'>관리자 답변<br>"+data.REPLY_BODY+"</font></p>";
                         }
 
                         $scope.search.TARGET_NO = $stateParams.id;

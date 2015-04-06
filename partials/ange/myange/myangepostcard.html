@@ -24,7 +24,7 @@
                             <table id="comp_board_table" class="table table-hover">
 
                                 <thead>
-                                <tr class="board_thead" height="48">
+                                <tr class="board_thead normaltype" height="48">
                                     <td width="80" align="center"><span class="board_th">신청일</span></td>
                                     <td align="center"><span class="board_th">제목</span></td>
                                     <td width="100" align="center"><span class="board_th">응모/당첨</span></td>
@@ -34,9 +34,23 @@
                                 <tbody class="on" ng-repeat="item in list">
 
                                 <tr > <!--style="cursor:pointer;"-->
-                                    <td class="table_date">{{item.adhj_date_request}}</td>
-                                    <td>{{item.ada_title}}</td>
-                                    <td  class="table_author">{{item.COMP_YN == 'N' ? '응모' : '당첨'}}</td>
+                                    <td class="table_date normaltype">{{item.adhj_date_request}}</td>
+                                    <td class="normaltype">{{item.ada_title}}</td>
+                                    <td  class="table_author normaltype">{{item.COMP_YN == 'N' ? '응모' : '당첨'}}</td>
+                                </tr>
+
+                                <tr style="cursor:pointer;">
+                                    <!---- 모바일 TD ------>
+                                    <td class="mobiletype" colspan="1" style="width: 90% !important;">
+                                        <div>
+                                            <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" >
+                                                {{item.ada_title}}
+                                            </div>
+                                        </div>
+
+                                        <div class="table_date" style="font-size:0.78em; color:#868686;">{{item.adhj_date_request}} / {{item.COMP_YN == 'N' ? '응모' : '당첨'}}</div>
+                                    </td>
+
                                 </tr>
 
                                 </tbody>
@@ -50,9 +64,16 @@
                                 </tbody>
                             </table><!-- /.List-->
 
-                            <nav class="text-center">
+                            <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" items-per-page="25" class="pagination-sm" ng-change="pageBoardChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="25" ng-model="PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_COUNT}}
+                                </div>
+                            </nav>
                             <!-- /peoplepoll_list -->
 
                         </div><!-- /.sub_contents_body -->

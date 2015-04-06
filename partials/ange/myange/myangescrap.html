@@ -52,7 +52,7 @@
                             <table id="comp_board_table" class="table table-hover">
 
                                 <thead>
-                                <tr class="board_thead" height="48">
+                                <tr class="board_thead normaltype" height="48">
                                     <td align="center" width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td align="center"><span class="board_th">제목</span></td>
                                     <!--<td width="92" align="center"><span class="board_th">작성자</span></td>-->
@@ -64,10 +64,10 @@
                                 <tbody class="on" ng-repeat="item in list">
 
                                 <tr style="cursor:pointer;">
-                                    <td class="table_no">
+                                    <td class="table_no normaltype">
                                         <span>{{item.RNUM}}</span>
                                     </td>
-                                    <td ng-if="item.TARGET_GB == 'BOARD'">
+                                    <td ng-if="item.TARGET_GB == 'BOARD'" class="normaltype">
                                         <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
                                         <a ng-click="click_showViewScrap(item.COMM_NO, item.BOARD_NO);">[{{item.SHORT_NM}}]{{ item.BOARD_SUBJECT | string_limit: 50 }}{{item.BOARD_SUBJECT > 50 ? '...' : ''}}</a>
                                         <!--<span class="reply_num">[2]</span>-->
@@ -75,7 +75,7 @@
                                         &lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;
                                         <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                     </td>
-                                    <td ng-if="item.TARGET_GB == 'PHOTO'">
+                                    <td ng-if="item.TARGET_GB == 'PHOTO'" class="normaltype">
                                         <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
                                         <a ng-click="click_showViewScrap(item.COMM_NO, item.BOARD_NO);">[{{item.SHORT_NM}}]{{ item.BOARD_SUBJECT | string_limit: 50 }}{{item.BOARD_SUBJECT > 50 ? '...' : ''}}</a>
                                         <!--<span class="reply_num">[2]</span>-->
@@ -83,7 +83,7 @@
                                         &lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;
                                         <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                     </td>
-                                    <td ng-if="item.TARGET_GB == 'CLINIC'">
+                                    <td ng-if="item.TARGET_GB == 'CLINIC'" class="normaltype">
                                         <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
                                         <a ng-click="click_showViewScrap(item.COMM_NO, item.BOARD_NO);">[{{item.SHORT_NM}}]{{ item.BOARD_SUBJECT | string_limit: 50 }}{{item.BOARD_SUBJECT > 50 ? '...' : ''}}</a>
                                         <!--<span class="reply_num">[2]</span>-->
@@ -91,7 +91,7 @@
                                         &lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;
                                         <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                     </td>
-                                    <td ng-if="item.TARGET_GB == 'CONTENT'">
+                                    <td ng-if="item.TARGET_GB == 'CONTENT'" class="normaltype">
                                         <!--<span ng-class="item.PASSWORD_FL != 0 ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span>-->
                                         <a ng-click="click_showViewContent(item);">[스토리]{{ item.CONTENT_SUBJECT | string_limit: 50 }}{{item.CONTENT_SUBJECT > 50 ? '...' : ''}}</a>
                                         <!--<span class="reply_num">[2]</span>-->
@@ -100,8 +100,38 @@
                                         <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                     </td>
                                     <!--<td  class="table_author">{{item.NICK_NM}}</td>-->
-                                    <td class="table_date">{{item.REG_DT}}</td>
-                                    <td align="center"><a ng-click="delete_board(item.NO);">삭제</a></td>
+                                    <td class="table_date normaltype">{{item.REG_DT}}</td>
+                                    <td class="normaltype" align="center"><a ng-click="delete_board(item.NO);">삭제</a></td>
+                                </tr>
+
+                                <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                    <!---- 모바일 TD ------>
+                                    <td class="table_no mobiletype" style="width: 10% !important;">
+                                        <span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.RNUM}}</span>
+                                    </td>
+
+                                    <td class="mobiletype" colspan="1" style="width: 90% !important;">
+                                        <div>
+                                            <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-if="item.TARGET_GB == 'BOARD'">
+                                                <a ng-click="click_showViewScrap(item.COMM_NO, item.BOARD_NO);">[{{item.SHORT_NM}}]{{ item.BOARD_SUBJECT | string_limit: 50 }}{{item.BOARD_SUBJECT > 50 ? '...' : ''}}</a>
+                                            </div>
+
+                                            <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-if="item.TARGET_GB == 'PHOTO'">
+                                                <a ng-click="click_showViewScrap(item.COMM_NO, item.BOARD_NO);">[{{item.SHORT_NM}}]{{ item.BOARD_SUBJECT | string_limit: 50 }}{{item.BOARD_SUBJECT > 50 ? '...' : ''}}</a>
+                                            </div>
+
+                                            <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-if="item.TARGET_GB == 'CLINIC'">
+                                                <a ng-click="click_showViewScrap(item.COMM_NO, item.BOARD_NO);">[{{item.SHORT_NM}}]{{ item.BOARD_SUBJECT | string_limit: 50 }}{{item.BOARD_SUBJECT > 50 ? '...' : ''}}</a>
+                                            </div>
+
+                                            <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-if="item.TARGET_GB == 'CONTENT'">
+                                                <a ng-click="click_showViewContent(item);">[스토리]{{ item.CONTENT_SUBJECT | string_limit: 50 }}{{item.CONTENT_SUBJECT > 50 ? '...' : ''}}</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="table_date" style="font-size:0.78em; color:#868686;"><a ng-click="delete_board(item.NO);">삭제</a></div>
+                                    </td>
+
                                 </tr>
 
                                 </tbody>
@@ -115,10 +145,16 @@
                                 </tbody>
                             </table><!-- /.List-->
 
-                            <nav class="text-center">
+                            <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" items-per-page="25" class="pagination-sm" ng-change="pageChanged()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
-                            <!-- /peoplepoll_list -->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="25" ng-model="PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_PAGES}}
+                                </div>
+                            </nav>
 
                         </div><!-- /.sub_contents_body -->
 

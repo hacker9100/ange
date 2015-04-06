@@ -52,7 +52,7 @@
                             <table id="comp_board_table" class="table table-hover">
 
                                 <thead>
-                                <tr class="board_thead" height="48">
+                                <tr class="board_thead normaltype" height="48">
                                     <td width="9%" align="center"><span class="board_th">번호</span></td>
                                     <td align="center"><span class="board_th">제목</span></td>
                                     <td width="80" align="center"><span class="board_th">작성일</span></td>
@@ -97,10 +97,10 @@
                                         <!--<td class="table_hit">{{item.HIT_CNT}}</td></tr>-->
                                     <!--</tr>-->
                                     <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
-                                        <td class="table_no">
+                                        <td class="table_no normaltype">
                                             <span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.BOARD_NO}}</span>
                                         </td>
-                                        <td>
+                                        <td class="normaltype">
                                             <div style="float:left;">
                                                 <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
                                                 <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
@@ -118,8 +118,40 @@
                                                 <span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>
                                             </div>
                                         </td>
-                                        <td class="table_date">{{item.REG_DT}}</td>
-                                        <td class="table_hit">{{item.HIT_CNT}}</td></tr>
+                                        <td class="table_date normaltype">{{item.REG_DT}}</td>
+                                        <td class="table_hit normaltype">{{item.HIT_CNT}}</td></tr>
+                                    </tr>
+
+                                    <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
+                                        <!---- 모바일 TD ------>
+                                        <td class="table_no mobiletype" style="width: 10% !important;">
+                                            <span ng-class="">{{item.BOARD_NO}}</span>
+                                        </td>
+
+                                        <td class="mobiletype" colspan="1" style="width: 90% !important;">
+                                            <div>
+                                                <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
+                                                    {{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
+                                                    <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                                    <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
+                                                    <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
+                                                </div>
+
+
+                                                <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>
+                                                <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                                <span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>
+                                            </div>
+
+                                            <div style="display:inline-block;">
+                                                <!--<span class="reply_num feed_count countlike_color table_gray" style="line-height:16px; margin-right:5px;">{{item.LIKE_CNT}}</span>-->
+                                                <span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>
+                                            </div>
+
+                                            <div ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="table_blue" ng-bind-html="item.NICK_NM" style="font-size:0.78em; color:#868686; margin-top:10px;"></div>
+                                            <div class="table_date" style="font-size:0.78em; color:#868686;">{{item.REG_DT+'  /  조회수 '+item.HIT_CNT}}</div>
+                                        </td>
+
                                     </tr>
 
                                 </tbody>
@@ -152,7 +184,7 @@
                                 </div><!-- /.row -->
                             </div><!-- /.container -->
 
-                            <nav class="text-center">
+                            <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" ng-model="PAGE_NO" class="pagination-sm" max-size="10" ng-change="pageChanged()" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
 
                                 <!--<ul class="pagination pagination-sm table_paging">-->
@@ -175,6 +207,13 @@
                                 <!--</li>-->
                                 <!--</ul>-->
                             </nav><!-- /.Paging-->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="25" ng-model="PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_COUNT}}
+                                </div>
+                            </nav>
                             <!-- /peoplepoll_list -->
 
                         </div><!-- /.sub_contents_body -->
