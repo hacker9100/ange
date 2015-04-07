@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('infodeskboard-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD) {
+    controllers.controller('infodeskboard-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', '$sce',function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD,$sce) {
 
         $scope.queue = [];
         // 게시판 초기화
@@ -173,9 +173,9 @@ define([
                         }
 
                         if(data.REPLY_YN == 'N'){
-                            $scope.item.BODY;
+                            $scope.item.BODY = $sce.trustAsHtml(data.BODY);
                         } else {
-                            $scope.item.BODY = data.BODY+"<br><br><br><br><br><p><font color='blue'>관리자 답변<br>"+data.REPLY_BODY+"</font></p>";
+                            $scope.item.BODY = $sce.trustAsHtml(data.BODY)+"<br><br><br><br><br><p><font color='blue'>관리자 답변<br>"+data.REPLY_BODY+"</font></p>";
                         }
 
                         $scope.search.TARGET_NO = $stateParams.id;

@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peopleclinic-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', '$modal', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT, $modal) {
+    controllers.controller('peopleclinic-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', '$modal', '$sce', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT, $modal,$sce) {
         /********** 초기화 **********/
             // 첨부파일 초기화
         $scope.queue = [];
@@ -243,9 +243,9 @@ define([
                         }else{
                             if(data.BLIND_FL == 'N'){
                                 if(data.REPLY_YN == 'N'){
-                                    $scope.item.BODY;
+                                    $scope.item.BODY = $sce.trustAsHtml(data.BODY);
                                 } else {
-                                    $scope.item.BODY = data.BODY+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                                    $scope.item.BODY = $sce.trustAsHtml(data.BODY)+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
                                 }
                             }else{
                                 if(data.REPLY_YN == 'N'){

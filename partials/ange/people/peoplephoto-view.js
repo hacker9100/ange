@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('peoplephoto-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', '$modal','CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD, $modal,CONSTANT) {
+    controllers.controller('peoplephoto-view', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'UPLOAD', '$modal','CONSTANT', '$sce',function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, UPLOAD, $modal,CONSTANT,$sce) {
         /********** 초기화 **********/
             // 첨부파일 초기화
         $scope.queue = [];
@@ -184,6 +184,8 @@ define([
                     $scope.item.TARGET_NO = $scope.item.NO;
                     $scope.item.TARGET_GB = "BOARD";
                     $scope.item.RE_COMMENT = "";
+
+                    $scope.renderHtml = $sce.trustAsHtml(data.BODY);
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }

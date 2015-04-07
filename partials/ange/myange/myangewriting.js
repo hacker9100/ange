@@ -79,7 +79,7 @@ define([
         $scope.init();
 
 
-        $scope.search.REG_UID = $rootScope.uid;
+
 
         // 일반 게시판 목록 조회
         $scope.getPeopleBoardList = function () {
@@ -88,14 +88,19 @@ define([
             $scope.search.BOARD_GB = 'BOARD';
             $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC'
+            $scope.search.FILE_EXIST = true;
+            $scope.search.REG_UID = $rootScope.uid;
 
             $scope.getList('com/webboard', 'list', {NO: $scope.BOARD_PAGE_NO- 1, SIZE: $scope.BOARD_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
                     var total_cnt = data[0].TOTAL_COUNT;
                     $scope.BOARD_TOTAL_COUNT = total_cnt;
+                    console.log('BOARD_TOTAL_COUNT = '+$scope.BOARD_TOTAL_COUNT);
 
                     /*$scope.total(total_cnt);*/
                     $scope.boardList = data;
+
+                    $scope.BOARD_TOTAL_PAGES = Math.ceil($scope.BOARD_TOTAL_COUNT / $scope.BOARD_PAGE_SIZE);
 
                 })
                 ['catch'](function(error){$scope.BOARD_TOTAL_COUNT = 0; $scope.boardList = "";});
@@ -166,6 +171,7 @@ define([
             $scope.search.FILE = true;
             $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC'
+            $scope.search.REG_UID = $rootScope.uid;
 
 
             $scope.getList('com/webboard', 'list', {NO: $scope.PHOTO_PAGE_NO- 1, SIZE: $scope.PHOTO_PAGE_SIZE}, $scope.search, true)
@@ -203,6 +209,7 @@ define([
                         console.log($scope.photoList);
                     }
 
+                    $scope.PHOTO_TOTAL_PAGES = Math.ceil($scope.PHOTO_TOTAL_COUNT / $scope.PHOTO_PAGE_SIZE);
                     /*$scope.total(total_cnt);*/
                     //$scope.photoList = data;
                 })
@@ -279,6 +286,8 @@ define([
             $scope.search.SORT = 'REG_DT';
             $scope.search.ORDER = 'DESC'
             $scope.search.BOARD_GB = 'CLINIC';
+            $scope.search.FILE_EXIST = true;
+            $scope.search.REG_UID = $rootScope.uid;
 
             $scope.getList('com/webboard', 'list', {NO: $scope.CLINIC_PAGE_NO-1, SIZE: $scope.CLINIC_PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
@@ -287,6 +296,8 @@ define([
 
                     /*$scope.total(total_cnt);*/
                     $scope.clinicList = data;
+
+                    $scope.CLINIC_TOTAL_PAGES = Math.ceil($scope.CLINIC_TOTAL_COUNT / $scope.CLINIC_PAGE_SIZE);
 
                 })
                 ['catch'](function(error){$scope.CLINIC_TOTAL_COUNT = 0; $scope.clinicList = "";});

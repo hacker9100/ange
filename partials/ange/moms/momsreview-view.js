@@ -219,6 +219,8 @@ define([
 
                         $scope.item = data;
 
+                        $scope.item.BODY = $sce.trustAsHtml(data.BODY);
+
                         //$scope.search.TARGET_NO = $stateParams.id;
                     })
                     ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});

@@ -94,7 +94,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
                 }
 
-                $sql = " SELECT TOTAL_COUNT, @RNUM := @RNUM+1 AS RNUM, CONTENT_NO, CONTENT_SUBJECT, NO,
+                $sql = " SELECT TOTAL_COUNT, (@RNUM := @RNUM -1)+1  AS RNUM, CONTENT_NO, CONTENT_SUBJECT, NO,
                             TARGET_NO, BOARD_NO, BOARD_SUBJECT, TARGET_GB, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT, (SELECT SHORT_NM FROM ANGE_COMM WHERE NO = COMM_NO) AS SHORT_NM, COMM_NO
                     FROM
                     (
@@ -112,7 +112,7 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                          ORDER BY REG_DT DESC
                          ".$limit."
                     ) AS DATA,
-                    (SELECT @RNUM := 0) R,
+                    (SELECT @RNUM := (SELECT COUNT(*) FROM COM_SCRAP CS WHERE 1=1 AND CS.REG_UID = '".$_SESSION['uid']."' ".$search_where.")) R,
                     (
                         SELECT COUNT(*) AS TOTAL_COUNT
                         FROM COM_SCRAP CS

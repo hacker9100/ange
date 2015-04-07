@@ -186,7 +186,7 @@
                                                     <dd ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
                                                         <div class="radio-inline">
                                                             <label>
-                                                                {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                                                                {{select}} <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"--> <!--{{percent[$parent.$index].percent}}--> &nbsp;&nbsp;{{percent[$parent.$parent.$index][$parent.$index+1] == null ? 0 : percent[$parent.$parent.$index][$parent.$index+1]}} %
                                                             </label>
                                                         </div>
 

@@ -52,6 +52,7 @@ define([
         // 차트
         $scope.chart = {};
         $scope.chartObject = {};
+        $scope.percent = {};
 
         $rootScope.jsontext = new Array();
         $rootScope.jsontext2 = new Array();
@@ -61,6 +62,8 @@ define([
 
         $rootScope.contact3 = new Array();
         $rootScope.contact4 = new Array();
+
+        $rootScope.rate = new Array();
 
         $rootScope.select_cnt = [];
 
@@ -140,11 +143,13 @@ define([
 
                         //console.log($rootScope.arr[i]);
 
-                        $scope.percent = [];
+                        //$scope.percent = [];
 
                         $scope.chart[i] = {};
                         $scope.chartObject[i] = {};
+                        //$scope.percent[i] = {};
                         //$scope.chart[i].data = '';
+                        $scope.percent[i] = {};
 
                         $rootScope.test = '{"cols": [{"id": "t", "label": "Topping", "type": "string"}, {"id": "s", "label": "", "type": "number"} ], "rows": []}';
                         $rootScope.obj = JSON.parse($rootScope.test);
@@ -157,6 +162,8 @@ define([
 
                             //console.log($rootScope.arr2[i][j]);
 
+                            //$scope.percent[i][j] = {};
+
                             if($rootScope.arr2[i][j] != "[['선택','응답율']"){
 
                                 $rootScope.arr2[i][j] = $rootScope.arr2[i][j].replace(/\[/g,''); //특정문자 제거
@@ -168,7 +175,9 @@ define([
                                 $rootScope.jsontext[i] = '{"v":"'+ $rootScope.arr2[i][j][0]+'"}';
                                 $rootScope.jsontext2[i] = '{"v":'+ $rootScope.arr2[i][j][1]+'}';
 
-                                console.log($rootScope.arr2[i][j][1]);
+                                $scope.percent[i][j]= $rootScope.arr2[i][j][1];
+
+                                //console.log($rootScope.arr2[i][j][1]);
                                 $rootScope.contact[i] = JSON.parse($rootScope.jsontext[i]);
                                 $rootScope.contact2[i] = JSON.parse($rootScope.jsontext2[i]);
 
@@ -177,6 +186,9 @@ define([
 
 
                                 $rootScope.obj['rows'].push({c:[$rootScope.contact[i], $rootScope.contact2[i]]});
+
+                                console.log('$scope.percent['+i+']['+j+'] ='+$scope.percent[i][j]);
+
 
                             }
 
@@ -196,6 +208,8 @@ define([
                         $scope.chartObject[i].type = 'ColumnChart';
 
                         $scope.chartObject[i].displayed = true;
+
+
                     }
 
                 })

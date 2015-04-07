@@ -112,6 +112,8 @@ define([
                     $scope.list = data;
 
                     $scope.isLoding = false;
+
+                    $scope.TOTAL_PAGES = Math.ceil($scope.TOTAL_COUNT / $scope.PAGE_SIZE);
                 })
                 ['catch'](function(error){
                     $scope.TOTAL_COUNT = 0; $scope.list = "";

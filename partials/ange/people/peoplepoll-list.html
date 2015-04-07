@@ -89,11 +89,11 @@
                                     <tr  ng-class="item.ada_state == 1 ? '' : 'ended'" ng-click="click_showViewAngePoll(item)"> <!-- ng-class="item.ada_state == 1 ? '' : 'ended'" -->
                                         <td class="table_no normaltype">{{item.RNUM}}</td>
                                         <td class="table_date normaltype">
-                                            <!--<span ng-if="item.ada_state == 0 || item.ada_date_open > todayDate" class="table_gray">준비</span> &lt;!&ndash; 'table_gray'  && item.ada_date_close > todayDate item.ada_state == 0 &&  &ndash;&gt;-->
+                                            <!--<span ng-if="item.ada_state == 0 && item.ada_date_open > todayDate" class="table_gray">준비</span> &lt;!&ndash; 'table_gray'  && item.ada_date_close > todayDate item.ada_state == 0 &&  &ndash;&gt;-->
                                             <!--<span ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" class="table_red">진행중</span> &lt;!&ndash; 'table_gray' &ndash;&gt;-->
                                             <!--<span ng-if="item.ada_date_close < todayDate" class="table_gray">완료</span> &lt;!&ndash; 'table_gray'  item.ada_state == 0 &&  item.ada_date_open < todayDate ||  &ndash;&gt;-->
 
-                                            <img ng-if="item.ada_state == 0 || item.ada_date_open > todayDate"  src="/imgs/ange/waitBtn_.jpg">
+                                            <img ng-if="item.ada_state == 0 && item.ada_date_open > todayDate"  src="/imgs/ange/waitBtn_.jpg">
                                             <img ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" src="/imgs/ange/goBtn_.jpg">
                                             <img ng-if="item.ada_date_close < todayDate" src="/imgs/ange/endBtn_.jpg">
 
@@ -114,7 +114,7 @@
 
                                         <td class="mobiletype" colspan="1" style="width: 90% !important;">
                                             <div style="display:inline-block;">
-                                                <img ng-if="item.ada_state == 0 || item.ada_date_open > todayDate"  src="/imgs/ange/waitBtn_.jpg">
+                                                <img ng-if="item.ada_state == 0 && item.ada_date_open > todayDate"  src="/imgs/ange/waitBtn_.jpg">
                                                 <img ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" src="/imgs/ange/goBtn_.jpg">
                                                 <img ng-if="item.ada_date_close < todayDate" src="/imgs/ange/endBtn_.jpg">
                                             </div>
@@ -164,6 +164,13 @@
                                     </li>
                                 </ul>-->
                             </nav><!-- /.Paging-->
+
+                            <nav class="text-center mobiletype" style="position:relative;">
+                                <pager total-items="TOTAL_COUNT" ng-change="pageChanged()" items-per-page="25" ng-model="PAGE_NO"></pager>
+                                <div style="font-family:Arial, sans-serif; font-size: 0.92em; position:absolute; top:6px; left:50%; margin-left:-18px; color:#888;">
+                                    <span class="table_blue">{{PAGE_NO}}</span> / {{TOTAL_PAGES}}
+                                </div>
+                            </nav>
                             <!-- /peoplepoll_list -->
 
 
