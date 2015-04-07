@@ -21,6 +21,32 @@
                             <select ng-model="item.USER_GB" ng-options="type.value as type.name for type in type" class= "form-control" ></select>
                         </div>
                     </div>
+                    <div ng-show="item.USER_GB == 'CLUB'" class= "form-group form_basic_group">
+                        <label class= "form_basic_label">담당자 </label>
+                        <div class= "col-md-4 form_basic_input">
+                            <div class= "col-md-8" style="padding-right:20px;">
+                                <input type="text" ng-model="item.CONTACT_NM" class= "form-control" placeholder="담당자"/>
+                            </div>
+                            <div class= "col-md-4">
+                                <input type="text" ng-model="item.CENTER_VISIT_YMD" class= "form-control" placeholder="방문일자"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="item.USER_GB == 'CLUB'" class= "form-group form_basic_group">
+                        <label class= "form_basic_label">산후조리원 </label>
+                        <div class= "col-md-4 form_basic_input">
+                            <div class="col-xs-4" style="padding-right:20px;">
+                                <select ng-model="item.CARE_AREA" ng-options="v.cc_area for v in area" class="form-control">
+                                    <option value="">지역</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-4">
+                                <select ng-model="item.CARE_CENTER" ng-options="v.cc_name for v in list" class= "form-control">
+                                    <option value="">선택</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class= "form-group form_basic_group">
                         <label class= "form_basic_label">권한 <span style="color:#b94a48">*</span></label>
                         <div class= "col-md-6 form_basic_input">
@@ -227,7 +253,7 @@
                                 <span class="col-md-1" style="float: left; margin:10px 0 0 10px;"> 출산예정일 : </span>
                                 <div class="col-md-5">
                                     <div class="col-md-3" style="padding-right:5px;">
-                                        <select ng-model="item.YEAR1" ng-options="v for v in years" class= "form-control">
+                                        <select ng-model="item.YEAR1" ng-options="v for v in pregYear" class= "form-control">
                                             <option value="">년</option>
                                         </select>
                                     </div>

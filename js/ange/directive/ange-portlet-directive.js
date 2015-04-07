@@ -1598,13 +1598,13 @@ define([
                 $scope.todayDate = today;
 
                 /********** 이벤트 **********/
-                    // 투표 클릭
+                // 투표 클릭
                 $scope.click_showPoll = function (key) {
                     $location.url($scope.option.url + '/edit/' + key)
                 };
 
                 // 설문 조회
-                $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, {POLL_ST: '1', SORT: 'RAND()', ORDER: ''}, false)
+                $scope.getList($scope.option.api, 'list', {NO: $scope.PAGE_NO, SIZE: $scope.PAGE_SIZE}, {POLL_ST: '1', CLOSE_DT: true, SORT: 'RAND()', ORDER: ''}, false)
                     .then(function(data){$scope.item = data[0]})
                     ['catch'](function(error){$scope.item = [];});
             }]

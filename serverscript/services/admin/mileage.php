@@ -51,7 +51,7 @@
         case "GET":
             if($_type == 'item'){
                 $sql = "SELECT
-                            MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
+                            NO, MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
                         FROM
                             ANGE_MILEAGE
                         WHERE NO = ".$_key."
@@ -85,11 +85,11 @@
 
                 $sql = "SELECT
                             TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
+                            NO, MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
                         FROM
                         (
                             SELECT
-                                MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
+                                NO, MILEAGE_GB, POINT, SUBJECT, REASON, COMM_GB, LIMIT_CNT, LIMIT_GB, LIMIT_DAY, POINT_ST
                             FROM ANGE_MILEAGE
                             WHERE 1=1
                             ".$search_where."
@@ -175,7 +175,7 @@
                             REASON = '".$_model[REASON]."',
                             COMM_GB = '".$_model[COMM_GB]."',
                             LIMIT_CNT = ".$_model[LIMIT_CNT].",
-                            LIMIT_GB = ".$_model[LIMIT_GB].",
+                            LIMIT_GB = '".$_model[LIMIT_GB]."',
                             LIMIT_DAY = '".$_model[LIMIT_DAY]."',
                             POINT_ST = ".$_model[POINT_ST]."
                         WHERE NO = '".$_key."'

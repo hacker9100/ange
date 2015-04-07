@@ -898,10 +898,8 @@
                 if (isset($data[EMAIL]) && $data[EMAIL] != "") {
                     $from_email = __SMTP_USR__;
                     $from_user = __SMTP_USR_NM__;
-//                    $to = $data['EMAIL'];
-//                    $to_user = $data['USER_NM'];
-                    $to = "hacker9100@gmail.com";
-                    $to_user = "김성환";
+                    $to = $data['EMAIL'];
+                    $to_user = $data['USER_NM'];
                     $subject = "[앙쥬] 전문가 상담실에 질문을 게시했습니다.";
                     $message = "<html>
                                 <head>
