@@ -49,9 +49,20 @@ define([
 
             $scope.getList('ange/calendar', 'list', {}, {"year":$scope.search.year,"month":$scope.search.month}, true)
                 .then(function(data){
+/*
+                    var i = 0;
+                    var preIdx = 0;
+                    for (var idx in data.list) {
+                        preIdx = idx;
+                        if (i != 0 && data.list[idx].day == data.list[preIdx].day) {
+                            data.list[idx].day = '';
+                        }
+
+                        i++;
+                    }
+*/
 
                     $scope.data = data;
-
                 })
                 ['catch'](function(error){
                 alert('error');
