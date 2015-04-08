@@ -113,26 +113,26 @@ define([
             $rootScope.info = {};
 
             // 마일리지몰 수량수정
-            if($rootScope.mileagecartlist != ''){
-
-                $scope.sumitem.CART = $rootScope.mileagecartlist;
-
-                $scope.insertItem('ange/order', 'sumitem', $scope.sumitem, false)
-                    .then(function(){
-                    })
-                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-            }
-
-            // 커머스 수량수정
-            if($rootScope.cummercecartlist != ''){
-
-                $scope.sumitem.CART = $rootScope.cummercecartlist;
-
-                $scope.insertItem('ange/order', 'sumitem', $scope.sumitem, false)
-                    .then(function(){
-                    })
-                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
-            }
+//            if($rootScope.mileagecartlist != ''){
+//
+//                $scope.sumitem.CART = $rootScope.mileagecartlist;
+//
+//                $scope.insertItem('ange/order', 'sumitem', $scope.sumitem, false)
+//                    .then(function(){
+//                    })
+//                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//            }
+//
+//            // 커머스 수량수정
+//            if($rootScope.cummercecartlist != ''){
+//
+//                $scope.sumitem.CART = $rootScope.cummercecartlist;
+//
+//                $scope.insertItem('ange/order', 'sumitem', $scope.sumitem, false)
+//                    .then(function(){
+//                    })
+//                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+//            }
 
         };
 
@@ -527,47 +527,47 @@ define([
             }
 
 
-            var pay_gb = '';
-
-            if($scope.item.PAY_GB == "CREDIT"){
-                pay_gb = 11;
-            }else if($scope.item.PAY_GB == "NOBANKBOOK"){
-                pay_gb = 22;
-            }
-            // /easypay70_plugin_php_window/web/normal/order.php
-            // /easypay70_plugin_php_window/web/easypay_request.php
-            var popUrl = CONSTANT.BASE_URL+"/easypay70_plugin_php/web/normal/order.php?EP_tr_cd?=00101000&EP_user_id="+$scope.item.USER_ID+"&EP_user_nm="+$scope.item.RECEIPTOR_NM+"&EP_order_no="+$scope.item.ORDER[0].PRODUCT_NO+"&EP_product_nm="+$scope.item.ORDER[0].PRODUCT_NM+
-                           "&EP_product_amt="+total_price+"&EP_user_mail="+$rootScope.user_info.EMAIL+"&EP_user_phone1="+$rootScope.user_info.PHONE_1+"&EP_user_phone2="+$scope.item.RECEIPT_PHONE+"&EP_user_addr="+$scope.item.RECEIPT_ADDR+"&EP_pay_type="+pay_gb;
-                	//팝업창에 출력될 페이지 URL
+//            var pay_gb = '';
 //
-////            var popUrl = "http://localhost/easypay70_plugin_php_window/web/easypay_request.php?EP_user_id="+$scope.item.USER_ID+"&EP_user_nm="+$scope.item.RECEIPTOR_NM+"&EP_order_no="+$scope.item.ORDER[0].PRODUCT_NO+"&EP_product_nm="+$scope.item.ORDER[0].PRODUCT_NM+
-////                "&EP_product_amt="+total_price+"&EP_user_mail="+$rootScope.user_info.EMAIL+"&EP_user_phone1="+$rootScope.user_info.PHONE_1+"&EP_user_phone2="+$scope.item.RECEIPT_PHONE+"&EP_user_addr="+$scope.item.RECEIPT_ADDR+"&EP_pay_type="+pay_gb;
-//
-            var popOption = "width=950, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
-            window.open(popUrl+"","",popOption);
+//            if($scope.item.PAY_GB == "CREDIT"){
+//                pay_gb = 11;
+//            }else if($scope.item.PAY_GB == "NOBANKBOOK"){
+//                pay_gb = 22;
+//            }
+//            // /easypay70_plugin_php_window/web/normal/order.php
+//            // /easypay70_plugin_php_window/web/easypay_request.php
+//            var popUrl = CONSTANT.BASE_URL+"/easypay70_plugin_php/web/normal/order.php?EP_tr_cd?=00101000&EP_user_id="+$scope.item.USER_ID+"&EP_user_nm="+$scope.item.RECEIPTOR_NM+"&EP_order_no="+$scope.item.ORDER[0].PRODUCT_NO+"&EP_product_nm="+$scope.item.ORDER[0].PRODUCT_NM+
+//                           "&EP_product_amt="+total_price+"&EP_user_mail="+$rootScope.user_info.EMAIL+"&EP_user_phone1="+$rootScope.user_info.PHONE_1+"&EP_user_phone2="+$scope.item.RECEIPT_PHONE+"&EP_user_addr="+$scope.item.RECEIPT_ADDR+"&EP_pay_type="+pay_gb;
+//                	//팝업창에 출력될 페이지 URL
+////
+//////            var popUrl = "http://localhost/easypay70_plugin_php_window/web/easypay_request.php?EP_user_id="+$scope.item.USER_ID+"&EP_user_nm="+$scope.item.RECEIPTOR_NM+"&EP_order_no="+$scope.item.ORDER[0].PRODUCT_NO+"&EP_product_nm="+$scope.item.ORDER[0].PRODUCT_NM+
+//////                "&EP_product_amt="+total_price+"&EP_user_mail="+$rootScope.user_info.EMAIL+"&EP_user_phone1="+$rootScope.user_info.PHONE_1+"&EP_user_phone2="+$scope.item.RECEIPT_PHONE+"&EP_user_addr="+$scope.item.RECEIPT_ADDR+"&EP_pay_type="+pay_gb;
+////
+//            var popOption = "width=950, height=900, resizable=no, scrollbars=no, status=no;";    //팝업창 옵션(optoin)
+//            window.open(popUrl+"","",popOption);
 
 //            // 상품 주문 등록
-//            $scope.insertItem('ange/order', 'item', $scope.item, false)
-//                .then(function(data){
-//                    $scope.step = 3;
-//                    $rootScope.REQUEST_NOTE = $scope.item.REQUEST_NOTE;
-//
-//                    /*$('input:radio[name=pay_info_gb]:input[value="NOBANKBOOK"]').prop("checked", true);*/
-//
-//                    if($scope.item.PAY_GB == 'CREDIT'){
-//                        $("#pay_info_gb1").attr("checked",true);
-//                        $("#pay_info_gb2").attr("checked",false);
-//                    } else if($scope.item.pay_gb == 'NOBANKBOOK'){
-//                        $("#pay_info_gb1").attr("checked",false);
-//                        $("#pay_info_gb2").attr("checked",true);
-//                    }
-//
-//                    $scope.PAY_INFO = $scope.item.PAY_GB;
-//
-//                    $rootScope.mileage = data.mileage;
-//                    $scope.orderlist();
-//                })
-//                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+            $scope.insertItem('ange/order', 'item', $scope.item, false)
+                .then(function(data){
+                    $scope.step = 3;
+                    $rootScope.REQUEST_NOTE = $scope.item.REQUEST_NOTE;
+
+                    /*$('input:radio[name=pay_info_gb]:input[value="NOBANKBOOK"]').prop("checked", true);*/
+
+                    if($scope.item.PAY_GB == 'CREDIT'){
+                        $("#pay_info_gb1").attr("checked",true);
+                        $("#pay_info_gb2").attr("checked",false);
+                    } else if($scope.item.pay_gb == 'NOBANKBOOK'){
+                        $("#pay_info_gb1").attr("checked",false);
+                        $("#pay_info_gb2").attr("checked",true);
+                    }
+
+                    $scope.PAY_INFO = $scope.item.PAY_GB;
+
+                    $rootScope.mileage = data.mileage;
+                    $scope.orderlist();
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
         }
 
         $scope.click_update_user_info = function () {

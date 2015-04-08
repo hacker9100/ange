@@ -129,6 +129,11 @@
                                 </tbody>
                             </table><!-- /.List-->
 
+                            <div style="display:inline-block; width:100%; background-color:#ededed; padding:5px 0; margin-top:10px">
+                                <span style="float:left; line-height:30px;padding:0 10px;">합계 마일리지</span>
+                                <span style="float:left; line-height:30px;padding:0 10px;" class="table_blue">{{ TOTAL_POINT | number }} P</span>
+                            </div>
+
                             <nav class="text-center normaltype">
                                 <pagination boundary-links="true" total-items="TOTAL_COUNT" items-per-page="25" ng-model="PAGE_NO" class="pagination-sm" ng-change="pageBoardChanged()" max-size="10" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
                             </nav><!-- /.Paging-->
