@@ -16,55 +16,53 @@
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
                             </div>
 
-                            </br>
+                            <div class="sub_contents_body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-xs-12 no-margin">
 
-                            <style>
-                                ul.cell_dayname { clear: both; width: 100%; height: 50px;}
-                                ul.cell_dayname>li { float: left; padding: 10px 10px; width: 14%; height: 40px; background-color: #eee; list-style-type: none; text-align: center; border: 1px solid #fff; }
+                                            <div class="calendar_wrap no-margin">
 
-                                ul.cell_day { clear: both; width: 100%; }
-                                ul.cell_day>li { float: left; padding: 10px 10px; width: 14%; height: 80px; background-color: #f0f0f0; list-style-type: none; text-align: center; border: 1px solid #fff; }
-                                ul.cell_day>li.blind { background-color: #f0f0f0; color: #ccc; }
-                                ul.cell_day>li.normal { background-color: #eee; color: #000; }
-                                ul.cell_day>li.event { background-color: #39f; color: #000; }
+                                                <div class="calendar_monthwrap">
+                                                    <center>
+                                                    <button href="javascript:void(0);" ng-click="moveCalendar(search.year,search.month,-1);" class="calendar_monthbtn">이전달</button>
+                                                    <div id="view_month" class="calendar_monthtxt">
+                                                        {{search.year}}. {{search.month}}
+                                                    </div>
+                                                    <button href="javascript:void(0);" ng-click="moveCalendar(search.year,search.month,1);" class="calendar_monthbtn">다음달</button>
+                                                    </center>
+                                                </div>
 
-                                ul.cell_list { width: 100%; background-color: #eee; }
-                                ul.cell_list>li { padding: 10px 0px; margin-top: 1px; background-color: #fff; list-style-type: none; text-align: left; border: 1px solid #fff; }
-                                ul.cell_list>li.birth { background-color: #FFF9F2; }
-                                ul.cell_list>li.reviewclose { background-color: #F9FFF2; }
-                                ul.cell_list>li.notice { background-color: #F2FCFF; }
-                            </style>
+                                                <ul class="cell_dayname">
+                                                    <li class="ange_red">일</li>
+                                                    <li class="ange_black">월</li>
+                                                    <li class="ange_black">화</li>
+                                                    <li class="ange_black">수</li>
+                                                    <li class="ange_black">목</li>
+                                                    <li class="ange_black">금</li>
+                                                    <li class="ange_black">토</li>
+                                                </ul>
+                                                <!-- item.type = normal / hidden / event -->
+                                                <ul class="cell_day">
+                                                    <li class="{{item.type}}" title="{{item.event}}" ng-repeat="item in data.calendar">
+                                                        <img src="/imgs/ange/_blank.gif" border="0" style="width:100%;" >
+                                                        <span class="cell_day_num {{item.type}}">{{item.day}}</span>
+                                                    </li>
+                                                </ul>
 
-                            <div style="width: 700px;">
-                                <div style="clear: both; width: 350px; height: 50px; margin: 0px auto;">
-                                    <a href="javascript:void(0);" ng-click="moveCalendar(search.year,search.month,-1);" style="float: left; border-radius: 5px; background-color: #aaa; color: #fff; padding: 0px 10px;">이전달</a>
-                                    <div id="view_month" style="float: left; font-size: 2em; padding: 0px 50px;">
-                                        {{search.year}}. {{search.month}}
-                                    </div>
-                                    <a href="javascript:void(0);" ng-click="moveCalendar(search.year,search.month,1);" style="float: left; border-radius: 5px; background-color: #aaa; color: #fff; padding: 0px 10px;">다음달</a>
-                                </div>
-                                <ul class="cell_dayname">
-                                    <li>SUN</li>
-                                    <li>MOM</li>
-                                    <li>TUE</li>
-                                    <li>WED</li>
-                                    <li>THU</li>
-                                    <li>FRI</li>
-                                    <li>SAT</li>
-                                </ul>
-                                <!-- item.type = normal / hidden / event -->
-                                <ul class="cell_day" >
-                                    <li class="{{item.type}}" title="{{item.event}}" ng-repeat="item in data.calendar">{{item.day}}<br/></li>
-                                </ul>
+                                                <div style="clear: both;"></div>
 
-                                <div style="clear: both;"></div>
+                                                <ul class="cell_list" style="border-top: 1px solid #eee; border-bottom: 2px solid #eee; margin-top: 10px;">
+                                                    <li class="{{item.event_type}}" ng-repeat="item in data.list" title="{{item.event}}">
+                                                        <span style="background-color: #eee; padding: 10px; font-size: 14pt; font-weight: 600;">{{item.day}}일</span> {{item.event}}
+                                                    </li>
+                                                </ul>
+                                            </div>
 
-                                <ul class="cell_list"  style="border-top: 1px solid #eee; border-bottom: 2px solid #eee; margin-top: 10px;">
-                                    <li class="{{item.event_type}}" ng-repeat="item in data.list" title="{{item.event}}">
-                                        <span style="background-color: #eee; padding: 10px; font-size: 14pt; font-weight: 600;">{{item.day}}일</span> {{item.event}}
-                                    </li>
-                                </ul>
-                            </div>
+                                        </div><!-- /.col-xs-12 -->
+                                    </div><!-- /.row -->
+                                </div><!-- /.container-fluid -->
+                            </div>  <!-- /.sub_contents_body -->
 
                         </div><!-- /.sub_contents_wrap -->
                     </div>

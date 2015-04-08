@@ -78,7 +78,7 @@
 .calendar_wrap {
     width: 100%;
     float: none;
-    border:1px solid blue;
+    text-align:center;
 }
 
 .calendar_monthwrap {
@@ -87,11 +87,11 @@
     width: 316px;
     height: 50px;
     margin: 0px auto;
-    border:1px solid red;
 }
 
 .calendar_monthbtn {
     float: left;
+    font-size: 0.86em;
     border-radius: 5px;
     background-color: #aaa;
     color: #fff;
@@ -100,6 +100,7 @@
     border:none;
     opacity: 0.75;
 }
+
 .calendar_monthbtn:hover {
     opacity: 1;
 }
@@ -107,24 +108,53 @@
 .calendar_monthtxt {
     float: left;
     font-size: 2em;
-    width: 190px;
+    width: 170px;
+    font-weight: 600;
     padding: 0px 10px;
 }
 
+ul.cell_dayname { clear: both; float: left; width: 100%; font-size: 0.86em; margin:0; padding:0; border-left: 1px solid #ddd; }
+ul.cell_dayname>li { float: left; padding: 8px 10px; width: 14%; height: 40px; background-color: #FAFAFA; list-style-type: none; text-align: center; border: 1px solid #ddd; border-left:none;}
 
-ul.cell_dayname { clear: both; width: 100%; height: 50px;}
-ul.cell_dayname>li { float: left; padding: 10px 10px; width: 14%; height: 40px; background-color: #eee; list-style-type: none; text-align: center; border: 1px solid #fff; }
-
-ul.cell_day { clear: both; width: 100%; }
-ul.cell_day>li { float: left; padding: 10px 10px; width: 14%; height: 80px; background-color: #f0f0f0; list-style-type: none; text-align: center; border: 1px solid #fff; }
-ul.cell_day>li.blind { background-color: #f0f0f0; color: #ccc; }
-ul.cell_day>li.normal { background-color: #eee; color: #000; }
-ul.cell_day>li.event { background-color: #39f; color: #000; }
+ul.cell_day { clear: both; float:left; width: 100%; border-left:1px solid #ddd;}
+ul.cell_day>li { position:relative; float: left; width: 14%; background-color: transparent; font-weight: 600; list-style-type: none; text-align: center; border: 1px solid #ddd; border-left:none; border-top:transparent;}
+ul.cell_day>li.blind { background-color: #fafafa; color: #ccc; }
+ul.cell_day>li.normal { background-color: #fff; color: #000; }
+/*ul.cell_day>li.event { background-color: #39f; color: #000; }*/
 
 ul.cell_list { width: 100%; background-color: #eee; }
 ul.cell_list>li { padding: 10px 0px; margin-top: 1px; background-color: #fff; list-style-type: none; text-align: left; border: 1px solid #fff; }
+
 ul.cell_list>li.birth { background-color: #FFF9F2; }
 ul.cell_list>li.reviewclose { background-color: #F9FFF2; }
 ul.cell_list>li.notice { background-color: #F2FCFF; }
+
+.cell_day_num {
+    position:absolute;
+    left:12%;
+    top:10%;
+    border:1px solid transparent;
+    width:26px;
+    height:26px;
+    border-radius: 50%;
+}
+
+.cell_day_num.event {
+    background-color: #e56366;
+    color: #fff;
+}
+
+@media screen and (max-width: 420px) {
+    ul.cell_day>li {
+        font-size:0.68em;
+        font-weight: 400;
+    }
+    .cell_day_num {
+        left:25%;
+        top:25%;
+        width:22px;
+        height:22px;
+    }
+}
 
 /* /Ange calendar */
