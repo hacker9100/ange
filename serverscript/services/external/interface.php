@@ -298,7 +298,7 @@
                             '".$parent_no."'
                             , '".$comm_no."'
                             , '".addslashes($subject)."'
-                            , '".addslashes($body)."'
+                            , '".addslashes(str_replace("\n", "<br />", $body))."'
                             , 'CLINIC'
                             , 'ANGE'
                             , '".$comm_data['uid']."'

@@ -20,12 +20,12 @@
                                     <select ng-model="search.CONDITION" ng-options="condition.name for condition in condition" class= "form-control"></select>
                                 </div>
                             </div>
-                            <div ng-show="search.CONDITION.index < 6" class="col-xs-5">
+                            <div ng-show="search.CONDITION.index < 7" class="col-xs-5">
                                 <div class="form_basic_input" style="margin-left:0; width:100%; padding-right:5px;">
                                     <input ng-model="search.KEYWORD" type= "text" class= "form-control" placeholder= "검색어" />
                                 </div>
                             </div>
-                            <div ng-show="search.CONDITION.index >= 6 " class="col-xs-5">
+                            <div ng-show="search.CONDITION.index >= 7 " class="col-xs-5">
                                 <div class="col-xs-4" style="padding-right:5px;">
                                     <input ng-model="search.START_YMD" type="text" class="form-control" datepicker-popup="{{format}}" is-open="start" min-date="minDate" datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="닫기" />
                                 </div>
@@ -219,10 +219,13 @@
                         {{ item.REMAIN_POINT == null ? 0 : item.REMAIN_POINT }}
                     </a>
                 </td>
-                <td style="width:120px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'최종접속'">
+                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'가입일'">
+                    {{ item.REG_DT }}
+                </td>
+                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'최종접속'">
                     {{ item.FINAL_LOGIN_DT }}
                 </td>
-                <td style="width:100px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'상태'">
+                <td style="width:80px; font-size:0.94em; line-height:38px;" class="text-center" data-title="'상태'">
                     <div ng-show="item.USER_ID == selectUser && isStatus">
                         <select ng-model="item.USER_ST" class= "form-control" ng-change="change_userStatus(item)">
                             <option value="N">정상</option>
@@ -370,14 +373,14 @@
             <div class="row form_basic_wrap">
                 <div class= "form-group form_basic_group">
                     <label class= "form_basic_label">발신 번호 <span style="color:#b94a48">*</span></label>
-                    <div class= "col-md-4 form_basic_input">
+                    <div class= "col-md-3 form_basic_input">
                         <input type="text" ng-model="item.SEND_PHONE" class= "form-control" placeholder="발신 번호"/><!--{{item.FROM_ID}}-->
                     </div>
                 </div>
                 <div class= "form-group form_basic_group">
                     <label class= "form_basic_label">추가 발신자 </label>
-                    <div class= "col-md-8 form_basic_input">
-                        <div class= "col-md-4">
+                    <div class= "col-md-10 form_basic_input">
+                        <div class= "col-md-8">
                             <input type="text" ng-model="item.ADD_PHONE" class= "form-control" placeholder="추가 발신자"/><!--{{item.FROM_ID}}-->
                         </div>
                         <div class= "col-md-4">
@@ -387,8 +390,13 @@
                 </div>
                 <div class= "form-group form_basic_group">
                     <label class= "form_basic_label">문자 발송 내용 </label>
-                    <div class= "col-md-9 form_basic_input">
-                        <textarea type="text" ng-model="item.MESSAGE" class= "form-control" placeholder="내용"/><!--{{item.FROM_ID}}-->
+                    <div class= "col-md-10 form_basic_input">
+                        <div class= "col-xs-8">
+                            <textarea type="text" ng-model="item.MESSAGE" class= "form-control" placeholder="내용"/><!--{{item.FROM_ID}}-->
+                        </div>
+                        <div class= "col-xs-4">
+                            <span> {{totalLen}} / 80 bytes </span>
+                        </div>
                     </div>
                 </div>
             </div>

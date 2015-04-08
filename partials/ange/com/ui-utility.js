@@ -101,7 +101,7 @@ define([
         // 로그인 모달창
         $scope.openModal = function (content, size) {
             var dlg = dialogs.create('login_modal.html',
-                ['$scope', '$modalInstance', '$controller', 'data', 'CONSTANT', function($scope, $modalInstance, $controller, data, CONSTANT) {
+                ['$scope', '$modalInstance', '$controller', '$timeout', 'data', 'CONSTANT', function($scope, $modalInstance, $controller, $timeout, data, CONSTANT) {
 
                     /********** 공통 controller 호출 **********/
                     angular.extend(this, $controller('ange-common', {$scope: $scope}));
@@ -113,6 +113,10 @@ define([
                     if (localStorage.getItem('save_id')) {
                         $scope.save_id = true;
                         $scope.item.id = localStorage.getItem('user_id');
+
+                        $timeout(function() { $('#password').focus();}, 1000);
+                    } else {
+                        $timeout(function() { $('#id').focus();}, 1000);
                     }
 
                     // 상단 배너 이미지 조회

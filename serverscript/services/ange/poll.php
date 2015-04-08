@@ -92,6 +92,10 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                     $search_where .= "AND ada_state = '".$_search[POLL_ST]."' ";
                 }
 
+                if (isset($_search[CLOSE_DT]) && $_search[CLOSE_DT] != "") {
+                    $search_where .= "AND DATE_FORMAT(ada_date_close, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d') ";
+                }
+
                 if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
                     $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
                 }
@@ -160,11 +164,44 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                         ) CNT
                         ";
 
-                $data = $_d->sql_query($sql);
+                $data = $_d->getData($sql);
+
+                if (!isset($data)) {
+                    $search_where = "AND ada_state = '0' ";
+
+                    $sql = "SELECT TOTAL_COUNT, (@RNUM := @RNUM -1)+1  AS RNUM,
+                                 ada_idx, ada_title, ada_url ,DATE_FORMAT(ada_date_open,'%Y-%m-%d') as ada_date_open ,DATE_FORMAT(ada_date_close, '%Y-%m-%d') as ada_date_close ,ada_option_quantity, ada_image, ada_preview, ada_imagemap
+                                 ,ada_state ,ada_que_info, concat('http://angead.marveltree.com/adm/upload/', ada_image) as ada_image_url, ada_type, ada_title, ada_que_type
+                                 ,DATE_FORMAT(ada_date_notice, '%Y-%m-%d') as ada_date_notice
+                            FROM
+                            (
+                                SELECT
+                                      ada_idx, ada_type, ada_title, ada_url, ada_date_open, ada_date_close, ada_option_quantity, ada_image, ada_preview, ada_imagemap,
+                                      ada_state, ada_que_info, ada_que_type, ada_date_notice
+                                FROM adm_ad
+                                WHERE 1 = 1
+                                  AND ada_type = 'survey'
+                                    ".$search_where."
+                                    ".$sort_order."
+                                    ".$limit."
+                            ) AS DATA,
+                            (SELECT @RNUM := (SELECT COUNT(*) FROM adm_ad WHERE 1=1 AND ada_type = 'survey' ".$search_where.")) R,
+                            (
+                                SELECT COUNT(*) AS TOTAL_COUNT
+                                FROM adm_ad
+                                WHERE 1 = 1
+                                  AND ada_type = 'survey'
+                                  ".$search_where."
+                            ) CNT
+                            ";
+
+                    $data = $_d->getData($sql);
+                }
+
                 if($_d->mysql_errno > 0){
                     $_d->failEnd("조회실패입니다:".$_d->mysql_error);
                 }else{
-                    $_d->dataEnd($sql);
+                    $_d->dataEnd2($data);
                 }
             } else if ($_type == "check") {
 

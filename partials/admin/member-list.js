@@ -362,7 +362,7 @@ define([
                         $modalInstance.close();
                     }
 
-                }], id, {size: 'lg',keyboard: true}, $scope);
+                }], id, {size: 'lg',keyboard: true,backdrop: 'static'}, $scope);
             dlg.result.then(function(){
 
             },function(){
@@ -442,6 +442,21 @@ define([
                     angular.extend(this, $controller('content', {$scope: $scope}));
 
                     $scope.item = data;
+                    $scope.totalLen = 0;
+
+                    $scope.$watch('item.MESSAGE', function(newVal, oldVal) {
+                        newVal = newVal.replace( /(\s*)/g, '');
+
+                        if (newVal != undefined && newVal.length > -1) {
+                            $scope.totalLen = newVal.length + (escape(newVal)+"%u").match(/%u/g).length-1;;
+
+                            if ($scope.totalLen > 80) {
+                                dialogs.notify('알림', '80 bytes가 초과되었습니다.', {size: 'md'});
+                                $scope.totalLen = oldVal.length + (escape(oldVal)+"%u").match(/%u/g).length-1;
+                                $scope.item.MESSAGE = oldVal;
+                            }
+                        }
+                    });
 
                     $scope.click_reg = function () {
                         $scope.insertItem('com/sms', 'brodcast', $scope.item, true)

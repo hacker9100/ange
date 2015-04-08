@@ -147,7 +147,8 @@
                                         <td class="normaltype">
                                             <div style="float:left;">
                                             <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                            <span style="font-size:0.86em;" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                                            <span style="font-size:0.86em;" ng-show="item.NOTICE_FL == '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><strong><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</strong></span>
+                                            <span style="font-size:0.86em;" ng-show="item.NOTICE_FL != '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
                                             <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
                                             <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
                                             <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
@@ -178,7 +179,14 @@
 
                                         <td class="mobiletype" colspan="1" style="width: 90% !important;">
                                             <div>
-                                                <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
+                                                <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-show="item.NOTICE_FL == '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
+                                                    <strong><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</strong>
+                                                    <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                                    <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
+                                                    <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
+                                                </div>
+
+                                                <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-show="item.NOTICE_FL != '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
                                                     <span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
                                                     <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
                                                     <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
