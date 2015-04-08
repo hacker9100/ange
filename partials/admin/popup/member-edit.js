@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('member-edit', ['$scope', '$stateParams', '$location', '$window', 'dialogs', function ($scope, $stateParams, $location, $window, dialogs) {
+    controllers.controller('member-edit', ['$scope', '$stateParams', '$location', '$window', '$q', 'dialogs', function ($scope, $stateParams, $location, $window, $q, dialogs) {
 
         if ($scope.isModal) {
 //            $scope.id = data;
@@ -36,18 +36,17 @@ define([
 
         // 초기화
         $scope.init = function() {
-            $scope.getList('club/center', 'area', {}, {}, false)
-                .then(function(data){
-                    $scope.area = data;
-                })
-                ['catch'](function(error){
-            });
 
-            $scope.getList('club/center', 'list', {}, {}, false)
-                .then(function(data){
-                    $scope.center = data;
-                })
-                ['catch'](function(error){
+            var deferred = $q.defer();
+
+            $q.all([
+                    $scope.getList('club/center', 'area', {}, {}, false).then(function(data){ $scope.area = data; }),
+                    $scope.getList('club/center', 'list', {}, {}, false).then(function(data){ $scope.center = data;})
+            ])
+            .then( function(results) {
+                deferred.resolve();
+            },function(error) {
+                deferred.reject(error);
             });
 
             var type = [{name: "일반회원", value: "MEMBER"}, {name: "앙쥬클럽", value: "CLUB"}];
@@ -101,23 +100,14 @@ define([
 
             $scope.blog = {BLOG_GB: '', BLOG_URL: ''};
             $scope.blog.BLOG_GB = 'NAVER';
+
+            return deferred.promise;
         };
 
         /********** 이벤트 **********/
             // 카테고리 주제 대분류 선택
         $scope.$watch('item.CARE_AREA', function(newVal, oldVal) {
-            var list = [];
-
-            if (newVal != undefined) {
-                for (var i in $scope.center) {
-                    var item = $scope.center[i];
-
-                    if (newVal.cc_area == item.cc_area) {
-                        list.push(item);
-                    }
-                }
-            }
-            $scope.list = list;
+            $scope.list = _.filter($scope.center, function(item) { return item.cc_area == newVal.cc_area });
         });
 
         // 우편번호 검색
@@ -214,6 +204,7 @@ define([
 //                dialogs.notify('알림', '결혼여부를 선택해주세요.', {size: 'md'});
 //                return;
 //            }
+            $scope.item.CARE_CENTER = $scope.item.CENTER_NAME.cc_name;
 
             if ( ($scope.item.YEAR1 == undefined || $scope.item.YEAR1 == '') || ($scope.item.MONTH1 == undefined || $scope.item.MONTH1 == '') || ($scope.item.DAY1 == undefined || $scope.item.DAY1 == '') ) {
             } else {
@@ -264,6 +255,15 @@ define([
 
                         $scope.item.USER_GB = $scope.type[i];
  */
+
+                        if ($scope.item.USER_GB == 'CLUB') {
+                            var center = _.find($scope.center, function(item) { return item.cc_name == data.CARE_CENTER });
+                            var area = _.find($scope.area, function(item) { return item.cc_area == center.cc_area });
+
+                            $scope.list = _.filter($scope.center, function(item) { return item.cc_area == center.cc_area });
+                            $scope.item.CENTER_AREA = area;
+                            $scope.item.CENTER_NAME = center;
+                        }
 
                         if ($scope.item.BIRTH.length == 8) {
                             $scope.item.YEAR = $scope.item.BIRTH.substr(0, 4);

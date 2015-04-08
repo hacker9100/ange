@@ -65,7 +65,7 @@ define([
 
                     var file = data.FILES;
                     for(var i in file) {
-                        if (file[i].FILE_GB == 'ANGE_MANAGER'){
+                        if (file[i].FILE_GB == 'MANAGER'){
                             $scope.main_img = CONSTANT.BASE_URL + file[i].PATH + file[i].FILE_ID;
 //                            $scope.main_img = "http://localhost" + file[i].PATH + file[i].FILE_ID;
                         }

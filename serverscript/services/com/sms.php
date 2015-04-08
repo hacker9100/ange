@@ -48,7 +48,8 @@
                             service_type,
                             broadcast_yn,
                             msg_status,
-                            recipient_num
+                            recipient_num,
+                            sys_type
                         )
                         values
                         (
@@ -58,7 +59,8 @@
                             '0',
                             'N',
                             '1',
-                            '".$_model['PHONE_2']."'
+                            '".$_model['PHONE_2']."',
+                            'ange_".$_model['USER_ID']."'
                         )";
 
                 $_d->sql_query($sql);
@@ -84,7 +86,8 @@
                             callback,
                             service_type,
                             broadcast_yn,
-                            msg_status
+                            msg_status,
+                            sys_type
                         )
                         values
                         (
@@ -93,7 +96,8 @@
                             '".$_model['SEND_PHONE']."',
                             '0',
                             'Y',
-                            '9'
+                            '9',
+                            'ange_muti'
                         )";
 
                 $_d->sql_query($sql);
@@ -169,7 +173,8 @@
                                 recipient_num,
                                 change_word1,
                                 change_word2,
-                                change_word3
+                                change_word3,
+                                sys_type
                             )
                             values
                             (
@@ -179,7 +184,8 @@
                                 '".$row[PHONE_2]."',
                                 '".$_model['WORD1']."',
                                 '".$_model['WORD2']."',
-                                '".$_model['WORD3']."'
+                                '".$_model['WORD3']."',
+                                'ange_".$row['USER_ID']."'
                             )";
 
                         $_d->sql_query($sql);
@@ -202,7 +208,8 @@
                                 recipient_num,
                                 change_word1,
                                 change_word2,
-                                change_word3
+                                change_word3,
+                                sys_type
                             )
                             values
                             (
@@ -212,7 +219,8 @@
                                 '".str_replace("-", "", trim($arr_phone[$j]))."',
                                 '".$_model['WORD1']."',
                                 '".$_model['WORD2']."',
-                                '".$_model['WORD3']."'
+                                '".$_model['WORD3']."',
+                                'ange_add'
                             )";
 
                         $_d->sql_query($sql);
