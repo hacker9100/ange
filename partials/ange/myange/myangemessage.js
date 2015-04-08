@@ -16,7 +16,7 @@ define([
         $scope.search = {};
 
         $scope.PAGE_NO = 1;
-        $scope.PAGE_SIZE = 10;
+        $scope.PAGE_SIZE = 25;
         $scope.TOTAL_COUNT = 0;
 
         $scope.list = [];
@@ -24,9 +24,9 @@ define([
         $scope.pageBoardChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
 
-            $scope.PAGE_NO = 1;
-            $scope.PAGE_SIZE = 10;
-            $scope.TOTAL_COUNT = 0;
+//            $scope.PAGE_NO = 1;
+//            $scope.PAGE_SIZE = 10;
+//            $scope.TOTAL_COUNT = 0;
 
             $scope.list = [];
 
