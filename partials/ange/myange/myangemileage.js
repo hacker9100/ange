@@ -13,10 +13,6 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('myangemileage', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT) {
 
-        // 초기화
-        $scope.init = function(session) {
-            $scope.community = "마일리지";
-        };
 
         $scope.search = {};
 
@@ -66,6 +62,9 @@ define([
         };
 
         $scope.init = function(){
+
+            $scope.community = "마일리지";
+
             $scope.search.YEAR = nowYear + '';
             $scope.search.REG_UID = $rootScope.uid;
             $scope.search.STATUS = true;
@@ -117,14 +116,20 @@ define([
                     var point = data[0].POINT;
                     $scope.POINT = point;
 
+                    var total_point = data[0].TOTAL_POINT;
+                    $scope.TOTAL_POINT = total_point;
+                    console.log('$scope.TOTAL_POINT = '+$scope.TOTAL_POINT);
+
                     /*$scope.total(total_cnt);*/
                     $scope.list = data;
 
                     $scope.isLoding = false;
                     $scope.TOTAL_PAGES = Math.ceil($scope.TOTAL_COUNT / $scope.PAGE_SIZE);
                 })
-                ['catch'](function(error){$scope.TOTAL_COUNT = 0;
+                ['catch'](function(error){
+                    $scope.TOTAL_COUNT = 0;
                     $scope.list = "";
+                    $scope.TOTAL_POINT = 0;
                     $scope.isLoding = false;
                 });
         };

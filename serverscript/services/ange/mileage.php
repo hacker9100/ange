@@ -88,7 +88,7 @@
 
                 // FROM ANGE_USER_MILEAGE AUM
                 $sql = "SELECT TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                            USER_ID, REASON, POINT, EARN_GB, PLACE_GB, EARN_DT, SUBJECT
+                            USER_ID, REASON, POINT, EARN_GB, PLACE_GB, EARN_DT, SUBJECT, TOTAL_POINT
                         FROM
                         (
                             SELECT AUM.USER_ID, PLACE_GB AS SUBJECT, REASON, POINT, AUM.EARN_GB, AUM.PLACE_GB, AUM.EARN_DT
@@ -98,6 +98,7 @@
                              ORDER BY AUM.EARN_DT DESC
                         ) AS DATA,
                         (SELECT @RNUM := 0) R,
+                        (SELECT SUM(POINT) AS TOTAL_POINT FROM  ANGE_USER_MILEAGE AUM WHERE 1=1 ".$search_where.") TOTAL_POINT,
                         (
                             SELECT COUNT(*) AS TOTAL_COUNT
                             ".$search_table."
