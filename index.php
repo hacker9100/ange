@@ -141,6 +141,7 @@ MtUtil::_d("### [END]");
     <link rel="stylesheet" type="text/css" href="lib/slick-carousel/slick.css" />
 
     <link rel="stylesheet" type="text/css" href="css/ng-table/ange-ng-table.css" />
+    <link rel="stylesheet" type="text/css" href="/css/ange/ange_ng-scrollbar.css" />
     <!--<link rel="stylesheet" type="text/css" href="css/dialog/dialogs.min.css" />-->
 
     <!-- chart -->

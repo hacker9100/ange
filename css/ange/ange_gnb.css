@@ -1,5 +1,6 @@
 
 .gnb{
+    position:absolute;
     float:left;
     width:100%;
     background-color:#fefefe;
@@ -7,15 +8,17 @@
     border: none;
     padding:0;
     border-bottom:2px solid #f0f0f0;
+    z-index:999;
 }
 
-.gnb_menu {
-    display:inline-block;
-    float:left;
-    margin:0;
-    width:100%;
-    border-bottom: 1px solid #EFEFEF;
-}
+/*.gnb_menu {*/
+    /*display:inline-block;*/
+    /*float:left;*/
+    /*margin:0;*/
+    /*width:100%;*/
+    /*border-bottom: 1px solid #EFEFEF;*/
+/*}*/
+/* gnb-desktop 과 mobile menu로 재구성 */
 
 .gnb_desktop_menu {
     height:102px;
@@ -106,14 +109,16 @@
 
 .mobile-header {
     display:none;
-    position:absolute;
-    width:60%;
-    left:50%;
-    margin-left:-30%;
+    position:fixed;
+    width:100%;
+    left:0;
+    /*margin-left:-25px;*/
+    background-color: #fff;
     height:75px;
-    /*margin:0px auto;*/
+    margin:0px auto;
     padding:8px 18px;
-    z-index: 99;
+    /*border:1px solid red;*/
+    z-index: 995;
 }
 
 .mobilelogo {
@@ -268,9 +273,9 @@
 
 /*}*/
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .gnb{
-        position:absolute;
+        position:fixed;
         margin:0px;
         top:75px;
         background-color:#f4f4f4;

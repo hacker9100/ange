@@ -831,7 +831,7 @@ div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 .channel_mark {
 	width:30%;
 	height:12px; 
-	margin:0px auto; 
+	margin:10px auto;
 	border-radius:5px;
 }
 

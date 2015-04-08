@@ -43,7 +43,7 @@
 }
 
 
-@media (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .comp_mileage {
         float:none;
         position: relative;

@@ -130,7 +130,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .pin {
         width:48%;
         margin: 0 0.6% 15px;
@@ -294,7 +294,7 @@ a.icon_like:hover, a.icon_like_on:hover {
     font-size:0.78em;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .story_plus_thumb {
         float:left;
         width:40%;

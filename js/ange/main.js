@@ -97,8 +97,9 @@ require.config({
 //        'google-map': '//maps.google.com/maps/api/js',
         'ng-map': '../../lib/ng-map/ng-map.min',
 
+        // scrollbar 모듈
+        'ng-scrollbar': '../../lib/ng-scrollbar/ng-scrollbar',
 //        'daum-postcode' : '//dmaps.daum.net/map_js_init/postcode',
-
         'library': '../../lib'
     },
 
@@ -192,6 +193,9 @@ require.config({
 //            deps:['angular']
 //        },
         'ng-map': {
+            deps:['angular']
+        },
+        'ng-scrollbar': {
             deps:['angular']
         }
     },

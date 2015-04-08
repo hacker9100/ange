@@ -135,7 +135,7 @@
     color:#fff;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .webzine_moms_list, .webzine_moms_list_detail {
        background-color: #fAFAFA;
     }

@@ -713,7 +713,7 @@ body {
     padding-bottom:40px;
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .storyplus_wrap {
         position:relative;
         display: block;

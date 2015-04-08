@@ -206,7 +206,7 @@
     background-position: bottom;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .webzine_store_list {
         background-color: #fAFAFA;
         border:1px solid #ddd;

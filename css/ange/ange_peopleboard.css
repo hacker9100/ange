@@ -60,7 +60,7 @@
 	padding:0px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
     .peoplep_list_tab {
         display: none;
     }
@@ -70,7 +70,7 @@
     }
 }
 
-/*@media screen and (max-width: 768px) {*/
+/*@media screen and (max-width: 767px) {*/
     /*.people_photo_contentcol {*/
         /*width:100% !important;*/
     /*}*/
