@@ -71,3 +71,60 @@
 }
 
 .album_photo_imgbox:hover { border:1px solid #e40029; background-color:#e40029; }
+
+
+/* Ange calendar */
+
+.calendar_wrap {
+    width: 100%;
+    float: none;
+    border:1px solid blue;
+}
+
+.calendar_monthwrap {
+    /*clear: both;*/
+    display: inline-block;
+    width: 316px;
+    height: 50px;
+    margin: 0px auto;
+    border:1px solid red;
+}
+
+.calendar_monthbtn {
+    float: left;
+    border-radius: 5px;
+    background-color: #aaa;
+    color: #fff;
+    padding: 0px 10px;
+    width:60px;
+    border:none;
+    opacity: 0.75;
+}
+.calendar_monthbtn:hover {
+    opacity: 1;
+}
+
+.calendar_monthtxt {
+    float: left;
+    font-size: 2em;
+    width: 190px;
+    padding: 0px 10px;
+}
+
+
+ul.cell_dayname { clear: both; width: 100%; height: 50px;}
+ul.cell_dayname>li { float: left; padding: 10px 10px; width: 14%; height: 40px; background-color: #eee; list-style-type: none; text-align: center; border: 1px solid #fff; }
+
+ul.cell_day { clear: both; width: 100%; }
+ul.cell_day>li { float: left; padding: 10px 10px; width: 14%; height: 80px; background-color: #f0f0f0; list-style-type: none; text-align: center; border: 1px solid #fff; }
+ul.cell_day>li.blind { background-color: #f0f0f0; color: #ccc; }
+ul.cell_day>li.normal { background-color: #eee; color: #000; }
+ul.cell_day>li.event { background-color: #39f; color: #000; }
+
+ul.cell_list { width: 100%; background-color: #eee; }
+ul.cell_list>li { padding: 10px 0px; margin-top: 1px; background-color: #fff; list-style-type: none; text-align: left; border: 1px solid #fff; }
+ul.cell_list>li.birth { background-color: #FFF9F2; }
+ul.cell_list>li.reviewclose { background-color: #F9FFF2; }
+ul.cell_list>li.notice { background-color: #F2FCFF; }
+
+/* /Ange calendar */

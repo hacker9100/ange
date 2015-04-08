@@ -292,6 +292,27 @@
 	top:30px;
 }
 
+
+/* clinic_reply */
+.clinic_reply_wrap {
+    padding:25px;
+}
+
+.clinic_reply_box {
+    border:1px solid #e8f7c6;
+    padding:20px;
+    background-color: #f7fae9;
+}
+
+.clinic_reply_body {
+    border-top: 1px dotted #ddd;
+    padding-top:18px;
+    text-align:justify;
+    word-break:keep-all;
+    margin:0px auto;
+}
+/* /clinic_reply */
+
 .people_view_replytop {
 	margin-top: 25px;
 	padding-bottom: 10px;

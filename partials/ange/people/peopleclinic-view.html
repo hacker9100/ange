@@ -99,18 +99,13 @@
                                             <!-- Editor CSS 적용 -->
                                             <div ng-bind-html="item.BODY" style="margin:0px auto; padding:50px;"></div>
 
-                                            <!--<p>산부인과와 산후조리원에 관한 앙쥬폴 떳네요.</p>-->
-                                            <!--<p>얼른하고왔어요</p>-->
-                                            <!--<p>참여인수가 3명이니..</p>-->
-                                            <!--<p>이제 올라온지 얼마 안되서 그런가봐여</p>-->
-                                            <!--<p>얼른하시고 마일리지 적립받으세요.ㅎㅎ</p>-->
-                                            <!--<p>아아..좀만 더더 노력하면 앞자리 숫자 바뀔듯한데</p>-->
-                                            <!--<p>힘드네요....</p>-->
-                                            <!--<p>&nbsp;</p>-->
-                                            <!--<p>아아 앙플이 전같지 않고</p>-->
-                                            <!--<p>또 말일 다가오니 다들 주춤모드 같고</p>-->
-                                            <!--<p>확실히 글도 많지 않고</p>-->
-                                            <!--<p>그리고 앙플기간인데도 불구하고 랭킹이 떨어졌다는 것도 참....</p>-->
+
+                                            <div ng-if="item.REPLY_BODY" class="clinic_reply_wrap">
+                                                <div class="clinic_reply_box">
+                                                    <img src="/imgs/ange/temp/img_dr_you.png" />
+                                                    <div ng-bind-html="item.REPLY_BODY" class="clinic_reply_body"></div>
+                                                </div>
+                                            </div>
 
                                             <!-- Editor CSS 적용 -->
 

@@ -233,25 +233,21 @@ define([
                             $scope.queue.push({"name":files[i].FILE_NM,"size":files[i].FILE_SIZE,"url":CONSTANT.BASE_URL+files[i].PATH+files[i].FILE_ID,"thumbnailUrl":CONSTANT.BASE_URL+files[i].PATH+"thumbnail/"+files[i].FILE_ID,"mediumUrl":CONSTANT.BASE_URL+files[i].PATH+"medium/"+files[i].FILE_ID,"deleteUrl":CONSTANT.BASE_URL+"/serverscript/upload/?file="+files[i].FILE_NM,"deleteType":"DELETE"});
                         }
 
-
                         if(data.BOARD_ST == 'D'){
-                            if(data.REPLY_YN == 'N'){
-                                $scope.item.BODY = "작성자가 삭제한 글 입니다";
-                            } else {
-                                $scope.item.BODY = "작성자가 삭제한 글 입니다"+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                            $scope.item.BODY = "작성자가 삭제한 글 입니다";
+                            if(data.REPLY_YN != 'N'){
+                                $scope.item.REPLY_BODY = data.REPLY_BODY;
                             }
                         }else{
                             if(data.BLIND_FL == 'N'){
-                                if(data.REPLY_YN == 'N'){
-                                    $scope.item.BODY = $sce.trustAsHtml(data.BODY);
-                                } else {
-                                    $scope.item.BODY = $sce.trustAsHtml(data.BODY)+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                                $scope.item.BODY = $sce.trustAsHtml(data.BODY);
+                                if(data.REPLY_YN != 'N'){
+                                    $scope.item.REPLY_BODY = data.REPLY_BODY;
                                 }
                             }else{
-                                if(data.REPLY_YN == 'N'){
-                                    $scope.item.BODY = "관리자에 의해 블라인드 처리가 된 글입니다";
-                                } else {
-                                    $scope.item.BODY = "관리자에 의해 블라인드 처리가 된 글입니다"+"<br><br><br><br><br><p>전문가 답변<br>"+data.REPLY_BODY+"</p>";
+                                $scope.item.BODY = "관리자에 의해 블라인드 처리가 된 글입니다";
+                                if(data.REPLY_YN != 'N'){
+                                    $scope.item.REPLY_BODY = data.REPLY_BODY;
                                 }
                             }
                         }
