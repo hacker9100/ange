@@ -158,7 +158,7 @@ define([
 
 
         // 지난 공구 게시판 목록
-        $scope.click_showPeopleBoardList = function () {
+        $scope.click_showStorePastBoardList = function () {
 
             $scope.search.FILE = true;
             $scope.search.PAST = 'Y';
@@ -300,7 +300,7 @@ define([
             .then($scope.sessionCheck)
             .then($scope.init)
             .then($scope.click_showStoreAuctionList)
-            .then($scope.click_showPeopleBoardList)
+            .then($scope.click_showStorePastBoardList)
             ['catch']($scope.reportProblems);
 
 //        $scope.init();
