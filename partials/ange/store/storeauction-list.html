@@ -120,7 +120,7 @@
                                         <div class="comp_basic h-cell-dynamic" style="width:100%; padding:0; margin:0px;">
                                             <div class="item webzine_store_featureimgbox" style="border:1px solid #ddd;">
                                                 <!--<img ng-src="/imgs/ange/temp/brandmall_01.jpg" style="width:100%;" />-->
-                                                <img class="webzine_store_featureimg" src="/imgs/ange/_blank.gif" style="width:100%; background-image:url({{item.MAIN_FILE}})" />
+                                                <img class="people_photo_img" src="/imgs/ange/_blank.gif"style="background-image:url('{{item.MAIN_FILE}}');" />
                                             </div>
                                         </div>
                                     </div>  <!-- /.col-xs-4 -->
@@ -227,28 +227,27 @@
                                         <div class="comp_basic h-cell-dynamic">
 
                                             <!-- 경매소 리스트 타입 -->
-                                            <div class="row webzine_moms_list" style="display: block; margin-top:0px;" ng-repeat='item in prevlist'>
-                                                <div class="col-xs-12 v-cell-4" style="margin:0px;">
-                                                    <div class="comp_basic comp_splite_left h-cell-1" style="width:100%; padding:0; margin:0px;">
+                                            <div class="row webzine_moms_list" ng-click="click_showViewPeoplePhoto(item.NO)" style="display: block; margin-top:0px;" ng-repeat='item in prevlist'>
+                                                <div class="col-xs-12 no-margin" style="margin:0px;">
+                                                    <div class="comp_basic h-cell-dynamic no-margin ">
 
-                                                        <div class="item" style="position:absolute;">
-                                                            <img src="/imgs/ange/_blank_4by3.gif" class="people_photo_img" style="background-image:url('{{item.MAIN_FILE}}')" />
+                                                        <div class="webzine_list_imgbox">
+                                                            <img src="/imgs/ange/_blank_262by158.gif" style="background-image:url('{{item.MAIN_FILE}}');" class="webzine_moms_featureimg">
+                                                            <!--<img src="/imgs/ange/_blank_262by158.gif" style="background-image:url('/imgs/ange/temp/moms_jb_01.jpg');" class="webzine_moms_featureimg">-->
                                                         </div>
 
                                                         <div class="webzine_list_wrap">
                                                             <div class="webzine_list_title">
-                                                                <!-- {{item.SUBJECT}} -->
-                                                                {{item.PRODUCT_NM}}
-
+                                                                <div class="webzine_list_titletxt">{{item.PRODUCT_NM}}</div>
                                                                 <div class="webzine_list_bottomwrap">
-                                                                    <div class="webzine_list_item"><strong>경매일자</strong><span class="table_gray" style="margin-left:8px;">2015-11-15</span></div>
+                                                                    <div class="webzine_list_item"><strong>경매일자</strong><span class="table_gray" style="margin-left:8px;">{{item.START_YMD}}~{{item.CLOSE_YMD}}</span></div>
                                                                     <div class="webzine_list_item"><strong>낙찰유형</strong><span class="table_gray" style="margin-left:8px;">마일리지</span></div> <!-- /마일리지/바로구매 -->
                                                                     <div class="webzine_list_item"><strong>낙찰가격</strong><span class="table_gray" style="margin-left:8px;">{{item.PRICE}} P</span></div>
                                                                 </div>
 
-                                                                <div class="webzine_list_btnwrap">
-                                                                    <button class="webzine_list_btn default" title="상세보기" ng-click="click_showViewPeoplePhoto(item.NO)">상세보기</button>
-                                                                </div>
+                                                                <!--<div class="webzine_list_btnwrap">-->
+                                                                    <!--<button class="webzine_list_btn default" title="상세보기" ng-click="click_showViewPeoplePhoto(item.NO)">상세보기</button>-->
+                                                                <!--</div>-->
                                                             </div>
                                                         </div>
 

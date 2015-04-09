@@ -181,13 +181,15 @@ switch ($_method) {
 
             $sql = "SELECT
                         NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, TOTAL_COUNT, PERIOD, ORDER_YN, DIRECT_PRICE,AUCTION_AMOUNT,AUCTION_COUNT,
-                        SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT, SOLD_OUT, COMPANY_NM
+                        SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT, SOLD_OUT, COMPANY_NM, START_YMD, CLOSE_YMD
                     FROM
                     (
                         SELECT NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, PERIOD, ORDER_YN, DIRECT_PRICE,
                                 (SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
                                 (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, COMPANY_NM,
-                                IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT
+                                IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT,
+                                START_YMD,
+                                CLOSE_YMD
                         FROM
                             ANGE_PRODUCT AP
                         WHERE

@@ -25,6 +25,10 @@ define([
 
         $scope.productsList = [];
 
+
+        $scope.list = [];
+        $scope.prevlist = [];
+
         $scope.pageChanged = function() {
             console.log('Page changed to: ' + $scope.PAGE_NO);
             $scope.click_showPeopleBoardList();
@@ -170,15 +174,19 @@ define([
                         data[i].PRICE  = data[i].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                         console.log(data[i].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
 
-                        if (data[i].FILE != null) {
-                            var img = CONSTANT.BASE_URL + '/storage/product/' + 'thumbnail/' + data[i].FILE.FILE_ID;
-                            data[i].MAIN_FILE = img;
+//                        if (data[i].FILE != null) {
+//
+//
+//                        }
 
-                        }
+                        var img = CONSTANT.BASE_URL + '/storage/product/' + 'thumbnail/' + data[i].FILE.FILE_ID;
+                        data[i].MAIN_FILE = img;
+
+                        $scope.prevlist.push(data[i]);
                     }
 
                     /*$scope.total(total_cnt);*/
-                    $scope.prevlist = data;
+                    //$scope.prevlist = data;
                 })
                 ['catch'](function(error){$scope.prevlist = ""; $scope.SEARCH_TOTAL_COUNT = 0;});
 
