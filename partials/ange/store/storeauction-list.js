@@ -102,12 +102,12 @@ define([
         $scope.click_showStoreAuctionList = function(){
             $scope.search.FILE = true;
             //$scope.search.ORDER_YN = 'N';
+            $scope.search.PROCESS = 'Y';
+            $scope.search.PAST = '';
+
 
             $scope.getList('ange/product', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
-
-
-                    console.log(data);
 
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
@@ -157,7 +157,8 @@ define([
         $scope.click_showPeopleBoardList = function () {
 
             $scope.search.FILE = true;
-            $scope.search.ORDER_YN = 'Y';
+            $scope.search.PAST = 'Y';
+            $scope.search.PROCESS = '';
 
             $scope.getList('ange/product', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
                 .then(function(data){
@@ -170,7 +171,7 @@ define([
                         console.log(data[i].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
 
                         if (data[i].FILE != null) {
-                            var img = UPLOAD.BASE_URL + data[i].FILE[0].PATH + 'thumbnail/' + data[i].FILE[0].FILE_ID;
+                            var img = CONSTANT.BASE_URL + '/storage/product/' + 'thumbnail/' + data[i].FILE.FILE_ID;
                             data[i].MAIN_FILE = img;
 
                         }

@@ -130,6 +130,14 @@ switch ($_method) {
                 $search_where .= "AND ORDER_YN = '".$_search[ORDER_YN]."' ";
             }
 
+            if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
+                $search_where .= "AND DATE_FORMAT(NOW(), '%Y-%m-%d') BETWEEN START_YMD AND CLOSE_YMD ";
+            }
+
+            if (isset($_search[PAST]) && $_search[PAST] != "") {
+                $search_where .= "AND CLOSE_YMD < DATE_FORMAT(NOW(), '%Y-%m-%d') ";
+            }
+
             if (isset($_search[PRODUCT_TYPE]) && $_search[PRODUCT_TYPE] != "" && $_search[PRODUCT_TYPE] != "ALL") {
 
                 if($_search[PRODUCT_TYPE] == 1){
