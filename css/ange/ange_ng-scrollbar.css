@@ -2,7 +2,6 @@
   -ms-touch-action: none;
 }
 .ngsb-wrap .ngsb-container {
-  border:1px solid blue;
   width: auto;
   overflow: hidden;
   transition: 0.5s all;
