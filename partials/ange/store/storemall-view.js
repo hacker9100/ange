@@ -141,11 +141,11 @@ define([
         // 상품 추가
         $scope.addProductList = function (products, item){
 
-            if ($scope.uid == '' || $scope.uid == null) {
-                dialogs.notify('알림', '로그인 후 상품선택이 가능합니다.', {size: 'md'});
-                //$("#checkProduct").attr("checked",false);
-                return;
-            }
+//            if ($scope.uid == '' || $scope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 상품선택이 가능합니다.', {size: 'md'});
+//                //$("#checkProduct").attr("checked",false);
+//                return;
+//            }
 
             if(products.NO == null){
                 $scope.productsList = [];
@@ -163,11 +163,11 @@ define([
         $scope.addcheckboxProductList = function (products, item){
 
             //alert('');
-            if ($scope.uid == '' || $scope.uid == null) {
-                dialogs.notify('알림', '로그인 후 장바구니에 상품 담기가 가능합니다.', {size: 'md'});
-                $("#checkProduct").attr("checked",false);
-                return;
-            }
+//            if ($scope.uid == '' || $scope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 장바구니에 상품 담기가 가능합니다.', {size: 'md'});
+//                $("#checkProduct").attr("checked",false);
+//                return;
+//            }
 
             $scope.product.CNT = 1;
             $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
