@@ -39,16 +39,40 @@ define([
             $scope.community = "쿠폰";
 
 
-            $scope.MOM_BIRTH_YEAR = $rootScope.user_info.BIRTH.substr(0,4);
-            $scope.MOM_BIRTH_MONTH = $rootScope.user_info.BIRTH.substr(4,2);
-            $scope.MOM_BIRTH_DAY = $rootScope.user_info.BIRTH.substr(6,2);
+            $scope.search.DETAIL = true;
+            $scope.getItem('com/user', 'item', $scope.uid, $scope.search , false)
+                .then(function(data){
+
+                    console.log(data);
+                    $rootScope.user_info.BIRTH = data.BIRTH;
+                    $rootScope.user_info.BABY = data.BABY;
+
+                    // $rootScope.user_info.BIRTH
+                    $scope.MOM_BIRTH_YEAR = data.BIRTH.substr(0,4);
+                    $scope.MOM_BIRTH_MONTH = data.BIRTH.substr(4,2);
+                    $scope.MOM_BIRTH_DAY = data.BIRTH.substr(6,2);
 
 
-            console.log(' $rootScope.user_info.BABY.BABY_BIRTH = '+ $rootScope.user_info.BABY[0].BABY_BIRTH);
+                    //console.log(' $rootScope.user_info.BABY.BABY_BIRTH = '+ $rootScope.user_info.BABY[0].BABY_BIRTH);
 
-            $scope.BABY_BIRTH_YEAR = $rootScope.user_info.BABY[0].BABY_BIRTH.substr(0,4);
-            $scope.BABY_BIRTH_MONTH = $rootScope.user_info.BABY[0].BABY_BIRTH.substr(4,2);
-            $scope.BABY_BIRTH_DAY = $rootScope.user_info.BABY[0].BABY_BIRTH.substr(6,2);
+                    console.log(data.BABY);
+
+                    //  $rootScope.user_info.BABY[0].BABY_BIRTH
+                    if(data.BABY == null){
+                        $scope.BABY_BIRTH_YEAR = '';
+                        $scope.BABY_BIRTH_MONTH = '';
+                        $scope.BABY_BIRTH_DAY = '';
+                    }else{
+                        $scope.BABY_BIRTH_YEAR = data.BABY[0].BABY_BIRTH.substr(0,4);
+                        $scope.BABY_BIRTH_MONTH = data.BABY[0].BABY_BIRTH.substr(4,2);
+                        $scope.BABY_BIRTH_DAY = data.BABY[0].BABY_BIRTH.substr(6,2);
+                    }
+
+                })
+                .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+
+
         };
 
         $scope.PAGE_NO = 1;
@@ -166,6 +190,12 @@ define([
 
         $scope.click_saveMomsBecomeCoupon = function (){
 
+
+            if($scope.BABY_BIRTH_YEAR == '' && $scope.BABY_BIRTH_MONTH == '' && $scope.BABY_BIRTH_DAY == ''){
+                dialogs.notify('알림', '회원정보에서 아이 생일을 추가해주세요.', {size: 'md'});
+                return;
+            }
+
             $scope.item.COUPON_CD = 'ANGE_MOM_BECAME'
             $scope.search.COUPON_CD = $scope.item.COUPON_CD;
 
@@ -244,10 +274,12 @@ define([
 
             //$scope.item.COUPON_CD = $scope.item.COUPON_CD.replace(/^\s+|\s+$/g,'');
 
-            $scope.item.COUPON_CD = $scope.item.COUPON_CD.replace(/^\s+|\s+$/g,'');
+            if($scope.item.COUPON_CD != undefined){
+                $scope.item.COUPON_CD = $scope.item.COUPON_CD.replace(/^\s+|\s+$/g,'');
+            }
 
             if($scope.item.COUPON_CD == undefined || $scope.item.COUPON_CD == ""){
-                alert('쿠폰을 입력하세요');
+                dialogs.notify('알림', '쿠폰번호를 입력하세요.', {size: 'md'});
                 return;
             }
 
@@ -255,6 +287,13 @@ define([
 
             var coupon_gb = $scope.item.COUPON_CD.split('_');
             coupon_gb = coupon_gb[0];
+
+            console.log(coupon_gb);
+            if(coupon_gb != 'ANGE' && coupon_gb != 'MAGAZINE' && coupon_gb != 'EXPO'){
+                dialogs.notify('알림', '쿠폰번호가 유효하지 않습니다.', {size: 'md'});
+                return;
+            }
+
 
             $scope.search.COUPON_CD = $scope.item.COUPON_CD;
             if(coupon_gb = 'MAGAZINE'){
@@ -275,10 +314,10 @@ define([
                         if(coupon_gb == 'ANGE'){
                             $scope.item.COUPON_GB = 'ANGE'
                             $scope.item.COUPON_NM = '앙쥬맘 쿠폰(마일리지적립)'+'_'+$scope.item.COUPON_CD;
-                        }else if(coupon_gb == 'MAGAZINE '){
+                        }else if(coupon_gb == 'MAGAZINE'){
                             $scope.item.COUPON_GB = 'MAGAZINE'
                             $scope.item.COUPON_NM = '매거진다운로드(마일리지적립)'+'_'+$scope.item.COUPON_CD;
-                        }else if(coupon_gb == 'EXPO '){
+                        }else if(coupon_gb == 'EXPO'){
                             $scope.item.COUPON_GB = 'EXPO'
                             $scope.item.COUPON_NM = '박람회 쿠폰(마일리지적립)'+'_'+$scope.item.COUPON_CD;
                         }
