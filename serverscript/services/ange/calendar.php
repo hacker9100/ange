@@ -52,7 +52,61 @@ if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
 
 switch ($_method) {
     case "GET":
-        if ($_type == 'list' ) {
+        if ($_type == 'default' ) {
+            $this_month = "{$_search['year']}-{$_search['month']}-1";
+            //$this_month = isset($_REQUEST['month'])?$_REQUEST['month']:date('Y-m-d');
+
+            $search_where = "";
+            $limit = "";
+
+            // $_search[USER_ID]
+            // $_search[YEAR]
+            // $_search[MONTH]
+
+            $this_month = date('Y',strtotime($this_month)).'-'.date('m',strtotime($this_month)).'-01';
+
+            $t_add = date('w',strtotime($this_month));
+            $t_startday = date('Y-m-d',strtotime("{$this_month} -{$t_add}days"));
+            $t_endday = date('Y-m-d',strtotime("{$this_month} +1months"));
+            $t_add = 7-date('w',strtotime($t_endday));
+            $t_endday = date('Y-m-d',strtotime("{$t_endday} +{$t_add}days"));
+
+            $lday = $t_startday;
+            $lcnt=0;
+            //$t_stream = '';
+            $t_year = date('Y',strtotime($this_month));
+            $t_month = date('m',strtotime($this_month));
+            while($lday!=$t_endday && $lcnt<50 ){
+
+                if ($t_month==date('m',strtotime($lday))){
+                    $t_type="normal";
+                }else{
+                    $t_type="blind";
+                }
+                $t_event = $v_event[date('m-d',strtotime($lday))];
+                if ($t_event!=''){
+                    $t_type="event";
+                }
+
+                //$t_stream .= "<td class=\"day\" title=\"{$t_event}\" style=\"{$t_style}\">".date('d',strtotime("{$lday}")).'</td>';
+                $t_key = substr( "0".(string)$lcnt,-2 );
+                $t_key = date('Ymd',strtotime($lday));
+                $data[$t_key]['day']=(int)date('d',strtotime("{$lday}"));
+                $data[$t_key]['event']="";
+                $data[$t_key]['type']=$t_type;
+                $data[$t_key]['event_type']=''; // 생일 birth, 출산예정일 , 병원 , 돌 birth_first, 행사참여 join, 결혼기념일 marriage
+
+                $lday = date('Y-m-d',strtotime("{$lday} +1days"));
+                $lcnt++;
+
+                $data_set['list'] = '';
+            }
+
+            // 달력 자료 연결
+            $data_set['calendar'] = $data;
+
+            $_d->dataEnd2($data_set);
+        } else if ($_type == 'list' ) {
 
             $this_month = "{$_search['year']}-{$_search['month']}-1";
             //$this_month = isset($_REQUEST['month'])?$_REQUEST['month']:date('Y-m-d');
@@ -180,7 +234,7 @@ switch ($_method) {
             while($row=$_d->sql_fetch_array($result)){
                 $row['ada_date_review_close'] = trim($row['ada_date_review_close']);
                 if ($row['ada_date_review_close']!=''){
-                    $e_date = date('Ymd',strtotime("2015-04-15"));
+                    $e_date = date('Ymd',$row['ada_date_review_close']);
                     $e_year = substr($e_date,0,4);
                     $e_month = substr($e_date,4,2);
                     $e_day = substr($e_date,6,2);

@@ -49,7 +49,7 @@
             <a class="util3" ng-click="click_infodesk()">고객센터</a>
             </div>
 
-            <div ng-show="uid" class="comp_calendar_wrap" style="float:left; width:100%; border:1px solid #DEDEDE; background-color:#fff;">
+            <div class="comp_calendar_wrap" style="float:left; width:100%; border:1px solid #DEDEDE; background-color:#fff;">
                 <div class="comp_calendar_viewer" ng-click="click_showCalendar();" style="font-family: arial, sna-serif; width: 100%; border-right: 1px solid #DEDEDE; ">
 
                     <!--<style>-->
@@ -63,7 +63,7 @@
                         <!--ul.cell_list>li { padding: 5px 0px; margin-top: 1px; background-color: #fff; list-style-type: none; text-align: left; border: 1px solid #fff; font-size: 0.75em;}-->
                     <!--</style>-->
 
-                    <div ng-if="uid" class="comp_calendar_viewer_content" style="padding:0px; height:180px;">
+                    <div class="comp_calendar_viewer_content" style="padding:0px; height:180px;">
                         <!-- item.type = normal / hidden / event -->
                         <ul class="cell_day">
                             <li class="{{item.type}}" title="{{item.event}}" ng-repeat="item in data.calendar">
