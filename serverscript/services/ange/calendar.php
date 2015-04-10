@@ -130,8 +130,13 @@ switch ($_method) {
                     $lcnt++;
                     $list[$t_key.$lcnt]['day'] = $e_day;
                     $list[$t_key.$lcnt]['type'] = "event";
-                    $list[$t_key.$lcnt]['event'] = "{$row['ada_name']} 후기 마감\r\n";
+                    $list[$t_key.$lcnt]['event'] = "출산예정일\r\n";
                     $list[$t_key.$lcnt]['event_type'] = "duedate";
+
+                    $list2[$t_key]['day'] = $e_day;
+                    $list2[$t_key]['type'] = "event";
+                    $list2[$t_key]['event'] .= "<li>출산예정일</li>";
+                    $list2[$t_key]['event_type'] = "duedate";
                 }
             }
 
@@ -155,8 +160,14 @@ switch ($_method) {
                     $lcnt++;
                     $list[$t_key.$lcnt]['day'] = $e_day;
                     $list[$t_key.$lcnt]['type'] = "event";
-                    $list[$t_key.$lcnt]['event'] = "{$row['ada_name']} 후기 마감\r\n";
+                    $list[$t_key.$lcnt]['event'] = "{$row['BABY_NM']} 생일\r\n";
                     $list[$t_key.$lcnt]['event_type'] = "birth";
+
+                    $list2[$t_key]['day'] = $e_day;
+                    $list2[$t_key]['type'] = "event";
+                    if ($list2[$t_key]['event']!='') { $list2[$t_key]['event'] .= "\r\n"; }
+                    $list2[$t_key]['event'] .= "<li>{$row['BABY_NM']} 생일</li>";
+                    $list2[$t_key]['event_type'] = "birth";
                 }
             }
 
@@ -184,6 +195,12 @@ switch ($_method) {
                         $list[$t_key.$lcnt]['type'] = "event";
                         $list[$t_key.$lcnt]['event'] = "{$row['ada_name']} 후기 마감\r\n";
                         $list[$t_key.$lcnt]['event_type'] = "reviewclose";
+
+                        $list2[$t_key]['day'] = $e_day;
+                        $list2[$t_key]['type'] = "event";
+                        if ($list2[$t_key]['event']!='') { $list2[$t_key]['event'] .= "\r\n"; }
+                        $list2[$t_key]['event'] .= "<li>{$row['ada_name']} 후기 마감</li>";
+                        $list2[$t_key]['event_type'] = "reviewclose";
                     }
                 }
                 if ($row['ada_date_notice']!=''){
@@ -203,13 +220,19 @@ switch ($_method) {
                         $list[$t_key.$lcnt]['type'] = "event";
                         $list[$t_key.$lcnt]['event'] = "{$row['ada_name']} 발표\r\n";
                         $list[$t_key.$lcnt]['event_type'] = "notice";
+
+                        $list2[$t_key]['day'] = $e_day;
+                        $list2[$t_key]['type'] = "event";
+                        if ($list2[$t_key]['event']!='') { $list2[$t_key]['event'] .= "\r\n"; }
+                        $list2[$t_key]['event'] .= "<li>{$row['ada_name']} 발표</li>";
+                        $list2[$t_key]['event_type'] = "notice";
                     }
                 }
             }
 
             // 달력 자료 연결
             $data_set['calendar'] = $data;
-            $data_set['list'] = $list;
+            $data_set['list'] = $list2;
 
 
 

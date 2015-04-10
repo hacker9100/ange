@@ -219,8 +219,10 @@ MtUtil::_d("### [END]");
     <!-- 다음 무편번호 서비스 추가 -->
     <? if(isset($_SERVER['HTTPS']) && $_SERVER["HTTPS"] == "on") {?>
         <script src="https://spi.maps.daum.net/imap/map_js_init/postcode.js"></script>
+        <script src="https://testpg.easypay.co.kr/plugin/EasyPayPlugin.js"></script>
     <? } else { ?>
         <script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>
+        <script src="http://testpg.easypay.co.kr/plugin/EasyPayPlugin.js"></script>
     <? } ?>
     <!-- 구글 맵 서비스 추가 -->
     <script src="https://maps.google.com/maps/api/js?sensor=false"></script>

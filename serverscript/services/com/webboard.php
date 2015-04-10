@@ -906,77 +906,54 @@
                                 <title>@ange_member</title>
                                 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
                                 </head>
-                                <body bgcolor='#FFFFFF' leftmargin='0' topmargin='0' marginwidth='0' marginheight='0'>
-                                <!-- Save for Web Slices (@ange_member.psd) -->
-                                <table id='Table_01' width='676' border='0' cellpadding='0' cellspacing='0'>
-                                    <tr style='1px solid red'>
-                                        <td align='center' style='background-image:url(".BASE_URL."/imgs/ange/mail/bg.jpg)'>
-                                            <table width='423' border='0' >
-                                                <tr>
-
-                                                    <td><img src='".BASE_URL."/imgs/ange/mail/01.jpg' width='64' height='17'></td>
-                                                    <td>&nbsp;</td>
-                                                </tr>
-                                                <tr>
-                                                    <th width='22%' align='left' valign='middle' style='padding: 10px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC; background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>이름</th>
-                                                    <td width='78%' align='left' valign='middle' style='padding: 13px 10px 10px; border:1px solid #CCC;  font-size:12px; font:'돋움'''>".$_SESSION['name']."</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal;border:1px solid #CCC;  background-color:#f2f2f2;  font-size:12px; font:'돋움'' scope='row'>아이디</th>
-                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움' border-bottom-style: solid;'>".$_SESSION['uid']."</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC;  background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>닉네임</th>
-                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움'border-bottom-style: solid;'>".$_SESSION['nick']."</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC;  background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>질문</th>
-                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움'border-bottom-style: solid;'>".$_model[SUBJECT]."</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC;  background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>내용</th>
-                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움'border-bottom-style: solid;'>".$_model[BODY]."</td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                <style type='text/css'>
+                                td {border:1px #dbdbdb solid; border-collapse:collapse;}
+                                </style>
+                                <body>
+                                <table width='750' border='0' cellpadding='0' cellspacing='0' style=' font-family:'나눔고딕'; color:#444444; font-size:13px; line-height:1.8; border-collapse:collapse;'>
+                                    <tr>
+                                        <td colspan='2'><img src='".BASE_URL."/imgs/ange/mail/peo00_top.jpg' width='750' height='164' /></td>
                                     </tr>
                                     <tr>
-                                        <td style='height:30px'>
-                                        </td>
+                                        <td colspan='2' height='20'>&nbsp;</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td width='110' bgcolor='#ededed' style='text-align:center; font-weight:600;'>닉네임</td>
+                                        <td width='646'  style='padding:15px;'>".$_SESSION['nick']."</td>
+
+
                                     </tr>
                                     <tr>
-                                        <td align='center' style='background-image:url(".BASE_URL."/imgs/ange/mail/bg.jpg)'>
-                                            <form action='".BASE_URL."/serverscript/services/external/interface.php' method='post'>
-                                            <input type='hidden' id='_method' name='_method' value='POST'>
-                                            <input type='hidden' id='_type' name='_type' value='clinic'>
-                                            <input type='hidden' id='parent_no' name='parent_no' value='".$no."'>
-                                            <input type='hidden' id='comm_no' name='comm_no' value='".$_model[COMM_NO]."'>
-
-                                            <table width='423' border='0' >
-                                                <tr>
-                                                    <th width='22%' align='left' valign='middle' style='padding: 10px 10px 10px; color: rgb(128, 135, 141); font-weight: normal; border:1px solid #CCC; background-color:#f2f2f2; font-size:12px; font:'돋움'' scope='row'>주제</th>
-                                                    <td width='78%' align='left' valign='middle' style='padding: 13px 10px 10px; border:1px solid #CCC;  font-size:12px; font:'돋움'''><input type='text' id='subject' name='subject' value='[RE]".$_model[SUBJECT]."'></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(128, 135, 141); font-weight: normal;border:1px solid #CCC;  background-color:#f2f2f2;  font-size:12px; font:'돋움'' scope='row'>답변</th>
-                                                    <td align='left' valign='middle' style='padding: 13px 10px 10px; color: rgb(57, 57, 57); border:1px solid #CCC;  font-size:12px; font:'돋움' border-bottom-style: solid;'><textarea id='body' name='body' style='width:100%; height:200px'></textarea></td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan='2' align='center' valign='middle' >
-                                                        <input type='submit' value='전송'>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                            </form>
-                                        </td>
+                                        <td bgcolor='#ededed' style='text-align:center; font-weight:600; '>질문</td>
+                                        <td  style='padding:15px;'>".$_model[SUBJECT]."</td>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor='#ededed' style='text-align:center; font-weight:600'>내용</td>
+                                        <td  style='padding:15px; text-align:justify'>".$_model[BODY]."</td>
                                     </tr>
                                 </table>
-                                <!-- End Save for Web Slices -->
+                                <p></p>
+                                <form action='".BASE_URL."/serverscript/services/external/interface.php' method='post'>
+                                <input type='hidden' id='_method' name='_method' value='POST'>
+                                <input type='hidden' id='_type' name='_type' value='clinic'>
+                                <input type='hidden' id='parent_no' name='parent_no' value='".$no."'>
+                                <input type='hidden' id='comm_no' name='comm_no' value='".$_model[COMM_NO]."'>
+                                <table width='750' border='0' cellpadding='0' cellspacing='0' style=' font-family:'나눔고딕'; color:#444444; font-size:13px; line-height:1.8; border-collapse:collapse;'>
+                                    <tr>
+                                       <td width='110' bgcolor='#ededed' style='text-align:center; font-weight:600'>주제</td>
+                                        <td width='649'  style='padding:15px; ' ><input type='text' name='subject' value='[RE]".$_model[SUBJECT]."'></td>
+                                    </tr>
+                                    <tr>
+                                        <td bgcolor='#ededed' style='text-align:center; font-weight:600'>답변</td>
+                                        <td  style='padding:15px;'><textarea name='body' style='width: 100%; height: 200px;'></textarea></td>
+                                    </tr>
+                                    <tr>
+                                         <td align='center' height='40' colspan='2' style='border: 0px'><input type='submit' value='전송'></td>
+                                    </tr>
+                                </table>
+                                </form>
+
                                 </body>
                                 </html>";
 
