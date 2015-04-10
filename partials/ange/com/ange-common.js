@@ -849,5 +849,9 @@ define([
                 alert('error');
             });
         };
+
+        $scope.click_showCalendar = function () {
+            $location.url('/myange/calendar');
+        };
     }]);
 });
