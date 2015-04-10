@@ -167,6 +167,7 @@ define([
                                 .then(function(data){
                                     dialogs.notify('알림', '정상적으로 발급 되었습니다.', {size: 'md'});
                                     $rootScope.mileage = data.mileage;
+                                    $scope.item.COUPON_CD = '';
                                     $scope.getCouponList();
                                 })
                                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -252,6 +253,7 @@ define([
                                 .then(function(data){
                                     dialogs.notify('알림', '정상적으로 발급 되었습니다.', {size: 'md'});
                                     $rootScope.mileage = data.mileage;
+                                    $scope.item.COUPON_CD = '';
                                     $scope.getCouponList();
                                 })
                                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
@@ -294,13 +296,25 @@ define([
                 return;
             }
 
-
             $scope.search.COUPON_CD = $scope.item.COUPON_CD;
-            if(coupon_gb = 'MAGAZINE'){
+
+            if(coupon_gb == 'MAGAZINE'){
                 //$scope.search.MONTH = coupon_gb[1];
                 //console.log(coupon_gb[1]);
                 var month = $scope.item.COUPON_CD.split('_');
                 console.log(month[1]);
+
+
+                if((todayyear+totaymonth) < month[1]){
+                    dialogs.notify('알림', '발급일이 아닙니다', {size: 'md'});
+                    return;
+                }
+
+                if((todayyear+totaymonth) > month[1]){
+                    dialogs.notify('알림', '발급일이 지났습니다', {size: 'md'});
+                    return;
+                }
+
                 $scope.search.MONTH = month[1];
             }
 
@@ -326,6 +340,7 @@ define([
                             .then(function(data){
                                 dialogs.notify('알림', '정상적으로 발급 되었습니다.', {size: 'md'});
                                 $rootScope.mileage = data.mileage;
+                                $scope.item.COUPON_CD = '';
                                 $scope.getCouponList();
                             })
                             ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
