@@ -179,7 +179,7 @@ define([
                                     $location.path('myange/account');
                                 }
 
-                                $modalInstance.close();
+                                $modalInstance.close('login');
                             })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
 
                     };
@@ -207,8 +207,10 @@ define([
                         }
                     };
                 }], content, {size:size,keyboard: true,backdrop: true}, $scope);
-            dlg.result.then(function(){
-
+            dlg.result.then(function(action){
+                if (action == 'login') {
+                    $scope.getCanlendarList();
+                }
             },function(){
                 if(angular.equals($scope.name,''))
                     $scope.name = 'You did not enter in your name!';

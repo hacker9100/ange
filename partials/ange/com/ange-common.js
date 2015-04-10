@@ -146,6 +146,7 @@ define([
                             $rootScope.uid = null;
                             $rootScope.name = null;
                             $rootScope.mileage = 0;
+                            $rootScope.message = 0;
                             $rootScope.role = null;
                             $rootScope.menu_role = null;
                             $rootScope.email = null;
@@ -158,8 +159,6 @@ define([
                             $rootScope.phone2 = null;
 
                             $rootScope.preg_fl = null;
-
-
 
                             deferred.resolve(data);
                         } else {
@@ -248,6 +247,7 @@ define([
                 $rootScope.uid = '';
                 $rootScope.name = '';
                 $rootScope.mileage = 0;
+                $rootScope.message = 0;
                 $rootScope.role = '';
                 $rootScope.menu_role = null;
                 $rootScope.email = '';
@@ -355,6 +355,8 @@ define([
 
                 $rootScope.user_gb = session.USER_INFO.USER_GB;
                 $rootScope.support_no = session.USER_INFO.SUPPORT_NO;
+
+                $scope.getCanlendarList();
 
                 console.log($rootScope.user_gb);
             }
@@ -834,5 +836,18 @@ define([
                 ['catch'](function(error){dialogs.error('오류', '[마일리지]'+error, {size: 'md'});});
         };
 
+        $scope.getCanlendarList = function () {
+            var now = new Date();
+            var nowYear = now.getFullYear();
+            var nowMonth = now.getMonth() + 1;
+
+            $scope.getList('ange/calendar', 'list', {}, {"year":nowYear,"month":nowMonth}, true)
+                .then(function(data){
+                    $scope.data = data;
+                })
+                ['catch'](function(error){
+                alert('error');
+            });
+        };
     }]);
 });

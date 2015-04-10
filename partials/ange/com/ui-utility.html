@@ -48,10 +48,38 @@
                 <span class="message_icon_new" ng-show="message > 0">{{message}}</span><a class="util2" ng-click="click_myangeMessage()">메시지</a>
             <a class="util3" ng-click="click_infodesk()">고객센터</a>
             </div>
-            <!--<img src="/imgs/ange/opennotice_20150303.png" />-->
 
-            <ange-portlet-calendar ng-model="option_r2_c1"></ange-portlet-calendar>
+            <div ng-show="uid" class="comp_calendar_wrap" style="float:left; width:100%; height:100%; border:1px solid #DEDEDE; background-color:#fff;">
+                <div class="comp_calendar_viewer" style="font-family: arial, sna-serif; width: 100%; height:100%; border-right: 1px solid #DEDEDE; ">
 
+                    <style>
+                        ul.cell_day { clear: both; width: 100%; }
+                        ul.cell_day>li { float: left; padding: 10px 5px; width: 14%; height: 30px; background-color: #f0f0f0; list-style-type: none; text-align: center; border: 1px solid #fff; }
+                        ul.cell_day>li.blind { background-color: #f0f0f0; color: #ccc; }
+                        ul.cell_day>li.normal { background-color: #eee; color: #000; }
+                        ul.cell_day>li.event { background-color: #39f; color: #000; }
+
+                        ul.cell_list { width: 100%; background-color: #eee; line-height: 1.4em;}
+                        ul.cell_list>li { padding: 5px 0px; margin-top: 1px; background-color: #fff; list-style-type: none; text-align: left; border: 1px solid #fff; font-size: 0.75em;}
+                    </style>
+
+                    <div ng-if="uid" class="comp_calendar_viewer_content" style="padding:0px 0px 0px 5px; height:200px;">
+                        <!-- item.type = normal / hidden / event -->
+                        <ul class="cell_day">
+                            <li class="{{item.type}}" title="{{item.event}}" ng-repeat="item in data.calendar">{{item.day}}<br/></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="comp_schedule_viewer" style="width:100%; height:100%;">
+                    <div class="comp_schedule_viewer_content"  style="margin-top:6px; float:left; width:100%; padding:10px; height:200px; overflow: auto; overflow-x:visible;">
+                        <div ng-repeat="item in data.list" class="comp_schedule_viewer_contentlist" style="font-size:0.86em; line-height: 14px; margin: 5px 0px;">
+                            <span class="comp_schedule_viewer_date">{{item.day}}일</span>
+                            <ul ng-bind-html="item.event" style="padding: 10px; font-weight: 600;"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
