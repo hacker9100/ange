@@ -54,7 +54,8 @@
 
                                                 <ul class="cell_list" style="border-top: 1px solid #eee; border-bottom: 2px solid #eee; margin-top: 10px;">
                                                     <li class="{{item.event_type}}" ng-repeat="item in data.list" title="{{item.event}}">
-                                                        <span ng-show="item.day != ''" style="background-color: #eee; padding: 10px; font-size: 14pt; font-weight: 600;">{{item.day}}일</span> {{item.event}}
+                                                        <span ng-show="item.day != ''" style="background-color: #eee; padding: 10px; font-size: 14pt; font-weight: 600;">{{item.day}}일</span>
+                                                        <ul ng-bind-html="item.event" style="padding: 10px; font-weight: 600;"></ul>
                                                     </li>
                                                 </ul>
                                             </div>
