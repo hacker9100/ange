@@ -815,7 +815,34 @@ div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 
 /* -- mini_review */
 
+.main_slidetoggle {
+    position:absolute;
+    right:10px;
+    top:10px;
+}
 
+.main_togglebtn {
+    margin:0;
+    padding:0;
+    border:none;
+    background-color:#fff;
+    background-position: center center;
+    background-repeat: no-repeat;
+    width:26px;
+    height:26px;
+    opacity:.7;
+}
+.main_togglebtn:hover {
+    opacity:1;
+}
+
+.main_togglebtn.zoomin {
+    background-image: url('/imgs/ange/btn_open2.png');
+}
+
+.main_togglebtn.zoomout {
+    background-image: url('/imgs/ange/btn_close2.png');
+}
 
 
 /* ---------------------------------------------------- */

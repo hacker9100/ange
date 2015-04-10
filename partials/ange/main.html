@@ -3,8 +3,11 @@
     <!-- mainbar -->
     <!--<div ng-class="slide != 'cover' ? 'index_mainbar slide0_small' : 'index_mainbar slide0'" ng-scrollbar>-->
     <div ng-class="slide != 'cover' ? 'index_mainbar slide0_small' : 'index_mainbar slide0'">
+        <div ng-show="slide != 'cover'" class="main_slidetoggle">
+            <button class="main_togglebtn zoomin" ng-click="click_toggleSlide('cover')"></button>
+        </div>
 
-        <div style="margin:18px auto; text-align:center;" ng-click="click_toggleSlide('story')" >
+        <div style="margin:18px auto; text-align:center;">
             <img src="/imgs/ange/main_titleimg_01_cover.jpg" style="margin:0px auto;">
         </div>
         <!--<div class="channel_mark cover_mark" ng-click="click_toggleSlide('cover')"></div>-->
@@ -341,6 +344,10 @@
 
         <div ng-class="slide == 'story' && mode == 'pan' ? 'subar slide1_pan' : 'subar slide1'">
 
+            <div ng-show="slide == 'story' && mode == 'pan'" class="main_slidetoggle">
+                <button class="main_togglebtn zoomout" ng-click="click_toggleSlide('story')"></button>
+            </div>
+
             <div class="main_channelbar_thumb">
 
                 <div style="margin:18px auto; text-align:center;">
@@ -380,6 +387,11 @@
         </div>
 
         <div ng-class="slide == 'people' && mode == 'pan' ? 'subar slide2_pan' : 'subar slide2'">
+
+            <div ng-show="slide == 'people' && mode == 'pan'" class="main_slidetoggle">
+                <button class="main_togglebtn zoomout" ng-click="click_toggleSlide('people')"></button>
+            </div>
+
             <div class="main_channelbar_thumb">
 
                 <div style="margin:18px auto; text-align:center;">
@@ -426,6 +438,11 @@
         </div>
 
         <div ng-class="slide == 'moms' && mode == 'pan' ? 'subar slide3_pan' : 'subar slide3'">
+
+            <div ng-show="slide == 'moms' && mode == 'pan'" class="main_slidetoggle">
+                <button class="main_togglebtn zoomout" ng-click="click_toggleSlide('moms')"></button>
+            </div>
+
             <div class="main_channelbar_thumb">
 
                 <div style="margin:18px auto; text-align:center;">
