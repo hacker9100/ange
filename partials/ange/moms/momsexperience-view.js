@@ -1466,8 +1466,9 @@ define([
             $scope.search.SYSTEM_GB = 'ANGE';
             $scope.search.FILE = true;
             $scope.search.TARGET_NO = $stateParams.id;
+            $scope.search.TARGET_GB = '';
 
-            $scope.getList('ange/review', 'list', {NO: $scope.PAGE_NO, SIZE: 5}, $scope.search, true)
+            $scope.getList('ange/review', 'list', {NO: $scope.PAGE_NO-1, SIZE: 5}, $scope.search, true)
                 .then(function(data){
 
                     for(var i in data) {
