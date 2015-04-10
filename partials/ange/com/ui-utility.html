@@ -48,7 +48,9 @@
                 <span class="message_icon_new" ng-show="message > 0">{{message}}</span><a class="util2" ng-click="click_myangeMessage()">메시지</a>
             <a class="util3" ng-click="click_infodesk()">고객센터</a>
             </div>
-            <img src="/imgs/ange/opennotice_20150303.png" />
+            <!--<img src="/imgs/ange/opennotice_20150303.png" />-->
+
+            <ange-portlet-calendar ng-model="option_r2_c1"></ange-portlet-calendar>
 
         </div>
     </div>
@@ -68,6 +70,7 @@
         </div>
         <!-- /로그인 후 -->
     </div>
+
 
 	<!--<div class="comp_calm">-->
 		<!--<img src="/imgs/ange/temp/keepcalm.png" />        -->
@@ -96,7 +99,6 @@
             <a ng-model="bottomBanner2" class="ADbanner_normal" title="{{bottomBanner2.ada_title}}" ng-click="click_linkBanner(bottomBanner2, true)" ng-style="{'background-image': 'url('+bottomBanner2.img+')', 'background-position': 'center'}">Premium [Catch-Up] #2</a>
 			<!--<a class="ADbanner_normal" title="배너타이틀" style="background-image:url('imgs/ange/temp/util_banner_02.jpg'); background-position:center;">Premium [Catch-Up] #2</a>-->
 		</div>
-
 	</div>
 
 </div>

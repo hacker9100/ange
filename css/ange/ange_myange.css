@@ -114,10 +114,11 @@
 }
 
 ul.cell_dayname { clear: both; float: left; width: 100%; font-size: 0.86em; margin:0; padding:0; border-left: 1px solid #ddd; }
-ul.cell_dayname>li { float: left; padding: 8px 10px; width: 14%; height: 40px; background-color: #FAFAFA; list-style-type: none; text-align: center; border: 1px solid #ddd; border-left:none;}
+ul.cell_dayname>li { float: left; padding: 8px 10px; width: 14.28%; height: 40px; background-color: #FAFAFA; list-style-type: none; text-align: center; border: 1px solid #ddd; border-left:none;}
 
 ul.cell_day { clear: both; float:left; width: 100%; border-left:1px solid #ddd;}
-ul.cell_day>li { position:relative; float: left; width: 14%; background-color: transparent; font-weight: 600; list-style-type: none; text-align: center; border: 1px solid #ddd; border-left:none; border-top:transparent;}
+ul.cell_day.mini { max-width:220px;}
+ul.cell_day>li { position:relative; float: left; width: 14.28%; background-color: transparent; font-weight: 400; list-style-type: none; text-align: center; border: 1px solid #ddd; border-left:none; border-top:transparent;}
 ul.cell_day>li.blind { background-color: #fafafa; color: #ccc; }
 ul.cell_day>li.normal { background-color: #fff; color: #000; }
 /*ul.cell_day>li.event { background-color: #39f; color: #000; }*/

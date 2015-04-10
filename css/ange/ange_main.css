@@ -826,34 +826,84 @@ div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 	clear:both;
 	float:none;
 	width:100%;
+    /*height:100%;*/
+    margin:0px;
+    padding-top:10px;
+    border-left: 1px solid #eee;
 }
 
+
 .channel_mark {
-	width:30%;
-	height:12px; 
-	margin:10px auto;
-	border-radius:5px;
+	width:40px;
+	height:40px;
+	margin: 0px auto;
+	border-radius:50%;
+}
+
+@media screen and (min-width: 1680px) {
+    .channel_mark {
+        width:25px;
+        height:80px;
+        margin:0 0 0 18px;
+        border-radius: 0;
+    }
+
+    .main_channelbar_thumb {
+        padding: 0;
+    }
+}
+
+
+.main_titlebtn {
+    border: none;
+    padding: 0;
+    margin:0px auto;
+    height: 50px;
+    width: 85px;
+    background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left top;
+    cursor: pointer;
+}
+
+
+.main_titlebtn:hover {
+    background-position: left -50px;
+}
+
+
+@media screen and (min-width: 1680px) {
+    .main_titlebtn {
+        height: 70px;
+        width: 120px;
+    }
+
+    .main_titlebtn:hover {
+        background-position: left bottom;
+    }
+}
+
+
+
+.common_mark{
+    background-color:#dddddd;
 }
 
 .cover_mark {
-    width:15%;
-    background-color:#e25d4c;
-    border:1px solid #e25d4c;
+    background-color:#f1a81a;
 }
 
 .story_mark {
-	background-color:#e25d4c; 
-	border:1px solid #e25d4c; 
+	background-color:#e56366;
 }
 
 .people_mark {
-	background-color:#e25d4c; 
-	border:1px solid #e25d4c; 
+	background-color:#80c833;
 }
 
 .moms_mark {
-	background-color:#e25d4c; 
-	border:1px solid #e25d4c; 
+	background-color:#47b6d6;
 }
 
 .channel_label_note {	
@@ -874,7 +924,7 @@ div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 	width:100%;
 	text-align:center;
 	padding-top:20px;
-	cursor:pointer;
+	/*cursor:pointer;*/
 }
 
 .menuicons {
@@ -905,6 +955,7 @@ div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 	border:1px solid #DDD; 
 	margin:14px auto; 
 	width:95%;
+    cursor: pointer;
 }
 
 .menucontents_img {

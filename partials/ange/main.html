@@ -4,9 +4,12 @@
     <!--<div ng-class="slide != 'cover' ? 'index_mainbar slide0_small' : 'index_mainbar slide0'" ng-scrollbar>-->
     <div ng-class="slide != 'cover' ? 'index_mainbar slide0_small' : 'index_mainbar slide0'">
 
-        <div class="channel_mark cover_mark" ng-click="click_toggleSlide('cover')"></div>
-        <div class="channel_label_note">엄마를 위한 행복놀이터</div>
-        <div class="channel_label_title">앙쥬온라인</div>
+        <div style="margin:18px auto; text-align:center;">
+            <img src="/imgs/ange/main_titleimg_01_cover.jpg" style="margin:0px auto;">
+        </div>
+        <!--<div class="channel_mark cover_mark" ng-click="click_toggleSlide('cover')"></div>-->
+        <!--<div class="channel_label_note">엄마를 위한 행복놀이터</div>-->
+        <!--<div class="channel_label_title">앙쥬온라인</div>-->
 
         <!-- 1페이지 모드일 경우 보여지는 슬라이드 버튼 -->
         <!--<a class="tablet_arrow tablet_arrow_left" title="이전 슬라이드">prev_button</a>-->
@@ -340,9 +343,13 @@
 
             <div class="main_channelbar_thumb">
 
-                <div class="channel_mark story_mark" ng-click="click_toggleSlide('story')"></div>
-                <div class="channel_label_note">디지털매거진</div>
-                <div class="channel_label_title">앙쥬스토리</div>
+                <div style="margin:18px auto; text-align:center;">
+                    <img ng-show="slide == 'story' && mode == 'pan'" src="/imgs/ange/main_titleimg_02_story.jpg" style="margin:0px auto;">
+                    <button ng-show="slide != 'story' || mode != 'pan'" ng-click="click_toggleSlide('story')" class="main_titlebtn" style="background-image:url('/imgs/ange/main_titlebtn_02_story.jpg')"></button>
+                </div>
+                <!--<div class="channel_mark story_mark" ng-click="click_toggleSlide('story')"></div>-->
+                <!--<div class="channel_label_note">디지털매거진</div>-->
+                <!--<div class="channel_label_title">스토리</div>-->
 
                 <div class="menuicons_wrap" ng-hide="slide == 'story' && mode == 'pan'" ng-click="click_showSlide('story', 'pan')">
                     <img class="menuicons" src="imgs/ange/main01-01.png" />
@@ -375,9 +382,13 @@
         <div ng-class="slide == 'people' && mode == 'pan' ? 'subar slide2_pan' : 'subar slide2'">
             <div class="main_channelbar_thumb">
 
-                <div class="channel_mark story_mark" ng-click="click_toggleSlide('people')"></div>
-                <div class="channel_label_note">커뮤니티</div>
-                <div class="channel_label_title">앙쥬피플</div>
+                <div style="margin:18px auto; text-align:center;">
+                    <img ng-show="slide == 'people' && mode == 'pan'" src="/imgs/ange/main_titleimg_03_people.jpg" style="margin:0px auto;">
+                    <button ng-show="slide != 'people' || mode != 'pan'" ng-click="click_toggleSlide('people')" class="main_titlebtn" style="background-image:url('/imgs/ange/main_titlebtn_03_people.jpg')"></button>
+                </div>
+                <!--<div class="channel_mark people_mark" ng-click="click_toggleSlide('people')"></div>-->
+                <!--<div class="channel_label_note">커뮤니티</div>-->
+                <!--<div class="channel_label_title">피 플</div>-->
 
                 <div class="menuicons_wrap" ng-hide="slide == 'people' && mode == 'pan'" ng-click="click_showSlide('people', 'pan')">
                     <div ng-repeat="item in main1">
@@ -417,9 +428,13 @@
         <div ng-class="slide == 'moms' && mode == 'pan' ? 'subar slide3_pan' : 'subar slide3'">
             <div class="main_channelbar_thumb">
 
-                <div class="channel_mark story_mark" ng-click="click_toggleSlide('moms')"></div>
-                <div class="channel_label_note">체험단/이벤트</div>
-                <div class="channel_label_title">앙쥬맘스</div>
+                <div style="margin:18px auto; text-align:center;">
+                    <img ng-show="slide == 'moms' && mode == 'pan'" src="/imgs/ange/main_titleimg_04_event.jpg" style="margin:0px auto;">
+                    <button ng-show="slide != 'moms' || mode != 'pan'" ng-click="click_toggleSlide('moms')" class="main_titlebtn" style="background-image:url('/imgs/ange/main_titlebtn_04_event.jpg')"></button>
+                </div>
+                <!--<div class="channel_mark moms_mark" ng-click="click_toggleSlide('moms')"></div>-->
+                <!--<div class="channel_label_note">체험단/이벤트</div>-->
+                <!--<div class="channel_label_title">이벤트</div>-->
 
                 <div class="menuicons_wrap" ng-hide="slide == 'moms' && mode == 'pan'" ng-click="click_showSlide('moms', 'pan')">
                     <div ng-repeat="item in main2">
