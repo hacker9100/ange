@@ -356,10 +356,10 @@ define([
                 $rootScope.user_gb = session.USER_INFO.USER_GB;
                 $rootScope.support_no = session.USER_INFO.SUPPORT_NO;
 
-                $scope.getCanlendarList();
-
                 console.log($rootScope.user_gb);
             }
+
+            $scope.getCanlendarList();
 
             return true;
         };

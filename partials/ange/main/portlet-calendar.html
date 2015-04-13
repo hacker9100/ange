@@ -40,7 +40,7 @@
             <div class="comp_schedule_viewer_content"  style="margin-top:6px; float:left; width:100%; padding:10px; height:200px; overflow: auto; overflow-x:visible;">
                 <div ng-repeat="item in data.list" class="comp_schedule_viewer_contentlist" style="font-size:0.86em; line-height: 14px; margin: 5px 0px;">
                     <span class="comp_schedule_viewer_date">{{search.year}}-{{search.month}}-{{item.day}}</span>
-                    <p><a class="comp_schedule_viewer_text">{{item.event}}</a></p>
+                    <ul ng-bind-html="item.event" style="padding: 10px; font-weight: 600;"></ul>
                 </div>
 
                 <!--<div class="comp_schedule_viewer_contentlist" style="font-size:0.86em; line-height: 14px; margin: 5px 0px;">-->
