@@ -1040,3 +1040,14 @@ div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 	margin-left:6px;
 }
 
+.main_titleimg_01 {
+    display:none;
+    margin:18px auto;
+    text-align:center;
+}
+
+@media screen and (min-width: 1471px) {
+    .main_titleimg_01 {
+        display: block;
+    }
+}
