@@ -52,7 +52,7 @@
 }
 
 .nav_menus.nowgnb {
-    cursor: default;
+    cursor: pointer;
 }
 
 .nav_menus.boarding {
@@ -79,6 +79,7 @@
     padding:0;
     margin:0;
     width:100%;
+    min-width: 320px;
     height:58px;
     border-bottom: 1px solid #EFEFEF;
 }
@@ -111,6 +112,7 @@
     display:none;
     position:fixed;
     width:100%;
+    min-width:320px;
     left:0;
     /*margin-left:-25px;*/
     background-color: #fff;
@@ -152,7 +154,7 @@
 }
 
 .gnb_subtxt.mobile {
-    width:65px;
+    width:60px;
     height:29px;
     background-position: left top;
     background-size: 100%;
@@ -166,11 +168,17 @@
     background-position: left -29px;
 }
 
-.gnb_subtxt.mobile.story { background-image: url('/imgs/ange/gnb_mobile_ch01.png');}
-.gnb_subtxt.mobile.people { background-image: url('/imgs/ange/gnb_mobile_ch02.png');}
-.gnb_subtxt.mobile.moms { background-image: url('/imgs/ange/gnb_mobile_ch03.png');}
-.gnb_subtxt.mobile.store { background-image: url('/imgs/ange/gnb_mobile_ch04.png');}
-.gnb_subtxt.mobile.myange { background-image: url('/imgs/ange/gnb_mobile_ch05.png');}
+.gnb_subtxt.mobile.story { background-image: url('/imgs/ange/gnb_mobile2_ch01.png');}
+.gnb_subtxt.mobile.people { background-image: url('/imgs/ange/gnb_mobile2_ch02.png');}
+.gnb_subtxt.mobile.moms { background-image: url('/imgs/ange/gnb_mobile2_ch03.png');}
+.gnb_subtxt.mobile.myange { background-image: url('/imgs/ange/gnb_mobile2_ch04.png');}
+.gnb_subtxt.mobile.store { background-image: url('/imgs/ange/gnb_mobile2_ch05.png');}
+
+/*.gnb_subtxt.mobile.story { background-image: url('/imgs/ange/gnb_mobile_ch01.png');}*/
+/*.gnb_subtxt.mobile.people { background-image: url('/imgs/ange/gnb_mobile_ch02.png');}*/
+/*.gnb_subtxt.mobile.moms { background-image: url('/imgs/ange/gnb_mobile_ch03.png');}*/
+/*.gnb_subtxt.mobile.store { background-image: url('/imgs/ange/gnb_mobile_ch04.png');}*/
+/*.gnb_subtxt.mobile.myange { background-image: url('/imgs/ange/gnb_mobile_ch05.png');}*/
 
 /*.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story.png'); }*/
 /*.chnnel1 { 	background:url('/imgs/ange/ui_gnbbtn_01_story_open.png'); }*/

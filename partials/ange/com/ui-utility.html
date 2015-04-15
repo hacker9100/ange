@@ -1,6 +1,6 @@
 
 <!-- Utility Panel -->
-<div ng-controller="ui-utility">
+<div ng-controller="ui-utility" style="width:100%;">
     <div class="comp_userinfo">
         <div class="inven_1stClass">
             <!--<a class="ADbanner_normal shadowed" title="배너타이틀" style="background-image:url('imgs/ange/temp/allbanner.png'); background-position:center;">1st Class Banner</a>-->
@@ -49,48 +49,108 @@
             <a class="util3" ng-click="click_infodesk()">고객센터</a>
             </div>
 
-            <div class="comp_calendar_wrap" style="float:left; width:100%; border:1px solid #DEDEDE; background-color:#fff;">
-                <div class="comp_calendar_viewer" ng-click="click_showCalendar();" style="font-family: arial, sna-serif; width: 100%; border-right: 1px solid #DEDEDE; ">
-
-                    <!--<style>-->
-                        <!--ul.cell_day { clear: both; width: 100%; }-->
-                        <!--ul.cell_day>li { float: left; padding: 10px 5px; width: 14%; height: 30px; background-color: #f0f0f0; list-style-type: none; text-align: center; border: 1px solid #fff; }-->
-                        <!--ul.cell_day>li.blind { background-color: #f0f0f0; color: #ccc; }-->
-                        <!--ul.cell_day>li.normal { background-color: #eee; color: #000; }-->
-                        <!--ul.cell_day>li.event { background-color: #39f; color: #000; }-->
-
-                        <!--ul.cell_list { width: 100%; background-color: #eee; line-height: 1.4em;}-->
-                        <!--ul.cell_list>li { padding: 5px 0px; margin-top: 1px; background-color: #fff; list-style-type: none; text-align: left; border: 1px solid #fff; font-size: 0.75em;}-->
-                    <!--</style>-->
-
-                    <div class="comp_calendar_viewer_content" style="padding:0px; height:180px;">
+            <div class="comp_calendar_wrap">
+                <div class="comp_calendar_viewer">
+                    <div class="comp_calendar_viewer_content">
                         <!-- item.type = normal / hidden / event -->
-                        <ul class="cell_day">
-                            <li class="{{item.type}}" title="{{item.event}}" ng-repeat="item in data.calendar">
-                                <img src="/imgs/ange/_blank.gif" border="0" style="width:100%;" >
-                                <span class="cell_day_num {{item.type}}">{{item.day}}</span>
+                        <ul class="cell_day" style="margin:0px;">
+                            <li class="{{item.type}}" ng-click="click_showCalendar();" title="{{item.event}}" ng-repeat="item in data.calendar" style="cursor:pointer;">
+                                <img src="/imgs/ange/_blank.gif" border="0" style="width:100%;" />
+                                <span class="cell_day_num_comp {{item.type}}">{{item.day}}</span>
                             </li>
                         </ul>
                     </div>
+                    <div class="ange_bg_milk comp_calendar_issue myissue">
+                        <!-- D-day count :
+                        출산예정일 카운트,
+                        출산 후 아기 백일 카운트,
+                        돌잔치 90일 전부터 카운트,
+                        본인 생일 30일 전부터 카운트,
+                        아기 생일 30일 전부터 카운트,
+                        사용자 정의,
+                         -->
+                        <div class="comp_calendar_label">기념일</div>
+                        <div class= "comp_calendar_issuetxt">
+                            <strong>김예슬</strong> 아기 돌 <span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;88</span>
+                            <br />
+                            출산예정일 <span style="float:right">D-831</span>
+                            <br />
+                            홍길돌 아기 백일
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div class="comp_album_wrap" style="float:left; width:100%; margin-top:5px;">
+                <div class="ange_bg_dark comp_album_label">
+                    마이앨범
+                    <a href="" title="더보기"><span class="glyphicon glyphicon-plus-sign" style="position:absolute; top:8px; right:8px; font-size:1.48em; color:#fff;"></span></a>
+                </div>
+                <div class="ange_bg_milk comp_album_pics">
+                    <img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">
+                    <img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">
+                    <img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">
+                </div>
+
+            </div>
+
+            <!--<div class="ange_bg_blue comp_calendar_issue angeissue">-->
+                <!--&lt;!&ndash; D-day count :-->
+                <!--출산예정일 카운트,-->
+                <!--출산 후 아기 백일 카운트,-->
+                <!--돌잔치 90일 전부터 카운트,-->
+                <!--본인 생일 30일 전부터 카운트,-->
+                <!--아기 생일 30일 전부터 카운트,-->
+                 <!--&ndash;&gt;-->
+                <!--<div class="comp_calendar_label">앙쥬소식</div>-->
+                <!--<div class="comp_calendar_issuetxt">-->
+                    <!--<a data-ng-click="#" href="#" title="LG하우시스 매트 체험단 모집마감 임박 D-2">LG하우시스 매트 체험단 모집마감 임박 D-2</a>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="ange_bg_blue comp_calendar_issue angeissue">-->
+            <!--&lt;!&ndash; D-day count :-->
+
+            <!--&ndash;&gt;-->
+            <!--<div class="comp_calendar_label">업데이트</div>-->
+            <!--<div class="comp_calendar_issuetxt">-->
+            <!--[스토리]LG하우시스 매트 체험단 모집마감 임박 D-2-->
+            <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
 
-    <div class="comp_userinfo_mobile" style="cursor:pointer;">
+    <div class="comp_userinfo_mobile">
+
         <!-- 로그인 전 -->
         <div ng-if="!uid">
-            <img src="/imgs/ange/login.png" class="userlog_login_btn" ng-click="click_login()" style="width:50px;">
+            <img src="/imgs/ange/login.png" class="userlog_login_btn" ng-click="click_login()" style="width:50px; cursor:pointer;">
         </div>
         <!-- /로그인 전 -->
 
         <!-- 로그인 후 -->
         <div ng-if="uid">
-            <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}" style="width:50px; height:50px;">
-            <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}" style="width:50px; height:50px;">
+            <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}" style="width:50px; height:50px; cursor:pointer;">
+            <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}" style="width:50px; height:50px; cursor:pointer;">
             <a class="userconfig_mobile" title="{{user_info.NICK_NM}}님의 정보 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
         </div>
         <!-- /로그인 후 -->
+
+        <!-- 모바일용 슬라이드 팝업 -->
+        <div ng-if="uid" style="display:none; text-align:center;">
+            <div class="ange_bg_milk mobileslide_userinfo">
+                <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}" style="width:50px; height:50px;">
+                <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}" style="width:50px; height:50px;">
+                <!--<a class="userconfig_mobile" title="{{user_info.NICK_NM}}님의 정보 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>-->
+                <div style="font-size:0.86em; color:#888; margin-top:10px;">{{user_info.NICK_NM}}</div>
+
+                <div class="mobile_divider"></div>
+
+
+
+            </div>
+        </div>
+        <!-- /모바일용 슬라이드 팝업 -->
+
     </div>
 
 

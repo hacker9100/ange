@@ -66,11 +66,13 @@ a.jumbotron_cover_pause:hover, a.jumbotron_cover_pause:focus, a.jumbotron_cover_
 }
 
 .jumbotron_indicators_wrap {
+    display:block;
 	top:0px;
 	padding:5px;
 	left:38px; 
 	width:240px;
 }
+
 
 li.jumbotron_indicators {
 	float:left; 
@@ -85,6 +87,7 @@ li.jumbotron_indicators_actived {
 
 
 .jumbotron_cover_controlbar_title {
+    display:block;
 	position:absolute; 
 	right: 16px;
 	color: #fff;
@@ -93,6 +96,16 @@ li.jumbotron_indicators_actived {
     text-overflow:ellipsis;
     text-align: right;
     width: 55%;
+}
+
+@media screen and (max-width: 767px){
+    .jumbotron_cover_controlbar {
+        display:none;
+        border:1px solid red;
+    }
+    /*.jumbotron_cover_controlbar_title {*/
+        /*display:none;*/
+    /*}*/
 }
 
 /* --- jumbotron_cover  */

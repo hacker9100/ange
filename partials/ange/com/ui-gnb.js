@@ -49,34 +49,59 @@ define([
 //            <!--<a href="/store/home" class="gnb_store ch_store">ANGE Store</a>--
 
         $scope.click_channel = function(menu) {
-            if(menu != $scope.channeltitle) {
-                switch(menu){
-                    case 'story':
-                        $location.url('/story/content/list');
-                        break;
-                    case 'people':
-                        $location.url('/people/home');
-                        break;
-                    case 'moms':
-                        $location.url('/moms/home');
-                        break;
-                    case 'myange':
-                        $scope.click_myange();
-                        break;
-                    case 'store':
-                        $location.url('/store/mileagemall/list');
-                        break;
-                    case 'infodesk':
-                        $location.url('/infodesk/qna/list');
-                        break;
-                    default:
-                        dialogs.notify('알림', '잘못된 접근입니다.', {size: 'md'});
-                        $location.url('/');
-                        break;
-                }
-            } else {
-                console.log ("[" + $scope.channeltitle + "] 현재 메뉴입니다.")
+
+            switch(menu){
+                case 'story':
+                    $location.url('/story/content/list');
+                    break;
+                case 'people':
+                    $location.url('/people/home');
+                    break;
+                case 'moms':
+                    $location.url('/moms/home');
+                    break;
+                case 'myange':
+                    $scope.click_myange();
+                    break;
+                case 'store':
+                    $location.url('/store/mileagemall/list');
+                    break;
+                case 'infodesk':
+                    $location.url('/infodesk/qna/list');
+                    break;
+                default:
+                    dialogs.notify('알림', '잘못된 접근입니다.', {size: 'md'});
+                    $location.url('/');
+                    break;
             }
+//            if(menu != $scope.channeltitle) {
+//                switch(menu){
+//                    case 'story':
+//                        $location.url('/story/content/list');
+//                        break;
+//                    case 'people':
+//                        $location.url('/people/home');
+//                        break;
+//                    case 'moms':
+//                        $location.url('/moms/home');
+//                        break;
+//                    case 'myange':
+//                        $scope.click_myange();
+//                        break;
+//                    case 'store':
+//                        $location.url('/store/mileagemall/list');
+//                        break;
+//                    case 'infodesk':
+//                        $location.url('/infodesk/qna/list');
+//                        break;
+//                    default:
+//                        dialogs.notify('알림', '잘못된 접근입니다.', {size: 'md'});
+//                        $location.url('/');
+//                        break;
+//                }
+//            } else {
+//                console.log ("[" + $scope.channeltitle + "] 현재 메뉴입니다.")
+//            }
         };
 
         $scope.click_login = function () {
@@ -91,7 +116,8 @@ define([
             }
 
             //$location.url('/myange/home');
-            $location.url('/myange/mileage');
+            //$location.url('/myange/mileage');
+            location.href = '/myange/mileage';
         }
 
         $scope.click_showSearch = function (){
@@ -126,7 +152,6 @@ define([
                     $location.url('/moms/home');
                     break;
                 case 'myange':
-                    alert(menu);
                     $scope.click_myange();
                     break;
                 case 'store':

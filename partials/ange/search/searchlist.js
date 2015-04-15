@@ -15,7 +15,7 @@ define([
 
         // 초기화
         $scope.init = function() {
-            $scope.community = "검색";
+            $scope.community = "통합검색";
 
             $scope.photoList = [];
 

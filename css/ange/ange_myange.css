@@ -140,7 +140,18 @@ ul.cell_list>li.notice { background-color: #F2FCFF; }
     border-radius: 50%;
 }
 
-.cell_day_num.event {
+.cell_day_num_comp {
+    position:absolute;
+    left:12%;
+    top:10%;
+    border:1px solid transparent;
+    width:22px;
+    height:22px;
+    border-radius: 50%;
+}
+
+
+.cell_day_num.event, .cell_day_num_comp.event {
     background-color: #e56366;
     color: #fff;
 }

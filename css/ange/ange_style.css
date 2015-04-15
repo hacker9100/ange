@@ -59,6 +59,17 @@ body {
 }
 
 /* Main Color Set [channel Theme] */
+
+.ange_bg_milk       { background-color: #fcfcfc; border: 1px solid #ddd; }
+.ange_bg_red        { background-color: #fce5e9; border: 1px solid #f8bbc1; }
+.ange_bg_green      { background-color: #e8f7c6; border: 1px solid #bfdb85; }
+.ange_bg_pink       { background-color: #ffe3f1; border: 1px solid #f4afce; }
+.ange_bg_choco      { background-color: #ffe2d7; border: 1px solid #e9b69f; }
+.ange_bg_blue       { background-color: #def9ff; border: 1px solid #a6ddee; }
+.ange_bg_orange     { background-color: #fff1dc; border: 1px solid #ffdda5; }
+.ange_bg_gray       { background-color: #efefef; border: 1px solid #d6dade; }
+.ange_bg_dark       { background-color: #595e63; border: 1px solid #464646; }
+
 .ange_lightred  { color: #fce5e9; }
 .ange_softred   { color: #f8bbc1; }
 .ange_red       { color: #e56366; }       /*스토리*/
@@ -117,7 +128,7 @@ body {
     width: 165px;
     padding: 24px 0 36px 18px;
     height:100%;
-    min-height:860px;
+    min-height:930px;
     overflow:auto;
     overflow-y: auto;
     overflow-x: hidden;
@@ -145,7 +156,7 @@ body {
 
 @media screen and (min-width: 768px) {
     .panel_content {
-        min-height:860px;
+        min-height:930px;
         height:100%;
     }
 }
@@ -167,7 +178,7 @@ body {
     float:right;
     height: 100%;
     margin:0;
-    min-height:860px;
+    min-height:930px;
     margin-right:-220px;
     padding-top:10px;
     width: 210px;
@@ -374,10 +385,31 @@ body {
 
 .comp_userinfo_mobile {
     display:none;
+    /*float:left;*/
+    /*width:100%;*/
+    width:52px;
     margin:0px;
     padding:0px;
     top:10px;
     left:10px;
+}
+
+.mobileslide_userinfo {
+    position:fixed;
+    height:100%;
+    left:0;
+    top:0;
+    width:120px;
+    padding:10px 5px;
+    border-left:none;
+}
+
+.mobile_divider {
+    width:100%;
+    height:1px;
+    border-top:1px solid #eee;
+    border-bottom:1px solid #fff;
+    margin:12px auto;
 }
 
 @media screen and (max-width: 1200px) {
@@ -406,7 +438,7 @@ body {
     }
 
     .panel_user {
-        margin-top:-96px;
+        margin-top:-115px;
     }
 
     .comp_userinfo {
@@ -805,7 +837,8 @@ a.tablet_arrow:hover, a.tablet_arrow:focus {
 /* 로그인 */
 .comp_userlog{
     position:relative;
-    margin-top:36px;
+    margin-top:18px;
+    width:100%;
     height:218px;
     border-bottom:1px solid #b1b1b1;
 }
@@ -1148,15 +1181,6 @@ a.logout:hover {
     background-position: left -18px;
 }
 
-
-
-
-
-
-
-
-
-
 a.util1 {
     float: left;
     width:77px;
@@ -1196,6 +1220,106 @@ a.util3 {
 a.util1:hover, a.util2:hover, a.util3:hover {
     background-position:left -28px;
 }
+
+/* 캘린더 comp */
+
+.comp_calendar_wrap {
+    width:100%;
+    border-top:1px solid #DEDEDE;
+    margin-top:36px;
+}
+
+.comp_calendar_viewer {
+    font-family: arial, sans-serif;
+    width: 100%;
+}
+
+.comp_calendar_viewer_content {
+    padding:0px;
+}
+
+.comp_calendar_issue {
+    float:left;
+    /*cursor:pointer;*/
+    font-family: arial, sans-serif;
+    width: 100%;
+    padding: 4px 8px 0 8px;
+    /*border:1px solid #ddd;*/
+    /*background-color:#fff;*/
+}
+.comp_calendar_issue.myissue{
+    float:left;
+    /*cursor:pointer;*/
+    font-family: arial, sans-serif;
+    width: 100%;
+    padding: 4px 8px 0 8px;
+    /*border:1px solid #ddd;*/
+    /*background-color:#fff;*/
+    border-top: 1px solid #fff;
+}
+.comp_calendar_label {
+    font-size:0.78em;
+    color:#888;
+}
+
+.comp_calendar_issue.angeissue {
+    float:left;
+    /*cursor:pointer;*/
+    font-family: arial, sans-serif;
+    width: 100%;
+    padding: 4px 8px 0 8px;
+    margin-top:4px;
+    /*border:1px solid #ddd;*/
+    /*background-color:#fff;*/
+}
+
+.comp_calendar_issuetxt {
+    float:none;
+    font-size:0.92em;
+    line-height:28px;
+    height:28px;
+    text-align: justify;
+    width:100%;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.dday_count {
+    font-weight:600; float:right;
+}
+
+/* /캘린더 comp */
+
+.comp_album_label {
+    font-size:0.78em;
+    color:#888;
+    position:relative;
+    color:#fff;
+    padding:8px;
+    border-top-left-radius:5px;
+    border-top-right-radius: 5px;
+}
+
+.comp_album_pics {
+    display:inline-block;
+    width:100%;
+    padding:15px 6px;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius: 5px;
+}
+
+.comp_album_thumb {
+    width:54px;
+    height:54px;
+    margin:0px 4px;
+    background-size: cover;
+    border-radius: 50%;
+    background-position: center center;
+    cursor: pointer;
+}
+
+
 
 .btn_angeclub {
     float:left;
