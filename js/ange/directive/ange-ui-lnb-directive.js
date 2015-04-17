@@ -74,7 +74,7 @@ define(['./directives'], function (directives) {
                             }
                         }
 
-                        if (scope.menu_info[j].TAIL_DESC != null)
+                        if (scope.menu_info[j].TAIL_DESC != null && scope.menu_info[j].TAIL_DESC != '' )
                             templet += '<span class="localmenu_comment">'+scope.menu_info[j].TAIL_DESC+'</span>';
 
                         if (j == scope.menu_info.length - 1 ) {
