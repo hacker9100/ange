@@ -68,6 +68,7 @@ body {
 .ange_bg_blue       { background-color: #def9ff; border: 1px solid #a6ddee; }
 .ange_bg_orange     { background-color: #fff1dc; border: 1px solid #ffdda5; }
 .ange_bg_gray       { background-color: #efefef; border: 1px solid #d6dade; }
+.ange_bg_cold       { background-color: #868686; border: 1px solid #767676; }
 .ange_bg_dark       { background-color: #595e63; border: 1px solid #464646; }
 
 .ange_lightred  { color: #fce5e9; }
@@ -106,6 +107,7 @@ body {
 .ange_darkgray  { color: #595e63; }
 
 .ange_black { color: #2d2f30; }     /*먹*/
+.ange_milk { color: #fcfcfc; }     /*백*/
 
 
 .ange_customBtn_0 {
@@ -119,6 +121,15 @@ body {
 .ange_customBtn_0:hover {
     opacity: 1;
 }
+
+.text_ellipsis {
+    width:100%;
+    text-align: justify;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+/*--------------------------------------*/
 
 .panel_ad {
     position:relative;
@@ -399,17 +410,46 @@ body {
     height:100%;
     left:0;
     top:0;
-    width:120px;
+    width:180px;
     padding:10px 5px;
     border-left:none;
+    overflow: auto;
 }
 
 .mobile_divider {
     width:100%;
+    float:left;
     height:1px;
     border-top:1px solid #eee;
     border-bottom:1px solid #fff;
     margin:12px auto;
+}
+
+.mobileslide_quicklink{
+    float:left;
+    position:relative;
+    padding:5px 0;
+    width:33%;
+    cursor:pointer;
+}
+
+.mobileslide_quicklink.border_right {
+    border-right:1px solid #ddd;
+}
+
+.message_icon_new_mobile {
+    position:absolute;
+    font-family: arial, san-serif;
+    font-size: 0.64em;
+    /*font-weight: bold;*/
+    padding: 0 2px;
+    background-color: #e56366;
+    color: #fbffdc;
+    border:1px solid transparent;
+    border-radius: 10px;
+    min-width:18px;
+    top:2px;
+    right:5px;
 }
 
 @media screen and (max-width: 1200px) {
@@ -576,6 +616,7 @@ body {
     .ng_wrap.moms { padding-top: 211px; }
     .ng_wrap.myange { padding-top: 190px; }
     .ng_wrap.store { padding-top: 191px; }
+    .ng_wrap.infodesk { padding-top: 158px; }
 }
 
 @media screen and (min-width: 1200px) {
@@ -590,11 +631,9 @@ body {
 }
 
 @media screen and (min-width: 1680px) {
-    .ng_wrap.story { margin:0px; padding-top: 102px; padding-left: 210px;}
-    .ng_wrap.people { margin:0px; padding-top: 102px; padding-left: 210px;}
-    .ng_wrap.moms { margin:0px; padding-top: 102px; padding-left: 210px;}
-    .ng_wrap.myange { margin:0px; padding-top: 102px; padding-left: 210px;}
-    .ng_wrap.store { margin:0px; padding-top: 102px; padding-left: 210px;}
+    .ng_wrap.story, .ng_wrap.people, .ng_wrap.moms, .ng_wrap.myange, .ng_wrap.store, .ng_wrap.infodesk  {
+        margin:0px; padding-top: 102px; padding-left: 210px;
+    }
 
     .ng_wrap {
         position:absolute;
@@ -1154,6 +1193,11 @@ img.userlog_login_pic {
     cursor: pointer;
 }
 
+.user_mileage_mobile {
+    cursor: pointer;
+    margin-top:4px;
+}
+
 .babyinfo {
     float: left;
     cursor: pointer;
@@ -1284,6 +1328,46 @@ a.util1:hover, a.util2:hover, a.util3:hover {
     overflow:hidden;
     text-overflow: ellipsis;
 }
+
+dl.comp_calendar_issuetxt_mobile {
+    float:none;
+    font-size:0.92em;
+    /*line-height:28px;*/
+    text-align: justify;
+    width:92%;
+    font-size:0.86em;
+    margin:0px auto;
+    margin-bottom:8px;
+}
+
+dl.comp_calendar_issuetxt_mobile dd{
+    padding:4px 0;
+}
+
+.mobile_slidebtn_basic {
+    width:100%;
+    /*background-color: #EEE;*/
+    padding:10px 0;
+    font-size:0.78em;
+    border-radius: 12px;
+    opacity: 0.8;
+}
+
+.mobile_slidebtn_round {
+    width:40px;
+    height:40px;
+    /*background-color: #EEE;*/
+    padding:6px 0;
+    margin:0 5px;
+    font-size:1.48em;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+.mobile_slidebtn_basic:hover, .mobile_slidebtn_round:hover {
+    opacity: 1;
+}
+
 
 .dday_count {
     font-weight:600; float:right;

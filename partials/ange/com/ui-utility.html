@@ -137,16 +137,76 @@
 
         <!-- 모바일용 슬라이드 팝업 -->
         <div ng-if="uid" style="display:none; text-align:center;">
+            <div style="display:block; position:fixed; left:0; top:0; width:100%; height:100%; background-color:#000; opacity: .38;"></div>
+
             <div class="ange_bg_milk mobileslide_userinfo">
+                <span class="glyphicon glyphicon-remove-circle ange_darkgray" style="position:absolute; top:5px; right:5px; font-size:1.12em; cursor:pointer;"></span>
                 <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}" style="width:50px; height:50px;">
                 <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}" style="width:50px; height:50px;">
                 <!--<a class="userconfig_mobile" title="{{user_info.NICK_NM}}님의 정보 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>-->
-                <div style="font-size:0.86em; color:#888; margin-top:10px;">{{user_info.NICK_NM}}</div>
+                <div class="ange_black" style="font-size:0.86em; margin-top:10px;">
+                    <div class="text_ellipsis" style="text-align: center;">
+                        {{user_info.NICK_NM}}
+                    </div>
+
+                    <div class="user_mileage_mobile" ng-click="click_myangeMileage()">
+                        <span style="color:#fb6362; font-weight:bold">{{ mileage | number }}</span>
+                        <small>Mileage</small>
+                    </div>
+                </div>
 
                 <div class="mobile_divider"></div>
 
+                <div style="font-size:0.78em; line-height:16px;">
+                    <div ng-click="click_myangeWriting()" class="ange_darkgray mobileslide_quicklink border_right">
+                        <span class="glyphicon glyphicon-th-list" style="font-size:1.4em;"></span>
+                        <br />
+                        내게시물
+                    </div>
+                    <div ng-click="click_myangeMessage()" class="ange_darkgray mobileslide_quicklink border_right">
+                        <span class="glyphicon glyphicon-envelope" style="font-size:1.4em;"></span>
+                        <br />
+                        메시지
+                        <div class="ange_bg_red message_icon_new_mobile" ng-show="message > 0">{{message}}</div>
+                    </div>
+                    <div class="ange_darkgray mobileslide_quicklink">
+                        <span class="glyphicon glyphicon-bookmark" style="font-size:1.4em;"></span>
+                        <br />
+                        스크랩
+                    </div>
+                </div>
 
+                <div class="mobile_divider"></div>
 
+                <dl class="comp_calendar_issuetxt_mobile">
+                    <dd><strong>김첫째</strong> 아기 돌 <span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;88</span></dd>
+                    <dd><strong>김둘째</strong> 아기 돌 <span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;88</span></dd>
+                    <dd><strong>출산예정일</strong> <span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;251</span></dd>
+                </dl>
+
+                <button ng-click="click_settingAccount()" class="mobile_slidebtn_basic ange_bg_cold ange_milk">내정보 변경하기</button>
+
+                <div class="mobile_divider"></div>
+
+                <div ng-click="click_infodesk()" style="font-size:0.78em; line-height:16px; width:33.3%; float:left;">
+                    <button class="mobile_slidebtn_round ange_bg_gray ange_darkgray">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                    </button>
+                    <br />
+                    <span class="ange_gray" style="line-height: 28px;">고객센터</span>
+                </div>
+                <div style="font-size:0.78em; line-height:16px; width:33.3%; float:left;">
+                    <button class="mobile_slidebtn_round ange_bg_gray ange_darkgray">
+                        <span class="glyphicon glyphicon-shopping-cart"></span>
+                    </button>
+                    <span class="ange_gray" style="line-height: 28px;">장바구니</span>
+                </div>
+                <div ng-click="logoutMe()" style="font-size:0.78em; line-height:16px; width:33.3%; float:left;">
+                    <button class="mobile_slidebtn_round ange_bg_gray ange_darkgray">
+                        <span class="glyphicon glyphicon-log-out"></span>
+                    </button>
+                    <span class="ange_gray" style="line-height: 28px;">로그아웃</span>
+                </div>
             </div>
         </div>
         <!-- /모바일용 슬라이드 팝업 -->
