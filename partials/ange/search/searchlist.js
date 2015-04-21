@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('searchlist', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('searchlist', ['$scope', '$rootScope', '$stateParams', '$location', '$window', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $window, $location, dialogs, UPLOAD) {
 
         // 초기화
         $scope.init = function() {
@@ -190,6 +190,11 @@ define([
             $scope.getPeopleClinicList();
 
         };
+
+        $scope.click_searchContent = function(path, no){
+//            alert(path + no);
+            $window,open(path + no);
+        }
 
         $scope.getSession()
             .then($scope.sessionCheck)

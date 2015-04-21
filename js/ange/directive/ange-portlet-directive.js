@@ -215,8 +215,8 @@ define([
                 '            <span class="mini_story_txt_head">{{item.PROJECT_NM}}</span>' +
                 '            <span class="mini_story_txt_title">| {{item.SUBJECT}}</span>' +
                 '            <ul class="mini_board_feeds">' +
-                '                <li class="mini_reply" style="float: right;">{{item.REPLY_COUNT}}</li>' +
-                '                <li class="mini_like" style="float: right;">{{item.LIKE_CNT}}</li>' +
+                '                <li class="comp_mini_reply" style="float: right;">{{item.REPLY_COUNT}}</li>' +
+                '                <li class="comp_mini_like" style="float: right;">{{item.LIKE_CNT}}</li>' +
                 '            </ul>' +
                 '        </div>' +
                 '    </div>' +

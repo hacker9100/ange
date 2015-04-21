@@ -98,7 +98,7 @@
 .people_photo_cate, .people_photo_cate a {
 	padding:4px; 
 	line-height: 20px; 
-	font-size:0.86em; 
+	font-size:0.86em;
 	color:#fff;
 }
 
@@ -108,8 +108,8 @@
 }
 
 .people_photo_txt {
-	margin-top: 8px; 
-	min-height: 48px; 
+	margin: 6px 0 0 0;
+	/*min-height: 48px; */
 	padding:4px; 
 	color:#464646;
 	font-weight:bold; 
@@ -117,9 +117,10 @@
 }
 
 .people_photo_info {
-	padding: 4px; 
-	font-size:0.76em; 
-	color: #868686; 
+	/*padding: 4px; */
+	font-size: 0.86em;
+	color: #868686;
+    padding: 2px 0 12px 2px;
 }
 
 .people_photo_imgbox:hover { border:1px solid #e40029; background-color:#e40029; }
@@ -172,13 +173,18 @@
 }
 
 .board_basicinfo_photosubject {
-	font-size: 1.54em; 
-	line-height:24px; 
-	font-weight: 600;
+	font-size: 1.48em;
+	line-height:24px;
+	/*font-weight: 600;*/
+    padding:12px 0;
+    /*white-space: nowrap;*/
+    /*width:99%;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
 }
 
 .peoplephoto_view_basicinfo {
-	padding: 0px 0 25px 0; 
+	padding: 0px 0 12px 0;
 	background-image:url(/imgs/ange/comp_miniboard_hr.png); 
 	background-repeat: repeat-x; 
 	background-position: bottom;
@@ -186,12 +192,23 @@
 }
 
 /*���� ������*/
+/*.people_photo_sharewrap {*/
+	/*position:absolute;*/
+    /*top:10px;*/
+    /*right:5%;*/
+    /*max-width:780px;*/
+	/*margin:10px;*/
+/*}*/
+
 .people_photo_sharewrap {
-	position:absolute;
-    top:10px;
-    right:5%;
-    max-width:780px;
-	margin:10px;
+    position:relative;
+    float:none;
+    width:100%;
+    text-align:center;
+    /*top:10px;*/
+    /*right:5%;*/
+    /*max-width:780px;*/
+    /*margin:10px;*/
 }
 
 .people_sharebtn {
@@ -225,6 +242,47 @@
 .people_sharebtn:hover {
 	opacity: 1;
 }
+
+
+/** new design **/
+.people_shares {
+    width: 56px;
+    height: 56px;
+    padding:0px;
+    background-color:transparent;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.people_shares.metoo  { background-image: url('/imgs/ange/board_like_off.png'); }
+.people_shares.scrap  { background-image: url('/imgs/ange/board_scrap_off.png'); }
+.people_shares.print  { background-image: url('/imgs/ange/board_print_off.png'); }
+.people_shares.cancel { background-image: url('/imgs/ange/board_like_on.png'); opacity: .75;}
+
+.people_shares.metoo:hover  { background-image: url('/imgs/ange/board_like_over.png'); }
+.people_shares.scrap:hover  { background-image: url('/imgs/ange/board_scrap_on.png'); }
+.people_shares.print:hover  { background-image: url('/imgs/ange/board_print_on.png'); }
+.people_shares.cancel:hover {  opacity: 1; }
+
+.people_shares_report {
+    float:right;
+    width: 55px;
+    height: 23px;
+    padding: 0px;
+    background-color:transparent;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url('/imgs/ange/board_report_off.png');
+}
+
+.people_shares_report:hover {
+    background-image: url('/imgs/ange/board_report_on.png');
+}
+
+
+/** new design **/
 
 
 .people_searchresult {
@@ -534,4 +592,40 @@ a.reply_sort:hover {
 
 .template_recipe .template_col_body span.recipe_material {
 	margin-left:55px;
+}
+
+.people_likes_mark {
+    text-align:right;
+    padding:3px;
+    padding-top:46px;
+    line-height:14px;
+    font-size:1.12em;
+}
+
+@media screen and (max-width: 767px){
+    .people_likes_mark {
+        text-align: center;
+        border-top:1px solid #ddd;
+        padding:12px 0;
+    }
+}
+
+.bullet_likes {
+    display:inline-block;
+    vertical-align: bottom;
+    width: 14px;
+    height: 12px;
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: contain;
+    margin:4px 5px 0 2px;
+    /*border:1px solid red;*/
+}
+
+.heart_icon {
+    background-image: url('/imgs/ange/comp_miniboard_icon_like.png');
+}
+
+.scrap_icon {
+    background-image: url('/imgs/ange/comp_miniboard_icon_reply.png');
 }

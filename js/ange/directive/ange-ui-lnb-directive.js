@@ -346,7 +346,7 @@ define(['./directives'], function (directives) {
                     }
 
                     if (link == 'C') {
-                        dialogs.notify('알림', '점검중입니다.', {size: 'md'});
+                        dialogs.notify('알림', '준비중입니다.', {size: 'md'});
                     } else if (link != 'N') {
                         $location.url(url);
                     }

@@ -1,10 +1,16 @@
+<div  ng-controller="ui-gnb">
     <div class="mobile-header">
         <a href="/main"><img src="/imgs/ange/_blank_4by3.gif" class="mobilelogo" alt="I Love ANGE" title="I Love ANGE"/></a>
+        <!--<a href="/search/list?search_key="><button class="gnb_search ch_search" ng-click="click_showSearch_mobile()" title="검색" style="float:right; border:none; z-index:999;"></button></a>-->
+        <!--<button class="gnb_search ch_search" ng-click="click_showSearch_mobile()" title="검색" style="float:right; border:none; z-index:999;"></button>-->
+
+        <button class="ange_darkgray" ng-click="click_showSearch_mobile()" title="검색" style="float:right; margin-top:8px; border:1px solid #ddd; background-color:#fff; height:42px; width:42px; font-size:1.4em; border-radius:8px; padding-top:4px; ">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        </button>
     </div>
 
 	<!-- GNB -->
-	<div class="gnb" ng-controller="ui-gnb">
-
+	<div class="gnb">
 		<!--<div class="gnb_menu" style="display:none;">-->
 			<!--<a href="/story/content/list" ng-class="channeltitle == 'story' ? 'gnb_chnnel chnnel1 nowmenu' : 'gnb_chnnel chnnel1'">ANGE Story</a>-->
 			<!--<a href="/people/home" ng-class="channeltitle == 'people' ? 'gnb_chnnel chnnel2 nowmenu' : 'gnb_chnnel chnnel2'">ANGE People</a>-->
@@ -115,3 +121,4 @@
         <!--</div>-->
     <!--</div>-->
 	<!-- /GNB -->
+</div>

@@ -128,6 +128,14 @@ define([
             $location.url('/search/list?search_key='+$scope.search.SEARCH_KEYWORD);
         }
 
+        $scope.click_showSearch_mobile = function (){
+            $location.url('/search/list');
+        }
+
+        $scope.click_searchContent = function(path, no){
+            $window,open();
+        }
+
         $scope.init();
 	}]);
 

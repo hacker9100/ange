@@ -18,46 +18,37 @@
                             </div>
                         </div><!-- /.sub_contents_wrap -->
 
-                        <div ng-model="item" class="sub_contents_body">
+                        <div ng-model="item" class="sub_contents_body" style="border-top:2px solid #333;">
 
                             <!-- peopleboard_view -->
                             <div class="people_view_wrap">
 
-                            <div class="container-fluid peoplephoto_view_topwrap">
+                            <div class="container-fluid peoplephoto_view_topwrap no-margin">
 
-                                <div class="row peoplephoto_view_basicinfo" style="position:relative;">
+                                <div class="row peoplephoto_view_basicinfo no-margin" style="position:relative;">
                                     <!--<div class="col-xs-6 board_basicinfo_photofeature">-->
                                         <!--&lt;!&ndash;<img class="feature_pic" ng-src="{{item.MAIN_FILE}}" style="width:100%;" />&ndash;&gt;-->
                                         <!--<img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url({{item.MAIN_FILE}})" />-->
                                     <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
-                                    <div class="col-xs-6  board_basicinfo_photosubject">
-                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">[{{item.CATEGORY_NM}}] {{item.SUBJECT}}</span>
+                                    <div class="col-xs-12 col-sm-8 board_basicinfo_photosubject">
+                                        <div ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" class="text_ellipsis"><span class="ange_green">{{item.CATEGORY_NM}} </span>| <strong>{{item.SUBJECT}}</strong></div>
                                         <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리가 된 글입니다</span>
                                         <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글입니다</span>
                                         <!--<span class="table_icon_new">N</span>-->
 
                                         <div class="people_photo_info">
-                                            <span class="table_blue">{{item.NICK_NM}}</span> | {{item.REG_DT}}
-                                        </div>
-
-                                        <div style="float:left; padding:3px; font-size:0.74em;">
-                                            <div style="display:inline; bottom:8px; right:0;">
-                                                <span class="feed_count countlike_color table_gray">{{item.LIKE_CNT}}</span>		<!-- 공감수 -->
-                                                <span class="feed_count countreply_color table_gray">{{item.PHOTO_REPLY_COUNT}}</span>	<!-- 댓글수 -->
-                                            </div>
+                                            <span class="ange_darkgray">{{item.NICK_NM}}</span> | {{item.REG_DT}}
                                         </div>
                                     </div><!-- /.col-xs-10-->
 
-                                    <div class="people_photo_sharewrap">
-                                        <div class="people_share" style="float:right; line-height:20px; vertical-align:top;">
-                                            <button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'N'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공 감</button>
-                                            <button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'Y'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공감취소</button>
-                                            <button ng-show="item.SCRAP_FL == 'Y'" class="people_sharebtn redbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>스크랩</button>
-                                            <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>프린트</button>
-                                            <button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭" ng-click="click_boardReport2(item)"><span class="glyphicon glyphicon-print sharebtn_icon"></span>신고</button>
-                                        </div>
+                                    <div class="col-xs-12 col-sm-4 ange_darkgray people_likes_mark">
+                                        <div style="display: inline; margin-left:12px;">공감<span class="bullet_likes heart_icon"></span>{{item.LIKE_CNT}}</div>
+                                        <div style="display: inline; margin-left:12px;">댓글<span class="bullet_likes scrap_icon"></span>{{item.PHOTO_REPLY_COUNT}}</div>
+                                        <!--<div style="display:inline; bottom:8px; right:0;">-->
+                                            <!--<span class="feed_count countlike_color table_gray">{{item.LIKE_CNT}}</span>		&lt;!&ndash; 공감수 &ndash;&gt;-->
+                                            <!--<span class="feed_count countreply_color table_gray">{{item.PHOTO_REPLY_COUNT}}</span>	&lt;!&ndash; 댓글수 &ndash;&gt;-->
+                                        <!--</div>-->
                                     </div>
-
 
                                 </div><!-- /.peoplephoto_view_basicinfo -->
                             </div><!-- /.container -->
@@ -65,6 +56,7 @@
 
                             <div class="container-fluid peopleboard_view_contentwrap">
                                 <div class="row">
+
                                     <div ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" class="col-xs-12 peopleboard_view_contentbody">
 
                                         <!-- Editor CSS 적용 -->
@@ -113,8 +105,24 @@
                                         <center>
 
                                             <!-- Editor CSS 적용 -->
-                                            <div ng-bind-html="renderHtml" style="margin:0px auto; padding:50px;"></div>
+                                            <div ng-bind-html="renderHtml" style="margin:0px auto; padding:18px 5px;"></div>
 
+                                            <div class="people_photo_sharewrap">
+                                                <div class="people_share">
+                                                    <!--<button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'N'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공 감</button>-->
+                                                    <!--<button class="people_sharebtn redbtn" ng-show="LIKE_FL == 'Y'" title="이 글에 공감하면 클릭" ng-click="click_likeCntAdd(item, LIKE_FL);"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>공감취소</button>-->
+                                                    <!--<button ng-show="item.SCRAP_FL == 'Y'" class="people_sharebtn redbtn" ng-click="click_scrapAdd(item);" title="이 글을 모아두려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>스크랩</button>-->
+                                                    <!--<button class="people_sharebtn blackbtn" title="이 글을 인쇄하려면 클릭"><span class="glyphicon glyphicon-heart sharebtn_icon"></span>프린트</button>-->
+
+                                                    <button ng-show="LIKE_FL == 'N'" class="people_shares metoo" ng-click="click_likeCntAdd(item, LIKE_FL);" title="공감"></button>
+                                                    <button ng-show="LIKE_FL == 'Y'" class="people_shares cancel" ng-click="click_likeCntAdd(item, LIKE_FL);" title="공감취소"></button>
+                                                    <button class="people_shares scrap" ng-click="click_scrapAdd(item);" title="스크랩"></button>
+                                                    <button class="people_shares print" title="프린트"></button>
+                                                </div>
+                                                <div>
+                                                    <button class="people_shares_report" ng-click="click_boardReport2(item)" title="신고"></button>
+                                                </div>
+                                            </div>
                                         </center>
 
                                         <!-- Editor CSS 적용 -->

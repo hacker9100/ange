@@ -18,7 +18,6 @@
 </div><!-- /.sub_contents_wrap -->
 
 
-
 <div class="row" style="clear: both; padding-bottom: 70px;">
     <form class="search_formgroup ng-pristine ng-valid" style="width:100%;">
         <div class="col-sm-offset-2 col-sm-8 col-sm-offset-2" style="position:relative; padding-right:70px;">
@@ -91,7 +90,7 @@
             </thead>
 
             <tbody class="on" ng-repeat="item in storyList" style="width:100%; min-width:320px !important;">
-            <tr  style="cursor:pointer;"> <!-- ng-click="click_showViewStory(item.COMM_NO, item.NO)" -->
+            <tr ng-click="click_searchContent('/story/content/list/', item.NO)" style="cursor:pointer;"> <!-- ng-click="click_showViewStory(item.COMM_NO, item.NO)" -->
 
 
                 <td width="18%" class="normaltype" style="min-width:150px;">
@@ -104,7 +103,8 @@
 
                 <td class="normaltype" style="padding-right:15px;">
                     <div style="font-size:1.08em; font-weight:600; height:46px;">
-                        <a href="/story/content/list/{{item.NO}}" target="_blank"><span>{{ item.SUBJECT | limitTo: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span></a>
+                        <!--<a href="/story/content/list/{{item.NO}}" target="_blank"><span>{{ item.SUBJECT | limitTo: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span></a>-->
+                        <span>{{ item.SUBJECT | limitTo: 30 }}{{item.SUBJECT > 30 ? '...' : ''}}</span>
                     </div>
 
 
@@ -119,8 +119,8 @@
                 </td>
             </tr>
 
-            <tr style="cursor:pointer;">
-                <a href="/story/content/list/{{item.NO}}" target="_blank">
+            <tr ng-click="click_searchContent('/story/content/list/', item.NO)" style="cursor:pointer;">
+                <!--<a href="/story/content/list/{{item.NO}}" target="_blank">-->
                 <!---- 모바일 TD ------>
                     <td class="table_no mobiletype" align="center" style="position:relative; font-size:1em; font-weight:400; padding-bottom:50px;">
 
@@ -142,7 +142,7 @@
                             {{item.SUMMARY | string_limit : 200}}
                         </div>
                     </td>
-                </a>
+                <!--</a>-->
             </tr>
             </tbody>
 
@@ -190,16 +190,16 @@
 
                 <tbody class="on" ng-repeat="item in boardList">
 
-                <tr ng-click="click_showViewPeopleBoard(item.COMM_NO, item.NO)" style="cursor:pointer;">
+                <tr ng-click="click_searchContent('/people/' + item.MENU_ID + '/view/', item.NO)" style="cursor:pointer;">
                     <td>
                         <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                        <a href="/people/{{item.MENU_ID}}/view/{{item.NO}}" target="_blank">
+                        <!--<a href="/people/{{item.MENU_ID}}/view/{{item.NO}}" target="_blank">-->
                             <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{item.SHORT_NM != ''? '['+item.SHORT_NM+']' : ''}}&nbsp;{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
                             <span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>
                             <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                             <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                             <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
-                        </a>
+                        <!--</a>-->
                     </td>
                     <td class="table_author">{{ menu.COMM_NO != 8 ? '' : item.NICK_NM}}</td>
                     <td class="table_date">{{item.REG_DT}}</td>
@@ -231,10 +231,11 @@
                     <div class="col-xs-12 v-cell-4">
                         <div class="comp_basic h-cell-dynamic">
 
-                            <div ng-repeat='item in photoList'>
+                            <div ng-click="click_searchContent('/people/'+item.MENU_ID+'/view/', item.NO)" ng-repeat='item in photoList'>
                                 <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
                                 <div class="col-xs-4 people_photo_contentcol" > <!-- ng-show="selectPhoto = item.PHOTO_TYPE" -->
-                                    <div ng-click="click_showViewPeoplePhoto(item.COMM_NO, item.NO)" class="people_photo_content">
+                                    <!--<div ng-click="click_showViewPeoplePhoto(item.COMM_NO, item.NO)" class="people_photo_content">-->
+                                    <div class="people_photo_content">
                                         <div class="people_photo_imgbox">
                                             <!--<img class="people_photo_img" ng-src="{{item.MAIN_FILE}}"/>-->
                                             <img ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
@@ -250,7 +251,7 @@
                                         </div>
 
                                         <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
-                                            <a href="/people/{{item.MENU_ID}}/view/{{item.NO}}" target="_blank">
+                                            <a ng-click="click_searchContent('/people/'+item.MENU_ID+'/view/', item.NO)">
                                                 {{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}
                                             </a>
                                         </div>
@@ -287,16 +288,16 @@
 
                 <tbody class="on" ng-repeat="item in clinicList">
 
-                <tr ng-click="click_showViewPeopleClinic(item.COMM_NO, item.NO)" style="cursor:pointer;">
+                <tr ng-click="click_searchContent('/people/'+item.MENU_ID+'/view/', item.NO)" style="cursor:pointer;">
                     <td>
-                        <a href="/people/{{item.MENU_ID}}/view/{{item.NO}}" target="_blank">
+                        <!--<a href="/people/{{item.MENU_ID}}/view/{{item.NO}}" target="_blank">-->
                             <!--span ng-class="item.PASSWORD != '' ? 'glyphicon glyphicon-lock table_icon_lock' : ''"></span-->
                             <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{item.PASSWORD}}{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
                             <!--<span class="reply_num">[2]</span>-->
                             <span ng-show="item.REG_DT == todayDate" class="table_icon_new">N</span>
                             <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                             <span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>
-                        </a>
+                        <!--</a>-->
                     </td>
                     <td  class="table_author">{{item.NICK_NM}}</td>
                     <td class="table_date">{{item.REG_DT}}</td>

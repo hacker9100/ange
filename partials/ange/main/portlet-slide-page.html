@@ -17,7 +17,7 @@
 
         <div class="row mini_event_contentlist">
             <slick id="{{option.id}}" init-onload="true" data="list" dots="false" autoplay="true" center-mode="false" slides-to-show="3" slides-to-scroll="3" autoplay-speed="3000" fade="false" pause-on-hover="false">
-                <div ng-repeat="item in list" class="col-xs-4 mini_event_contentcol">
+                <div ng-repeat="item in list" class="col-xs-12 mini_event_contentcol">
                     <a href="/moms/{{ item.menu }}/view/{{ item.ada_idx }}">
                         <div class="mini_event_content">
                         <div ng-show="item.ada_date_open > todayDate" class="mini_event_comingsoon"></div>

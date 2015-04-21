@@ -14,7 +14,7 @@ define([
     controllers.controller('ange-common', ['$rootScope', '$scope', '$stateParams', '$window', '$location', '$timeout', '$q', 'dataService', '$filter', 'dialogs', 'CONSTANT', function ($rootScope, $scope, $stateParams, $window, $location, $timeout, $q, dataService, $filter, dialogs, CONSTANT) {
 
         $scope.comming_soon = function() {
-            dialogs.notify('알림', '점검중입니다.', {size: 'md'});
+            dialogs.notify('알림', '준비중입니다.', {size: 'md'});
         }
 
         // 주소 경로

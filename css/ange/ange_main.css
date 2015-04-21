@@ -566,10 +566,10 @@ div.mini_community_contents:hover {
 
 .mini_event_txt_title{
 	float:left;
-	font-size: 1.08em;
+	font-size: 0.92em;
 	font-weight: bold;
 	margin-top:3%;
-	line-height: 1.2em;
+	line-height: 20px;
     overflow: hidden;
     height:38px;
     text-overflow:ellipsis;
@@ -586,16 +586,24 @@ div.mini_community_contents:hover {
 }
 
 .mini_event_txt_emblem {
-	font-size: 0.68em;
-	padding:2px 4px;
-	color:#fff;
-	font-weight: normal;
-	vertical-align: top;
-	margin-right:4px;
+    font-size: 0.68em;
+    padding:2px 4px;
+    color:#fff;
+    font-weight: normal;
+    vertical-align: top;
+    margin-right:4px;
 }
 .coloremblem_purple { background-color: #7230c3; }
 .coloremblem_blue { background-color: #3096c3; }
 .coloremblem_brown { background-color: #c3a630; }
+
+@media screen and (max-width: 767px) {
+    .mini_event_txt_title {
+        font-size: 0.86em;
+        line-height: 20px;
+        text-overflow:ellipsis;
+    }
+}
 
 
 a.miniboard_tab_slidepause{
@@ -622,6 +630,7 @@ a.miniboard_tab_slideplay{
 
 
 a.miniboard_tab_slideprev{
+    display:none;
 	float:left;
 	height: 15px;
 	width: 15px;
@@ -633,6 +642,7 @@ a.miniboard_tab_slideprev{
 }
 
 a.miniboard_tab_slidenext{
+    display:none;
 	float:left;
 	height: 15px;
 	width: 15px;
@@ -1044,6 +1054,30 @@ div.mini_review_contents:hover, div.mini_review_contents-noimg:hover {
 	background-position: left bottom;
 	line-height: 0.92em;
 	padding-left:15px;
+}
+
+.comp_mini_like {
+    float: right;
+    margin-left:8px;
+    height: 12px;
+    background-image: url('/imgs/ange/comp_miniboard_icon_like.png');
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size:contain;
+    line-height: 1.12em;
+    padding-left:18px;
+}
+
+.comp_mini_reply {
+    float: right;
+    margin-left:8px;
+    height: 12px;
+    background-image: url('/imgs/ange/comp_miniboard_icon_reply.png');
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size:contain;
+    line-height: 1.12em;
+    padding-left:18px;
 }
 
 .kbd_new {

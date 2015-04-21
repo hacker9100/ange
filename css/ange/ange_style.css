@@ -2764,6 +2764,7 @@ img.blank_wrap {
     line-height:20px;
     vertical-align:top;
     width:100%;
+    margin:30px 0 15px 0;
 }
 
 .people_share_mobile {
@@ -2778,9 +2779,9 @@ img.blank_wrap {
         display: block;
     }
 
-    .people_share {
-        display: none;
-    }
+    /*.people_share {*/
+        /*display: none;*/
+    /*}*/
 }
 
 .story_sharebtn {

@@ -31,7 +31,7 @@ define([
             $scope.option_r2_c1 = {title: '앙쥬스토리', api:'cms/task', size: 5, id: 'story', type: 'content', url: '/story/content/list', defIdx: 0, tab: [{no: '0', menu: 'popular', name: '인기'}, {no: '1', menu: 'current', name: '최신'}], image: true, head: true, date: false, nick: true};
 
             // ange-portlet-basic-list
-            $scope.option_r3_c2 = {title: '커뮤니티', api:'com/webboard', size: 5, type: 'board', url: '/people/home', image: false, head: true, date: false, nick: false};
+            $scope.option_r3_c2 = {title: '앙쥬피플', api:'com/webboard', size: 5, type: 'board', url: '/people/home', image: false, head: true, date: false, nick: false};
 
             // ange-portlet-slide-page
             $scope.option_r4_c1 = {title: '체험단&이벤트', api:'ange/event', size: 6, url: '/moms/home', id: 'event', dots: false, autoplay: true, centerMode: true, showNo: 3, fade: 'false'};

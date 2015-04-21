@@ -121,7 +121,7 @@
                             <!-- peoplephoto_list -->
                             <div class="peoplep_list_tab">
                                 <ul class="nav nav-tabs">
-                                    <li role="presentation" ng-repeat="tab in category_list" ng-class="selectIdx == $index ? 'active' : ''">
+                                    <li role="presentation" ng-repeat="tab in category_list" ng-class="selectIdx == $index ? 'active' : ''" style="cursor:pointer;">
                                         <a ng-click="click_selectTab($index, tab.NO)">{{tab.CATEGORY_NM}}<span ng-hide="true">({{tab.TOTAL_COUNT}})</span></a> <!-- <span ng-hide="$index == 0">({{tab.CNT}})</span> -->
                                     </li>
                                 </ul>
@@ -149,9 +149,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}</div>
-                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</div>
-                                                        <div class="people_photo_txt" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</div>
+                                                        <div class="people_photo_txt text_ellipsis" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">{{ item.SUBJECT | limitTo: 20 }}{{item.SUBJECT > 20 ? '...' : ''}}</div>
+                                                        <div class="people_photo_txt text_ellipsis" ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</div>
+                                                        <div class="people_photo_txt text_ellipsis" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</div>
                                                         <div class="people_photo_info"><span class="table_blue">{{item.NICK_NM}}</span> | {{item.REG_DT}}</div>
                                                     </div><!-- /.people_photo_content -->
                                                 </div><!-- /.people_photo_contentcol -->
