@@ -15,6 +15,7 @@ define([
 
         $scope.search = {};
         $scope.isAlbum = true;
+        $scope.nowAlbumSubject = '';
 
         if ($stateParams.id == undefined) {
             $scope.search.PARENT_NO = '0';
@@ -121,6 +122,9 @@ define([
                     return;
                 });
             } else {
+
+                $scope.click_togglePhotoConfig();
+
                 var dialog = dialogs.confirm('알림', '사진을 삭제 하시겠습니까?', {size: 'md'});
 
                 dialog.result.then(function(btn){
@@ -253,6 +257,26 @@ define([
             });
         };
 
+        var temp_num = '';
+
+        $scope.click_togglePhotoConfig = function (p_num) {
+
+            //alert('photo_menu_' + p_num);
+            if (p_num == temp_num) {
+                temp_num = '';
+            }
+
+            if(p_num){
+                document.getElementById('photo_menu_' + p_num).style.display = "block";
+            }
+
+            if(temp_num) {
+                document.getElementById('photo_menu_' + temp_num).style.display = "none";
+            }
+            temp_num = p_num;
+        };
+
+
         // 앨범/사진 수정 버튼 클릭
         $scope.click_showEditMyAlbum = function (item, idx) {
 
@@ -261,6 +285,8 @@ define([
             } else {
                 $scope.openViewMyPictureRegModal(item, idx, 'lg');
             }
+
+            $scope.click_togglePhotoConfig();
         };
 
         // 앨범 등록 버튼 클릭

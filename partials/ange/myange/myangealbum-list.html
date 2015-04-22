@@ -3,9 +3,7 @@
     <div class="mainbar sub-slide0">
         <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
 
-
             <div class="row">
-
                 <div class="col-xs-12 v-cell-3">
                     <div class="comp_basic h-cell-dynamic">
 
@@ -14,7 +12,7 @@
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
-                                <p>나만의 앨범을 만들어 소중한 추억을 간직하세요.</p>
+                                <p>나만의 앨범을 만들어 소중한 추억을 간직하세요. {{m_view_mode.value}}</p>
                             </div>
 
                             <div ng-show="!isAlbum" class="container-fluid sub_contents_search">
@@ -52,15 +50,29 @@
                         </div><!-- /.sub_contents_wrap -->
 
                         <div class="sub_contents_body">
-                            <div class="container-fluid peoplephoto_list_wrap">
-                                <div class="row">
-                                    <div class="col-xs-12 v-cell-4">
+
+                            <div class="content_titlebox" style="background-image: url('/imgs/ange/coupon_backimg_2.png');">
+                                <div class="content_titletxt table_red">마이앨범 <span class="ange_darkgray">활용 방법</span></div>
+                                <ul>
+                                    <li>자유롭게 새앨범을 만들어 사진첩을 준비하세요.</li>
+                                    <li>추가한 앨범 안에서 사진을 등록하여 간직할 수 있습니다.</li>
+                                    <!--<li>사진은 앙쥬커뮤니티에서 자유롭게 사용할 수 있습니다.</li>-->
+                                </ul>
+                            </div>
+
+                            <div class="container-fluid content_container_wrap">
+                                <div class="row no-margin">
+                                    <div class="col-xs-12 no-margin v-cell-4">
                                         <div ng-show="m_view_mode.value == 'COLLECTION'" class="comp_basic h-cell-dynamic">
+
+                                            <div ng-if="!isAlbum" style="padding: 4px 0 18px 5px;">
+                                                <h4 class="ange_darkgray"><span class="ange_red" style="font-weight: 600;"><i class="glyphicon glyphicon-inbox" style="vertical-align: bottom;"></i> {{'새앨범'}}</span> 사진</h4>
+                                            </div>
 
                                             <div ng-repeat="item in list">
                                                 <!--<div ng-repeat='item in list' ng-class="item.RNUM % 3 == 1 ? 'row people_photo_contentlist' : ''">-->
-                                                <div class="col-xs-12 col-sm-3 album_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
-                                                    <div class="album_photo_content">
+                                                <div class="col-xs-6 col-sm-3 album_photo_contentcol" > <!-- ng-show="selectPhoto = item.CATEGORY_NO" -->
+                                                    <div ng-if="isAlbum" class="ange_bg_milk album_content">
                                                         <div class="album_photo_imgbox" ng-click="click_showViewMyAlbum(item)">
                                                             <img ng-if="item.NEW_ALBUM" src="/imgs/ange/_blank.gif" class="album_photo_img" ng-style="{ 'background-image' : 'url( /imgs/ange/newalbum_imgnone.png )' }" />
                                                             <img ng-if="!item.NEW_ALBUM" src="/imgs/ange/_blank.gif" class="album_photo_img" ng-style="{ 'background-image' : 'url( {{ item.ALBUM_FILE }} )' }" />
@@ -70,6 +82,10 @@
                                                             <div class="album_photo_txt">
                                                                 <span class="table_blue">{{ item.SUBJECT }}</span><br />{{ item.SHOOTING_YMD }}
                                                             </div>
+                                                        </div>
+
+                                                        <div ng-if="item.ALBUM_GB == 'ADD'" style="width:100%; text-align:center;">
+                                                            <div class="ange_darkgray" style="margin-bottom: 4px;">새앨범 추가</div>
                                                         </div>
                                                         <div ng-if="item.ALBUM_GB != 'ADD'" style="width:100%; text-align:center;">
                                                             <button class="btn btn-default btn-xs fileinput-button" data-ng-click="click_showEditMyAlbum(item, $index)">
@@ -81,9 +97,50 @@
                                                                 <span>삭제</span>
                                                             </button>
                                                         </div>
-                                                    </div><!-- /.people_photo_content -->
+                                                    </div><!-- /.album_photo_content -->
+
+                                                    <div ng-if="!isAlbum" class="photo_content">
+                                                        <div ng-click="click_showViewMyAlbum(item)">
+                                                            <!--<img ng-if="item.NEW_ALBUM" src="/imgs/ange/_blank.gif" class="album_photo_img" ng-style="{ 'background-image' : 'url( /imgs/ange/newalbum_imgnone.png )' }" />-->
+                                                            <img ng-if="!item.NEW_ALBUM" src="/imgs/ange/_blank.gif" class="album_photo_img" ng-style="{ 'background-image' : 'url( {{ item.ALBUM_FILE }} )' }" />
+                                                            <!--<img ng-show="item.BOARD_ST == 'D'" src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('/imgs/ange/noimage.png')" /> &lt;!&ndash; 삭제처리했을때 블라인드 이미지 추가해야함&ndash;&gt;-->
+                                                        </div>
+                                                        <div style="width:100%; text-align:center; font-size:0.86em;">
+                                                            <div class="album_photo_txt">
+                                                                <span class="table_blue">{{ item.SUBJECT }}</span><br />{{ item.SHOOTING_YMD }}
+                                                            </div>
+                                                        </div>
+                                                        <!--<div ng-if="item.ALBUM_GB != 'ADD'" style="width:100%; text-align:center;">-->
+                                                            <!--<button class="btn btn-default btn-xs fileinput-button" data-ng-click="click_showEditMyAlbum(item, $index)">-->
+                                                                <!--<i class="glyphicon glyphicon-pencil"></i>-->
+                                                                <!--<span>수정</span>-->
+                                                            <!--</button>-->
+                                                            <!--<button class="btn btn-default btn-xs fileinput-button" data-ng-click="click_deleteMyAlbum(item, $index)">-->
+                                                                <!--<i class="glyphicon glyphicon-trash"></i>-->
+                                                                <!--<span>삭제</span>-->
+                                                            <!--</button>-->
+                                                        <!--</div>-->
+                                                    </div><!-- /.album_photo_content -->
+
+                                                    <div ng-if="!isAlbum">
+                                                        <button data-ng-click="click_togglePhotoConfig(item.NO)" class="ange_customBtn_0 photoalbum_configbtn">
+                                                            <i class="glyphicon glyphicon-cog"></i>
+                                                        </button>
+
+                                                        <div id="photo_menu_{{item.NO}}" class="photoalbum_configs">
+
+                                                            <div data-ng-click="click_togglePhotoConfig()" class="ange_customBtn_0" style="border-bottom:1px solid #ddd; width:100%; font-size:1.21em; padding:4px 0; height:26px;">
+                                                                <i class="glyphicon glyphicon-remove-circle" class="text-right" style="float:right;"></i>
+                                                            </div>
+
+                                                            <div data-ng-click="click_showEditMyAlbum(item, $index)" class="photoalbum_configs_menu"><i class="glyphicon glyphicon-pencil"></i><span>수정</span></div>
+                                                            <div data-ng-click="click_deleteMyAlbum(item, $index)" class="photoalbum_configs_menu"><i class="glyphicon glyphicon-trash"></i><span>삭제</span></div>
+                                                        </div>
+                                                    </div>
+
                                                 </div><!-- /.people_photo_contentcol -->
                                             </div><!-- /.people_photo_contentlist -->		<!-- 1줄	 -->
+
 
                                             <div ng-show="!isLoding && list == ''">
                                                 <p><center>조회 데이터가 없습니다.</center></p>
@@ -97,6 +154,7 @@
                                         </div><!-- /.comp_basic -->
 
                                         <div ng-show="m_view_mode.value == 'ALBUM'" class="comp_basic h-cell-dynamic">
+
                                             <div class="album_image" ng-click="click_showViewMyAlbum(current)" >
                                                 <img ng-src="{{current.ALBUM_FILE}}" alt="{{current.SUBJECT}}">
                                             </div>
@@ -175,7 +233,7 @@
 <script type="text/ng-template" id="myangealbum-edit.html">
     <div class="modal-header" style="background-color:#FAFAFA;">
         <span style="font-size:0.86em; margin-left:5px; color:#888;">ange Album</span>
-        <h2 class="modal-title" style="color:#b26b41; font-weight:bold;">앨범 등록</h2>
+        <h3 class="modal-title" style="color:#b26b41; font-weight:bold;">앨범 등록/수정</h3>
     </div>
     <div class="modal-body">
         <div class="body_wrap">
@@ -233,7 +291,7 @@
 <script type="text/ng-template" id="myangepicture-edit.html">
     <div class="modal-header" style="background-color:#FAFAFA;">
         <span style="font-size:0.86em; margin-left:5px; color:#888;">ange Album</span>
-        <h2 class="modal-title" style="color:#b26b41; font-weight:bold;">사진 등록</h2>
+        <h3 class="modal-title" style="color:#b26b41; font-weight:bold;">사진 등록</h3>
     </div>
     <div class="modal-body">
         <div class="body_wrap">

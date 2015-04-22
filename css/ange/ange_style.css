@@ -71,6 +71,13 @@ body {
 .ange_bg_cold       { background-color: #868686; border: 1px solid #767676; }
 .ange_bg_dark       { background-color: #595e63; border: 1px solid #464646; }
 
+.ange_bg_vivid_red        { background-color: #e56366; }
+.ange_bg_vivid_green      { background-color: #80c833; }
+.ange_bg_vivid_pink       { background-color: #f668b2; }
+.ange_bg_vivid_choco      { background-color: #b66e43; }
+.ange_bg_vivid_blue       { background-color: #47b6d6; }
+.ange_bg_vivid_orange     { background-color: #f1a81a; }
+
 .ange_lightred  { color: #fce5e9; }
 .ange_softred   { color: #f8bbc1; }
 .ange_red       { color: #e56366; }       /*스토리*/
@@ -3013,6 +3020,45 @@ label.mobiletype {
 }
 
 
+/* 서브페이지 안내소개 페이지 */
+
+.content_titlebox {
+    padding:30px 20px;
+    /*border:1px solid #ddd;*/
+    border-top:2px solid #ddd;
+    border-bottom:1px solid #ddd;
+    background-position: right top;
+    background-size: 52%;
+    background-repeat: no-repeat;
+}
+
+
+.content_titletxt {
+    margin-top: 5px;
+    font-size: 1.12em;
+}
+
+.content_titlebox ul {
+    margin-left:20px;
+    margin-top:10px;
+    font-size:0.92em;
+}
+
+@media screen and (max-width: 767px) {
+    .content_titletxt {
+        margin-top: 60px;
+    }
+}
+
+.content_container_wrap {
+    position:relative;
+    padding: 0;
+    margin: 0 auto;
+    width:100%;
+    margin-top: 24px;
+}
+
+
 /*** 레이아웃 작업 시 아래 하애 주석 해제 필요함 ***/
 
 
@@ -3020,7 +3066,6 @@ label.mobiletype {
 	/*background:#FEFEFE;*/
 	/*border:1px solid #DEDEDE;*/
 /*}*/
-
 
 
 /* 체험기간 임시 블라인드 */
