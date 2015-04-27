@@ -151,7 +151,7 @@ define([
                 $scope.productsList = [];
             }else{
                 $scope.product.CNT = 1;
-                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELIVERY_PRICE" : item.DELIVERY_PRICE, "DELIVERY_ST" : item.DELIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
                 //, "SUM_IN_OUT" : item.SUM_IN_OUT}
 
 
@@ -170,18 +170,18 @@ define([
 //            }
 
             $scope.product.CNT = 1;
-            $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+            $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELIVERY_PRICE" : item.DELIVERY_PRICE, "DELIVERY_ST" : item.DELIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
 
 //            if($scope.checkboxproduct == 'Y'){
 //                $scope.product.CNT = 1;
-//                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+//                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELIVERY_PRICE" : item.DELIVERY_PRICE, "DELIVERY_ST" : item.DELIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
 //            }else{
 //                $scope.productsList = [];
 //            }
 
 //            if($("#checkProduct").is(":checked")){
 //                $scope.product.CNT = 1;
-//                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+//                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELIVERY_PRICE" : item.DELIVERY_PRICE, "DELIVERY_ST" : item.DELIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
 //                //, "SUM_IN_OUT" : item.SUM_IN_OUT
 //            }else{
 //                $scope.productsList = [];
@@ -236,9 +236,8 @@ define([
                         $scope.products = data.PRODUCTS;
                         $scope.item = data;
 
-
-                        $scope.PRICE = data.PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                        $scope.DELEIVERY_PRICE = data.DELEIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+//                        $scope.PRICE = data.PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+//                        $scope.DELIVERY_PRICE = data.DELIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
                         if($scope.products == null){
                             $scope.checkboxproduct = 'Y';
@@ -281,7 +280,7 @@ define([
 
         // 전체 금액 계산
         $scope.addSumPrice = function(price, cnt, index, sum_cnt){
-            if(cnt > 2){
+            if($scope.menu == 'mileage' && cnt > 2){
                 dialogs.notify('알림', '마일리지 몰에서는 2개까지 구매가 가능합니다.', {size: 'md'});
                 $scope.productsList[index].PRODUCT_CNT = 1;
                 return;
@@ -342,7 +341,8 @@ define([
         $scope.click_review = function (){
 
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
@@ -391,7 +391,7 @@ define([
             .then($scope.init)
             .then($scope.getPeopleBoard)
             .then($scope.getReviewList)
-            .then($scope.getProductList)
+//            .then($scope.getProductList)
             ['catch']($scope.reportProblems);
 //        $scope.init();
 //        $scope.getPeopleBoard();

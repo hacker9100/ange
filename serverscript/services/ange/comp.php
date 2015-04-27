@@ -256,69 +256,69 @@ switch ($_method) {
         if($_type == "eventitem"){
 
             $sql = "INSERT INTO ANGE_COMP
-                            (
-                                TARGET_NO,
-                                USER_ID,
-                                NICK_NM,
-                                USER_NM,
-                                REG_DT,
-                                PREG_FL,
-                                BABY_MONTH,
-                                BABY_AGE,
-                                BLOG_URL,
-                                ANSWER,
-                                ADD1,
-                                ADD2,
-                                ADD3,
-                                CHILD_CNT,
-                                PHONE1,
-                                PHONE2,
-                                PRODUCT,
-                                CREDIT_FL,
-                                REASON,
-                                TARGET_GB,
-                                HOPE_REASON,
-                                SIZE1,
-                                SIZE2,
-                                SIZE3,
-                                ANGE_MEET,
-                                PLACE,
-                                PREGNANT_WEEKS,
-                                CHILD_AGE,
-                                CHILD_FL,
-                                BABY_BIRTH
-                            ) VALUES (
-                                 '".$_model[NO]."'
-                                , '".$_SESSION['uid']."'
-                                , '".$_SESSION['nick']."'
-                                , '".$_SESSION['name']."'
-                                , SYSDATE()
-                                , '".$_model[PREG_FL]."'
-                                ,'".$_model[BABY_MONTH]."'
-                                ,'".$_model[BABY_AGE]."'
-                                ,'".$_model[BLOG_URL]."'
-                                ,'".$_model[ANSWER]."'
-                                ,'".$_model[ADD1]."'
-                                ,'".$_model[ADD2]."'
-                                ,'".$_model[ADD3]."'
-                                ,'".$_model[CHILD_CNT]."'
-                                , '".$_SESSION['phone1']."'
-                                , '".$_SESSION['phone2']."'
-                                ,'".$_model[PRODUCT]."'
-                                ,'".$_model[CREDIT_FL]."'
-                                ,'".$_model[REASON]."'
-                                ,'".$_model[TARGET_GB]."'
-                                ,'".$_model[HOPE_REASON]."'
-                                ,'".$_model[SIZE1]."'
-                                ,'".$_model[SIZE2]."'
-                                ,'".$_model[SIZE3]."'
-                                ,'".$_model[ANGE_MEET]."'
-                                ,'".$_model[PLACE]."'
-                                ,".$_model[PREGNANT_WEEKS]."
-                                ,'".$_model[CHILD_AGE]."'
-                                ,'".$_model[CHILD_FL]."'
-                                ,'".$_model[BABY_BIRTH]."'
-                            )";
+                    (
+                        TARGET_NO,
+                        USER_ID,
+                        NICK_NM,
+                        USER_NM,
+                        REG_DT,
+                        PREG_FL,
+                        BABY_MONTH,
+                        BABY_AGE,
+                        BLOG_URL,
+                        ANSWER,
+                        ADD1,
+                        ADD2,
+                        ADD3,
+                        CHILD_CNT,
+                        PHONE1,
+                        PHONE2,
+                        PRODUCT,
+                        CREDIT_FL,
+                        REASON,
+                        TARGET_GB,
+                        HOPE_REASON,
+                        SIZE1,
+                        SIZE2,
+                        SIZE3,
+                        ANGE_MEET,
+                        PLACE,
+                        PREGNANT_WEEKS,
+                        CHILD_AGE,
+                        CHILD_FL,
+                        BABY_BIRTH
+                    ) VALUES (
+                         '".$_model[NO]."'
+                        , '".$_SESSION['uid']."'
+                        , '".$_SESSION['nick']."'
+                        , '".$_SESSION['name']."'
+                        , SYSDATE()
+                        , '".$_model[PREG_FL]."'
+                        ,'".$_model[BABY_MONTH]."'
+                        ,'".$_model[BABY_AGE]."'
+                        ,'".$_model[BLOG_URL]."'
+                        ,'".$_model[ANSWER]."'
+                        ,'".$_model[ADD1]."'
+                        ,'".$_model[ADD2]."'
+                        ,'".$_model[ADD3]."'
+                        ,'".$_model[CHILD_CNT]."'
+                        , '".$_SESSION['phone1']."'
+                        , '".$_SESSION['phone2']."'
+                        ,'".$_model[PRODUCT]."'
+                        ,'".$_model[CREDIT_FL]."'
+                        ,'".$_model[REASON]."'
+                        ,'".$_model[TARGET_GB]."'
+                        ,'".$_model[HOPE_REASON]."'
+                        ,'".$_model[SIZE1]."'
+                        ,'".$_model[SIZE2]."'
+                        ,'".$_model[SIZE3]."'
+                        ,'".$_model[ANGE_MEET]."'
+                        ,'".$_model[PLACE]."'
+                        ,".$_model[PREGNANT_WEEKS]."
+                        ,'".$_model[CHILD_AGE]."'
+                        ,'".$_model[CHILD_FL]."'
+                        ,'".$_model[BABY_BIRTH]."'
+                    )";
 
             $_d->sql_query($sql);
 
@@ -370,7 +370,8 @@ switch ($_method) {
 
                 $data = $_d->sql_fetch($sql);
 
-                if ($data['ada_count_request'] >= 200) {
+                if ($data['ada_count_request'] >= 199) {
+//                if ($data['ada_count_request'] >= 200) {
                     $_d->failEnd("샘플팩 신청이 마감되었습니다.");
                     break;
                 }
@@ -378,59 +379,59 @@ switch ($_method) {
 
             // 응모/신청 광고센터 adm_history_join 테이블에 insert -> 실적통계에서 확인가능
             $sql = "INSERT INTO adm_history_join
-                                (
-                                    ada_idx,
-                                    adu_id,
-                                    adu_name,
-                                    adhj_date_request,
-                                    adhj_answers
-                                ) VALUES (
-                                     '".$_model[ada_idx]."'
-                                    , '".$_SESSION['uid']."'
-                                    , '".$_SESSION['name']."'
-                                    , NOW()
-                                    , '".$_model[ANSWER]."'
-                                )";
+                    (
+                        ada_idx,
+                        adu_id,
+                        adu_name,
+                        adhj_date_request,
+                        adhj_answers
+                    ) VALUES (
+                         '".$_model[ada_idx]."'
+                        , '".$_SESSION['uid']."'
+                        , '".$_SESSION['name']."'
+                        , NOW()
+                        , '".$_model[ANSWER]."'
+                    )";
 
             $_d->sql_query($sql);
 
             // 신청자명 증가
             $sql = "UPDATE adm_ad
-                  SET  ada_count_request = ada_count_request + 1
-                  WHERE ada_idx = '".$_model[ada_idx]."'";
+                    SET  ada_count_request = ada_count_request + 1
+                    WHERE ada_idx = '".$_model[ada_idx]."'";
 
             $_d->sql_query($sql);
 
 
             if(isset($_model[MILEAGE]) && $_model[MILEAGE] != ""){
                 $sql = "INSERT INTO ANGE_USER_MILEAGE
-                                (
-                                    USER_ID,
-                                    EARN_DT,
-                                    MILEAGE_NO,
-                                    EARN_GB,
-                                    PLACE_GB,
-                                    POINT,
-                                    REASON
-                                ) VALUES (
-                                    '".$_SESSION['uid']."'
-                                    , SYSDATE()
-                                    , '990'
-                                    , '990'
-                                    , '샘플팩'
-                                    , '-2000'
-                                    , '샘플팩2 신청'
-                                )";
+                        (
+                            USER_ID,
+                            EARN_DT,
+                            MILEAGE_NO,
+                            EARN_GB,
+                            PLACE_GB,
+                            POINT,
+                            REASON
+                        ) VALUES (
+                            '".$_SESSION['uid']."'
+                            , SYSDATE()
+                            , '990'
+                            , '990'
+                            , '샘플팩'
+                            , '-2000'
+                            , '샘플팩2 신청'
+                        )";
 
                 $_d->sql_query($sql);
 
                 $sql = "UPDATE COM_USER
-                                SET
-                                    USE_POINT = USE_POINT + 2000,
-                                    REMAIN_POINT = REMAIN_POINT - 2000
-                                WHERE
-                                    USER_ID = '".$_SESSION['uid']."'
-                                ";
+                        SET
+                            USE_POINT = USE_POINT + 2000,
+                            REMAIN_POINT = REMAIN_POINT - 2000
+                        WHERE
+                            USER_ID = '".$_SESSION['uid']."'
+                        ";
                 $_d->sql_query($sql);
 
                 $_SESSION['mileage'] = $_SESSION['mileage'] - 2000;
@@ -473,25 +474,25 @@ switch ($_method) {
                                     ";
                     }*/
         $sql = "UPDATE ANGE_COMP
-                            SET
-                                USER_ID = '".$_SESSION['uid']."'
-                                ,NICK_NM = '".$_SESSION['nick']."'
-                                ,USER_NM = '".$_SESSION['name']."'
-                                ,PREG_FL = '".$_model[PREG_FL]."'
-                                ,BABY_MONTH = '".$_model[BABY_MONTH]."'
-                                ,BABY_AGE = '".$_model[BABY_AGE]."'
-                                ,BLOG_URL = '".$_model[BLOG_URL]."'
-                                ,ANSWER = '".$_model[ANSWER]."'
-                                ,ADD1 = '".$_model[ADD1]."'
-                                ,ADD2 = '".$_model[ADD2]."'
-                                ,ADD3 = '".$_model[ADD3]."'
-                                ,CHILD_CNT  = '".$_model[CHILD_CNT]."'
-                                ,PHONE1  = '".$_SESSION['phone1']."'
-                                ,PHONE2  = '".$_SESSION['phone2']."'
-                                ,CREDIT_FL = '".$_model['CREDIT_FL']."'
-                                ,REASON = '".$_model['REASON']."'
-                            WHERE
-                                NO = ".$_key."
+                SET
+                    USER_ID = '".$_SESSION['uid']."'
+                    ,NICK_NM = '".$_SESSION['nick']."'
+                    ,USER_NM = '".$_SESSION['name']."'
+                    ,PREG_FL = '".$_model[PREG_FL]."'
+                    ,BABY_MONTH = '".$_model[BABY_MONTH]."'
+                    ,BABY_AGE = '".$_model[BABY_AGE]."'
+                    ,BLOG_URL = '".$_model[BLOG_URL]."'
+                    ,ANSWER = '".$_model[ANSWER]."'
+                    ,ADD1 = '".$_model[ADD1]."'
+                    ,ADD2 = '".$_model[ADD2]."'
+                    ,ADD3 = '".$_model[ADD3]."'
+                    ,CHILD_CNT  = '".$_model[CHILD_CNT]."'
+                    ,PHONE1  = '".$_SESSION['phone1']."'
+                    ,PHONE2  = '".$_SESSION['phone2']."'
+                    ,CREDIT_FL = '".$_model['CREDIT_FL']."'
+                    ,REASON = '".$_model['REASON']."'
+                WHERE
+                    NO = ".$_key."
 
          ";
         // ,SEASON_NM = '".$_model[SEASON_NM]."'

@@ -274,7 +274,7 @@ define([
                     } else {
                         console.log(list[0].DIRECT_PRICE);
 
-                        $scope.productsList.push({"MAIN_FILE": list[0].MAIN_FILE, "PRODUCT_NO" : list[0].NO, "PRODUCT_NM" : list[0].PRODUCT_NM , "PRICE" : list[0].DIRECT_PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : list[0].DIRECT_PRICE, "DELEIVERY_PRICE" : list[0].DELEIVERY_PRICE, "DELEIVERY_ST" : list[0].DELEIVERY_ST, "PRODUCT_GB" : list[0].PRODUCT_GB});
+                        $scope.productsList.push({"MAIN_FILE": list[0].MAIN_FILE, "PRODUCT_NO" : list[0].NO, "PRODUCT_NM" : list[0].PRODUCT_NM , "PRICE" : list[0].DIRECT_PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : list[0].DIRECT_PRICE, "DELIVERY_PRICE" : list[0].DELIVERY_PRICE, "DELIVERY_ST" : list[0].DELIVERY_ST, "PRODUCT_GB" : list[0].PRODUCT_GB});
 
                         $scope.item.CART = $scope.productsList;
 

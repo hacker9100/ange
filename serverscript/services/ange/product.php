@@ -49,8 +49,8 @@ switch ($_method) {
             $msg = "";
 
             $sql = "SELECT
-                        NO, PRODUCT_NM, PRODUCT_GB, COMPANY_NO, COMPANY_NM, URL, BODY, PRICE, STOCK_FL, SUM_IN_CNT, SUM_OUT_CNT, NOTE, DELEIVERY_PRICE,
-                        DELEIVERY_ST, DIRECT_PRICE, ORDER_YN,(SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
+                        NO, PRODUCT_NM, PRODUCT_GB, COMPANY_NO, COMPANY_NM, URL, BODY, PRICE, STOCK_FL, SUM_IN_CNT, SUM_OUT_CNT, NOTE, DELIVERY_PRICE,
+                        DELIVERY_ST, DIRECT_PRICE, ORDER_YN,(SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
                         (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, PARENT_NO, SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT,
                         IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT
                     FROM
@@ -404,8 +404,8 @@ switch ($_method) {
                         SUM_IN_CNT,
                         SUM_OUT_CNT,
                         NOTE,
-                        DELEIVERY_PRICE,
-                        DELEIVERY_ST,
+                        DELIVERY_PRICE,
+                        DELIVERY_ST,
                         CATEGORY_NO
                     ) VALUES (
                         '".$_model[PRODUCT_NM]."',
@@ -419,8 +419,8 @@ switch ($_method) {
                         '".$_model[SUM_IN_CNT]."',
                         '".$_model[SUM_OUT_CNT]."',
                         '".$_model[NOTE]."',
-                        '".$_model[DELEIVERY_PRICE]."',
-                        '".$_model[DELEIVERY_ST]."',
+                        '".$_model[DELIVERY_PRICE]."',
+                        '".$_model[DELIVERY_ST]."',
                         '".$category_no."'
                     )";
 
@@ -637,13 +637,13 @@ switch ($_method) {
                                 $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                             }
 
-                            $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                            $insert_path[$i] = array('path' => $file_path, 'uid' => $uid, 'kind' => $file[kind]);
 
                             MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
                             MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
 
                         } else {
-                            $insert_path[$i] = array(path => '', uid => '', kind => '');
+                            $insert_path[$i] = array('path' => '', 'uid' => '', 'kind' => $file[kind]);
                         }
                     }
                 }
@@ -686,11 +686,13 @@ switch ($_method) {
                         COMPANY_NM = '".$_model[COMPANY_NM]."',
                         BODY = '".$_model[BODY]."',
                         URL = '".$_model[URL]."',
-                        PRICE = ".$_model[PRICE].",
-                        DIRECT_PRICE = ".$_model[DIRECT_PRICE].",
+                        PRICE = ".($_model[PRICE] == '' ? 0 : $_model[PRICE]).",
+                        DIRECT_PRICE = ".($_model[DIRECT_PRICE] == '' ? 0 : $_model[DIRECT_PRICE]).",
                         SUM_IN_CNT = ".$_model[SUM_IN_CNT].",
                         SUM_OUT_CNT = ".$_model[SUM_OUT_CNT].",
                         NOTE = '".$_model[NOTE]."',
+                        DELIVERY_PRICE = '".$_model[DELIVERY_PRICE]."',
+                        DELIVERY_ST = '".$_model[DELIVERY_ST]."',
                         CATEGORY_NO = '".$category_no."'
                     WHERE
                         NO = ".$_key."
@@ -749,14 +751,13 @@ switch ($_method) {
             }
 
             $sql = "SELECT
-                            F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                        FROM
-                            COM_FILE F
-                        WHERE
-                            F.TARGET_GB = 'PRODUCT'
-                            AND F.CONTENT_GB = 'FILE'
-                            AND F.TARGET_NO = ".$_key."
-                        ";
+                        F.NO, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                    FROM
+                        COM_FILE F
+                    WHERE
+                        F.TARGET_GB = 'PRODUCT'
+                        AND F.TARGET_NO = ".$_key."
+                    ";
 
             $result = $_d->sql_query($sql,true);
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
@@ -767,6 +768,9 @@ switch ($_method) {
                     for ($i = 0 ; $i < count($files); $i++) {
                         if ($row[FILE_NM] == $files[$i][name] && $row[FILE_SIZE] == $files[$i][size]) {
                             $is_delete = false;
+
+                            $sql = "UPDATE COM_FILE SET FILE_GB = '".$files[$i][kind]."' WHERE NO = ".$row[NO];
+                            $_d->sql_query($sql);
                         }
                     }
                 }

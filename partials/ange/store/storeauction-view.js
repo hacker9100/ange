@@ -80,7 +80,7 @@ define([
                 $scope.product.CNT = 1;
 
                 // TOTAL_PRICE 경매 가격으로 으로 데이터 넣음
-                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : item.AUCTION_AMOUNT, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : item.AUCTION_AMOUNT, "PARENT_NO" : products.PARENT_NO, "DELIVERY_PRICE" : item.DELIVERY_PRICE, "DELIVERY_ST" : item.DELIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
                  // , "RECEIPTOR_NM" : $rootScope.user_info.USER_NM, "RECEIPT_ADDR" :$rootScope.user_info.ADDR, "RECEIPT_ADDR_DETAIL" : $rootScope.user_info.ADDR_DETAIL, "RECEIPT_PHONE" : $rootScope.user_info.PHONE_2
             }
         }
@@ -96,11 +96,11 @@ define([
 
 //            if($("#checkProduct").is(":checked")){
 //                $scope.product.CNT = 1;
-//                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB, "SUM_IN_OUT" : item.SUM_IN_OUT});
+//                $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELIVERY_PRICE" : item.DELIVERY_PRICE, "DELIVERY_ST" : item.DELIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB, "SUM_IN_OUT" : item.SUM_IN_OUT});
 //            }else{
 //                $scope.productsList = [];
 //            }
-            $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELEIVERY_PRICE" : item.DELEIVERY_PRICE, "DELEIVERY_ST" : item.DELEIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
+            $scope.productsList.push({"MAIN_FILE": item.MAIN_FILE, "PRODUCT_NO" : products.NO, "PRODUCT_NM" : products.PRODUCT_NM , "PRICE" : item.PRICE, "PRODUCT_CNT" : 0, "TOTAL_PRICE" : 0, "PARENT_NO" : products.PARENT_NO, "DELIVERY_PRICE" : item.DELIVERY_PRICE, "DELIVERY_ST" : item.DELIVERY_ST, "PRODUCT_GB" : item.PRODUCT_GB});
         }
 
 //        $(document).ready(function(){
@@ -141,7 +141,7 @@ define([
                         $scope.item = data;
 
                         $scope.PRICE = data.PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-                        $scope.DELEIVERY_PRICE = data.DELEIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                        $scope.DELIVERY_PRICE = data.DELIVERY_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                         $scope.DIRECT_PRICE = data.DIRECT_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
 
 
@@ -209,7 +209,7 @@ define([
             }
 
             // TOTAL_PRICE 즉시 구매 가격으로 데이터 넣음
-            $scope.productsList.push({"MAIN_FILE": list.MAIN_FILE, "PRODUCT_NO" : list.NO, "PRODUCT_NM" : list.PRODUCT_NM , "PRICE" : list.DIRECT_PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : list.DIRECT_PRICE, "DELEIVERY_PRICE" : list.DELEIVERY_PRICE, "DELEIVERY_ST" : list.DELEIVERY_ST, "PRODUCT_GB" : list.PRODUCT_GB});
+            $scope.productsList.push({"MAIN_FILE": list.MAIN_FILE, "PRODUCT_NO" : list.NO, "PRODUCT_NM" : list.PRODUCT_NM , "PRICE" : list.DIRECT_PRICE, "PRODUCT_CNT" : 1, "TOTAL_PRICE" : list.DIRECT_PRICE, "DELIVERY_PRICE" : list.DELIVERY_PRICE, "DELIVERY_ST" : list.DELIVERY_ST, "PRODUCT_GB" : list.PRODUCT_GB});
 
             $scope.item.CART = $scope.productsList;
 

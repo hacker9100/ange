@@ -11,7 +11,7 @@
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
-                                <p>적립된 마일리지로 구매가 가능합니다</p>
+                                <p ng-if="menu == 'mileage'">적립된 마일리지로 구매가 가능합니다</p>
                             </div>
 
                             <!-- 상품 기본정보 -->
@@ -32,9 +32,8 @@
                                             <div class="store_col_info_title">{{item.PRODUCT_NM}}<span ng-if="item.SUM_CNT <= 0">(품절)</span></div>
 
                                             <div class="store_col_info">
-                                                <div class="store_list_item maininfo" ng-show="menu == 'mileage'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{PRICE}} P</span></div>
-                                                <div class="store_list_item maininfo" ng-show="menu == 'cummerce'"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{PRICE}} 원</span></div>
-                                                <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{DELEIVERY_PRICE}} 원({{item.DELEIVERY_ST == 1 ? '선불' : '착불'}})</span></div>
+                                                <div class="store_list_item maininfo"><strong>가 격</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE | number }} {{menu == 'mileage' ? 'P' : '원'}}</span></div>
+                                                <div class="store_list_item maininfo"><strong>배송비</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DELIVERY_PRICE | number}} 원({{item.DELIVERY_ST == 2 ? '선불' : '착불'}})</span></div>
                                                 <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.COMPANY_NM}}</span></div>
                                                 <div ng-show="role == 'ANGE_ADMIN'" class="store_list_item maininfo"><strong>수량</strong>
                                                     <span ng-class="item.SUM_CNT > 0 ? 'table_gray' : 'table_red'" style="position:absolute; left:120px;">{{item.SUM_CNT >  0 ? item.SUM_CNT : '품절'}}</span>
@@ -78,7 +77,7 @@
 
                                                     </div>
                                                     <div class="store_optionprice">
-                                                        {{item.PRICE * product.PRODUCT_CNT}}
+                                                        {{item.PRICE * product.PRODUCT_CNT | number}}
                                                         <button type="button" class="btn btn-xs btn-info" title="구매 수량을 변경할 수 있습니다" ng-click="click_removeProduct($index);">x</button>
                                                     </div>
 
@@ -97,15 +96,15 @@
                                                     <span class="store_optiontitle">&nbsp;</span>
                                                     <span class="store_pricevalue">
                                                         <span>
-                                                            마일리지<br />현금<br />배송비
+                                                            {{menu == 'mileage' ? '마일리지' : '현금'}}
+                                                            <br />
+                                                            배송비
                                                         </span>
                                                     </span>
                                                     <span class="store_totalprice">
-                                                        <!--{{TOTAL_MILEAGE}}-->{{menu == 'mileage' ? total() : 0}} P
+                                                        {{total() | number}} {{menu == 'mileage' ? 'P' : '원'}}
                                                         <br />
-                                                        {{menu == 'cummerce' ? total() : 0}} 원
-                                                        <br />
-                                                        {{item.DELEIVERY_ST == 1 ? '선불' : '착불'}}
+                                                        {{item.DELIVERY_ST == 2 ? '선불' : '착불'}}
                                                     </span>
                                                 </div>
 
