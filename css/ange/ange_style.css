@@ -2975,7 +2975,7 @@ label.mobiletype {
     margin-top:6px
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 1200px) {
     .mobilefooter_logobox_logos {
         border:none;
         width:100%;
