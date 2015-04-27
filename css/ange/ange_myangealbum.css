@@ -23,18 +23,33 @@
 
 .thumb_imgbox {
     display: inline;
+    position: relative;
     list-style-type: none;
     cursor: pointer;
+    margin:0;
+    padding:0;
 }
 
 .thumb_imgbox:hover {
-    opacity: 0.5;
+    opacity: 0.8;
 }
 
-.thumb_img {
-    width:25%;
+.album_slide_img {
+    width:100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.album_slide_thumb {
+    display: inline-block;
+    width:20%;
+    margin:0;
+    padding:0;
     background-size: cover;
     background-position: center center;
+    border:1px solid transparent;
+    border-radius: 50%;
 }
 
 .album_detail_subject {
@@ -66,3 +81,4 @@
     margin:0px auto;
     padding:5px 0;
 }
+
