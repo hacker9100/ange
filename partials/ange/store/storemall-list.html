@@ -131,53 +131,91 @@
 
                             </div>  <!-- /.common_container -->
 
-
-
-                            <div class="container-fluid sub_contents_search" style="margin-top:25px;">
+                            <div class="container-fluid sub_contents_search">
                                 <div class="row">
-
                                     <div class="col-xs-12" style="padding:0">
-                                        <div class="btn-group" style="float:left;">
 
-                                            <div class="btn-group" style="float:left;">
-                                                <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>
-                                            </div><!-- /btn-group -->
+                                        <div class="btn-group col-xs-12 col-sm-2" style="float:left; padding:2px 0px;">
+                                            <select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class="form-control input-sm" placeholder="검색선택"></select>
+                                        </div><!-- /btn-group -->
 
-                                            <div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">
-                                                <input type="text" ng-model="search.KEYWORD" class="form-control" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0" placeholder="검색할 단어를 두자 이상 입력">
+                                        <div class="input-group input-group-sm col-xs-12 col-sm-7" style="float:left; padding:2px 0px;">
+                                            <input type="text" ng-model="search.KEYWORD" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0" class="form-control" placeholder="검색할 단어를 두자 이상 입력">
 
-                                                <span class="input-group-btn" >
-                                                <button class="btn btn-default"  ng-click="click_searchPeopleBoard();" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                                                </span>
-                                            </div>
-                                        </div>  <!-- /.btn-group -->
-
-                                        <div class="btn-group" ng-show="menu == 'cummerce'" style="float:right; display: block;">
-                                            <button type="button" class="btn btn-default btn-sm" style="width:120px; text-align:left;" data-toggle="dropdown" aria-expanded="false" >
-                                                <span ng-if="category[1] == null"> 전체 </span>
-                                                <span ng-if="category[1] != null"> {{category[1].CATEGORY_NM}} </span>
-
-                                                <span class="caret" style="float:right; margin:8px 4px 0 0"></span>
-                                            </button>
-
-                                            <ul class="dropdown-menu" role="menu" >
-                                                <li><a ng-click="click_selectCategory(1, null)">전체</a></li>
-                                                <li ng-repeat="category in category_list">
-                                                    <a ng-click="click_selectCategory(1, category)">{{category.CATEGORY_NM}}</a>
-                                                </li>
-                                            </ul>
+                                            <span class="input-group-btn" ng-click="click_searchPeopleBoard();">
+                                                <button class="btn btn-default"  type="button" ><span class="glyphicon glyphicon-search"></span></button>
+                                            </span>
                                         </div>
-                                    </div>  <!-- /.col-xs-12-->
+
+                                        <div class="btn-group col-xs-12 col-sm-2" style="float:right; padding:2px 0px;" ng-show="menu == 'cummerce'">
+                                            <select ng-model="cate" class="form-control input-sm" placeholder="검색선택" ng-options="category.CATEGORY_NM for category in category_list">
+                                                <option value="">전체</option>
+                                            </select>
+                                            <!--<button type="button" class="btn btn-default btn-sm" style="width:100%;" data-toggle="dropdown" aria-expanded="false" >-->
+                                                <!--<span ng-if="category[1] == null"> 전체 </span>-->
+                                                <!--<span ng-if="category[1] != null"> {{category[1].CATEGORY_NM}} </span>-->
+                                                <!--<span class="caret" style="float:right; margin:8px 4px 0 0"></span>-->
+                                            <!--</button>-->
+                                            <!--<ul class="dropdown-menu" role="menu">-->
+                                                <!--<li><a ng-click="click_selectCategory(1, null)">전체</a></li>-->
+                                                <!--<li ng-repeat="category in category_list">-->
+                                                <!--<a ng-click="click_selectCategory(1, category)">{{category.CATEGORY_NM}}</a>-->
+                                                <!--</li>-->
+                                            <!--</ul>-->
+                                        </div>
+
+                                    </div><!-- /.col-xs-12-->
 
                                     <div class="col-xs-12 people_searchresult" style="display:block;">	<!-- 검색 시에만 표시됩니다. -->
-                                        {{TOTAL_COUNT}}개의 게시물 중 <span class="table_red">{{SEARCH_TOTAL_COUNT == null ? 0 : SEARCH_TOTAL_COUNT}}</span> 개가 검색되었습니다.
-                                    </div><!-- /.people_searchresult -->
-
+                                        {{PHOTO_TOTAL_COUNT}}개의 게시물 중 <span class="table_red">{{SEARCH_TOTAL_COUNT == null ? 0 : SEARCH_TOTAL_COUNT}}</span> 개가 검색되었습니다.
+                                    </div><!-- /.col-xs-12-->
                                 </div><!-- /.row -->
-                            </div><!-- /.container -->
+                            </div><!-- /.sub_contents_search -->
+
+                            <!--<div class="container-fluid sub_contents_search" style="margin-top:25px;">-->
+                                <!--<div class="row">-->
+
+                                    <!--<div class="col-xs-12" style="padding:0">-->
+                                        <!--<div class="btn-group" style="float:left;">-->
+
+                                            <!--<div class="btn-group" style="float:left;">-->
+                                                <!--<select ng-model="search.CONDITION" ng-options="condition.name for condition in conditions" class= "form-control" placeholder="검색선택"></select>-->
+                                            <!--</div>&lt;!&ndash; /btn-group &ndash;&gt;-->
+
+                                            <!--<div class="input-group input-group-sm" style="width:240px; margin-left: 5px; float:left;">-->
+                                                <!--<input type="text" ng-model="search.KEYWORD" class="form-control" ng-keyup="($event.which === 13) ? click_searchPeopleBoard() : 0" placeholder="검색할 단어를 두자 이상 입력">-->
+
+                                                <!--<span class="input-group-btn" >-->
+                                                <!--<button class="btn btn-default"  ng-click="click_searchPeopleBoard();" type="button"><span class="glyphicon glyphicon-search"></span></button>-->
+                                                <!--</span>-->
+                                            <!--</div>-->
+                                        <!--</div>  &lt;!&ndash; /.btn-group &ndash;&gt;-->
+
+                                        <!--<div class="btn-group" ng-show="menu == 'cummerce'" style="float:right; display: block;">-->
+                                            <!--<button type="button" class="btn btn-default btn-sm" style="width:120px; text-align:left;" data-toggle="dropdown" aria-expanded="false" >-->
+                                                <!--<span ng-if="category[1] == null"> 전체 </span>-->
+                                                <!--<span ng-if="category[1] != null"> {{category[1].CATEGORY_NM}} </span>-->
+
+                                                <!--<span class="caret" style="float:right; margin:8px 4px 0 0"></span>-->
+                                            <!--</button>-->
+
+                                            <!--<ul class="dropdown-menu" role="menu" >-->
+                                                <!--<li><a ng-click="click_selectCategory(1, null)">전체</a></li>-->
+                                                <!--<li ng-repeat="category in category_list">-->
+                                                    <!--<a ng-click="click_selectCategory(1, category)">{{category.CATEGORY_NM}}</a>-->
+                                                <!--</li>-->
+                                            <!--</ul>-->
+                                        <!--</div>-->
+                                    <!--</div>  &lt;!&ndash; /.col-xs-12&ndash;&gt;-->
+
+                                    <!--<div class="col-xs-12 people_searchresult" style="display:block;">	&lt;!&ndash; 검색 시에만 표시됩니다. &ndash;&gt;-->
+                                        <!--{{TOTAL_COUNT}}개의 게시물 중 <span class="table_red">{{SEARCH_TOTAL_COUNT == null ? 0 : SEARCH_TOTAL_COUNT}}</span> 개가 검색되었습니다.-->
+                                    <!--</div>&lt;!&ndash; /.people_searchresult &ndash;&gt;-->
+
+                                <!--</div>&lt;!&ndash; /.row &ndash;&gt;-->
+                            <!--</div>&lt;!&ndash; /.container &ndash;&gt;-->
 
                             <div class="sub_contents_body">
-
                                 <!-- peoplephoto_list -->
                                 <div class="peoplep_list_tab" ng-show="menu == 'mileagemall'">
                                     <ul class="nav nav-tabs nav-justified">
@@ -196,6 +234,24 @@
                                     </ul>
                                 </div>  <!-- /.peoplep_list_tab -->
 
+                                <div class="peoplep_list_dropdown" ng-show="menu == 'mileagemall'">
+                                    <!--<pre>{{SEARCH_NOW_CATEGORY || '전체'}}</pre>-->
+                                    <button type="button" class="btn btn-default btn-sm col-xs-12 dropdown-toggle" data-toggle="dropdown">
+                                        <!--{{SEARCH_NOW_CATEGORY || '전체'}} &nbsp;-->
+                                        {{SEARCH_NOW_CATEGORY}} &nbsp;
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu" style="position:relative; width:100%;">
+                                        <li style="cursor:pointer;">
+                                            <a ng-click="click_selectTab(0, tab)">{{'전체'}}</a>
+                                        </li>
+                                        <li ng-repeat="tab in category_list"  style="cursor:pointer;">
+                                            <a ng-click="click_selectTab($index+1, tab)">{{tab.CATEGORY_NM}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
                                 <div class="container-fluid peoplephoto_list_wrap">
                                     <div class="row">
                                         <div class="col-xs-12 v-cell-4">
@@ -203,17 +259,17 @@
 
                                                 <!-- 마일리지몰 썸네일 타입 -->
                                                 <div style="display: block;"  ng-show="menu == 'mileagemall'" ng-repeat='item in list'>
-                                                    <div class="col-xs-4 people_photo_contentcol">
+                                                    <div class="col-xs-6 col-sm-4 people_photo_contentcol">
                                                         <div ng-click="click_showViewPeoplePhoto(item)" class="people_photo_content">
                                                             <div class="people_photo_imgbox">
                                                                 <img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url('{{item.FILE}}')" />
                                                             </div>
-                                                            <div class="people_photo_txt">{{item.PRODUCT_NM}}<span ng-if="item.SUM_CNT <= 0">(품절)</span></div>
+                                                            <div class="people_photo_txt text_ellipsis">{{item.PRODUCT_NM}}<span ng-if="item.SUM_CNT <= 0">(품절)</span></div>
                                                             <div class="people_photo_info"><span class="table_blue">{{item.PRICE}}</span> P</div>
                                                         </div>  <!-- /.people_photo_content -->
                                                     </div>  <!-- /.people_photo_contentcol -->
                                                 </div>  <!-- 1줄	 -->
-                                                <div ng-show="menu == 'mileagemall' && list == ''">
+                                                <div ng-show="menu == 'mileagemall' && list == ''" style="min-height: 320px;">
                                                     <p><center>조회 데이터가 없습니다.</center></p>
                                                 </div>
 
@@ -250,7 +306,7 @@
                                                         </div>  <!-- comp_basic -->
                                                     </div>  <!-- col-xs-8 -->
                                                 </div>  <!-- /.row -->
-                                                <div ng-show="menu == 'cummerce' && list == ''">
+                                                <div ng-show="menu == 'cummerce' && list == ''" style="min-height: 320px;">
                                                     <p><center>조회 데이터가 없습니다.</center></p>
                                                 </div>
 

@@ -64,6 +64,7 @@ define([
         $scope.init = function(session) {
 
             //$scope.selectIdx = 'ALL';
+            $scope.SEARCH_NOW_CATEGORY = '전체';
 
             $scope.getList('ange/product', 'list', {}, $scope.search, true)
                 .then(function(data){
@@ -118,6 +119,9 @@ define([
                 // 초기화 후 조회
                 $scope.list = [];
                 $scope.click_showPeopleBoardList();
+
+                $scope.SEARCH_NOW_CATEGORY = '전체';
+
             }else{
                 $scope.search.CATEGORY_NO = category_no;
 
@@ -129,6 +133,8 @@ define([
                 // 초기화 후 조회
                 $scope.list = [];
                 $scope.click_showPeopleBoardList();
+
+                $scope.SEARCH_NOW_CATEGORY = category.CATEGORY_NM;
             }
         };
 

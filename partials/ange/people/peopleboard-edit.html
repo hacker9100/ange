@@ -98,7 +98,7 @@
                                                     <div data-ng-repeat="file in queue">
                                                         <div class="files_row">
                                                             <input type="checkbox" checklist-model="item.queue" checklist-value="file" style="vertical-align: top;" aria-label="...">
-                                                            <span class="fileicon"><span class="glyphicon glyphicon-picture table_icon_pic"></span></span>
+                                                            <span class="fileicon"><span class="table_icon_pic"></span></span>
                                                             <span class="filename">{{file.name}}</span>
                                                             <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;">{{file.size | formatFileSize}}</div>
                                                             <div class="filesize table_gray" style="float:right; font-famly: arial, san-serif;" data-ng-show="file.error">{{file.error}}</div>

@@ -95,7 +95,7 @@
                         <!--</div>&lt;!&ndash; /.sub_contents_wrap &ndash;&gt;-->
 
 
-                        <div class="sub_contents_body">
+                        <div class="sub_contents_body" style="line-height: 14px;">
 
                             <!-- peoplepoll_list -->
                             <!--<table id="comp_board_table" ng-table="tableParams" class="table table-hover">-->
@@ -126,132 +126,183 @@
                                 <!--</tr>-->
                             <!--</table>-->
 
-                            <table id="comp_board_table" class="table table-hover">
-
-                                <thead style="min-width:360px;">
-                                <tr class="board_thead normaltype" height="48"  style="min-width:360px;">
-                                    <td width="9%" align="center"><span class="board_th">번호</span></td>
-                                    <td align="center"><span class="board_th">제목</span></td>
-                                    <td ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" width="120" align="center"><span class="board_th">작성자</span></td>
-                                    <td width="80" align="center"><span class="board_th">작성일</span></td>
-                                    <td width="60" align="center"><span class="board_th">조회</span></td>
-                                </tr>
-                                </thead>
-
-                                <tbody class="on" ng-repeat="item in list" style="width:100%; min-width:320px !important;">
-
-                                    <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
-                                        <td class="table_no normaltype">
-                                            <span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.NOTICE_FL == '1' ? '공지' : item.BOARD_NO}}</span>
-                                        </td>
-                                        <td class="normaltype">
-                                            <div style="float:left;">
-                                            <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
-                                            <span style="font-size:0.90em;" ng-show="item.NOTICE_FL == '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><strong style="font-weight: 800"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</strong></span>
-                                            <span style="font-size:0.86em;" ng-show="item.NOTICE_FL != '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
-                                            <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
-                                            <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
-                                            <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
-
-                                            <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>
-                                            <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
-                                            <span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>
-                                            </div>
-
-                                            <div style="display:inline-block; float:left;">
-                                                <span class="reply_num feed_count countlike_color table_gray" style="line-height:16px; margin-right:5px;">{{item.LIKE_CNT}}</span>
-                                                <span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>
-                                            </div>
-                                        </td>
-                                        <td ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="table_author normaltype">
-                                            <div ng-show="item.NICK_NM != ''" ng-bind-html="item.NICK_NM"></div>
-                                            <!--<div ng-show="item.NICK_NM == null || item.NICK_NM != ''">{{item.REG_USER_NM}}</div>-->
-                                        </td> <!-- {{}} -->
-                                        <td class="table_date normaltype">{{item.REG_DT}}</td>
-                                        <td class="table_hit normaltype">{{item.HIT_CNT}}</td></tr>
-
-                                    </tr>
-                                    <tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">
-                                        <!---- 모바일 TD ------>
-                                        <td class="table_no mobiletype" style="width: 10% !important;">
-                                            <span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.NOTICE_FL == '1' ? '공지' : item.BOARD_NO}}</span>
-                                        </td>
-
-                                        <td class="mobiletype" colspan="1" style="width: 90% !important;">
-                                            <div>
-                                                <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-show="item.NOTICE_FL == '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
-                                                    <strong style="font-weight: 700"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</strong>
-                                                    <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
-                                                    <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
-                                                    <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
-                                                </div>
-
-                                                <div style="width:100%; white-space: inherit; overflow: hidden; text-overflow: ellipsis; font-size:1.12em;" ng-show="item.NOTICE_FL != '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">
-                                                    <span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}
-                                                    <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
-                                                    <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
-                                                    <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
-                                                </div>
+                            <dl class="board_normal_titlelist">
+                                <dt class="ange_blue t_title cell_no">번호</dt>
+                                <dt class="ange_blue t_title cell_title">제목</dt>
+                                <dt class="ange_blue t_title cell_autho">작성자</dt>
+                                <dt class="ange_blue t_title cell_date">작성일</dt>
+                                <dt class="ange_blue t_title cell_hit">조회</dt>
+                            </dl>
 
 
-                                                <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>
-                                                <!--<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
-                                                <span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>
-                                            </div>
+                            <dl data-ng-show="list == '' || list == null" class="board_normal_tablelist_load">
+                                <dd ng-show="!isLoding" class="t_body cell_status">
+                                    <div class="t_txt">조회 데이터가 없습니다.</div>
+                                </dd>
 
-                                            <div style="display:inline-block;">
-                                                <span class="reply_num feed_count countlike_color table_gray" style="line-height:16px; margin-right:5px;">{{item.LIKE_CNT}}</span>
-                                                <span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>
-                                            </div>
+                                <dd ng-show="isLoding" class="t_body cell_status">
+                                    <!--<div class="t_txt">로딩 중 입니다.</td>-->
+                                    <img src="/imgs/ange/loading_01.gif" />
+                                </dd>
+                            </dl>
 
-                                            <div ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="table_blue" ng-bind-html="item.NICK_NM" style="font-size:0.78em; color:#868686; margin-top:10px;"></div>
-                                            <div class="table_date" style="font-size:0.78em; color:#868686;">{{item.REG_DT+'  /  조회수 '+item.HIT_CNT}}</div>
-                                        </td>
+                            <dl ng-repeat="item in list" ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;" class="board_normal_tablelist" ng-class="item.NOTICE_FL == '1' ? 'notice' : ''">
 
-                                    </tr>
+                                <dd class="ange_darkgray t_body cell_no">
+                                    <div class="t_txt" ng-class="item.NOTICE_FL == '1' ? 'ange_blue' : ''">{{item.NOTICE_FL == '1' ? '공지' : item.BOARD_NO}}</div>
+                                </dd>
+                                <dd class="ange_darkgray t_body cell_title">
+                                    <div class="t_txt">
+                                        <span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new"></span>
+                                        <span ng-show="item.FILE_CNT != 0" class="table_icon_pic"></span>
+                                        <!--<span class="glyphicon glyphicon-lock table_icon_lock"></span>-->
+                                        <span ng-show="item.NOTICE_FL == '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><strong style="font-weight: 800"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</strong></span>
+                                        <span ng-show="item.NOTICE_FL != '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>
+                                        <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>
+                                        <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>
+                                        <!--<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>-->
+                                    </div>
+                                </dd>
+                                <dd class="ange_darkgray t_body cell_reply">
+                                    <div class="t_txt" style="display:inline;">
+                                        <div style="display: inline; margin-left:6px;"><span class="bullet_likes heart_icon"></span>{{item.LIKE_CNT}}</div>
+                                        <div style="display: inline; margin-left:6px;"><span class="bullet_likes scrap_icon"></span>{{item.PHOTO_REPLY_COUNT}}</div>
+                                        <!--<span class="reply_num feed_count countlike_color table_gray" style="line-height:16px; margin-right:5px;">{{item.LIKE_CNT}}</span>-->
+                                        <!--<span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>-->
+                                    </div>
+                                </dd>
+                                <dd ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="ange_darkgray t_body cell_autho">
+                                    <div class="t_txt" ng-show="item.NICK_NM != ''" ng-bind-html="item.NICK_NM"></div>
+                                </dd>
+                                <dd class="t_txt ange_darkgray t_body cell_date">{{item.REG_DT}}</dd>
+                                <dd class="t_txt ange_darkgray t_body cell_hit">{{item.HIT_CNT}}</dd>
+                            </dl>
+                            <!--<table id="comp_board_table" class="table table-hover" style="width:100%;">-->
+
+                                <!--<thead style="width:100%; min-width:360px;">-->
+                                <!--<tr class="board_thead normaltype" height="48"  style="min-width:360px;">-->
+                                    <!--<td width="9%" align="center"><span class="board_th">번호</span></td>-->
+                                    <!--<td align="center"><span class="board_th">제목</span></td>-->
+                                    <!--<td ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" width="120" align="center"><span class="board_th">작성자</span></td>-->
+                                    <!--<td width="80" align="center"><span class="board_th">작성일</span></td>-->
+                                    <!--<td width="60" align="center"><span class="board_th">조회</span></td>-->
+                                <!--</tr>-->
+                                <!--</thead>-->
+
+                                <!--<tbody class="on" ng-repeat="item in list" style="width:100%; min-width:320px !important;">-->
 
                                     <!--<tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">-->
-                                        <!--<td class="table_no">-->
+                                        <!--<td class="table_no normaltype">-->
                                             <!--<span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.NOTICE_FL == '1' ? '공지' : item.BOARD_NO}}</span>-->
                                         <!--</td>-->
-                                        <!--<td colspan="4">-->
-                                            <!--<div style="width:100%; font-size:1.12em; white-space:nowrap; overflow: hidden; text-overflow: ellipsis; ">-->
-                                                <!--<span style="font-size:0.86em;" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>-->
-                                                <!--<span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>-->
-                                                <!--<span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>-->
-                                                <!--&lt;!&ndash;<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>&ndash;&gt;-->
+                                        <!--<td class="normaltype">-->
+                                            <!--<div style="float:left;">-->
+                                            <!--&lt;!&ndash;<span class="glyphicon glyphicon-lock table_icon_lock"></span>&ndash;&gt;-->
+                                            <!--<span style="font-size:0.90em; border:1px solid red; width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; " ng-show="item.NOTICE_FL == '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><strong style="font-weight: 800"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</strong></span>-->
+                                            <!--<span style="font-size:0.86em; border:1px solid blue;" ng-show="item.NOTICE_FL != '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>-->
+                                            <!--<span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>-->
+                                            <!--<span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>-->
+                                            <!--&lt;!&ndash;<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>&ndash;&gt;-->
+
+                                            <!--<span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>-->
+                                            <!--&lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;-->
+                                            <!--<span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
+                                            <!--</div>-->
+
+                                            <!--<div style="display:inline;">-->
+                                                <!--<span class="reply_num feed_count countlike_color table_gray" style="line-height:16px; margin-right:5px;">{{item.LIKE_CNT}}</span>-->
+                                                <!--<span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>-->
+                                            <!--</div>-->
+                                        <!--</td>-->
+                                        <!--<td ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="table_author normaltype">-->
+                                            <!--<div ng-show="item.NICK_NM != ''" ng-bind-html="item.NICK_NM"></div>-->
+                                            <!--&lt;!&ndash;<div ng-show="item.NICK_NM == null || item.NICK_NM != ''">{{item.REG_USER_NM}}</div>&ndash;&gt;-->
+                                        <!--</td> &lt;!&ndash; {{}} &ndash;&gt;-->
+                                        <!--<td class="table_date normaltype">{{item.REG_DT}}</td>-->
+                                        <!--<td class="table_hit normaltype">{{item.HIT_CNT}}</td></tr>-->
+
+                                    <!--</tr>-->
+                                    <!--<tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">-->
+                                        <!--&lt;!&ndash;-- 모바일 TD ----&ndash;&gt;-->
+                                        <!--<td class="table_no mobiletype" style="width: 10% !important;">-->
+                                            <!--<span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.NOTICE_FL == '1' ? '공지' : item.BOARD_NO}}</span>-->
+                                        <!--</td>-->
+
+                                        <!--<td class="mobiletype" colspan="1" style="width: 90% !important;">-->
+                                            <!--<div style="width:100%;">-->
+                                                <!--<div style="width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size:1.12em; border:1px solid blue;" ng-show="item.NOTICE_FL == '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">-->
+                                                    <!--<strong style="font-weight: 700"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</strong>-->
+                                                    <!--<span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>-->
+                                                    <!--<span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>-->
+                                                    <!--&lt;!&ndash;<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>&ndash;&gt;-->
+                                                <!--</div>-->
+
+                                                <!--<div style="width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size:1.12em; border:1px solid red;" ng-show="item.NOTICE_FL != '1' && item.BOARD_ST != 'D' && item.BLIND_FL == 'N'">-->
+                                                    <!--<span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}-->
+                                                    <!--<span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>-->
+                                                    <!--<span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>-->
+                                                    <!--&lt;!&ndash;<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>&ndash;&gt;-->
+                                                <!--</div>-->
+
 
                                                 <!--<span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>-->
                                                 <!--&lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;-->
                                                 <!--<span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>-->
                                             <!--</div>-->
 
-                                            <!--<div style="display:inline-block;">-->
+                                            <!--<div style="display:inline-block; text-align:right;">-->
                                                 <!--<span class="reply_num feed_count countlike_color table_gray" style="line-height:16px; margin-right:5px;">{{item.LIKE_CNT}}</span>-->
                                                 <!--<span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>-->
                                             <!--</div>-->
 
-                                            <!--<div ng-bind-html="item.NICK_NM" style="font-size:0.78em; color:#868686; margin-top:10px;"></div>-->
+                                            <!--<div ng-if="menu.COMM_NO != 8 || role == 'ANGE_ADMIN'" class="table_blue" ng-bind-html="item.NICK_NM" style="font-size:0.78em; color:#868686; margin-top:10px;"></div>-->
                                             <!--<div class="table_date" style="font-size:0.78em; color:#868686;">{{item.REG_DT+'  /  조회수 '+item.HIT_CNT}}</div>-->
-                                            <!--&lt;!&ndash;<div class="table_hit" style="font-size:0.78em; color:#868686;">{{item.HIT_CNT}}</div>&ndash;&gt;-->
                                         <!--</td>-->
-                                        <!--<td ng-if="menu.COMM_NO != 8" class="table_author"></td> &lt;!&ndash; {{}} &ndash;&gt;-->
+
                                     <!--</tr>-->
 
-                                </tbody>
+                                    <!--&lt;!&ndash;<tr ng-click="click_showViewPeopleBoard(item.NO)" style="cursor:pointer;">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<td class="table_no">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<span ng-class="item.NOTICE_FL == '1' ? 'table_blue' : ''">{{item.NOTICE_FL == '1' ? '공지' : item.BOARD_NO}}</span>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<td colspan="4">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<div style="width:100%; font-size:1.12em; white-space:nowrap; overflow: hidden; text-overflow: ellipsis; ">&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<span style="font-size:0.86em;" ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'"><span ng-show="search.COMM_NO == '31'">[{{item.CATEGORY_NO}}기]</span>{{ item.SUBJECT | limitTo: 50 }}{{item.SUBJECT > 50 ? '...' : ''}}</span>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글 입니다.</span>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리 된 글입니다.</span>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;&lt;!&ndash;<span ng-class="item.REPLY_COUNT > 0 ? 'reply_num' : ''">{{item.REPLY_COUNT > 0 ? '['+item.REPLY_COUNT+']' : ''}}</span>&ndash;&gt;&ndash;&gt;-->
 
-                                <tbody data-ng-show="list == '' || list == null"  style="width:100%; min-width:320px !important;">
+                                                <!--&lt;!&ndash;<span ng-show="item.REG_DT == item.REG_NEW_DT" class="table_icon_new">N</span>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;&lt;!&ndash;<span ng-show="item.IMAGE_FL == 'Y'" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<span ng-show="item.FILE_CNT != 0" class="glyphicon glyphicon-picture table_icon_pic"></span>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                                    <tr ng-show="!isLoding">
-                                        <td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>
-                                    </tr>
+                                            <!--&lt;!&ndash;<div style="display:inline-block;">&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<span class="reply_num feed_count countlike_color table_gray" style="line-height:16px; margin-right:5px;">{{item.LIKE_CNT}}</span>&ndash;&gt;-->
+                                                <!--&lt;!&ndash;<span class="reply_num feed_count countreply_color table_gray" style="line-height:16px; margin-left:0px;">{{item.REPLY_COUNT}}</span>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
-                                    <tr ng-show="isLoding">
-                                        <td colspan="5" style="text-align: center">로딩 중 입니다.</td>
-                                    </tr>
+                                            <!--&lt;!&ndash;<div ng-bind-html="item.NICK_NM" style="font-size:0.78em; color:#868686; margin-top:10px;"></div>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<div class="table_date" style="font-size:0.78em; color:#868686;">{{item.REG_DT+'  /  조회수 '+item.HIT_CNT}}</div>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;&lt;!&ndash;<div class="table_hit" style="font-size:0.78em; color:#868686;">{{item.HIT_CNT}}</div>&ndash;&gt;&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</td>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<td ng-if="menu.COMM_NO != 8" class="table_author"></td> &lt;!&ndash; {{}} &ndash;&gt;&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
 
-                                </tbody>
-                            </table><!-- /.List-->
+                                <!--</tbody>-->
+
+                                <!--<tbody data-ng-show="list == '' || list == null"  style="width:100%; min-width:320px !important;">-->
+
+                                    <!--<tr ng-show="!isLoding">-->
+                                        <!--<td colspan="5" style="text-align: center">조회 데이터가 없습니다.</td>-->
+                                    <!--</tr>-->
+
+                                    <!--<tr ng-show="isLoding">-->
+                                        <!--<td colspan="5" style="text-align: center">로딩 중 입니다.</td>-->
+                                    <!--</tr>-->
+
+                                <!--</tbody>-->
+                            <!--</table>&lt;!&ndash; /.List&ndash;&gt;-->
 
                             <div class="container-fluid people_view_btnwrap">
                                 <div class="row">

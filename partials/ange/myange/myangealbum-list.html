@@ -12,7 +12,7 @@
                             <div class="sub_contents_title">
                                 <span class="sub_contents_bullet"></span>
                                 <h3 style="font-weight:bold;">{{community}} <!--<a href="#" class="people_boardmanager">관리자<span class="people_boardmanager_id">비타민D</span></a>--></h3>
-                                <p>나만의 앨범을 만들어 소중한 추억을 간직하세요. {{m_view_mode.value}}</p>
+                                <p>나만의 앨범을 만들어 소중한 추억을 간직하세요.</p>
                             </div>
 
                             <div ng-show="!isAlbum" class="container-fluid sub_contents_search">
@@ -156,13 +156,14 @@
                                         <div ng-show="m_view_mode.value == 'ALBUM'" class="comp_basic h-cell-dynamic">
 
                                             <div class="album_image" ng-click="click_showViewMyAlbum(current)" >
-                                                <img ng-src="{{current.ALBUM_FILE}}" alt="{{current.SUBJECT}}">
+                                                <!--<img ng-src="{{current.ALBUM_FILE}}" alt="{{current.SUBJECT}}">-->
+                                                <img src="/imgs/ange/_blank.gif" class="album_slide_img" alt="{{current.SUBJECT}}" style="background-image: url('{{current.ALBUM_FILE}}')">
                                             </div>
 
                                             <div class="thumb_wrapper">
                                                 <ul class="thumb_list">
                                                     <li ng-repeat="item in list" class="thumb_imgbox" ng-click="click_currentImage(item)">
-                                                        <img src="/imgs/ange/_blank.gif" class="thumb_img" ng-style="{ 'background-image' : 'url( {{ item.ALBUM_FILE }} )' }">
+                                                        <img src="/imgs/ange/_blank.gif" class="album_slide_thumb" ng-style="{ 'background-image' : 'url( {{ item.ALBUM_FILE }} )' }">
                                                     </li>
                                                 </ul>
                                             </div>
