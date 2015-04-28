@@ -26,6 +26,9 @@
         <div onClick="window.open('http://ebook.ange.co.kr/ebook/ecatalog.php?Dir=24&catimage=&callmode=admin','_blank','width=1100,height=750');" data-ng-show="task.NO=='1466'" class="ebook_view_button">
             <span class="glyphicon glyphicon-book" aria-hidden="true"></span> eBook
         </div>
+        <div ng-click="click_eBookOpen(task)" data-ng-show="task.EBOOK_URL!='' && task.EBOOK_URL!=null" class="ebook_view_button">
+            <span class="glyphicon glyphicon-book" aria-hidden="true"></span> eBook
+        </div>
 
         <!--<button class="story_sharebtn blackbtn" ng-click="click_shareContent()" title="이 글을 공유하려면 클릭"><span class="glyphicon glyphicon-cloud-upload sharebtn_icon"></span>공 유</button>-->
         <button class="story_sharebtn redbtn" ng-click="click_addScrap();" title="스크랩하기"><span class="glyphicon glyphicon-folder-open sharebtn_icon"></span>스크랩</button>

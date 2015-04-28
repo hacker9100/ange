@@ -125,20 +125,20 @@
 
                 if ($_search['PARENT_NO'] == "0") {
                     $sql = "SELECT {$row['TOTAL_COUNT']} AS TOTAL_COUNT, DATA.*, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, (SELECT COUNT(*) FROM ANGE_ALBUM WHERE PARENT_NO = DATA.NO) AS PHOTO_CNT FROM
-                        (
-                            SELECT * FROM ANGE_ALBUM WHERE REG_UID = '{$_SESSION['uid']}' {$search_where}
-                            ORDER BY {$sort_order}
-                            {$limit}
-                        ) AS DATA
-                            LEFT OUTER JOIN COM_FILE F ON (SELECT MAX(NO) FROM ANGE_ALBUM WHERE PARENT_NO = DATA.NO) = F.TARGET_NO AND F.TARGET_GB = 'ALBUM'";
+                            (
+                                SELECT * FROM ANGE_ALBUM WHERE REG_UID = '{$_SESSION['uid']}' {$search_where}
+                                ORDER BY {$sort_order}
+                                {$limit}
+                            ) AS DATA
+                                LEFT OUTER JOIN COM_FILE F ON (SELECT MAX(NO) FROM ANGE_ALBUM WHERE PARENT_NO = DATA.NO) = F.TARGET_NO AND F.TARGET_GB = 'ALBUM'";
                 } else {
                     $sql = "SELECT {$row['TOTAL_COUNT']} AS TOTAL_COUNT, DATA.*, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, (SELECT COUNT(*) FROM ANGE_ALBUM WHERE PARENT_NO = DATA.NO) AS PHOTO_CNT FROM
-                        (
-                            SELECT * FROM ANGE_ALBUM WHERE REG_UID = '{$_SESSION['uid']}' {$search_where}
-                            ORDER BY {$sort_order}
-                            {$limit}
-                        ) AS DATA
-                            LEFT OUTER JOIN COM_FILE F ON DATA.NO = F.TARGET_NO AND F.TARGET_GB = 'ALBUM'";
+                            (
+                                SELECT * FROM ANGE_ALBUM WHERE REG_UID = '{$_SESSION['uid']}' {$search_where}
+                                ORDER BY {$sort_order}
+                                {$limit}
+                            ) AS DATA
+                                LEFT OUTER JOIN COM_FILE F ON DATA.NO = F.TARGET_NO AND F.TARGET_GB = 'ALBUM'";
                 }
 
 

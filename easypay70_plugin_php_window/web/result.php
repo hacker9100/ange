@@ -1,15 +1,17 @@
 <html>
 <title>KICC EASYPAY7.0 SAMPLE</title>
-<meta name="robots" content="noindex, nofollow"> 
-<meta http-equiv="content-type" content="text/html; charset=euc-kr">
+<meta name="robots" content="noindex, nofollow">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="./css/style.css" rel="stylesheet" type="text/css">
 <script language="javascript" src="./js/default.js" type="text/javascript"></script>
 <?
+header("Content-type: text/html; charset=utf-8");
+
 $res_cd		= $_POST["res_cd"];
 $res_msg	= $_POST["res_msg"];
 $cno		= $_POST["cno"];
 $amount		= $_POST["amount"];
-//$msg_type	= $_POST["msg_type"];
+$msg_type	= $_POST["msg_type"];
 $order_no	= $_POST["order_no"];
 $auth_no	= $_POST["auth_no"];
 $tran_date	= $_POST["tran_date"];
@@ -29,7 +31,7 @@ $bank_nm	= $_POST["bank_nm"];
 $account_no	= $_POST["account_no"];
 $deposit_nm	= $_POST["deposit_nm"];
 $expire_date	= $_POST["expire_date"];
-//$vacct_rt_val	= $_POST["vacct_rt_val"];
+$vacct_rt_val	= $_POST["vacct_rt_val"];
 $cash_res_cd	= $_POST["cash_res_cd"];
 $cash_res_msg	= $_POST["cash_res_msg"];
 $cash_auth_no	= $_POST["cash_auth_no"];
@@ -54,188 +56,188 @@ $refund_date	= $_POST["refund_date"];
 $pay_type	= $_POST["pay_type"];
 $gw_url 	= $_POST["gw_url"];
 $gw_port	= $_POST["gw_port"];
-	
+
 $gw_name = "";
-if( "testgw.easypay.co.kr" == $gw_url )
+if( "testgw.easypay.co.kr" == gw_url )
 {
-    $gw_name = "Å×½ºÆ®";
+    $gw_name = "í…ŒìŠ¤íŠ¸";
 }
-else if( "gw.easypay.co.kr" == $gw_url )
+else if( "gw.easypay.co.kr" == gw_url )
 {
-    $gw_name = "¸®¾ó";
+    $gw_name = "ë¦¬ì–¼";
 }
 ?>
-<body> 
+<body>
 <table border="0" width="910" cellpadding="10" cellspacing="0">
-<tr>
-    <td>
-    <table border="0" width="900" cellpadding="0" cellspacing="0">
-	<tr>
-		<td height="30" bgcolor="#FFFFFF" align="left">&nbsp;<img src="./img/arow3.gif" border="0" align="absmiddle">&nbsp;<b>°á°ú</b></td>
-	</tr>
-	<tr>
-		<td height="2" bgcolor="#2D4677"></td>
-	</tr>
-	</table>
-	<table border="0" width="900" cellpadding="0" cellspacing="0">
-	<tr>
-		<td height="5"></td>
-	</tr>
-	</table>
-    <table border="0" width="900" cellpadding="0" cellspacing="1" bgcolor="#DCDCDC">
-    <tr height="25">
-        <td bgcolor="#EDEDED" width="150">&nbsp;¼­¹ö</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<?=$gw_name?>[<?=$gw_url?>]</td>
-        <td bgcolor="#EDEDED" width="150">&nbsp;¼­¹öPORT</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<?=$gw_port?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED" width="150">&nbsp;ÀÀ´äÄÚµå</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<?=$res_cd?></td>
-        <td bgcolor="#EDEDED" width="150">&nbsp;ÀÀ´ä¸Ş½ÃÁö</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<?=$res_msg?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;PG°Å·¡¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$cno?></td>
-        <td bgcolor="#EDEDED">&nbsp;ÃÑ °áÁ¦±İ¾×</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$amount?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;°Å·¡±¸ºĞ</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$msg_type?></td>
-        <td bgcolor="#EDEDED">&nbsp;ÁÖ¹®¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$order_no?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;½ÂÀÎ¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$auth_no?></td>
-        <td bgcolor="#EDEDED">&nbsp;½ÂÀÎÀÏ½Ã</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$tran_date?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;Æ÷ÀÎÆ®½ÂÀÎ¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$pnt_auth_no?></td>
-        <td bgcolor="#EDEDED">&nbsp;Æ÷ÀÎÆ®½ÂÀÎÀÏ½Ã</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$pnt_tran_date?></td>
-	</tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;ÄíÆù½ÂÀÎ¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$cpon_auth_no?></td>
-        <td bgcolor="#EDEDED">&nbsp;ÄíÆù½ÂÀÎÀÏ½Ã</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$cpon_tran_date?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;Ä«µå¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$card_no?></td>
-        <td bgcolor="#EDEDED">&nbsp;¹ß±Ş»çÄÚµå</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$issuer_cd?></td>
-    </tr>
     <tr>
-        <td bgcolor="#EDEDED">&nbsp;¹ß±Ş»ç¸í</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$issuer_nm?></td>
-        <td bgcolor="#EDEDED">&nbsp;¸ÅÀÔ»çÄÚµå</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$acquirer_cd?></td>
+        <td>
+            <table border="0" width="900" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="30" bgcolor="#FFFFFF" align="left">&nbsp;<img src="./img/arow3.gif" border="0" align="absmiddle">&nbsp;<b>ê²°ê³¼</b></td>
+                </tr>
+                <tr>
+                    <td height="2" bgcolor="#2D4677"></td>
+                </tr>
+            </table>
+            <table border="0" width="900" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="5"></td>
+                </tr>
+            </table>
+            <table border="0" width="900" cellpadding="0" cellspacing="1" bgcolor="#DCDCDC">
+                <tr height="25">
+                    <td bgcolor="#EDEDED" width="150">&nbsp;ì„œë²„</td>
+                    <td bgcolor="#FFFFFF" width="300">&nbsp;<?=$gw_name?>[<?=$gw_url?>]</td>
+                    <td bgcolor="#EDEDED" width="150">&nbsp;ì„œë²„PORT</td>
+                    <td bgcolor="#FFFFFF" width="300">&nbsp;<?=$gw_port?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED" width="150">&nbsp;ì‘ë‹µì½”ë“œ</td>
+                    <td bgcolor="#FFFFFF" width="300">&nbsp;<?=$res_cd?></td>
+                    <td bgcolor="#EDEDED" width="150">&nbsp;ì‘ë‹µë©”ì‹œì§€</td>
+                    <td bgcolor="#FFFFFF" width="300">&nbsp;<?=$res_msg?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;PGê±°ë˜ë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$cno?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ì´ ê²°ì œê¸ˆì•¡</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$amount?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ê±°ë˜êµ¬ë¶„</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$msg_type?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ì£¼ë¬¸ë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$order_no?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ìŠ¹ì¸ë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$auth_no?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ìŠ¹ì¸ì¼ì‹œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$tran_date?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;í¬ì¸íŠ¸ìŠ¹ì¸ë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$pnt_auth_no?></td>
+                    <td bgcolor="#EDEDED">&nbsp;í¬ì¸íŠ¸ìŠ¹ì¸ì¼ì‹œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$pnt_tran_date?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì¿ í°ìŠ¹ì¸ë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$cpon_auth_no?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ì¿ í°ìŠ¹ì¸ì¼ì‹œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$cpon_tran_date?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì¹´ë“œë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$card_no?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ë°œê¸‰ì‚¬ì½”ë“œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$issuer_cd?></td>
+                </tr>
+                <tr>
+                    <td bgcolor="#EDEDED">&nbsp;ë°œê¸‰ì‚¬ëª…</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$issuer_nm?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ë§¤ì…ì‚¬ì½”ë“œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$acquirer_cd?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ë§¤ì…ì‚¬ëª…</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$acquirer_nm?></td>
+                    <td bgcolor="#EDEDED">&nbsp;í• ë¶€ê°œì›”</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$install_period?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ë¬´ì´ìì—¬ë¶€</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$noint?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ì€í–‰ì½”ë“œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$bank_cd?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì€í–‰ëª…</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$bank_nm?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ê³„ì¢Œë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$account_no?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì…ê¸ˆìëª…</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$deposit_nm?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ê³„ì¢Œì‚¬ìš©ë§Œë£Œì¼</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$expire_date?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì…ê¸ˆí†µë³´ìš© ì—…ì²´ ì‚¬ìš©ì˜ì—­</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$vacct_rt_val?></td>
+                    <td bgcolor="#EDEDED">&nbsp;í˜„ê¸ˆì˜ìˆ˜ì¦ ê²°ê³¼ì½”ë“œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$cash_res_cd?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;í˜„ê¸ˆì˜ìˆ˜ì¦ ê²°ê³¼ë©”ì„¸ì§€</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$cash_res_msg?></td>
+                    <td bgcolor="#EDEDED">&nbsp;í˜„ê¸ˆì˜ìˆ˜ì¦ ìŠ¹ì¸ë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$cash_auth_no?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;í˜„ê¸ˆì˜ìˆ˜ì¦ ìŠ¹ì¸ì¼ì‹œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$cash_tran_date?></td>
+                    <td bgcolor="#EDEDED">&nbsp;PhoneID</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$auth_id?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì¸ì¦ë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$billid?></td>
+                    <td bgcolor="#EDEDED">&nbsp;íœ´ëŒ€í°ë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$mobile_no?></td>
+                </tr>
+                <tr>
+                    <td height="25" bgcolor="#EDEDED">&nbsp;ì „í™”ë²ˆí˜¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$ars_no?></td>
+                    <td bgcolor="#EDEDED">&nbsp;í¬ì¸íŠ¸ì‚¬</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$cp_cd?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì‚¬ìš©í¬ì¸íŠ¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$used_pnt?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ì”ì—¬í•œë„</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$remain_pnt?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;í• ì¸/ë°œìƒí¬ì¸íŠ¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$pay_pnt?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ëˆ„ì í¬ì¸íŠ¸</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$accrue_pnt?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì¿ í°ì”ì•¡</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$remain_cpon?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ì¿ í° ì‚¬ìš©ê¸ˆì•¡</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$used_cpon?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì œíœ´ì‚¬ëª…ì¹­</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$mall_nm?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ì—ìŠ¤í¬ë¡œ ì‚¬ìš©ìœ ë¬´</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$escrow_yn?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ë³µí•©ê²°ì œ ìœ ë¬´</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$complex_yn?></td>
+                    <td bgcolor="#EDEDED">&nbsp;ë§¤ì…ì·¨ì†Œì¼ì‹œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$canc_acq_date?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ì·¨ì†Œì¼ì‹œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$canc_date?></td>
+                    <td bgcolor="#EDEDED">&nbsp;í™˜ë¶ˆì˜ˆì •ì¼ì‹œ</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$refund_date?></td>
+                </tr>
+                <tr height="25">
+                    <td bgcolor="#EDEDED">&nbsp;ê²°ì œìˆ˜ë‹¨</td>
+                    <td bgcolor="#FFFFFF">&nbsp;<?=$pay_type?></td>
+                    <td bgcolor="#EDEDED">&nbsp;</td>
+                    <td bgcolor="#FFFFFF">&nbsp;</td>
+                </tr>
+            </table>
+        </td>
     </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;¸ÅÀÔ»ç¸í</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$acquirer_nm?></td>
-        <td bgcolor="#EDEDED">&nbsp;ÇÒºÎ°³¿ù</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$install_period?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;¹«ÀÌÀÚ¿©ºÎ</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$noint?></td>
-        <td bgcolor="#EDEDED">&nbsp;ÀºÇàÄÚµå</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$bank_cd?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;ÀºÇà¸í</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$bank_nm?></td>
-        <td bgcolor="#EDEDED">&nbsp;°èÁÂ¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$account_no?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;ÀÔ±İÀÚ¸í</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$deposit_nm?></td>
-        <td bgcolor="#EDEDED">&nbsp;°èÁÂ»ç¿ë¸¸·áÀÏ</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$expire_date?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;ÀÔ±İÅëº¸¿ë ¾÷Ã¼ »ç¿ë¿µ¿ª</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$vacct_rt_val?></td>
-        <td bgcolor="#EDEDED">&nbsp;Çö±İ¿µ¼öÁõ °á°úÄÚµå</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$cash_res_cd?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;Çö±İ¿µ¼öÁõ °á°ú¸Ş¼¼Áö</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$cash_res_msg?></td>
-        <td bgcolor="#EDEDED">&nbsp;Çö±İ¿µ¼öÁõ ½ÂÀÎ¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$cash_auth_no?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;Çö±İ¿µ¼öÁõ ½ÂÀÎÀÏ½Ã</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$cash_tran_date?></td>
-        <td bgcolor="#EDEDED">&nbsp;PhoneID</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$auth_id?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;ÀÎÁõ¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$billid?></td>
-        <td bgcolor="#EDEDED">&nbsp;ÈŞ´ëÆù¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$mobile_no?></td>
-    </tr>
-    <tr>
-        <td height="25" bgcolor="#EDEDED">&nbsp;ÀüÈ­¹øÈ£</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$ars_no?></td>
-        <td bgcolor="#EDEDED">&nbsp;Æ÷ÀÎÆ®»ç</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$cp_cd?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;»ç¿ëÆ÷ÀÎÆ®</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$used_pnt?></td>
-        <td bgcolor="#EDEDED">&nbsp;ÀÜ¿©ÇÑµµ</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$remain_pnt?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;ÇÒÀÎ/¹ß»ıÆ÷ÀÎÆ®</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$pay_pnt?></td>
-        <td bgcolor="#EDEDED">&nbsp;´©ÀûÆ÷ÀÎÆ®</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$accrue_pnt?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;ÄíÆùÀÜ¾×</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$remain_cpon?></td>
-        <td bgcolor="#EDEDED">&nbsp;ÄíÆù »ç¿ë±İ¾×</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$used_cpon?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;Á¦ÈŞ»ç¸íÄª</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$mall_nm?></td>
-        <td bgcolor="#EDEDED">&nbsp;¿¡½ºÅ©·Î »ç¿ëÀ¯¹«</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$escrow_yn?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;º¹ÇÕ°áÁ¦ À¯¹«</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$complex_yn?></td>
-        <td bgcolor="#EDEDED">&nbsp;¸ÅÀÔÃë¼ÒÀÏ½Ã</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$canc_acq_date?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;Ãë¼ÒÀÏ½Ã</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$canc_date?></td>
-        <td bgcolor="#EDEDED">&nbsp;È¯ºÒ¿¹Á¤ÀÏ½Ã</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$refund_date?></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED">&nbsp;°áÁ¦¼ö´Ü</td>
-        <td bgcolor="#FFFFFF">&nbsp;<?=$pay_type?></td>
-        <td bgcolor="#EDEDED">&nbsp;</td>
-        <td bgcolor="#FFFFFF">&nbsp;</td>
-    </tr>
-    </table>
-    </td>
-</tr>
 </table>
 </form>
 </body>

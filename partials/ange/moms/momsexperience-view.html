@@ -73,8 +73,19 @@
                                 </div>  <!-- col-xs-12 -->
                             </div>  <!-- /.row -->
 
+                            <div ng-show="role == 'ANGE_ADMIN'" class="form-group">
+                                <input type="text" class="form-control" placeholder="Enter text to copy" ng-model="clip">
+                            </div>
+
                             <div class="webzine_listbar" id="view_state" style="float:left; padding: 0 20px; margin:0px; width:100%; line-height:32px;">
-                                <h4><span id="event_view" class="glyphicon glyphicon-th-large h4_icon table_gray"></span>상세정보</h4>
+                                <h4>
+                                    <span id="event_view" class="glyphicon glyphicon-th-large h4_icon table_gray"></span>상세정보
+                                    <div ng-show="role == 'ANGE_ADMIN'" style="float:right; font-size: 0.86em;">
+                                        <button class="webzine_list_btn red" clip-copy="clip" clip-click="click_clipCopy()" style="line-height:18px;" title="퍼가기">
+                                            <span class="glyphicon glyphicon-download-alt"></span> 퍼가기
+                                        </button>
+                                    </div>
+                                </h4>
                             </div>
 
                             <div class="container-fluid peopleboard_view_contentwrap">

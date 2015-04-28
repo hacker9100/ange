@@ -377,6 +377,13 @@ define([
         $scope.getMenuList1 = function () {
             $scope.getList('com/menu', 'menu', {}, {SYSTEM_GB: 'ANGE', CHANNEL_NO: '1'}, true)
                 .then(function(data){
+
+                    for (var i in data) {
+                        if (data[i].ETC == null || data[i].ETC == '') {
+                            data[i].CATEGORY = [];
+                        }
+                    }
+
                     $scope.list1 = data;
 
 //                    $scope.TOTAL_CNT = data[0].TOTAL_COUNT;

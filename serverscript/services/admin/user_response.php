@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -54,7 +54,7 @@
                 $limit = "";
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
                 $sql = "SELECT
@@ -98,11 +98,11 @@
 
             $_d->sql_beginTransaction();
 
-            if (isset($_model[TYPE])) {
+            if (isset($_model['TYPE'])) {
                 $type_str = "";
-                for($i=0;$i< sizeof($_model[TYPE]);$i++){
-                    $type_str .= trim($_model[TYPE][$i]);
-                    if (sizeof($_model[TYPE]) - 1 != $i) $type_str .= ",";
+                for($i=0;$i< sizeof($_model['TYPE']);$i++){
+                    $type_str .= trim($_model['TYPE'][$i]);
+                    if (sizeof($_model['TYPE']) - 1 != $i) $type_str .= ",";
                 }
             }
 
@@ -112,8 +112,8 @@
                         NOTE,
                         REG_DT
                     ) VALUES (
-                        '".$_model[USER_ID]."',
-                        '".$_model[NOTE]."',
+                        '".$_model['USER_ID']."',
+                        '".$_model['NOTE']."',
                         SYSDATE()
                     )";
 
@@ -148,7 +148,7 @@
 
                 $sql = "UPDATE ADMIN_USER_RESPONSE
                         SET
-                            NOTE = '".$_model[NOTE]."'
+                            NOTE = '".$_model['NOTE']."'
                         WHERE
                             NO = ".$_key."
                         ";

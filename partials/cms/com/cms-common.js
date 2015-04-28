@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('cms-common', ['$scope', '$rootScope', '$location', '$q', 'dataService', 'dialogs', function ($scope, $rootScope, $location, $q, dataService, dialogs) {
+    controllers.controller('cms-common', ['$scope', '$rootScope', '$location', '$q', 'dataService', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $location, $q, dataService, dialogs, CONSTANT) {
 
         $scope.path = $location.path();
 
@@ -170,6 +170,8 @@ define([
                 }
                 $location.path("/signin");
                 return false;
+            } else if ($rootScope.session.SYSTEM_GB != CONSTANT.SYSTEM_GB) {
+                dialogs.error('오류', '다른 시스템에 로그인되어있습니다. 로그아웃 후 다시 로그인 하세요', {size: 'md'});
             }
 
             if (url) path = url;

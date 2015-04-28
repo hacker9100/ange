@@ -768,7 +768,8 @@ define([
         // 신청자격 여부 체크
         $scope.click_samplepackCheck = function (){
 
-            if($scope.season_gb == 'SAMPLE2' && $scope.item.ada_count_request > 199){
+            if($scope.season_gb == 'SAMPLE2' && $scope.item.ada_count_request > 198){
+//            if($scope.season_gb == 'SAMPLE2' && $scope.item.ada_count_request > 199){
 
                 dialogs.notify('알림', '샘플팩 신청이 마감되었습니다.', {size: 'md'});
                 $location.url('/moms/samplepack/intro');
@@ -800,7 +801,8 @@ define([
 
         $scope.click_compCheck = function (){
 
-            if($scope.season_gb == 'SAMPLE2' && $scope.item.ada_count_request > 199){
+            if($scope.season_gb == 'SAMPLE2' && $scope.item.ada_count_request > 198){
+//            if($scope.season_gb == 'SAMPLE2' && $scope.item.ada_count_request > 199){
 
                 dialogs.notify('알림', '샘플팩 신청이 마감되었습니다.', {size: 'md'});
                 $location.url('/moms/samplepack/intro');

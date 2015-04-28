@@ -79,6 +79,21 @@
                     $msg = $_d->mysql_error;
                 }
 
+                $cnt = 0;
+                $t_year = date('Y');
+                $d_day = (strtotime($t_year.substr($data['BIRTH'],4,4)) - strtotime(date("Ymd"))) / 86400;
+
+                if ( $d_day < 90 && $d_day >= 0) {
+                    $list['type'] = "event";
+                    $list['event'] = "내생일";
+                    $list['event_type'] = "birth";
+                    $list['dday'] = $d_day;
+
+                    $row[$cnt++] = $list;
+                }
+
+                $data['SCHEDULE'] = $row;
+
                 if ($data) {
                     if ( $data['USER_ST'] == "F") {
                         $_d->failEnd("이용이 정지된 사용자입니다. 관리자에게 문의하세요.");
@@ -169,6 +184,17 @@
 
                     $blog_data  = $_d->sql_fetch($sql);
                     $data['BLOG'] = $blog_data;
+
+                    $sql = "SELECT DATA.*, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, (SELECT COUNT(*) FROM ANGE_ALBUM WHERE PARENT_NO = DATA.NO) AS PHOTO_CNT FROM
+                            (
+                                SELECT * FROM ANGE_ALBUM WHERE REG_UID = '{$_key}' AND PARENT_NO <> '0'
+                                ORDER BY REG_DT DESC
+                                LIMIT 0, 3
+                            ) AS DATA
+                                LEFT OUTER JOIN COM_FILE F ON DATA.NO = F.TARGET_NO AND F.TARGET_GB = 'ALBUM'";
+
+                    $album_data  = $_d->getData($sql);
+                    $data['ALBUM'] = $album_data;
                 } else {
                     $_d->failEnd("아이디나 패스워드를 확인해주세요.");
                 }
@@ -432,7 +458,7 @@
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID) BABY_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'M') BABY_MALE_CNT,
                             (SELECT COUNT(*) FROM ANGE_USER_BABY WHERE USER_ID = U.USER_ID AND BABY_SEX_GB = 'F') BABY_FEMALE_CNT,
-                            U.USER_GB, U.SUPPORT_NO, U.REMAIN_POINT
+                            U.USER_GB, U.SUPPORT_NO, U.REMAIN_POINT, U.BIRTH
                         FROM
                             COM_USER U, USER_ROLE UR, COM_ROLE R
                         WHERE
@@ -525,9 +551,19 @@
                                 USER_ID = '".$_key."'
                             ";
 
-                    $blog_result = $_d->sql_query($sql);
-                    $blog_data  = $_d->sql_fetch_array($blog_result);
+                    $blog_data  = $_d->sql_fetch($sql);
                     $data['BLOG'] = $blog_data;
+
+                    $sql = "DATA.*, F.FILE_NM, F.FILE_SIZE, F.PATH, F.FILE_ID, (SELECT COUNT(*) FROM ANGE_ALBUM WHERE PARENT_NO = DATA.NO) AS PHOTO_CNT FROM
+                            (
+                                SELECT * FROM ANGE_ALBUM WHERE REG_UID = '{$_key}' AND PARENT_NO <> '0'
+                                ORDER BY REG_DT DESC
+                                LIMIT 0, 3
+                            ) AS DATA
+                                LEFT OUTER JOIN COM_FILE F ON DATA.NO = F.TARGET_NO AND F.TARGET_GB = 'ALBUM'";
+
+                    $album_data  = $_d->getData($sql);
+                    $data['ALBUM'] = $album_data;
                 }
 
                 if ($err > 0) {

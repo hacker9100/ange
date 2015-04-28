@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('project-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'COMMON', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, COMMON) {
+    controllers.controller('project-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'ngTableParams', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, ngTableParams, CONSTANT) {
 
         /********** 초기화 **********/
         // 검색 조건
@@ -86,7 +86,7 @@ define([
         }
 
         // 페이지 사이즈
-        $scope.PAGE_SIZE = COMMON.PAGE_SIZE;
+        $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
 
         // 프로젝트 목록 조회
         $scope.getProjectList = function () {

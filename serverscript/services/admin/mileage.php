@@ -71,12 +71,12 @@
                 $limit = "";
 
                 // 검색조건 추가
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    $search_where .= "AND ".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%'";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 if (isset($_page)) {
@@ -170,14 +170,14 @@
             if($_type == 'item') {
                 $sql = "UPDATE ANGE_MILEAGE
                         SET
-                            SUBJECT = '".$_model[SUBJECT]."',
-                            POINT = '".$_model[POINT]."',
-                            REASON = '".$_model[REASON]."',
-                            COMM_GB = '".$_model[COMM_GB]."',
-                            LIMIT_CNT = ".$_model[LIMIT_CNT].",
-                            LIMIT_GB = '".$_model[LIMIT_GB]."',
-                            LIMIT_DAY = '".$_model[LIMIT_DAY]."',
-                            POINT_ST = ".$_model[POINT_ST]."
+                            SUBJECT = '".$_model['SUBJECT']."',
+                            POINT = '".$_model['POINT']."',
+                            REASON = '".$_model['REASON']."',
+                            COMM_GB = '".$_model['COMM_GB']."',
+                            LIMIT_CNT = ".$_model['LIMIT_CNT'].",
+                            LIMIT_GB = '".$_model['LIMIT_GB']."',
+                            LIMIT_DAY = '".$_model['LIMIT_DAY']."',
+                            POINT_ST = ".$_model['POINT_ST']."
                         WHERE NO = '".$_key."'
                         ";
 
@@ -192,7 +192,7 @@
             } else if ($_type == 'status') {
                 $sql = "UPDATE ANGE_MILEAGE
                         SET
-                            POINT_ST = ".$_model[POINT_ST]."
+                            POINT_ST = ".$_model['POINT_ST']."
                         WHERE NO = '".$_key."'
                         ";
 

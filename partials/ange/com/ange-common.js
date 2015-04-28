@@ -152,6 +152,7 @@ define([
                             $rootScope.email = null;
                             $rootScope.nick = null;
                             $rootScope.profileImg = null;
+                            $rootScope.albumList = null;
 
                             $rootScope.addr = null;
                             $rootScope.addr_detail = null;
@@ -340,6 +341,19 @@ define([
                     $rootScope.profileImg = CONSTANT.BASE_URL + session.USER_INFO.FILE.PATH + session.USER_INFO.FILE.FILE_ID;
                 } else {
                     $rootScope.profileImg = null;
+                }
+
+                if (session.USER_INFO != undefined && session.USER_INFO.ALBUM) {
+                    var albumData = session.USER_INFO.ALBUM;
+                    for(var i in albumData) {
+                        if (albumData[i].FILE_ID != null) {
+                            albumData[i].ALBUM_FILE = CONSTANT.BASE_URL + albumData[i].PATH + 'thumbnail/' + albumData[i].FILE_ID;
+                        }
+                    }
+
+                    $rootScope.albumList = albumData;
+                } else {
+                    $rootScope.albumList = null;
                 }
 
                 $rootScope.addr = session.ADDR;
@@ -618,6 +632,125 @@ define([
                     $location.path('myange/account');
                 }
             }
+        };
+
+        // 로그인 모달창
+        $scope.openLogin = function (content, size) {
+            var dlg = dialogs.create('/partials/ange/popup/login-popup.html',
+                ['$scope', '$modalInstance', '$controller', '$timeout', 'data', 'CONSTANT', function($scope, $modalInstance, $controller, $timeout, data, CONSTANT) {
+
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope}));
+
+                    $scope.item = {};
+                    $scope.save_id = false;
+                    $scope.content = data;
+
+                    if (localStorage.getItem('save_id')) {
+                        $scope.save_id = true;
+                        $scope.item.id = localStorage.getItem('user_id');
+
+                        $timeout(function() { $('#password').focus();}, 1000);
+                    } else {
+                        $timeout(function() { $('#id').focus();}, 1000);
+                    }
+
+                    // 상단 배너 이미지 조회
+                    $scope.getLoginBanner = function () {
+                        $scope.search = {};
+                        $scope.search.ADP_IDX = CONSTANT.AD_CODE_BN31;
+                        $scope.search.ADA_STATE = 1;
+                        $scope.search.ADA_TYPE = 'banner';
+                        $scope.search.MENU = $scope.path[1];
+                        $scope.search.CATEGORY = ($scope.path[2] == undefined ? '' : $scope.path[2]);
+
+                        $scope.getList('ad/banner', 'list', {NO:0, SIZE:1}, $scope.search, false)
+                            .then(function(data){
+                                $scope.loginBanner = data[0];
+                                $scope.loginBanner.img = CONSTANT.AD_FILE_URL + data[0].ada_preview;
+                            })
+                            ['catch'](function(error){});
+                    };
+
+                    $scope.getLoginBanner();
+
+                    $scope.click_ok = function () {
+                        if ($scope.item.id == null || $scope.item.id == '') {
+                            dialogs.notify('알림', '아이디를 입력하세요', {size: 'md'});
+                            return;
+                        }
+
+                        if ($scope.save_id) {
+                            localStorage.setItem('user_id', $scope.item.id);
+                        } else {
+                            localStorage.removeItem('user_id');
+                        }
+
+                        $scope.item.SYSTEM_GB = 'ANGE';
+
+                        $scope.login($scope.item.id, $scope.item)
+                            .then(function(data){
+                                $rootScope.login = true;
+                                $rootScope.authenticated = true;
+                                $rootScope.user_info = data;
+                                $rootScope.uid = data.USER_ID;
+                                $rootScope.mileage = data.REMAIN_POINT;
+                                $rootScope.message = data.MESSAGE_CNT;
+                                $rootScope.name = data.USER_NM;
+                                $rootScope.role = data.ROLE_ID;
+                                $rootScope.system = data.SYSTEM_GB;
+                                $rootScope.menu_role = data.MENU_ROLE;
+                                $rootScope.email = data.EMAIL;
+                                $rootScope.nick = data.NICK_NM;
+
+                                if (data.FILE) {
+                                    $rootScope.profileImg = CONSTANT.BASE_URL + data.FILE.PATH + data.FILE.FILE_ID;
+                                } else {
+                                    $rootScope.profileImg = null;
+                                }
+
+                                $scope.addMileage('LOGIN', null);
+
+                                if (data.USER_ST == 'W' && data.CERT_GB == 'MIG') {
+                                    $location.path('myange/account');
+                                }
+
+                                $modalInstance.close('login');
+                            })['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+
+                    };
+
+                    $scope.click_cancel = function () {
+                        $modalInstance.close();
+                    };
+
+                    $scope.click_forgotInfo = function () {
+                        $location.url('infodesk/forgot/request');
+                        $modalInstance.close();
+                    };
+
+                    $scope.click_joinMember = function () {
+                        $location.url('infodesk/signon');
+                        $modalInstance.close();
+                    };
+
+                    $scope.check_saveId = function ($event) {
+                        var checkbox = $event.target;
+                        if (checkbox.checked) {
+                            localStorage.setItem('save_id', $scope.save_id);
+                        } else {
+                            localStorage.removeItem('save_id');
+                        }
+                    };
+                }], content, {size:size,keyboard: true,backdrop: true}, $scope);
+            dlg.result.then(function(action){
+                if (action == 'login') {
+                    $scope.getCanlendarList();
+                }
+            },function(){
+                if(angular.equals($scope.name,''))
+                    $scope.name = 'You did not enter in your name!';
+            });
         };
 
         // 광고센터 URL 셋팅

@@ -60,6 +60,23 @@
                             </li>
                         </ul>
                     </div>
+                    <style>
+                        .ngtickerMessage > ul li {
+                            display:initial;
+                            position:absolute;
+                            top:-10px;
+                        }
+
+                        #ngtickerMessage ul {
+                            position: relative;
+                        }
+
+                        #ngtickerMessage .list {
+                            position: absolute;
+                            -webkit-transition: all .8s;
+                            transition: all .8s;
+                        }
+                    </style>
                     <div class="ange_bg_milk comp_calendar_issue myissue">
                         <!-- D-day count :
                         출산예정일 카운트,
@@ -71,27 +88,45 @@
                          -->
                         <div class="comp_calendar_label">기념일</div>
                         <div class= "comp_calendar_issuetxt">
-                            <strong>김예슬</strong> 아기 돌 <span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;88</span>
-                            <br />
-                            출산예정일 <span style="float:right">D-831</span>
-                            <br />
-                            홍길돌 아기 백일
+                            <div id="ngtickerMessage"  class="ngtickerMessage">
+                                <ul>
+                                    <li class="list" ng-style="{opacity:setVisible($index)}" ng-repeat="item in scheduleList">
+                                        <strong>{{item.name}}</strong>&nbsp;{{item.event}}&nbsp;<span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;{{item.dday}}</span>
+                                    </li>
+                                    <!--<li class="list" ng-style="{opacity:setVisible($index)}" data-ng-repeat="item in scheduleList">-->
+                                        <!--<strong>김예슬</strong> 아기 돌 <span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;88</span>-->
+                                        <!--<strong>{{item.name}}</strong>{{item.event}}<span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;{{item.dday}}</span>-->
+                                    <!--</li>-->
+                                </ul>
+                            </div>
+                            <!--<strong>김예슬</strong> 아기 돌 <span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;88</span>-->
+                            <!--<br />-->
+                            <!--출산예정일 <span style="float:right">D-831</span>-->
+                            <!--<br />-->
+                            <!--홍길돌 아기 백일-->
                         </div>
                     </div>
                 </div>
             </div>
 
+            <div class="newsTicker" data-xf-news-ticker="{{verbs}}" data-duration="{{duration}}" id="newsTicker"></div>
+
             <div class="comp_album_wrap" style="float:left; width:100%; margin-top:5px;">
                 <div class="ange_bg_dark comp_album_label">
                     마이앨범
-                    <a href="" title="더보기"><span class="glyphicon glyphicon-plus-sign" style="position:absolute; top:8px; right:8px; font-size:1.48em; color:#fff;"></span></a>
+                    <a title="더보기" ng-click="click_myangeAlbum()"><span class="glyphicon glyphicon-plus-sign" style="position:absolute; top:8px; right:8px; font-size:1.48em; color:#fff;"></span></a>
                 </div>
                 <div class="ange_bg_milk comp_album_pics">
-                    <img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">
-                    <img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">
-                    <img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">
-                </div>
+                    <img ng-repeat="item in albumList" class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( {{ item.ALBUM_FILE }} )' }">
 
+                    <!--<img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">-->
+                    <!--<img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">-->
+                    <!--<img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">-->
+
+                    <div ng-show="albumList == '' || albumList == null" style="width:100%; height:50px; text-align: center; !important;">
+                        <a ng-click="click_myangeAlbum()">앨범을 등록하세요.</a>
+                    </div>
+                </div>
             </div>
 
             <!--<div class="ange_bg_blue comp_calendar_issue angeissue">-->
@@ -131,16 +166,16 @@
         <div ng-if="uid">
             <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}" style="width:50px; height:50px; cursor:pointer;">
             <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}" style="width:50px; height:50px; cursor:pointer;">
-            <a class="userconfig_mobile" title="{{user_info.NICK_NM}}님의 정보 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>
+            <a class="userconfig_mobile" title="{{user_info.NICK_NM}}님의 정보 관리" ng-click="click_showSlide()"><span class="glyphicon glyphicon-cog"></span></a>
         </div>
         <!-- /로그인 후 -->
 
         <!-- 모바일용 슬라이드 팝업 -->
-        <div ng-if="uid" style="display:none; text-align:center;">
+        <div ng-if="uid && isProfile" style="text-align:center;">
             <div style="display:block; position:fixed; left:0; top:0; width:100%; height:100%; background-color:#000; opacity: .38;"></div>
 
             <div class="ange_bg_milk mobileslide_userinfo">
-                <span class="glyphicon glyphicon-remove-circle ange_darkgray" style="position:absolute; top:5px; right:5px; font-size:1.12em; cursor:pointer;"></span>
+                <span class="glyphicon glyphicon-remove-circle ange_darkgray" style="position:absolute; top:5px; right:5px; font-size:1.12em; cursor:pointer;" ng-click="click_closeSlide()"></span>
                 <img ng-if="!profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url(/imgs/ange/profile_img_left.png)'}" style="width:50px; height:50px;">
                 <img ng-if="profileImg" class="userlog_login_pic" ng-style="{'background-image' : 'url('+profileImg+')'}" style="width:50px; height:50px;">
                 <!--<a class="userconfig_mobile" title="{{user_info.NICK_NM}}님의 정보 관리" ng-click="click_settingAccount()"><span class="glyphicon glyphicon-cog"></span></a>-->
@@ -169,7 +204,7 @@
                         메시지
                         <div class="ange_bg_red message_icon_new_mobile" ng-show="message > 0">{{message}}</div>
                     </div>
-                    <div class="ange_darkgray mobileslide_quicklink">
+                    <div ng-click="click_myangeScrap()" class="ange_darkgray mobileslide_quicklink">
                         <span class="glyphicon glyphicon-bookmark" style="font-size:1.4em;"></span>
                         <br />
                         스크랩
@@ -195,7 +230,7 @@
                     <br />
                     <span class="ange_gray" style="line-height: 28px;">고객센터</span>
                 </div>
-                <div style="font-size:0.78em; line-height:16px; width:33.3%; float:left;">
+                <div ng-click="click_storeCart()" style="font-size:0.78em; line-height:16px; width:33.3%; float:left;">
                     <button class="mobile_slidebtn_round ange_bg_gray ange_darkgray">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                     </button>

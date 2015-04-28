@@ -26,48 +26,48 @@
     $search_where = "";
     $sort_order = "";
 
-    if ($_search[CHECKED] == "C") {
+    if ($_search['CHECKED'] == "C") {
         MtUtil::_d($_search.CHECKED);
-        if (isset($_search[USER_ID_LIST])) {
+        if (isset($_search['USER_ID_LIST'])) {
             MtUtil::_d($_search.CHECKED);
             $in_str = "";
-            $in_size = sizeof($_search[USER_ID_LIST]);
+            $in_size = sizeof($_search['USER_ID_LIST']);
             for ($i=0; $i< $in_size; $i++) {
-                $in_str .= "'".trim($_search[USER_ID_LIST][$i])."'";
+                $in_str .= "'".trim($_search['USER_ID_LIST'][$i])."'";
                 if ($in_size - 1 != $i) $in_str .= ",";
             }
     
             $search_where = "AND U.USER_ID IN (".$in_str.") ";
         }
     } else {
-        if ((isset($_search[CONDITION]) && $_search[CONDITION] != "") && (isset($_search[KEYWORD]) && $_search[KEYWORD] != "")) {
-            if ($_search[CONDITION][value] == "USER_NM" || $_search[CONDITION][value] == "USER_ID" || $_search[CONDITION][value] == "NICK_NM") {
-                $arr_keywords = explode(",", $_search[KEYWORD]);
+        if ((isset($_search['CONDITION']) && $_search['CONDITION'] != "") && (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "")) {
+            if ($_search['CONDITION']['value'] == "USER_NM" || $_search['CONDITION']['value'] == "USER_ID" || $_search['CONDITION']['value'] == "NICK_NM") {
+                $arr_keywords = explode(",", $_search['KEYWORD']);
                 $in_condition = "";
                 for ($i=0; $i< sizeof($arr_keywords); $i++) {
                     $in_condition .= "'".trim($arr_keywords[$i])."'";
                     if (sizeof($arr_keywords) - 1 != $i) $in_condition .= ",";
                 }
     
-                $search_where .= "AND U.".$_search[CONDITION][value]." IN (".$in_condition.") ";
-            } else if ($_search[CONDITION][value] == "PHONE") {
-                $search_where .= "AND ( U.PHONE_1 LIKE '%".$_search[KEYWORD]."%' OR U.PHONE_2 LIKE '%".$_search[KEYWORD]."%' ) ";
+                $search_where .= "AND U.".$_search['CONDITION']['value']." IN (".$in_condition.") ";
+            } else if ($_search['CONDITION']['value'] == "PHONE") {
+                $search_where .= "AND ( U.PHONE_1 LIKE '%".$_search['KEYWORD']."%' OR U.PHONE_2 LIKE '%".$_search['KEYWORD']."%' ) ";
             } else {
-                $search_where .= "AND U.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                $search_where .= "AND U.".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
             }
         }
-        if (isset($_search[TYPE]) && $_search[TYPE] != "") {
+        if (isset($_search['TYPE']) && $_search['TYPE'] != "") {
     
             $in_type = "";
-            for ($i=0; $i< count($_search[TYPE]); $i++) {
-                $in_type .= "'".$_search[TYPE][$i]."'";
-                if (count($_search[TYPE]) - 1 != $i) $in_type .= ",";
+            for ($i=0; $i< count($_search['TYPE']); $i++) {
+                $in_type .= "'".$_search['TYPE'][$i]."'";
+                if (count($_search['TYPE']) - 1 != $i) $in_type .= ",";
             }
     
             $search_where .= "AND U.USER_GB IN (".$in_type.") ";
         }
-        if (isset($_search[STATUS]) && $_search[STATUS] != "" && $_search[STATUS][value] != "A") {
-            $search_where .= "AND U.USER_ST  = '".$_search[STATUS][value]."' ";
+        if (isset($_search['STATUS']) && $_search['STATUS'] != "" && $_search['STATUS']['value'] != "A") {
+            $search_where .= "AND U.USER_ST  = '".$_search['STATUS']['value']."' ";
         }
     }
 

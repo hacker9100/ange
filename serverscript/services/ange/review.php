@@ -99,6 +99,12 @@
                     $search_where .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
                 }
 
+                if (isset($_search[MIG_NO]) && $_search[MIG_NO] != "") {
+                    $search_where .= "AND MIG_NO = ".$_search[MIG_NO]." ";
+                } else {
+                    $search_where .= "AND MIG_NO IS NULL ";
+                }
+
 //                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
 //                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
 //                }
@@ -348,9 +354,11 @@
 
                             if ($file[version] == 6 ) {
                                 $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                                $body_str = str_replace(BASE_URL.'/upload/files/'.$file[name], BASE_URL.$file_path.$uid, $body_str);
                             } else {
                                 rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
                                 $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                $body_str = str_replace(BASE_URL.'/upload/files/medium/'.$file[name], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                             }
 
                             $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
@@ -505,15 +513,17 @@
                                 $uid = uniqid();
                                 rename($upload_path.$file[name], $source_path.$uid);
                                 rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
-                                $insert_path[$i] = array(path => $file_path, uid => $uid);
 
-                                MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                                MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
+                                if ($file[version] == 6 ) {
+                                    $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                                    $body_str = str_replace(BASE_URL.'/upload/files/'.$file[name], BASE_URL.$file_path.$uid, $body_str);
+                                } else {
+                                    rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                                    $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                    $body_str = str_replace(BASE_URL.'/upload/files/medium/'.$file[name], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                }
 
-                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-
-                                MtUtil::_d("------------>>>>> body_str : ".$body_str);
+                                $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
                             } else {
                                 $insert_path[$i] = array(path => '', uid => '');
                             }

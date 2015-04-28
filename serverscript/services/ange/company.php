@@ -169,16 +169,19 @@ switch ($_method) {
         $source_path = '../../..'.$file_path;
         $insert_path = null;
 
+        $file_name = null;
+
         try {
             if (count($_model[FILE]) > 0) {
                 $file = $_model[FILE];
+                $file_name = $file[name];
                 if (!file_exists($source_path) && !is_dir($source_path)) {
                     @mkdir($source_path);
                 }
 
                 if (file_exists($upload_path.$file[name])) {
                     $uid = uniqid();
-                    rename($upload_path.$file[name], $source_path.$uid);
+                    copy($upload_path.$file[name], $source_path.$uid);
                     $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
 
                     MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[path]);
@@ -286,6 +289,10 @@ switch ($_method) {
             $from_user = $_model[CHARGE_NM];
             $to = __SMTP_USR__;
             $to_user = __SMTP_USR_NM__;
+//            $from_email = __SMTP_USR__;
+//            $from_user = __SMTP_USR_NM__;
+//            $to = $_model[EMAIL];
+//            $to_user = $_model[CHARGE_NM];
             $subject = "$_model[COMPANY_NM]의 제휴&광고문의 입니다.";
             $message = "안녕하세요. ".$_model[COMPANY_NM]."의 제휴&광고문의 내용입니다.".
                         "<br>기업명 : ".$_model[COMPANY_NM].
@@ -293,9 +300,9 @@ switch ($_method) {
                         "<br>담당자 : ".$_model[URL].
                         "<br>유선전화 : ".$_model[PHONE_1].
                         "<br>휴대폰 : ".$_model[PHONE_2].
-                        "<br>내용 : ".$_model[NOTE].
+                        "<br>내용 : ".str_replace("\n", "<br />", $_model[NOTE]);
 
-            $result = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
+            $result = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user, $file_name);
 
             if(!$result) {
                 $err++;

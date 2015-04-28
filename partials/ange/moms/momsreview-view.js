@@ -577,7 +577,8 @@ define([
         $scope.click_showCreateReview = function () {
 
             if ($scope.uid == '' || $scope.uid == null) {
-                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 

@@ -83,16 +83,9 @@
                     <!--<button class="btn btn-default btn-xs" style="font-size:0.86em; font-family: arial, sans-serif; color:darkgray;" title="삭제" ng-click="click_deleteCommunity(item)" ng-disabled="role != 'ANGE_ADMIN'" ng-hide="true"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>-->
                 </td>
             </tr>
-            <tr ng-show="$data == ''">
-
-                <tr ng-show="!isLoding">
-                    <td colspan="7" style="text-align: center">조회 데이터가 없습니다.</td>
-                </tr>
-
-                <tr ng-show="isLoding">
-                    <td colspan="7" style="text-align: center">로딩 중 입니다.</td>
-                </tr>
-
+            <tr ng-show="$data == '' || $data == null">
+                <td ng-show="!isLoding" colspan="7" style="text-align: center">조회 데이터가 없습니다.</td>
+                <td ng-show="isLoding" colspan="7" style="text-align: center">로딩 중 입니다.</td>
             </tr>
         </table>
         <!-- ////List -->

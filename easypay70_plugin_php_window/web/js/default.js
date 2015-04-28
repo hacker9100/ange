@@ -1,46 +1,46 @@
 function inputCheckSpecial(obj){
-	var ret= "true";
-	var strobj = obj.value;
+    var ret= "true";
+    var strobj = obj.value;
 
-	//re = /[~!@\#$%<>^&*\()\-=+_\']/gi;
-	re = /[@\#$%<>&\()\-=+_\']/gi;
+    //re = /[~!@\#$%<>^&*\()\-=+_\']/gi;
+    re = /[@\#$%<>&\()\-=+_\']/gi;
 
-	if( re.test(strobj) ){
-		obj.value=strobj.replace(re,"");
-		obj.focus();
-		ret += ",false";
-	}else {
-		ret += ",true";
-	}
+    if( re.test(strobj) ){
+        obj.value=strobj.replace(re,"");
+        obj.focus();
+        ret += ",false";
+    }else {
+        ret += ",true";
+    }
 
 
-	if (ret.indexOf("false")!=-1){
-		return false;
-	}else{
-		return true;
-	}
+    if (ret.indexOf("false")!=-1){
+        return false;
+    }else{
+        return true;
+    }
 }
 
 
-function press(e) { 
-    var code = e.charCode?e.charCode:e.keyCode; 
-    if(code<48 || code>57) 
-        return false; 
-    else return true; 
-} 
+function press(e) {
+    var code = e.charCode?e.charCode:e.keyCode;
+    if(code<48 || code>57)
+        return false;
+    else return true;
+}
 
-function down(e) { 
-    if(e.ctrlKey && e.keyCode==86) 
-        return false; 
-} 
+function down(e) {
+    if(e.ctrlKey && e.keyCode==86)
+        return false;
+}
 
-var temp = ""; 
-function up(obj) { 
-    if(obj.value.search(/[^0-9]/) != -1) 
-        obj.value = temp; 
-    else 
-        temp = obj.value; 
-} 
+var temp = "";
+function up(obj) {
+    if(obj.value.search(/[^0-9]/) != -1)
+        obj.value = temp;
+    else
+        temp = obj.value;
+}
 
 
 
@@ -65,364 +65,364 @@ function FlashObject(path, width, height)
         html = "<object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000' codebase='http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0' width='" + m_width + "' height='" + m_height + "'";
         if (this.id != "") html += " id='" + this.id + "'";
         html += ">";
-        
+
         html += "<param name='allowScriptAccess' value='" + this.allowScriptAccess + "' />";
         html += "<param name='movie' value='" + m_movie + "' />";
         html += "<param name='menu' value='" + this.menu + "' />";
         html += "<param name='quality' value='" + this.quality + "' />";
         if (this.wmode != "") html += "<param name='wmode' value='" + this.wmode + "' />";
         if (this.FlashVars != "") html += "<param name='FlashVars' value='" + this.FlashVars + "' />";
-        
+
         html += "<embed src='" + m_movie + "' quality='" + this.quality + "' pluginspage='http://www.macromedia.com/go/getflashplayer' type='application/x-shockwave-flash' width='" + m_width + "' height='" + m_height + "'";
         html += " allowScriptAccess='" + this.allowScriptAccess + "'";
         if (this.wmode != "") html += " wmode='" + this.wmode + "'";
         if (this.FlashVars != "") html += " FlashVars='" + this.FlashVars + "'";
         html += " /></object>";
-        
+
         document.write(html);
     }
 }
 
 function f_menu_goto(url)
 {
-	window.parent.location.href=url;
+    window.parent.location.href=url;
 }
 
 
 var totcount;
 
 function setConfig(num){
-	totcount = num;
+    totcount = num;
 }
 
 function clickshow(num) {
-	var showcase;
-	var totcount1 = totcount;
+    var showcase;
+    var totcount1 = totcount;
 
-	for (i=1;i<totcount1+1;i++) {
-		menu=eval("document.all.block"+i+".style");
-		imgch=eval("document.bar"+i);
+    for (i=1;i<totcount1+1;i++) {
+        menu=eval("document.all.block"+i+".style");
+        imgch=eval("document.bar"+i);
 
-		if (num==i)	{
-			if (menu.display=="block") {
-				menu.display="none";
-			} else {
-				menu.display="block";
-				showcase = "1";
-			}
-		}
-	}
+        if (num==i)	{
+            if (menu.display=="block") {
+                menu.display="none";
+            } else {
+                menu.display="block";
+                showcase = "1";
+            }
+        }
+    }
 
-	if (showcase == "1"){
-		for (i=1;i<totcount1+1;i++) {
-			menu=eval("document.all.block"+i+".style");
-			imgch=eval("document.bar"+i);
-			if (num!=i){
-				if (menu.display=="block") menu.display="none";
-			}
-		}
-	}
+    if (showcase == "1"){
+        for (i=1;i<totcount1+1;i++) {
+            menu=eval("document.all.block"+i+".style");
+            imgch=eval("document.bar"+i);
+            if (num!=i){
+                if (menu.display=="block") menu.display="none";
+            }
+        }
+    }
 }
 
 /*
-// ø¿∏•¬  ∏∂øÏΩ∫ ∏∑¿Ω start
-var message=""; 
-function clickIE() {
-	if (document.all) {
-		(message);
-		return false;
-	}
-}
-function clickNS(e) {
-	if(document.layers||(document.getElementById&&!document.all)) {
-		if (e.which==2||e.which==3) {
-			(message);
-			return false;
-		}
-	}
-}
-if (document.layers) {
-	document.captureEvents(Event.MOUSEDOWN);
-	document.onmousedown=clickNS;
-} else {
-	document.onmouseup=clickNS;
-	document.oncontextmenu=clickIE;
-}
+ // Ïò§Î•∏Ï™Ω ÎßàÏö∞Ïä§ ÎßâÏùå start
+ var message="";
+ function clickIE() {
+ if (document.all) {
+ (message);
+ return false;
+ }
+ }
+ function clickNS(e) {
+ if(document.layers||(document.getElementById&&!document.all)) {
+ if (e.which==2||e.which==3) {
+ (message);
+ return false;
+ }
+ }
+ }
+ if (document.layers) {
+ document.captureEvents(Event.MOUSEDOWN);
+ document.onmousedown=clickNS;
+ } else {
+ document.onmouseup=clickNS;
+ document.oncontextmenu=clickIE;
+ }
 
-document.oncontextmenu=new Function("return false")
-//document.onselectstart=new Function("return false")
-document.ondragstart=new Function("return false")
-// ø¿∏•¬  ∏∂øÏΩ∫ ∏∑¿Ω end
-*/
+ document.oncontextmenu=new Function("return false")
+ //document.onselectstart=new Function("return false")
+ document.ondragstart=new Function("return false")
+ // Ïò§Î•∏Ï™Ω ÎßàÏö∞Ïä§ ÎßâÏùå end
+ */
 
 
 function f_reset(obj)
 {
-	obj.reset();
+    obj.reset();
 }
 
 
-function Numberchk() { 
-	var key = event.keyCode;
-	 if(!(key==8||key==9||key==13||key==46||key==144||(key>=48&&key<=57)||key==110||key==190)){
-	//if(event.keyCode<45||(event.keyCode>57&&event.keyCode<96)||event.keyCode>105){
-	//if(event.keyCode<48||(event.keyCode>57&&event.keyCode<96)||event.keyCode>105){
-		event.returnValue = false; 
-	}
-} 
-
-function searchEnter() { 
-	var key = event.keyCode;
-	 if(key==13){
-   		f_list_submit();
-	}
-} 
-
-function submitEnter() { 
-	var key = event.keyCode;
-	 if(key==13){		 
-   		f_submit();
-	}
-} 
-
-function confirmEnter() { 
-	var key = event.keyCode;
-	 if(key==13){		 
-		f_confirm();
-	}
+function Numberchk() {
+    var key = event.keyCode;
+    if(!(key==8||key==9||key==13||key==46||key==144||(key>=48&&key<=57)||key==110||key==190)){
+        //if(event.keyCode<45||(event.keyCode>57&&event.keyCode<96)||event.keyCode>105){
+        //if(event.keyCode<48||(event.keyCode>57&&event.keyCode<96)||event.keyCode>105){
+        event.returnValue = false;
+    }
 }
 
-function vComma(obj) { 
-    var str = "" + obj.value.replace(/,/gi,''); // ƒﬁ∏∂ ¡¶∞≈ 
-    var regx = new RegExp(/(-?\d+)(\d{3})/); 
-    var bExists = str.indexOf(".",0); 
-    var strArr  = str.split('.'); 
-    while(regx.test(strArr[0])){ 
-        strArr[0] = strArr[0].replace(regx,"$1,$2"); 
-    } 
-    if (bExists > -1) 
-        obj.value = strArr[0] + "." + strArr[1]; 
-    else 
-        obj.value = strArr[0]; 
-} 
+function searchEnter() {
+    var key = event.keyCode;
+    if(key==13){
+        f_list_submit();
+    }
+}
 
-function trim(str) { 
-    return str.replace(/(^\s*)|(\s*$)/g, ""); 
-} 
+function submitEnter() {
+    var key = event.keyCode;
+    if(key==13){
+        f_submit();
+    }
+}
 
-function getNumber(str) { 
-    str = "" + str.replace(/,/gi,''); // ƒﬁ∏∂ ¡¶∞≈ 
+function confirmEnter() {
+    var key = event.keyCode;
+    if(key==13){
+        f_confirm();
+    }
+}
+
+function vComma(obj) {
+    var str = "" + obj.value.replace(/,/gi,''); // ÏΩ§Îßà Ï†úÍ±∞ 
+    var regx = new RegExp(/(-?\d+)(\d{3})/);
+    var bExists = str.indexOf(".",0);
+    var strArr  = str.split('.');
+    while(regx.test(strArr[0])){
+        strArr[0] = strArr[0].replace(regx,"$1,$2");
+    }
+    if (bExists > -1)
+        obj.value = strArr[0] + "." + strArr[1];
+    else
+        obj.value = strArr[0];
+}
+
+function trim(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
+function getNumber(str) {
+    str = "" + str.replace(/,/gi,''); // ÏΩ§Îßà Ï†úÍ±∞ 
     str = str.replace(/(^\s*)|(\s*$)/g, ""); // trim 
-    return (new Number(str)); 
-} 
+    return (new Number(str));
+}
 
-function getComma(str) { 
-	var tmp = "";
-    var regx = new RegExp(/(-?\d+)(\d{3})/); 
-	str = ""+str;
+function getComma(str) {
+    var tmp = "";
+    var regx = new RegExp(/(-?\d+)(\d{3})/);
+    str = ""+str;
 
-    var bExists = str.indexOf(".",0); 
+    var bExists = str.indexOf(".",0);
 
-    var strArr  = str.split('.'); 
-    while(regx.test(strArr[0])){ 
-        strArr[0] = strArr[0].replace(regx,"$1,$2"); 
-    } 
-    if (bExists > -1) 
-        tmp =  strArr[0] + "." + strArr[1]; 
-    else 
-        tmp =  strArr[0]; 
+    var strArr  = str.split('.');
+    while(regx.test(strArr[0])){
+        strArr[0] = strArr[0].replace(regx,"$1,$2");
+    }
+    if (bExists > -1)
+        tmp =  strArr[0] + "." + strArr[1];
+    else
+        tmp =  strArr[0];
 
-	return tmp;
-} 
+    return tmp;
+}
 
 
 function isLength(varCk) {
-	var varLen = 0;
-	var agr = navigator.userAgent;
+    var varLen = 0;
+    var agr = navigator.userAgent;
 
-	for (i=0; i<varCk.length; i++) {
-		ch = varCk.charAt(i);
-		if ((ch == "\n") || ((ch >= "§ø") && (ch <= "»˜")) || ((ch >="§°") && (ch <="§æ")))
-			varLen += 2;
-		else
-			varLen += 1;
-	}
-	return (varLen);
+    for (i=0; i<varCk.length; i++) {
+        ch = varCk.charAt(i);
+        if ((ch == "\n") || ((ch >= "„Öè") && (ch <= "Ìûà")) || ((ch >="„Ñ±") && (ch <="„Öé")))
+            varLen += 2;
+        else
+            varLen += 1;
+    }
+    return (varLen);
 }
 
 
 
-// ¿‘∑¬ πÆ¿⁄ø≠ ∞ÀªÁ (º˝¿⁄/∆ØºˆπÆ¿⁄)
+// ÏûÖÎ†• Î¨∏ÏûêÏó¥ Í≤ÄÏÇ¨ (Ïà´Ïûê/ÌäπÏàòÎ¨∏Ïûê)
 function isInteger(varCk, charSet) {
-	var chk=true;
-	for (i=0; i<=varCk.length-1; i++) {
-		ch = varCk.substring(i,i+1);
-		if (ch>="0" && ch<="9") {
-			chk = true;
-		} else {
-			chk=false;
-			for (j=0; j<=charSet.length-1; j++) {
-				comp = charSet.substring(j,j+1);
-				if (ch==comp) {
-					chk = true;
-					break;
-				}
-			}
-			if (!chk) 	break;	// º˝¿⁄+∆ØºˆπÆ¿⁄ø‹¿« πÆ¿⁄∞° ¿÷¥¬ ∞ÊøÏ∏∏ error ¡æ∑· 2002.04.08
-		}
-	}
-	return chk;
+    var chk=true;
+    for (i=0; i<=varCk.length-1; i++) {
+        ch = varCk.substring(i,i+1);
+        if (ch>="0" && ch<="9") {
+            chk = true;
+        } else {
+            chk=false;
+            for (j=0; j<=charSet.length-1; j++) {
+                comp = charSet.substring(j,j+1);
+                if (ch==comp) {
+                    chk = true;
+                    break;
+                }
+            }
+            if (!chk) 	break;	// Ïà´Ïûê+ÌäπÏàòÎ¨∏ÏûêÏô∏Ïùò Î¨∏ÏûêÍ∞Ä ÏûàÎäî Í≤ΩÏö∞Îßå error Ï¢ÖÎ£å 2002.04.08
+        }
+    }
+    return chk;
 }
 
 
 
 function isDay(varCk1,varCk2,varCk3) {
-	if ( (isLength(varCk1)==4) && (isLength(varCk2)==2) && (isLength(varCk3)==2) ) {
-		if ( (isInteger(varCk1,"")) && (isInteger(varCk2,"")) && (isInteger(varCk3,"")) ) {
-			if (varCk1>="1900" && varCk1<="2099" && varCk2>="01" && varCk2<="12") {
-				if (varCk2=="01" && varCk3>="01" && varCk3<="31") return true;
-				if (varCk2=="02" && varCk3>="01" && varCk3<="28") return true;
-				if (varCk2=="03" && varCk3>="01" && varCk3<="31") return true;
-				if (varCk2=="04" && varCk3>="01" && varCk3<="30") return true;
-				if (varCk2=="05" && varCk3>="01" && varCk3<="31") return true;
-				if (varCk2=="06" && varCk3>="01" && varCk3<="30") return true;
-				if (varCk2=="07" && varCk3>="01" && varCk3<="31") return true;
-				if (varCk2=="08" && varCk3>="01" && varCk3<="31") return true;
-				if (varCk2=="09" && varCk3>="01" && varCk3<="30") return true;
-				if (varCk2=="10" && varCk3>="01" && varCk3<="31") return true;
-				if (varCk2=="11" && varCk3>="01" && varCk3<="30") return true;
-				if (varCk2=="12" && varCk3>="01" && varCk3<="31") return true;
-				return false;
-			}
-			return false;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+    if ( (isLength(varCk1)==4) && (isLength(varCk2)==2) && (isLength(varCk3)==2) ) {
+        if ( (isInteger(varCk1,"")) && (isInteger(varCk2,"")) && (isInteger(varCk3,"")) ) {
+            if (varCk1>="1900" && varCk1<="2099" && varCk2>="01" && varCk2<="12") {
+                if (varCk2=="01" && varCk3>="01" && varCk3<="31") return true;
+                if (varCk2=="02" && varCk3>="01" && varCk3<="28") return true;
+                if (varCk2=="03" && varCk3>="01" && varCk3<="31") return true;
+                if (varCk2=="04" && varCk3>="01" && varCk3<="30") return true;
+                if (varCk2=="05" && varCk3>="01" && varCk3<="31") return true;
+                if (varCk2=="06" && varCk3>="01" && varCk3<="30") return true;
+                if (varCk2=="07" && varCk3>="01" && varCk3<="31") return true;
+                if (varCk2=="08" && varCk3>="01" && varCk3<="31") return true;
+                if (varCk2=="09" && varCk3>="01" && varCk3<="30") return true;
+                if (varCk2=="10" && varCk3>="01" && varCk3<="31") return true;
+                if (varCk2=="11" && varCk3>="01" && varCk3<="30") return true;
+                if (varCk2=="12" && varCk3>="01" && varCk3<="31") return true;
+                return false;
+            }
+            return false;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 function isTime(varCk1,varCk2,varCk3) {
-	if ( (isLength(varCk1)==2) && (isLength(varCk2)==2) && (isLength(varCk3)==2) ) {
-		if ( (isInteger(varCk1,"")) && (isInteger(varCk2,"")) && (isInteger(varCk3,"")) ) {
-			if (varCk1>="00" && varCk1<="23" && varCk2>="00" && varCk2<="59" && varCk3>="00" && varCk3<="59") {
-				return true;
-			}
-			return false;
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+    if ( (isLength(varCk1)==2) && (isLength(varCk2)==2) && (isLength(varCk3)==2) ) {
+        if ( (isInteger(varCk1,"")) && (isInteger(varCk2,"")) && (isInteger(varCk3,"")) ) {
+            if (varCk1>="00" && varCk1<="23" && varCk2>="00" && varCk2<="59" && varCk3>="00" && varCk3<="59") {
+                return true;
+            }
+            return false;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 /*
- * ∫–∏Æ¿⁄∏¶ ¿ÃøÎ«œø© ≥Ø¬•¿« ¿Ø»øº∫ √º≈©
- * øπ) 2000.03.24 -> '.'¿ª ¿ÃøÎ«œø© √º≈©«—¥Ÿ.
- *@param inputDate √º≈©«“ ≥Ø¬•
- *@param point ≥‚,ø˘,¿œ ∫–∏Æ¿⁄
+ * Î∂ÑÎ¶¨ÏûêÎ•º Ïù¥Ïö©ÌïòÏó¨ ÎÇ†ÏßúÏùò Ïú†Ìö®ÏÑ± Ï≤¥ÌÅ¨
+ * Ïòà) 2000.03.24 -> '.'ÏùÑ Ïù¥Ïö©ÌïòÏó¨ Ï≤¥ÌÅ¨ÌïúÎã§.
+ *@param inputDate Ï≤¥ÌÅ¨Ìï† ÎÇ†Ïßú
+ *@param point ÎÖÑ,Ïõî,Ïùº Î∂ÑÎ¶¨Ïûê
  */
 function dateCheck(inputDate, point){
-	var dateElement = new Array(3);
-	
-	/*if(point != ""){
-		dateElement = inputDate.split(point);
-		if(inputDate.length != 10 || dateElement.length != 3){
-			return false;
-		}
-	}else{*/
-		dateElement[0] = inputDate.substring(0,4);
-		dateElement[1] = inputDate.substring(4,6);
-		dateElement[2] = inputDate.substring(6,8);
-	//}
-	//≥‚µµ ∞ÀªÁ
-	if( !( 1800 <= dateElement[0] && dateElement[0] <= 4000 ) ) {
-		return false;
-	}
+    var dateElement = new Array(3);
 
-	//¥ﬁ ∞ÀªÁ
-	if( !( 0 < dateElement[1] &&  dateElement[1] < 13  ) ) {
-		return false;
-	}
+    /*if(point != ""){
+     dateElement = inputDate.split(point);
+     if(inputDate.length != 10 || dateElement.length != 3){
+     return false;
+     }
+     }else{*/
+    dateElement[0] = inputDate.substring(0,4);
+    dateElement[1] = inputDate.substring(4,6);
+    dateElement[2] = inputDate.substring(6,8);
+    //}
+    //ÎÖÑÎèÑ Í≤ÄÏÇ¨
+    if( !( 1800 <= dateElement[0] && dateElement[0] <= 4000 ) ) {
+        return false;
+    }
 
-	// «ÿ¥Á ≥‚µµ ø˘¿« ∏∂¡ˆ∏∑ ≥Ø
-	var tempDate = new Date(dateElement[0], dateElement[1], 0);
-	var endDay = tempDate.getDate();
+    //Îã¨ Í≤ÄÏÇ¨
+    if( !( 0 < dateElement[1] &&  dateElement[1] < 13  ) ) {
+        return false;
+    }
 
-	//¿œ ∞ÀªÁ
-	if( !( 0 < dateElement[2] && dateElement[2] <= endDay ) ) {
-		 return false;
-	}
+    // Ìï¥Îãπ ÎÖÑÎèÑ ÏõîÏùò ÎßàÏßÄÎßâ ÎÇ†
+    var tempDate = new Date(dateElement[0], dateElement[1], 0);
+    var endDay = tempDate.getDate();
 
-	return true;
+    //Ïùº Í≤ÄÏÇ¨
+    if( !( 0 < dateElement[2] && dateElement[2] <= endDay ) ) {
+        return false;
+    }
+
+    return true;
 }
 
 
 /*
- * ≥Ø¬• ∫Ò±≥
- * ¡æ∑·¿œ¿Ã Ω√¿€¿œ ∫∏¥Ÿ ¿€¿ª∂ß false∏¶
- * ¡§ªÛ ±‚∞£¿œ ∞ÊøÏ true∏¶ ∏Æ≈œ«—¥Ÿ.
- * @param startDate Ω√¿€¿œ
- * @param endDate ¡æ∑·¿œ
- * @param point ≥Ø¬• ±∏∫–¿⁄
+ * ÎÇ†Ïßú ÎπÑÍµê
+ * Ï¢ÖÎ£åÏùºÏù¥ ÏãúÏûëÏùº Î≥¥Îã§ ÏûëÏùÑÎïå falseÎ•º
+ * Ï†ïÏÉÅ Í∏∞Í∞ÑÏùº Í≤ΩÏö∞ trueÎ•º Î¶¨ÌÑ¥ÌïúÎã§.
+ * @param startDate ÏãúÏûëÏùº
+ * @param endDate Ï¢ÖÎ£åÏùº
+ * @param point ÎÇ†Ïßú Íµ¨Î∂ÑÏûê
  */
- function dateCompare(startDate, endDate, point){
-	//¡§ªÛ ≥Ø¬•¿Œ¡ˆ √º≈©«—¥Ÿ.
-	var startDateChk = dateCheck(startDate, point);
-	if(!startDateChk){
-		return false;
-	}
-	var endDateChk = dateCheck(endDate, point, "end");
-	
-	if(!endDateChk){
-		return false;
-	}
+function dateCompare(startDate, endDate, point){
+    //Ï†ïÏÉÅ ÎÇ†ÏßúÏù∏ÏßÄ Ï≤¥ÌÅ¨ÌïúÎã§.
+    var startDateChk = dateCheck(startDate, point);
+    if(!startDateChk){
+        return false;
+    }
+    var endDateChk = dateCheck(endDate, point, "end");
 
-	//≥‚ ø˘¿œ∑Œ ∫–∏Æ «—¥Ÿ.
-	var start_Date = new Array(3);
-	var end_Date = new Array(3);
+    if(!endDateChk){
+        return false;
+    }
 
-	if(point != ""){
-		start_Date = startDate.split(point);
-		end_Date = endDate.split(point);
-		if(start_Date.length != 3 && end_Date.length != 3){
-			return false;
-		}
-	}else{
-		start_Date[0] = startDate.substring(0,4);
-		start_Date[1] = startDate.substring(4,6);
-		start_Date[2] = startDate.substring(6,8);
+    //ÎÖÑ ÏõîÏùºÎ°ú Î∂ÑÎ¶¨ ÌïúÎã§.
+    var start_Date = new Array(3);
+    var end_Date = new Array(3);
 
-		end_Date[0] = endDate.substring(0,4);
-		end_Date[1] = endDate.substring(4,6);
-		end_Date[2] = endDate.substring(6,8);
-	}
+    if(point != ""){
+        start_Date = startDate.split(point);
+        end_Date = endDate.split(point);
+        if(start_Date.length != 3 && end_Date.length != 3){
+            return false;
+        }
+    }else{
+        start_Date[0] = startDate.substring(0,4);
+        start_Date[1] = startDate.substring(4,6);
+        start_Date[2] = startDate.substring(6,8);
 
-	//Date ∞¥√º∏¶ ª˝º∫«—¥Ÿ.
-	var sDate = new Date(start_Date[0], start_Date[1], start_Date[2]);
-	var eDate = new Date(end_Date[0], end_Date[1], end_Date[2]);
+        end_Date[0] = endDate.substring(0,4);
+        end_Date[1] = endDate.substring(4,6);
+        end_Date[2] = endDate.substring(6,8);
+    }
 
-	if(sDate > eDate){
-		return false;
-	}
+    //Date Í∞ùÏ≤¥Î•º ÏÉùÏÑ±ÌïúÎã§.
+    var sDate = new Date(start_Date[0], start_Date[1], start_Date[2]);
+    var eDate = new Date(end_Date[0], end_Date[1], end_Date[2]);
 
-	return true;
+    if(sDate > eDate){
+        return false;
+    }
+
+    return true;
 }
 
 function corpAddr(){
-	var frm = document.frm;
+    var frm = document.frm;
 
-	if( frm.addrChk.checked ){
-		frm.zip.value = frm.ceoZip.value;
-		frm.addr1.value = frm.ceoAddr1.value;
-		frm.addr2.value = frm.ceoAddr2.value;
-	}else{
-		frm.zip.value = "";
-		frm.addr1.value = "";
-		frm.addr2.value = "";
-	}
+    if( frm.addrChk.checked ){
+        frm.zip.value = frm.ceoZip.value;
+        frm.addr1.value = frm.ceoAddr1.value;
+        frm.addr2.value = frm.ceoAddr2.value;
+    }else{
+        frm.zip.value = "";
+        frm.addr1.value = "";
+        frm.addr2.value = "";
+    }
 }
 
 

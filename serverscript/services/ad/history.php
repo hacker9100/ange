@@ -68,13 +68,13 @@
                             adhb_menu,
                             adhb_category
                         ) VALUES (
-                            ,'".$_model[ada_idx]."',
+                            ,'".$_model['ada_idx']."',
                             ,'".$_SESSION['guid']."'
                             ,'".$_SESSION['uid']."'
                             ,'".$ip."'
-                            ,'".$_model[adhb_type]."'
-                            ,'".$_model[adhb_menu]."'
-                            ,'".$_model[adhb_category]."'
+                            ,'".$_model['adhb_type']."'
+                            ,'".$_model['adhb_menu']."'
+                            ,'".$_model['adhb_category']."'
                         )";
 
                 $_d->sql_query($sql);

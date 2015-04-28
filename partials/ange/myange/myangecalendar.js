@@ -11,7 +11,9 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('myangecalendar', ['$scope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, dialogs, UPLOAD) {
+    controllers.controller('myangecalendar', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
+
+        $scope.talkCheck = false;
 
         // 초기화
         $scope.init = function(session) {
@@ -41,8 +43,53 @@ define([
 
 
             $scope.getEventList();
+            $scope.getTalkSubject();
         };
 
+        $scope.click_moveTalk = function () {
+            $location.url('people/linetalk/list');
+        };
+
+        $scope.getTalkSubject = function (){
+
+            // 일일 날짜 셋팅
+            var date = new Date();
+
+            // GET YYYY, MM AND DD FROM THE DATE OBJECT
+            var thisyear = date.getFullYear().toString();
+            var mm = (date.getMonth()+1).toString();
+            var dd  = date.getDate().toString();
+
+            if(mm < 10){
+                mm = '0'+mm;
+            }
+
+            if(dd < 10){
+                dd = '0'+dd;
+            }
+
+            $scope.getItem('com/reply', 'subjectitem', {}, {TODAY_DATE: true, YEAR: thisyear, MONTH: mm, DAY: dd}, true)
+                .then(function(data){
+                    console.log(data)
+                    $scope.talkitem = data;
+                })
+                ['catch'](function(error){
+                $scope.talkitem="";
+            });
+
+            $scope.getItem('com/reply', 'check', {}, {TODAY_DATE: true, YEAR: thisyear, MONTH: mm, DAY: dd, TARGET_GB: 'TALK', REG_UID: $rootScope.uid}, true)
+                .then(function(data){
+                    if (data.COUNT > 0) {
+                        $scope.talkCheck = true;
+                    } else {
+                        $scope.talkCheck = false;
+                    }
+
+                })
+                ['catch'](function(error){
+                    $scope.talkCheck = false;
+            });
+        }
 
         // 일반 게시판 목록 조회
         $scope.getEventList = function () {

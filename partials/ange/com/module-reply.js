@@ -76,7 +76,8 @@ define([
         // 의견 등록
         $scope.click_saveComment = function () {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 사용할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
@@ -113,10 +114,12 @@ define([
         $scope.click_saveReComment = function (item) {
 
             if($rootScope.uid == null || $rootScope.uid == ''){
-                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }else if($rootScope.uid == undefined){
-                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
@@ -179,10 +182,12 @@ define([
         $scope.click_updateReply = function (key, comment) {
 
             if($rootScope.uid == null || $rootScope.uid == ''){
-                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }else if($rootScope.uid == undefined){
-                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
