@@ -47,6 +47,16 @@ define([
             }
         }
 
+        $scope.$watch('uid', function(newVal, oldVal) {
+            if (( newVal != undefined && oldVal != undefined && newVal != oldVal ) || ( newVal == null && oldVal != undefined )) {
+                $scope.list = [];
+                $scope.PAGE_NO = 0;
+                $scope.PAGE_SIZE = 30;
+
+                $scope.getContentList();
+            }
+        });
+
         /********** 초기화 **********/
         $scope.$parent.reload = false;
         $scope.busy = false;
@@ -172,7 +182,8 @@ define([
         // 공감 클릭
         $scope.click_addLike = function (idx, item) {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 사용할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
@@ -187,9 +198,9 @@ define([
                     $scope.list[idx].LIKE_FL = afterLike;
                     $scope.list[idx].LIKE_CNT = item.LIKE_FL == 'Y' ? parseInt($scope.list[idx].LIKE_CNT) + 1 : parseInt($scope.list[idx].LIKE_CNT) - 1;
                     if (afterLike == 'Y') {
-                        dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
+//                        dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
                     } else {
-                        dialogs.notify('알림', '공감 취소되었습니다.', {size: 'md'});
+//                        dialogs.notify('알림', '공감 취소되었습니다.', {size: 'md'});
                     }
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});

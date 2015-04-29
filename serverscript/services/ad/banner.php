@@ -82,34 +82,34 @@
                 $err = 0;
                 $msg = "";
 
-                if (isset($_search[ADP_IDX]) && $_search[ADP_IDX] != "") {
-                    $search_where .= "AND a.adp_idx = '".$_search[ADP_IDX]."' ";
+                if (isset($_search['ADP_IDX']) && $_search['ADP_IDX'] != "") {
+                    $search_where .= "AND a.adp_idx = '".$_search['ADP_IDX']."' ";
                 }
 
-                if (isset($_search[ADP_CODE]) && $_search[ADP_CODE] != "") {
-                    $search_where .= "AND d.adp_code = '".$_search[ADP_CODE]."' ";
+                if (isset($_search['ADP_CODE']) && $_search['ADP_CODE'] != "") {
+                    $search_where .= "AND d.adp_code = '".$_search['ADP_CODE']."' ";
                 }
 
-                if (isset($_search[ADA_TYPE]) && $_search[ADA_TYPE] != "") {
-                    $search_where .= "AND ada_type = '".$_search[ADA_TYPE]."' ";
+                if (isset($_search['ADA_TYPE']) && $_search['ADA_TYPE'] != "") {
+                    $search_where .= "AND ada_type = '".$_search['ADA_TYPE']."' ";
                 }
 
-                if (isset($_search[ADA_STATE]) && $_search[ADA_STATE] != "") {
-                    $search_where .= "AND ada_state  = '".$_search[ADA_STATE]."' ";
+                if (isset($_search['ADA_STATE']) && $_search['ADA_STATE'] != "") {
+                    $search_where .= "AND ada_state  = '".$_search['ADA_STATE']."' ";
                 }
 
-//                if (isset($_search[PROCESS]) && $_search[PROCESS] != "") {
+//                if (isset($_search['PROCESS']) && $_search['PROCESS'] != "") {
 //                    $search_where .= "AND DATE_FORMAT(a.ada_date_close, '%Y-%m-%d') >= DATE_FORMAT(NOW(), '%Y-%m-%d')";
 //                }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 } else {
                     $sort_order .= "ORDER BY RAND() ";
                 }
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
                 $sql = "SELECT
@@ -172,22 +172,26 @@
                 $sort_order = "";
                 $limit = "";
 
-                if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                    $search_where .= "AND ".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%'";
+                if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                    $search_where .= "AND ".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%'";
                 }
 
-                if (isset($_search[BANNER_GB]) && $_search[BANNER_GB] != "") {
-                    $search_where .= "AND BANNER_GB = '".$_search[BANNER_GB]."' ";
+                if (isset($_search['BANNER_GB']) && $_search['BANNER_GB'] != "") {
+                    $search_where .= "AND BANNER_GB = '".$_search['BANNER_GB']."' ";
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order .= "ORDER BY ".$_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['BANNER_ST']) && $_search['BANNER_ST'] != "") {
+                    $search_where .= "AND BANNER_ST = '".$_search['BANNER_ST']."' ";
+                }
+
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order .= "ORDER BY ".$_search['SORT']." ".$_search['ORDER']." ";
                 } else {
                     $sort_order .= "ORDER BY RAND() ";
                 }
 
                 if (isset($_page)) {
-                    $limit .= "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit .= "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
                 $sql = "SELECT
@@ -248,7 +252,7 @@
             break;
 
         case "POST":
-            if ( trim($_model[SUBJECT]) == "" ) {
+            if ( trim($_model['SUBJECT']) == "" ) {
                 $_d->failEnd("제목을 작성 하세요");
             }
 
@@ -258,18 +262,18 @@
             $insert_path = null;
 
             try {
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
+                if (count($_model['FILE']) > 0) {
+                    $file = $_model['FILE'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                     }
 
-                    if (file_exists($upload_path.$file[name])) {
+                    if (file_exists($upload_path.$file['name'])) {
                         $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                        rename($upload_path.$file['name'], $source_path.$uid);
+                        $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
 
-                        MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path[path]);
+                        MtUtil::_d("------------>>>>> mediumUrl : ".$i.'--'.$insert_path['path']);
                     }
                 }
             } catch(Exception $e) {
@@ -291,12 +295,12 @@
                         BANNER_ST,
                         BIND_NO
                     ) VALUES (
-                        '".$_model[URL]."'
-                        ,'".$_model[SUBJECT]."'
-                        ,'".$_model[BANNER_GB]."'
-                        ,'".$_model[LOCATION_GB]."'
-                        ,'".$_model[BANNER_ST]."'
-                        ,'".$_model[BIND_NO]."'
+                        '".$_model['URL']."'
+                        ,'".$_model['SUBJECT']."'
+                        ,'".$_model['BANNER_GB']."'
+                        ,'".$_model['LOCATION_GB']."'
+                        ,'".$_model['BANNER_ST']."'
+                        ,'".$_model['BIND_NO']."'
                     )";
 
             $_d->sql_query($sql);
@@ -307,8 +311,8 @@
                 $msg = $_d->mysql_error;
             }
 
-            if (isset($_model[FILE]) && $_model[FILE] != "") {
-                $file = $_model[FILE];
+            if (isset($_model['FILE']) && $_model['FILE'] != "") {
+                $file = $_model['FILE'];
 
                 MtUtil::_d("------------>>>>> file : ".$file['name']);
 
@@ -331,15 +335,15 @@
                             ,TARGET_NO
                             ,TARGET_GB
                         ) VALUES (
-                            '".$file[name]."'
-                            , '".$insert_path[uid]."'
-                            , '".$insert_path[path]."'
-                            , '".$file[type]."'
-                            , '".$file[size]."'
+                            '".$file['name']."'
+                            , '".$insert_path['uid']."'
+                            , '".$insert_path['path']."'
+                            , '".$file['type']."'
+                            , '".$file['size']."'
                             , '0'
                             , SYSDATE()
                             , 'C'
-                            , '".$file[kind]."'
+                            , '".$file['kind']."'
                             , '0'
                             , '".$no."'
                             , 'BANNER'
@@ -375,16 +379,16 @@
             $insert_path = null;
 
             try {
-                if (count($_model[FILE]) > 0) {
-                    $file = $_model[FILE];
+                if (count($_model['FILE']) > 0) {
+                    $file = $_model['FILE'];
                     if (!file_exists($source_path) && !is_dir($source_path)) {
                         @mkdir($source_path);
                     }
 
-                    if (file_exists($upload_path.$file[name])) {
+                    if (file_exists($upload_path.$file['name'])) {
                         $uid = uniqid();
-                        rename($upload_path.$file[name], $source_path.$uid);
-                        $insert_path = array(path => $file_path, uid => $uid, kind => $file[kind]);
+                        rename($upload_path.$file['name'], $source_path.$uid);
+                        $insert_path = array(path => $file_path, uid => $uid, kind => $file['kind']);
                     } else {
                         $insert_path = array(path => '', uid => '', kind => '');
                     }
@@ -401,12 +405,12 @@
 
             $sql = "UPDATE ANGE_BANNER
                     SET
-                        URL = '".$_model[URL]."'
-                        ,SUBJECT = '".$_model[SUBJECT]."'
-                        ,BANNER_GB = '".$_model[BANNER_GB]."'
-                        ,LOCATION_GB = '".$_model[LOCATION_GB]."'
-                        ,BANNER_ST = '".$_model[BANNER_ST]."'
-                        ,BIND_NO = '".$_model[BIND_NO]."'
+                        URL = '".$_model['URL']."'
+                        ,SUBJECT = '".$_model['SUBJECT']."'
+                        ,BANNER_GB = '".$_model['BANNER_GB']."'
+                        ,LOCATION_GB = '".$_model['LOCATION_GB']."'
+                        ,BANNER_ST = '".$_model['BANNER_ST']."'
+                        ,BIND_NO = '".$_model['BIND_NO']."'
                     WHERE
                         NO = ".$_key."
                     ";
@@ -432,30 +436,30 @@
             $result = $_d->sql_fetch($sql,true);
             $is_delete = true;
 
-            if (count($_model[FILE]) > 0) {
-                $file = $_model[FILE];
-                if ($result[FILE_NM] == $file[name] && $result[FILE_SIZE] == $file[size]) {
+            if (count($_model['FILE']) > 0) {
+                $file = $_model['FILE'];
+                if ($result['FILE_NM'] == $file['name'] && $result['FILE_SIZE'] == $file['size']) {
                     $is_delete = false;
                 }
             }
 
             if ($is_delete) {
-                MtUtil::_d("------------>>>>> DELETE NO : ".$result[NO]);
-                $sql = "DELETE FROM COM_FILE WHERE TARGET_GB = 'BANNER' AND NO = ".$result[NO];
+                MtUtil::_d("------------>>>>> DELETE NO : ".$result['NO']);
+                $sql = "DELETE FROM COM_FILE WHERE TARGET_GB = 'BANNER' AND NO = ".$result['NO'];
 
                 $_d->sql_query($sql);
 
-                if (file_exists('../../..'.$result[PATH].$result[FILE_ID])) {
-                    unlink('../../..'.$result[PATH].$result[FILE_ID]);
+                if (file_exists('../../..'.$result['PATH'].$result['FILE_ID'])) {
+                    unlink('../../..'.$result['PATH'].$result['FILE_ID']);
                 }
             }
 
-            if (count($_model[FILE]) > 0) {
-                $file = $_model[FILE];
+            if (count($_model['FILE']) > 0) {
+                $file = $_model['FILE'];
 
                 MtUtil::_d("------------>>>>> file : ".$file['name']);
 
-                if ($insert_path[uid] != "") {
+                if ($insert_path['uid'] != "") {
                     $sql = "INSERT INTO COM_FILE
                             (
                                 FILE_NM
@@ -471,15 +475,15 @@
                                 ,TARGET_NO
                                 ,TARGET_GB
                             ) VALUES (
-                                '".$file[name]."'
-                                , '".$insert_path[uid]."'
-                                , '".$insert_path[path]."'
-                                , '".$file[type]."'
-                                , '".$file[size]."'
+                                '".$file['name']."'
+                                , '".$insert_path['uid']."'
+                                , '".$insert_path['path']."'
+                                , '".$file['type']."'
+                                , '".$file['size']."'
                                 , '0'
                                 , SYSDATE()
                                 , 'C'
-                                , '".$file[kind]."'
+                                , '".$file['kind']."'
                                 , '0'
                                 , '".$_key."'
                                 , 'BANNER'
@@ -530,7 +534,7 @@
 
             $result = $_d->sql_query($sql,true);
             for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                $sql = "DELETE FROM COM_FILE WHERE TARGET_GB = 'BANNER' AND NO = ".$row[NO];
+                $sql = "DELETE FROM COM_FILE WHERE TARGET_GB = 'BANNER' AND NO = ".$row['NO'];
 
                 $_d->sql_query($sql);
 
@@ -539,8 +543,8 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if (file_exists('../../..'.$row[PATH].$row[FILE_ID])) {
-                    unlink('../../..'.$row[PATH].$row[FILE_ID]);
+                if (file_exists('../../..'.$row['PATH'].$row['FILE_ID'])) {
+                    unlink('../../..'.$row['PATH'].$row['FILE_ID']);
                 }
             }
 

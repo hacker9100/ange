@@ -16,14 +16,14 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT']."/serverscript/classes/ImportClasses.php");
 
-    MtUtil::_d("### [START]");
+    MtUtil::_d("### ['START']");
 	MtUtil::_d(print_r($_REQUEST,true));
 /*
     if (isset($_REQUEST['_category'])) {
         $category = explode("/", $_REQUEST['_category']);
 
-        Util::_c("FUNC[processApi] category : ".print_r($_REQUEST,true));
-        Util::_c("FUNC[processApi] category.cnt : ".count($category));
+        Util::_c("FUNC['processApi'] category : ".print_r($_REQUEST,true));
+        Util::_c("FUNC['processApi'] category.cnt : ".count($category));
     }
 */
     $_d = new MtJson(null);
@@ -53,7 +53,7 @@
                             P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, DATE_FORMAT(T.REG_DT, '%Y-%m-%d') AS REG_DT,
                             T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, S.SERIES_NM, C.SEASON_NM, C.SECTION_NM, P.YEAR, T.LIKE_CNT, T.HIT_CNT, SCRAP_CNT, REPLY_CNT,
                             CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL, T.AD_CODE,
-                            CASE WHEN T.AD_CODE IS NULL THEN 'N' ELSE 'Y' END AS AD_FL
+                            CASE WHEN T.AD_CODE IS NULL THEN 'N' ELSE 'Y' END AS AD_FL, EBOOK_URL
                         FROM
                             CMS_TASK T
                             INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
@@ -96,7 +96,7 @@
 
                     $data['APPROVAL'] = $approval_data;
 
-                    if ($_search[FILE]) {
+                    if ($_search['FILE']) {
                         $sql = "SELECT
                                     F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                                 FROM
@@ -125,17 +125,17 @@
                 $limit = "";
 
                 if (isset($_page)) {
-                    $limit = "LIMIT ".($_page[NO] * $_page[SIZE]).", ".$_page[SIZE];
+                    $limit = "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".$_page['SIZE'];
                 }
 
-                if (isset($_search[SORT]) && $_search[SORT] != "") {
-                    $sort_order = $_search[SORT]." ".$_search[ORDER]." ";
+                if (isset($_search['SORT']) && $_search['SORT'] != "") {
+                    $sort_order = $_search['SORT']." ".$_search['ORDER']." ";
                 }
 
                 if (isset($_search) && count($_search) > 0) {
-                    if (isset($_search[PHASE])) {
+                    if (isset($_search['PHASE'])) {
                         $in_str = "";
-                        $arr_phase = explode(',', $_search[PHASE]);
+                        $arr_phase = explode(',', $_search['PHASE']);
                         for($i=0;$i< sizeof($arr_phase);$i++){
                             $in_str = $in_str."'".trim($arr_phase[$i])."'";
                             if (sizeof($arr_phase) - 1 != $i) $in_str = $in_str.",";
@@ -143,37 +143,37 @@
 
                         $search_where = "AND T.PHASE IN (".$in_str.") ";
                     }
-                    if (isset($_search[MY_TASK]) && $_search[MY_TASK] != "") {
-                        if ($_search[MY_TASK] == 'true') {
+                    if (isset($_search['MY_TASK']) && $_search['MY_TASK'] != "") {
+                        if ($_search['MY_TASK'] == 'true') {
                             $search_where .= "AND T.EDITOR_ID  = '".$_SESSION['uid']."' ";
                         }
                     }
-                    if (isset($_search[NOT_TASK_NO]) && $_search[NOT_TASK_NO] != "") {
-                        $search_where .= "AND T.NO  != '".$_search[NOT_TASK_NO]."' ";
+                    if (isset($_search['NOT_TASK_NO']) && $_search['NOT_TASK_NO'] != "") {
+                        $search_where .= "AND T.NO  != '".$_search['NOT_TASK_NO']."' ";
                     }
-                    if (isset($_search[YEAR]) && $_search[YEAR] != "") {
-                        $search_where .= "AND P.YEAR  = '".$_search[YEAR]."' ";
+                    if (isset($_search['YEAR']) && $_search['YEAR'] != "") {
+                        $search_where .= "AND P.YEAR  = '".$_search['YEAR']."' ";
                     }
-                    if (isset($_search[PROJECT]) && $_search[PROJECT] != "") {
-                        $search_where .= "AND P.NO  = '".$_search[PROJECT][NO]."' ";
+                    if (isset($_search['PROJECT']) && $_search['PROJECT'] != "") {
+                        $search_where .= "AND P.NO  = '".$_search['PROJECT']['NO']."' ";
                     }
-                    if (isset($_search[KEYWORD]) && $_search[KEYWORD] != "") {
-                        $search_where .= "AND T.".$_search[CONDITION][value]." LIKE '%".$_search[KEYWORD]."%' ";
+                    if (isset($_search['KEYWORD']) && $_search['KEYWORD'] != "") {
+                        $search_where .= "AND T.".$_search['CONDITION']['value']." LIKE '%".$_search['KEYWORD']."%' ";
                     }
-                    if (isset($_search[EDITOR_ID]) && $_search[EDITOR_ID] != "") {
-                        $search_where .= "AND T.EDITOR_ID  = '".$_search[EDITOR_ID]."' ";
+                    if (isset($_search['EDITOR_ID']) && $_search['EDITOR_ID'] != "") {
+                        $search_where .= "AND T.EDITOR_ID  = '".$_search['EDITOR_ID']."' ";
                     }
-                    if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
-//                        $where_category = $_search[CATEGORY_NO];
+                    if (isset($_search['CATEGORY_NO']) && $_search['CATEGORY_NO'] != "") {
+//                        $where_category = $_search['CATEGORY_NO'];
 //
-//                        if (!isset($_search[CATEGORY]) || $_search[CATEGORY] == "") {
+//                        if (!isset($_search['CATEGORY']) || $_search['CATEGORY'] == "") {
                             $from_category .= ",(
                                               SELECT
                                                   TARGET_NO
                                               FROM
                                                   CONTENT_CATEGORY
                                               WHERE
-                                                  TARGET_GB = 'TASK' AND CATEGORY_NO IN (".$_search[CATEGORY_NO].")
+                                                  TARGET_GB = 'TASK' AND CATEGORY_NO IN (".$_search['CATEGORY_NO'].")
                                               GROUP BY TARGET_NO
                                           ) AS TEMP1 ";
 
@@ -181,12 +181,12 @@
 //                        }
                     }
 
-                    if (isset($_search[CATEGORY]) && count($_search[CATEGORY]) != 0) {
+                    if (isset($_search['CATEGORY']) && count($_search['CATEGORY']) != 0) {
                         $where_category = "";
-                            for ($i = 0; $i < count($_search[CATEGORY]); $i++) {
-                                $category = $_search[CATEGORY][$i];
+                            for ($i = 0; $i < count($_search['CATEGORY']); $i++) {
+                                $category = $_search['CATEGORY'][$i];
 
-                                if ($category[CATEGORY_GB] == 2 && $category[PARENT_NO] == 0) {
+                                if ($category['CATEGORY_GB'] == 2 && $category['PARENT_NO'] == 0) {
                                     $sql = "SELECT
                                                 NO
                                             FROM
@@ -194,13 +194,13 @@
                                             WHERE
                                                 CATEGORY_ST = '0'
                                                 AND CATEGORY_GB = '2'
-                                                AND PARENT_NO = ".$category[NO]."
+                                                AND PARENT_NO = ".$category['NO']."
                                             ";
 
                                     $result = $_d->sql_query($sql,true);
 
                                     for ($j=0; $row=$_d->sql_fetch_array($result); $j++) {
-                                        $where_category .= $row[NO].",";
+                                        $where_category .= $row['NO'].",";
                                     }
                                 } else {
                                     $from_category .= ",(
@@ -209,7 +209,7 @@
                                                   FROM
                                                       CONTENT_CATEGORY
                                                   WHERE TARGET_GB = 'TASK'
-                                                    AND CATEGORY_NO = ".$category[NO]."
+                                                    AND CATEGORY_NO = ".$category['NO']."
                                                   GROUP BY TARGET_NO
                                               ) AS TEMP3 ";
 
@@ -242,13 +242,13 @@
                             CLOSE_YMD, DEPLOY_YMD, TAG, NOTE, PROJECT_NO, SECTION_NO, SERIES_NM, (SELECT SECTION_NM FROM CMS_SECTION S WHERE S.NO = SECTION_NO) AS SECTION_NM,
                             HIT_CNT, SCRAP_CNT, LIKE_CNT, REPLY_CNT, LIKE_FL,
                             (SELECT COUNT(*) AS REPLY_COUNT FROM COM_REPLY WHERE TARGET_NO = DATA.NO AND TARGET_GB = 'CONTENT') AS REPLY_COUNT, AD_CODE,
-                            CASE WHEN AD_CODE IS NULL THEN 'N' ELSE 'Y' END AS AD_FL
+                            CASE WHEN AD_CODE IS NULL THEN 'N' ELSE 'Y' END AS AD_FL, EBOOK_URL
                         FROM
                         (
                             SELECT
-                                P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
+                                DISTINCT P.SUBJECT AS PROJECT_NM, T.NO, T.PHASE, T.SUBJECT, T.SUMMARY, T.EDITOR_ID, T.EDITOR_NM, T.REG_UID, T.REG_NM, T.REG_DT,
                                 T.CLOSE_YMD, T.DEPLOY_YMD, T.TAG, T.NOTE, T.PROJECT_NO, T.SECTION_NO, T.HIT_CNT, T.SCRAP_CNT, T.LIKE_CNT, T.REPLY_CNT, S.SERIES_NM,
-                                CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL, T.AD_CODE
+                                CASE IFNULL(L.TARGET_NO, 'N') WHEN 'N' THEN 'N' ELSE 'Y' END AS LIKE_FL, T.AD_CODE, EBOOK_URL
                             FROM
                                 CMS_TASK T
                                 INNER JOIN CMS_PROJECT P ON T.PROJECT_NO = P.NO
@@ -293,7 +293,7 @@
                     $category_data = $_d->getData($sql);
                     $row['CATEGORY'] = $category_data;
 
-                    if ($_search[FILE]) {
+                    if ($_search['FILE']) {
                         $sql = "SELECT
                                     F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                                 FROM
@@ -309,7 +309,7 @@
                         $row['FILE'] = $_d->sql_fetch($sql);
                     }
 
-                    if ($_search[CONETNT]) {
+                    if ($_search['CONETNT']) {
                         $sql = "SELECT
                                     NO, SUPER_NO, PHASE, VERSION, SUMMARY, BODY, CONTENT_ST, REG_UID, REG_NM, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT,
                                     CURRENT_FL, MODIFY_FL, HIT_CNT, SCRAP_CNT, TASK_NO
@@ -350,16 +350,16 @@
                 $limit = "";
 
                 if (isset($_page)) {
-                    $limit = "LIMIT ".($_page[NO] * $_page[SIZE]).", ".($_page[SIZE]/4);
+                    $limit = "LIMIT ".($_page['NO'] * $_page['SIZE']).", ".($_page['SIZE']/4);
                 }
 
                 $search_where = "AND T.PHASE IN ('30', '31') ";
 
-                if (isset($_search[CATEGORY_NO]) && $_search[CATEGORY_NO] != "") {
+                if (isset($_search['CATEGORY_NO']) && $_search['CATEGORY_NO'] != "") {
 
                     $select = "";
 
-                    $arr_category = explode(',', $_search[CATEGORY_NO]);
+                    $arr_category = explode(',', $_search['CATEGORY_NO']);
                     for($i=0;$i< sizeof($arr_category);$i++){
 
                         $sql = "SELECT
@@ -375,7 +375,7 @@
                         $result = $_d->sql_query($sql,true);
 
                         for ($j=0; $row=$_d->sql_fetch_array($result); $j++) {
-                            $where_category .= $row[NO].($j != $_d->mysql_num_rows - 1 ? "," : "");
+                            $where_category .= $row['NO'].($j != $_d->mysql_num_rows - 1 ? "," : "");
                         }
 
                         $select_where = "AND C.CATEGORY_NO = ".trim($arr_category[$i])." ";
@@ -429,7 +429,7 @@
                 $result = $_d->sql_query($sql,true);
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
-                    if ($_search[FILE]) {
+                    if ($_search['FILE']) {
                         $sql = "SELECT
                                     F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
                                 FROM
@@ -461,36 +461,36 @@
 
         case "POST":
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             if ($_type == 'item') {
-                if ( trim($_model[SUBJECT]) == "" ) {
+                if ( trim($_model['SUBJECT']) == "" ) {
                     $_d->failEnd("제목을 작성 하세요");
                 }
 
-                if ( trim($_model[PHASE]) == "" ) {
-                    $_model[PHASE] = '0';
+                if ( trim($_model['PHASE']) == "" ) {
+                    $_model['PHASE'] = '0';
                 }
 
                 $project_no = 0;
                 $project_st = '1';
 
-                if ( trim($_model[PROJECT_NO]) != "" ) {
-                    $project_no = $_model[PROJECT_NO];
+                if ( trim($_model['PROJECT_NO']) != "" ) {
+                    $project_no = $_model['PROJECT_NO'];
                 }
 
-                if (count($_model[PROJECT]) > 0) {
-                    $project = $_model[PROJECT];
-                    $project_no = $project[NO];
-                    $project_st = $project[PROJECT_ST];
+                if (count($_model['PROJECT']) > 0) {
+                    $project = $_model['PROJECT'];
+                    $project_no = $project['NO'];
+                    $project_st = $project['PROJECT_ST'];
                 }
 
                 // 2014.11.14(금) SECTION 섹션 추가
-                if (count($_model[SECTION]) > 0) {
-                    $section = $_model[SECTION];
-                    $section_no = $section[NO];
-                    $section_nm = $section[SECTION_NM];
-                    $season_nm = $section[SEASON_NM];
+                if (count($_model['SECTION']) > 0) {
+                    $section = $_model['SECTION'];
+                    $section_no = $section['NO'];
+                    $section_nm = $section['SECTION_NM'];
+                    $season_nm = $section['SEASON_NM'];
                 }
 
                 $err = 0;
@@ -514,21 +514,23 @@
                             ,TAG
                             ,NOTE
                             ,AD_CODE
+                            ,EBOOK_URL
                         ) VALUES (
-                            '".$_model[PHASE]."'
-                            ,'".$_model[SUBJECT]."'
-                            ,'".$_model[EDITOR_ID]."'
-                            ,'".$_model[EDITOR_NM]."'
+                            '".$_model['PHASE']."'
+                            ,'".$_model['SUBJECT']."'
+                            ,'".$_model['EDITOR_ID']."'
+                            ,'".$_model['EDITOR_NM']."'
                             ,'".$_SESSION['uid']."'
                             ,'".$_SESSION['name']."'
                             ,SYSDATE()
-                            ,'".$_model[CLOSE_YMD]."'
-                            ,'".$_model[DEPLOY_YMD]."'
+                            ,'".$_model['CLOSE_YMD']."'
+                            ,'".$_model['DEPLOY_YMD']."'
                             ,".$project_no."
                             ,".$section_no."
-                            ,'".$_model[TAG]."'
-                            ,'".$_model[NOTE]."'
-                            ,".( $_model[AD_FL] == "true" ? '"AD"' : "NULL" )."
+                            ,'".$_model['TAG']."'
+                            ,'".$_model['NOTE']."'
+                            ,".( $_model['AD_FL'] == "true" ? '"AD"' : "NULL" )."
+                            ,'".$_model['EBOOK_URL']."'
                         )";
 
                 $_d->sql_query($sql);
@@ -539,10 +541,10 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if (count($_model[CATEGORY]) > 0) {
-                    $categories = $_model[CATEGORY];
+                if (count($_model['CATEGORY']) > 0) {
+                    $categories = $_model['CATEGORY'];
 
-                    for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                    for ($i = 0 ; $i < count($_model['CATEGORY']); $i++) {
                         $category = $categories[$i];
 
                         $sql = "INSERT INTO CONTENT_CATEGORY
@@ -551,7 +553,7 @@
                                     ,TARGET_NO
                                     ,TARGET_GB
                                 ) VALUES (
-                                    '".$category[NO]."'
+                                    '".$category['NO']."'
                                     , '".$no."'
                                     , 'TASK'
                                 )";
@@ -565,12 +567,12 @@
                     }
                 }
 
-                if (!empty($_model[NO]) && $_model[PHASE] > 0) {
+                if (!empty($_model['NO']) && $_model['PHASE'] > 0) {
                     $sql = "UPDATE CMS_CONTENT
                             SET
                                 CURRENT_FL = 'N'
                             WHERE
-                                NO = ".$_model[NO]."
+                                NO = ".$_model['NO']."
                             ";
 
                     $_d->sql_query($sql);
@@ -623,7 +625,7 @@
                             ,'CREATE'
                             ,'".$ip."'
                             ,'/task'
-                            ,'".$_model[SUBJECT]."'
+                            ,'".$_model['SUBJECT']."'
                         )";
 
                     $_d->sql_query($sql);
@@ -639,7 +641,7 @@
 
                 $sql = "INSERT INTO CMS_TASK_DEL
                             SELECT * FROM CMS_TASK
-                            WHERE NO = ".$_model[NO]."
+                            WHERE NO = ".$_model['NO']."
                        ";
 
                 $_d->sql_query($sql);
@@ -693,7 +695,7 @@
             }
 
 //            $form = json_decode(file_get_contents("php://input"),true);
-//            MtUtil::_d("### [POST_DATA] ".json_encode(file_get_contents("php://input"),true));
+//            MtUtil::_d("### ['POST_DATA'] ".json_encode(file_get_contents("php://input"),true));
 
             if ($_type == 'item') {
                 $err = 0;
@@ -701,45 +703,46 @@
 
                 $_d->sql_beginTransaction();
 
-                if ( trim($_model[PHASE]) == "" ) {
-                    $_model[PHASE] = '0';
+                if ( trim($_model['PHASE']) == "" ) {
+                    $_model['PHASE'] = '0';
                 }
 
                 $project_no = 0;
                 $project_st = '1';
 
-                if ( trim($_model[PROJECT_NO]) != "" ) {
-                    $project_no = $_model[PROJECT_NO];
+                if ( trim($_model['PROJECT_NO']) != "" ) {
+                    $project_no = $_model['PROJECT_NO'];
                 }
 
-                if (count($_model[PROJECT]) > 0) {
-                    $project = $_model[PROJECT];
-                    $project_no = $project[NO];
-                    $project_st = $project[PROJECT_ST];
+                if (count($_model['PROJECT']) > 0) {
+                    $project = $_model['PROJECT'];
+                    $project_no = $project['NO'];
+                    $project_st = $project['PROJECT_ST'];
                 }
 
                 // 2014.11.14(금) SECTION 섹션 추가
-                if (count($_model[SECTION]) > 0) {
-                    $section = $_model[SECTION];
-                    $section_no = $section[NO];
-                    $section_nm = $section[SECTION_NM];
+                if (count($_model['SECTION']) > 0) {
+                    $section = $_model['SECTION'];
+                    $section_no = $section['NO'];
+                    $section_nm = $section['SECTION_NM'];
                 }
 
                 $sql = "UPDATE CMS_TASK
                         SET
-                            PHASE = '".$_model[PHASE]."'
-                            ,SUBJECT = '".$_model[SUBJECT]."'
-                            ,EDITOR_ID = '".$_model[EDITOR_ID]."'
-                            ,EDITOR_NM = '".$_model[EDITOR_NM]."'
+                            PHASE = '".$_model['PHASE']."'
+                            ,SUBJECT = '".$_model['SUBJECT']."'
+                            ,EDITOR_ID = '".$_model['EDITOR_ID']."'
+                            ,EDITOR_NM = '".$_model['EDITOR_NM']."'
                             ,REG_UID = '".$_SESSION['uid']."'
                             ,REG_NM = '".$_SESSION['name']."'
-                            ,CLOSE_YMD = '".$_model[CLOSE_YMD]."'
-                            ,DEPLOY_YMD = '".$_model[DEPLOY_YMD]."'
+                            ,CLOSE_YMD = '".$_model['CLOSE_YMD']."'
+                            ,DEPLOY_YMD = '".$_model['DEPLOY_YMD']."'
                             ,PROJECT_NO = ".$project_no."
                             ,SECTION_NO = ".$section_no."
-                            ,TAG = '".$_model[TAG]."'
-                            ,NOTE = '".$_model[NOTE]."'
-                            ,AD_CODE = ".( $_model[AD_FL] == "true" ? '"AD"' : "NULL" )."
+                            ,TAG = '".$_model['TAG']."'
+                            ,NOTE = '".$_model['NOTE']."'
+                            ,AD_CODE = ".( $_model['AD_FL'] == "true" ? '"AD"' : "NULL" )."
+                            ,EBOOK_URL = '".$_model['EBOOK_URL']."'
                         WHERE
                             NO = ".$_key."
                         ";
@@ -751,7 +754,7 @@
                     $msg = $_d->mysql_error;
                 }
 
-                if ($_model[PHASE] == '30') {
+                if ($_model['PHASE'] == '30') {
 
                     $sql = "SELECT
                                 PHASE
@@ -764,7 +767,7 @@
                     $result = $_d->sql_query($sql,true);
                     $project_st = '2';
                     for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
-                        if ($row[PHASE] != '30' && $row[PHASE] != '31') {
+                        if ($row['PHASE'] != '30' && $row['PHASE'] != '31') {
                             $project_st = '1';
                         }
                     }
@@ -786,7 +789,7 @@
                     }
                 }
 
-                if (count($_model[CATEGORY]) > 0) {
+                if (count($_model['CATEGORY']) > 0) {
 
                     $sql = "DELETE FROM CONTENT_CATEGORY
                             WHERE
@@ -801,9 +804,9 @@
                         $msg = $_d->mysql_error;
                     }
 
-                    $categories = $_model[CATEGORY];
+                    $categories = $_model['CATEGORY'];
 
-                    for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
+                    for ($i = 0 ; $i < count($_model['CATEGORY']); $i++) {
                         $category = $categories[$i];
 
                         $sql = "INSERT INTO CONTENT_CATEGORY
@@ -812,7 +815,7 @@
                                     ,TARGET_NO
                                     ,TARGET_GB
                                 ) VALUES (
-                                    '".$category[NO]."'
+                                    '".$category['NO']."'
                                     , '".$_key."'
                                     , 'TASK'
                                 )";
@@ -852,7 +855,7 @@
                         ,'UPDATE'
                         ,'".$ip."'
                         ,'/task'
-                        ,'".$_model[SUBJECT]."'
+                        ,'".$_model['SUBJECT']."'
                     )";
 
                     $_d->sql_query($sql);

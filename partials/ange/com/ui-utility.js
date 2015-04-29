@@ -15,6 +15,24 @@ define([
 
         angular.extend(this, $controller('ange-common', {$scope: $scope}));
 
+        $scope.verbs = [
+                            {
+                                "title": "WM-Qualifikation: DFB-Frauen mit Tor-Festival gegen die Slowakei",
+                                "text": "Bundestrainerin Silvia Neid kann allmählich mit den Planungen für die WM im kommenden Jahr beginnen. Die Fußball-Nationalmannschaft der Frauen gewann auch ihr achtes Qualifikationsspiel souverän und kann kaum noch von Rang eins verdrängt werden.",
+                                "creationDate": "Thu, 08 May 2014 19:10:00 +0200",
+                                "changeDate": "Sun, 12 May 2014 09:30:00 +0200"
+                            },
+                            {
+                                "title": "2,5 Milliarden Euro: Real Madrid ist wertvollster Fußballclub der Welt",
+                                "text": "Als einziger deutscher Club hat es der FC Bayern in die Top Ten der wertvollsten Fußball-Vereine der Welt geschafft. Die Münchner liegen im \"Forbes\"-Ranking auf Rang vier hinter Real Madrid, dem FC Barcelona und Manchester United.",
+                                "creationDate": "Thu, 08 May 2014 18:28:00 +0200",
+                                "changeDate": "Sat, 11 May 2014 12:40:00 +0200"
+                            }
+                        ];
+        $scope.duration = 3000;
+
+        $scope.isProfile = false;
+
         /********** 이벤트 **********/
         $scope.click_login = function () {
             $scope.openModal(null, 'md');
@@ -35,7 +53,8 @@ define([
             console.log('$rootScope.user_gb = '+$rootScope.user_gb);
             console.log('$rootScope.role = '+$rootScope.role);
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
@@ -67,6 +86,14 @@ define([
             $location.url('myange/account');
         };
 
+        $scope.click_showSlide = function () {
+            $scope.isProfile = true;
+        };
+
+        $scope.click_closeSlide = function () {
+            $scope.isProfile = false;
+        };
+
         $scope.click_settingBaby = function () {
             $location.url('myange/baby');
         };
@@ -75,9 +102,18 @@ define([
             $location.url('myange/mileage');
         };
 
+        $scope.click_myangeScrap = function () {
+            $location.url('myange/scrap');
+        };
+
+        $scope.click_storeCart = function () {
+            $location.url('store/cart/list');
+        };
+
         $scope.click_myangeWriting = function () {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
@@ -86,7 +122,8 @@ define([
 
         $scope.click_myangeMessage = function () {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
@@ -96,6 +133,42 @@ define([
         $scope.click_infodesk = function () {
             $location.url('infodesk/qna/list');
 //            $location.url('infodesk/home');
+        };
+
+        $scope.click_myangeAlbum = function () {
+            if ($rootScope.uid == '' || $rootScope.uid == null) {
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
+                return;
+            }
+
+            $location.url('myange/album/list');
+        };
+
+        // 조회 버튼 클릭
+        $scope.click_showViewMyAlbum = function (item) {
+            $scope.openViewMyAlbumModal(item, 'lg');
+        };
+
+        $scope.openViewMyAlbumModal = function (item, size) {
+            var dlg = dialogs.create('partials/ange/myange/myangealbum-view-popup.html',
+                ['$scope', '$rootScope', '$modalInstance', '$controller', 'data', function($scope, $rootScope, $modalInstance, $controller, data) {
+                    /********** 공통 controller 호출 **********/
+                    angular.extend(this, $controller('ange-common', {$scope: $scope, $rootScope : $rootScope}));
+
+                    $scope.isHome = true;
+                    $scope.item = data;
+
+                    // 닫기
+                    $scope.click_close = function(){
+                        $modalInstance.close();
+                    }
+                }], item, {size:size,keyboard: true}, $scope);
+            dlg.result.then(function(){
+
+            },function(){
+
+            });
         };
 
         // 로그인 모달창
@@ -173,7 +246,29 @@ define([
                                     $rootScope.profileImg = null;
                                 }
 
+                                if (data != undefined && data.ALBUM) {
+                                    var albumData = data.ALBUM;
+                                    for(var i in albumData) {
+                                        if (albumData[i].FILE_ID != null) {
+                                            albumData[i].ALBUM_FILE = CONSTANT.BASE_URL + albumData[i].PATH + 'thumbnail/' + albumData[i].FILE_ID;
+                                        }
+                                    }
+
+                                    $rootScope.albumList = albumData;
+                                } else {
+                                    $rootScope.albumList = null;
+                                }
+
+                                alert(JSON.stringify(data.SCHEDULE))
+                                $rootScope.scheduleList = data.SCHEDULE;
+
                                 $scope.addMileage('LOGIN', null);
+
+                                var check = /^(?=.+[@])$/;
+
+                                if (check.test(data.USER_ID) || data.NICK_NM == '') {
+                                    $location.path('myange/account');
+                                }
 
                                 if (data.USER_ST == 'W' && data.CERT_GB == 'MIG') {
                                     $location.path('myange/account');
@@ -210,6 +305,7 @@ define([
             dlg.result.then(function(action){
                 if (action == 'login') {
                     $scope.getCanlendarList();
+//                    $rootScope.scheduleList = [{"name":"이예슬", "event":"돌", "dday":"88"}, {"name":"므에에롱", "event":"생일", "dday":"30"}, {"name":"막둥이", "event":"백일", "dday":"10"}]
                 }
             },function(){
                 if(angular.equals($scope.name,''))
@@ -232,6 +328,8 @@ define([
 //                    $location.url('main');
                 });
             }
+
+            $scope.isProfile = false;
         };
 
         // 상단 배너 이미지 조회
@@ -309,6 +407,28 @@ define([
         $scope.click_mainLogo = function() {
 
         };
+
+        $scope.activeMsg = 0;
+
+        $scope.setVisible = function(index) {
+            if (index == $scope.activeMsg) {
+                return("1") ;
+            } else {
+                return("0") ;
+            }
+        }
+
+        $scope.refresh = function() {
+            $scope.$apply(function() {
+                $scope.activeMsg++ ;
+
+                if ($rootScope.scheduleList != undefined && $scope.activeMsg >= $rootScope.scheduleList.length) {
+                    $scope.activeMsg = 0 ;
+                }
+            })
+        }
+
+        setInterval($scope.refresh,3000) ;
 
 //        $scope.getSession()
 //            .then($scope.sessionCheck)

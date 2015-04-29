@@ -15,6 +15,7 @@ require.config({
     // baseUrl은 JavaScript 파일들이 존재하는 base 위치를 지정한다.
     baseUrl: '/js/ange',
     urlArgs: "bust=" + (new Date()).getTime(),
+    waitSeconds: 0,
 
     // paths는 baseUrl에서 지정한 경로에 존재하지 않는 모듈을 찾기위해서 경로를 매핑해준다.
     // 보통 맨뒤 js확장자는 별도롤 붙이지 않으며, 맨 뒤에 js를 붙이지 않아도 자동으로 js를 붙여서 찾아준다.
@@ -96,6 +97,12 @@ require.config({
         // map 모듈
 //        'google-map': '//maps.google.com/maps/api/js',
         'ng-map': '../../lib/ng-map/ng-map.min',
+
+        // clip 모듈
+        'ng-clip': '../../lib/ng-clip/ng-clip.min',
+
+        // newsticker 모듈
+//        'angular-newsticker': '../../lib/angular-newsticker/angular-NewsTicker',
 
         // scrollbar 모듈
         'ng-scrollbar': '../../lib/ng-scrollbar/ng-scrollbar',
@@ -195,6 +202,17 @@ require.config({
         'ng-map': {
             deps:['angular']
         },
+        'ng-clip': {
+            deps:['angular']
+        },
+//        'angular-newsticker': {
+//            deps:['jquery', 'angular']
+//        },
+
+//        'modernizr': '../../lib/modernizr/modernizr',
+//        'prefix-free-min': '../../lib/newsticker/prefix-free-min',
+//        'prefix-free-dynamic-dom-min': '../../lib/newsticker/prefix-free-dynamic-dom-min',
+
         'ng-scrollbar': {
             deps:['angular']
         }

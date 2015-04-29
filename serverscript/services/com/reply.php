@@ -167,6 +167,59 @@
                 }else{
                     $_d->dataEnd2($data);
                 }
+            } else if ($_type == 'check') {
+
+                $search_common = "";
+
+                if (isset($_search[TARGET_NO]) && $_search[TARGET_NO] != "") {
+                    $search_common .= "AND TARGET_NO = ".$_search[TARGET_NO]." ";
+                }
+
+                if (isset($_search[TARGET_GB]) && $_search[TARGET_GB] != "") {
+                    $search_common .= "AND TARGET_GB = '".$_search[TARGET_GB]."' ";
+                }
+
+                if (isset($_search[REPLY_GB]) && $_search[REPLY_GB] != "") {
+                    $search_common .= "AND REPLY_GB = '".$_search[REPLY_GB]."' ";
+                }
+
+                if (isset($_search[TODAY_DATE]) && $_search[TODAY_DATE] != "") {
+                    $search_common .= "AND DATE_FORMAT(REG_DT, '%Y-%m-%d') = CONCAT('".$_search[YEAR]."','-' ,'".$_search[MONTH]."', '-', '".$_search[DAY]."')";
+                }
+
+                if (isset($_search[REG_UID]) && $_search[REG_UID] != "") {
+                    $search_common .= "AND REG_UID = '".$_search[REG_UID]."' ";
+                }
+
+                if (isset($_search[SORT]) && $_search[SORT] != "") {
+                    $sort_order = "ORDER BY ".$_search[SORT]." ".$_search[ORDER];
+                }
+
+                if (isset($_search[PAGE_NO]) && $_search[PAGE_NO] != "") {
+                    $limit .= "LIMIT ".(($_search[PAGE_NO] - 1) * $_search[PAGE_SIZE]).", ".$_search[PAGE_SIZE];
+                }
+
+                $sql = "SELECT
+                            COUNT(*) AS COUNT
+                        FROM
+                            COM_REPLY
+                        WHERE 1=1
+                            AND PARENT_NO = 0
+                            ".$search_common."
+                        ";
+
+                $data = $_d->sql_fetch($sql);
+
+                if($_d->mysql_errno > 0) {
+                    $err++;
+                    $msg = $_d->mysql_error;
+                }
+
+                if($err > 0){
+                    $_d->failEnd("조회실패입니다:".$msg);
+                }else{
+                    $_d->dataEnd2($data);
+                }
             }
 
             break;

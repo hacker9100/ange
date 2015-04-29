@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('dashboard_main', ['$scope', '$rootScope', '$location', 'dialogs', 'COMMON', function ($scope, $rootScope, $location, dialogs, COMMON) {
+    controllers.controller('dashboard_main', ['$scope', '$rootScope', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $location, dialogs, CONSTANT) {
 
         /********** 초기화 **********/
         // 초기화
@@ -19,7 +19,7 @@ define([
             $scope.oneAtATime = true;
 
             $scope.PAGE_NO = 0;
-            $scope.PAGE_SIZE = COMMON.DASHBOARD_PAGE_SIZE;
+            $scope.PAGE_SIZE = CONSTANT.DASHBOARD_PAGE_SIZE;
         };
 
         /********** 이벤트 **********/

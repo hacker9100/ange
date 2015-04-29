@@ -59,8 +59,9 @@
                 $msg = "";
 
                 $sql = "SELECT
-                            NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT , SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM,
-                            REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, NICK_NM, BOARD_NO,
+                            NO,PARENT_NO,HEAD,SUBJECT,BODY,REG_UID,REG_NM,REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, COMM_NM,
+                            REPLY_BODY , IFNULL(REPLY_BODY,'N')AS REPLY_YN, SCRAP_FL, REPLY_FL, REPLY_COUNT, BOARD_GB, ETC1, ETC2, ETC3, ETC4, ETC5, BOARD_NO,
+                            CASE WHEN NICK_NM = '' THEN CONCAT('*', SUBSTRING(REG_NM, 2, 1), '*') ELSE NICK_NM END AS NICK_NM,
                             CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT1, PASSWORD, REG_NEW_DT, CATEGORY_NO, BOARD_ST,
                             (SELECT NOTE FROM CMS_CATEGORY WHERE NO = CATEGORY_NO) AS CATEGORY_NM,BLIND_FL,PHOTO_REPLY_COUNT,REG_DT_TIME, REG_DT_TIME
                         FROM (
@@ -246,7 +247,8 @@
 
                 $sql = "SELECT
                           0 as TOTAL_COUNT, @RNUM := @RNUM + 1 AS RNUM,
-                          DATA.NO, PARENT_NO, HEAD, SUBJECT, DATA.REG_UID, DATA.REG_NM, DATA.NICK_NM, DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
+                          DATA.NO, PARENT_NO, HEAD, SUBJECT, DATA.REG_UID, DATA.REG_NM, DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO, IFNULL(C.COMM_NM, '') AS COMM_NM, IFNULL(C.SHORT_NM, '') AS SHORT_NM,
+                          CASE WHEN DATA.NICK_NM = '' THEN CONCAT('*', SUBSTRING(DATA.REG_NM, 2, 1), '*') ELSE DATA.NICK_NM END AS NICK_NM,
                           (DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
 	                      CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, CATEGORY_NO,
 	                      BOARD_NO, DATE_FORMAT(NOW(), '%Y-%m-%d') AS REG_NEW_DT,
@@ -415,7 +417,8 @@
                 }
 
                 $sql = "SELECT
-                            DATA.NO, HEAD, SUBJECT, DATA.REG_UID, DATA.REG_NM, DATA.NICK_NM, DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO,
+                            DATA.NO, HEAD, SUBJECT, DATA.REG_UID, DATA.REG_NM, DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') AS REG_DT, HIT_CNT, LIKE_CNT, SCRAP_CNT, REPLY_CNT, NOTICE_FL, WARNING_FL, BEST_FL, TAG, COMM_NO,
+                            CASE WHEN DATA.NICK_NM = '' THEN CONCAT('*', SUBSTRING(DATA.REG_NM, 2, 1), '*') ELSE DATA.NICK_NM END AS NICK_NM,
                             (SELECT SHORT_NM FROM ANGE_COMM WHERE DATA.COMM_NO = NO) AS SHORT_NM,
                             (DATE_FORMAT(DATA.REG_DT, '%Y-%m-%d') > DATE_FORMAT(DATE_ADD(NOW(), INTERVAL - 7 DAY), '%Y-%m-%d')) AS NEW_FL,
                             CASE IFNULL(PASSWORD, 0) WHEN 0 THEN 0 ELSE 1 END AS PASSWORD_FL, CATEGORY_NO,
@@ -701,9 +704,11 @@
 
                             if ($file[version] == 6 ) {
                                 $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                                $body_str = str_replace(BASE_URL.'/upload/files/'.$file[name], BASE_URL.$file_path.$uid, $body_str);
                             } else {
                                 rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
                                 $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                $body_str = str_replace(BASE_URL.'/upload/files/medium/'.$file[name], BASE_URL.$file_path.'medium/'.$uid, $body_str);
                             }
 
                             $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
@@ -958,7 +963,7 @@
                                 </html>";
 
                     MtUtil::_d("------------>>>>> mail : ");
-                    MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
+                    MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user, null);
                 }
             }
 
@@ -1003,15 +1008,17 @@
                                 $uid = uniqid();
                                 rename($upload_path.$file[name], $source_path.$uid);
                                 rename($upload_path.'thumbnail/'.$file[name], $source_path.'thumbnail/'.$uid);
-                                rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+
+                                if ($file[version] == 6 ) {
+                                    $body_str = str_replace($file[url], BASE_URL.$file_path.$uid, $body_str);
+                                    $body_str = str_replace(BASE_URL.'/upload/files/'.$file[name], BASE_URL.$file_path.$uid, $body_str);
+                                } else {
+                                    rename($upload_path.'medium/'.$file[name], $source_path.'medium/'.$uid);
+                                    $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                    $body_str = str_replace(BASE_URL.'/upload/files/medium/'.$file[name], BASE_URL.$file_path.'medium/'.$uid, $body_str);
+                                }
+
                                 $insert_path[$i] = array(path => $file_path, uid => $uid, kind => $file[kind]);
-
-                                MtUtil::_d("------------>>>>> mediumUrl : ".$file[mediumUrl]);
-                                MtUtil::_d("------------>>>>> mediumUrl : ".'http://localhost'.$source_path.'medium/'.$uid);
-
-                                $body_str = str_replace($file[mediumUrl], BASE_URL.$file_path.'medium/'.$uid, $body_str);
-
-                                MtUtil::_d("------------>>>>> body_str : ".$body_str);
                             } else {
                                 $uid = uniqid();
                                 $insert_path[$i] = array(path => '', uid => '', kind => '');

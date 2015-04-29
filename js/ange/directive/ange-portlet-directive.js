@@ -203,7 +203,7 @@ define([
                 '    <div class="mini_story_rollcate" style="margin-bottom:5px;">' +
                 '        <a class="mini_story_rollcate_left" ng-click="click_preCategory()">Pre Category</a>' +
                 '        <div class="col-xs-12 no-margin" style="width:100%; padding:0 2%; height:100%; line-height: 34px;">' +
-                '           <slick id="category" current-index="0" infinite="true" dots="false" autoplay="false" center-mode="true" slides-to-show="3" slides-to-scroll="1">' +
+                '           <slick id="category" current-index="0" infinite="false" dots="false" autoplay="false" slides-to-show="4" slides-to-scroll="1">' +
                 '               <div ng-repeat="item in cate" ng-class=" $index == curIdx ? \'foucsing\' : \'\' " ng-click="click_slickGoTo($index)" style="overflow:hidden; white-space:nowrap; width:100%; text-overflow: ellipsis;  margin:0 1.3%; text-align:center; font-size:0.86em;"><a class="rollcate_link" title="item.CATEGORY_NM">{{item.CATEGORY_NM}}</a></div>' +
                 '           </slick>' +
                 '        </div>' +
@@ -225,8 +225,8 @@ define([
                 '            <div class="col-xs-2" style="padding:4px;">' +
                 '                <span class="mini_story_contentbox_kortitle">임신부<br /><strong>솔루션</strong></span>' +
                 '                <div class="mini_story_contentbox_engtitle">Health<br />&nbsp;&nbsp;& Food</div>' +
-                '                <a class="miniboard_tab_slideprev" style="margin-top:-12px;" title="이전">이전슬라이드</a>' +
-                '                <a class="miniboard_tab_slidenext" style="margin-top:-12px;" title="다음">다음슬라이드</a>' +
+                '                <a class="miniboard_tab_slideprev" style="margin-top:-12px;" ng-click="click_slickPrev()" title="이전">이전슬라이드</a>' +
+                '                <a class="miniboard_tab_slidenext" style="margin-top:-12px;" ng-click="click_slickNext()" title="다음">다음슬라이드</a>' +
                 '            </div>' +
                 '            <div class="col-xs-10 mini_story_contentboxlist_roll">' +
                 '                <div class="mini_story_contentboxlist_wrap">' +
@@ -294,9 +294,12 @@ define([
                     $location.url($scope.option.url);
                 };
 
+                $scope.curIdx = 0;
                 $scope.cateIdx = 0;
 
                 $scope.click_preCategory = function () {
+                    if ($scope.curIdx == 0) return;
+
                     angular.element('#category').slickPrev();
                     $scope.curIdx--;
                     // 클릭 슬라이드로 변경
@@ -304,6 +307,8 @@ define([
                 }
 
                 $scope.click_nextCategory = function () {
+                    if ($scope.curIdx == ($scope.category_b.length - 1)) return;
+
                     angular.element('#category').slickNext();
                     $scope.curIdx++
                     // 클릭 슬라이드로 변경
@@ -354,6 +359,16 @@ define([
 
                         $scope.getMiniList();
                     }
+                };
+
+                // 다음 슬라이드
+                $scope.click_slickPrev = function() {
+                    angular.element('#'+$scope.option.id).slickPrev();
+                };
+
+                // 이전 슬라이드
+                $scope.click_slickNext = function() {
+                    angular.element('#'+$scope.option.id).slickNext();
                 };
 
                 // 리스트 조회
@@ -1097,6 +1112,7 @@ define([
                 // 검색 조건 추가
                 if ($scope.option.type == 'ange') {
                     $scope.search.BANNER_GB = $scope.option.gb;
+                    $scope.search.BANNER_ST = 1;
                     type = $scope.option.type;
                 } else if ($scope.option.type == 'banner') {
                     $scope.search.PROCESS = true;
@@ -1570,7 +1586,7 @@ define([
 //            scope: { images:'=' },
 //            replace: true,
             templateUrl: '/partials/ange/main/portlet-link-poll.html',
-            controller: ['$scope', '$attrs', '$location', '$window', function($scope, $attrs, $location, $window) {
+            controller: ['$scope', '$rootScope', '$attrs', '$location', 'dialogs',  function($scope, $rootScope, $attrs, $location, dialogs) {
 
                 /********** 초기화 **********/
                 $scope.option = $scope.$eval($attrs.ngModel);
@@ -1600,6 +1616,11 @@ define([
                 /********** 이벤트 **********/
                 // 투표 클릭
                 $scope.click_showPoll = function (key) {
+                    if ($rootScope.uid == '' || $rootScope.uid == null) {
+                        dialogs.notify('알림', '로그인 후 설문조사 참여가 가능합니다.', {size: 'md'});
+                        return;
+                    }
+
                     $location.url($scope.option.url + '/edit/' + key)
                 };
 

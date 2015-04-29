@@ -120,7 +120,7 @@ define([
                 return;
             }
 
-            if (item.ada_state == 0 || $scope.todayDate < item.ada_date_open) {
+            if (item.ada_state == 0 && $scope.todayDate < item.ada_date_open) {
                 dialogs.notify('알림', '준비중입니다.', {size: 'md'});
                 return;
             }

@@ -237,7 +237,7 @@ class MtUtil extends Mt {
      * $MAILTO : 받는 사람 메일 주소
      * $MAILTONAME : 받는 사람 이름
      */
-    function smtpMail($EMAIL, $NAME, $SUBJECT, $CONTENT, $MAILTO, $MAILTONAME){
+    function smtpMail($EMAIL, $NAME, $SUBJECT, $CONTENT, $MAILTO, $MAILTONAME, $ATTACHFILE){
         $mail             = new PHPMailer();
         $body             = $CONTENT;
 
@@ -261,6 +261,10 @@ class MtUtil extends Mt {
         $mail->SetFrom($EMAIL, $NAME);
 
         $mail->AddReplyTo($EMAIL, $NAME);
+
+        if ($ATTACHFILE != null) {
+            $mail->AddAttachment(__SMTP_ATTACH_PATH__.$ATTACHFILE);
+        }
 
         $mail->Subject    = $SUBJECT;
 

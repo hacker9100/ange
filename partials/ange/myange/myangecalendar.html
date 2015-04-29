@@ -79,9 +79,9 @@
                                                         <div class="calendar_attend_nowbox">
                                                             <div style="width:80%; margin:12px auto;">
                                                                 <div class="ange_gray" style="font-size:0.68em; text-align:center;line-height:12px; margin-top:4px;">Today Talk</div>
-                                                                <div class="ange_orange" style="font-size:1.12em; text-align:center;">아들? 딸?</div>
+                                                                <div class="ange_orange" style="font-size:1.12em; text-align:center;">{{talkitem.SUBJECT != '' ? talkitem.SUBJECT : '주제가 없습니다'}}</div>
                                                                 <div class="ange_darkgray text_ellipsis" style="font-size:0.86em; text-align:center;">
-                                                                    임신했을땐 아들이면 어떻고 딸이면 어떻고~했던것 같아요. 낳고보니 아들이어서 좋은점 또 딸이어서 좋은점 얘기해보아요~
+                                                                    {{talkitem.BODY}}
                                                                 </div>
                                                             </div>
 
@@ -90,12 +90,12 @@
                                                             </div>
                                                             <div ng-if="uid" class="ange_darkgray" style="font-size:0.86em; text-align: center;">
                                                                 <span class="ange_blue">{{user_info.NICK_NM}}</span>님은
-                                                                <span style="display:inline; font-weight:600;">출석체크를 하셨습니다.</span>
-                                                                <span style="display:none; font-weight:600;">출석체크 전입니다.</span>
+                                                                <span ng-show="talkCheck" style="font-weight:600;">출석체크를 하셨습니다.</span>
+                                                                <span ng-show="!talkCheck" style="font-weight:600;">출석체크 전입니다.</span>
                                                             </div>
 
                                                             <center>
-                                                                <button class="btn btn-default btn-xs" data-ng-click="" stlye="font-size:0.86em; ">
+                                                                <button class="btn btn-default btn-xs" data-ng-click="click_moveTalk()" stlye="font-size:0.86em; ">
                                                                     <span>투데이톡 하러가기</span>
                                                                 </button>
                                                             </center>

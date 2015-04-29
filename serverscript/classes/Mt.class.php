@@ -35,6 +35,7 @@ define("__SMTP_PORT__" , 25);
 define("__SMTP_USR__" , "angeweb@ange.co.kr");
 define("__SMTP_PWD__" , "mailange33302");
 define("__SMTP_USR_NM__" , "앙쥬");
+define("__SMTP_ATTACH_PATH__" , "D:/xampp/htdocs/ange/upload/files/");
 
 define("DEBUG", true);
 define("SESSION_TIMEOUT", 1800);

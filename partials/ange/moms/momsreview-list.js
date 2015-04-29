@@ -59,31 +59,22 @@ define([
             $scope.search.BOARD_ST = 'D';
 
             if ($stateParams.menu == 'experiencereview') {
-                $scope.community = "체험단/서평단 후기";
                 $scope.search['TARGET_GB'] = 'EXPERIENCE';
             } else if ($stateParams.menu == 'productreview') {
-                $scope.community = "상품 후기";
                 $scope.search['TARGET_GB'] = 'PRODUCT';
             } else if ($stateParams.menu == 'angereview') {
-                $scope.community = "앙쥬 후기";
                 $scope.search['TARGET_GB'] = 'ANGE';
             } else if ($stateParams.menu == 'samplereview') {
-                $scope.community = "샘플팩 후기";
                 $scope.search['TARGET_GB'] = 'SAMPLE';
             } else if ($stateParams.menu == 'samplepackreview') {
-                $scope.community = "앙쥬 샘플팩 후기";
                 $scope.search['TARGET_GB'] = 'SAMPLEPACK';
             } else if ($stateParams.menu == 'eventreview') {
-                $scope.community = "이벤트 후기";
                 $scope.search['TARGET_GB'] = 'EVENT';
             } else if ($stateParams.menu == 'bookreview') {
-                $scope.community = "서평단 후기";
                 $scope.search['TARGET_GB'] = 'BOOK';
             } else if ($stateParams.menu == 'dolreview') {
-                $scope.community = "앙쥬돌 후기";
                 $scope.search['TARGET_GB'] = 'DOL';
             }else if ($stateParams.menu == 'storereview') {
-                $scope.community = "스토어 후기";
                 $scope.search['TARGET_GB'] = 'STORE';
             }
 
@@ -215,7 +206,8 @@ define([
         $scope.click_showCreateReview = function () {
 
             if ($scope.uid == '' || $scope.uid == null) {
-                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 게시물을 등록 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 

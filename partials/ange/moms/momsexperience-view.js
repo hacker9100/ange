@@ -301,6 +301,10 @@ define([
                 .catch(function(error){dialogs.error('오류', error+'', {size: 'md'});});
         };
 
+        $scope.click_clipCopy = function() {
+            dialogs.notify('알림', '클립보드에 복사되었습니다. Ctrl + V로 붙여넣기 하세요.', {size: 'md'});
+        };
+
         $scope.click_focus = function(){
             //$('html,body').animate({scrollTop:$('#item').offset().top}, 150);
             $("#preg_fl").focus();
@@ -335,20 +339,31 @@ define([
                         $scope.end_date2 = data.ada_date_close.replace(/-/gi, "");
                         $scope.open_date = data.ada_date_review_open.replace(/-/gi, "");
                         $scope.end_date = data.ada_date_review_close.replace(/-/gi, "");
-
                         $scope.ada_detail = data.ada_detail != null ? data.ada_detail.replace(/&quot;/gi, '\"') : data.ada_detail;
-                        $scope.ada_text = data.ada_text != null ? data.ada_text.replace(/&quot;/gi, '\"') : data.ada_text;
 
-                        data.ada_imagemap = data.ada_imagemap != null ? data.ada_imagemap.replace(/&quot;/gi, '\"') : data.ada_imagemap;
+                        if (data.ada_text != null) {
+                            $scope.ada_text = data.ada_text.replace(/&quot;/gi, '\"');
+                            $scope.ada_text = $scope.ada_text.replace(/src="(?!http)/gi, 'src="'+CONSTANT.AD_SERVER_URL);
+                            $scope.ada_text = $scope.ada_text.replace(/background="(?!http)/gi, 'background="'+CONSTANT.AD_SERVER_URL);
+                        }
 
-                        $scope.ada_text = data.ada_text != null ? $scope.ada_text.replace(/src="\//gi, 'src="'+CONSTANT.AD_SERVER_URL+'/') : data.ada_text;
-                        $scope.ada_imagemap = data.ada_imagemap.replace(/%name%/gi, 'adimage');
+                        if (data.ada_imagemap != null) {
+                            $scope.ada_imagemap = data.ada_imagemap.replace(/&quot;/gi, '\"');
+                            $scope.ada_imagemap = $scope.ada_imagemap.replace(/%name%/gi, 'adimage');
+                        }
 
-                        $scope.renderHtml = $sce.trustAsHtml($scope.ada_text+data.ada_imagemap);
+                        $scope.renderHtml = $sce.trustAsHtml($scope.ada_text+$scope.ada_imagemap);
 
                         $timeout(function() {
                             $scope.imageMap('adimage');
                         }, 500);
+
+                        if ($scope.ada_text == '') {
+                            var img = '<img src=""'+data.ada_content_img+'" title="'+data.ada_title+'" usemap="#adimage" ng-style="{\'max-width\':\'100%\'}" style="float:none; margin:0px auto;">';
+                            $scope.clip = img+data.ada_imagemap;
+                        } else {
+                            $scope.clip = $scope.ada_text;
+                        }
 
                         //$scope.D_DAY = parseInt($scope.end_date) - parseInt($scope.todayDate);
 
@@ -1466,7 +1481,8 @@ define([
             $scope.search.SYSTEM_GB = 'ANGE';
             $scope.search.FILE = true;
             $scope.search.TARGET_NO = $stateParams.id;
-            $scope.search.TARGET_GB = '';
+            $scope.search.TARGET_GB = 'PRODUCT';
+            $scope.search.MIG_NO = '';
 
             $scope.getList('ange/review', 'list', {NO: $scope.PAGE_NO-1, SIZE: 5}, $scope.search, true)
                 .then(function(data){

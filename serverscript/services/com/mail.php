@@ -93,7 +93,7 @@
                             </html>";
 
                 MtUtil::_d("------------>>>>> mail : ");
-                MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
+                MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user, null);
                 $_d->succEnd('');
             }
 

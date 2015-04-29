@@ -1,14 +1,14 @@
-<?
+<?php
 class EasyPay_Client
 {
- 
+
  	var $deli_fs;
 	var $deli_gs;
 	var $deli_rs;
 	var $deli_us;
-	
+
 	var $_req_data_cnt;
-	
+
 	var $gw_url;
 	var $gw_port;
 	var $home_dir;
@@ -19,14 +19,14 @@ class EasyPay_Client
 	var $enc_data;
 	var $snd_key;
 	var $trace_no;
-	
+
 	var $_easypay_txreq;
-	
+
 	var $_easypay_reqdata;
 	var $_easypay_resdata;
-	
+
 	function EasyPay_Client() {
-        
+
             $this->deli_fs = chr(28);
             $this->deli_gs = chr(29);
             $this->deli_rs = chr(30);
@@ -40,7 +40,7 @@ class EasyPay_Client
             $this->cert_file = "";
             $this->enc_data  = "";
             $this->snd_key   = "";
-        
+
             $this->_req_data_cnt  = 0;
             $this->_easypay_txreq = "";
             $this->_easypay_reqdata = Array();
@@ -59,7 +59,7 @@ class EasyPay_Client
             $this->_easypay_reqdata = "";
             $this->_easypay_resdata = "";
         }
-	
+
 	function set_gw_url($gw_url) {
 	    $this->gw_url = $gw_url;
 	}
@@ -71,7 +71,7 @@ class EasyPay_Client
 	function set_home_dir($home_dir) {
 	    $this->home_dir = $home_dir;
 	}
-	
+
 	function set_log_dir($log_dir) {
 	    $this->log_dir = $log_dir;
 	}
@@ -79,7 +79,7 @@ class EasyPay_Client
         function set_log_level($log_level) {
 	    $this->log_level = $log_level;
 	}
-	
+
 	function set_cert_file($cert_file) {
 	    $this->cert_file = $cert_file;
 	}
@@ -87,32 +87,32 @@ class EasyPay_Client
         function set_enc_data($enc_data) {
 	    $this->enc_data = $enc_data;
 	}
-	
+
 	function set_snd_key($snd_key) {
 	    $this->snd_key = $snd_key;
 	}
-	
+
 	function set_trace_no($trace_no) {
 	    $this->trace_no = $trace_no;
 	}
-	
+
 	function set_easypay_deli_fs($value) {
         if ($value != "" && strlen($value)) {
     		$this->_easypay_txreq .= $value . $this->deli_fs;
     	}
 	}
-	
+
 	function set_easypay_deli_us($no, $key, $value) {
         if ($value != "" && strlen($value) != 0) {
-    		$this->_easypay_reqdata[$no][1] .= $key ."=" . $value . 
+    		$this->_easypay_reqdata[$no][1] .= $key ."=" . $value .
     		                                   $this->deli_us;
     	}
 	}
-	
+
 	function set_easypay_deli_rs($idx1, $idx2) {
-		$this->_easypay_reqdata[$idx1][1] .= $this->_easypay_reqdata[$idx2][0] . 
-		                                     "=" . 
-		                                     $this->_easypay_reqdata[$idx2][1] . 
+		$this->_easypay_reqdata[$idx1][1] .= $this->_easypay_reqdata[$idx2][0] .
+		                                     "=" .
+		                                     $this->_easypay_reqdata[$idx2][1] .
 		                                     $this->deli_rs;
 	}
 
@@ -121,9 +121,9 @@ class EasyPay_Client
 			$this->_easypay_reqdata[$no][1] .= $key ."=" . $value . $this->deli_gs;
 		}
 	}
-	
+
 	function set_easypay_item($data_name) {
-		$i;
+		$i = 0;
 		for ($i = 0; $i < $this->_req_data_cnt; $i++)
 			if ($this->_easypay_reqdata[$i][0] == $data_name)
 				break;
@@ -132,12 +132,12 @@ class EasyPay_Client
 			$this->_easypay_reqdata[$i][0] = $data_name;
 			$this->_req_data_cnt++;
 		}
-		
+
 		return $i;
 	}
 
 	function easypay_exec($mall_id, $tr_cd, $order_no, $cust_ip, $opt) {
-		
+
 	    $this->set_tx_req_data($opt);
 
         $res_data = $this->mf_exec( $this->home_dir . "/bin/ep_cli_exe ",
@@ -159,29 +159,29 @@ class EasyPay_Client
 
         if ( $res_data == "" )
         {
-            $res_data = "res_cd=M114" . $this->deli_us . "res_msg=¿¬µ¿ ¸ðµâ ½ÇÇà ¿À·ù";
+            $res_data = "res_cd=M114" . $this->deli_us . "res_msg=ì—°ë™ ëª¨ë“ˆ ì‹¤í–‰ ì˜¤ë¥˜";
         }
-        
+
         parse_str(str_replace($this->deli_us, "&", $res_data), $this->_easypay_resdata);
 	}
-	
+
 	function get_easypay_item($data_name) {
-	    
-		$i;
-		$result;
-		
+
+		$i = 0;
+		$result = null;
+
 		for ($i = 0; $i < $this->_req_data_cnt; $i++) {
 			if ($this->_easypay_reqdata[$i][0] == $data_name) {
 			    $result = $data_name . "=" . $this->_easypay_reqdata[$i][1];
 			    break;
 			}
 		}
-		
+
 		return $result;
 	}
-	
+
 	function set_tx_req_data($opt) {
-		
+
 		if($opt == "utf-8") {
 			$pay_data = iconv( "utf-8", "euc-kr", $this->get_easypay_item("pay_data"));
 	        $order_data = iconv( "utf-8", "euc-kr", $this->get_easypay_item("order_data"));
@@ -196,7 +196,7 @@ class EasyPay_Client
 	        $mgr_data = $this->get_easypay_item("mgr_data");
 	        $cash_data = $this->get_easypay_item("cash_data");
 	    }
-	    
+
 	    if($pay_data != "") {
 	        $this->set_easypay_deli_fs($pay_data) ;
 	    }
@@ -212,9 +212,9 @@ class EasyPay_Client
 	    if($cash_data != "") {
 	        $this->set_easypay_deli_fs($cash_data) ;
 	    }
-	    
+
 	}
-	
+
 	function get_easypay_txreq() {
 	    return $this->_easypay_txreq;
 	}
@@ -222,6 +222,7 @@ class EasyPay_Client
 
     function mf_exec() {
         $arg = func_get_args();
+        $exec_cmd = null;
 
         if(is_array($arg[0])) {
             $arg = $arg[0];
@@ -236,7 +237,7 @@ class EasyPay_Client
 
         return  $res_data;
     }
-    
+
     function get_remote_addr()
     {
         if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -248,7 +249,7 @@ class EasyPay_Client
         else {
             $client_ip = $_SERVER['REMOTE_ADDR'];
         }
-        
+
         return $client_ip;
     }
 }

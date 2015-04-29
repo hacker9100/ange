@@ -13,6 +13,16 @@ define([
     // 사용할 서비스를 주입
     controllers.controller('myangeorderlist', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'UPLOAD', function ($scope, $rootScope, $stateParams, $location, dialogs, UPLOAD) {
 
+        $scope.returnPayment = function (ret, val) {
+//            $scope.frameName = 'pay';
+            $scope.frameUrl = 'about:blank';
+
+            if (ret) {
+                alert(ret);
+//                $scope.cancelOrder();
+            }
+        }
+
         $scope.selectIdx = 0;
 
         $scope.search = {};
@@ -127,7 +137,7 @@ define([
 
                     $scope.cummercelist = data;
                 })
-                ['catch'](function(error){$scope.cummercelist = ""; $scope.CUMMERCE_TOTAL_COUNT = 0});
+                ['catch'](function(error){alert(0); $scope.cummercelist = ""; $scope.CUMMERCE_TOTAL_COUNT = 0});
         };
 
         // 게시판 목록 조회
@@ -407,29 +417,37 @@ define([
             var dialog = dialogs.confirm('알림', '주문취소를 하시겠습니까.', {size: 'md'});
 
             dialog.result.then(function(btn){
+                $scope.item= item;
                 $scope.item.ORDER_ST = 5;
-                $scope.item.PRODUCT_NO = item.PRODUCT_NO;
-                $scope.item.PRODUCT_NM = item.PRODUCT_NM;
                 $scope.item.PRICE = item.SUM_PRICE;
-                $scope.item.PRODUCT_CNT = item.PRODUCT_CNT;
-                $scope.item.PRODUCT_CODE = item.PRODUCT_CODE;
 
-                $scope.updateItem('ange/order', 'item', item.NO, $scope.item, false)
-                    .then(function(data){
-                        dialogs.notify('알림', '주문취소 되었습니다.', {size: 'md'});
-                        //$scope.getPeopleBoardList();
+                if ($scope.item.ORDER_GB == 'MILEAGE') {
+                    $scope.cancelOrder();
+                } else if ($scope.item.ORDER_GB == 'CUMMERCE') {
+                    $scope.frameName = 'pay';
+                    $scope.frameUrl = '/easypay70_plugin_php_window/web/normal/mgr.php?mgr_txtype=40&org_cno='+$scope.item.ORDER_NO+'&req_id=hong';
+                }
 
-                        $scope.getMileageList();
-                        $scope.getCummerceList();
-                        $scope.getNamingList();
-
-                        //$rootScope.mileage = data.mileage;
-                    })
-                    ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
             }, function(btn) {
                 return;
             });
         }
+
+        // 주문 취소 등록
+        $scope.cancelOrder = function(item) {
+            $scope.updateItem('ange/order', 'item', $scope.item.NO, $scope.item, false)
+                .then(function(data){
+                    dialogs.notify('알림', '주문취소 되었습니다.', {size: 'md'});
+                    //$scope.getPeopleBoardList();
+
+                    $scope.getMileageList();
+                    $scope.getCummerceList();
+                    $scope.getNamingList();
+
+                    //$rootScope.mileage = data.mileage;
+                })
+                ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});
+        };
 
         $scope.pageMileageChanged = function() {
             console.log('Page changed to: ' + $scope.MILEAGE_PAGE_NO);

@@ -9,7 +9,7 @@ define([
 ], function(app, menu) {
     'use strict';
     app.constant(
-        "COMMON", {
+        "CONSTANT", {
             "SYSTEM_GB" : "CMS",
             "DASHBOARD_PAGE_SIZE" : 5,
             "PAGE_SIZE" : 20

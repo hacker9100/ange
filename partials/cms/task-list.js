@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('task-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'COMMON', function ($scope, $rootScope, $stateParams, $location, dialogs, COMMON) {
+    controllers.controller('task-list', ['$scope', '$rootScope', '$stateParams', '$location', 'dialogs', 'CONSTANT', function ($scope, $rootScope, $stateParams, $location, dialogs, CONSTANT) {
 
         $scope.isModal = false;
 
@@ -224,7 +224,7 @@ define([
         };
 
         // 페이지 사이즈
-        $scope.PAGE_SIZE = COMMON.PAGE_SIZE;
+        $scope.PAGE_SIZE = CONSTANT.PAGE_SIZE;
 
         $scope.list = [];
         $scope.pageNo = 0;

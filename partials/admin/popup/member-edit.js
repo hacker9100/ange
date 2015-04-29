@@ -106,7 +106,7 @@ define([
 
         /********** 이벤트 **********/
             // 카테고리 주제 대분류 선택
-        $scope.$watch('item.CARE_AREA', function(newVal, oldVal) {
+        $scope.$watch('item.CENTER_AREA', function(newVal, oldVal) {
             $scope.list = _.filter($scope.center, function(item) { return item.cc_area == newVal.cc_area });
         });
 

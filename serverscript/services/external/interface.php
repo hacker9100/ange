@@ -54,7 +54,7 @@
                 $subject = "앙쥬에 오신걸 환영합니다. 이메일을 인증해 주세요.";
                 $message = "안녕하세요. ".$_model[USER_NM]."회원님.<br>아래 링크를 클릭하면 이메일 인증이 완료됩니다. <br><br><a href='http://ange.marveltree.com/serverscript/services/external/interface.php?_method=POST&_type=mileage&user_id=hong&earn_gb=20150306&point=50'>마일리지 적립</a>";
 
-                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
+                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user, null);
                 $_d->succEnd('');
             } else if ($_type == 'point') {
                 $err = 0;

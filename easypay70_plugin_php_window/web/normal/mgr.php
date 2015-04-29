@@ -1,166 +1,204 @@
 <?
 /* -------------------------------------------------------------------------- */
-/* ::: IP Á¤º¸ ¼³Á¤                                                           */
+/* ::: IP ì •ë³´ ì„¤ì •                                                           */
 /* -------------------------------------------------------------------------- */
-$req_ip = $_SERVER['REMOTE_ADDR']; // [ÇÊ¼ö]¿äÃ»ÀÚ IP
-?>	
+header("Content-type: text/html; charset=utf-8");
+$req_ip = $_SERVER['REMOTE_ADDR']; // [í•„ìˆ˜]ìš”ì²­ì IP
+?>
 <html>
-<head>	
-<title>KICC EASYPAY7.0 SAMPLE</title>
-<meta name="robots" content="noindex, nofollow"> 
-<meta http-equiv="content-type" content="text/html; charset=euc-kr">
-<link href="../css/style.css" rel="stylesheet" type="text/css">
-<script language="javascript" src="../js/default.js" type="text/javascript"></script>
-<script type="text/javascript">
+<head>
+    <title>KICC EASYPAY7.0 SAMPLE</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link href="../css/style.css" rel="stylesheet" type="text/css">
+    <script language="javascript" src="../js/default.js" type="text/javascript"></script>
+    <script type="text/javascript">
 
-   
-    function f_submit() {
-        var frm_mgr = document.frm_mgr;
-        
-        var bRetVal = false;
-        
-        /*  º¯°æÁ¤º¸ È®ÀÎ */
-        if( !frm_mgr.org_cno.value ) {
-            alert("PG°Å·¡¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä!!");
-            frm_mgr.org_cno.focus();
-            return;
+        function f_init(){
+            var frm_mgr = document.frm_mgr;
+
+            var today = new Date();
+            var year  = today.getFullYear();
+            var month = today.getMonth() + 1;
+            var date  = today.getDate();
+            var time  = today.getTime();
+
+            if(parseInt(month) < 10) {
+                month = "0" + month;
+            }
+
+            if(parseInt(date) < 10) {
+                date = "0" + date;
+            }
+
+            var getParam = function(key){
+                var _parammap = {};
+                document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+                    function decode(s) {
+                        return decodeURIComponent(s.split("+").join(" "));
+                    }
+
+                    _parammap[decode(arguments[1])] = decode(arguments[2]);
+                });
+
+                return _parammap[key];
+            };
+
+            // ï¿½ß°ï¿½
+            frm_mgr.mgr_txtype.value = getParam("mgr_txtype");
+            frm_mgr.org_cno.value = getParam("org_cno");
+            frm_mgr.req_id.value = getParam("req_id");
+
+            f_submit();
         }
-        
-        if( !frm_mgr.req_id.value ) {
-            alert("¿äÃ»ÀÚID¸¦ ÀÔ·ÂÇÏ¼¼¿ä!!");
-            frm_mgr.req_id.focus();
-            return;
-        }
-        /* ºÎºĞÃë¼Ò ½Ã DATA °ËÁõ ÇÊ¿ä */            
-        if ( frm_mgr.mgr_txtype.value == "31" ) {
-        	
-        	if ( !frm_mgr.mgr_amt.value ) {
-                alert("±İ¾×À» ÀÔ·ÂÇÏ¼¼¿ä!!");
-                frm_mgr.mgr_amt.focus();
+
+        function f_submit() {
+            var frm_mgr = document.frm_mgr;
+
+            var bRetVal = false;
+
+            /*  ë³€ê²½ì •ë³´ í™•ì¸ */
+            if( !frm_mgr.org_cno.value ) {
+                alert("PGê±°ë˜ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”!!");
+                frm_mgr.org_cno.focus();
                 return;
             }
-            
-            if ( !frm_mgr.mgr_rem_amt.value ) {
-                alert("ºÎºĞÃë¼Ò ÀÜ¾×À»¸¦ ÀÔ·ÂÇÏ¼¼¿ä!!");
-                frm_mgr.mgr_rem_amt.focus();
-                return;
-            } 	
-        }
-        
-        if ( frm_mgr.mgr_txtype.value == "31" || frm_mgr.mgr_txtype.value == "33" ) {
-	        if( frm_pay.mgr_tax_flg.value == "TG01" )
-	        {
-				if( !frm_pay.mgr_tax_amt.value ) {
-		            alert("°ú¼¼ ºÎºĞÃë¼Ò ±İ¾×À» ÀÔ·ÂÇÏ¼¼¿ä.!!");
-		            frm_pay.mgr_tax_amt.focus();
-		            return;
-		        }
-		        
-		        if( !frm_pay.mgr_free_amt.value ) {
-		            alert("ºñ°ú¼¼ ºÎºĞÃë¼Ò ±İ¾×À» ÀÔ·ÂÇÏ¼¼¿ä.!!");
-		            frm_pay.mgr_free_amt.focus();
-		            return;
-		        }
-		        
-		        if( !frm_pay.mgr_vat_amt.value ) {
-		            alert("ºÎ°¡¼¼ ºÎºĞÃë¼Ò ±İ¾×À» ÀÔ·ÂÇÏ¼¼¿ä.!!");
-		            frm_pay.mgr_vat_amt.focus();
-		            return;
-		        }
-	        }
-        }
-        bRetVal = true;
-        if ( bRetVal ) frm_mgr.submit();
-    }
-</script>
-</head>
-<body>
-<form name="frm_mgr" method="post" action="../easypay_request.php">
-	
-<!-- [ÇÊ¼ö]°Å·¡±¸ºĞ(¼öÁ¤ºÒ°¡) -->
-<input type="hidden" name="EP_tr_cd" value="00201000">
-<!-- [ÇÊ¼ö]¿äÃ»ÀÚ IP -->
-<input type="hidden" name="req_ip" value="<?=$req_ip?>">
 
-<table border="0" width="910" cellpadding="10" cellspacing="0">
-<tr>
-    <td>
-    <!-- title start -->
-	<table border="0" width="900" cellpadding="0" cellspacing="0">
-	<tr>
-		<td height="30" bgcolor="#FFFFFF" align="left">&nbsp;<img src="../img/arow3.gif" border="0" align="absmiddle">&nbsp;ÀÏ¹İ > <b>º¯°æ</b></td>
-	</tr>
-	<tr>
-		<td height="2" bgcolor="#2D4677"></td>
-	</tr>
-	</table>
-	<!-- title end -->
-    
-    <!-- mgr start -->
-    <table border="0" width="900" cellpadding="0" cellspacing="0">
-    <tr>
-        <td height="30" bgcolor="#FFFFFF">&nbsp;<img src="../img/arow2.gif" border="0" align="absmiddle">&nbsp;<b>º¯°æÁ¤º¸</b>(*ÇÊ¼ö)</td>
-    </tr>
+            if( !frm_mgr.req_id.value ) {
+                alert("ìš”ì²­ìIDë¥¼ ì…ë ¥í•˜ì„¸ìš”!!");
+                frm_mgr.req_id.focus();
+                return;
+            }
+            /* ë¶€ë¶„ì·¨ì†Œ ì‹œ DATA ê²€ì¦ í•„ìš” */
+            if ( frm_mgr.mgr_txtype.value == "31" ) {
+
+                if ( !frm_mgr.mgr_amt.value ) {
+                    alert("ê¸ˆì•¡ì„ ì…ë ¥í•˜ì„¸ìš”!!");
+                    frm_mgr.mgr_amt.focus();
+                    return;
+                }
+
+                if ( !frm_mgr.mgr_rem_amt.value ) {
+                    alert("ë¶€ë¶„ì·¨ì†Œ ì”ì•¡ì„ë¥¼ ì…ë ¥í•˜ì„¸ìš”!!");
+                    frm_mgr.mgr_rem_amt.focus();
+                    return;
+                }
+            }
+
+            if ( frm_mgr.mgr_txtype.value == "31" || frm_mgr.mgr_txtype.value == "33" ) {
+                if( frm_mgr.mgr_tax_flg.value == "TG01" )
+                {
+                    if( !frm_mgr.mgr_tax_amt.value ) {
+                        alert("ê³¼ì„¸ ë¶€ë¶„ì·¨ì†Œ ê¸ˆì•¡ì„ ì…ë ¥í•˜ì„¸ìš”.!!");
+                        frm_mgr.mgr_tax_amt.focus();
+                        return;
+                    }
+
+                    if( !frm_mgr.mgr_free_amt.value ) {
+                        alert("ë¹„ê³¼ì„¸ ë¶€ë¶„ì·¨ì†Œ ê¸ˆì•¡ì„ ì…ë ¥í•˜ì„¸ìš”.!!");
+                        frm_mgr.mgr_free_amt.focus();
+                        return;
+                    }
+
+                    if( !frm_mgr.mgr_vat_amt.value ) {
+                        alert("ë¶€ê°€ì„¸ ë¶€ë¶„ì·¨ì†Œ ê¸ˆì•¡ì„ ì…ë ¥í•˜ì„¸ìš”.!!");
+                        frm_mgr.mgr_vat_amt.focus();
+                        return;
+                    }
+                }
+            }
+            bRetVal = true;
+            if ( bRetVal ) frm_mgr.submit();
+        }
+    </script>
+</head>
+<body onload="f_init();">
+<form name="frm_mgr" method="post" action="../easypay_request.php">
+
+    <!-- [í•„ìˆ˜]ê±°ë˜êµ¬ë¶„(ìˆ˜ì •ë¶ˆê°€) -->
+    <input type="hidden" name="EP_tr_cd" value="00201000">
+    <!-- [í•„ìˆ˜]ìš”ì²­ì IP -->
+    <input type="hidden" name="req_ip" value="<?=$req_ip?>">
+
+    <table border="0" width="910" cellpadding="10" cellspacing="0">
+        <tr>
+            <td>
+                <!-- title start -->
+                <table border="0" width="900" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td height="30" bgcolor="#FFFFFF" align="left">&nbsp;<img src="../img/arow3.gif" border="0" align="absmiddle">&nbsp;ì¼ë°˜ > <b>ë³€ê²½</b></td>
+                    </tr>
+                    <tr>
+                        <td height="2" bgcolor="#2D4677"></td>
+                    </tr>
+                </table>
+                <!-- title end -->
+
+                <!-- mgr start -->
+                <table border="0" width="900" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td height="30" bgcolor="#FFFFFF">&nbsp;<img src="../img/arow2.gif" border="0" align="absmiddle">&nbsp;<b>ë³€ê²½ì •ë³´</b>(*í•„ìˆ˜)</td>
+                    </tr>
+                </table>
+                <table border="0" width="900" cellpadding="0" cellspacing="1" bgcolor="#DCDCDC">
+                    <tr height="25">
+                        <!-- [í•„ìˆ˜]ì—ìŠ¤í¬ë¡œ ê±°ë˜ëŠ” ë°˜ë“œì‹œ ì—ìŠ¤í¬ë¡œ ë³€ê²½ìœ¼ë¡œ ìš”ì²­í•˜ì‹œê¸° ë°”ëë‹ˆë‹¤. -->
+                        <td bgcolor="#EDEDED" width="150">&nbsp;*ê±°ë˜êµ¬ë¶„</td>
+                        <td bgcolor="#FFFFFF" width="300" colspan="3">&nbsp;<select name="mgr_txtype" class="input_F">
+                                <option value="20" >ë§¤ì…ìš”ì²­</option>
+                                <option value="30" >ë§¤ì…ì·¨ì†Œ</option>
+                                <option value="31" >ë¶€ë¶„ë§¤ì…ì·¨ì†Œ</option>
+                                <option value="33" >ê³„ì¢Œì´ì²´ë¶€ë¶„ì·¨ì†Œ</option>
+                                <option value="40" selected>ì¦‰ì‹œì·¨ì†Œ</option>
+                            </select></td>
+                    </tr>
+                    <tr height="25">
+                        <!-- [í•„ìˆ˜] PGê±°ë˜ë²ˆí˜¸ -->
+                        <td bgcolor="#EDEDED" width="150">&nbsp;*PGê±°ë˜ë²ˆí˜¸</td>
+                        <td bgcolor="#FFFFFF" width="300" colspan="3">&nbsp;<input type="text" name="org_cno" size="50" class="input_F"></td>
+                    </tr>
+                    <tr height="25">
+                        <!-- [í•„ìˆ˜] ìš”ì²­ìID -->
+                        <td bgcolor="#EDEDED" width="150">&nbsp;*ìš”ì²­ìID</td>
+                        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="req_id" size="50" class="input_F"></td>
+                        <!-- [ì˜µì…˜] ë³€ê²½ì‚¬ìœ  -->
+                        <td bgcolor="#EDEDED" width="150">&nbsp;ë³€ê²½ì‚¬ìœ </td>
+                        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_msg" size="50" class="input_A"></td>
+                    </tr>
+                    <tr height="25">
+                        <!-- [ì˜µì…˜]ë¶€ë¶„ì·¨ì†Œ ìš”ì²­ ì‹œ í•„ìˆ˜í•­ëª© -->
+                        <td bgcolor="#EDEDED" width="150">&nbsp;ê¸ˆì•¡(ë¶€ë¶„ì·¨ì†Œ ê¸ˆì•¡)</td>
+                        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_amt" size="50" class="input_A"></td>
+                        <td bgcolor="#EDEDED" width="150">&nbsp;ë¶€ë¶„ì·¨ì†Œ ì”ì•¡</td>
+                        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_rem_amt" size="50" class="input_A"></td>
+                    </tr>
+                    <tr height="25">
+                        <td bgcolor="#EDEDED" width="150">&nbsp;ê³¼ì„¸êµ¬ë¶„</td>
+                        <td bgcolor="#FFFFFF" width="300">&nbsp;<select name="mgr_tax_flg" class="input_A">
+                                <option value="" selected>ì¼ë°˜</option>
+                                <option value="TG01">ë³µí•©ê³¼ì„¸</option>
+                            </select></td>
+                        <td bgcolor="#EDEDED" width="150">&nbsp;ê³¼ì„¸ ë¶€ë¶„ì·¨ì†Œ ê¸ˆì•¡</td>
+                        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_tax_amt" size="50" class="input_F"></td>
+                    </tr>
+                    <tr height="25">
+                        <td bgcolor="#EDEDED" width="150">&nbsp;ë¹„ê³¼ì„¸ ë¶€ë¶„ì·¨ì†Œ ê¸ˆì•¡</td>
+                        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_free_amt" size="50" class="input_F"></td>
+                        <td bgcolor="#EDEDED" width="150">&nbsp;ë¶€ê°€ì„¸ ë¶€ë¶„ì·¨ì†Œ ê¸ˆì•¡</td>
+                        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_vat_amt" size="50" class="input_F"></td>
+                    </tr>
+                </table>
+
+                <!-- mgr Data END -->
+
+                <table border="0" width="900" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td height="30" align="center" bgcolor="#FFFFFF"><input type="button" value="ë³€ ê²½" class="input_D" style="cursor:hand;" onclick="javascript:f_submit();"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
     </table>
-    <table border="0" width="900" cellpadding="0" cellspacing="1" bgcolor="#DCDCDC">
-    <tr height="25">
-    	<!-- [ÇÊ¼ö]¿¡½ºÅ©·Î °Å·¡´Â ¹İµå½Ã ¿¡½ºÅ©·Î º¯°æÀ¸·Î ¿äÃ»ÇÏ½Ã±â ¹Ù¶ø´Ï´Ù. -->
-        <td bgcolor="#EDEDED" width="150">&nbsp;*°Å·¡±¸ºĞ</td>
-        <td bgcolor="#FFFFFF" width="300" colspan="3">&nbsp;<select name="mgr_txtype" class="input_F">        	        	
-            <option value="20" >¸ÅÀÔ¿äÃ»</option>
-            <option value="30" >¸ÅÀÔÃë¼Ò</option>
-            <option value="31" >ºÎºĞ¸ÅÀÔÃë¼Ò</option>
-            <option value="33" >°èÁÂÀÌÃ¼ºÎºĞÃë¼Ò</option>
-            <option value="40" selected>Áï½ÃÃë¼Ò</option>
-        </select></td>        
-    </tr>
-    <tr height="25">
-    	<!-- [ÇÊ¼ö] PG°Å·¡¹øÈ£ -->
-        <td bgcolor="#EDEDED" width="150">&nbsp;*PG°Å·¡¹øÈ£</td>
-        <td bgcolor="#FFFFFF" width="300" colspan="3">&nbsp;<input type="text" name="org_cno" size="50" class="input_F"></td>        
-    </tr>
-    <tr height="25">
-    	<!-- [ÇÊ¼ö] ¿äÃ»ÀÚID -->
-        <td bgcolor="#EDEDED" width="150">&nbsp;*¿äÃ»ÀÚID</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="req_id" size="50" class="input_F"></td>
-        <!-- [¿É¼Ç] º¯°æ»çÀ¯ -->
-        <td bgcolor="#EDEDED" width="150">&nbsp;º¯°æ»çÀ¯</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_msg" size="50" class="input_A"></td>
-    </tr>    
-    <tr height="25">
-    	<!-- [¿É¼Ç]ºÎºĞÃë¼Ò ¿äÃ» ½Ã ÇÊ¼öÇ×¸ñ -->
-        <td bgcolor="#EDEDED" width="150">&nbsp;±İ¾×(ºÎºĞÃë¼Ò ±İ¾×)</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_amt" size="50" class="input_A"></td>
-        <td bgcolor="#EDEDED" width="150">&nbsp;ºÎºĞÃë¼Ò ÀÜ¾×</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_rem_amt" size="50" class="input_A"></td>
-    </tr>    
-    <tr height="25">
-        <td bgcolor="#EDEDED" width="150">&nbsp;°ú¼¼±¸ºĞ</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<select name="mgr_tax_flg" class="input_A">
-			<option value="" selected>ÀÏ¹İ</option>
-            <option value="TG01">º¹ÇÕ°ú¼¼</option>
-        </select></td>
-        <td bgcolor="#EDEDED" width="150">&nbsp;°ú¼¼ ºÎºĞÃë¼Ò ±İ¾×</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_tax_amt" size="50" class="input_F"></td>
-    </tr>
-    <tr height="25">
-        <td bgcolor="#EDEDED" width="150">&nbsp;ºñ°ú¼¼ ºÎºĞÃë¼Ò ±İ¾×</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_free_amt" size="50" class="input_F"></td>
-        <td bgcolor="#EDEDED" width="150">&nbsp;ºÎ°¡¼¼ ºÎºĞÃë¼Ò ±İ¾×</td>
-        <td bgcolor="#FFFFFF" width="300">&nbsp;<input type="text" name="mgr_vat_amt" size="50" class="input_F"></td>
-    </tr>
-    </table>
-    
-    <!-- mgr Data END -->
-    
-    <table border="0" width="900" cellpadding="0" cellspacing="0">
-    <tr>
-        <td height="30" align="center" bgcolor="#FFFFFF"><input type="button" value="º¯ °æ" class="input_D" style="cursor:hand;" onclick="javascript:f_submit();"></td>
-    </tr>
-    </table>
-    </td>
-</tr>
-</table>
 </form>
 </body>
 </html>

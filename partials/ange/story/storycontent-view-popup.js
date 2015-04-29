@@ -162,6 +162,16 @@ define([
 //            });
         }
 
+        $scope.click_eBookOpen = function (item) {
+            var popup = $window.open(item.EBOOK_URL, '_blank', 'width=1100,height=750');
+
+            if ( popup ){
+                popup.focus();
+            } else {
+                dialogs.notify('알림', "팝업차단을 해제해주세요.", {size: 'md'});
+            }
+        }
+
         $scope.share_open = function () {
             var popup = $window.open('http://story.kakao.com/share?url=' + UPLOAD.BASE_URL + $location.path() + '/' + $scope.task.NO, '_blank', 'width=500,height=400');
 
@@ -196,7 +206,8 @@ define([
 
         $scope.click_addScrap = function () {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 사용할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
@@ -243,7 +254,8 @@ define([
         // 공감 클릭
         $scope.click_addLike = function () {
             if ($rootScope.uid == '' || $rootScope.uid == null) {
-                dialogs.notify('알림', '로그인 후 사용할 수 있습니다.', {size: 'md'});
+//                dialogs.notify('알림', '로그인 후 사용 할 수 있습니다.', {size: 'md'});
+                $scope.openLogin(null, 'md');
                 return;
             }
 
@@ -259,9 +271,9 @@ define([
                     $scope.task.LIKE_CNT = afterLike == 'Y' ? parseInt($scope.task.LIKE_CNT) + 1 : parseInt($scope.task.LIKE_CNT) - 1;
 
                     if (afterLike == 'Y') {
-                        dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
+//                        dialogs.notify('알림', '공감 되었습니다.', {size: 'md'});
                     } else {
-                        dialogs.notify('알림', '공감 취소되었습니다.', {size: 'md'});
+//                        dialogs.notify('알림', '공감 취소되었습니다.', {size: 'md'});
                     }
                 })
                 ['catch'](function(error){dialogs.error('오류', error+'', {size: 'md'});});

@@ -1,4 +1,4 @@
-<div class="peoplepoll" ng-model="item">
+<div class="peoplepoll" ng-model="item" ng-click="click_showPoll(item.ada_idx)">
     <div ng-if="item.ada_state == 1 && item.ada_date_open <= todayDate && todayDate <= item.ada_date_close" class="poll_left"></div>
     <div class="poll_right"></div>
     <!-- 최근 poll 제목 -->

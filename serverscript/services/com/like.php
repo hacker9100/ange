@@ -75,7 +75,15 @@
             }
 
             if (isset($_model[LIKE_FL]) && $_model[LIKE_FL] != "") {
-                if ($_model[LIKE_FL] == "N") {
+                $sql = "SELECT COUNT(*) AS LIKE_CNT
+                        FROM ANGE_LIKE
+                        WHERE TARGET_NO = ".$_model['TARGET_NO']."
+                            AND TARGET_GB = '".$_model['TARGET_GB']."'
+                            AND REG_UID = '".$_SESSION['uid']."'";
+
+                $data = $_d->sql_fetch($sql);
+
+                if ($data['LIKE_CNT'] == 0 && $_model[LIKE_FL] == "N") {
                     $sql = "INSERT INTO ANGE_LIKE
                             (
                                 TARGET_NO,

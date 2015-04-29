@@ -40,7 +40,7 @@ define([
             $scope.option_r5_c1 = {title: '도전 앙쥬모델', api:'com/webboard', size: 10, type: 'photo', url: '/people/angemodel'};
 
             // ange-portlet-basic-list
-            $scope.option_r5_c2 = {title: '전문가 상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/chlidoriental/list', image: false, head: false, date: false, nick: false};
+            $scope.option_r5_c2 = {title: '전문가상담', api:'com/webboard', size: 3, type: 'clinic', url: '/people/chlidoriental/list', image: false, head: false, date: false, nick: false};
 
             // ange-portlet-basic-list
             $scope.option_r6_c1 = {title: '앙쥬후기', api:'ange/review', size: 5, type: 'review', url: '/moms/review', defIdx: 2, tab: [{no: 'sample', menu: 'samplereview', name: '샘플팩'}, {no: 'product', menu: 'productreview', name: '상품'}, {no: 'ange', menu: 'angereview', name: '앙쥬'}], image: true, head: false, date: false, nick: true};
@@ -74,16 +74,6 @@ define([
 
         $scope.click_moveMenu = function(menu) {
             $location.url(menu);
-        };
-
-        // 등록 버튼 클릭
-        $scope.click_createNewProject = function () {
-            $location.path('/project/edit/0');
-        };
-
-        // 조회 화면 이동
-        $scope.click_showViewProject = function (key) {
-            $location.url('/project/view/'+key);
         };
 
         $scope.main1 = [];

@@ -874,7 +874,7 @@
                                     </html>";
 
 //                        MtUtil::sendMail($to, $subject, $message, $headers);
-                        MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
+                        MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user, null);
                     }
 
                     $_d->sql_commit();
@@ -944,7 +944,7 @@
 
 //                $return = MtUtil::sendMail($to, $subject, $message, $headers);
                 MtUtil::_d("------------>>>>> mail : ".$return);
-                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
+                $return = MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user, null);
                 $_d->succEnd('');
             }
 
@@ -1521,7 +1521,7 @@
                             </html>";
 
                     MtUtil::_d("------------>>>>> mail : ");
-                    MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user);
+                    MtUtil::smtpMail($from_email, $from_user, $subject, $message, $to, $to_user, null);
 
                     ob_end_clean();
 //                    header("Location: http://localhost"); /* Redirect browser */

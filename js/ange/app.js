@@ -27,6 +27,8 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
 //    'angular-socialshare',
     'ng-google-chart',
     'ng-map',
+    'ng-clip',
+//    'angular-newsticker',
     'ng-scrollbar',
 
     // 각 컨트롤러 로딩
@@ -52,6 +54,8 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'googlechart',
 //        '720kb.socialshare',
         'ngMap',
+        'ngClipboard',
+//        'xfNewsTicker',
         'ngScrollbar'
         ], function () {
             // 여기서는 필요한 설정들을 진행.
