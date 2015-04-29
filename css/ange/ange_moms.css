@@ -324,7 +324,6 @@ a.samplepack_gotoreview:hover {
     font-size:0.86em;
     margin-top:40px;
     margin-bottom: 40px;
-
 }
 
 .samplepack_new_howto dt {
@@ -333,6 +332,32 @@ a.samplepack_gotoreview:hover {
 
 .samplepack_new_howto dd {
     margin-left:90px;
+}
+
+
+.postcard_howto {
+    font-size:0.86em;
+    margin-top:40px;
+    margin-bottom: 40px;
+}
+
+.postcard_howto dt {
+    width: 80px;
+}
+
+.postcard_howto dd {
+    margin-left:88px;
+}
+
+@media screen and (max-width: 767px) {
+
+    .postcard_howto dt {
+        margin-top:10px;
+    }
+
+    .postcard_howto dd {
+        margin-left:2px;
+    }
 }
 
 .samplepack_guidebox {
@@ -469,6 +494,104 @@ a.samplepack_gotoreview:hover {
     padding-left:5px;
 }
 
+
+.postcard_tabox_body {
+    border:1px solid #ddd;
+    border-top:none;
+    min-height:650px;
+    /*height:650px;*/
+    padding:25px 20px;
+    /*overflow:auto;*/
+    /*overflow-x:hidden;*/
+    font-weight: 400;
+    word-break: keep-all;
+}
+
+
+.postcard_goodbox_tr {
+    display:inline-block;
+    position:relative;
+    border-top:1px solid #ddd;
+    padding:12px;
+}
+
+.postcard_goodbox_tr img {
+    float:left;
+    width:40%;
+    max-width: 400px;
+    background-position:center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.postcard_goodsboxtxt_wrap {
+    float:right;
+    width: 60%;
+    padding-left:25px;
+}
+
+.postcard_goodsboxtitle {
+    clear:both;
+    font-size:1.24em;
+    font-weight: 600;
+    line-height:18px;
+    padding:12px 0;
+}
+
+.postcard_goodsboxtxt {
+    clear:both;
+    font-size:0.92em;
+    line-height:18px;
+}
+
+.postcard_phonenum {
+    /*float:left;*/
+    display: block;
+    margin-top:10px;
+    font-family: arial, sans-serif;
+    font-size:1.08em;
+    color:#464646 !important;
+}
+
+.postcard_phonenum:hover{
+    text-decoration: none;
+    cursor: default;
+}
+
+
+.postcard_sponlink {
+    /*float:left;*/
+    display: block;
+    margin-top:2px;
+    font-family: arial, sans-serif;
+    font-size:1em;
+    color:#868686 !important;
+}
+
+
+@media screen and (max-width: 767px){
+    .postcard_tabox_body{
+        border:none;
+        padding:15px 0;
+    }
+
+    .postcard_goodbox_tr {
+        border:1px solid #ddd;
+    }
+
+    .postcard_goodbox_tr img {
+        width: 100%;
+        margin:0px auto;
+    }
+
+    .postcard_goodsboxtxt_wrap {
+        width: 100%;
+        padding-left:5px;
+    }
+}
+
+
+
 .samplepack_tagwrap {
     position:relative;
     height:60px;
@@ -531,6 +654,7 @@ a.samplepack_gotoreview:hover {
     font-size:0.86em;
     line-height:15px;
 }
+
 .samplepack_sponlink {
     float:left;
     margin-top:5px;

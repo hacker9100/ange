@@ -1,153 +1,160 @@
 <div ng-controller="momspostcard-edit" class="ng_wrap {{channel.CHANNEL_ID}}">
 
-    <!-- mainbar -->
-    <div class="mainbar sub-slide0">
+<!-- mainbar -->
+<div class="mainbar sub-slide0">
 
-        <div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
-            <div class="row">
+<div class="container-fluid" style="clear:both; margin:0px auto; width:95%; max-width:800px;">
+<div class="row">
 
-                <div class="col-xs-12 v-cell-3">
-                    <div class="comp_basic h-cell-dynamic">
+<div class="col-xs-12 v-cell-3">
+<div class="comp_basic h-cell-dynamic">
 
-                        <div class="sub_contents_wrap">
+<div class="sub_contents_wrap">
 
-                            <div class="sub_contents_title">
-                                <span class="sub_contents_bullet"></span>
-                                <h3 style="font-weight:bold;">애독자 엽서</h3>
-                            </div>
+<div class="sub_contents_title">
+    <span class="sub_contents_bullet"></span>
+    <h3 style="font-weight:bold;">애독자 엽서</h3>
+</div>
 
-                            <!-- 애독자 엽서 -->
-                            <div  class="samplepack_types subs" style="display:block;">
-                                <div class="samplepack_tagwrap">
-                                    <div class="samplepack_tags blue">
-                                        <!--&nbsp;<span style="font-size:1.32em; font-weight:bold;">{{item.ada_title | limitTo : 9}}</span> {{item.ada_title | limitTo : -12}}-->
-                                        <!--&nbsp;<span style="font-size:1.32em; font-weight:bold;">{{item.ada_title}}</span>-->
-                                        {{item.ada_title}}
-                                    </div>
-                                </div>
+<!-- 애독자 엽서 -->
+<div  class="samplepack_types subs" style="display:block;">
+    <div class="samplepack_tagwrap">
+        <div class="samplepack_tags blue">
+            <!--&nbsp;<span style="font-size:1.32em; font-weight:bold;">{{item.ada_title | limitTo : 9}}</span> {{item.ada_title | limitTo : -12}}-->
+            <!--&nbsp;<span style="font-size:1.32em; font-weight:bold;">{{item.ada_title}}</span>-->
+            {{item.ada_title}}
+        </div>
+    </div>
 
-                                <div  class="samplepack_smalltitle">
-                                    <h2><strong>소중한 의견을 보내주세요</strong></h2>
-                                    <br />
-                                    <h4><strong>애독자 엽서 보내기!</strong></h4>
-                                    <p class="table_blue samplepack_subguide">
-                                        엄마들의 행복놀이터 매거진 앙쥬는 열려있습니다. <br>
-                                        소중한 의견을 보내주신 분께 당첨을 통해 선물을 드립니다.
-                                    </p>
-                                </div>
+    <div  class="samplepack_smalltitle">
+        <h2><strong>소중한 의견을 보내주세요</strong></h2>
+        <br />
+        <h4><strong>애독자 엽서 보내기!</strong></h4>
+        <p class="table_blue samplepack_subguide">
+            엄마들의 행복놀이터 매거진 앙쥬는 열려있습니다. <br>
+            소중한 의견을 보내주신 분께 당첨을 통해 선물을 드립니다.
+        </p>
+    </div>
 
 
-                                <dl class="dl-horizontal samplepack_new_howto">
-                                    <dt><span class="table_red">신청기간</span></dt><dd><strong>~ {{item.ada_date_close}}</strong></dd>
-                                    <dt><span class="table_red">당첨발표</span></dt><dd><strong>앙쥬 {{item.ada_notice_month}}월호 / 게시판은 {{item.ada_notice_month -1 }}월 27일</strong>(이벤트 당첨자 발표 게시판)</dd> <!-- 앙쥬{{next_month}}월호 / 게시판{{next_month-1}}월 28일 -->
-                                    <dt><span class="table_red">증정인원</span></dt><dd>선물 별 당첨자</dd>
-                                    <dt><span class="table_red">선물발송</span></dt><dd>{{item.ada_notice_month}}월 말 (선물 착불발송)</dd>
-                                    <dt><span class="table_red">신청방법</span></dt><dd><strong><mark>애독자 엽서 보내기</mark></strong> 버튼을 누른 후 내용 작성(회원만 가능)</dd>
-                                </dl>
+    <dl class="dl-horizontal postcard_howto">
+        <dt><span class="table_red">신청기간</span></dt><dd><strong>~ {{item.ada_date_close}}</strong></dd>
+        <dt><span class="table_red">당첨발표</span></dt><dd><strong>앙쥬 {{item.ada_notice_month}}월호 / 게시판은 {{item.ada_notice_month -1 }}월 27일</strong>(이벤트 당첨자 발표 게시판)</dd> <!-- 앙쥬{{next_month}}월호 / 게시판{{next_month-1}}월 28일 -->
+        <dt><span class="table_red">증정인원</span></dt><dd>선물 별 당첨자</dd>
+        <dt><span class="table_red">선물발송</span></dt><dd>{{item.ada_notice_month}}월 말 (선물 착불발송)</dd>
+        <dt><span class="table_red">신청방법</span></dt><dd><strong><mark>애독자 엽서 보내기</mark></strong> 버튼을 누른 후 내용 작성(회원만 가능)</dd>
 
-                                <div  class="samplepack_warning">
 
-                                    <blockquote class="table_red" style="font-size:0.92em;">
-                                        지정일에 반드시 당첨확인 전화 필요 (02-333-4650 내선 0번)<br />
-                                        한번 작성하여 보내주신 엽서는 수정할 수 없습니다.<br />
-                                        보내기에 문제가 생기신 분은 <a href="mailto:angeweb@ange.co.kr">angeweb@ange.co.kr</a> 메일로 해당내용을 보내주시기 바랍니다.
-                                    </blockquote>
-                                </div>
-                            </div>
-                            <!-- /애독자 엽서 -->
+        <!--<dt><span class="table_red">신청기간</span></dt><dd><strong>~ {{item.ada_date_close}}</strong></dd>-->
+        <!--<dt><span class="table_red">당첨발표</span></dt><dd><strong>앙쥬 {{item.ada_notice_month}}월호 / 게시판은 {{item.ada_notice_month -1 }}월 27일</strong>(이벤트 당첨자 발표 게시판)</dd> &lt;!&ndash; 앙쥬{{next_month}}월호 / 게시판{{next_month-1}}월 28일 &ndash;&gt;-->
+        <!--<dt><span class="table_red">증정인원</span></dt><dd>선물 별 당첨자</dd>-->
+        <!--<dt><span class="table_red">선물발송</span></dt><dd>{{item.ada_notice_month}}월 말 (선물 착불발송)</dd>-->
+        <!--<dt><span class="table_red">신청방법</span></dt><dd><strong><mark>애독자 엽서 보내기</mark></strong> 버튼을 누른 후 내용 작성(회원만 가능)</dd>-->
+    </dl>
 
-                            <!-- 애독자 엽서 -->
-                            <div  class="samplepack_btnbox" style="display:block;">
-                                <button ng-click="click_joinon();" class="samplepack_gotojoin"></button>
-                                <button ng-click="showSamplepackDetails = ! showSamplepackDetails" class="samplepack_postsend"></button>
-                            </div>
-                            <!-- /애독자 엽서 -->
+    <div  class="samplepack_warning">
 
-                            <!-- 신청 폼 -->
-                            <div class="moms_form_foot" ng-class="{ 'hidden': ! showSamplepackDetails }" ng-show="!uid" style="background-color:#F8F8F8;">
-                                <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">로그인 후에 응모가 가능합니다.</div>
-                            </div>
+        <blockquote class="ange_red" style="font-weight:600; font-size:0.92em;">
+            지정일에 반드시 당첨확인 전화 필요 (02-333-4650 내선 0번)<br />
+            한번 작성하여 보내주신 엽서는 수정할 수 없습니다.<br />
+            보내기에 문제가 생기신 분은 <a href="mailto:angeweb@ange.co.kr">angeweb@ange.co.kr</a> 메일로 해당내용을 보내주시기 바랍니다.
+        </blockquote>
+    </div>
+</div>
+<!-- /애독자 엽서 -->
 
-                            <div ng-show="item.ada_que_type == 'upload'">
-                                <form  id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
-                                    <input type="hidden" id="version" name="version" value="1">
-                                    <div class= "form-group form_basic_group">
-                                        <label class= "form_basic_label">이미지</label>
-                                        <div class="row" style="margin-left:110px;">
-                                            <div class="col-sm-4">
-                                                <div ng-model="file">
-                                                    <input ng-model="file.name" type= "text" class= "form-control" style="cursor:default;width: 300px;" disabled/>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-2 files" style="margin-left: 160px;">
-                                                <!-- The fileinput-button span is used to style the file input field as button -->
+<!-- 애독자 엽서 -->
+<div  class="samplepack_btnbox" style="display:block;">
+    <button ng-click="click_joinon();" class="samplepack_gotojoin"></button>
+    <button ng-click="showSamplepackDetails = ! showSamplepackDetails" class="samplepack_postsend"></button>
+</div>
+<!-- /애독자 엽서 -->
+
+<!-- 신청 폼 -->
+<div class="moms_form_foot" ng-class="{ 'hidden': ! showSamplepackDetails }" ng-show="!uid" style="background-color:#F8F8F8;">
+    <div class="table_blue" style="font-size:1.08em; font-weight:400; margin-top:12px;">로그인 후에 응모가 가능합니다.</div>
+</div>
+
+<div ng-show="item.ada_que_type == 'upload'">
+    <form  id="MAIN" name="MAIN" method="POST" enctype="multipart/form-data" data-file-upload="options">
+        <input type="hidden" id="version" name="version" value="1">
+        <div class= "form-group form_basic_group">
+            <label class= "form_basic_label">이미지</label>
+            <div class="row" style="margin-left:110px;">
+                <div class="col-sm-4">
+                    <div ng-model="file">
+                        <input ng-model="file.name" type= "text" class= "form-control" style="cursor:default;width: 300px;" disabled/>
+                    </div>
+                </div>
+                <div class="col-sm-2 files" style="margin-left: 160px;">
+                    <!-- The fileinput-button span is used to style the file input field as button -->
                                         <span class="btn btn-success fileinput-button" ng-class="{disabled: disabled}">
                                             <i class="glyphicon glyphicon-plus"></i>
                                             <span>탐색기</span>
                                             <input type="file" name="files[]" ng-disabled="disabled">
                                         </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
-                            <form name="pollvaliation" id="postcardvalidation" onSubmit="return CheckForm(this);"> <!-- onSubmit="return CheckForm(this);" action="/" -->
-                                <div ng-show="uid != '' && uid != null" class="samplepack_formwrap" ng-model="item" style="display:block;" ng-class="{ 'hidden': ! showSamplepackDetails }"> <!-- ng-class="{ 'hidden': ! showSamplepackDetails }"-->
-                                    <div class="samplepack_form_title" style="background:#333; height:46px; padding:10px;">
-                                        <span class="table_blue" style="font-size:1.18em; float:left;">| 애독자엽서 양식</span>
-                                        <div style="float:right;">
-                                            <small><span class="table_blue">정보가 다르신가요?</span></small>
-                                            <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">정보수정</button>
-                                        </div>
-                                    </div>
+<form name="pollvaliation" id="postcardvalidation" onSubmit="return CheckForm(this);"> <!-- onSubmit="return CheckForm(this);" action="/" -->
+<div ng-show="uid != '' && uid != null" class="samplepack_formwrap" ng-model="item" style="display:block;" ng-class="{ 'hidden': ! showSamplepackDetails }"> <!-- ng-class="{ 'hidden': ! showSamplepackDetails }"-->
+<div class="samplepack_form_title" style="background:#333; height:46px; padding:10px;">
+    <span class="table_blue" style="font-size:1.18em; float:left;">| 애독자엽서 양식</span>
+    <div style="float:right;">
+        <small><span class="table_blue">정보가 다르신가요?</span></small>
+        <button ng-click="click_update_user_info()" class="btn btn-xs btn-primary" style="margin:0 5px;">정보수정</button>
+    </div>
+</div>
 
-                                    <!--<div class="row form_rows">-->
-                                        <!--<div class="form_basicinfo">-->
-                                            <!--<span class="col-xs-2 basicinfo title">-->
-                                                <!--<strong>아이디</strong>-->
-                                                <!--<span class="table_blue">*</span>-->
-                                            <!--</span>-->
+<!--<div class="row form_rows">-->
+<!--<div class="form_basicinfo">-->
+<!--<span class="col-xs-2 basicinfo title">-->
+<!--<strong>아이디</strong>-->
+<!--<span class="table_blue">*</span>-->
+<!--</span>-->
 
-                                            <!--<span class="col-xs-4 basicinfo input">-->
-                                                <!--<div class="form-group" style="margin:0 5px">-->
-                                                    <!--<input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
-                                                <!--</div>-->
-                                            <!--</span>-->
-                                        <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
-                                    <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
+<!--<span class="col-xs-4 basicinfo input">-->
+<!--<div class="form-group" style="margin:0 5px">-->
+<!--<input type="text" ng-model="item.USER_ID" class="form-control input-sm" style="margin:0px;"placeholder="" disabled>-->
+<!--</div>-->
+<!--</span>-->
+<!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+<!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                    <!--<div class="row form_rows">-->
-                                        <!--<div class="form_basicinfo">-->
-                                            <!--<span class="col-xs-2 basicinfo title">-->
-                                                <!--<strong>신청자명</strong>-->
-                                                <!--<span class="table_blue">*</span>-->
-                                            <!--</span>-->
+<!--<div class="row form_rows">-->
+<!--<div class="form_basicinfo">-->
+<!--<span class="col-xs-2 basicinfo title">-->
+<!--<strong>신청자명</strong>-->
+<!--<span class="table_blue">*</span>-->
+<!--</span>-->
 
-                                            <!--<span class="col-xs-4 basicinfo input">-->
-                                                <!--<div class="form-group" style="margin:0 5px">-->
-                                                    <!--<input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
-                                                <!--</div>-->
-                                            <!--</span>-->
-                                        <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
-                                    <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
+<!--<span class="col-xs-4 basicinfo input">-->
+<!--<div class="form-group" style="margin:0 5px">-->
+<!--<input type="text" ng-model="item.NICK_NM" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
+<!--</div>-->
+<!--</span>-->
+<!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+<!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
-                                    <!--<div class="row form_rows">-->
-                                        <!--<div class="form_basicinfo">-->
-                                            <!--<span class="col-xs-2 basicinfo title">-->
-                                                <!--<strong>가입일자</strong>-->
-                                                <!--<span class="table_blue">*</span>-->
-                                            <!--</span>-->
+<!--<div class="row form_rows">-->
+<!--<div class="form_basicinfo">-->
+<!--<span class="col-xs-2 basicinfo title">-->
+<!--<strong>가입일자</strong>-->
+<!--<span class="table_blue">*</span>-->
+<!--</span>-->
 
-                                            <!--<span class="col-xs-4 basicinfo input">-->
-                                                <!--<div class="form-group" style="margin:0 5px">-->
-                                                    <!--<input type="text" ng-model="item.REG_DT" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
-                                                <!--</div>-->
-                                            <!--</span>-->
-                                        <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
-                                    <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
+<!--<span class="col-xs-4 basicinfo input">-->
+<!--<div class="form-group" style="margin:0 5px">-->
+<!--<input type="text" ng-model="item.REG_DT" class="form-control input-sm" style="margin:0px;"  placeholder="" disabled>-->
+<!--</div>-->
+<!--</span>-->
+<!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+<!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
+<div class="row form_rows">
+    <div class="form_basicinfo">
                                         <span class="col-xs-2 basicinfo title">
                                             <strong>신청자명</strong>
                                             <span class="table_blue">*</span>
@@ -159,11 +166,11 @@
                                                 {{user_info.NICK_NM}}<!--({{user_info.USER_ID}}) -->
                                             </div>
                                         </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>
+    </div>  <!-- /.form_basicinfo -->
+</div>
 
-                                <div class="row form_rows">
-                                    <div class="form_basicinfo">
+<div class="row form_rows">
+    <div class="form_basicinfo">
                                         <span class="col-xs-2 basicinfo title">
                                             <strong>연락처</strong>
                                             <span class="table_blue">*</span>
@@ -191,42 +198,42 @@
                                                 {{user_info.PHONE_2}}
                                             </div>
                                         </span>
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
+    </div>  <!-- /.form_basicinfo -->
+</div>  <!-- /.form_rows -->
 
-                                <!--<div class="row form_rows">-->
-                                        <!--<div class="form_basicinfo">-->
-                                            <!--<span class="col-xs-2 basicinfo title">-->
-                                                <!--<strong>연락처</strong>-->
-                                                <!--<span class="table_blue">*</span>-->
-                                            <!--</span>-->
+<!--<div class="row form_rows">-->
+<!--<div class="form_basicinfo">-->
+<!--<span class="col-xs-2 basicinfo title">-->
+<!--<strong>연락처</strong>-->
+<!--<span class="table_blue">*</span>-->
+<!--</span>-->
 
-                                            <!--<span class="col-xs-2 basicinfo input">-->
-                                                <!--<div class="form-group" style="margin:0 5px; text-align:right;">-->
-                                                    <!--<small class="table_gray">전화번호</small>-->
-                                                <!--</div>-->
-                                            <!--</span>-->
-                                            <!--<span class="col-xs-3 basicinfo input">-->
-                                                <!--<div class="form-group" style="margin:0 5px">-->
-                                                    <!--<input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
-                                                <!--</div>-->
-                                            <!--</span>-->
-                                            <!--<span class="col-xs-2 basicinfo input">-->
-                                                <!--<div class="form-group" style="margin:0 5px; text-align:right;">-->
-                                                    <!--<small class="table_gray">휴대폰</small>-->
-                                                <!--</div>-->
-                                            <!--</span>-->
-                                            <!--<span class="col-xs-3 basicinfo input">-->
-                                                <!--<div class="form-group" style="margin:0 5px">-->
-                                                    <!--<input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
-                                                <!--</div>-->
-                                            <!--</span>-->
-                                        <!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
-                                    <!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
+<!--<span class="col-xs-2 basicinfo input">-->
+<!--<div class="form-group" style="margin:0 5px; text-align:right;">-->
+<!--<small class="table_gray">전화번호</small>-->
+<!--</div>-->
+<!--</span>-->
+<!--<span class="col-xs-3 basicinfo input">-->
+<!--<div class="form-group" style="margin:0 5px">-->
+<!--<input type="text" ng-model="item.PHONE_1" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
+<!--</div>-->
+<!--</span>-->
+<!--<span class="col-xs-2 basicinfo input">-->
+<!--<div class="form-group" style="margin:0 5px; text-align:right;">-->
+<!--<small class="table_gray">휴대폰</small>-->
+<!--</div>-->
+<!--</span>-->
+<!--<span class="col-xs-3 basicinfo input">-->
+<!--<div class="form-group" style="margin:0 5px">-->
+<!--<input type="text" ng-model="item.PHONE_2" class="form-control input-sm" style="margin:0px;" placeholder="" disabled>-->
+<!--</div>-->
+<!--</span>-->
+<!--</div>  &lt;!&ndash; /.form_basicinfo &ndash;&gt;-->
+<!--</div>  &lt;!&ndash; /.form_rows &ndash;&gt;-->
 
 
-                                    <div class="row form_rows" style="border-bottom:1px dashed #ddd;">
-                                        <div class="form_basicinfo">
+<div class="row form_rows" style="border-bottom:1px dashed #ddd;">
+    <div class="form_basicinfo">
                                             <span class="col-xs-2 basicinfo title">
                                                 <strong>받으실 곳</strong>
                                                 <span class="table_blue">*</span>
@@ -239,17 +246,17 @@
                                                     {{user_info.ADDR_DETAIL}}<!--<input type="text" class="form-control input-sm" style="margin:0px;" ng-model="item.ADDR_DETAIL" placeholder="" disabled>-->
                                                 </div>
                                             </span>
-                                        </div>  <!-- /.form_basicinfo -->
-                                    </div>  <!-- /.form_rows -->
+    </div>  <!-- /.form_basicinfo -->
+</div>  <!-- /.form_rows -->
 
-                                <div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;"> <!-- ng-if="item.ada_que_type == 'question'" -->
-                                    <div class="row form_rows" data-ng-repeat="query in item.QUE">    <!-- ng-if="item.ada_que_type == 'question'" -->
-                                        <input type="hidden" name="index[]" class="poll_question_no"/>
+<div ng-if="item.ada_que_type == 'question'"  ng-model="item" class="moms_form" style="margin:0px; display:block;"> <!-- ng-if="item.ada_que_type == 'question'" -->
+    <div class="row form_rows" data-ng-repeat="query in item.QUE">    <!-- ng-if="item.ada_que_type == 'question'" -->
+        <input type="hidden" name="index[]" class="poll_question_no"/>
                                         <span class="col-xs-12 basicinfo title" style="text-align: left; padding-left:12px;">
                                             <strong style="width: 100%">{{query.title}}</strong>
                                             <span class="table_blue">*</span>
                                         </span>
-                                        <div ng-if="query.type == '1'">
+        <div ng-if="query.type == '1'">
 
                                             <span class="col-xs-10 basicinfo input">
                                                 <div class="form-group" style="margin:0 5px">
@@ -258,61 +265,61 @@
                                                     </p>
                                                 </div>
                                             </span>
-                                        </div>
-                                        <div ng-if="query.type == '0'" data-ng-repeat="select in query.choice" style="padding-left:15px;">
-                                            <!--<div class="radio-inline">-->
-                                                <!--<label>-->
-                                                    <!--<input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
-                                                <!--</label>-->
-                                            <!--</div>-->
-                                            <div class="radio" style="float: left;">
-                                                <!--<label>-->
-                                                  <input type="radio"  title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select">{{select}}&nbsp;&nbsp;
-                                                <!--</label>-->
-                                            </div>
-                                        </div>
-                                        <div ng-if="query.type == '2'" data-ng-repeat="select in query.choice" style="padding-left:15px;">
-                                            <div class="radio" style="float: left;">
-                                                <!--<label>-->
-                                                  <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select">{{select}}&nbsp;&nbsp;
-                                                <!--</label>-->
-                                            </div>
-                                            <label>
-                                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
-                                            </label>
-                                        </div>
-                                        <div ng-if="query.type == '3'" data-ng-repeat="select in query.choice" style="padding-left:10px;">
-                                            <div class="radio" style="float: left;">
-                                                <!--<label>-->
-                                                <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}}}&nbsp;&nbsp; <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                <!--</label>-->
-                                            </div>
-                                        </div>
-                                        <div ng-if="query.type == '4'" >
-                                            <div class="form-group" style="padding:0 15px;">
-                                                <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                <textarea title="장문" name="answer{{query.index}}" id="answer{{query.index}}" class="form-control" rows="6" style="resize: none;"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+        </div>
+        <div ng-if="query.type == '0'" data-ng-repeat="select in query.choice" style="padding-left:15px;">
+            <!--<div class="radio-inline">-->
+            <!--<label>-->
+            <!--<input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
+            <!--</label>-->
+            <!--</div>-->
+            <div class="radio" style="float: left;">
+                <!--<label>-->
+                <input type="radio"  title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select">{{select}}&nbsp;&nbsp;
+                <!--</label>-->
+            </div>
+        </div>
+        <div ng-if="query.type == '2'" data-ng-repeat="select in query.choice" style="padding-left:15px;">
+            <div class="radio" style="float: left;">
+                <!--<label>-->
+                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select">{{select}}&nbsp;&nbsp;
+                <!--</label>-->
+            </div>
+            <label>
+                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+            </label>
+        </div>
+        <div ng-if="query.type == '3'" data-ng-repeat="select in query.choice" style="padding-left:10px;">
+            <div class="radio" style="float: left;">
+                <!--<label>-->
+                <input type="checkbox" title="문항" name="answer{{query.index}}" id="answer{{query.index}}" ng-value="select"/>{{select}}}&nbsp;&nbsp; <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                <!--</label>-->
+            </div>
+        </div>
+        <div ng-if="query.type == '4'" >
+            <div class="form-group" style="padding:0 15px;">
+                <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                <textarea title="장문" name="answer{{query.index}}" id="answer{{query.index}}" class="form-control" rows="6" style="resize: none;"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                <!-- 참여유형이 업로드 중 질문이 있을때 -->
-                                <div ng-if="item.ada_que_type == 'upload'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
-                                    <div class="row form_rows" data-ng-repeat="query in item.QUE">    <!-- ng-if="item.ada_que_type == 'question'" -->
-                                        <input type="hidden" name="index[]" class="poll_upload_no"/>
+<!-- 참여유형이 업로드 중 질문이 있을때 -->
+<div ng-if="item.ada_que_type == 'upload'"  ng-model="item" class="moms_form" style="margin:0px; display:block;">
+    <div class="row form_rows" data-ng-repeat="query in item.QUE">    <!-- ng-if="item.ada_que_type == 'question'" -->
+        <input type="hidden" name="index[]" class="poll_upload_no"/>
                                         <span class="col-xs-2 basicinfo title">
                                             <strong>{{query.title}}</strong>
                                             <span class="table_blue">*</span>
                                         </span>
-                                        <div ng-if="query.type == '1'">
-                                            <!--<div class="radio-inline">-->
-                                            <!--<label>-->
-                                            <!--<input  type="text" name="answer[]" style="width: 250px;"/>-->
-                                            <!--&nbsp;&nbsp;&nbsp;-->
-                                            <!--&lt;!&ndash;<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>&ndash;&gt;-->
-                                            <!--</label>-->
-                                            <!--</div>-->
+        <div ng-if="query.type == '1'">
+            <!--<div class="radio-inline">-->
+            <!--<label>-->
+            <!--<input  type="text" name="answer[]" style="width: 250px;"/>-->
+            <!--&nbsp;&nbsp;&nbsp;-->
+            <!--&lt;!&ndash;<span ng-show="" class="table_blue">{{select.POLL_CNT > 0 ? select.POLL_CNT : ''}}</span>&ndash;&gt;-->
+            <!--</label>-->
+            <!--</div>-->
 
                                             <span class="col-xs-10 basicinfo input">
                                                 <div class="form-group" style="margin:0 5px">
@@ -321,441 +328,859 @@
                                                     </p>
                                                 </div>
                                             </span>
-                                        </div>
-                                        <div ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
-                                            <!--<div class="radio-inline">-->
-                                            <!--<label>-->
-                                            <!--<input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
-                                            <!--</label>-->
-                                            <!--</div>-->
-                                            <div class="radio" style="float: left;">
-                                                <!--<label>-->
-                                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}"  ng-value="select">{{select}}&nbsp;&nbsp;
-                                                <!--</label>-->
-                                            </div>
-                                        </div>
-                                        <div ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
-                                            <div class="radio" style="float: left;">
-                                                <!--<label>-->
-                                                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}"  class="poll_select_radio"ng-value="select">{{select}}&nbsp;&nbsp;
-                                                <!--</label>-->
-                                            </div>
-                                            <label>
-                                                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
-                                            </label>
-                                        </div>
-                                        <div ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
-                                            <div class="radio" style="float: left;">
-                                                <!--<label>-->
-                                                <input type="checkbox" title="문항"  name="answer{{query.index}}" id="answer{{query.index}}" class="poll_select_checkbox"  ng-value="select"/>{{select}}&nbsp;&nbsp; <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                <!--</label>-->
-                                            </div>
-                                        </div>
-                                        <div ng-if="query.type == '4'" >
-                                            <div class="form-group" style="padding:0 15px;">
-                                                <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
-                                                <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="6" style="resize: none;"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 참여유형이 댓글일때 -->
-                                <div ng-if="item.ada_que_type == 'reply' && !tempEvent"  ng-model="item" class="sub_contents_body">
-
-                                    <div class="container-fluid peopleboard_view_commentwrap">
-                                        <div class="row peopleboard_view_commenttop">
-                                            <div class="col-xs-12 peopleboard_view_commenttitle">
-                                                <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">{{item.REPLY_SUBJECT}}</span>
-                                                <!--<small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>-->
-                                            </div><!-- /.col-xs-12-->
-                                        </div><!-- /.row -->
-
-                                        <div class="row peopleboard_view_commentbox">
-                                            <div class="col-xs-10 peopleboard_view_text">
-                                                <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
-                                            </div><!-- /.col-xs-10-->
-                                        </div><!-- /.row -->
-                                    </div><!-- /.container -->
-                                </div>
-
-                                <div class="row form_rows" style="border-top:2px solid #333;">
-                                    <div class="form_basicinfo">
-                                        <!-- 애독자 엽서 사은품 구성 -->
-                                        <div style="display:block;" style="widith:100%;">
-                                            <br />
-                                            <span class="table_blue" style="line-height: 38px; font-size:1.28em; margin-left:12px;">애독자선물 구성</span>
-                                            <br />
-
-                                            <div class="samplepack_goodsbox_td">
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_01.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">잉글레시나 트립 유모차</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">잉글레시나의 가볍고 산뜻한 절충형 디럭스 유모차 ‘트립’.
-                                                            유모차계의 새로운 트렌드를 이끌어온트립은 휴대성과 디럭스 기능의 완벽한 조화로 많은 사랑을 받으며 국내 최고 판매량을 기록하고 있는 베스트셀러 제품이다.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.credere.co.kr" target="_blank">(주)끄레델</a>
-                                                    </div>
-                                                </div>
-
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_02.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">키보스 리틀라이프 보아져 S3 캐리어</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">리틀라이프 ‘보아져 S3 캐리어’
-                                                            리틀라이프 보아져 S3 캐리어는 아이를 업을 수 있는 유아 캐리어와 가방을 결합한 제품으로 아이와 함께 등산과 트레킹 등을 안전하게 즐길 수 있다.</div>
-                                                        <a class="samplepack_sponlink" style="float:left; margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://littlelife.kibos.co.kr/" target="_blank">(주)키보스(구 토이스쿨)</a>
-                                                    </div>
-                                                </div>
-                                            </div> <!-- /.samplepack_goodsbox_td -->
-
-                                            <div class="samplepack_goodsbox_td">
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_03.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">포브 세븐 카시트 + 도로시 R 데즐 아기띠</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">‘포브 세븐 카시트’와 ‘도로시 R 데즐 아기띠’ 신생아부터 7세까지 오랫동안 사용할 수 있어 효율적이며 14단계 헤드레스트 높이 조절이 가능해 성장하는 아이의 체형에 맞게 높이를 조절할 수 있다.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://littlelife.kibos.co.kr/" target="_blank">(주)앤빌</a>
-                                                    </div>
-                                                </div>
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_04.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">베베쿡 우리 아이 처음 먹는 유산균 프로바이오 4종 시리즈</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">‘우리 아이 처음 먹는 유산균 프로바이오 4종 시리즈’
-                                                            베베쿡 프로바이오 시리즈는 이유식을 시작하면서 아이 장 트러블로 고생하는 엄마들의 고민을 해결하기 위해
-                                                            유산균 분야의 권위자인 지근억 교수 연구팀과 베베쿡이 공동으로 개발한 2중 기능성 건강기능식품.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.bebecook.com/" target="_blank">베베쿡</a>
-                                                    </div>
-                                                </div>
-                                            </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                            <div class="samplepack_goodsbox_td">
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_05.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">리틀스마티 하루 10분 우리말 깨치듯! 리틀스마티 영어</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">영어를 처음 시작하는 영유아를 위한 프로그램 ‘리틀스마티(Little Smarty) 영어’
-                                                            미국의 한 변호사는 자신의 딸이 아기였을 때 영어를 쉽게 읽는 법을 가르쳐 주고 싶어 언어학에 관한 연구를 통해 플래시 카드와 직접 만든 책.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.littlesmarty.co.kr/" target="_blank">리틀스마티</a>
-                                                    </div>
-                                                </div>
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_06.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">큐비앤맘 출산 준비물 세트(배냇저고리, 손싸개, 턱받이,속싸개, 방수요, 짱구베개, 바스타월, 대형 욕조)</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">임신, 출산, 유아용품 전문 브랜드 큐비앤맘이 앙쥬 독자들을 위해 8종의 상품.
-                                                            뛰어나다. 출산 준비에 꼭 필요한 기본 용품들인 배냇저고리, 손싸개, 턱받이, 속싸개, 방수요, 짱구베개 및 목욕 후 아기 몸을 닦아줄 수 있으며
-                                                            속싸개로도 사용가능한 대형 바스타월과 오랜 기간에 걸쳐 엄마들에게 인정받은 대형 욕조 등 8종의 선물을 구성.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.cubynmom.com/" target="_blank">큐비앤맘</a>
-                                                    </div>
-                                                </div>
-                                            </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                            <div class="samplepack_goodsbox_td">
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_07.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">우수메디컬 물따로 물티슈 오리지널 캡형 2Box + 오리지널 휴대용 2Box</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">물따로 물티슈는 ‘무엇을 넣느냐’ 보다 ‘무엇을 빼느냐’라는 발상의 전환으로 개발되었다.
-                                                            화학방부제 및 기타 첨가물이 전혀 들어 있지 않아 물티슈에 고민이 많았던 엄마들에게는 해답과 같은 제품.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.multtaro.com/" target="_blank">우수메디컬</a>
-                                                    </div>
-                                                </div>
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_08.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">데스티네이션 마터니티 임산부 MUST HAVE ITEM 기본 레깅스 2pcs</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">임신 초기부터 만삭까지는 물론, 출산 후까지 입을 수 있는 장점을 가지고 있다.
-                                                            배를 감싸고 있는 벨리는 심리스( Seamless) 형태로 배를 압박하지 않고 편안하고 안정적으로 감싸줄 뿐만 아니라 출산 후에는 반으로 접어
-                                                            입으면 산전 상태의 몸으로 회복되는 데 도움을 준다.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.destinationmaternity.co.kr/" target="_blank">데스티네이션 마터니티</a>
-                                                    </div>
-                                                </div>
-                                            </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                            <div class="samplepack_goodsbox_td">
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_09.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">토미티피 진저 브레드(Ginger Bread) 젖병 선물 세트</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">‘토미티피(tommeetippee.0to7.com)’의 기술력이 담긴 모성수유 젖병(260㎖) 2개와 천 턱받이 1개로 구성된 실속형 선물 세트로
-                                                            0~3개월 신생아가 사용하기에 적합하다.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://tommeetippee.0to7.com/" target="_blank">토미티피</a>
-                                                    </div>
-                                                </div>
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_10.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">지나월드 뽀로로 가방 소꿉놀이</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">뽀로로 가방 소꿉놀이는 영유아의 감성교육놀이를 최우선으로 하는 지나월드에서, 영유아 최고 인기 캐릭터인
-                                                            뽀로로를 적용해 개발한 역할 감성 놀이교육용 장난감이다.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.ginaworld.co.kr/new_home/" target="_blank">지나월드</a>
-                                                    </div>
-                                                </div>
-                                            </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                            <div class="samplepack_goodsbox_td">
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_11.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">아토팜 매터니티 케어 올인원 페이셜 크림</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">아토팜 매터니티 케어는 임신으로 인해 몸과 마음이 민감해진 엄마를 위한 임산부 전용 브랜드. 아토팜 매터니티 케어 올인원 페이셜 크림은
-                                                            로션, 에센스, 크림의 기능을 한번에 제공해 예민한 임산부의 피부를 더욱 쉽고 편안하게 관리할 수 있는 순한 스마트 스킨케어 제품.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.atopalm.co.kr/main/" target="_blank">아토팜</a>
-                                                    </div>
-                                                </div>
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_12.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">재이투비앤씨 쿠아스 반디힙시트캐리어</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">아이의 성장 단계에 맞춰 사용 할 수 있고 다양한 방법으로 착용 가능한 실용적인 힙시트캐리어 ‘쿠아스 반디힙시트캐리어’
-                                                            초경량의 무독성 EPP 압축폼으로 제작해 오래 사용해도 깨짐, 꺼짐 현상이 없다.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://cafe.naver.com/jtobnc" target="_blank">재이투비앤씨</a>
-                                                    </div>
-                                                </div>
-                                            </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                            <div class="samplepack_goodsbox_td">
-                                                <div class="samplepack_goodsbox">
-                                                    <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_13.jpg')"/>
-                                                    <div class="samplepack_goodsboxtxt">
-                                                        <p class="table_green">자연생각 아기작作 오가닉 아기침구 세트</p>
-                                                        <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">‘자연생각 아기작作 오가닉 아기침구 세트’는 메밀베개, 누빔 패드, 이불로 구성. (최고급 누빔솜, 100% 유기농 면)
-                                                            형광물질과 화학 성분의 염색이나 나염, 자수 등이 전혀 들어가지 않아서 알록달록 화려하진 않지만 깔끔하고 고급스러운 디자인.</div>
-                                                        <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.t-eco.co.kr/main" target="_blank">자연생각</a>
-                                                    </div>
-                                                </div>
-                                                <div class="samplepack_goodsbox">
-                                                </div>
-                                            </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                        </div>  <!-- /#samplepack_new_goods -->
-                                        <!-- /애독자 엽서 사은품 구성 -->
-
-                                    </div>  <!-- /.form_basicinfo -->
-                                </div>  <!-- /.form_rows -->
-
-
-                                <div class="samplepack_guidebox" style="float:left; width:100%; border-bottom: 1px solid #333;">
-                                    <center>
-                                        <div style="width:80px; height:80px; border:1px solid #4cace8; background-color:#4cace8; border-radius: 50%; line-height:80px; color:#fff; text-align: center;">
-                                            주의사항
-                                        </div>
-                                    </center>
-
-                                    <ol class="samplepack_howto">
-                                        <li class="table_red">한번 등록한 내용은 변경하실 수 없습니다.</li>
-                                        <li>임신부 레깅스 선택 시 사이즈(XS(44)/S(55)/M(66)) 및 색상(블랙/그레이) 을 선택하지 않으면 M(66) 블랙으로 발송됩니다.
-                                        <li>엽서등록확인은 마이페이지 <span class="table_blue">마이앙쥬 > 내 활동 조회</span>에서 확인가능 합니다.
-                                        <li>애독자 선물의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체 사정으로 공지없이 변경될 수 있습니다.</li>
-                                        <li>당첨자 발표 후 별도 주소확인은 하지 않으며 주소가 불분명할 경우 선물은 발송되지 않습니다. (번지수가 없거나 아파트 동, 호수 없는 경우)</li>
-                                        <li>회원 탈퇴 후 재가입하여 신청하더라도 신청기록은 남기 때문에 샘플팩 선정에서 제외됩니다.</li>
-                                    </ol>
-                                </div>
-
-                                <div style="float:left; position:relative; width:100%;">
-                                    <div style="clear:both; text-align: center; width:225px; margin:0px auto; padding-top:10px 0 40px 0;">
-                                        <a class="samplepack_submit cancelbtn" href="/moms/samplepack/intro"></a>
-                                        <a class="samplepack_submit submitbtn" ng-click="click_saveSamplepackComp();"></a>
-                                    </div>
-                                </div>
-
-
-
-                                <!--<div class="col-xs-12">-->
-                                <!--<div ng-model="ad" class="inven_themeup">-->
-                                <!--<a class="ADbanner_image" title="배너타이틀">-->
-                                <!--&lt;!&ndash;<img ng-src="{{ad.FILE}}"/>&ndash;&gt;-->
-                                <!--<img img src="/imgs/ange/temp/story_banner.jpg"/>-->
-                                <!--</a>-->
-                                <!--</div>-->
-                                <!--</div>-->
-
-
-                            </div>
-                    </form>
-                            <!-- /신청폼 -->
-
-
-                            <div class="samplepack_tabbox"   style="display:block;" ng-class="{ 'hidden': showSamplepackDetails }">
-
-                                <ul class="nav nav-tabs nav-justified" id="tab" style="font-size:0.92em; font-weight:700;">
-                                    <!--<li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">주의사항</a></li>-->
-                                    <li class="active"><a><span class="tabox_title" style="color:#2486ee; line-height:60px; font-size:1.46em;">애독자 선물 구성</span></a></li>
-
-                                    <!-- 애독자 엽서 사은품 구성 -->
-                                    <div class="tabox_body" style="display:block;">
-                                        <p><small class="table_gray">※종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
-
-                                        <div class="samplepack_goodsbox_td">
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_01.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">잉글레시나 트립 유모차</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">잉글레시나의 가볍고 산뜻한 절충형 디럭스 유모차 ‘트립’.
-                                                        유모차계의 새로운 트렌드를 이끌어온트립은 휴대성과 디럭스 기능의 완벽한 조화로 많은 사랑을 받으며 국내 최고 판매량을 기록하고 있는 베스트셀러 제품이다.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.credere.co.kr" target="_blank">(주)끄레델</a>
-                                                </div>
-                                            </div>
-
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_02.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">키보스 리틀라이프 보아져 S3 캐리어</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">리틀라이프 ‘보아져 S3 캐리어’
-                                                        리틀라이프 보아져 S3 캐리어는 아이를 업을 수 있는 유아 캐리어와 가방을 결합한 제품으로 아이와 함께 등산과 트레킹 등을 안전하게 즐길 수 있다.</div>
-                                                    <a class="samplepack_sponlink" style="float:left; margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://littlelife.kibos.co.kr/" target="_blank">(주)키보스(구 토이스쿨)</a>
-                                                </div>
-                                            </div>
-                                        </div> <!-- /.samplepack_goodsbox_td -->
-
-                                        <div class="samplepack_goodsbox_td">
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_03.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">포브 세븐 카시트 + 도로시 R 데즐 아기띠</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">‘포브 세븐 카시트’와 ‘도로시 R 데즐 아기띠’ 신생아부터 7세까지 오랫동안 사용할 수 있어 효율적이며 14단계 헤드레스트 높이 조절이 가능해 성장하는 아이의 체형에 맞게 높이를 조절할 수 있다.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://littlelife.kibos.co.kr/" target="_blank">(주)앤빌</a>
-                                                </div>
-                                            </div>
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_04.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">베베쿡 우리 아이 처음 먹는 유산균 프로바이오 4종 시리즈</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">‘우리 아이 처음 먹는 유산균 프로바이오 4종 시리즈’
-                                                        베베쿡 프로바이오 시리즈는 이유식을 시작하면서 아이 장 트러블로 고생하는 엄마들의 고민을 해결하기 위해
-                                                        유산균 분야의 권위자인 지근억 교수 연구팀과 베베쿡이 공동으로 개발한 2중 기능성 건강기능식품.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.bebecook.com/" target="_blank">베베쿡</a>
-                                                </div>
-                                            </div>
-                                        </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                        <div class="samplepack_goodsbox_td">
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_05.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">리틀스마티 하루 10분 우리말 깨치듯! 리틀스마티 영어</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">영어를 처음 시작하는 영유아를 위한 프로그램 ‘리틀스마티(Little Smarty) 영어’
-                                                        미국의 한 변호사는 자신의 딸이 아기였을 때 영어를 쉽게 읽는 법을 가르쳐 주고 싶어 언어학에 관한 연구를 통해 플래시 카드와 직접 만든 책.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.littlesmarty.co.kr/" target="_blank">리틀스마티</a>
-                                                </div>
-                                            </div>
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_06.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">큐비앤맘 출산 준비물 세트(배냇저고리, 손싸개, 턱받이,속싸개, 방수요, 짱구베개, 바스타월, 대형 욕조)</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">임신, 출산, 유아용품 전문 브랜드 큐비앤맘이 앙쥬 독자들을 위해 8종의 상품.
-                                                        뛰어나다. 출산 준비에 꼭 필요한 기본 용품들인 배냇저고리, 손싸개, 턱받이, 속싸개, 방수요, 짱구베개 및 목욕 후 아기 몸을 닦아줄 수 있으며
-                                                        속싸개로도 사용가능한 대형 바스타월과 오랜 기간에 걸쳐 엄마들에게 인정받은 대형 욕조 등 8종의 선물을 구성.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.cubynmom.com/" target="_blank">큐비앤맘</a>
-                                                </div>
-                                            </div>
-                                        </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                        <div class="samplepack_goodsbox_td">
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_07.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">우수메디컬 물따로 물티슈 오리지널 캡형 2Box + 오리지널 휴대용 2Box</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">물따로 물티슈는 ‘무엇을 넣느냐’ 보다 ‘무엇을 빼느냐’라는 발상의 전환으로 개발되었다.
-                                                        화학방부제 및 기타 첨가물이 전혀 들어 있지 않아 물티슈에 고민이 많았던 엄마들에게는 해답과 같은 제품.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.multtaro.com/" target="_blank">우수메디컬</a>
-                                                </div>
-                                            </div>
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_08.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">데스티네이션 마터니티 임산부 MUST HAVE ITEM 기본 레깅스 2pcs</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">임신 초기부터 만삭까지는 물론, 출산 후까지 입을 수 있는 장점을 가지고 있다.
-                                                        배를 감싸고 있는 벨리는 심리스( Seamless) 형태로 배를 압박하지 않고 편안하고 안정적으로 감싸줄 뿐만 아니라 출산 후에는 반으로 접어
-                                                        입으면 산전 상태의 몸으로 회복되는 데 도움을 준다.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.destinationmaternity.co.kr/" target="_blank">데스티네이션 마터니티</a>
-                                                </div>
-                                            </div>
-                                        </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                        <div class="samplepack_goodsbox_td">
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_09.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">토미티피 진저 브레드(Ginger Bread) 젖병 선물 세트</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">‘토미티피(tommeetippee.0to7.com)’의 기술력이 담긴 모성수유 젖병(260㎖) 2개와 천 턱받이 1개로 구성된 실속형 선물 세트로
-                                                        0~3개월 신생아가 사용하기에 적합하다.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://tommeetippee.0to7.com/" target="_blank">토미티피</a>
-                                                </div>
-                                            </div>
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_10.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">지나월드 뽀로로 가방 소꿉놀이</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">뽀로로 가방 소꿉놀이는 영유아의 감성교육놀이를 최우선으로 하는 지나월드에서, 영유아 최고 인기 캐릭터인
-                                                        뽀로로를 적용해 개발한 역할 감성 놀이교육용 장난감이다.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.ginaworld.co.kr/new_home/" target="_blank">지나월드</a>
-                                                </div>
-                                            </div>
-                                        </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                        <div class="samplepack_goodsbox_td">
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_11.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">아토팜 매터니티 케어 올인원 페이셜 크림</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">아토팜 매터니티 케어는 임신으로 인해 몸과 마음이 민감해진 엄마를 위한 임산부 전용 브랜드. 아토팜 매터니티 케어 올인원 페이셜 크림은
-                                                        로션, 에센스, 크림의 기능을 한번에 제공해 예민한 임산부의 피부를 더욱 쉽고 편안하게 관리할 수 있는 순한 스마트 스킨케어 제품.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.atopalm.co.kr/main/" target="_blank">아토팜</a>
-                                                </div>
-                                            </div>
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_12.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">재이투비앤씨 쿠아스 반디힙시트캐리어</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">아이의 성장 단계에 맞춰 사용 할 수 있고 다양한 방법으로 착용 가능한 실용적인 힙시트캐리어 ‘쿠아스 반디힙시트캐리어’
-                                                        초경량의 무독성 EPP 압축폼으로 제작해 오래 사용해도 깨짐, 꺼짐 현상이 없다.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://cafe.naver.com/jtobnc" target="_blank">재이투비앤씨</a>
-                                                </div>
-                                            </div>
-                                        </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                        <div class="samplepack_goodsbox_td">
-                                            <div class="samplepack_goodsbox">
-                                                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/201503_post_13.jpg')"/>
-                                                <div class="samplepack_goodsboxtxt">
-                                                    <p class="table_green">자연생각 아기작作 오가닉 아기침구 세트</p>
-                                                    <div class="table_gray" style="clear:both; font-size:0.86em; line-height:15px;">‘자연생각 아기작作 오가닉 아기침구 세트’는 메밀베개, 누빔 패드, 이불로 구성. (최고급 누빔솜, 100% 유기농 면)
-                                                        형광물질과 화학 성분의 염색이나 나염, 자수 등이 전혀 들어가지 않아서 알록달록 화려하진 않지만 깔끔하고 고급스러운 디자인.</div>
-                                                    <a class="samplepack_sponlink" style="float:left;margin-top:5px;font-family: arial, sans-serif; font-size:0.82em; color:#868686;" href="http://www.t-eco.co.kr/main" target="_blank">자연생각</a>
-                                                </div>
-                                            </div>
-                                            <div class="samplepack_goodsbox">
-                                            </div>
-                                        </div>  <!-- /.samplepack_goodsbox_td -->
-
-                                    </div>  <!-- /#samplepack_new_goods -->
-                                    <!-- /애독자 엽서 사은품 구성 -->
-
-                                </ul>   <!-- /.nav-tabs -->
-                            </div>  <!-- /.samplepack_tabbox -->
-
-                        </div><!-- /.sub_contents_wrap -->
-                    </div>
-                </div>
-
-            </div> <!-- rows -->
-        </div><!-- container-fluid -->
-
-    </div><!-- /.mainbar -->
-
-
-    <div class="subar sub-slide1">
-        <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
-
-        <!-- 1200px 이하일 경우 표시되는 footer -->
-        <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
-        <!-- /1200px 이하일 경우 표시되는 footer -->
+        </div>
+        <div ng-if="query.type == '0'" data-ng-repeat="select in query.choice">
+            <!--<div class="radio-inline">-->
+            <!--<label>-->
+            <!--<input type="radio" id="selectanswer{{query.index}}_{{$index}}" class="poll_select_radio" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}} &lt;!&ndash;radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"&ndash;&gt;-->
+            <!--</label>-->
+            <!--</div>-->
+            <div class="radio" style="float: left;">
+                <!--<label>-->
+                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}"  ng-value="select">{{select}}&nbsp;&nbsp;
+                <!--</label>-->
+            </div>
+        </div>
+        <div ng-if="query.type == '2'" data-ng-repeat="select in query.choice">
+            <div class="radio" style="float: left;">
+                <!--<label>-->
+                <input type="radio" title="문항" name="answer{{query.index}}" id="answer{{query.index}}"  class="poll_select_radio"ng-value="select">{{select}}&nbsp;&nbsp;
+                <!--</label>-->
+            </div>
+            <label>
+                <input type="text" ng-show="select == '기타'" name="etc_answer" id="etc_answer "style="width: 250px;"/>
+            </label>
+        </div>
+        <div ng-if="query.type == '3'" data-ng-repeat="select in query.choice">
+            <div class="radio" style="float: left;">
+                <!--<label>-->
+                <input type="checkbox" title="문항"  name="answer{{query.index}}" id="answer{{query.index}}" class="poll_select_checkbox"  ng-value="select"/>{{select}}&nbsp;&nbsp; <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                <!--</label>-->
+            </div>
+        </div>
+        <div ng-if="query.type == '4'" >
+            <div class="form-group" style="padding:0 15px;">
+                <!--<input type="checkbox" id="selectanswer3{{query.index}}_{{$index}}" class="poll_select_checkbox" name="selectanswer[{{query.index}}]" ng-value="select"/>{{select}}--> <!--radiolist-model="item.QUE_SELECT_ANSWER"  name="selectanswer[]" id="select_sort{{select}}"-->
+                <textarea name="answer{{query.index}}" id="answer{{query.index}}" title="장문" class="form-control" rows="6" style="resize: none;"></textarea>
+            </div>
+        </div>
     </div>
+</div>
 
-    <!-- /Main Page Layout Set -->
+<!-- 참여유형이 댓글일때 -->
+<div ng-if="item.ada_que_type == 'reply' && !tempEvent"  ng-model="item" class="sub_contents_body">
+
+    <div class="container-fluid peopleboard_view_commentwrap">
+        <div class="row peopleboard_view_commenttop">
+            <div class="col-xs-12 peopleboard_view_commenttitle">
+                <span class="people_small_title" style="font-size:1.32em; font-weight: bold; ">{{item.REPLY_SUBJECT}}</span>
+                <!--<small style="color:#868686;">타인비방, 모욕, 개인정보 노출, 상업광고, 홍보글 등은 공지없이 바로 삭제</small>-->
+            </div><!-- /.col-xs-12-->
+        </div><!-- /.row -->
+
+        <div class="row peopleboard_view_commentbox">
+            <div class="col-xs-10 peopleboard_view_text">
+                <textarea ng-model="item.COMMENT" class="form-control" rows="4" style="resize: none;"></textarea>
+            </div><!-- /.col-xs-10-->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</div>
+
+<div class="row form_rows" style="border-top:2px solid #333;">
+    <div class="form_basicinfo">
+        <!-- 애독자 엽서 사은품 구성 -->
+        <div style="display:block;" style="widith:100%;">
+            <br />
+            <span class="table_blue" style="line-height: 38px; font-size:1.28em; margin-left:12px;">애독자 선물 구성</span>
+            <br />
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_001.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">잉글레시나</span> 트립 유모차</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)끄레델에서 <앙쥬> 독자들을 위해 잉글레시나의 가볍고 산뜻한 절충형
+                        디럭스 유모차 ‘트립’을 선물한다. 유모차계의 새로운 트렌드를 이끌어온
+                        트립은 휴대성과 디럭스 기능의 완벽한 조화로 많은 사랑을 받으며 국내 최고
+                        판매량을 기록하고 있는 베스트셀러 제품이다. 또 <컨슈머리포트>가 실시한
+                            테스트에서 가격, 안전성, 품질력 모두 최우수 평가를 받았다. 휴대성 높은
+                            가벼운 무게와 손쉬운 폴딩 시스템, 아이의 안전을 고려한 탁월한 무게중심
+                            설계, 360° 회전 가능한 뛰어난 핸들링과 최대 170° 조절 등받이가 특징.
+                            충격 흡수 서스펜션과 원터치 링키지 브레이크로 안전성도 우수하다. 편안한
+                            손잡이와 유용한 컵홀더, 안전가드 포함. 색상은 임의 발송.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:1600-0716">1600-0716</a>
+                    <a class="postcard_sponlink" href="http://www.crederemall.co.kr" target="_blank">www.crederemall.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_002.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">키보스</span> 리틀라이프 보아져 S3 캐리어</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)키보스(구 토이스쿨)에서 <앙쥬> 독자를 위해 리틀라이프 ‘보아져 S3 캐리어’를
+                        선물한다. 리틀라이프 보아져 S3 캐리어는 최근 KBS 예능 프로그램 <슈퍼맨이
+                                돌아왔다>에서 송일국이 착용해 인기몰이 중인 등산용 유아 캐리어다.
+                            리틀라이프 보아져 S3 캐리어는 아이를 업을 수 있는 유아 캐리어와 가방을
+                            결합한 제품으로 아이와 함께 등산과 트레킹 등을 안전하게 즐길 수 있는
+                            점이 가장 큰 특징. 캐리어 부위에는 높낮이 조절이 가능한 푹신한 시트로
+                            아이에게 편안함을 선사하고 5점식 안전벨트로 안정성을 높였다. 특히
+                            무게를 분산시키는 인체공학적 프레임과 디자인으로 최대 20kg까지
+                            편안한 지탱이 가능하며 고급 등산 가방에 적용되는 특수 등받이
+                            시스템으로 착용자의 신장에 맞춰 157~193cm까지 착용할 수 있다.
+                            스타일리시한 디자인과 세련된 컬러, 넉넉한 수납 공간으로 가까운 공원
+                            나들이용으로도 손색없다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:02-577-7180">02-577-7180</a>
+                    <a class="postcard_sponlink" href="http://www.kibos.co.kr" target="_blank">www.kibos.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_003.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">포브</span> 세븐 카시트 + 도로시 R 데즐 아기띠</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)앤빌에서 <앙쥬> 독자를 위해 ‘포브 세븐 카시트’와 ‘도로시 R 데즐
+                        아기띠’를 선물한다. 포브 세븐 카시트는 알루미늄과 플라스틱을 섞은
+                        스페셜 프레임으로 가볍게 디자인된 카시트다. 신생아부터 7세까지
+                        오랫동안 사용할 수 있어 효율적이며 14단계 헤드레스트 높이 조절이
+                        가능해 성장하는 아이의 체형에 맞게 높이를 조절할 수 있다. 2중
+                        헤드레스트를 적용해 사고로부터 아이를 안전하게 보호하고 측면
+                        돌출형이라 안전성이 매우 높다. 도로시 R 데즐 아기띠는 엄마의 허리와
+                        어깨는 물론, 아기의 척추를 보호하는 G 메커니즘 구조로 되어 있다.
+                        어깨 벨트가 두툼한 데다 쿠션감까지 있어 장시간 착용해도 불편함이
+                        매우 적다. 등 부분의 커버는 분리할 수 있으며 메시와 면 소재의 이중
+                        슬리핑 후드가 달려 있어 날씨에 따라 편리하게 사용할 수 있다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:080-579-7000">080-579-7000</a>
+                    <a class="postcard_sponlink" href="http://www.forb.co.kr" target="_blank">www.forb.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_004.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">베베쿡</span> 우리 아이 처음 먹는 유산균 프로바이오 4종 시리즈</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        베베쿡이 <앙쥬> 독자들을 위해 ‘우리 아이 처음 먹는 유산균 프로바이오
+                        4종 시리즈’를 선물한다. 베베쿡 프로바이오 시리즈는 이유식을
+                        시작하면서 아이 장 트러블로 고생하는 엄마들의 고민을 해결하기 위해
+                        유산균 분야의 권위자인 지근억 교수 연구팀과 베베쿡이 공동으로
+                        개발한 2중 기능성 건강기능식품이다. 특허 받은 60억 유산균에
+                        면역력을 강화하는 아연이 추가된 ‘프로바이오 베베’, 비타민D가 추가된
+                        ‘프로바이오 썬’, 철분이 추가된 ‘프로바이오 에프’, 멀티비타민이 추가된
+                        ‘프로바이오 패밀리’ 등 총 4가지가 있어 아이부터 성인까지 연령별,
+                        상황에 맞게 제품을 선택할 수 있다. 위산과 담즙산에 강한 특허 받은
+                        유산균이 장까지 살아서
+                        도달하며, 장에 잘 정착하는
+                        것이 특징이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:1588-2655">1588-2655</a>
+                    <a class="postcard_sponlink" href="http://www.bebecook.com" target="_blank">www.bebecook.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_005.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">(주)펀앤키즈</span> 리틀타익스 NEW 액티비티가든</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)펀앤키즈가
+                        <앙쥬> 독자들을 위해
+                            아기체육관 ‘리틀타익스
+                            NEW 액티비티가든’을
+                            선물한다. 리틀타익스
+                            NEW 액티비티가든은
+                            운동 능력과 인지
+                            능력을 향상시키기
+                            위한 여러 가지 기능을
+                            갖춘 아기체육관으로, 놀이를
+                            즐기며 학습을 할 수 있어 일석이조의
+                            효과를 얻을 수 있다. 아기의 운동 능력을 발달시키는 리틀타익스 NEW
+                            액티비티가든은 자유로운 공간 변형이 가능해 아기에게 늘 새로운 놀이
+                            공간을 제공하며 본체로부터 탈·부착이 가능한 다기능 놀이판을 통해
+                            양면으로 더욱 다양한 놀이를 즐길 수 있다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:02-2093-2380">02-2093-2380</a>
+                    <a class="postcard_sponlink" href="http://www.littletikeskorea.com" target="_blank">www.littletikeskorea.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_006.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">아토팜</span> 매터니티 케어 올인원 페이셜 크림</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)네오팜의 민감 피부 전문 스킨케어 브랜드 아토팜이 <앙쥬> 독자들을
+                        위해 ‘아토팜 매터니티 케어 올인원 페이셜 크림’을 선물한다. 아토팜
+                        매터니티 케어는 임신과 출산으로 인해 몸과 마음이 민감해진 엄마를
+                        위한 임산부 전용 브랜드. 아토팜
+                        매터니티 케어 올인원 페이셜 크림은
+                        로션, 에센스, 크림의 기능을 한 번에
+                        제공해 예민한 임산부의 피부를 더욱 쉽고
+                        편안하게 관리할 수 있는 순한 스마트
+                        스킨케어 제품이다. 아토팜의 국제특허
+                        피부장벽 기술인 MLEⓇ에 세라마이드가
+                        더해져 예민한 임산부의 피부 진정과
+                        보습에 최적의 효과를 나타낸다.
+                        또한 식물성 콜라겐과 감초 추출물로
+                        푸석해지기 쉬운 피부에 영양과 촉촉한
+                        윤기를 부여한다. 피부 자극 테스트를
+                        완료해 안심하고 사용할 수 있다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:080-500-0037">080-500-0037</a>
+                    <a class="postcard_sponlink" href="http://www.atopalm.co.kr" target="_blank">www.atopalm.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_007.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">큐비앤맘</span> 출산 준비물 세트(배냇저고리, 손싸개, 턱받이, 속싸개, 방수요, 짱구베개, 바스타월, 대형 욕조)</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        임신, 출산, 유아용품 전문 브랜드 큐비앤맘이 앙쥬 독자들을 위해 8종의
+                        상품으로 구성된 출산 준비물 세트를 선물한다. 큐비앤맘은 국내에
+                        생산 기반이 없는 일부 제품을 제외하고는 국내 생산을 원칙으로 하고
+                        있으며 면제품의 경우 순면 100% 무형광 원단으로 제품을 만들기 때문에
+                        연약하고 민감한 아이 피부에 좋으며 흡수성과 통기성이 뛰어나다. 출산
+                        준비에 꼭 필요한 기본 용품들인 배냇저고리, 손싸개, 턱받이, 속싸개,
+                        방수요, 짱구베개 및 목욕 후 아기 몸을 닦아줄 수 있으며 속싸개로도 사용
+                        가능한 대형 바스타월과 오랜 기간에 걸쳐 엄마들에게 인정받은 대형
+                        욕조 등 8종의 선물을 구성해 선물한다. 요즘 인기 트렌드인 북유럽풍의
+                        디자인을 접목했고 부엉이, 고양이, 기린, 곰, 토끼 등 다양하고 귀여운
+                        캐릭터들이 제품에 녹아들어 아기의 편안함과 귀여움을 강조하고
+                        산뜻함과 세련미를 제공한다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:031-969-8364">031-969-8364</a>
+                    <a class="postcard_sponlink" href="http://www.cubynmom.com" target="_blank">www.cubynmom.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_008.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">우수메디컬</span> 물따로 물티슈 오리지널 캡형 2Box+오리지널 휴대용 2Box</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)우수메디컬에서 <앙쥬> 독자들을 위해 ‘물따로 물티슈 오리지널
+                        캡형 2Box+오리지널 휴대용 2Box’를 선물한다. 물따로 물티슈는
+                        ‘무엇을 넣느냐’ 보다 ‘무엇을 빼느냐’라는 발상의 전환으로 개발되었다.
+                        화학방부제 및 기타 첨가물이 전혀 들어 있지 않아 물티슈에 고민이
+                        많았던 엄마들에게는 해답과 같은 제품이다. ‘살균초순수’와 천연 소재
+                        ‘국내산 레이온 건티슈’를 따로 따로 제공해 첨가제의 사용을 근본적으로
+                        차단했다. 살균초순수는 물속에 있는 금속이온, 비금속이온, 실리카,
+                        미립자, 유기화합물, 무기미네랄, 미생물 등 모든 성분을 제거한 순수한
+                        물로 건티슈에 부어서 사용할 수 있다. 또 따로 살균초순수를 붓지 않고
+                        건티슈로도 쓸 수 있어 사용도가 높은 제품이다. 화학 성분이 전혀
+                        없기에 연약한 신생아 피부에도, 아이의 손과 입에도 안심하고 사용할 수
+                        있으며 잔여물이 남지 않아 예민하고 연약한 피부에 안성맞춤이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:1661-7761">1661-7761</a>
+                    <a class="postcard_sponlink" href="http://www.multtaro.com" target="_blank">www.multtaro.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_009.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">데스티네이션 마터니티</span> 임산부 MUST HAVE ITEM 기본 레깅스 2pcs</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        아가방앤컴퍼니가 직수입한 세계 최대의 임부복 데스티네이션
+                        마터니티에서 <앙쥬> 독자들을 위해 미국 특허를 받은 Secret Fit
+                        BellyⓇ(씨크릿 핏 벨리)의 임산부 레깅스 2pcs를 선물한다. 이 레깅스는
+                        임신 초기부터 만삭까지는 물론, 출산 후까지 입을 수 있는 장점을 가지고
+                        있다. 배를 감싸고 있는 벨리는 심리스( Seamless) 형태로 배를 압박하지
+                        않고 편안하고 안정적으로 감싸줄 뿐만 아니라 출산 후에는 반으로 접어
+                        입으면 산전 상태의 몸으로 회복되는 데 도움을 준다. XS, S, M의 사이즈와
+                        블랙, 그레이 컬러로 구성되어 각자의 체형과 취향에 맞게 선택이 가능하다.
+                        데스티네이션 마터니티는 레깅스 외에도 전국 주요
+                        매장과 온라인 쇼핑몰에서 다양한 임산부 의류,
+                        란제리 등의 구매가 가능하다. 매장 상세 정보는
+                        홈페이지에서 확인할 수 있다. 신청 시 수령할
+                        레깅스의 사이즈와 컬러 확인을 위해 반드시
+                        휴대폰 연락처를 기재해야 한다(벨리 미국
+                        특허 번호 RE43563, RE43531, 7,814,575
+                        and 7,900,276).
+                    </div>
+                    <a class="postcard_phonenum" href="tel:02-2268-0401">02-2268-0401</a>
+                    <a class="postcard_sponlink" href="http://www.destinationmaternity.co.kr" target="_blank">www.destinationmaternity.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_010.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">토미티피</span> 진저 브레드(Ginger Bread) 젖병 선물 세트(시즌 한정)</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)제로투세븐에서 <앙쥬> 독자들을 위해 시즌 한정판으로
+                        선보이는 ‘진저 브레드(Ginger Bread) 젖병 선물 세트’를 선물한다.
+                        ‘토미티피(tommeetippee.0to7.com)’의 기술력이 담긴 모성수유
+                        젖병(260㎖) 2개와 천 턱받이 1개로 구성된 실속형 선물 세트로
+                        0~3개월 신생아가 사용하기에 적합하다. 영국에서 유래된 전래 동화
+                        ‘진저 브레드맨’의 캐릭터를 활용한 귀여운 디자인과 레드, 그린 컬러의
+                        조합으로 영국 특유의 감성을 만끽할 수 있다. 토미티피 ‘진저 브레드
+                        젖병 선물 세트’의 모성수유 젖병은 엄마의 가슴을 닮아 기존 젖꼭지보다
+                        2.1cm 더 넓은 5.5cm 와이드 젖꼭지로, 넓은 젖꼭지에 아기의 입술
+                        전체가 밀착, 엄마 체온과 같은 따뜻함을 아기에게 전달한다.
+                        아기 혀의 움직임에 맞춘 주름 설계
+                        젖꼭지는 자유로운 움직임과 최적의
+                        모성수유를 도와준다. 폴리프로필
+                        렌 소재로 제작해 환경호르몬
+                        걱정 없이 안심하고 수유할
+                        수 있다. 당첨자 1명당
+                        2세트씩 제공한다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:1588-7601">1588-7601</a>
+                    <a class="postcard_sponlink" href="http://tommeetippee.0to7.com" target="_blank">tommeetippee.0to7.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_011.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">지나월드</span> 프리미엄 유모차 자전거 컴포에어</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)유진로봇 지나월드에서 <앙쥬> 독자들을 위해 프리미엄 유모차
+                        자전거 ‘컴포에어’를 선물한다. 컴포에어는 알루미늄 보디를 적용한
+                        7.8KG의 무게로 현재까지 출시된 유모차형 자전거 중에서 가장 가벼운
+                        초경량 제품이다. 등받이는 편안하게 쉬기 좋은 ‘슬립 모드’와 페달을
+                        구르기 쉬운 ‘라이딩 모드’로 변환이 가능하다. 무엇보다
+                        등받이를 폴딩 모드로 전환했을 때 차 트렁크에
+                        손쉽게 수납할 수 있을 만큼 휴대성이
+                        뛰어나다. 아이의 성장기에 따라 유모차
+                        형태의 세발자전거, 선셰이드를 뗀
+                        콤팩트한 스타일, 자전거 등 모두
+                        3단계로 활용 가능한 3 ni 1 제품이다 .
+                        무게는 가볍게, 조작은 쉽게,
+                        스타일은 더욱 멋진 컴포에어.
+                        <앙쥬> 독자들에게는 블루,
+                            그레이 색상 중 한 가지가
+                            랜덤으로 발송될 예정이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:070-4639-0810">070-4639-0810</a>
+                    <a class="postcard_sponlink" href="http://www.ginaworld.co.kr" target="_blank">www.ginaworld.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_012.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">다이치</span> 퍼스트세븐 터치-픽스 오가닉 탠저린</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)다이치에서 <앙쥬> 독자를 위해 ‘다이치 퍼스트세븐 터치-픽스 오가닉
+                        탠저린’을 선물한다. 퍼스트세븐 터치-픽스 오가닉은 국내 최초로 7세용
+                        ISOFIX 베이스 카시트다. 연령은 신생아부터 사용이 가능하며 중량은
+                        24kg까지이다. 간편한 터치 방식의 ISOFIX
+                        베이스는 한 손으로도 원터치 조작이 가능하며,
+                        카시트 앞부분에서 장·탈착을 할 수 있어
+                        편리하다. 신생아를 위한 에그셸 프로텍션
+                        시스템은 엄마 배 속에 있는 듯한 편안함을
+                        제공하며, 사고 시 충격을 최대한 줄여준다.
+                        3중 측면에서 보호해주는 T-SIP
+                        시스템은 ‘흔들린 아이 증후군’으로부터
+                        아이의 머리를 안전하게 지켜준다.
+                        특히 경주용 자동차 카시트와 벨트를
+                        생산하는 이탈리아 전문 브랜드 샤벨트의
+                        5점식 벨트는 전방, 후방, 측면, 전복
+                        사고에도 충격을 잘 분산시키며 큰
+                        압력에도 벨트 형태가 변형되지 않아
+                        안전하다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:031-942-4324">031-942-4324</a>
+                    <a class="postcard_sponlink" href="http://www.babyseat.net" target="_blank">www.babyseat.net</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_013.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">재이투비앤씨</span> 쿠아스 반디힙시트캐리어</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)재이투비앤씨에서 <앙쥬> 독자들을 위해 아이의 성장 단계에 맞춰
+                        사용 할 수 있고 다양한 방법으로 착용 가능한 실용적인 힙시트캐리어
+                        ‘쿠아스 반디힙시트캐리어’를 선물한다. 초경량의 무독성 EPP
+                        압축폼으로 제작해 오래 사용해도 깨짐, 꺼짐 현상이 없다. 넓고
+                        두툼한 허리·어깨 패드를 장착하고
+                        쿠션감이 우수한 고탄성 스펀지를
+                        사용하여 착용 시 허리와
+                        어깨의 부담을 최소화했다.
+                        3D 에어메시 원단으로 만들어
+                        끈적임 없는 쾌적한 착용감을
+                        자랑한다. 또한 허리벨트
+                        부분에 다용도 수납 포켓이
+                        있어 편리하며 YKK지퍼를
+                        사용, 견고하고 세심한
+                        생산 과정을 거쳐 안심하고
+                        사용할 수 있다. 북유럽
+                        특유의 고급스러운 노르딕
+                        패턴을 접목시킨 슬리핑 후드가
+                        돋보이는 제품이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:070-7752-6395">070-7752-6395</a>
+                    <a class="postcard_sponlink" href="http://www.pentazone.co.kr" target="_blank">www.pentazone.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_014.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">자연생각</span> 아기작作 오가닉 아기침구 세트</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        자연생각에서 <앙쥬> 독자들을 위해 ‘자연생각 아기작作 오가닉
+                        아기침구 세트(최고급 누빔솜, 100% 유기농 면)’를 선물한다. ‘자연생각
+                        아기작作 오가닉 아기침구 세트’는 메밀베개, 누빔 패드, 이불로
+                        구성되어 있다. 형광물질과 화학 성분의 염색이나 나염, 자수 등이
+                        전혀 들어가지 않아서 알록달록 화려하진 않지만 깔끔하고 고급스러운
+                        디자인을 자랑한다. 신생아부터 초등생까지 사용 가능할 정도로 사이즈
+                        또한 넉넉하다. 100% 순수 유기농 면으로 요즘 아이들에게 많은 비염,
+                        천식 같은 호흡기질환, 아토피 같은 피부질환 등의 증상 완화에 도움이
+                        된다. 기침이나 콧물, 피부 가려움으로 인해 뒤척이는 아이에게 좋으며
+                        면역력 약한 아기에게도 좋다. 현재
+                        방송 중인 KBS <엄마의 탄생>의
+                            염경환·서현정 부부도 사용
+                            중인 제품이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:080-033-3636">080-033-3636</a>
+                    <a class="postcard_sponlink" href="http://www.t-ecoshop.co.kr" target="_blank">www.t-ecoshop.co.kr</a>
+                </div>
+            </div>
+
+        </div>  <!-- /#samplepack_new_goods -->
+        <!-- /애독자 엽서 사은품 구성 -->
+
+    </div>  <!-- /.form_basicinfo -->
+</div>  <!-- /.form_rows -->
+
+
+<div class="samplepack_guidebox" style="float:left; width:100%; border-bottom: 1px solid #333;">
+    <center>
+        <div style="width:80px; height:80px; border:1px solid #4cace8; background-color:#4cace8; border-radius: 50%; line-height:80px; color:#fff; text-align: center;">
+            주의사항
+        </div>
+    </center>
+
+    <ol class="samplepack_howto">
+        <li class="table_red">한번 등록한 내용은 변경하실 수 없습니다.</li>
+        <li>임신부 레깅스 선택 시 사이즈(XS(44)/S(55)/M(66)) 및 색상(블랙/그레이) 을 선택하지 않으면 M(66) 블랙으로 발송됩니다.
+        <li>엽서등록확인은 마이페이지 <span class="table_blue">마이앙쥬 > 내 활동 조회</span>에서 확인가능 합니다.
+        <li>애독자 선물의 종류와 수량은 사진과 다를 수 있으며, 구성은 업체 사정으로 공지없이 변경될 수 있습니다.</li>
+        <li>당첨자 발표 후 별도 주소확인은 하지 않으며 주소가 불분명할 경우 선물은 발송되지 않습니다. (번지수가 없거나 아파트 동, 호수 없는 경우)</li>
+        <li>회원 탈퇴 후 재가입하여 신청하더라도 신청기록은 남기 때문에 샘플팩 선정에서 제외됩니다.</li>
+    </ol>
+</div>
+
+<div style="float:left; position:relative; width:100%;">
+    <div style="clear:both; text-align: center; width:225px; margin:0px auto; padding-top:10px 0 40px 0;">
+        <a class="samplepack_submit cancelbtn" href="/moms/samplepack/intro"></a>
+        <a class="samplepack_submit submitbtn" ng-click="click_saveSamplepackComp();"></a>
+    </div>
+</div>
+
+
+
+<!--<div class="col-xs-12">-->
+<!--<div ng-model="ad" class="inven_themeup">-->
+<!--<a class="ADbanner_image" title="배너타이틀">-->
+<!--&lt;!&ndash;<img ng-src="{{ad.FILE}}"/>&ndash;&gt;-->
+<!--<img img src="/imgs/ange/temp/story_banner.jpg"/>-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+
+
+</div>
+</form>
+<!-- /신청폼 -->
+
+
+<div class="samplepack_tabbox"   style="display:block;" ng-class="{ 'hidden': showSamplepackDetails }">
+
+    <ul class="nav nav-tabs nav-justified" id="tab" style="font-size:0.92em; font-weight:700;">
+        <!--<li role="presentation" ng-class="selectIdx == '1' ? 'active' : ''"><a ng-click="click_selectTab('1');">주의사항</a></li>-->
+        <li class="active"><a><span class="tabox_title" style="color:#2486ee; line-height:60px; font-size:1.46em;">애독자 선물 구성</span></a></li>
+
+        <!-- 애독자 엽서 사은품 구성 -->
+        <div class="postcard_tabox_body" style="display:block;">
+            <p><small class="table_gray">※종류와 수량은 사진과 다를 수 있으며, 구성은 업체사정으로 공지없이 변경될 수 있습니다.</small></p>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_001.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">잉글레시나</span> 트립 유모차</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)끄레델에서 <앙쥬> 독자들을 위해 잉글레시나의 가볍고 산뜻한 절충형
+                        디럭스 유모차 ‘트립’을 선물한다. 유모차계의 새로운 트렌드를 이끌어온
+                        트립은 휴대성과 디럭스 기능의 완벽한 조화로 많은 사랑을 받으며 국내 최고
+                        판매량을 기록하고 있는 베스트셀러 제품이다. 또 <컨슈머리포트>가 실시한
+                        테스트에서 가격, 안전성, 품질력 모두 최우수 평가를 받았다. 휴대성 높은
+                        가벼운 무게와 손쉬운 폴딩 시스템, 아이의 안전을 고려한 탁월한 무게중심
+                        설계, 360° 회전 가능한 뛰어난 핸들링과 최대 170° 조절 등받이가 특징.
+                        충격 흡수 서스펜션과 원터치 링키지 브레이크로 안전성도 우수하다. 편안한
+                        손잡이와 유용한 컵홀더, 안전가드 포함. 색상은 임의 발송.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:1600-0716">1600-0716</a>
+                    <a class="postcard_sponlink" href="http://www.crederemall.co.kr" target="_blank">www.crederemall.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_002.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">키보스</span> 리틀라이프 보아져 S3 캐리어</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)키보스(구 토이스쿨)에서 <앙쥬> 독자를 위해 리틀라이프 ‘보아져 S3 캐리어’를
+                        선물한다. 리틀라이프 보아져 S3 캐리어는 최근 KBS 예능 프로그램 <슈퍼맨이
+                                돌아왔다>에서 송일국이 착용해 인기몰이 중인 등산용 유아 캐리어다.
+                            리틀라이프 보아져 S3 캐리어는 아이를 업을 수 있는 유아 캐리어와 가방을
+                            결합한 제품으로 아이와 함께 등산과 트레킹 등을 안전하게 즐길 수 있는
+                            점이 가장 큰 특징. 캐리어 부위에는 높낮이 조절이 가능한 푹신한 시트로
+                            아이에게 편안함을 선사하고 5점식 안전벨트로 안정성을 높였다. 특히
+                            무게를 분산시키는 인체공학적 프레임과 디자인으로 최대 20kg까지
+                            편안한 지탱이 가능하며 고급 등산 가방에 적용되는 특수 등받이
+                            시스템으로 착용자의 신장에 맞춰 157~193cm까지 착용할 수 있다.
+                            스타일리시한 디자인과 세련된 컬러, 넉넉한 수납 공간으로 가까운 공원
+                            나들이용으로도 손색없다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:02-577-7180">02-577-7180</a>
+                    <a class="postcard_sponlink" href="http://www.kibos.co.kr" target="_blank">www.kibos.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_003.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">포브</span> 세븐 카시트 + 도로시 R 데즐 아기띠</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)앤빌에서 <앙쥬> 독자를 위해 ‘포브 세븐 카시트’와 ‘도로시 R 데즐
+                        아기띠’를 선물한다. 포브 세븐 카시트는 알루미늄과 플라스틱을 섞은
+                        스페셜 프레임으로 가볍게 디자인된 카시트다. 신생아부터 7세까지
+                        오랫동안 사용할 수 있어 효율적이며 14단계 헤드레스트 높이 조절이
+                        가능해 성장하는 아이의 체형에 맞게 높이를 조절할 수 있다. 2중
+                        헤드레스트를 적용해 사고로부터 아이를 안전하게 보호하고 측면
+                        돌출형이라 안전성이 매우 높다. 도로시 R 데즐 아기띠는 엄마의 허리와
+                        어깨는 물론, 아기의 척추를 보호하는 G 메커니즘 구조로 되어 있다.
+                        어깨 벨트가 두툼한 데다 쿠션감까지 있어 장시간 착용해도 불편함이
+                        매우 적다. 등 부분의 커버는 분리할 수 있으며 메시와 면 소재의 이중
+                        슬리핑 후드가 달려 있어 날씨에 따라 편리하게 사용할 수 있다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:080-579-7000">080-579-7000</a>
+                    <a class="postcard_sponlink" href="http://www.forb.co.kr" target="_blank">www.forb.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_004.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">베베쿡</span> 우리 아이 처음 먹는 유산균 프로바이오 4종 시리즈</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        베베쿡이 <앙쥬> 독자들을 위해 ‘우리 아이 처음 먹는 유산균 프로바이오
+                        4종 시리즈’를 선물한다. 베베쿡 프로바이오 시리즈는 이유식을
+                        시작하면서 아이 장 트러블로 고생하는 엄마들의 고민을 해결하기 위해
+                        유산균 분야의 권위자인 지근억 교수 연구팀과 베베쿡이 공동으로
+                        개발한 2중 기능성 건강기능식품이다. 특허 받은 60억 유산균에
+                        면역력을 강화하는 아연이 추가된 ‘프로바이오 베베’, 비타민D가 추가된
+                        ‘프로바이오 썬’, 철분이 추가된 ‘프로바이오 에프’, 멀티비타민이 추가된
+                        ‘프로바이오 패밀리’ 등 총 4가지가 있어 아이부터 성인까지 연령별,
+                        상황에 맞게 제품을 선택할 수 있다. 위산과 담즙산에 강한 특허 받은
+                        유산균이 장까지 살아서
+                        도달하며, 장에 잘 정착하는
+                        것이 특징이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:1588-2655">1588-2655</a>
+                    <a class="postcard_sponlink" href="http://www.bebecook.com" target="_blank">www.bebecook.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_005.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">(주)펀앤키즈</span> 리틀타익스 NEW 액티비티가든</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)펀앤키즈가
+                        <앙쥬> 독자들을 위해
+                            아기체육관 ‘리틀타익스
+                            NEW 액티비티가든’을
+                            선물한다. 리틀타익스
+                            NEW 액티비티가든은
+                            운동 능력과 인지
+                            능력을 향상시키기
+                            위한 여러 가지 기능을
+                            갖춘 아기체육관으로, 놀이를
+                            즐기며 학습을 할 수 있어 일석이조의
+                            효과를 얻을 수 있다. 아기의 운동 능력을 발달시키는 리틀타익스 NEW
+                            액티비티가든은 자유로운 공간 변형이 가능해 아기에게 늘 새로운 놀이
+                            공간을 제공하며 본체로부터 탈·부착이 가능한 다기능 놀이판을 통해
+                            양면으로 더욱 다양한 놀이를 즐길 수 있다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:02-2093-2380">02-2093-2380</a>
+                    <a class="postcard_sponlink" href="http://www.littletikeskorea.com" target="_blank">www.littletikeskorea.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_006.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">아토팜</span> 매터니티 케어 올인원 페이셜 크림</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)네오팜의 민감 피부 전문 스킨케어 브랜드 아토팜이 <앙쥬> 독자들을
+                        위해 ‘아토팜 매터니티 케어 올인원 페이셜 크림’을 선물한다. 아토팜
+                        매터니티 케어는 임신과 출산으로 인해 몸과 마음이 민감해진 엄마를
+                        위한 임산부 전용 브랜드. 아토팜
+                        매터니티 케어 올인원 페이셜 크림은
+                        로션, 에센스, 크림의 기능을 한 번에
+                        제공해 예민한 임산부의 피부를 더욱 쉽고
+                        편안하게 관리할 수 있는 순한 스마트
+                        스킨케어 제품이다. 아토팜의 국제특허
+                        피부장벽 기술인 MLEⓇ에 세라마이드가
+                        더해져 예민한 임산부의 피부 진정과
+                        보습에 최적의 효과를 나타낸다.
+                        또한 식물성 콜라겐과 감초 추출물로
+                        푸석해지기 쉬운 피부에 영양과 촉촉한
+                        윤기를 부여한다. 피부 자극 테스트를
+                        완료해 안심하고 사용할 수 있다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:080-500-0037">080-500-0037</a>
+                    <a class="postcard_sponlink" href="http://www.atopalm.co.kr" target="_blank">www.atopalm.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_007.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">큐비앤맘</span> 출산 준비물 세트(배냇저고리, 손싸개, 턱받이, 속싸개, 방수요, 짱구베개, 바스타월, 대형 욕조)</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        임신, 출산, 유아용품 전문 브랜드 큐비앤맘이 앙쥬 독자들을 위해 8종의
+                        상품으로 구성된 출산 준비물 세트를 선물한다. 큐비앤맘은 국내에
+                        생산 기반이 없는 일부 제품을 제외하고는 국내 생산을 원칙으로 하고
+                        있으며 면제품의 경우 순면 100% 무형광 원단으로 제품을 만들기 때문에
+                        연약하고 민감한 아이 피부에 좋으며 흡수성과 통기성이 뛰어나다. 출산
+                        준비에 꼭 필요한 기본 용품들인 배냇저고리, 손싸개, 턱받이, 속싸개,
+                        방수요, 짱구베개 및 목욕 후 아기 몸을 닦아줄 수 있으며 속싸개로도 사용
+                        가능한 대형 바스타월과 오랜 기간에 걸쳐 엄마들에게 인정받은 대형
+                        욕조 등 8종의 선물을 구성해 선물한다. 요즘 인기 트렌드인 북유럽풍의
+                        디자인을 접목했고 부엉이, 고양이, 기린, 곰, 토끼 등 다양하고 귀여운
+                        캐릭터들이 제품에 녹아들어 아기의 편안함과 귀여움을 강조하고
+                        산뜻함과 세련미를 제공한다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:031-969-8364">031-969-8364</a>
+                    <a class="postcard_sponlink" href="http://www.cubynmom.com" target="_blank">www.cubynmom.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_008.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">우수메디컬</span> 물따로 물티슈 오리지널 캡형 2Box+오리지널 휴대용 2Box</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)우수메디컬에서 <앙쥬> 독자들을 위해 ‘물따로 물티슈 오리지널
+                        캡형 2Box+오리지널 휴대용 2Box’를 선물한다. 물따로 물티슈는
+                        ‘무엇을 넣느냐’ 보다 ‘무엇을 빼느냐’라는 발상의 전환으로 개발되었다.
+                        화학방부제 및 기타 첨가물이 전혀 들어 있지 않아 물티슈에 고민이
+                        많았던 엄마들에게는 해답과 같은 제품이다. ‘살균초순수’와 천연 소재
+                        ‘국내산 레이온 건티슈’를 따로 따로 제공해 첨가제의 사용을 근본적으로
+                        차단했다. 살균초순수는 물속에 있는 금속이온, 비금속이온, 실리카,
+                        미립자, 유기화합물, 무기미네랄, 미생물 등 모든 성분을 제거한 순수한
+                        물로 건티슈에 부어서 사용할 수 있다. 또 따로 살균초순수를 붓지 않고
+                        건티슈로도 쓸 수 있어 사용도가 높은 제품이다. 화학 성분이 전혀
+                        없기에 연약한 신생아 피부에도, 아이의 손과 입에도 안심하고 사용할 수
+                        있으며 잔여물이 남지 않아 예민하고 연약한 피부에 안성맞춤이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:1661-7761">1661-7761</a>
+                    <a class="postcard_sponlink" href="http://www.multtaro.com" target="_blank">www.multtaro.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_009.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">데스티네이션 마터니티</span> 임산부 MUST HAVE ITEM 기본 레깅스 2pcs</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        아가방앤컴퍼니가 직수입한 세계 최대의 임부복 데스티네이션
+                        마터니티에서 <앙쥬> 독자들을 위해 미국 특허를 받은 Secret Fit
+                        BellyⓇ(씨크릿 핏 벨리)의 임산부 레깅스 2pcs를 선물한다. 이 레깅스는
+                        임신 초기부터 만삭까지는 물론, 출산 후까지 입을 수 있는 장점을 가지고
+                        있다. 배를 감싸고 있는 벨리는 심리스( Seamless) 형태로 배를 압박하지
+                        않고 편안하고 안정적으로 감싸줄 뿐만 아니라 출산 후에는 반으로 접어
+                        입으면 산전 상태의 몸으로 회복되는 데 도움을 준다. XS, S, M의 사이즈와
+                        블랙, 그레이 컬러로 구성되어 각자의 체형과 취향에 맞게 선택이 가능하다.
+                        데스티네이션 마터니티는 레깅스 외에도 전국 주요
+                        매장과 온라인 쇼핑몰에서 다양한 임산부 의류,
+                        란제리 등의 구매가 가능하다. 매장 상세 정보는
+                        홈페이지에서 확인할 수 있다. 신청 시 수령할
+                        레깅스의 사이즈와 컬러 확인을 위해 반드시
+                        휴대폰 연락처를 기재해야 한다(벨리 미국
+                        특허 번호 RE43563, RE43531, 7,814,575
+                        and 7,900,276).
+                    </div>
+                    <a class="postcard_phonenum" href="tel:02-2268-0401">02-2268-0401</a>
+                    <a class="postcard_sponlink" href="http://www.destinationmaternity.co.kr" target="_blank">www.destinationmaternity.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_010.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">토미티피</span> 진저 브레드(Ginger Bread) 젖병 선물 세트(시즌 한정)</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)제로투세븐에서 <앙쥬> 독자들을 위해 시즌 한정판으로
+                        선보이는 ‘진저 브레드(Ginger Bread) 젖병 선물 세트’를 선물한다.
+                        ‘토미티피(tommeetippee.0to7.com)’의 기술력이 담긴 모성수유
+                        젖병(260㎖) 2개와 천 턱받이 1개로 구성된 실속형 선물 세트로
+                        0~3개월 신생아가 사용하기에 적합하다. 영국에서 유래된 전래 동화
+                        ‘진저 브레드맨’의 캐릭터를 활용한 귀여운 디자인과 레드, 그린 컬러의
+                        조합으로 영국 특유의 감성을 만끽할 수 있다. 토미티피 ‘진저 브레드
+                        젖병 선물 세트’의 모성수유 젖병은 엄마의 가슴을 닮아 기존 젖꼭지보다
+                        2.1cm 더 넓은 5.5cm 와이드 젖꼭지로, 넓은 젖꼭지에 아기의 입술
+                        전체가 밀착, 엄마 체온과 같은 따뜻함을 아기에게 전달한다.
+                        아기 혀의 움직임에 맞춘 주름 설계
+                        젖꼭지는 자유로운 움직임과 최적의
+                        모성수유를 도와준다. 폴리프로필
+                        렌 소재로 제작해 환경호르몬
+                        걱정 없이 안심하고 수유할
+                        수 있다. 당첨자 1명당
+                        2세트씩 제공한다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:1588-7601">1588-7601</a>
+                    <a class="postcard_sponlink" href="http://tommeetippee.0to7.com" target="_blank">tommeetippee.0to7.com</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_011.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">지나월드</span> 프리미엄 유모차 자전거 컴포에어</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)유진로봇 지나월드에서 <앙쥬> 독자들을 위해 프리미엄 유모차
+                        자전거 ‘컴포에어’를 선물한다. 컴포에어는 알루미늄 보디를 적용한
+                        7.8KG의 무게로 현재까지 출시된 유모차형 자전거 중에서 가장 가벼운
+                        초경량 제품이다. 등받이는 편안하게 쉬기 좋은 ‘슬립 모드’와 페달을
+                        구르기 쉬운 ‘라이딩 모드’로 변환이 가능하다. 무엇보다
+                        등받이를 폴딩 모드로 전환했을 때 차 트렁크에
+                        손쉽게 수납할 수 있을 만큼 휴대성이
+                        뛰어나다. 아이의 성장기에 따라 유모차
+                        형태의 세발자전거, 선셰이드를 뗀
+                        콤팩트한 스타일, 자전거 등 모두
+                        3단계로 활용 가능한 3 ni 1 제품이다 .
+                        무게는 가볍게, 조작은 쉽게,
+                        스타일은 더욱 멋진 컴포에어.
+                        <앙쥬> 독자들에게는 블루,
+                            그레이 색상 중 한 가지가
+                            랜덤으로 발송될 예정이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:070-4639-0810">070-4639-0810</a>
+                    <a class="postcard_sponlink" href="http://www.ginaworld.co.kr" target="_blank">www.ginaworld.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_012.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">다이치</span> 퍼스트세븐 터치-픽스 오가닉 탠저린</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)다이치에서 <앙쥬> 독자를 위해 ‘다이치 퍼스트세븐 터치-픽스 오가닉
+                        탠저린’을 선물한다. 퍼스트세븐 터치-픽스 오가닉은 국내 최초로 7세용
+                        ISOFIX 베이스 카시트다. 연령은 신생아부터 사용이 가능하며 중량은
+                        24kg까지이다. 간편한 터치 방식의 ISOFIX
+                        베이스는 한 손으로도 원터치 조작이 가능하며,
+                        카시트 앞부분에서 장·탈착을 할 수 있어
+                        편리하다. 신생아를 위한 에그셸 프로텍션
+                        시스템은 엄마 배 속에 있는 듯한 편안함을
+                        제공하며, 사고 시 충격을 최대한 줄여준다.
+                        3중 측면에서 보호해주는 T-SIP
+                        시스템은 ‘흔들린 아이 증후군’으로부터
+                        아이의 머리를 안전하게 지켜준다.
+                        특히 경주용 자동차 카시트와 벨트를
+                        생산하는 이탈리아 전문 브랜드 샤벨트의
+                        5점식 벨트는 전방, 후방, 측면, 전복
+                        사고에도 충격을 잘 분산시키며 큰
+                        압력에도 벨트 형태가 변형되지 않아
+                        안전하다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:031-942-4324">031-942-4324</a>
+                    <a class="postcard_sponlink" href="http://www.babyseat.net" target="_blank">www.babyseat.net</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_013.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">재이투비앤씨</span> 쿠아스 반디힙시트캐리어</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        (주)재이투비앤씨에서 <앙쥬> 독자들을 위해 아이의 성장 단계에 맞춰
+                        사용 할 수 있고 다양한 방법으로 착용 가능한 실용적인 힙시트캐리어
+                        ‘쿠아스 반디힙시트캐리어’를 선물한다. 초경량의 무독성 EPP
+                        압축폼으로 제작해 오래 사용해도 깨짐, 꺼짐 현상이 없다. 넓고
+                        두툼한 허리·어깨 패드를 장착하고
+                        쿠션감이 우수한 고탄성 스펀지를
+                        사용하여 착용 시 허리와
+                        어깨의 부담을 최소화했다.
+                        3D 에어메시 원단으로 만들어
+                        끈적임 없는 쾌적한 착용감을
+                        자랑한다. 또한 허리벨트
+                        부분에 다용도 수납 포켓이
+                        있어 편리하며 YKK지퍼를
+                        사용, 견고하고 세심한
+                        생산 과정을 거쳐 안심하고
+                        사용할 수 있다. 북유럽
+                        특유의 고급스러운 노르딕
+                        패턴을 접목시킨 슬리핑 후드가
+                        돋보이는 제품이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:070-7752-6395">070-7752-6395</a>
+                    <a class="postcard_sponlink" href="http://www.pentazone.co.kr" target="_blank">www.pentazone.co.kr</a>
+                </div>
+            </div>
+
+            <div class="postcard_goodbox_tr">
+                <img src="/imgs/ange/_blank.gif" style="background-image: url('/imgs/ange/temp/postcard_present_014.jpg')"/>
+                <div class="postcard_goodsboxtxt_wrap">
+                    <div class="postcard_goodsboxtitle ange_darkgray"><span class="ange_blue">자연생각</span> 아기작作 오가닉 아기침구 세트</div>
+                    <div class="postcard_goodsboxtxt table_gray">
+                        자연생각에서 <앙쥬> 독자들을 위해 ‘자연생각 아기작作 오가닉
+                        아기침구 세트(최고급 누빔솜, 100% 유기농 면)’를 선물한다. ‘자연생각
+                        아기작作 오가닉 아기침구 세트’는 메밀베개, 누빔 패드, 이불로
+                        구성되어 있다. 형광물질과 화학 성분의 염색이나 나염, 자수 등이
+                        전혀 들어가지 않아서 알록달록 화려하진 않지만 깔끔하고 고급스러운
+                        디자인을 자랑한다. 신생아부터 초등생까지 사용 가능할 정도로 사이즈
+                        또한 넉넉하다. 100% 순수 유기농 면으로 요즘 아이들에게 많은 비염,
+                        천식 같은 호흡기질환, 아토피 같은 피부질환 등의 증상 완화에 도움이
+                        된다. 기침이나 콧물, 피부 가려움으로 인해 뒤척이는 아이에게 좋으며
+                        면역력 약한 아기에게도 좋다. 현재
+                        방송 중인 KBS <엄마의 탄생>의
+                            염경환·서현정 부부도 사용
+                            중인 제품이다.
+                    </div>
+                    <a class="postcard_phonenum" href="tel:080-033-3636">080-033-3636</a>
+                    <a class="postcard_sponlink" href="http://www.t-ecoshop.co.kr" target="_blank">www.t-ecoshop.co.kr</a>
+                </div>
+            </div>
+
+        </div>  <!-- /#samplepack_new_goods -->
+        <!-- /애독자 엽서 사은품 구성 -->
+
+    </ul>   <!-- /.nav-tabs -->
+</div>  <!-- /.samplepack_tabbox -->
+
+</div><!-- /.sub_contents_wrap -->
+</div>
+</div>
+
+</div> <!-- rows -->
+</div><!-- container-fluid -->
+
+</div><!-- /.mainbar -->
+
+
+<div class="subar sub-slide1">
+    <div ng-include=" '/partials/ange/com/subside-ad.html' "></div>
+
+    <!-- 1200px 이하일 경우 표시되는 footer -->
+    <div ng-include=" '/partials/ange/com/ui-mobilefooter.html' "></div>
+    <!-- /1200px 이하일 경우 표시되는 footer -->
+</div>
+
+<!-- /Main Page Layout Set -->
 </div>  <!-- /.ng_wrap -->
 
 
