@@ -100,7 +100,7 @@
     text-overflow: ellipsis;
 }
 
-..webzine_list_link {
+.webzine_list_link {
     text-decoration: none;
 }
 
@@ -493,7 +493,6 @@ a.samplepack_gotoreview:hover {
     width: 70%;
     padding-left:5px;
 }
-
 
 .postcard_tabox_body {
     border:1px solid #ddd;
