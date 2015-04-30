@@ -982,6 +982,7 @@ define([
                 // 검색 조건에 진행 상태 추가
                 $scope.search.FILE = true;
                 $scope.search.PRODUCT_GB = angular.uppercase($scope.option.type);
+                $scope.search.SOLD_OUT = 'N';
 //                $scope.search.ORDER_YN = 'Y';
 //                $scope.search.SORT = 'ada_date_open';
 //                $scope.search.ORDER = 'DESC';
@@ -1013,6 +1014,7 @@ define([
                     $scope.curIdx = idx;
 
                     $scope.search.CATEGORY_NO = item.NO;
+                    angular.element('#'+$scope.option.id).slickRemoveAll();
                     angular.element('#'+$scope.option.id).unslick();
 //                    angular.element('#'+$scope.option.id).slickFilter(item.NO);
 //                    angular.element('#'+$scope.option.id).slickRemoveAll();
