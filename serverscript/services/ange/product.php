@@ -52,7 +52,7 @@ switch ($_method) {
                         NO, PRODUCT_NM, PRODUCT_GB, COMPANY_NO, COMPANY_NM, URL, BODY, PRICE, STOCK_FL, SUM_IN_CNT, SUM_OUT_CNT, NOTE, DELIVERY_PRICE,
                         DELIVERY_ST, DIRECT_PRICE, ORDER_YN,(SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
                         (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, PARENT_NO, SUM_IN_CNT - SUM_OUT_CNT AS SUM_CNT,
-                        IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT
+                        IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT, START_YMD, CLOSE_YMD
                     FROM
                         ANGE_PRODUCT AP
                     WHERE
@@ -185,11 +185,9 @@ switch ($_method) {
                     FROM
                     (
                         SELECT NO,PRODUCT_NM, PRODUCT_GB, COMPANY_NO, PRICE, SUM_IN_CNT, SUM_OUT_CNT, NOTE, PERIOD, ORDER_YN, DIRECT_PRICE,
-                                (SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
-                                (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, COMPANY_NM,
-                                IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT,
-                                START_YMD,
-                                CLOSE_YMD
+                            (SELECT SUM(AMOUNT) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_AMOUNT,
+                            (SELECT COUNT(*) FROM ANGE_AUCTION WHERE PRODUCT_NO = AP.NO) AS AUCTION_COUNT, COMPANY_NM,
+                            IF(SUM_IN_CNT - SUM_OUT_CNT > 0, 'N', 'Y') AS SOLD_OUT, START_YMD, CLOSE_YMD
                         FROM
                             ANGE_PRODUCT AP
                         WHERE
@@ -221,13 +219,13 @@ switch ($_method) {
                 for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
 
                     $sql = "SELECT
-                                    F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
-                                FROM
-                                    COM_FILE F
-                                WHERE
-                                    F.TARGET_GB = 'PRODUCT'
-                                    AND F.FILE_GB = 'MAIN'
-                                    AND F.TARGET_NO = ".$row['NO']."";
+                                F.NO, F.FILE_NM, F.FILE_SIZE, F.FILE_ID, F.PATH, F.THUMB_FL, F.ORIGINAL_NO, DATE_FORMAT(F.REG_DT, '%Y-%m-%d') AS REG_DT
+                            FROM
+                                COM_FILE F
+                            WHERE
+                                F.TARGET_GB = 'PRODUCT'
+                                AND F.FILE_GB = 'MAIN'
+                                AND F.TARGET_NO = ".$row['NO']."";
 
                     $row['FILE'] = $_d->sql_fetch($sql);
 
@@ -406,6 +404,8 @@ switch ($_method) {
                         NOTE,
                         DELIVERY_PRICE,
                         DELIVERY_ST,
+                        START_YMD,
+                        CLOSE_YMD,
                         CATEGORY_NO
                     ) VALUES (
                         '".$_model[PRODUCT_NM]."',
@@ -421,6 +421,8 @@ switch ($_method) {
                         '".$_model[NOTE]."',
                         '".$_model[DELIVERY_PRICE]."',
                         '".$_model[DELIVERY_ST]."',
+                        '".$_model[START_YMD]."',
+                        '".$_model[CLOSE_YMD]."',
                         '".$category_no."'
                     )";
 
@@ -438,26 +440,24 @@ switch ($_method) {
                 for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
                     $category = $categories[$i];
 
-                    if ($category['PARENT_NO'] == "1") {
-                        $category_no = $category['NO'];
-                    }
+                    if (isset($category['NO'])) {
+                        $sql = "INSERT INTO CONTENT_CATEGORY
+                                (
+                                    CATEGORY_NO
+                                    ,TARGET_NO
+                                    ,TARGET_GB
+                                ) VALUES (
+                                    '".$category[NO]."'
+                                    , '".$no."'
+                                    , 'PRODUCT'
+                                )";
 
-                    $sql = "INSERT INTO CONTENT_CATEGORY
-                            (
-                                CATEGORY_NO
-                                ,TARGET_NO
-                                ,TARGET_GB
-                            ) VALUES (
-                                '".$category[NO]."'
-                                , '".$no."'
-                                , 'PRODUCT'
-                            )";
+                        $_d->sql_query($sql);
 
-                    $_d->sql_query($sql);
-
-                    if ($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
+                        if ($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
                     }
                 }
             }
@@ -693,6 +693,8 @@ switch ($_method) {
                         NOTE = '".$_model[NOTE]."',
                         DELIVERY_PRICE = '".$_model[DELIVERY_PRICE]."',
                         DELIVERY_ST = '".$_model[DELIVERY_ST]."',
+                        START_YMD = '".$_model[START_YMD]."',
+                        CLOSE_YMD = '".$_model[CLOSE_YMD]."',
                         CATEGORY_NO = '".$category_no."'
                     WHERE
                         NO = ".$_key."
@@ -726,26 +728,24 @@ switch ($_method) {
                 for ($i = 0 ; $i < count($_model[CATEGORY]); $i++) {
                     $category = $categories[$i];
 
-                    if ($category['PARENT_NO'] == "1") {
-                        $category_no = $category['NO'];
-                    }
+                    if (isset($category['NO'])) {
+                        $sql = "INSERT INTO CONTENT_CATEGORY
+                                (
+                                    CATEGORY_NO
+                                    ,TARGET_NO
+                                    ,TARGET_GB
+                                ) VALUES (
+                                    '".$category[NO]."'
+                                    , '".$_key."'
+                                    , 'PRODUCT'
+                                )";
 
-                    $sql = "INSERT INTO CONTENT_CATEGORY
-                            (
-                                CATEGORY_NO
-                                ,TARGET_NO
-                                ,TARGET_GB
-                            ) VALUES (
-                                '".$category[NO]."'
-                                , '".$_key."'
-                                , 'PRODUCT'
-                            )";
+                        $_d->sql_query($sql);
 
-                    $_d->sql_query($sql);
-
-                    if ($_d->mysql_errno > 0) {
-                        $err++;
-                        $msg = $_d->mysql_error;
+                        if ($_d->mysql_errno > 0) {
+                            $err++;
+                            $msg = $_d->mysql_error;
+                        }
                     }
                 }
             }

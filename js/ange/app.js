@@ -16,7 +16,6 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'ng-table',
     'dialog',
     'dialog-translation',
-    'ngActivityIndicator',
     'lodash', // dropdownMultiSelect 관련 라이브러리
     'ckeditor-jquery', // ckeditor 관련 라이브러리
     'ui-widget', // fileUpload ui 관련 라이브러리
@@ -24,12 +23,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
     'fileupload-process', // fileUpload ui 관련 라이브러리
     'fileupload-angular', // fileUpload angularjs 관련 라이브러리
 
-//    'angular-socialshare',
     'ng-google-chart',
     'ng-map',
     'ng-clip',
-//    'angular-newsticker',
-    'ng-scrollbar',
 
     // 각 컨트롤러 로딩
     './service/index',
@@ -50,13 +46,9 @@ define([ // 의존 모듈들을 나열한다. 모듈을 한 개라도 배열로 
         'ngTable',
         'ui.router',
         'blueimp.fileupload',
-
         'googlechart',
-//        '720kb.socialshare',
         'ngMap',
-        'ngClipboard',
-//        'xfNewsTicker',
-        'ngScrollbar'
+        'ngClipboard'
         ], function () {
             // 여기서는 필요한 설정들을 진행.
         }

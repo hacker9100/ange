@@ -356,6 +356,8 @@ define([
                     $rootScope.albumList = null;
                 }
 
+                $rootScope.scheduleList = session.USER_INFO.SCHEDULE;
+
                 $rootScope.addr = session.ADDR;
                 $rootScope.addr_detail = session.ADDR_DETAIL;
                 $rootScope.phone1 = session.PHONE_1;
@@ -754,14 +756,14 @@ define([
         };
 
         // 광고센터 URL 셋팅
-        $scope.adBannerUrl = function(idx, type) {
+        $scope.adBannerUrl = function(idx, type, ad_type) {
             var deferred = $q.defer();
 
             var guid = $rootScope.guid;
             var id = $rootScope.uid;
             var ip = $rootScope.ip;
-            var ad_type = (type == undefined ? 1 : type);
-            var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + ad_type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
+            var type = (type == undefined ? 1 : type);
+            var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
             if (guid == '' || guid == null) {
                 $scope.getSession()
                     .then($scope.sessionCheck)
@@ -770,11 +772,13 @@ define([
                         id = $rootScope.uid;
                         ip = $rootScope.ip;
 
-                        var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + ad_type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
+                        var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
+                        if (ad_type == 'exp' || ad_type == 'event') ad_url += '&target=' + ad_type;
                         deferred.resolve(ad_url);
                     })
             } else {
-                var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + ad_type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
+                var ad_url = CONSTANT.AD_LOG_URL + '?index=' + idx + '&guid=' + guid + '&id=' + id + '&ip=' + ip + '&type=' + type + '&menu=' + $scope.path[1] + '&category=' + ($scope.path[2] == undefined ? '' : $scope.path[2]);
+                if (ad_type == 'exp' || ad_type == 'event') ad_url += '&target=' + ad_type;
                 deferred.resolve(ad_url);
             }
 
@@ -784,7 +788,7 @@ define([
         // 배너 이미지 클릭
         $scope.click_linkBanner = function (item) {
             if (item.ada_url != undefined && item.ada_url != '') {
-                $scope.adBannerUrl(item.ada_idx, 1)
+                $scope.adBannerUrl(item.ada_idx, 1, item.ada_type)
                     .then(function(data){
                         if ($rootScope.uid != '' && $rootScope.uid != null) {
                             $scope.addMileage('BANNER', null);

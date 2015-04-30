@@ -259,7 +259,6 @@ define([
                                     $rootScope.albumList = null;
                                 }
 
-                                alert(JSON.stringify(data.SCHEDULE))
                                 $rootScope.scheduleList = data.SCHEDULE;
 
                                 $scope.addMileage('LOGIN', null);

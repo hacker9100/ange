@@ -1202,7 +1202,7 @@ define([
                       '   <div class="jumbotron_cover_imgs" style="padding-bottom:45px;">' +
                       '       <div id="jumbotron_cover" class="carousel slide" data-ride="carousel">' +
                       '           <slick id="{{ option.id }}" init-onload="true" data="slideList" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false">' +
-                      '               <div ng-repeat="item in slideList" class="carousel-inner" role="listbox"><div class="item active"><a ng-click="click_linkBanner(item)"><img ng-src="{{ item.MAIN_FILE }}" style="width:100%; cursor:pointer;"/></a></div></div>' +
+                      '               <div ng-repeat="item in slideList" class="carousel-inner" role="listbox"><div class="item active"><a ng-click="option.id == \'store\' ? click_showView(item) : click_linkBanner(item)"><img ng-src="{{ item.MAIN_FILE }}" style="width:100%; cursor:pointer;"/></a></div></div>' +
                       '           </slick>' +
                       '       </div>' +
                       '   </div>' +
@@ -1251,6 +1251,11 @@ define([
                     $scope.search.ADP_IDX = $scope.option.gb == undefined ? '' : $scope.option.gb;
                     $scope.search.EVENT_GB = "event";
 //                    $scope.search.FILE = true;
+                } else if ($scope.option.type == 'cummerce') {
+                    $scope.search.PRODUCT_GB = 'CUMMERCE';
+                    $scope.search.SOLD_OUT = 'N';
+                    $scope.search.PROCESS = 'Y';
+                    $scope.search.FILE = true;
                 }
 
                 /********** 이벤트 **********/
@@ -1277,12 +1282,22 @@ define([
                     angular.element('#'+$scope.option.id).slickGoTo(idx);
                 }
 
+                // 선택
+                $scope.click_showView = function (item) {
+                    $location.url($scope.option.url+'/view/'+item.NO);
+                };
+
                 // 롤링 이미지 조회
                 $scope.getPortletList = function () {
                     $scope.getList($scope.option.api, 'list', {NO:$scope.PAGE_NO, SIZE:$scope.PAGE_SIZE}, $scope.search, true)
                         .then(function(data){
                             for (var i in data) {
-                                data[i].MAIN_FILE = CONSTANT.AD_FILE_URL + data[i].ada_preview;
+
+                                if ($scope.option.type == 'cummerce') {
+                                    data[i].MAIN_FILE = CONSTANT.BASE_URL + '/storage/product/' + 'thumbnail/' + data[i].FILE.FILE_ID;
+                                } else {
+                                    data[i].MAIN_FILE = CONSTANT.AD_FILE_URL + data[i].ada_preview;
+                                }
                             }
 
                             $scope.slideList = data;
@@ -1309,7 +1324,11 @@ define([
                                     return angular.element('#'+$scope.option.id).slickCurrentSlide();
                                 }, function(newVal, oldVal) {
                                     $scope.curIdx = newVal;
-                                    $scope.coverTitle = data[newVal].ada_title;
+                                    if ($scope.option.type == 'cummerce') {
+                                        $scope.coverTitle = data[newVal].SUBJECT;
+                                    } else {
+                                        $scope.coverTitle = data[newVal].ada_title;
+                                    }
                                 });
                             }, 500);
                         })

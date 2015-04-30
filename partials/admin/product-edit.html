@@ -57,13 +57,39 @@
                     <input ng-model="item.PRICE" type= "text" class= "form-control" placeholder= "포인트 점수"/>
                 </div>
             </div>
+            <div ng-show="item.PRODUCT_GB.value != 'MILEAGE'" class= "form-group form_basic_group">
+                <label class= "form_basic_label">시작일</label>
+                <div class="col-xs-6 form_basic_input">
+                    <div class="col-xs-8">
+                        <input ng-model="item.START_YMD" type="text" class="form-control" datepicker-popup="{{format}}" is-open="start" min-date="minDate" datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="닫기" />
+                    </div>
+                    <div class="col-xs-2">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event, 'start')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="item.PRODUCT_GB.value != 'MILEAGE'" class= "form-group form_basic_group">
+                <label class= "form_basic_label">종료일</label>
+                <div class="col-xs-6 form_basic_input">
+                    <div class="col-xs-8">
+                        <input ng-model="item.CLOSE_YMD" type="text" class="form-control" datepicker-popup="{{format}}" is-open="close" min-date="minDate" datepicker-options="dateOptions" ng-readonly="true" ng-required="true" close-text="닫기" />
+                    </div>
+                    <div class="col-xs-2">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event, 'close')"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
             <div ng-show="item.PRODUCT_GB.value == 'AUCTION'" class= "form-group form_basic_group">
                 <label class= "form_basic_label">바로구매가</label>
                 <div class="col-xs-6 form_basic_input">
                     <input ng-model="item.DIRECT_PRICE" type= "text" class= "form-control" placeholder= "바로구매가"/>
                 </div>
             </div>
-            <div class= "form-group form_basic_group" ng-class="{error: edit_form.item_st.$invalid}">
+            <div class= "form-group form_basic_group">
                 <label class= "form_basic_label">배송비 구분<span style="color:#b94a48">*</span></label>
                 <div class="col-xs-6 form_basic_input">
                     <input ng-model="item.DELIVERY_ST" type="radio" value="0" style="float: left; margin:13px 0 0 15px;" ng-init="item.DELIVERY_ST = 0">
@@ -74,7 +100,7 @@
                     <span style="float:left; margin:10px 0 0 15px;">업체배송</span>
                 </div>
             </div>
-            <div class= "form-group form_basic_group" ng-class="{error: edit_form.item_cnt.$invalid}">
+            <div class= "form-group form_basic_group">
                 <label class= "form_basic_label">배송비</label>
                 <div class="col-xs-6 form_basic_input">
                     <input ng-model="item.DELIVERY_PRICE" type= "text" class= "form-control" placeholder="배송비"/>
@@ -126,7 +152,7 @@
                 </button>
             </div>
             <div class= "col-xs-6 form-group form_basic" style="text-align:right;">
-                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveProduct();" ng-disabled="edit_form.$invalid">
+                <button type="button" class="btn btn-primary btn-xs start" ng-click="click_saveProduct();">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>저장</span>
                 </button>

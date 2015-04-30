@@ -12,13 +12,12 @@
  */
 define([
     'require',
-    'text', //미리 선언해둔 path, css나 html을 로드하기 위한 requireJS 플러그인
     'jquery',
     'angular',
     'app',
     'constant',
     'routes'
-], function (require, text, $, angular) {
+], function (require, $, angular) {
     'use strict';
 
     // 방법1 : require를 사용하는 방법

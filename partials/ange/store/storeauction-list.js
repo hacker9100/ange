@@ -56,8 +56,6 @@ define([
 
         $scope.todayDate = today;
 
-
-        $scope.community = "마일리지 경매소";
         $scope.search.PRODUCT_GB = 'AUCTION';
         $scope.search.SOLD_OUT = 'N';
         $scope.menu = 'auction';
@@ -72,18 +70,19 @@ define([
          }*/
 
 
-        $scope.getList('ange/product', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
-            .then(function(data){
-                var total_cnt = data[0].TOTAL_COUNT;
+            $scope.getList('ange/product', 'list', {NO: $scope.PAGE_NO-1, SIZE: $scope.PAGE_SIZE}, $scope.search, true)
+                .then(function(data){
+                    var total_cnt = data[0].TOTAL_COUNT;
 
-                $scope.TOTAL_COUNT = total_cnt;
+                    $scope.TOTAL_COUNT = total_cnt;
 
-                /*$scope.total(total_cnt);*/
-                //$scope.list = data;
-            })
-            ['catch'](function(error){
-            //$scope.list = "";
-            $scope.TOTAL_COUNT = 0;});
+                    /*$scope.total(total_cnt);*/
+                    //$scope.list = data;
+                })
+                ['catch'](function(error){
+                    //$scope.list = "";
+                    $scope.TOTAL_COUNT = 0;
+            });
         };
 
         $(function () {
@@ -116,28 +115,15 @@ define([
                     var search_total_cnt = data[0].TOTAL_COUNT;
                     $scope.SEARCH_TOTAL_COUNT = search_total_cnt;
 
-                    $scope.item.PRICE  = data[0].PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-
-                    $scope.item.PRODUCT_NM = data[0].PRODUCT_NM;
-
-                    $scope.item.COMPANY_NM = data[0].COMPANY_NM;
-
-
-                    $scope.item.NO = data[0].NO;
-
                     if(data[0].DIRECT_PRICE == null){
                         $scope.item.DIRECT_PRICE = 0;
-                    }else{
-                        $scope.item.DIRECT_PRICE  = data[0].DIRECT_PRICE.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                     }
 
                     if(data[0].AUCTION_AMOUNT == null){
                         $scope.item.AUCTION_AMOUNT = 0;
-                    }else{
-                        $scope.item.AUCTION_AMOUNT  = data[0].AUCTION_AMOUNT.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                     }
 
-                    $scope.item.AUCTION_COUNT = data[0].AUCTION_COUNT;
+                    $scope.item = data[0];
 
                     for(var i in data) {
 

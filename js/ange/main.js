@@ -22,9 +22,9 @@ require.config({
     // 라이브러리 경로 선언을 위해서도 사용된다.
     paths: {
         'text': '../../lib/require/text', //HTML 데이터를 가져올때 text! 프리픽스를 붙여준다.
-        'jquery': '../../lib/jquery/jquery', // jquery
+        'jquery': '../../lib/jquery/jquery-1.9.1.min', // jquery
         'jquery-ui': '../../lib/jquery/jquery-ui-1.10.2.min', // bootstrap 사용을 위해 로딩한다.
-        'domReady': '../../lib/domReady/domReady', // requirejs로 library를 로딩할때 사용된다.
+        'domReady': '../../lib/domReady/domReady.min', // requirejs로 library를 로딩할때 사용된다.
 
         // bootstrpa 모듈
         'js-bootstrap': '../../lib/bootstrap/js/bootstrap.min', // bootstrap을 사용한다.
@@ -34,9 +34,9 @@ require.config({
 //        'angular': '../../lib/angular/angular', // angularjs를 사용한다.
 //        'angular-resource': '../../lib/angular/angular-resource', // restful방식으로 http 통신을 통한 서비스를 한다.
 //        'angular-sanitize': '../../lib/angular/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
-        'angular': '../../lib/angular-1.2.1/angular', // angularjs를 사용한다.
-        'angular-resource': '../../lib/angular-1.2.1/angular-resource', // restful방식으로 http 통신을 통한 서비스를 한다.
-        'angular-sanitize': '../../lib/angular-1.2.1/angular-sanitize', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
+        'angular': '../../lib/angular-1.2.1/angular.min', // angularjs를 사용한다.
+        'angular-resource': '../../lib/angular-1.2.1/angular-resource.min', // restful방식으로 http 통신을 통한 서비스를 한다.
+        'angular-sanitize': '../../lib/angular-1.2.1/angular-sanitize.min', // html 코드를 화면에서 html로 동적으로 변환 시켜준다.
         'angular-ui-router': '../../lib/angular-ui/angular-ui-router.min', // index에서 url 라우팅을 동적으로 해준다.
         'angular-translate': '../../lib/angular/angular-translate.min', //
         'i18n': '../../lib/angular-1.2.1/i18n/angular-locale_ko-kr', //
@@ -57,9 +57,6 @@ require.config({
         // ckeditor 모듈
         'ckeditor-core': '../../lib/ckeditor/ckeditor', // ckeditor
         'ckeditor-jquery': '../../lib/ckeditor/adapters/jquery', // angularjs에서 ckeditor를 사용할 수 있게 해주는 어덥터다.
-//        'ckfinder': '../../lib/ckfinder/ckfinder', // ckeditor에서 업로드를 할 수 있게 해준다.
-
-        'ngActivityIndicator': '../../lib/ngActivityIndicator/ngActivityIndicator', // 로딩시 화면에 잠깐 보여주는 역할을 한다.
 
         // fileupload 모듈
         'ui-widget': '../../lib/file-upload/vendor/jquery.ui.widget',
@@ -82,30 +79,15 @@ require.config({
         'fileupload-validate': '../../lib/file-upload/jquery.fileupload-validate',
         'fileupload-angular': '../../lib/file-upload/jquery.fileupload-angular',
 
-        // fullcalendar 모듈
-//        'fullcalendar': '../../lib/fullcalendar/fullcalendar',
-//        'ko': '../../lib/fullcalendar/lang/ko',
-//        'uiCalendar': '../../lib/fullcalendar/calendar',
-//        'moment': '../../lib/fullcalendar/lib/moment.min',
-
         // google-chart 모듈
         'ng-google-chart': '../../lib/ng-google-chart/ng-google-chart',
 
-        // socialshare 모듈
-//        'angular-socialshare': '../../lib/angular-socialshare/angular-socialshare',
-
         // map 모듈
-//        'google-map': '//maps.google.com/maps/api/js',
         'ng-map': '../../lib/ng-map/ng-map.min',
 
         // clip 모듈
         'ng-clip': '../../lib/ng-clip/ng-clip.min',
 
-        // newsticker 모듈
-//        'angular-newsticker': '../../lib/angular-newsticker/angular-NewsTicker',
-
-        // scrollbar 모듈
-        'ng-scrollbar': '../../lib/ng-scrollbar/ng-scrollbar',
 //        'daum-postcode' : '//dmaps.daum.net/map_js_init/postcode',
         'library': '../../lib'
     },
@@ -160,18 +142,6 @@ require.config({
         'ckeditor-jquery': {
             deps:['jquery','ckeditor-core']
         },
-        'ngActivityIndicator': {
-            deps:['angular']
-        },
-//        'fullcalendar':{
-//            deps:['jquery','moment']
-//        },
-//        'ko':{
-//            deps:['jquery','moment']
-//        },
-//        'uiCalendar':{
-//            deps:['angular','fullcalendar']
-//        },
 //        'jquery-blueimp-gallery':{
 //            deps:['jquery','blueimp-gallery']
 //        },
@@ -196,24 +166,10 @@ require.config({
         'ng-google-chart': {
             deps:['jquery', 'angular']
         },
-//        'angular-socialshare':{
-//            deps:['angular']
-//        },
         'ng-map': {
             deps:['angular']
         },
         'ng-clip': {
-            deps:['angular']
-        },
-//        'angular-newsticker': {
-//            deps:['jquery', 'angular']
-//        },
-
-//        'modernizr': '../../lib/modernizr/modernizr',
-//        'prefix-free-min': '../../lib/newsticker/prefix-free-min',
-//        'prefix-free-dynamic-dom-min': '../../lib/newsticker/prefix-free-dynamic-dom-min',
-
-        'ng-scrollbar': {
             deps:['angular']
         }
     },
