@@ -333,6 +333,9 @@ a.comp_account_gotomall:hover {
 .comp_purchase_content_name {
 	width:100%;
 	color: #BC8E76;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 }
 .comp_purchase_content_price {
 	width:100%;

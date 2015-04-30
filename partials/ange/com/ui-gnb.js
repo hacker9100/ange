@@ -116,9 +116,8 @@ define([
                 return;
             }
 
-            //$location.url('/myange/home');
-            $location.url('/myange/mileage');
-            //location.href = '/myange/mileage';
+            $location.url('/myange/home');
+//            $location.url('/myange/mileage');
         }
 
         $scope.click_showSearch = function (){
