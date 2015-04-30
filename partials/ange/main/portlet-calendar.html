@@ -1,5 +1,5 @@
-<div class="comp_calendar" >
-    <div class="comp_calendar_wrap" style="float:left; width:100%; height:100%; border:1px solid #DEDEDE; background-color:#fff;">
+<div class="comp_calendar">
+    <div class="comp_calendar_wrap no-margin" style="float:left; width:100%; height:100%; border:1px solid #DEDEDE; background-color:#fff;">
 
         <div class="comp_calendar_viewer" style="float:left; font-family: arial, sna-serif; width: 55%; height:100%; border-right: 1px solid #DEDEDE; ">
             <div class="comp_calendar_viewer_top" style="position:relative; width:100%; padding:18px; font-size:0.86em; text-align:center; background-color:#2F3C45; color:#EEE;">
@@ -24,7 +24,7 @@
                 <ul class="cell_day mini" style="border-top:1px solid #ddd; width:100%; margin:0px auto;">
                     <li class="{{item.type}}" title="{{item.event}}" ng-repeat="item in data.calendar">
                         <img src="/imgs/ange/_blank.gif" border="0" style="width:100%;" >
-                        <span class="cell_day_num {{item.type}}">{{item.day}}</span>
+                        <span class="cell_day_num_comp {{item.type}}">{{item.day}}</span>
                     </li>
                     <!--<li class="{{item.type}}" title="{{item.event}}" ng-repeat="item in data.calendar">{{item.day}}<br/></li>-->
                 </ul>

@@ -113,7 +113,7 @@
                 }
 
                 $sql = "SELECT
-                            ada_idx, DATE_FORMAT(ada_date_open, '%Y-%m-%d') AS FROM_YMD, DATE_FORMAT(ada_date_close, '%Y-%m-%d') AS TO_YMD, ada_url, ada_title,
+                            ada_idx, ada_type, DATE_FORMAT(ada_date_open, '%Y-%m-%d') AS FROM_YMD, DATE_FORMAT(ada_date_close, '%Y-%m-%d') AS TO_YMD, ada_url, ada_title,
                             a.adp_idx, ada_state, ada_files, ada_image, ada_preview
                         FROM
                             adm_ad a, adm_product d

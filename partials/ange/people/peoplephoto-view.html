@@ -31,7 +31,9 @@
                                         <!--<img src="/imgs/ange/_blank.gif" class="people_photo_img" style="background-image:url({{item.MAIN_FILE}})" />-->
                                     <!--</div>&lt;!&ndash; /.col-xs-2&ndash;&gt;-->
                                     <div class="col-xs-12 col-sm-8 board_basicinfo_photosubject">
-                                        <div ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" class="text_ellipsis"><span class="ange_green">{{item.CATEGORY_NM}} </span>| <strong>{{item.SUBJECT}}</strong></div>
+                                        <div ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'N'" class="text_ellipsis"><span class="ange_green">{{item.CATEGORY_NM}} </span>
+										<span ng-show="item.CATEGORY_NM">&nbsp;|&nbsp;</span> 
+										<strong>{{item.SUBJECT}}</strong></div>
                                         <span ng-show="item.BOARD_ST != 'D' && item.BLIND_FL == 'Y'">관리자에 의해 블라인드 처리가 된 글입니다</span>
                                         <span ng-show="item.BOARD_ST == 'D'">작성자가 삭제한 글입니다</span>
                                         <!--<span class="table_icon_new">N</span>-->

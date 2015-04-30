@@ -11,7 +11,7 @@ define([
     'use strict';
 
     // 사용할 서비스를 주입
-    controllers.controller('product-edit', ['$scope', '$stateParams', '$location', '$timeout', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, $timeout, dialogs, UPLOAD) {
+    controllers.controller('product-edit', ['$scope', '$stateParams', '$location', '$timeout', '$filter', 'dialogs', 'UPLOAD', function ($scope, $stateParams, $location, $timeout, $filter, dialogs, UPLOAD) {
 
         // 파일 업로드 설정
         $scope.options = { url: UPLOAD.UPLOAD_INDEX, autoUpload: true, dropZone: angular.element('#dropzone') };
@@ -52,6 +52,26 @@ define([
             $scope.product_gb = [{value: "MILEAGE", name: "마일리지몰"}, {value: "AUCTION", name: "경매소"}, {value: "CUMMERCE", name: "커머스"}];
 
             $scope.item.PRODUCT_GB = $scope.product_gb[0];
+
+            // ui bootstrap 달력
+            $scope.format = 'yyyy-MM-dd';
+
+            $scope.today = function() {
+                $scope.item.START_YMD = new Date();
+                $scope.item.CLOSE_YMD = new Date();
+            };
+            $scope.today();
+
+//            $scope.clear = function () {
+//                $scope.item.CLOSE_YMD = null;
+//            };
+
+            $scope.open = function($event, opened) {
+                $event.preventDefault();
+                $event.stopPropagation();
+
+                $scope[opened] = true;
+            };
         };
 
         // CK Editor
@@ -137,6 +157,9 @@ define([
             if ($scope.category_2 != '') {
                 $scope.item.CATEGORY.push($scope.category_2);
             }
+
+            $scope.item.START_YMD = $filter('date')($scope.item.START_YMD, 'yyyy-MM-dd');
+            $scope.item.CLOSE_YMD = $filter('date')($scope.item.CLOSE_YMD, 'yyyy-MM-dd');
 
             if ($stateParams.id == 0) {
                 $scope.insertItem('ange/product', 'item', $scope.item, false)

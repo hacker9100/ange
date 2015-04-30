@@ -13,7 +13,7 @@
             <img class="comp_purchase_content_img" ng-src="{{item.MAIN_FILE}}" />
             <div class="comp_purchase_content_date">[{{item.PROGRESS_ST_NM != '' ? item.PROGRESS_ST_NM : item.ORDER_GB_NM}}]</div>
             <div class="comp_purchase_content_name">{{ item.PRODUCT_NM }}</div>
-            <div class="comp_purchase_content_price">{{ item.PRODUCT_GB == 'MILEAGE' ? item.SUM_PRICE : item.DIRECT_PRICE }} {{ item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원' }}</div>
+            <div class="comp_purchase_content_price">{{ item.SUM_PRICE }} {{ item.PRODUCT_GB == 'MILEAGE' ? 'P' : '원' }}</div>
         </div>
 
         <div ng-show="list == '' || list == null" style="width:100%; text-align: center; !important;">

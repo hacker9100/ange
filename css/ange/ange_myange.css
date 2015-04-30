@@ -175,6 +175,11 @@ ul.cell_day>li.normal { background-color: #fff; color: #000; }
 /*ul.cell_day>li.event { background-color: #39f; color: #000; }*/
 ul.cell_day>li.event { background-color: #fff; }
 
+
+
+
+
+
 ul.cell_list { width: 100%; background-color: #eee; }
 ul.cell_list>li { padding:0px; margin-top: 1px; background-color: #fff; list-style-type: none; text-align: left; border: 1px solid #fff; }
 
@@ -207,12 +212,13 @@ ul.cell_list>li>ul>li {
 
 .cell_day_num_comp {
     position:absolute;
-    left:12%;
-    top:10%;
+    left:14%;
+    top:12%;
     border:1px solid transparent;
-    width:22px;
-    height:22px;
+    width:18px;
+    height:18px;
     border-radius: 50%;
+	padding:4px 0;
 }
 
 .cell_day_num.event, .cell_day_num_comp.event {
@@ -252,6 +258,30 @@ ul.cell_list>li>ul>li {
     padding:10px;
 }
 
+.cell_day_iconwrap {	
+	display: block;
+	position:absolute;
+	bottom:5px;
+	right:5px;
+}
+
+.cell_day_icon {	
+	display: inline-block;
+	float:right;
+	width: 19px;
+	height: 19px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+}
+
+.cell_day_icon.birthday	{ background-image: url('/imgs/ange/calender_birthday.png'); }
+.cell_day_icon.babyborn { background-image: url('/imgs/ange/calender_baby.png'); }
+.cell_day_icon.hundred	{ background-image: url('/imgs/ange/calender_100day.png'); }
+.cell_day_icon.dol			{ background-image: url('/imgs/ange/calender_1thbirth.png'); }
+.cell_day_icon.ange		{ background-image: url('/imgs/ange/calender_notice.png');}
+.cell_day_icon.wedding	{ background-image: url('/imgs/ange/calender_weddingday.png'); }
+
 
 @media screen and (max-width: 797px) {
     .calendar_attend_titlebox {
@@ -285,11 +315,13 @@ ul.cell_list>li>ul>li {
         font-weight: 400;
     }
     .cell_day_num {
-        left:25%;
-        top:25%;
+        left:12%;
+        top:12%;
         width:22px;
         height:22px;
     }
+	.cell_day_icon {
+		display: none;
 }
 
 /* /Ange calendar */

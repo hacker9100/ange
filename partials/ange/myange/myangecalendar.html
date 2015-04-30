@@ -46,7 +46,17 @@
                                                 <ul class="cell_day">
                                                     <li class="{{item.type}}" title="{{item.event}}" ng-repeat="item in data.calendar">
                                                         <img src="/imgs/ange/_blank.gif" border="0" style="width:100%;" >
-                                                        <span class="cell_day_num {{item.type}}">{{item.day}}</span>
+														<span class="cell_day_num {{item.type}}">{{item.day}}</span>
+
+														<div class="cell_day_iconwrap">
+															<div ng-show="item.event_type.toLowerCase().indexOf('birth') > 0" class="cell_day_icon birthday"></div>
+															<div ng-show="item.event_type.toLowerCase().indexOf('100th') > 0" class="cell_day_icon hundred"></div>
+															<div ng-show="item.event_type.toLowerCase().indexOf('dol') > 0" class="cell_day_icon dol"></div>
+															<div ng-show="item.event_type.toLowerCase().indexOf('wedding') > 0" class="cell_day_icon wedding"></div>
+															<div ng-show="item.event_type.toLowerCase().indexOf('duedate') > 0" class="cell_day_icon babyborn"></div>
+															<div ng-show="item.event_type.toLowerCase().indexOf('notice') > 0 || item.event_type.toLowerCase().indexOf('reviewclose') > 0" class="cell_day_icon ange"></div>
+														</div>
+
                                                     </li>
                                                 </ul>
 

@@ -49,7 +49,8 @@
             <a class="util3" ng-click="click_infodesk()">고객센터</a>
             </div>
 
-            <div class="comp_calendar_wrap">
+            <div class="comp_calendar_wrap" style="position:relative;">
+
                 <div class="comp_calendar_viewer">
                     <div class="comp_calendar_viewer_content">
                         <!-- item.type = normal / hidden / event -->
@@ -60,6 +61,7 @@
                             </li>
                         </ul>
                     </div>
+
                     <style>
                         .ngtickerMessage > ul li {
                             display:initial;
@@ -93,18 +95,18 @@
                                     <li class="list" ng-style="{opacity:setVisible($index)}" ng-repeat="item in scheduleList">
                                         <strong>{{item.name}}</strong>&nbsp;{{item.event}}&nbsp;<span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;{{item.dday}}</span>
                                     </li>
-                                    <!--<li class="list" ng-style="{opacity:setVisible($index)}" data-ng-repeat="item in scheduleList">-->
-                                        <!--<strong>김예슬</strong> 아기 돌 <span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;88</span>-->
-                                        <!--<strong>{{item.name}}</strong>{{item.event}}<span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;{{item.dday}}</span>-->
-                                    <!--</li>-->
                                 </ul>
                             </div>
-                            <!--<strong>김예슬</strong> 아기 돌 <span class="ange_blue dday_count">D&nbsp;&minus;&nbsp;88</span>-->
-                            <!--<br />-->
-                            <!--출산예정일 <span style="float:right">D-831</span>-->
-                            <!--<br />-->
-                            <!--홍길돌 아기 백일-->
                         </div>
+
+						<div ng-show="!uid" class="login_msg_bg" style="position:absolute; top:0px; left:0px; width:100%; height:320px; background-color:#FFF; opacity:.8; border:1px solid transparent; z-index:990;"></div>
+						<div ng-show="!uid" class="login_msg ange_bg_green">
+								<a href="" ng-click="click_login()"><strong class="ange_blue" style="font-size:1.12em;">로그인</strong></a> <span style="font-size:0.92em;">하면 <br>
+								앙쥬 캘린더와 <br>
+								앨범 서비스 등의 <br>
+								특별한 혜택을 모두 <br> 
+								누릴 수 있습니다.</span>
+						</div>
                     </div>
                 </div>
             </div>
@@ -114,7 +116,7 @@
             <div class="comp_album_wrap" style="float:left; width:100%; margin-top:5px;">
                 <div class="ange_bg_dark comp_album_label">
                     마이앨범
-                    <a title="더보기" ng-click="click_myangeAlbum()"><span class="glyphicon glyphicon-plus-sign" style="position:absolute; top:8px; right:8px; font-size:1.48em; color:#fff;"></span></a>
+                    <a title="앨범꾸미기" href="" ng-click="click_myangeAlbum()"><span class="glyphicon glyphicon-plus-sign" style="position:absolute; top:8px; right:8px; font-size:1.48em; color:#fff;"></span></a>
                 </div>
                 <div class="ange_bg_milk comp_album_pics">
                     <img ng-repeat="item in albumList" class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( {{ item.ALBUM_FILE }} )' }">
@@ -123,8 +125,9 @@
                     <!--<img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">-->
                     <!--<img class="comp_album_thumb" src="/imgs/ange/_blank.gif" ng-click="click_showViewMyAlbum(item)" ng-style="{ 'background-image': 'url( http://ange.marveltree.com/storage/user/hong/thumbnail/5519ffbf25eaa )' }">-->
 
-                    <div ng-show="albumList == '' || albumList == null" style="width:100%; height:50px; text-align: center; !important;">
-                        <a ng-click="click_myangeAlbum()">앨범을 등록하세요.</a>
+                    <div ng-show="albumList == '' || albumList == null" style="width:100%; height:50px; font-size:0.86em; text-align: center; !important;">
+						<br/>
+                        <a href="" ng-click="click_myangeAlbum()">앨범을 등록하세요.</a>
                     </div>
                 </div>
             </div>

@@ -83,16 +83,32 @@
                 $t_year = date('Y');
                 $d_day = (strtotime($t_year.substr($data['BIRTH'],4,4)) - strtotime(date("Ymd"))) / 86400;
 
-                if ( $d_day < 90 && $d_day >= 0) {
+                if ($d_day < 30 && $d_day >= 0) {
                     $list['type'] = "event";
                     $list['event'] = "내생일";
                     $list['event_type'] = "birth";
                     $list['dday'] = $d_day;
 
-                    $row[$cnt++] = $list;
+                    $s_data[$cnt++] = $list;
                 }
 
-                $data['SCHEDULE'] = $row;
+                $d_day = (strtotime($data['BABY_BIRTH_DT']) - strtotime(date("Ymd"))) / 86400;
+
+                if ($d_day >= 0) {
+                    $list['type'] = "event";
+                    $list['event'] = "출산예정일";
+                    $list['event_type'] = "birth";
+                    $list['dday'] = $d_day;
+
+                    $s_data[$cnt++] = $list;
+                } else if ($d_day < 0 && $d_day >= -100) {
+                    $list['type'] = "event";
+                    $list['event'] = "아기 백일";
+                    $list['event_type'] = "birth";
+                    $list['dday'] = 100 + $d_day;
+
+                    $s_data[$cnt++] = $list;
+                }
 
                 if ($data) {
                     if ( $data['USER_ST'] == "F") {
@@ -174,6 +190,32 @@
                     $baby_data = $_d->getData($sql);
                     $data['BABY'] = $baby_data;
 
+                    $result = $_d->sql_query($sql,true);
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                        $d_day = (strtotime($t_year.substr($row['BABY_BIRTH'],4,4)) - strtotime(date("Ymd"))) / 86400;
+                        $e_date = $row['BABY_BIRTH'];
+                        $f_year = substr($e_date,0,4);
+
+                        if ((int)$f_year!=(int)$t_year && $d_day < 30 && $d_day >= 0) {
+                            $list['type'] = "event";
+                            $list['name'] = $row['BABY_NM'];
+                            $list['event'] = "생일";
+                            $list['event_type'] = "birth";
+                            $list['dday'] = $d_day;
+
+                            $s_data[$cnt++] = $list;
+                        } else if ((int)$f_year+1==(int)$t_year && $d_day < 90 && $d_day >= 0) {
+                            $list['type'] = "event";
+                            $list['name'] = $row['BABY_NM'];
+                            $list['event'] = "돌";
+                            $list['event_type'] = "birth";
+                            $list['dday'] = $d_day;
+
+                            $s_data[$cnt++] = $list;
+                        }
+                    }
+
                     $sql = "SELECT
                                 BLOG_GB, BLOG_URL, PHASE, THEME, NEIGHBOR_CNT, POST_CNT, VISIT_CNT, SNS
                             FROM
@@ -198,6 +240,8 @@
                 } else {
                     $_d->failEnd("아이디나 패스워드를 확인해주세요.");
                 }
+
+                $data['SCHEDULE'] = $s_data;
 
                 if ($err > 0) {
                     $_d->failEnd("조회실패입니다:".$msg);
@@ -475,6 +519,37 @@
                     $msg = $_d->mysql_error;
                 }
 
+                $cnt = 0;
+                $t_year = date('Y');
+                $d_day = (strtotime($t_year.substr($data['BIRTH'],4,4)) - strtotime(date("Ymd"))) / 86400;
+
+                if ($d_day < 30 && $d_day >= 0) {
+                    $list['type'] = "event";
+                    $list['event'] = "내생일";
+                    $list['event_type'] = "birth";
+                    $list['dday'] = $d_day;
+
+                    $s_data[$cnt++] = $list;
+                }
+
+                $d_day = (strtotime($data['BABY_BIRTH_DT']) - strtotime(date("Ymd"))) / 86400;
+
+                if ($d_day >= 0) {
+                    $list['type'] = "event";
+                    $list['event'] = "출산예정일";
+                    $list['event_type'] = "birth";
+                    $list['dday'] = $d_day;
+
+                    $s_data[$cnt++] = $list;
+                } else if ($d_day < 0 && $d_day >= -100) {
+                    $list['type'] = "event";
+                    $list['event'] = "아기 백일";
+                    $list['event_type'] = "birth";
+                    $list['dday'] = 100 + $d_day;
+
+                    $s_data[$cnt++] = $list;
+                }
+
                 if ($data) {
                     $sql = "SELECT
                                 COUNT(*) AS TO_CNT
@@ -551,6 +626,32 @@
                                 USER_ID = '".$_key."'
                             ";
 
+                    $result = $_d->sql_query($sql,true);
+                    for ($i=0; $row=$_d->sql_fetch_array($result); $i++) {
+
+                        $d_day = (strtotime($t_year.substr($row['BABY_BIRTH'],4,4)) - strtotime(date("Ymd"))) / 86400;
+                        $e_date = $row['BABY_BIRTH'];
+                        $f_year = substr($e_date,0,4);
+
+                        if ((int)$f_year!=(int)$t_year && $d_day < 30 && $d_day >= 0) {
+                            $list['type'] = "event";
+                            $list['name'] = $row['BABY_NM'];
+                            $list['event'] = "생일";
+                            $list['event_type'] = "birth";
+                            $list['dday'] = $d_day;
+
+                            $s_data[$cnt++] = $list;
+                        } else if ((int)$f_year+1==(int)$t_year && $d_day < 90 && $d_day >= 0) {
+                            $list['type'] = "event";
+                            $list['name'] = $row['BABY_NM'];
+                            $list['event'] = "돌";
+                            $list['event_type'] = "birth";
+                            $list['dday'] = $d_day;
+
+                            $s_data[$cnt++] = $list;
+                        }
+                    }
+
                     $blog_data  = $_d->sql_fetch($sql);
                     $data['BLOG'] = $blog_data;
 
@@ -565,6 +666,8 @@
                     $album_data  = $_d->getData($sql);
                     $data['ALBUM'] = $album_data;
                 }
+
+                $data['SCHEDULE'] = $s_data;
 
                 if ($err > 0) {
                     $_d->failEnd("조회실패입니다:".$msg);

@@ -70,7 +70,7 @@
 
                                                 <div class="table_gray" style="height:24px;">
                                                     <small>
-                                                        <div class="table_blue" style="float:left;">{{item.PERIOD}} 경매</div>
+                                                        <div class="table_blue" style="float:left;">{{item.START_YMD}}~{{item.CLOSE_YMD}}경매</div>
                                                         <!--<div style="float:right;">[상품번호 M20141023]</div>-->
                                                     </small>
                                                 </div>
@@ -81,8 +81,8 @@
                                                 <!--</p>-->
 
                                                 <div class="store_col_info">
-                                                    <div class="store_list_item maininfo"><strong>소비자금액</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE}} 원</span></div>
-                                                    <div class="store_list_item maininfo"><strong>바로구매가</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DIRECT_PRICE}} 원</span></div>
+                                                    <div class="store_list_item maininfo"><strong>소비자금액</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.PRICE  | number}} 원</span></div>
+                                                    <div class="store_list_item maininfo"><strong>바로구매가</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.DIRECT_PRICE | number}} 원</span></div>
                                                     <div class="store_list_item maininfo"><strong>판매사</strong><span class="table_gray" style="position:absolute; left:120px;">{{item.COMPANY_NM}}</span></div>
                                                     <!--<div class="store_list_item maininfo"><strong>홈페이지</strong><span class="table_gray" style="position:absolute; left:120px;"><a style="font-size:0.86em;" href="#">http://www.inyinternational.com</a></span></div>-->
                                                     <!--<div class="store_list_item maininfo"><strong>외부링크</strong>-->

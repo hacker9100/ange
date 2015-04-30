@@ -316,15 +316,10 @@ switch ($_method) {
 
             //$lcnt=0;
             while($row=$_d->sql_fetch_array($result)){
-                MtUtil::_d("### [reg_dt] ".$row['REG_DT']);
                 $e_date = $row['REG_DT'];
                 $e_year = substr($e_date,0,4);
                 $e_month = substr($e_date,4,2);
                 $e_day = substr($e_date,6,2);
-
-                MtUtil::_d("### [e_year] ".$e_year);
-                MtUtil::_d("### [e_month] ".$e_month);
-                MtUtil::_d("### [e_day] ".$e_day);
 
                 if ((int)$e_year==(int)$t_year && (int)$e_month==(int)$t_month){
                     $t_key = $e_date;

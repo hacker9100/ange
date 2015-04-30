@@ -87,7 +87,6 @@ MtUtil::_a("### [START]");
 <link rel="stylesheet" type="text/css" href="/lib/ngActivityIndicator/css/ngActivityIndicator.css" />
 <link rel="stylesheet" type="text/css" href="/lib/fullcalendar/fullcalendar.css" />
 
-<link rel="stylesheet" type="text/css" href="/css/calendarDemo.css" />
 <link rel="stylesheet" type="text/css" href="/css/ng-table/ng-table.min.css" />
 <link rel="stylesheet" type="text/css" href="/css/dialog/dialogs.min.css" />
 
