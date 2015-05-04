@@ -1204,7 +1204,10 @@ define([
                       '   <div class="jumbotron_cover_imgs" style="padding-bottom:45px;">' +
                       '       <div id="jumbotron_cover" class="carousel slide" data-ride="carousel">' +
                       '           <slick id="{{ option.id }}" init-onload="true" data="slideList" current-index="0" dots="false" autoplay="true" center-mode="true" slides-to-show="1" slides-to-scroll="1" autoplay-speed="3000" fade="true" pause-on-hover="false">' +
-                      '               <div ng-repeat="item in slideList" class="carousel-inner" role="listbox"><div class="item active"><a ng-click="option.id == \'store\' ? click_showView(item) : click_linkBanner(item)"><img ng-src="{{ item.MAIN_FILE }}" style="width:100%; cursor:pointer;"/></a></div></div>' +
+                      '               <div ng-repeat="item in slideList" class="carousel-inner" role="listbox"><div class="item active">' +
+                      '                 <a ng-click="option.id == \'store\' ? click_showView(item) : click_linkBanner(item)">' +
+                      '                     <img src="/imgs/ange/_blank_262by143.gif" class="comp_store_rollimg" style="background-image: url({{ item.MAIN_FILE }});"/>' +
+                      '                 </a></div></div>' +
                       '           </slick>' +
                       '       </div>' +
                       '   </div>' +

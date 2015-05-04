@@ -1,7 +1,7 @@
 <div class="comp_calendar">
     <div class="comp_calendar_wrap no-margin" style="float:left; width:100%; height:100%; border:1px solid #DEDEDE; background-color:#fff;">
 
-        <div class="comp_calendar_viewer" style="float:left; font-family: arial, sna-serif; width: 55%; height:100%; border-right: 1px solid #DEDEDE; ">
+        <div class="comp_calendar_viewer">
             <div class="comp_calendar_viewer_top" style="position:relative; width:100%; padding:18px; font-size:0.86em; text-align:center; background-color:#2F3C45; color:#EEE;">
                 {{search.year}}. {{search.month}}
                 <a ng-click="moveCalendar(search.year,search.month,-1);" class="rollbtn_white_w5px prev" title="이전 달"></a>
@@ -31,7 +31,7 @@
             </div>
         </div>
 
-        <div class="comp_schedule_viewer" style="float: right; width:45%; height:100%;">
+        <div class="comp_schedule_viewer">
             <div class="comp_schedule_viewer_titlebar">
                 <span class="comp_schedule_viewer_titlebar_title">마이캘린더</span>
                 <a href="/myange/calendar" class="miniboard_tab_more">더보기</a>

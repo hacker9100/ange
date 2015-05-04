@@ -134,6 +134,15 @@ a.goton_mileagemall:hover {
 	margin:auto;
 }
 
+.comp_store_rollimg {
+    width:100%;
+    background-color:#fff;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor:pointer;
+}
+
 .comp_dream {
 	height:100%; 
 	width:100%; 
