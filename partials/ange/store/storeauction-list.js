@@ -62,7 +62,6 @@ define([
 
         // 초기화
         $scope.init = function(session) {
-
             $scope.selectIdx = 'ALL';
             $scope.community = "마일리지 경매소";
 /*         if($rootScope.uid == '' || $rootScope.uid == null){
