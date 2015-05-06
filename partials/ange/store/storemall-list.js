@@ -78,9 +78,11 @@ define([
             if($stateParams.menu == 'mileagemall'){
                 $scope.search.PARENT_NO = 1;
                 $scope.community = "마일리지몰";
+
             }else{
                 $scope.search.PARENT_NO = 2;
                 $scope.community = "앙쥬커머스";
+
             }
 
             $scope.getList('com/webboard', 'category', {}, $scope.search, true)
