@@ -4,10 +4,10 @@
 }
 
 .album_image img {
-    width: 100%;
-    max-width:600px;
+    max-width: 100%;
+    /*max-width:600px;*/
     display: block;
-    margin: auto;
+    margin: 0px auto;
 }
 
 .thumb_wrapper {
