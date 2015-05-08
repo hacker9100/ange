@@ -1,0 +1,67 @@
+/* Sub- page Responsive Style Set */
+.ng_wrap {
+    float:left;
+    width:100%;
+    z-index: 980;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.mainbar {
+    float: left;
+    position:relative;
+    padding-right: 5px;
+    overflow : hidden;
+    z-index: 981;
+}
+
+@media screen and (max-width: 767px) {
+    .ng_wrap {
+        height:50%;
+        float:left;
+        padding-top: 50px;
+        background-color: #fff;
+        /*overflow : hidden;*/
+        /*padding-top: 210px; *//* 상단 탭 길이만큼 top padding 부여 */
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+    .ng_wrap {
+        height:100%;
+        padding: 0;
+        background-color: #fff;
+        /*padding-top: 210px; *//* 상단 탭 길이만큼 top padding 부여 */
+    }
+
+    .ng_wrap.story { padding-top: 210px; }
+    .ng_wrap.people { padding-top: 251px; }
+    .ng_wrap.moms { padding-top: 211px; }
+    .ng_wrap.myange { padding-top: 190px; }
+    .ng_wrap.store { padding-top: 191px; }
+    .ng_wrap.infodesk { padding-top: 158px; }
+}
+
+@media screen and (min-width: 1200px) {
+    .ng_wrap {
+        overflow : hidden;
+    }
+    .mainbar {
+        height:100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+}
+
+@media screen and (min-width: 1680px) {
+    .ng_wrap.story, .ng_wrap.people, .ng_wrap.moms, .ng_wrap.myange, .ng_wrap.store, .ng_wrap.infodesk  {
+        margin:0px; padding-top: 102px; padding-left: 210px;
+    }
+
+    .ng_wrap {
+        position:absolute;
+        top: 0;
+        width: 100%;
+    }
+}
